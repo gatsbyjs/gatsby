@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collatePluginAPIs Identifies APIs used by a site's plugins 1`] = `
+Object {
+  "apiToPlugins": Object {
+    "browser-1": Array [
+      "foo-plugin",
+    ],
+    "browser-2": Array [
+      "foo-plugin",
+      "default-site-plugin",
+    ],
+    "browser-3": Array [
+      "default-site-plugin",
+    ],
+    "browser-4": Array [],
+    "node-1": Array [
+      "foo-plugin",
+    ],
+    "node-2": Array [
+      "foo-plugin",
+      "default-site-plugin",
+    ],
+    "node-3": Array [
+      "default-site-plugin",
+    ],
+    "node-4": Array [],
+    "ssr-1": Array [
+      "foo-plugin",
+    ],
+    "ssr-2": Array [
+      "foo-plugin",
+      "default-site-plugin",
+    ],
+    "ssr-3": Array [
+      "default-site-plugin",
+    ],
+    "ssr-4": Array [],
+  },
+  "badExports": Object {
+    "browser": Array [],
+    "node": Array [],
+    "ssr": Array [],
+  },
+  "flattenedPlugins": Array [
+    Object {
+      "browserAPIs": Array [
+        "browser-1",
+        "browser-2",
+      ],
+      "id": "Plugin foo",
+      "name": "foo-plugin",
+      "nodeAPIs": Array [
+        "node-1",
+        "node-2",
+      ],
+      "pluginOptions": Object {
+        "plugins": Array [],
+      },
+      "resolve": "/foo",
+      "ssrAPIs": Array [
+        "ssr-1",
+        "ssr-2",
+      ],
+      "version": "1.0.0",
+    },
+    Object {
+      "browserAPIs": Array [
+        "browser-2",
+        "browser-3",
+      ],
+      "id": "Plugin default-site-plugin",
+      "name": "default-site-plugin",
+      "nodeAPIs": Array [
+        "node-2",
+        "node-3",
+      ],
+      "pluginOptions": Object {
+        "plugins": Array [],
+      },
+      "resolve": "/bar",
+      "ssrAPIs": Array [
+        "ssr-2",
+        "ssr-3",
+      ],
+      "version": "ec21d02c31ab044d027a1d2fcaeb4a79",
+    },
+  ],
+}
+`;
+
+exports[`collatePluginAPIs Identifies incorrect APIs used by a site's plugins 1`] = `
+Object {
+  "apiToPlugins": Object {
+    "browser-1": Array [
+      "foo-plugin",
+    ],
+    "browser-2": Array [
+      "foo-plugin",
+    ],
+    "browser-3": Array [],
+    "browser-4": Array [],
+    "node-1": Array [
+      "foo-plugin",
+    ],
+    "node-2": Array [
+      "foo-plugin",
+    ],
+    "node-3": Array [],
+    "node-4": Array [],
+    "ssr-1": Array [
+      "foo-plugin",
+    ],
+    "ssr-2": Array [
+      "foo-plugin",
+    ],
+    "ssr-3": Array [],
+    "ssr-4": Array [],
+  },
+  "badExports": Object {
+    "browser": Array [
+      Object {
+        "exportName": "bad-browser-2",
+        "pluginName": "default-site-plugin",
+        "pluginVersion": "ec21d02c31ab044d027a1d2fcaeb4a79",
+      },
+      Object {
+        "exportName": "bad-browser-3",
+        "pluginName": "default-site-plugin",
+        "pluginVersion": "ec21d02c31ab044d027a1d2fcaeb4a79",
+      },
+    ],
+    "node": Array [
+      Object {
+        "exportName": "bad-node-2",
+        "pluginName": "default-site-plugin",
+        "pluginVersion": "ec21d02c31ab044d027a1d2fcaeb4a79",
+      },
+      Object {
+        "exportName": "bad-node-3",
+        "pluginName": "default-site-plugin",
+        "pluginVersion": "ec21d02c31ab044d027a1d2fcaeb4a79",
+      },
+    ],
+    "ssr": Array [
+      Object {
+        "exportName": "bad-ssr-2",
+        "pluginName": "default-site-plugin",
+        "pluginVersion": "ec21d02c31ab044d027a1d2fcaeb4a79",
+      },
+      Object {
+        "exportName": "bad-ssr-3",
+        "pluginName": "default-site-plugin",
+        "pluginVersion": "ec21d02c31ab044d027a1d2fcaeb4a79",
+      },
+    ],
+  },
+  "flattenedPlugins": Array [
+    Object {
+      "browserAPIs": Array [
+        "browser-1",
+        "browser-2",
+      ],
+      "id": "Plugin foo",
+      "name": "foo-plugin",
+      "nodeAPIs": Array [
+        "node-1",
+        "node-2",
+      ],
+      "pluginOptions": Object {
+        "plugins": Array [],
+      },
+      "resolve": "/foo",
+      "ssrAPIs": Array [
+        "ssr-1",
+        "ssr-2",
+      ],
+      "version": "1.0.0",
+    },
+    Object {
+      "browserAPIs": Array [],
+      "id": "Plugin default-site-plugin",
+      "name": "default-site-plugin",
+      "nodeAPIs": Array [],
+      "pluginOptions": Object {
+        "plugins": Array [],
+      },
+      "resolve": "/bad-apis",
+      "ssrAPIs": Array [],
+      "version": "ec21d02c31ab044d027a1d2fcaeb4a79",
+    },
+  ],
+}
+`;
+
+exports[`handleMultipleReplaceRenderers Does nothing when replaceRenderers is implemented once 1`] = `
+Array [
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin foo",
+    "name": "foo-plugin",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "___TEST___",
+    "ssrAPIs": Array [
+      "replaceRenderer",
+    ],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin default-site-plugin",
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "___TEST___",
+    "ssrAPIs": Array [],
+    "version": "ec21d02c31ab044d027a1d2fcaeb4a79",
+  },
+]
+`;
+
+exports[`handleMultipleReplaceRenderers Sets skipSSR when replaceRenderers is implemented more than once 1`] = `
+Array [
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin foo",
+    "name": "foo-plugin",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "___TEST___",
+    "skipSSR": true,
+    "ssrAPIs": Array [
+      "replaceRenderer",
+    ],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "Plugin default-site-plugin",
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "___TEST___",
+    "ssrAPIs": Array [
+      "replaceRenderer",
+    ],
+    "version": "ec21d02c31ab044d027a1d2fcaeb4a79",
+  },
+]
+`;

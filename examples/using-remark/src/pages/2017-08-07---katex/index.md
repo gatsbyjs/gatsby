@@ -37,7 +37,10 @@ a^2 + b^2 = c^2
 $$
 ```
 
-**Example output:** $$ a^2 + b^2 = c^2 $$
+**Example output:**
+$$
+a^2 + b^2 = c^2
+$$
 
 **Add Katex CSS to your template** Katex's CSS file is required to render the
 formulas correctly. Include the CSS file in your template ([example][4])

@@ -26,8 +26,8 @@ import type { DocumentNode, GraphQLSchema } from "graphql"
 const { printTransforms } = IRTransforms
 
 const {
-  ArgumentsOfCorrectTypeRule,
-  DefaultValuesOfCorrectTypeRule,
+  ValuesOfCorrectTypeRule,
+  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -41,13 +41,16 @@ type RootQuery = {
   name: string,
   path: string,
   text: string,
+  originalText: string,
+  isStaticQuery: boolean,
+  hash: string,
 }
 
 type Queries = Map<string, RootQuery>
 
 const validationRules = [
-  ArgumentsOfCorrectTypeRule,
-  DefaultValuesOfCorrectTypeRule,
+  ValuesOfCorrectTypeRule,
+  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -69,7 +72,11 @@ class Runner {
   }
 
   reportError(message) {
-    report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+    if (process.env.NODE_ENV === `production`) {
+      report.panic(`${report.format.red(`GraphQL Error`)} ${message}`)
+    } else {
+      report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+    }
   }
 
   async compileAll() {
@@ -80,8 +87,12 @@ class Runner {
   async parseEverything() {
     // FIXME: this should all use gatsby's configuration to determine parsable
     // files (and how to parse them)
-    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`)
-    files = files.concat(glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`))
+    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`, {
+      nodir: true,
+    })
+    files = files.concat(
+      glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`, { nodir: true })
+    )
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
 
@@ -92,7 +103,7 @@ class Runner {
     // run babel on code in node_modules). Otherwise the component will throw
     // an error in the browser of "graphql is not defined".
     files = files.concat(
-      Object.keys(store.getState().components).map(c => normalize(c))
+      Array.from(store.getState().components.keys(), c => normalize(c))
     )
     files = _.uniq(files)
 
@@ -138,10 +149,14 @@ class Runner {
       return compiledNodes
     }
 
-    const printContext = printTransforms.reduce(
-      (ctx, transform) => transform(ctx, this.schema),
-      compilerContext
-    )
+    // relay-compiler v1.5.0 added "StripUnusedVariablesTransform" to
+    // printTransforms. Unfortunately it currently doesn't detect variables
+    // in input objects widely used in gatsby, and therefore removing
+    // variable declaration from queries.
+    // As a temporary workaround remove that transform by slicing printTransforms.
+    const printContext = printTransforms
+      .slice(0, -1)
+      .reduce((ctx, transform) => transform(ctx, this.schema), compilerContext)
 
     compilerContext.documents().forEach((node: { name: string }) => {
       if (node.kind !== `Root`) return
@@ -166,11 +181,23 @@ class Runner {
         .map(GraphQLIRPrinter.print)
         .join(`\n`)
 
-      compiledNodes.set(filePath, {
+      const query = {
         name,
         text,
-        path: path.join(this.baseDir, filePath),
-      })
+        originalText: nameDefMap.get(name).text,
+        path: filePath,
+        isStaticQuery: nameDefMap.get(name).isStaticQuery,
+        hash: nameDefMap.get(name).hash,
+      }
+
+      if (query.isStaticQuery) {
+        query.jsonName =
+          `sq--` +
+          _.kebabCase(
+            `${path.relative(store.getState().program.directory, filePath)}`
+          )
+      }
+      compiledNodes.set(filePath, query)
     })
 
     return compiledNodes

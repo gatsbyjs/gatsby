@@ -1,5 +1,20 @@
+"use strict"
+
+const glob = require(`glob`)
 const reducer = require(`../reducers/pages`)
 const { actions } = require(`../actions`)
+const { readFile } = require(`fs-extra`)
+
+jest.mock(`fs`)
+jest.mock(`fs-extra`, () => {
+  return {
+    readFile: jest.fn(() => `contents`),
+  }
+})
+
+afterEach(() => {
+  readFile.mockClear()
+})
 
 Date.now = jest.fn(
   () =>
@@ -7,7 +22,17 @@ Date.now = jest.fn(
     1482363367071 // + diff
 )
 
+glob.sync = jest.fn(() => ``)
+
 describe(`Add pages`, () => {
+  const MOCK_FILE_INFO = {
+    "/whatever/index.js": `import React from 'react'; export default Page;`,
+    "/whatever2/index.js": `import React from 'react'; export default Page;`,
+  }
+  beforeEach(() => {
+    // Set up some mocked out file info before each test
+    require(`fs`).__setMockFiles(MOCK_FILE_INFO)
+  })
   it(`allows you to add pages`, () => {
     const action = actions.createPage(
       {
@@ -21,6 +46,52 @@ describe(`Add pages`, () => {
     expect(state).toMatchSnapshot()
   })
 
+  it(`Fails if path is missing`, () => {
+    const action = actions.createPage(
+      {
+        component: `/path/to/file1.js`,
+      },
+      { id: `test`, name: `test` }
+    )
+    expect(action).toMatchSnapshot()
+  })
+
+  it(`Fails if component path is missing`, () => {
+    const action = actions.createPage(
+      {
+        path: `/whatever/`,
+      },
+      { id: `test`, name: `test` }
+    )
+    expect(action).toMatchSnapshot()
+  })
+
+  it(`Fails if the component path isn't absolute`, () => {
+    const action = actions.createPage(
+      {
+        path: `/whatever/`,
+        component: `cheese.js`,
+      },
+      { id: `test`, name: `test` }
+    )
+    expect(action).toMatchSnapshot()
+  })
+
+  it(`Fails if use a reserved field in the context object`, () => {
+    const action = actions.createPage(
+      {
+        component: `/path/to/file1.js`,
+        path: `/yo/`,
+        context: {
+          path: `/yo/`,
+          matchPath: `/pizz*`,
+        },
+      },
+      { id: `test`, name: `test` }
+    )
+    expect(action).toMatchSnapshot()
+  })
+
   it(`adds an initial forward slash if the user doesn't`, () => {
     const action = actions.createPage(
       {
@@ -30,7 +101,7 @@ describe(`Add pages`, () => {
       { id: `test`, name: `test` }
     )
     const state = reducer(undefined, action)
-    expect(state[0].path).toEqual(`/hi/`)
+    expect(Array.from(state.values())[0].path).toEqual(`/hi/`)
   })
 
   it(`allows you to add pages with context`, () => {
@@ -81,7 +152,7 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(2)
+    expect(state.size).toEqual(2)
   })
 
   it(`allows you to update existing pages (based on path)`, () => {
@@ -105,7 +176,7 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(1)
+    expect(state.size).toEqual(1)
   })
 
   it(`allows you to delete paths`, () => {
@@ -121,6 +192,6 @@ describe(`Add pages`, () => {
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
-    expect(state.length).toEqual(0)
+    expect(state.size).toEqual(0)
   })
 })

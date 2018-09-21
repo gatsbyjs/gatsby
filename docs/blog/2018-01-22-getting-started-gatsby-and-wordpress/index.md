@@ -2,6 +2,7 @@
 title: Getting Started with Gatsby and WordPress
 date: "2018-01-22"
 author: "Amberley Romo"
+tags: ["getting-started", "wordpress"]
 ---
 
 _This post was originally published on
@@ -10,7 +11,7 @@ on January 18, 2018._
 
 Earlier this week I began rebuilding my blog using GatsbyJS + WordPress. As I familiarized with Gatsby, I found myself flipping through a million tabs, and I thought it might be useful to summarize concepts and to aggregate links I found helpful.
 
-I recently decided to tackle a redo of my blog. I wanted to do something different and I've been hearing a lot about GatsbyJS. A static site generator for React that I can easily pull my existing WordPress data for? Sold. I'll try it. 
+I recently decided to tackle a redo of my blog. I wanted to do something different and I've been hearing a lot about GatsbyJS. A static site generator for React that I can easily pull my existing WordPress data for? Sold. I'll try it.
 
 I generated a new site using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and read through what it gave me. Assuming you have the [Gatsby CLI](/docs/) installed, run:
 
@@ -25,16 +26,17 @@ Essentially the Gatsby home base. The two things defined here initially (in the 
 ```javascript
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: "Gatsby Default Starter",
   },
-  plugins: ['gatsby-plugin-react-helmet'],
-};
+  plugins: ["gatsby-plugin-react-helmet"],
+}
 ```
 
 See the [docs page on gatsby-config.js](/docs/gatsby-config/) for more.
 
 For the curious:
-* `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
+
+- `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
 
 ##gatsby-node.js
 
@@ -101,11 +103,11 @@ _.each(result.data.allWordpressPost.edges, edge => {
     path: edge.node.slug,
     // specify the component template of your choice
     component: slash(postTemplate),
-    // In the ^template's GraphQL query, 'id' will be available 
+    // In the ^template's GraphQL query, 'id' will be available
     // as a GraphQL variable to query for this posts's data.
     context: {
-        id: edge.node.id,
-    }
+      id: edge.node.id,
+    },
   })
 })
 ```
@@ -122,7 +124,7 @@ A template is a page component we can loop over to dynamically create pages base
 
 So a template is a page component that we can use to programmatically create pages. Then what's a page component?
 
-> Page Component — React.js component that renders a page and can optionally specify a layout component and a graphql query. ([Source](https://www.gatsbyjs.org/docs/api-specification/#concepts)).
+> Page Component — React.js component that renders a page and can optionally specify a layout component and a graphql query. ([Source](/docs/api-specification/#concepts)).
 
 React components living in `src/pages` automatically become pages. The file name of a page maps to its site path. My site in its current state only has one good example of this — `src/pages/index.js` maps to [amberley.blog](https://amberley.blog/). If I had an 'about' page, it would live at `src/pages/about.js`, and map to [amberley.blog/about](https://amberley.blog/about). (Since that doesn't exist, it will actually end up hitting the only other page currently defined in my site, which is `src/pages/404.js` — ([read about 404 pages](/docs/add-404-page/)).
 
@@ -133,8 +135,9 @@ If you include the "optional GraphQL query" noted above, the result of that quer
 While this isn't a tutorial -- more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup -- if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `gatsby develop`!
 
 ##Sidenotes
-1. You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
-2. Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
-3. Read through some of the source code. I particularly enjoyed reading through [the bootstrap process](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js). (It's beautifully commented).
-4. Gatsby.js is a static Progressive Web App (PWA) generator, but to be PWA friendly (at least according to the [Lighthouse PWA audit](https://developers.google.com/web/tools/lighthouse/)), look into two plugins: `gatsby-plugin-manifest` and `gatsby-plugin-offline`.
-5. I did end up [deploying with Netlify](/docs/deploy-gatsby/#netlify), and I'm super happy with it. (A [previous post](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby) discussed Netlify a bit more, if you're interested).
+
+1.  You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
+2.  Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
+3.  Read through some of the source code. I particularly enjoyed reading through [the bootstrap process](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js). (It's beautifully commented).
+4.  Gatsby.js is a static Progressive Web App (PWA) generator, but to be PWA friendly (at least according to the [Lighthouse PWA audit](https://developers.google.com/web/tools/lighthouse/)), look into two plugins: `gatsby-plugin-manifest` and `gatsby-plugin-offline`.
+5.  I did end up [deploying with Netlify](/docs/deploy-gatsby/#netlify), and I'm super happy with it. (A [previous post](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby) discussed Netlify a bit more, if you're interested).

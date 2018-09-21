@@ -1,48 +1,20 @@
-const fs = require(`fs`)
-const { joinPath } = require(`../../utils/path`)
 const { watchComponent } = require(`./query-watcher`)
 
 let components = {}
 
-const handlePageOrLayout = store => pageOrLayout => {
-  // Ensure page/layout component has a JSON file.
-  const jsonDest = joinPath(
-    store.getState().program.directory,
-    `.cache`,
-    `json`,
-    pageOrLayout.jsonName
-  )
-  if (!fs.existsSync(jsonDest)) {
-    fs.writeFile(jsonDest, `{}`, () => {})
+exports.onCreatePage = ({ page, store }) => {
+  // In development, watch the component to detect query changes.
+  if (process.env.NODE_ENV !== `production`) {
+    const component = store.getState().components.get(page.componentPath)
+
+    if (!component) {
+      process.exit()
+    }
+
+    if (components[component.componentPath]) {
+      return
+    }
+
+    watchComponent(component.componentPath)
   }
-
-  // Ensure layout component has a wrapper entry component file (which
-  // requires its JSON file so the data + code are one bundle).
-  if (pageOrLayout.isLayout) {
-    const wrapperComponent = `
-  import React from "react"
-  import Component from "${pageOrLayout.component}"
-  import data from "${jsonDest}"
-
-  export default (props) => <Component {...props} {...data} />
-  `
-    fs.writeFileSync(pageOrLayout.componentWrapperPath, wrapperComponent)
-  }
-
-  const component = store.getState().components[pageOrLayout.componentPath]
-
-  if (components[component.componentPath]) {
-    return
-  }
-
-  // Watch the component to detect query changes.
-  watchComponent(component.componentPath)
-}
-
-exports.onCreatePage = ({ page, store, boundActionCreators }) => {
-  handlePageOrLayout(store)(page)
-}
-
-exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
-  handlePageOrLayout(store)(layout)
 }

@@ -1,21 +1,23 @@
 import React from "react"
-
+import { graphql } from "gatsby"
 import StoryItem from "../components/story-item"
+import Layout from "../layouts"
 
 class Index extends React.Component {
   render() {
-    console.log(this.props)
     const { allMongodbCloudDocuments } = this.props.data
 
     return (
-      <div>
-        <h1>Website information stored in MongoDB</h1>
-        <ul>
-          {allMongodbCloudDocuments.edges.map(({ node }) => (
-            <StoryItem item={node} key={node.id} />
-          ))}
-        </ul>
-      </div>
+      <Layout>
+        <div>
+          <h1>Website information stored in MongoDB</h1>
+          <ul>
+            {allMongodbCloudDocuments.edges.map(({ node }) => (
+              <StoryItem item={node} key={node.id} />
+            ))}
+          </ul>
+        </div>
+      </Layout>
     )
   }
 }
@@ -23,7 +25,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query PageQuery {
+  query {
     allMongodbCloudDocuments {
       edges {
         node {

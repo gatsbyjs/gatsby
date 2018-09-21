@@ -3,11 +3,7 @@ const fs = require(`fs-extra`)
 exports.onCreateNode = require(`./on-node-create`)
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
 
-exports.onPreExtractQueries = async ({
-  store,
-  getNodes,
-  boundActionCreators,
-}) => {
+exports.onPreExtractQueries = async ({ store, getNodes }) => {
   const program = store.getState().program
 
   // Check if there are any ImageSharp nodes and if gatsby-image is installed. If so

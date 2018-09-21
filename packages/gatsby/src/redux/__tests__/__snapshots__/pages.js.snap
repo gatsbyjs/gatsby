@@ -1,34 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Add pages Fails if component path is missing 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when create creating a page"`;
+
+exports[`Add pages Fails if path is missing 1`] = `"The plugin \\"test\\" must set the page path when creating a page"`;
+
+exports[`Add pages Fails if the component path isn't absolute 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when create creating a page"`;
+
+exports[`Add pages Fails if use a reserved field in the context object 1`] = `
+"The plugin \\"test\\" used reserved field names in the context object when creating a page:
+
+  * \\"path\\"
+  * \\"matchPath\\"
+
+{
+    \\"component\\": \\"/path/to/file1.js\\",
+    \\"path\\": \\"/yo/\\",
+    \\"context\\": {
+        \\"path\\": \\"/yo/\\",
+        \\"matchPath\\": \\"/pizz*\\"
+    }
+}
+
+Data in \\"context\\" is passed to GraphQL as potential arguments when running the
+page query.
+
+When arguments for GraphQL are constructed, the context object is combined with
+the page object so *both* page object and context data are available as
+arguments. So you don't need to add the page \\"path\\" to the context as it's
+already available in GraphQL. If a context field duplicates a field already
+used by the page object, this can break functionality within Gatsby so must be
+avoided.
+
+Please choose another name for the conflicting fields.
+
+The following fields are used by the page object and should be avoided.
+
+  * \\"path\\"
+  * \\"matchPath\\"
+  * \\"component\\"
+  * \\"componentChunkName\\"
+  * \\"pluginCreator___NODE\\"
+  * \\"pluginCreatorName\\"
+
+            "
+`;
+
 exports[`Add pages allows you to add multiple pages 1`] = `
-Array [
-  Object {
+Map {
+  "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi.json",
-    "layout": null,
+    "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
-  Object {
+  "/hi/pizza/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHiPizza",
-    "jsonName": "hi-pizza.json",
-    "layout": null,
+    "jsonName": "hi-pizza-f10",
     "matchPath": undefined,
     "path": "/hi/pizza/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
-]
+}
 `;
 
 exports[`Add pages allows you to add pages 1`] = `
@@ -38,8 +81,7 @@ Object {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi.json",
-    "layout": null,
+    "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -50,27 +92,25 @@ Object {
     "id": "test",
     "name": "test",
   },
-  "traceId": undefined,
   "type": "CREATE_PAGE",
 }
 `;
 
 exports[`Add pages allows you to add pages 2`] = `
-Array [
-  Object {
+Map {
+  "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi.json",
-    "layout": null,
+    "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
-]
+}
 `;
 
 exports[`Add pages allows you to add pages with context 1`] = `
@@ -82,8 +122,7 @@ Object {
       "id": 123,
     },
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi.json",
-    "layout": null,
+    "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -94,29 +133,27 @@ Object {
     "id": "test",
     "name": "test",
   },
-  "traceId": undefined,
   "type": "CREATE_PAGE",
 }
 `;
 
 exports[`Add pages allows you to add pages with context 2`] = `
-Array [
-  Object {
+Map {
+  "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {
       "id": 123,
     },
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi.json",
-    "layout": null,
+    "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
-]
+}
 `;
 
 exports[`Add pages allows you to add pages with matchPath 1`] = `
@@ -126,8 +163,7 @@ Object {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi.json",
-    "layout": null,
+    "jsonName": "hi-18e",
     "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -138,45 +174,42 @@ Object {
     "id": "test",
     "name": "test",
   },
-  "traceId": undefined,
   "type": "CREATE_PAGE",
 }
 `;
 
 exports[`Add pages allows you to add pages with matchPath 2`] = `
-Array [
-  Object {
+Map {
+  "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi.json",
-    "layout": null,
+    "jsonName": "hi-18e",
     "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
-]
+}
 `;
 
-exports[`Add pages allows you to delete paths 1`] = `Array []`;
+exports[`Add pages allows you to delete paths 1`] = `Map {}`;
 
 exports[`Add pages allows you to update existing pages (based on path) 1`] = `
-Array [
-  Object {
+Map {
+  "/hi/" => Object {
     "component": "/whatever2/index.js",
     "componentChunkName": "component---whatever-2-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi.json",
-    "layout": null,
+    "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
-]
+}
 `;

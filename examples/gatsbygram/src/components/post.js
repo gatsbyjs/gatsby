@@ -1,7 +1,8 @@
 import * as PropTypes from "prop-types"
 import React from "react"
 import HeartIcon from "react-icons/lib/fa/heart"
-import Link from "gatsby-link"
+import { Link, graphql } from "gatsby"
+import Img from "gatsby-image"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -28,6 +29,7 @@ class Post extends React.Component {
     const { small } = smallImage.childImageSharp
     return (
       <Link
+        data-testid="post"
         to={`/${id}/`}
         onTouchStart={() => (touched = true)}
         onMouseEnter={() => {
@@ -42,7 +44,6 @@ class Post extends React.Component {
         }}
         css={{
           display: `block`,
-          backgroundColor: `lightgray`,
           flex: `1 0 0%`,
           marginRight: rhythm(1 / 8),
           width: `100%`,
@@ -61,14 +62,11 @@ class Post extends React.Component {
             flexDirection: `column`,
             flexShrink: 0,
             position: `relative`,
-            paddingBottom: `100%`,
             overflow: `hidden`,
           }}
         >
-          <img
-            src={small.src}
-            srcSet={small.srcSet}
-            sizes="(min-width: 960px) 292px, 33vw"
+          <Img
+            fluid={{ ...small }}
             css={{
               margin: 0,
               height: `100%`,
@@ -96,6 +94,7 @@ class Post extends React.Component {
         {/* overlay */}
         {this.state.hovering && (
           <div
+            data-testid="likes"
             css={{
               position: `absolute`,
               top: 0,
@@ -133,9 +132,12 @@ export const postFragment = graphql`
     likes
     smallImage: image {
       childImageSharp {
-        small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
+        small: fluid(maxWidth: 292, maxHeight: 292) {
           src
           srcSet
+          aspectRatio
+          sizes
+          tracedSVG
         }
       }
     }

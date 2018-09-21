@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
+Object {
+  "excerpt": "",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to default value 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum…",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter with truncate 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?
+",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;

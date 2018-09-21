@@ -1,11 +1,11 @@
 const path = require(`path`)
 
-exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
   let slug
   if (
     node.internal.type === `MarkdownRemark` ||
-    node.internal.type === `JSFrontmatter`
+    node.internal.type === `JavascriptFrontmatter`
   ) {
     const fileNode = getNode(node.parent)
     const parsedFilePath = path.parse(fileNode.relativePath)
@@ -22,11 +22,10 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
   }
 }
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
 
   return new Promise((resolve, reject) => {
-    const pages = []
     const mdInsetPage = path.resolve(`src/templates/mdInsetPage.js`)
     const mdBlogPost = path.resolve(`src/templates/mdBlogPost.js`)
 
@@ -48,11 +47,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 }
               }
             }
-            allJsFrontmatter {
+            allJavascriptFrontmatter {
               edges {
                 node {
                   fileAbsolutePath
-                  data {
+                  frontmatter {
                     layoutType
                     path
                   }
@@ -73,11 +72,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create from markdown
         result.data.allMarkdownRemark.edges.forEach(edge => {
-          let frontmatter = edge.node.frontmatter
+          let { frontmatter } = edge.node
           if (frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
-              layout: `blogPost`, // this matches the filename of src/layouts/blogPost.js, layout created automatically
               component: mdBlogPost,
               context: {
                 slug: edge.node.fields.slug,
@@ -86,7 +84,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           } else if (frontmatter.layoutType === `page`) {
             createPage({
               path: frontmatter.path, // required
-              layout: `insetPage`, // this matches the filename of src/layouts/blogPost.js, layout created automatically
               component: mdInsetPage,
               context: {
                 slug: edge.node.fields.slug,
@@ -99,13 +96,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         // Gatsby will, by default, createPages for javascript in the
         //  /pages directory. We purposely don't have a folder with this name
         //  so that we can go full manual mode.
-        result.data.allJsFrontmatter.edges.forEach(edge => {
-          let frontmatter = edge.node.data
+        result.data.allJavascriptFrontmatter.edges.forEach(edge => {
+          let { frontmatter } = edge.node
           // see above
           if (frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
-              layout: `blogPost`, // this matches the filename of src/layouts/blogPost.js, layout created automatically
               // Note, we can't have a template, but rather require the file directly.
               //  Templates are for converting non-react into react. jsFrontmatter
               //  picks up all of the javascript files. We have only written these in react.
@@ -117,16 +113,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           } else if (frontmatter.layoutType === `page`) {
             createPage({
               path: frontmatter.path, // required
-              layout: `insetPage`, // this matches the filename of src/layouts/insetPage.js, layout created automatically
-              component: path.resolve(edge.node.fileAbsolutePath),
-              context: {
-                slug: edge.node.fields.slug,
-              },
-            })
-          } else if (edge.node.fields.slug === `/index/`) {
-            createPage({
-              path: `/`, // required, we don't have frontmatter for this page hence separate if()
-              layout: `insetPage`, // this matches the filename of src/layouts/insetPage.js, layout created automatically
               component: path.resolve(edge.node.fileAbsolutePath),
               context: {
                 slug: edge.node.fields.slug,

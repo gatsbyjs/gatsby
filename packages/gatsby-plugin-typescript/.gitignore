@@ -1,5 +1,3 @@
-node_modules
-typescript
-/index.js
-/gatsby-node.js
+/*.js
+!index.js
 /__tests__

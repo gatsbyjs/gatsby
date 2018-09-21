@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import { rhythm } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 
 class EvaluationCell extends Component {
   render() {
     const bgDefault = `#edebf0`
-    const bgFeatureAvailability = presets.accent
+    const bgFeatureAvailability = colors.accent
 
     const getBackground = num => {
       switch (num) {
@@ -22,11 +22,11 @@ class EvaluationCell extends Component {
           return `none`
         }
         case ``:
-        case `N/A`: {
+        case `N/A`:
+        default: {
           return `none`
         }
       }
-      return `none`
     }
     const basicStyling = {
       height: rhythm(3 / 4),
@@ -42,7 +42,6 @@ class EvaluationCell extends Component {
       <div
         css={{
           ...basicStyling,
-          // border: `1px solid ${presets.brandLight}`,
           backgroundColor:
             [`N/A`, `0`, ``].indexOf(this.props.num) !== -1
               ? bgDefault

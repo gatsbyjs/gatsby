@@ -1,54 +1,30 @@
-const { transpileModule } = require(`typescript`)
-const path = require(`path`)
+const resolvableExtensions = () => [`.ts`, `.tsx`]
 
-const test = /\.tsx?$/
-const compilerDefaults = {
-  target: `esnext`,
-  experimentalDecorators: true,
-  jsx: `react`,
-}
-
-module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
-
-module.exports.modifyWebpackConfig = (
-  { config },
-  { compilerOptions, transpileOnly = true }
-) => {
-  // CommonJS to keep Webpack happy.
-  const copts = Object.assign({}, compilerDefaults, compilerOptions, {
-    module: `commonjs`,
-  })
-
-  // React-land is rather undertyped; nontrivial TS projects will most likely
-  // error (i.e., not build) at something or other.
-  const opts = { compilerOptions: copts, transpileOnly }
-
-  // Load gatsby babel plugin to extract graphql query
-  const extractQueryPlugin = path.resolve(
-    __dirname,
-    `../gatsby/dist/utils/babel-plugin-extract-graphql.js`
-  )
-
-  config.loader(`typescript`, {
-    test,
-    loaders: [
-      `babel?${JSON.stringify({ plugins: [extractQueryPlugin] })}`,
-      `ts-loader?${JSON.stringify(opts)}`,
-    ],
+function onCreateBabelConfig({ actions }, pluginOptions) {
+  actions.setBabelPreset({
+    name: `@babel/preset-typescript`,
   })
 }
 
-module.exports.preprocessSource = (
-  { contents, filename },
-  { compilerOptions }
-) => {
-  // overwrite defaults with custom compiler options
-  const copts = Object.assign({}, compilerDefaults, compilerOptions, {
-    target: `esnext`,
-    module: `es6`,
+function onCreateWebpackConfig({ actions, loaders }) {
+  const jsLoader = loaders.js()
+
+  if (!jsLoader) {
+    return
+  }
+
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: jsLoader,
+        },
+      ],
+    },
   })
-  // return the transpiled source if it's TypeScript, otherwise null
-  return test.test(filename)
-    ? transpileModule(contents, { compilerOptions: copts }).outputText
-    : null
 }
+
+exports.resolvableExtensions = resolvableExtensions
+exports.onCreateBabelConfig = onCreateBabelConfig
+exports.onCreateWebpackConfig = onCreateWebpackConfig

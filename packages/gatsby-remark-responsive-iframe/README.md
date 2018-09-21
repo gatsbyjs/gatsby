@@ -20,7 +20,7 @@ plugins: [
       plugins: [`gatsby-remark-responsive-iframe`],
     },
   },
-];
+]
 ```
 
 ### Usage in Markdown
@@ -34,4 +34,4 @@ Example usage:
 
     This is a beautiful iframe:
 
-    &lt;iframe url=&quot;http://www.example.com/&quot; width=&quot;600&quot; height=&quot;400&quot;&gt;&lt;/iframe&gt;
+    <iframe url="http://www.example.com/" width="600" height="400"></iframe>

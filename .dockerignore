@@ -1,0 +1,5 @@
+node_modules
+**/node_modules
+**/public
+npm-debug.log
+.git

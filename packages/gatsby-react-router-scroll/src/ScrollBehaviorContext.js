@@ -1,7 +1,7 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
 import ScrollBehavior from "scroll-behavior"
 import PropTypes from "prop-types"
+import { globalHistory as history } from "@reach/router/lib/history"
 
 import SessionStorage from "./StateStorage"
 
@@ -9,7 +9,6 @@ const propTypes = {
   shouldUpdateScroll: PropTypes.func,
   children: PropTypes.element.isRequired,
   location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
 }
 
 const childContextTypes = {
@@ -19,8 +18,6 @@ const childContextTypes = {
 class ScrollContext extends React.Component {
   constructor(props, context) {
     super(props, context)
-
-    const { history } = props
 
     this.scrollBehavior = new ScrollBehavior({
       addTransitionHook: history.listen,
@@ -39,7 +36,7 @@ class ScrollContext extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { location, history } = this.props
+    const { location } = this.props
     const prevLocation = prevProps.location
 
     if (location === prevLocation) {
@@ -47,8 +44,17 @@ class ScrollContext extends React.Component {
     }
 
     const prevRouterProps = {
-      history: prevProps.history,
       location: prevProps.location,
+    }
+
+    // The "scroll-behavior" package expects the "action" to be on the location
+    // object so let's copy it over.
+
+    // Temp hack while awaiting https://github.com/reach/router/issues/119
+    if (window.__navigatingToLink) {
+      location.action = `PUSH`
+    } else {
+      location.action = `POP`
     }
 
     this.scrollBehavior.updateScroll(prevRouterProps, { history, location })
@@ -59,8 +65,8 @@ class ScrollContext extends React.Component {
   }
 
   getRouterProps() {
-    const { history, location } = this.props
-    return { history, location }
+    const { location } = this.props
+    return { location, history }
   }
 
   shouldUpdateScroll = (prevRouterProps, routerProps) => {
@@ -98,4 +104,4 @@ class ScrollContext extends React.Component {
 ScrollContext.propTypes = propTypes
 ScrollContext.childContextTypes = childContextTypes
 
-export default withRouter(ScrollContext)
+export default ScrollContext

@@ -2,6 +2,7 @@
 title: "Building i18n with Gatsby"
 date: 2017-10-17
 author: "Samuel Goudie"
+tags: ["i18n"]
 ---
 
 Languages are a key part of who we are; they are an expression of our identity.
@@ -83,10 +84,10 @@ but copied here for convenience. You'll need to create an i18n component and
 import it somewhere (we did it in our index layout):
 
 ```jsx
-import i18n from "i18next";
-import Backend from "i18next-xhr-backend";
-import LanguageDetector from "i18next-browser-languagedetector";
-import { reactI18nextModule } from "react-i18next";
+import i18n from "i18next"
+import Backend from "i18next-xhr-backend"
+import LanguageDetector from "i18next-browser-languagedetector"
+import { reactI18nextModule } from "react-i18next"
 
 i18n
   .use(Backend)
@@ -108,9 +109,9 @@ i18n
     react: {
       wait: true,
     },
-  });
+  })
 
-export default i18n;
+export default i18n
 ```
 
 ## Locales
@@ -141,8 +142,7 @@ The `PageHeader` component in the `en` folder might look like this:
 ```json
 {
   "heading": "Shwmae, bonjour, and hola!",
-  "description":
-    "Available in English, Welsh, French, and Spanish, with more translations coming soon. doopoll is great for local, multi-lingual, and global organisations."
+  "description": "Available in English, Welsh, French, and Spanish, with more translations coming soon. doopoll is great for local, multi-lingual, and global organisations."
 }
 ```
 
@@ -151,8 +151,7 @@ And the `cy` component would look like this:
 ```json
 {
   "heading": "Shwmae, bonjour, a hola!",
-  "description":
-    "Ar gael yn Saesneg, Cymraeg, Ffrangeg a Sbaeneg, gyda rhagor o gyfieithiadau'n dod yn fuan. Mae doopoll yn wych ar gyfer sefydliadau lleol, amlieithog a byd-eang."
+  "description": "Ar gael yn Saesneg, Cymraeg, Ffrangeg a Sbaeneg, gyda rhagor o gyfieithiadau'n dod yn fuan. Mae doopoll yn wych ar gyfer sefydliadau lleol, amlieithog a byd-eang."
 }
 ```
 
@@ -163,16 +162,16 @@ little hook to our `gatsby-node.js` file. It copies the locales folder post
 build and gets everything in the right place:
 
 ```javascript
-const fs = require("fs-extra");
-const path = require("path");
+const fs = require("fs-extra")
+const path = require("path")
 
 exports.onPostBuild = () => {
-  console.log("Copying locales");
+  console.log("Copying locales")
   fs.copySync(
     path.join(__dirname, "/src/locales"),
     path.join(__dirname, "/public/locales")
-  );
-};
+  )
+}
 ```
 
 ## Using with a component
@@ -184,23 +183,23 @@ React-i18next uses a HOC to wrap your component and provide some props to handle
 language switching. Here's our `PageHeader` component:
 
 ```jsx
-import React, { Component } from "react";
-import { translate } from "react-i18next";
+import React, { Component } from "react"
+import { translate } from "react-i18next"
 
 class PageHeader extends Component {
   render() {
-    const { t } = this.props;
+    const { t } = this.props
 
     return (
       <div className="PageHeader">
         <h2>{t("heading")}</h2>
         <p>{t("description")}</p>
       </div>
-    );
+    )
   }
 }
 
-export default translate("PageHeader")(PageHeader);
+export default translate("PageHeader")(PageHeader)
 ```
 
 Pretty simple! The string provided to `translate` is the corresponding JSON file
@@ -225,32 +224,32 @@ Finally, to make it easy for our users to switch language we need to create a
 little component. Here's an example from our site:
 
 ```jsx
-import React, { Component } from "react";
-import classNames from "classnames";
-import { translate } from "react-i18next";
+import React, { Component } from "react"
+import classNames from "classnames"
+import { translate } from "react-i18next"
 
 class LanguageSwitcher extends Component {
   constructor(props) {
-    super(props);
-    const { i18n } = this.props;
-    this.state = { language: i18n.language };
+    super(props)
+    const { i18n } = this.props
+    this.state = { language: i18n.language }
 
-    this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
+    this.handleChangeLanguage = this.handleChangeLanguage.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ language: nextProps.i18n.language });
+    this.setState({ language: nextProps.i18n.language })
   }
 
   handleChangeLanguage(lng) {
-    const { i18n } = this.props;
-    i18n.changeLanguage(lng);
+    const { i18n } = this.props
+    i18n.changeLanguage(lng)
   }
 
   renderLanguageChoice({ code, label }) {
     const buttonClass = classNames("LanguageSwitcher__button", {
       "LanguageSwitcher__button--selected": this.state.language === code,
-    });
+    })
 
     return (
       <button
@@ -260,24 +259,24 @@ class LanguageSwitcher extends Component {
       >
         {label}
       </button>
-    );
+    )
   }
 
   render() {
     const languages = [
       { code: "en", label: "English" },
       { code: "cy", label: "Cymraeg" },
-    ];
+    ]
 
     return (
       <div className="LanguageSwitcher">
         {languages.map(language => this.renderLanguageChoice(language))}
       </div>
-    );
+    )
   }
 }
 
-export default translate("LanguageSwitcher")(LanguageSwitcher);
+export default translate("LanguageSwitcher")(LanguageSwitcher)
 ```
 
 This is a pretty simple component. We're setting the `language` state based on
@@ -287,6 +286,55 @@ that in our menu.
 The `handleLanguageChange` function just wraps the `react-i18n` function passed
 in as a prop through `translate`. Pretty much everything is handled for us.
 Hooray! 🎉
+
+## SSR
+
+To let it render the content into html, you need to load i18n namespaces (using `i18n.loadNamespaces`) before render
+
+### With redux
+
+```js
+// gatsby-ssr.js
+
+import React from "react"
+import { Provider } from "react-redux"
+import { renderToString } from "react-dom/server"
+import i18n from "./src/i18n"
+
+import createStore from "./src/state/createStore"
+
+exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
+  i18n.loadNamespaces(["common"], () => {
+    const store = createStore()
+    const ConnectedBody = () => (
+      <Provider store={store}>{bodyComponent}</Provider>
+    )
+    replaceBodyHTMLString(renderToString(<ConnectedBody />))
+  })
+}
+```
+
+### Without redux
+
+> Not yet tested
+
+```js
+// gatsby-ssr.js
+
+import React from "react"
+import { renderToString } from "react-dom/server"
+import i18n from "./src/i18n"
+
+import createStore from "./src/state/createStore"
+
+exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
+  i18n.loadNamespaces(["common"], () => {
+    replaceBodyHTMLString(bodyComponent)
+  })
+}
+```
+
+> `translate` hoc from react-i18next cause page / component not able to SSR. I make it works by import i18n & use i18n.t
 
 ## Finishing up
 

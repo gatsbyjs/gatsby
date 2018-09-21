@@ -1,8 +1,13 @@
 import React from "react"
-import Link from "gatsby-link"
-import Helmet from "react-helmet"
+import { Link, graphql } from "gatsby"
 import sortBy from "lodash/sortBy"
 import moment from "moment"
+import InsetPageLayout from "../components/Layouts/insetPage"
+
+export const frontmatter = {
+  layoutType: `page`,
+  path: `/`,
+}
 
 class SiteIndex extends React.Component {
   render() {
@@ -10,20 +15,13 @@ class SiteIndex extends React.Component {
     let iteratorKey = 0
     let pageRaw = [
       ...this.props.data.allMarkdownRemark.edges,
-      ...this.props.data.allJsFrontmatter.edges,
+      ...this.props.data.allJavascriptFrontmatter.edges,
     ]
     let pageArray = []
     pageRaw.forEach(page => {
       if (typeof page.node.frontmatter === `object`) {
         if (typeof page.node.frontmatter.written !== `undefined`) {
           pageArray.push(page.node.frontmatter)
-        }
-      } else if (typeof page.node.data === `object`) {
-        if (
-          typeof page.node.data.written !== `undefined` &&
-          page.node.data.written !== ``
-        ) {
-          pageArray.push(page.node.data)
         }
       }
     })
@@ -82,19 +80,19 @@ class SiteIndex extends React.Component {
       }
     })
 
-    return <div>{pageLinks}</div>
+    return <InsetPageLayout {...this.props}>{pageLinks}</InsetPageLayout>
   }
 }
 
 export default SiteIndex
 
 export const pageQuery = graphql`
-  query allPosts {
-    allJsFrontmatter {
+  query {
+    allJavascriptFrontmatter {
       edges {
         node {
           fileAbsolutePath
-          data {
+          frontmatter {
             path
             title
             written
@@ -117,7 +115,6 @@ export const pageQuery = graphql`
             title
             path
             layoutType
-            parent
             written
             updated
             category
@@ -126,6 +123,9 @@ export const pageQuery = graphql`
           timeToRead
         }
       }
+    }
+    site {
+      ...site_sitemetadata
     }
   }
 `

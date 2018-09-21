@@ -1,13 +1,17 @@
 import React from "react"
+import { graphql } from "gatsby"
+import InsetPageLayout from "../components/Layouts/insetPage"
 
 class mdInsetPage extends React.Component {
   render() {
     const { html } = this.props.data.markdownRemark
 
     return (
-      <div className="box container content">
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-      </div>
+      <InsetPageLayout {...this.props}>
+        <div className="box container content">
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
+      </InsetPageLayout>
     )
   }
 }
@@ -15,9 +19,12 @@ class mdInsetPage extends React.Component {
 export default mdInsetPage
 
 export const pageQuery = graphql`
-  query markdownTemplateBySlug($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
+    }
+    site {
+      ...site_sitemetadata
     }
   }
 `

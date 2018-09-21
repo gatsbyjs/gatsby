@@ -1,5 +1,5 @@
 ---
-title: Querying data with GraphQL
+title: Querying Data with GraphQL
 ---
 
 There are many options for loading data into React components. One of the most
@@ -14,17 +14,17 @@ familiar with SQL, it works in a very similar way. Using a special syntax, you d
 the data you want in your component and then that data is given
 to you.
 
-Gatsby uses GraphQL to enable [page and layout
+Gatsby uses GraphQL to enable [page and StaticQuery
 components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
 
 ## Why is GraphQL so cool?
 
-* Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
-* Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
-* It's the perfect data querying language for the often complex/nested data dependencies of modern applications
-* Improve performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
+- Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
+- Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
+- It's the perfect data querying language for the often complex/nested data dependencies of modern applications
+- Improve performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
 
 ## What does a GraphQL query look like?
 
@@ -55,29 +55,33 @@ Which returns this:
 A basic page component with a GraphQL query might look like this:
 
 ```jsx
-import React from "react";
+import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => (
   <div>
     <h1>About {data.site.siteMetadata.title}</h1>
     <p>We're a very cool website you should return to often.</p>
   </div>
-);
+)
 
 export const query = graphql`
-  query AboutQuery {
+  query {
     site {
       siteMetadata {
         title
       }
     }
   }
-`;
+`
 ```
 
 The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
+
+_Note:_ Queries are only executed from Page or Layout components. For other
+components you'll want to use GraphQL [_fragments_](#fragments).
 
 ## How to learn GraphQL
 
@@ -86,8 +90,8 @@ as we do and find it useful for all your projects.
 
 When starting out with GraphQL, we recommend the following two tutorials:
 
-* https://www.howtographql.com/
-* http://graphql.org/learn/
+- https://www.howtographql.com/
+- http://graphql.org/learn/
 
 [The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
@@ -164,52 +168,192 @@ markdownRemark {
 
 Gatsby has rich support for processing images. Responsive images are a big part of the modern web and typically involve creating 5+ sized thumbnails per photo. With Gatsby's [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/), you can _query_ your images for responsive versions. The query automatically creates all the needed responsive thumbnails and returns `src` and `srcSet` fields to add to your image element.
 
-Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primatives for building sites with images.
+Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primitives for building sites with images.
 
 This is what a component using `gatsby-image` looks like:
 
 ```jsx
-import React from "react";
-import Img from "gatsby-image";
+import React from "react"
+import Img from "gatsby-image"
+import { graphql } from "gatsby"
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
-);
+)
 
 export const query = graphql`
-  query GatsbyImageSampleQuery {
+  query {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
-        resolutions(width: 125, height: 125) {
-          ...GatsbyImageSharpResolutions
+        fixed(width: 125, height: 125) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
   }
-`;
+`
 ```
 
 See also the following blog posts:
 
-* [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
-* [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+- [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
+- [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+
+## Advanced
+
+### Fragments
+
+Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
+
+If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
+
+For example if I put a fragment in a helper component, I can use that fragment in any other query:
+
+```jsx
+// src/components/PostItem.js
+
+export const markdownFrontmatterFragment = graphql`
+  fragment MarkdownFrontmatter on MarkdownRemark {
+    frontmatter {
+      path
+      title
+      date(formatString: "MMMM DD, YYYY")
+    }
+  }
+`
+```
+
+They can then be used in any GraphQL query after that!
+
+```graphql
+query($path: String!) {
+  markdownRemark(frontmatter: { path: { eq: $path } }) {
+    ...MarkdownFrontmatter
+  }
+}
+```
+
+It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page might map over all of your posts to show them in a list.
+
+```jsx
+// src/pages/index.jsx
+
+import React from "react"
+import { graphql } from "gatsby"
+
+export default ({ data }) => {
+  return (
+    <div>
+      <h1>Index page</h1>
+      <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
+      {data.allMarkdownRemark.edges.map(({ node }) => (
+        <div key={node.id}>
+          <h3>
+            {node.frontmatter.title} <span>— {node.frontmatter.date}</span>
+          </h3>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export const query = graphql`
+  query {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "DD MMMM, YYYY")
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+If the index component becomes too large, you might want to refactor it into smaller components.
+
+```jsx
+// src/components/IndexPost.jsx
+
+import React from "react"
+import { graphql } from "gatsby"
+
+export default ({ frontmatter: { title, date } }) => (
+  <div>
+    <h3>
+      {title} <span>— {date}</span>
+    </h3>
+  </div>
+)
+
+export const query = graphql`
+  fragment IndexPostFragment on MarkdownRemark {
+    frontmatter {
+      title
+      date(formatString: "MMMM DD, YYYY")
+    }
+  }
+`
+```
+
+Now, we can use the component together with the exported fragment in our index page.
+
+```jsx{26}
+// src/pages/index.jsx
+
+import React from "react"
+import IndexPost from "../components/IndexPost"
+import { graphql } from "gatsby"
+
+export default ({ data }) => {
+  return (
+    <div>
+      <h1>Index page</h1>
+      <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
+      {data.allMarkdownRemark.edges.map(({ node }) => (
+        <div key={node.id}>
+          <IndexPost frontmatter={node.frontmatter} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export const query = graphql`
+  query {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          ...IndexPostFragment
+        }
+      }
+    }
+  }
+`
+```
 
 ## Further reading
 
 ### Getting started with GraphQL
 
-* http://graphql.org/learn/
-* https://www.howtographql.com/
-* https://reactjs.org/blog/2015/05/01/graphql-introduction.html
-* https://services.github.com/on-demand/graphql/
+- http://graphql.org/learn/
+- https://www.howtographql.com/
+- https://reactjs.org/blog/2015/05/01/graphql-introduction.html
+- https://services.github.com/on-demand/graphql/
 
 ### Advanced readings on GraphQL
 
-* [GraphQL specification](https://facebook.github.io/graphql/October2016/)
-* [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
-* [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)
+- [GraphQL specification](https://facebook.github.io/graphql/October2016/)
+- [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
+- [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)

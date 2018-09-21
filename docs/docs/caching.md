@@ -1,5 +1,5 @@
 ---
-title: "Caching static sites"
+title: "Caching Static Sites"
 ---
 
 An important part of creating a very fast website is setting up proper HTTP caching. HTTP caching allows browsers to cache resources from a website so that when the user returns to a site, very few parts of the website have to be downloaded.
@@ -26,4 +26,4 @@ The `cache-control` header should be `cache-control: public, max-age=0, must-rev
 
 How you setup caching depends on how you're hosting your site. We encourage people to create Gatsby plugins which automate the creation of caching headers for Gatsby sites. The following plugins have been created:
 
-* [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)

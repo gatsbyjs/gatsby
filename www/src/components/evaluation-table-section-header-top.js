@@ -1,6 +1,6 @@
 import React from "react"
-import presets from "../utils/presets"
-import { scale, rhythm, options } from "../utils/typography"
+import presets, { colors } from "../utils/presets"
+import { scale, rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
   `Feature`,
@@ -29,8 +29,8 @@ const superHeader = () => (
           width: i === 0 ? 120 : `inherit`,
           border: 0,
           // fontFamily: options.headerFontFamily.join(`,`),
-          color: presets.calm,
-          background: presets.sidebar,
+          color: colors.gray.calm,
+          background: colors.ui.whisper,
           "&:first-child": {
             borderTopLeftRadius: presets.radiusLg,
             textAlign: `left`,

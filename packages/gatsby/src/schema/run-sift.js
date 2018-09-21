@@ -5,11 +5,32 @@ const { connectionFromArray } = require(`graphql-skip-limit`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
+const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
+const { getNode } = require(`../redux`)
+
+const resolvedNodesCache = new Map()
+const enhancedNodeCache = new Map()
+const enhancedNodePromiseCache = new Map()
+const enhancedNodeCacheId = ({ node, args }) =>
+  node && node.internal && node.internal.contentDigest
+    ? JSON.stringify({
+        nodeid: node.id,
+        digest: node.internal.contentDigest,
+        ...args,
+      })
+    : null
 
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    return field.resolve(node)
+    return field.resolve(
+      node,
+      {},
+      {},
+      {
+        fieldName: k,
+      }
+    )
   } else if (node[k] !== undefined) {
     return node[k]
   }
@@ -18,14 +39,15 @@ function awaitSiftField(fields, node, k) {
 }
 
 /*
-* Filters a list of nodes using mongodb-like syntax.
-* Returns a single unwrapped element if connection = false.
-*
-*/
+ * Filters a list of nodes using mongodb-like syntax.
+ * Returns a single unwrapped element if connection = false.
+ *
+ */
 module.exports = ({
   args,
   nodes,
   type,
+  typeName,
   connection = false,
   path = ``,
 }: Object) => {
@@ -36,7 +58,10 @@ module.exports = ({
   const siftifyArgs = object => {
     const newObject = {}
     _.each(object, (v, k) => {
-      if (_.isObject(v) && !_.isArray(v)) {
+      if (_.isPlainObject(v)) {
+        if (k === `elemMatch`) {
+          k = `$elemMatch`
+        }
         newObject[k] = siftifyArgs(v)
       } else {
         // Compile regex first.
@@ -57,7 +82,7 @@ module.exports = ({
   // Build an object that excludes the innermost leafs,
   // this avoids including { eq: x } when resolving fields.
   function extractFieldsToSift(prekey, key, preobj, obj, val) {
-    if (_.isObject(val) && !_.isArray(val)) {
+    if (_.isPlainObject(val)) {
       _.forEach((val: any), (v, k) => {
         preobj[prekey] = obj
         extractFieldsToSift(key, k, obj, {}, v)
@@ -74,12 +99,16 @@ module.exports = ({
       // Ignore connection and sorting args.
       if (_.includes([`skip`, `limit`, `sort`], k)) return
 
-      siftArgs.push(siftifyArgs({ [k]: v }))
+      siftArgs.push(
+        siftifyArgs({
+          [k]: v,
+        })
+      )
       extractFieldsToSift(``, k, {}, fieldsToSift, v)
     })
   }
 
-  // Resolves every field used in the sift.
+  // Resolves every field used in the node.
   function resolveRecursive(node, siftFieldsObj, gqFields) {
     return Promise.all(
       _.keys(siftFieldsObj).map(k =>
@@ -87,7 +116,13 @@ module.exports = ({
           .then(v => {
             const innerSift = siftFieldsObj[k]
             const innerGqConfig = gqFields[k]
-            if (_.isObject(innerSift) && v != null) {
+            if (
+              _.isObject(innerSift) &&
+              v != null &&
+              innerGqConfig &&
+              innerGqConfig.type &&
+              _.isFunction(innerGqConfig.type.getFields)
+            ) {
               return resolveRecursive(
                 v,
                 innerSift,
@@ -100,19 +135,92 @@ module.exports = ({
           .then(v => [k, v])
       )
     ).then(resolvedFields => {
-      const myNode = { ...node }
+      const myNode = {
+        ...node,
+      }
       resolvedFields.forEach(([k, v]) => (myNode[k] = v))
       return myNode
     })
   }
 
-  return Promise.all(
-    nodes.map(node => resolveRecursive(node, fieldsToSift, type.getFields()))
-  ).then(myNodes => {
+  // If the the query only has a filter for an "id", then we'll just grab
+  // that ID and return it.
+  if (
+    Object.keys(fieldsToSift).length === 1 &&
+    Object.keys(fieldsToSift)[0] === `id`
+  ) {
+    const node = resolveRecursive(
+      getNode(siftArgs[0].id[`$eq`]),
+      fieldsToSift,
+      type.getFields()
+    )
+
+    if (node) {
+      createPageDependency({
+        path,
+        nodeId: node.id,
+      })
+    }
+
+    return node
+  }
+
+  const nodesPromise = () => {
+    const nodesCacheKey = JSON.stringify({
+      // typeName + count being the same is a pretty good
+      // indication that the nodes are the same.
+      typeName,
+      nodesLength: nodes.length,
+      ...fieldsToSift,
+    })
+    if (
+      process.env.NODE_ENV === `production` &&
+      resolvedNodesCache.has(nodesCacheKey)
+    ) {
+      return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
+    } else {
+      return Promise.all(
+        nodes.map(node => {
+          const cacheKey = enhancedNodeCacheId({
+            node,
+            args: fieldsToSift,
+          })
+          if (cacheKey && enhancedNodeCache.has(cacheKey)) {
+            return Promise.resolve(enhancedNodeCache.get(cacheKey))
+          } else if (cacheKey && enhancedNodePromiseCache.has(cacheKey)) {
+            return enhancedNodePromiseCache.get(cacheKey)
+          }
+
+          const enhancedNodeGenerationPromise = new Promise(resolve => {
+            resolveRecursive(node, fieldsToSift, type.getFields()).then(
+              resolvedNode => {
+                trackInlineObjectsInRootNode(resolvedNode)
+                if (cacheKey) {
+                  enhancedNodeCache.set(cacheKey, resolvedNode)
+                }
+                resolve(resolvedNode)
+              }
+            )
+          })
+          enhancedNodePromiseCache.set(cacheKey, enhancedNodeGenerationPromise)
+          return enhancedNodeGenerationPromise
+        })
+      ).then(resolvedNodes => {
+        resolvedNodesCache.set(nodesCacheKey, resolvedNodes)
+        return resolvedNodes
+      })
+    }
+  }
+  const tempPromise = nodesPromise().then(myNodes => {
     if (!connection) {
       const index = _.isEmpty(siftArgs)
         ? 0
-        : sift.indexOf({ $and: siftArgs }, myNodes)
+        : sift.indexOf(
+            {
+              $and: siftArgs,
+            },
+            myNodes
+          )
 
       // If a node is found, create a dependency between the resulting node and
       // the path.
@@ -130,7 +238,12 @@ module.exports = ({
 
     let result = _.isEmpty(siftArgs)
       ? myNodes
-      : sift({ $and: siftArgs }, myNodes)
+      : sift(
+          {
+            $and: siftArgs,
+          },
+          myNodes
+        )
 
     if (!result || !result.length) return null
 
@@ -155,4 +268,6 @@ module.exports = ({
     }
     return connectionArray
   })
+
+  return tempPromise
 }

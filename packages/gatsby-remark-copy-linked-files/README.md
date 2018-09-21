@@ -19,7 +19,7 @@ plugins: [
       plugins: ["gatsby-remark-copy-linked-files"],
     },
   },
-];
+]
 ```
 
 ### How to change the directory the files are added to.
@@ -42,7 +42,7 @@ plugins: [
             destinationDir: 'path/to/dir',
           }
         }
-      }
+      ]
     }
   }
 ]
@@ -74,7 +74,7 @@ plugins: [
       ],
     },
   },
-];
+]
 ```
 
 Then in your Markdown files, link to the file you desire to reference.
@@ -97,12 +97,12 @@ markdown HTML will be modified to point to it.
 
 ### Supported Markdown tags
 
-* img
-* link
+- img
+- link
 
 ### Supported HTML tags
 
-* `<img />`
-* `<video />`
-* `<audio />`
-* `<a />`
+- `<img />`
+- `<video />`
+- `<audio />`
+- `<a />`

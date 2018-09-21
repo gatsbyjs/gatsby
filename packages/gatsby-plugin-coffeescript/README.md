@@ -4,12 +4,12 @@ Provides drop-in support for CoffeeScript and CJSX.
 
 ## Install
 
-`yarn add gatsby-plugin-coffeescript`
+`npm install --save gatsby-plugin-coffeescript`
 
 ## How to use
 
-1. Include the plugin in your `gatsby-config.js` file.
-2. Write your components in CJSX or CoffeeScript.
+1.  Include the plugin in your `gatsby-config.js` file.
+2.  Write your components in CJSX or CoffeeScript.
 
 ```javascript
 // in gatsby-config.js
@@ -22,7 +22,7 @@ plugins: [
     // options are passed directly to the compiler
     options: {},
   },
-];
+]
 ```
 
 ## Notes
@@ -40,5 +40,5 @@ CoffeeScript@next is being loaded. The very first line of source in the former's
 `index.js` should be the following: note the lack of dash.
 
 ```js
-var coffee = require("coffeescript");
+var coffee = require("coffeescript")
 ```

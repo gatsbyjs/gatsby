@@ -23,7 +23,9 @@ describe(`Process WordPress data`, () => {
     entities = normalize.excludeUnknownEntities(entities)
   })
   it(`creates Gatsby IDs for each entity`, () => {
-    entities = normalize.createGatsbyIds(entities)
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    entities = normalize.createGatsbyIds(createNodeId, entities)
     expect(entities).toMatchSnapshot()
   })
   it(`Creates map of types`, () => {
@@ -54,6 +56,10 @@ describe(`Process WordPress data`, () => {
       { id: 1 },
       { id: 2, acf: {} },
     ])
+  })
+  it(`Creates links between entities and polylang translations entities`, () => {
+    entities = normalize.mapPolylangTranslations(entities)
+    expect(entities).toMatchSnapshot()
   })
 
   // Actually let's not test this since it's a bit tricky to mock

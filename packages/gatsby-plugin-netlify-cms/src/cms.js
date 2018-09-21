@@ -1,4 +1,6 @@
-/* eslint-disable no-unused-vars */
-import React from "react"
 import CMS from "netlify-cms"
-import "netlify-cms/dist/cms.css"
+
+/**
+ * The stylesheet output from the module at `stylesPath` will be at `cms.css`.
+ */
+CMS.registerPreviewStyle(`cms.css`)

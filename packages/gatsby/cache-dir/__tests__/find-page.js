@@ -1,4 +1,4 @@
-const pageFinderFactory = require(`../find-page`)
+const pageFinderFactory = require(`../find-page`).default
 
 let findPage
 

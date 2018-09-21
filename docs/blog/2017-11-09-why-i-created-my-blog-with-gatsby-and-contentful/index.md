@@ -2,6 +2,7 @@
 title: "Why I created my blog with Gatsby and Contentful"
 date: 2017-11-09
 author: "Fernando Poumian"
+tags: ["contentful", "netlify", "getting-started", "hosting", "static"]
 ---
 
 I recently deployed my new blog at
@@ -17,10 +18,10 @@ minimal and modern ones like Ghost, Medium and Tumblr.
 However, in my experience, I found that pretty much all of these options
 typically force you to give up at least one of the following:
 
-* Money: As in the money you spend per month keeping the blog up and running.
-* Time: As in the time you spend maintaining, scaling and securing the blog
+- Money: As in the money you spend per month keeping the blog up and running.
+- Time: As in the time you spend maintaining, scaling and securing the blog
   infrastructure once it has been deployed (i.e. DevOps time).
-* Control: As in the degree of control you have over the blog's appearance,
+- Control: As in the degree of control you have over the blog's appearance,
   performance and architecture.
 
 This last point refers more than anything to online publishing platforms like

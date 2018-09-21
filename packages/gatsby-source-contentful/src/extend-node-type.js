@@ -5,66 +5,19 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-  GraphQLEnumType,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
+const path = require(`path`)
 
-const ImageFormatType = new GraphQLEnumType({
-  name: `ContentfulImageFormat`,
-  values: {
-    NO_CHANGE: { value: `` },
-    JPG: { value: `jpg` },
-    PNG: { value: `png` },
-    WEBP: { value: `webp` },
-  },
-})
+const cacheImage = require(`./cache-image`)
 
-const ImageResizingBehavior = new GraphQLEnumType({
-  name: `ImageResizingBehavior`,
-  values: {
-    NO_CHANGE: {
-      value: ``,
-    },
-    PAD: {
-      value: `pad`,
-      description: `Same as the default resizing, but adds padding so that the generated image has the specified dimensions.`,
-    },
-
-    CROP: {
-      value: `crop`,
-      description: `Crop a part of the original image to match the specified size.`,
-    },
-    FILL: {
-      value: `fill`,
-      description: `Crop the image to the specified dimensions, if the original image is smaller than these dimensions, then the image will be upscaled.`,
-    },
-    THUMB: {
-      value: `thumb`,
-      description: `When used in association with the f parameter below, creates a thumbnail from the image based on a focus area.`,
-    },
-    SCALE: {
-      value: `scale`,
-      description: `Scale the image regardless of the original aspect ratio.`,
-    },
-  },
-})
-
-const ImageCropFocusType = new GraphQLEnumType({
-  name: `ContentfulImageCropFocus`,
-  values: {
-    TOP: { value: `top` },
-    TOP_LEFT: { value: `top_left` },
-    TOP_RIGHT: { value: `top_right` },
-    BOTTOM: { value: `bottom` },
-    BOTTOM_RIGHT: { value: `bottom_left` },
-    BOTTOM_LEFT: { value: `bottom_right` },
-    RIGHT: { value: `right` },
-    LEFT: { value: `left` },
-    FACES: { value: `faces` },
-  },
-})
+const {
+  ImageFormatType,
+  ImageResizingBehavior,
+  ImageCropFocusType,
+} = require(`./schemes`)
 
 const isImage = image =>
   _.includes(
@@ -72,8 +25,10 @@ const isImage = image =>
     _.get(image, `file.contentType`)
   )
 
-const getBase64Image = (imgUrl, args = {}) => {
-  const requestUrl = `https:${imgUrl}?w=20`
+const getBase64Image = imageProps => {
+  if (!imageProps) return null
+
+  const requestUrl = `https:${imageProps.baseUrl}?w=20`
   // TODO add caching.
   return new Promise(resolve => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
@@ -82,26 +37,24 @@ const getBase64Image = (imgUrl, args = {}) => {
   })
 }
 
-const getBase64ImageAndBasicMeasurements = (image, args) =>
-  new Promise(resolve => {
-    getBase64Image(image.file.url, args).then(base64Str => {
-      let aspectRatio
-      if (args.width && args.height) {
-        aspectRatio = args.width / args.height
-      } else {
-        aspectRatio =
-          image.file.details.image.width / image.file.details.image.height
-      }
+const getBasicImageProps = (image, args) => {
+  let aspectRatio
+  if (args.width && args.height) {
+    aspectRatio = args.width / args.height
+  } else {
+    aspectRatio =
+      image.file.details.image.width / image.file.details.image.height
+  }
 
-      resolve({
-        contentType: image.file.contentType,
-        base64Str,
-        aspectRatio,
-        width: image.file.details.image.width,
-        height: image.file.details.image.height,
-      })
-    })
-  })
+  return {
+    baseUrl: image.file.url,
+    contentType: image.file.contentType,
+    aspectRatio,
+    width: image.file.details.image.width,
+    height: image.file.details.image.height,
+  }
+}
+
 const createUrl = (imgUrl, options = {}) => {
   // Convert to Contentful names and filter out undefined/null values.
   const args = _.pickBy(
@@ -110,9 +63,10 @@ const createUrl = (imgUrl, options = {}) => {
       h: options.height,
       fl: options.jpegProgressive ? `progressive` : null,
       q: options.quality,
-      fm: options.toFormat ? options.toFormat : ``,
-      fit: options.resizingBehavior ? options.resizingBehavior : ``,
-      f: options.cropFocus ? options.cropFocus : ``,
+      fm: options.toFormat || ``,
+      fit: options.resizingBehavior || ``,
+      f: options.cropFocus || ``,
+      bg: options.background || ``,
     },
     _.identity
   )
@@ -120,388 +74,452 @@ const createUrl = (imgUrl, options = {}) => {
 }
 exports.createUrl = createUrl
 
-const resolveResponsiveResolution = (image, options) => {
+const resolveFixed = (image, options) => {
   if (!isImage(image)) return null
 
-  return new Promise(resolve => {
-    getBase64ImageAndBasicMeasurements(image, options).then(
-      ({ contentType, base64Str, width, height, aspectRatio }) => {
-        let desiredAspectRatio = aspectRatio
+  const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
 
-        // If we're cropping, calculate the specified aspect ratio.
-        if (options.height) {
-          desiredAspectRatio = options.width / options.height
-        }
+  let desiredAspectRatio = aspectRatio
 
-        // If the user selected a height (so cropping) and fit option
-        // is not set, we'll set our defaults
-        if (options.height) {
-          if (!options.resizingBehavior) {
-            options.resizingBehavior = `fill`
-          }
-        }
+  // If we're cropping, calculate the specified aspect ratio.
+  if (options.height) {
+    desiredAspectRatio = options.width / options.height
+  }
 
-        // Create sizes (in width) for the image. If the width of the
-        // image is 800px, the sizes would then be: 800, 1200, 1600,
-        // 2400.
-        //
-        // This is enough sizes to provide close to the optimal image size for every
-        // device size / screen resolution
-        let sizes = []
-        sizes.push(options.width)
-        sizes.push(options.width * 1.5)
-        sizes.push(options.width * 2)
-        sizes.push(options.width * 3)
-        sizes = sizes.map(Math.round)
+  // If the user selected a height (so cropping) and fit option
+  // is not set, we'll set our defaults
+  if (options.height) {
+    if (!options.resizingBehavior) {
+      options.resizingBehavior = `fill`
+    }
+  }
 
-        // Filter out sizes larger than the image's width.
-        const filteredSizes = sizes.filter(size => size < width)
+  // Create sizes (in width) for the image. If the width of the
+  // image is 800px, the sizes would then be: 800, 1200, 1600,
+  // 2400.
+  //
+  // This is enough sizes to provide close to the optimal image size for every
+  // device size / screen resolution
+  let fixedSizes = []
+  fixedSizes.push(options.width)
+  fixedSizes.push(options.width * 1.5)
+  fixedSizes.push(options.width * 2)
+  fixedSizes.push(options.width * 3)
+  fixedSizes = fixedSizes.map(Math.round)
 
-        // Sort sizes for prettiness.
-        const sortedSizes = _.sortBy(filteredSizes)
+  // Filter out sizes larger than the image's width.
+  const filteredSizes = fixedSizes.filter(size => size < width)
 
-        // Create the srcSet.
-        const srcSet = sortedSizes
-          .map((size, i) => {
-            let resolution
-            switch (i) {
-              case 0:
-                resolution = `1x`
-                break
-              case 1:
-                resolution = `1.5x`
-                break
-              case 2:
-                resolution = `2x`
-                break
-              case 3:
-                resolution = `3x`
-                break
-              default:
-            }
-            const h = Math.round(size / desiredAspectRatio)
-            return `${createUrl(image.file.url, {
-              ...options,
-              width: size,
-              height: h,
-            })} ${resolution}`
-          })
-          .join(`,\n`)
+  // Sort sizes for prettiness.
+  const sortedSizes = _.sortBy(filteredSizes)
 
-        let pickedHeight
-        if (options.height) {
-          pickedHeight = options.height
-        } else {
-          pickedHeight = options.width / desiredAspectRatio
-        }
-
-        return resolve({
-          base64: base64Str,
-          aspectRatio: aspectRatio,
-          width: Math.round(options.width),
-          height: Math.round(pickedHeight),
-          src: createUrl(image.file.url, {
-            ...options,
-            width: options.width,
-          }),
-          srcSet,
-        })
+  // Create the srcSet.
+  const srcSet = sortedSizes
+    .map((size, i) => {
+      let resolution
+      switch (i) {
+        case 0:
+          resolution = `1x`
+          break
+        case 1:
+          resolution = `1.5x`
+          break
+        case 2:
+          resolution = `2x`
+          break
+        case 3:
+          resolution = `3x`
+          break
+        default:
       }
-    )
-  })
-}
-exports.resolveResponsiveResolution = resolveResponsiveResolution
+      const h = Math.round(size / desiredAspectRatio)
+      return `${createUrl(baseUrl, {
+        ...options,
+        width: size,
+        height: h,
+      })} ${resolution}`
+    })
+    .join(`,\n`)
 
-const resolveResponsiveSizes = (image, options) => {
+  let pickedHeight
+  if (options.height) {
+    pickedHeight = options.height
+  } else {
+    pickedHeight = options.width / desiredAspectRatio
+  }
+
+  return {
+    aspectRatio: desiredAspectRatio,
+    baseUrl,
+    width: Math.round(options.width),
+    height: Math.round(pickedHeight),
+    src: createUrl(baseUrl, {
+      ...options,
+      width: options.width,
+    }),
+    srcSet,
+  }
+}
+exports.resolveFixed = resolveFixed
+
+const resolveFluid = (image, options) => {
   if (!isImage(image)) return null
 
-  return new Promise(resolve => {
-    getBase64ImageAndBasicMeasurements(image, options).then(
-      ({ contentType, base64Str, width, height, aspectRatio }) => {
-        let desiredAspectRatio = aspectRatio
+  const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
 
-        // If we're cropping, calculate the specified aspect ratio.
-        if (options.maxHeight) {
-          desiredAspectRatio = options.maxWidth / options.maxHeight
-        }
+  let desiredAspectRatio = aspectRatio
 
-        // If the users didn't set a default sizes, we'll make one.
-        if (!options.sizes) {
-          options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${
-            options.maxWidth
-          }px`
-        }
+  // If we're cropping, calculate the specified aspect ratio.
+  if (options.maxHeight) {
+    desiredAspectRatio = options.maxWidth / options.maxHeight
+  }
 
-        // Create sizes (in width) for the image. If the max width of the container
-        // for the rendered markdown file is 800px, the sizes would then be: 200,
-        // 400, 800, 1200, 1600, 2400.
-        //
-        // This is enough sizes to provide close to the optimal image size for every
-        // device size / screen resolution
-        let sizes = []
-        sizes.push(options.maxWidth / 4)
-        sizes.push(options.maxWidth / 2)
-        sizes.push(options.maxWidth)
-        sizes.push(options.maxWidth * 1.5)
-        sizes.push(options.maxWidth * 2)
-        sizes.push(options.maxWidth * 3)
-        sizes = sizes.map(Math.round)
+  // If the users didn't set a default sizes, we'll make one.
+  if (!options.sizes) {
+    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${
+      options.maxWidth
+    }px`
+  }
 
-        // Filter out sizes larger than the image's maxWidth.
-        const filteredSizes = sizes.filter(size => size < width)
+  // Create sizes (in width) for the image. If the max width of the container
+  // for the rendered markdown file is 800px, the sizes would then be: 200,
+  // 400, 800, 1200, 1600, 2400.
+  //
+  // This is enough sizes to provide close to the optimal image size for every
+  // device size / screen resolution
+  let fluidSizes = []
+  fluidSizes.push(options.maxWidth / 4)
+  fluidSizes.push(options.maxWidth / 2)
+  fluidSizes.push(options.maxWidth)
+  fluidSizes.push(options.maxWidth * 1.5)
+  fluidSizes.push(options.maxWidth * 2)
+  fluidSizes.push(options.maxWidth * 3)
+  fluidSizes = fluidSizes.map(Math.round)
 
-        // Add the original image to ensure the largest image possible
-        // is available for small images.
-        filteredSizes.push(width)
+  // Filter out sizes larger than the image's maxWidth.
+  const filteredSizes = fluidSizes.filter(size => size < width)
 
-        // Sort sizes for prettiness.
-        const sortedSizes = _.sortBy(filteredSizes)
+  // Add the original image to ensure the largest image possible
+  // is available for small images.
+  filteredSizes.push(width)
 
-        // Create the srcSet.
-        const srcSet = sortedSizes
-          .map(width => {
-            const h = Math.round(width / desiredAspectRatio)
-            return `${createUrl(image.file.url, {
-              ...options,
-              width,
-              height: h,
-            })} ${Math.round(width)}w`
-          })
-          .join(`,\n`)
+  // Sort sizes for prettiness.
+  const sortedSizes = _.sortBy(filteredSizes)
 
-        return resolve({
-          base64: base64Str,
-          aspectRatio: aspectRatio,
-          src: createUrl(image.file.url, {
-            ...options,
-            width: options.maxWidth,
-            height: options.maxHeight,
-          }),
-          srcSet,
-          sizes: options.sizes,
-        })
-      }
-    )
-  })
+  // Create the srcSet.
+  const srcSet = sortedSizes
+    .map(width => {
+      const h = Math.round(width / desiredAspectRatio)
+      return `${createUrl(image.file.url, {
+        ...options,
+        width,
+        height: h,
+      })} ${Math.round(width)}w`
+    })
+    .join(`,\n`)
+
+  return {
+    aspectRatio: desiredAspectRatio,
+    baseUrl,
+    src: createUrl(baseUrl, {
+      ...options,
+      width: options.maxWidth,
+      height: options.maxHeight,
+    }),
+    srcSet,
+    sizes: options.sizes,
+  }
 }
-exports.resolveResponsiveSizes = resolveResponsiveSizes
+exports.resolveFluid = resolveFluid
 
 const resolveResize = (image, options) => {
   if (!isImage(image)) return null
 
-  return new Promise(resolve => {
-    getBase64ImageAndBasicMeasurements(image, options).then(
-      ({ contentType, base64Str, width, height, aspectRatio }) => {
-        // If the user selected a height (so cropping) and fit option
-        // is not set, we'll set our defaults
-        if (options.height) {
-          if (!options.resizingBehavior) {
-            options.resizingBehavior = `fill`
-          }
-        }
+  const { baseUrl, aspectRatio } = getBasicImageProps(image, options)
 
-        if (options.base64) {
-          resolve(base64Str)
-          return
-        }
+  // If the user selected a height (so cropping) and fit option
+  // is not set, we'll set our defaults
+  if (options.height) {
+    if (!options.resizingBehavior) {
+      options.resizingBehavior = `fill`
+    }
+  }
 
-        const pickedWidth = options.width
-        let pickedHeight
-        if (options.height) {
-          pickedHeight = options.height
-        } else {
-          pickedHeight = pickedWidth / aspectRatio
-        }
-        resolve({
-          src: createUrl(image.file.url, options),
-          width: Math.round(pickedWidth),
-          height: Math.round(pickedHeight),
-          aspectRatio,
-          base64: base64Str,
-        })
-      }
-    )
-  })
+  const pickedWidth = options.width
+  let pickedHeight
+  if (options.height) {
+    pickedHeight = options.height
+  } else {
+    pickedHeight = pickedWidth / aspectRatio
+  }
+  return {
+    src: createUrl(image.file.url, options),
+    width: Math.round(pickedWidth),
+    height: Math.round(pickedHeight),
+    aspectRatio,
+    baseUrl,
+  }
 }
 
 exports.resolveResize = resolveResize
 
-exports.extendNodeType = ({ type }) => {
+const fixedNodeType = ({ name, getTracedSVG }) => {
+  return {
+    type: new GraphQLObjectType({
+      name: name,
+      fields: {
+        base64: {
+          type: GraphQLString,
+          resolve(imageProps) {
+            return getBase64Image(imageProps)
+          },
+        },
+        tracedSVG: {
+          type: GraphQLString,
+          resolve: getTracedSVG,
+        },
+        aspectRatio: { type: GraphQLFloat },
+        width: { type: GraphQLFloat },
+        height: { type: GraphQLFloat },
+        src: { type: GraphQLString },
+        srcSet: { type: GraphQLString },
+        srcWebp: {
+          type: GraphQLString,
+          resolve({ image, options, context }) {
+            if (
+              _.get(image, `file.contentType`) === `image/webp` ||
+              options.toFormat === `webp`
+            ) {
+              return null
+            }
+
+            const fixed = resolveFixed(image, {
+              ...options,
+              toFormat: `webp`,
+            })
+            return _.get(fixed, `src`)
+          },
+        },
+        srcSetWebp: {
+          type: GraphQLString,
+          resolve({ image, options, context }) {
+            if (
+              _.get(image, `file.contentType`) === `image/webp` ||
+              options.toFormat === `webp`
+            ) {
+              return null
+            }
+
+            const fixed = resolveFixed(image, {
+              ...options,
+              toFormat: `webp`,
+            })
+            return _.get(fixed, `srcSet`)
+          },
+        },
+      },
+    }),
+    args: {
+      width: {
+        type: GraphQLInt,
+        defaultValue: 400,
+      },
+      height: {
+        type: GraphQLInt,
+      },
+      quality: {
+        type: GraphQLInt,
+        defaultValue: 50,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      resizingBehavior: {
+        type: ImageResizingBehavior,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: null,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: null,
+      },
+    },
+    resolve: (image, options, context) =>
+      Promise.resolve(resolveFixed(image, options)).then(node => {
+        return {
+          ...node,
+          image,
+          options,
+          context,
+        }
+      }),
+  }
+}
+
+const fluidNodeType = ({ name, getTracedSVG }) => {
+  return {
+    type: new GraphQLObjectType({
+      name: name,
+      fields: {
+        base64: {
+          type: GraphQLString,
+          resolve(imageProps) {
+            return getBase64Image(imageProps)
+          },
+        },
+        tracedSVG: {
+          type: GraphQLString,
+          resolve: getTracedSVG,
+        },
+        aspectRatio: { type: GraphQLFloat },
+        src: { type: GraphQLString },
+        srcSet: { type: GraphQLString },
+        srcWebp: {
+          type: GraphQLString,
+          resolve({ image, options, context }) {
+            if (
+              _.get(image, `file.contentType`) === `image/webp` ||
+              options.toFormat === `webp`
+            ) {
+              return null
+            }
+
+            const fluid = resolveFluid(image, {
+              ...options,
+              toFormat: `webp`,
+            })
+            return _.get(fluid, `src`)
+          },
+        },
+        srcSetWebp: {
+          type: GraphQLString,
+          resolve({ image, options, context }) {
+            if (
+              _.get(image, `file.contentType`) === `image/webp` ||
+              options.toFormat === `webp`
+            ) {
+              return null
+            }
+
+            const fluid = resolveFluid(image, {
+              ...options,
+              toFormat: `webp`,
+            })
+            return _.get(fluid, `srcSet`)
+          },
+        },
+        sizes: { type: GraphQLString },
+      },
+    }),
+    args: {
+      maxWidth: {
+        type: GraphQLInt,
+        defaultValue: 800,
+      },
+      maxHeight: {
+        type: GraphQLInt,
+      },
+      quality: {
+        type: GraphQLInt,
+        defaultValue: 50,
+      },
+      toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      resizingBehavior: {
+        type: ImageResizingBehavior,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+        defaultValue: null,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: null,
+      },
+      sizes: {
+        type: GraphQLString,
+      },
+    },
+    resolve: (image, options, context) =>
+      Promise.resolve(resolveFluid(image, options)).then(node => {
+        return {
+          ...node,
+          image,
+          options,
+          context,
+        }
+      }),
+  }
+}
+
+exports.extendNodeType = ({ type, store }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
 
+  const getTracedSVG = async args => {
+    const { traceSVG } = require(`gatsby-plugin-sharp`)
+
+    const { image, options } = args
+    const {
+      file: { contentType },
+    } = image
+
+    if (contentType.indexOf(`image/`) !== 0) {
+      return null
+    }
+
+    const absolutePath = await cacheImage(store, image, options)
+    const extension = path.extname(absolutePath)
+
+    return traceSVG({
+      file: {
+        internal: image.internal,
+        name: image.file.fileName,
+        extension,
+        absolutePath,
+      },
+      args: { toFormat: `` },
+      fileArgs: options,
+    })
+  }
+
+  // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
+  const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
+  const resolutionsNode = fixedNodeType({
+    name: `ContentfulResolutions`,
+    getTracedSVG,
+  })
+  resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
+
+  const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
+  const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
+  sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
+
   return {
-    resolutions: {
-      type: new GraphQLObjectType({
-        name: `ContentfulResolutions`,
-        fields: {
-          base64: { type: GraphQLString },
-          aspectRatio: { type: GraphQLFloat },
-          width: { type: GraphQLFloat },
-          height: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-        },
-      }),
-      args: {
-        width: {
-          type: GraphQLInt,
-          defaultValue: 400,
-        },
-        height: {
-          type: GraphQLInt,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        resizingBehavior: {
-          type: ImageResizingBehavior,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: null,
-        },
-      },
-      resolve(image, options, context) {
-        return resolveResponsiveResolution(image, options)
-      },
-    },
-    sizes: {
-      type: new GraphQLObjectType({
-        name: `ContentfulSizes`,
-        fields: {
-          base64: { type: GraphQLString },
-          aspectRatio: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          sizes: { type: GraphQLString },
-        },
-      }),
-      args: {
-        maxWidth: {
-          type: GraphQLInt,
-          defaultValue: 800,
-        },
-        maxHeight: {
-          type: GraphQLInt,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        resizingBehavior: {
-          type: ImageResizingBehavior,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: null,
-        },
-        sizes: {
-          type: GraphQLString,
-        },
-      },
-      resolve(image, options, context) {
-        return resolveResponsiveSizes(image, options)
-      },
-    },
-    responsiveResolution: {
-      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
-      type: new GraphQLObjectType({
-        name: `ContentfulResponsiveResolution`,
-        fields: {
-          base64: { type: GraphQLString },
-          aspectRatio: { type: GraphQLFloat },
-          width: { type: GraphQLFloat },
-          height: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-        },
-      }),
-      args: {
-        width: {
-          type: GraphQLInt,
-          defaultValue: 400,
-        },
-        height: {
-          type: GraphQLInt,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        resizingBehavior: {
-          type: ImageResizingBehavior,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: null,
-        },
-      },
-      resolve(image, options, context) {
-        return resolveResponsiveResolution(image, options)
-      },
-    },
-    responsiveSizes: {
-      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
-      type: new GraphQLObjectType({
-        name: `ContentfulResponsiveSizes`,
-        fields: {
-          base64: { type: GraphQLString },
-          aspectRatio: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-          srcSet: { type: GraphQLString },
-          sizes: { type: GraphQLString },
-        },
-      }),
-      args: {
-        maxWidth: {
-          type: GraphQLInt,
-          defaultValue: 800,
-        },
-        maxHeight: {
-          type: GraphQLInt,
-        },
-        quality: {
-          type: GraphQLInt,
-          defaultValue: 50,
-        },
-        toFormat: {
-          type: ImageFormatType,
-          defaultValue: ``,
-        },
-        resizingBehavior: {
-          type: ImageResizingBehavior,
-        },
-        cropFocus: {
-          type: ImageCropFocusType,
-          defaultValue: null,
-        },
-        sizes: {
-          type: GraphQLString,
-        },
-      },
-      resolve(image, options, context) {
-        return resolveResponsiveSizes(image, options)
-      },
-    },
+    fixed: fixedNode,
+    resolutions: resolutionsNode,
+    fluid: fluidNode,
+    sizes: sizesNode,
     resize: {
       type: new GraphQLObjectType({
         name: `ContentfulResize`,
         fields: {
+          base64: {
+            type: GraphQLString,
+            resolve(imageProps) {
+              return getBase64Image(imageProps)
+            },
+          },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: getTracedSVG,
+          },
           src: { type: GraphQLString },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
@@ -527,16 +545,16 @@ exports.extendNodeType = ({ type }) => {
         resizingBehavior: {
           type: ImageResizingBehavior,
         },
-        base64: {
-          type: GraphQLBoolean,
-          defaultValue: false,
-        },
         toFormat: {
           type: ImageFormatType,
           defaultValue: ``,
         },
         cropFocus: {
           type: ImageCropFocusType,
+          defaultValue: null,
+        },
+        background: {
+          type: GraphQLString,
           defaultValue: null,
         },
       },

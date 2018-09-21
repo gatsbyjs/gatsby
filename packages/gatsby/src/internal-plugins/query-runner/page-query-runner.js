@@ -1,3 +1,7 @@
+// @flow
+
+import type { QueryJob } from "../query-runner"
+
 /**
  * Jobs of this module
  * - Ensure on bootstrap that all invalid page queries are run and report
@@ -12,26 +16,44 @@ const { store, emitter } = require(`../../redux`)
 
 let queuedDirtyActions = []
 let active = false
+let running = false
+
+const runQueriesForPathnamesQueue = new Set()
+exports.queueQueryForPathname = pathname => {
+  runQueriesForPathnamesQueue.add(pathname)
+}
 
 // Do initial run of graphql queries during bootstrap.
 // Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
 // for dirty nodes before running queries.
-exports.runQueries = async () => {
-  // Run queued dirty nodes now that we're active.
+exports.runInitialQueries = async () => {
+  await runQueries()
+
+  active = true
+  return
+}
+
+const runQueries = async () => {
+  // Find paths dependent on dirty nodes
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
-  await runQueriesForIds(dirtyIds)
-
   queuedDirtyActions = []
 
   // Find ids without data dependencies (i.e. no queries have been run for
   // them before) and run them.
   const cleanIds = findIdsWithoutDataDependencies()
 
-  // Run these pages
-  await runQueriesForIds(cleanIds)
+  // Construct paths for all queries to run
+  const pathnamesToRun = _.uniq([
+    ...runQueriesForPathnamesQueue,
+    ...dirtyIds,
+    ...cleanIds,
+  ])
 
-  active = true
+  runQueriesForPathnamesQueue.clear()
+
+  // Run these paths
+  await runQueriesForPathnames(pathnamesToRun)
   return
 }
 
@@ -40,21 +62,23 @@ emitter.on(`CREATE_NODE`, action => {
 })
 
 emitter.on(`DELETE_NODE`, action => {
-  queuedDirtyActions.push({ payload: action.node })
+  queuedDirtyActions.push({ payload: action.payload })
 })
 
 const runQueuedActions = async () => {
-  if (active) {
-    queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-    await runQueriesForIds(findDirtyIds(queuedDirtyActions))
-    queuedDirtyActions = []
-
-    // Find ids without data dependencies (e.g. new pages) and run
-    // their queries.
-    const cleanIds = findIdsWithoutDataDependencies()
-    runQueriesForIds(cleanIds)
+  if (active && !running) {
+    try {
+      running = true
+      await runQueries()
+    } finally {
+      running = false
+      if (queuedDirtyActions.length > 0) {
+        runQueuedActions()
+      }
+    }
   }
 }
+exports.runQueuedActions = runQueuedActions
 
 // Wait until all plugins have finished running (e.g. various
 // transformer plugins) before running queries so we don't
@@ -77,14 +101,14 @@ const findIdsWithoutDataDependencies = () => {
   // paths.
   const notTrackedIds = _.difference(
     [
-      ...state.pages.map(p => p.path),
-      ...state.layouts.map(l => `LAYOUT___${l.id}`),
+      ...Array.from(state.pages.values(), p => p.path),
+      ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
     ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
 
   // Add new IDs to our seen array so we don't keep trying to run queries for them.
-  // Pages/Layouts without queries can't be tracked.
+  // Pages without queries can't be tracked.
   seenIdsWithoutDataDependencies = _.uniq([
     ...notTrackedIds,
     ...seenIdsWithoutDataDependencies,
@@ -93,21 +117,47 @@ const findIdsWithoutDataDependencies = () => {
   return notTrackedIds
 }
 
-const runQueriesForIds = ids => {
+const runQueriesForPathnames = pathnames => {
+  const staticQueries = pathnames.filter(p => p.slice(0, 4) === `sq--`)
+  const pageQueries = pathnames.filter(p => p.slice(0, 4) !== `sq--`)
   const state = store.getState()
-  const pagesAndLayouts = [...state.pages, ...state.layouts]
+
+  staticQueries.forEach(id => {
+    const staticQueryComponent = store.getState().staticQueryComponents.get(id)
+    const queryJob: QueryJob = {
+      id: staticQueryComponent.hash,
+      hash: staticQueryComponent.hash,
+      jsonName: staticQueryComponent.jsonName,
+      query: staticQueryComponent.query,
+      componentPath: staticQueryComponent.componentPath,
+      context: { path: staticQueryComponent.jsonName },
+    }
+    queue.push(queryJob)
+  })
+
+  const pages = state.pages
   let didNotQueueItems = true
-  ids.forEach(id => {
-    const plObj = pagesAndLayouts.find(
-      pl => pl.path === id || `LAYOUT___${pl.id}` === id
-    )
-    if (plObj) {
+  pageQueries.forEach(id => {
+    const page = pages.get(id)
+    if (page) {
       didNotQueueItems = false
-      queue.push({ ...plObj, _id: plObj.id, id: plObj.jsonName })
+      queue.push(
+        ({
+          id: page.path,
+          jsonName: page.jsonName,
+          query: store.getState().components.get(page.componentPath).query,
+          isPage: true,
+          componentPath: page.componentPath,
+          context: {
+            ...page,
+            ...page.context,
+          },
+        }: QueryJob)
+      )
     }
   })
 
-  if (didNotQueueItems || !ids || ids.length === 0) {
+  if (didNotQueueItems || !pathnames || pathnames.length === 0) {
     return Promise.resolve()
   }
 
@@ -120,17 +170,22 @@ const runQueriesForIds = ids => {
 
 const findDirtyIds = actions => {
   const state = store.getState()
-  return actions.reduce((dirtyIds, action) => {
-    const node = action.payload
+  const uniqDirties = _.uniq(
+    actions.reduce((dirtyIds, action) => {
+      const node = action.payload
 
-    // find invalid pagesAndLayouts
-    dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
+      if (!node || !node.id || !node.internal.type) return dirtyIds
 
-    // Find invalid connections
-    dirtyIds = dirtyIds.concat(
-      state.componentDataDependencies.connections[node.internal.type]
-    )
+      // Find components that depend on this node so are now dirty.
+      dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
-    return _.compact(dirtyIds)
-  }, [])
+      // Find connections that depend on this node so are now invalid.
+      dirtyIds = dirtyIds.concat(
+        state.componentDataDependencies.connections[node.internal.type]
+      )
+
+      return _.compact(dirtyIds)
+    }, [])
+  )
+  return uniqDirties
 }

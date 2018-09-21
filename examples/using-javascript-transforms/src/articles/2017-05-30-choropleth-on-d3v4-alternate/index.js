@@ -1,10 +1,10 @@
 import React from "react"
+import { graphql } from "gatsby"
 import BlogPostChrome from "../../components/BlogPostChrome"
-import { findDOMNode } from "react-dom"
 var d3 = require(`d3`)
 
 // this is an additional method to export data and make it usable elsewhere
-export const data = {
+export const frontmatter = {
   title: `Alternate Choropleth on d3v4`,
   written: `2017-05-30`,
   layoutType: `post`,
@@ -14,10 +14,6 @@ export const data = {
 }
 
 class choroplethAltBase extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     this.d3Node = d3.select(`div#states`)
     let measurements = {
@@ -30,8 +26,7 @@ class choroplethAltBase extends React.Component {
        we begin drawing here, grab the data and use it to draw
       */
 
-    d3
-      .queue()
+    d3.queue()
       .defer(d3.json, stateDataURL)
       .defer(d3.csv, statisticsDataURL)
       .awaitAll(function(error, results) {
@@ -51,7 +46,12 @@ class choroplethAltBase extends React.Component {
     let html = data.html
 
     return (
-      <BlogPostChrome {...this.props.data.jsFrontmatter.data}>
+      <BlogPostChrome
+        {...{
+          frontmatter: this.props.data.javascriptFrontmatter.frontmatter,
+          site: this.props.data.site,
+        }}
+      >
         <div className="section">
           <div className="container">
             <div id="states" />
@@ -122,7 +122,7 @@ average: tooltip, path fill
 
   let states = svg.selectAll(`path.states`).data(data)
 
-  let drawStates = states
+  states
     .enter()
     .append(`path`)
     .attr(`class`, `state`)
@@ -162,13 +162,13 @@ let mouseOver = d => {
 }
 
 let mouseOut = () => {
-  d3
-    .select(`#tooltip`)
+  d3.select(`#tooltip`)
     .transition()
     .duration(500)
     .style(`opacity`, 0)
 }
 
+// eslint-disable-next-line no-unused-vars
 function scale(scaleFactor, width, height) {
   return d3.geoTransform({
     point: function(x, y) {
@@ -200,7 +200,7 @@ let mergeData = (d1, d1key, d2, d2key) => {
 //  query for it here, and get the transformed html though because remark transforms
 //  any markdown based node.
 export const pageQuery = graphql`
-  query choroplethOnD3v4Alt($slug: String!) {
+  query choroplethOnD3v4Alt {
     markdownRemark(
       fields: {
         slug: { eq: "/2017-05-30-choropleth-on-d3v4-alternate/_choropleth/" }
@@ -208,8 +208,11 @@ export const pageQuery = graphql`
     ) {
       html
     }
-    jsFrontmatter(fields: { slug: { eq: $slug } }) {
-      ...JSBlogPost_data
+    javascriptFrontmatter {
+      ...JSBlogPost_frontmatter
+    }
+    site {
+      ...site_sitemetadata
     }
   }
 `

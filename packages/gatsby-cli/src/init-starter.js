@@ -5,6 +5,8 @@ const hostedGitInfo = require(`hosted-git-info`)
 const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
+const url = require(`url`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const spawn = (cmd: string) => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -48,9 +50,19 @@ const copy = async (starterPath: string, rootPath: string) => {
   // 493 = parseInt('755', 8)
   await fs.mkdirp(rootPath, { mode: 493 })
 
-  if (!fs.existsSync(starterPath)) {
+  if (!existsSync(starterPath)) {
     throw new Error(`starter ${starterPath} doesn't exist`)
   }
+
+  if (starterPath === `.`) {
+    throw new Error(
+      `You can't create a starter from the existing directory. If you want to
+      create a new site in the current directory, the trailing dot isn't
+      necessary. If you want to create a new site from a local starter, run
+      something like "gatsby new new-gatsby-site ../my-gatsby-starter"`
+    )
+  }
+
   report.info(`Creating new site from local starter: ${starterPath}`)
 
   report.log(`Copying local starter to ${rootPath} ...`)
@@ -66,7 +78,15 @@ const copy = async (starterPath: string, rootPath: string) => {
 
 // Clones starter from URI.
 const clone = async (hostInfo: any, rootPath: string) => {
-  const url = hostInfo.git({ noCommittish: true })
+  let url
+  // Let people use private repos accessed over SSH.
+  if (hostInfo.getDefaultRepresentation() === `sshurl`) {
+    url = hostInfo.ssh({ noCommittish: true })
+    // Otherwise default to normal git syntax.
+  } else {
+    url = hostInfo.https({ noCommittish: true, noGitPlus: true })
+  }
+
   const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``
 
   report.info(`Creating new site from git: ${url}`)
@@ -90,7 +110,15 @@ type InitOptions = {
 module.exports = async (starter: string, options: InitOptions = {}) => {
   const rootPath = options.rootPath || process.cwd()
 
-  if (fs.existsSync(sysPath.join(rootPath, `package.json`))) {
+  const urlObject = url.parse(rootPath)
+  if (urlObject.protocol && urlObject.host) {
+    report.panic(
+      `It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
+    )
+    return
+  }
+
+  if (existsSync(sysPath.join(rootPath, `package.json`))) {
     report.panic(`Directory ${rootPath} is already an npm project`)
     return
   }

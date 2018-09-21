@@ -2,22 +2,31 @@ import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
-import testRequireError from "./test-require-error"
+// import testRequireError from "./test-require-error"
+// For some extremely mysterious reason, webpack adds the above module *after*
+// this module so that when this code runs, testRequireError is undefined.
+// So in the meantime, we'll just inline it.
+const testRequireError = (moduleName, err) => {
+  const regex = new RegExp(`Error: Cannot find module\\s.${moduleName}`)
+  const firstLine = err.toString().split(`\n`)[0]
+  return regex.test(firstLine)
+}
 
-let HTML
+let Html
 try {
-  HTML = require(`../src/html`)
+  Html = require(`../src/html`)
 } catch (err) {
-  if (testRequireError(`..\/src\/html`, err)) {
-    HTML = require(`./default-html`)
+  if (testRequireError(`../src/html`, err)) {
+    Html = require(`./default-html`)
   } else {
     console.log(`There was an error requiring "src/html.js"\n\n`, err, `\n\n`)
     process.exit()
   }
 }
 
-module.exports = (locals, callback) => {
-  // const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
+Html = Html && Html.__esModule ? Html.default : Html
+
+export default (pagePath, callback) => {
   let headComponents = []
   let htmlAttributes = {}
   let bodyAttributes = {}
@@ -50,6 +59,24 @@ module.exports = (locals, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
+  const getHeadComponents = () => headComponents
+
+  const replaceHeadComponents = components => {
+    headComponents = components
+  }
+
+  const getPreBodyComponents = () => preBodyComponents
+
+  const replacePreBodyComponents = components => {
+    preBodyComponents = components
+  }
+
+  const getPostBodyComponents = () => postBodyComponents
+
+  const replacePostBodyComponents = components => {
+    postBodyComponents = components
+  }
+
   apiRunner(`onRenderBody`, {
     setHeadComponents,
     setHtmlAttributes,
@@ -59,7 +86,16 @@ module.exports = (locals, callback) => {
     setBodyProps,
   })
 
-  const htmlElement = React.createElement(HTML, {
+  apiRunner(`onPreRenderHTML`, {
+    getHeadComponents,
+    replaceHeadComponents,
+    getPreBodyComponents,
+    replacePreBodyComponents,
+    getPostBodyComponents,
+    replacePostBodyComponents,
+  })
+
+  const htmlElement = React.createElement(Html, {
     ...bodyProps,
     body: ``,
     headComponents: headComponents.concat([

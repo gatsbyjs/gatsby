@@ -1,24 +1,33 @@
 {
   "name": "gatsby-plugin-catch-links",
-  "version": "1.0.14",
   "description": "Intercepts local links from markdown and other non-react pages and does a client-side pushState to avoid the browser having to refresh the page.",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
+  "version": "2.0.2",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "cross-env": "^5.1.4"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin"
   ],
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-beta"
   },
-  "dependencies": {
-    "babel-runtime": "^6.26.0"
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

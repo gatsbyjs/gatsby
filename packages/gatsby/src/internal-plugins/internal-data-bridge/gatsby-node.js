@@ -40,8 +40,10 @@ function transformPackageJson(json) {
   return json
 }
 
-exports.sourceNodes = ({ boundActionCreators, store }) => {
-  const { createNode } = boundActionCreators
+const createPageId = path => `SitePage ${path}`
+
+exports.sourceNodes = ({ actions, store }) => {
+  const { createNode } = actions
   const state = store.getState()
   const { program } = state
   const { flattenedPlugins } = state
@@ -122,21 +124,29 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     `gatsby-config.js`
   )
   chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
-    // Delete require cache so we can reload the module.
-    delete require.cache[require.resolve(pathToGatsbyConfig)]
-    const config = require(pathToGatsbyConfig)
-    createGatsbyConfigNode(config)
+    const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
+    try {
+      // Delete require cache so we can reload the module.
+      delete require.cache[require.resolve(pathToGatsbyConfig)]
+      const config = require(pathToGatsbyConfig)
+      createGatsbyConfigNode(config)
+    } catch (e) {
+      // Restore the old cache since requiring the new gatsby-config.js failed.
+      if (oldCache !== undefined) {
+        require.cache[require.resolve(pathToGatsbyConfig)] = oldCache
+      }
+    }
   })
 }
 
-const createPageId = path => `SitePage ${path}`
-
-exports.onCreatePage = ({ page, boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+exports.onCreatePage = ({ page, actions }) => {
+  const { createNode } = actions
+  // eslint-disable-next-line
+  const { updatedAt, ...pageWithoutUpdated } = page
 
   // Add page.
   createNode({
-    ...page,
+    ...pageWithoutUpdated,
     id: createPageId(page.path),
     parent: `SOURCE`,
     children: [],
@@ -144,8 +154,12 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
       type: `SitePage`,
       contentDigest: crypto
         .createHash(`md5`)
-        .update(JSON.stringify(page))
+        .update(JSON.stringify(pageWithoutUpdated))
         .digest(`hex`),
+      description:
+        page.pluginCreatorId === `Plugin default-site-plugin`
+          ? `Your site's "gatsby-node.js"`
+          : page.pluginCreatorId,
     },
   })
 }
@@ -154,5 +168,5 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 emitter.on(`DELETE_PAGE`, action => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
-  boundActionCreators.deleteNode(nodeId, node)
+  boundActionCreators.deleteNode({ node })
 })

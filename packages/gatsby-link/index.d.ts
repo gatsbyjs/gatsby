@@ -1,14 +1,22 @@
-import * as React from "react";
-import { NavLinkProps } from "react-router-dom";
+import * as React from "react"
+import { NavigateFn, LinkProps } from "@reach/router"
 
-export interface GatsbyLinkProps extends NavLinkProps {
-  onClick?: (event: any) => void
-  className?: string
-  style?:any;
+export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
+  activeClassName?: string
+  activeStyle?: object
+  innerRef?: Function
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
+  to: string
 }
 
-export const navigateTo: (path: string) => void;
+export default class GatsbyLink<TState> extends React.Component<
+  GatsbyLinkProps<TState>,
+  any
+> {}
+export const navigate: NavigateFn
+export const withPrefix: (path: string) => string
 
-export const withPrefix: (path: string) => string;
-
-export default class GatsbyLink extends React.Component<GatsbyLinkProps, any> { }
+// TODO: Remove navigateTo, push & replace for Gatsby v3
+export const push: (to: string) => void
+export const replace: (to: string) => void
+export const navigateTo: (to: string) => void

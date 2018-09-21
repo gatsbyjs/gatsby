@@ -1,28 +1,40 @@
 {
   "name": "gatsby-plugin-manifest",
-  "version": "1.0.12",
-  "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
-  "main": "index.js",
-  "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
+  "description": "Gatsby plugin which adds a manifest.webmanifest to make sites progressive web apps",
+  "version": "2.0.2",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "bluebird": "^3.5.0",
+    "sharp": "^0.20.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "cross-env": "^5.1.4"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
-    "manifest.json",
-    "pwa",
-    "progressive-web-app"
+    "favicon",
+    "icons",
+    "manifest.webmanifest",
+    "progressive-web-app",
+    "pwa"
   ],
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5"
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
   },
-  "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "bluebird": "^3.5.0"
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   }
 }

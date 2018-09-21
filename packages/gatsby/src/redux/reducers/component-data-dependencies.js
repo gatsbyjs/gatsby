@@ -43,12 +43,17 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
       )
 
       return state
-    case `DELETE_NODE`:
-      delete state.nodes[action.payload]
-      return state
-    case `DELETE_NODES`:
-      action.payload.forEach(n => delete state.nodes[n])
-      return state
+    // Don't delete data dependencies as we're now deleting transformed nodes
+    // when their parent is changed. WIth the code below as stands, this
+    // would delete the connection between the page and the transformed
+    // node which will be recreated after its deleted meaning the query
+    // won't be re-run.
+    // case `DELETE_NODE`:
+    // delete state.nodes[action.payload]
+    // return state
+    // case `DELETE_NODES`:
+    // action.payload.forEach(n => delete state.nodes[n])
+    // return state
     default:
       return state
   }

@@ -1,59 +1,49 @@
 describe(`gatsby-plugin-less`, () => {
-  jest.mock(`extract-text-webpack-plugin`, () => {
-    return {
-      extract(...args) {
-        return { extractTextCalledWithArgs: args }
-      },
-    }
+  jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+
+  const actions = {
+    setWebpackConfig: jest.fn(),
+  }
+
+  // loaders "mocks"
+  const loaders = {
+    miniCssExtract: () => `miniCssExtract`,
+    css: args => `css(${JSON.stringify(args)})`,
+    postcss: args => `postcss(${JSON.stringify(args)})`,
+  }
+
+  const { onCreateWebpackConfig } = require(`../gatsby-node`)
+
+  beforeEach(() => {
+    actions.setWebpackConfig.mockReset()
   })
 
-  const { modifyWebpackConfig } = require(`../gatsby-node`)
-  const cssLoader = expect.stringMatching(/^css/)
-  ;[
-    {
-      stages: [`develop`],
-      loaderKeys: [`less`, `lessModules`],
-      loaderConfig: {
-        loaders: expect.arrayContaining([cssLoader, `less`]),
-      },
-    },
-    {
-      stages: [`build-css`],
-      loaderKeys: [`less`, `lessModules`],
-      loaderConfig: {
-        loader: {
-          extractTextCalledWithArgs: expect.arrayContaining([
-            expect.arrayContaining([cssLoader, `less`]),
-          ]),
+  const tests = {
+    stages: [`develop`, `build-javascript`, `develop-html`, `build-html`],
+    options: {
+      "No options": {},
+      "Less options #1": {
+        modifyVars: {
+          "text-color": `#fff`,
         },
+        strictMath: true,
+      },
+      "Less options #2": {
+        modifyVars: require(`../theme-test.js`),
+      },
+      "PostCss plugins": {
+        postCssPlugins: [`test1`],
       },
     },
-    {
-      stages: [`develop-html`, `build-html`, `build-javascript`],
-      loaderKeys: [`lessModules`],
-      loaderConfig: {
-        loader: {
-          extractTextCalledWithArgs: expect.arrayContaining([
-            expect.arrayContaining([cssLoader, `less`]),
-          ]),
-        },
-      },
-    },
-  ].forEach(({ stages, loaderKeys, loaderConfig }) => {
-    stages.forEach(stage => {
-      it(`modifies webpack config for stage: ${stage}`, () => {
-        const config = { loader: jest.fn() }
-        const modified = modifyWebpackConfig({ config, stage })
+  }
 
-        expect(modified).toBe(config)
-
-        loaderKeys.forEach(loaderKey =>
-          expect(config.loader).toBeCalledWith(
-            loaderKey,
-            expect.objectContaining(loaderConfig)
-          )
-        )
+  tests.stages.forEach(stage => {
+    for (let label in tests.options) {
+      const options = tests.options[label]
+      it(`Stage: ${stage} / ${label}`, () => {
+        onCreateWebpackConfig({ actions, loaders, stage: `develop` }, options)
+        expect(actions.setWebpackConfig).toMatchSnapshot()
       })
-    })
+    }
   })
 })

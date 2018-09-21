@@ -1,11 +1,10 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import SiteNav from "../SiteNav"
 import SiteLinks from "../SiteLinks"
 
 class SiteSidebar extends React.Component {
   render() {
-    const isHome = this.props.location.pathname === `/`
     const { siteMetadata } = this.props.data.site
     // TODO, deal with image more nice like
 
@@ -14,7 +13,10 @@ class SiteSidebar extends React.Component {
         <div className="card-image">
           <Link to={`/`}>
             <figure className="image">
-              <img src="https://camo.githubusercontent.com/9c70ec950802d744cd3bccaa97fadbfdd7c8f2a9/68747470733a2f2f7777772e6761747362796a732e6f72672f6761747362792d6e656761746976652e737667" />
+              <img
+                src="https://camo.githubusercontent.com/ac31ac54c2013850b0fb8a3a4926f4718a398fb3/68747470733a2f2f7777772e6761747362796a732e6f72672f6d6f6e6f6772616d2e737667"
+                alt="Gatsby logo"
+              />
             </figure>
           </Link>
         </div>

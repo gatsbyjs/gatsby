@@ -1,23 +1,36 @@
 // @flow
-import Joi from "joi"
-import chalk from "chalk"
+const Joi = require(`joi`)
+const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
-const glob = require(`glob`)
+const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
-
-const { joinPath } = require(`../utils/path`)
-const {
-  getNode,
-  hasNodeChanged,
-  trackSubObjectsToRootNodeId,
-} = require(`./index`)
+const fs = require(`fs`)
+const kebabHash = require(`kebab-hash`)
+const { hasNodeChanged, getNode } = require(`./index`)
+const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
-import * as joiSchemas from "../joi-schemas/joi"
-import { generateComponentChunkName } from "../utils/js-chunk-names"
+const fileExistsSync = require(`fs-exists-cached`).sync
+const joiSchemas = require(`../joi-schemas/joi`)
+const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
 
 const actions = {}
+
+const findChildrenRecursively = (children = []) => {
+  children = children.concat(
+    ...children.map(child => {
+      const newChildren = getNode(child).children
+      if (_.isArray(newChildren) && newChildren.length > 0) {
+        return findChildrenRecursively(newChildren)
+      } else {
+        return []
+      }
+    })
+  )
+
+  return children
+}
 
 type Job = {
   id: string,
@@ -25,14 +38,6 @@ type Job = {
 type PageInput = {
   path: string,
   component: string,
-  layout?: string,
-  context?: Object,
-}
-type LayoutInput = {
-  id?: string,
-  machineId?: string,
-  component: string,
-  layout?: string,
   context?: Object,
 }
 
@@ -44,28 +49,22 @@ type Page = {
   internalComponentName: string,
   jsonName: string,
   componentChunkName: string,
-  layout: ?string,
   updatedAt: number,
-}
-
-type Layout = {
-  id: any,
-  context: Object,
-  component: string,
-  componentWrapperPath: string,
-  componentChunkName: string,
-  internalComponentName: string,
-  jsonName: string,
-  isLayout: true,
 }
 
 type Plugin = {
   name: string,
 }
 
+type ActionOptions = {
+  traceId: ?string,
+  parentSpan: ?Object,
+  followsSpan: ?Object,
+}
+
 /**
  * Delete a page
- * @param {Object} page a page object with at least the path set
+ * @param {Object} page a page object
  * @param {string} page.path The path of the page
  * @param {string} page.component The absolute path to the page component
  * @example
@@ -78,7 +77,13 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(_.camelCase, _.upperFirst)
+const pascalCase = _.flow(
+  _.camelCase,
+  _.upperFirst
+)
+const hasWarnedForPageComponent = new Set()
+const fileOkCache = {}
+
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documenation about creating pages.
@@ -86,14 +91,12 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
- * to the component `this.props.pathContext` as well as to the graphql query
+ * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
  *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
- *   // If you have a layout component at src/layouts/blog-layout.js
- *   layout: `blog-layout`,
  *   // The context is passed as props to the component as well
  *   // as into the component's GraphQL query.
  *   context: {
@@ -101,27 +104,133 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  *   },
  * })
  */
-actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
-  let jsonName = `${_.kebabCase(page.path)}.json`
-  let internalComponentName = `Component${pascalCase(page.path)}`
-
-  if (jsonName === `.json`) {
-    jsonName = `index.json`
-    internalComponentName = `ComponentIndex`
+actions.createPage = (
+  page: PageInput,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions
+) => {
+  let noPageOrComponent = false
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
   }
-  let layout = page.layout || null
-  // If no layout is set we try fallback to `/src/layouts/index`.
-  if (
-    !layout &&
-    glob.sync(
-      joinPath(store.getState().program.directory, `src/layouts/index.*`)
-    ).length
-  ) {
-    layout = `index`
+  if (!page.path) {
+    const message = `${name} must set the page path when creating a page`
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+    } else {
+      return message
+    }
+    noPageOrComponent = true
+  }
+
+  // Validate that the context object doesn't overlap with any core page fields
+  // as this will cause trouble when running graphql queries.
+  if (_.isObject(page.context)) {
+    const reservedFields = [
+      `path`,
+      `matchPath`,
+      `component`,
+      `componentChunkName`,
+      `pluginCreator___NODE`,
+      `pluginCreatorName`,
+    ]
+    const invalidFields = Object.keys(_.pick(page.context, reservedFields))
+
+    const singularMessage = `${name} used a reserved field name in the context object when creating a page:`
+    const pluralMessage = `${name} used reserved field names in the context object when creating a page:`
+    if (invalidFields.length > 0) {
+      const error = `${
+        invalidFields.length === 1 ? singularMessage : pluralMessage
+      }
+
+${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
+
+${JSON.stringify(page, null, 4)}
+
+Data in "context" is passed to GraphQL as potential arguments when running the
+page query.
+
+When arguments for GraphQL are constructed, the context object is combined with
+the page object so *both* page object and context data are available as
+arguments. So you don't need to add the page "path" to the context as it's
+already available in GraphQL. If a context field duplicates a field already
+used by the page object, this can break functionality within Gatsby so must be
+avoided.
+
+Please choose another name for the conflicting fields.
+
+The following fields are used by the page object and should be avoided.
+
+${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
+
+            `
+      if (process.env.NODE_ENV === `test`) {
+        return error
+        // Only error if the context version is different than the page
+        // version.  People in v1 often thought that they needed to also pass
+        // the path to context for it to be available in GraphQL
+      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
+        report.panic(error)
+      } else {
+        if (!hasWarnedForPageComponent.has(page.component)) {
+          report.warn(error)
+          hasWarnedForPageComponent.add(page.component)
+        }
+      }
+    }
+  }
+
+  // Don't check if the component exists during tests as we use a lot of fake
+  // component paths.
+  if (process.env.NODE_ENV !== `test`) {
+    if (!fileExistsSync(page.component)) {
+      const message = `${name} created a page with a component that doesn't exist`
+      console.log(``)
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+      noPageOrComponent = true
+    }
+  }
+
+  if (!page.component || !path.isAbsolute(page.component)) {
+    const message = `${name} must set the absolute path to the page component when create creating a page`
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      console.log(``)
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+    } else {
+      return message
+    }
+    noPageOrComponent = true
+  }
+
+  if (noPageOrComponent) {
+    console.log(``)
+    console.log(
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+    )
+    console.log(``)
+    process.exit(1)
+  }
+
+  let jsonName
+  let internalComponentName
+  if (page.path === `/`) {
+    jsonName = `index`
+    internalComponentName = `ComponentIndex`
+  } else {
+    jsonName = `${kebabHash(page.path)}`
+    internalComponentName = `Component${pascalCase(page.path)}`
   }
 
   let internalPage: Page = {
-    layout,
     jsonName,
     internalComponentName,
     path: page.path,
@@ -138,111 +247,118 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     internalPage.path = `/${internalPage.path}`
   }
 
-  const result = Joi.validate(internalPage, joiSchemas.pageSchema)
-  if (result.error) {
-    console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(internalPage)
-    return null
+  // Validate that the page component imports React and exports something
+  // (hopefully a component).
+  //
+  // Only run validation once during builds.
+  if (
+    !internalPage.component.includes(`/.cache/`) &&
+    (process.env.NODE_ENV === `production` &&
+      !fileOkCache[internalPage.component])
+  ) {
+    const fileName = internalPage.component
+    const fileContent = fs.readFileSync(fileName, `utf-8`)
+    let notEmpty = true
+    let includesDefaultExport = true
+
+    if (fileContent === ``) {
+      notEmpty = false
+    }
+
+    if (
+      !fileContent.includes(`export default`) &&
+      !fileContent.includes(`module.exports`) &&
+      !fileContent.includes(`exports.default`)
+    ) {
+      includesDefaultExport = false
+    }
+    if (!notEmpty || !includesDefaultExport) {
+      const relativePath = path.relative(
+        store.getState().program.directory,
+        fileName
+      )
+
+      if (!notEmpty) {
+        console.log(``)
+        console.log(
+          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
+        )
+        console.log(``)
+        // TODO actually do die during builds.
+        // process.exit(1)
+      }
+
+      if (!includesDefaultExport) {
+        console.log(``)
+        console.log(
+          `[${fileName}] The page component must export a React component for it to be valid`
+        )
+        console.log(``)
+      }
+
+      // TODO actually do die during builds.
+      // process.exit(1)
+    }
+
+    fileOkCache[internalPage.component] = true
   }
 
   return {
+    ...actionOptions,
     type: `CREATE_PAGE`,
     plugin,
-    traceId,
     payload: internalPage,
   }
 }
 
 /**
- * Delete a layout
- * @param {string} layout a layout object with at least the name set
- * @example
- * deleteLayout(layout)
- */
-actions.deleteLayout = (layout: Layout, plugin?: Plugin) => {
-  return {
-    type: `DELETE_LAYOUT`,
-    payload: layout,
-  }
-}
-
-/**
- * Create a layout. Generally layouts are created automatically by placing a
- * React component in the `src/layouts/` directory. This action should be used
- * if loading layouts from an NPM package or from a non-standard location.
- * @param {Object} layout a layout object
- * @param {string} layout.component The absolute path to the component for this layout
- * @example
- * createLayout({
- *   component: path.resolve(`./src/templates/myNewLayout.js`),
- *   id: 'custom-id', // If no id is provided, the filename will be used as id.
- *   context: {
- *     title: `My New Layout`
- *   }
- * })
- */
-actions.createLayout = (
-  layout: LayoutInput,
-  plugin?: Plugin,
-  traceId?: string
-) => {
-  let id = layout.id || path.parse(layout.component).name
-  // Add a "machine" id as a universal ID to differentiate layout from
-  // page components.
-  const machineId = `layout---${id}`
-  let componentWrapperPath = joinPath(
-    store.getState().program.directory,
-    `.cache`,
-    `layouts`,
-    `${id}.js`
-  )
-
-  let internalLayout: Layout = {
-    id,
-    machineId,
-    componentWrapperPath,
-    isLayout: true,
-    jsonName: `layout-${_.kebabCase(id)}.json`,
-    internalComponentName: `Component-layout-${pascalCase(id)}`,
-    component: layout.component,
-    componentChunkName: generateComponentChunkName(layout.component),
-    // Ensure the page has a context object
-    context: layout.context || {},
-  }
-
-  const result = Joi.validate(internalLayout, joiSchemas.layoutSchema)
-
-  if (result.error) {
-    console.log(
-      chalk.blue.bgYellow(`The upserted layout didn't pass validation`)
-    )
-    console.log(chalk.bold.red(result.error))
-    console.log(internalLayout)
-    return null
-  }
-
-  return {
-    type: `CREATE_LAYOUT`,
-    plugin,
-    traceId,
-    payload: internalLayout,
-  }
-}
-
-/**
  * Delete a node
- * @param {string} nodeId a node id
- * @param {object} node the node object
+ * @param {object} $0
+ * @param {object} $0.node the node object
  * @example
- * deleteNode(node.id, node)
+ * deleteNode({node: node})
  */
-actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
-  return {
+actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
+  let node = _.get(options, `node`)
+
+  // Check if using old method signature. Warn about incorrect usage but get
+  // node from nodeID anyway.
+  if (typeof options === `string`) {
+    console.warn(
+      `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
+    )
+
+    if (args[0] && args[0].name) {
+      // `plugin` used to be the third argument
+      console.log(`"deleteNode" was called by ${args[0].name}`)
+    }
+
+    node = getNode(options)
+  }
+
+  let deleteDescendantsActions
+  // It's possible the file node was never created as sometimes tools will
+  // write and then immediately delete temporary files to the file system.
+  if (node) {
+    // Also delete any nodes transformed from this one.
+    const descendantNodes = findChildrenRecursively(node.children)
+    if (descendantNodes.length > 0) {
+      deleteDescendantsActions = descendantNodes.map(n =>
+        actions.deleteNode({ node: getNode(n) }, plugin)
+      )
+    }
+  }
+
+  const deleteAction = {
     type: `DELETE_NODE`,
     plugin,
-    node,
-    payload: nodeId,
+    payload: node,
+  }
+
+  if (deleteDescendantsActions) {
+    return [...deleteDescendantsActions, deleteAction]
+  } else {
+    return deleteAction
   }
 }
 
@@ -253,10 +369,34 @@ actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
  * deleteNodes([`node1`, `node2`])
  */
 actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  return {
+  console.log(
+    `The "deleteNodes" action is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead.`
+  )
+  if (plugin && plugin.name) {
+    console.log(`"deleteNodes" was called by ${plugin.name}`)
+  }
+
+  // Also delete any nodes transformed from these.
+  const descendantNodes = _.flatten(
+    nodes.map(n => findChildrenRecursively(getNode(n).children))
+  )
+  let deleteDescendantsActions
+  if (descendantNodes.length > 0) {
+    deleteDescendantsActions = descendantNodes.map(n =>
+      actions.deleteNode({ node: getNode(n) }, plugin)
+    )
+  }
+
+  const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
     payload: nodes,
+  }
+
+  if (deleteDescendantsActions) {
+    return [...deleteDescendantsActions, deleteNodesAction]
+  } else {
+    return deleteNodesAction
   }
 }
 
@@ -267,7 +407,7 @@ const typeOwners = {}
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
  * derived from another node, set that node as the parent. Otherwise it can
- * just be an empty string.
+ * just be `null`.
  * @param {Array} node.children An array of children node IDs. If you're
  * creating the children nodes while creating the parent node, add the
  * children node IDs here directly. If you're adding a child node to a
@@ -295,6 +435,10 @@ const typeOwners = {}
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
+ * @param {string} node.internal.description An optional field. Human
+ * readable description of what this node represent / its source. It will
+ * be displayed when type conflicts are found, making it easier to find
+ * and correct type conflicts.
  * @example
  * createNode({
  *   // Data for the node.
@@ -315,10 +459,15 @@ const typeOwners = {}
  *       .digest(`hex`),
  *     mediaType: `text/markdown`, // optional
  *     content: JSON.stringify(fieldData), // optional
+ *     description: `Cool Service: "Title of entry"`, // optional
  *   }
  * })
  */
-actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
+actions.createNode = (
+  node: any,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions = {}
+) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -332,12 +481,22 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     node.internal = {}
   }
 
+  // Ensure the new node has a children array.
+  if (!node.array && !_.isArray(node.children)) {
+    node.children = []
+  }
+
+  // Ensure the new node has a parent field
+  if (!node.parent) {
+    node.parent = null
+  }
+
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
     console.log(JSON.stringify(node, null, 4))
     console.log(
       chalk.bold.red(
-        `The node internal.owner field is set automatically by Gatsby and not by plugin`
+        `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
     process.exit(1)
@@ -377,7 +536,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     )
   }
 
-  trackSubObjectsToRootNodeId(node)
+  trackInlineObjectsInRootNode(node)
 
   const oldNode = getNode(node.id)
 
@@ -422,21 +581,45 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     }
   }
 
+  if (actionOptions.parentSpan) {
+    actionOptions.parentSpan.setTag(`nodeId`, node.id)
+    actionOptions.parentSpan.setTag(`nodeType`, node.id)
+  }
+
+  let deleteAction
+  let updateNodeAction
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
-    return {
+    updateNodeAction = {
       type: `TOUCH_NODE`,
       plugin,
-      traceId,
+      ...actionOptions,
       payload: node.id,
     }
   } else {
-    return {
+    // Remove any previously created descendant nodes as they're all due
+    // to be recreated.
+    if (oldNode) {
+      const descendantNodes = findChildrenRecursively(oldNode.children)
+      if (descendantNodes.length > 0) {
+        deleteAction = descendantNodes.map(n =>
+          actions.deleteNode({ node: getNode(n) })
+        )
+      }
+    }
+
+    updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
-      traceId,
+      ...actionOptions,
       payload: node,
     }
+  }
+
+  if (deleteAction) {
+    return [deleteAction, updateNodeAction]
+  } else {
+    return updateNodeAction
   }
 }
 
@@ -446,11 +629,27 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {string} nodeId The id of a node.
+ * @param {Object} $0
+ * @param {string} $0.nodeId The id of a node
  * @example
- * touchNode(`a-node-id`)
+ * touchNode({ nodeId: `a-node-id` })
  */
-actions.touchNode = (nodeId: string, plugin?: Plugin) => {
+actions.touchNode = (options: any, plugin?: Plugin) => {
+  let nodeId = _.get(options, `nodeId`)
+
+  // Check if using old method signature. Warn about incorrect usage
+  if (typeof options === `string`) {
+    console.warn(
+      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`
+    )
+
+    if (plugin && plugin.name) {
+      console.log(`"touchNode" was called by ${plugin.name}`)
+    }
+
+    nodeId = options
+  }
+
   return {
     type: `TOUCH_NODE`,
     plugin,
@@ -470,7 +669,7 @@ type CreateNodeInput = {
  * key on the extended node object.
  *
  * Once a plugin has claimed a field name the field name can't be used by
- * other plugins.  Also since node's are immutable, you can't mutate the node
+ * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
@@ -490,7 +689,7 @@ type CreateNodeInput = {
 actions.createNodeField = (
   { node, name, value, fieldName, fieldValue }: CreateNodeInput,
   plugin: Plugin,
-  traceId?: string
+  actionOptions?: ActionOptions
 ) => {
   if (fieldName) {
     console.warn(
@@ -516,8 +715,15 @@ actions.createNodeField = (
     node.fields = {}
   }
 
+  /**
+   * Normalized name of the field that will be used in schema
+   */
+  const schemaFieldName = _.includes(name, `___NODE`)
+    ? name.split(`___`)[0]
+    : name
+
   // Check that this field isn't owned by another plugin.
-  const fieldOwner = node.internal.fieldOwners[name]
+  const fieldOwner = node.internal.fieldOwners[schemaFieldName]
   if (fieldOwner && fieldOwner !== plugin.name) {
     throw new Error(
       stripIndent`
@@ -533,12 +739,12 @@ actions.createNodeField = (
 
   // Update node
   node.fields[name] = value
-  node.internal.fieldOwners[name] = plugin.name
+  node.internal.fieldOwners[schemaFieldName] = plugin.name
 
   return {
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    traceId,
+    ...actionOptions,
     payload: node,
   }
 }
@@ -614,7 +820,7 @@ actions.deleteComponentsDependencies = (paths: string[]) => {
 }
 
 /**
- * When the query watcher extracts a graphq query, it calls
+ * When the query watcher extracts a GraphQL query, it calls
  * this to store the query with its component.
  * @private
  */
@@ -631,6 +837,165 @@ actions.replaceComponentQuery = ({
       query,
       componentPath,
     },
+  }
+}
+
+/**
+ * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
+ * components, it calls this to store the query with its component.
+ * @private
+ */
+actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
+  return {
+    type: `REPLACE_STATIC_QUERY`,
+    plugin,
+    payload: args,
+  }
+}
+
+/**
+ * Merge additional configuration into the current webpack config. A few
+ * configurations options will be ignored if set, in order to try prevent accidental breakage.
+ * Specifically, any change to `entry`, `output`, `target`, or `resolveLoaders` will be ignored.
+ *
+ * For full control over the webpack config, use `replaceWebpackConfig()`.
+ *
+ * @param {Object} config partial webpack config, to be merged into the current one
+ */
+actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  return {
+    type: `SET_WEBPACK_CONFIG`,
+    plugin,
+    payload: config,
+  }
+}
+
+/**
+ * Completely replace the webpack config for the current stage. This can be
+ * dangerous and break Gatsby if certain configuration options are changed.
+ *
+ * Generally only useful for cases where you need to handle config merging logic
+ * yourself, in which case consider using `webpack-merge`.
+ *
+ * @param {Object} config complete webpack config
+ */
+actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  return {
+    type: `REPLACE_WEBPACK_CONFIG`,
+    plugin,
+    payload: config,
+  }
+}
+
+/**
+ * Set top-level Babel options. Plugins and presets will be ignored. Use
+ * setBabelPlugin and setBabelPreset for this.
+ * @param {Object} config An options object in the shape of a normal babelrc javascript object
+ * @example
+ * setBabelOptions({
+ *   options: {
+ *     sourceMaps: `inline`,
+ *   }
+ * })
+ */
+actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!_.isObject(options)) {
+    console.log(`${name} must pass an object to "setBabelOptions"`)
+    console.log(JSON.stringify(options, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+
+  if (!_.isObject(options.options)) {
+    console.log(`${name} must pass options to "setBabelOptions"`)
+    console.log(JSON.stringify(options, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+
+  return {
+    type: `SET_BABEL_OPTIONS`,
+    plugin,
+    payload: options,
+  }
+}
+
+/**
+ * Add new plugins or merge options into existing Babel plugins.
+ * @param {Object} config A config object describing the Babel plugin to be added.
+ * @param {string} config.name The name of the Babel plugin
+ * @param {Object} config.options Options to pass to the Babel plugin.
+ * @example
+ * setBabelPlugin({
+ *   name:  `babel-plugin-emotion`,
+ *   options: {
+ *     sourceMap: true,
+ *   },
+ * })
+ */
+actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!config.name) {
+    console.log(`${name} must set the name of the Babel plugin`)
+    console.log(JSON.stringify(config, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+  if (!config.options) {
+    config.options = {}
+  }
+  return {
+    type: `SET_BABEL_PLUGIN`,
+    plugin,
+    payload: config,
+  }
+}
+
+/**
+ * Add new presets or merge options into existing Babel presets.
+ * @param {Object} config A config object describing the Babel plugin to be added.
+ * @param {string} config.name The name of the Babel preset.
+ * @param {Object} config.options Options to pass to the Babel preset.
+ * @example
+ * setBabelPreset({
+ *   name: `@babel/preset-react`,
+ *   options: {
+ *     pragma: `Glamor.createElement`,
+ *   },
+ * })
+ */
+actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
+  // Validate
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!config.name) {
+    console.log(`${name} must set the name of the Babel preset`)
+    console.log(JSON.stringify(config, null, 4))
+    if (process.env.NODE_ENV !== `test`) {
+      process.exit(1)
+    }
+  }
+  if (!config.options) {
+    config.options = {}
+  }
+  return {
+    type: `SET_BABEL_PRESET`,
+    plugin,
+    payload: config,
   }
 }
 
@@ -708,15 +1073,16 @@ actions.setPluginStatus = (
 }
 
 /**
- * Create a redirect from one page to another.  Redirect data can be used to
- * configure hosting environments like Netlify (automatically handled with the
- * [Netlify plugin](/packages/gatsby-plugin-netlify/)).
+ * Create a redirect from one page to another. Server redirects don't work out
+ * of the box. You must have a plugin setup to integrate the redirect data with
+ * your hosting technology e.g. the [Netlify
+ * plugin](/packages/gatsby-plugin-netlify/)).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
- * @param {string} redirect.isPermanent This is a permanent redirect; defaults to temporary
+ * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
- * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
@@ -745,5 +1111,36 @@ actions.createRedirect = ({
   }
 }
 
+/**
+ * Add a third-party schema to be merged into main schema. Schema has to be a
+ * graphql-js GraphQLSchema object.
+ *
+ * This schema is going to be merged as-is. This can easily break the main
+ * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
+ * (by eg namespacing the schema).
+ *
+ * @param {Object} $0
+ * @param {GraphQLSchema} $0.schema GraphQL schema to add
+ */
+actions.addThirdPartySchema = (
+  { schema }: { schema: GraphQLSchema },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `ADD_THIRD_PARTY_SCHEMA`,
+    plugin,
+    traceId,
+    payload: schema,
+  }
+}
+
+/**
+ * All action creators wrapped with a dispatch.
+ */
 exports.actions = actions
+
+/**
+ * All action creators wrapped with a dispatch. - *DEPRECATED*
+ */
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)

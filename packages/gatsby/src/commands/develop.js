@@ -1,6 +1,8 @@
 /* @flow */
 
 const url = require(`url`)
+const glob = require(`glob`)
+const fs = require(`fs`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
@@ -20,6 +22,10 @@ const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
 const sourceNodes = require(`../utils/source-nodes`)
+const websocketManager = require(`../utils/websocket-manager`)
+const getSslCert = require(`../utils/get-ssl-cert`)
+const slash = require(`slash`)
+const { initTracer } = require(`../utils/tracer`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -64,14 +70,13 @@ async function startServer(program) {
 
   await createIndexHtml()
 
-  const compilerConfig = await webpackConfig(
+  const devConfig = await webpackConfig(
     program,
     directory,
     `develop`,
     program.port
   )
 
-  const devConfig = compilerConfig.resolve()
   const compiler = webpack(devConfig)
 
   /**
@@ -80,7 +85,7 @@ async function startServer(program) {
   const app = express()
   app.use(
     require(`webpack-hot-middleware`)(compiler, {
-      log: () => {},
+      log: false,
       path: `/__webpack_hmr`,
       heartbeat: 10 * 1000,
     })
@@ -126,15 +131,22 @@ async function startServer(program) {
     res.end()
   })
 
-  app.use(express.static(__dirname + `/public`))
+  app.use(express.static(`public`))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
-      noInfo: true,
-      quiet: true,
+      logLevel: `trace`,
       publicPath: devConfig.output.publicPath,
+      stats: `errors-only`,
     })
   )
+
+  // Expose access to app for advanced use cases
+  const { developMiddleware } = store.getState().config
+
+  if (developMiddleware) {
+    developMiddleware(app)
+  }
 
   // Set up API proxy.
   const { proxy } = store.getState().config
@@ -145,33 +157,6 @@ async function startServer(program) {
       req.pipe(request(proxiedUrl)).pipe(res)
     })
   }
-
-  // Check if the file exists in the public folder.
-  app.get(`*`, (req, res, next) => {
-    // Load file but ignore errors.
-    res.sendFile(
-      directoryPath(`/public${decodeURIComponent(req.path)}`),
-      err => {
-        // No err so a file was sent successfully.
-        if (!err || !err.path) {
-          next()
-        } else if (err) {
-          // There was an error. Let's check if the error was because it
-          // couldn't find an HTML file. We ignore these as we want to serve
-          // all HTML from our single empty SSR html file.
-          const parsedPath = parsePath(err.path)
-          if (
-            parsedPath.extname === `` ||
-            parsedPath.extname.startsWith(`.html`)
-          ) {
-            next()
-          } else {
-            res.status(404).end()
-          }
-        }
-      }
-    )
-  })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
@@ -194,13 +179,14 @@ async function startServer(program) {
   /**
    * Set up the HTTP server and socket.io.
    **/
+  let server = require(`http`).Server(app)
 
-  const server = require(`http`).Server(app)
-  const io = require(`socket.io`)(server)
-
-  io.on(`connection`, socket => {
-    socket.join(`clients`)
-  })
+  // If a SSL cert exists in program, use it with `createServer`.
+  if (program.ssl) {
+    server = require(`https`).createServer(program.ssl, app)
+  }
+  websocketManager.init({ server, directory: program.directory })
+  const socket = websocketManager.getSocket()
 
   const listener = server.listen(program.port, program.host, err => {
     if (err) {
@@ -209,7 +195,7 @@ async function startServer(program) {
         report.panic(
           `Unable to start Gatsby on port ${
             program.port
-          } as there's already a process listing on that port.`
+          } as there's already a process listening on that port.`
         )
         return
       }
@@ -220,21 +206,42 @@ async function startServer(program) {
 
   // Register watcher that rebuilds index.html every time html.js changes.
   const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
-    directoryPath(path)
+    slash(directoryPath(path))
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
-    io.to(`clients`).emit(`reload`)
+    socket.to(`clients`).emit(`reload`)
   })
 
   return [compiler, listener]
 }
 
 module.exports = async (program: any) => {
+  initTracer(program.openTracingConfigFile)
+
   const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
+
+  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
+  // used together
+  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
+    report.panic(
+      `for custom ssl --https, --cert-file, and --key-file must be used together`
+    )
+  }
+
+  // Check if https is enabled, then create or get SSL cert.
+  // Certs are named after `name` inside the project's package.json.
+  if (program.https) {
+    program.ssl = await getSslCert({
+      name: program.sitePackageJson.name,
+      certFile: program[`cert-file`],
+      keyFile: program[`key-file`],
+      directory: program.directory,
+    })
+  }
 
   let compiler
   await new Promise(resolve => {
@@ -351,22 +358,72 @@ module.exports = async (program: any) => {
     console.log()
   }
 
+  function printDeprecationWarnings() {
+    const deprecatedApis = [`boundActionCreators`, `pathContext`]
+    const fixMap = {
+      boundActionCreators: {
+        newName: `actions`,
+        docsLink: `https://gatsby.app/boundActionCreators`,
+      },
+      pathContext: {
+        newName: `pageContext`,
+        docsLink: `https://gatsby.app/pathContext`,
+      },
+    }
+    const deprecatedLocations = {}
+    deprecatedApis.forEach(api => (deprecatedLocations[api] = []))
+
+    glob
+      .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
+      .forEach(file => {
+        const fileText = fs.readFileSync(file)
+        const matchingApis = deprecatedApis.filter(
+          api => fileText.indexOf(api) !== -1
+        )
+        matchingApis.forEach(api => deprecatedLocations[api].push(file))
+      })
+
+    deprecatedApis.forEach(api => {
+      if (deprecatedLocations[api].length) {
+        console.log(
+          `%s %s %s %s`,
+          chalk.cyan(api),
+          chalk.yellow(`is deprecated. Please use`),
+          chalk.cyan(fixMap[api].newName),
+          chalk.yellow(
+            `instead. For migration instructions, see ${
+              fixMap[api].docsLink
+            }\nCheck the following files:`
+          )
+        )
+        console.log()
+        deprecatedLocations[api].forEach(file => console.log(file))
+        console.log()
+      }
+    })
+  }
+
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin(`done`, stats => {
+  compiler.hooks.done.tapAsync(`print getsby instructions`, (stats, done) => {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true))
-    const urls = prepareUrls(`http`, program.host, program.port)
-    const isSuccessful = !messages.errors.length && !messages.warnings.length
+    const urls = prepareUrls(
+      program.ssl ? `https` : `http`,
+      program.host,
+      program.port
+    )
+    const isSuccessful = !messages.errors.length
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))
     // }
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
+      printDeprecationWarnings()
       if (program.open) {
         require(`opn`)(urls.localUrlForBrowser)
       }
@@ -403,5 +460,7 @@ module.exports = async (program: any) => {
     // " to the line before.\n"
     // )
     // }
+
+    done()
   })
 }

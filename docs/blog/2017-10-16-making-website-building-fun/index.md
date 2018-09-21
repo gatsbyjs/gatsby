@@ -3,6 +3,7 @@ title: "Making website building fun"
 date: 2017-10-16
 author: "Kyle Mathews"
 typora-copy-images-to: ./
+tags: ["right-building-blocks", "gatsby-image", "react", "graphql", "plugins"]
 ---
 
 I still remember the first non-trivial React component I built in 2014—not long
@@ -20,14 +21,14 @@ simple I realized you almost don't need documentation. A React header component
 using it would look like this:
 
 ```jsx
-import React from "react";
-import Headroom from "react-headroom";
+import React from "react"
+import Headroom from "react-headroom"
 
 export default () => (
   <Headroom>
     <h1>You can put anything you'd like inside the Headroom Component</h1>
   </Headroom>
-);
+)
 ```
 
 Having coming from years of building things with Backbone.js and jQuery where
@@ -49,11 +50,11 @@ Compare this with the minimum code necessary for the original headroom.js.
 
 ```js
 // grab the element
-var myElement = document.querySelector("header");
+var myElement = document.querySelector("header")
 // construct an instance of Headroom, passing the element
-var headroom = new Headroom(myElement);
+var headroom = new Headroom(myElement)
 // initialise
-headroom.init();
+headroom.init()
 ```
 
 #### CSS
@@ -202,15 +203,15 @@ Here's what a really simple Gatsby page component using gatsby-image would look
 like:
 
 ```jsx
-import React from "react";
-import Img from "gatsby-image";
+import React from "react"
+import Img from "gatsby-image"
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
-);
+)
 ```
 
 So this is all very nice and it's far better to be able to use this from NPM vs.
@@ -226,12 +227,12 @@ before we get to actually coding the frontend.
 
 For example, how does a single image typically get on a website?
 
-1. A page is designed
-2. Specific images are chosen
-3. The images are resized (with ideally multiple thumbnails to fit different
-   devices)
-4. And finally, the image(s) are included in the HTML/CSS/JS (or React
-   component) for the page.
+1.  A page is designed
+2.  Specific images are chosen
+3.  The images are resized (with ideally multiple thumbnails to fit different
+    devices)
+4.  And finally, the image(s) are included in the HTML/CSS/JS (or React
+    component) for the page.
 
 What makes gatsby-image really interesting is it's _seamlessly integrated into
 Gatsby's data layer_ which has native image processing capabilities.
@@ -248,21 +249,21 @@ The code I showed above was missing the GraphQL query. A full image component
 would look like:
 
 ```jsx
-import React from "react";
-import Img from "gatsby-image";
+import React from "react"
+import Img from "gatsby-image"
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fixed={data.file.childImageSharp.fixed} />
   </div>
-);
+)
 
 export const query = graphql`
   query GatsbyImageSampleQuery {
     file(relativePath: { eq: "images/an-image.jpeg" }) {
       childImageSharp {
-        resolutions(width: l25, height: 125) {
+        fixed(width: l25, height: 125) {
           src
           srcSet
           width
@@ -271,16 +272,16 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 So instead of a long pipeline of tasks to setup optimized images for your site,
 the steps now are:
 
-1. Install gatsby-image
-2. Decide what size of image you need (125x125 in the example above)
-3. Add your query and the gatsby-image component to your page
-4. And… that's it!
+1.  Install gatsby-image
+2.  Decide what size of image you need (125x125 in the example above)
+3.  Add your query and the gatsby-image component to your page
+4.  And… that's it!
 
 Now playing with images is fun! Want to tweak your design? No problem, just
 change your query a bit and see how the page updates. By eliminating the

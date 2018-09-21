@@ -58,10 +58,10 @@ range of lines to highlight, relative to a `highlight-range` comment.
 #### JavaScript example
 
 ```js
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"
+import ReactDOM from "react-dom"
 
-const name = "Brian"; // highlight-line
+const name = "Brian" // highlight-line
 
 ReactDOM.render(
   <div>
@@ -69,7 +69,7 @@ ReactDOM.render(
     <h1>Hello, ${name}!</h1>
   </div>,
   document.getElementById("root")
-);
+)
 ```
 
 #### CSS example
@@ -114,25 +114,51 @@ quz: "highlighted"
 
 `npm install --save gatsby-remark-embed-snippet`
 
-## Usage
+## How to use
+
+Important: This module must appear before `gatsby-remark-prismjs` in your plugins array, or the markup will have already been transformed into a code block and this plugin will fail to detect it and inline the file.
 
 ```javascript
 // In your gatsby-config.js
-{
-  resolve: 'gatsby-remark-embed-snippet',
-  options: {
-    // Class prefix for <pre> tags containing syntax highlighting;
-    // defaults to 'language-' (eg <pre class="language-js">).
-    // If your site loads Prism into the browser at runtime,
-    // (eg for use with libraries like react-live),
-    // you may use this to prevent Prism from re-processing syntax.
-    // This is an uncommon use-case though;
-    // If you're unsure, it's best to use the default value.
-    classPrefix: 'language-',
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              // Class prefix for <pre> tags containing syntax highlighting;
+              // defaults to 'language-' (eg <pre class="language-js">).
+              // If your site loads Prism into the browser at runtime,
+              // (eg for use with libraries like react-live),
+              // you may use this to prevent Prism from re-processing syntax.
+              // This is an uncommon use-case though;
+              // If you're unsure, it's best to use the default value.
+              classPrefix: "language-",
+            },
+          },
+          {
+            resolve: "gatsby-remark-embed-snippet",
+            options: {
+              // Class prefix for <pre> tags containing syntax highlighting;
+              // defaults to 'language-' (eg <pre class="language-js">).
+              // If your site loads Prism into the browser at runtime,
+              // (eg for use with libraries like react-live),
+              // you may use this to prevent Prism from re-processing syntax.
+              // This is an uncommon use-case though;
+              // If you're unsure, it's best to use the default value.
+              classPrefix: "language-",
 
-    // Example code links are relative to this dir.
-    // eg examples/path/to/file.js
-    directory: `${__dirname}/examples/`,
-  },
-},
+              // Example code links are relative to this dir.
+              // eg examples/path/to/file.js
+              directory: `${__dirname}/examples/`,
+            },
+          },
+        ],
+      },
+    },
+  ],
+}
 ```

@@ -5,7 +5,9 @@ import "typeface-montserrat"
 import "typeface-merriweather"
 
 import profilePic from "./profile-pic.jpg"
-import { rhythm } from "../utils/typography"
+import typography from "../utils/typography"
+
+const { rhythm } = typography
 
 class Bio extends React.Component {
   render() {
@@ -28,7 +30,8 @@ class Bio extends React.Component {
         />
         <p>
           Written by <strong>Kyle Mathews</strong> who lives and works in San
-          Francisco building useful things.{` `}
+          Francisco building useful things.
+          {` `}
           <a href="https://twitter.com/kylemathews">
             You should follow him on Twitter
           </a>

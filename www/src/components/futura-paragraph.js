@@ -1,5 +1,5 @@
-import { rhythm, scale, options } from "../utils/typography"
-import presets from "../utils/presets"
+import React from "react"
+import { options } from "../utils/typography"
 
 const FuturaParagraph = ({ children }) => (
   <p

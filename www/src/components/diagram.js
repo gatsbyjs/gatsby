@@ -2,15 +2,14 @@ import React from "react"
 import { css } from "glamor"
 
 import { rhythm, scale, options } from "../utils/typography"
-import colors from "../utils/colors"
-import presets from "../utils/presets"
-import logo from "../gatsby-negative.svg"
+import presets, { colors } from "../utils/presets"
+import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
-import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
+import { vP } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `249, 245, 255, 1`
+const stripeColor = `255, 255, 255, 0.9`
 const stripeSize = 15
 const stripeAnimation = css.keyframes({
   "0%": {
@@ -19,7 +18,7 @@ const stripeAnimation = css.keyframes({
   "100%": { backgroundPosition: `0 0` },
 })
 const stripeBg = {
-  backgroundColor: presets.sidebar,
+  backgroundColor: colors.ui.whisper,
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
   backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
@@ -48,8 +47,8 @@ const SegmentTitle = ({ children }) => (
     className="Segment-title"
     css={{
       display: `inline`,
-      background: presets.accent,
-      color: `#fff`,
+      background: colors.accent,
+      color: colors.gray.copy,
       borderRadius: presets.radius,
       margin: `0 auto`,
       position: `relative`,
@@ -77,7 +76,7 @@ const VerticalLine = () => (
     <path
       d="M10 40 L10 -10"
       css={{
-        stroke: presets.brandLight,
+        stroke: colors.lilac,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -88,14 +87,14 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.b[0]}`,
+  border: `1px solid ${colors.ui.light}`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: presets.sidebar,
+  background: colors.ui.whisper,
 }
 
 const borderAndBoxShadow = {
-  border: `1px solid ${presets.veryLightPurple}`,
+  border: `1px solid ${colors.ui.light}`,
   background: `#fff`,
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
@@ -129,6 +128,7 @@ const SourceItem = ({ children }) => (
       },
       [presets.Phablet]: {
         flex: `1 1 33%`,
+        maxWidth: `33%`,
       },
     }}
   >
@@ -148,7 +148,7 @@ const SourceItem = ({ children }) => (
 const ItemTitle = ({ children }) => (
   <h3
     css={{
-      color: presets.brand,
+      color: colors.gatsby,
       margin: 0,
       fontStyle: `normal`,
       ...scale(0),
@@ -163,7 +163,7 @@ const ItemDescription = ({ children }) => (
     css={{
       lineHeight: 1.2,
       display: `block`,
-      color: presets.brandLight,
+      color: colors.gatsby,
       [presets.Hd]: {
         fontSize: scale(-1 / 5).fontSize,
       },
@@ -213,7 +213,7 @@ const Gatsby = ({ children }) => (
       </small>
       <span
         css={{
-          color: presets.brand,
+          color: colors.gatsby,
         }}
       >
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
@@ -222,7 +222,7 @@ const Gatsby = ({ children }) => (
   </div>
 )
 
-const Diagram = ({ containerCSS }) => (
+const Diagram = () => (
   <section
     className="Diagram"
     css={{
@@ -231,7 +231,10 @@ const Diagram = ({ containerCSS }) => (
       padding: vP,
       marginTop: rhythm(1),
       textAlign: `center`,
-      ...containerCSS,
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      flex: `1 1 100%`,
+      borderTop: `1px solid ${colors.ui.light}`,
       [presets.Tablet]: {
         marginTop: 0,
       },
@@ -240,7 +243,7 @@ const Diagram = ({ containerCSS }) => (
     <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
     <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
       <FuturaParagraph>
-        Gatsby lets you build blazing-fast sites with <em>your data</em>,
+        Gatsby lets you build blazing fast sites with <em>your data</em>,
         whatever the source. Liberate your sites from legacy CMSs and fly into
         the future.
       </FuturaParagraph>
@@ -291,7 +294,8 @@ const Diagram = ({ containerCSS }) => (
           }}
         >
           <ItemDescription>
-            HTML &middot; CSS &middot;{` `}
+            HTML &middot; CSS &middot;
+            {` `}
             <TechWithIcon icon={ReactJSIcon} height="1.1em">
               React
             </TechWithIcon>

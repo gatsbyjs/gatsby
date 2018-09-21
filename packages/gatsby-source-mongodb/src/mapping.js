@@ -21,7 +21,6 @@ module.exports = function(node, key, text, mediaType, createNode) {
   }
 
   node.children = node.children.concat([mappingNode.id])
-  createNode(mappingNode)
 
-  return mappingNode.id
+  return mappingNode
 }

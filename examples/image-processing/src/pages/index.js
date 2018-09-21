@@ -1,25 +1,27 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
-
+import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
 
 class Index extends React.Component {
   render() {
-    const images = this.props.data.allImageSharp.edges
-    const sizes = this.props.data.sizes.sizes
-    const resolutions = this.props.data.resolution.resolutions
-    const cropDefault = this.props.data.cropDefault.resize
-    const cropBottomLeft = this.props.data.cropBottomLeft.resize
-    const cropEntropy = this.props.data.cropEntropy.resize
-    const cropCenter = this.props.data.cropCenter.resize
-    const sizesDuotoneOriginal = this.props.data.sizesDuotoneOriginal.sizes
-    const sizesDuotone25 = this.props.data.sizesDuotone25.sizes
-    const sizesDuotone50 = this.props.data.sizesDuotone50.sizes
-    const sizesDuotone75 = this.props.data.sizesDuotone75.sizes
-    const sizesDuotone = this.props.data.sizesDuotone.sizes
+    const data = this.props.data
+    const images = data.allImageSharp.edges
+    const fluid = data.fluidImages.childImageSharp.fluid
+    const fixed = data.fixedImages.childImageSharp.fixed
+    const cropDefault = data.cropDefault.childImageSharp.resize
+    const cropBottomLeft = data.cropBottomLeft.childImageSharp.resize
+    const cropEntropy = data.cropEntropy.childImageSharp.resize
+    const cropCenter = data.cropCenter.childImageSharp.resize
+    const fluidDuotoneOriginal = data.fluidDuotoneOriginal.childImageSharp.fluid
+    const fluidDuotone25 = data.fluidDuotone25.childImageSharp.fluid
+    const fluidDuotone50 = data.fluidDuotone50.childImageSharp.fluid
+    const fluidDuotone75 = data.fluidDuotone75.childImageSharp.fluid
+    const fluidDuotone = data.fluidDuotone.childImageSharp.fluid
 
     return (
-      <div>
+      <Layout>
         <p>
           <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-sharp/">
             <code>gatsby-transformer-sharp</code>
@@ -29,7 +31,9 @@ class Index extends React.Component {
           {` `}
           <a href="https://github.com/lovell/sharp">
             Sharp image processing library
-          </a>. With it and{` `}
+          </a>
+          . With it and
+          {` `}
           <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
             Gatsby Image
           </a>
@@ -44,7 +48,13 @@ class Index extends React.Component {
               documentation
             </a>
             {` `}
-            or peep the code of this example site for more information.
+            or peep the
+            {` `}
+            <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing">
+              code
+            </a>
+            {` `}
+            of this example site for more information.
           </strong>
         </p>
 
@@ -62,8 +72,7 @@ class Index extends React.Component {
         </h2>
 
         <p>
-          Easily resize and intelligently crop images given a
-          {` `}
+          Easily resize and intelligently crop images given a{` `}
           <code>width</code>
           {` `}
           and optionally a <code>height</code>.
@@ -74,8 +83,8 @@ class Index extends React.Component {
           {` `}
           <code>rotate</code> option
           {` `}
-          exposes Sharp{`'`}s
-          {` `}
+          exposes Sharp
+          {`'`}s{` `}
           <a href="http://sharp.dimens.io/en/stable/api-operation/#rotate">
             <code>rotate</code>
           </a>
@@ -91,20 +100,20 @@ class Index extends React.Component {
         <ul style={{ ...styles.ul, ...styles.row }}>
           {images.map(image => (
             <li style={styles.column20} key={image.node.resize.src}>
-              <img src={image.node.resize.src} />
+              <img
+                src={image.node.resize.src}
+                alt={image.node.resize.originalName}
+              />
             </li>
           ))}
         </ul>
-
         <p
           style={{
             clear: `left`,
           }}
         >
           We also expose all of Sharp
-          {`'`}
-          s
-          {` `}
+          {`'`}s{` `}
           <a href="http://sharp.dimens.io/en/stable/api-resize/#crop">
             <code>crop</code>
           </a>
@@ -114,17 +123,27 @@ class Index extends React.Component {
         <p>
           The default is
           <code>ATTENTION</code>, which the Sharp documentation describes as
-          {` "`}focus on the region with the highest luminance frequency, colour
-          saturation and presence of skin tones{`"`} – which is why we actually
-          see Mr. Gatsby toasting to us in the first thumbnail:
+          {` "`}
+          focus on the region with the highest luminance frequency, colour
+          saturation and presence of skin tones
+          {`"`} – which is why we actually see Mr. Gatsby toasting to us in the
+          first thumbnail:
         </p>
 
         <ul style={{ ...styles.ul, ...styles.row }}>
           <li style={styles.column25}>
-            <img src={cropDefault.src} />
+            <img
+              src={cropDefault.src}
+              alt={`File ${cropDefault.originalName} with a default crop`}
+            />
           </li>
           <li style={styles.column25}>
-            <img src={cropBottomLeft.src} />
+            <img
+              src={cropBottomLeft.src}
+              alt={`File ${
+                cropBottomLeft.originalName
+              } cropped to the bottom left`}
+            />
             <p>
               <small>
                 <code>cropFocus: SOUTHWEST</code>
@@ -132,7 +151,10 @@ class Index extends React.Component {
             </p>
           </li>
           <li style={styles.column25}>
-            <img src={cropEntropy.src} />
+            <img
+              src={cropEntropy.src}
+              alt={`File ${cropEntropy.originalName} with an "entropy" crop`}
+            />
             <p>
               <small>
                 <code>cropFocus: ENTROPY</code>
@@ -140,7 +162,10 @@ class Index extends React.Component {
             </p>
           </li>
           <li style={styles.column25}>
-            <img src={cropCenter.src} />
+            <img
+              src={cropCenter.src}
+              alt={`File ${cropCenter.originalName} cropped to the centre`}
+            />
             <p>
               <small>
                 <code>cropFocus: CENTER</code>
@@ -155,9 +180,9 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsivesizes">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#fluid">
             <code>
-              <strong>sizes</strong>
+              <strong>fluid</strong>
             </code>
           </a>
         </h2>
@@ -169,19 +194,18 @@ class Index extends React.Component {
         </p>
         <p>
           If the max width of the container for the rendered markdown file is
-          800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400 –
-          enough to provide close to the optimal image size for every device
+          800px, the fluid sizes would then be: 200, 400, 800, 1200, 1600, 2400
+          – enough to provide close to the optimal image size for every device
           size / screen resolution.
         </p>
         <p>
-          On top of that, <code>sizes</code>
+          On top of that, <code>fluid</code>
           {` `}
           returns everything else (namely
           {` `}
           <code>aspectRatio</code>
           {` `}
-          and a
-          {` `}
+          and a{` `}
           <code>base64</code>
           {` `}
           image to use as a placeholder) you need to implement the "blur up"
@@ -201,16 +225,15 @@ class Index extends React.Component {
           {` `}
           <a href="https://www.gatsbyjs.org/packages/gatsby-remark-images/">
             gatsby-remark-images
-          </a>).
+          </a>
+          ).
         </p>
         <p>
           The <code>duotone</code> option (see
           {` `}
           <a href="https://alistapart.com/article/finessing-fecolormatrix">I</a>
-          ,
-          {` `}
-          <a href="http://blog.72lions.com/blog/2015/7/7/duotone-in-js">II</a>
-          ,
+          ,{` `}
+          <a href="http://blog.72lions.com/blog/2015/7/7/duotone-in-js">II</a>,
           {` `}
           <a href="https://ines.io/blog/dynamic-duotone-svg-jade">III</a>
           ), given two hex colors
@@ -230,18 +253,18 @@ class Index extends React.Component {
 
         <h3>
           <small>
-            sizes(duotone:
+            fluid(duotone:
             {` `}
             {`{ `}
             highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
           </small>
         </h3>
 
-        <Img sizes={sizes} />
+        <Img fluid={fluid} />
 
         <h3 style={{ marginTop: rhythm(2) }}>
           <small>
-            sizes(duotone:
+            fluid(duotone:
             {` `}
             {`{ `}
             highlight: "#0ec4f1", shadow: "#192550", opacity: 50 {`}`})
@@ -250,28 +273,31 @@ class Index extends React.Component {
 
         <div style={styles.row}>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotoneOriginal} />
+            <Img fluid={fluidDuotoneOriginal} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone25} />
+            <Img fluid={fluidDuotone25} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone50} />
+            <Img fluid={fluidDuotone50} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone75} />
+            <Img fluid={fluidDuotone75} />
           </div>
           <div style={styles.column20}>
-            <Img sizes={sizesDuotone} />
+            <Img fluid={fluidDuotone} />
           </div>
         </div>
 
         <p>
-          By setting an optional third parameter{` `}
+          By setting an optional third parameter
+          {` `}
           <code>opacity</code> for <code>duotone</code>, a semi-transparent
-          version of the duotone{`'`}d image will be composited over the
-          original allowing the original image and its colors to partially {`"`}shine
-          through{`"`}.
+          version of the duotone
+          {`'`}d image will be composited over the original allowing the
+          original image and its colors to partially {`"`}
+          shine through
+          {`"`}.
         </p>
 
         <h2
@@ -279,8 +305,8 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsiveresolution">
-            <code>resolutions</code>
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#fixed">
+            <code>fixed</code>
           </a>
         </h2>
         <p>
@@ -298,8 +324,8 @@ class Index extends React.Component {
           {` `}
           <code>grayscale</code> option
           {` `}
-          uses Sharp{`'`}s
-          {` `}
+          uses Sharp
+          {`'`}s{` `}
           <a href="http://sharp.dimens.io/en/stable/api-colour/#greyscale">
             <code>greyscale</code>
           </a>
@@ -307,8 +333,8 @@ class Index extends React.Component {
           to convert the source image to 8-bit greyscale, 256 shades of grey.
         </p>
 
-        <Img resolutions={resolutions} />
-      </div>
+        <Img fixed={fixed} />
+      </Layout>
     )
   }
 }
@@ -347,7 +373,7 @@ styles.column25 = {
 export default Index
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allImageSharp {
       edges {
         node {
@@ -359,91 +385,117 @@ export const pageQuery = graphql`
         }
       }
     }
-    sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
-      sizes(
-        duotone: { highlight: "#f00e2e", shadow: "#192550" }
-        traceSVG: {
-          color: "#f00e2e"
-          turnPolicy: TURNPOLICY_MINORITY
-          blackOnWhite: false
+    fluidImages: file(
+      relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    ) {
+      childImageSharp {
+        fluid(
+          duotone: { highlight: "#f00e2e", shadow: "#192550" }
+          traceSVG: {
+            color: "#f00e2e"
+            turnPolicy: TURNPOLICY_MINORITY
+            blackOnWhite: false
+          }
+          toFormat: PNG
+        ) {
+          ...GatsbyImageSharpFluid_tracedSVG
         }
-        toFormat: PNG
-      ) {
-        ...GatsbyImageSharpSizes_tracedSVG
       }
     }
-    sizesDuotone: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
-      sizes(
-        maxWidth: 120
-        duotone: { highlight: "#0ec4f1", shadow: "#192550" }
-        traceSVG: { color: "#1E2151" }
-      ) {
-        ...GatsbyImageSharpSizes_tracedSVG
-      }
-    }
-    sizesDuotone50: imageSharp(
-      id: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    fluidDuotone: file(
+      relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
-      sizes(
-        maxWidth: 120
-        duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 50 }
-        traceSVG: { color: "#A7DEF6" }
-      ) {
-        ...GatsbyImageSharpSizes_tracedSVG
+      childImageSharp {
+        fluid(
+          maxWidth: 120
+          duotone: { highlight: "#0ec4f1", shadow: "#192550" }
+          traceSVG: { color: "#1E2151" }
+        ) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
       }
     }
-    sizesDuotone75: imageSharp(
-      id: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    fluidDuotone50: file(
+      relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
-      sizes(
-        maxWidth: 120
-        duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 75 }
-        traceSVG: { color: "#0ec4f1" }
-      ) {
-        ...GatsbyImageSharpSizes_tracedSVG
+      childImageSharp {
+        fluid(
+          maxWidth: 120
+          duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 50 }
+          traceSVG: { color: "#A7DEF6" }
+        ) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
       }
     }
-    sizesDuotone25: imageSharp(
-      id: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    fluidDuotone75: file(
+      relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
-      sizes(
-        maxWidth: 120
-        traceSVG: { color: "#D1EFFB" }
-        duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 25 }
-      ) {
-        ...GatsbyImageSharpSizes_tracedSVG
+      childImageSharp {
+        fluid(
+          maxWidth: 120
+          duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 75 }
+          traceSVG: { color: "#0ec4f1" }
+        ) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
       }
     }
-    sizesDuotoneOriginal: imageSharp(
-      id: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    fluidDuotone25: file(
+      relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
     ) {
-      sizes(maxWidth: 120, traceSVG: { color: "#e7f7fe" }, toFormat: PNG) {
-        ...GatsbyImageSharpSizes_tracedSVG
+      childImageSharp {
+        fluid(
+          maxWidth: 120
+          traceSVG: { color: "#D1EFFB" }
+          duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 25 }
+        ) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
       }
     }
-    resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
-      resolutions(grayscale: true, width: 500) {
-        ...GatsbyImageSharpResolutions_withWebp
+    fluidDuotoneOriginal: file(
+      relativePath: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    ) {
+      childImageSharp {
+        fluid(maxWidth: 120, traceSVG: { color: "#e7f7fe" }, toFormat: PNG) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
       }
     }
-    cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {
-      resize(width: 180, height: 180) {
-        src
+    fixedImages: file(relativePath: { regex: "/lol.jpg/" }) {
+      childImageSharp {
+        fixed(grayscale: true, width: 500) {
+          ...GatsbyImageSharpFixed_withWebp
+        }
       }
     }
-    cropBottomLeft: imageSharp(id: { regex: "/nyancat/" }) {
-      resize(width: 180, height: 180, cropFocus: SOUTHWEST) {
-        src
+    cropDefault: file(relativePath: { regex: "/gatsby.jpg/" }) {
+      childImageSharp {
+        resize(width: 180, height: 180) {
+          src
+        }
       }
     }
-    cropEntropy: imageSharp(id: { regex: "/gatsby.jpg/" }) {
-      resize(width: 180, height: 180, cropFocus: ENTROPY) {
-        src
+    cropBottomLeft: file(relativePath: { regex: "/nyancat/" }) {
+      childImageSharp {
+        resize(width: 180, height: 180, cropFocus: SOUTHWEST) {
+          src
+        }
       }
     }
-    cropCenter: imageSharp(id: { regex: "/gatsby.jpg/" }) {
-      resize(width: 180, height: 180, cropFocus: CENTER) {
-        src
+    cropEntropy: file(relativePath: { regex: "/gatsby.jpg/" }) {
+      childImageSharp {
+        resize(width: 180, height: 180, cropFocus: ENTROPY) {
+          src
+        }
+      }
+    }
+    cropCenter: file(relativePath: { regex: "/gatsby.jpg/" }) {
+      childImageSharp {
+        resize(width: 180, height: 180, cropFocus: CENTER) {
+          src
+        }
       }
     }
   }
