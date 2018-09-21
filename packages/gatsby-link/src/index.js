@@ -174,11 +174,11 @@ GatsbyLink.propTypes = {
 }
 
 // eslint-disable-next-line react/display-name
-const withLocation = Comp => props => (
+const withLocation = Comp => React.forwardRef((props, ref) => (
   <Location>
-    {({ location }) => <Comp location={location} {...props} />}
+    {({ location }) => <Comp location={location} innerRef={ref} {...props} />}
   </Location>
-)
+))
 
 export default withLocation(GatsbyLink)
 
