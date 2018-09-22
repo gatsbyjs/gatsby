@@ -6,7 +6,7 @@ const colors = {
   gatsby: `#663399`, // was #744c9e
   lilac: `#8c65b3`,
   lavender: `#b190d5`,
-  wisteria: `#CCB2E5`,
+  wisteria: `#ccb2e5`,
   // accent color from the "bolder palette" by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard",
