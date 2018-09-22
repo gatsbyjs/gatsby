@@ -45,7 +45,7 @@ const IndexPage = () => (
         {` `}
         link uses
         {` `}
-        <a href="https://next.gatsbyjs.org/docs/gatsby-link/">
+        <a href="https://gatsbyjs.org/docs/gatsby-link/">
           <code>Link</code>
         </a>
         {` `}
