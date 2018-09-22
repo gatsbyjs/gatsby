@@ -26,6 +26,7 @@ module.exports = (
     showCaptions: false,
     pathPrefix,
     withWebp: false,
+    fileRelativeRoot: ``    
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -70,6 +71,12 @@ module.exports = (
 
     const imageNode = _.find(files, file => {
       if (file && file.absolutePath) {
+        if(
+          options.fileRelativeRoot &&
+          node.url.indexOf(options.fileRelativeRoot) === 0
+        ) {
+          imagePath = slash(path.join(file.dir, path.basename(node.url)))
+        }
         return file.absolutePath === imagePath
       }
       return null
