@@ -63,6 +63,7 @@
     "react-icons": "^2.2.7",
     "react-instantsearch": "^4.5.1",
     "react-modal": "^3.4.4",
+    "react-svg-inline": "^2.1.1",
     "react-typography": "^1.0.0-alpha.4",
     "rehype-react": "^3.0.3",
     "remove-markdown": "^0.3.0",
