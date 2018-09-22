@@ -204,6 +204,11 @@ async function startServer(program) {
     }
   })
 
+  // use chokidar usePoling option
+  if (process.env.GATSBY_USEPOLLING) {
+    process.env.CHOKIDAR_USEPOLLING = `true`
+  }
+
   // Register watcher that rebuilds index.html every time html.js changes.
   const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
     slash(directoryPath(path))
