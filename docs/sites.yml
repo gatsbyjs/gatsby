@@ -2604,3 +2604,15 @@
   built_by: Wall-to-Wall Studios
   built_by_url: https://walltowall.com
   featured: false
+- title: Coletiv
+  url: https://coletiv.com
+  main_url: https://coletiv.com
+  description: Coletiv teams up with companies of all sizes to design, develop & launch digital products for iOS, Android & the Web.
+  categories:
+    - Technology
+    - Software Dev
+    - Agency
+    - Web Dev
+  built_by: Coletiv
+  built_by_url: https://coletiv.com
+  featured: false
