@@ -104,7 +104,6 @@ class CreatorTemplate extends Component {
             >
               <h1
                 css={{
-                  textTransform: `uppercase`,
                   margin: `0`,
                 }}
               >
