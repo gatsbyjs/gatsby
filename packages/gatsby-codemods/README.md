@@ -41,7 +41,7 @@ Structure of a jscodeshift call:
 
 Add a `graphql` import to modules that use the `graphql` tag function without an import. This was supported in Gatsby v1 and deprecated for Gatsby v2.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby).
+See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby).
 
 ```sh
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/global-graphql-calls.js <path>
@@ -72,7 +72,7 @@ export const query = graphql`
 
 Import `Link` from `gatsby` instead of `gatsby-link` and remove the `gatsby-link` import.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-link-from-gatsby).
+See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-link-from-gatsby).
 
 ```sh
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/import-link.js <path>
@@ -93,7 +93,7 @@ export default props => (
 
 Change the deprecated `navigateTo` method from `gatsby-link` to `navigate` from the `gatsby` module.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-navigateto-to-navigate).
+See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-navigateto-to-navigate).
 
 ```sh
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/navigate-calls.js <path>
@@ -120,7 +120,7 @@ Rename `boundActionCreators` to `actions`. `boundActionCreators` has been deprec
 
 Note: Run this codemod only against files that use `boundActionCreators` instead of running it against a whole directory.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions).
+See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions).
 
 ```sh
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/rename-bound-action-creators.js <path-to-file>

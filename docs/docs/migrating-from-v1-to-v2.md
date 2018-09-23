@@ -34,6 +34,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Use Query in place of RootQueryType](#use-query-in-place-of-rootquerytype)
   - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
   - [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
+  - [Update Jest configuration](#update-jest-configuration)
 
 - [Resolving Deprecations](#resolving-deprecations)
 
@@ -678,6 +679,10 @@ export default ({ children }) => (
 )
 ```
 
+### Update Jest configuration
+
+If you were using Jest with Gatsby V1, you will need to make some updates to your configuration when upgrading to Gatsby V2. You can view the complete details of setting up your test environment on the [Unit Testing](/docs/unit-testing/) page of the docs.
+
 ### gatsby-image's `outerWrapperClassName` was removed
 
 Because the outer wrapper `div` was removed, you can no longer use `outerWrapperClassName` for styling your images. You should merge those styles into your wrapper's class.
@@ -741,6 +746,8 @@ export const query = graphql`
 ```
 
 > There is a codemod that can automatically make this change to your projects. Check out the [`gatsby-codemods`](https://www.npmjs.com/package/gatsby-codemods) package for usage instructions.
+
+> Note that if you are relying on the auto-import feature of WebStorm or VSCode, it may import `graphql` from `'graphql'` instead of `'gatsby'`. This will throw a bunch of errors around bad imports. Make sure `graphql` is always imported from `gatsby`.
 
 ### Rename `boundActionCreators` to `actions`
 

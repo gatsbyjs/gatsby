@@ -56,7 +56,7 @@ install:
   - 'yarn $INSTALL_COMMAND'
 before_script:
   - 'cd $TRAVIS_BUILD_DIR'
-  - './scripts/integration-test.sh $INTEGRATION_TEST $SRC_PATH'
+  - './scripts/integration-test-travis.sh $INTEGRATION_TEST $SRC_PATH'
   - 'cd $SRC_PATH'
 script:
   - 'yarn $TEST_COMMAND'

@@ -127,7 +127,7 @@ export const query = graphql`
 `
 ```
 
-For another explanation of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e) or this one by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/)
 
 ## Two types of responsive images
 
@@ -272,10 +272,12 @@ prop. e.g. `<Img fluid={fluid} />`
 | `title`                 | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                   | `string`            | Passed to the `img` element                                                                                                 |
 | `className`             | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `style`                 | `object`            | Spread into the default styles in the wrapper element                                                                       |
-| `imgStyle`              | `object`            | Spread into the default styles for the actual `img` element                                                                 |
+| `style`                 | `object`            | Spread into the default styles of the wrapper element                                                                       |
+| `imgStyle`              | `object`            | Spread into the default styles of the actual `img` element                                                                 |
+| `placeholderStyle`      | `object`            | Spread into the default styles of the placeholder `img` element                                                                 |
 | `backgroundColor`       | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onError`               | `func`              | A callback that is called when the image fails to load.                                                              |
 | `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 | `critical`              | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
 

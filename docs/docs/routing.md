@@ -1,5 +1,5 @@
 ---
-title: Gatsby on Macs
+title: Routing
 ---
 
 This is a stub. Help our community expand it.

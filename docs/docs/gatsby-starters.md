@@ -267,7 +267,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Full-width photo grid-layout (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
   - Minimalistic light theme with large images
   - Create your projects in Markdown
-  - Styling with SCSS and
+  - Styling with Emotion and
     [Typography.js](https://kyleamathews.github.io/typography.js/)
   - Easily configurable
   - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
@@ -281,11 +281,11 @@ There are several starters that have been created. Create a PR to include yours!
 
   - Focus on big images (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
   - Dark Theme with HeroPatterns Header
-  - CSS Grid and Styled Components
+  - CSS Grid and Emotion
   - One-Page layout with sub-pages for projects
   - Easily configurable
   - React Overdrive transitions
-  - Create your projects in Markdown
+  - Create your projects in Markdown (automatic import of images)
   - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 - [gatsby-starter-portfolio-bella](https://github.com/LeKoArts/gatsby-starter-portfolio-bella)
@@ -298,7 +298,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Big typography & images
   - White theme
   - Prismic.io as CMS
-  - Emotion for styling
+  - Emotion for styling + Emotion-Grid
   - One-page layout with sub-pages for case studies
   - Easily configurable
   - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
@@ -310,7 +310,6 @@ There are several starters that have been created. Create a PR to include yours!
 
   Features:
 
-  - Gatsby v2
   - React Spring
   - TailwindCSS & Emotion
   - Playful & Colorful One-Page website with Parallax effect
@@ -889,12 +888,15 @@ There are several starters that have been created. Create a PR to include yours!
 
   > A set of starters for Gatsby v2
 
-  - Minimal
-  - Equipped
-  - Themed
-  - Website
-  - Blog
-  - more coming soon
+  - Minimal [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/minimal-starter/) / [demo](https://gatsby-starter-kit-minimal.netlify.com/) ]
+  - Equipped [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/equipped-starter/) / [demo](https://gatsby-starter-kit-equipped.netlify.com/) ]
+  - Themed [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/themed-starter/) / [demo](https://gatsby-starter-kit-themed.netlify.com/) ]
+  - Website [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/website-starter/) / [demo](https://gatsby-starter-kit-website.netlify.com/) ]
+  - Blog [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/blog-starter/) / [demo](https://gatsby-starter-kit-blog.netlify.com/) ]
+  - Classy Docs [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/classy-docs-starter/) / [demo](https://gatsby-starter-kit-classy-docs.netlify.com/) ]
+  - Side Blog [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/side-blog-starter/) / [demo](https://gatsby-starter-kit-side-blog.netlify.com/) ]
+  - Clean Diary [ [docs](https://greglobinski.github.io/gatsby-starter-kit-docs/clean-diary-starter/) / [demo](https://gatsby-starter-kit-clean-diary.netlify.com/) ]
+  - more soon
 
 - [gatsby-v2-jslingui](https://github.com/zuiidea/gatsby-v2-jslingui)
   [(demo)](https://gatsby-v2-jslingui.surge.sh)
