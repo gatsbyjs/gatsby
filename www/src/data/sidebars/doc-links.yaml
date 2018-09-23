@@ -168,30 +168,7 @@
       items:
         - title: Progressive web app (PWA)
           link: /docs/progressive-web-app/
-        - title: Centralizing your site's navigation
-          link: /docs/centralizing-your-sites-navigation/
-        - title: Rendering sidebar navigation dynamically
-          link: /docs/rendering-sidebar-navigation-dynamically/
-        - title: Authentication*
-          link: /docs/authentication/
-        - title: E-commerce*
-          link: /docs/e-commerce/
-        - title: Interactive pages*
-          link: /docs/interactive-pages/
-    - title: Preparing your site for launch
-      link: /docs/preparing-for-site-launch/
-      items:
-        - title: Adding a 404 Page
-          link: /docs/add-404-page/
-        - title: Adding tags and categories to blog posts
-          link: /docs/adding-tags-and-categories-to-blog-posts/
-        - title: Creating a sitemap*
-          link: /docs/creating-a-sitemap/
-        - title: Linking between pages*
-          link: /docs/linking-between-pages/
-        - title: Search Engine Optimization (SEO)
-          link: /docs/seo/
-    - title: Adding third-party services
+    - title: Adding website functionality
       link: /docs/adding-third-party-services/
       items:
         - title: Adding search
@@ -200,6 +177,31 @@
           link: /docs/adding-analytics/
         - title: Adding forms*
           link: /docs/adding-forms/
+        - title: Adding a 404 Page
+          link: /docs/add-404-page/
+        - title: Adding tags and categories to blog posts
+          link: /docs/adding-tags-and-categories-to-blog-posts/
+        - title: Creating a sitemap*
+          link: /docs/creating-a-sitemap/
+        - title: Linking between pages*
+          link: /docs/linking-between-pages/
+        - title: Authentication*
+          link: /docs/authentication/
+        - title: E-commerce*
+          link: /docs/e-commerce/
+        - title: Interactive pages*
+          link: /docs/interactive-pages/
+        - title: Routing
+          link: /docs/routing/
+          items:
+          - title: "@reach/router and Gatsby"
+            link: /docs/reach-router-and-gatsby/
+          - title: Linking and prefetching with Gatsby
+            link: /docs/linking-and-prefetching-with-gatsby/
+          - title: Centralizing your site's navigation
+            link: /docs/centralizing-your-sites-navigation/
+          - title: Rendering sidebar navigation dynamically
+            link: /docs/rendering-sidebar-navigation-dynamically/
     - title: Performance
       link: /docs/performance/
       items:
@@ -215,6 +217,8 @@
           link: /docs/add-offline-support/
         - title: Add Page Metadata
           link: /docs/add-page-metadata/
+        - title: Search Engine Optimization (SEO)
+          link: /docs/seo/
         - title: Optimize Prefetching with Guess.js*
           link: /docs/optimize-prefetching-with-guessjs/
 - title: API Reference
