@@ -1,4 +1,6 @@
-## Gatsby Project Structure:
+ ---
+ title: Gatsby Project Structure
+ ---
 
 Inside a Gatsby project, you may see some or all of the following folders and files:
 
