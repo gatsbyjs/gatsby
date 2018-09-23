@@ -6,24 +6,11 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
 exports.onPreExtractQueries = async ({ store, getNodes }) => {
   const program = store.getState().program
 
-  // Check if there are any ImageSharp nodes and if gatsby-image is installed. If so
-  // add fragments for ImageSharp and gatsby-image. The fragment will cause an error
-  // if there's not ImageSharp nodes and without gatsby-image, the fragment is useless.
+  // Check if there are any ImageSharp nodes. If so add fragments for ImageSharp.
+  // The fragment will cause an error if there are no ImageSharp nodes.
   const nodes = getNodes()
 
   if (!nodes.some(n => n.internal.type === `ImageSharp`)) {
-    return
-  }
-
-  let gatsbyImageDoesNotExist = true
-  try {
-    require.resolve(`gatsby-image`)
-    gatsbyImageDoesNotExist = false
-  } catch (e) {
-    // Ignore
-  }
-
-  if (gatsbyImageDoesNotExist) {
     return
   }
 
