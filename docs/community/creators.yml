@@ -102,6 +102,19 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Corey Ward
+  type: individual
+  description: >-
+    Full-stack designer/developer/contractor working in service of marketing.
+    Savvy startups hire me when there’s no time for a spec or reviews, yet no
+    room for failure. Comfortable under pressure. Kolbe A Index: 5-9-2-2
+  location: Austin, TX
+  website: 'http://www.coreyward.me/'
+  github: 'https://github.com/coreyward'
+  image: images/corey-ward.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
 - name: Michael Uloth
   type: individual
   description: Michael Uloth is a Toronto-based web developer who specializes in building fast-loading, accessibile websites with Gatsby.
