@@ -977,8 +977,6 @@ There are several starters that have been created. Create a PR to include yours!
   - ESLint
   - Prettier code styling
   - Webpack , babel and deploy configured to eliminate heap crash during build and support for generator functions
-  
-  
 
 - [gatsby-starter-craft](https://github.com/magicspon/gatsby-starter-craftcms)
 
@@ -992,6 +990,6 @@ There are several starters that have been created. Create a PR to include yours!
   - Rematch store
   - Offline
   - Manifest
-  - Fork of gatsby-image to work with craft-imageoptimizer [GitHub - nystudio107/craft-imageoptimize: Automatically create & optimize responsive image transforms, using either native Craft transforms or a service like Imgix, with zero template changes.](https://github.com/nystudio107/craft-imageoptimize)
+  - Fork of gatsby-image to work with [craft-imageoptimizer](https://github.com/nystudio107/craft-imageoptimize)
   - Sitemap (integrated with Craftcms)
   - SVG Symbols
