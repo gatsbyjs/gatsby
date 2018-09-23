@@ -257,6 +257,10 @@ const fluidNodeType = ({
         type: GraphQLInt,
         defaultValue: 0,
       },
+      sizes: {
+        type: GraphQLString,
+        defaultValue: ``,
+      },
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
