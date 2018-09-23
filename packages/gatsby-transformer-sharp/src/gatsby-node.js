@@ -14,8 +14,7 @@ exports.onPreExtractQueries = async ({ store, getNodes }) => {
     return
   }
 
-  // We have both gatsby-image installed as well as ImageSharp nodes so let's
-  // add our fragments to .cache/fragments.
+  // We have ImageSharp nodes so let's add our fragments to .cache/fragments.
   await fs.copy(
     require.resolve(`gatsby-transformer-sharp/src/fragments.js`),
     `${program.directory}/.cache/fragments/image-sharp-fragments.js`
