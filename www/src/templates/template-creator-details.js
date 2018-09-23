@@ -98,7 +98,6 @@ class CreatorTemplate extends Component {
             <div
               css={{
                 display: `flex`,
-                borderBottom: `2px solid black`,
                 alignItems: `center`,
               }}
             >
