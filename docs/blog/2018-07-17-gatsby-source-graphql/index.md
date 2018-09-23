@@ -1,11 +1,27 @@
 ---
-title: Simple GraphQL APIs with Gatsby
-date: "2018-08-03"
+title: Natively querying GraphQL APIs with Gatsby
+date: "2018-09-20"
 author: "Mikhail Novikov"
 tags: ["gatsby", "graphql", "plugin", "source"]
 ---
 
-Gatsby 2.0 adds support for schema stitching of its internal schema. Schema stitching allows merging multiple GraphQL schemas together, which greatly simplifies working with third-party GraphQL APIs. Along with low-level support for stitching in general, we are shipping an official [gatsby-source-graphql](https://www.gatsbyjs.org/packages/gatsby-source-graphql/) plugin, which enables connecting to an arbitrary GraphQL API with just a few lines of configuration.
+We're excited to announce support for natively querying GraphQL APIs within Gatsby!
+
+When Gatsby was started 3.5 years ago, GraphQL was still an internal project at Facebook and had yet to be open sourced.
+
+Since being open sourced, GraphQL's usage has exploded and 1000s of companies use it to power critical apps and websites.
+
+Gatsby's vision is to be the integration layer for modern websites gluing together data and code into highly performant websites and apps.
+
+Gatsby v1 shipped last year with a plugin-powered data layer that let you easily pull data from any source using GraphQL. At the time, there was still very few public GraphQL schemas so we built a system that let plugins transform data from REST APIs into a GraphQL schema.
+
+But unfortunately, if you already had a GraphQL API, to bring that data inside Gatsby, you had to awkwardly first query your GraphQL API for data and add it to Gatsby where it'd be converted into use by Gatsby's built-in GraphQL server.
+
+But in the last year, a lot has changed. More and more services are shipping with native GraphQL APIs. CMSs like [GraphCMS](https://graphcms.com/), [CraftCMS](https://github.com/markhuot/craftql), and [TakeShape](https://www.takeshape.io/) all have launched GraphQL APIs. [Contentful]() is launching a [native GraphQL API as well soon](https://www.contentful.com/blog/2018/07/04/graphql-abstract-syntax-tree-new-schema/).
+
+We're huge fans of GraphQL obviously so this has all been incredibly exciting to watch and a fullfillment of our vision for the future of the web where GraphQL makes it easy to stitch together data from any number of sources.
+
+Gatsby 2.0 adds experimental support for schema stitching of its internal schema. Schema stitching allows merging multiple GraphQL schemas together, which greatly simplifies working with third-party GraphQL APIs. Along with low-level support for stitching in general, we are shipping an official [gatsby-source-graphql](https://www.gatsbyjs.org/packages/gatsby-source-graphql/) plugin, which enables connecting to an arbitrary GraphQL API with just a few lines of configuration.
 
 # Getting started
 
