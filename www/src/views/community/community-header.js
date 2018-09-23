@@ -49,7 +49,7 @@ class CommunityHeader extends Component {
         >
           Creators
         </Link>
-        <nav
+        {/* <nav
           role="navigation"
           css={{
             display: `flex`,
@@ -70,7 +70,7 @@ class CommunityHeader extends Component {
           <CommunityHeaderLink linkTo="/community/companies/">
             Companies
           </CommunityHeaderLink>
-        </nav>
+        </nav> */}
         <div
           className="community--filters"
           css={{
@@ -78,7 +78,7 @@ class CommunityHeader extends Component {
             flex: `2`,
           }}
         >
-          <label
+          {/* <label
             className="label"
             css={[styles.filter, forHire && styles.activeFilter]}
           >
@@ -109,7 +109,7 @@ class CommunityHeader extends Component {
               disabled={forHire}
             />
             Hiring
-          </label>
+          </label> */}
           <div
             css={{
               marginLeft: `auto`,
