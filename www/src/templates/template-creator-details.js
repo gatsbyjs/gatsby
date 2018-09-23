@@ -5,6 +5,7 @@ import Helmet from "react-helmet"
 import typography, { rhythm, scale } from "../utils/typography"
 import Img from "gatsby-image"
 import CommunityHeader from "../views/community/community-header"
+import Badge from "../views/community/badge"
 import presets, { colors } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
@@ -89,9 +90,10 @@ class CreatorTemplate extends Component {
             }}
           >
             {creator.for_hire || creator.hiring ? (
-              <div css={[styles.badge]}>
-                {creator.for_hire ? `Open For Work` : `Hiring`}
-              </div>
+              <Badge
+                forHire={creator.for_hire}
+                title={creator.for_hire ? `Open for work` : `Hiring`}
+              />
             ) : null}
             <div
               css={{

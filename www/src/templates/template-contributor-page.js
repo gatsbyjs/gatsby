@@ -5,6 +5,7 @@ import Img from "gatsby-image"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
+import Badge from "../views/community/badge"
 import typography, { rhythm, options } from "../utils/typography"
 
 class ContributorPageTemplate extends React.Component {
