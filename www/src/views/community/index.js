@@ -1,14 +1,15 @@
 import React, { Component } from "react"
-import { Link } from "gatsby"
 import Helmet from "react-helmet"
 import typography, { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import CommunityHeader from "./community-header"
-import Img from "gatsby-image"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
 import presets, { colors } from "../../utils/presets"
 import qs from "qs"
+import ThumbnailLink from "../shared/thumbnail"
+import EmptyGridItems from "../shared/empty-grid-items"
+import sharedStyles from "../shared/styles"
 
 class CommunityView extends Component {
   state = {
@@ -129,56 +130,36 @@ class CommunityView extends Component {
               <p css={{ color: colors.gatsby }}>No results</p>
             ) : (
               creators.map(item => (
-                <Link
-                  key={item.node.name}
-                  css={{
-                    "&&": {
-                      borderBottom: `none`,
-                      boxShadow: `none`,
-                      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-                      display: `flex`,
-                      flexDirection: `column`,
-                      margin: rhythm(3 / 4),
-                      [presets.Phablet]: {
-                        marginLeft: `0`,
-                        "&:hover": {
-                          background: `transparent`,
-                        },
-                      },
-                    },
-                  }}
-                  to={item.node.fields.slug}
-                >
-                  <Img
-                    alt={`${item.node.name}`}
-                    fixed={item.node.image.childImageSharp.fixed}
-                  />
-                  <div
-                    css={{
-                      display: `flex`,
-                    }}
+                <div key={item.node.name} css={styles.showcaseItem}>
+                  <ThumbnailLink
+                    slug={item.node.fields.slug}
+                    image={item.node.image}
+                    title={item.node.name}
                   >
-                    <p
+                    <strong className="title">{item.node.name}</strong>
+                  </ThumbnailLink>
+                  <div css={{ display: `flex`, ...sharedStyles.meta }}>
+                    <div
                       css={{
-                        margin: `0`,
+                        margin: `0 0 ${rhythm(1 / 8)}`,
+                        color: colors.gray.bright,
+                        ...scale(-1 / 3),
                       }}
-                    >{`${item.node.name}`}</p>
+                    >
+                      {item.node.location}
+                    </div>
                     {item.node.github && (
-                      <GithubIcon
+                      <a
                         css={{
+                          ...sharedStyles.shortcutIcon,
                           marginLeft: `auto`,
-                          color: colors.gray.bright,
                         }}
-                      />
+                        href={item.node.github}
+                      >
+                        <GithubIcon style={{ verticalAlign: `text-top` }} />
+                      </a>
                     )}
                   </div>
-                  <div
-                    css={{
-                      margin: `${rhythm(1 / 6)} 0`,
-                      color: colors.gray.bright,
-                      ...scale(-1 / 3),
-                    }}
-                  >{`${item.node.location}`}</div>
                   {item.node.for_hire || item.node.hiring ? (
                     <div
                       css={[
@@ -189,9 +170,10 @@ class CommunityView extends Component {
                       {item.node.for_hire ? `For Hire` : `Hiring`}
                     </div>
                   ) : null}
-                </Link>
+                </div>
               ))
             )}
+            {creators.length && <EmptyGridItems styles={styles.showcaseItem} />}
           </div>
         </main>
       </Layout>
@@ -203,9 +185,10 @@ export default CommunityView
 
 const styles = {
   badge: {
-    ...scale(-1 / 3),
+    ...scale(-1 / 2),
+    lineHeight: 1.5,
     padding: `0 ${rhythm(1 / 3)}`,
-    borderRadius: `20px`,
+    borderRadius: 20,
     alignSelf: `flex-start`,
   },
   hiring: {
@@ -215,5 +198,14 @@ const styles = {
   forHire: {
     background: colors.success,
     color: `white`,
+  },
+  showcaseItem: {
+    display: `flex`,
+    flexDirection: `column`,
+    margin: rhythm(3 / 4),
+    minWidth: 200,
+    maxWidth: 240,
+    flex: `1 0 0`,
+    position: `relative`,
   },
 }

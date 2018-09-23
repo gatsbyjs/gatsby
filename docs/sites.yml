@@ -303,12 +303,16 @@
     - Education
     - Web Dev
 - title: Piotr Fedorczyk Portfolio
-  main_url: "https://piotrf.pl/"
-  url: "https://piotrf.pl/"
-  featured: false
+  built_by: Piotr Fedorczyk
+  built_by_url: "https://piotrf.pl"
   categories:
     - Portfolio
     - Web Dev
+  description: >-
+    Portfolio of Piotr Fedorczyk, a digital product designer and full-stack developer specializing in shaping, designing and building news and tools for news.
+  featured: false
+  main_url: "https://piotrf.pl/"
+  url: "https://piotrf.pl/"
 - title: unrealcpp
   main_url: "https://unrealcpp.com/"
   url: "https://unrealcpp.com/"
@@ -2429,8 +2433,8 @@
 - title: MOMNOTEBOOK.COM
   description: >
     Sharing knowledge and experiences that make childhood and motherhood rich, vibrant and healthy.
-  main_url: 'https://momnotebook.com/'
-  url: 'https://momnotebook.com/'
+  main_url: "https://momnotebook.com/"
+  url: "https://momnotebook.com/"
   featured: false
   built_by: Aleksander Hansson
   built_by_url: https://www.linkedin.com/in/aleksanderhansson/
@@ -2439,8 +2443,8 @@
 - title: Pirate Studios
   description: >
     Reinventing music studios with 24/7 self service rehearsal, DJ & production rooms available around the world.
-  main_url: 'https://www.piratestudios.co'
-  url: 'https://www.piratestudios.co'
+  main_url: "https://www.piratestudios.co"
+  url: "https://www.piratestudios.co"
   featured: false
   built_by: The Pirate Studios team
   built_by_url: https://github.com/piratestudios/
@@ -2500,8 +2504,8 @@
 - title: Wire • Secure collaboration platform
   description: >
     Corporate website of Wire, an open source, end-to-end encrypted collaboration platform
-  main_url: https:/wire.com
-  url: https://wire.com
+  main_url: "https://wire.com"
+  url: "https://wire.com"
   featured: false
   categories:
     - Open Source
@@ -2509,4 +2513,106 @@
     - Technology
     - Blog
   built_by: Wire team
-  built_by_url: https://github.com/orgs/wireapp/people
+  built_by_url: "https://github.com/orgs/wireapp/people"
+- title: J. Patrick Raftery
+  main_url: "https://www.jpatrickraftery.com"
+  url: "https://www.jpatrickraftery.com"
+  description: J. Patrick Raftery is an opera singer and voice teacher based in Vancouver, BC.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: Aria Umezawa
+  main_url: "https://www.ariaumezawa.com"
+  url: "https://www.ariaumezawa.com"
+  description: Aria Umezawa is a director, producer, and writer currently based in San Francisco.
+  categories:
+    - Portfolio
+    - Music
+    - Entertainment
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: Pomegranate Opera
+  main_url: "https://www.pomegranateopera.com"
+  url: "https://www.pomegranateopera.com"
+  description: Pomegranate Opera is a lesbian opera written by Amanda Hale & Kye Marshall.
+  categories:
+    - Gallery
+    - Music
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: Daniel Cabena
+  main_url: "https://www.danielcabena.com"
+  url: "https://www.danielcabena.com"
+  description: Daniel Cabena is a Canadian countertenor highly regarded in both Canada and Europe for prize-winning performances ranging from baroque to contemporary repertoire.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: Artist.Center
+  main_url: "https://artistcenter.netlify.com"
+  url: "https://artistcenter.netlify.com"
+  description: The marketing page for Artist.Center, a soon-to-launch platform designed to connect opera singers to opera companies.
+  categories:
+    - Music
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: DG Volo & Company
+  main_url: "https://www.dgvolo.com"
+  url: "https://www.dgvolo.com"
+  description: DG Volo & Company is a Toronto-based investment consultancy.
+  categories:
+    - Finance
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: Shawna Lucey
+  main_url: "https://www.shawnalucey.com"
+  url: "https://www.shawnalucey.com"
+  description: Shawna Lucey is an American theater and opera director based in New York City.
+  categories:
+    - Portfolio
+    - Music
+    - Entertainment
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: Leyan Lo
+  main_url: https://www.leyanlo.com
+  url: https://www.leyanlo.com
+  description: >
+    Leyan Lo’s personal website
+  categories:
+    - Portfolio
+    - Rubik’s Cube
+  built_by: Leyan Lo
+  built_by_url: https://www.leyanlo.com
+  featured: false
+- title: Hawaii National Bank
+  url: https://hawaiinational.bank
+  main_url: https://hawaiinational.bank
+  description: Hawaii National Bank's highly personalized service has helped loyal customers & locally owned businesses achieve their financial dreams for over 50 years.
+  categories:
+    - Bank
+  built_by: Wall-to-Wall Studios
+  built_by_url: https://walltowall.com
+  featured: false
+- title: Coletiv
+  url: https://coletiv.com
+  main_url: https://coletiv.com
+  description: Coletiv teams up with companies of all sizes to design, develop & launch digital products for iOS, Android & the Web.
+  categories:
+    - Technology
+    - Software Dev
+    - Agency
+    - Web Dev
+  built_by: Coletiv
+  built_by_url: https://coletiv.com
+  featured: false
