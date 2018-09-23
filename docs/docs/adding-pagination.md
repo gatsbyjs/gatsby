@@ -1,6 +1,5 @@
 ---
 title: Adding pagination
-draft: true
 ---
 
 A page displaying a list of content gets longer as the amount of content grows.
@@ -10,14 +9,12 @@ The goal is to create multiple pages (from a single [template](https://www.gatsb
 
 Each page will [query GraphQL](https://www.gatsbyjs.org/docs/querying-with-graphql/) for the items it wants to display.
 
-The information needed to query for those specific items will come from the [pageContext](https://www.gatsbyjs.org/docs/graphql-reference/#query-variables) that is added when [creating pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`
-
-> You can access the values stored in the `pageContext` from withing your GraphQL query
+The information needed to query for those specific items will come from the [`context`](https://www.gatsbyjs.org/docs/graphql-reference/#query-variables) that is added when [creating pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`
 
 ### Example
 
-```js
-// in src/templates/blog-list-template.js
+```js{22-27}
+// src/templates/blog-list-template.js
 
 import React from "react"
 import { graphql } from "gatsby"
@@ -59,8 +56,8 @@ export const blogListQuery = graphql`
 `
 ```
 
-```js
-// in gatsby-node.js
+```js{36-49}
+// gatsby-node.js
 
 const path = require("path")
 const { createFilePath } = require("gatsby-source-filesystem")
@@ -91,6 +88,8 @@ exports.createPages = ({ graphql, actions }) => {
         if (result.errors) {
           reject(result.errors)
         }
+
+        // ...
 
         // Create blog-list pages
         const posts = result.data.allMarkdownRemark.edges
@@ -125,18 +124,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 ```
 
-The code above will create a dynamic amount of pages that is based off the total number of blogposts. Each page will list `postsPerPage`(6) posts, until there are less than `postsPerPage`(6) posts left.
+The code above will create an amount of pages that is based off the total number of posts. Each page will list `postsPerPage`(6) posts, until there are less than `postsPerPage`(6) posts left.
 The urls will be `/blog/1`, `/blog/2`, `/blog/3` etc.
 
 ### Other resources
 
-[A step by step blog-post](https://nickymeuleman.netlify.com/blog/gatsby-pagination/) that also places a link to the previous/next page and adds the traditional page-number-navigation at the bottom of the page
-If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add
-them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blogposts, outside tutorials, etc.).
+[A step by step tutorial](https://nickymeuleman.netlify.com/blog/gatsby-pagination/) that adds links to the previous/next page and the traditional page-navigation at the bottom of the page.
 
-- Link to a blogpost
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
+[gatsby-paginated-blog](https://github.com/NickyMeuleman/gatsby-paginated-blog) [(demo)](https://nickymeuleman.github.io/gatsby-paginated-blog/) is an extension of the official [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) with pagination in place.
