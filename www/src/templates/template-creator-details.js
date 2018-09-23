@@ -136,7 +136,6 @@ class CreatorTemplate extends Component {
               <p
                 css={{
                   margin: `0`,
-                  textDecoration: `underline`,
                   fontWeight: `600`,
                   width: `150`,
                 }}
@@ -161,9 +160,7 @@ class CreatorTemplate extends Component {
               <p
                 css={{
                   margin: `0`,
-                  textDecoration: `underline`,
                   fontWeight: `600`,
-
                   width: `150`,
                 }}
               >
@@ -188,7 +185,6 @@ class CreatorTemplate extends Component {
                   css={{
                     margin: `0`,
                     marginBottom: rhythm(3 / 4),
-                    textDecoration: `underline`,
                     fontWeight: `600`,
                     width: `150`,
                   }}
