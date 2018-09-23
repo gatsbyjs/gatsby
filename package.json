@@ -9,6 +9,8 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.0.0",
+    "@commitlint/cli": "^7.1.2",
+    "@commitlint/config-conventional": "^7.1.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "8.2.1",
     "babel-jest": "^22.4.3",
@@ -26,6 +28,7 @@
     "flow-bin": "^0.42.0",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.1",
+    "husky": "^1.0.0-rc.14",
     "jest": "^23.5.0",
     "jest-cli": "^23.5.0",
     "lerna": "^3.3.0",
@@ -79,5 +82,10 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
 }
