@@ -977,3 +977,19 @@ There are several starters that have been created. Create a PR to include yours!
   - ESLint
   - Prettier code styling
   - Webpack , babel and deploy configured to eliminate heap crash during build and support for generator functions
+
+- [gatsby-starter-craft](https://github.com/magicspon/gatsby-starter-craftcms)
+
+  Features:
+
+  - Craftcms as a backend
+  - Tailwind
+  - Page transitions with Pose
+  - CSS in JS via emotion
+  - Remove unused CSS with purgecss
+  - Rematch store
+  - Offline
+  - Manifest
+  - Fork of gatsby-image to work with [craft-imageoptimizer](https://github.com/nystudio107/craft-imageoptimize)
+  - Sitemap (integrated with Craftcms)
+  - SVG Symbols
