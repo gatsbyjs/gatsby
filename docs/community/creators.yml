@@ -150,11 +150,22 @@
   type: individual
   description: >-
     I'm a developer for hire. I can help you make the transition from Wordpress to Gatsby, providing you with the level of customization that makes you feel comfortable.
-    I'm a full stack software engineer. I can also handle your iOS development, web application development, and cross-platform desktop applications. 
+    I'm a full stack software engineer. I can also handle your iOS development, web application development, and cross-platform desktop applications.
     I am here to help you launch your product or idea.
   website: https://giraffesyo.io
   image: images/michael-mcquade.jpg
   for_hire: true
   hiring: false
   portfolio: true
-
+- name: LekoArts
+  type: individual
+  description: >-
+    Hi, I'm Lennart — a self-taught and passionate graphic/web designer & frontend developer. I create accessible, fast and beautiful designed websites with Gatsby.
+    I regularly create Gatsby starters, tutorials and contribute to the project. I know Gatsby by heart & can help you transition your website to the JAMStack.
+    Feel free to contact me if you want to launch a blazingly fast website!
+  location: "Darmstadt, Germany"
+  website: "https://www.lekoarts.de"
+  github: "https://github.com/LeKoArts"
+  image: images/lekoarts.jpg
+  for_hire: true
+  portfolio: true
