@@ -194,14 +194,14 @@
         - title: Routing
           link: /docs/routing/
           items:
-          - title: "@reach/router and Gatsby"
-            link: /docs/reach-router-and-gatsby/
-          - title: Linking and prefetching with Gatsby
-            link: /docs/linking-and-prefetching-with-gatsby/
-          - title: Centralizing your site's navigation
-            link: /docs/centralizing-your-sites-navigation/
-          - title: Rendering sidebar navigation dynamically
-            link: /docs/rendering-sidebar-navigation-dynamically/
+            - title: "@reach/router and Gatsby*"
+              link: /docs/reach-router-and-gatsby/
+            - title: Linking and prefetching with Gatsby*
+              link: /docs/linking-and-prefetching-with-gatsby/
+            - title: Centralizing your site's navigation
+              link: /docs/centralizing-your-sites-navigation/
+            - title: Rendering sidebar navigation dynamically*
+              link: /docs/rendering-sidebar-navigation-dynamically/
     - title: Performance
       link: /docs/performance/
       items:
