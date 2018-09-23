@@ -95,10 +95,23 @@
   type: individual
   description: >-
     Hi I'm Ste! I’m a full stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
-  location: 'Leeds, England'
-  website: 'https://steoneill.me'
-  github: 'https://github.com/steoneill'
+  location: "Leeds, England"
+  website: "https://steoneill.me"
+  github: "https://github.com/steoneill"
   image: images/ste-oneill.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Corey Ward
+  type: individual
+  description: >-
+    Full-stack designer/developer/contractor working in service of marketing.
+    Savvy startups hire me when there’s no time for a spec or reviews, yet no
+    room for failure. Comfortable under pressure. Kolbe A Index: 5-9-2-2
+  location: Austin, TX
+  website: 'http://www.coreyward.me/'
+  github: 'https://github.com/coreyward'
+  image: images/corey-ward.jpg
   for_hire: true
   hiring: false
   portfolio: true
@@ -106,30 +119,30 @@
   type: individual
   description: Michael Uloth is a Toronto-based web developer who specializes in building fast-loading, accessibile websites with Gatsby.
   location: Toronto
-  website: 'https://www.michaeluloth.com'
-  github: 'https://github.com/ooloth'
+  website: "https://www.michaeluloth.com"
+  github: "https://github.com/ooloth"
   image: images/michael-uloth.jpg
   for_hire: true
   hiring: false
   portfolio: true
-- name: Ramón Chancay
-  type: individual
-  description: >-
-    Desarrollador web full stack en Guayaquil Ecuador. Actualmente en EveryMundo, Antes en El Universo, Disfruto de la construcción de cosas con código. Organizador y Speaker en Meetups por pizza y cerveza. 🍕🍻
-  location: 'Guayaquil, Ecuador'
-  website: 'https://ramonchancay.me'
-  github: 'https://github.com/devrchancay'
-  image: images/ramon-chancay.svg
-  for_hire: true
-  hiring: false
-  portfolio: false
 - name: Piotr Fedorczyk
   type: individual
   description: Digital product designer. Full-stack developer. Eclectic flâneur extraordinaire in constant exploration of spoken, visual and programming languages.
   location: Poland
-  website: 'https://piotrf.pl'
-  github: 'https://github.com/piotrf'
+  website: "https://piotrf.pl"
+  github: "https://github.com/piotrf"
   image: images/piotr-fedorczyk.jpeg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Coletiv
+  type: agency
+  description: >-
+    Coletiv teams up with companies of all sizes to design, develop & launch digital products for iOS, Android & the Web.
+  location: "Porto, PT"
+  website: "https://coletiv.com/"
+  github: https://github.com/coletiv
+  image: images/coletiv.jpg
   for_hire: true
   hiring: false
   portfolio: true

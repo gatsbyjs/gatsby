@@ -5,7 +5,11 @@ import { Router, navigate } from "@reach/router"
 import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import { shouldUpdateScroll, init as navigationInit } from "./navigation"
+import {
+  shouldUpdateScroll,
+  init as navigationInit,
+  RouteUpdates,
+} from "./navigation"
 import emitter from "./emitter"
 window.___emitter = emitter
 import PageRenderer from "./page-renderer"
@@ -43,22 +47,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       // if not, add that.
 
       return (
-        <ScrollContext
-          location={location}
-          shouldUpdateScroll={shouldUpdateScroll}
-        >
-          <EnsureResources location={location}>
-            {({ pageResources, location }) => (
-              <PageRenderer
-                {...this.props}
+        <EnsureResources location={location}>
+          {({ pageResources, location }) => (
+            <RouteUpdates location={location}>
+              <ScrollContext
                 location={location}
-                pageResources={pageResources}
-                {...pageResources.json}
-                isMain
-              />
-            )}
-          </EnsureResources>
-        </ScrollContext>
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <PageRenderer
+                  {...this.props}
+                  location={location}
+                  pageResources={pageResources}
+                  {...pageResources.json}
+                />
+              </ScrollContext>
+            </RouteUpdates>
+          )}
+        </EnsureResources>
       )
     }
   }
