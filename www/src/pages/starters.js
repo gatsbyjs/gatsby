@@ -1,18 +1,18 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 
-import ShowcaseView from "../views/starter-showcase"
+import StartersView from "../views/starters"
 
-class ShowcasePage extends Component {
+class StartersPage extends Component {
   render() {
     const data = this.props.data
     const location = this.props.location
 
-    return <ShowcaseView data={data} location={location} />
+    return <StartersView data={data} location={location} />
   }
 }
 
-export default ShowcasePage
+export default StartersPage
 
 export const showcaseQuery = graphql`
   query SiteShowcaseQuery {

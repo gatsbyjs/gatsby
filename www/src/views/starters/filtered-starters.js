@@ -12,9 +12,9 @@ import presets, { colors } from "../../utils/presets"
 import styles from "../shared/styles"
 
 import LHSFilter from "./lhs-filter"
-import ShowcaseList from "./showcase-list"
+import StartersList from "./starters-list"
 
-export default class FilteredShowcase extends Component {
+export default class FilteredStarterLibrary extends Component {
   state = {
     sitesToShow: 9,
   }
@@ -312,7 +312,7 @@ export default class FilteredShowcase extends Component {
               </label>
             </div>
           </div>
-          <ShowcaseList
+          <StartersList
             urlState={urlState}
             sortRecent={urlState.sort === `recent`}
             starters={starters}
