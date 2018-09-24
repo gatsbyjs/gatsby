@@ -600,19 +600,6 @@
     - Emotion with a basic theme and SSR
     - Typography.js
     - Eslint rules based on Prettier and Airbnb
-- url: https://gatsby-starter-simple-landing.greglobinski.com/
-  repo: https://github.com/greglobinski/gatsby-starter-simple-landing
-  description: n/a
-  tags:
-    - Styling:CSS-in-JS
-    - Markdown
-  features:
-    - CSS-in-JS via JSS
-    - easily restyled through theme object
-    - text content via Markdown files
-    - auto-generated sizes and types (png, webp) for background and hero images
-    - favicons generator
-    - webfonts with webfontloader
 - url: http://gatsby-stellar.surge.sh/
   repo: https://github.com/codebushi/gatsby-starter-stellar
   description: n/a
