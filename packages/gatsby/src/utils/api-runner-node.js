@@ -54,7 +54,7 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const runAPI = (plugin, api, args) => {
+const runAPI = async (plugin, api, args) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -90,7 +90,7 @@ const runAPI = (plugin, api, args) => {
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
     const tracing = initAPICallTracing(pluginSpan)
-    const cache = new Cache(plugin.name)
+    const cache = await new Cache(plugin.name).init()
 
     const apiCallArgs = [
       {
