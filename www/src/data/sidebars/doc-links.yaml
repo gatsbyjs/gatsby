@@ -125,7 +125,7 @@
     - title: Styling
       link: /docs/styling/
       items:
-        - title: CSS Modules*
+        - title: CSS Modules
           link: /docs/css-modules/
         - title: Typography.js*
           link: /docs/typography-js/
