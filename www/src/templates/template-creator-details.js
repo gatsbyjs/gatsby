@@ -11,6 +11,8 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
+const breakpoint2Columns = presets.Tablet
+
 const MetaTitle = ({ children }) => (
   <p
     css={{
@@ -23,7 +25,7 @@ const MetaTitle = ({ children }) => (
       [presets.Mobile]: {
         width: 150,
       },
-      [presets.Desktop]: {
+      [breakpoint2Columns]: {
         fontWeight: `600`,
         letterSpacing: 0,
         ...scale(0),
@@ -46,7 +48,7 @@ const MetaSection = ({ children, background, last, first }) => (
       padding: rhythm(3 / 4),
       borderTop: first ? `1px solid ${colors.ui.light}` : null,
       borderBottom: last ? null : `1px solid ${colors.ui.light}`,
-      [presets.Desktop]: {
+      [breakpoint2Columns]: {
         background: `transparent`,
         paddingLeft: 0,
         paddingRight: 0,
@@ -90,10 +92,8 @@ class CreatorTemplate extends Component {
             alignItems: `center`,
             justifyContent: `center`,
             width: `100%`,
-            [presets.Tablet]: {
+            [breakpoint2Columns]: {
               paddingBottom: rhythm(3 / 4),
-            },
-            [presets.Desktop]: {
               flexDirection: `row`,
               alignItems: `flex-start`,
             },
@@ -106,8 +106,11 @@ class CreatorTemplate extends Component {
               marginBottom: rhythm(options.blockMarginBottom / 4),
               flexGrow: `1`,
               width: `100%`,
-              [presets.Desktop]: {
+              [breakpoint2Columns]: {
                 width: `auto`,
+                maxWidth: 480,
+              },
+              [presets.Desktop]: {
                 maxWidth: 560,
               },
             }}
