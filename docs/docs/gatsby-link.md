@@ -54,6 +54,29 @@ class Page extends React.Component {
 }
 ```
 
+## Replacing history entry
+
+You can pass boolean `replace` property to replace previous history entry.
+Therefore clicking the back button after navigation to such Link would redirect
+to page before, _skipping_ the page the link was on.
+
+```jsx
+import { Link } from 'gatsby'
+
+render () {
+  return (
+    <Link
+      to="/another-page/"
+      replace
+    />
+      Go and prevent back to bring you back here
+    </Link>
+  )
+}
+```
+
+Using `replace` also won't scroll the page after navigation.
+
 ## Programmatic navigation
 
 For cases when you can only use event handlers for navigation, you can use `navigate`
@@ -62,9 +85,11 @@ For cases when you can only use event handlers for navigation, you can use `navi
 import { navigate } from "gatsby"
 
 render () {
-  <div onClick={ () => navigate('/example')} role="link" tabIndex="0" onKeyUp={this.handleKeyUp}>
-    <p>Example</p>
-  </div>
+  return (
+    <div onClick={ () => navigate('/example')} role="link" tabIndex="0" onKeyUp={this.handleKeyUp}>
+      <p>Example</p>
+    </div>
+  )
 }
 ```
 

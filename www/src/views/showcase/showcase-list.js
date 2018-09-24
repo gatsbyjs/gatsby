@@ -1,15 +1,16 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { Link } from "gatsby"
-import Img from "gatsby-image"
 
 import styles from "../shared/styles"
+import ThumbnailLink from "../shared/thumbnail"
+import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
-import { rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
+import LaunchSiteIcon from "react-icons/lib/md/launch"
 import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
 
 const ShowcaseList = ({ items, count }) => {
@@ -31,51 +32,13 @@ const ShowcaseList = ({ items, count }) => {
                 ...styles.showcaseItem,
               }}
             >
-              <Link
-                to={node.fields.slug}
-                state={{ isModal: true }}
-                {...styles.withTitleHover}
-                css={{
-                  "&&": {
-                    borderBottom: `none`,
-                    boxShadow: `none`,
-                    transition: `all ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    }`,
-                    "&:hover": {
-                      ...styles.screenshotHover,
-                    },
-                    "&:hover ~ .meta > .featured-site": {
-                      transform: `translateY(-3px)`,
-                    },
-                  },
-                }}
+              <ThumbnailLink
+                slug={node.fields.slug}
+                image={node.childScreenshot}
+                title={node.title}
               >
-                {node.childScreenshot ? (
-                  <Img
-                    resolutions={
-                      node.childScreenshot.screenshotFile.childImageSharp
-                        .resolutions
-                    }
-                    alt={`Screenshot of ${node.title}`}
-                    css={{
-                      ...styles.screenshot,
-                    }}
-                  />
-                ) : (
-                  <div
-                    css={{
-                      width: 320,
-                      backgroundColor: `#d999e7`,
-                    }}
-                  >
-                    missing
-                  </div>
-                )}
-                <div>
-                  <span className="title">{node.title}</span>
-                </div>
-              </Link>
+                <strong className="title">{node.title}</strong>
+              </ThumbnailLink>
               <div
                 css={{
                   ...styles.meta,
@@ -92,29 +55,29 @@ const ShowcaseList = ({ items, count }) => {
                 >
                   <ShowcaseItemCategories categories={node.categories} />
                 </div>
-                {node.source_url && (
-                  <div>
-                    <a
-                      css={{
-                        "&&": {
-                          color: colors.gray.bright,
-                          fontWeight: `normal`,
-                          borderBottom: `none`,
-                          boxShadow: `none`,
-                          "&:hover": {
-                            background: `none`,
-                            color: colors.gatsby,
-                          },
-                        },
-                      }}
-                      href={node.source_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <GithubIcon style={{ verticalAlign: `text-top` }} />
-                    </a>
-                  </div>
-                )}
+                <div css={{ flex: `0 0 auto`, textAlign: `right` }}>
+                  {node.source_url && (
+                    <Fragment>
+                      <a
+                        css={{ ...styles.shortcutIcon }}
+                        href={node.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <GithubIcon style={{ verticalAlign: `text-top` }} />
+                      </a>
+                      {` `}
+                    </Fragment>
+                  )}
+                  <a
+                    css={{ ...styles.shortcutIcon }}
+                    href={node.main_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <LaunchSiteIcon style={{ verticalAlign: `text-top` }} />
+                  </a>
+                </div>
                 {node.featured && (
                   <Link
                     css={{
@@ -140,6 +103,7 @@ const ShowcaseList = ({ items, count }) => {
             </div>
           )
       )}
+      {items.length && <EmptyGridItems styles={styles.showcaseItem} />}
     </div>
   )
 }

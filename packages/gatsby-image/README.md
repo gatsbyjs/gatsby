@@ -10,9 +10,9 @@ optimize image loading for your sites. `gatsby-image` uses
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
-_Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
+_Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It's
 optimized for fixed width/height images and images that stretch the full-width
-of a container. Some ways you can use `<img/>` won't work with gatsby-image._
+of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
@@ -78,6 +78,25 @@ plugins: [
 ];
 ```
 
+Also, make sure you have set up a source plugin, so your images are available in `graphql` queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
+```js
+const path = require(`path`);
+
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: path.join(__dirname, `src`, `images`)
+      }
+    },
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`
+  ]
+};
+```
+
 ## How to use
 
 This is what a component using `gatsby-image` looks like:
@@ -108,7 +127,7 @@ export const query = graphql`
 `
 ```
 
-For another explanation of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e) or this one by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/)
 
 ## Two types of responsive images
 
@@ -253,13 +272,14 @@ prop. e.g. `<Img fluid={fluid} />`
 | `title`                 | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                   | `string`            | Passed to the `img` element                                                                                                 |
 | `className`             | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `outerWrapperClassName` | `string` / `object` | Passed to the outer wrapper element. Object is needed to support Glamor's css prop                                          |
-| `style`                 | `object`            | Spread into the default styles in the wrapper element                                                                       |
-| `imgStyle`              | `object`            | Spread into the default styles for the actual `img` element                                                                 |
-| `position`              | `string`            | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned                                      |
+| `style`                 | `object`            | Spread into the default styles of the wrapper element                                                                       |
+| `imgStyle`              | `object`            | Spread into the default styles of the actual `img` element                                                                 |
+| `placeholderStyle`      | `object`            | Spread into the default styles of the placeholder `img` element                                                                 |
 | `backgroundColor`       | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onError`               | `func`              | A callback that is called when the image fails to load.                                                              |
 | `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+| `critical`              | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
 
 ## Image processing arguments
 
@@ -270,6 +290,12 @@ prop. e.g. `<Img fluid={fluid} />`
 
 - If you want to set `display: none;` on a component using a `fixed` prop,
   you need to also pass in to the style prop `{ display: 'inherit' }`.
-- Images don't load until JavaScript is loaded. Gatsby's automatic code
+- By default, images don't load until JavaScript is loaded. Gatsby's automatic code
   splitting generally makes this fine but if images seem slow coming in on a
   page, check how much JavaScript is being loaded there.
+- Images marked as `critical` will start loading immediately as the DOM is
+  parsed, but unless `fadeIn` is set to `false`, the transition from placeholder
+  to final image will not occur until after the component is mounted.
+- Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for
+  media types to be chosen by the browser without using javascript. It also is
+  backward compatible to older browsers (IE 11, etc)

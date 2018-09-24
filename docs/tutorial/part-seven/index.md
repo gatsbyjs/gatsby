@@ -329,7 +329,7 @@ The last step is to link to your new pages from the index page.
 Return to `src/pages/index.js` and let's query for your markdown slugs and create
 links.
 
-```jsx{3,23-29,45,64-66}
+```jsx{3,22-28,44,63-65}
 import React from "react"
 import { css } from "react-emotion"
 import { Link, graphql } from "gatsby"

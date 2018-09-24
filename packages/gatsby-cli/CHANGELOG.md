@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.4.1"></a>
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.0...gatsby-cli@2.4.1) (2018-09-18)
+
+### Features
+
+- add --prefix-paths option to gatsby serve cli ([#8060](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/8060)) ([98c8e91](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/98c8e91))
+
+<a name="2.4.0"></a>
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-rc.6...gatsby-cli@2.4.0) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.0.0-rc.6"></a>
+
+# [2.0.0-rc.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-rc.5...gatsby-cli@2.0.0-rc.6) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.0.0-rc.5"></a>
+
+# [2.0.0-rc.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-rc.4...gatsby-cli@2.0.0-rc.5) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.0.0-rc.4"></a>
+
+# [2.0.0-rc.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-rc.3...gatsby-cli@2.0.0-rc.4) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.0.0-rc.3"></a>
+
+# [2.0.0-rc.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-rc.2...gatsby-cli@2.0.0-rc.3) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.0.0-rc.2"></a>
+
+# [2.0.0-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-rc.1...gatsby-cli@2.0.0-rc.2) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-cli
+
 <a name="2.0.0-rc.1"></a>
 
 # [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.0.0-rc.0...gatsby-cli@2.0.0-rc.1) (2018-08-29)

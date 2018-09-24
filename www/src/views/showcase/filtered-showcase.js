@@ -6,7 +6,8 @@ import styles from "../shared/styles"
 import ShowcaseList from "./showcase-list"
 import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
-import { options, rhythm, scale } from "../../utils/typography"
+import Button from "../../components/button"
+import { rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import URLQuery from "../../components/url-query"
 
@@ -135,7 +136,6 @@ class FilteredShowcase extends Component {
                     background: `rgba(255,255,255,0.98)`,
                     paddingLeft: `${rhythm(3 / 4)}`,
                     paddingRight: `${rhythm(3 / 4)}`,
-                    paddingBottom: rhythm(options.blockMarginBottom),
                     zIndex: 1,
                     borderBottom: `1px solid ${colors.ui.light}`,
                   }}
@@ -199,22 +199,18 @@ class FilteredShowcase extends Component {
                 <ShowcaseList items={items} count={this.state.sitesToShow} />
 
                 {this.state.sitesToShow < items.length && (
-                  <button
-                    css={{
-                      ...styles.button,
-                      ...styles.loadMoreButton,
-                    }}
+                  <Button
+                    tag="button"
+                    overrideCSS={styles.loadMoreButton}
                     onClick={() => {
                       this.setState({
                         sitesToShow: this.state.sitesToShow + 15,
                       })
                     }}
+                    icon={<MdArrowDownward />}
                   >
                     Load More
-                    <MdArrowDownward
-                      style={{ marginLeft: 4, verticalAlign: `sub` }}
-                    />
-                  </button>
+                  </Button>
                 )}
               </div>
             </section>

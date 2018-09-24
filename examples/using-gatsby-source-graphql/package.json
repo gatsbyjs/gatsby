@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "dateformat": "^3.0.3",
-    "gatsby": "next",
-    "gatsby-plugin-netlify": "^1.0.21",
-    "gatsby-source-graphql": "next",
+    "gatsby": "^2.0.0",
+    "gatsby-plugin-netlify": "^2.0.0",
+    "gatsby-source-graphql": "^2.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-markdown": "^3.3.4"

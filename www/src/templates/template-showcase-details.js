@@ -87,8 +87,8 @@ export const pageQuery = graphql`
       childScreenshot {
         screenshotFile {
           childImageSharp {
-            sizes(maxWidth: 700) {
-              ...GatsbyImageSharpSizes
+            fluid(maxWidth: 700) {
+              ...GatsbyImageSharpFluid_noBase64
             }
             resize(
               width: 1500

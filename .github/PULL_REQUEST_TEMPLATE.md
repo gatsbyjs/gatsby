@@ -2,12 +2,6 @@
   Q. Which branch should I use for my pull request?
   A. Use `master` branch (probably).
 
-  Q. Which branch if my change is an update to Gatsby v2?
-  A. Definitely use `master` branch :)
-
-  Q. Which branch if my change is an update to documentation or gatsbyjs.org?
-  A. Use `master` branch. A Gatsby maintainer will copy your changes over to the `v1` branch for you
-
   Q. Which branch if my change is a bug fix for Gatsby v1?
   A. In this case, you should use the `v1` branch
 

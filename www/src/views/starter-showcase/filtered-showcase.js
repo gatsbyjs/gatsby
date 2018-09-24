@@ -6,13 +6,14 @@ import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { options, /* rhythm, */ scale, rhythm } from "../../utils/typography"
+import { options, scale, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 import styles from "../shared/styles"
 
 import LHSFilter from "./lhs-filter"
 import ShowcaseList from "./showcase-list"
+import Button from "../../components/button"
 
 export default class FilteredShowcase extends Component {
   state = {
@@ -201,7 +202,6 @@ export default class FilteredShowcase extends Component {
               background: `rgba(255,255,255,0.98)`,
               paddingLeft: `${rhythm(3 / 4)}`,
               paddingRight: `${rhythm(3 / 4)}`,
-              paddingBottom: rhythm(options.blockMarginBottom),
               zIndex: 1,
               borderBottom: `1px solid ${colors.ui.light}`,
             }}
@@ -331,26 +331,16 @@ export default class FilteredShowcase extends Component {
             count={this.state.sitesToShow}
           />
           {this.state.sitesToShow < items.length && (
-            <button
-              css={{
-                ...styles.button,
-                display: `block`,
-                marginBottom: rhythm(options.blockMarginBottom * 5),
-                marginTop: rhythm(options.blockMarginBottom * 2),
-                marginLeft: `auto`,
-                marginRight: `auto`,
-                [presets.Desktop]: {
-                  marginLeft: rhythm(6 / 4),
-                  marginRight: rhythm(6 / 4),
-                },
-              }}
+            <Button
+              tag="button"
+              overrideCSS={styles.loadMoreButton}
               onClick={() => {
                 this.setState({ sitesToShow: this.state.sitesToShow + 15 })
               }}
+              icon={<MdArrowDownward />}
             >
               Load More
-              <MdArrowDownward style={{ marginLeft: 4 }} />
-            </button>
+            </Button>
           )}
         </div>
       </section>

@@ -15,7 +15,7 @@ npm install --global jscodeshift
 - Install this package
 
 ```
-npm install gatsby-codemods@next
+npm install gatsby-codemods
 ```
 
 - Run a transform from this package on your project
@@ -41,7 +41,7 @@ Structure of a jscodeshift call:
 
 Add a `graphql` import to modules that use the `graphql` tag function without an import. This was supported in Gatsby v1 and deprecated for Gatsby v2.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby).
+See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby).
 
 ```sh
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/global-graphql-calls.js <path>
@@ -66,6 +66,82 @@ export const query = graphql`
     }
   }
 `
+```
+
+#### `import-link`
+
+Import `Link` from `gatsby` instead of `gatsby-link` and remove the `gatsby-link` import.
+
+See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-link-from-gatsby).
+
+```sh
+jscodeshift -t node_modules/gatsby-codemods/dist/transforms/import-link.js <path>
+```
+
+Example result:
+
+```diff
+- import Link from "gatsby-link"
++ import { Link } from "gatsby"
+
+export default props => (
+  <Link to="/">Home</Link>
+)
+```
+
+#### `navigate-calls`
+
+Change the deprecated `navigateTo` method from `gatsby-link` to `navigate` from the `gatsby` module.
+
+See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-navigateto-to-navigate).
+
+```sh
+jscodeshift -t node_modules/gatsby-codemods/dist/transforms/navigate-calls.js <path>
+```
+
+Example result:
+
+```diff
+import React from "react"
+- import { navigateTo } from "gatsby-link"
++ import { navigate } from "gatsby"
+
+// Don't use navigate with an onClick btw :-)
+// Generally just use the `<Link>` component.
+export default props => (
+-  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
++  <div onClick={() => navigate(`/`)}>Click to go to home</div>
+)
+```
+
+#### `rename-bound-action-creators`
+
+Rename `boundActionCreators` to `actions`. `boundActionCreators` has been deprecated in Gatsby v2
+
+Note: Run this codemod only against files that use `boundActionCreators` instead of running it against a whole directory.
+
+See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions).
+
+```sh
+jscodeshift -t node_modules/gatsby-codemods/dist/transforms/rename-bound-action-creators.js <path-to-file>
+```
+
+Example result:
+
+```diff
+- exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
++ exports.onCreateNode = ({ node, getNode, actions }) => {
+- const { createNodeField } = boundActionCreators
++ const { createNodeField } = actions
+  if (node.internal.type === `MarkdownRemark`) {
+    const slug = createFilePath({ node, getNode, basePath: `pages` })
+    createNodeField({
+      node,
+      name: `slug`,
+      value: slug,
+    })
+  }
+}
 ```
 
 ### More scripts

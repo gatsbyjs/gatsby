@@ -6,10 +6,10 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "flat": "^2.0.1",
-    "gatsby": "next",
-    "gatsby-plugin-manifest": "next",
-    "gatsby-source-hacker-news": "next",
-    "lodash": "^4.16.4",
+    "gatsby": "^2.0.0",
+    "gatsby-plugin-manifest": "^2.0.2",
+    "gatsby-source-hacker-news": "^2.0.5",
+    "lodash": "^4.17.10",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "slash": "^2.0.0"

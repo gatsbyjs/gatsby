@@ -104,6 +104,7 @@ class GatsbyLink extends React.Component {
       ref: $ref,
       innerRef: $innerRef,
       state,
+      replace,
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
@@ -153,7 +154,7 @@ class GatsbyLink extends React.Component {
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            navigate(prefixedTo, { state })
+            navigate(to, { state, replace })
           }
 
           return true
@@ -169,6 +170,7 @@ GatsbyLink.propTypes = {
   innerRef: PropTypes.func,
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
+  replace: PropTypes.bool,
 }
 
 // eslint-disable-next-line react/display-name
@@ -181,21 +183,21 @@ const withLocation = Comp => props => (
 export default withLocation(GatsbyLink)
 
 export const navigate = (to, options) => {
-  window.___navigate(to, options)
+  window.___navigate(withPrefix(to), options)
 }
 
 export const push = to => {
   console.warn(
     `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
   )
-  window.___push(to)
+  window.___push(withPrefix(to))
 }
 
 export const replace = to => {
   console.warn(
     `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
   )
-  window.___replace(to)
+  window.___replace(withPrefix(to))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
