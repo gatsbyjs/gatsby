@@ -55,8 +55,8 @@ Guides cover the smallest possible topic, while tutorials can cover a series of 
 Topics should be chosen based on these priorities:
 
 1.  Stub articles (already exist on the site but just don't have content in them yet)
-2.  Articles requested in the In Progress epics in Github Zenhub
-3.  Articles requested in the Roadmap in Github Zenhub
+2.  Articles requested in the In Progress epics in GitHub Zenhub
+3.  Articles requested in the Roadmap in GitHub Zenhub
 4.  Articles that you or other community members would like to see
 
 ### Length of a guide
@@ -145,8 +145,8 @@ If it needs to extend beyond the fold, try to keep it to the length of a piece o
 Guide overview articles are essentially new parent categories that help organize all the guide articles. Here’s how to decide if you should create a new guide overview article:
 
 1.  Stub articles (already exist on the site but just don't have content in them yet)
-2.  Articles requested in the In Progress epics in Github Zenhub
-3.  Articles requested in the Roadmap in Github Zenhub
+2.  Articles requested in the In Progress epics in GitHub Zenhub
+3.  Articles requested in the Roadmap in GitHub Zenhub
 4.  Articles that you or other community members would like to see
 
 ## Guide overview template
@@ -209,8 +209,8 @@ Guides cover the smallest possible topic, while tutorials can cover a series of 
 Topics should be chosen based on these priorities:
 
 1.  Stub articles (already exist on the site but just don't have content in them yet)
-2.  Tutorials requested in the In Progress epics in Github Zenhub
-3.  Tutorials requested in the Roadmap in Github Zenhub
+2.  Tutorials requested in the In Progress epics in GitHub Zenhub
+3.  Tutorials requested in the Roadmap in GitHub Zenhub
 4.  Tutorials that you or other community members would like to see
 
 ## Length of a tutorial

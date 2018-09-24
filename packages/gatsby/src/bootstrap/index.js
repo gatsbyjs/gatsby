@@ -17,6 +17,7 @@ const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
+const preferDefault = require(`./prefer-default`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -39,8 +40,6 @@ const {
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.
 // require(`./log-line-function`)
-
-const preferDefault = m => (m && m.default) || m
 
 type BootstrapArgs = {
   directory: string,
@@ -321,7 +320,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Collect resolvable extensions and attach to program.
-  const extensions = [`.js`, `.jsx`]
+  const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
   // Change to this being an action and plugins implement `onPreBootstrap`
   // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`, {

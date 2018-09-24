@@ -8,6 +8,7 @@ const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
+const { version: gatsbyVersion } = require(`gatsby/package.json`)
 
 // Speed up looking up pages.
 const pagesObjectMap = new Map()
@@ -50,7 +51,9 @@ const createElement = React.createElement
 
 export default (pagePath, callback) => {
   let bodyHtml = ``
-  let headComponents = []
+  let headComponents = [
+    <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />
+  ]
   let htmlAttributes = {}
   let bodyAttributes = {}
   let preBodyComponents = []

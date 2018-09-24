@@ -16,7 +16,7 @@ import CardHeadline from "../components/card-headline"
 import Diagram from "../components/diagram"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
-import CtaButton from "../components/cta-button"
+import Button from "../components/button"
 import TechWithIcon from "../components/tech-with-icon"
 
 class IndexRoute extends React.Component {
@@ -25,7 +25,10 @@ class IndexRoute extends React.Component {
     return (
       <Layout location={this.props.location}>
         <Helmet>
-          <meta name="Description" content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby." />
+          <meta
+            name="Description"
+            content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
+          />
         </Helmet>
         <div css={{ position: `relative` }}>
           <MastheadBg />
@@ -146,12 +149,13 @@ class IndexRoute extends React.Component {
                         <FuturaParagraph>
                           It only takes a few minutes to get up and running!
                         </FuturaParagraph>
-                        <CtaButton
+                        <Button
+                          secondary
                           to="/docs/"
                           overrideCSS={{ marginTop: `1rem` }}
                         >
                           Get Started
-                        </CtaButton>
+                        </Button>
                       </div>
                     </Container>
                   </div>
@@ -191,14 +195,15 @@ class IndexRoute extends React.Component {
                           css={{ marginBottom: rhythm(2) }}
                         />
                       ))}
-                      <CtaButton
+                      <Button
+                        secondary
                         to="/blog/"
                         overrideCSS={{
                           marginBottom: rhythm(options.blockMarginBottom * 2),
                         }}
                       >
                         Read More
-                      </CtaButton>
+                      </Button>
                     </Container>
                   </div>
                 </Cards>

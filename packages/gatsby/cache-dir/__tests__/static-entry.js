@@ -2,6 +2,9 @@ import React from "react"
 import DevelopStaticEntry from "../develop-static-entry"
 
 jest.mock(`fs`)
+jest.mock(`gatsby/package.json`, () => ({
+  version: '2.0.0'
+}));
 
 jest.mock(
   `../sync-requires`,

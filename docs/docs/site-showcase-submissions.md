@@ -2,13 +2,13 @@
 title: Site Showcase Submissions
 ---
 
-Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/)? Follow these instructions.
+Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructions.
 
 ## Steps
 
 There are only three major steps :)
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo).
+1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/docs/how-to-contribute/#contributing-to-the-repo).
 
 2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
@@ -17,10 +17,10 @@ There are only three major steps :)
 ```yaml
 - title: Title of the Site
 
-  # this URL is used to generate a screenshot
+  # this is the URL that is linked from the showcase
   main_url: https://titleofthesite.com
 
-  # this is the URL that is linked from the showcase
+  # this URL is used to generate a screenshot
   url: https://titleofthesite.com/portfolio
 
   # optional: for open-source sites, this URL points to the repo that powers the site
@@ -112,7 +112,7 @@ Featured sites will be chosen quarterly based on the following criteria:
 
 _Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
 
-If you're site is chosen as featured, here's what to do next:
+If your site is chosen as featured, here's what to do next:
 
 1.  Change `featured: false` to `featured: true`
 
