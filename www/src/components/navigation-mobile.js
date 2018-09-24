@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
 import { style } from "glamor"
-import SVGInline from "react-svg-inline"
 
 import SvgDefs from "../assets/svg-defs"
 import {
@@ -29,7 +28,7 @@ const getNavItemStyles = ({ isPartiallyCurrent }) =>
 
 const MobileNavItem = ({ linkTo, label, icon }) => (
   <Link to={linkTo} getProps={getNavItemStyles}>
-    <SVGInline svg={icon} />
+    <span dangerouslySetInnerHTML={{ __html: icon }} />
     <div>{label}</div>
   </Link>
 )

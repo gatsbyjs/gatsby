@@ -2,14 +2,12 @@ import React, { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
-import SVGInline from "react-svg-inline"
 
 import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
-import SvgDefs from "../../assets/svg-defs"
 import URLQuery from "../../components/url-query"
 import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
@@ -298,7 +296,9 @@ class FeaturedSites extends Component {
                             },
                           }}
                         >
-                          <SVGInline svg={ShowcaseIcon} />
+                          <span
+                            dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
+                          />
                         </span>
                         View all Featured Sites
                       </span>
