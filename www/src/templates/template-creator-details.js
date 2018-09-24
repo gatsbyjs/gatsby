@@ -9,6 +9,8 @@ import Badge from "../views/community/badge"
 import presets, { colors } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
+const removeProtocol = input => input.replace(/^https?:\/\//, ``)
+
 const MetaTitle = ({ children }) => (
   <p
     css={{
@@ -202,7 +204,7 @@ class CreatorTemplate extends Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {creator.website}
+                {removeProtocol(creator.website)}
               </a>
             </MetaSection>
             <MetaSection>
