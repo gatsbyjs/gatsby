@@ -173,7 +173,7 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
             )
           )
         })}
-        {items.length && <EmptyGridItems styles={styles.showcaseItem} />}
+        {starters.length && <EmptyGridItems styles={styles.showcaseItem} />}
       </div>
     )
   }
