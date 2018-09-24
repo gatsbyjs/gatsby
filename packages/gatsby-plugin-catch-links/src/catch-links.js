@@ -78,7 +78,19 @@ module.exports = function(root, cb) {
     // will navigate to an external link instead of doing a pushState resulting
     // in `https://example.com/myapp/https://example.com/not-my-app`
     var re = new RegExp(`^${a2.host}${withPrefix(`/`)}`)
+
+    // IE quirk:
+    // - anchor.pathname misses starting slash
+    // - anchor.origin is missing - same with window.location.origin
+    // workaround 1: ie a.pathname
     var a1pathname = (a1.pathname[0] !== `/` ? `/` : ``) + a1.pathname
+    // workaround 2: ie origin
+    var a1origin = a1.origin ||
+          (a1.protocol + `//` + a1.hostname + (a1.port ? `:` + a1.port : ``))
+    var windowLocationOrigin = window.location.origin ||
+          (window.location.protocol + `//` + window.location.hostname +
+          (window.location.port ? `:` + window.location.port : ``))
+
     if (!re.test(`${a1.host}${a1pathname}`)) return true
 
     // Adding a check for absolute internal links in a callback or here,
@@ -86,13 +98,10 @@ module.exports = function(root, cb) {
     // to avoid `https://example.com/myapp/https://example.com/myapp/here` navigation
 
     ev.preventDefault()
-
-    var anchoreUrl = new URL(anchor.href)
-
     if (
-      checkSameOriginWithoutProtocol(window.location.origin, anchoreUrl.origin)
+      checkSameOriginWithoutProtocol(windowLocationOrigin, a1origin)
     ) {
-      cb(`${anchoreUrl.pathname}${anchoreUrl.search}${anchoreUrl.hash}`)
+      cb(`${a1pathname}${a1.search}${a1.hash}`)
       return false
     }
 
