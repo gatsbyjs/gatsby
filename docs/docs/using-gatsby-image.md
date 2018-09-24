@@ -3,7 +3,7 @@ Using gatsby-image to prevent image bloat
 
 `gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin READme](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
 
-*Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It’s optimized for fixed width/height images and images that stretch the full-width of a container. Some ways you can use `<img/>` won’t work with gatsby-image.*
+*Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full-width of a container. Some ways you can use `<img />` won’t work with gatsby-image.*
 
 [Demo](https://using-gatsby-image.gatsbyjs.org/)
 
