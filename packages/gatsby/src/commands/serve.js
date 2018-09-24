@@ -36,6 +36,7 @@ module.exports = async program => {
     if (open) {
       console.log(`Opening browser...`)
       openurl(openUrlString)
+        .catch(err => console.log(`warn browser not opened`))
     }
   })
 
