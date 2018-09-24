@@ -78,7 +78,9 @@ module.exports = function(root, cb) {
     // will navigate to an external link instead of doing a pushState resulting
     // in `https://example.com/myapp/https://example.com/not-my-app`
     var re = new RegExp(`^${a2.host}${withPrefix(`/`)}`)
-    if (!re.test(`${a1.host}${a1.pathname}`)) return true
+    var a1pathname = (a1.pathname[0] !== '/' ? '/' : '') + a1.pathname
+    // Adding a check for absolute internal links in a callback or here,
+    if (!re.test(`${a1.host}${a1pathname}`)) return true
 
     // Adding a check for absolute internal links in a callback or here,
     // or always pass only `${a1.pathname}${a1.hash}`
