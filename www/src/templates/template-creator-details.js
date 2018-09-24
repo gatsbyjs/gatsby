@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import Helmet from "react-helmet"
-import typography, { rhythm, scale } from "../utils/typography"
+import typography, { rhythm, scale, options } from "../utils/typography"
 import Img from "gatsby-image"
 import CommunityHeader from "../views/community/community-header"
 import Badge from "../views/community/badge"
@@ -78,8 +78,6 @@ class CreatorTemplate extends Component {
           </div>
           <div
             css={{
-              display: `flex`,
-              flexDirection: `column`,
               margin: rhythm(3 / 4),
               flex: `1`,
               width: `100%`,
@@ -89,33 +87,54 @@ class CreatorTemplate extends Component {
               },
             }}
           >
-            {creator.for_hire || creator.hiring ? (
-              <Badge
-                forHire={creator.for_hire}
-                title={creator.for_hire ? `Open for work` : `Hiring`}
-              />
-            ) : null}
+            <h1
+              css={{
+                margin: `0`,
+              }}
+            >
+              {creator.name}
+            </h1>
+
             <div
               css={{
                 display: `flex`,
                 alignItems: `center`,
+                marginTop: rhythm(options.blockMarginBottom / 2),
               }}
             >
-              <h1
-                css={{
-                  margin: `0`,
-                }}
-              >
-                {creator.name}
-              </h1>
-              {creator.github && (
-                <GithubIcon
+              {creator.for_hire || creator.hiring ? (
+                <div
                   css={{
-                    marginLeft: `auto`,
+                    alignSelf: `flex-start`,
+                    ...scale(-1 / 3),
+                    marginRight: `.25rem`,
                   }}
-                />
+                >
+                  <Badge
+                    forHire={creator.for_hire}
+                    title={creator.for_hire ? `Open for work` : `Hiring`}
+                  />
+                </div>
+              ) : null}
+              {creator.github && (
+                <a
+                  href={creator.github}
+                  css={{
+                    "&&": {
+                      border: 0,
+                      boxShadow: `none`,
+                      "&:hover": {
+                        background: `none`,
+                        color: colors.gatsby,
+                      },
+                    },
+                  }}
+                >
+                  <GithubIcon />
+                </a>
               )}
             </div>
+
             <div
               css={{
                 borderBottom: `2px solid black`,

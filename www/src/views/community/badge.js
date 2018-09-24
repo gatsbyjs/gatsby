@@ -1,10 +1,16 @@
-import React from "React"
+import React from "react"
 
-import { rhythm, scale } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 import { colors } from "../../utils/presets"
 
 const Badge = ({ forHire, title }) => (
-  <div css={[styles.badge, forHire ? styles.forHire : styles.hiring]}>
+  <div
+    css={[
+      styles.badge,
+      forHire ? styles.forHire : styles.hiring,
+      { letterSpacing: forHire ? `0.025em` : null },
+    ]}
+  >
     {title}
   </div>
 )
@@ -13,18 +19,15 @@ export default Badge
 
 const styles = {
   badge: {
-    ...scale(-1 / 2),
-    lineHeight: 1.5,
-    padding: `0 ${rhythm(1 / 3)}`,
     borderRadius: 20,
-    alignSelf: `flex-start`,
+    padding: `0 ${rhythm(1 / 3)}`,
   },
   hiring: {
     background: colors.ui.light,
-    color: colors.gatsby,
+    color: colors.lilac,
   },
   forHire: {
-    background: colors.success,
-    color: `white`,
+    background: `#effaef`,
+    color: colors.success,
   },
 }

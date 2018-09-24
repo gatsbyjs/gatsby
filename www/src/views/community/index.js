@@ -162,10 +162,17 @@ class CommunityView extends Component {
                     )}
                   </div>
                   {item.node.for_hire || item.node.hiring ? (
-                    <Badge
-                      forHire={item.node.for_hire}
-                      title={item.node.for_hire ? `For Hire` : `Hiring`}
-                    />
+                    <div
+                      css={{
+                        alignSelf: `flex-start`,
+                        ...scale(-1 / 3),
+                      }}
+                    >
+                      <Badge
+                        forHire={item.node.for_hire}
+                        title={item.node.for_hire ? `For Hire` : `Hiring`}
+                      />
+                    </div>
                   ) : null}
                 </div>
               ))
