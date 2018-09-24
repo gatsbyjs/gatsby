@@ -48,9 +48,7 @@ class CreatorTemplate extends Component {
             alignItems: `center`,
             justifyContent: `center`,
             width: `100%`,
-            ...scale(-1 / 4),
             [presets.Tablet]: {
-              ...scale(),
               paddingBottom: rhythm(3 / 4),
             },
             [presets.Desktop]: {
