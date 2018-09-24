@@ -15,7 +15,7 @@ afterEach(() => {
 
 const getInstance = (props, pathPrefix = ``) => {
   getWithPrefix()(pathPrefix)
-  return Link(props)
+  return <Link {...props} />
 }
 
 const getNavigate = () => {
