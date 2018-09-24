@@ -35,6 +35,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
   - [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
   - [Update Jest configuration](#update-jest-configuration)
+  - [gatsby-image's `outerWrapperClassName` was removed](#gatsby-images-outerwrapperclassname-was-removed)
 
 - [Resolving Deprecations](#resolving-deprecations)
 
@@ -685,7 +686,7 @@ If you were using Jest with Gatsby V1, you will need to make some updates to you
 
 ### gatsby-image's `outerWrapperClassName` was removed
 
-Because the outer wrapper `div` was removed, you can no longer use `outerWrapperClassName` for styling your images. You should merge those styles into your wrapper's class.
+Because the outer wrapper `div` was removed, you can no longer use the `outerWrapperClassName` prop for styling your images. You should merge those styles into your wrapper's class.
 
 ```diff
 <Img
@@ -694,6 +695,9 @@ Because the outer wrapper `div` was removed, you can no longer use `outerWrapper
 - outerWrapperClassName={styles.outerWrapper}
 />
 ```
+
+Similarly, if you have created any CSS styling rules referencing the `gatsby-image-outer-wrapper` class, you should merge those styles into the `gatsby-image-wrapper` class.
+
 
 ## Resolving Deprecations
 
