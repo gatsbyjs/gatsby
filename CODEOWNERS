@@ -1,2 +1,2 @@
 # All docs must be reviewed by the docs team
-docs/* @gatsbyjs/docs
+/docs/ @gatsbyjs/docs
