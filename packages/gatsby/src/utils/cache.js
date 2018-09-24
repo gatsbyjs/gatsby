@@ -4,6 +4,7 @@ const fsStore = require(`cache-manager-fs`)
 const path = require(`path`)
 
 const MAX_CACHE_SIZE = 250
+const ONE_HOUR = 60 * 60
 
 class Cache {
   constructor(folderName = `db`, store = fsStore) {
@@ -24,6 +25,7 @@ class Cache {
         store: this.store,
         options: {
           path: this.directory,
+          ttl: ONE_HOUR,
         },
       },
     ].map(cache => manager.caching(cache))
