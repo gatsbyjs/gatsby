@@ -71,8 +71,8 @@
     - title: Sourcing content and data*
       link: /docs/content-and-data/
       items:
-        - title: Unstructured Data
-          link: /docs/unstructured-data/
+        - title: Using Unstructured Data
+          link: /docs/using-unstructured-data/
         - title: Sourcing from the filesystem*
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases*
@@ -257,6 +257,8 @@
   items:
     - title: The Gatsby core philosophy*
       link: /docs/gatsby-core-philosophy/
+    - title: Gatsby project structure
+      link: /docs/gatsby-project-structure/
     - title: Life and times of a Gatsby build*
       link: /docs/life-and-times-of-a-gatsby-build/
     - title: Building with components
