@@ -213,6 +213,7 @@ class Image extends React.Component {
 
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
+      transition: `opacity 0.5s`,
       transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
       ...imgStyle,
       ...placeholderStyle,

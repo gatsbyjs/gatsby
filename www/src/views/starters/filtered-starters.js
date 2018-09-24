@@ -6,7 +6,7 @@ import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { options, /* rhythm, */ scale, rhythm } from "../../utils/typography"
+import { options, scale, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 import styles from "../shared/styles"
@@ -327,10 +327,10 @@ export default class FilteredStarterLibrary extends Component {
               onClick={() => {
                 this.setState({ sitesToShow: this.state.sitesToShow + 15 })
               }}
+              icon={<MdArrowDownward />}
             >
               Load More
-              <MdArrowDownward style={{ marginLeft: 4 }} />
-            </button>
+            </Button>
           )}
         </div>
       </section>

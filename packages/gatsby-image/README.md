@@ -10,9 +10,9 @@ optimize image loading for your sites. `gatsby-image` uses
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
-_Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
+_Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It's
 optimized for fixed width/height images and images that stretch the full-width
-of a container. Some ways you can use `<img/>` won't work with gatsby-image._
+of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
@@ -127,7 +127,7 @@ export const query = graphql`
 `
 ```
 
-For another explanation of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e) or this one by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/)
 
 ## Two types of responsive images
 
@@ -293,7 +293,7 @@ prop. e.g. `<Img fluid={fluid} />`
 - By default, images don't load until JavaScript is loaded. Gatsby's automatic code
   splitting generally makes this fine but if images seem slow coming in on a
   page, check how much JavaScript is being loaded there.
-- Images marked as `critical` will start loading immediately as the DOM is 
+- Images marked as `critical` will start loading immediately as the DOM is
   parsed, but unless `fadeIn` is set to `false`, the transition from placeholder
   to final image will not occur until after the component is mounted.
 - Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for

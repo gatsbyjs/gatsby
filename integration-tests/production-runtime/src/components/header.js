@@ -18,6 +18,7 @@ const Header = ({ siteTitle }) => (
     >
       <h1 style={{ margin: 0 }}>
         <Link
+          data-testid="index-link"
           to="/"
           style={{
             color: `white`,

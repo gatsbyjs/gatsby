@@ -25,6 +25,7 @@ class IndexRoute extends React.Component {
             <p>
               This quick start is intended for intermediate to advanced
               developers. For a gentler intro to Gatsby,
+              {` `}
               <Link to="/tutorial/">head to our tutorial!</Link>
             </p>
             <h2>
