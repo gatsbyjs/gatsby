@@ -71,6 +71,8 @@
     - title: Sourcing content and data*
       link: /docs/content-and-data/
       items:
+        - title: Unstructured Data
+          link: /docs/unstructured-data/
         - title: Sourcing from the filesystem*
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases*
@@ -351,7 +353,7 @@
       link: /docs/gatsby-style-guide/
     - title: RFC process*
       link: /docs/rfc-process/
-    - title: Docs templates*
+    - title: Docs templates
       link: /docs/templates/
     - title: How to run a Gatsby workshop*
       link: /docs/how-to-run-a-gatsby-workshop/
