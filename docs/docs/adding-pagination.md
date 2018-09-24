@@ -5,17 +5,15 @@ title: Adding pagination
 A page displaying a list of content gets longer as the amount of content grows.
 Pagination is the technique of spreading that content across multiple pages.
 
-The goal is to create multiple pages (from a single [template](https://www.gatsbyjs.org/docs/building-with-components/#page-template-components)) that show a limited number of items.
+The goal is to create multiple pages (from a single [template](/docs/building-with-components/#page-template-components)) that show a limited number of items.
 
-Each page will [query GraphQL](https://www.gatsbyjs.org/docs/querying-with-graphql/) for the items it wants to display.
+Each page will [query GraphQL](/docs/querying-with-graphql/) for those specific items.
 
-The information needed to query for those specific items will come from the [`context`](https://www.gatsbyjs.org/docs/graphql-reference/#query-variables) that is added when [creating pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`
+The information needed to query for those specific items (a [limit](/docs/graphql-reference/#limit) and [skip](/docs/graphql-reference/#skip) value) will come from the [`context`](/docs/graphql-reference/#query-variables) that is added when [creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`
 
 ### Example
 
-```js{22-27}
-// src/templates/blog-list-template.js
-
+```js{20-25}:title=src/templates/blog-list-template.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -56,9 +54,7 @@ export const blogListQuery = graphql`
 `
 ```
 
-```js{36-49}
-// gatsby-node.js
-
+```js{34-47}:title=gatsby-node.js
 const path = require("path")
 const { createFilePath } = require("gatsby-source-filesystem")
 
