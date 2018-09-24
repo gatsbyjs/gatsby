@@ -272,8 +272,11 @@ exports.createPages = ({ graphql, actions }) => {
       // Create starter pages.
       const starters = _.filter(result.data.allStartersYaml.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
-        if (!slug) return null
-        else return edge
+        if (!slug) {
+          return null
+        } else {
+          return edge
+        }
       })
 
       const starterTemplate = path.resolve(
