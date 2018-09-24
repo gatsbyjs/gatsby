@@ -440,9 +440,11 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it(`should support hideline-range and hideline-next-line markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
-        // hideline-range{1-2,9-11}
+        // hideline-range{1-2,11-13}
         import React from 'react'
         import { render } from "react-dom"
+
+
         ReactDOM.render(
           <div>
             <ul>
@@ -456,6 +458,8 @@ describe(`gatsby-remark-embed-snippet`, () => {
           </div>,
           document.getElementById('root')
         );
+
+
         // hideline-next-line
         console.log('Hidden')
       `
