@@ -107,10 +107,14 @@ window.addEventListener(`popstate`, () => {
   resetRouteChangePromise()
 })
 
-function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
+function shouldUpdateScroll(prevRouterProps, { location }) {
+  const { pathname, hash } = location
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
+    // `pathname` for backwards compatibility
     pathname,
+    routerProps: { location },
+    getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
     return results[0]
@@ -121,7 +125,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
       location: { pathname: oldPathname },
     } = prevRouterProps
     if (oldPathname === pathname) {
-      return false
+      // Scroll to element if it exists, if it doesn't, or no hash is provided,
+      // scroll to top.
+      return hash ? hash.slice(1) : [0, 0]
     }
   }
   return true
