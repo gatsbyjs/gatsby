@@ -24,7 +24,6 @@ export const showcaseQuery = graphql`
             starterShowcase {
               slug
               stub
-              error
               description
               stars
               lastUpdated
