@@ -45,160 +45,169 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
       </div>
     )
   }
-  if (count)
+  if (count) {
     starters = starters.sort(sortingFunction(sortRecent)).slice(0, count)
-  return (
-    <div
-      css={{
-        fontFamily: options.headerFontFamily.join(`,`),
-        ...styles.showcaseList,
-      }}
-    >
-      {starters.map(({ node: starter }) => {
-        const {
-          description,
-          gatsbyDependencies,
-          name,
-          githubFullName,
-          lastUpdated,
-          owner,
-          stars,
-          stub,
-        } = starter.fields.starterShowcase
-        const { url: demoUrl, repo: repoUrl } = starter
-        const gatsbyVersion = gatsbyDependencies.find(
-          ([k, v]) => k === `gatsby`
-        )[1]
-        const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/) // we just want x.x
-        const minorVersion = match ? match[0] : gatsbyVersion // default to version if no match
-        const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(minorVersion) // either 2.x or next or latest
+    return (
+      <div
+        css={{
+          fontFamily: options.headerFontFamily.join(`,`),
+          ...styles.showcaseList,
+        }}
+      >
+        {starters.map(({ node: starter }) => {
+          const {
+            description,
+            gatsbyDependencies,
+            name,
+            githubFullName,
+            lastUpdated,
+            owner,
+            stars,
+            stub,
+          } = starter.fields.starterShowcase
+          const { url: demoUrl, repo: repoUrl } = starter
+          const gatsbyVersion = gatsbyDependencies.find(
+            ([k, v]) => k === `gatsby`
+          )[1]
+          const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/) // we just want x.x
+          const minorVersion = match ? match[0] : gatsbyVersion // default to version if no match
+          const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(
+            minorVersion
+          ) // either 2.x or next or latest
 
-        return (
-          starter.fields && ( // have to filter out null fields from bad data
-            <div
-              key={starter.id}
-              css={{
-                ...styles.showcaseItem,
-              }}
-              {...styles.withTitleHover}
-            >
-              <ThumbnailLink
-                slug={`/starters/${stub}`}
-                image={starter.childScreenshot}
-                title={starter.name}
-              />
+          return (
+            starter.fields && ( // have to filter out null fields from bad data
               <div
+                key={starter.id}
                 css={{
-                  ...styles.meta,
+                  ...styles.showcaseItem,
                 }}
+                {...styles.withTitleHover}
               >
-                <div css={{ display: `flex`, justifyContent: `space-between` }}>
-                  <span css={{ color: colors.gray.dark }}>{owner} /</span>
-                  <span>
-                    <a
-                      href="#copy-to-clipboard"
-                      onClick={() =>
-                        copyToClipboard(`https://github.com/${githubFullName}`)
-                      }
-                      css={{ ...styles.shortcutIcon }}
-                    >
-                      <CopyToClipboardIcon />
-                    </a>
-                    {` `}
-                    <a
-                      href={demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      css={{ ...styles.shortcutIcon }}
-                    >
-                      <LaunchDemoIcon />
-                    </a>
-                    {` `}
-                    <a
-                      href={`https://github.com/${githubFullName}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      css={{ ...styles.shortcutIcon }}
-                    >
-                      <GithubIcon />
-                      {` `}
-                    </a>
-                  </span>
-                </div>
-                <div>
-                  <span className="title">
-                    <h5 css={{ margin: 0 }}>
-                      <strong>{name}</strong>
-                    </h5>
-                  </span>
-                  {/* {isGatsbyVersionWarning ?
-                      <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
-                      <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
-                    } */}
-                </div>
+                <ThumbnailLink
+                  slug={`/starters/${stub}`}
+                  image={starter.childScreenshot}
+                  title={starter.name}
+                />
                 <div
                   css={{
-                    textOverflow: `ellipsis`,
-                    overflow: `hidden`,
-                    whiteSpace: `nowrap`,
+                    ...styles.meta,
                   }}
                 >
-                  {description || `No description`}
-                </div>
-                <div css={{ display: `flex`, justifyContent: `space-between` }}>
-                  <div css={{ display: `inline-block` }}>
-                    <MdStar
-                      style={{
-                        color: colors.accent,
-                        verticalAlign: `text-top`,
-                      }}
-                    />
-                    {stars}
+                  <div
+                    css={{ display: `flex`, justifyContent: `space-between` }}
+                  >
+                    <span css={{ color: colors.gray.dark }}>{owner} /</span>
+                    <span>
+                      <a
+                        href="#copy-to-clipboard"
+                        onClick={() =>
+                          copyToClipboard(
+                            `https://github.com/${githubFullName}`
+                          )
+                        }
+                        css={{ ...styles.shortcutIcon }}
+                      >
+                        <CopyToClipboardIcon />
+                      </a>
+                      {` `}
+                      <a
+                        href={demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        css={{ ...styles.shortcutIcon }}
+                      >
+                        <LaunchDemoIcon />
+                      </a>
+                      {` `}
+                      <a
+                        href={`https://github.com/${githubFullName}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        css={{ ...styles.shortcutIcon }}
+                      >
+                        <GithubIcon />
+                        {` `}
+                      </a>
+                    </span>
                   </div>
-                  <div css={{ display: `inline-block` }}>
-                    Updated {new Date(lastUpdated).toLocaleDateString()}
+                  <div>
+                    <span className="title">
+                      <h5 css={{ margin: 0 }}>
+                        <strong>{name}</strong>
+                      </h5>
+                    </span>
+                    {/* {isGatsbyVersionWarning ?
+                        <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
+                        <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
+                      } */}
+                  </div>
+                  <div
+                    css={{
+                      textOverflow: `ellipsis`,
+                      overflow: `hidden`,
+                      whiteSpace: `nowrap`,
+                    }}
+                  >
+                    {description || `No description`}
+                  </div>
+                  <div
+                    css={{ display: `flex`, justifyContent: `space-between` }}
+                  >
+                    <div css={{ display: `inline-block` }}>
+                      <MdStar
+                        style={{
+                          color: colors.accent,
+                          verticalAlign: `text-top`,
+                        }}
+                      />
+                      {stars}
+                    </div>
+                    <div css={{ display: `inline-block` }}>
+                      Updated {new Date(lastUpdated).toLocaleDateString()}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )
           )
-        )
-      })}
-      {/* makes last row items equal width and aligned left */}
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-    </div>
-  )
+        })}
+        {/* makes last row items equal width and aligned left */}
+        <div
+          aria-hidden="true"
+          css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+        />
+        <div
+          aria-hidden="true"
+          css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+        />
+        <div
+          aria-hidden="true"
+          css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+        />
+        <div
+          aria-hidden="true"
+          css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+        />
+        <div
+          aria-hidden="true"
+          css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+        />
+        <div
+          aria-hidden="true"
+          css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
+        />
+      </div>
+    )
+  }
 }
 
 export default ShowcaseList
 
 function sortingFunction(sortRecent) {
   return function({ node: nodeA }, { node: nodeB }) {
-    const metricA = get(nodeA, 'fields.starterShowcase.stars', 0)
-    const metricB = get(nodeB, 'fields.starterShowcase.stars', 0)
+    const metricA = get(nodeA, "fields.starterShowcase.stars", 0)
+    const metricB = get(nodeB, "fields.starterShowcase.stars", 0)
     return metricB - metricA
   }
 }

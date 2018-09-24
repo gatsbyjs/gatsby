@@ -7,6 +7,7 @@ const slash = require(`slash`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
+const parseGHUrl = require("parse-github-url")
 const { GraphQLClient } = require("graphql-request")
 
 require(`dotenv`).config({
@@ -430,19 +431,19 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.
     // Default fields are to avoid graphql errors.
-    const [owner, repoStub] = node.repo.split(`/`).splice(-2, 2)
+    const { owner, name: repoStub } = parseGHUrl(node.repo)
     const defaultFields = {
       slug: ``,
       stub: ``,
       name: ``,
       description: ``,
-      stars: ``,
+      stars: 0,
       lastUpdated: ``,
       owner: ``,
       githubFullName: ``,
-      allDependencies: ``,
-      gatsbyDependencies: ``,
-      miscDependencies: ``,
+      allDependencies: [],
+      gatsbyDependencies: [],
+      miscDependencies: [],
     }
 
     if (!process.env.GITHUB_TOKEN) {
@@ -451,7 +452,6 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
         name: `starterShowcase`,
         value: {
           ...defaultFields,
-          error: `Looks like you need to supply a GitHub token`,
         },
       })
     }
@@ -507,7 +507,6 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           miscDependencies: allDependencies.filter(
             ([key, _]) => !key.includes(`gatsby`)
           ),
-          error: ``,
         }
         createNodeField({
           node,
@@ -524,7 +523,6 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           name: `starterShowcase`,
           value: {
             ...defaultFields,
-            error: `Your GitHub token may be invalid.`,
           },
         })
       })

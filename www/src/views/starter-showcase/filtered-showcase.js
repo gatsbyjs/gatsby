@@ -50,23 +50,6 @@ export default class FilteredShowcase extends Component {
 
     let starters = data.allStartersYaml.edges
 
-    if (starters[0].node.fields.starterShowcase.error) {
-      return (
-        <div
-          css={{
-            padding: rhythm(3 / 4),
-          }}
-        >
-          <h1>Oops</h1>
-          <p>
-            Trying to develop on the starter showcase?{" "}
-            {starters[0].node.fields.starterShowcase.error}
-          </p>
-          <p>Check the `www` README for more details.</p>
-        </div>
-      )
-    }
-
     if (urlState.s.length > 0) {
       starters = starters.filter(starter => {
         return JSON.stringify(starter.node)
@@ -392,7 +375,6 @@ function filterByDependencies(list, categories) {
         starter.fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
         categories
       )
-    // starter.fields.starterShowcase.gatsbyDependencies.filter(c => categories.has(c[0])).length > 0
   )
 
   return starters
