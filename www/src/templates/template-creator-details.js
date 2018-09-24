@@ -68,6 +68,8 @@ class CreatorTemplate extends Component {
   render() {
     const { data, location } = this.props
     const creator = data.creatorsYaml
+    const isAgencyOrCompany =
+      creator.type === `agency` || creator.type === `company`
 
     let sites = []
     data.allSitesYaml.edges.map(site => {
@@ -146,6 +148,17 @@ class CreatorTemplate extends Component {
                 marginTop: rhythm(options.blockMarginBottom / 2),
               }}
             >
+              {isAgencyOrCompany && (
+                <span
+                  css={{
+                    color: colors.gray.calm,
+                    marginRight: `.5rem`,
+                  }}
+                >
+                  {creator.type.charAt(0).toUpperCase() + creator.type.slice(1)}
+                </span>
+              )}
+
               {creator.for_hire || creator.hiring ? (
                 <div
                   css={{
@@ -279,6 +292,7 @@ export const pageQuery = graphql`
       for_hire
       hiring
       portfolio
+      type
       fields {
         slug
       }
