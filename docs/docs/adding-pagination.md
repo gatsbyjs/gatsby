@@ -9,7 +9,7 @@ The goal of pagination is to create multiple pages (from a single [template](/do
 
 Each page will [query GraphQL](/docs/querying-with-graphql/) for those specific items.
 
-The information needed to query for those specific items (a [limit](/docs/graphql-reference/#limit) and [skip](/docs/graphql-reference/#skip) value) will come from the [`context`](/docs/graphql-reference/#query-variables) that is added when [creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`.
+The information needed to query for those specific items (i.e. values for [`limit`](/docs/graphql-reference/#limit) and [`skip`](/docs/graphql-reference/#skip)) will come from the [`context`](/docs/graphql-reference/#query-variables) that is added when [creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`.
 
 ### Example
 
@@ -94,7 +94,7 @@ exports.createPages = ({ graphql, actions }) => {
 
         Array.from({ length: numPages }).forEach((_, i) => {
           createPage({
-            path: `/blog/${i + 1}`,
+            path: i === 0 ? `/blog` : `/blog/${i + 1}`,
             component: path.resolve("./src/templates/blog-list-template.js"),
             context: {
               limit: postsPerPage,
@@ -121,7 +121,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 ```
 
 The code above will create an amount of pages that is based off the total number of posts. Each page will list `postsPerPage`(6) posts, until there are less than `postsPerPage`(6) posts left.
-The urls will be `/blog/1`, `/blog/2`, `/blog/3` etc.
+The path for the first page is `/blog`, following pages will have a path of the form: `/blog/2`, `/blog/3`, etc.
 
 ### Other resources
 
