@@ -2616,3 +2616,19 @@
   built_by: Coletiv
   built_by_url: https://coletiv.com
   featured: false
+- title: janosh.io
+  description: >
+    Personal blog and portfolio of Janosh Riebesell
+  main_url: "https://janosh.io"
+  url: "https://janosh.io"
+  source_url: "https://github.com/janosh/janosh.io"
+  categories:
+    - Portfolio
+    - Blog
+    - Science
+    - Photography
+    - Travel
+    - Personal
+  built_by: Janosh Riebesell
+  built_by_url: "https://janosh.io"
+  featured: false
