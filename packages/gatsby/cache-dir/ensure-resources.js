@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import loader from "./loader"
 import shallowCompare from "shallow-compare"
+import { getRedirectUrl } from "./load-directly-or-404"
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -16,6 +17,7 @@ class EnsureResources extends React.Component {
     this.state = {
       location: { ...location },
       pageResources: loader.getResourcesForPathnameSync(location.pathname),
+      pageResources404: loader.getResourcesForPathnameSync(`/404.html`),
     }
   }
 
@@ -93,24 +95,19 @@ class EnsureResources extends React.Component {
   }
 
   render() {
+    const pageResources =
+      this.state.pageResources || this.state.pageResources404
+
     if (
       process.env.NODE_ENV === `production` &&
-      !(this.state.pageResources && this.state.pageResources.json)
+      !(pageResources && pageResources.json)
     ) {
-      // Try to load the page directly - this should result in a 404 or
-      // network offline error.
-      const url = new URL(window.location)
-      if (url.search) {
-        url.search += `&no-cache=1`
-      } else {
-        url.search = `?no-cache=1`
-      }
-      window.location.replace(url)
-
+      const url = getRedirectUrl(this.state.location.pathname)
+      if (url) window.location.replace(url)
       return null
     }
 
-    return this.props.children(this.state)
+    return this.props.children({ location: this.state.location, pageResources })
   }
 }
 
