@@ -92,7 +92,7 @@ Build optimizations, coupled with improvements in the client side runtime, have 
 
 ![Gatsby v2 lighthouse](./images/v2-perf.png)
 
-![Comparison](./images/lighthouse-chart.png)
+![Comparison](./images/lighthouse-chart.png) <!-- https://docs.google.com/spreadsheets/d/1nHXm1GuiMyBXvKnA4wuYMIR5tHqew7l_z8LLQ384yxo/edit?usp=sharing -->
 
 _Lower is better 😉_
 
