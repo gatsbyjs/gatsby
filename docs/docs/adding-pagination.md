@@ -5,11 +5,11 @@ title: Adding pagination
 A page displaying a list of content gets longer as the amount of content grows.
 Pagination is the technique of spreading that content across multiple pages.
 
-The goal is to create multiple pages (from a single [template](/docs/building-with-components/#page-template-components)) that show a limited number of items.
+The goal of pagination is to create multiple pages (from a single [template](/docs/building-with-components/#page-template-components)) that show a limited number of items.
 
 Each page will [query GraphQL](/docs/querying-with-graphql/) for those specific items.
 
-The information needed to query for those specific items (a [limit](/docs/graphql-reference/#limit) and [skip](/docs/graphql-reference/#skip) value) will come from the [`context`](/docs/graphql-reference/#query-variables) that is added when [creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`
+The information needed to query for those specific items (a [limit](/docs/graphql-reference/#limit) and [skip](/docs/graphql-reference/#skip) value) will come from the [`context`](/docs/graphql-reference/#query-variables) that is added when [creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`.
 
 ### Example
 
@@ -125,6 +125,6 @@ The urls will be `/blog/1`, `/blog/2`, `/blog/3` etc.
 
 ### Other resources
 
-[A step by step tutorial](https://nickymeuleman.netlify.com/blog/gatsby-pagination/) that adds links to the previous/next page and the traditional page-navigation at the bottom of the page.
+- Follow this [step-by-step tutorial](https://nickymeuleman.netlify.com/blog/gatsby-pagination/) to add links to the previous/next page and the traditional page-navigation at the bottom of the page
 
-[gatsby-paginated-blog](https://github.com/NickyMeuleman/gatsby-paginated-blog) [(demo)](https://nickymeuleman.github.io/gatsby-paginated-blog/) is an extension of the official [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) with pagination in place.
+- See [gatsby-paginated-blog](https://github.com/NickyMeuleman/gatsby-paginated-blog) [(demo)](https://nickymeuleman.github.io/gatsby-paginated-blog/) for an extension of the official [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) with pagination in place
