@@ -23,7 +23,7 @@ class Cache {
   }
 
   get directory() {
-    return path.join(process.cwd(), `.cache/${this.folderName}`)
+    return path.join(process.cwd(), `.cache/caches/${this.folderName}`)
   }
 
   init() {
@@ -41,5 +41,4 @@ class Cache {
   }
 }
 
-module.exports = new Cache()
-module.exports.Cache = Cache
+module.exports = Cache
