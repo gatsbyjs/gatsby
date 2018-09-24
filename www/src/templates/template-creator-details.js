@@ -82,6 +82,7 @@ class CreatorTemplate extends Component {
     })
     this.setState({ sites: sites })
   }
+
   render() {
     const { data, location } = this.props
     const creator = data.creatorsYaml
@@ -114,6 +115,7 @@ class CreatorTemplate extends Component {
           <div
             css={{
               margin: rhythm(3 / 4),
+              marginBottom: rhythm(options.blockMarginBottom / 4),
               flexGrow: `1`,
               width: `100%`,
               [presets.Desktop]: {
@@ -158,7 +160,7 @@ class CreatorTemplate extends Component {
                   css={{
                     alignSelf: `flex-start`,
                     ...scale(-1 / 3),
-                    marginRight: `.25rem`,
+                    marginRight: `.5rem`,
                   }}
                 >
                   <Badge
@@ -176,9 +178,11 @@ class CreatorTemplate extends Component {
                 <a
                   href={creator.github}
                   css={{
+                    "& svg": { display: `block` },
                     "&&": {
                       border: 0,
                       boxShadow: `none`,
+                      lineHeight: 1,
                       "&:hover": {
                         background: `none`,
                         color: colors.gatsby,
