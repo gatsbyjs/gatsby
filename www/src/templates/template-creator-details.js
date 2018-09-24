@@ -63,29 +63,17 @@ const MetaSection = ({ children, background, last, first }) => (
 )
 
 class CreatorTemplate extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { sites: [] }
-  }
+  render() {
+    const { data, location } = this.props
+    const creator = data.creatorsYaml
 
-  componentDidMount() {
-    this.generateThumbnails()
-  }
-
-  generateThumbnails = () => {
     let sites = []
-    let creator = this.props.data.creatorsYaml
-    this.props.data.allSitesYaml.edges.map(site => {
+    data.allSitesYaml.edges.map(site => {
       if (site.node.built_by === creator.name) {
         sites.push(site)
       }
     })
-    this.setState({ sites: sites })
-  }
 
-  render() {
-    const { data, location } = this.props
-    const creator = data.creatorsYaml
     return (
       <Layout location={location}>
         <Helmet>
@@ -230,7 +218,7 @@ class CreatorTemplate extends Component {
                     alignItems: `flex-start`,
                   }}
                 >
-                  {this.state.sites.map(site => (
+                  {sites.map(site => (
                     <Link
                       key={site.node.title}
                       css={{
