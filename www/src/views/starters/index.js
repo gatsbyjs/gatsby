@@ -3,11 +3,9 @@ import Helmet from "react-helmet"
 import Layout from "../../components/layout"
 import RRSM from "../../utils/reach-router-state-manager"
 
-import FilteredShowcase from "./filtered-showcase"
+import FilteredStarters from "./filtered-starters"
 
-// main components
-
-class StarterShowcasePage extends Component {
+class StarterLibraryPage extends Component {
   shouldComponentUpdate(nextProps) {
     // prevent double render https://gatsbyjs.slack.com/archives/CA1GW1HNU/p1529615449000350
     return JSON.stringify(this.props) !== JSON.stringify(nextProps)
@@ -23,7 +21,7 @@ class StarterShowcasePage extends Component {
     return (
       <Layout location={location}>
         <Helmet>
-          <title>Starter Showcase</title>
+          <title>Starter Library</title>
           <meta
             name="description"
             content={`Gatsby Starters: ${filtersApplied}`}
@@ -41,12 +39,10 @@ class StarterShowcasePage extends Component {
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`1 min read`} />
         </Helmet>
-        <FilteredShowcase {...this.props} />
+        <FilteredStarters {...this.props} />
       </Layout>
     )
   }
 }
 
-export default RRSM({ s: ``, c: [], d: [], sort: `recent` })(
-  StarterShowcasePage
-)
+export default RRSM({ s: ``, c: [], d: [], sort: `recent` })(StarterLibraryPage)
