@@ -29,6 +29,6 @@ const styles = {
   },
   forHire: {
     background: `#effaef`,
-    color: colors.success,
+    color: `#2b7e2b`,
   },
 }
