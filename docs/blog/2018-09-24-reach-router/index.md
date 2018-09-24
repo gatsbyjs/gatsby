@@ -1,15 +1,15 @@
 ---
-title: Routing with @reach/router in Gatsby v2
+title: How we improved Gatsby's accessibility in v2 by switching to @reach/router
 date: 2018-09-24
 author: Amberley Romo
 tags: ["routing", "v2", "accessibility"]
 ---
 
-We recently announced the [second major release of Gatsby](/blog/2018-09-17-gatsby-v2/) 🚀. One big v2 shift we want to highlight is the switch to using [@reach/router](https://reach.tech/router) to improve the accessibility of routing in Gatsby sites. What is @reach/router, and what are the benefits of undertaking the switch?
+We recently announced the [second major release of Gatsby](/blog/2018-09-17-gatsby-v2/) 🚀. One change we want to highlight is the switch to using [@reach/router](https://reach.tech/router) to improve the accessibility of routing in Gatsby sites. What is @reach/router, and what are the benefits of undertaking the switch?
 
 ## What is @reach/router?
 
-@reach/router is a successive routing library for React written and maintained by the founder of react-router, [Ryan Florence](https://twitter.com/ryanflorence). After [investigating the tradeoffs](https://github.com/gatsbyjs/gatsby/issues/5656), we made the leap to depending on @reach/router:
+@reach/router is a routing library for React written and maintained by the founder of react-router, [Ryan Florence](https://twitter.com/ryanflorence). After [investigating the tradeoffs](https://github.com/gatsbyjs/gatsby/issues/5656), we made the leap to depending on @reach/router:
 
 - [Accessibility](https://reach.tech/router/accessibility) is a first-class concern
 - Smaller bundle size (25% decrease, 8kb to 6kb gzipped)
@@ -17,7 +17,7 @@ We recently announced the [second major release of Gatsby](/blog/2018-09-17-gats
 
 ## How does it support accessibility?
 
-When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then the JavaScript to convert the site into a web app is loaded. From there, internal routing is handled with the [Gatsby Link component](/docs/gatsby-link/), which wraps [@reach/router’s Link component](https://reach.tech/router/api/Link).
+When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then the JavaScript to hydrate the site into a web app is loaded. From there, internal routing is handled with the [Gatsby Link component](/docs/gatsby-link/), which wraps [@reach/router’s Link component](https://reach.tech/router/api/Link).
 
 Web apps rerender in the client -- without making a request to the server to fetch new HTML -- resulting in a faster, more seamless user experience. The performance benefits associated with not having to fully load a new page, however, can come at the expense of a broken experience for users who rely on assistive technology like screen readers.
 
