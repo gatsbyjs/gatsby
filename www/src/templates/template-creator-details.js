@@ -111,8 +111,13 @@ class CreatorTemplate extends Component {
                 >
                   <Badge
                     forHire={creator.for_hire}
-                    title={creator.for_hire ? `Open for work` : `Hiring`}
-                  />
+                    customCSS={{
+                      background: colors.success,
+                      color: `#fff`,
+                    }}
+                  >
+                    {creator.for_hire ? `Open for work` : `Hiring`}
+                  </Badge>
                 </div>
               ) : null}
               {creator.github && (
@@ -133,7 +138,6 @@ class CreatorTemplate extends Component {
                 </a>
               )}
             </div>
-
             <div
               css={{
                 borderBottom: `2px solid black`,

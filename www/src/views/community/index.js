@@ -168,10 +168,9 @@ class CommunityView extends Component {
                         ...scale(-1 / 3),
                       }}
                     >
-                      <Badge
-                        forHire={item.node.for_hire}
-                        title={item.node.for_hire ? `For Hire` : `Hiring`}
-                      />
+                      <Badge forHire={item.node.for_hire}>
+                        {item.node.for_hire ? `For Hire` : `Hiring`}
+                      </Badge>
                     </div>
                   ) : null}
                 </div>
