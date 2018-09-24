@@ -686,7 +686,7 @@ If you were using Jest with Gatsby V1, you will need to make some updates to you
 
 ### gatsby-image's `outerWrapperClassName` was removed
 
-Because the outer wrapper `div` was removed, you can no longer use `outerWrapperClassName` for styling your images. You should merge those styles into your wrapper's class.
+Because the outer wrapper `div` was removed, you can no longer use the `outerWrapperClassName` prop for styling your images. You should merge those styles into your wrapper's class.
 
 ```diff
 <Img
@@ -696,7 +696,7 @@ Because the outer wrapper `div` was removed, you can no longer use `outerWrapper
 />
 ```
 
-Similarly, if you have used the `gatsby-image-outer-wrapper` class for styling, merge those styles into the `gatsby-image-wrapper` class.
+Similarly, if you have created any CSS styling rules referencing the `gatsby-image-outer-wrapper` class, you should merge those styles into the `gatsby-image-wrapper` class.
 
 
 ## Resolving Deprecations
