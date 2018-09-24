@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.3"></a>
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.2...gatsby-plugin-netlify-cms@3.0.3) (2018-09-24)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** ensure login listener is added after logout ([9b1a2e7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/9b1a2e7))
+
+<a name="3.0.2"></a>
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.1...gatsby-plugin-netlify-cms@3.0.2) (2018-09-18)
+
+### Bug Fixes
+
+- **netlify-cms:** redirect after git gateway login ([#8286](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/8286)) ([535b4a7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/535b4a7))
+
 <a name="3.0.1"></a>
 
 ## [3.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.0...gatsby-plugin-netlify-cms@3.0.1) (2018-09-18)

@@ -12,7 +12,7 @@ const screenshotQueue = new Queue(
       .then(r => cb(null, r))
       .catch(e => cb(e))
   },
-  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 10, retryDelay: 1000 }
+  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 }
 )
 
 const createContentDigest = obj =>
@@ -83,28 +83,32 @@ exports.onCreateNode = async (
     return
   }
 
-  const screenshotNode = await new Promise((resolve, reject) => {
-    screenshotQueue
-      .push({
-        url: node.url,
-        parent: node.id,
-        store,
-        cache,
-        createNode,
-        createNodeId,
-      })
-      .on(`finish`, r => {
-        resolve(r)
-      })
-      .on(`failed`, e => {
-        reject(e)
-      })
-  })
+  try {
+    const screenshotNode = await new Promise((resolve, reject) => {
+      screenshotQueue
+        .push({
+          url: node.url,
+          parent: node.id,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+        })
+        .on(`finish`, r => {
+          resolve(r)
+        })
+        .on(`failed`, e => {
+          reject(e)
+        })
+    })
 
-  createParentChildLink({
-    parent: node,
-    child: screenshotNode,
-  })
+    createParentChildLink({
+      parent: node,
+      child: screenshotNode,
+    })
+  } catch (e) {
+    return
+  }
 }
 
 const createScreenshotNode = async ({
