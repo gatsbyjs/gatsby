@@ -8,18 +8,7 @@ const MAX_CACHE_SIZE = 250
 class Cache {
   constructor(folderName = `db`, store = fsStore) {
     this.folderName = folderName
-
-    const caches = [
-      { store: `memory`, max: MAX_CACHE_SIZE },
-      {
-        store,
-        options: {
-          path: this.directory,
-        },
-      },
-    ].map(cache => manager.caching(cache))
-
-    this.cache = manager.multiCaching(caches)
+    this.store = store
   }
 
   get directory() {
@@ -28,6 +17,18 @@ class Cache {
 
   init() {
     fs.ensureDirSync(this.directory)
+
+    const caches = [
+      { store: `memory`, max: MAX_CACHE_SIZE },
+      {
+        store: this.store,
+        options: {
+          path: this.directory,
+        },
+      },
+    ].map(cache => manager.caching(cache))
+
+    this.cache = manager.multiCaching(caches)
 
     return this
   }
