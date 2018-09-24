@@ -993,3 +993,12 @@ There are several starters that have been created. Create a PR to include yours!
   - Fork of gatsby-image to work with [craft-imageoptimizer](https://github.com/nystudio107/craft-imageoptimize)
   - Sitemap (integrated with Craftcms)
   - SVG Symbols
+
+- [gatsby-mdx-blog-starter-project](https://github.com/rwieruch/gatsby-mdx-blog-starter-project)
+
+  Features:
+
+  - MDX: JavaScript/React in Markdown
+  - Prism.js: Syntax Highlighting
+  - Pagination
+  - Category Pages
