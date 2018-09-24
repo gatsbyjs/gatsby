@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-rc.1...gatsby-plugin-catch-links@2.0.3) (2018-09-24)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-rc.1...gatsby-plugin-catch-links@2.0.2) (2018-09-17)
