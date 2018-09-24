@@ -145,7 +145,7 @@ En el mundo de los componentes, en su lugar creas un componente `PrimaryButton` 
 ```
 
 Los componentes se convierten en los bloques de construcción básicos de tu sitio. En vez de ser
-limitado a los bloques de construcción que el navegador proporciona, ejemplo: `<button/>`, puedes crear fácilmente nuevos bloques de construcción que satisfagan elegantemente las necesidades de tus proyectos.
+limitado a los bloques de construcción que el navegador proporciona, ejemplo: `<button />`, puedes crear fácilmente nuevos bloques de construcción que satisfagan elegantemente las necesidades de tus proyectos.
 
 > 💡 Consulta la página [Building with Components](/docs/building-with-components/) para obtener más información sobre componentes en Gatsby y enlaces a otros recursos.
 
@@ -187,7 +187,7 @@ import React from "react"
 export default () => <h1>Este es un encabezado.</h1>
 ```
 
-3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con `<Header/>`:
+3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con `<Header />`:
 
 ```jsx{2,6}
 import React from "react"
@@ -249,7 +249,7 @@ En "header.js", el componente del encabezado espera recibir la propiedad `header
 
 > 💡 En JSX, puedes incrustar cualquier expresión de JavaScript envolviéndola con `{}`. Así es como podemos acceder a la propiedad `headerText` (o" prop! ") Desde el objeto "props".
 
-Si hubiéramos pasado otra propiedad a nuestro componente `<Header/>`, como...
+Si hubiéramos pasado otra propiedad a nuestro componente `<Header />`, como...
 
 ```jsx
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
@@ -286,9 +286,9 @@ Exploraremos los componentes de layout en la [parte tres](/tutorial/part-three).
 
 A menudo querrás vincular las páginas. Veamos el enrutamiento en un sitio de Gatsby.
 
-### ✋ Usando el componente `<Link/>`
+### ✋ Usando el componente `<Link />`
 
-1. Abre el componente de la página índice (`/src/pageindex.js`). Importe el componente `<Link/>` de Gatsby. Agregue un componente `<Link/>` debajo del encabezado y asígnele una propiedad `to`, con el valor de `"/contact/"`para el nombre de ruta:
+1. Abre el componente de la página índice (`/src/pageindex.js`). Importe el componente `<Link />` de Gatsby. Agregue un componente `<Link />` debajo del encabezado y asígnele una propiedad `to`, con el valor de `"/contact/"`para el nombre de ruta:
 
 ```jsx{2,7}
 import React from "react"
@@ -336,7 +336,7 @@ Después de guardar el archivo, deberías ver la página de contacto y poder est
   <p>Sorry! You browser doesn't support this video.</p>
 </video>
 
-El componente `<Link/>` de Gatsby es para vincular las páginas de tu sitio. Para enlaces externos a páginas que no maneja tu sitio Gatsby, usa la etiqueta de HTML `<a>`.
+El componente `<Link />` de Gatsby es para vincular las páginas de tu sitio. Para enlaces externos a páginas que no maneja tu sitio Gatsby, usa la etiqueta de HTML `<a>`.
 
 > 💡 Ve más detalles sobre el enrutamiento en Gatsby en [API docs para Gatsby Link](/docs/gatsby-link/).
 
