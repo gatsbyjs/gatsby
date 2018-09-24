@@ -6,6 +6,8 @@
       link: /docs/gatsby-starters/
     - title: Recipes
       link: /docs/recipes/
+    - title: Gatsby Project Structure
+      link: /docs/gatsby-project-structure/
     - title: Overview of the docs*
       link: /docs/overview/
 - title: Guides
@@ -71,8 +73,8 @@
     - title: Sourcing content and data*
       link: /docs/content-and-data/
       items:
-        - title: Unstructured Data
-          link: /docs/unstructured-data/
+        - title: Using Unstructured Data
+          link: /docs/using-unstructured-data/
         - title: Sourcing from the filesystem*
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases*
