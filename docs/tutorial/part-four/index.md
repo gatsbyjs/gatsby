@@ -1,5 +1,5 @@
 ---
-title: Querying for data in a blog
+title: Data in Gatsby
 typora-copy-images-to: ./
 ---
 
@@ -39,7 +39,7 @@ Which is an _excellent_ way to build many websites. But, often you want to store
 data _outside_ components and then bring the data _into_ the component as
 needed.
 
-For example, if you're building a site with WordPress (so other contributors
+If you're building a site with WordPress (so other contributors
 have a nice interface for adding & maintaining content) and Gatsby, the _data_
 for the site (pages and posts) are in WordPress and you _pull_ that data, as
 needed, into your components.
@@ -50,7 +50,22 @@ and APIs of all sorts.
 **Gatsby's data layer lets you pull data from these (and any other source)
 directly into your components**—in the shape and form you want.
 
-## How Gatsby's data layer uses GraphQL to pull data into components
+## Using Unstructured Data vs GraphQL
+
+### Do I have to use GraphQL and source plugins to pull data into Gatsby sites?
+
+Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+
+See the [Using Unstructured Data](/docs/using-unstructured-data/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
+
+### When do I use unstructured data vs GraphQL?
+
+If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
+
+1.  Check out the [Plugin Library](/packages/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2.  If they don't exist, read the [Plugin Authoring](/docs/plugin-authoring/) guide and consider building your own!
+
+### How Gatsby's data layer uses GraphQL to pull data into components
 
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
