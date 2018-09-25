@@ -1,5 +1,5 @@
 export function getRedirectUrl(path) {
-  const url = new URL(window.location.origin + path)
+  const url = new URL(path, window.location.origin)
 
   // This should never happen, but check just in case - otherwise, there would
   // be an infinite redirect loop

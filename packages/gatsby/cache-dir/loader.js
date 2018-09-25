@@ -258,7 +258,7 @@ const queue = {
     if (page) {
       return pathScriptsCache[page.path]
     } else {
-      return null
+      return queue.getResourcesForPathnameSync(`/404.html`)
     }
   },
 

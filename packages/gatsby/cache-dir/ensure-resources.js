@@ -17,7 +17,6 @@ class EnsureResources extends React.Component {
     this.state = {
       location: { ...location },
       pageResources: loader.getResourcesForPathnameSync(location.pathname),
-      pageResources404: loader.getResourcesForPathnameSync(`/404.html`),
     }
   }
 
@@ -95,19 +94,17 @@ class EnsureResources extends React.Component {
   }
 
   render() {
-    const pageResources =
-      this.state.pageResources || this.state.pageResources404
-
     if (
       process.env.NODE_ENV === `production` &&
-      !(pageResources && pageResources.json)
+      !(this.state.pageResources && this.state.pageResources.json)
     ) {
-      const url = getRedirectUrl(this.state.location.pathname)
+      // This should only occur if there's no custom 404 page
+      const url = getRedirectUrl(this.state.location.href)
       if (url) window.location.replace(url)
       return null
     }
 
-    return this.props.children({ location: this.state.location, pageResources })
+    return this.props.children(this.state)
   }
 }
 
