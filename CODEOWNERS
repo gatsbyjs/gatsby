@@ -1,2 +1,13 @@
 # All docs must be reviewed by the docs team
-/docs/ @gatsbyjs/docs
+/docs/                                          @gatsbyjs/docs
+
+# These files have the highest likelihood to cause chaos, so we require an
+# admin to review and approve pull requests that affect these.
+/packages/gatsby/                               @gatsbyjs/admin
+/packages/babel-plugin-remove-graphql-queries/  @gatsbyjs/admin
+/packages/gatsby-link/                          @gatsbyjs/admin
+/packages/gatsby-dev-cli/                       @gatsbyjs/admin
+/packages/gatsby-cli/                           @gatsbyjs/admin
+
+# The website auto-deploys, so we need an extra check to avoid shenanigans.
+/www/                                           @gatsbyjs/website
