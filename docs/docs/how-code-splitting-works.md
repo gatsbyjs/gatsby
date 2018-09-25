@@ -12,10 +12,9 @@ During the [Write Out Pages](/docs/write-pages/#async-requiresjs) bootstrap phas
 
 ```javascript
 exports.components = {
-  "component--src-blog-js": () => import(
-    "/home/site/src/blog.js"
+  "component--src-blog-js": () =>
+    import("/home/site/src/blog.js"),
     /* webpackChunkName: "component---src-blog-js" */
-  ),
   // more components
 }
 ```

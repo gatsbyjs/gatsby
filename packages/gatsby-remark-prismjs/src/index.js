@@ -6,7 +6,12 @@ const addLineNumbers = require(`./add-line-numbers`)
 
 module.exports = (
   { markdownAST },
-  { classPrefix = `language-`, inlineCodeMarker = null, aliases = {}, noInlineHighlight = false } = {}
+  {
+    classPrefix = `language-`,
+    inlineCodeMarker = null,
+    aliases = {},
+    noInlineHighlight = false,
+  } = {}
 ) => {
   const normalizeLanguage = lang => {
     const lower = lang.toLowerCase()

@@ -11,15 +11,16 @@ describe('navigate', () => {
   it(`uses pathPrefix`, () => {
     cy.getTestElement('page-2-button-link')
       .click()
-      .location(`pathname`).should(`eq`, withTrailingSlash(`${pathPrefix}/page-2`))
+      .location(`pathname`)
+      .should(`eq`, withTrailingSlash(`${pathPrefix}/page-2`))
   })
 
   it(`can navigate back after using`, () => {
-    cy
-      .getTestElement('page-2-button-link')
+    cy.getTestElement('page-2-button-link')
       .click()
       .getTestElement('index-link')
       .click()
-      .location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
+      .location(`pathname`)
+      .should(`eq`, withTrailingSlash(pathPrefix))
   })
 })

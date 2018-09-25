@@ -4,7 +4,9 @@ exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
   actions.setBabelPlugin({
     name: `babel-plugin-react-css-modules`,
     options: {
-      generateScopedName: isDevelopment ? `[name]--[local]--[hash:base64:5]` : `[hash:base64:5]`,
+      generateScopedName: isDevelopment
+        ? `[name]--[local]--[hash:base64:5]`
+        : `[hash:base64:5]`,
       webpackHotModuleReloading: process.env.NODE_ENV !== `production`,
       ...pluginOptions,
     },

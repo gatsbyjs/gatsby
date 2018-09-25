@@ -74,7 +74,7 @@ jobs:
       - persist_to_workspace:
           root: packages
           paths:
-            - '*'
+            - "*"
 
   lint:
     <<: *node10
@@ -126,7 +126,7 @@ jobs:
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
       - run: ./scripts/integration-test.sh integration-tests/path-prefix
-  
+
   e2e_tests_gatsby-image:
     <<: *node10_browsers
     steps:
@@ -136,7 +136,7 @@ jobs:
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
       - run: ./scripts/integration-test.sh integration-tests/gatsby-image
-  
+
   e2e_tests_runtime:
     <<: *node10_browsers
     steps:

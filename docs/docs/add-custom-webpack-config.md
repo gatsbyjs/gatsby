@@ -98,12 +98,12 @@ You need this if you want to do things like transpile parts of `node_modules`.
 
 ```js
 exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
-  const config = getConfig();
+  const config = getConfig()
 
   config.module.rules = [
     // Omit the default rule where test === '\.jsx?$'
     ...config.module.rules.filter(
-      rule => String(rule.test) !== String(/\.jsx?$/),
+      rule => String(rule.test) !== String(/\.jsx?$/)
     ),
 
     // Recreate it with custom exclude filter
@@ -127,9 +127,9 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
         /node_modules/.test(modulePath) &&
         !/node_modules\/(swiper|dom7)/.test(modulePath),
     },
-  ];
+  ]
 
   // This will completely replace the webpack config with the modified object.
-  actions.replaceWebpackConfig(config);
-};
+  actions.replaceWebpackConfig(config)
+}
 ```
