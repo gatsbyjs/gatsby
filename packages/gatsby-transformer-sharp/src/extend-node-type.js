@@ -216,6 +216,8 @@ const fluidNodeType = ({
         sizes: { type: GraphQLString },
         originalImg: { type: GraphQLString },
         originalName: { type: GraphQLString },
+        presentationWidth: { type: GraphQLInt },
+        presentationHeight: { type: GraphQLInt },
       },
     }),
     args: {
@@ -256,6 +258,10 @@ const fluidNodeType = ({
       rotate: {
         type: GraphQLInt,
         defaultValue: 0,
+      },
+      sizes: {
+        type: GraphQLString,
+        defaultValue: ``,
       },
     },
     resolve: (image, fieldArgs, context) => {

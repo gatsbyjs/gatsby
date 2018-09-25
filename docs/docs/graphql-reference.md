@@ -32,6 +32,12 @@ There are several ways to reduce the number of results from a query. Here `total
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20limit%3A%202%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
 
+## Skip
+
+Skip over a number of results. In this query `skip` is used to omit the first 3 results.
+
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(skip%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
+
 ## Filter
 
 In this query `filter` and the `ne` (not equals) operator is used to show only results that have a title.

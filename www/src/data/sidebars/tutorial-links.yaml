@@ -14,6 +14,8 @@
           link: /tutorial/part-zero/#install-nodejs
         - title: Familiarize with npm
           link: /tutorial/part-zero/#familiarize-with-npm
+        - title: Install Git
+          link: /tutorial/part-zero/#install-git
         - title: Install the Gatsby CLI
           link: /tutorial/part-zero/#install-the-gatsby-cli
         - title: Create a Gatsby site

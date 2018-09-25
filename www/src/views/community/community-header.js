@@ -49,7 +49,7 @@ class CommunityHeader extends Component {
         >
           Creators
         </Link>
-        <nav
+        {/* <nav
           role="navigation"
           css={{
             display: `flex`,
@@ -70,7 +70,7 @@ class CommunityHeader extends Component {
           <CommunityHeaderLink linkTo="/community/companies/">
             Companies
           </CommunityHeaderLink>
-        </nav>
+        </nav> */}
         <div
           className="community--filters"
           css={{
@@ -78,7 +78,7 @@ class CommunityHeader extends Component {
             flex: `2`,
           }}
         >
-          <label
+          {/* <label
             className="label"
             css={[styles.filter, forHire && styles.activeFilter]}
           >
@@ -109,7 +109,7 @@ class CommunityHeader extends Component {
               disabled={forHire}
             />
             Hiring
-          </label>
+          </label> */}
           <div
             css={{
               marginLeft: `auto`,
@@ -136,23 +136,21 @@ export default CommunityHeader
 const styles = {
   header: {
     display: `flex`,
-    flexDirection: `column`,
+    // flexDirection: `column`,
+    flexDirection: `row`,
+    alignItems: `center`,
     borderBottom: `1px solid ${colors.ui.light}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
-    padding: `${rhythm(2 / 4)} ${rhythm(3 / 4)} 0 ${rhythm(3 / 4)}`,
+    // padding: `${rhythm(2 / 4)} ${rhythm(3 / 4)} 0 ${rhythm(3 / 4)}`,
+    padding: `0 ${rhythm(3 / 4)}`,
+    height: presets.headerHeight,
     fontFamily: typography.options.headerFontFamily.join(`,`),
-    [presets.Tablet]: {
-      padding: `0 ${rhythm(3 / 4)}`,
-      height: presets.headerHeight,
-      flexDirection: `row`,
-      alignItems: `center`,
-    },
   },
   creatorsLink: {
     "&&": {
-      ...scale(1 / 7),
-      display: `none`,
+      ...scale(1 / 3),
+      // display: `none`,
       color: colors.gatsby,
       boxShadow: `none`,
       borderBottom: `none`,
@@ -161,7 +159,7 @@ const styles = {
         backgroundColor: `initial`,
       },
       [presets.Desktop]: {
-        display: `inline`,
+        // display: `inline`,
       },
     },
   },
