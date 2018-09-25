@@ -698,7 +698,6 @@ Because the outer wrapper `div` was removed, you can no longer use the `outerWra
 
 Similarly, if you have created any CSS styling rules referencing the `gatsby-image-outer-wrapper` class, you should merge those styles into the `gatsby-image-wrapper` class.
 
-
 ## Resolving Deprecations
 
 ### Import Link from Gatsby

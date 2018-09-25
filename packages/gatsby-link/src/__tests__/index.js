@@ -141,6 +141,9 @@ describe(`navigate`, () => {
     global.__PATH_PREFIX__ = `/blog`
     getNavigate()(to)
 
-    expect(global.___navigate).toHaveBeenCalledWith(`${global.__PATH_PREFIX__}${to}`, undefined)
+    expect(global.___navigate).toHaveBeenCalledWith(
+      `${global.__PATH_PREFIX__}${to}`,
+      undefined
+    )
   })
 })

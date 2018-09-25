@@ -25,4 +25,4 @@ React in general).
 
 ## How to build a page using CSS modules
 
-Visit the [CSS Modules section of the tutorial](https://www.gatsbyjs.org/tutorial/part-two/#css-modules) to learn how to build a page using CSS modules. 
+Visit the [CSS Modules section of the tutorial](https://www.gatsbyjs.org/tutorial/part-two/#css-modules) to learn how to build a page using CSS modules.
