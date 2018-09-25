@@ -13,7 +13,7 @@ Gatsby's vision is to be the integration layer for modern websites gluing togeth
 
 Gatsby v1 shipped last year with a plugin-powered data layer that let you easily pull data from any source using GraphQL. At the time, there was still very few public GraphQL schemas so we built a system that let plugins transform data from REST APIs into a GraphQL schema.
 
-But in the last year, a lot has changed. More and more services are shipping with native GraphQL APIs. CMSs like [GraphCMS](https://graphcms.com/), [AppSync](https://aws.amazon.com/appsync/), and [TakeShape](https://www.takeshape.io/) all have launched GraphQL APIs. [Contentful]() is launching a [native GraphQL API as well soon](https://www.contentful.com/blog/2018/07/04/graphql-abstract-syntax-tree-new-schema/).
+But in the last year, a lot has changed. More and more services are shipping with native GraphQL APIs. CMSs like [GraphCMS](https://graphcms.com/), [AppSync](https://aws.amazon.com/appsync/), and [TakeShape](https://www.takeshape.io/) all have launched GraphQL APIs. [Contentful](https://www.contentful.com/) is launching a [native GraphQL API as well soon](https://www.contentful.com/blog/2018/07/04/graphql-abstract-syntax-tree-new-schema/).
 
 Watching the spread of GraphQL has all been incredibly exciting to watch and a fullfillment of our vision for the future of the web where sites easily stitch together data from many sources.
 
@@ -72,7 +72,7 @@ To understand why a separate new plugin is needed, let's dive into how Gatsby so
 
 This system works really well for many cases and it's very intuitive, you don't need to care about creating a GraphQL schema or types for the nodes, any objects can be used. However, this is a limitation when using existing GraphQL APIs. First of all, you won't be able to use the same API as the one provided by the third-party API, because it will be replaced by Gatsby's internal node API. This can be confusing, because you can't consult the third-party API's documentation. Secondly, the plugin needs to proactively fetch all the possible data from the API, which can be complicated because the plugin author would have to predict which data might be needed.
 
-When there weren't many existing GraphQL APIs in the wild, that wasn't that much of a problem. For the few available APIs there was a source plugin. With the rise of both public GraphQL APIs, like Github or Shopify, and with so many more people having a GraphQL API of their own (or using one of the GraphQL solutions like Prisma, GraphCMS or AppSync), writing a plugin for each one became unfeasible. Meet `gatsby-source-graphql`.
+When there weren't many existing GraphQL APIs in the wild, that wasn't that much of a problem. For the few available APIs there was a source plugin. With the rise of both public GraphQL APIs, like GitHub or Shopify, and with so many more people having a GraphQL API of their own (or using one of the GraphQL solutions like Prisma, GraphCMS or AppSync), writing a plugin for each one became unfeasible. Meet `gatsby-source-graphql`.
 
 # How does it work?
 
@@ -84,4 +84,4 @@ The actual stitching happens on the Gatsby level. There is a new action, [`addTh
 
 # Conclusions
 
-`gatsby-source-graphql` is part of [Gatsby's 2.0 release](/blog/2018-09-17-gatsby-v2/). Try it out now! [Check out the docs](/docs/third-party-graphql) or [a sample project using Github's GraphQL API](https://github.com/freiksenet/gatsby-github-displayer).
+`gatsby-source-graphql` is part of [Gatsby's 2.0 release](/blog/2018-09-17-gatsby-v2/). Try it out now! [Check out the docs](/docs/third-party-graphql) or [a sample project using GitHub's GraphQL API](https://github.com/freiksenet/gatsby-github-displayer).
