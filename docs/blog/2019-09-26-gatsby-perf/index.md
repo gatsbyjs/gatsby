@@ -14,7 +14,7 @@ What’s the value in being blazing fast?
 How do you know it’s blazing fast?
 How can it be even more blazing (incineratingly?) fast?
 
-These are questions the Gatsby core team has thought about a lot recently, since our recent release of Gatsby v2 improved upon Gatsby v1's gold standard to squeeze even more performance out of every site. 
+These are questions the Gatsby core team has thought about recently, since our recent release of Gatsby v2 improved upon Gatsby v1's gold standard to squeeze even more performance out of every site. 
 
 And what are some simple, meaningful metrics to _know_ if your site is blazing fast? 
 
@@ -80,12 +80,12 @@ It's not 🚀 science. Shipping less JavaScript to your end users makes your app
 > As much as I love JavaScript, it’s always the most expensive part of your site.
 > -- Addy Osmani
 
-To that end, Gatsby v2 ships 31% less JavaScript in its client runtime. While we'd _love_ to brag about this, most of the credit goes to smart optimizations in libraries we rely upon: React and @reach/router. Much like performance optimizations, build upgrades, etc. are available for free in something like [create-react-app][create-react-app], these upgrades in Gatsby v2 are available _for free_ simply by updating to Gatsby v2 by following the [migration guide][migration-guide]. The power of opinionated, optimized toolsets that internalize smart defaults!
+To that end, Gatsby v2 ships 31% less JavaScript in its client runtime. While we'd _love_ to brag about this, most of the credit goes to smart optimizations in libraries we rely upon: React--upgrading from 15 to 16--and @reach/router--swapped in place of react-router. Much like performance optimizations, build upgrades, etc. are available for free in something like [create-react-app][create-react-app], these upgrades in Gatsby v2 are available _for free_ simply by updating to Gatsby v2 by following the [migration guide][migration-guide]. The power of opinionated, optimized toolsets that internalize smart defaults!
 
-|    Library    | Gatsby v1 | Gatsby v2 |
-| :-----------: | :-------: | :-------: |
-|     React     |  49.8kb   |  34.8kb   |
-| react-router -> @reach/router |    8kb    |    6kb    |
+|Version|React|Router|Total|
+|:-----:|:---:|:----:|:---:|
+|v1|`49.8kb`|`8kb`|`57.8kb`|
+|v2|`34.8kb`|`6kb`|`40.8kb`|
 
 ## Bringing it home
 
@@ -102,6 +102,13 @@ _Oncemore: lower is better 😉_
 ### WebPagetest
 
 ![Gatsby v2 WebPagetest](./images/v2-webpagetest.png)
+
+|Version|Speed Index|Time To Interactive|
+|:-----:|:---------:|:-----------------:|
+|v1|`1728`|`2.635s`|
+|v2|`1712`|`2.486`|
+
+We've shaved off ~200ms from Time To Interactive, while also improving the Speed Index score 💪
 
 ## Wrap Up
 
