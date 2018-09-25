@@ -39,12 +39,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   class RouteHandler extends React.Component {
     render() {
       let { location } = this.props
-      // TODO
-      // check if hash + if element and if so scroll
-      // remove hash handling from gatsby-link
-      // check if scrollbehavior handles back button for
-      // restoring old position
-      // if not, add that.
 
       return (
         <EnsureResources location={location}>

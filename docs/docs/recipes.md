@@ -18,6 +18,7 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 
 ## Table of Contents
 
+- [Using Unstructured Data](#using-unstructured-data)
 - [Using a starter](#using-a-starter)
 - [Creating pages](#creating-pages)
 - [Linking between pages](#linking-between-pages)
@@ -27,6 +28,18 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 - [Querying data](#querying-data)
 - [Sourcing data](#sourcing-data)
 - [Transforming data](#transforming-data)
+- [Gatsby project structure](#gatsby-project-structure)
+
+## Using Unstructured Data
+
+You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+
+- Learn how to pull unstructured data into Gatsby sites in [Using Unstructured Data](/docs/using-unstructured-data/)
+- Learn when and how to use GraphQL and source plugins for more complex Gatsby sites in [Querying data with GraphQL](/docs/querying-with-graphql/)
+
+## Gatsby project structure
+
+Read the [Gatsby project structure](/docs/gatsby-project-structure/) guide for a tour of the folders and files you may see inside a Gatsby project.
 
 ## Using a starter
 
@@ -103,4 +116,3 @@ Transforming data in Gatsby is also plugin-driven; Transformer plugins take data
 
 - Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
 - Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
-
