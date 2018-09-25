@@ -1,6 +1,9 @@
 import React from "react"
 import { withPrefix } from "gatsby"
 import { defaultIcons } from "./common.js"
+import fs from "fs"
+import crypto from "crypto"
+let cacheId = null
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
@@ -28,6 +31,21 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         />
       )
     }
+
+    if (!cacheId) {
+      cacheId = crypto
+        .createHash("sha1")
+        .update(fs.readFileSync(`public${favicon}`))
+        .digest("hex")
+    }
+
+    setHeadComponents([
+      <link
+        key={`gatsby-plugin-manifest-icon-link`}
+        rel="shortcut icon"
+        href={[withPrefix(favicon), cacheId].join("?")}
+      />,
+    ])
   }
 
   // Add manifest link tag.
