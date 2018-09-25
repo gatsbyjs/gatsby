@@ -32,7 +32,7 @@ class IndexRoute extends React.Component {
           <li>
             Create a new site.
             {` `}
-            <code>gatsby new gatsby-site</code>
+            <code>gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default#v1</code>
           </li>
           <li>
             <code>cd gatsby-site</code>

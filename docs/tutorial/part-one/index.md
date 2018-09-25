@@ -51,7 +51,7 @@ npm install --global gatsby-cli
 Once that's installed, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-one` and then move to this new directory:
 
 ```sh
-gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world#v1
 cd tutorial-part-one
 ```
 

@@ -54,7 +54,7 @@ That function can be set up a number of different ways. To set up that function 
 Create a new Gatsby project by running the `gatsby new` command in the terminal and change directories into the new project you just started:
 
 ```shell
-gatsby new ecommerce-gatsby-tutorial
+gatsby new ecommerce-gatsby-tutorial https://github.com/gatsbyjs/gatsby-starter-default#v1
 cd ecommerce-gatsby-tutorial
 ```
 

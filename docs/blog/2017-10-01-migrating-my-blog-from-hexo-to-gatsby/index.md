@@ -83,7 +83,7 @@ To get all the Gatsby files you can use the Gatsby CLI.
 
 ```yaml
 npm install -g gatsby-cli   # Install gatsby CLI
-gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
+gatsby new temp-gatsby-files https://github.com/gatsbyjs/gatsby-starter-default#v1 # Initialize gatsby in a temp directory
 cp -R temp-gatsby-files/* ./ # Copy all the files into your root directory
 rm -rf temp-gatsby-files     # Remove the temp directory
 ```

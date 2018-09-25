@@ -13,7 +13,7 @@ site on e.g.
 For example, to quickly create a blog using Gatsby, you could install the Gatsby
 Starter Blog by running:
 
-`gatsby new blog https://github.com/gatsbyjs/gatsby-starter-blog`
+`gatsby new blog https://github.com/gatsbyjs/gatsby-starter-blog#v1`
 
 This downloads the files and initializes the site by running `npm install`
 
