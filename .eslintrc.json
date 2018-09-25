@@ -9,7 +9,7 @@
     "prettier/flowtype",
     "prettier/react"
   ],
-  "plugins": ["flowtype", "react", "prettier"],
+  "plugins": ["flowtype", "prettier", "react"],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
