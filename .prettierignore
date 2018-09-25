@@ -1,1 +1,3 @@
+*.min.js
+flow-typed
 node_modules

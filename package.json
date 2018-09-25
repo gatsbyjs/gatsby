@@ -59,8 +59,8 @@
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions lerna-prepare",
     "check-versions": "babel-node scripts/check-versions.js",
-    "format": "yarn format:js && yarn format:other",
-    "format:other": "yarn prettier --write",
+    "format": "npm run format:js && npm run format:other",
+    "format:other": "npm run prettier --write",
     "format:js": "npm run lint:js --fix",
     "jest": "jest",
     "lerna": "lerna",
