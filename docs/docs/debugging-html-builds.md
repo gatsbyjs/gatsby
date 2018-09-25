@@ -2,7 +2,7 @@
 title: Debugging HTML Builds
 ---
 
-Errors while building static HTML files generally happen for two reasons.
+Errors while building static HTML files generally happen for one of the following reasons:
 
 1.  Some of your code references "browser globals" like window or document. If
     this is your problem you should see an error above like "window is not
