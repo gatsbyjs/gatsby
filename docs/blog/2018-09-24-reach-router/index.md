@@ -9,10 +9,10 @@ We recently announced the [second major release of Gatsby](/blog/2018-09-17-gats
 
 ## What is @reach/router?
 
-@reach/router is a routing library for React written and maintained by the founder of react-router, [Ryan Florence](https://twitter.com/ryanflorence). After [investigating the tradeoffs](https://github.com/gatsbyjs/gatsby/issues/5656), we made the leap to depending on @reach/router:
+@reach/router is a routing library for React written and maintained by one of the original creators of [react-router](https://github.com/ReactTraining/react-router), [Ryan Florence](https://twitter.com/ryanflorence). After [investigating the tradeoffs](https://github.com/gatsbyjs/gatsby/issues/5656), we made the leap to depending on @reach/router:
 
 - [Accessibility](https://reach.tech/router/accessibility) is a first-class concern
-- Smaller bundle size (25% decrease, 8kb to 6kb gzipped)
+- Smaller bundle size (~70% decrease, 18.4kb to 6kb gzipped)
 - Simplified API
 
 ## How does it support accessibility?
