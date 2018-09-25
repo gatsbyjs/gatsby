@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.2"></a>
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-rc.3...gatsby-transformer-sharp@2.1.2) (2018-09-24)
+
+### Features
+
+- **gatsby-transformer-sharp:** expose sizes argument for fluid query ([#8466](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/8466)) ([efe95a4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/efe95a4))
+
 <a name="2.1.1"></a>
 
 ## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-rc.3...gatsby-transformer-sharp@2.1.1) (2018-09-17)

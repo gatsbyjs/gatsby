@@ -24,7 +24,7 @@ You can access it when your site's development server is running—normally at
 
 Here you poke around the built-in `Site` "type" and see what fields are available
 on it—including the `siteMetadata` object you queried earlier. Try opening
-Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> to bring up
+Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up
 the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be
 using Graph_i_QL a lot more through the remainder of the tutorial.
 
