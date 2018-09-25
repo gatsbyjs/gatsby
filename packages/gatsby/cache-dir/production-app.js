@@ -81,7 +81,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader
     .getResourcesForPathname(browserLoc.pathname)
     .then(resources => {
-      if (resources.page.path === `/404.html`) {
+      if (!resources || resources.page.path === `/404.html`) {
         return loadDirectlyOr404(
           resources,
           browserLoc.pathname + browserLoc.search + browserLoc.hash,
