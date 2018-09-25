@@ -429,7 +429,7 @@ module.exports = async (
     // assets smaller than specified size as data URLs to avoid requests.
     config.loader(`url-loader`, {
       test: /\.(svg|jpg|jpeg|png|gif|mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-      loader: `url`,
+      loader: `url-loader`,
       query: {
         limit: 10000,
         name: `static/[name].[hash:8].[ext]`,
