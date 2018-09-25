@@ -42,10 +42,10 @@ exports.createPages = ({ graphql, actions }) => {
   })
 
   createRedirect({
-    fromPath: `/docs/netlify-cms`,
+    fromPath: `/docs/netlify-cms/`,
     isPermanent: true,
     redirectInBrowser: true,
-    toPath: `/docs/sourcing-from-netlify-cms`,
+    toPath: `/docs/sourcing-from-netlify-cms/`,
   })
 
   createRedirect({
@@ -55,10 +55,10 @@ exports.createPages = ({ graphql, actions }) => {
   })
   
   createRedirect({
-    fromPath: `/docs/adding-third-party-services`,
+    fromPath: `/docs/adding-third-party-services/`,
     isPermanent: true,
     redirectInBrowser: true,
-    toPath: `/docs/adding-website-functionality`,
+    toPath: `/docs/adding-website-functionality/`,
   })
 
   return new Promise((resolve, reject) => {
