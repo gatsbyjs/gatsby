@@ -53,6 +53,13 @@ exports.createPages = ({ graphql, actions }) => {
     toPath: `/starters/`,
     isPermanent: true,
   })
+  
+  createRedirect({
+    fromPath: `/docs/adding-third-party-services`,
+    isPermanent: true,
+    redirectInBrowser: true,
+    toPath: `/docs/adding-website-functionality`,
+  })
 
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
