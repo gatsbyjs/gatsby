@@ -7,21 +7,33 @@ showImageInArticle: false
 tags: ["performance", "v2", "lighthouse", "webpagetest"]
 ---
 
-Blazing fast isn't just a marketing buzzword. There's real business value in a fast site, and whether or not your users realize it, they _want_ a blazing fast site. Gatsby is my preferred solution for making fast sites and making sites fast. Gatsby balances smart, performant defaults with excellent developer ergonomics, making it my preferred solution for creating sites that my users love. However, blazing fast isn't _just_ a goal that once hit can be lauded and bragged about. Blazing fast is something that needs to be regularly measured, understood, and improved. Each new library that's added, each new screen, each new feature runs the risk of bogging down your site, lessening the meaningful part of blazing in blazing fast. If we're _merely_ fast, our competitive advantage in our speed is lost! In this post, I'll deep dive on this notion of blazing fast: how do we measure blazing fast? How did we improve upon Gatsby v1's gold standard to squeeze even more performance out of every site? What are some simple, meaningful metrics to _know_ if your site is blazing fast? Let's get to it.
+We say it all the time: Gatsby sites are blazing fast. 
+
+It’s a great tagline. But for you, that might raise more questions:
+What’s the value in being blazing fast?
+How do you know it’s blazing fast?
+How can it be even more blazing (incineratingly?) fast?
+
+These are questions the Gatsby core team has thought about a lot recently, since our recent release of Gatsby v2 improved upon Gatsby v1's gold standard to squeeze even more performance out of every site. 
+
+And what are some simple, meaningful metrics to _know_ if your site is blazing fast? 
+
+Let's get to it.
 
 > At the BBC, 10% of users are lost for every additional second the site takes to load.
 
 ## Measuring Speed
 
-It can oftentimes be overwhelming and exhausting to truly _know_ all the performance optimizations and [web performance acronyms][web-perf] that are helpful to make your site blazing fast. H/2, PRPL, RAIL, FLIP, SPA, SW, TTI, oh my! Gatsby internalizes many of these practices so that you get _for free_ a blazing fast site with smart defaults out of the box. It's valuable to show rather than tell, so let's go over some performance monitoring tools and techniques so that you can learn how to measure the speed of your site and measure your site's performance. In particular, I'll go over two tools: Lighthouse and Webpagetest, and two metrics, TTI and Speed Index. Armed with the knowledge of these tangible metrics and tools you can be empowered yourself to _know_ whether your site is actually blazing fast or merely an imposter.
+It can oftentimes be overwhelming and exhausting to truly _know_ all the performance optimizations and [web performance acronyms][web-perf] that are helpful to make your site blazing fast. H/2, PRPL, RAIL, FLIP, SPA, SW, TTI, oh my! Gatsby internalizes many of these practices so that you get _for free_ a blazing fast site with smart defaults out of the box. It's valuable to show rather than tell, so let's go over some performance monitoring tools and techniques so that you can learn how to measure the speed of your site and measure your site's performance. In particular, I'll go over two tools: Lighthouse and WebPagetest, and two metrics, Time to Interactive (TTI) and Speed Index. Armed with the knowledge of these tangible metrics and tools you can empower yourself to _know_ whether your site is actually blazing fast — or merely an imposter.
 
 ### Lighthouse / Google Audit
 
 [Lighthouse][lighthouse] is an excellent tool provided by Google Chrome. It's built into the Chrome browser itself, so there's no reason to _not_ use and explore the excellent provided functionality.
 
-Lighthouse measures your site's speed and performance on a variety of meaningful criteria including: performance, progessive web app functionality (e.g. service workers, offline functionality, etc.), accessibility, best practices, and search engine optimization. These core measurements, when maximized, give strong evidence that your site is performant, following the latest web performance techniques, and you know, _actually_ fast.
+Lighthouse measures your site's speed and performance on a variety of meaningful criteria including: performance, progressive web app functionality (e.g. service workers, offline functionality, etc.), accessibility, best practices, and search engine optimization. These core measurements, when maximized, give strong evidence that your site is performant, following the latest web performance techniques, and you know, _actually_ fast.
 
 Our baseline is going to be Gatsby v1. I've created a [repository][gatsby-v1-repo] that I've then [deployed to Netlify][gatsby-v1-netlify]. To use Lighthouse, simply open up Chrome's Developer Tools and navigate to the Audits tab, like so:
+
 
 ![Chrome Audits](./video/lighthouse.mp4) <!-- Note: this probably won't work -->
 
@@ -45,13 +57,21 @@ Running a test in WebPagetest will pull up the specified site on the browser/net
 
 ![WebPagetest v1](./images/v1-webpagetest.png)
 
-Armed with the powerful combo of Lighthouse, Webpagetest, and a knowledge of some useful performance terms like TTI, we can now shift into a discussion of the changes in Gatsby v2 that _improve_ performance over Gatsby v1 in meaningful, real-world ways. We'll come back to both of these tools as it relates to the Gatsby v2 site to actually _prove_ that we've improved performance over our Gatsby v1 baseline!
+Armed with the powerful combo of Lighthouse, WebPagetest, and a knowledge of some useful performance terms like TTI, we can now shift into a discussion of the changes in Gatsby v2 that _improve_ performance over Gatsby v1 in meaningful, real-world ways. We'll come back to both of these tools as it relates to the Gatsby v2 site to actually _prove_ that we've improved performance over our Gatsby v1 baseline!
 
 ## Improving upon Gatsby v1
 
-Gatsby v1 was in many ways an experiment to prove out some meaningful ideas. Injecting content at _build time_ from remote data sources with GraphQL. Statically rendering React components to HTML to maximize performance and SEO. Static site generation _and_ app-like functionality with React hydration. A pluggable and extensible architecture to augment and enhance Gatsby's base feature set and give Gatsby superpowers. [Pull data from Wordpress at build time][gatsby-source-wordpress]? Sure. [Author your application in Typescript][gatsby-plugin-typescript]? Seems reasonable. All this while maintaining sane and optimized defaults to truly squeeze every ounce of performance out of your application.
+Gatsby v1 was in many ways an experiment to prove out some meaningful ideas:
+
+- Injecting content at _build time_ from remote data sources with GraphQL
+- Statically rendering React components to HTML to maximize performance and SEO
+- Static site generation _and_ app-like functionality with React hydration
+- A pluggable and extensible architecture to augment and enhance Gatsby's base feature set and give Gatsby superpowers.
+
+[Pull data from Wordpress at build time][gatsby-source-wordpress]? Sure. [Author your application in Typescript][gatsby-plugin-typescript]? Seems reasonable. All this while maintaining sane and optimized defaults to truly squeeze every ounce of performance out of your application.
 
 Gatsby v2 set out to build upon this solid foundation, while focusing on improvements in speed and developer experience.
+
 
 ### Speed improvements
 
@@ -65,28 +85,11 @@ To that end, Gatsby v2 ships 31% less JavaScript in its client runtime. While we
 |    Library    | Gatsby v1 | Gatsby v2 |
 | :-----------: | :-------: | :-------: |
 |     React     |  49.8kb   |  34.8kb   |
-| @reach/router |    8kb    |    6kb    |
-
-### Build improvements
-
-<!-- Note: I wanted to mention these, but this will be a separate blog post, i.e. hulk smash efforts -->
-
-Client speed (i.e. the deployed site) is of paramount importance for Gatsby and your end users. We also want our developers using Gatsby to have a great experience, and to that end, we've also made a number of tangible improvements in Gatsby v2 that we think will make using Gatsby even more enjoyable.
-
-We've updated a number of our build dependencies, notably Webpack (1 -> 4), babel (6 -> 7), and more to gain some nice performance benefits and other optimizations. Again, it's better to show than tell, so consider the following GIF proof of the value of these efforts as it relates to developer experience:
-
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br><br>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
-
-Additionally, we've been able to set a new record with our create pages benchmark, which programatically creates 100k pages and measure the performance.
-
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">New speed record for <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> v2 with our &quot;create pages&quot; <a href="https://twitter.com/hashtag/benchmark?src=hash&amp;ref_src=twsrc%5Etfw">#benchmark</a>!<br><br>4.5k queries/second, 13207.88 pages/second, 75.38 seconds total build time for 100k page site <a href="https://t.co/DTH56Imzzi">pic.twitter.com/DTH56Imzzi</a></p>&mdash; Andrew Rhyne (@thebigredgeek) <a href="https://twitter.com/thebigredgeek/status/1029465502358355970?ref_src=twsrc%5Etfw">August 14, 2018</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-To re-iterate, simply by following the [migration guide to update to Gatsby v2][migration-guide], these improvements and optimizations are available for free, simply by the process of updating!
+| react-router -> @reach/router |    8kb    |    6kb    |
 
 ## Bringing it home
 
-Build optimizations, coupled with improvements in the client side runtime, have enabled some very real performance benefits and improvements in developer experience. Let's take another look at performance in Gatsby v2 by revisiting our trusty friends Lighthouse and WebPagetest. Refer to [the repo][gatsby-v2-repo] and [deployed site][gatsby-v2-netlify] to judge for yourself!
+Let's take another look at performance in Gatsby v2 by revisiting our trusty friends Lighthouse and WebPagetest. Refer to [the repo][gatsby-v2-repo] and [deployed site][gatsby-v2-netlify] to judge for yourself!
 
 ### Lighthouse
 
@@ -94,7 +97,7 @@ Build optimizations, coupled with improvements in the client side runtime, have 
 
 ![Comparison](./images/lighthouse-chart.png) <!-- https://docs.google.com/spreadsheets/d/1nHXm1GuiMyBXvKnA4wuYMIR5tHqew7l_z8LLQ384yxo/edit?usp=sharing -->
 
-_Lower is better 😉_
+_Oncemore: lower is better 😉_
 
 ### WebPagetest
 
@@ -102,7 +105,7 @@ _Lower is better 😉_
 
 ## Wrap Up
 
-Gatsby v2 is an iterative approach to improving the solid foundational base that was Gatsby v1. By simply upgrading your dependencies, and fixing a minimal amount of breaking changes, you can fully realize these performance benefits and deliver that blazing fast experience your users want, need, and should expect. You've learned some tangible ways to measure performance so you can _prove_ for yourself that your site is as fast as it should be. Onwards and upwards!
+Gatsby v2 is an iterative approach to improving the solid foundational base that was Gatsby v1. By upgrading your site, you can fully realize these performance benefits and deliver that blazing fast experience your users want, need, and expect. You've learned some tangible ways to measure performance so you can _prove_ for yourself that your site is as fast as it should be. Finally, you’ve learned in more depth about some of the changes and improvements that will be available merely by upgrading to Gatsby v2. [Follow our migration guide and update today][migration-guide] to see for yourself!
 
 [bbc]: https://www.blackbeltcommerce.com/bigcommerce/poor-website-performance/
 [web-perf]: https://github.com/google/WebFundamentals/blob/master/src/data/glossary.yaml
