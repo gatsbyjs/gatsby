@@ -109,9 +109,11 @@ class CreatorTemplate extends Component {
                 {creator.name}
               </h1>
               {creator.github && (
-                <a href={creator.github} css={{ marginLeft: `auto` }}>
-                  <GithubIcon />
-                </a>
+                <GithubIcon
+                  css={{
+                    marginLeft: `auto`,
+                  }}
+                />
               )}
             </div>
             <div
