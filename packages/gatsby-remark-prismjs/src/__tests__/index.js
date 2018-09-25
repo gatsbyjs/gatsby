@@ -58,6 +58,16 @@ describe(`remark prism plugin`, () => {
     })
   })
 
+  it(`does not handle inline code if noInlineHighlight: true`, () => {
+    const code = `some text \`containing inline code\``
+    const markdownAST = remark.parse(code)
+    plugin(
+      { markdownAST },
+      { noInlineHighlight: true }
+    )
+    expect(markdownAST).toMatchSnapshot()
+  })
+
   describe(`numberLines`, () => {
     it(`adds line-number markup when necessary`, () => {
       const code = `\`\`\`js{numberLines:5}\n//.foo { \ncolor: red;\n }\``
