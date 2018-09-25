@@ -1,5 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`remark prism plugin does not handle inline code if noInlineHighlight: true 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 11,
+              "line": 1,
+              "offset": 10,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "text",
+          "value": "some text ",
+        },
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 35,
+              "line": 1,
+              "offset": 34,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 11,
+              "line": 1,
+              "offset": 10,
+            },
+          },
+          "type": "inlineCode",
+          "value": "containing inline code",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 35,
+          "line": 1,
+          "offset": 34,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 35,
+      "line": 1,
+      "offset": 34,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
 exports[`remark prism plugin generates a <pre> tag with a custom class prefix if configured 1`] = `
 Object {
   "children": Array [

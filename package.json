@@ -34,7 +34,6 @@
     "prettier": "^1.12",
     "prettier-eslint-cli": "4.7.1",
     "rimraf": "^2.6.1",
-    "yaml-lint": "^1.2.4",
     "yargs": "^10.0.3"
   },
   "engines": {
@@ -49,7 +48,7 @@
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions lerna-prepare",
     "check-versions": "babel-node scripts/check-versions.js",
-    "format": "npm-run-all -p format-packages format-cache-dir format-www format-integration format-examples format-scripts format-markdown",
+    "format": "npm-run-all -p format-packages format-cache-dir format-www format-integration format-examples format-scripts format-markdown format-yaml",
     "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
     "format-examples": "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/gatsby-config.js\" \"examples/**/src/**/*.js\"",
     "format-markdown": "prettier --write \"**/*.md\" --no-semi",
@@ -57,13 +56,14 @@
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
     "format-integration": "prettier-eslint --write \"integration-tests/**/src/**/*.js\" \"integration-tests/**/cypress/**/*.js\"",
+    "format-yaml": "prettier --write \"**/*.y?(a)ml\"",
     "jest": "jest",
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error --parallel lint:js lint:yaml",
     "lint:js": "eslint --ext .js,.jsx packages/**/src integration-tests/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
-    "lint:yaml": "yamllint \"**/*.y?(a)ml\" --ignore=\"**/node_modules/**\"",
+    "lint:yaml": "prettier --list-different \"**/*.y?(a)ml\"",
     "plop": "plop",
     "prebootstrap": "yarn",
     "publish": "lerna publish",
