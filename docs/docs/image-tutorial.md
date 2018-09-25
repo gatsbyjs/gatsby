@@ -19,7 +19,7 @@ First you’ll need to install the `gatsby-source-wordpress` plugin that has ima
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-gatsby new images-tutorial-site
+gatsby new images-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default#v1
 cd images-tutorial-site
 ```
 

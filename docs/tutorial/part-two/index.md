@@ -115,7 +115,7 @@ Let's start by creating a new site. At this point it probably makes sense to clo
 Just like in part one, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-two`. Then, change to this new directory:
 
 ```shell
-gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world#v1
 cd tutorial-part-two
 ```
 

@@ -142,7 +142,7 @@ $ npm install --global gatsby-cli
 In the folder `gatsby-strapi-tutorial` that you previously created, generate your brand new blog:
 
 ```bash
-$ gatsby new blog
+$ gatsby new blog https://github.com/gatsbyjs/gatsby-starter-default#v1
 ```
 
 ### Start in development mode
