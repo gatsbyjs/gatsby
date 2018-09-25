@@ -3,17 +3,17 @@
 
 # These files have the highest likelihood to cause chaos, so we require an
 # admin to review and approve pull requests that affect these.
-/packages/gatsby/                               @gatsbyjs/admin
-/packages/babel-plugin-remove-graphql-queries/  @gatsbyjs/admin
-/packages/gatsby-link/                          @gatsbyjs/admin
-/packages/gatsby-dev-cli/                       @gatsbyjs/admin
-/packages/gatsby-cli/                           @gatsbyjs/admin
+/packages/gatsby/                               @gatsbyjs/core
+/packages/babel-plugin-remove-graphql-queries/  @gatsbyjs/core
+/packages/gatsby-link/                          @gatsbyjs/core
+/packages/gatsby-dev-cli/                       @gatsbyjs/core
+/packages/gatsby-cli/                           @gatsbyjs/core
 
 # We also need to be careful with CI/CD and repo config files.
-.circleci/                                      @gatsbyjs/admin
-.travis.yml                                     @gatsbyjs/admin
-appveyor.yml                                    @gatsbyjs/admin
-.github/                                        @gatsbyjs/admin
+.circleci/                                      @gatsbyjs/core
+.travis.yml                                     @gatsbyjs/core
+appveyor.yml                                    @gatsbyjs/core
+.github/                                        @gatsbyjs/core
 
 # The website auto-deploys, so we need an extra check to avoid shenanigans.
 /www/                                           @gatsbyjs/website
