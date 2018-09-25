@@ -183,6 +183,8 @@
           link: /docs/add-404-page/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
+        - title: Adding pagination
+          link: /docs/adding-pagination/
         - title: Creating a sitemap*
           link: /docs/creating-a-sitemap/
         - title: Linking between pages*
