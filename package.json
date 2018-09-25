@@ -59,7 +59,7 @@
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions lerna-prepare",
     "check-versions": "babel-node scripts/check-versions.js",
-    "format": "npm-run-all -p format-packages format:js format:other",
+    "format": "yarn format:js && yarn format:other",
     "format:other": "yarn prettier --write",
     "format:js": "eslint --ignore-path .gitignore \"**/*.{js,jsx}\" --fix",
     "jest": "jest",
@@ -68,7 +68,7 @@
     "lint": "npm-run-all --continue-on-error --parallel lint:js lint:yaml",
     "lint:js": "eslint --ext .js,.jsx packages/**/src integration-tests/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
-    "lint:other": "yarn prettier --list-different",
+    "lint:other": "npm run prettier --list-different",
     "plop": "plop",
     "prebootstrap": "yarn",
     "precommit": "lint-staged",
