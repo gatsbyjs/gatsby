@@ -2,11 +2,7 @@
 title: RFC process
 ---
 
-## What is this doc about?
-
-The Gatsby open source community uses an RFC ("request for comments") process for contributing ideas to Gatsby.
-
-## Why are we using an RFC process?
+## What is the RFC process?
 
 Many changes, including bug fixes and documentation improvements can be
 implemented and reviewed via the normal GitHub pull request workflow.
