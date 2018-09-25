@@ -100,7 +100,10 @@ class EnsureResources extends React.Component {
     ) {
       // This should only occur if there's no custom 404 page
       const url = getRedirectUrl(this.state.location.href)
-      if (url) window.location.replace(url)
+      if (url) {
+        window.location.replace(url)
+      }
+
       return null
     }
 
