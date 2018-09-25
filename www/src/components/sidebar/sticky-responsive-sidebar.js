@@ -69,6 +69,9 @@ class StickyResponsiveSidebar extends Component {
           css={{ ...styles.sidebarToggleButton }}
           onClick={this._openSidebar}
           role="button"
+          aria-label="Show Secondary Navigation"
+          aria-controls="SecondaryNavigation"
+          aria-expanded={open ? "true" : "false"}
           tabIndex={0}
         >
           <div css={{ ...styles.sidebarToggleButtonInner }}>
