@@ -194,16 +194,21 @@ class SidebarBody extends Component {
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
     return (
-      <div className="docSearch-sidebar" css={{ height: `100%` }}>
+      <section
+        aria-label="Secondary Navigation"
+        id="SecondaryNavigation"
+        className="docSearch-sidebar"
+        css={{ height: `100%` }}
+      >
         {!itemList[0].disableExpandAll && (
-          <div css={{ ...styles.utils }}>
+          <header css={{ ...styles.utils }}>
             <ExpandAllButton
               onClick={this._expandAll}
               expandAll={this.state.expandAll}
             />
-          </div>
+          </header>
         )}
-        <div
+        <nav
           onScroll={({ nativeEvent }) => {
             // get proper scroll position
             const position = nativeEvent.target.scrollTop
@@ -241,8 +246,8 @@ class SidebarBody extends Component {
               />
             ))}
           </ul>
-        </div>
-      </div>
+        </nav>
+      </section>
     )
   }
 }
