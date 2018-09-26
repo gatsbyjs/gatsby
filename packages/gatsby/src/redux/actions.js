@@ -1099,13 +1099,18 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
+  // Check if URL is an external link
+  // and if it is, don't add pathPrefix
+  const isExternalUrl = toPath.startsWith(`https://` || `http://`)
+  const toPathPrefix = isExternalUrl ? `` : pathPrefix
+
   return {
     type: `CREATE_REDIRECT`,
     payload: {
       fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
       redirectInBrowser,
-      toPath: `${pathPrefix}${toPath}`,
+      toPath: `${toPathPrefix}${toPath}`,
       ...rest,
     },
   }
