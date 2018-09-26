@@ -25,6 +25,7 @@ class Cache {
         store: this.store,
         options: {
           path: this.directory,
+          reviveBuffers: false,
           ttl: ONE_HOUR,
         },
       },
@@ -36,11 +37,15 @@ class Cache {
   }
 
   get(key) {
-    return this.cache.get(key)
+    return new Promise(resolve => {
+      this.cache.get(key, (_, res) => resolve(res))
+    })
   }
 
-  set(key, value) {
-    return this.cache.set(key, value)
+  set(key, value, args = {}) {
+    return new Promise(resolve => {
+      this.cache.set(key, value, args, (_, res) => resolve(res))
+    })
   }
 }
 
