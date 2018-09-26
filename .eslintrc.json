@@ -27,22 +27,23 @@
     "spyOn": true
   },
   "rules": {
-    "no-console": "off",
-    "no-inner-declarations": "off",
-    "valid-jsdoc": "off",
-    "require-jsdoc": "off",
-    "consistent-return": ["error"],
     "arrow-body-style": [
       "error",
       "as-needed",
       { "requireReturnForObjectLiteral": true }
     ],
+    "consistent-return": ["error"],
+    "no-console": "off",
+    "no-inner-declarations": "off",
+    "prettier/prettier": "error",
     "react/prop-types": [
       "error",
       {
         "ignore": ["children"]
       }
-    ]
+    ],
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off"
   },
   "overrides": [
     {
