@@ -1,7 +1,7 @@
 const faker = require(`faker`)
 const matter = require(`gray-matter`)
 
-const NUM_ROWS = process.env.NUM_ROWS || 25;
+const NUM_ROWS = parseInt(process.env.NUM_ROWS || 25, 10);
 
 module.exports = index => `
 ${matter.stringify(``, {

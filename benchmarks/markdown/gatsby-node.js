@@ -1,4 +1,4 @@
-const NUM_PAGES = process.env.NUM_PAGES || 5000
+const NUM_PAGES = parseInt(process.env.NUM_PAGES || 5000, 10)
 const template = require(`./page-template`)
 
 exports.sourceNodes = ({ actions: { createNode } }) => {
