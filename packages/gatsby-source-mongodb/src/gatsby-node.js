@@ -71,14 +71,14 @@ function createNodes(
         reject(err)
       }
 
-      documents.forEach(item => {
-        var id = item._id.toString()
+      documents.map(d => JSON.parse(JSON.stringify(d))).forEach(item => {
+        const id = item._id
         delete item._id
 
-        var node = {
+        const node = {
           // Data for the node.
           ...item,
-          id: createNodeId(`${id}`),
+          id: id,
           mongodb_id: id,
           parent: `__${collectionName}__`,
           children: [],
