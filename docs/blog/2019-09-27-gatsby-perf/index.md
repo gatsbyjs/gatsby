@@ -1,7 +1,7 @@
 ---
 title: "Web Performance 102: Keeping Gatsby Sites Blazing Fast"
 author: Dustin Schau
-date: 2018-09-26
+date: 2018-09-27
 image: images/rocket.jpg
 showImageInArticle: false
 tags: ["performance", "v2", "lighthouse", "webpagetest"]
@@ -10,9 +10,10 @@ tags: ["performance", "v2", "lighthouse", "webpagetest"]
 We say it all the time: Gatsby sites are blazing fast. 
 
 It’s a great tagline. But for you, that might raise more questions:
-What’s the value in being blazing fast?
-How do you know it’s blazing fast?
-How can it be even more blazing (incineratingly?) fast?
+
+- What’s the value in being blazing fast?
+- How do you know it’s blazing fast?
+- How can it be even more blazing (incineratingly?) fast?
 
 These are questions the Gatsby core team has thought about recently, since our recent release of Gatsby v2 improved upon Gatsby v1's gold standard to squeeze even more performance out of every site. 
 
@@ -34,16 +35,19 @@ Lighthouse measures your site's speed and performance on a variety of meaningful
 
 Our baseline is going to be Gatsby v1. I've created a [repository][gatsby-v1-repo] that I've then [deployed to Netlify][gatsby-v1-netlify]. To use Lighthouse, simply open up Chrome's Developer Tools and navigate to the Audits tab, like so:
 
-
 ![Chrome Audits](./video/lighthouse.mp4) <!-- Note: this probably won't work -->
 
-Chrome will simulate a slower, mobile device, and measure the performance of your site on the criteria previously mentioned. Of particular note is the trace, which takes screenshots of your site as it loads. The less blank white screens your users see, the better. The quicker your site loads in this trace, the happier your users will be as your site is _actually_ blazing fast and a joy to use. Maximizing this trace coupled with a concept known as TTI, or Time To Interactive, means that not only does your site load fast, but that it is able to be accessed and actually _used_ quickly too. If your site shell and content loads quickly, but JavaScript and other resources are still blocking the main thread, your users will leave your site and/or grow frustrated! Blazing fast isn't just the appearance of loading fast, it's loading fast coupled with actually _being_ fast, and TTI is a great metric to consider as a performance baseline.
+Chrome will simulate a slower, mobile device, and measure the performance of your site on the criteria previously mentioned. Of particular note is the trace, which takes screenshots of your site as it loads. The less blank white screens your users see, the better. The quicker your site loads in this trace, the happier your users will be as your site is _actually_ blazing fast and a joy to use. 
+
+Maximizing this trace coupled with a concept known as TTI, or Time to Interactive, means that not only does your site load fast, but that it is able to be accessed and actually _used_ quickly too. If your site shell and content loads quickly, but JavaScript and other resources are still blocking the main thread, your users will leave your site and/or grow frustrated! Blazing fast isn't just the appearance of loading fast, it's loading fast coupled with actually _being_ fast, and TTI is a great metric to consider as a performance baseline.
 
 Running a performance audit on a Gatsby v1 site gives us these results in Lighthouse:
 
 ![Gatsby v1 Lighthouse](./images/v1-perf.png)
 
 💯 Pretty speedy! We had our work cut out for us in improving upon this standard, but we did 💪
+
+It's also pertinent to discuss Speed Index when discussing performance measurements. Speed Index is ["... the average time at which visible parts of the page are displayed."][speed-index] In effect, Speed Index gives us an idea how fast the separate pieces of our page are loaded and filled in. A page that loads disparate elements--e.g. the header, page content, sidebar, etc.--more quickly is a page that gives your user the sense of a fast-loading page. Couple a quick speed index with a blazing time to interactive, and you have a page that not only gives the appearance of loading quickly but one that is also _ready to use_ quickly. This is the gold standard we strive for at Gatsby.
 
 Lighthouse is an excellent tool for providing _evidence_ that your site is fast, and it does so by using local emulation and simulation of slow networks and slower devices, e.g. CPU throttling. However, to really _know_ that your site is fast, there's no replacing testing on a real device, which is where an excellent tool [WebPagetest][webpagetest] is valuable.
 
@@ -103,12 +107,12 @@ _Oncemore: lower is better 😉_
 
 ![Gatsby v2 WebPagetest](./images/v2-webpagetest.png)
 
-|Version|Speed Index|Time To Interactive|
+|Version|Speed Index|Time to Interactive|
 |:-----:|:---------:|:-----------------:|
 |v1|`1728`|`2.635s`|
 |v2|`1712`|`2.486`|
 
-We've shaved off ~200ms from Time To Interactive, while also improving the Speed Index score 💪
+We've shaved off ~200ms from Time to Interactive, while also improving the Speed Index score 💪
 
 ## Wrap Up
 
@@ -116,6 +120,7 @@ Gatsby v2 is an iterative approach to improving the solid foundational base that
 
 [bbc]: https://www.blackbeltcommerce.com/bigcommerce/poor-website-performance/
 [web-perf]: https://github.com/google/WebFundamentals/blob/master/src/data/glossary.yaml
+[speed-index]: https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index
 [lighthouse]: https://www.google.com/search?q=google+audit&ie=utf-8&oe=utf-8&client=firefox-b-1-ab
 [gatsby-v1-repo]: https://github.com/dschau/gatsby-v1
 [gatsby-v1-netlify]: https://gatsby-v1-perf.netlify.com/
