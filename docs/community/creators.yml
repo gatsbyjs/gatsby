@@ -169,3 +169,12 @@
   image: images/lekoarts.jpg
   for_hire: true
   portfolio: true
+- name: Ventura Digitalagentur
+  type: agency
+  description: >-
+    Ventura is a digital agency specialized in developing web-based applications, native apps and Progressive Web Apps for companies of all sizes.
+  location: "Cologne, Germany"
+  website: "https://www.ventura-digitalagentur.de"
+  image: ventura-digitalagentur.jpg
+  for_hire: true
+  portfolio: true
