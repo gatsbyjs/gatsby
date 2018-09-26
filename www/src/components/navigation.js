@@ -57,9 +57,9 @@ const Navigation = ({ pathname }) => {
   )
 
   return (
-    <div
-      role="navigation"
+    <nav
       className="navigation"
+      aria-label="Primary Navigation"
       css={{
         backgroundColor: isHomepage ? `transparent` : `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : `relative`,
@@ -187,7 +187,7 @@ const Navigation = ({ pathname }) => {
           </SocialNavItem>
         </div>
       </div>
-    </div>
+    </nav>
   )
 }
 

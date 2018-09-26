@@ -105,3 +105,31 @@ export const buttonStyles = {
     },
   },
 }
+
+export const svgStyles = {
+  active: {
+    "& .svg-stroke": {
+      strokeWidth: 1.4173,
+      strokeMiterlimit: 10,
+    },
+    "& .svg-stroke-accent": { stroke: colors.accent },
+    "& .svg-stroke-lilac": { stroke: colors.lilac },
+    "& .svg-stroke-gatsby": { stroke: colors.gatsby },
+    "& .svg-stroke-gradient-purple": { stroke: `url(#purple-top)` },
+    "& .svg-fill-lilac": { fill: colors.lilac },
+    "& .svg-fill-gatsby": { fill: colors.gatsby },
+    "& .svg-fill-accent": { fill: colors.accent },
+    "& .svg-fill-wisteria": { fill: colors.wisteria },
+    "& .svg-fill-brightest": { fill: `#fff` },
+    "& .svg-fill-gradient-accent-white-45deg": {
+      fill: `url(#accent-white-45deg)`,
+    },
+    "& .svg-fill-gradient-purple": { fill: `url(#lilac-gatsby)` },
+    "& .svg-fill-gradient-accent-white-bottom": {
+      fill: `url(#accent-white-bottom)`,
+    },
+    "& .svg-fill-gradient-accent-white-top": {
+      fill: `url(#accent-white-top)`,
+    },
+  },
+}

@@ -17,11 +17,7 @@ const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
 
   return (
-    <div
-      css={{
-        ...styles.showcaseList,
-      }}
-    >
+    <div css={{ ...styles.showcaseList }}>
       {items.map(
         ({ node }) =>
           node.fields &&
@@ -80,11 +76,7 @@ const ShowcaseList = ({ items, count }) => {
                 </div>
                 {node.featured && (
                   <Link
-                    css={{
-                      "&&": {
-                        ...styles.featuredItem,
-                      },
-                    }}
+                    css={{ "&&": { ...styles.featuredItem } }}
                     to={`/showcase?${qs.stringify({
                       filters: `Featured`,
                     })}`}
@@ -93,9 +85,7 @@ const ShowcaseList = ({ items, count }) => {
                     <img
                       src={FeaturedIcon}
                       alt="icon"
-                      css={{
-                        ...styles.featuredIcon,
-                      }}
+                      css={{ ...styles.featuredIcon }}
                     />
                   </Link>
                 )}
