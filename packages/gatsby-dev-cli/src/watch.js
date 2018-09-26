@@ -1,7 +1,7 @@
 const chokidar = require(`chokidar`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
-const syspath = require(`path`)
+const path = require(`path`)
 
 let numCopied = 0
 
@@ -34,36 +34,36 @@ function watch(root, packages, { scanOnce, quiet }) {
   ].concat(
     packages.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
   )
-  const watchers = packages.map(p => syspath.join(root, `/packages/`, p))
+  const watchers = packages.map(p => path.join(root, `/packages/`, p))
 
   let allCopies = []
 
   chokidar.watch(watchers, {
-    ignored: [(path, stats) => _.some(ignored, reg => reg.test(path))],
+    ignored: [(filePath, stats) => _.some(ignored, reg => reg.test(filePath))],
   })
-    .on(`all`, (event, path) => {
+    .on(`all`, (event, filePath) => {
       if (event === `change` || event === `add`) {
-        const name = syspath.basename(syspath.dirname(path.split(`packages/`).pop()))
-        const prefix = syspath.join(root, `/packages/`, name)
+        const name = path.basename(path.dirname(filePath.split(`packages/`).pop()))
+        const prefix = path.join(root, `/packages/`, name)
 
         // Copy it over local version.
         // Don't copy over the Gatsby bin file as that breaks the NPM symlink.
-        if (_.includes(path, `dist/gatsby-cli.js`)) {
+        if (_.includes(filePath, `dist/gatsby-cli.js`)) {
           return
         }
 
-        const newPath = syspath.join(
+        const newPath = path.join(
           `./node_modules/${name}`,
-          syspath.relative(prefix, path)
+          path.relative(prefix, filePath)
         )
 
-        let localCopies = [copyPath(path, newPath, quiet)]
+        let localCopies = [copyPath(filePath, newPath, quiet)]
 
         // If this is from "cache-dir" also copy it into the site's .cache
-        if (_.includes(path, `cache-dir`)) {
-          const newCachePath = syspath.join(
+        if (_.includes(filePath, `cache-dir`)) {
+          const newCachePath = path.join(
             `.cache/`,
-            syspath.relative(syspath.join(prefix, `cache-dir`), path)
+            path.relative(path.join(prefix, `cache-dir`), filePath)
           )
           localCopies.push(copyPath(path, newCachePath, quiet))
         }
