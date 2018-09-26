@@ -43,8 +43,8 @@ function watch(root, packages, { scanOnce, quiet }) {
   })
     .on(`all`, (event, filePath) => {
       if (event === `change` || event === `add`) {
-        const name = path.basename(path.dirname(filePath.split(`packages/`).pop()))
-        const prefix = path.join(root, `/packages/`, name)
+        const packageName = path.basename(path.dirname(filePath.split(`packages/`).pop()))
+        const prefix = path.join(root, `/packages/`, packageName)
 
         // Copy it over local version.
         // Don't copy over the Gatsby bin file as that breaks the NPM symlink.
@@ -53,7 +53,7 @@ function watch(root, packages, { scanOnce, quiet }) {
         }
 
         const newPath = path.join(
-          `./node_modules/${name}`,
+          `./node_modules/${packageName}`,
           path.relative(prefix, filePath)
         )
 
