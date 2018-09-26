@@ -8,13 +8,13 @@ import MdStar from "react-icons/lib/md/star"
 const Meta = ({ starter, repoName, imageSharp, frontmatter }) => {
   return (
     <div
-      className="starter-meta-container"
       css={{
         fontFamily: options.headerFontFamily.join(`,`),
         color: colors.gray.dark,
         display: "flex",
-        flexWrap: "nowrap",
-        width: 320,
+        flexWrap: "wrap",
+        width: "100%",
+        minWidth: "320px",
         flexDirection: "column-reverse",
         padding: sharedStyles.gutter,
         paddingTop: 0,
@@ -23,23 +23,25 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => {
           paddingTop: 0,
         },
         [presets.Phablet]: {
-          width: "100%",
           flexDirection: "row",
+          flexWrap: "nowrap",
         },
       }}
     >
       <div
-        className="left-column-container"
         css={{
           marginTop: rhythm(3 / 4),
           paddingRight: 15,
           display: "flex",
           flexWrap: "wrap",
-          [presets.Phablet]: {},
+          justifyContent: "space-between",
+          flexShrink: 0,
+          [presets.Phablet]: {
+            justifyContent: "flex-start",
+          },
         }}
       >
-        {/* GitHub stars */}
-        <div className="github-stars">
+        <div>
           <span
             css={{
               color: colors.accent,
@@ -52,8 +54,7 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => {
           </span>
         </div>
 
-        {/* Last updated */}
-        <div className="last-updated">
+        <div>
           <span
             css={{
               color: colors.gray.calm,
@@ -66,24 +67,30 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => {
           {showDate(starter.githubData.repoMetadata.updated_at)}
         </div>
       </div>
+
       <div
-        className="right-column-container"
         css={{
           marginTop: rhythm(3 / 4),
           marginRight: 15,
           display: "flex",
-          flexWrap: "wrap",
+          flexWrap: "nowrap",
           flexGrow: 1,
-          justifyContent: "flex-start",
+          justifyContent: "space-between",
+          borderBottom: `1px solid ${colors.ui.light}`,
+          paddingBottom: rhythm(2 / 4),
           [presets.Phablet]: {
-            justifyContent: "space-between",
+            borderBottom: `0px`,
           },
         }}
       >
-        {/* By {author} */}
         <div
-          className="by-author"
-          css={{ paddingRight: 15, paddingBottom: 15 }}
+          css={{
+            paddingRight: 15,
+            paddingBottom: 15,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
         >
           <span css={{ color: colors.gray.light }}>{`By  `}</span>
           <a
@@ -102,14 +109,13 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => {
             }}
             href={`https://github.com/${starter.owner.login}`}
           >
-            <span className="title">{starter.owner.login}</span>
+            {starter.owner.login}
           </a>
         </div>
-
-        {/* Visit / share demo */}
         <div
-          className="out-links"
           css={{
+            flex: "2 0 auto",
+            textAlign: "right",
             position: "relative",
             zIndex: 1,
           }}
@@ -123,7 +129,7 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => {
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: rhythm(1.5 / 4),
-              padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
+              padding: `${rhythm(1 / 6)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
               textDecoration: `none`,
               WebkitFontSmoothing: `antialiased`,
               "&&": {
@@ -137,12 +143,17 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => {
               },
             }}
           >
-            <MdLaunch style={{ verticalAlign: `sub` }} /> Visit demo
+            <MdLaunch
+              style={{
+                verticalAlign: `sub`,
+              }}
+            />
+            {` Visit demo `}
           </a>
           <ShareMenu
             url={`https://github.com/${starter.githubFullName}`}
             title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
-            image={imageSharp.childImageSharp.fluid.src}
+            image={imageSharp.childImageSharp.resize.src}
             theme={"accent"}
           />
         </div>

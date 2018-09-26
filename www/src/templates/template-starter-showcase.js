@@ -89,23 +89,33 @@ class StarterTemplate extends React.Component {
               <meta name="twitter:data1" content={`1 min read`} />
             </Helmet>
             <StarterHeader stub={starterShowcase.stub} />
-            <StarterMeta
-              starter={starterShowcase}
-              repoName={repoName}
-              imageSharp={imageSharp}
-              frontmatter={frontmatter}
-            />
-            <StarterScreenshot imageSharp={imageSharp} />
+            <div
+              css={{
+                display: "flex",
+                flexDirection: "column-reverse",
+                [presets.Phablet]: {
+                  flexDirection: "column",
+                },
+              }}
+            >
+              <StarterMeta
+                starter={starterShowcase}
+                repoName={repoName}
+                imageSharp={imageSharp}
+                frontmatter={frontmatter}
+              />
+              <StarterScreenshot imageSharp={imageSharp} />
+            </div>
             <StarterSource
               frontmatter={frontmatter}
               markdownRemark={markdownRemark}
             />
             <StarterDetails
               frontmatter={frontmatter}
-              showAllDeps={this.showAllDeps}
               allDeps={allDeps}
               shownDeps={shownDeps}
               showMore={showMore}
+              showAllDeps={this.showAllDeps}
             />
           </div>
         </div>

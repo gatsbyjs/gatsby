@@ -111,7 +111,7 @@ const Details = ({
                 )
             )}
           {showMore && (
-            <button css={{ ...sharedStyles.button }} onClick={showAllDeps}>
+            <button css={{ ...styles.showMoreButton }} onClick={showAllDeps}>
               {`Show ${allDeps.length - shownDeps.length} more`}
             </button>
           )}
@@ -122,3 +122,24 @@ const Details = ({
 }
 
 export default Details
+
+const styles = {
+  showMoreButton: {
+    border: 0,
+    borderRadius: presets.radius,
+    cursor: `pointer`,
+    fontFamily: options.headerFontFamily.join(`,`),
+    fontWeight: `bold`,
+    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+    WebkitFontSmoothing: `antialiased`,
+    "&&": {
+      backgroundColor: colors.gatsby,
+      borderBottom: `none`,
+      boxShadow: `none`,
+      color: `white`,
+      "&:hover": {
+        backgroundColor: colors.gatsby,
+      },
+    },
+  },
+}

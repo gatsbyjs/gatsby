@@ -8,7 +8,6 @@ import { NetlifyIcon } from "../../assets/logos"
 const Source = ({ frontmatter, markdownRemark }) => {
   return (
     <div
-      className="github-source-playground"
       css={{
         display: `flex`,
         borderTop: `1px solid ${colors.ui.light}`,
@@ -91,19 +90,22 @@ const Source = ({ frontmatter, markdownRemark }) => {
           href={`https://app.netlify.com/start/deploy?repository=${
             frontmatter.repo
           }`}
-          style={{
-            borderBottom: `none`,
-            boxShadow: `none`,
-            color: colors.gatsby,
-            ...scale(1 / 5),
-            fontWeight: `normal`,
+          css={{
+            "&&": {
+              ...scale(1 / 5),
+              boxShadow: `none`,
+              borderBottom: 0,
+              color: colors.gatsby,
+              cursor: `pointer`,
+              fontFamily: options.headerFontFamily.join(`,`),
+              fontWeight: `normal`,
+              "&:hover": {
+                background: `transparent`,
+                color: colors.lilac,
+              },
+            },
           }}
         >
-          {/* <img
-						src="https://www.netlify.com/img/deploy/button.svg"
-						alt="Deploy to Netlify"
-						css={{ marginBottom: 0 }}
-					/> */}
           <TechWithIcon icon={NetlifyIcon}>Netlify</TechWithIcon>
         </a>
       </div>
