@@ -1,12 +1,9 @@
 import React, { Component } from "react"
 import SearchIcon from "../../components/search-icon"
-import MdFilterList from "react-icons/lib/md/filter-list"
-import MdClear from "react-icons/lib/md/clear"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
-import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { options, scale, rhythm } from "../../utils/typography"
+import { options, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 import styles from "../shared/styles"
@@ -14,6 +11,15 @@ import styles from "../shared/styles"
 import LHSFilter from "./lhs-filter"
 import ShowcaseList from "./showcase-list"
 import Button from "../../components/button"
+import {
+  SidebarHeader,
+  SidebarBody,
+  SidebarContainer,
+  ContentHeader,
+  ContentTitle,
+  ContentContainer,
+} from "../shared/sidebar"
+import ResetFilters from "../shared/reset-filters"
 
 export default class FilteredShowcase extends Component {
   state = {
@@ -28,6 +34,7 @@ export default class FilteredShowcase extends Component {
       sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
     })
   resetFilters = () => this.props.setURLState({ c: null, d: null, s: `` })
+
   render() {
     const { data, urlState, setURLState } = this.props
     const {
@@ -71,93 +78,12 @@ export default class FilteredShowcase extends Component {
     }
 
     return (
-      <section
-        className="showcase"
-        css={{
-          display: `flex`,
-        }}
-      >
-        <div
-          css={{
-            display: `none`,
-            [presets.Desktop]: {
-              display: `block`,
-              flexBasis: `15rem`,
-              minWidth: `15rem`,
-              ...styles.sticky,
-              paddingTop: 0,
-              borderRight: `1px solid ${colors.ui.light}`,
-              height: `calc(100vh - ${presets.headerHeight})`,
-            },
-          }}
-        >
-          <h3
-            css={{
-              margin: 0,
-              [presets.Desktop]: {
-                ...scale(1 / 8),
-                lineHeight: 1,
-                height: presets.headerHeight,
-                margin: 0,
-                color: colors.gray.calm,
-                fontWeight: `normal`,
-                display: `flex`,
-                flexShrink: 0,
-                paddingLeft: rhythm(3 / 4),
-                paddingRight: rhythm(3 / 4),
-                paddingTop: rhythm(options.blockMarginBottom),
-                paddingBottom: rhythm(options.blockMarginBottom),
-                borderBottom: `1px solid ${colors.ui.light}`,
-              },
-            }}
-          >
-            Filter & Refine
-            {` `}
-            <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
-              <MdFilterList />
-            </span>
-          </h3>
-          <div
-            css={{
-              paddingLeft: rhythm(3 / 4),
-              height: `calc(100vh - ((${presets.headerHeight} * 2) + ${
-                presets.bannerHeight
-              }))`,
-              display: `flex`,
-              flexDirection: `column`,
-            }}
-          >
+      <section className="showcase" css={{ display: `flex` }}>
+        <SidebarContainer>
+          <SidebarHeader />
+          <SidebarBody>
             {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
-              <div
-                css={{
-                  marginRight: rhythm(3 / 4),
-                }}
-              >
-                <button
-                  css={{
-                    ...scale(-1 / 6),
-                    alignItems: `center`,
-                    background: colors.ui.light,
-                    border: 0,
-                    borderRadius: presets.radius,
-                    color: colors.gatsby,
-                    cursor: `pointer`,
-                    display: `flex`,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    marginTop: rhythm(options.blockMarginBottom),
-                    paddingRight: rhythm(3 / 4),
-                    textAlign: `left`,
-                    "&:hover": {
-                      background: colors.gatsby,
-                      color: `#fff`,
-                    },
-                  }}
-                  onClick={resetFilters}
-                >
-                  <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset all
-                  Filters
-                </button>
-              </div>
+              <ResetFilters onClick={resetFilters} />
             )}
             <LHSFilter
               heading="Categories"
@@ -189,49 +115,18 @@ export default class FilteredShowcase extends Component {
               setFilters={setFiltersDependency}
               sortRecent={urlState.sort === `recent`}
             />
-          </div>
-        </div>
-        <div css={{ width: `100%` }}>
-          <div
-            css={{
-              display: `flex`,
-              alignItems: `center`,
-              height: presets.headerHeight,
-              flexDirection: `row`,
-              ...styles.sticky,
-              background: `rgba(255,255,255,0.98)`,
-              paddingLeft: `${rhythm(3 / 4)}`,
-              paddingRight: `${rhythm(3 / 4)}`,
-              zIndex: 1,
-              borderBottom: `1px solid ${colors.ui.light}`,
-            }}
-          >
-            <h2
-              css={{
-                color: colors.gatsby,
-                margin: 0,
-                ...scale(1 / 5),
-                lineHeight: 1,
-              }}
-            >
-              {urlState.s.length === 0 ? (
-                filters.size === 0 ? (
-                  <span>
-                    All {data.allMarkdownRemark.edges.length} Starters
-                  </span>
-                ) : (
-                  <span>
-                    {items.length}
-                    {` `}
-                    {filters.size === 1 && filters.values()[0]}
-                    {` `}
-                    Sites
-                  </span>
-                )
-              ) : (
-                <span>{items.length} search results</span>
-              )}
-            </h2>
+          </SidebarBody>
+        </SidebarContainer>
+        <ContentContainer>
+          <ContentHeader>
+            <ContentTitle
+              search={urlState.s}
+              filters={filters}
+              label="Gatsby Starter"
+              items={items}
+              edges={data.allMarkdownRemark.edges}
+              what="size"
+            />
             <div css={{ marginLeft: `auto` }}>
               <label
                 css={{
@@ -244,26 +139,6 @@ export default class FilteredShowcase extends Component {
                     paddingTop: rhythm(1 / 8),
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(1),
-                    width: rhythm(5),
-                  },
-                }}
-              >
-                <MdArrowForward css={{ marginRight: 8 }} />
-                Submit your starter
-              </label>
-              <label
-                css={{
-                  display: `none`,
-                  [presets.Desktop]: {
-                    color: colors.gatsby,
-                    border: 0,
-                    borderRadius: presets.radiusLg,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
-                    // paddingLeft: rhythm(1),
                     width: rhythm(5),
                   },
                 }}
@@ -304,7 +179,6 @@ export default class FilteredShowcase extends Component {
                 />
                 <SearchIcon
                   overrideCSS={{
-                    // ...iconStyles,
                     fill: colors.lilac,
                     position: `absolute`,
                     left: `5px`,
@@ -312,17 +186,12 @@ export default class FilteredShowcase extends Component {
                     width: `16px`,
                     height: `16px`,
                     pointerEvents: `none`,
-                    // transition: `fill ${speedDefault} ${curveDefault}`,
                     transform: `translateY(-50%)`,
-
-                    // [presets.Hd]: {
-                    //   fill: focussed && isHomepage && colors.gatsby,
-                    // },
                   }}
                 />
               </label>
             </div>
-          </div>
+          </ContentHeader>
           <ShowcaseList
             urlState={urlState}
             sortRecent={urlState.sort === `recent`}
@@ -342,7 +211,7 @@ export default class FilteredShowcase extends Component {
               Load More
             </Button>
           )}
-        </div>
+        </ContentContainer>
       </section>
     )
   }

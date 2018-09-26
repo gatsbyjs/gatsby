@@ -56,7 +56,7 @@
       items:
         - title: Your first layout component
           link: /tutorial/part-three/#your-first-layout-component
-    - title: 4. Querying for data in a blog
+    - title: 4. Data in Gatsby
       link: /tutorial/part-four/
       ui: steps
       items:

@@ -39,12 +39,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   class RouteHandler extends React.Component {
     render() {
       let { location } = this.props
-      // TODO
-      // check if hash + if element and if so scroll
-      // remove hash handling from gatsby-link
-      // check if scrollbehavior handles back button for
-      // restoring old position
-      // if not, add that.
 
       return (
         <EnsureResources location={location}>
@@ -86,18 +80,15 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   loader
     .getResourcesForPathname(browserLoc.pathname)
-    .then(() => {
-      if (!loader.getPage(browserLoc.pathname)) {
-        return loader
-          .getResourcesForPathname(`/404.html`)
-          .then(resources =>
-            loadDirectlyOr404(
-              resources,
-              browserLoc.pathname + browserLoc.search + browserLoc.hash,
-              true
-            )
-          )
+    .then(resources => {
+      if (!resources || resources.page.path === `/404.html`) {
+        return loadDirectlyOr404(
+          resources,
+          browserLoc.pathname + browserLoc.search + browserLoc.hash,
+          true
+        )
       }
+
       return null
     })
     .then(() => {

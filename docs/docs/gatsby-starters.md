@@ -942,7 +942,7 @@ There are several starters that have been created. Create a PR to include yours!
 
   - Built upon gatsby-starter-default
   - Perfect if you want to use Typescript and SASS but don't want any extra code
-  
+
 - [gatsby-starter-mate](https://github.com/EmaSuriano/gatsby-starter-mate)
   [(demo)](https://gatsby-starter-mate.netlify.com/)
 

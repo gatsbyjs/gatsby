@@ -71,6 +71,8 @@
     - title: Sourcing content and data*
       link: /docs/content-and-data/
       items:
+        - title: Using Unstructured Data
+          link: /docs/using-unstructured-data/
         - title: Sourcing from the filesystem*
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases*
@@ -103,6 +105,8 @@
           link: /docs/page-query/
         - title: Querying data in components with StaticQuery
           link: /docs/static-query/
+        - title: Using third-party GraphQL APIs
+          link: /docs/third-party-graphql/
         - title: Adding Markdown pages
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
@@ -125,7 +129,7 @@
     - title: Styling
       link: /docs/styling/
       items:
-        - title: CSS Modules*
+        - title: CSS Modules
           link: /docs/css-modules/
         - title: Typography.js*
           link: /docs/typography-js/
@@ -181,6 +185,8 @@
           link: /docs/add-404-page/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
+        - title: Adding pagination
+          link: /docs/adding-pagination/
         - title: Creating a sitemap*
           link: /docs/creating-a-sitemap/
         - title: Linking between pages*
@@ -255,6 +261,8 @@
   items:
     - title: The Gatsby core philosophy*
       link: /docs/gatsby-core-philosophy/
+    - title: Gatsby project structure
+      link: /docs/gatsby-project-structure/
     - title: Life and times of a Gatsby build*
       link: /docs/life-and-times-of-a-gatsby-build/
     - title: Building with components
@@ -351,7 +359,7 @@
       link: /docs/gatsby-style-guide/
     - title: RFC process*
       link: /docs/rfc-process/
-    - title: Docs templates*
+    - title: Docs templates
       link: /docs/templates/
     - title: How to run a Gatsby workshop*
       link: /docs/how-to-run-a-gatsby-workshop/
