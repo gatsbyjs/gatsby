@@ -1,0 +1,163 @@
+import presets, { colors } from "../../utils/presets"
+import { /*typography, */ rhythm, options } from "../../utils/typography"
+import sharedStyles from "../shared/styles"
+import ShareMenu from "../../components/share-menu"
+import MdLaunch from "react-icons/lib/md/launch"
+import MdStar from "react-icons/lib/md/star"
+
+const Meta = ({ starter, repoName, imageSharp, frontmatter }) => {
+  return (
+    <div
+      className="starter-meta-container"
+      css={{
+        fontFamily: options.headerFontFamily.join(`,`),
+        color: colors.gray.dark,
+        display: "flex",
+        flexWrap: "nowrap",
+        width: 320,
+        flexDirection: "column-reverse",
+        padding: sharedStyles.gutter,
+        paddingTop: 0,
+        [presets.Desktop]: {
+          padding: sharedStyles.gutterDesktop,
+          paddingTop: 0,
+        },
+        [presets.Phablet]: {
+          width: "100%",
+          flexDirection: "row",
+        },
+      }}
+    >
+      <div
+        className="left-column-container"
+        css={{
+          marginTop: rhythm(3 / 4),
+          paddingRight: 15,
+          display: "flex",
+          flexWrap: "wrap",
+          [presets.Phablet]: {},
+        }}
+      >
+        {/* GitHub stars */}
+        <div className="github-stars">
+          <span
+            css={{
+              color: colors.accent,
+              paddingRight: 10,
+            }}
+          >
+            <MdStar style={{ verticalAlign: `sub` }} />
+            {` `}
+            <span css={{ color: colors.gray.light }}>{starter.stars}</span>
+          </span>
+        </div>
+
+        {/* Last updated */}
+        <div className="last-updated">
+          <span
+            css={{
+              color: colors.gray.calm,
+              fontFamily: options.headerFontFamily.join(`,`),
+              paddingRight: 8,
+            }}
+          >
+            Updated
+          </span>
+          {showDate(starter.githubData.repoMetadata.updated_at)}
+        </div>
+      </div>
+      <div
+        className="right-column-container"
+        css={{
+          marginTop: rhythm(3 / 4),
+          marginRight: 15,
+          display: "flex",
+          flexWrap: "wrap",
+          flexGrow: 1,
+          justifyContent: "flex-start",
+          [presets.Phablet]: {
+            justifyContent: "space-between",
+          },
+        }}
+      >
+        {/* By {author} */}
+        <div
+          className="by-author"
+          css={{ paddingRight: 15, paddingBottom: 15 }}
+        >
+          <span css={{ color: colors.gray.light }}>{`By  `}</span>
+          <a
+            css={{
+              "&&": {
+                boxShadow: `none`,
+                borderBottom: 0,
+                color: colors.lilac,
+                cursor: `pointer`,
+                fontFamily: options.headerFontFamily.join(`,`),
+                "&:hover": {
+                  background: `transparent`,
+                  color: colors.gatsby,
+                },
+              },
+            }}
+            href={`https://github.com/${starter.owner.login}`}
+          >
+            <span className="title">{starter.owner.login}</span>
+          </a>
+        </div>
+
+        {/* Visit / share demo */}
+        <div
+          className="out-links"
+          css={{
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          <a
+            href={frontmatter.demo}
+            css={{
+              border: 0,
+              borderRadius: presets.radius,
+              color: colors.accent,
+              fontFamily: options.headerFontFamily.join(`,`),
+              fontWeight: `bold`,
+              marginRight: rhythm(1.5 / 4),
+              padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
+              textDecoration: `none`,
+              WebkitFontSmoothing: `antialiased`,
+              "&&": {
+                backgroundColor: colors.accent,
+                borderBottom: `none`,
+                boxShadow: `none`,
+                color: colors.gatsby,
+                "&:hover": {
+                  backgroundColor: colors.accent,
+                },
+              },
+            }}
+          >
+            <MdLaunch style={{ verticalAlign: `sub` }} /> Visit demo
+          </a>
+          <ShareMenu
+            url={`https://github.com/${starter.githubFullName}`}
+            title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
+            image={imageSharp.childImageSharp.fluid.src}
+            theme={"accent"}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function showDate(dt) {
+  const date = new Date(dt)
+  return date.toLocaleDateString(`en-US`, {
+    month: `short`,
+    day: `numeric`,
+    year: `numeric`,
+  })
+}
+
+export default Meta
