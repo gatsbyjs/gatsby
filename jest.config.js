@@ -7,8 +7,8 @@ const reGatsby = /gatsby$/
 const gatsbyDir = pkgs.find(p => reGatsby.exec(p))
 const gatsbyBuildDirs = [`dist`].map(dir => path.join(gatsbyDir, dir))
 const builtTestsDirs = pkgs.map(p => path.join(p, `__tests__`))
-const distTestDirs = pkgs.map(p => path.join(p, `dist`))
-const ignoreDirs = [].concat(gatsbyBuildDirs, builtTestsDirs, distTestDirs)
+const distDirs = pkgs.map(p => path.join(p, `dist`))
+const ignoreDirs = [].concat(gatsbyBuildDirs, builtTestsDirs, distDirs)
 const coverageDirs = pkgs.map(p => path.join(p, `src/**/*.js`))
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
-  collectCoverage: true,
+  collectCoverage: false,
   coverageReporters: [`json-summary`, `text`, `html`],
   coverageThreshold: {
     global: {
