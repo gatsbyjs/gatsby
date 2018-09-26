@@ -1,19 +1,22 @@
 const fs = require(`fs-extra`)
 const manager = require(`cache-manager`)
-const fsStore = require(`cache-manager-fs`)
+const fsStore = require(`cache-manager-fs-hash`)
 const path = require(`path`)
 
 const MAX_CACHE_SIZE = 250
 const ONE_HOUR = 60 * 60
 
 class Cache {
-  constructor(folderName = `db`, store = fsStore) {
-    this.folderName = folderName
+  constructor({
+    name = `db`,
+    store = fsStore,
+  } = {}) {
+    this.name = name
     this.store = store
   }
 
   get directory() {
-    return path.join(process.cwd(), `.cache/caches/${this.folderName}`)
+    return path.join(process.cwd(), `.cache/caches/${this.name}`)
   }
 
   init() {

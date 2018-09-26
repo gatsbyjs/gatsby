@@ -90,7 +90,9 @@ const runAPI = (plugin, api, args) => {
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
     const tracing = initAPICallTracing(pluginSpan)
-    const cache = new Cache(plugin.name).init()
+    const cache = new Cache({
+      name: plugin.name,
+    }).init()
 
     const apiCallArgs = [
       {
