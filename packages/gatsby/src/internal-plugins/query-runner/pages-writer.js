@@ -141,9 +141,9 @@ let oldPages
 const debouncedWritePages = _.debounce(
   () => {
     // Don't write pages again until bootstrap has finished.
-    if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
+    if (bootstrapFinished && oldPages !== store.getState().pages) {
       writePages()
-      oldPages = store.getState().pages
+      oldPages = new Map(store.getState().pages)
     }
   },
   500,
