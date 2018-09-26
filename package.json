@@ -68,7 +68,7 @@
     "lint": "npm-run-all --continue-on-error -p lint:flow lint:js lint:other",
     "lint:js": "eslint --ignore-path .gitignore --ignore-path .prettierignore --ext .js,.jsx .",
     "lint:flow": "babel-node scripts/flow-check.js",
-    "lint:other": "npm run prettier --list-different",
+    "lint:other": "npm run prettier -- --list-different",
     "plop": "plop",
     "prebootstrap": "yarn",
     "precommit": "lint-staged",
