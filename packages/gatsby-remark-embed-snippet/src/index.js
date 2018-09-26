@@ -149,7 +149,6 @@ module.exports = (
           return !isHiddenLine
         }) 
         .map((line, index) => {
-          console.log(line)
           if (line.includes(`highlight-line`)) {
             // Mark this line for highlighting.
             // (Highlight line numbers are 1-based).
