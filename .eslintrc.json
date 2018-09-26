@@ -36,6 +36,7 @@
     "no-console": "off",
     "no-inner-declarations": "off",
     "prettier/prettier": "error",
+    "quotes": ["error", "backtick"],
     "react/prop-types": [
       "error",
       {
