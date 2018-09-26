@@ -251,19 +251,21 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it(`should support hideline-range and hideline-next-line markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
-        <!-- hideline-range{4,9-10} -->
         <html>
           <body>
             <p>
+              <!-- hideline-range{1-2} -->
               <span>hidden</span>
-              <span>not hidden</span>
-              <!-- hideline-next-line -->
               <span>hidden</span>
             </p>
             <ul>
+              <!-- hideline-range{1-2} -->
               <li>hidden</li>
               <li>hidden</li>
+              <li>not hidden</li>
             </ul>
+            <!-- hideline-next-line -->
+            <span>hidden</span>
           </body>
         </html>
       `
@@ -440,7 +442,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it(`should support hideline-range and hideline-next-line markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
-        // hideline-range{1-2,11-13}
+        // hideline-range{1-2}
         import React from 'react'
         import { render } from "react-dom"
 
@@ -451,6 +453,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
               <li>Not hidden</li>
               <li>Not hidden</li>
               <li>Not hidden</li>
+              // hideline-range{1-3}
               <li>Hidden</li>
               <li>Hidden</li>
               <li>Hidden</li>
@@ -526,7 +529,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
         ReactDOM.render(
           <div>
             <ul>
-              <li>Maybe hidden</li>
+              <li>hidden</li>
             </ul>
           </div>,
           // highlight-next-line
@@ -538,16 +541,10 @@ describe(`gatsby-remark-embed-snippet`, () => {
       )
 
       const markdownAST = remark.parse(`\`embed:hello-world.js\``)
-      try {
-        plugin(
-          { markdownAST },
-          {
-            directory: `examples`,
-          }
-        )
-      } catch (e) {
-        expect(e).toMatchSnapshot()
-      }
+
+      expect(() => plugin({ markdownAST }, { directory: `examples` })).toThrow(
+        `Line 6 has been marked as both hidden an highlighted for file: examples/hello-world.js.`
+      )
     })
   })
 
