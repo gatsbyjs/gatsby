@@ -1101,7 +1101,7 @@ actions.createRedirect = ({
 
   // Check if URL is an external link
   // and if it is, don't add pathPrefix
-  const isExternalUrl = /^https?:/.test(toPath)
+  const isExternalUrl = /^(https?:|\/\/)/.test(toPath)
   const toPathPrefix = isExternalUrl ? `` : pathPrefix
 
   return {
