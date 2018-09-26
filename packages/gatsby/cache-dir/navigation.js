@@ -89,11 +89,14 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
-    if (!pageResources && process.env.NODE_ENV === `production`) {
-      loader.getResourcesForPathname(`/404.html`).then(resources => {
-        clearTimeout(timeoutId)
-        loadDirectlyOr404(resources, to).then(() => reachNavigate(to, options))
-      })
+    if (
+      (!pageResources || pageResources.page.path === `/404.html`) &&
+      process.env.NODE_ENV === `production`
+    ) {
+      clearTimeout(timeoutId)
+      loadDirectlyOr404(pageResources, to).then(() =>
+        reachNavigate(to, options)
+      )
     } else {
       reachNavigate(to, options)
       clearTimeout(timeoutId)
