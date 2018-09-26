@@ -12,10 +12,9 @@ During the [Write Out Pages](/docs/write-pages/#async-requiresjs) bootstrap phas
 
 ```javascript
 exports.components = {
-  "component--src-blog-js": () => import(
-    "/home/site/src/blog.js"
+  "component--src-blog-js": () =>
+    import("/home/site/src/blog.js"),
     /* webpackChunkName: "component---src-blog-js" */
-  ),
   // more components
 }
 ```
@@ -43,7 +42,7 @@ digraph {
 
   rankdir = LR;
   node [ fillcolor = "lightgray", style = "filled" ];
-  
+
   subgraph cluster_chunks {
     label = "chunks";
     node [ shape = "Mrecord" ];
@@ -54,7 +53,7 @@ digraph {
     "id7" [ label = "id: 7 | asset: component---src-blog-1-js-cebc3ae7596cbb5b0951.js | js for src/blog/1.js" ];
     "id8" [ label = "id: 8 | asset: component---src-blog-2-js-cebc3ae7596cbb5b0951.js | js for src/blog/2.js" ];
   }
-  
+
   subgraph cluster_chunkGroups {
    label = "chunkGroups";
    node [ shape = "Mbox" ];
@@ -62,7 +61,7 @@ digraph {
     "component1" [ label = "component---src-blog-1-js" ];
     "component2" [ label = "component---src-blog-2-js" ];
   }
-  
+
   app -> id5;
   app -> id42;
   component1 -> id7;
@@ -131,9 +130,9 @@ These two files are loaded by [static-entry.js](https://github.com/gatsbyjs/gats
 
 ##### Construct link and script tags for current page
 
-As mentioned above, `static-entry.js` generates HTML, but also loads the Gatsby js runtime and the js for the page we're generating HTML for. These are added as a `link` tags in the `<head>` (see [link tag preloading](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content)), and then referenced at the bottom of the body in `script` tags. 
+As mentioned above, `static-entry.js` generates HTML, but also loads the Gatsby js runtime and the js for the page we're generating HTML for. These are added as a `link` tags in the `<head>` (see [link tag preloading](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content)), and then referenced at the bottom of the body in `script` tags.
 
-The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L164)). We [lookup assetsByChunkName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L195) by `app` to get its chunk asset files. Then we do the same for the component by looking up the same collection by `componentChunkName` (e.g `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, we create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259). 
+The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L164)). We [lookup assetsByChunkName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L195) by `app` to get its chunk asset files. Then we do the same for the component by looking up the same collection by `componentChunkName` (e.g `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, we create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259).
 
 ```html
 <link as="script"
@@ -144,7 +143,7 @@ The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](
 
 `rel="preload"` tells the browser to start downloading this resource with a high priority as it will likely be referenced further down in the document. So hopefully by the time we get there, the resource will be returned from the server already.
 
-Then, at the [end of the body](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L331), we include the actual script tag that references the preloaded asset. 
+Then, at the [end of the body](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L331), we include the actual script tag that references the preloaded asset.
 
 ```html
 <script key="app-2e49587d85e03a033f58.js"
@@ -163,11 +162,11 @@ If the asset is css, we [inject it inline in the head](https://github.com/gatsby
 
 As shown above, Gatsby uses "preload" to speed up loading of resources required by the page. These are its css and its core javascript needed to run the page. But if we stopped there, then when a user clicked a link to another page, we would have to wait for that pages resources to download before showing it. To speed this up, once the current page has loaded, Gatsby looks for all links on the page, and for each starts prefetching the page that the link points to.
 
-It does this using the `<link rel="prefetch" href="..."/>` parameter. When the browser sees this tag, it will start downloading the resource but at an extremely low priority and only when the resources for the current page have finished loading. Check out the [MDN prefetch docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) for more.
+It does this using the `<link rel="prefetch" href="..." />` parameter. When the browser sees this tag, it will start downloading the resource but at an extremely low priority and only when the resources for the current page have finished loading. Check out the [MDN prefetch docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) for more.
 
 Here's how it works. All links on Gatsby sites use the [gatsby-link](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link) plugin which provides a `GatsbyLink` component that uses reach router. The "to" attribute is the page the browser will navigate to if clicked. So once the Link [componentDidMount](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-link/src/index.js#L57) callback is invoked, we enqueue the "to" path into the [production-app loader](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L188) for prefetching.
 
-At this stage, we know the page that we're navigating to, and can retrieve its `componentChunkName` and `jsonName`, but how do we figure out the generated chunkGroup for the component? 
+At this stage, we know the page that we're navigating to, and can retrieve its `componentChunkName` and `jsonName`, but how do we figure out the generated chunkGroup for the component?
 
 `static-entry.js` [requires `chunk-map.json`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L20) and then [injects it into the CDATA](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L342) of the html as `window.___chunkMapping` so that it is available to all code in [production-app.js](/docs/production-app/). E.g:
 
@@ -176,7 +175,7 @@ At this stage, we know the page that we're navigating to, and can retrieve its `
 <![
   CDATA[ */
     window.___chunkMapping={
-      "app":[ 
+      "app":[
         "/app-2e49587d85e03a033f58.js"
       ],
       "component---src-blog-2-js": [
@@ -189,7 +188,7 @@ At this stage, we know the page that we're navigating to, and can retrieve its `
 */
 ```
 
-Now the loader can create the full component asset path using [chunkMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L51). It then dynamically constructs a `<link rel="prefetch" .../>` tag and adds it to the DOM (in [prefetch.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/prefetch.js)).
+Now the loader can create the full component asset path using [chunkMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L51). It then dynamically constructs a `<link rel="prefetch" ... />` tag and adds it to the DOM (in [prefetch.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/prefetch.js)).
 
 You may notice that prefetching doesn't prefetch the shared chunks (e.g `id0` and `id1`). Why? This is a punt. We're guessing that shared chunks will have been loaded earlier for other pages. And if not, then the main page loading logic will download it. It just won't be prefetched.
 

@@ -1,3 +1,5 @@
+import React from "react"
+import PropTypes from "prop-types"
 import loader, { setApiRunnerForLoader } from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
@@ -87,11 +89,14 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
-    if (!pageResources && process.env.NODE_ENV === `production`) {
-      loader.getResourcesForPathname(`/404.html`).then(resources => {
-        clearTimeout(timeoutId)
-        loadDirectlyOr404(resources, to).then(() => reachNavigate(to, options))
-      })
+    if (
+      (!pageResources || pageResources.page.path === `/404.html`) &&
+      process.env.NODE_ENV === `production`
+    ) {
+      clearTimeout(timeoutId)
+      loadDirectlyOr404(pageResources, to).then(() =>
+        reachNavigate(to, options)
+      )
     } else {
       reachNavigate(to, options)
       clearTimeout(timeoutId)
@@ -105,10 +110,14 @@ window.addEventListener(`popstate`, () => {
   resetRouteChangePromise()
 })
 
-function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
+function shouldUpdateScroll(prevRouterProps, { location }) {
+  const { pathname, hash } = location
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
+    // `pathname` for backwards compatibility
     pathname,
+    routerProps: { location },
+    getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
     return results[0]
@@ -119,7 +128,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
       location: { pathname: oldPathname },
     } = prevRouterProps
     if (oldPathname === pathname) {
-      return false
+      // Scroll to element if it exists, if it doesn't, or no hash is provided,
+      // scroll to top.
+      return hash ? hash.slice(1) : [0, 0]
     }
   }
   return true
@@ -139,4 +150,39 @@ function init() {
   maybeRedirect(window.location.pathname)
 }
 
-export { init, shouldUpdateScroll, onRouteUpdate, onPreRouteUpdate }
+// Fire on(Pre)RouteUpdate APIs
+class RouteUpdates extends React.Component {
+  constructor(props) {
+    super(props)
+    onPreRouteUpdate(props.location)
+  }
+
+  componentDidMount() {
+    onRouteUpdate(this.props.location)
+  }
+
+  componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
+    if (shouldFireRouteUpdate) {
+      onRouteUpdate(this.props.location)
+    }
+  }
+
+  getSnapshotBeforeUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      onPreRouteUpdate(this.props.location)
+      return true
+    }
+
+    return false
+  }
+
+  render() {
+    return this.props.children
+  }
+}
+
+RouteUpdates.propTypes = {
+  location: PropTypes.object.isRequired,
+}
+
+export { init, shouldUpdateScroll, RouteUpdates }

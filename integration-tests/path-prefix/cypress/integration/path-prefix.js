@@ -5,7 +5,7 @@ const withTrailingSlash = url => `${url}/`
 
 describe(`Production pathPrefix`, () => {
   beforeEach(() => {
-    cy.visit(`/`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`returns 200 on base route`, () => {

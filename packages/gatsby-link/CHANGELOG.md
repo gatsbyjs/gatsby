@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.1...gatsby-link@2.0.2) (2018-09-26)
+
+### Bug Fixes
+
+- **gatsby-link:** use path prefix in navigate/replace/push calls ([#8289](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/8289)) ([df3ac18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/df3ac18)), closes [#8155](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/8155)
+- scroll behaviour when navigating back to anchor on the same page ([#8061](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/8061)) ([ef44cff](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/ef44cff))
+
 <a name="2.0.1"></a>
 
 ## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.0-rc.4...gatsby-link@2.0.1) (2018-09-17)

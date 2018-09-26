@@ -7,7 +7,7 @@ arrays of objects and single objects.
 
 `npm install --save gatsby-transformer-json`
 
-You also need to have `gatsby-source-filesystem` installed and configured so it
+If you want to transform json files, you also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
 
 ## How to use
@@ -182,15 +182,15 @@ or a function that receives the following arguments:
 [
   {
     "level": "info",
-    "message": "hurray",
+    "message": "hurray"
   },
   {
     "level": "info",
-    "message": "it works",
+    "message": "it works"
   },
   {
     "level": "warning",
-    "message": "look out",
+    "message": "look out"
   }
 ]
 ```
@@ -201,7 +201,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-json`,
       options: {
-        typeName: (({ node, object, isArray }) => object.level),
+        typeName: ({ node, object, isArray }) => object.level,
       },
     },
   ],

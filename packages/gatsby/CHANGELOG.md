@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.8...gatsby@2.0.9) (2018-09-26)
+
+### Bug Fixes
+
+- scroll behaviour when navigating back to anchor on the same page ([#8061](https://github.com/gatsbyjs/gatsby/issues/8061)) ([ef44cff](https://github.com/gatsbyjs/gatsby/commit/ef44cff))
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.7...gatsby@2.0.8) (2018-09-24)
+
+### Bug Fixes
+
+- check for INVALID_VALUE to avoid throwing exceptions on bad data ([#8346](https://github.com/gatsbyjs/gatsby/issues/8346)) ([bb5c0d2](https://github.com/gatsbyjs/gatsby/commit/bb5c0d2))
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.6...gatsby@2.0.7) (2018-09-21)
+
+**Note:** Version bump only for package gatsby
+
 <a name="2.0.6"></a>
 
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.5...gatsby@2.0.6) (2018-09-19)
