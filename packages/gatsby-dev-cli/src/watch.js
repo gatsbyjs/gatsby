@@ -72,6 +72,7 @@ function watch(root, packages, { scanOnce, quiet }) {
       }
     })
     .on(`ready`, () => {
+      // all files watched, quit once all files are copied if necessary
       Promise.all(allCopies).then(() => {
         if (scanOnce) {
           quit()
