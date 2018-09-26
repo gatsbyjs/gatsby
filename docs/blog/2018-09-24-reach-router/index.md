@@ -19,9 +19,9 @@ We recently announced the [second major release of Gatsby](/blog/2018-09-17-gats
 
 When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then the JavaScript to hydrate the site into a web app is loaded. From there, internal routing is handled with the [Gatsby Link component](/docs/gatsby-link/), which wraps [@reach/router’s Link component](https://reach.tech/router/api/Link).
 
-Web apps rerender in the client -- without making a request to the server to fetch new HTML -- resulting in a faster, more seamless user experience. The performance benefits associated with not having to fully load a new page, however, can come at the expense of a broken experience for users who rely on assistive technology like screen readers.
+Web apps rerender in the client -- without making a request to the server to fetch new HTML -- resulting in a faster, more seamless user experience. These performance benefits, however, can create a broken experience for users who rely on assistive technology like screen readers.
 
-When navigating between traditional server-rendered pages, the page is fully reloaded and in response, screen readers can announce the new content. When using most client-side routing solutions (out of the box), without the page reload, screen readers don’t know new content has been loaded to focus or announce.
+When a user navigates between traditional server-rendered pages, the page is fully reloaded; In response, screen readers can announce the new content. When using most client-side routing solutions (out of the box), without the page reload, screen readers don’t know new content has been loaded to focus or announce.
 
 The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitter.com/robdel12), which accompanied his related article, “[Single page app routers are broken](https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf)”)
 
