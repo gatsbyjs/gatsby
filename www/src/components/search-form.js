@@ -1,11 +1,14 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { navigateTo } from "gatsby-link"
+import { navigate } from "gatsby"
 import { rhythm } from "../utils/typography"
 
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import SearchIcon from "./search-icon"
+
+const loadJS = () => import(`./docsearch.min.js`)
+let loadedJs = false
 
 import { css } from "glamor"
 
@@ -232,48 +235,31 @@ css.insert(`
     }
   }
 `)
-
 class SearchForm extends Component {
   constructor() {
     super()
-    this.state = { enabled: true, focussed: false }
+    this.state = { focussed: false }
     this.autocompleteSelected = this.autocompleteSelected.bind(this)
   }
-
   /**
    * Replace the default selection event, allowing us to do client-side
    * navigation thus avoiding a full page refresh.
    *
    * Ref: https://github.com/algolia/autocomplete.js#events
-   */
-  autocompleteSelected(e) {
+   */ autocompleteSelected(e) {
     e.stopPropagation()
     // Use an anchor tag to parse the absolute url (from autocomplete.js) into a relative url
-    // eslint-disable-next-line no-undef
     const a = document.createElement(`a`)
     a.href = e._args[0].url
     this.searchInput.blur()
-    navigateTo(`${a.pathname}${a.hash}`)
+    navigate(`${a.pathname}${a.hash}`)
   }
-
-  componentDidMount() {
-    if (
-      typeof window === `undefined` || // eslint-disable-line no-undef
-      typeof window.docsearch === `undefined` // eslint-disable-line no-undef
-    ) {
-      console.warn(`Search has failed to load and now is being disabled`)
-      this.setState({ enabled: false })
-      return
-    }
-
-    // eslint-disable-next-line no-undef
+  init() {
     window.addEventListener(
       `autocomplete:selected`,
       this.autocompleteSelected,
       true
     )
-
-    // eslint-disable-next-line no-undef
     window.docsearch({
       apiKey: `71af1f9c4bd947f0252e17051df13f9c`,
       indexName: `gatsbyjs`,
@@ -287,12 +273,33 @@ class SearchForm extends Component {
       },
     })
   }
-
+  componentDidMount() {
+    if (
+      typeof window === `undefined` ||
+      typeof window.docsearch === `undefined`
+    ) {
+      // Algolia's docsearch lib not loaded yet so load it.
+      // Lazy load css
+      const path = `https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css`
+      const link = document.createElement(`link`)
+      link.setAttribute(`rel`, `stylesheet`)
+      link.setAttribute(`type`, `text/css`)
+      link.setAttribute(`href`, path)
+      document.head.appendChild(link)
+    }
+  }
+  loadAlgoliaJS() {
+    !loadedJs &&
+      loadJS().then(a => {
+        loadedJs = true
+        window.docsearch = a.default
+        this.init()
+      })
+  }
   render() {
-    const { enabled, focussed } = this.state
-    const { iconStyles, isHomepage } = this.props
-
-    return enabled ? (
+    const { focussed } = this.state
+    const { iconColor, isHomepage, offsetVertical } = this.props
+    return (
       <form
         css={{
           display: `flex`,
@@ -301,53 +308,55 @@ class SearchForm extends Component {
           alignItems: `center`,
           marginLeft: rhythm(1 / 2),
           marginBottom: 0,
+          marginTop: offsetVertical ? offsetVertical : false,
         }}
         className="searchWrap"
+        onMouseOver={() => this.loadAlgoliaJS()}
+        onClick={() => this.loadAlgoliaJS()}
         onSubmit={e => e.preventDefault()}
       >
-        <label css={{ position: `relative` }}>
+        <label
+          css={{
+            position: `relative`,
+          }}
+        >
           <input
             id="doc-search"
             css={{
               appearance: `none`,
               backgroundColor: `transparent`,
               border: 0,
-              borderRadius: presets.radiusLg,
-              color: colors.gatsby,
+              borderRadius: presets.radius,
+              color: colors.lilac,
               paddingTop: rhythm(1 / 8),
               paddingRight: rhythm(1 / 4),
               paddingBottom: rhythm(1 / 8),
-              paddingLeft: rhythm(1),
+              paddingLeft: rhythm(5 / 4),
               overflow: `hidden`,
               width: rhythm(1),
               transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
               ":focus": {
-                outline: 0,
                 backgroundColor: colors.ui.light,
-                borderRadius: presets.radiusLg,
+                color: colors.gatsby,
+                outline: 0,
                 width: rhythm(5),
-                transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
               },
-
               [presets.Desktop]: {
                 backgroundColor: !isHomepage && `#fff`,
-                color: colors.gatsby,
-                width: !isHomepage && rhythm(5),
+                width: !isHomepage && rhythm(3.5),
                 ":focus": {
                   backgroundColor: colors.ui.light,
-                  color: colors.gatsby,
                 },
               },
-
               [presets.Hd]: {
                 backgroundColor: isHomepage && colors.lilac,
                 color: isHomepage && colors.ui.light,
-                width: isHomepage && rhythm(5),
+                width: isHomepage && rhythm(3.5),
               },
             }}
             type="search"
-            placeholder="Search docs"
-            aria-label="Search docs"
+            placeholder="Search"
+            aria-label="Search"
             title="Hit 's' to search docs"
             onFocus={() => this.setState({ focussed: true })}
             onBlur={() => this.setState({ focussed: false })}
@@ -357,31 +366,28 @@ class SearchForm extends Component {
           />
           <SearchIcon
             overrideCSS={{
-              ...iconStyles,
-              fill: focussed && colors.gatsby,
+              fill: focussed ? colors.gatsby : colors.lilac,
               position: `absolute`,
-              left: `5px`,
+              left: rhythm(1 / 4),
               top: `50%`,
-              width: `16px`,
-              height: `16px`,
+              width: `1rem`,
+              height: `1rem`,
               pointerEvents: `none`,
               transition: `fill ${speedDefault} ${curveDefault}`,
-              transform: `translateY(-50%)`,
-
-              [presets.Hd]: {
-                fill: focussed && isHomepage && colors.gatsby,
+              transform: `translateY(-55%)`,
+              [presets.Phablet]: {
+                fill: focussed ? colors.gatsby : isHomepage ? iconColor : false,
               },
             }}
           />
         </label>
       </form>
-    ) : null
+    )
   }
 }
-
 SearchForm.propTypes = {
   isHomepage: PropTypes.bool,
-  iconStyles: PropTypes.object,
+  iconColor: PropTypes.string,
+  offsetVertical: PropTypes.string,
 }
-
 export default SearchForm

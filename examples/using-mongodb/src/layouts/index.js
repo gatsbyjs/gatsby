@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Helmet from "react-helmet"
 
 class DefaultLayout extends React.Component {
@@ -20,7 +20,7 @@ class DefaultLayout extends React.Component {
             Example of using mongoDB as a data source for a Gatsby site
           </h3>
         </Link>
-        {this.props.children()}
+        {this.props.children}
         <hr />
         <p>
           The src for this website is at

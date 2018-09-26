@@ -1,102 +1,43 @@
 describe(`gatsby-plugin-sass`, () => {
-  jest.mock(`gatsby-1-config-extract-plugin`, () => {
-    return {
-      extractTextPlugin: () => {
-        return {
-          extract: (...args) => {
-            return { extractTextCalledWithArgs: args }
-          },
-        }
-      },
-    }
+  jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+
+  const actions = {
+    setWebpackConfig: jest.fn(),
+  }
+
+  // loaders "mocks"
+  const loaders = {
+    miniCssExtract: () => `miniCssExtract`,
+    css: args => `css(${JSON.stringify(args)})`,
+    postcss: args => `postcss(${JSON.stringify(args)})`,
+  }
+
+  const { onCreateWebpackConfig } = require(`../gatsby-node`)
+
+  beforeEach(() => {
+    actions.setWebpackConfig.mockReset()
   })
-  const { modifyWebpackConfig } = require(`../gatsby-node`)
-  const cssLoader = expect.stringMatching(/^css/)
-  ;[
-    {
-      stages: [`develop`],
-      loaderKeys: [`sass`, `sassModules`],
-      loaderConfig(sassLoader) {
-        return {
-          loaders: expect.arrayContaining([cssLoader, sassLoader]),
-        }
+
+  const tests = {
+    stages: [`develop`, `build-javascript`, `develop-html`, `build-html`],
+    options: {
+      "No options": {},
+      "Sass options": {
+        includePaths: [`absolute/path/a`, `absolute/path/b`],
+      },
+      "PostCss plugins": {
+        postCssPlugins: [`test1`],
       },
     },
-    {
-      stages: [`build-css`],
-      loaderKeys: [`sass`, `sassModules`],
-      loaderConfig(sassLoader) {
-        return {
-          loader: {
-            extractTextCalledWithArgs: expect.arrayContaining([
-              expect.arrayContaining([cssLoader, sassLoader]),
-            ]),
-          },
-        }
-      },
-    },
-    {
-      stages: [`develop-html`, `build-html`, `build-javascript`],
-      loaderKeys: [`sassModules`],
-      loaderConfig(sassLoader) {
-        return {
-          loader: {
-            extractTextCalledWithArgs: expect.arrayContaining([
-              expect.arrayContaining([cssLoader, sassLoader]),
-            ]),
-          },
-        }
-      },
-    },
-  ].forEach(({ stages, loaderKeys, loaderConfig }) => {
-    stages.forEach(stage => {
-      describe(`stage: ${stage}`, () => {
-        ;[
-          { options: {}, sassLoader: `sass?{}` },
-          {
-            options: { precision: 8 },
-            sassLoader: `sass?${JSON.stringify({ precision: 8 }).toString()}`,
-          },
-          {
-            options: { includePaths: [] },
-            sassLoader: `sass?${JSON.stringify({
-              includePaths: [],
-            }).toString()}`,
-          },
-          {
-            options: { precision: 8, includePaths: [] },
-            sassLoader: `sass?${JSON.stringify({
-              precision: 8,
-              includePaths: [],
-            }).toString()}`,
-          },
-          {
-            options: { includePaths: [`./node_modules`, `./path`] },
-            sassLoader: `sass?${JSON.stringify({
-              includePaths: [`./node_modules`, `./path`],
-            }).toString()}`,
-          },
-        ].forEach(({ options, sassLoader }) => {
-          const stringified = JSON.stringify(options)
+  }
 
-          it(`modifies webpack config for ${stringified}`, () => {
-            const config = {
-              loader: jest.fn(),
-              merge: jest.fn(),
-            }
-            const modified = modifyWebpackConfig({ config, stage }, options)
-
-            expect(modified).toBe(config)
-
-            loaderKeys.forEach(loaderKey =>
-              expect(config.loader).toBeCalledWith(
-                loaderKey,
-                expect.objectContaining(loaderConfig(sassLoader))
-              )
-            )
-          })
-        })
+  tests.stages.forEach(stage => {
+    for (let label in tests.options) {
+      const options = tests.options[label]
+      it(`Stage: ${stage} / ${label}`, () => {
+        onCreateWebpackConfig({ actions, loaders, stage: `develop` }, options)
+        expect(actions.setWebpackConfig).toMatchSnapshot()
       })
-    })
+    }
   })
 })

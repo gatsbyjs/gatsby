@@ -4,12 +4,13 @@ title: "Deploying Gatsby"
 
 ## Tutorials for deploying on different static site hosts
 
-* [Netlify](/docs/deploy-gatsby/#netlify)
-* [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
-* [GitHub Pages](/docs/deploy-gatsby/#github-pages)
-* [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
-* [Heroku](/docs/deploy-gatsby/#heroku)
-* [Now](/docs/deploy-gatsby/#now)
+- [Netlify](/docs/deploy-gatsby/#netlify)
+- [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
+- [GitHub Pages](/docs/deploy-gatsby/#github-pages)
+- [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
+- [Heroku](/docs/deploy-gatsby/#heroku)
+- [Now](/docs/deploy-gatsby/#now)
+- [Aerobatic](/docs/deploy-gatsby/#aerobatic)
 
 ## Netlify
 
@@ -60,7 +61,7 @@ script to **deploy** your project by running `npm install gh-pages --save-dev`.
 
 Then add a `deploy` script in your `package.json` file.
 
-```
+```json
 "scripts": {
   "deploy": "gatsby build --prefix-paths && gh-pages -d public",
 }
@@ -72,7 +73,7 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/project-name`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```
+```js
 module.exports = {
   pathPrefix: `/project-name`,
 }
@@ -87,6 +88,8 @@ Now run `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
 site on GitHub under `Settings` > `GitHub Pages`.
 
+If this is not successful, make sure that `gh-pages` is set as the source branch in your repository's `Settings` > `GitHub Pages` and then re-run `npm run deploy`.
+
 ### Deploying a user/organization site
 
 Unlike project pages, user/organization sites on GitHub live in a special
@@ -95,7 +98,7 @@ repository dedicated to files for the site. The sites must be published from the
 kept in a branch named `source` or something similar. We also don't need to
 prefix links like we do with project sites.
 
-```
+```json
 "scripts": {
   "deploy": "gatsby build && gh-pages -b master -d public",
 }
@@ -123,7 +126,7 @@ platform.
 Create a new GitLab repository, initialize your Gatsby project folder if you
 haven't already, and add the GitLab remote.
 
-```
+```bash
 git init
 git remote add origin git@gitlab.com:examplerepository
 git add .
@@ -142,7 +145,7 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/examplerepository`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```
+```js
 module.exports = {
   pathPrefix: `/examplerepository`,
 }
@@ -151,37 +154,37 @@ module.exports = {
 ### Build and Deploy with GitLab CI
 
 To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml`
-configuration file. This is the file that Gitlab uses to manage the CI job.
+configuration file. This is the file that GitLab uses to manage the CI job.
 
-It can easily be added to your repository by the [Gitlab](https://gitlab.com) 
-website, as the online editor contains a pre-built template for Gatsby deployment. 
+It can easily be added to your repository by the [GitLab](https://gitlab.com)
+website, as the online editor contains a pre-built template for Gatsby deployment.
 
-To use the template open your repository on their website, select the 'Setup CI/CD' option on 
-the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now 
-select the 'Apply a Gitlab CI Yaml Template' drop-down, and type 'Gatsby' into 
+To use the template open your repository on their website, select the 'Setup CI/CD' option on
+the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now
+select the 'Apply a GitLab CI Yaml Template' drop-down, and type 'Gatsby' into
 the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
 
-If adding this manually to your project, the file needs to contain a few required 
+If adding this manually to your project, the file needs to contain a few required
 fields:
 
-```
+```yaml
 image: node:latest
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
   paths:
-  - node_modules/
+    - node_modules/
 
 pages:
   script:
-  - npm install
-  - ./node_modules/.bin/gatsby build --prefix-paths
+    - npm install
+    - ./node_modules/.bin/gatsby build --prefix-paths
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - master
+    - master
 ```
 
 The CI platform uses Docker images/containers, so `image: node:latest` tells the
@@ -222,7 +225,7 @@ You can use the [heroku buildpack static](https://github.com/heroku/heroku-build
 
 Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
 
-```
+```json
 {
   "buildpacks": [
     {
@@ -239,9 +242,8 @@ Sometimes specifying buildpacks via the `app.json` file doesn't work. If this is
 
 Add a `heroku-postbuild` script in your `package.json`:
 
-```
+```json
 {
-
   // ...
   "scripts": {
     // ...
@@ -304,3 +306,42 @@ not caused by Gatsby. React uses HTML comments to help identify locations of
 components that do not render anything. If you are using a CDN that minifies
 your HTML, it will eliminate the HTML comments used by React to take control of
 the page on the client. Cloudflare is a CDN that minifies HTML by default.
+
+## Aerobatic
+
+[Aerobatic](https://www.aerobatic.com) is a specialized static site host. You can easily deploy your Gatsby site to Aerobatic with the following steps:
+
+1.  Install the Aerobatic CLI:
+
+`npm install aerobatic-cli -g`
+
+2.  Create a new Aerobatic site at the root of your Gatsby project:
+
+`aero create --name <your-site-name>`
+
+3.  Deploy your Gatsby build output:
+
+`aero deploy --directory public`
+
+Your site will be ready on our CDN at https://<your-site-name>.aerobaticapp.com in a matter of seconds.
+
+There are some additional HTTP header optimizations you can configure in your `aerobatic.yml` file:
+
+```yaml
+deploy:
+  # Note with below setting it is not necessary to pass --directory to aero deploy command
+  directory: public
+  # Turn off the Aerobatic asset fingerprinting since Gatsby already does this
+  optimizer:
+    fingerprintAssets: false
+
+plugins:
+  # Force aggressive 1yr max-age header for all .js and .js.map requests
+  - name: http-headers
+    path: ["/*.js", "/*.js.map"]
+    options:
+      "Cache-Control": "public, max-age=31536000"
+  - name: webpage
+```
+
+Learn more about Gatsy and Aerobatic at https://www.aerobatic.com/docs/static-site-generators/#react

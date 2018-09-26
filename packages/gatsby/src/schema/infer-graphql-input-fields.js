@@ -17,10 +17,12 @@ const {
   getExampleValues,
   extractFieldNames,
   isEmptyObjectOrArray,
+  INVALID_VALUE,
 } = require(`./data-tree-utils`)
 
 const { findLinkedNode } = require(`./infer-graphql-type`)
 const { getNodes } = require(`../redux`)
+const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type {
   GraphQLInputFieldConfig,
@@ -33,6 +35,8 @@ function typeFields(type): GraphQLInputFieldConfigMap {
       return {
         eq: { type: GraphQLBoolean },
         ne: { type: GraphQLBoolean },
+        in: { type: new GraphQLList(GraphQLBoolean) },
+        nin: { type: new GraphQLList(GraphQLBoolean) },
       }
     case `string`:
       return {
@@ -40,16 +44,30 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         ne: { type: GraphQLString },
         regex: { type: GraphQLString },
         glob: { type: GraphQLString },
+        in: { type: new GraphQLList(GraphQLString) },
+        nin: { type: new GraphQLList(GraphQLString) },
       }
     case `int`:
       return {
         eq: { type: GraphQLInt },
         ne: { type: GraphQLInt },
+        gt: { type: GraphQLInt },
+        gte: { type: GraphQLInt },
+        lt: { type: GraphQLInt },
+        lte: { type: GraphQLInt },
+        in: { type: new GraphQLList(GraphQLInt) },
+        nin: { type: new GraphQLList(GraphQLInt) },
       }
     case `float`:
       return {
         eq: { type: GraphQLFloat },
         ne: { type: GraphQLFloat },
+        gt: { type: GraphQLFloat },
+        gte: { type: GraphQLFloat },
+        lt: { type: GraphQLFloat },
+        lte: { type: GraphQLFloat },
+        in: { type: new GraphQLList(GraphQLFloat) },
+        nin: { type: new GraphQLList(GraphQLFloat) },
       }
   }
   return {}
@@ -68,7 +86,7 @@ function inferGraphQLInputFields({
       let headType = typeOf(headValue)
 
       if (headType === `number`)
-        headType = _.isInteger(headValue) ? `int` : `float`
+        headType = is32BitInteger(headValue) ? `int` : `float`
 
       // Determine type for in operator.
       let inType
@@ -112,13 +130,24 @@ function inferGraphQLInputFields({
           )
       }
 
+      let fields
+      if (headType === `object`) {
+        fields = {
+          elemMatch: {
+            type: inType,
+          },
+        }
+      } else {
+        fields = {
+          ...typeFields(headType),
+          in: { type: new GraphQLList(inType) },
+        }
+      }
+
       return {
         type: new GraphQLInputObjectType({
           name: createTypeName(`${prefix}QueryList`),
-          fields: {
-            ...typeFields(headType),
-            in: { type: new GraphQLList(inType) },
-          },
+          fields,
         }),
       }
     }
@@ -157,7 +186,7 @@ function inferGraphQLInputFields({
       }
     }
     case `number`: {
-      if (value % 1 === 0) {
+      if (is32BitInteger(value)) {
         return {
           type: new GraphQLInputObjectType({
             name: createTypeName(`${prefix}QueryInteger`),
@@ -194,6 +223,9 @@ const recursiveOmitBy = (value, fn) => {
   if (_.isObject(value)) {
     if (_.isPlainObject(value)) {
       value = _.omitBy(value, fn)
+    } else if (_.isArray(value)) {
+      // don't mutate original value
+      value = _.clone(value)
     }
     _.each(value, (v, k) => {
       value[k] = recursiveOmitBy(v, fn)
@@ -219,7 +251,13 @@ export function inferInputObjectStructureFromNodes({
 
   prefix = isRoot ? typeName : prefix
   if (exampleValue === null) {
-    exampleValue = getExampleValues(nodes)
+    // typeName includes "Connection" string, which is not what we want,
+    // so extract type from first node
+    exampleValue = getExampleValues({
+      nodes,
+      typeName:
+        nodes && nodes[0] && nodes[0].internal && nodes[0].internal.type,
+    })
   }
 
   _.each(exampleValue, (v, k) => {
@@ -227,7 +265,7 @@ export function inferInputObjectStructureFromNodes({
     let key = k
     // Remove fields for traversing through nodes as we want to control
     // setting traversing up not try to automatically infer them.
-    if (isRoot && EXCLUDE_KEYS[key]) return
+    if (value === INVALID_VALUE || (isRoot && EXCLUDE_KEYS[key])) return
 
     if (_.includes(key, `___NODE`)) {
       // TODO: Union the objects in array
@@ -243,7 +281,7 @@ export function inferInputObjectStructureFromNodes({
         )
         value = getExampleValues({
           nodes: relatedNodes,
-          type: linkedNode.internal.type,
+          typeName: linkedNode.internal.type,
         })
         value = recursiveOmitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
         linkedNodeCache[linkedNode.internal.type] = value

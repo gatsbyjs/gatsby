@@ -5,31 +5,35 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-image": "latest",
-    "gatsby-link": "latest",
-    "gatsby-plugin-glamor": "latest",
-    "gatsby-plugin-google-analytics": "latest",
-    "gatsby-plugin-manifest": "latest",
-    "gatsby-plugin-offline": "latest",
-    "gatsby-plugin-sharp": "latest",
-    "gatsby-source-filesystem": "latest",
-    "gatsby-transformer-json": "latest",
-    "gatsby-transformer-sharp": "latest",
+    "core-js": "^2.5.5",
+    "gatsby": "^2.0.0",
+    "gatsby-image": "^2.0.5",
+    "gatsby-plugin-glamor": "^2.0.5",
+    "gatsby-plugin-google-analytics": "^2.0.5",
+    "gatsby-plugin-manifest": "^2.0.2",
+    "gatsby-plugin-offline": "^2.0.5",
+    "gatsby-plugin-sharp": "^2.0.5",
+    "gatsby-plugin-typography": "^2.2.0",
+    "gatsby-source-filesystem": "^2.0.1",
+    "gatsby-transformer-json": "^2.1.1",
+    "gatsby-transformer-sharp": "^2.1.1",
+    "glamor": "^2.20.40",
     "instagram-screen-scrape": "^2.0.0",
-    "lodash": "^4.16.4",
+    "lodash": "^4.17.10",
     "mkdirp": "^0.5.1",
     "mousetrap": "^1.6.0",
-    "progress": "^1.1.8",
+    "progress": "^2.0.0",
     "prop-types": "^15.5.8",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "react-gravatar": "^2.6.1",
-    "react-icons": "^2.2.3",
-    "react-modal": "^1.7.6",
-    "react-typography": "^0.15.0",
+    "react-icons": "^2.2.7",
+    "react-modal": "^3.4.2",
+    "react-typography": "^0.16.13",
     "request": "^2.79.0",
     "slug": "^0.9.1",
-    "typeface-space-mono": "^0.0.22",
-    "typography": "^0.15.0"
+    "typeface-space-mono": "0.0.54",
+    "typography": "^0.16.6"
   },
   "keywords": [
     "gatsby"
@@ -44,10 +48,10 @@
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run --browser chrome"
   },
   "devDependencies": {
-    "cypress": "^2.1.0",
+    "cypress": "^3.1.0",
     "start-server-and-test": "^1.1.4"
   }
 }

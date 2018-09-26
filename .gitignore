@@ -51,3 +51,5 @@ node_modules/
 *.sw*
 
 .serverless/
+yarn.lock
+package-lock.json

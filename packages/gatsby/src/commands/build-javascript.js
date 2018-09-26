@@ -12,7 +12,7 @@ module.exports = async program => {
   )
 
   return new Promise((resolve, reject) => {
-    webpack(compilerConfig.resolve()).run((err, stats) => {
+    webpack(compilerConfig).run((err, stats) => {
       if (err) {
         reject(err)
         return

@@ -1,9 +1,12 @@
 import React, { Component } from "react"
+import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 
+import Layout from "../components/layout"
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
+import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -92,7 +95,6 @@ const LegendTable = () => {
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
-          display: `table`,
           [presets.Phablet]: {
             display: `none`,
           },
@@ -120,7 +122,8 @@ const FeaturesHeader = () => (
     </FuturaParagraph>
     <ul css={{ fontFamily: options.headerFontFamily.join(`,`) }}>
       <li>
-        <b>Traditional static site generators</b> such as{` `}
+        <b>Traditional static site generators</b> such as
+        {` `}
         <a href="http://jekyllrb.com/">Jekyll</a> let you put text or markdown
         in a specific directory such as <code>pages/</code> in a
         version-controlled codebase. They then build a specific kind of site,
@@ -128,7 +131,8 @@ const FeaturesHeader = () => (
         can be cached and served from a CDN.
       </li>
       <li>
-        <b>Content Management Systems</b> (CMSs) like{` `}
+        <b>Content Management Systems</b> (CMSs) like
+        {` `}
         <a href="http://wordpress.org/">Wordpress</a> give you an online text
         editor to create content. You customize the look and feel through
         choosing themes and plugins, or writing custom PHP or Javascript code.
@@ -137,7 +141,8 @@ const FeaturesHeader = () => (
         self-host your website, or use an official hosting provider.
       </li>
       <li>
-        <b>Site builders</b> like{` `}
+        <b>Site builders</b> like
+        {` `}
         <a href="http://squarespace.com/">Squarespace</a> are a type of hosted
         closed-source CMS. They focus on making it fast to build a website;
         however, they don't allow self-hosting or enable you to export your
@@ -182,8 +187,13 @@ const getFeaturesData = function(data) {
 const FeaturesFooter = () => (
   <p css={{ fontSize: `80%`, marginTop: rhythm(1) }}>
     Want to help keep this information complete, accurate, and up-to-date?
-    Please comment{` `}
-    <a href="https://github.com/gatsbyjs/gatsby/issues/2444" target="_blank">
+    Please comment
+    {` `}
+    <a
+      href="https://github.com/gatsbyjs/gatsby/issues/2444"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       here.
     </a>
   </p>
@@ -196,11 +206,20 @@ class FeaturesPage extends Component {
     )
 
     return (
-      <Container>
-        <FeaturesHeader />
-        <EvaluationTable sections={sections} sectionHeaders={sectionHeaders} />
-        <FeaturesFooter />
-      </Container>
+      <Layout
+        location={this.props.location}
+        itemList={itemListFeatures}
+        enableScrollSync={true}
+      >
+        <Container>
+          <FeaturesHeader />
+          <EvaluationTable
+            sections={sections}
+            sectionHeaders={sectionHeaders}
+          />
+          <FeaturesFooter />
+        </Container>
+      </Layout>
     )
   }
 }
@@ -208,7 +227,7 @@ class FeaturesPage extends Component {
 export default FeaturesPage
 
 export const pageQuery = graphql`
-  query EvaluationTableQuery {
+  query {
     allGatsbySpecsCsv {
       edges {
         node {

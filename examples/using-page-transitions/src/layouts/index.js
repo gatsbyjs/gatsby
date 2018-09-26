@@ -1,9 +1,9 @@
 import React from "react"
-import PropTypes from "prop-types"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import Helmet from "react-helmet"
+import Transition from "../components/transition"
 
-import "./index.css"
+import "./layout.css"
 
 const Header = () => (
   <div
@@ -34,7 +34,7 @@ const Header = () => (
   </div>
 )
 
-const TemplateWrapper = ({ children }) => (
+const TemplateWrapper = ({ children, location }) => (
   <div>
     <Helmet
       title="Gatsby Default Starter"
@@ -52,13 +52,9 @@ const TemplateWrapper = ({ children }) => (
         paddingTop: 0,
       }}
     >
-      {children()}
+      <Transition location={location}>{children}</Transition>
     </div>
   </div>
 )
-
-TemplateWrapper.propTypes = {
-  children: PropTypes.func,
-}
 
 export default TemplateWrapper

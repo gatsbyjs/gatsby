@@ -5,7 +5,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLEnumType,
-} = require(`graphql`)
+} = require(`gatsby/graphql`)
 const sharp = require(`sharp`)
 const { Potrace } = require(`potrace`)
 

@@ -20,10 +20,10 @@ This is important not just for site viewers, but also for SEO -- title and descr
 Just add the plugin to the plugins array in your `gatsby-config.js`
 
 ```javascript
-plugins: [`gatsby-plugin-react-helmet`];
+plugins: [`gatsby-plugin-react-helmet`]
 ```
 
 ## Examples
 
-[GatsbyJS.org](https://github.com/gatsbyjs/gatsby/blob/master/www/src/layouts/index.js)
-[Jason Lengstorf personal website](https://github.com/jlengstorf/lengstorf.com/blob/master/src/components/SEO.js)
+- [GatsbyJS.org](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/layout.js)
+- [Jason Lengstorf personal website](https://github.com/jlengstorf/lengstorf.com/blob/master/src/components/SEO.js)

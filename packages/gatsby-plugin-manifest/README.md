@@ -1,6 +1,6 @@
 # gatsby-plugin-manifest
 
-Adds support for shipping a manifest.json with your site. The web application
+Adds support for shipping a manifest.webmanifest with your site. The web application
 manifest is a JSON file that lets users (on Android Chrome, Firefox, and Opera —
 [support in MS Edge & Safari is under development](http://caniuse.com/#feat=web-app-manifest))
 save your web application to their smartphone home screen so it behaves similar
@@ -13,7 +13,9 @@ For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozil
 
 If you're using this plugin together with `gatsby-plugin-offline` (recommended),
 this plugin should be listed _before_ the offline plugin so that it can cache
-the created manifest.json.
+the created manifest.webmanifest.
+
+If you use the "automatic mode" (described below), this plugin will also add a favicon link to your html pages.
 
 ## Install
 
@@ -21,7 +23,7 @@ the created manifest.json.
 
 ## How to use
 
-This plugin configures Gatsby to create a `manifest.json` file on every site build.
+This plugin configures Gatsby to create a `manifest.webmanifest` file on every site build.
 
 ## Generating icons
 
@@ -39,22 +41,22 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
-      icon: "src/images/icon.png", // This path is relative to the root of the site.
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
+      icon: `src/images/icon.png`, // This path is relative to the root of the site.
     },
   },
-];
+]
 ```
 
 When in automatic mode the following json array is injected into the manifest configuration you provide and the icons are generated from it. The source icon you provide should be at least as big as the largest icon being generated.
 
 ```javascript
-[
+;[
   {
     src: `icons/icon-48x48.png`,
     sizes: `48x48`,
@@ -95,7 +97,7 @@ When in automatic mode the following json array is injected into the manifest co
     sizes: `512x512`,
     type: `image/png`,
   },
-];
+]
 ```
 
 The automatic mode is the easiest option for most people.
@@ -110,13 +112,13 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
-      icon: src/images/icon.png // This path is relative to the root of the site.
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
+      icon: `src/images/icon.png`, // This path is relative to the root of the site.
       icons: [
         {
           src: `/favicons/android-chrome-192x192.png`,
@@ -131,7 +133,7 @@ plugins: [
       ],
     },
   },
-];
+]
 ```
 
 The hybrid option allows the most flexibility while still not requiring you to create most icons sizes manually.
@@ -146,17 +148,17 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
       icons: [
         {
           // Everything in /static will be copied to an equivalent
           // directory in /public during development and build, so
-          // assuming your favicons are in /static/favicons,
+          // assuming your favicons are in /favicons,
           // you can reference them here
           src: `/favicons/android-chrome-192x192.png`,
           sizes: `192x192`,
@@ -170,5 +172,5 @@ plugins: [
       ],
     },
   },
-];
+]
 ```

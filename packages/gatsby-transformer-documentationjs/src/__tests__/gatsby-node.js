@@ -3,12 +3,15 @@ import path from "path"
 import gatsbyNode from "../gatsby-node"
 
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
-  let boundActionCreators, node, createdNodes, updatedNodes
+  let actions, node, createdNodes, updatedNodes
+  const createNodeId = jest.fn()
+  createNodeId.mockReturnValue(`uuid-from-gatsby`)
   let run = (node = node, opts = {}) =>
     gatsbyNode.onCreateNode(
       {
         node,
-        boundActionCreators,
+        actions,
+        createNodeId,
       },
       opts
     )
@@ -25,7 +28,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         type: `File`,
       },
     }
-    boundActionCreators = {
+    actions = {
       createNode: jest.fn(n => createdNodes.push(n)),
       createParentChildLink: jest.fn(n => updatedNodes.push(n)),
     }

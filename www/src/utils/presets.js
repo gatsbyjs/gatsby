@@ -1,7 +1,7 @@
-import colors from "./colors"
+const colors = require(`./colors`).default
 
 module.exports = {
-  colors: colors,
+  colors,
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
   phablet: `(min-width: 550px)`,
@@ -31,7 +31,10 @@ module.exports = {
     curveDefault: `cubic-bezier(0.4, 0, 0.2, 1)`,
     speedDefault: `250ms`,
     speedFast: `100ms`,
+    speedSlow: `350ms`,
   },
   logoOffset: 1.8,
   headerHeight: `3.5rem`,
+  bannerHeight: `2.5rem`,
+  sidebarUtilityHeight: `2.5rem`,
 }

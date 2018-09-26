@@ -22,7 +22,7 @@ plugins: [
       showSpinner: false,
     },
   },
-];
+]
 ```
 
 In addition to `color` – a configuration option specific to

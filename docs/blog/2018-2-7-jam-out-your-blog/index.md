@@ -27,15 +27,15 @@ _**Let’s get into it.**_
 
 ### Like Josh’s requirements, my list includes:
 
-* **Speed** - this includes development, website performance, and deployment
-* **Development Experience** - I want to use React and Webpack
-* **Maintainability** - ease with which anyone can create, update and delete posts
-* **Scalability** - need to make sure that performance is not hindered by a growing needs
-* **Lean** - simplify the tools and services use to a bare minimum
-* **Revision History** - for accountability and allowing for versioning
-* **Inexpensive Hosting** - again, to maximize value and keep personal costs down
-* **NO WordPress** - similarly, I don’t want to deal with updates, themes, hacks...etc
-* **Continuous Deployment** - the site needs to always be up and running and current
+- **Speed** - this includes development, website performance, and deployment
+- **Development Experience** - I want to use React and Webpack
+- **Maintainability** - ease with which anyone can create, update and delete posts
+- **Scalability** - need to make sure that performance is not hindered by a growing needs
+- **Lean** - simplify the tools and services use to a bare minimum
+- **Revision History** - for accountability and allowing for versioning
+- **Inexpensive Hosting** - again, to maximize value and keep personal costs down
+- **NO WordPress** - similarly, I don’t want to deal with updates, themes, hacks...etc
+- **Continuous Deployment** - the site needs to always be up and running and current
 
 For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/. ](http://jamstack.org/)
 
@@ -47,12 +47,12 @@ Josh’s article provides a solution by way of using Contentful to manage conten
 
 ### Here are some Pros (at the time of writing):
 
-* Clean UI
-* Free Tier
-* User Roles (admins, editors, content authors)
-* Comprehensive tutorials
-* Fully-customizable front end
-* Article search and filters
+- Clean UI
+- Free Tier
+- User Roles (admins, editors, content authors)
+- Comprehensive tutorials
+- Fully-customizable front end
+- Article search and filters
 
 With such a robust set of features, it is easy to see why Contentful is a popular service. However, between a combination of having no prior experience with the platorm, and wanting to keep things simple, I ran into issues, and felt that it was _too_ robust for my project goals.
 
@@ -66,20 +66,20 @@ All I wanted to do was streamline my process and here I was adding another servi
 
 To spare you the details, I spent a few hours comparing my GraphQL queries to those used in the [Gatsby + Contentful example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) to find errors in my code. I eventually gave up and I thought that there had to be an easier way to manage content online. Luckily there is. It's called Prose.
 
-## Managing Content Via Github: Enter Prose.io
+## Managing Content Via GitHub: Enter Prose.io
 
 Prose was originally created for editing markdown files on GitHub by the people at [Development Seed](https://developmentseed.org/).
 
 ### Here is a summary:
 
-* Simple Content Authoring Environment
-* Designed for CMS-Free Websites
-* Web-based Interface for Managing Content Directly on Github
-* Advanced Support for Markdown Content - Including Syntax Highlighting & Formatting Toolbar
+- Simple Content Authoring Environment
+- Designed for CMS-Free Websites
+- Web-based Interface for Managing Content Directly on GitHub
+- Advanced Support for Markdown Content - Including Syntax Highlighting & Formatting Toolbar
 
 Source: [Prose](http://prose.io/#about)
 
-So, a service that works on top of Github where I, or anyone with a Github account can quickly create and manage posts. Sick!
+So, a service that works on top of GitHub where I, or anyone with a GitHub account can quickly create and manage posts. Sick!
 
 #### Follow these steps:
 
@@ -96,7 +96,7 @@ _**Yes, there’s more.**_
 
 Because Prose was built for Jekyll, it recognizes any headmatter you add to your .md files. This will give developers the ability to build queries and replicate familiar features from other CMS platforms. Say hello to publish states, publish date, article author and more.
 
-I should also mention that Prose is an open source project that is available for download if you wish to self-host. Check out the [documentation on Github.](https://github.com/prose/prose)
+I should also mention that Prose is an open source project that is available for download if you wish to self-host. Check out the [documentation on GitHub.](https://github.com/prose/prose)
 
 ## Get Lean and Get on Netlify
 
@@ -122,7 +122,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 
 When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
 
-With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of Github and Netlify. Think about the magic:
+With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
 
 1.  Use Gatsby to create your website.
 2.  Set up a GitHub repository to track changes and version history.

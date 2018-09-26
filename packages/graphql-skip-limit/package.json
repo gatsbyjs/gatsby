@@ -1,19 +1,19 @@
 {
   "name": "graphql-skip-limit",
   "description": "A library to help construct a graphql-js server supporting skip/relay style pagination. Built for Gatsby but perhaps useful elsewhere.",
-  "version": "1.0.11",
+  "version": "2.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "graphql": "^0.11.7"
+    "@babel/runtime": "^7.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "cross-env": "^5.0.5",
-    "graphql": "^0.10.3"
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "cross-env": "^5.1.4",
+    "graphql": "^0.13.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit#readme",
   "keywords": [
@@ -25,7 +25,7 @@
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir dist"
   }
 }

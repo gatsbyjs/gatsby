@@ -1,43 +1,43 @@
 const webpackLodashPlugin = require(`lodash-webpack-plugin`)
 
 // Add Lodash webpack plugin
-exports.modifyWebpackConfig = (
-  { config, stage },
+exports.onCreateWebpackConfig = (
+  { actions, stage },
   { disabledFeatures = [] }
 ) => {
-  if (stage === `build-javascript`) {
-    const features = {
-      shorthands: true,
-      cloning: true,
-      currying: true,
-      caching: true,
-      collections: true,
-      exotics: true,
-      guards: true,
-      metadata: true,
-      deburring: true,
-      unicode: true,
-      chaining: true,
-      memoizing: true,
-      coercions: true,
-      flattening: true,
-      paths: true,
-      placeholders: true,
-    }
+  if (stage !== `build-javascript`) return
 
-    disabledFeatures.forEach(feature => {
-      delete features[feature]
-    })
-    config.plugin(`Lodash`, webpackLodashPlugin, [features])
+  const features = {
+    shorthands: true,
+    cloning: true,
+    currying: true,
+    caching: true,
+    collections: true,
+    exotics: true,
+    guards: true,
+    metadata: true,
+    deburring: true,
+    unicode: true,
+    chaining: true,
+    memoizing: true,
+    coercions: true,
+    flattening: true,
+    paths: true,
+    placeholders: true,
   }
 
-  return
+  disabledFeatures.forEach(feature => {
+    delete features[feature]
+  })
+
+  actions.setWebpackConfig({
+    plugins: [new webpackLodashPlugin(features)],
+  })
 }
 
 // Add Lodash Babel plugin
-exports.modifyBabelrc = ({ babelrc }) => {
-  return {
-    ...babelrc,
-    plugins: babelrc.plugins.concat([`lodash`]),
-  }
+exports.onCreateBabelConfig = ({ actions }) => {
+  actions.setBabelPlugin({
+    name: `babel-plugin-lodash`,
+  })
 }

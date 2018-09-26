@@ -2,12 +2,9 @@ import React from "react"
 
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
+import { graphql } from "gatsby"
 
 class PostDetail extends React.Component {
-  constructor() {
-    super()
-  }
-
   render() {
     const {
       bigImage,
@@ -147,10 +144,11 @@ class PostDetail extends React.Component {
             }}
           >
             <img
+              alt={``}
               key={big.src}
               src={big.src}
               srcSet={big.srcSet}
-              sizes="(min-width: 640px) 640px, 100vw"
+              fluid="(min-width: 640px) 640px, 100vw"
               css={{
                 margin: 0,
                 height: `100%`,
@@ -216,7 +214,7 @@ export const postDetailFragment = graphql`
         # thumbnails are created. This makes iterating on
         # designs effortless as we change the args
         # for the query and we get new thumbnails.
-        big: sizes(maxWidth: 640) {
+        big: fluid(maxWidth: 640) {
           src
           srcSet
         }

@@ -5,6 +5,9 @@ Object {
   "anArray": Object {
     "field": "anArray",
   },
+  "context___nestedObject___name": Object {
+    "field": "context___nestedObject___name",
+  },
   "context___nestedObject___someOtherProperty": Object {
     "field": "context___nestedObject___someOtherProperty",
   },
@@ -51,6 +54,7 @@ Object {
   ],
   "context": Object {
     "nestedObject": Object {
+      "name": "Inner name",
       "someOtherProperty": 1,
     },
   },

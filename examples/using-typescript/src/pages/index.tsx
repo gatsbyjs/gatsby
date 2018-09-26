@@ -1,4 +1,6 @@
-import * as React from "react";
+import { graphql } from "gatsby"
+import * as React from "react"
+import Layout from "../layouts"
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -6,32 +8,33 @@ interface IndexPageProps {
   data: {
     site: {
       siteMetadata: {
-        siteName: string;
-      };
-    };
-  };
-}
-
-export default class extends React.Component<IndexPageProps, {}> {
-  constructor(props:IndexPageProps, context: any){
-    super(props, context);
-  }
-  public render() {
-    return(
-      <div>
-        <h1>Hello Typescript world!</h1>
-        <p>This site is named <strong>{this.props.data.site.siteMetadata.siteName}</strong></p>
-      </div>
-    );
+        siteName: string
+      }
+    }
   }
 }
 
 export const pageQuery = graphql`
-  query IndexQuery{
+  query IndexQuery {
     site {
       siteMetadata {
         siteName
       }
     }
   }
-`;
+`
+
+export default class IndexPage extends React.Component<IndexPageProps, {}> {
+  readonly hello = `Hello`
+  public render() {
+    const { siteName } = this.props.data.site.siteMetadata
+    return (
+      <Layout>
+        <h1>{this.hello} Typescript world!</h1>
+        <p>
+          This site is named <strong>{siteName}</strong>
+        </p>
+      </Layout>
+    )
+  }
+}

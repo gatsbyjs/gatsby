@@ -11,7 +11,7 @@ Source plugin for pulling data into Gatsby from the
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-source-hacker-news`];
+plugins: [`gatsby-source-hacker-news`]
 ```
 
 ## How to query
@@ -19,7 +19,7 @@ plugins: [`gatsby-source-hacker-news`];
 You can query nodes created from Hacker News like the following:
 
 ```graphql
-query StoriesQuery {
+query {
   allHnStory(sort: { fields: [order] }) {
     edges {
       node {

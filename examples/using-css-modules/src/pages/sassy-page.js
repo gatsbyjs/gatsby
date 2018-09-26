@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
 import styles from "../styles/sass.module.scss"
 
@@ -8,6 +8,7 @@ class IndexComponent extends React.Component {
     return (
       <div className={styles.page}>
         <h1 className={styles.header}>Cheese: Do you like it?</h1>
+        <h1 className={styles.header}>🧀 🧀 🧀 🧀 🧀 🧀 🧀</h1>
         <Link to="/" className={styles.link}>
           Back home
         </Link>

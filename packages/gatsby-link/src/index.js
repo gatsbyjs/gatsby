@@ -1,35 +1,20 @@
-/*global __PREFIX_PATHS__, __PATH_PREFIX__ */
-import React from "react"
-import { Link, NavLink } from "react-router-dom"
+/*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
-import { createLocation as cL, createPath } from "history"
-
-let pathPrefix = `/`
-if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
-  pathPrefix = __PATH_PREFIX__
-}
+import React from "react"
+import { Link } from "@reach/router"
+import { parsePath } from "gatsby"
 
 export function withPrefix(path) {
-  return normalizePath(pathPrefix + path)
+  return normalizePath(`${__PATH_PREFIX__}/${path}`)
 }
 
 function normalizePath(path) {
-  return path.replace(/^\/\//g, `/`)
-}
-
-function createLocation(path, history) {
-  const location = cL(path, null, null, history.location)
-  location.pathname = withPrefix(location.pathname)
-  return location
+  return path.replace(/\/+/g, `/`)
 }
 
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
-  exact: PropTypes.bool,
-  strict: PropTypes.bool,
-  isActive: PropTypes.func,
-  location: PropTypes.object,
 }
 
 // Set up IntersectionObserver
@@ -52,7 +37,7 @@ const handleIntersection = (el, cb) => {
 }
 
 class GatsbyLink extends React.Component {
-  constructor(props, context) {
+  constructor(props) {
     super()
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -60,35 +45,23 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
-    const { history } = context.router
-    const to = createLocation(props.to, history)
-
     this.state = {
-      path: createPath(to),
-      to,
       IOSupported,
     }
     this.handleRef = this.handleRef.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.to !== nextProps.to) {
-      const to = createLocation(nextProps.to, history)
-      this.setState({
-        path: createPath(to),
-        to,
-      })
-      // Preserve non IO functionality if no support
-      if (!this.state.IOSupported) {
-        ___loader.enqueue(this.state.to.pathname)
-      }
+  componentDidUpdate(prevProps, prevState) {
+    // Preserve non IO functionality if no support
+    if (this.props.to !== prevProps.to && !this.state.IOSupported) {
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(this.state.to.pathname)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
@@ -98,22 +71,53 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
-        ___loader.enqueue(this.state.to.pathname)
+        ___loader.enqueue(parsePath(this.props.to).pathname)
       })
     }
   }
 
-  render() {
-    const { onClick, ...rest } = this.props
-    let El
-    if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
-      El = NavLink
-    } else {
-      El = Link
+  defaultGetProps = ({ isCurrent }) => {
+    if (isCurrent) {
+      return {
+        className: [this.props.className, this.props.activeClassName]
+          .filter(Boolean)
+          .join(` `),
+        style: { ...this.props.style, ...this.props.activeStyle },
+      }
     }
+    return null
+  }
+
+  render() {
+    const {
+      to,
+      getProps = this.defaultGetProps,
+      onClick,
+      onMouseEnter,
+      /* eslint-disable no-unused-vars */
+      activeClassName: $activeClassName,
+      activeStyle: $activeStyle,
+      ref: $ref,
+      innerRef: $innerRef,
+      state,
+      replace,
+      /* eslint-enable no-unused-vars */
+      ...rest
+    } = this.props
+
+    const prefixedTo = withPrefix(to)
 
     return (
-      <El
+      <Link
+        to={prefixedTo}
+        state={state}
+        getProps={getProps}
+        innerRef={this.handleRef}
+        onMouseEnter={e => {
+          // eslint-disable-line
+          onMouseEnter && onMouseEnter(e)
+          ___loader.hovering(parsePath(to).pathname)
+        }}
         onClick={e => {
           // eslint-disable-line
           onClick && onClick(e)
@@ -127,45 +131,16 @@ class GatsbyLink extends React.Component {
             !e.ctrlKey &&
             !e.shiftKey
           ) {
-            // Is this link pointing to a hash on the same page? If so,
-            // just scroll there.
-            let pathname = this.state.path
-            if (pathname.split(`#`).length > 1) {
-              pathname = pathname
-                .split(`#`)
-                .slice(0, -1)
-                .join(``)
-            }
-            if (pathname === window.location.pathname) {
-              const hashFragment = this.state.path
-                .split(`#`)
-                .slice(1)
-                .join(`#`)
-              const element = document.getElementById(hashFragment)
-              if (element !== null) {
-                element.scrollIntoView()
-                return true
-              } else {
-                // This is just a normal link to the current page so let's emulate default
-                // browser behavior by scrolling now to the top of the page.
-                window.scrollTo(0, 0)
-                return true
-              }
-            }
+            e.preventDefault()
 
-            // In production, make sure the necessary scripts are
+            // Make sure the necessary scripts and data are
             // loaded before continuing.
-            if (process.env.NODE_ENV === `production`) {
-              e.preventDefault()
-              window.___navigateTo(this.state.to)
-            }
+            navigate(to, { state, replace })
           }
 
           return true
         }}
         {...rest}
-        to={this.state.to}
-        innerRef={this.handleRef}
       />
     )
   }
@@ -175,15 +150,34 @@ GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
   innerRef: PropTypes.func,
   onClick: PropTypes.func,
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-}
-
-GatsbyLink.contextTypes = {
-  router: PropTypes.object,
+  to: PropTypes.string.isRequired,
+  replace: PropTypes.bool,
 }
 
 export default GatsbyLink
 
+export const navigate = (to, options) => {
+  window.___navigate(withPrefix(to), options)
+}
+
+export const push = to => {
+  console.warn(
+    `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
+  window.___push(withPrefix(to))
+}
+
+export const replace = to => {
+  console.warn(
+    `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
+  window.___replace(withPrefix(to))
+}
+
+// TODO: Remove navigateTo for Gatsby v3
 export const navigateTo = to => {
-  window.___navigateTo(to)
+  console.warn(
+    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "push" instead.`
+  )
+  return push(to)
 }

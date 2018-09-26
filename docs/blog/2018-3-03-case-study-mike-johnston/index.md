@@ -18,9 +18,9 @@ Our goal was to provide a solid architecture to build a long-term future on top 
 
 To execute on this effectively, we prioritized a few architectural goals:
 
-* **System Resources** — Sadly, public sector software budgets often don’t match those of their private sector counterparts. We wanted to pursue a system that would not require a large deployment, a lot of performance tuning, and constant monitoring and maintenance.
-* **Security** — It’s no secret that there are bad actors across the world that would love to influence campaigns and governance wherever they can. We wanted to provide strong protections to prevent hackers from gaining access and interfering.
-* **Maintainability** — If this stack is going to support a growing engagement and policy platform on a lean budget, it needs to be easy to work on. We wanted to maintain best practices wherever possible and use techniques that would be easy for someone to come in behind me and build on.
+- **System Resources** — Sadly, public sector software budgets often don’t match those of their private sector counterparts. We wanted to pursue a system that would not require a large deployment, a lot of performance tuning, and constant monitoring and maintenance.
+- **Security** — It’s no secret that there are bad actors across the world that would love to influence campaigns and governance wherever they can. We wanted to provide strong protections to prevent hackers from gaining access and interfering.
+- **Maintainability** — If this stack is going to support a growing engagement and policy platform on a lean budget, it needs to be easy to work on. We wanted to maintain best practices wherever possible and use techniques that would be easy for someone to come in behind me and build on.
 
 ## Content Management with WordPress
 
