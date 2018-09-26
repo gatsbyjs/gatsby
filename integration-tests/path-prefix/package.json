@@ -5,12 +5,12 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "cypress": "^3.1.0",
-    "gatsby": "^2.0.6",
-    "gatsby-plugin-manifest": "next",
-    "gatsby-plugin-offline": "next",
-    "gatsby-plugin-react-helmet": "next",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "gatsby": "latest",
+    "gatsby-plugin-manifest": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-react-helmet": "latest",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "react-helmet": "^5.2.0"
   },
   "keywords": [
@@ -21,16 +21,15 @@
     "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test": "npm-run-all -s build start-server-and-test",
+    "test": "npm run build && npm run start-server-and-test",
     "start-server-and-test": "start-server-and-test serve http://localhost:9000/blog cy:run",
     "serve": "gatsby serve --prefix-paths",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.3",
-    "prettier": "^1.14.2",
-    "start-server-and-test": "^1.7.0"
+    "prettier": "^1.14.3",
+    "start-server-and-test": "^1.7.1"
   },
   "repository": {
     "type": "git",

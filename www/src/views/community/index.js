@@ -143,7 +143,7 @@ class CommunityView extends Component {
                     <div
                       css={{
                         margin: `0 0 ${rhythm(1 / 8)}`,
-                        color: colors.gray.bright,
+                        color: colors.gray.calm,
                         ...scale(-1 / 3),
                       }}
                     >
