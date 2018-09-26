@@ -37,7 +37,7 @@ module.exports = async program => {
     if (open) {
       console.log(`${chalk.blue(`info`)} Opening browser...`)
       openurl(openUrlString)
-        .catch(err => console.log(`${chalk.yellow(`warn`)} browser not opened`))
+        .catch(err => console.log(`${chalk.yellow(`warn`)} Browser not opened because no browser was found`))
     }
   })
 

@@ -426,7 +426,7 @@ module.exports = async (program: any) => {
       printDeprecationWarnings()
       if (program.open) {
         require(`opn`)(urls.localUrlForBrowser)
-          .catch(err => console.log(`${chalk.yellow(`warn`)} browser not opened`))
+          .catch(err => console.log(`${chalk.yellow(`warn`)} Browser not opened because no browser was found`))
       }
     }
 
