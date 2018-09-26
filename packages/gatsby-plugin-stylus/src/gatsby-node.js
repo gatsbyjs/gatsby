@@ -24,34 +24,10 @@ const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
 
 exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
   // Pass in stylus options regardless of stage.
-  if (Array.isArray(options.use)) {
-    config.merge(current => {
-      current.stylus = {
-        use: options.use,
-      }
-      return current
-    })
-  } else if (options.use) {
-    throw new Error(
-      `gatsby-plugin-stylus "use" option passed with ${
-        options.use
-      }. Pass an array of stylus plugins instead`
-    )
-  }
-  if (Array.isArray(options.import)) {
-    config.merge(current => {
-      current.stylus = {
-        import: options.import,
-      }
-      return current
-    })
-  } else if (options.import) {
-    throw new Error(
-      `gatsby-plugin-stylus "import" option passed with ${
-        options.import
-      }. Pass an array of filenames instead`
-    )
-  }
+  config.merge(function (current) {
+    current.stylus = options
+    return current
+  })
 
   const stylusFiles = /\.styl$/
   const stylusModulesFiles = /\.module\.styl$/
