@@ -25,7 +25,6 @@ class Cache {
         store: this.store,
         options: {
           path: this.directory,
-          reviveBuffers: false,
           ttl: ONE_HOUR,
         },
       },
