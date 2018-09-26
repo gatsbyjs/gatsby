@@ -257,6 +257,8 @@ const queue = {
     const page = findPage(path)
     if (page) {
       return pathScriptsCache[page.path]
+    } else if (path !== `/404.html`) {
+      return queue.getResourcesForPathnameSync(`/404.html`)
     } else {
       return null
     }
