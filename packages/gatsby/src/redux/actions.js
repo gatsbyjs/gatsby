@@ -7,6 +7,7 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
@@ -1099,10 +1100,11 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
-  // Check if URL is an external link
-  // and if it is, don't add pathPrefix
-  const isExternalUrl = /^(https?:|\/\/)/.test(toPath)
-  const toPathPrefix = isExternalUrl ? `` : pathPrefix
+  // Parse urls to get their protocols
+  // url.parse will not cover protocol-relative urls so do a separate check for those
+  const parsed = url.parse(toPath)
+  const isRelativeProtocol = toPath.startsWith(`//`)
+  const toPathPrefix = parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
 
   return {
     type: `CREATE_REDIRECT`,
