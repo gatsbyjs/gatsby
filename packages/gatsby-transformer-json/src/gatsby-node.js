@@ -10,6 +10,8 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }, pl
       return pluginOptions.typeName
     } else if (isArray) {
       return _.upperFirst(_.camelCase(`${node.name} Json`))
+    } else if (node.internal.type !== `File`) {
+      return `${node.internal.type} Json`
     } else {
       return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`))
     }
