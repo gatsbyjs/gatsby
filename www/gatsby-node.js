@@ -280,7 +280,7 @@ exports.createPages = ({ graphql, actions }) => {
       })
 
       const starterTemplate = path.resolve(
-        `src/templates/template-starter-showcase.js`
+        `src/templates/template-starter-page.js`
       )
 
       starters.forEach((edge, index) => {
