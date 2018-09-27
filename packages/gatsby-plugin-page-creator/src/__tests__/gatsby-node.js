@@ -64,7 +64,7 @@ describe(`JavaScript page creator`, () => {
   it(`filters out files that start with template-*`, () => {
     const validFiles = [
       { path: `something/blah.js` },
-      { path: `something/template-cool-page-type.js` },
+      { path: `file1.js` },
     ]
 
     const testFiles = validFiles.concat([
