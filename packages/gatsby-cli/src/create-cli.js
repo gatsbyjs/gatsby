@@ -4,7 +4,6 @@ const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
-const fs = require(`fs`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
