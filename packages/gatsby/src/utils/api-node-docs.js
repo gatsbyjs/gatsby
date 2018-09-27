@@ -82,22 +82,22 @@ exports.createPagesStatefully = true
  *
  * See also the documentation for [`createNode`](/docs/actions/#createNode).
  * @example
- * const crypto = require(`crypto`);
+ * const crypto = require(`crypto`)
  *
  * exports.sourceNodes = ({ actions, createNodeId }) => {
- *   const { createNode } = actions;
+ *   const { createNode } = actions
  *
  *   // Data can come from anywhere, but for now create it manually
  *   const myData = {
  *     foo: `The foo field of my node`,
  *     bar: `Baz`
- *   };
+ *   }
  *
- *   const nodeContent = JSON.stringify(myData);
+ *   const nodeContent = JSON.stringify(myData)
  *   const nodeContentDigest = crypto
  *     .createHash(`md5`)
  *     .update(nodeContent)
- *     .digest(`hex`);
+ *     .digest(`hex`)
  *
  *   const nodeMeta = {
  *     id: createNodeId(`my-unique-id`),
