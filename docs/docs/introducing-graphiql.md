@@ -26,7 +26,7 @@ on it—including the `siteMetadata` object.
 
 ## How to use Graph_i_QL
 
-when the development server is running for one of your Gatsby sites, open Graph_i_QL at <http://localhost:8000/___graphql> and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query.
+When the development server is running for one of your Gatsby sites, open Graph_i_QL at <http://localhost:8000/___graphql> and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query.
 
 Make sure to check out the Graph_i_QL docs in the upper right-hand corner of the IDE. It's easy to miss them, but they're worth visiting!
 
