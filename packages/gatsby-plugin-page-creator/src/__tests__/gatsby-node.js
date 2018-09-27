@@ -1,7 +1,7 @@
 const validatePath = require(`../validate-path`)
 const createPath = require(`../create-path`)
 
-describe(`JavaScript page creator`, () => {
+describe.only(`JavaScript page creator`, () => {
   it(`filters out files that start with underscores`, () => {
     const files = [
       {
@@ -12,6 +12,31 @@ describe(`JavaScript page creator`, () => {
       },
       {
         path: `_blah.js`,
+      },
+    ]
+
+    expect(files.filter(file => validatePath(file.path)).length).toEqual(1)
+  })
+
+  it(`filters out files that start with dot`, () => {
+    const files = [
+      {
+        path: `.eslintrc`,
+      },
+      {
+        path: `something/.eslintrc`,
+      },
+      {
+        path: `something/.eslintrc.js`,
+      },
+      {
+        path: `something/blah.js`,
+      },
+      {
+        path: `.markdownlint.json`,
+      },
+      {
+        path: `something/.markdownlint.json`,
       },
     ]
 
