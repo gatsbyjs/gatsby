@@ -10,6 +10,8 @@ With this plugin, *any* file that lives in the `src/pages` folder (or subfolders
 - `*.test.jsx?`
 - `*.spec.jsx?`
 - `*.d.tsx?`
+- `*.json`
+- `*.yaml`
 - `_*`
 - `.*`
 

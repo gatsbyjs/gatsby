@@ -1,7 +1,7 @@
 const validatePath = require(`../validate-path`)
 const createPath = require(`../create-path`)
 
-describe.only(`JavaScript page creator`, () => {
+describe(`JavaScript page creator`, () => {
   it(`filters out files that start with underscores`, () => {
     const files = [
       {
@@ -41,6 +41,34 @@ describe.only(`JavaScript page creator`, () => {
     ]
 
     expect(files.filter(file => validatePath(file.path)).length).toEqual(1)
+  })
+
+  it(`filters out json and yaml files`, () => {
+    const files = [
+      {
+        path: `something/blah.js`,
+      },
+      {
+        path: `something/otherConfig.yml`,
+      },
+      {
+        path: `config.yaml`,
+      },
+      {
+        path: `somefile.json`,
+      },
+      {
+        path: `somefile.js`,
+      },
+      {
+        path: `dir1/file.json`,
+      },
+      {
+        path: `dir1/dir2/file.json`,
+      },
+    ]
+
+    expect(files.filter(file => validatePath(file.path)).length).toEqual(2)
   })
 
   it(`filters out files that start with template-*`, () => {
