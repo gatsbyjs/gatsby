@@ -1,6 +1,5 @@
 import Typography from "typography"
 import bootstrapTheme from "typography-theme-bootstrap"
-console.log(bootstrapTheme)
 
 bootstrapTheme.googleFonts = [
   {
@@ -9,5 +8,7 @@ bootstrapTheme.googleFonts = [
   },
 ]
 const typography = new Typography(bootstrapTheme)
+
+export const { rhythm, scale } = typography
 
 export default typography

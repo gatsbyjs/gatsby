@@ -1,10 +1,12 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 
+import Layout from "../layouts"
 import { rhythm, options } from "../utils/typography"
 
-const PreferWebp = ({ data }) => (
-  <div>
+const PreferWebp = ({ data, location }) => (
+  <Layout location={location}>
     <h2>Prefer WebP</h2>
     <Img
       style={{ display: `inherit` }}
@@ -19,7 +21,7 @@ const PreferWebp = ({ data }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.resolutions}
+      fixed={data.reddImageMobile.childImageSharp.fixed}
     />
     <Img
       style={{ display: `inherit` }}
@@ -33,11 +35,12 @@ const PreferWebp = ({ data }) => (
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.resolutions}
+      fixed={data.reddImage.childImageSharp.fixed}
     />
     <p>
       Lorem markdownum nocens, est aut tergo, inmansuetique bella. Neve illud
-      contrarius ad es prior.{` `}
+      contrarius ad es prior.
+      {` `}
       <a href="http://nunc.io/fuit.html">Planguntur</a> quondam, sua ferunt
       uterum semina advertere si fraudesque terram hosti subiecta, nec. Audenti
       refugitque manibusque aliis infelicem sed mihi aevis! Que ipso templa; tua
@@ -52,7 +55,8 @@ const PreferWebp = ({ data }) => (
     <p>
       Proteus ut dis nec exsecrantia data: agrestes, truculenta Peleus. Et
       diffidunt, talia intravit Thaumantias; figere et <em>et</em> qui socio
-      qui, <a href="http://vixmonet.io/in.html">tuo servet unda</a> hoc{` `}
+      qui, <a href="http://vixmonet.io/in.html">tuo servet unda</a> hoc
+      {` `}
       <strong>classi</strong>? Causam <em>quemque</em>? Subigebant cornibus
       fibras ut per nare nati, cunctis et <strong>illa verba</strong> inrita.
     </p>
@@ -65,42 +69,51 @@ const PreferWebp = ({ data }) => (
       <li>Constitit nomine senta suspirat et signis genuisse</li>
     </ol>
     <Img
-      sizes={data.kenImage.sizes}
+      fluid={data.kenImage.childImageSharp.fluid}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <h2>Levia mihi</h2>
     <p>
-      Precor Ortygiam, prudens diro stabant prodis moenia; aut tergo{` `}
+      Precor Ortygiam, prudens diro stabant prodis moenia; aut tergo
+      {` `}
       <a href="http://orehaec.io/">loquax et data</a> sua rite in vulnere. Esse
-      lumina plaustrum lacus necopina, iam umbrae nec clipeo sentit{` `}
+      lumina plaustrum lacus necopina, iam umbrae nec clipeo sentit
+      {` `}
       <a href="http://ut.org/hinc">sinistra</a>.
     </p>
     <p>
-      Pendebat nitidum vidistis ecce crematisregia fera et lucemque crines.{` `}
+      Pendebat nitidum vidistis ecce crematisregia fera et lucemque crines.
+      {` `}
       <a href="http://www.sub.net/">Est sopita satis</a> quod harena
       Antimachumque tulit fusile. Fieri qui que prosit equidem, meis praescia
       monebat cacumina tergo acerbo saepe nullaque.
     </p>
-  </div>
+  </Layout>
 )
 
 export default PreferWebp
 
 export const query = graphql`
-  query PreferWebpQuery {
-    reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 125) {
-        ...GatsbyImageSharpResolutions_withWebp
+  query {
+    reddImageMobile: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 125) {
+          ...GatsbyImageSharpFixed_withWebp
+        }
       }
     }
-    reddImage: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 200) {
-        ...GatsbyImageSharpResolutions_withWebp
+    reddImage: file(relativePath: { regex: "/redd/" }) {
+      childImageSharp {
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed_withWebp
+        }
       }
     }
-    kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      sizes(maxWidth: 600) {
-        ...GatsbyImageSharpSizes_withWebp
+    kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
+      childImageSharp {
+        fluid(maxWidth: 600) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
       }
     }
   }

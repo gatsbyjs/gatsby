@@ -10,13 +10,13 @@ _Note: There are many sample configs which may be helpful to reference in the di
 
 Options available to set within `gatsby-config.js` include:
 
-1.  siteMetadata (object)
-2.  plugins (array)
-3.  pathPrefix (string)
-4.  polyfill (boolean)
-5.  mapping (object)
-6.  proxy (object)
-7.  developMiddleware (function)
+1.  [siteMetadata](#siteMetadata) (object)
+2.  [plugins](#plugins) (array)
+3.  [pathPrefix](#pathPrefix) (string)
+4.  [polyfill](#polyfill) (boolean)
+5.  [mapping](#mapping-node-types) (object)
+6.  [proxy](#proxy) (object)
+7.  [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
 
 ## siteMetadata
 
@@ -27,9 +27,9 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
     siteUrl: `https://www.gatsbyjs.org`,
-    description: `Blazing-fast static site generator for React`,
+    description: `Blazing fast modern site generator for React`,
   },
-};
+}
 ```
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
@@ -52,7 +52,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to see available official and community plugins.
@@ -65,7 +65,7 @@ It's common for sites to be hosted somewhere other than the root of their domain
 module.exports = {
   // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
-};
+}
 ```
 
 See more about [Adding a Path Prefix](/docs/path-prefix/).
@@ -79,7 +79,7 @@ If you'd like to provide your own Promise polyfill, you can set `polyfill` to fa
 ```javascript
 module.exports = {
   polyfill: false,
-};
+}
 ```
 
 See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
@@ -121,7 +121,7 @@ module.exports = {
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 
 ```graphql
-query BlogPost($slug: String!) {
+query($slug: String!) {
   markdownRemark(fields: { slug: { eq: $slug } }) {
     html
     fields {
@@ -198,7 +198,7 @@ module.exports = {
 You can query the `tech` object via the referred ids in `experience`:
 
 ```graphql
-query CV {
+query {
   experience: allExperienceJson {
     edges {
       node {
@@ -222,6 +222,30 @@ query CV {
 }
 ```
 
+Mapping also works between Markdown files. For example, instead of having all authors in a YAML file, you could have info about each author in a separate Markdown file:
+
+```markdown
+---
+author_id: Kyle Mathews
+twitter: "@kylemathews"
+---
+
+Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
+```
+
+And then add the following rule to your `gatsby-config.js`:
+
+```javascript
+module.exports = {
+  plugins: [...],
+  mapping: {
+    'MarkdownRemark.frontmatter.author': `MarkdownRemark.frontmatter.author_id`
+  },
+}
+```
+
+Similarly to YAML and JSON files, mapping between Markdown files can also be used to map an array of ids.
+
 ## Proxy
 
 Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server. For example:
@@ -232,7 +256,7 @@ module.exports = {
     prefix: "/api",
     url: "http://examplesite.com/api/",
   },
-};
+}
 ```
 
 See more about [Proxying API Requests in Develop](/docs/api-proxy/).

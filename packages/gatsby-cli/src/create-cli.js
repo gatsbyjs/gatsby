@@ -2,9 +2,8 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
-const fs = require(`fs`)
-
-const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
+const envinfo = require(`envinfo`)
+const existsSync = require(`fs-exists-cached`).sync
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -17,12 +16,35 @@ function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
   const directory = path.resolve(`.`)
 
+  // 'not dead' query not available in browserslist used in Gatsby v1
+  const DEFAULT_BROWSERS =
+    installedGatsbyVersion() === 1
+      ? [`> 1%`, `last 2 versions`, `IE >= 9`]
+      : [`>0.25%`, `not dead`]
+
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
-  const useYarn = fs.existsSync(path.join(directory, `yarn.lock`))
+  const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
+  }
+
+  function installedGatsbyVersion() {
+    let majorVersion
+    try {
+      const packageInfo = require(path.join(
+        process.cwd(),
+        `node_modules`,
+        `gatsby`,
+        `package.json`
+      ))
+      majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
+    } catch (err) {
+      /* ignore */
+    }
+
+    return majorVersion
   }
 
   function resolveLocalCommand(command) {
@@ -43,7 +65,7 @@ function buildLocalCommands(cli, isLocalSite) {
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
         return report.panic(
-          `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`
+          `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
@@ -97,7 +119,7 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`o`, {
           alias: `open`,
           type: `boolean`,
-          describe: `Open the site in your browser for you.`,
+          describe: `Open the site in your (default) browser for you.`,
         })
         .option(`S`, {
           alias: `https`,
@@ -115,6 +137,10 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `string`,
           default: ``,
           describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`open-tracing-config-file`, {
+          type: `string`,
+          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -135,12 +161,17 @@ function buildLocalCommands(cli, isLocalSite) {
       _.option(`prefix-paths`, {
         type: `boolean`,
         default: false,
-        describe: `Build site with link paths prefixed (set prefix in your config).`,
-      }).option(`no-uglify`, {
-        type: `boolean`,
-        default: false,
-        describe: `Build site without uglifying JS bundles (for debugging).`,
-      }),
+        describe: `Build site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
+      })
+        .option(`no-uglify`, {
+          type: `boolean`,
+          default: false,
+          describe: `Build site without uglifying JS bundles (for debugging).`,
+        })
+        .option(`open-tracing-config-file`, {
+          type: `string`,
+          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+        }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
@@ -168,10 +199,60 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`o`, {
           alias: `open`,
           type: `boolean`,
-          describe: `Open the site in your browser for you.`,
+          describe: `Open the site in your (default) browser for you.`,
+        })
+        .option(`prefix-paths`, {
+          type: `boolean`,
+          default: false,
+          describe: `Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js).`,
         }),
 
     handler: getCommandHandler(`serve`),
+  })
+
+  cli.command({
+    command: `info`,
+    desc: `Get environment information for debugging and issue reporting`,
+    builder: _ =>
+      _.option(`C`, {
+        alias: `clipboard`,
+        type: `boolean`,
+        default: false,
+        describe: `Automagically copy environment information to clipboard`,
+      }),
+    handler: args => {
+      try {
+        envinfo.run(
+          {
+            System: [`OS`, `CPU`, `Shell`],
+            Binaries: [`Node`, `npm`, `Yarn`],
+            Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
+            npmPackages: `gatsby*`,
+            npmGlobalPackages: `gatsby*`,
+          },
+          {
+            console: true,
+            // Clipboard is not accessible when on a linux tty
+            clipboard:
+              process.platform === `linux` && !process.env.DISPLAY
+                ? false
+                : args.clipboard,
+          }
+        )
+      } catch (err) {
+        console.log(`Error: unable to print environment info`)
+        console.log(err)
+      }
+    },
+  })
+
+  cli.command({
+    command: `repl`,
+    desc: `Get a node repl with context of Gatsby environment, see (add docs link here)`,
+    handler: getCommandHandler(`repl`, (args, cmd) => {
+      process.env.NODE_ENV = process.env.NODE_ENV || `development`
+      return cmd(args)
+    }),
   })
 }
 

@@ -16,9 +16,14 @@ const { store, getNode, getNodes } = require(`../redux`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
-const { getExampleValues, isEmptyObjectOrArray } = require(`./data-tree-utils`)
+const {
+  getExampleValues,
+  isEmptyObjectOrArray,
+  INVALID_VALUE,
+} = require(`./data-tree-utils`)
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
+const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -92,7 +97,12 @@ function inferGraphQLType({
     return listType
   }
 
-  if (DateType.shouldInfer(exampleValue)) {
+  if (
+    // momentjs crashes when it encounters a Symbol,
+    // so check against that
+    typeof exampleValue !== `symbol` &&
+    DateType.shouldInfer(exampleValue)
+  ) {
     return DateType.getType()
   }
 
@@ -117,7 +127,7 @@ function inferGraphQLType({
         }),
       }
     case `number`:
-      return _.isInteger(exampleValue)
+      return is32BitInteger(exampleValue)
         ? { type: GraphQLInt }
         : { type: GraphQLFloat }
     default:
@@ -335,7 +345,7 @@ function _inferObjectStructureFromNodes(
   _.each(resolvedExample, (value, key) => {
     // Remove fields common to the top-level of all nodes.  We add these
     // elsewhere so don't need to infer their type.
-    if (isRoot && EXCLUDE_KEYS[key]) return
+    if (value === INVALID_VALUE || (isRoot && EXCLUDE_KEYS[key])) return
 
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.

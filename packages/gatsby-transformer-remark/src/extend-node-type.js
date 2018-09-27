@@ -4,7 +4,9 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLEnumType,
-} = require(`graphql`)
+  GraphQLJSON,
+  GraphQLBoolean,
+} = require(`gatsby/graphql`)
 const Remark = require(`remark`)
 const select = require(`unist-util-select`)
 const sanitizeHTML = require(`sanitize-html`)
@@ -20,10 +22,10 @@ const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
-const GraphQlJson = require(`graphql-type-json`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 
+let fileNodes
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
 const astCacheKey = node =>
@@ -60,7 +62,7 @@ const withPathPrefix = (url, pathPrefix) =>
 const ASTPromiseMap = new Map()
 
 module.exports = (
-  { type, store, pathPrefix, getNode, cache, reporter },
+  { type, store, pathPrefix, getNode, getNodes, cache, reporter },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -72,11 +74,23 @@ module.exports = (
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    let remark = new Remark().data(`settings`, {
-      commonmark: true,
-      footnotes: true,
-      pedantic: true,
-    })
+    const {
+      commonmark = true,
+      footnotes = true,
+      pedantic = true,
+      gfm = true,
+      blocks,
+    } = pluginOptions
+    const remarkOptions = {
+      gfm,
+      commonmark,
+      footnotes,
+      pedantic,
+    }
+    if (_.isArray(blocks)) {
+      remarkOptions.blocks = blocks
+    }
+    let remark = new Remark().data(`settings`, remarkOptions)
 
     for (let plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
@@ -104,9 +118,9 @@ module.exports = (
         return await ASTPromiseMap.get(cacheKey)
       } else {
         const ASTGenerationPromise = new Promise(async resolve => {
-          const files = _.values(store.getState().nodes).filter(
-            n => n.internal.type === `File`
-          )
+          if (process.env.NODE_ENV !== `production` || !fileNodes) {
+            fileNodes = getNodes().filter(n => n.internal.type === `File`)
+          }
           const ast = await new Promise((resolve, reject) => {
             // Use Bluebird's Promise function "each" to run remark plugins serially.
             Promise.each(pluginOptions.plugins, plugin => {
@@ -115,9 +129,10 @@ module.exports = (
                 return requiredPlugin.mutateSource(
                   {
                     markdownNode,
-                    files,
+                    files: fileNodes,
                     getNode,
                     reporter,
+                    cache,
                   },
                   plugin.pluginOptions
                 )
@@ -170,9 +185,9 @@ module.exports = (
               // every node type in DataTree gets a schema type automatically.
               // typegen plugins just modify the auto-generated types to add derived fields
               // as well as computationally expensive fields.
-              const files = _.values(store.getState().nodes).filter(
-                n => n.internal.type === `File`
-              )
+              if (process.env.NODE_ENV !== `production` || !fileNodes) {
+                fileNodes = getNodes().filter(n => n.internal.type === `File`)
+              }
               // Use Bluebird's Promise function "each" to run remark plugins serially.
               Promise.each(pluginOptions.plugins, plugin => {
                 const requiredPlugin = require(plugin.resolve)
@@ -182,9 +197,10 @@ module.exports = (
                       markdownAST,
                       markdownNode,
                       getNode,
-                      files,
+                      files: fileNodes,
                       pathPrefix,
                       reporter,
+                      cache,
                     },
                     plugin.pluginOptions
                   )
@@ -226,7 +242,7 @@ module.exports = (
       }
     }
 
-    async function getTableOfContents(markdownNode) {
+    async function getTableOfContents(markdownNode, pathToSlugField) {
       const cachedToc = await cache.get(tableOfContentsCacheKey(markdownNode))
       if (cachedToc) {
         return cachedToc
@@ -238,7 +254,17 @@ module.exports = (
         if (tocAst.map) {
           const addSlugToUrl = function(node) {
             if (node.url) {
-              node.url = [pathPrefix, markdownNode.fields.slug, node.url]
+              if (_.get(markdownNode, pathToSlugField) === undefined) {
+                console.warn(
+                  `Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`
+                )
+                return null
+              }
+              node.url = [
+                pathPrefix,
+                _.get(markdownNode, pathToSlugField),
+                node.url,
+              ]
                 .join(`/`)
                 .replace(/\/\//g, `/`)
             }
@@ -328,7 +354,7 @@ module.exports = (
         },
       },
       htmlAst: {
-        type: GraphQlJson,
+        type: GraphQLJSON,
         resolve(markdownNode) {
           return getHTMLAst(markdownNode).then(ast => {
             const strippedAst = stripPosition(_.clone(ast), true)
@@ -343,8 +369,12 @@ module.exports = (
             type: GraphQLInt,
             defaultValue: 140,
           },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
         },
-        resolve(markdownNode, { pruneLength }) {
+        resolve(markdownNode, { pruneLength, truncate }) {
           if (markdownNode.excerpt) {
             return Promise.resolve(markdownNode.excerpt)
           }
@@ -356,8 +386,13 @@ module.exports = (
               }
               return
             })
-
-            return prune(excerptNodes.join(` `), pruneLength, `…`)
+            if (!truncate) {
+              return prune(excerptNodes.join(` `), pruneLength, `…`)
+            }
+            return _.truncate(excerptNodes.join(` `), {
+              length: pruneLength,
+              omission: `…`,
+            })
           })
         },
       },
@@ -395,8 +430,14 @@ module.exports = (
       },
       tableOfContents: {
         type: GraphQLString,
-        resolve(markdownNode) {
-          return getTableOfContents(markdownNode)
+        args: {
+          pathToSlugField: {
+            type: GraphQLString,
+            defaultValue: `fields.slug`,
+          },
+        },
+        resolve(markdownNode, { pathToSlugField }) {
+          return getTableOfContents(markdownNode, pathToSlugField)
         },
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071

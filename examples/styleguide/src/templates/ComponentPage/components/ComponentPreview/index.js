@@ -1,1 +1,3 @@
-export { default } from "./ComponentPreview"
+import ComponentPreview from "./ComponentPreview"
+
+export default ComponentPreview

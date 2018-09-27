@@ -12,9 +12,9 @@ You have a static site. Or you will have. You understand how the content will wo
 
 You have three choices.
 
-* Keep comments in git.
-* Use client side comment service.
-* Do something crazy.
+- Keep comments in git.
+- Use client side comment service.
+- Do something crazy.
 
 ## Client side
 

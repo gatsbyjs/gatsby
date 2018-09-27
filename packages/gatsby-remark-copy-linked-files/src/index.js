@@ -162,6 +162,15 @@ module.exports = (
     visitor(link)
   })
 
+  visit(markdownAST, `definition`, definition => {
+    const ext = definition.url.split(`.`).pop()
+    if (options.ignoreFileExtensions.includes(ext)) {
+      return
+    }
+
+    visitor(definition)
+  })
+
   // This will only work for markdown img tags
   visit(markdownAST, `image`, image => {
     const ext = image.url.split(`.`).pop()

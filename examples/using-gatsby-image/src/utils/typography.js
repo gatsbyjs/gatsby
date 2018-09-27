@@ -32,7 +32,7 @@ elkGlenTheme.overrideThemeStyles = ({ rhythm, scale }, options) => {
     },
     "@media (min-width: 640px)": {
       html: {
-        fontSize: `${21 / 17 * 100}%`,
+        fontSize: `${(21 / 17) * 100}%`,
       },
     },
   }
@@ -40,4 +40,9 @@ elkGlenTheme.overrideThemeStyles = ({ rhythm, scale }, options) => {
 
 const typography = new Typography(elkGlenTheme)
 
+// Back out the below once Typography is upgraded for es6
 export default typography
+
+export const options = typography.options
+export const scale = typography.scale
+export const rhythm = typography.rhythm

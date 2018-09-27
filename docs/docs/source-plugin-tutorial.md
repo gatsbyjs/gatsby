@@ -36,22 +36,22 @@ Pixabay's [API documentation](https://pixabay.com/api/docs/#api_search_images) d
 
 Take the above URL and paste it in to a browser to see Pixabay's response to your query. It gives you a list of photos matching the query "yellow flowers" that have received an Editor's Choice award.
 
-> **NOTE:** You should replace <YOUR_API_KEY_HERE> with your Pixabay API key.
+> **NOTE:** You should replace `<YOUR_API_KEY_HERE>` with your Pixabay API key.
 
 ### Plugin behavior
 
 Your plugin will have the following behavior:
 
-* Accept config options like a Pixabay API key and a search query
-* Make an API request using the provided config options
-* Convert the data in the API response to Gatsby's node system
+- Accept config options like a Pixabay API key and a search query
+- Make an API request using the provided config options
+- Convert the data in the API response to Gatsby's node system
 
 ### Setup a new Gatsby site
 
 Create a new Gatsby project and change directories into the new project you just created.
 
 ```shell
-gatsby new source-tutorial-site
+gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default
 cd source-tutorial-site
 ```
 
@@ -104,8 +104,8 @@ Open your `package.json` file and you'll see `node-fetch` and `query-string` hav
 
 ```js
   "dependencies": {
-    "node-fetch": "^2.1.2",
-    "query-string": "^6.0.0"
+    "node-fetch": "^2.2.0",
+    "query-string": "^6.1.0"
   }
 ```
 
@@ -116,22 +116,19 @@ With the setup done, move on to adding the plugin's functionality.
 Create a new file called `gatsby-node.js` in your `gatsby-source-pixabay` directory, and add the following:
 
 ```js
-const crypto = require("crypto");
-const fetch = require("node-fetch");
-const queryString = require("query-string");
+const crypto = require("crypto")
+const fetch = require("node-fetch")
+const queryString = require("query-string")
 
-exports.sourceNodes = (
-  { boundActionCreators, createNodeId },
-  configOptions
-) => {
-  const { createNode } = boundActionCreators;
+exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+  const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
-  delete configOptions.plugins;
+  delete configOptions.plugins
 
   // plugin code goes here...
-  console.log("Testing my plugin", configOptions);
-};
+  console.log("Testing my plugin", configOptions)
+}
 ```
 
 ### Step by step through your `gatsby-node.js` file
@@ -139,34 +136,31 @@ exports.sourceNodes = (
 What did you do by adding this code? You started by importing the dependencies that you added earlier (along with one built in dependency):
 
 ```js
-const crypto = require("crypto");
-const fetch = require("node-fetch");
-const queryString = require("query-string");
+const crypto = require("crypto")
+const fetch = require("node-fetch")
+const queryString = require("query-string")
 ```
 
-Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`boundActionCreators` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`actions` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
 
 ```js
-exports.sourceNodes = (
-  { boundActionCreators, createNodeId },
-  configOptions
-) => {
+exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
 ```
 
 You do some initial setup:
 
 ```js
-const { createNode } = boundActionCreators;
+const { createNode } = actions
 
 // Gatsby adds a configOption that's not needed for this plugin, delete it
-delete configOptions.plugins;
+delete configOptions.plugins
 ```
 
 And finally add a placeholder message:
 
 ```js
 // plugin code goes here...
-console.log("Testing my plugin", configOptions);
+console.log("Testing my plugin", configOptions)
 ```
 
 ### Add the plugin to your site
@@ -190,7 +184,7 @@ module.exports = {
       },
     },
   ],
-};
+}
 ```
 
 Open a new terminal in the root directory of your tutorial site, then start Gatsby's development mode:
@@ -214,16 +208,13 @@ Note that Gatsby is warning that your plugin doesn't do anything yet. Time to fi
 
 Update `gatsby-node.js` in your `plugins/gatsby-source-pixabay/` directory:
 
-```js{14-32}
-const fetch = require('node-fetch')
-const queryString = require('query-string')
-const crypto = require('crypto')
+```js{11-30}
+const fetch = require("node-fetch")
+const queryString = require("query-string")
+const crypto = require("crypto")
 
-exports.sourceNodes = (
-  { boundActionCreators, createNodeId },
-  configOptions
-) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+  const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
@@ -275,18 +266,15 @@ You're ready to add the final step of your plugin - converting this data into a 
 
 ### Use `createNode` function
 
-You're adding a helper function on lines 15 to 35 and processing the data into a node on lines 52 to 55:
+You're adding a helper function on lines 12 to 32 and processing the data into a node on lines 49 to 52:
 
-```js{15-35,52-55}
-const fetch = require('node-fetch')
-const queryString = require('query-string')
-const crypto = require('crypto')
+```js{12-32,49-52}
+const fetch = require("node-fetch")
+const queryString = require("query-string")
+const crypto = require("crypto")
 
-exports.sourceNodes = (
-  { boundActionCreators, createNodeId },
-  configOptions
-) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+  const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
@@ -296,9 +284,9 @@ exports.sourceNodes = (
     const nodeId = createNodeId(`pixabay-photo-${photo.id}`)
     const nodeContent = JSON.stringify(photo)
     const nodeContentDigest = crypto
-      .createHash('md5')
+      .createHash("md5")
       .update(nodeContent)
-      .digest('hex')
+      .digest("hex")
 
     const nodeData = Object.assign({}, photo, {
       id: nodeId,
@@ -373,10 +361,10 @@ You've built a local plugin for your project, but what if you want to share it w
 
 You've written a local Gatsby plugin that:
 
-* can be configured with an entry in your `gatsby-config.js` file
-* requests data from a third-party API
-* pulls the API data into Gatsby's node system
-* allows the data to be queried with GraphQL
+- can be configured with an entry in your `gatsby-config.js` file
+- requests data from a third-party API
+- pulls the API data into Gatsby's node system
+- allows the data to be queried with GraphQL
 
 Congratulations!
 

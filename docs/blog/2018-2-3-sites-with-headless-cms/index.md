@@ -53,11 +53,11 @@ When businesses specialize in one thing instead of several, they tend to become 
 
 This specialization also means that headless CMSs perform well in scenarios in which a traditional CMS would prove inadequate. I’d like to point to Deane Barker’s [excellent article on use cases for headless CMSs](https://gadgetopia.com/post/9743), from which we've extracted a partial list:
 
-* You need to gather content from disparate places and pull it together into one platform
-* You need to push content to various formats, including desktop sites, mobile sites, smart watches, ads, etc.
-* Your developers dislike traditional CMSs, yet the editors and marketing folks prefer to add, edit, and delete content in a familiar editing environment
-* You keep a traditional CMS and yet want to add a simpler/cheaper/more structured method for particular projects, types of content, or a specific group of editors
-* All of the above! :)
+- You need to gather content from disparate places and pull it together into one platform
+- You need to push content to various formats, including desktop sites, mobile sites, smart watches, ads, etc.
+- Your developers dislike traditional CMSs, yet the editors and marketing folks prefer to add, edit, and delete content in a familiar editing environment
+- You keep a traditional CMS and yet want to add a simpler/cheaper/more structured method for particular projects, types of content, or a specific group of editors
+- All of the above! :)
 
 In all of these cases, a headless CMS is an excellent solution for you.
 

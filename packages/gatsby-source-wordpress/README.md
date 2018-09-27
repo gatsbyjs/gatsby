@@ -6,28 +6,28 @@ WordPress sites using the
 
 An example site for this plugin is available.
 
-* [Demo](https://using-wordpress.gatsbyjs.org/)
-* [Example site source code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
+- [Demo](https://using-wordpress.gatsbyjs.org/)
+- [Example site source code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
 ## Features
 
-* Pulls data from self-hosted WordPress sites, hosted on wordpress.com or
+- Pulls data from self-hosted WordPress sites, hosted on wordpress.com or
   wordpress.org
-* Should work with any number of article and post (tested on a site with 900
+- Should work with any number of article and post (tested on a site with 900
   posts)
-* Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
-* Easily create responsive images in Gatsby from WordPress images. See [image
+- Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
+- Easily create responsive images in Gatsby from WordPress images. See [image
   processing](#image-processing) section.
 
 ## WordPress and custom entities
 
 This module currently pulls from WordPress the following entities:
 
-* [x] All entities are supported (posts, pages, tags, categories, media, types,
+- [x] All entities are supported (posts, pages, tags, categories, media, types,
       users, statuses, taxonomies, ...)
-* [x] Any new entity should be pulled as long the IDs are correct.
-* [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
-* [x] Custom post types (any type you could have declared using WordPress'
+- [x] Any new entity should be pulled as long the IDs are correct.
+- [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
+- [x] Custom post types (any type you could have declared using WordPress'
       `functions.php`)
 
 We welcome PRs adding support for data from other plugins.
@@ -64,6 +64,13 @@ plugins: [
       // This feature is untested for sites hosted on Wordpress.com.
       // Defaults to true.
       useACF: true,
+      // Include specific ACF Option Pages that have a set post ID
+      // Regardless if an ID is set, the default options route will still be retrieved
+      // Must be using V3 of ACF to REST to include these routes
+      // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
+      // routes with the ID option_page_1 and option_page_2
+      // Dashes in IDs will be converted to underscores for use in GraphQL
+      acfOptionPageIds: [],
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.
@@ -97,9 +104,13 @@ plugins: [
       // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
       excludedRoutes: ["/*/*/comments", "/yoast/**"],
+      // use a custom normalizer which is applied after the built-in ones.
+      normalizer: function({ entities }) {
+        return entities
+      },
     },
   },
-];
+]
 ```
 
 ## WordPress Plugins
@@ -107,32 +118,35 @@ plugins: [
 These plugins were tested. We welcome PRs adding support for data from other
 plugins.
 
-* [x] Custom Post Types : it will work seamlessly, no further option needs to be
+- [x] Custom Post Types : it will work seamlessly, no further option needs to be
       activated. ("Show in REST API" setting needs to be set to true on the
       custom post in the plugin settings for this to work. It's set to "false"
       by default.)
 
-* [x] [ACF](https://www.advancedcustomfields.com/) The option `useACF: true`
+- [x] [ACF](https://www.advancedcustomfields.com/) The option `useACF: true`
       must be activated in your site's `gatsby-config.js`.
 
-  * You must have the plugin
+  - You must have the plugin
     [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in
     WordPress.
-  * Will pull the `acf: { ... }` fields's contents from any entity which has it
+  - Will pull the `acf: { ... }` fields's contents from any entity which has it
     attached (pages, posts, medias, ... you choose from in WordPress back-end
     while creating a Group of Fields).
-  * [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF :
-  * Will work with
+  - [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF :
+  - Will work with
     [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/)
     and premium stuff like that (repeater, gallery, ...).
-  * Will pull the content attached to the
+  - Will pull the content attached to the
     [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
 
-* [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives
+- [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives
       you the menus and menu locations endpoint.
 
-* [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
-      the current locale and available translations to all post types.
+- [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
+      the current locale and available translations to all post types translated with WPML.
+
+- [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
+      the current locale and available translations to all post types translated with Polylang.
 
 ## How to use Gatsby with Wordpress.com hosting
 
@@ -211,16 +225,16 @@ behind the scene.
 For example the following URL:
 `http://my-blog.wordpress.com/wp-json/acf/v2/options`
 
-* Manufacturer : `acf`
-* Endpoint : `options`
-* Final GraphQL Type : AllWordpressAcfOptions
+- Manufacturer : `acf`
+- Endpoint : `options`
+- Final GraphQL Type : AllWordpressAcfOptions
 
 For example the following URL:
 `http://my-blog.wordpress.com/wp-api-menus/v2/menu-locations`
 
-* Manufacturer : `wpapimenus`
-* Endpoint : `menulocations`
-* Final GraphQL Type : AllWordpressWpApiMenusMenuLocations
+- Manufacturer : `wpapimenus`
+- Endpoint : `menulocations`
+- Final GraphQL Type : AllWordpressWpApiMenusMenuLocations
 
 ```graphql
 {
@@ -230,6 +244,29 @@ For example the following URL:
         id
        type
         // Put your fields here
+      }
+    }
+  }
+}
+```
+
+### Query ACF Options
+
+Whether you are using V2 or V3 of ACF to REST, the query below will return `options` as the default ACF Options page data.
+
+If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
+
+```
+{
+  allWordpressAcfOptions {
+    edges {
+      node{
+        option_page_1 {
+          test_acf
+        }
+        options {
+          test_acf
+        }
       }
     }
   }
@@ -349,8 +386,8 @@ Full example:
               image {
                 localFile {
                   childImageSharp {
-                    sizes(maxWidth: 800) {
-                      ...GatsbyImageSharpSizes_withWebp
+                    fluid(maxWidth: 800) {
+                      ...GatsbyImageSharpFluid_withWebp
                     }
                   }
                 }
@@ -426,17 +463,95 @@ Full example:
 }
 ```
 
-### Image processing
+### Query posts with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPost {
+    edges {
+      node {
+        id
+        slug
+        title
+        content
+        excerpt
+        date
+        modified
+        author
+        featured_media
+        template
+        categories
+        tags
+        polylang_current_lang
+        polylang_translations {
+          id
+          slug
+          title
+          content
+          excerpt
+          date
+          modified
+          author
+          featured_media
+          template
+          categories
+          tags
+          polylang_current_lang
+        }
+      }
+    }
+  }
+}
+```
+
+### Query pages with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPage {
+    edges {
+      node {
+        id
+        title
+        content
+        excerpt
+        date
+        modified
+        slug
+        author
+        featured_media
+        template
+        polylang_current_lang
+        polylang_translations {
+          id
+          title
+          content
+          excerpt
+          date
+          modified
+          slug
+          author
+          featured_media
+          template
+          polylang_current_lang
+        }
+      }
+    }
+  }
+}
+```
+
+## Image processing
 
 To use image processing you need `gatsby-transformer-sharp`, `gatsby-plugin-sharp` and their
 dependencies `gatsby-image` and `gatsby-source-filesystem` in your `gatsby-config.js`.
 
 You can apply image processing to:
 
-* featured images (also known as post thumbnails),
-* ACF fields:
-  * Image field type (return value must be set to `Image Object` or `Image URL` or field name must be `featured_media`),
-  * Gallery field type.
+- featured images (also known as post thumbnails),
+- ACF fields:
+  - Image field type (return value must be set to `Image Object` or `Image URL` or field name must be `featured_media`),
+  - Gallery field type.
 
 Image processing of inline images added in wordpress WYSIWIG editor is
 currently not supported.
@@ -466,8 +581,8 @@ Full example:
         featured_media {
           localFile {
             childImageSharp {
-              resolutions(width: 500, height: 300) {
-                ...GatsbyImageSharpResolutions_withWebp
+              fixed(width: 500, height: 300) {
+                ...GatsbyImageSharpFixed_withWebp
               }
             }
           }
@@ -476,8 +591,8 @@ Full example:
           image {
             localFile {
               childImageSharp {
-                sizes(maxWidth: 500) {
-                  ...GatsbyImageSharpSizes_withWebp
+                fluid(maxWidth: 500) {
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -500,17 +615,68 @@ Full example:
 
 To learn more about image processing check
 
-* documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
-* source code of [image processing example
+- documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
+- source code of [image processing example
   site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
+
+## Using a custom normalizer
+
+The plugin uses the concept of normalizers to transform the json data from WordPress into
+GraphQL nodes. You can extend the normalizers by passing a custom function to your `gatsby-config.js`.
+
+### Example:
+
+You have a custom post type `movie` and a related custom taxonomy `genre` in your WordPress site. Since
+`gatsby-source-wordpress` doesn't know about the relation of the two, we can build an additional normalizer function to map the movie GraphQL nodes to the genre nodes:
+
+```javascript
+function mapMoviesToGenres({ entities }) {
+  const genres = entities.filter(e => e.__type === `wordpress__wp_genre`)
+
+  return entities.map(e => {
+    if (e.__type === `wordpress__wp_movie`) {
+      let hasGenres = e.genres && Array.isArray(e.genres) && e.categories.length
+      // Replace genres with links to their nodes.
+      if (hasGenres) {
+        e.genres___NODE = e.genres.map(
+          c => genres.find(gObj => c === gObj.wordpress_id).id
+        )
+        delete e.genres
+      }
+    }
+    return e
+  })
+
+  return entities
+}
+```
+
+In your `gatsby-config.js` you can then pass the function to the plugin options:
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        // ...
+        normalizer: mapMoviesToGenres,
+      },
+    },
+  ],
+}
+```
+
+Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions
+and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
 
 ## Site's `gatsby-node.js` example
 
 ```javascript
-const _ = require(`lodash`);
-const Promise = require(`bluebird`);
-const path = require(`path`);
-const slash = require(`slash`);
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -518,8 +684,8 @@ const slash = require(`slash`);
 // create pages.
 // Will create pages for WordPress pages (route : /{slug})
 // Will create pages for WordPress posts (route : /post/{slug})
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
   return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
     // queries against the local WordPress graphql schema. Think of
@@ -545,12 +711,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
       .then(result => {
         if (result.errors) {
-          console.log(result.errors);
-          reject(result.errors);
+          console.log(result.errors)
+          reject(result.errors)
         }
 
         // Create Page pages.
-        const pageTemplate = path.resolve("./src/templates/page.js");
+        const pageTemplate = path.resolve("./src/templates/page.js")
         // We want to create a detailed page for each
         // page node. We'll just use the WordPress Slug for the slug.
         // The Page ID is prefixed with 'PAGE_'
@@ -568,8 +734,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             context: {
               id: edge.node.id,
             },
-          });
-        });
+          })
+        })
       })
       // ==== END PAGES ====
 
@@ -593,10 +759,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           `
         ).then(result => {
           if (result.errors) {
-            console.log(result.errors);
-            reject(result.errors);
+            console.log(result.errors)
+            reject(result.errors)
           }
-          const postTemplate = path.resolve("./src/templates/post.js");
+          const postTemplate = path.resolve("./src/templates/post.js")
           // We want to create a detailed page for each
           // post node. We'll just use the WordPress Slug for the slug.
           // The Post ID is prefixed with 'POST_'
@@ -607,12 +773,93 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               context: {
                 id: edge.node.id,
               },
-            });
-          });
-          resolve();
-        });
-      });
+            })
+          })
+          resolve()
+        })
+      })
     // ==== END POSTS ====
-  });
-};
+  })
+}
+```
+
+## Troubleshooting
+
+### GraphQL Error - Unknown Field on ACF
+
+ACF returns `false` in cases where there is no data to be returned. This can cause conflicting data types in GraphQL and often leads to the error: `GraphQL Error Unknown field {field} on type {type}`.
+
+To solve this, you can use the [acf/format_value filter](https://www.advancedcustomfields.com/resources/acf-format_value/). There are 2 possible ways to use this:
+
+- `acf/format_value` – filter for every field
+- `acf/format_value/type={$field_type}` – filter for a specific field based on it’s type
+
+Using the following function, you can check for an empty field and if it's empty return `null`.
+
+```php
+if (!function_exists('acf_nullify_empty')) {
+    /**
+     * Return `null` if an empty value is returned from ACF.
+     *
+     * @param mixed $value
+     * @param mixed $post_id
+     * @param array $field
+     *
+     * @return mixed
+     */
+    function acf_nullify_empty($value, $post_id, $field) {
+        if (empty($value)) {
+            return null;
+        }
+        return $value;
+    }
+}
+```
+
+You can then apply this function to all ACF fields using the following code snippet:
+
+```php
+add_filter('acf/format_value', 'acf_nullify_empty', 100, 3);
+```
+
+Or if you would prefer to target specific fields, you can use the `acf/format_value/type={$field_type}` filter. Here are some examples:
+
+```php
+add_filter('acf/format_value/type=image', 'acf_nullify_empty', 100, 3);
+add_filter('acf/format_value/type=gallery', 'acf_nullify_empty', 100, 3);
+add_filter('acf/format_value/type=repeater', 'acf_nullify_empty', 100, 3);
+```
+
+This code should be added as a plugin (recommended), or within the `functions.php` of a theme.
+
+### GraphQL Error - Unknown field `localFile` on type `[image field]`
+
+WordPress has a [known issue](https://core.trac.wordpress.org/ticket/41445) that can affect how media objects are returned through the REST API.
+
+During the upload process to the WordPress media library, the `post_parent` value ([seen here in the wp_posts table](https://codex.wordpress.org/Database_Description#Table:_wp_posts)) is set to the ID of the post the image is attached to. This value is unable to be changed by any WordPress administration actions.
+
+When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
+
+```
+   {
+      "code":"rest_forbidden",
+      "message":"You don't have permission to do this.",
+      "data":{
+         "status":403
+      }
+   }
+```
+
+which prevents Gatsby from retrieving it.
+
+In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
+
+### Self-signed certificates
+
+When running locally, or in other situations that may involve self-signed certificates, you may run into the error: `The request failed with error code "DEPTH_ZERO_SELF_SIGNED_CERT"`.
+
+To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `gatsby-node.js`:
+
+```javascript
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 ```

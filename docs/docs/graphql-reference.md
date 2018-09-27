@@ -8,7 +8,7 @@ title: GraphQL Reference
 
 This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. You'll be querying the _real_ schema used on gatsbyjs.org so feel free to experiment and poke around the innards of our site!
 
-You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-four/#introducing-graphiql).
+You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-five/#introducing-graphiql).
 
 ## Basic query
 
@@ -31,6 +31,12 @@ Try using the editor's autocomplete (`Ctrl + Space`) to get extended details fro
 There are several ways to reduce the number of results from a query. Here `totalCount` tells you there's a few hundred results, but `limit` is used to show only the first two.
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20limit%3A%202%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
+
+## Skip
+
+Skip over a number of results. In this query `skip` is used to omit the first 3 results.
+
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(skip%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
 
 ## Filter
 
@@ -58,6 +64,10 @@ Dates can be formatted using the `formatString` function.
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%7D%7D%0A%20%20)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date(formatString%3A%20%22dddd%20DD%20MMMM%20YYYY%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
 
+Gatsby relies on [Moment.js](https://momentjs.com/) to format the dates. This allows you to use any tokens in your string. See [moment.js documentation](https://momentjs.com/docs/#/displaying/format/) for more tokens.
+
+Example: [`anotherDate(formatString: "dddd, MMMM Do YYYY, h:mm:ss a") # Sunday, August 5th 2018, 10:56:14 am`](<https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%7D%7D%0A%20%20)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20%23%20Sunday%2C%20August%205th%202018%2C%2010%3A56%3A14%20am%60%0A%20%20%20%20%20%20%20%20%20%20date(formatString%3A%20%22dddd%2C%20MMMM%20Do%20YYYY%2C%20h%3Amm%3Ass%20a%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D>)
+
 > TODO: Expand on the possibilities of formatting - which fields can be formatted? What are the available formatting options?
 
 ## Sort, filter, limit & format together
@@ -75,6 +85,14 @@ The query below is the same one as the previous example, but with the input argu
 To add variables to page component queries, pass these in the `context` object [when creating pages](https://deploy-preview-4795--gatsbyjs.netlify.com/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs).
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=query%20GetBlogPosts(%24limit%3A%20Int%2C%20%24filter%3A%20filterMarkdownRemark%2C%20%24sort%3A%20markdownRemarkConnectionSort)%20%7B%0A%09allMarkdownRemark(%0A%20%20%20%20limit%3A%20%24limit%2C%0A%20%20%20%20filter%3A%20%24filter%2C%0A%20%20%20%20sort%3A%20%24sort%0A%20%20)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20fields%7B%0A%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date(formatString%3A%20%22dddd%20DD%20MMMM%20YYYY%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%20%20%20%20%0A%7D&operationName=GetBlogPosts&variables=%7B%0A%20%20%22limit%22%3A%203%2C%0A%20%20%22filter%22%3A%20%7B%0A%20%20%20%20%22frontmatter%22%3A%20%7B%0A%20%20%20%20%20%20%22date%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22ne%22%3A%20null%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20%22sort%22%3A%20%7B%0A%20%20%20%20%22fields%22%3A%20%22frontmatter___date%22%2C%0A%20%20%20%20%22order%22%3A%20%22DESC%22%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
+
+## Group
+
+You can also group values on the basis of a field e.g. the title, date or category and get the field value, the total number of occurrences and edges.
+
+The query below gets us all authors (`fieldValue`) who wrote a blogpost and how many blogposts (`totalCount`) they wrote. In addition we're grabbing the `title` and `slug` of the author's articles.
+
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7BfileAbsolutePath%3A%20%7Bregex%3A%20%22%2Fdocs.blog%2F%22%7D%7D)%20%7B%0A%20%20%20%20group(field%3A%20frontmatter___author)%20%7B%0A%20%20%20%20%20%20fieldValue%0A%20%20%20%20%20%20totalCount%0A%20%20%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
 
 ## Where next?
 

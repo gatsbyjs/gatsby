@@ -1,5 +1,3 @@
-"use strict"
-
 import { injectGlobal } from "emotion"
 
 const colors = {
@@ -48,7 +46,7 @@ injectGlobal`
 
 injectGlobal`code {
   font-size: 1em;
-  font-family: 'Source Code Pro', monospace; 
+  font-family: 'Source Code Pro', monospace;
 }`
 
 injectGlobal`.gatsby-highlight + .gatsby-highlight {

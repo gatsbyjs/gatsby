@@ -11,10 +11,10 @@ Each of these sites need a prefix added to all paths on the site. So a link to
 `/my-sweet-blog-post/` should be rewritten to `/blog/my-sweet-blog-post`.
 
 In addition links to various resources (JavaScript, images, CSS) need the same
-prefix added.
+prefix added (this is accomplished by setting the `publicPath` in webpack).
 
 Luckily, for most sites, this work can be offloaded to Gatsby. Using
-[gatsby-link](/packages/gatsby-link/) for internal links ensures those links
+[Gatsby's Link component](/packages/gatsby/) for internal links ensures those links
 will be prefixed correctly. Gatsby ensures that paths created internally and by
 webpack are also correctly prefixed.
 
@@ -34,7 +34,7 @@ First define the prefix in your site's `gatsby-config.js`.
 module.exports = {
   // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
-};
+}
 ```
 
 Then pass `--prefix-paths` cmd option to Gatsby.

@@ -48,7 +48,7 @@ module.exports = type => {
       resolve(connection, args) {
         let fieldName = args.field
         if (_.includes(args.field, `___`)) {
-          fieldName = args.field.replace(`___`, `.`)
+          fieldName = args.field.replace(/___/g, `.`)
         }
         const fields = connection.edges.map(edge => _.get(edge.node, fieldName))
         return _.sortBy(_.filter(_.uniq(_.flatten(fields)), _.identity))
@@ -66,7 +66,7 @@ module.exports = type => {
         },
       },
       resolve(connection, args) {
-        const fieldName = args.field.replace(`___`, `.`)
+        const fieldName = args.field.replace(/___/g, `.`)
         const connectionNodes = connection.edges.map(edge => edge.node)
 
         let groups = {}

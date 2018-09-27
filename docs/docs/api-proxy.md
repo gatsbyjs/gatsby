@@ -14,7 +14,7 @@ module.exports = {
     prefix: "/api",
     url: "http://dev-mysite.com",
   },
-};
+}
 ```
 
 This way, when you `fetch('/api/todos')` in development, the development server
@@ -31,7 +31,7 @@ Gatsby exposes the [Express.js](https://expressjs.com/) develop server to your s
 can add Express middleware as needed.
 
 ```javascript
-var proxy = require("http-proxy-middleware");
+var proxy = require("http-proxy-middleware")
 
 module.exports = {
   developMiddleware: app => {
@@ -43,9 +43,9 @@ module.exports = {
           "/.netlify/functions/": "",
         },
       })
-    );
+    )
   },
-};
+}
 ```
 
 Keep in mind that middleware only has effect in development (with gatsby develop).

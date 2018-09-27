@@ -52,6 +52,8 @@ describe(`Process contentful data`, () => {
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createContentTypeNodes({
         contentTypeItem,
@@ -59,6 +61,7 @@ describe(`Process contentful data`, () => {
         conflictFieldPrefix,
         entries: entryList[i].map(normalize.fixIds),
         createNode,
+        createNodeId,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
@@ -70,11 +73,14 @@ describe(`Process contentful data`, () => {
 
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
       normalize.createAssetNodes({
         assetItem,
         createNode,
+        createNodeId,
         defaultLocale,
         locales,
       })
@@ -155,10 +161,20 @@ describe(`Gets field value based on current locale`, () => {
         localesFallback,
         locale: {
           code: `gsw_CH`,
-          fallbackCode: `de`,
         },
       })
     ).toBe(field[`de`])
+  })
+  it(`returns null if passed a locale that doesn't have a field on a localized field`, () => {
+    expect(
+      normalize.getLocalizedField({
+        field,
+        localesFallback: { "es-ES": null, de: null },
+        locale: {
+          code: `es-US`,
+        },
+      })
+    ).toEqual(null)
   })
   it(`returns null if passed a locale that doesn't have a field nor a fallbackCode`, () => {
     expect(
@@ -167,7 +183,6 @@ describe(`Gets field value based on current locale`, () => {
         localesFallback,
         locale: {
           code: `es-US`,
-          fallbackCode: `null`,
         },
       })
     ).toEqual(null)

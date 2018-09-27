@@ -25,7 +25,7 @@ async function handleQueue(task, cb) {
  * @typedef {Options}
  * @type {Object}
  * @see For a detailed descriptions of the options,
- *      see {@link https://www.npmjs.com/package/better-queue#full-documentation|better-queue on Github}
+ *      see {@link https://www.npmjs.com/package/better-queue#full-documentation|better-queue on GitHub}
  */
 
 /**

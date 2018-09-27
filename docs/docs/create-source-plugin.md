@@ -5,9 +5,9 @@ title: "Create a Source Plugin"
 There are two types of plugins that work within Gatsby's data system, "source"
 and "transformer" plugins.
 
-* **Source** plugins "source" data from remote or local locations into what
+- **Source** plugins "source" data from remote or local locations into what
   Gatsby calls [nodes](/docs/node-interface/).
-* **Transformer** plugins "transform" data provided by source plugins into new
+- **Transformer** plugins "transform" data provided by source plugins into new
   nodes and/or node fields.
 
 For example:
@@ -60,18 +60,18 @@ follow this pattern.
 Your `gatsby-node.js` should look something like:
 
 ```javascript
-exports.sourceNodes = async ({ boundActionCreators }) => {
-  const { createNode } = boundActionCreators;
+exports.sourceNodes = async ({ actions }) => {
+  const { createNode } = actions
   // Create nodes here, generally by downloading data
   // from a remote API.
-  const data = await fetch(REMOTE_API);
+  const data = await fetch(REMOTE_API)
 
   // Process data into nodes.
-  data.forEach(datum => createNode(processDatum(datum)));
+  data.forEach(datum => createNode(processDatum(datum)))
 
   // We're done, return.
-  return;
-};
+  return
+}
 ```
 
 Peruse the [`sourceNodes`](/docs/node-apis/#sourceNodes) and
@@ -80,16 +80,16 @@ documentation on implementing those APIs.
 
 But at a high-level, these are the jobs of a source plugin:
 
-* Ensure local data is synced with its source and 100% accurate. If your source
+- Ensure local data is synced with its source and 100% accurate. If your source
   allows you to add an `updatedSince` query (or something similar) you can store
   the last time you fetched data using
   [`setPluginStatus`](/docs/bound-action-creators/#setPluginStatus).
-* Create nodes with accurate media types, human meaningful types, and accurate
+- Create nodes with accurate media types, human meaningful types, and accurate
   contentDigests.
-* "Link" nodes types you create as appropriate (see
+- "Link" nodes types you create as appropriate (see
   [_Node Link_](/docs/api-specification/) in the API specification concepts
   section.
-* Return either a promise or use the callback (3rd parameter) to report back to
+- Return either a promise or use the callback (3rd parameter) to report back to
   Gatsby when you're done sourcing nodes. Otherwise either Gatsby will continue
   on before you're done sourcing or hang while waiting for you to indicate
   you're finished.
@@ -100,3 +100,53 @@ package provides a set of helper functions to generate Node objects with the
 required fields. This includes automatically generating fields like node IDs
 and the `contentDigest` MD5 hash, keeping your code focused on data gathering,
 not boilerplate.
+
+## Advanced
+
+### Adding relationships between nodes
+
+Gatsby source plugins not only create nodes, they also create relationships between nodes that are exposed to GraphQL queries.
+
+There are two ways of adding node relationships in Gatsby: (1) transformations (parent-child) or (2) foreign-key based.
+
+#### Transformation relationships
+
+An example of a transformation relationship is the `gatsby-transformer-remark` plugin, which transforms a parent `fileNode`'s markdown string into a `MarkdownRemark` node. The Remark transformer plugin adds its newly created child node as a child of the parent node using the action `createParentChildLink`. Transformation relationships are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `fileNode` and wouldn't ever exist if the parent `fileNode` hadn't been created.
+
+Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on) with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there's not nodes left over that were derived from older versions of data but shouldn't exist any longer.
+
+_Creating the transformation relationship_
+
+In order to create a parent/child relationship, when calling `createNode` for the child node, the new node object that is passed in should have a `parent` key with the value set to the parent node's `id`. After this, call the `createParentChildLink` function exported inside `actions`.
+
+_Examples_
+
+[Here's the above example](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-remark/src/on-node-create.js#L34-L64) from the `gatsby-transformer-remark` source plugin.
+
+[Here's another example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.
+
+#### Foreign-key relationships
+
+An example of a foreign-key relationship would be a Post that has an Author.
+
+In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. The API of a service that allows complex object modelling, for example a CMS, will often allow users to relationships between entities and expose them through the API.
+
+When an object node is deleted, Gatsby _does not_ delete any referenced entities. When using foreign-key references, it's a source plugin's responsibility to clean up any dangling entity references.
+
+##### Creating the relationship
+
+Let's say you want to create a relationship between Posts and Authors, and let's say you want to call the field `author`.
+
+Before you pass the Post object and Author object into `createNode` and create the respective nodes, you need to create a field called `author___NODE` on the Post object to hold the relationship to Authors. The value of this field should be the node ID of the Author.
+
+##### Creating the reverse relationship
+
+It's often convenient for querying to add to the schema backwards references. For example, you might want to query the Author of a Post but you might also want to query all the posts an author has written.
+
+If you want to call this field on `Author` `posts`, you would create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
+
+Here's an example from the [Wordpress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
+
+#### Union types
+
+When creating fields linking to an array of nodes, if the array of IDs are all of the same type, the relationship field that is created will be of this type. If the linked nodes are of different types; the field will turn into a union type of all types that are linked. See the [GraphQL documentation on how to query union types](https://graphql.org/learn/schema/#union-types).

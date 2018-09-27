@@ -82,6 +82,16 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
   })
 
+  it(`can copy reference-style images`, async () => {
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remark.parse(`![sample][1]\n\n[1]: ${path}`)
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy file links`, async () => {
     const path = `files/sample-file.txt`
 

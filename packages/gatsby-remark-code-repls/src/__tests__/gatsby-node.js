@@ -17,7 +17,7 @@ const { createPages } = require(`../gatsby-node`)
 
 const createPage = jest.fn()
 const createPagesParams = {
-  boundActionCreators: {
+  actions: {
     createPage,
   },
 }

@@ -1,20 +1,26 @@
-if (__POLYFILL__) {
-  require(`core-js/modules/es6.promise`)
-}
 import React from "react"
 import ReactDOM from "react-dom"
-import { AppContainer as HotContainer } from "react-hot-loader"
 import domReady from "domready"
+import { hot } from "react-hot-loader"
 
 import socketIo from "./socketIo"
+import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
+import loader from "./loader"
+import syncRequires from "./sync-requires"
+import pages from "./pages.json"
 
-window.___emitter = require(`./emitter`)
+window.___emitter = emitter
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Hook up the client to socket.io on server
-  socketIo()
+  const socket = socketIo()
+  if (socket) {
+    socket.on(`reload`, () => {
+      window.location.reload()
+    })
+  }
 
   /**
    * Service Workers are persistent by nature. They stick around,
@@ -34,43 +40,26 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const rootElement = document.getElementById(`___gatsby`)
 
-  let Root = require(`./root`)
-  if (Root.default) {
-    Root = Root.default
-  }
+  const renderer = apiRunner(
+    `replaceHydrateFunction`,
+    undefined,
+    ReactDOM.render
+  )[0]
 
-  const renderer = apiRunner(`replaceHydrateFunction`, undefined, ReactDOM.render)[0]
+  loader.addPagesArray(pages)
+  loader.addDevRequires(syncRequires)
 
-  domReady(() =>
-    renderer(
-      <HotContainer>
-        <Root />
-      </HotContainer>,
-      rootElement,
-      () => {
+  loader.getResourcesForPathname(window.location.pathname).then(() => {
+    let Root = hot(module)(preferDefault(require(`./root`)))
+    domReady(() => {
+      renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
-      }
-    )
-  )
-
-  if (module.hot) {
-    module.hot.accept(`./root`, () => {
-      let NextRoot = require(`./root`)
-      if (NextRoot.default) {
-        NextRoot = NextRoot.default
-      }
-      renderer(
-        <HotContainer>
-          <NextRoot />
-        </HotContainer>,
-        rootElement,
-        () => {
-          apiRunner(`onInitialClientRender`)
-        }
-      )
+      })
     })
-  }
+  })
 })
+
+const preferDefault = m => (m && m.default) || m
 
 function supportsServiceWorkers(location, navigator) {
   if (location.hostname === `localhost` || location.protocol === `https:`) {

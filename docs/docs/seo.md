@@ -1,4 +1,6 @@
-# SEO with Gatsby
+---
+title: SEO with Gatsby
+---
 
 Gatsby helps your site place better in search engines. Some advantages come out of the box and some require configuration.
 
@@ -22,5 +24,5 @@ A common way to add metadata to pages is to add [react-helmet](https://github.co
 
 Some examples using react-helmet:
 
-* [Official GatsbyJS.org site](https://github.com/gatsbyjs/gatsby/blob/master/www/src/layouts/index.js)
-* [Jason Lengstorf's personal website](https://github.com/jlengstorf/lengstorf.com/blob/master/src/components/SEO.js)
+- [Official GatsbyJS.org site](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/layout.js)
+- [Jason Lengstorf's personal website](https://github.com/jlengstorf/lengstorf.com/blob/master/src/components/SEO.js)

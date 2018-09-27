@@ -85,24 +85,42 @@ const scalarFilterMap = {
   Int: {
     eq: { type: GraphQLInt },
     ne: { type: GraphQLInt },
+    gt: { type: GraphQLInt },
+    gte: { type: GraphQLInt },
+    lt: { type: GraphQLInt },
+    lte: { type: GraphQLInt },
+    in: { type: new GraphQLList(GraphQLInt) },
+    nin: { type: new GraphQLList(GraphQLInt) },
   },
   Float: {
     eq: { type: GraphQLFloat },
     ne: { type: GraphQLFloat },
+    gt: { type: GraphQLFloat },
+    gte: { type: GraphQLFloat },
+    lt: { type: GraphQLFloat },
+    lte: { type: GraphQLFloat },
+    in: { type: new GraphQLList(GraphQLFloat) },
+    nin: { type: new GraphQLList(GraphQLFloat) },
   },
   ID: {
     eq: { type: GraphQLID },
     ne: { type: GraphQLID },
+    in: { type: new GraphQLList(GraphQLID) },
+    nin: { type: new GraphQLList(GraphQLID) },
   },
   String: {
     eq: { type: GraphQLString },
     ne: { type: GraphQLString },
     regex: { type: GraphQLString },
     glob: { type: GraphQLString },
+    in: { type: new GraphQLList(GraphQLString) },
+    nin: { type: new GraphQLList(GraphQLString) },
   },
   Boolean: {
     eq: { type: GraphQLBoolean },
     ne: { type: GraphQLBoolean },
+    in: { type: new GraphQLList(GraphQLBoolean) },
+    nin: { type: new GraphQLList(GraphQLBoolean) },
   },
 }
 
@@ -135,12 +153,21 @@ function convertToInputFilter(
     const innerFilter = convertToInputFilter(`${prefix}ListElem`, innerType)
     const innerFields = innerFilter ? innerFilter.getFields() : {}
 
-    return new GraphQLInputObjectType({
-      name: createTypeName(`${prefix}QueryList`),
-      fields: {
+    let fields
+    if (innerType instanceof GraphQLInputObjectType) {
+      fields = {
+        elemMatch: { type: innerFilter },
+      }
+    } else {
+      fields = {
         ...innerFields,
         in: { type: new GraphQLList(innerType) },
-      },
+      }
+    }
+
+    return new GraphQLInputObjectType({
+      name: createTypeName(`${prefix}QueryList`),
+      fields,
     })
   } else if (type instanceof GraphQLNonNull) {
     return convertToInputFilter(prefix, type.ofType)

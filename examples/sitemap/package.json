@@ -5,12 +5,16 @@
   "version": "1.0.0",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-source-filesystem": "latest",
-    "gatsby-transformer-remark": "latest",
-    "gatsby-plugin-sitemap": "latest"
+    "gatsby": "^2.0.0",
+    "gatsby-plugin-sitemap": "^2.0.1",
+    "gatsby-source-filesystem": "^2.0.1",
+    "gatsby-transformer-remark": "^2.1.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

@@ -4,11 +4,13 @@
   "version": "1.0.0",
   "author": "Steven Surgnier <stevensurgnier@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.102",
-    "gatsby-link": "^1.6.22",
-    "gatsby-plugin-react-helmet": "^2.0.1",
+    "gatsby": "^2.0.0",
+    "gatsby-plugin-layout": "^1.0.0",
+    "gatsby-plugin-react-helmet": "^3.0.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
-    "react-transition-group": "^2.2.1"
+    "react-transition-group": "^2.4.0"
   },
   "keywords": [
     "gatsby"
@@ -20,8 +22,5 @@
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "prettier": "^1.7.4"
   }
 }
