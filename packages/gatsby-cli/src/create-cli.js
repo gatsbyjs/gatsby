@@ -4,8 +4,7 @@ const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
-
-const DEFAULT_BROWSERS = [`>0.25%`, `not dead`]
+const fs = require(`fs`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -18,12 +17,33 @@ function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
   const directory = path.resolve(`.`)
 
+  // 'not dead' query not available in browserslist used in Gatsby v1
+  const DEFAULT_BROWSERS =
+    installedGatsbyVersion() === 1
+      ? [`> 1%`, `last 2 versions`, `IE >= 9`]
+      : [`>0.25%`, `not dead`]
+
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
+  }
+
+  function installedGatsbyVersion() {
+    let majorVersion
+    try {
+      let packagePath = require.resolve(
+        path.join(process.cwd(), `node_modules`, `gatsby`, `package.json`)
+      )
+      const packageInfo = JSON.parse(fs.readFileSync(packagePath))
+      majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
+    } catch (err) {
+      /* ignore */
+    }
+
+    return majorVersion
   }
 
   function resolveLocalCommand(command) {
