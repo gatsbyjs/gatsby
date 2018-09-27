@@ -101,6 +101,8 @@ const healOptions = (args, defaultArgs) => {
   return options
 }
 
+const useMozjpeg = process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`
+
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
@@ -148,9 +150,6 @@ const processFile = (file, jobs, cb, reporter) => {
         adaptiveFiltering: false,
         force: args.toFormat === `png`,
       })
-      .jpeg({
-        force: args.toFormat === `jpg`,
-      })
       .webp({
         quality: args.quality,
         force: args.toFormat === `webp`,
@@ -159,6 +158,15 @@ const processFile = (file, jobs, cb, reporter) => {
         quality: args.quality,
         force: args.toFormat === `tiff`,
       })
+
+    // jpeg
+    if (!useMozjpeg) {
+      clonedPipeline = clonedPipeline.jpeg({
+        quality: args.quality,
+        progressive: args.jpegProgressive,
+        force: args.toFormat === `jpg`,
+      })
+    }
 
     // grayscale
     if (args.grayscale) {
@@ -224,9 +232,10 @@ const processFile = (file, jobs, cb, reporter) => {
         .catch(onFinish)
       // Compress jpeg
     } else if (
-      (job.file.extension === `jpg` && args.toFormat === ``) ||
-      (job.file.extension === `jpeg` && args.toFormat === ``) ||
-      args.toFormat === `jpg`
+      useMozjpeg &&
+      ((job.file.extension === `jpg` && args.toFormat === ``) ||
+        (job.file.extension === `jpeg` && args.toFormat === ``) ||
+        args.toFormat === `jpg`)
     ) {
       clonedPipeline
         .toBuffer()
