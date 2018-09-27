@@ -34,10 +34,12 @@ function buildLocalCommands(cli, isLocalSite) {
   function installedGatsbyVersion() {
     let majorVersion
     try {
-      let packagePath = require.resolve(
-        path.join(process.cwd(), `node_modules`, `gatsby`, `package.json`)
-      )
-      const packageInfo = JSON.parse(fs.readFileSync(packagePath))
+      const packageInfo = require(path.join(
+        process.cwd(),
+        `node_modules`,
+        `gatsby`,
+        `package.json`
+      ))
       majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
     } catch (err) {
       /* ignore */
