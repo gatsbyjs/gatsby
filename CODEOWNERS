@@ -16,7 +16,7 @@ appveyor.yml                                    @gatsbyjs/core
 .github/                                        @gatsbyjs/core
 
 # The ecosystem files are error-prone, so we require an extra set of eyes on them.
-/docs/starters.yml                              @gatsbyjs/ecosystem
+/docs/*                                         @gatsbyjs/ecosystem
 
 # The website auto-deploys, so we need an extra check to avoid shenanigans.
 /www/                                           @gatsbyjs/website
