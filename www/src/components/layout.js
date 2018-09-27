@@ -157,6 +157,9 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
+        <a href="#MainContent" css={styles.skipLink}>
+          Skip to main content
+        </a>
         <Banner background={isHomepage ? `#402060` : false}>
           These are the docs for v2.
           {` `}
@@ -206,6 +209,20 @@ class DefaultLayout extends React.Component {
       </div>
     )
   }
+}
+
+const styles = {
+  skipLink: {
+    flex: `none`,
+    position: `absolute !important`,
+    top: `0`,
+    clip: `rect(1px, 1px, 1px, 1px) !important`,
+    overflow: `hidden !important`,
+    height: `1px !important`,
+    width: `1px !important`,
+    padding: `0 !important`,
+    border: `0 !important`,
+  },
 }
 
 export default DefaultLayout

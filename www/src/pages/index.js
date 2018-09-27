@@ -54,6 +54,7 @@ class IndexRoute extends React.Component {
               }}
             >
               <main
+                id={`MainContent`}
                 css={{
                   display: `flex`,
                   flexDirection: `row`,

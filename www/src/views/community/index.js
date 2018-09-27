@@ -107,7 +107,7 @@ class CommunityView extends Component {
           submissionText={submissionText}
         />
         <main
-          role="main"
+          id={`MainContent`}
           css={{
             padding: rhythm(3 / 4),
             paddingBottom: `10vh`,
