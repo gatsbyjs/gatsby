@@ -47,6 +47,6 @@ class StarterShowcasePage extends Component {
   }
 }
 
-export default RRSM({ s: ``, c: [], d: [], sort: `recent` })(
+export default RRSM({ s: ``, c: [], d: [], v: [], sort: `recent` })(
   StarterShowcasePage
 )
