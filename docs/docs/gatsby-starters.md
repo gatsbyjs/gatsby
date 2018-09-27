@@ -1002,3 +1002,14 @@ There are several starters that have been created. Create a PR to include yours!
   - Prism.js: Syntax Highlighting
   - Pagination
   - Category Pages
+  
+- [gatsby-mdx-starter](https://github.com/gatsby-mdx-starter/gatsby-mdx-starter)
+
+  Features:
+  
+  - Blog Oriented
+  - [MDX](https://github.com/mdx-js/mdx): Markdown + React Components
+  - [React Live](https://github.com/FormidableLabs/react-live): Playground for live editing React components (optional)
+  - Mobile friendly
+  - [Styled Components](https://github.com/styled-components/styled-components): css-in-js
+  
