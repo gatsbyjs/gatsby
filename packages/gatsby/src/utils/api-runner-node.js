@@ -8,6 +8,8 @@ const Cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 
+let caches = new Map()
+
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
 const boundPluginActionCreators = {}
@@ -90,9 +92,12 @@ const runAPI = (plugin, api, args) => {
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
     const tracing = initAPICallTracing(pluginSpan)
-    const cache = new Cache({
-      name: plugin.name,
-    }).init()
+
+    let cache = caches.get(plugin.name)
+    if (!cache) {
+      cache = new Cache({ name: plugin.name }).init()
+      caches.set(plugin.name, cache)
+    }
 
     const apiCallArgs = [
       {
