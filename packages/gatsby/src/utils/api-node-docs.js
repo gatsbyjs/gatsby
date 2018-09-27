@@ -89,6 +89,7 @@ exports.createPagesStatefully = true
  *
  *   // Data can come from anywhere, but for now create it manually
  *   const myData = {
+ *     key: 123,
  *     foo: `The foo field of my node`,
  *     bar: `Baz`
  *   }
@@ -100,7 +101,7 @@ exports.createPagesStatefully = true
  *     .digest(`hex`)
  *
  *   const nodeMeta = {
- *     id: createNodeId(`my-unique-id`),
+ *     id: createNodeId(`my-data-${myData.key}`),
  *     parent: null,
  *     children: [],
  *     internal: {
