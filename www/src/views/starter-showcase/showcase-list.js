@@ -70,10 +70,6 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
         const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(minorVersion) // either 2.x or next or latest
         const imgsharp = imgsFilter(imgs, stub)
 
-        // console.log("gatsby version", gatsbyVersion)
-        // console.log("gatsby match", match)
-        // console.log("isGatsbyVersionWarning?", isGatsbyVersionWarning)
-
         const repo = githubData.repoMetadata
         const { pushed_at } = repo
         return (
