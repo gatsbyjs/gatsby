@@ -113,7 +113,7 @@ exports.createPagesStatefully = true
  *   }
  *
  *   const node = Object.assign({}, myData, nodeMeta)
- *   const createNode(node)
+ *   createNode(node)
  * }
  */
 exports.sourceNodes = true
