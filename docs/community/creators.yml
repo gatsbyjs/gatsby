@@ -95,10 +95,23 @@
   type: individual
   description: >-
     Hi I'm Ste! I’m a full stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
-  location: 'Leeds, England'
-  website: 'https://steoneill.me'
-  github: 'https://github.com/steoneill'
+  location: "Leeds, England"
+  website: "https://steoneill.me"
+  github: "https://github.com/steoneill"
   image: images/ste-oneill.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Corey Ward
+  type: individual
+  description: >-
+    Full-stack designer/developer/contractor working in service of marketing.
+    Savvy startups hire me when there’s no time for a spec or reviews, yet no
+    room for failure. Comfortable under pressure. Kolbe A Index: 5-9-2-2
+  location: Austin, TX
+  website: "http://www.coreyward.me/"
+  github: "https://github.com/coreyward"
+  image: images/corey-ward.jpg
   for_hire: true
   hiring: false
   portfolio: true
@@ -106,8 +119,8 @@
   type: individual
   description: Michael Uloth is a Toronto-based web developer who specializes in building fast-loading, accessibile websites with Gatsby.
   location: Toronto
-  website: 'https://www.michaeluloth.com'
-  github: 'https://github.com/ooloth'
+  website: "https://www.michaeluloth.com"
+  github: "https://github.com/ooloth"
   image: images/michael-uloth.jpg
   for_hire: true
   hiring: false
@@ -116,9 +129,61 @@
   type: individual
   description: Digital product designer. Full-stack developer. Eclectic flâneur extraordinaire in constant exploration of spoken, visual and programming languages.
   location: Poland
-  website: 'https://piotrf.pl'
-  github: 'https://github.com/piotrf'
+  website: "https://piotrf.pl"
+  github: "https://github.com/piotrf"
   image: images/piotr-fedorczyk.jpeg
   for_hire: true
   hiring: false
+  portfolio: true
+- name: Coletiv
+  type: agency
+  description: >-
+    Coletiv teams up with companies of all sizes to design, develop & launch digital products for iOS, Android & the Web.
+  location: "Porto, PT"
+  website: "https://coletiv.com/"
+  github: https://github.com/coletiv
+  image: images/coletiv.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Michael McQuade
+  type: individual
+  description: >-
+    I'm a developer for hire. I can help you make the transition from Wordpress to Gatsby, providing you with the level of customization that makes you feel comfortable.
+    I'm a full stack software engineer. I can also handle your iOS development, web application development, and cross-platform desktop applications.
+    I am here to help you launch your product or idea.
+  website: https://giraffesyo.io
+  image: images/michael-mcquade.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: LekoArts
+  type: individual
+  description: >-
+    Hi, I'm Lennart — a self-taught and passionate graphic/web designer & frontend developer. I create accessible, fast and beautiful designed websites with Gatsby.
+    I regularly create Gatsby starters, tutorials and contribute to the project. I know Gatsby by heart & can help you transition your website to the JAMStack.
+    Feel free to contact me if you want to launch a blazingly fast website!
+  location: "Darmstadt, Germany"
+  website: "https://www.lekoarts.de"
+  github: "https://github.com/LeKoArts"
+  image: images/lekoarts.jpg
+  for_hire: true
+  portfolio: true
+- name: Steven Natera
+  type: individual
+  description: >-
+    Hey, I'm Steven! I am the founder of Gatsby Manor, we build themes for gatsby.
+    We have themes for all types of projects including, personal, business, docs,
+    portfolio, ecommerce, marketing, and creative designs. We also run an in-house
+    web dev and design studio. If you cannot find what you want, we can build it for you!
+    Therefore there is no theme we cannot make for your project. Email us at gatsbymanor@gmail.com
+    with questions. Visit gatsbymanor.com to see our themes. Outside of Gatsby Manor,
+    I am a software engineer working on cloud native infrastructure and tools. 
+    I spend a great deal of my time with AWS, GCP, Terraform and Kubernetes.
+    In my free, time I build sites with Gatsby, Netlify, Contentful, and I love it!
+  location: "New York, US"
+  website: "https://www.stevennatera.com"
+  github: "https://github.com/nodox"
+  image: images/steven-natera.jpg
+  for_hire: true
   portfolio: true

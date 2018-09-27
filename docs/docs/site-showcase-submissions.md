@@ -63,7 +63,7 @@ Categories currently include both _type of site_ (structure) and the _content of
 
 #### Content of site:
 
-A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web dev" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web dev is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web dev.
+A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web development" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web development is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web development.
 
 - Agency
 - Cinema
@@ -88,7 +88,7 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - Real Estate
 - Science
 - Technology
-- Web Dev
+- Web Development
 - (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
 
 ### Note on Featured Sites

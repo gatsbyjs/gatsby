@@ -10,9 +10,9 @@ optimize image loading for your sites. `gatsby-image` uses
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
-_Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
+_Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It's
 optimized for fixed width/height images and images that stretch the full-width
-of a container. Some ways you can use `<img/>` won't work with gatsby-image._
+of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
@@ -79,8 +79,9 @@ plugins: [
 ```
 
 Also, make sure you have set up a source plugin, so your images are available in `graphql` queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
+
 ```js
-const path = require(`path`);
+const path = require(`path`)
 
 module.exports = {
   plugins: [
@@ -88,13 +89,13 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: path.join(__dirname, `src`, `images`)
-      }
+        path: path.join(__dirname, `src`, `images`),
+      },
     },
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`
-  ]
-};
+    `gatsby-transformer-sharp`,
+  ],
+}
 ```
 
 ## How to use
@@ -264,22 +265,22 @@ prop. e.g. `<Img fluid={fluid} />`
 
 ## `gatsby-image` props
 
-| Name                    | Type                | Description                                                                                                                 |
-| ----------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `fixed`                 | `object`            | Data returned from the `fixed` query                                                                                        |
-| `fluid`                 | `object`            | Data returned from the `fluid` query                                                                                        |
-| `fadeIn`                | `bool`              | Defaults to fading in the image on load                                                                                     |
-| `title`                 | `string`            | Passed to the `img` element                                                                                                 |
-| `alt`                   | `string`            | Passed to the `img` element                                                                                                 |
-| `className`             | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `style`                 | `object`            | Spread into the default styles of the wrapper element                                                                       |
-| `imgStyle`              | `object`            | Spread into the default styles of the actual `img` element                                                                 |
-| `placeholderStyle`      | `object`            | Spread into the default styles of the placeholder `img` element                                                                 |
-| `backgroundColor`       | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
-| `onLoad`                | `func`              | A callback that is called when the full-size image has loaded.                                                              |
-| `onError`               | `func`              | A callback that is called when the image fails to load.                                                              |
-| `Tag`                   | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
-| `critical`              | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
+| Name               | Type                | Description                                                                                                                 |
+| ------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `fixed`            | `object`            | Data returned from the `fixed` query                                                                                        |
+| `fluid`            | `object`            | Data returned from the `fluid` query                                                                                        |
+| `fadeIn`           | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `title`            | `string`            | Passed to the `img` element                                                                                                 |
+| `alt`              | `string`            | Passed to the `img` element                                                                                                 |
+| `className`        | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
+| `style`            | `object`            | Spread into the default styles of the wrapper element                                                                       |
+| `imgStyle`         | `object`            | Spread into the default styles of the actual `img` element                                                                  |
+| `placeholderStyle` | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
+| `backgroundColor`  | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| `onLoad`           | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onError`          | `func`              | A callback that is called when the image fails to load.                                                                     |
+| `Tag`              | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+| `critical`         | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
 
 ## Image processing arguments
 
@@ -293,7 +294,7 @@ prop. e.g. `<Img fluid={fluid} />`
 - By default, images don't load until JavaScript is loaded. Gatsby's automatic code
   splitting generally makes this fine but if images seem slow coming in on a
   page, check how much JavaScript is being loaded there.
-- Images marked as `critical` will start loading immediately as the DOM is 
+- Images marked as `critical` will start loading immediately as the DOM is
   parsed, but unless `fadeIn` is set to `false`, the transition from placeholder
   to final image will not occur until after the component is mounted.
 - Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for

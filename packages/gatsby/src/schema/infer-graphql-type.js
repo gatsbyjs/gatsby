@@ -16,7 +16,11 @@ const { store, getNode, getNodes } = require(`../redux`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
-const { getExampleValues, isEmptyObjectOrArray } = require(`./data-tree-utils`)
+const {
+  getExampleValues,
+  isEmptyObjectOrArray,
+  INVALID_VALUE,
+} = require(`./data-tree-utils`)
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
@@ -341,7 +345,7 @@ function _inferObjectStructureFromNodes(
   _.each(resolvedExample, (value, key) => {
     // Remove fields common to the top-level of all nodes.  We add these
     // elsewhere so don't need to infer their type.
-    if (isRoot && EXCLUDE_KEYS[key]) return
+    if (value === INVALID_VALUE || (isRoot && EXCLUDE_KEYS[key])) return
 
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.

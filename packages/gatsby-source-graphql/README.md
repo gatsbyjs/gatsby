@@ -86,7 +86,7 @@ module.exports = {
 
 By default schema is introspected from the remote schema. Schema is cached in `.cache` in this case and refreshing the schema requires deleting the cache.
 
-To control schema consumpiton, you can alternatively construct schema definition by passing `createSchema` callback. This way you could, for example, read schema SDL or introspection JSON. When `createSchema` callback is used, schema isn't cached. `createSchema` can return a Promise to GraphQLSchema instance or GraphQLSchema instance.
+To control schema consumption, you can alternatively construct schema definition by passing `createSchema` callback. This way you could, for example, read schema SDL or introspection JSON. When `createSchema` callback is used, schema isn't cached. `createSchema` can return a Promise to GraphQLSchema instance or GraphQLSchema instance.
 
 ```js
 const fs = require("fs")

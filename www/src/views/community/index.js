@@ -3,6 +3,7 @@ import Helmet from "react-helmet"
 import typography, { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import CommunityHeader from "./community-header"
+import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
 import presets, { colors } from "../../utils/presets"
@@ -142,7 +143,7 @@ class CommunityView extends Component {
                     <div
                       css={{
                         margin: `0 0 ${rhythm(1 / 8)}`,
-                        color: colors.gray.bright,
+                        color: colors.gray.calm,
                         ...scale(-1 / 3),
                       }}
                     >
@@ -162,12 +163,14 @@ class CommunityView extends Component {
                   </div>
                   {item.node.for_hire || item.node.hiring ? (
                     <div
-                      css={[
-                        styles.badge,
-                        item.node.for_hire ? styles.forHire : styles.hiring,
-                      ]}
+                      css={{
+                        alignSelf: `flex-start`,
+                        ...scale(-1 / 3),
+                      }}
                     >
-                      {item.node.for_hire ? `For Hire` : `Hiring`}
+                      <Badge forHire={item.node.for_hire}>
+                        {item.node.for_hire ? `For Hire` : `Hiring`}
+                      </Badge>
                     </div>
                   ) : null}
                 </div>
@@ -184,21 +187,6 @@ class CommunityView extends Component {
 export default CommunityView
 
 const styles = {
-  badge: {
-    ...scale(-1 / 2),
-    lineHeight: 1.5,
-    padding: `0 ${rhythm(1 / 3)}`,
-    borderRadius: 20,
-    alignSelf: `flex-start`,
-  },
-  hiring: {
-    background: colors.ui.light,
-    color: colors.gatsby,
-  },
-  forHire: {
-    background: colors.success,
-    color: `white`,
-  },
   showcaseItem: {
     display: `flex`,
     flexDirection: `column`,
