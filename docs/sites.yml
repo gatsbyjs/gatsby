@@ -2623,3 +2623,33 @@
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
   featured: false
+- title: Gatsby Manor
+  description: >
+    We build themes for gatsby. We have themes for all projects including personal,
+    portfolio, ecommerce, landing pages and more. We also run an in-house
+    web dev and design studio. If you cannot find what you want, we can build it for you!
+    Email us at gatsbymanor@gmail.com with questions.
+  main_url: "https://www.gatsbymanor.com"
+  url: "https://www.gatsbymanor.com"
+  source_url: "https://github.com/gatsbymanor"
+  categories:
+    - Web Development
+    - Themes
+    - Agency
+    - Technology
+    - Freelance
+  built_by: Steven Natera
+  built_by_url: "https://stevennatera.com"
+- title: Ema Suriano's Portfolio
+  main_url: https://emasuriano.com/
+  url: https://emasuriano.com/
+  source_url: https://github.com/EmaSuriano/emasuriano.github.io
+  description: >
+    Ema Suriano's portfolio to display information about him, his projects and what he's writting about.
+  categories:
+    - Portfolio
+    - Technology
+    - Web development
+  built_by: Ema Suriano
+  built_by_url: https://emasuriano.com/
+  featured: false

@@ -70,10 +70,10 @@
     "publish-canary": "lerna publish --canary --yes",
     "publish-next": "lerna publish --npm-tag=next --bump=prerelease",
     "test": "npm-run-all -s lint jest",
+    "test:coverage": "jest --coverage",
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
     "test:integration": "jest --config=jest.integration.js",
-    "test_bkup": "npm-run-all -s lint test-node test-integration",
     "version": "prettier --write \"**/CHANGELOG.md\" --no-semi",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
