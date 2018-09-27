@@ -2622,3 +2622,16 @@
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
   featured: false
+- title: Ema Suriano's Portfolio
+  main_url: https://emasuriano.com/
+  url: https://emasuriano.com/
+  source_url: https://github.com/EmaSuriano/emasuriano.github.io
+  description: >
+    Ema Suriano's portfolio to display information about him, his projects and what he's writting about.
+  categories:
+    - Portfolio
+    - Technology
+    - Web development
+  built_by: Ema Suriano
+  built_by_url: https://emasuriano.com/
+  featured: false
