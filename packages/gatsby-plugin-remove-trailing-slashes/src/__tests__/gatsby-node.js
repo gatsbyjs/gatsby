@@ -3,7 +3,7 @@ const { onCreatePage } = require(`../gatsby-node`)
 describe(`gatsby-plugin-remove-trailing-slashes`, () => {
   const actions = {
     createPage: jest.fn(),
-    deletePage: jest.fn()
+    deletePage: jest.fn(),
   }
 
   it(`correctly keeps index /`, () => {
