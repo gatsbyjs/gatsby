@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import SearchIcon from "../../components/search-icon"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { options, rhythm } from "../../utils/typography"
@@ -198,6 +199,19 @@ export default class FilteredStarterLibrary extends Component {
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
+                <Button
+                  to="https://gatsbyjs.org/docs/submit-to-starter-showcase/"
+                  tag="href"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  small
+                  icon={<ArrowForwardIcon />}
+                  overrideCSS={{
+                    marginLeft: 10,
+                  }}
+                >
+                  Submit a Starter
+                </Button>
                 <SearchIcon
                   overrideCSS={{
                     fill: colors.lilac,
