@@ -43,9 +43,8 @@ exports.createPages = ({ graphql, actions }) => {
 
   createRedirect({
     fromPath: `/docs/netlify-cms/`,
-    isPermanent: true,
-    redirectInBrowser: true,
     toPath: `/docs/sourcing-from-netlify-cms/`,
+    isPermanent: true,
   })
 
   createRedirect({
@@ -53,12 +52,11 @@ exports.createPages = ({ graphql, actions }) => {
     toPath: `/starters/`,
     isPermanent: true,
   })
-  
+
   createRedirect({
     fromPath: `/docs/adding-third-party-services/`,
-    isPermanent: true,
-    redirectInBrowser: true,
     toPath: `/docs/adding-website-functionality/`,
+    isPermanent: true,
   })
 
   return new Promise((resolve, reject) => {
@@ -84,20 +82,17 @@ exports.createPages = ({ graphql, actions }) => {
 
     createRedirect({
       fromPath: `/docs/bound-action-creators/`,
-      isPermanent: true,
-      redirectInBrowser: true,
       toPath: `/docs/actions/`,
+      isPermanent: true,
     })
 
     createRedirect({
       fromPath: `/docs/bound-action-creators`,
-      isPermanent: true,
-      redirectInBrowser: true,
       toPath: `/docs/actions`,
+      isPermanent: true,
     })
 
     // Query for markdown nodes to use in creating pages.
-
     graphql(
       `
         query {
