@@ -1,9 +1,9 @@
 /* eslint-disable */
-import React from 'react';
-import { graphql, navigate } from 'gatsby';
+import React from "react"
+import { graphql, navigate } from "gatsby"
 
 export default function Example() {
-  return <button onClick={() => navigate('/sample')}>waddup</button>;
+  return <button onClick={() => navigate("/sample")}>waddup</button>
 }
 
 export const pageQuery = graphql`
@@ -12,4 +12,4 @@ export const pageQuery = graphql`
       prefix
     }
   }
-`;
+`

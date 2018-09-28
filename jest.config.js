@@ -24,7 +24,7 @@ module.exports = {
     `/node_modules/`,
     `__tests__/fixtures`,
   ],
-  transform: { '^.+\\.js$': `<rootDir>/jest-transformer.js` },
+  transform: { "^.+\\.js$": `<rootDir>/jest-transformer.js` },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },

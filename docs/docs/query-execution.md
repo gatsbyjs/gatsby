@@ -15,7 +15,7 @@ Here's an overview of how it all relates:
 ```dot
 digraph {
   compound = true;
-  
+
   subgraph cluster_other {
     style = invis;
     extractQueries [ label = "query-watcher.js", shape = box ];
@@ -23,16 +23,16 @@ digraph {
     components [ label = "components\l (redux)", shape = cylinder ];
     createNode [ label = "CREATE_NODE action", shape = box ];
   }
-  
+
   subgraph cluster_pageQueryRunner {
     label = "page-query-runner.js"
-    
+
     dirtyActions [ label = "dirtyActions", shape = cylinder ];
-    extractedQueryQ [ label = "queueQueryForPathname()", shape = box ]; 
+    extractedQueryQ [ label = "queueQueryForPathname()", shape = box ];
     findIdsWithoutDD [ label = "findIdsWithoutDataDependencies()", shape = box ];
     findDirtyActions [ label = "findDirtyActions()", shape = box ];
     queryJobs [ label = "runQueriesForPathnames()", shape = box ];
-    
+
     extractedQueryQ -> queryJobs;
     findIdsWithoutDD -> queryJobs;
     dirtyActions -> findDirtyActions [ weight = 100 ];
@@ -43,15 +43,15 @@ digraph {
     label = "query-queue.js";
     queryQ [ label = "better-queue", shape = box ];
   }
-  
+
   subgraph cluster_queryRunner {
     label = "query-runner.js"
     graphqlJs [ label = "graphqlJs(schema, query, context, ...)" ];
     result [ label = "Query Result" ];
-  
+
     graphqlJs -> result;
   }
-  
+
   diskResult [ label = "/public/static/d/${dataPath}", shape = cylinder ];
   jsonDataPaths [ label = "jsonDataPaths\l(redux)", shape = cylinder ];
 
@@ -79,7 +79,7 @@ All queries queued after being extracted (from `query-watcher.js`).
 
 ##### Queries without node dependencies
 
-All queries whose component path isn't listed in `componentDataDependencies`. As a recap, in [Schema Generation](/docs/schema-generation/), we showed that all Type resolvers record a dependency between the page whose query we're running and any nodes that were successfully resolved. So, If a component is declared in the `components` redux namespace (occurs during [Page Creation](/docs/page-creation/)), but is *not* contained in `componentDataDependencies`, then by definition, the query has not been run. Therefore we need to run it. Checkout [Page -> Node Dependencies](/docs/page-node-dependencies/) for more info. The code for this step is in [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L89).
+All queries whose component path isn't listed in `componentDataDependencies`. As a recap, in [Schema Generation](/docs/schema-generation/), we showed that all Type resolvers record a dependency between the page whose query we're running and any nodes that were successfully resolved. So, If a component is declared in the `components` redux namespace (occurs during [Page Creation](/docs/page-creation/)), but is _not_ contained in `componentDataDependencies`, then by definition, the query has not been run. Therefore we need to run it. Checkout [Page -> Node Dependencies](/docs/page-node-dependencies/) for more info. The code for this step is in [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L89).
 
 ##### Pages that depend on dirty nodes
 
@@ -132,4 +132,3 @@ As queries are consumed from the queue and executed, their results are saved to 
 For static queries, instead of using the page's jsonName, we just use a hash of the query.
 
 Now we need to store the association of the page -> the query result in redux so we can recall it later. This is accomplished via the [json-data-paths](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/json-data-paths.js) reducer which we invoke by creating a `SET_JSON_DATA_PATH` action with the page's jsonName and the saved dataPath.
-

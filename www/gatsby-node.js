@@ -75,7 +75,7 @@ exports.createPages = ({ graphql, actions }) => {
     toPath: `/starters/`,
     isPermanent: true,
   })
-  
+
   createRedirect({
     fromPath: `/docs/adding-third-party-services/`,
     isPermanent: true,

@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React from 'react';
+import React from "react"
 
 export default function Hello() {
-  return <h1>Oh hey</h1>;
+  return <h1>Oh hey</h1>
 }

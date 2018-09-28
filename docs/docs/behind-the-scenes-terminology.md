@@ -57,7 +57,7 @@ The path on disk to the javascript file containing the React component. E.g
 
 Think of this as `componentPath` instead.
 
-### Redux `components ` namespace
+### Redux `components` namespace
 
 Mapping from `component` (path on disk) to its [Page object](#page-object). It is created every time a page is created (by listening to `CREATE_PAGE`).
 

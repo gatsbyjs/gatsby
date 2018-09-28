@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { graphql, Link } from "gatsby";
+import { graphql, Link } from "gatsby"
 
 export const query = graphql`
   query {

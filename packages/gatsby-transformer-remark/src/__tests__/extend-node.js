@@ -69,7 +69,13 @@ async function queryResult(nodes, fragment, { types = [] } = {}) {
   return result
 }
 
-const bootstrapTest = (label, content, query, test, additionalParameters = {}) => {
+const bootstrapTest = (
+  label,
+  content,
+  query,
+  test,
+  additionalParameters = {}
+) => {
   const node = {
     id: `whatever`,
     children: [],
@@ -81,21 +87,16 @@ const bootstrapTest = (label, content, query, test, additionalParameters = {}) =
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  it(label, async (done) => {
+  it(label, async done => {
     node.content = content
     const createNode = markdownNode => {
-      queryResult(
-        [markdownNode],
-        query,
-        {
-          types: [{ name: `MarkdownRemark` }],
-        }
-      ).then(result => {
+      queryResult([markdownNode], query, {
+        types: [{ name: `MarkdownRemark` }],
+      }).then(result => {
         try {
           test(result.data.listNode[0])
           done()
-        }
-        catch(err) {
+        } catch (err) {
           done.fail(err)
         }
       })
@@ -104,19 +105,19 @@ const bootstrapTest = (label, content, query, test, additionalParameters = {}) =
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-    },
-    { ...additionalParameters }
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+      },
+      { ...additionalParameters }
     )
-    })
+  })
 }
 
 describe(`Excerpt is generated correctly from schema`, () => {
-
   bootstrapTest(
     `correctly loads an excerpt`,
     `---
@@ -129,7 +130,7 @@ Where oh where is my little pony?`,
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     }
@@ -146,7 +147,7 @@ date: "2017-09-18T23:19:51.246Z"
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(``)
     }
@@ -169,7 +170,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     },
@@ -192,7 +193,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(139)
     }
@@ -206,7 +207,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(46)
     }
@@ -220,7 +221,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(50)
     }
@@ -246,16 +247,15 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
-      expect(node.wordCount).toEqual(
-        {
+      expect(node.wordCount).toEqual({
         paragraphs: 2,
         sentences: 19,
         words: 150,
-        }
-      )
-    })
+      })
+    }
+  )
 
   const content = `---
 title: "my little pony"
@@ -274,16 +274,15 @@ date: "2017-09-18T23:19:51.246Z"
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
-      expect(node.wordCount).toEqual(
-        {
+      expect(node.wordCount).toEqual({
         paragraphs: null,
         sentences: null,
         words: null,
-        }
-      )
-    })
+      })
+    }
+  )
 
   bootstrapTest(
     `correctly uses a default value for timeToRead`,
@@ -292,10 +291,11 @@ date: "2017-09-18T23:19:51.246Z"
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.timeToRead).toBe(1)
-    })
+    }
+  )
 })
 
 describe(`Table of contents is generated correctly from schema`, () => {
@@ -320,11 +320,12 @@ some other text
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(console.warn).toBeCalled()
       expect(node.tableOfContents).toBe(null)
-    })
+    }
+  )
 
   bootstrapTest(
     `correctly generates table of contents`,
@@ -348,7 +349,8 @@ final text
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
-    })
-  })
+    }
+  )
+})

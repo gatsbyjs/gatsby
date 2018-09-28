@@ -100,7 +100,7 @@ Note that the graphql-js library has NOT been invoked yet. We're instead calling
 
 The resolve method in this case would return a paragraph node, which also needs to be properly resolved. So We descend the `fieldsToSift` arg tree and perform the above operation on the paragraph node (using the found paragraph gqlType).
 
-After `resolveRecursive` has finished, we will have "realized" all the query fields in each node, giving us confidence that we can perform the query with all the data being there. 
+After `resolveRecursive` has finished, we will have "realized" all the query fields in each node, giving us confidence that we can perform the query with all the data being there.
 
 ### 4. Track newly realized fields
 

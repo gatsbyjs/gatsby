@@ -1,8 +1,5 @@
 /* eslint-disable */
-const {
-  graphql,
-  Link
-} = require(`gatsby`)
+const { graphql, Link } = require(`gatsby`)
 
 export const query = graphql`
   query {

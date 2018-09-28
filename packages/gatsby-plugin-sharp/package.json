@@ -12,6 +12,7 @@
     "bluebird": "^3.5.0",
     "fs-exists-cached": "^1.0.0",
     "imagemin": "^6.0.0",
+    "imagemin-mozjpeg": "^7.0.0",
     "imagemin-pngquant": "^6.0.0",
     "imagemin-webp": "^4.1.0",
     "lodash": "^4.17.10",

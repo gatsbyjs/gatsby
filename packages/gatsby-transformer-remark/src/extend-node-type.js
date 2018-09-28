@@ -74,7 +74,13 @@ module.exports = (
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const { commonmark = true, footnotes = true, pedantic = true, gfm = true, blocks } = pluginOptions
+    const {
+      commonmark = true,
+      footnotes = true,
+      pedantic = true,
+      gfm = true,
+      blocks,
+    } = pluginOptions
     const remarkOptions = {
       gfm,
       commonmark,
@@ -249,10 +255,16 @@ module.exports = (
           const addSlugToUrl = function(node) {
             if (node.url) {
               if (_.get(markdownNode, pathToSlugField) === undefined) {
-                console.warn(`Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`)
+                console.warn(
+                  `Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`
+                )
                 return null
               }
-              node.url = [pathPrefix, _.get(markdownNode, pathToSlugField), node.url]
+              node.url = [
+                pathPrefix,
+                _.get(markdownNode, pathToSlugField),
+                node.url,
+              ]
                 .join(`/`)
                 .replace(/\/\//g, `/`)
             }

@@ -12,8 +12,9 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   }
 }
 
-exports.createPages = ({ graphql, boundActionCreators }) => new Promise((resolve, reject) => {
-  graphql(`
+exports.createPages = ({ graphql, boundActionCreators }) =>
+  new Promise((resolve, reject) => {
+    graphql(`
       {
         allMarkdownRemark {
           edges {
@@ -25,9 +26,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => new Promise((resolve
           }
         }
       }
-    `
-  ).then(result => {
-    console.log(JSON.stringify(result, null, 4))
-    resolve()
+    `).then(result => {
+      console.log(JSON.stringify(result, null, 4))
+      resolve()
+    })
   })
-})

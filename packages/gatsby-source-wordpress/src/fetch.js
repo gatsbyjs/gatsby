@@ -70,13 +70,13 @@ Mama Route URL: ${url}
         password: _auth.htaccess_pass,
       }
     }
-    
+
     if (_hostingWPCOM && _accessToken) {
       options.headers = {
         Authorization: `Bearer ${_accessToken}`,
       }
     }
-    
+
     allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)

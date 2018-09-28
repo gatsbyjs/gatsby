@@ -64,9 +64,7 @@ plugins
 
 ```javascript
 module.exports = {
-  plugins: [
-    'my-own-plugin',
-  ]
+  plugins: ["my-own-plugin"],
 }
 ```
 

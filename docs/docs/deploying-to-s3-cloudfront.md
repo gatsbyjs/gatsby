@@ -118,6 +118,7 @@ Here, we'll be prompted for what we would like to change about the project confi
 > To learn more about AWS Amplify, check out the [Getting Started](https://aws-amplify.github.io/media/get_started) page.
 
 ## References:
+
 - [Publishing Your Next Gatsby Site to AWS With AWS Amplify](https://www.gatsbyjs.org/blog/2018-08-24-gatsby-aws-hosting/)
 - [Escalade Sports: From $5000 to $5/month in Hosting With Gatsby](https://www.gatsbyjs.org/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
 - [Deploy your Gatsby.js Site to AWS S3](https://benenewton.com/deploy-your-gatsby-js-site-to-aws-s-3)
