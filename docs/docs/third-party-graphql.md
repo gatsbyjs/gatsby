@@ -98,3 +98,4 @@ exports.createPages = async ({ actions, graphql }) => {
 - [graphql-source-graphql docs](/packages/gatsby-source-graphql)
 - [Example with Github API](https://github.com/freiksenet/gatsby-github-displayer)
 - [Example with GraphCMS](https://github.com/freiksenet/gatsby-graphcms)
+- [Example with Hasura](https://github.com/hasura/graphql-engine/tree/master/community/boilerplates/gatsby-postgres-graphql)

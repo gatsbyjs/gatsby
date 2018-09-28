@@ -29,21 +29,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `StarterShowcaseImages`,
-        path: `${__dirname}/src/data/StarterShowcase/generatedScreenshots`,
-      },
-    },
-    //   need to have the img processing first? https://github.com/gatsbyjs/gatsby/issues/5196
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `StarterShowcaseData`,
-        path: `${__dirname}/src/data/StarterShowcase/startersData`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
@@ -183,7 +168,12 @@ module.exports = {
         endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
       },
     },
-    `gatsby-transformer-screenshot`,
+    {
+      resolve: `gatsby-transformer-screenshot`,
+      options: {
+        nodeTypes: [`StartersYaml`],
+      },
+    },
     `gatsby-plugin-subfont`,
     // {
     // resolve: `gatsby-plugin-guess-js`,
