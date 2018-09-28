@@ -272,7 +272,7 @@ class StarterTemplate extends React.Component {
               {screenshotFile && (
                 <Img
                   fluid={screenshotFile.childImageSharp.fluid}
-                  alt={`Screenshot of ${name}`}
+                  alt={`Screenshot of ${repoName}`}
                   css={{
                     ...sharedStyles.screenshot,
                   }}
@@ -324,7 +324,9 @@ class StarterTemplate extends React.Component {
               <div>
                 {features ? (
                   <ul css={{ marginTop: 0 }}>
-                    {features.map((f, i) => <li key={i}>{f}</li>)}
+                    {features.map((f, i) => (
+                      <li key={i}>{f}</li>
+                    ))}
                   </ul>
                 ) : (
                   `No features`
