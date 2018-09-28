@@ -18,19 +18,19 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "bluebird": "^3.5.0",
-    "chokidar": "^1.7.0",
-    "fs-exists-cached": "^1.0.0",
-    "glob": "^7.1.1",
-    "lodash": "^4.17.10",
-    "parse-filepath": "^1.0.1",
-    "slash": "^1.0.0"
+    "@babel/runtime": "7.0.0",
+    "bluebird": "3.5.0",
+    "chokidar": "1.7.0",
+    "fs-exists-cached": "1.0.0",
+    "glob": "7.1.1",
+    "lodash": "4.17.10",
+    "parse-filepath": "1.0.1",
+    "slash": "1.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "cross-env": "^5.0.5"
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0",
+    "cross-env": "5.0.5"
   },
   "peerDependencies": {
     "gatsby": ">2.0.0-alpha"

@@ -8,19 +8,19 @@
   },
   "bundledDependencies": [],
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "axios": "^0.18.0",
-    "bluebird": "^3.5.0",
-    "deep-map": "^1.5.0",
-    "deep-map-keys": "^1.2.0",
-    "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.10"
+    "@babel/runtime": "7.0.0",
+    "axios": "0.18.0",
+    "bluebird": "3.5.0",
+    "deep-map": "1.5.0",
+    "deep-map-keys": "1.2.0",
+    "json-stringify-safe": "5.0.1",
+    "lodash": "4.17.10"
   },
   "deprecated": false,
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "cross-env": "^5.1.4"
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0",
+    "cross-env": "5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-lever#readme",
   "keywords": [

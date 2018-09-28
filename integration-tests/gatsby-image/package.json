@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "cypress": "^3.1.0",
+    "cypress": "3.1.0",
     "gatsby": "latest",
     "gatsby-image": "latest",
     "gatsby-plugin-manifest": "latest",
@@ -13,9 +13,9 @@
     "gatsby-plugin-sharp": "latest",
     "gatsby-source-filesystem": "latest",
     "gatsby-transformer-sharp": "latest",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-helmet": "^5.2.0"
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "react-helmet": "5.2.0"
   },
   "keywords": [
     "gatsby"
@@ -32,8 +32,8 @@
     "cy:run": "cypress run --browser chrome"
   },
   "devDependencies": {
-    "prettier": "^1.14.3",
-    "start-server-and-test": "^1.7.1"
+    "prettier": "1.14.3",
+    "start-server-and-test": "1.7.1"
   },
   "repository": {
     "type": "git",

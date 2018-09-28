@@ -3,13 +3,13 @@
   "version": "2.5.0",
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0"
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0"
   },
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "graphql": "^0.13.2"
+    "graphql": "0.13.2"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

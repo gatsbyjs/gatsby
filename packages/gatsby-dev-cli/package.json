@@ -10,18 +10,18 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "chokidar": "^1.7.0",
-    "configstore": "^3.1.0",
-    "fs-extra": "^4.0.1",
-    "is-absolute": "^0.2.6",
-    "lodash": "^4.17.10",
-    "yargs": "^8.0.2"
+    "@babel/runtime": "7.0.0",
+    "chokidar": "1.7.0",
+    "configstore": "3.1.0",
+    "fs-extra": "4.0.1",
+    "is-absolute": "0.2.6",
+    "lodash": "4.17.10",
+    "yargs": "8.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "cross-env": "^5.0.5"
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0",
+    "cross-env": "5.0.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme",
   "keywords": [

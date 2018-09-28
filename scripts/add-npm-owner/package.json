@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lerna-get-packages": "^1.0.0",
-    "shelljs": "^0.8.2"
+    "lerna-get-packages": "1.0.0",
+    "shelljs": "0.8.2"
   }
 }

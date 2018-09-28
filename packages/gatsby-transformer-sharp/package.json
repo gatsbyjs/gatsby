@@ -7,17 +7,17 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "bluebird": "^3.5.0",
-    "fs-extra": "^4.0.2",
-    "potrace": "^2.1.1",
-    "probe-image-size": "^4.0.0",
-    "sharp": "^0.20.2"
+    "@babel/runtime": "7.0.0",
+    "bluebird": "3.5.0",
+    "fs-extra": "4.0.2",
+    "potrace": "2.1.1",
+    "probe-image-size": "4.0.0",
+    "sharp": "0.20.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "cross-env": "^5.1.4"
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0",
+    "cross-env": "5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp#readme",
   "keywords": [
@@ -29,7 +29,7 @@
   "license": "MIT",
   "peerDependencies": {
     "gatsby": ">2.0.0-alpha",
-    "gatsby-plugin-sharp": "^2.0.0-beta.3"
+    "gatsby-plugin-sharp": "2.0.0-beta.3"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp",
   "scripts": {
