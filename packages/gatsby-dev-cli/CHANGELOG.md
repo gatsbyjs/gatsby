@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.4.2"></a>
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.1...gatsby-dev-cli@2.4.2) (2018-09-28)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** wait for files to be copied before exiting ([#8387](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/8387)) ([576f78a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/576f78a))
+
 <a name="2.4.1"></a>
 
 ## [2.4.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.0...gatsby-dev-cli@2.4.1) (2018-09-19)

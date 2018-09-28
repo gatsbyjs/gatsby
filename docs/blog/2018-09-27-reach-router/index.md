@@ -1,6 +1,6 @@
 ---
 title: How we improved Gatsby's accessibility in v2 by switching to @reach/router
-date: 2018-09-24
+date: 2018-09-27
 author: Amberley Romo
 tags: ["routing", "v2", "accessibility"]
 ---
