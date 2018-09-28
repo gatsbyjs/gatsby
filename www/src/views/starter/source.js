@@ -6,7 +6,7 @@ import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
 import { NetlifyIcon } from "../../assets/logos"
 
-const Source = ({ frontmatter, markdownRemark }) => (
+const Source = ({ startersYaml, repoUrl }) => (
   <div
     css={{
       display: `flex`,
@@ -21,11 +21,11 @@ const Source = ({ frontmatter, markdownRemark }) => (
       },
     }}
   >
-    {frontmatter.repo && (
+    {repoUrl && (
       <div
         css={{
           padding: 20,
-          paddingLeft: markdownRemark.featured ? false : 0,
+          paddingLeft: startersYaml.featured ? false : 0,
           display: `flex`,
           [presets.Desktop]: {
             ...scale(-1 / 6),
@@ -43,7 +43,7 @@ const Source = ({ frontmatter, markdownRemark }) => (
           }}
         />
         <a
-          href={frontmatter.repo}
+          href={repoUrl}
           css={{
             "&&": {
               ...scale(1 / 5),
@@ -89,9 +89,7 @@ const Source = ({ frontmatter, markdownRemark }) => (
         Try this starter
       </span>
       <a
-        href={`https://app.netlify.com/start/deploy?repository=${
-          frontmatter.repo
-        }`}
+        href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
         css={{
           "&&": {
             ...scale(1 / 5),

@@ -21,7 +21,7 @@ class StarterLibraryPage extends Component {
     return (
       <Layout location={location}>
         <Helmet>
-          <title>Starter Showcase</title>
+          <title>Starter Library</title>
           <meta
             name="description"
             content={`Gatsby Starters: ${filtersApplied}`}

@@ -20,9 +20,6 @@ class StarterTemplate extends React.Component {
     const {
       url: demoUrl,
       repo: repoUrl,
-      tags,
-      description,
-      features,
       fields: { starterShowcase },
       childScreenshot: { screenshotFile },
     } = startersYaml
@@ -100,17 +97,14 @@ class StarterTemplate extends React.Component {
               <StarterMeta
                 starter={starterShowcase}
                 repoName={repoName}
-                imageSharp={imageSharp}
-                frontmatter={frontmatter}
+                imageSharp={screenshotFile}
+                demo={demoUrl}
               />
-              <StarterScreenshot imageSharp={imageSharp} />
+              <StarterScreenshot imageSharp={screenshotFile} />
             </div>
-            <StarterSource
-              frontmatter={frontmatter}
-              markdownRemark={markdownRemark}
-            />
+            <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
             <StarterDetails
-              frontmatter={frontmatter}
+              startersYaml={startersYaml}
               allDeps={allDeps}
               shownDeps={shownDeps}
               showMore={showMore}

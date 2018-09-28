@@ -33,7 +33,7 @@ class ShareMenu extends React.Component {
   }
 
   render() {
-    const { url, title, image, theme = "gatsby" } = this.props
+    const { url, title, image, theme = `gatsby` } = this.props
     const { open } = this.state
     return (
       <Fragment>
@@ -126,7 +126,7 @@ export default ShareMenu
 const styles = {
   gatsby: {
     background: colors.gatsby,
-    textColor: "white",
+    textColor: `white`,
   },
   accent: {
     background: colors.accent,

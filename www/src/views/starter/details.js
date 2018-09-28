@@ -10,7 +10,7 @@ const Details = ({
   shownDeps,
   showAllDeps,
   showMore,
-  frontmatter,
+  startersYaml,
 }) => (
   <div
     css={{
@@ -32,7 +32,7 @@ const Details = ({
     >
       Tags
     </div>
-    <div>{frontmatter.tags.join(`, `)}</div>
+    <div>{startersYaml.tags.join(`, `)}</div>
 
     <div
       css={{
@@ -43,7 +43,7 @@ const Details = ({
     >
       Description
     </div>
-    <div>{frontmatter.description}</div>
+    <div>{startersYaml.description}</div>
 
     <div
       css={{
@@ -55,9 +55,9 @@ const Details = ({
       Features
     </div>
     <div>
-      {frontmatter.features ? (
+      {startersYaml.features ? (
         <ul css={{ marginTop: 0 }}>
-          {frontmatter.features.map((f, i) => (
+          {startersYaml.features.map((f, i) => (
             <li key={i}>{f}</li>
           ))}
         </ul>

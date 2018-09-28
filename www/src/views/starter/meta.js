@@ -6,7 +6,7 @@ import ShareMenu from "../../components/share-menu"
 import MdLaunch from "react-icons/lib/md/launch"
 import MdStar from "react-icons/lib/md/star"
 
-const Meta = ({ starter, repoName, imageSharp, frontmatter }) => (
+const Meta = ({ starter, repoName, imageSharp, demo }) => (
   <div
     css={{
       fontFamily: options.headerFontFamily.join(`,`),
@@ -66,7 +66,7 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => (
         >
           Updated
         </span>
-        {showDate(starter.githubData.repoMetadata.updated_at)}
+        {showDate(starter.lastUpdated)}
       </div>
     </div>
 
@@ -109,9 +109,9 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => (
               },
             },
           }}
-          href={`https://github.com/${starter.owner.login}`}
+          href={`https://github.com/${starter.owner}`}
         >
-          {starter.owner.login}
+          {starter.owner}
         </a>
       </div>
       <div
@@ -123,7 +123,7 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => (
         }}
       >
         <a
-          href={frontmatter.demo}
+          href={demo}
           css={{
             border: 0,
             borderRadius: presets.radius,
