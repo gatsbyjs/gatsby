@@ -4,8 +4,7 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 
-import presets, { colors } from "../utils/presets"
-import { /*typography, */ rhythm, scale, options } from "../utils/typography"
+import presets from "../utils/presets"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
 import StarterScreenshot from "../views/starter/screenshot"
@@ -91,10 +90,10 @@ class StarterTemplate extends React.Component {
             <StarterHeader stub={starterShowcase.stub} />
             <div
               css={{
-                display: "flex",
-                flexDirection: "column-reverse",
+                display: `flex`,
+                flexDirection: `column-reverse`,
                 [presets.Phablet]: {
-                  flexDirection: "column",
+                  flexDirection: `column`,
                 },
               }}
             >
