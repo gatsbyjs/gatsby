@@ -1,5 +1,4 @@
 import React from "react"
-import { colors } from "../../utils/presets"
 import sharedStyles from "../shared/styles"
 import Img from "gatsby-image"
 
