@@ -30,7 +30,7 @@ When the development server is running for one of your Gatsby sites, open Graph_
 
 Make sure to check out the Graph_i_QL docs in the upper right-hand corner of the IDE. It's easy to miss them, but they're worth visiting!
 
-![A diagram pointing out where to find the GraphiQl docs](graphiql-docs.png)
+![A diagram pointing out where to find the GraphiQl docs](images/graphiql-docs.png)
 
 ## Other resources
 
