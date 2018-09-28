@@ -494,6 +494,16 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
         const allDependencies = Object.entries(dependencies).concat(
           Object.entries(devDependencies)
         )
+
+        const gatsbyMajorVersion = allDependencies
+          .filter(([key, _]) => key === `gatsby`)
+          .map(version => {
+            let [gatsby, versionNum] = version
+            if (versionNum === `latest` || versionNum === `next`) {
+              return [gatsby, `2`]
+            }
+            return [gatsby, versionNum.replace(/\D/g, ``).charAt(0)]
+          })
         const starterShowcaseFields = {
           slug: `/${repoStub}/`,
           stub: repoStub,
@@ -503,6 +513,7 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           lastUpdated,
           owner,
           githubFullName,
+          gatsbyMajorVersion,
           allDependencies,
           gatsbyDependencies: allDependencies
             .filter(
