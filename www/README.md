@@ -16,7 +16,7 @@ To develop on the starter showcase, you'll need to supply a GitHub personal acce
 3. Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
 
 ```
-GITHUB_TOKEN=YOUR_TOKEN_HERE
+GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
 The `.env.development` file is ignored by git. Your token should never be committed.

@@ -14,17 +14,17 @@ require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-if (process.env.NODE_ENV === "production" && !process.env.GITHUB_TOKEN) {
+if (process.env.NODE_ENV === "production" && !process.env.GITHUB_API_TOKEN) {
   throw new Error(
     `A GitHub token is required to build the site. Check the README.`
   )
 }
 
 // used to gather repo data on starters
-const githubApiClient = process.env.GITHUB_TOKEN
+const githubApiClient = process.env.GITHUB_API_TOKEN
   ? new GraphQLClient(`https://api.github.com/graphql`, {
       headers: {
-        authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`,
       },
     })
   : null
@@ -456,7 +456,7 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       miscDependencies: [],
     }
 
-    if (!process.env.GITHUB_TOKEN) {
+    if (!process.env.GITHUB_API_TOKEN) {
       return createNodeField({
         node,
         name: `starterShowcase`,
