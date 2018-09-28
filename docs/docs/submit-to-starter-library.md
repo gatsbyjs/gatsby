@@ -6,7 +6,7 @@ Have you created a Gatsby starter you'd like to add to the [Starter Library](/st
 
 ## Steps
 
-There are only two major steps :)
+To get your site added to the starter library, follow the two steps below.
 
 1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/docs/how-to-contribute/#contributing-to-the-repo).
 
@@ -27,7 +27,7 @@ There are only two major steps :)
     - Categories and tags for blog posts with pagination
 ```
 
-Check out the `starters.yml` file for examples.
+Check out the [`starters.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/starters.yml) file for examples.
 
 ### Need to change details?
 
