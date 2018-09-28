@@ -48,6 +48,7 @@ export const showcaseQuery = graphql`
             package
             starterShowcase {
               stub
+              gatsbyMajorVersion
               gatsbyDependencies
               lastUpdated
               description

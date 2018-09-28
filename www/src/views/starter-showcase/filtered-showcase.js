@@ -29,17 +29,21 @@ export default class FilteredShowcase extends Component {
     this.props.setURLState({ c: Array.from(filtersCategory) })
   setFiltersDependency = filtersDependency =>
     this.props.setURLState({ d: Array.from(filtersDependency) })
+  setFiltersVersion = filtersVersion =>
+    this.props.setURLState({ v: Array.from(filtersVersion) })
   toggleSort = () =>
     this.props.setURLState({
       sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
     })
-  resetFilters = () => this.props.setURLState({ c: null, d: null, s: `` })
+  resetFilters = () =>
+    this.props.setURLState({ c: null, d: null, v: null, s: `` })
 
   render() {
     const { data, urlState, setURLState } = this.props
     const {
       setFiltersCategory,
       setFiltersDependency,
+      setFiltersVersion,
       resetFilters,
       toggleSort,
     } = this
@@ -49,10 +53,16 @@ export default class FilteredShowcase extends Component {
     const filtersDependency = new Set(
       Array.isArray(urlState.d) ? urlState.d : [urlState.d]
     )
+
+    const filtersVersion = new Set(
+      Array.isArray(urlState.v) ? urlState.v : [urlState.v]
+    )
     // https://stackoverflow.com/a/32001444/1106414
     const filters = new Set(
       [].concat(
-        ...[filtersCategory, filtersDependency].map(set => Array.from(set))
+        ...[filtersCategory, filtersDependency, filtersVersion].map(set =>
+          Array.from(set)
+        )
       )
     )
 
@@ -75,6 +85,10 @@ export default class FilteredShowcase extends Component {
     }
     if (filtersDependency.size > 0) {
       items = filterByDependencies(items, filtersDependency)
+    }
+
+    if (filtersVersion.size > 0) {
+      items = filterByVersions(items, filtersVersion)
     }
 
     return (
@@ -114,6 +128,22 @@ export default class FilteredShowcase extends Component {
               filters={filtersDependency}
               setFilters={setFiltersDependency}
               sortRecent={urlState.sort === `recent`}
+            />
+            <LHSFilter
+              heading="Gatsby Version"
+              data={Array.from(
+                count(
+                  items.map(
+                    ({ node }) =>
+                      node.fields &&
+                      node.fields.starterShowcase.gatsbyMajorVersion.map(
+                        str => str[1]
+                      )
+                  )
+                )
+              )}
+              filters={filtersVersion}
+              setFilters={setFiltersVersion}
             />
           </SidebarBody>
         </SidebarContainer>
@@ -217,8 +247,6 @@ export default class FilteredShowcase extends Component {
   }
 }
 
-// utility functions
-
 function count(arrays) {
   let counts = new Map()
 
@@ -258,6 +286,18 @@ function filterByDependencies(list, categories) {
     // node.fields.starterShowcase.gatsbyDependencies.filter(c => categories.has(c[0])).length > 0
   )
 
+  return items
+}
+function filterByVersions(list, versions) {
+  let items = list
+  items = items.filter(
+    ({ node }) =>
+      node.fields &&
+      isSuperset(
+        node.fields.starterShowcase.gatsbyMajorVersion.map(c => c[1]),
+        versions
+      )
+  )
   return items
 }
 

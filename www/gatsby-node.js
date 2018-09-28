@@ -462,6 +462,18 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
     const allDependencies = Object.entries(dependencies).concat(
       Object.entries(devDependencies)
     )
+
+    const gatsbyMajorVersion = allDependencies
+      .filter(([key, _]) => key === `gatsby`)
+      .map(version => {
+        let [gatsby, versionNum] = version
+        if (versionNum === `latest` || versionNum === `next`) {
+          return [gatsby, `2`]
+        }
+
+        return [gatsby, versionNum.replace(/\D/g, "").charAt(0)]
+      })
+
     // make an object to stick into a Field
     const starterShowcaseFields = {
       slug,
@@ -474,6 +486,7 @@ function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
       lastUpdated: repoMetadata.created_at,
       owner: repoMetadata.owner,
       githubFullName: repoMetadata.full_name,
+      gatsbyMajorVersion,
       allDependencies,
       gatsbyDependencies: allDependencies
         .filter(
