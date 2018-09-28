@@ -8,7 +8,7 @@ class PageWithPluginSearchBar extends Component {
   render() {
     return (
       <Fragment>
-        <div
+        <section
           css={{
             ...styles.sidebar,
             // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
@@ -16,8 +16,8 @@ class PageWithPluginSearchBar extends Component {
           }}
         >
           <PluginSearchBar location={this.props.location} />
-        </div>
-        <div
+        </section>
+        <main
           css={{
             ...styles.content,
             // mobile: hide README on gatsbyjs.org/plugins index page
@@ -25,7 +25,7 @@ class PageWithPluginSearchBar extends Component {
           }}
         >
           {this.props.children}
-        </div>
+        </main>
       </Fragment>
     )
   }

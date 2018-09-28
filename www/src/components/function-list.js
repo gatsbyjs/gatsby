@@ -80,6 +80,42 @@ export default ({ functions }) => (
             {node.params.map(param => Param(param, 0))}
           </div>
         )}
+        {node.returns &&
+          node.returns.length > 0 && (
+            <div>
+              <h4>Return value</h4>
+              {node.returns.map(ret => (
+                <div
+                  key={`ret ${JSON.stringify(ret)}`}
+                  css={{
+                    marginLeft: `1.05rem`,
+                    ...scale(-1 / 5),
+                    lineHeight: options.baseLineHeight,
+                  }}
+                >
+                  <h5 css={{ margin: 0 }}>
+                    <span css={{ color: `#73725f` }}>
+                      {`{${
+                        ret.type.type === "UnionType"
+                          ? ret.type.elements
+                              .map(el => String(el.name))
+                              .join("|")
+                          : ret.type.name
+                      }}`}
+                    </span>
+                  </h5>
+                  {ret.description && (
+                    <div
+                      css={{ marginBottom: rhythm(-1 / 4) }}
+                      dangerouslySetInnerHTML={{
+                        __html: ret.description.childMarkdownRemark.html,
+                      }}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
 
         {node.examples &&
           node.examples.length > 0 && (
@@ -117,7 +153,19 @@ export const pageQuery = graphql`
       }
     }
     returns {
-      title
+      type {
+        name
+        type
+        elements {
+          name
+          type
+        }
+      }
+      description {
+        childMarkdownRemark {
+          html
+        }
+      }
     }
     examples {
       highlighted

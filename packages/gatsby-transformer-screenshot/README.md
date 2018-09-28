@@ -31,6 +31,24 @@ module.exports = {
 }
 ```
 
+By default, the plugin will target nodes sourced from a yaml file named `sites.yml`.
+
+To source additional node types, supply an array of the types to a `nodeTypes` option on the plugin.
+
+```javascript
+// in your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-screenshot`,
+      options: {
+        nodeTypes: [`StartersYaml`, `WhateverType`],
+      },
+    },
+  ],
+}
+```
+
 ## How to query
 
 You can query for screenshot files as shown below:

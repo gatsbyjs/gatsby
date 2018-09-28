@@ -10,8 +10,8 @@ export const creatorDataFragment = graphql`
     github
     image {
       childImageSharp {
-        fixed(width: 240, height: 240) {
-          ...GatsbyImageSharpFixed
+        fluid(maxWidth: 240, maxHeight: 240) {
+          ...GatsbyImageSharpFluid
         }
       }
     }

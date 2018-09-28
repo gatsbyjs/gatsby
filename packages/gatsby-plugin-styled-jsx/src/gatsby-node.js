@@ -1,9 +1,19 @@
 // Add babel plugin
-exports.onCreateBabelConfig = ({ actions }, { jsxPlugins }) => {
+exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
+  const {
+    jsxPlugins: plugins,
+    optimizeForSpeed,
+    sourceMaps,
+    vendorPrefixes,
+  } = pluginOptions
+
   actions.setBabelPlugin({
     name: `styled-jsx/babel`,
     options: {
-      plugins: jsxPlugins || [],
+      optimizeForSpeed,
+      sourceMaps,
+      vendorPrefixes,
+      ...(plugins ? { plugins } : {}),
     },
   })
 }

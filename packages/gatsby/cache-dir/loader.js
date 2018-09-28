@@ -257,6 +257,8 @@ const queue = {
     const page = findPage(path)
     if (page) {
       return pathScriptsCache[page.path]
+    } else if (path !== `/404.html`) {
+      return queue.getResourcesForPathnameSync(`/404.html`)
     } else {
       return null
     }
@@ -297,9 +299,9 @@ const queue = {
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
 
-        // Preload the custom 404 page when running `gatsby develop`
-        if (path !== `/404.html` && process.env.NODE_ENV !== `production`) {
-          queue.getResourcesForPathname(`/404.html`)
+        // Preload the custom 404 page
+        if (path !== `/404.html`) {
+          return resolve(queue.getResourcesForPathname(`/404.html`))
         }
 
         return resolve()
@@ -326,7 +328,6 @@ const queue = {
       // In development we know the code is loaded already
       // so we just return with it immediately.
       if (process.env.NODE_ENV !== `production`) {
-        const page = findPage(path)
         const pageResources = {
           component: syncRequires.components[page.componentChunkName],
           page,
@@ -346,6 +347,11 @@ const queue = {
           getResourceModule(page.componentChunkName),
           getResourceModule(page.jsonName),
         ]).then(([component, json]) => {
+          if (!(component && json)) {
+            resolve(null)
+            return
+          }
+
           const pageResources = {
             component,
             json,

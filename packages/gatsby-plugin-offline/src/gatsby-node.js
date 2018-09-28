@@ -73,6 +73,7 @@ exports.onPostBuild = (args, pluginOptions) => {
   })
 
   const options = {
+    importWorkboxFrom: `local`,
     globDirectory: rootDir,
     globPatterns,
     modifyUrlPrefix: {
@@ -100,6 +101,11 @@ exports.onPostBuild = (args, pluginOptions) => {
         urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `staleWhileRevalidate`,
       },
+      {
+        // Use the Network First handler for external resources
+        urlPattern: /^https:/,
+        handler: `networkFirst`,
+      },
     ],
     skipWaiting: true,
     clientsClaim: true,
@@ -116,6 +122,10 @@ exports.onPostBuild = (args, pluginOptions) => {
     .generateSW({ swDest, ...combinedOptions })
     .then(({ count, size, warnings }) => {
       if (warnings) warnings.forEach(warning => console.warn(warning))
+
+      const swAppend = fs.readFileSync(`${__dirname}/sw-append.js`)
+      fs.appendFileSync(`public/sw.js`, swAppend)
+
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )

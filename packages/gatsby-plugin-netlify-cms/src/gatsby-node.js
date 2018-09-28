@@ -34,7 +34,7 @@ function deepMap(obj, fn) {
 }
 
 exports.onCreateWebpackConfig = (
-  { store, stage, getConfig, plugins },
+  { store, stage, getConfig, plugins, pathPrefix },
   {
     modulePath,
     publicPath = `admin`,
@@ -126,6 +126,14 @@ exports.onCreateWebpackConfig = (
          * `HtmlWebpackPlugin` config.
          */
         new HtmlWebpackExcludeAssetsPlugin(),
+
+        /**
+         * Pass in needed Gatsby config values.
+         */
+        new webpack.DefinePlugin({
+          __PATH__PREFIX__: pathPrefix,
+          CMS_PUBLIC_PATH: JSON.stringify(publicPath),
+        }),
       ].filter(p => p),
 
       /**

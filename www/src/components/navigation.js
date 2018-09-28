@@ -30,7 +30,7 @@ const NavItem = ({ linkTo, children }) => (
 
 const Navigation = ({ pathname }) => {
   const isHomepage = pathname === `/`
-  const isBlog = pathname === `/blog/`
+  const isBlog = pathname === `/blog/` || pathname.indexOf(`/blog/page/`) === 0
 
   const socialIconsStyles = {
     ...styles.navItem,
@@ -57,9 +57,9 @@ const Navigation = ({ pathname }) => {
   )
 
   return (
-    <div
-      role="navigation"
+    <nav
       className="navigation"
+      aria-label="Primary Navigation"
       css={{
         backgroundColor: isHomepage ? `transparent` : `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : `relative`,
@@ -125,8 +125,8 @@ const Navigation = ({ pathname }) => {
             : {}),
         }}
       >
-        <Link to="/" css={styles.logoLink}>
-          <img src={logo} css={styles.logo} alt="" />
+        <Link to="/" css={styles.logoLink} aria-label="Go to homepage">
+          <img src={logo} css={styles.logo} alt="Gatsby logo" />
         </Link>
         <ul css={styles.navContainer}>
           <NavItem linkTo="/docs/">Docs</NavItem>
@@ -135,8 +135,7 @@ const Navigation = ({ pathname }) => {
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
           <NavItem linkTo="/showcase/">Showcase</NavItem>
-          {false ? (
-            <li css={styles.li}>
+          {/* <li css={styles.li}>
               <Link
                 to="/community/"
                 css={styles.navItem}
@@ -144,8 +143,7 @@ const Navigation = ({ pathname }) => {
               >
                 Community
               </Link>
-            </li>
-          ) : null}
+            </li> */}
         </ul>
         <div css={styles.searchAndSocialContainer}>
           <SearchForm
@@ -189,7 +187,7 @@ const Navigation = ({ pathname }) => {
           </SocialNavItem>
         </div>
       </div>
-    </div>
+    </nav>
   )
 }
 
@@ -231,6 +229,7 @@ const styles = {
     color: `inherit`,
     display: `block`,
     letterSpacing: `0.03em`,
+    WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,

@@ -1,12 +1,6 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import presets, { colors } from "./presets"
-import {
-  MOBILE_MEDIA_QUERY,
-  TABLET_MEDIA_QUERY,
-  MIN_DEFAULT_MEDIA_QUERY,
-  MIN_LARGER_DISPLAY_MEDIA_QUERY,
-} from "typography-breakpoint-constants"
 
 const headerFontFamily = [
   `Futura PT`,
@@ -51,8 +45,8 @@ const _options = {
     `Arial`,
     `sans-serif`,
   ],
-  baseFontSize: `18px`,
   baseLineHeight: 1.4,
+  baseFontSize: `16px`,
   headerLineHeight: 1.075,
   headerColor: colors.gray.dark,
   bodyColor: colors.gray.copy,
@@ -264,18 +258,17 @@ const _options = {
         height: `348px`,
         border: `none`,
       },
-      [MOBILE_MEDIA_QUERY]: {
-        // Make baseFontSize on mobile 16px.
-        html: {
-          fontSize: `${(16 / 16) * 100}%`,
-        },
-      },
-      [TABLET_MEDIA_QUERY]: {
+      [presets.Mobile]: {
         html: {
           fontSize: `${(17 / 16) * 100}%`,
         },
       },
-      [MIN_DEFAULT_MEDIA_QUERY]: {
+      [presets.Tablet]: {
+        html: {
+          fontSize: `${(18 / 16) * 100}%`,
+        },
+      },
+      [presets.Desktop]: {
         ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-options.blockMarginBottom * 1.5),
           marginRight: rhythm(-options.blockMarginBottom * 1.5),
@@ -299,7 +292,7 @@ const _options = {
           )}`,
         },
       },
-      [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {
+      [presets.VVHd]: {
         html: {
           fontSize: `${(21 / 16) * 100}%`,
         },

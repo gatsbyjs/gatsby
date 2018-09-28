@@ -551,7 +551,7 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the in operator for array of objects`, async () => {
+  it(`handles the elemMatch operator for array of objects`, async () => {
     let result = await queryResult(
       nodes,
       `

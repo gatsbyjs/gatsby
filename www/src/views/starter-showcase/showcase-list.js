@@ -1,13 +1,14 @@
 import React from "react"
-import FaExtLink from "react-icons/lib/fa/external-link"
-import FaGithub from "react-icons/lib/fa/github"
-import FaClipboard from "react-icons/lib/fa/clipboard"
+import LaunchDemoIcon from "react-icons/lib/md/launch"
+import GithubIcon from "react-icons/lib/go/mark-github"
+import CopyToClipboardIcon from "react-icons/lib/go/clippy"
 import MdStar from "react-icons/lib/md/star"
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { options } from "../../utils/typography"
+import { colors } from "../../utils/presets"
 import copyToClipboard from "../../utils/copy-to-clipboard"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
+import EmptyGridItems from "../shared/empty-grid-items"
 
 const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
   if (!items.length) {
@@ -49,13 +50,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
     <div
       css={{
         fontFamily: options.headerFontFamily.join(`,`),
-        display: `flex`,
-        flexWrap: `wrap`,
-        padding: rhythm(3 / 4),
-        justifyContent: `center`,
-        [presets.Desktop]: {
-          justifyContent: `flex-start`,
-        },
+        ...styles.showcaseList,
       }}
     >
       {items.map(({ node }) => {
@@ -82,8 +77,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
             <div
               key={node.id}
               css={{
-                margin: rhythm(3 / 4),
-                width: 280,
+                ...styles.showcaseItem,
               }}
               {...styles.withTitleHover}
             >
@@ -101,43 +95,33 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
                   <span css={{ color: colors.gray.dark }}>
                     {repo.owner && repo.owner.login} /
                   </span>
-                  <span
-                    css={{
-                      "> a": {
-                        paddingLeft: 5,
-                        "&:hover": {
-                          background: `none`,
-                          color: colors.gatsby,
-                        },
-                      },
-                    }}
-                  >
+                  <span>
                     <a
                       href="#copy-to-clipboard"
                       onClick={() =>
                         copyToClipboard(`https://github.com/${githubFullName}`)
                       }
-                      css={{ ...styles.noLinkUnderline }}
+                      css={{ ...styles.shortcutIcon }}
                     >
-                      <FaClipboard />
-                      {` `}
+                      <CopyToClipboardIcon />
                     </a>
+                    {` `}
                     <a
                       href={node.frontmatter.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      css={{ ...styles.noLinkUnderline }}
+                      css={{ ...styles.shortcutIcon }}
                     >
-                      <FaExtLink />
-                      {` `}
+                      <LaunchDemoIcon />
                     </a>
+                    {` `}
                     <a
                       href={`https://github.com/${githubFullName}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      css={{ ...styles.noLinkUnderline }}
+                      css={{ ...styles.shortcutIcon }}
                     >
-                      <FaGithub />
+                      <GithubIcon />
                       {` `}
                     </a>
                   </span>
@@ -181,6 +165,7 @@ const ShowcaseList = ({ urlState, items, imgs, count, sortRecent }) => {
           )
         )
       })}
+      {items.length && <EmptyGridItems styles={styles.showcaseItem} />}
     </div>
   )
 }

@@ -333,5 +333,5 @@ describe("Header", () =>
 ## Using TypeScript
 
 If you are using TypeScript this is a lot easier to get right as the type errors
-will tell you exaclty what you should be passing to the components. This is why
+will tell you exactly what you should be passing to the components. This is why
 it is a good idea to define type interfaces for all of your GraphQL queries.

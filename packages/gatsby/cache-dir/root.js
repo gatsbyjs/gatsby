@@ -4,14 +4,14 @@ import { ScrollContext } from "gatsby-react-router-scroll"
 import {
   shouldUpdateScroll,
   init as navigationInit,
-  onRouteUpdate,
-  onPreRouteUpdate,
+  RouteUpdates,
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
+import EnsureResources from "./ensure-resources"
 
 import * as ErrorOverlay from "react-error-overlay"
 
@@ -48,58 +48,58 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
 navigationInit()
 
 class RouteHandler extends React.Component {
-  constructor(props) {
-    super(props)
-    onPreRouteUpdate(props.location)
-  }
-
   render() {
     let { location } = this.props
-    const pageResources = loader.getResourcesForPathnameSync(location.pathname)
-    const isPage = !!(pageResources && pageResources.component)
-    let child
-    if (isPage) {
-      child = (
-        <JSONStore
-          pages={pages}
-          {...this.props}
-          pageResources={pageResources}
-        />
-      )
-    } else if (loader.getPage(`/404.html`)) {
-      location.pathname = `/404.html`
-      child = (
-        <JSONStore
-          pages={pages}
-          {...this.props}
-          pageResources={loader.getResourcesForPathnameSync(location.pathname)}
-        />
+
+    // check if page exists - in dev pages are sync loaded, it's safe to use
+    // loader.getPage
+    let page = loader.getPage(location.pathname)
+
+    if (page) {
+      return (
+        <EnsureResources location={location}>
+          {locationAndPageResources => (
+            <RouteUpdates location={location}>
+              <ScrollContext
+                location={location}
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <JSONStore
+                  pages={pages}
+                  {...this.props}
+                  {...locationAndPageResources}
+                />
+              </ScrollContext>
+            </RouteUpdates>
+          )}
+        </EnsureResources>
       )
     } else {
-      const dev404Page = pages.find(p => /^\/dev-404-page\/$/.test(p.path))
-      child = createElement(
-        syncRequires.components[dev404Page.componentChunkName],
-        {
-          pages,
-          ...this.props,
-        }
+      const dev404Page = pages.find(p => /^\/dev-404-page\/?$/.test(p.path))
+      const custom404 = locationAndPageResources =>
+        loader.getPage(`/404.html`) ? (
+          <JSONStore
+            pages={pages}
+            {...this.props}
+            {...locationAndPageResources}
+          />
+        ) : null
+
+      return (
+        <EnsureResources location={location}>
+          {locationAndPageResources =>
+            createElement(
+              syncRequires.components[dev404Page.componentChunkName],
+              {
+                pages,
+                custom404: custom404(locationAndPageResources),
+                ...this.props,
+              }
+            )
+          }
+        </EnsureResources>
       )
     }
-
-    return (
-      <ScrollContext
-        location={location}
-        history={this.props.history}
-        shouldUpdateScroll={shouldUpdateScroll}
-      >
-        {child}
-      </ScrollContext>
-    )
-  }
-
-  // Call onRouteUpdate on the initial page load.
-  componentDidMount() {
-    onRouteUpdate(this.props.location)
   }
 }
 
