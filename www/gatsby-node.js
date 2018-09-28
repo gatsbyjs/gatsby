@@ -59,6 +59,18 @@ exports.createPages = ({ graphql, actions }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/bound-action-creators/`,
+    toPath: `/docs/actions/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/bound-action-creators`,
+    toPath: `/docs/actions`,
+    isPermanent: true,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -79,18 +91,6 @@ exports.createPages = ({ graphql, actions }) => {
     const creatorPageTemplate = path.resolve(
       `src/templates/template-creator-details.js`
     )
-
-    createRedirect({
-      fromPath: `/docs/bound-action-creators/`,
-      toPath: `/docs/actions/`,
-      isPermanent: true,
-    })
-
-    createRedirect({
-      fromPath: `/docs/bound-action-creators`,
-      toPath: `/docs/actions`,
-      isPermanent: true,
-    })
 
     // Query for markdown nodes to use in creating pages.
     graphql(
