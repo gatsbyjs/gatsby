@@ -176,8 +176,8 @@
   location: "Cologne, Germany"
   website: "https://www.ventura-digital.de"
   image: ventura-digitalagentur.jpg
-  for_hire: false
-  portfolio: false
+  for_hire: true
+  portfolio: true
 - name: Steven Natera
   type: individual
   description: >-
