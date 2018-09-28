@@ -1,6 +1,7 @@
 import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
+import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
@@ -157,9 +158,7 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
-        <a href="#MainContent" css={styles.skipLink}>
-          Skip to main content
-        </a>
+        <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner background={isHomepage ? `#402060` : false}>
           These are the docs for v2.
           {` `}
@@ -213,15 +212,29 @@ class DefaultLayout extends React.Component {
 
 const styles = {
   skipLink: {
-    flex: `none`,
-    position: `absolute !important`,
-    top: `0`,
-    clip: `rect(1px, 1px, 1px, 1px) !important`,
-    overflow: `hidden !important`,
-    height: `1px !important`,
-    width: `1px !important`,
-    padding: `0 !important`,
-    border: `0 !important`,
+    "[data-reach-skip-link]": {
+      border: `0`,
+      clip: `rect(0 0 0 0)`,
+      height: `1px`,
+      width: `1px`,
+      margin: `-1px`,
+      padding: `0`,
+      overflow: `hidden`,
+      position: `absolute`,
+      zIndex: `100`,
+      fontSize: `0.85rem`,
+      ":focus": {
+        padding: `0.9rem`,
+        position: `fixed`,
+        top: `10px`,
+        left: `10px`,
+        background: `white`,
+        textDecoration: `none`,
+        width: `auto`,
+        height: `auto`,
+        clip: `auto`,
+      },
+    },
   },
 }
 

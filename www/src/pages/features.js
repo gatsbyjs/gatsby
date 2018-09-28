@@ -212,7 +212,7 @@ class FeaturesPage extends Component {
         enableScrollSync={true}
       >
         <Container>
-          <main id={`MainContent`}>
+          <main id={`reach-skip-nav`}>
             <FeaturesHeader />
             <EvaluationTable
               sections={sections}

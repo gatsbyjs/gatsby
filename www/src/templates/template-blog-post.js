@@ -67,7 +67,7 @@ class BlogPostTemplate extends React.Component {
     return (
       <Layout location={this.props.location}>
         <Container className="post" css={{ paddingBottom: `0` }}>
-          <main id={`MainContent`}>
+          <main id={`reach-skip-nav`}>
             {/* Add long list of social meta tags */}
             <Helmet>
               <title>{post.frontmatter.title}</title>

@@ -17,7 +17,7 @@ const ShowcaseList = ({ items, count }) => {
   if (count) items = items.slice(0, count)
 
   return (
-    <main id={`MainContent`} css={{ ...styles.showcaseList }}>
+    <main id={`reach-skip-nav`} css={{ ...styles.showcaseList }}>
       {items.map(
         ({ node }) =>
           node.fields &&

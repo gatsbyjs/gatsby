@@ -18,7 +18,7 @@ class PageWithPluginSearchBar extends Component {
           <PluginSearchBar location={this.props.location} />
         </section>
         <main
-          id={`MainContent`}
+          id={`reach-skip-nav`}
           css={{
             ...styles.content,
             // mobile: hide README on gatsbyjs.org/plugins index page

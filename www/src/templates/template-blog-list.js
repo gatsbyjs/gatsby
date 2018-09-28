@@ -19,7 +19,7 @@ class BlogPostsIndex extends React.Component {
     return (
       <Layout location={this.props.location}>
         <main
-          id={`MainContent`}
+          id={`reach-skip-nav`}
           css={{
             [presets.Tablet]: {
               background: colors.ui.whisper,
