@@ -115,7 +115,7 @@ export default class FilteredStarterLibrary extends Component {
               search={urlState.s}
               filters={filters}
               label="Gatsby Starter"
-              items={items}
+              items={starters}
               edges={starters}
               what="size"
             />
