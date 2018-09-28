@@ -58,6 +58,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
         {starters.map(({ node: starter }) => {
           const {
             description,
+            gatsbyMajorVersion,
             gatsbyDependencies,
             name,
             githubFullName,
@@ -163,6 +164,9 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         }}
                       />
                       {stars}
+                    </div>
+                    <div css={{ display: `inline-block` }}>
+                      {`Gatsby v${gatsbyMajorVersion[0][1]}`}
                     </div>
                     <div css={{ display: `inline-block` }}>
                       Updated {new Date(lastUpdated).toLocaleDateString()}

@@ -9,7 +9,7 @@ import presets, { colors } from "../../utils/presets"
 import styles from "../shared/styles"
 
 import LHSFilter from "./lhs-filter"
-import StartersList from "./starter-list"
+import StarterList from "./starter-list"
 import Button from "../../components/button"
 import {
   SidebarHeader,
@@ -29,17 +29,21 @@ export default class FilteredStarterLibrary extends Component {
     this.props.setURLState({ c: Array.from(filtersCategory) })
   setFiltersDependency = filtersDependency =>
     this.props.setURLState({ d: Array.from(filtersDependency) })
+  setFiltersVersion = filtersVersion =>
+    this.props.setURLState({ v: Array.from(filtersVersion) })
   toggleSort = () =>
     this.props.setURLState({
       sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
     })
-  resetFilters = () => this.props.setURLState({ c: null, d: null, s: `` })
+  resetFilters = () =>
+    this.props.setURLState({ c: null, d: null, v: null, s: `` })
 
   render() {
     const { data, urlState, setURLState } = this.props
     const {
       setFiltersCategory,
       setFiltersDependency,
+      setFiltersVersion,
       resetFilters,
       toggleSort,
     } = this
@@ -49,10 +53,15 @@ export default class FilteredStarterLibrary extends Component {
     const filtersDependency = new Set(
       Array.isArray(urlState.d) ? urlState.d : [urlState.d]
     )
+    const filtersVersion = new Set(
+      Array.isArray(urlState.v) ? urlState.v : [urlState.v]
+    )
     // https://stackoverflow.com/a/32001444/1106414
     const filters = new Set(
       [].concat(
-        ...[filtersCategory, filtersDependency].map(set => Array.from(set))
+        ...[filtersCategory, filtersDependency, filtersVersion].map(set =>
+          Array.from(set)
+        )
       )
     )
 
@@ -73,6 +82,10 @@ export default class FilteredStarterLibrary extends Component {
       starters = filterByDependencies(starters, filtersDependency)
     }
 
+    if (filtersVersion.size > 0) {
+      starters = filterByVersions(starters, filtersVersion)
+    }
+
     return (
       <section className="showcase" css={{ display: `flex` }}>
         <SidebarContainer>
@@ -81,6 +94,22 @@ export default class FilteredStarterLibrary extends Component {
             {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
               <ResetFilters onClick={resetFilters} />
             )}
+            <LHSFilter
+              heading="Gatsby Version"
+              data={Array.from(
+                count(
+                  starters.map(
+                    ({ node }) =>
+                      node.fields &&
+                      node.fields.starterShowcase.gatsbyMajorVersion.map(
+                        str => str[1]
+                      )
+                  )
+                )
+              )}
+              filters={filtersVersion}
+              setFilters={setFiltersVersion}
+            />
             <LHSFilter
               heading="Categories"
               data={Array.from(
@@ -184,7 +213,7 @@ export default class FilteredStarterLibrary extends Component {
               </label>
             </div>
           </ContentHeader>
-          <StartersList
+          <StarterList
             urlState={urlState}
             sortRecent={urlState.sort === `recent`}
             starters={starters}
@@ -247,6 +276,19 @@ function filterByDependencies(list, categories) {
       )
   )
 
+  return starters
+}
+
+function filterByVersions(list, versions) {
+  let starters = list
+  starters = starters.filter(
+    ({ node }) =>
+      node.fields &&
+      isSuperset(
+        node.fields.starterShowcase.gatsbyMajorVersion.map(c => c[1]),
+        versions
+      )
+  )
   return starters
 }
 
