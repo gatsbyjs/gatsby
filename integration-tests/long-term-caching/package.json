@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "gatsby": "next",
-    "gray-percentage": "^2.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "gray-percentage": "2.0.0",
+    "react": "16.2.0",
+    "react-dom": "16.2.0"
   },
   "devDependencies": {
-    "babel-plugin-dynamic-import-node-sync": "^2.0.1"
+    "babel-plugin-dynamic-import-node-sync": "2.0.1"
   }
 }

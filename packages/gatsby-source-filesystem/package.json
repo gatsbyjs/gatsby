@@ -7,23 +7,23 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "better-queue": "^3.8.7",
-    "bluebird": "^3.5.0",
-    "chokidar": "^1.7.0",
-    "fs-extra": "^5.0.0",
-    "got": "^7.1.0",
-    "md5-file": "^3.1.1",
-    "mime": "^2.2.0",
-    "pretty-bytes": "^4.0.2",
-    "slash": "^1.0.0",
-    "valid-url": "^1.0.9",
-    "xstate": "^3.1.0"
+    "@babel/runtime": "7.0.0",
+    "better-queue": "3.8.7",
+    "bluebird": "3.5.0",
+    "chokidar": "1.7.0",
+    "fs-extra": "5.0.0",
+    "got": "7.1.0",
+    "md5-file": "3.1.1",
+    "mime": "2.2.0",
+    "pretty-bytes": "4.0.2",
+    "slash": "1.0.0",
+    "valid-url": "1.0.9",
+    "xstate": "3.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "cross-env": "^5.1.4"
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0",
+    "cross-env": "5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme",
   "keywords": [
