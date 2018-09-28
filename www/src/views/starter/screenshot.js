@@ -2,7 +2,7 @@ import React from "react"
 import sharedStyles from "../shared/styles"
 import Img from "gatsby-image"
 
-const Screenshot = ({ imageSharp }) => (
+const Screenshot = ({ imageSharp, repoName }) => (
   <div
     className="screenshot"
     css={{
@@ -12,7 +12,7 @@ const Screenshot = ({ imageSharp }) => (
     {imageSharp && (
       <Img
         fluid={imageSharp.childImageSharp.fluid}
-        alt={`Screenshot of ${imageSharp.name}`}
+        alt={`Screenshot of ${repoName}`}
         css={{
           ...sharedStyles.screenshot,
         }}

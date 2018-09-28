@@ -100,7 +100,10 @@ class StarterTemplate extends React.Component {
                 imageSharp={screenshotFile}
                 demo={demoUrl}
               />
-              <StarterScreenshot imageSharp={screenshotFile} />
+              <StarterScreenshot
+                imageSharp={screenshotFile}
+                repoName={repoName}
+              />
             </div>
             <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
             <StarterDetails
