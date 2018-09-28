@@ -12,6 +12,20 @@ export const runQuery = (handler, query) =>
     return r.data
   })
 
+// only keep string and number metadata
+const clean = (siteMetadata) => {
+  const out = {}
+  let r
+  for (r in siteMetadata) {
+    if (typeof siteMetadata[r] === 'string') {
+      out[r] = siteMetadata[r]
+    } else if (typeof siteMetadata[r] === 'number') {
+      out[r] = String(siteMetadata[r])
+    }
+  }
+  return out
+}
+
 export const defaultOptions = {
   // Override if you want to manually specify the RSS "generator" tag.
   generator: `GatsbyJS`,
@@ -38,7 +52,7 @@ export const defaultOptions = {
     },
   }) => {
     return {
-      ...siteMetadata,
+      ...clean(siteMetadata),
       ...rest,
     }
   },
