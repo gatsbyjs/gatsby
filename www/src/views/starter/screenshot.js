@@ -7,7 +7,6 @@ const Screenshot = ({ imageSharp }) => (
   <div
     className="screenshot"
     css={{
-      borderTop: `1px solid ${colors.ui.light}`,
       position: `relative`,
     }}
   >

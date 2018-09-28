@@ -18,13 +18,15 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => (
       flexDirection: `column-reverse`,
       padding: sharedStyles.gutter,
       paddingTop: 0,
-      [presets.Desktop]: {
-        padding: sharedStyles.gutterDesktop,
-        paddingTop: 0,
-      },
       [presets.Phablet]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
+        paddingBottom: 0,
+      },
+      [presets.Desktop]: {
+        padding: sharedStyles.gutterDesktop,
+        paddingTop: 0,
+        paddingBottom: 0,
       },
     }}
   >
@@ -79,7 +81,7 @@ const Meta = ({ starter, repoName, imageSharp, frontmatter }) => (
         borderBottom: `1px solid ${colors.ui.light}`,
         paddingBottom: rhythm(2 / 4),
         [presets.Phablet]: {
-          borderBottom: `0px`,
+          borderBottom: 0,
         },
       }}
     >

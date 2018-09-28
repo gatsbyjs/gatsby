@@ -13,6 +13,9 @@ const Source = ({ frontmatter, markdownRemark }) => (
       borderTop: `1px solid ${colors.ui.light}`,
       fontFamily: options.headerFontFamily.join(`,`),
       margin: `0 ${sharedStyles.gutter}`,
+      [presets.Phablet]: {
+        borderTop: 0,
+      },
       [presets.Desktop]: {
         margin: `0 ${sharedStyles.gutterDesktop}`,
       },
@@ -71,7 +74,6 @@ const Source = ({ frontmatter, markdownRemark }) => (
           flex: 1,
           justifyContent: `flex-end`,
           display: `flex`,
-          borderRight: `1px solid ${colors.ui.light}`,
           ...scale(-1 / 6),
           alignItems: `center`,
         },

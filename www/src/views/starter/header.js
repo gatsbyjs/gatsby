@@ -11,7 +11,10 @@ const Header = ({ stub }) => (
     css={{
       fontFamily: options.headerFontFamily.join(`,`),
       padding: sharedStyles.gutter,
-      paddingBottom: 0,
+      paddingBottom: rhythm(options.blockMarginBottom),
+      [presets.Phablet]: {
+        paddingBottom: 0,
+      },
       [presets.Desktop]: {
         padding: sharedStyles.gutterDesktop,
         paddingBottom: 0,
