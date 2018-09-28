@@ -7,14 +7,14 @@ const slash = require(`slash`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
-const parseGHUrl = require("parse-github-url")
-const { GraphQLClient } = require("graphql-request")
+const parseGHUrl = require(`parse-github-url`)
+const { GraphQLClient } = require(`graphql-request`)
 
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-if (process.env.NODE_ENV === "production" && !process.env.GITHUB_API_TOKEN) {
+if (process.env.NODE_ENV === `production` && !process.env.GITHUB_API_TOKEN) {
   throw new Error(
     `A GitHub token is required to build the site. Check the README.`
   )
@@ -75,7 +75,7 @@ exports.createPages = ({ graphql, actions }) => {
     toPath: `/starters/`,
     isPermanent: true,
   })
-  
+
   createRedirect({
     fromPath: `/docs/adding-third-party-services/`,
     isPermanent: true,
@@ -280,7 +280,7 @@ exports.createPages = ({ graphql, actions }) => {
       })
 
       const starterTemplate = path.resolve(
-        `src/templates/template-starter-showcase.js`
+        `src/templates/template-starter-page.js`
       )
 
       starters.forEach((edge, index) => {

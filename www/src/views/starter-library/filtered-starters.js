@@ -9,7 +9,7 @@ import presets, { colors } from "../../utils/presets"
 import styles from "../shared/styles"
 
 import LHSFilter from "./lhs-filter"
-import StartersList from "./starters-list"
+import StartersList from "./starter-list"
 import Button from "../../components/button"
 import {
   SidebarHeader,
@@ -59,11 +59,11 @@ export default class FilteredStarterLibrary extends Component {
     let starters = data.allStartersYaml.edges
 
     if (urlState.s.length > 0) {
-      starters = starters.filter(starter => {
-        return JSON.stringify(starter.node)
+      starters = starters.filter(starter =>
+        JSON.stringify(starter.node)
           .toLowerCase()
           .includes(urlState.s)
-      })
+      )
     }
 
     if (filtersCategory.size > 0) {

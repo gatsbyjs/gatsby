@@ -11,7 +11,7 @@ import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import get from "lodash/get"
 
-const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
+const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
     // empty state!
     const emptyStateReason =
@@ -179,12 +179,12 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
   }
 }
 
-export default ShowcaseList
+export default StartersList
 
 function sortingFunction(sortRecent) {
   return function({ node: nodeA }, { node: nodeB }) {
-    const metricA = get(nodeA, "fields.starterShowcase.stars", 0)
-    const metricB = get(nodeB, "fields.starterShowcase.stars", 0)
+    const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
+    const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)
     return metricB - metricA
   }
 }
