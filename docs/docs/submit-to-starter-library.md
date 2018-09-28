@@ -27,6 +27,8 @@ There are only two major steps :)
     - Categories and tags for blog posts with pagination
 ```
 
+Check out the `starters.yml` file for examples.
+
 ### Need to change details?
 
 If you want to edit anything in your site submission later, simply edit the .yml file by submitting another PR. GitHub data (like stars) will be automatically pulled and updated, but your starter description, tags, and feature list are up to you!
