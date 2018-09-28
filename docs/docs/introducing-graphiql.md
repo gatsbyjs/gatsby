@@ -20,7 +20,7 @@ When you have <http://localhost:8000/___graphql> open, it will look something li
 on it—including the `siteMetadata` object.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/www/static/graphiql-explore.mp4"></source>
+  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
   <p>Your browser does not support the video element.</p>
 </video>
 
