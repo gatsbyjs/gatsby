@@ -39,7 +39,7 @@ function watch(root, packages, { scanOnce, quiet }) {
   let allCopies = []
 
   chokidar.watch(watchers, {
-    ignored: [(filePath, stats) => _.some(ignored, reg => reg.test(filePath))],
+    ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
   })
     .on(`all`, (event, filePath) => {
       if (event === `change` || event === `add`) {
@@ -65,7 +65,7 @@ function watch(root, packages, { scanOnce, quiet }) {
             `.cache/`,
             path.relative(path.join(prefix, `cache-dir`), filePath)
           )
-          localCopies.push(copyPath(path, newCachePath, quiet))
+          localCopies.push(copyPath(filePath, newCachePath, quiet))
         }
 
         allCopies = allCopies.concat(localCopies)
