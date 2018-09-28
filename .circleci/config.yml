@@ -149,7 +149,7 @@ jobs:
           test_path: integration-tests/production-runtime
 
 workflows:
-  version: 2.1
+  version: 2
   build-test:
     jobs:
       - bootstrap
