@@ -22,7 +22,6 @@ const _options = {
   headerFontFamily,
   bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
   monospaceFontFamily: [
-    `Space Mono`,
     `SFMono-Regular`,
     `Menlo`,
     `Monaco`,
@@ -103,7 +102,6 @@ const _options = {
       },
       ".gatsby-highlight": {
         background: colors.code.bg,
-        boxShadow: `inset 0 0 0 1px ${colors.code.border}`,
         borderRadius: `${presets.radius}px`,
         padding: rhythm(options.blockMarginBottom),
         marginBottom: rhythm(options.blockMarginBottom),
@@ -123,8 +121,8 @@ const _options = {
       },
       ".gatsby-highlight pre code": {
         display: `block`,
-        fontSize: `95%`,
-        lineHeight: options.baseLineHeight,
+        fontSize: `92%`,
+        lineHeight: 1.5,
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
@@ -225,25 +223,20 @@ const _options = {
       },
       ".gatsby-code-title": {
         background: colors.code.bg,
-        border: `1px solid ${colors.code.border}`,
-        borderBottomWidth: 0,
+        borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
         marginLeft: rhythm(-options.blockMarginBottom),
         marginRight: rhythm(-options.blockMarginBottom),
-        padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
+        padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
           options.blockMarginBottom
-        )}`,
+        )} ${rhythm(options.blockMarginBottom / 2)}`,
+        fontSize: `74%`,
       },
       "@media (max-width:634px)": {
         ".gatsby-highlight, .gatsby-resp-image-link": {
           borderRadius: 0,
           borderLeft: 0,
           borderRight: 0,
-        },
-        ".gatsby-highlight": {
-          boxShadow: `inset 0 1px 0 0 ${colors.code.border}, inset 0 -1px 0 0 ${
-            colors.code.border
-          }`,
         },
       },
       video: {
@@ -287,9 +280,9 @@ const _options = {
           )}`,
         },
         ".gatsby-code-title": {
-          padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
+          padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
             options.blockMarginBottom * 1.5
-          )}`,
+          )} ${rhythm(options.blockMarginBottom / 2)}`,
         },
       },
       [presets.VVHd]: {
