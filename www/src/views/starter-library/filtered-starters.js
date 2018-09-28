@@ -9,7 +9,7 @@ import presets, { colors } from "../../utils/presets"
 import styles from "../shared/styles"
 
 import LHSFilter from "./lhs-filter"
-import StartersList from "./starter-list"
+import StarterList from "./starter-list"
 import Button from "../../components/button"
 import {
   SidebarHeader,
@@ -213,7 +213,7 @@ export default class FilteredStarterLibrary extends Component {
               </label>
             </div>
           </ContentHeader>
-          <StartersList
+          <StarterList
             urlState={urlState}
             sortRecent={urlState.sort === `recent`}
             starters={starters}
