@@ -1,71 +1,55 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 
-import ShowcaseView from "../views/starter-showcase"
+import StartersView from "../views/starters"
 
-class ShowcasePage extends Component {
+class StartersPage extends Component {
   render() {
     const data = this.props.data
     const location = this.props.location
 
-    return <ShowcaseView data={data} location={location} />
+    return <StartersView data={data} location={location} />
   }
 }
 
-export default ShowcasePage
+export default StartersPage
 
 export const showcaseQuery = graphql`
   query SiteShowcaseQuery {
-    allFile(filter: { absolutePath: { regex: "/generatedScreenshots/" } }) {
-      edges {
-        node {
-          name
-          childImageSharp {
-            ...ShowcaseThumbnailFragment_item
-          }
-        }
-      }
-    }
-    allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      limit: 1000
-      filter: { fileAbsolutePath: { regex: "/startersData/", ne: null } }
-    ) {
+    allStartersYaml {
       edges {
         node {
           id
-          fileAbsolutePath
-          frontmatter {
-            demo
-            repo
-            tags
-            features
-          }
           fields {
-            anchor
-            slug
-            title
-            package
             starterShowcase {
+              slug
               stub
-              gatsbyDependencies
-              lastUpdated
               description
+              stars
+              lastUpdated
+              owner
+              name
               githubFullName
-              owner {
-                avatar_url
-              }
-              githubData {
-                repoMetadata {
-                  full_name
-                  pushed_at
-                  name
-                  owner {
-                    login
-                  }
+              allDependencies
+              gatsbyDependencies
+              miscDependencies
+            }
+          }
+          url
+          repo
+          description
+          tags
+          features
+          internal {
+            type
+          }
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                fluid(maxWidth: 512) {
+                  ...GatsbyImageSharpFluid_noBase64
                 }
               }
-              stars
             }
           }
         }
