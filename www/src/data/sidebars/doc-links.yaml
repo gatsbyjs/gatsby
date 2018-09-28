@@ -97,7 +97,7 @@
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
-        - title: Introducing GraphiQL*
+        - title: Introducing GraphiQL
           link: /docs/introducing-graphiql/
         - title: Creating and modifying pages
           link: /docs/creating-and-modifying-pages/
