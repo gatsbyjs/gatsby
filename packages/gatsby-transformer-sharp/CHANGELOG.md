@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.3"></a>
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.2...gatsby-transformer-sharp@2.1.3) (2018-09-28)
+
+### Features
+
+- provide fragments without gatsby-image ([#8459](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/8459)) ([3389b89](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/3389b89))
+
 <a name="2.1.2"></a>
 
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-rc.3...gatsby-transformer-sharp@2.1.2) (2018-09-24)

@@ -31,14 +31,14 @@ interface GatsbyImageProps {
   title?: string
   alt?: string
   className?: string | object
-  outerWrapperClassName?: string | object
+  critical?: boolean
   style?: object
   imgStyle?: object
   placeholderStyle: object
-  position?: string
   backgroundColor?: string | boolean
   onLoad?: () => void
   onStartLoad?: (param: { wasCached: boolean }) => void
+  onError?: (event: any) => void
   Tag?: string
 }
 

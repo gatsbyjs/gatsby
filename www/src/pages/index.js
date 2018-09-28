@@ -53,7 +53,7 @@ class IndexRoute extends React.Component {
                 },
               }}
             >
-              <div
+              <main
                 css={{
                   display: `flex`,
                   flexDirection: `row`,
@@ -207,7 +207,7 @@ class IndexRoute extends React.Component {
                     </Container>
                   </div>
                 </Cards>
-              </div>
+              </main>
             </div>
           </div>
         </div>

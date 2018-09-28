@@ -9,10 +9,10 @@ Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby's Gra
 First install the plugin.
 
 ```
-yarn add gatsby-source-graphql
+npm install gatsby-source-graphql
 ```
 
-Providing there is a GraphQL API under a `url`, adding it to an API just requires adding this to the config.
+Provided there is a GraphQL API under a `url`, adding it to an API just requires adding this to the config.
 
 ```js
 module.exports = {
@@ -98,3 +98,4 @@ exports.createPages = async ({ actions, graphql }) => {
 - [graphql-source-graphql docs](/packages/gatsby-source-graphql)
 - [Example with Github API](https://github.com/freiksenet/gatsby-github-displayer)
 - [Example with GraphCMS](https://github.com/freiksenet/gatsby-graphcms)
+- [Example with Hasura](https://github.com/hasura/graphql-engine/tree/master/community/boilerplates/gatsby-postgres-graphql)
