@@ -105,5 +105,6 @@ describe(`Test plugin feed`, async () => {
     }
     await onPostBuild({ graphql }, options)
     expect(internals.writeFile).toMatchSnapshot()
+    expect(graphql).toMatchSnapshot()
   })
 })

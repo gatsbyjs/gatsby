@@ -17,6 +17,55 @@ exports[`Test plugin feed custom query runs 1`] = `
 }
 `;
 
+exports[`Test plugin feed custom query runs 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "
+    {
+      site {
+        siteMetadata {
+          title
+          description
+          siteUrl
+          site_url: siteUrl
+        }
+      }
+    }
+  ",
+    ],
+    Array [
+      "
+          {
+            allMarkdownRemark(
+              limit: 1000,
+            ) {
+              edges {
+                node {
+                  frontmatter {
+                    path
+                  }
+                  excerpt
+                }
+              }
+            }
+          }
+        ",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
 exports[`Test plugin feed default settings work properly 1`] = `
 [MockFunction] {
   "calls": Array [
