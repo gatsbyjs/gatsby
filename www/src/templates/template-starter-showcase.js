@@ -20,12 +20,16 @@ class StarterTemplate extends React.Component {
     showAllDeps: false,
   }
   render() {
-    const { data } = this.props
-    const { markdownRemark, file: imageSharp } = data
+    const { startersYaml } = this.props.data
     const {
+      url: demoUrl,
+      repo: repoUrl,
+      tags,
+      description,
+      features,
       fields: { starterShowcase },
-      frontmatter,
-    } = markdownRemark
+      childScreenshot: { screenshotFile },
+    } = startersYaml
 
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
@@ -39,7 +43,7 @@ class StarterTemplate extends React.Component {
 
     // plug for now
     const isModal = false
-    const repoName = starterShowcase.githubData.repoMetadata.name
+    const repoName = starterShowcase.name
     return (
       <Layout
         location={this.props.location}
@@ -64,11 +68,11 @@ class StarterTemplate extends React.Component {
               <title>{`${repoName}: Gatsby Starter`}</title>
               <meta
                 name="og:image"
-                content={imageSharp.childImageSharp.fluid.src}
+                content={screenshotFile.childImageSharp.fluid.src}
               />
               <meta
                 name="twitter:image"
-                content={imageSharp.childImageSharp.fluid.src}
+                content={screenshotFile.childImageSharp.fluid.src}
               />
               <meta
                 name="description"
@@ -99,7 +103,7 @@ class StarterTemplate extends React.Component {
               }}
             >
               <a
-                href={`https://github.com/${starterShowcase.owner.login}`}
+                href={`https://github.com/${starterShowcase.owner}`}
                 css={{
                   ...styles.link,
                   fontWeight: `bold`,
@@ -108,7 +112,7 @@ class StarterTemplate extends React.Component {
                   },
                 }}
               >
-                {starterShowcase.owner.login}
+                {starterShowcase.owner}
               </a>
               {` `}
               <span>/</span>
@@ -136,11 +140,11 @@ class StarterTemplate extends React.Component {
                 },
               }}
             >
-              {frontmatter.repo && (
+              {repoUrl && (
                 <div
                   css={{
                     padding: 20,
-                    paddingLeft: markdownRemark.featured ? false : 0,
+                    paddingLeft: starterShowcase.featured ? false : 0,
                     display: `flex`,
                     borderRight: `1px solid ${colors.ui.light}`,
                     [presets.Desktop]: {
@@ -157,7 +161,7 @@ class StarterTemplate extends React.Component {
                       width: 20,
                     }}
                   />
-                  <a href={frontmatter.repo} css={{ ...styles.link }}>
+                  <a href={repoUrl} css={{ ...styles.link }}>
                     Source
                   </a>
                 </div>
@@ -180,9 +184,7 @@ class StarterTemplate extends React.Component {
               >
                 <span css={{ marginRight: 20 }}>Try this starter</span>
                 <a
-                  href={`https://app.netlify.com/start/deploy?repository=${
-                    frontmatter.repo
-                  }`}
+                  href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
                   style={{
                     borderBottom: `none`,
                     boxShadow: `none`,
@@ -217,7 +219,7 @@ class StarterTemplate extends React.Component {
                 >
                   Last Updated
                 </span>
-                {showDate(starterShowcase.githubData.repoMetadata.updated_at)}
+                {showDate(starterShowcase.lastUpdated)}
               </div>
             </div>
             <div
@@ -237,7 +239,7 @@ class StarterTemplate extends React.Component {
                 }}
               >
                 <a
-                  href={frontmatter.demo}
+                  href={demoUrl}
                   css={{
                     border: 0,
                     borderRadius: presets.radius,
@@ -264,13 +266,13 @@ class StarterTemplate extends React.Component {
                 <ShareMenu
                   url={`https://github.com/${starterShowcase.githubFullName}`}
                   title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
-                  image={imageSharp.childImageSharp.fluid.src}
+                  image={screenshotFile.childImageSharp.fluid.src}
                 />
               </div>
-              {imageSharp && (
+              {screenshotFile && (
                 <Img
-                  fluid={imageSharp.childImageSharp.fluid}
-                  alt={`Screenshot of ${imageSharp.name}`}
+                  fluid={screenshotFile.childImageSharp.fluid}
+                  alt={`Screenshot of ${name}`}
                   css={{
                     ...sharedStyles.screenshot,
                   }}
@@ -297,7 +299,7 @@ class StarterTemplate extends React.Component {
               >
                 Tags
               </div>
-              <div>{frontmatter.tags.join(`, `)}</div>
+              <div>{tags.join(`, `)}</div>
 
               <div
                 css={{
@@ -308,7 +310,7 @@ class StarterTemplate extends React.Component {
               >
                 Description
               </div>
-              <div>{frontmatter.description}</div>
+              <div>{description}</div>
 
               <div
                 css={{
@@ -320,11 +322,9 @@ class StarterTemplate extends React.Component {
                 Features
               </div>
               <div>
-                {frontmatter.features ? (
+                {features ? (
                   <ul css={{ marginTop: 0 }}>
-                    {frontmatter.features.map((f, i) => (
-                      <li key={i}>{f}</li>
-                    ))}
+                    {features.map((f, i) => <li key={i}>{f}</li>)}
                   </ul>
                 ) : (
                   `No features`
@@ -398,48 +398,47 @@ class StarterTemplate extends React.Component {
 export default StarterTemplate
 
 export const pageQuery = graphql`
-  query TemplateStarter($slug: String!, $stub: String!) {
-    file(name: { eq: $stub }) {
-      name
-      childImageSharp {
-        fluid(maxWidth: 700) {
-          ...GatsbyImageSharpFluid
-        }
-        resize(width: 1500, height: 1500, cropFocus: CENTER, toFormat: JPG) {
-          src
-        }
-      }
-    }
-    markdownRemark(fields: { starterShowcase: { slug: { eq: $slug } } }) {
-      frontmatter {
-        date
-        demo
-        repo
-        tags
-        features
-        description
-      }
+  query TemplateStarter($slug: String!) {
+    startersYaml(fields: { starterShowcase: { slug: { eq: $slug } } }) {
+      id
       fields {
         starterShowcase {
-          stub
           slug
-          date
+          stub
+          description
+          stars
+          lastUpdated
+          owner
+          name
+          githubFullName
+          allDependencies
           gatsbyDependencies
           miscDependencies
-          lastUpdated
-          description
-          githubFullName
-          owner {
-            login
-          }
-          githubData {
-            repoMetadata {
-              updated_at
-              full_name
-              name
+        }
+      }
+      url
+      repo
+      description
+      tags
+      features
+      internal {
+        type
+      }
+      childScreenshot {
+        screenshotFile {
+          childImageSharp {
+            fluid(maxWidth: 700) {
+              ...GatsbyImageSharpFluid
+            }
+            resize(
+              width: 1500
+              height: 1500
+              cropFocus: CENTER
+              toFormat: JPG
+            ) {
+              src
             }
           }
-          stars
         }
       }
     }
