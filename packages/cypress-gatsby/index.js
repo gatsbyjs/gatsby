@@ -1,1 +1,1 @@
-// no-op
+require(`./commands`)

@@ -6,6 +6,10 @@ const {
 } = require(`./loader`).publicLoader
 
 exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
+  if (window.___cypressAPIHandler) {
+    window.___cypressAPIHandler.resolveAPIPromise(api)
+  }
+
   let results = plugins.map(plugin => {
     if (!plugin.plugin[api]) {
       return undefined
