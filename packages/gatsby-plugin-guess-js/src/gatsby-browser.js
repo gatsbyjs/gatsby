@@ -62,7 +62,6 @@ exports.onPrefetchPathname = (
           // eslint-disable-next-line
           const page = ___loader.getPage(p)
           if (!page) return
-          onPostPrefetchPathname({ pathname: p })
 
           let resources = []
           if (chunk.assetsByChunkName[page.componentChunkName]) {
@@ -74,6 +73,8 @@ exports.onPrefetchPathname = (
           resources.push(`static/d/${___dataPaths[page.jsonName]}.json`)
           // TODO add support for pathPrefix
           resources.forEach(r => prefetch(`/${r}`))
+
+          onPostPrefetchPathname({ pathname: p })
         })
       })
     }
