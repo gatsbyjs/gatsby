@@ -2,7 +2,7 @@ const fluidTestId = `image-fluid`
 
 describe(`fluid`, () => {
   beforeEach(() => {
-    cy.visit(`/fluid`).waitForRouteChange()
+    cy.visit(`/fluid`).waitForAPI(`onRouteUpdate`)
   })
 
   it(`renders a spacer div`, () => {

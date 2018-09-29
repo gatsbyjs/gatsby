@@ -2,7 +2,7 @@ const tracedTestId = `image-traced`
 
 describe(`fixed`, () => {
   beforeEach(() => {
-    cy.visit(`/traced`).waitForRouteChange()
+    cy.visit(`/traced`).waitForAPI(`onRouteUpdate`)
   })
 
   it(`renders a traced svg`, () => {
