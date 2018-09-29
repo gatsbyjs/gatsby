@@ -76,6 +76,12 @@ exports.createPages = ({ graphql, actions }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/gatsby-starters/`, // Main Gatsby starters page is the starter library
+    toPath: `/starters/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/docs/adding-third-party-services/`,
     toPath: `/docs/adding-website-functionality/`,
     isPermanent: true,
