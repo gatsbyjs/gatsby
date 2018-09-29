@@ -12,9 +12,9 @@ export function waitForAPI(api) {
   if (resolvedAPIs.indexOf(api) !== -1) {
     // If the API has been marked as pre-resolved,
     // resolve immediately and reset the variables.
-    resolve()
     awaitingAPI = null
     resolvedAPIs = []
+    resolve()
   }
   return promise
 }
