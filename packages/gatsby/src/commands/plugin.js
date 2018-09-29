@@ -1,5 +1,8 @@
 const chalk = require(`chalk`)
+const report = require(`gatsby-cli/lib/reporter`)
+
 
 module.exports = async program => {
-    console.log(`${chalk.blue(`info`)} modifying a plugin`)
+    report.info(`action: ${program.action}`)
+    report.info(`plugin: ${program.plugin}`)
 }

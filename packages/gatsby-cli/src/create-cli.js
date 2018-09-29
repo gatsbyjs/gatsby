@@ -264,6 +264,17 @@ function buildLocalCommands(cli, isLocalSite) {
   cli.command({
     command: `plugin [action] [plugin-name]`,
     desc: `Manage Gatsby plugin to package.json and gatsby-config.js.`,
+    command: `plugin <action> <plugin>`,
+    desc: `Manage Gatsby plugins.`,
+    builder: _ =>
+      _.positional(`action`, {
+        type: `string`,
+        describe: `Action to be taken for provided plugin`,
+        choices: [`add`, `remove`],
+      }).positional(`plugin`, {
+        type: `string`,
+        describe: `Package to add, remove, etc..`,
+      }),
     handler: getCommandHandler(`plugin`),
   })
 
