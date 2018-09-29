@@ -159,7 +159,21 @@ exports.wrapRootElement = true
  * Called when prefetching for a pathname is triggered. Allows
  * for plugins with custom prefetching logic.
  * @param {object} $0
- * @param {object} $0.pathname The pathname whose resources should now be prefetched
+ * @param {string} $0.pathname The pathname whose resources should now be prefetched
+ * @param {function} $0.getResourcesForPathname Function for fetching resources related to pathname
+ * @param {function} $0.onPostPrefetchPathname Function for calling the
+ * post-prefetch API - if you use custom prefetching, you should call this
+ * function once pageCache has been populated (e.g. after using getPage).
+ * @example
+ * exports.onPrefetchPathname = ({
+ *   pathname,
+ *   getResourcesForPathname,
+ *   onPostPrefetchPathname,
+ * }) => {
+ *   getResourcesForPathname(pathname).then(() => {
+ *     onPostPrefetchPathname({ pathname })
+ *   })
+ * }
  */
 exports.onPrefetchPathname = true
 
@@ -167,8 +181,8 @@ exports.onPrefetchPathname = true
  * Called when prefetching for a pathname is successful. Allows
  * for plugins with custom prefetching logic.
  * @param {object} $0
- * @param {object} $0.pathname The pathname whose resources have now been prefetched
- * @param {object} $0.getResourcesForPathname Function for fetching resources related to the pathname
+ * @param {string} $0.pathname The pathname whose resources have now been prefetched
+ * @param {function} $0.getResourceURLsForPathname Function for fetching URLs for resources related to the pathname
  */
 exports.onPostPrefetchPathname = true
 

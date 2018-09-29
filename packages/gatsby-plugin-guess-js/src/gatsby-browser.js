@@ -38,7 +38,10 @@ const prefetch = url => {
   parentElement.appendChild(link)
 }
 
-exports.onPrefetchPathname = ({ pathPrefix }, pluginOptions) => {
+exports.onPrefetchPathname = (
+  { onPostPrefetchPathname, pathPrefix },
+  pluginOptions
+) => {
   if (process.env.NODE_ENV === `production`) {
     const matchedPaths = Object.keys(
       guess({
@@ -59,6 +62,8 @@ exports.onPrefetchPathname = ({ pathPrefix }, pluginOptions) => {
           // eslint-disable-next-line
           const page = ___loader.getPage(p)
           if (!page) return
+          onPostPrefetchPathname({ pathname: p })
+
           let resources = []
           if (chunk.assetsByChunkName[page.componentChunkName]) {
             resources = resources.concat(

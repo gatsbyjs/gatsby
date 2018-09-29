@@ -195,6 +195,8 @@ const queue = {
     if (!prefetchTriggered[path]) {
       apiRunner(`onPrefetchPathname`, {
         pathname: path,
+        onPostPrefetchPathname: args =>
+          apiRunner(`onPostPrefetchPathname`, args),
       })
       prefetchTriggered[path] = true
     }
