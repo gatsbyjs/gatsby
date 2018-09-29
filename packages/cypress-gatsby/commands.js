@@ -12,10 +12,10 @@ Cypress.Commands.add(
   (subject, api) => {
     cy.window().then({ timeout: 9999 }, win => {
       if (!win.___cypressAPIHandler) {
-        win.___cypressAPIHandler = { waitForAPI, resolveAPIPromise }
+        win.___resolveAPIPromise = resolveAPIPromise.bind(win)
       }
 
-      return waitForAPI(api).then(() => subject)
+      return waitForAPI.call(win, api).then(() => subject)
     })
   }
 )

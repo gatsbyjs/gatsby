@@ -6,8 +6,15 @@ const {
 } = require(`./loader`).publicLoader
 
 exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
-  if (window.___cypressAPIHandler) {
-    window.___cypressAPIHandler.resolveAPIPromise(api)
+  // Hooks for cypress-gatsby's API handler
+  if (window.Cypress) {
+    if (window.___resolveAPIPromise) {
+      window.___resolveAPIPromise(api)
+    } else if (window.___resolvedAPIs) {
+      window.___resolvedAPIs.push(api)
+    } else {
+      window.___resolvedAPIs = [api]
+    }
   }
 
   let results = plugins.map(plugin => {
