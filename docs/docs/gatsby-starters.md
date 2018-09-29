@@ -460,7 +460,7 @@ There are several starters that have been created. Create a PR to include yours!
   - All your Project/Portfolio Data in Markdown, server by GraphQL
   - Responsive Design, optimized for Mobile devices
 
-- [gatsby-starter-strata](https://github.com/ChangoMan/gatsby-starter-strata)
+- [gatsby-starter-strata](https://github.com/codebushi/gatsby-starter-strata-v2)
   [(demo)](http://gatsby-strata.surge.sh/)
 
   Features:
@@ -471,6 +471,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Lightbox style React photo gallery
   - Fully Responsive
   - Styling with SCSS
+  - Updated to use Gatsby.js V2
 
 - [verious](https://github.com/cpinnix/verious-boilerplate)
   [(demo)](https://www.verious.io/)
@@ -611,7 +612,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Seo Friendly
   - Uses Flexbox
 
-- [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar)
+- [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar-v2)
   [(demo)](http://gatsby-stellar.surge.sh/)
 
   Features:
@@ -622,6 +623,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Sticky Navigation when scrolling.
   - Scroll spy and smooth scrolling to different sections of the page.
   - Styling with SCSS
+  - Updated to use Gatsby.js V2
 
 - [gatsby-starter-tailwind](https://github.com/taylorbryant/gatsby-starter-tailwind)
   [(demo)](https://quizzical-mcclintock-0226ac.netlify.com/)
@@ -653,7 +655,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Avoids code duplication - generates pages for each locale
   - Possibility of translated paths
 
-- [gatsby-starter-photon](https://github.com/codebushi/gatsby-starter-photon)
+- [gatsby-starter-photon](https://github.com/codebushi/gatsby-starter-photon-v2)
   [(demo)](http://gatsby-photon.surge.sh/)
 
   Features:
@@ -663,6 +665,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Single Page, Responsive Site
   - Custom grid made with CSS Grid
   - Styling with SCSS
+  - Updated to use Gatsby.js V2
 
 - [gatsby-starter-business](https://github.com/v4iv/gatsby-starter-business)
   [(demo)](https://gatsby-starter-business.netlify.com/)
