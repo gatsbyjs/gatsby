@@ -237,6 +237,7 @@ class Image extends React.Component {
             ...style,
           }}
           ref={this.handleRef}
+          key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
           {/* Preserve the aspect ratio. */}
           <Tag
@@ -341,6 +342,7 @@ class Image extends React.Component {
           className={`${className ? className : ``} gatsby-image-wrapper`}
           style={divStyle}
           ref={this.handleRef}
+          key={`fixed-${JSON.stringify(image.srcSet)}`}
         >
           {/* Show the blurry base64 image. */}
           {image.base64 && (

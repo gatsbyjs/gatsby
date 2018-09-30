@@ -6,6 +6,28 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`slugify`)
 const url = require(`url`)
+const getpkgjson = require(`get-package-json-from-github`)
+const parseGHUrl = require(`parse-github-url`)
+const { GraphQLClient } = require(`graphql-request`)
+
+require(`dotenv`).config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
+if (process.env.NODE_ENV === `production` && !process.env.GITHUB_API_TOKEN) {
+  throw new Error(
+    `A GitHub token is required to build the site. Check the README.`
+  )
+}
+
+// used to gather repo data on starters
+const githubApiClient = process.env.GITHUB_API_TOKEN
+  ? new GraphQLClient(`https://api.github.com/graphql`, {
+      headers: {
+        authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`,
+      },
+    })
+  : null
 
 const localPackages = `../packages`
 const localPackagesArr = []
@@ -43,9 +65,8 @@ exports.createPages = ({ graphql, actions }) => {
 
   createRedirect({
     fromPath: `/docs/netlify-cms/`,
-    isPermanent: true,
-    redirectInBrowser: true,
     toPath: `/docs/sourcing-from-netlify-cms/`,
+    isPermanent: true,
   })
 
   createRedirect({
@@ -53,12 +74,23 @@ exports.createPages = ({ graphql, actions }) => {
     toPath: `/starters/`,
     isPermanent: true,
   })
-  
+
   createRedirect({
     fromPath: `/docs/adding-third-party-services/`,
-    isPermanent: true,
-    redirectInBrowser: true,
     toPath: `/docs/adding-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/bound-action-creators/`,
+    toPath: `/docs/actions/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/bound-action-creators`,
+    toPath: `/docs/actions`,
+    isPermanent: true,
   })
 
   return new Promise((resolve, reject) => {
@@ -82,22 +114,7 @@ exports.createPages = ({ graphql, actions }) => {
       `src/templates/template-creator-details.js`
     )
 
-    createRedirect({
-      fromPath: `/docs/bound-action-creators/`,
-      isPermanent: true,
-      redirectInBrowser: true,
-      toPath: `/docs/actions/`,
-    })
-
-    createRedirect({
-      fromPath: `/docs/bound-action-creators`,
-      isPermanent: true,
-      redirectInBrowser: true,
-      toPath: `/docs/actions`,
-    })
-
     // Query for markdown nodes to use in creating pages.
-
     graphql(
       `
         query {
@@ -111,10 +128,6 @@ exports.createPages = ({ graphql, actions }) => {
                 fields {
                   slug
                   package
-                  starterShowcase {
-                    slug
-                    stub
-                  }
                 }
                 frontmatter {
                   title
@@ -150,6 +163,21 @@ exports.createPages = ({ graphql, actions }) => {
                 fields {
                   slug
                 }
+              }
+            }
+          }
+          allStartersYaml {
+            edges {
+              node {
+                id
+                fields {
+                  starterShowcase {
+                    slug
+                    stub
+                  }
+                }
+                url
+                repo
               }
             }
           }
@@ -236,19 +264,23 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
-      // Create starters.
-      const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
+      // Create starter pages.
+      const starters = _.filter(result.data.allStartersYaml.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
-        if (!slug) return null
-        else return edge
+        if (!slug) {
+          return null
+        } else {
+          return edge
+        }
       })
+
       const starterTemplate = path.resolve(
-        `src/templates/template-starter-showcase.js`
+        `src/templates/template-starter-page.js`
       )
 
       starters.forEach((edge, index) => {
         createPage({
-          path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
+          path: `/starters${edge.node.fields.starterShowcase.slug}`,
           component: slash(starterTemplate),
           context: {
             slug: edge.node.fields.starterShowcase.slug,
@@ -256,7 +288,6 @@ exports.createPages = ({ graphql, actions }) => {
           },
         })
       })
-      // END Create starters.
 
       // Create contributor pages.
       result.data.allAuthorYaml.edges.forEach(edge => {
@@ -387,13 +418,6 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       })
       createNodeField({ node, name: `package`, value: true })
     }
-    if (
-      // starter showcase
-      fileNode.sourceInstanceName === `StarterShowcaseData` &&
-      parsedFilePath.name !== `README`
-    ) {
-      createNodesForStarterShowcase({ node, getNode, getNodes, actions })
-    } // end starter showcase
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
@@ -408,6 +432,116 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     const cleaned = parsed.hostname + parsed.pathname
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
+  } else if (node.internal.type === `StartersYaml` && node.repo) {
+    // To develop on the starter showcase, you'll need a GitHub
+    // personal access token. Check the `www` README for details.
+    // Default fields are to avoid graphql errors.
+    const { owner, name: repoStub } = parseGHUrl(node.repo)
+    const defaultFields = {
+      slug: ``,
+      stub: ``,
+      name: ``,
+      description: ``,
+      stars: 0,
+      lastUpdated: ``,
+      owner: ``,
+      githubFullName: ``,
+      allDependencies: [],
+      gatsbyDependencies: [],
+      miscDependencies: [],
+    }
+
+    if (!process.env.GITHUB_API_TOKEN) {
+      return createNodeField({
+        node,
+        name: `starterShowcase`,
+        value: {
+          ...defaultFields,
+        },
+      })
+    }
+
+    Promise.all([
+      getpkgjson(node.repo),
+      githubApiClient.request(`
+          query {
+            repository(owner:"${owner}", name:"${repoStub}") {
+              name
+              stargazers {
+                totalCount
+              }
+              createdAt
+              updatedAt
+              owner {
+                login
+              }
+              nameWithOwner
+            }
+          }
+        `),
+    ])
+      .then(results => {
+        const [pkgjson, githubData] = results
+        const {
+          stargazers: { totalCount: stars },
+          updatedAt: lastUpdated,
+          owner: { login: owner },
+          name,
+          nameWithOwner: githubFullName,
+        } = githubData.repository
+
+        const { dependencies = [], devDependencies = [] } = pkgjson
+        const allDependencies = Object.entries(dependencies).concat(
+          Object.entries(devDependencies)
+        )
+
+        const gatsbyMajorVersion = allDependencies
+          .filter(([key, _]) => key === `gatsby`)
+          .map(version => {
+            let [gatsby, versionNum] = version
+            if (versionNum === `latest` || versionNum === `next`) {
+              return [gatsby, `2`]
+            }
+            return [gatsby, versionNum.replace(/\D/g, ``).charAt(0)]
+          })
+        const starterShowcaseFields = {
+          slug: `/${repoStub}/`,
+          stub: repoStub,
+          name,
+          description: pkgjson.description,
+          stars,
+          lastUpdated,
+          owner,
+          githubFullName,
+          gatsbyMajorVersion,
+          allDependencies,
+          gatsbyDependencies: allDependencies
+            .filter(
+              ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
+            )
+            .filter(([key, _]) => key.includes(`gatsby`)),
+          miscDependencies: allDependencies.filter(
+            ([key, _]) => !key.includes(`gatsby`)
+          ),
+        }
+        createNodeField({
+          node,
+          name: `starterShowcase`,
+          value: starterShowcaseFields,
+        })
+      })
+      .catch(err => {
+        console.log(
+          `\nError getting repo data. Your GitHub token may be invalid`
+        )
+        return createNodeField({
+          node,
+          name: `starterShowcase`,
+          value: {
+            ...defaultFields,
+          },
+        })
+      })
   }
 
   // Community/Creators Pages
@@ -439,59 +573,6 @@ exports.onPostBuild = () => {
     `./public/gatsbygram.mp4`
   )
 }
-
-// Starter Showcase related code
-const { createFilePath } = require(`gatsby-source-filesystem`)
-const gitFolder = `./src/data/StarterShowcase/generatedGithubData`
-function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
-  const { createNodeField, createParentChildLink } = actions
-  if (node.internal.type === `MarkdownRemark`) {
-    const slug = createFilePath({
-      node,
-      getNode,
-      basePath: `startersData`,
-    })
-    // preprocessing
-    const stub = slug.replace(/\//gi, ``)
-    var fromPath = path.join(gitFolder, `${stub}.json`)
-    var data = fs.readFileSync(fromPath, `utf8`)
-    const ghdata = JSON.parse(data)
-    if (ghdata.repository && ghdata.repository.url)
-      ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
-    const { repoMetadata, dependencies = [], devDependencies = [] } = ghdata
-    const allDependencies = Object.entries(dependencies).concat(
-      Object.entries(devDependencies)
-    )
-    // make an object to stick into a Field
-    const starterShowcaseFields = {
-      slug,
-      stub,
-      date: new Date(node.frontmatter.date),
-      githubData: ghdata,
-      // nice-to-have destructures of githubData
-      description: ghdata.description,
-      stars: repoMetadata.stargazers_count,
-      lastUpdated: repoMetadata.created_at,
-      owner: repoMetadata.owner,
-      githubFullName: repoMetadata.full_name,
-      allDependencies,
-      gatsbyDependencies: allDependencies
-        .filter(
-          ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
-        )
-        .filter(([key, _]) => key.includes(`gatsby`)),
-      miscDependencies: allDependencies.filter(
-        ([key, _]) => !key.includes(`gatsby`)
-      ),
-    }
-    createNodeField({
-      node,
-      name: `starterShowcase`,
-      value: starterShowcaseFields,
-    })
-  }
-}
-// End Starter Showcase related code
 
 // limited logging for debug purposes
 let limitlogcount = 0
