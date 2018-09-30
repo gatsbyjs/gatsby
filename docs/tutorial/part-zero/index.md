@@ -141,7 +141,7 @@ A code editor is a program designed specifically for editing computer code. Ther
 
 ### ✋ Download VS Code
 
-Visit the [VS code site](https://code.visualstudio.com/#alt-downloads), and download the version appropriate for your platform.
+Visit the [VS code site](https://code.visualstudio.com/#alt-downloads), and download the version appropriate for your platform. 
 
 ### ✋ Install Prettier plugin
 
@@ -154,6 +154,10 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 3.  Click "Install". After installation you'll be prompted to restart VS Code to enable the extension.
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
+
+### ✋ Further Tweaks and tuning
+
+* [Here](/docs/vscode-setup) is a guide to get IntelliSense and Chrome Debugging up and running smoothly.
 
 ## ➡️ What’s Next?
 
