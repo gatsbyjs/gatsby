@@ -2653,6 +2653,18 @@
   built_by: Ema Suriano
   built_by_url: https://emasuriano.com/
   featured: false
+- title: EZAgrar
+  main_url: https://www.ezagrar.at/en/
+  url: https://www.ezagrar.at/en/
+  description: >
+    EZAgrar.at is the homepage of the biggest agricultural machinery dealership in Austria. In total 8 pages will be built for this client reusing a lot of components between them.
+  categories:
+    - eCommerce
+    - Marketing
+    - Multilingual
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
 - title: OAsome blog
   main_url: https://oasome.blog/
   url: https://oasome.blog/
