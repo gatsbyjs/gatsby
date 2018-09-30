@@ -336,7 +336,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Secured Credit Card payments with Stripe
   - Storing of funding information in Firebase
 
-- [gatsby-starter-dimension-v2](https://github.com/codebushi/gatsby-starter-dimension-v2)
+- [gatsby-starter-dimension](https://github.com/codebushi/gatsby-starter-dimension)
   [(demo)](http://gatsby-dimension-v2.surge.sh/)
 
   Features:
@@ -405,7 +405,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Offline support.
   - Page transitions.
 
-- [gatsby-starter-forty-v2](https://github.com/codebushi/gatsby-starter-forty-v2)
+- [gatsby-starter-forty](https://github.com/codebushi/gatsby-starter-forty)
   [(demo)](http://gatsby-forty-v2.surge.sh/)
 
   Features:
@@ -460,7 +460,7 @@ There are several starters that have been created. Create a PR to include yours!
   - All your Project/Portfolio Data in Markdown, server by GraphQL
   - Responsive Design, optimized for Mobile devices
 
-- [gatsby-starter-strata](https://github.com/codebushi/gatsby-starter-strata-v2)
+- [gatsby-starter-strata](https://github.com/codebushi/gatsby-starter-strata)
   [(demo)](http://gatsby-strata.surge.sh/)
 
   Features:
@@ -612,7 +612,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Seo Friendly
   - Uses Flexbox
 
-- [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar-v2)
+- [gatsby-starter-stellar](https://github.com/codebushi/gatsby-starter-stellar)
   [(demo)](http://gatsby-stellar.surge.sh/)
 
   Features:
@@ -655,7 +655,7 @@ There are several starters that have been created. Create a PR to include yours!
   - Avoids code duplication - generates pages for each locale
   - Possibility of translated paths
 
-- [gatsby-starter-photon](https://github.com/codebushi/gatsby-starter-photon-v2)
+- [gatsby-starter-photon](https://github.com/codebushi/gatsby-starter-photon)
   [(demo)](http://gatsby-photon.surge.sh/)
 
   Features:
