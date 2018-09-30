@@ -2653,6 +2653,18 @@
   built_by: Ema Suriano
   built_by_url: https://emasuriano.com/
   featured: false
+- title: Luan Orlandi
+  main_url: https://luanorlandi.github.io
+  url: https://luanorlandi.github.io
+  source_url: https://github.com/luanorlandi/luanorlandi.github.io
+  description: >
+    Luan Orlandi's personal website. Brazilian web developer, enthusiast in React and Gatsby.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Luan Orlandi
+  built_by_url: https://github.com/luanorlandi
 - title: Mobius Labs
   main_url: https://mobius.ml
   url: https://mobius.ml
