@@ -1,6 +1,6 @@
 /* global Cypress cy */
 
-import { waitForAPI, resolveAPIPromise } from "./api-handler"
+import apiHandler, { waitForAPI } from "./api-handler"
 
 Cypress.Commands.add(`getTestElement`, selector =>
   cy.get(`[data-testid="${selector}"]`)
@@ -12,7 +12,7 @@ Cypress.Commands.add(
   (subject, api) => {
     cy.window().then({ timeout: 9999 }, win => {
       if (!win.___cypressAPIHandler) {
-        win.___resolveAPIPromise = resolveAPIPromise.bind(win)
+        win.___apiHandler = apiHandler.bind(win)
       }
 
       return waitForAPI.call(win, api).then(() => subject)

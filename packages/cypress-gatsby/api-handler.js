@@ -18,7 +18,7 @@ export function waitForAPI(api) {
   return promise
 }
 
-export function resolveAPIPromise(api) {
+export default function apiHandler(api) {
   if (!awaitingAPI) {
     // If we're not currently waiting for anything,
     // mark the API as pre-resolved.
