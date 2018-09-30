@@ -11,7 +11,7 @@ Cypress.Commands.add(
   { prevSubject: `optional` },
   (subject, api) => {
     cy.window().then({ timeout: 9999 }, win => {
-      if (!win.___cypressAPIHandler) {
+      if (!win.___apiHandler) {
         win.___apiHandler = apiHandler.bind(win)
       }
 
