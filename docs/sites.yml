@@ -2653,3 +2653,15 @@
   built_by: Ema Suriano
   built_by_url: https://emasuriano.com/
   featured: false
+- title: OAsome blog
+  main_url: https://oasome.blog/
+  url: https://oasome.blog/
+  source_url: https://github.com/oorestisime/oasome
+  description: >
+    Paris-based Cypriot adventurers. A and O. Lovers of life and travel. Want to get a glimpse of the OAsome world?
+  categories:
+    - Blog
+    - Photography
+    - Travel
+  built_by: Orestis Ioannou
+  featured: false
