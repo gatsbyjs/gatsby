@@ -2653,6 +2653,18 @@
   built_by: Ema Suriano
   built_by_url: https://emasuriano.com/
   featured: false
+- title: Mobius Labs
+  main_url: https://mobius.ml
+  url: https://mobius.ml
+  description: >
+    Mobius Labs landing page, a Start-up working on Computer Vision
+  categories:
+    - Landing page
+    - Marketing
+    - Technology
+    - AI
+  built_by: sktt
+  built_by_url: https://github.com/sktt
 - title: EZAgrar
   main_url: https://www.ezagrar.at/en/
   url: https://www.ezagrar.at/en/
