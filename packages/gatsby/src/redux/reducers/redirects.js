@@ -1,11 +1,14 @@
 const _ = require(`lodash`)
 
+/*
+ * Explicitly add redirect with and without trailing slash
+ */
 module.exports = (state = [], action) => {
   switch (action.type) {
     case `CREATE_REDIRECT`: {
-      if (!state.some(redirect => _.isEqual(redirect, action.payload))) {
-        // Add redirect only if it wasn't yet added to prevent duplicates
-        return [...state, action.payload]
+      const filtered = action.payload.filter(redirect => !state.find(existing => _.isEqual(existing, redirect)))
+      if (filtered.length > 0) {
+        return [...state, ...action.payload]
       }
       return state
     }

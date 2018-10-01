@@ -1099,15 +1099,34 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
+  const normalize = pathPart => `${pathPrefix}${pathPart.replace(/\/$/, '')}`;
+  const isFile = pathPart => /\..+$/.test(pathPart);
+
+  const addSlashRedirect = (...parts) => parts.some(part => !isFile(part))
+
+  const payload =       {
+    fromPath: normalize(fromPath),
+    isPermanent,
+    redirectInBrowser,
+    toPath: normalize(toPath),
+    ...rest,
+  };
+
   return {
     type: `CREATE_REDIRECT`,
-    payload: {
-      fromPath: `${pathPrefix}${fromPath}`,
-      isPermanent,
-      redirectInBrowser,
-      toPath: `${pathPrefix}${toPath}`,
-      ...rest,
-    },
+    payload: [
+      payload
+    ].concat(addSlashRedirect(fromPath, toPath) ? [
+      {
+        ...payload,
+        ...(isFile(fromPath) ? {} : {
+          fromPath: `${payload.fromPath}/`
+        }),
+        ...(isFile(toPath) ? {} : {
+          toPath: `${payload.toPath}/`
+        })
+      }
+    ] : []),
   }
 }
 
