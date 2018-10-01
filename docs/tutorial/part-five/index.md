@@ -48,7 +48,7 @@ npm install --save gatsby-source-filesystem
 
 Then add it to your `gatsby-config.js`:
 
-```javascript{6-12}
+```javascript{6-12}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -108,7 +108,7 @@ Let's try this.
 Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
 created:
 
-```jsx{6}
+```jsx{6}:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -151,7 +151,7 @@ The shape of the data matches the shape of the GraphQL query.
 
 Let's add some code to your component to print out the File data.
 
-```jsx{9-31}
+```jsx{9-31}:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
