@@ -2,7 +2,7 @@
 title: "Setting up Visual Studio Code for Gatsby development"
 ---
 
-VS Code is a wonderful tool that can require some initial setup to get everything working. Here's some recommendations to get code flowing smoothly.
+VS Code is a wonderful tool that can require some initial setup to get everything working. Here are some recommendations to get code flowing smoothly. 
 
 ## Initial Setup
 
@@ -16,7 +16,7 @@ You should add the `typescript` package as a global or dev dependency for your p
 
 `yarn global add typescript` will add it globally.
 
-The following `jsconfig.json` is reccomended for getting better IntelliSense on your `.js` files while working.
+The following `jsconfig.json` is recommended for getting better IntelliSense on your `.js` files while working.
 
 ```json5
 {
