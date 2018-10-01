@@ -355,7 +355,14 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 You've built a local plugin for your project, but what if you want to share it with others? `npm` allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Don't forget to edit your plugin's `package.json` file to include info about your plugin.
+> **NOTE:** Don't forget to edit your plugin's `package.json` file to include info about your plugin. To make sure it is included in the  [Gatsby Plugin Library](https://www.gatsbyjs.org/plugins/), add a `keywords` field to package.json containing `gatsby` and `gatsby-plugin`.
+
+```
+"keywords": [
+  "gatsby",
+  "gatsby-plugin"
+]
+```
 
 ## Summary
 
