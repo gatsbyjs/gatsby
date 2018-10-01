@@ -27,23 +27,23 @@ const copyPath = (oldPath, newPath, quiet) =>
   })
 
 function watch(root, packages, { scanOnce, quiet }) {
-  const ignored = [
-    /[/\\]node_modules[/\\]/i,
-    /\.git/i,
-    /\.DS_Store/,
-  ].concat(
+  const ignored = [/[/\\]node_modules[/\\]/i, /\.git/i, /\.DS_Store/].concat(
     packages.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
   )
   const watchers = packages.map(p => path.join(root, `/packages/`, p))
 
   let allCopies = []
 
-  chokidar.watch(watchers, {
-    ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
-  })
+  chokidar
+    .watch(watchers, {
+      ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
+    })
     .on(`all`, (event, filePath) => {
       if (event === `change` || event === `add`) {
-        const packageName = path.basename(path.dirname(filePath.split(`packages/`).pop()))
+        const [packageName] = filePath
+          .split(`packages/`)
+          .pop()
+          .split(`/`)
         const prefix = path.join(root, `/packages/`, packageName)
 
         // Copy it over local version.
