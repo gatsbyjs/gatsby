@@ -24,7 +24,7 @@ There are only two major steps :)
 
 3.  Edit the [`creators.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/community/creators.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
-```yaml
+```yaml:title=docs/community/creators.yml
 - name: Your Name
   # You can choose one of three `types`: agency, company, or individual
   type: agency
