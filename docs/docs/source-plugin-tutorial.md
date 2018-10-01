@@ -102,7 +102,7 @@ npm install node-fetch query-string --save
 
 Open your `package.json` file and you'll see `node-fetch` and `query-string` have been added to a `dependencies` section at the end:
 
-```js
+```js:title=package.json
   "dependencies": {
     "node-fetch": "^2.2.0",
     "query-string": "^6.1.0"
@@ -115,7 +115,7 @@ With the setup done, move on to adding the plugin's functionality.
 
 Create a new file called `gatsby-node.js` in your `gatsby-source-pixabay` directory, and add the following:
 
-```js
+```js:title=gatsby-node.js
 const crypto = require("crypto")
 const fetch = require("node-fetch")
 const queryString = require("query-string")
@@ -169,7 +169,7 @@ The skeleton of your plugin is in place which means you can add it to your proje
 
 Open `gatsby-config.js` from the root directory of your tutorial site, and add the `gatsby-source-pixabay` plugin:
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby Default Starter",
@@ -208,7 +208,7 @@ Note that Gatsby is warning that your plugin doesn't do anything yet. Time to fi
 
 Update `gatsby-node.js` in your `plugins/gatsby-source-pixabay/` directory:
 
-```js{11-30}
+```js{11-30}:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 const crypto = require("crypto")
@@ -268,7 +268,7 @@ You're ready to add the final step of your plugin - converting this data into a 
 
 You're adding a helper function on lines 12 to 32 and processing the data into a node on lines 49 to 52:
 
-```js{12-32,49-52}
+```js{12-32,49-52}:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 const crypto = require("crypto")

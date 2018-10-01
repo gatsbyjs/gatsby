@@ -21,7 +21,7 @@ This guide will use the Gatsby starter project `gatsby-starter-default`, which c
 
 First, locate the `gatsby-config.js` file in the root directory of your project. Inside the `siteMetadata` object, add an array of menu link objects. These objects should contain two properties: `name` and `link`. `name` is the name of your navigation item and `link` is the page which will be navigated to when a menu item is clicked.
 
-```diff
+```diff:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Default Starter',
@@ -96,7 +96,7 @@ StaticQuery is a new component introduced in Gatsby V2, which allows you to run 
 
 Let's extend the query within this component to include the menu links, so it looks like so:
 
-```diff
+```diff:title=src/components/layout.js
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -143,7 +143,7 @@ With the above changes to your `StaticQuery` component, the `render` property, w
 
 To do this, the header component that is already available in the project seems like it might be a good starting place to display the navigation. Lets pass the `menuLinks` object to this header component like so:
 
-```diff
+```diff:title=src/components/layout.js
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -191,7 +191,7 @@ const Layout = ({ children }) => (
 
 Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to us when generating our project):
 
-```diff
+```diff:title=src/components/header.js
 import React from 'react'
 import { Link } from 'gatsby'
 const Header = ({ siteTitle, menuLinks }) => (
@@ -235,7 +235,7 @@ The `siteTitle` and `menuLinks` arguments are de-structered es6 syntax for quick
 
 You can now access the header component's props and map the `menuLinks` array into elements that can be rendered in the document:
 
-```diff
+```diff:title=src/components/header.js
 import React from 'react'
 import { Link } from 'gatsby'
 
