@@ -58,15 +58,13 @@ describe(`watching`, () => {
     })
 
     it(`copies files on watch event`, () => {
+      const filePath = path.join(process.cwd(), `packages/gatsby/dist/index.js`)
       watch(...args)
-      callEventCallback(
-        `add`,
-        path.join(process.cwd(), `packages/gatsby/dist/index.js`)
-      )
+      callEventCallback(`add`, filePath)
 
       expect(fs.copy).toHaveBeenCalledTimes(1)
       expect(fs.copy).toHaveBeenCalledWith(
-        expect.stringContaining(`gatsby/packages`),
+        filePath,
         `node_modules/gatsby/dist/index.js`,
         expect.any(Function)
       )
