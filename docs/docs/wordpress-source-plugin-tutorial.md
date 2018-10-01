@@ -37,7 +37,7 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```js{11-30}
+```js{11-30}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby Wordpress Tutorial",
@@ -122,7 +122,7 @@ This next query will pull in a sorted list of the blogposts:
 
 Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
 
