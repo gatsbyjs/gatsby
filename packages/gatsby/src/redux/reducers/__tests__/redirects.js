@@ -37,6 +37,16 @@ describe(`redirects`, () => {
     expect(state).toHaveLength(1)
   })
 
+  it(`skips root domain`, () => {
+    const redirect = { fromPath: `/`, toPath: `/docs` }
+    let state = []
+
+    state = createRedirects(state, createAction(redirect))
+
+    expect(state).toHaveLength(1)
+    expect(state).toEqual([expect.objectContaining(redirect)])
+  })
+
   it(`adds file redirects, as is`, () => {
     let state = []
 
@@ -83,10 +93,9 @@ describe(`redirects`, () => {
 
     expect(state).toEqual([
       expect.objectContaining(redirect),
-      {
-        fromPath: `/blog/`,
-        toPath: `/docs/`,
-      },
+      expect.objectContaining({
+        fromPath: `/blog/`
+      }),
     ])
   })
 })

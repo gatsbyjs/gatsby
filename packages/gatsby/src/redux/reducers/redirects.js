@@ -1,19 +1,15 @@
 const _ = require(`lodash`)
 
 const createRedirectWithSlash = redirect => {
-  const { fromPath, toPath } = redirect
+  const { fromPath } = redirect
   const isFile = pathPart => /\..+$/.test(pathPart)
-  const addSlashRedirect = (...parts) => parts.map(part => part.split(`/`).pop()).some(part => !isFile(part))
 
-  if (addSlashRedirect(fromPath, toPath)) {
+  if (!isFile(fromPath) && fromPath !== `/`) {
     return {
       ...redirect,
       ...(isFile(fromPath) ? {} : {
         fromPath: `${fromPath}/`,
-      }),
-      ...(isFile(toPath) ? {} : {
-        toPath: `${toPath}/`,
-      }),
+      })
     }
   }
 

@@ -1099,7 +1099,13 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
-  const normalize = pathPart => `${pathPrefix}${pathPart.replace(/\/+$/, ``)}`
+  const normalize = pathPart => {
+    const normalized = `${pathPrefix}${pathPart.replace(/\/+$/, ``)}`
+    if (normalized !== ``) {
+      return normalized
+    }
+    return `/`
+  }
 
   return {
     type: `CREATE_REDIRECT`,

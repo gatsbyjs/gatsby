@@ -35,18 +35,15 @@ describe(`createRedirect`, () => {
     expect(action.type).toBe(`CREATE_REDIRECT`)
   })
 
-  it(`adds pathPrefix`, () => {
-    mockStore(`/blog`)
+  it(`handles root path`, () => {
+    mockStore()
 
     const action = createRedirect({
-      fromPath: `/other.html`,
-      toPath: `/sample.html`,
+      fromPath: `/index.html`,
+      toPath: `/`
     })
 
-    expect(action.payload).toEqual(expect.objectContaining({
-      fromPath: expect.stringMatching(/^\/blog/),
-      toPath: expect.stringMatching(/^\/blog/),
-    }))
+    expect(action.payload.toPath).toBe(`/`)
   })
 
   it(`removes trailing slashes`, () => {
@@ -85,5 +82,35 @@ describe(`createRedirect`, () => {
       fromPath: `/blog/`,
       toPath: `/docs/`,
     }))
+  })
+
+  describe(`pathPrefix`, () => {
+    it(`adds on non-root domain`, () => {
+      mockStore(`/blog`)
+  
+      const action = createRedirect({
+        fromPath: `/other.html`,
+        toPath: `/sample.html`,
+      })
+  
+      expect(action.payload).toEqual(expect.objectContaining({
+        fromPath: expect.stringMatching(/^\/blog/),
+        toPath: expect.stringMatching(/^\/blog/),
+      }))
+    })
+
+    it(`adds on root domain`, () => {
+      mockStore(`/blog`)
+
+      const action = createRedirect({
+        fromPath: `/index.html`,
+        toPath: `/`
+      })
+
+      expect(action.payload).toEqual(expect.objectContaining({
+        fromPath: expect.stringMatching(/^\/blog/),
+        toPath: `/blog`,
+      }))
+    })
   })
 })
