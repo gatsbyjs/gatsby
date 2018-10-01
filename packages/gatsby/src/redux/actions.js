@@ -8,9 +8,8 @@ const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
 const kebabHash = require(`kebab-hash`)
-const { hasNodeChanged, getNode } = require(`./index`)
+const { hasNodeChanged, getNode, store } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
-const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
@@ -1077,6 +1076,7 @@ actions.setPluginStatus = (
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/packages/gatsby-plugin-netlify/)).
+ * Note: slash suffix is added automatically, e.g. fromPath: `/blog` handles both `/blog` and `/blog/` routes
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
@@ -1099,34 +1099,17 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
-  const normalize = pathPart => `${pathPrefix}${pathPart.replace(/\/$/, '')}`;
-  const isFile = pathPart => /\..+$/.test(pathPart);
-
-  const addSlashRedirect = (...parts) => parts.some(part => !isFile(part))
-
-  const payload =       {
-    fromPath: normalize(fromPath),
-    isPermanent,
-    redirectInBrowser,
-    toPath: normalize(toPath),
-    ...rest,
-  };
+  const normalize = pathPart => `${pathPrefix}${pathPart.replace(/\/+$/, ``)}`
 
   return {
     type: `CREATE_REDIRECT`,
-    payload: [
-      payload
-    ].concat(addSlashRedirect(fromPath, toPath) ? [
-      {
-        ...payload,
-        ...(isFile(fromPath) ? {} : {
-          fromPath: `${payload.fromPath}/`
-        }),
-        ...(isFile(toPath) ? {} : {
-          toPath: `${payload.toPath}/`
-        })
-      }
-    ] : []),
+    payload: {
+      fromPath: normalize(fromPath),
+      isPermanent,
+      redirectInBrowser,
+      toPath: normalize(toPath),
+      ...rest,
+    },
   }
 }
 
