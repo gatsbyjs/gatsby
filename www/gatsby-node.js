@@ -446,6 +446,7 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       lastUpdated: ``,
       owner: ``,
       githubFullName: ``,
+      gatsbyMajorVersion: ``,
       allDependencies: [],
       gatsbyDependencies: [],
       miscDependencies: [],
@@ -504,6 +505,9 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
             }
             return [gatsby, versionNum.replace(/\D/g, ``).charAt(0)]
           })
+
+        // If a new field is added here, make sure a corresponding
+        // change is made to "defaultFields" to not break DX
         const starterShowcaseFields = {
           slug: `/${repoStub}/`,
           stub: repoStub,
