@@ -194,7 +194,7 @@ function prepareStructuredTextNode(node, key, content, createNode, createNodeId)
     [key]: str,
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} StructuredTextNode`),
-      mediaType: `application/json`,
+      mediaType: `application/structuredtext`,
       content: str,
       contentDigest: digest(str),
     },
@@ -396,6 +396,7 @@ exports.createContentTypeNodes = ({
           delete entryItemFields[entryItemFieldKey]
         } else if (
           fieldType === `StructuredText` &&
+          process.env.CF_STRUCTURED_TEXT === `enabled` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
           const stNode = prepareStructuredTextNode(
