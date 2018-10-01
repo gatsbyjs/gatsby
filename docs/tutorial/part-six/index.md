@@ -175,7 +175,7 @@ Now the frontpage should look like:
 But your one blog post looks a bit lonely. So let's add another one at
 `src/pages/pandas-and-bananas.md`
 
-```markdown
+```markdown:title=src/pages/pandas-and-bananas.md
 ---
 title: "Pandas and Bananas"
 date: "2017-08-21"
