@@ -12,7 +12,7 @@ To get your site added to the starter library, follow the two steps below.
 
 2.  Edit the [`starters.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/starters.yml) file by adding your starter information to the bottom of the list in the following format:
 
-```yaml
+```yaml:title=docs/starters.yml
 - url: Link to a demo of your starter
   repo: Link to GitHub repo
   description: Your starter description

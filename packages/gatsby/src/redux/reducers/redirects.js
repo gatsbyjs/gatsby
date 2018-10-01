@@ -9,7 +9,7 @@ const createRedirectWithSlash = redirect => {
       ...redirect,
       ...(isFile(fromPath) ? {} : {
         fromPath: `${fromPath}/`,
-      })
+      }),
     }
   }
 

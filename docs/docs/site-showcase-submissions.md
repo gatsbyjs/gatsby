@@ -14,7 +14,7 @@ There are only three major steps :)
 
 3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
-```yaml
+```yaml:title=docs/sites.yml
 - title: Title of the Site
 
   # this is the URL that is linked from the showcase

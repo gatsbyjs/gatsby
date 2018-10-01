@@ -40,7 +40,7 @@ describe(`createRedirect`, () => {
 
     const action = createRedirect({
       fromPath: `/index.html`,
-      toPath: `/`
+      toPath: `/`,
     })
 
     expect(action.payload.toPath).toBe(`/`)
@@ -104,7 +104,7 @@ describe(`createRedirect`, () => {
 
       const action = createRedirect({
         fromPath: `/index.html`,
-        toPath: `/`
+        toPath: `/`,
       })
 
       expect(action.payload).toEqual(expect.objectContaining({

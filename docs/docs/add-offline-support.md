@@ -19,7 +19,7 @@ npm install --save gatsby-plugin-offline
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
     plugins: [
         {

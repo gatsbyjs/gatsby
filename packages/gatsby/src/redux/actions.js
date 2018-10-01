@@ -7,6 +7,7 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode, store } = require(`./index`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
@@ -1076,7 +1077,7 @@ actions.setPluginStatus = (
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/packages/gatsby-plugin-netlify/)).
- * Note: slash suffix is added automatically, e.g. fromPath: `/blog` handles both `/blog` and `/blog/` routes
+ * Note: trailing slash is added automatically, e.g. fromPath: `/blog` handles both `/blog` and `/blog/` routes
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
@@ -1099,21 +1100,26 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
-  const normalize = pathPart => {
-    const normalized = `${pathPrefix}${pathPart.replace(/\/+$/, ``)}`
+  const normalize = (pathPart, prefix = pathPrefix) => {
+    const normalized = `${prefix}${pathPart.replace(/\/+$/, ``)}`
     if (normalized !== ``) {
       return normalized
     }
     return `/`
   }
+  // Parse urls to get their protocols
+  // url.parse will not cover protocol-relative urls so do a separate check for those
+  const parsed = url.parse(toPath)
+  const isRelativeProtocol = toPath.startsWith(`//`)
+  const toPathPrefix = parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
 
   return {
     type: `CREATE_REDIRECT`,
     payload: {
       fromPath: normalize(fromPath),
+      toPath: normalize(toPath, toPathPrefix),
       isPermanent,
       redirectInBrowser,
-      toPath: normalize(toPath),
       ...rest,
     },
   }

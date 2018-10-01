@@ -81,7 +81,7 @@ export default () => (
 
 4.  Add an image. (In this case, a random image from Unsplash).
 
-```jsx{7}
+```jsx{7}:title=src/pages/index.js
 import React from "react"
 
 export default () => (

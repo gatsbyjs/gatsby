@@ -94,8 +94,67 @@ describe(`redirects`, () => {
     expect(state).toEqual([
       expect.objectContaining(redirect),
       expect.objectContaining({
-        fromPath: `/blog/`
+        fromPath: `/blog/`,
       }),
     ])
+  })
+
+  describe(`external URLs`, () => {
+    it(`lets you redirect to an internal url`, () => {
+      const redirect = {
+        fromPath: `/page1/sample.html`,
+        toPath: `/page1`,
+      }
+      let state = createRedirects([], createAction(redirect))
+  
+      expect(state).toEqual(
+        [
+          redirect,
+        ]
+      )
+    })
+  
+    it(`lets you redirect to an external url`, () => {
+      const redirect = {
+        fromPath: `/page1`,
+        toPath: `https://example.com`,
+      }
+  
+      const state = createRedirects([], createAction(redirect))
+  
+      expect(state).toEqual(
+        [
+          redirect,
+          {
+            ...redirect,
+            fromPath: `${redirect.fromPath}/`,
+          },
+        ]
+      )
+    })
+  
+    ;[
+      [`https`, `https://example.com`],
+      [`http`, `http://example.com`],
+      [`//`, `//example.com`],
+      [`ftp`, `ftp://example.com`],
+      [`mailto`, `mailto:example@email.com`],
+    ].forEach(([protocol, toPath], index) => {
+      it(`lets you redirect using ${protocol}`, () => {
+        const fromPath = `/page${index}`
+        const redirect = {
+          fromPath,
+          toPath,
+        }
+  
+        expect(createRedirects([], createAction(redirect))).toEqual([
+          redirect,
+          {
+            ...redirect,
+            fromPath: `${fromPath}/`,
+          },
+        ])
+      })
+    })
   })
 })
