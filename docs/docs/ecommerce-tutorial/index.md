@@ -182,6 +182,7 @@ const Checkout = class extends React.Component {
       token: token => {
         fetch(`AWS_LAMBDA_URL`, {
           method: "POST",
+          mode: 'no-cors',
           body: JSON.stringify({
             token,
             amount,
@@ -194,7 +195,7 @@ const Checkout = class extends React.Component {
             console.log("Transaction processed successfully")
             this.resetButton()
             this.setState({ paymentMessage: "Payment Successful!" })
-            return res.json()
+            return res
           })
           .catch(error => {
             console.error("Error:", error)
