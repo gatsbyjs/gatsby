@@ -2692,3 +2692,13 @@
     - Travel
   built_by: Orestis Ioannou
   featured: false
+- title: Kelvin Kamau
+  main_url: "https://www.kelvinkamau.app/"
+  url: "https://www.kelvinkamau.app/"
+  description: >
+    Official Website of a maker and software artisan in Kenya.
+  categories:
+    - Portfolio
+    - Miscellaneous
+    - Featured
+  featured: false
