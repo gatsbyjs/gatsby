@@ -59,7 +59,23 @@ aliases:
     requires:
       - bootstrap
 
-version: 2
+commands:
+  integration_test:
+    parameters:
+      ignore_pattern:
+        type: string
+        default: packages/*|integration-tests/*
+      test_path:
+        type: string
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "<< parameters.ignore_pattern >>"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh "<< parameters.test_path >>"
+
+version: 2.1
 
 jobs:
   bootstrap:
@@ -110,42 +126,27 @@ jobs:
   e2e_tests_gatsbygram:
     <<: *node10_browsers
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|examples/gatsbygram/*"
-      - <<: *restore_node_modules
-      - <<: *install_node_modules
-      - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh examples/gatsbygram
+      - integration_test:
+          ignore_pattern: "packages/*|integration-tests/*|examples/gatsbygram/*"
+          test_path: examples/gatsbygram
 
   e2e_tests_path-prefix:
     <<: *node10_browsers
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
-      - <<: *restore_node_modules
-      - <<: *install_node_modules
-      - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh integration-tests/path-prefix
+      - integration_test:
+          test_path: integration-tests/path-prefix
 
   e2e_tests_gatsby-image:
     <<: *node10_browsers
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
-      - <<: *restore_node_modules
-      - <<: *install_node_modules
-      - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh integration-tests/gatsby-image
+      - integration_test:
+          test_path: integration-tests/gatsby-image
 
   e2e_tests_runtime:
     <<: *node10_browsers
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
-      - <<: *restore_node_modules
-      - <<: *install_node_modules
-      - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh integration-tests/production-runtime
+      - integration_test:
+          test_path: integration-tests/production-runtime
 
 workflows:
   version: 2
