@@ -28,13 +28,6 @@ class IndexRoute extends React.Component {
               {` `}
               <Link to="/tutorial/">head to our tutorial!</Link>
             </p>
-            <h2>
-              Install Gatsby
-              {`'`}s command line tool
-            </h2>
-            <p>
-              <code>npm install --global gatsby-cli</code>
-            </p>
             <h2 id="using-the-gatsby-cli">Using the Gatsby CLI</h2>
             <ol>
               <li>
@@ -42,7 +35,7 @@ class IndexRoute extends React.Component {
                 <div className="gatsby-highlight" data-language="bash">
                   <pre className="language-bash">
                     <code className="language-bash">
-                      gatsby new gatsby-site
+                      npx gatsby new gatsby-site
                       https://github.com/gatsbyjs/gatsby-starter-default
                     </code>
                   </pre>
