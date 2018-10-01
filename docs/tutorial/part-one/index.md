@@ -115,7 +115,7 @@ import React from "react"
 export default () => React.createElement("div", null, "Hello world!")
 ```
 
-Now you can spot the use of the `'react'` import! But wait. We’re writing JSX, not pure HTML and JavaScript. How does the browser read that? The short answer: It doesn’t. Gatsby sites comes with tooling already set up to convert your source code into something that browsers can interpret.
+Now you can spot the use of the `'react'` import! But wait. We’re writing JSX, not pure HTML and JavaScript. How does the browser read that? The short answer: It doesn’t. Gatsby sites come with tooling already set up to convert your source code into something that browsers can interpret.
 
 ## Building with components
 
