@@ -39,7 +39,8 @@ function watch(root, packages, { scanOnce, quiet }) {
       ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
     })
     .on(`all`, (event, filePath) => {
-      if (event === `change` || event === `add`) {
+      const watchEvents = [`change`, `add`]
+      if (_.includes(watchEvents, event)) {
         const [packageName] = filePath
           .split(`packages/`)
           .pop()
@@ -71,14 +72,14 @@ function watch(root, packages, { scanOnce, quiet }) {
         allCopies = allCopies.concat(localCopies)
       }
     })
-    .on(`ready`, () => {
+    .on(`ready`, () =>
       // all files watched, quit once all files are copied if necessary
       Promise.all(allCopies).then(() => {
         if (scanOnce) {
           quit()
         }
       })
-    })
+    )
 }
 
 module.exports = watch

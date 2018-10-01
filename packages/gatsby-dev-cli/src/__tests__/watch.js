@@ -1,0 +1,116 @@
+jest.mock(`chokidar`, () => {
+  return {
+    watch: jest.fn(),
+  }
+})
+jest.mock(`fs-extra`, () => {
+  return {
+    copy: jest.fn(),
+  }
+})
+const chokidar = require(`chokidar`)
+const fs = require(`fs-extra`)
+const watch = require(`../watch`)
+
+let on
+beforeEach(() => {
+  fs.copy.mockReset()
+  chokidar.watch.mockImplementation(() => {
+    const mock = {
+      on: jest.fn().mockImplementation(() => mock),
+    }
+    on = mock.on
+    return mock
+  })
+})
+
+describe(`watching`, () => {
+  const callEventCallback = (...args) =>
+    on.mock.calls[0].slice(-1).pop()(...args)
+  const callReadyCallback = (...args) =>
+    on.mock.calls[1].slice(-1).pop()(...args)
+
+  const args = [process.cwd(), [`gatsby`], {}]
+
+  it(`watches files`, () => {
+    watch(...args)
+    expect(chokidar.watch).toHaveBeenCalledTimes(1)
+    expect(chokidar.watch).toHaveBeenCalledWith(expect.any(Array), {
+      ignored: [expect.any(Function)],
+    })
+  })
+
+  it(`registers on handlers`, () => {
+    watch(...args)
+
+    expect(on).toHaveBeenCalledTimes(2)
+    expect(on).toHaveBeenLastCalledWith(`ready`, expect.any(Function))
+  })
+
+  describe(`copying files`, () => {
+    it(`does not copy files on non-watch event`, () => {
+      watch(...args)
+
+      callEventCallback(`test`)
+
+      expect(fs.copy).not.toHaveBeenCalled()
+    })
+
+    it(`copies files on watch event`, () => {
+      watch(...args)
+      callEventCallback(`add`, `../gatsby/packages/gatsby/dist/index.js`)
+
+      expect(fs.copy).toHaveBeenCalledTimes(1)
+      expect(fs.copy).toHaveBeenCalledWith(
+        expect.stringContaining(`gatsby/packages`),
+        expect.stringContaining(`node_modules/gatsby`),
+        expect.any(Function)
+      )
+    })
+
+    it(`copies cache-dir files`, () => {
+      watch(...args)
+
+      const filePath = `../gatsby/packages/gatsby/cache-dir/register-service-worker.js`
+      callEventCallback(`add`, filePath)
+
+      expect(fs.copy).toHaveBeenCalledTimes(2)
+      expect(fs.copy).toHaveBeenLastCalledWith(
+        filePath,
+        `.cache/register-service-worker.js`,
+        expect.any(Function)
+      )
+    })
+  })
+
+  describe(`exiting`, () => {
+    let realProcess
+    beforeAll(() => {
+      realProcess = process
+
+      global.process = {
+        ...realProcess,
+        exit: jest.fn(),
+      }
+    })
+
+    afterAll(() => {
+      global.process = process = realProcess
+    })
+
+    it(`does not exit if scanOnce is not defined`, () => {
+      watch(...args)
+      callReadyCallback()
+
+      expect(process.exit).not.toHaveBeenCalled()
+    })
+
+    it(`exits if scanOnce is defined`, async () => {
+      watch(process.cwd(), [`gatsby`], { scanOnce: true })
+
+      await callReadyCallback()
+
+      expect(process.exit).toHaveBeenCalledTimes(1)
+    })
+  })
+})
