@@ -30,7 +30,7 @@ describe(`watching`, () => {
   const callReadyCallback = (...args) =>
     on.mock.calls[1].slice(-1).pop()(...args)
 
-  const args = [process.cwd(), [`gatsby`], {}]
+  const args = [`.`, [`gatsby`], {}]
 
   it(`watches files`, () => {
     watch(...args)
@@ -86,7 +86,7 @@ describe(`watching`, () => {
   describe(`exiting`, () => {
     let realProcess
     beforeAll(() => {
-      realProcess = process
+      realProcess = global.process
 
       global.process = {
         ...realProcess,
@@ -95,7 +95,7 @@ describe(`watching`, () => {
     })
 
     afterAll(() => {
-      global.process = process = realProcess
+      global.process = realProcess
     })
 
     it(`does not exit if scanOnce is not defined`, () => {
@@ -106,7 +106,7 @@ describe(`watching`, () => {
     })
 
     it(`exits if scanOnce is defined`, async () => {
-      watch(process.cwd(), [`gatsby`], { scanOnce: true })
+      watch(`.`, [`gatsby`], { scanOnce: true })
 
       await callReadyCallback()
 
