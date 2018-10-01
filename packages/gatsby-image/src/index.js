@@ -204,12 +204,7 @@ class Image extends React.Component {
       Tag,
     } = convertProps(this.props)
 
-    let bgColor
-    if (typeof backgroundColor === `boolean`) {
-      bgColor = `lightgray`
-    } else {
-      bgColor = backgroundColor
-    }
+    const bgColor = typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
@@ -250,7 +245,7 @@ class Image extends React.Component {
             {/* Show the blurry base64 image. */}
             {image.base64 && (
               <Img
-                alt={alt}
+                alt={!this.state.isVisible ? alt : ``}
                 title={title}
                 src={image.base64}
                 style={imagePlaceholderStyle}
@@ -260,7 +255,7 @@ class Image extends React.Component {
             {/* Show the traced SVG image. */}
             {image.tracedSVG && (
               <Img
-                alt={alt}
+                alt={!this.state.isVisible ? alt : ``}
                 title={title}
                 src={image.tracedSVG}
                 style={imagePlaceholderStyle}
@@ -347,7 +342,7 @@ class Image extends React.Component {
           {/* Show the blurry base64 image. */}
           {image.base64 && (
             <Img
-              alt={alt}
+              alt={!this.state.isVisible ? alt : ``}
               title={title}
               src={image.base64}
               style={imagePlaceholderStyle}
@@ -357,7 +352,7 @@ class Image extends React.Component {
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
             <Img
-              alt={alt}
+              alt={!this.state.isVisible ? alt : ``}
               title={title}
               src={image.tracedSVG}
               style={imagePlaceholderStyle}
