@@ -26,7 +26,7 @@ Let's add a markdown file to your site at
 blog post) and learn how to _transform_ it to HTML using transformer plugins and
 GraphQL.
 
-```markdown
+```markdown:title=src/pages/sweet-pandas-eating-sweets.md
 ---
 title: "Sweet Pandas Eating Sweets"
 date: "2017-08-10"
