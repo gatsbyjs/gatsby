@@ -252,13 +252,14 @@
   tags:
     - Official
 - url: http://gatsby-dimension.surge.sh/
-  repo: https://github.com/ChangoMan/gatsby-starter-dimension
-  description: n/a
+  repo: https://github.com/codebushi/gatsby-starter-dimension
+  description: Single page starter based on the Dimension site template
   tags:
     - Portfolio
+    - HTML5UP
     - Styling:SCSS
   features:
-    - Based off of the Dimension site template. Designed by HTML5 UP
+    - Designed by HTML5 UP
     - Simple one page site that’s perfect for personal portfolios
     - Fully Responsive
     - Styling with SCSS
@@ -295,15 +296,16 @@
     - Eslint & Prettier. Uses Airbnb JavaScript Style Guide
     - Authentication via Moltin (Login and Register)
 - url: http://gatsby-forty.surge.sh/
-  repo: https://github.com/ChangoMan/gatsby-starter-forty
-  description: n/a
+  repo: https://github.com/codebushi/gatsby-starter-forty
+  description: Multi-page starter based on the Forty site template
   tags:
     - Styling:SCSS
     - HTML5UP
   features:
-    - Based off of the Forty site template. Designed by HTML5 UP
+    - Designed by HTML5 UP
     - Colorful homepage, and also includes a Landing Page and Generic Page components.
     - Many elements are available, including buttons, forms, tables, and pagination.
+    - Custom grid made with CSS Grid
     - Styling with SCSS
 - url: https://themes.gatsbythemes.com/gatsby-starter/
   repo: https://github.com/saschajullmann/gatsby-starter-gatsbythemes
@@ -480,11 +482,12 @@
     - Webpack BundleAnalyzerPlugin
 - url: http://gatsby-photon.surge.sh/
   repo: https://github.com/codebushi/gatsby-starter-photon
-  description: n/a
+  description: Single page starter based on the Photon site template
   tags:
     - HTML5UP
+    - Styling:SCSS
   features:
-    - Based off of the Photon site template. Designed by HTML5 UP
+    - Designed by HTML5 UP
     - Single Page, Responsive Site
     - Custom grid made with CSS Grid
     - Styling with SCSS
@@ -600,24 +603,25 @@
     - Eslint rules based on Prettier and Airbnb
 - url: http://gatsby-stellar.surge.sh/
   repo: https://github.com/codebushi/gatsby-starter-stellar
-  description: n/a
+  description: Single page starter based on the Stellar site template
   tags:
     - HTML5UP
+    - Styling:SCSS
   features:
-    - Based off of the Stellar site template. Designed by HTML5 UP
+    - Designed by HTML5 UP
     - Scroll friendly, responsive site. Can be used as a single or multi-page site.
     - Sticky Navigation when scrolling.
     - Scroll spy and smooth scrolling to different sections of the page.
     - Styling with SCSS
 - url: http://gatsby-strata.surge.sh/
-  repo: https://github.com/ChangoMan/gatsby-starter-strata
-  description: n/a
+  repo: https://github.com/codebushi/gatsby-starter-strata
+  description: Single page starter based on the Strata site template
   tags:
     - Portfolio
     - HTML5UP
     - Styling:SCSS
   features:
-    - Based off of the Strata site template. Designed by HTML5 UP
+    - Designed by HTML5 UP
     - Super Simple, single page portfolio site
     - Lightbox style React photo gallery
     - Fully Responsive
