@@ -25,6 +25,7 @@
     "mdast-util-to-string": "^1.0.4",
     "mdast-util-toc": "^2.0.1",
     "mime": "^2.3.1",
+    "pretty-bytes": "^5.1.0",
     "remark": "^9.0.0",
     "retext": "^5.0.0",
     "slash": "^2.0.0",
