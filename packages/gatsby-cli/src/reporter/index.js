@@ -83,6 +83,9 @@ module.exports = Object.assign(reporter, {
       start: () => {
         spinner.tick(name)
       },
+      tick: (text) => {
+        spinner.tick(text)
+      },
       end: () => {
         reporter.success(`${name} — ${elapsedTime()}`)
         spinner.end()
