@@ -47,8 +47,8 @@ describe(`cache`, () => {
 
     expect(manager.caching).toHaveBeenCalledWith(expect.objectContaining({
       options: expect.objectContaining({
-        ttl: Number.MAX_SAFE_INTEGER
-      })
+        ttl: Number.MAX_SAFE_INTEGER,
+      }),
     }))
   })
 
