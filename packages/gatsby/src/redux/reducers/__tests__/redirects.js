@@ -7,9 +7,7 @@ const createAction = payload => {return {
 
 describe(`redirects`, () => {
   it(`passes through non-redirect action types`, () => {
-    let state = []
-
-    state = createRedirects(state, {
+    const state = createRedirects([], {
       type: `__SAMPLE_DO_NOT_PASS_THROUGH__`,
       payload: { test: true },
     })
@@ -39,37 +37,32 @@ describe(`redirects`, () => {
 
   it(`skips root domain`, () => {
     const redirect = { fromPath: `/`, toPath: `/docs` }
-    let state = []
 
-    state = createRedirects(state, createAction(redirect))
+    const state = createRedirects([], createAction(redirect))
 
     expect(state).toHaveLength(1)
     expect(state).toEqual([expect.objectContaining(redirect)])
   })
 
   it(`adds file redirects, as is`, () => {
-    let state = []
-
     const redirect = {
       fromPath: `/blog/sample.html`,
       toPath: `/blog/other.html`,
     }
 
-    state = createRedirects(state, createAction(redirect))
+    const state = createRedirects([], createAction(redirect))
 
     expect(state).toHaveLength(1)
     expect(state).toEqual([expect.objectContaining(redirect)])
   })
 
   it(`adds slash to folder redirect`, () => {
-    let state = []
-
     const redirect = {
       fromPath: `/blog`,
       toPath: `/blog/sample.html`,
     }
 
-    state = createRedirects(state, createAction(redirect))
+    const state = createRedirects([], createAction(redirect))
 
     expect(state).toHaveLength(2)
     expect(state).toEqual([
@@ -82,14 +75,12 @@ describe(`redirects`, () => {
   })
 
   it(`adds slash to multiple folder redirects`, () => {
-    let state = []
-
     const redirect = {
       fromPath: `/blog`,
       toPath: `/docs`,
     }
 
-    state = createRedirects(state, createAction(redirect))
+    const state = createRedirects([], createAction(redirect))
 
     expect(state).toEqual([
       expect.objectContaining(redirect),
@@ -105,7 +96,7 @@ describe(`redirects`, () => {
         fromPath: `/page1/sample.html`,
         toPath: `/page1`,
       }
-      let state = createRedirects([], createAction(redirect))
+      const state = createRedirects([], createAction(redirect))
   
       expect(state).toEqual(
         [
