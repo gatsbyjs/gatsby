@@ -4,7 +4,7 @@ const fsStore = require(`cache-manager-fs-hash`)
 const path = require(`path`)
 
 const MAX_CACHE_SIZE = 250
-const ONE_HOUR = 60 * 60
+const TTL = Number.Max_SAFE_INTEGER
 
 class Cache {
   constructor({
@@ -23,12 +23,15 @@ class Cache {
     fs.ensureDirSync(this.directory)
 
     const caches = [
-      { store: `memory`, max: MAX_CACHE_SIZE },
+      {
+        store: `memory`,
+        max: MAX_CACHE_SIZE,
+      },
       {
         store: this.store,
         options: {
           path: this.directory,
-          ttl: ONE_HOUR,
+          ttl: TTL,
         },
       },
     ].map(cache => manager.caching(cache))
