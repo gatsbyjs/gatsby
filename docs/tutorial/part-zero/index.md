@@ -141,7 +141,7 @@ A code editor is a program designed specifically for editing computer code. Ther
 
 ### ✋ Download VS Code
 
-Visit the [VS code site](https://code.visualstudio.com/#alt-downloads), and download the version appropriate for your platform. 
+Visit the [VS code site](https://code.visualstudio.com/#alt-downloads), and download the version appropriate for your platform.
 
 ### ✋ Install Prettier plugin
 
