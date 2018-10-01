@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.13"></a>
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.12...gatsby-image@2.0.13) (2018-10-01)
+
+### Bug Fixes
+
+- Address [#8579](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/8579) Don't display double alt text. ([#8671](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/8671)) ([cb0adee](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/cb0adee))
+
 <a name="2.0.12"></a>
 
 ## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.11...gatsby-image@2.0.12) (2018-09-28)
