@@ -42,6 +42,16 @@ describe(`cache`, () => {
     expect(manager.caching).not.toHaveBeenCalled()
   })
 
+  it(`uses MAX_SAFE_INTEGER as TTL`, () => {
+    getCache()
+
+    expect(manager.caching).toHaveBeenCalledWith(expect.objectContaining({
+      options: expect.objectContaining({
+        ttl: Number.MAX_SAFE_INTEGER
+      })
+    }))
+  })
+
   describe(`init`, () => {
     it(`it contains an init method`, () => {
       const cache = getCache()
