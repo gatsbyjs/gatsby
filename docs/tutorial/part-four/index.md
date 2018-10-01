@@ -101,9 +101,7 @@ npm install --save gatsby-plugin-typography typography react-typography typograp
 
 Let's set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
 
-`src/components/layout.js`
-
-```jsx
+```jsx:title=src/components/layout.js
 import React from "react"
 import { css } from "react-emotion"
 import { Link } from "gatsby"
@@ -143,9 +141,7 @@ export default ({ children }) => (
 )
 ```
 
-`src/pages/index.js`
-
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -162,9 +158,7 @@ export default () => (
 )
 ```
 
-`src/pages/about.js`
-
-```jsx
+```jsx:title=src/pages/about.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -179,9 +173,7 @@ export default () => (
 )
 ```
 
-`src/utils/typography.js`
-
-```javascript
+```javascript:title=src/utils/typography.js
 import Typography from "typography"
 import kirkhamTheme from "typography-theme-kirkham"
 
@@ -193,7 +185,7 @@ export const rhythm = typography.rhythm
 
 `gatsby-config.js` (must be in the root of your project, not under src)
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-emotion`,
@@ -223,7 +215,7 @@ But what if you want to change the site title in the future? You'd have to searc
 
 The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Let's add your site title to the `gatsby-config.js` file:
 
-```javascript{2-4}
+```javascript{2-4}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Title from siteMetadata`,
@@ -246,7 +238,7 @@ Restart the development server.
 
 Now the site title is available to be queried; Let's add it to the `about.js` file using a [page query](/docs/page-query):
 
-```jsx{2,5,7,14-23}
+```jsx{2,5,7,14-23}:title=src/pages/about.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -298,7 +290,7 @@ Page queries live outside of the component definition -- by convention at the en
 
 Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
-```jsx{3,8-18,35,48}
+```jsx{3,8-18,35,48}:title=src/components/layout.js
 import React from "react"
 import { css } from "react-emotion"
 import { StaticQuery, Link, graphql } from "gatsby"

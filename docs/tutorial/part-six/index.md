@@ -53,7 +53,7 @@ npm install --save gatsby-transformer-remark
 
 Then add it to the `gatsby-config.js` like normal:
 
-```javascript{13}
+```javascript{13}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -104,7 +104,7 @@ posts so you won't need to maintain the list manually.
 Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
 the following to add a GraphQL query with some initial HTML and styling.
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
 import { css } from "react-emotion"
