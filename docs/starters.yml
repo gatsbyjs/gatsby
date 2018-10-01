@@ -740,3 +740,17 @@
     - Baseline grid built in with modular scale across viewports.
     - Abstract measurements utilize REM for spacing.
     - One font to rule them all, Helvetica.
+- url: https://ganevru.github.io/gatsby-starter-blog-grommet
+  repo: https://github.com/Ganevru/gatsby-starter-blog-grommet
+  description: GatsbyJS v2 starter for creating a blog. Based on Grommet v2 UI.
+  tags:
+    - blog
+    - markdown
+    - Styling:Grommet
+  features:
+    - Grommet v2 UI
+    - Easily configurable - see site-config.js in the root
+    - Blog posts previews in card style
+    - Responsive Design, optimized for Mobile devices
+    - styled-components
+    - JavaScript Standard Style
