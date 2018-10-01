@@ -10,6 +10,7 @@ jest.mock(`fs-extra`, () => {
 })
 const chokidar = require(`chokidar`)
 const fs = require(`fs-extra`)
+const path = require(`path`)
 const watch = require(`../watch`)
 
 let on
@@ -30,7 +31,7 @@ describe(`watching`, () => {
   const callReadyCallback = (...args) =>
     on.mock.calls[1].slice(-1).pop()(...args)
 
-  const args = [`.`, [`gatsby`], {}]
+  const args = [process.cwd(), [`gatsby`], {}]
 
   it(`watches files`, () => {
     watch(...args)
@@ -58,12 +59,15 @@ describe(`watching`, () => {
 
     it(`copies files on watch event`, () => {
       watch(...args)
-      callEventCallback(`add`, `../gatsby/packages/gatsby/dist/index.js`)
+      callEventCallback(
+        `add`,
+        path.join(process.cwd(), `packages/gatsby/dist/index.js`)
+      )
 
       expect(fs.copy).toHaveBeenCalledTimes(1)
       expect(fs.copy).toHaveBeenCalledWith(
         expect.stringContaining(`gatsby/packages`),
-        expect.stringContaining(`node_modules/gatsby`),
+        `node_modules/gatsby/dist/index.js`,
         expect.any(Function)
       )
     })
@@ -71,7 +75,10 @@ describe(`watching`, () => {
     it(`copies cache-dir files`, () => {
       watch(...args)
 
-      const filePath = `../gatsby/packages/gatsby/cache-dir/register-service-worker.js`
+      const filePath = path.join(
+        process.cwd(),
+        `packages/gatsby/cache-dir/register-service-worker.js`
+      )
       callEventCallback(`add`, filePath)
 
       expect(fs.copy).toHaveBeenCalledTimes(2)
@@ -106,7 +113,7 @@ describe(`watching`, () => {
     })
 
     it(`exits if scanOnce is defined`, async () => {
-      watch(`.`, [`gatsby`], { scanOnce: true })
+      watch(process.cwd(), [`gatsby`], { scanOnce: true })
 
       await callReadyCallback()
 
