@@ -1263,15 +1263,6 @@
     - Portfolio
     - Web Development
     - Blog
-- title: Bartosz Dominiak Blog/Portfolio
-  main_url: "http://bartoszdominiak.com/"
-  url: "http://bartoszdominiak.com/"
-  source_url: "https://github.com/bartdominiak/blog"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
 - title: HBTU MUN 2018 (source)
   featured: false
 - title: Jamie Henson's Blog (source)
