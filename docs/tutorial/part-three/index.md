@@ -154,7 +154,7 @@ But try navigating to one of the other pages e.g. `/about/`. That page still
 isn't centered. Try now importing and adding the layout component to `about.js` and
 `contact.js`.
 
-Let's now add to the layout component your site title:
+Let's now add your site title to the layout component:
 
 ```jsx{5}:title=src/components/layout.js
 import React from "react"
