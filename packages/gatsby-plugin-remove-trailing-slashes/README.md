@@ -16,6 +16,15 @@ This is an important factor when relying on path driven logic, such as in the us
 
 For example, if the current route is `/about`, the component `<Link to="/about/" activeStyle={{ color: 'rebeccapurple' }}>` wouldn't match because of the slash.
 
+#### Netlify Trailing Slashes
+[Netlify](https://www.netlify.com) users should also take into account that that the services will match paths to redirect rules regardless of whether or not they contain a trailing slash, potentially causing infinite redirect loops and unexpected behaviours.
+
+This can be negated through the use of their Pretty URL feature, which rewrites URLs to pretty URLs.
+
+Please see the Netlify docs for more information:
+[https://www.netlify.com/docs/redirects/#trailing-slash](https://www.netlify.com/docs/redirects/#trailing-slash)
+
+
 ## Usage
 
 Install:
