@@ -1,4 +1,9 @@
 jest.mock(`fs`)
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    panic: jest.fn(),
+  }
+})
 
 const resolveModuleExports = require(`../resolve-module-exports`)
 let resolver
@@ -106,6 +111,7 @@ describe(`Resolve module exports`, () => {
   beforeEach(() => {
     resolver = jest.fn(arg => arg)
     require(`fs`).__setMockFiles(MOCK_FILE_INFO)
+    require(`gatsby-cli/lib/reporter`).panic.mockClear()
   })
 
   it(`Returns empty array for file paths that don't exist`, () => {
@@ -118,9 +124,15 @@ describe(`Resolve module exports`, () => {
     expect(result).toEqual([])
   })
 
-  it(`Returns empty array for invalid JavaScript`, () => {
-    const result = resolveModuleExports(`/bad/file`)
-    expect(result).toEqual([])
+  it(`Show meaningful error message for invalid JavaScript`, () => {
+    resolveModuleExports(`/bad/file`, resolver)
+    expect(
+      require(`gatsby-cli/lib/reporter`).panic.mock.calls.map(c =>
+        // Remove console colors + trim whitespace
+        // eslint-disable-next-line
+        c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim()
+      )
+    ).toMatchSnapshot()
   })
 
   it(`Resolves an export`, () => {
