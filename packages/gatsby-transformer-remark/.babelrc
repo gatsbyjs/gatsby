@@ -1,5 +1,5 @@
 {
   "presets": [
-    ["gatsby"]
+    ["babel-preset-gatsby"]
   ]
 }

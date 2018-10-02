@@ -8,6 +8,6 @@ if (process.env.NODE_ENV !== `test`) {
 
 module.exports = {
   sourceMaps: true,
-  presets: ["gatsby"],
+  presets: ["babel-preset-gatsby"],
   ignore,
 }

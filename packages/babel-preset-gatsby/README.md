@@ -13,11 +13,15 @@ Gatsby uses the phenomenal project [Babel](https://babeljs.io/) to enable suppor
 
 ## Usage
 
-Add a `.babelrc` file with the following content to the root of your project:
+Install `babel-preset-gatsby` and add a `.babelrc` file with the following content to the root of your project:
+
+```bash
+npm install --dev babel-preset-gatsby
+```
 
 ```json
 {
-  "presets": ["gatsby"]
+  "presets": ["babel-preset-gatsby"]
 }
 ```
 

@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["gatsby", { "browser": true }]
+    ["babel-preset-gatsby", { "browser": true }]
   ],
   "plugins": ["dev-expression"]
 }
