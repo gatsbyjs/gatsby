@@ -33,11 +33,11 @@ function createFileContentHash(root, globPattern) {
  * will be an absolute path.
  * @return {PluginInfo}
  */
-function resolvePlugin(pluginName) {
+function resolvePlugin(pluginName, pluginsFolder = `./plugins`) {
   // Only find plugins when we're not given an absolute path
   if (!existsSync(pluginName)) {
     // Find the plugin in the local plugins folder
-    const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
+    const resolvedPath = slash(path.resolve(`${pluginsFolder}/${pluginName}`))
 
     if (existsSync(resolvedPath)) {
       if (existsSync(`${resolvedPath}/package.json`)) {
@@ -92,7 +92,7 @@ module.exports = (config = {}) => {
   // Also test adding to redux store.
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
-      const info = resolvePlugin(plugin)
+      const info = resolvePlugin(plugin, config.pluginsFolder)
 
       return {
         ...info,
@@ -122,7 +122,7 @@ module.exports = (config = {}) => {
         }
       }
 
-      const info = resolvePlugin(plugin.resolve)
+      const info = resolvePlugin(plugin.resolve, config.pluginsFolder)
 
       return {
         ...info,

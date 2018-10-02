@@ -6,6 +6,7 @@ export const gatsbyConfigSchema = Joi.object().keys({
   pathPrefix: Joi.string(),
   mapping: Joi.object(),
   plugins: Joi.array(),
+  pluginsFolder: Joi.string(),
   proxy: Joi.object().keys({
     prefix: Joi.string().required(),
     url: Joi.string().required(),
