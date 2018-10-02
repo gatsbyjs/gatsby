@@ -19,3 +19,11 @@ Cypress.Commands.add(
     })
   }
 )
+
+Cypress.Commands.add(
+  `waitForRouteChange`,
+  {
+    prevSubject: `optional`,
+  },
+  subject => cy.waitForAPI(`onRouteUpdate`).then(() => subject)
+)
