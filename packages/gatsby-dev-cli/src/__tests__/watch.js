@@ -96,6 +96,15 @@ describe(`watching`, () => {
 
       expect(chokidar.watch).toHaveBeenCalledWith([], expect.any(Object))
     })
+
+    it(`filters duplicate directories`, () => {
+      watch(process.cwd(), [`gatsby`, `gatsby`], {})
+
+      expect(chokidar.watch).toHaveBeenCalledWith(
+        [expect.stringContaining(`gatsby`)],
+        expect.any(Object)
+      )
+    })
   })
 
   describe(`exiting`, () => {
