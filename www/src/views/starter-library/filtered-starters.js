@@ -200,7 +200,7 @@ export default class FilteredStarterLibrary extends Component {
                   aria-label="Search starters"
                 />
                 <Button
-                  to="https://gatsbyjs.org/docs/submit-to-starter-showcase/"
+                  to="https://gatsbyjs.org/docs/submit-to-starter-library/"
                   tag="href"
                   target="_blank"
                   rel="noopener noreferrer"
