@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1"></a>
+
+## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.0...gatsby-plugin-netlify@2.0.1) (2018-10-02)
+
+### Features
+
+- **gatsby-plugin-netlify:** add force option to createRedirect ([#8521](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/issues/8521)) ([e1d354e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/commit/e1d354e))
+
 <a name="2.0.0"></a>
 
 # [2.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.0-rc.6...gatsby-plugin-netlify@2.0.0) (2018-09-17)
