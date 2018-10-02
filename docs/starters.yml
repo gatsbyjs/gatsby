@@ -129,7 +129,7 @@
   repo: https://github.com/gatsbyjs/gatsby-starter-blog
   description: official blog
   tags:
-    - official
+    - Official
     - Blog
 - url: https://gatsby-starter-bloomer.netlify.com/
   repo: https://github.com/Cethy/gatsby-starter-bloomer
@@ -745,8 +745,8 @@
   repo: https://github.com/Ganevru/gatsby-starter-blog-grommet
   description: GatsbyJS v2 starter for creating a blog. Based on Grommet v2 UI.
   tags:
-    - blog
-    - markdown
+    - Blog
+    - Markdown
     - Styling:Grommet
   features:
     - Grommet v2 UI
