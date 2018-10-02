@@ -6,6 +6,7 @@ jest.mock(`chokidar`, () => {
 jest.mock(`fs-extra`, () => {
   return {
     copy: jest.fn(),
+    existsSync: jest.fn(),
   }
 })
 const chokidar = require(`chokidar`)
@@ -16,6 +17,7 @@ const watch = require(`../watch`)
 let on
 beforeEach(() => {
   fs.copy.mockReset()
+  fs.existsSync.mockImplementation(() => true)
   chokidar.watch.mockImplementation(() => {
     const mock = {
       on: jest.fn().mockImplementation(() => mock),
@@ -85,6 +87,14 @@ describe(`watching`, () => {
         `.cache/register-service-worker.js`,
         expect.any(Function)
       )
+    })
+
+    it(`filters non-existant files/directories`, () => {
+      fs.existsSync.mockReset().mockImplementation(file => false)
+
+      watch(...args)
+
+      expect(chokidar.watch).toHaveBeenCalledWith([], expect.any(Object))
     })
   })
 
