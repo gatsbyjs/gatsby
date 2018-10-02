@@ -33,7 +33,7 @@ _Note: Again, the editor shown here is Visual Studio Code. If you’re using a d
 
 Let’s take a look at the code that powers the homepage.
 
-> 💡 If you stopped your development server after running `gatsby develop` in the previous section, start it up again now — time to make some changes to the hello-world site!
+> 💡 If you stopped your development server after running `gatsby develop` in the previous section, start it up again now — time to make some changes to the “Hello World” site!
 
 ## Familiarizing with Gatsby pages
 
