@@ -51,7 +51,7 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 - On the npm website, you can browse what JavaScript packages are available in the npm registry.
 - The npm registry is a large database of information about JavaScript packages available on npm.
-- Once you’ve identified a package you want, you can use the npm CLI to install it in your project. The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
+- Once you’ve identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
 
 > 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
 
