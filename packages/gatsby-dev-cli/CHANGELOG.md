@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.4.4"></a>
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.3...gatsby-dev-cli@2.4.4) (2018-10-02)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** infer correct prefix from package path ([#8683](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/8683)) ([30b68e2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/30b68e2))
+
 <a name="2.4.3"></a>
 
 ## [2.4.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.2...gatsby-dev-cli@2.4.3) (2018-09-28)
