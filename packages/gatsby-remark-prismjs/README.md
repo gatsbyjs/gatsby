@@ -45,6 +45,9 @@ plugins: [
             //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
             // Defaults to false.
             showLineNumbers: false,
+            // If setting this to true, the parser won't handle and highlight inline
+            // code used in markdown i.e. single backtick code like `this`.
+            noInlineHighlight: false,
           },
         },
       ],
@@ -127,7 +130,7 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
   min-width: 100%; /* 2 */
 }
 .gatsby-highlight pre[class*="language-"].line-numbers {
-  paddingleft: 2.8em; /* 3 */
+  padding-left: 2.8em; /* 3 */
 }
 ```
 

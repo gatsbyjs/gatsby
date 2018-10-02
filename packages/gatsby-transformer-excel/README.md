@@ -10,7 +10,7 @@ Note: You generally will use this plugin together with the [`gatsby-source-files
 
 ## How to use
 
-If you put your Excel's files in `./src/data`:
+If you put your Excel files in `./src/data`:
 
 ```javascript
 // In your gatsby-config.js
@@ -28,7 +28,9 @@ module.exports = {
 }
 ```
 
-You can see an example project at https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel.
+This plugin allows you to pass any available options used by the underlying library's function. [Click here](https://github.com/SheetJS/js-xlsx#json) to view the full list of options and the default values.
+
+You can see an example project at [https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-excel).
 
 ## Parsing algorithm
 
@@ -38,7 +40,7 @@ the first row and whose type is determined by the name of the worksheet.
 
 So if your project has a `letters.xlsx` with two worksheets:
 
-```
+```text
 ------ Sheet1 ------
 /|    A    |   B   |
 -+---------+-------+
@@ -60,18 +62,18 @@ So if your project has a `letters.xlsx` with two worksheets:
 
 the following nodes would be created:
 
-```javascript
-;[
-  { letter: "a", value: 97, type: "LettersXlsxSheet1" },
-  { letter: "b", value: 98, type: "LettersXlsxSheet1" },
-  { letter: "A", value: 65, type: "LettersXlsxSheet2" },
-  { letter: "B", value: 66, type: "LettersXlsxSheet2" },
+```json
+[
+  { "letter": "a", "value": 97, "type": "LettersXlsxSheet1" },
+  { "letter": "b", "value": 98, "type": "LettersXlsxSheet1" },
+  { "letter": "A", "value": 65, "type": "LettersXlsxSheet2" },
+  { "letter": "B", "value": 66, "type": "LettersXlsxSheet2" }
 ]
 ```
 
 ## How to query
 
-You'd be able to query your letters like:
+Using the same `letters.xlsx` example from above, you'd be able to query your letters like:
 
 ```graphql
 {
@@ -123,11 +125,13 @@ module.exports = {
     {
       resolve: `gatsby-transformer-excel`,
       options: {
-        rawOutput: false,
+        raw: false,
       },
     },
   ],
 }
 ```
+
+_NOTE 1_: A previous version of this library used the attribute name `rawOutput`. This name still works, but is an alias for the correct attribute `raw`. If both attributes are specified, the value for `raw` takes precedence.
 
 This will make sure, that all field types are converted to strings.

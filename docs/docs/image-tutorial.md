@@ -31,10 +31,10 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```javascript{32-58}
- module.exports = {
+```javascript{32-58}:title=gatsby-config.js
+module.exports = {
   siteMetadata: {
-    title: 'Gatsby Wordpress Tutorial',
+    title: "Gatsby Wordpress Tutorial",
   },
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
@@ -77,41 +77,41 @@ npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
 
 Place these plugins in your `gatsby-config.js` like this:
 
-```javascript{112-121}
+```javascript{112-121}:title=gatsby-config.js
 module.exports = {
- siteMetadata: {
-   title: 'Gatsby Wordpress Tutorial',
- },
- plugins: [
-   // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
-   /*
+  siteMetadata: {
+    title: "Gatsby Wordpress Tutorial",
+  },
+  plugins: [
+    // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
+    /*
     * Gatsby's data processing layer begins with “source”
     * plugins. Here the site sources its data from Wordpress.
     */
-   {
-     resolve: `gatsby-source-wordpress`,
-     options: {
-       /*
+    {
+      resolve: `gatsby-source-wordpress`,
+      options: {
+        /*
        * The base URL of the Wordpress site without the trailing slash and the protocol. This is required.
        * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
        */
-       baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
-       // The protocol. This can be http or https.
-       protocol: `http`,
-       // Indicates whether the site is hosted on wordpress.com.
-       // If false, then the asumption is made that the site is self hosted.
-       // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
-       // If your site is hosted on wordpress.org, then set this to false.
-       hostingWPCOM: false,
-       // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
-       // This feature is untested for sites hosted on Wordpress.com
-       useACF: true,
-     },
-   },
-   'gatsby-plugin-react-helmet',
-   'gatsby-transformer-sharp',
-   'gatsby-plugin-sharp',
- ],
+        baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
+        // The protocol. This can be http or https.
+        protocol: `http`,
+        // Indicates whether the site is hosted on wordpress.com.
+        // If false, then the asumption is made that the site is self hosted.
+        // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
+        // If your site is hosted on wordpress.org, then set this to false.
+        hostingWPCOM: false,
+        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
+        // This feature is untested for sites hosted on Wordpress.com
+        useACF: true,
+      },
+    },
+    "gatsby-plugin-react-helmet",
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-sharp",
+  ],
 }
 ```
 
@@ -197,7 +197,7 @@ In either case, you can add traced SVG support by adding `_tracedSVG` to the end
 
 Here is what your `index.js` should look like with the query added:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"

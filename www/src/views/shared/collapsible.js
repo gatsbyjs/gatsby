@@ -26,6 +26,7 @@ class Collapsible extends Component {
           borderBottom: collapsed ? 0 : `1px solid ${colors.ui.light}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
+          minHeight: collapsed ? `initial` : `130px`,
           // paddingBottom: collapsed ? 0 : rhythm(options.blockMarginBottom),
         }}
       >

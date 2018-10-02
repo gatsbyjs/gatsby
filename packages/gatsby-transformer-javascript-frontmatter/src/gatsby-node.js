@@ -20,7 +20,12 @@ async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
       `jsx`,
       `doExpressions`,
       `objectRestSpread`,
-      `decorators`,
+      [
+        `decorators`,
+        {
+          decoratorsBeforeExport: true,
+        },
+      ],
       `classProperties`,
       `exportExtensions`,
       `asyncGenerators`,

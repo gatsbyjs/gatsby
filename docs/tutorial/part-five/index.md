@@ -24,7 +24,7 @@ You can access it when your site's development server is running—normally at
 
 Here you poke around the built-in `Site` "type" and see what fields are available
 on it—including the `siteMetadata` object you queried earlier. Try opening
-Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> to bring up
+Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up
 the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be
 using Graph_i_QL a lot more through the remainder of the tutorial.
 
@@ -48,7 +48,7 @@ npm install --save gatsby-source-filesystem
 
 Then add it to your `gatsby-config.js`:
 
-```javascript{6-12}
+```javascript{6-12}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -108,7 +108,7 @@ Let's try this.
 Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
 created:
 
-```jsx{6}
+```jsx{6}:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -151,7 +151,7 @@ The shape of the data matches the shape of the GraphQL query.
 
 Let's add some code to your component to print out the File data.
 
-```jsx{9-31}
+```jsx{9-31}:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"

@@ -13,7 +13,7 @@ const isItemActive = (activeItemParents, item) => {
   return false
 }
 
-class Item extends React.Component {
+class Item extends React.PureComponent {
   render() {
     const {
       activeItemLink,

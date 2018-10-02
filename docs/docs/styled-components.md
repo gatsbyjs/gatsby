@@ -10,6 +10,10 @@ One of the most important problems they solve is selector name collisions. With 
 
 With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it much easier to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
+<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components/embed" />
+
+Video hosted on [egghead.io](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components).
+
 First, open a new terminal window and run the following to create a new site:
 
 ```shell
@@ -24,7 +28,7 @@ npm install --save gatsby-plugin-styled-components styled-components babel-plugi
 
 And then add it to your site's `gatsby-config.js`:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-styled-components`],
 }
@@ -34,7 +38,7 @@ Then in your terminal run `gatsby develop` to start the Gatsby development serve
 
 Now let's create a sample Styled Components page at `src/pages/index.js`:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import styled from "styled-components"
 

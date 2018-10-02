@@ -1,8 +1,13 @@
+import React from "react"
+import PropTypes from "prop-types"
 import loader, { setApiRunnerForLoader } from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
-import { globalHistory } from "@reach/router/lib/history"
+import {
+  resolveRouteChangePromise,
+  resetRouteChangePromise,
+} from "./wait-for-route-change"
 import { navigate as reachNavigate } from "@reach/router"
 import parsePath from "./parse-path"
 import loadDirectlyOr404 from "./load-directly-or-404"
@@ -39,13 +44,23 @@ const onPreRouteUpdate = location => {
     apiRunner(`onPreRouteUpdate`, { location })
   }
 }
+
 const onRouteUpdate = location => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location })
+    resolveRouteChangePromise()
+
+    // Temp hack while awaiting https://github.com/reach/router/issues/119
+    window.__navigatingToLink = false
   }
 }
 
-const navigate = (to, options) => {
+const navigate = (to, options = {}) => {
+  // Temp hack while awaiting https://github.com/reach/router/issues/119
+  if (!options.replace) {
+    window.__navigatingToLink = true
+  }
+
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -62,6 +77,8 @@ const navigate = (to, options) => {
     return
   }
 
+  resetRouteChangePromise()
+
   // Start a timer to wait for a second before transitioning and showing a
   // loader in case resources aren't around yet.
   const timeoutId = setTimeout(() => {
@@ -72,26 +89,35 @@ const navigate = (to, options) => {
   }, 1000)
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
-    if (!pageResources && process.env.NODE_ENV === `production`) {
-      loader.getResourcesForPathname(`/404.html`).then(resources => {
-        clearTimeout(timeoutId)
-        onPreRouteUpdate(window.location)
-        loadDirectlyOr404(resources, to).then(() =>
-          reachNavigate(to, options).then(() => onRouteUpdate(window.location))
-        )
-      })
+    if (
+      (!pageResources || pageResources.page.path === `/404.html`) &&
+      process.env.NODE_ENV === `production`
+    ) {
+      clearTimeout(timeoutId)
+      loadDirectlyOr404(pageResources, to).then(() =>
+        reachNavigate(to, options)
+      )
     } else {
-      onPreRouteUpdate(window.location)
-      reachNavigate(to, options).then(() => onRouteUpdate(window.location))
+      reachNavigate(to, options)
       clearTimeout(timeoutId)
     }
   })
 }
 
-function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
+// reset route change promise after going back / forward
+// in history (when not using Gatsby navigation)
+window.addEventListener(`popstate`, () => {
+  resetRouteChangePromise()
+})
+
+function shouldUpdateScroll(prevRouterProps, { location }) {
+  const { pathname, hash } = location
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
+    // `pathname` for backwards compatibility
     pathname,
+    routerProps: { location },
+    getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
     return results[0]
@@ -102,13 +128,18 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
       location: { pathname: oldPathname },
     } = prevRouterProps
     if (oldPathname === pathname) {
-      return false
+      // Scroll to element if it exists, if it doesn't, or no hash is provided,
+      // scroll to top.
+      return hash ? hash.slice(1) : [0, 0]
     }
   }
   return true
 }
 
 function init() {
+  // Temp hack while awaiting https://github.com/reach/router/issues/119
+  window.__navigatingToLink = false
+
   setApiRunnerForLoader(apiRunner)
   window.___loader = loader
   window.___push = to => navigate(to, { replace: false })
@@ -119,4 +150,39 @@ function init() {
   maybeRedirect(window.location.pathname)
 }
 
-export { init, shouldUpdateScroll, onRouteUpdate, onPreRouteUpdate }
+// Fire on(Pre)RouteUpdate APIs
+class RouteUpdates extends React.Component {
+  constructor(props) {
+    super(props)
+    onPreRouteUpdate(props.location)
+  }
+
+  componentDidMount() {
+    onRouteUpdate(this.props.location)
+  }
+
+  componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
+    if (shouldFireRouteUpdate) {
+      onRouteUpdate(this.props.location)
+    }
+  }
+
+  getSnapshotBeforeUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      onPreRouteUpdate(this.props.location)
+      return true
+    }
+
+    return false
+  }
+
+  render() {
+    return this.props.children
+  }
+}
+
+RouteUpdates.propTypes = {
+  location: PropTypes.object.isRequired,
+}
+
+export { init, shouldUpdateScroll, RouteUpdates }

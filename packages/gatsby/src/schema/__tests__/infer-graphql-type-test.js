@@ -82,6 +82,7 @@ describe(`GraphQL type inferance`, () => {
       "with space": 1,
       "with-hyphen": 2,
       "with resolver": `1012-11-01`,
+      123: 42,
       aBoolean: true,
       externalUrl: `https://example.com/awesome.jpg`,
       domain: `pizza.com`,
@@ -102,6 +103,7 @@ describe(`GraphQL type inferance`, () => {
       anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
       "with space": 3,
       "with-hyphen": 4,
+      123: 24,
       frontmatter: {
         date: `1984-10-12`,
         title: `The world of slash and adventure`,
@@ -235,6 +237,7 @@ describe(`GraphQL type inferance`, () => {
         with_space
         with_hyphen
         with_resolver(formatString:"DD.MM.YYYY")
+        _123
       `
     )
 
@@ -245,6 +248,8 @@ describe(`GraphQL type inferance`, () => {
     expect(result.data.listNode[1].with_space).toEqual(3)
     expect(result.data.listNode[1].with_hyphen).toEqual(4)
     expect(result.data.listNode[0].with_resolver).toEqual(`01.11.1012`)
+    expect(result.data.listNode[0]._123).toEqual(42)
+    expect(result.data.listNode[1]._123).toEqual(24)
   })
 
   describe(`Handles dates`, () => {

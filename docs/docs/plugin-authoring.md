@@ -8,7 +8,7 @@ You may be looking to build a plugin that doesn't exist yet, or you may just be 
 2.  naming conventions for the plugin title
 3.  expected files in a plugin package
 4.  defining a local (unpublished) plugin for your own use case
-5.  what a plugin is _not_
+5.  how to publish your plugin to the library
 
 ## Core Concepts
 
@@ -60,7 +60,35 @@ plugins
 
 **NOTE:** You still need to add the plugin to your `gatsby-config.js`. There is no auto-detection of local plugins.
 
+**NOTE:** For the plugin to be discovered, the plugin's root folder name is the value that needs to be referenced in order to load it (_not_ it's _name_ in it's package.json file). For example, in the above structure, the correct way to load the plugin is:
+
+```javascript
+module.exports = {
+  plugins: [
+    'my-own-plugin',
+  ]
+}
+```
+
 Like all `gatsby-*` files, the code is not processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
 can place the files in a `src` subfolder and build them to the plugin folder
 root.
+
+## Publishing a plugin to the library
+
+In order to add your plugin to the [Plugin Library](/packages/), you need to publish a package to npm (learn how [here](https://docs.npmjs.com/getting-started/publishing-npm-packages)) with the [required files](#what-files-does-gatsby-look-for-in-a-plugin) and **include a `keywords` field** to `package.json` containing `gatsby` and `gatsby-plugin`.
+
+After doing so, Algolia will take up to 12 hours to add it to the library search index (the exact time necessary is still unknown), and wait for the daily rebuild of https://gatsbyjs.org to automatically include your plugin page to the website. Then, all you have to do is share your wonderful plugin with the community!
+
+**NOTE:** You can include other _relevant_ keywords to your `package.json` file to help interested users in finding it. As an example, a Markdown MathJax transformer would include:
+
+```
+"keywords": [
+  "gatsby",
+  "gatsby-plugin",
+  "gatsby-transformer-plugin",
+  "mathjax",
+  "markdown",
+]
+```
