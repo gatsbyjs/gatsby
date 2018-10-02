@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Allows custom targets 1`] = `
+"\\"use strict\\";
+
+const p = () => \\"s\\";"
+`;
+
+exports[`Applies @babel/preset-env for target browsers 1`] = `
+"\\"use strict\\";
+
+var p = function p() {
+  return \\"s\\";
+};"
+`;
