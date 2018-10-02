@@ -1,9 +1,8 @@
 let resolve = null
-let promise = null
 let awaitingAPI = null
 
 export function waitForAPI(api) {
-  promise = new Promise(r => {
+  const promise = new Promise(r => {
     resolve = r
   })
   awaitingAPI = api
