@@ -96,9 +96,7 @@ module.exports = (config = {}) => {
 
       return {
         ...info,
-        pluginOptions: {
-          plugins: [],
-        },
+        pluginOptions: {},
       }
     } else {
       // Plugins can have plugins.
@@ -116,9 +114,7 @@ module.exports = (config = {}) => {
       if (plugin.resolve === `___TEST___`) {
         return {
           name: `TEST`,
-          pluginOptions: {
-            plugins: [],
-          },
+          pluginOptions: {},
         }
       }
 
@@ -126,7 +122,7 @@ module.exports = (config = {}) => {
 
       return {
         ...info,
-        pluginOptions: _.merge({ plugins: [] }, plugin.options),
+        pluginOptions: plugin.options,
       }
     }
   }

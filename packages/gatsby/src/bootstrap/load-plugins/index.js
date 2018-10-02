@@ -31,7 +31,9 @@ const flattenPlugins = plugins => {
 
   plugins.forEach(plugin => {
     flattened.push(plugin)
-    extractPlugins(plugin)
+    if (plugin.pluginOptions.plugins) {
+      extractPlugins(plugin)
+    }
   })
 
   return flattened

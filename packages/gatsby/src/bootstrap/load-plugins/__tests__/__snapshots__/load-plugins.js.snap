@@ -9,9 +9,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -23,9 +21,7 @@ Array [
     "nodeAPIs": Array [
       "onPreBootstrap",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -38,9 +34,7 @@ Array [
       "sourceNodes",
       "onCreatePage",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -52,9 +46,7 @@ Array [
     "nodeAPIs": Array [
       "onCreatePage",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -66,9 +58,7 @@ Array [
     "nodeAPIs": Array [
       "onCreatePage",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -95,7 +85,6 @@ Array [
     "pluginOptions": Object {
       "path": "/src/pages",
       "pathCheck": false,
-      "plugins": Array [],
     },
     "resolve": "",
     "ssrAPIs": Array [],
@@ -113,9 +102,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -127,9 +114,7 @@ Array [
     "nodeAPIs": Array [
       "onPreBootstrap",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -142,9 +127,7 @@ Array [
       "sourceNodes",
       "onCreatePage",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -156,9 +139,7 @@ Array [
     "nodeAPIs": Array [
       "onCreatePage",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -170,9 +151,7 @@ Array [
     "nodeAPIs": Array [
       "onCreatePage",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -181,9 +160,7 @@ Array [
     "browserAPIs": Array [],
     "name": "TEST",
     "nodeAPIs": Array [],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
+    "pluginOptions": Object {},
     "resolve": "",
     "ssrAPIs": Array [],
     "version": "1.0.0",
@@ -210,7 +187,6 @@ Array [
     "pluginOptions": Object {
       "path": "/src/pages",
       "pathCheck": false,
-      "plugins": Array [],
     },
     "resolve": "",
     "ssrAPIs": Array [],
