@@ -1,5 +1,4 @@
 const parseXml = require(`xml-parser`)
-const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 async function onCreateNode({ node, actions, loadNodeContent, createNodeId, createContentDigest }) {
