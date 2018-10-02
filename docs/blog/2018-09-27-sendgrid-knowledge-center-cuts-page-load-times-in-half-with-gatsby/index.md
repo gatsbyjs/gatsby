@@ -1,6 +1,6 @@
 ---
 title: SendGrid Knowledge Center cuts page load times in half with Gatsby
-date: 2018-09-27
+date: 2018-10-02
 author: Linda Watkins
 tags: ["case study"]
 ---
