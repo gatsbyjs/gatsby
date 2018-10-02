@@ -2,8 +2,8 @@
   items:
     - title: Quick start
       link: /docs/
-    - title: Starters
-      link: /docs/gatsby-starters/
+    - title: Starter Library
+      link: /starters/
     - title: Recipes
       link: /docs/recipes/
     - title: Overview of the docs*
@@ -126,6 +126,11 @@
           link: /docs/create-source-plugin/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
+    - title: Starters
+      link: /docs/starters/
+      items:
+        - title: Create a Starter*
+          link: /docs/create-a-starter/
     - title: Styling
       link: /docs/styling/
       items:
