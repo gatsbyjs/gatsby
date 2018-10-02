@@ -87,7 +87,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
               reporter,
               cache
             },
-            plugin.pluginOptions || {}
+            plugin.options || {}
           );
           return markdownAST;
         };
