@@ -14,9 +14,9 @@ require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-if (process.env.NODE_ENV === `production` && !process.env.GITHUB_API_TOKEN) {
+if (!process.env.GITHUB_API_TOKEN) {
   throw new Error(
-    `A GitHub token is required to build the site. Check the README.`
+    `A GitHub token is required to build the site. Check www/README.md.`
   )
 }
 
