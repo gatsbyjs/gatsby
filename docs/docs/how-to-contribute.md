@@ -91,6 +91,7 @@ To add a new blog post to the gatsbyjs.org blog:
 
 - Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
+- Create a `.env.development` file with a `GITHUB_API_TOKEN` environment variable. See [www/README.md](https://github.com/gatsbyjs/gatsby/tree/master/www#working-with-the-starter-showcase) for more info!
 - Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
 - The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
 - Add your avatar image to `/docs/blog/avatars`
