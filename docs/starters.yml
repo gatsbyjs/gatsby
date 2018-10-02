@@ -755,3 +755,15 @@
     - Responsive Design, optimized for Mobile devices
     - styled-components
     - JavaScript Standard Style
+- url: https://happy-pare-dff451.netlify.com/
+  repo: https://github.com/fhavrlent/gastby-contentful-typescript-starter
+  description: Contentful and TypeScript starter based on default starter.
+  tags:
+    - Contentful
+    - TypeScript
+    - Styling:CSS-in-JS
+  features:
+    - Based on default starter
+    - TypeScript
+    - CSS in JS (Emotion)
+    - Contentful
