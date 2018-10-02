@@ -116,11 +116,10 @@ With the setup done, move on to adding the plugin's functionality.
 Create a new file called `gatsby-node.js` in your `gatsby-source-pixabay` directory, and add the following:
 
 ```js:title=gatsby-node.js
-const crypto = require("crypto")
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -136,15 +135,14 @@ exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
 What did you do by adding this code? You started by importing the dependencies that you added earlier (along with one built in dependency):
 
 ```js
-const crypto = require("crypto")
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 ```
 
-Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`actions` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`actions`, `createNodeId` and `createContentDigest`) along with any config options that are provided in your project's `gatsby-config.js` file:
 
 ```js
-exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
 ```
 
 You do some initial setup:
@@ -211,9 +209,8 @@ Update `gatsby-node.js` in your `plugins/gatsby-source-pixabay/` directory:
 ```js{11-30}:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
-const crypto = require("crypto")
 
-exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -266,14 +263,13 @@ You're ready to add the final step of your plugin - converting this data into a 
 
 ### Use `createNode` function
 
-You're adding a helper function on lines 12 to 32 and processing the data into a node on lines 49 to 52:
+You're adding a helper function on lines 11 to 27 and processing the data into a node on lines 44 to 47:
 
-```js{12-32,49-52}:title=gatsby-node.js
+```js{11-27,44-47}:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
-const crypto = require("crypto")
 
-exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -283,10 +279,6 @@ exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
   const processPhoto = photo => {
     const nodeId = createNodeId(`pixabay-photo-${photo.id}`)
     const nodeContent = JSON.stringify(photo)
-    const nodeContentDigest = crypto
-      .createHash("md5")
-      .update(nodeContent)
-      .digest("hex")
 
     const nodeData = Object.assign({}, photo, {
       id: nodeId,
@@ -295,7 +287,7 @@ exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
       internal: {
         type: `PixabayPhoto`,
         content: nodeContent,
-        contentDigest: nodeContentDigest,
+        contentDigest: createContentDigest(photo),
       },
     })
 
