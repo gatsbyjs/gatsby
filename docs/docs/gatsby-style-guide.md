@@ -58,7 +58,7 @@ examples:
 - [plugin READme](/packages/gatsby-source-filesystem/)
 - [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](docs/templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 
@@ -84,7 +84,7 @@ If the content is already somewhere else on the .org site, feel free to copy and
 
 Possible sources of great research materials:
 
-- Blogposts (on gatsbyjs.org and other sites)
+- Blog posts (on gatsbyjs.org and other sites)
 - Docs (on gatsbyjs.org and other sites)
 - Video tutorials
 - Discord, Spectrum, or Twitter conversations
