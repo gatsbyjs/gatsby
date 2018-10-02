@@ -34,9 +34,11 @@ function watch(root, packages, { scanOnce, quiet }) {
   const ignored = [/[/\\]node_modules[/\\]/i, /\.git/i, /\.DS_Store/].concat(
     packages.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
   )
-  const watchers = packages
-    .map(p => path.join(root, `/packages/`, p))
-    .filter(p => fs.existsSync(p))
+  const watchers = _.uniq(
+    packages
+      .map(p => path.join(root, `/packages/`, p))
+      .filter(p => fs.existsSync(p))
+  )
 
   let allCopies = []
 
