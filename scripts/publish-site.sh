@@ -1,6 +1,6 @@
 #!/bin/sh
 yarn bootstrap
-npm install -g gatsby-dev-cli
+npm install -g gatsby-dev-cli@2.4.1 # hard code, until gatsby-dev-cli is fixed
 gatsby-dev --set-path-to-repo .
 
 echo "=== Installing the website dependencies"
