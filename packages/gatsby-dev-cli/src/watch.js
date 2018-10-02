@@ -26,6 +26,10 @@ const copyPath = (oldPath, newPath, quiet) =>
     })
   })
 
+/*
+ * non-existant packages break on('ready')
+ * See: https://github.com/paulmillr/chokidar/issues/449
+ */
 function watch(root, packages, { scanOnce, quiet }) {
   const ignored = [/[/\\]node_modules[/\\]/i, /\.git/i, /\.DS_Store/].concat(
     packages.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
