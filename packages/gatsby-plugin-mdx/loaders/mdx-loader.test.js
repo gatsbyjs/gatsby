@@ -1,4 +1,4 @@
-const mdxLoader = require("../loaders/mdx-loader");
+const mdxLoader = require("./mdx-loader");
 const prettier = require("prettier");
 const c = require("js-combinatorics");
 
