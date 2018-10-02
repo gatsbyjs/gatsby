@@ -16,7 +16,7 @@ require(`dotenv`).config({
 
 if (!process.env.GITHUB_API_TOKEN) {
   throw new Error(
-    `A GitHub token is required to build the site. Check the README.`
+    `A GitHub token is required to build the site. Check www/README.md.`
   )
 }
 

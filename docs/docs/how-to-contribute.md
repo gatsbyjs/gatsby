@@ -76,7 +76,7 @@ a pull request.
 
 - Clone the repo and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
-- Create a `.env.development` file with a `GITHUB_API_TOKEN` environment variable. See [www/README](https://github.com/gatsbyjs/gatsby/tree/master/www#working-with-the-starter-showcase) for more info!
+- Create a `.env.development` file with a `GITHUB_API_TOKEN` environment variable. See [www/README][www-readme] for more info!
 - Run `gatsby develop` to preview the website in `http://localhost:8000`
 - The Markdown files for the documentation live in `/docs` folder. Make
   additions or modifications here.
@@ -92,7 +92,7 @@ To add a new blog post to the gatsbyjs.org blog:
 
 - Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
-- Create a `.env.development` file with a `GITHUB_API_TOKEN` environment variable. See [www/README](https://github.com/gatsbyjs/gatsby/tree/master/www#working-with-the-starter-showcase) for more info!
+- Create a `.env.development` file with a `GITHUB_API_TOKEN` environment variable. See [www/README][www-readme] for more info!
 - Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
 - The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
 - Add your avatar image to `/docs/blog/avatars`
@@ -110,3 +110,5 @@ To add a new blog post to the gatsbyjs.org blog:
 ### Debugging the build process
 
 Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
+
+[www-readme]: https://github.com/gatsbyjs/gatsby/tree/master/www#working-with-the-starter-showcase
