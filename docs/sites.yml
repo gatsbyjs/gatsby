@@ -2695,8 +2695,9 @@
 - title: Brittany Chiang
   main_url: https://brittanychiang.com/
   url: https://brittanychiang.com/
+  source_url: https://github.com/bchiang7/v4
   description: >
-    Personal website and portfolio of Brittany Chiang built with Gatsby v2 and hosted on Netlify
+    Personal website and portfolio of Brittany Chiang built with Gatsby v2
   categories:
     - Portfolio
   built_by: Brittany Chiang
