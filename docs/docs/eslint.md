@@ -8,11 +8,32 @@ Gatsby ships with Prettier, which is a simple, opinionated code *formatter*. [ES
 
 ## How to use ESLint
 
-Here we will explore an ESLint configuration that acts like Prettier by adhering to [Standard.js](https://standardjs.com) rules. ESLint might seem intimidating at first, however it is aimed at providing a number of configurable options to make your code format fit your style. Run the following command to remove Prettier and install ESLint.
+Here we will explore an ESLint configuration that acts like Prettier by adhering to [Standard.js](https://standardjs.com) rules. ESLint might seem intimidating at first, however it is aimed at providing a number of configurable options to make your code format fit your style. Run the following commands to remove Prettier and install ESLint.
 
-  `npm rm prettier; npm install --save-dev eslint babel-eslint eslint-config-standard eslint-plugin-import eslint-plugin-promise eslint-plugin-standard eslint-plugin-react`
+```bash
+# Remove the Prettier package
+npm rm prettier
 
-Now that we have our packages installed, remove `.prettierrc` from the root of your new Gatsby project and create a new file named `.eslintrc.js`. We recommend copying our default .eslintrc.js below to the root of your site and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options.
+# Install ESLint and its packages
+npm install --save-dev eslint babel-eslint \
+  eslint-config-standard \
+  eslint-plugin-standard eslint-plugin-react \
+  eslint-plugin-import eslint-plugin-promise \
+```
+
+Now that we have our packages installed, remove `.prettierrc` from the root of your new Gatsby project and create a new file named `.eslintrc.js` using the commands below. 
+
+```bash
+# Remove the Prettier config file
+rm .prettierrc
+
+# Create a config file for ESLint
+touch .eslintrc.js
+```
+
+### Configuring ESLint
+
+We recommend copying our default .eslintrc.js content below to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options.
 
 ```js
 module.exports = {
