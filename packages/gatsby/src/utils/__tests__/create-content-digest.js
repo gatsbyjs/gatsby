@@ -1,19 +1,19 @@
 const createContentDigest = require(`../create-content-digest`)
 
 describe(`Create content digest`, () => {
-  it(`returns the content digest`, () => {
-    const content = JSON.stringify({ id: 1 })
+  it(`returns the content digest when the input is a string`, () => {
+    const input = JSON.stringify({ id: 1 })
 
-    const contentDigest = createContentDigest(content)
+    const contentDigest = createContentDigest(input)
 
-    expect(contentDigest).toEqual(`d2ce28b9a7fd7e4407e2b0fd499b7fe4`)
+    expect(contentDigest).toMatchSnapshot()
   })
 
-  it(`throws an error when the data argument is not a string`, () => {
-    const content = [{ id: 1 }]
+  it(`returns the content digest when the input is a non string`, () => {
+    const input = { id: 1 }
 
-    expect(() => {
-      createContentDigest(content)
-    }).toThrow()
+    const contentDigest = createContentDigest(input)
+
+    expect(contentDigest).toMatchSnapshot()
   })
 })

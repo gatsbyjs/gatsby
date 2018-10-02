@@ -102,7 +102,7 @@ exports.createPagesStatefully = true
  *       type: `MyNodeType`,
  *       mediaType: `text/html`,
  *       content: nodeContent,
- *       contentDigest: createContentDigest(nodeContent)
+ *       contentDigest: createContentDigest(myData)
  *     }
  *   }
  *

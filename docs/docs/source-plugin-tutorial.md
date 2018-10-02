@@ -287,7 +287,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOpt
       internal: {
         type: `PixabayPhoto`,
         content: nodeContent,
-        contentDigest: createContentDigest(nodeContent),
+        contentDigest: createContentDigest(photo),
       },
     })
 
