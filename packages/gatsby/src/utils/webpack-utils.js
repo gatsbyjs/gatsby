@@ -305,7 +305,7 @@ module.exports = async ({
   {
     let mjs = (options = {}) => {
       return {
-        test: /\.mjs?$/,
+        test: /\.mjs$/,
         include: /node_modules/,
         type: `javascript/auto`,
         ...options,
