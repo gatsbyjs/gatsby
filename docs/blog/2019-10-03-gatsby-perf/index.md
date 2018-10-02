@@ -1,13 +1,13 @@
 ---
 title: "Web Performance 102: Keeping Gatsby Sites Blazing Fast"
 author: Dustin Schau
-date: 2018-09-27
+date: 2018-10-03
 image: images/rocket.jpg
 showImageInArticle: false
 tags: ["performance", "v2", "lighthouse", "webpagetest"]
 ---
 
-We say it all the time: Gatsby sites are blazing fast. 
+We say it all the time: Gatsby sites are blazing fast.
 
 It’s a great tagline. But for you, that might raise more questions:
 
@@ -15,9 +15,9 @@ It’s a great tagline. But for you, that might raise more questions:
 - How do you know it’s blazing fast?
 - How can it be even more blazing (incineratingly?) fast?
 
-These are questions the Gatsby core team has thought about recently, since our recent release of Gatsby v2 improved upon Gatsby v1's gold standard to squeeze even more performance out of every site. 
+These are questions the Gatsby core team has thought about recently, since our recent release of Gatsby v2 improved upon Gatsby v1's gold standard to squeeze even more performance out of every site.
 
-And what are some simple, meaningful metrics to _know_ if your site is blazing fast? 
+And what are some simple, meaningful metrics to _know_ if your site is blazing fast?
 
 Let's get to it.
 
@@ -35,9 +35,12 @@ Lighthouse measures your site's speed and performance on a variety of meaningful
 
 Our baseline is going to be Gatsby v1. I've created a [repository][gatsby-v1-repo] that I've then [deployed to Netlify][gatsby-v1-netlify]. To use Lighthouse, simply open up Chrome's Developer Tools and navigate to the Audits tab, like so:
 
-![Chrome Audits](./video/lighthouse.mp4) <!-- Note: this probably won't work -->
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="/lighthouse.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
 
-Chrome will simulate a slower, mobile device, and measure the performance of your site on the criteria previously mentioned. Of particular note is the trace, which takes screenshots of your site as it loads. The less blank white screens your users see, the better. The quicker your site loads in this trace, the happier your users will be as your site is _actually_ blazing fast and a joy to use. 
+Chrome will simulate a slower, mobile device, and measure the performance of your site on the criteria previously mentioned. Of particular note is the trace, which takes screenshots of your site as it loads. The less blank white screens your users see, the better. The quicker your site loads in this trace, the happier your users will be as your site is _actually_ blazing fast and a joy to use.
 
 Maximizing this trace coupled with a concept known as TTI, or Time to Interactive, means that not only does your site load fast, but that it is able to be accessed and actually _used_ quickly too. If your site shell and content loads quickly, but JavaScript and other resources are still blocking the main thread, your users will leave your site and/or grow frustrated! Blazing fast isn't just the appearance of loading fast, it's loading fast coupled with actually _being_ fast, and TTI is a great metric to consider as a performance baseline.
 
@@ -76,7 +79,6 @@ Gatsby v1 was in many ways an experiment to prove out some meaningful ideas:
 
 Gatsby v2 set out to build upon this solid foundation, while focusing on improvements in speed and developer experience.
 
-
 ### Speed improvements
 
 It's not 🚀 science. Shipping less JavaScript to your end users makes your application faster to load, parse, and use. Think _hard_ whether that slick launch animation and heavy above the fold hero image are actually _meaningful_ to the quality experience your users want. Every additional byte of JavaScript has an associated parse and evaluation time that you're forwarding along to your end users.
@@ -86,10 +88,10 @@ It's not 🚀 science. Shipping less JavaScript to your end users makes your app
 
 To that end, Gatsby v2 ships 31% less JavaScript in its client runtime. While we'd _love_ to brag about this, most of the credit goes to smart optimizations in libraries we rely upon: React--upgrading from 15 to 16--and @reach/router--swapped in place of react-router. Much like performance optimizations, build upgrades, etc. are available for free in something like [create-react-app][create-react-app], these upgrades in Gatsby v2 are available _for free_ simply by updating to Gatsby v2 by following the [migration guide][migration-guide]. The power of opinionated, optimized toolsets that internalize smart defaults!
 
-|Version|React|Router|Total|
-|:-----:|:---:|:----:|:---:|
-|v1|`49.8kb`|`8kb`|`57.8kb`|
-|v2|`34.8kb`|`6kb`|`40.8kb`|
+| Version |  React   |  Router  |  Total   |
+| :-----: | :------: | :------: | :------: |
+|   v1    | `49.8kb` | `18.4kb` | `68.2kb` |
+|   v2    | `34.8kb` |  `6kb`   | `40.8kb` |
 
 ## Bringing it home
 
@@ -99,7 +101,7 @@ Let's take another look at performance in Gatsby v2 by revisiting our trusty fri
 
 ![Gatsby v2 lighthouse](./images/v2-perf.png)
 
-![Comparison](./images/lighthouse-chart.png) <!-- https://docs.google.com/spreadsheets/d/1nHXm1GuiMyBXvKnA4wuYMIR5tHqew7l_z8LLQ384yxo/edit?usp=sharing -->
+![Comparison](./images/lighthouse-chart.png)
 
 _Oncemore: lower is better 😉_
 
@@ -107,10 +109,10 @@ _Oncemore: lower is better 😉_
 
 ![Gatsby v2 WebPagetest](./images/v2-webpagetest.png)
 
-|Version|Speed Index|Time to Interactive|
-|:-----:|:---------:|:-----------------:|
-|v1|`1728`|`2.635s`|
-|v2|`1712`|`2.486`|
+| Version | Speed Index | Time to Interactive |
+| :-----: | :---------: | :-----------------: |
+|   v1    |   `1728`    |      `2.635s`       |
+|   v2    |   `1712`    |       `2.486`       |
 
 We've shaved off ~200ms from Time to Interactive, while also improving the Speed Index score 💪
 
@@ -129,3 +131,4 @@ Gatsby v2 is an iterative approach to improving the solid foundational base that
 [gatsby-source-wordpress]: /packages/gatsby-source-wordpress
 [gatsby-plugin-typescript]: /packages/gatsby-plugin-typescript
 [migration-guide]: /docs/migrating-from-v1-to-v2/
+[webpagetest]: https://webpagetest.org
