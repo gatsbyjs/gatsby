@@ -2692,12 +2692,14 @@
     - Travel
   built_by: Orestis Ioannou
   featured: false
-- title: Kelvin Kamau
-  main_url: "https://www.kelvinkamau.app/"
-  url: "https://www.kelvinkamau.app/"
+- title: Brittany Chiang
+  main_url: https://brittanychiang.com/
+  url: https://brittanychiang.com/
+  source_url: https://github.com/bchiang7/v4
   description: >
-    Official Website of a maker and software artisan in Kenya.
+    Personal website and portfolio of Brittany Chiang built with Gatsby v2
   categories:
     - Portfolio
-    - Miscellaneous
+  built_by: Brittany Chiang
+  built_by_url: https://github.com/bchiang7
   featured: false
