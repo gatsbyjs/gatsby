@@ -8,7 +8,7 @@ const crypto = require(`crypto`)
  * @return {String} - The content digest
  */
 const createContentDigest = input => {
-  const content = typeof input != `string` ? JSON.stringify(input) : input
+  const content = typeof input !== `string` ? JSON.stringify(input) : input
 
   return crypto
   .createHash(`md5`)
