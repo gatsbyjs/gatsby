@@ -2,7 +2,7 @@
   "name": "babel-preset-gatsby",
   "version": "0.1.0",
   "author": "Philipp Spiess <hello@philippspiess.com>",
-  "devDependencies": {
+  "dependencies": {
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
