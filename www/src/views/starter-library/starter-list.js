@@ -67,15 +67,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             stars,
             stub,
           } = starter.fields.starterShowcase
-          const { url: demoUrl, repo: repoUrl } = starter
-          const gatsbyVersion = gatsbyDependencies.find(
-            ([k, v]) => k === `gatsby`
-          )[1]
-          const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/) // we just want x.x
-          const minorVersion = match ? match[0] : gatsbyVersion // default to version if no match
-          const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(
-            minorVersion
-          ) // either 2.x or next or latest
+          const { url: demoUrl } = starter
 
           return (
             starter.fields && ( // have to filter out null fields from bad data
