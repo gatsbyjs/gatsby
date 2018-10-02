@@ -1,3 +1,3 @@
 {
-  "presets": [["../../.babel-preset.js", { "browser": true }]]
+  "presets": [["gatsby", { "browser": true }]]
 }
