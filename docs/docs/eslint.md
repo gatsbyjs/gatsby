@@ -2,7 +2,61 @@
 title: ESLint
 ---
 
-This is a stub. Help our community expand it.
+## Why ESLint
 
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+Gatsby ships with Prettier, which is a simple, opinionated code *formatter*. [ESLint](https://eslint.org) can be both a *linter* and *formatter*, meaning you can use it to check for syntactical errors as well as formatting. Prettier will work for most sites, however if you'd like to add linting capabilities *and* highly-configurable formatting you should implement ESLint into your new Gatsby project.
+
+## How to use ESLint
+
+Here we will explore an ESLint configuration that acts like Prettier by adhering to [Standard.js](https://standardjs.com) rules. ESLint might seem intimidating at first, however it is aimed at providing a number of configurable options to make your code format fit your style. Run the following command to remove Prettier and install ESLint.
+
+  `yarn remove prettier; yarn add -D eslint babel-eslint eslint-config-standard eslint-plugin-import eslint-plugin-promise eslint-plugin-standard eslint-plugin-react`
+
+Now that we have our packages installed, remove `.prettierrc` from the root of your new Gatsby project and create a new file named `.eslintrc.js`. We recommend copying our default .eslintrc.js below to the root of your site and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options.
+
+```js
+module.exports = {
+  extends: ['standard'],
+  plugins: ['standard', 'react'],
+  rules: {
+    'no-var': 'error', // optional, recommended when using es6+
+    'no-unused-vars': 1, // recommended
+    'arrow-spacing': ['error', { 'before': true, 'after': true }], // recommended
+    'indent': ['error', 2],
+    'comma-dangle': ['error', {
+      'objects': 'only-multiline',
+      'arrays': 'only-multiline',
+      'imports': 'never',
+      'exports': 'never',
+      'functions': 'never'
+    }],
+
+    // options to emulate prettier setup
+    'semi': ['error', 'never'],
+    'max-len': ['error', { 'code': 80 }],
+    'template-curly-spacing': ['error', 'always'],
+    'arrow-parens': ['error', 'as-needed'],
+
+    // standard.js
+    'space-before-function-paren': ['error', {
+      'named': 'always',
+      'anonymous': 'always',
+      'asyncArrow': 'always'
+    }],
+
+    // standard plugin - options
+    'standard/object-curly-even-spacing': ['error', 'either'],
+    'standard/array-bracket-even-spacing': ['error', 'either'],
+    'standard/computed-property-even-spacing': ['error', 'even'],
+    'standard/no-callback-literal': ['error', ['cb', 'callback']],
+
+    // react plugin - options
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error'
+  },
+  parser: 'babel-eslint',
+  parserOptions: {
+    'ecmaVersion': 8, // optional, recommended 6+
+  }
+}
+```
