@@ -26,24 +26,33 @@ const copyPath = (oldPath, newPath, quiet) =>
     })
   })
 
+/*
+ * non-existant packages break on('ready')
+ * See: https://github.com/paulmillr/chokidar/issues/449
+ */
 function watch(root, packages, { scanOnce, quiet }) {
-  const ignored = [
-    /[/\\]node_modules[/\\]/i,
-    /\.git/i,
-    /\.DS_Store/,
-  ].concat(
+  const ignored = [/[/\\]node_modules[/\\]/i, /\.git/i, /\.DS_Store/].concat(
     packages.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
   )
-  const watchers = packages.map(p => path.join(root, `/packages/`, p))
+  const watchers = _.uniq(
+    packages
+      .map(p => path.join(root, `/packages/`, p))
+      .filter(p => fs.existsSync(p))
+  )
 
   let allCopies = []
 
-  chokidar.watch(watchers, {
-    ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
-  })
+  chokidar
+    .watch(watchers, {
+      ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
+    })
     .on(`all`, (event, filePath) => {
-      if (event === `change` || event === `add`) {
-        const packageName = path.basename(path.dirname(filePath.split(`packages/`).pop()))
+      const watchEvents = [`change`, `add`]
+      if (_.includes(watchEvents, event)) {
+        const [packageName] = filePath
+          .split(`packages/`)
+          .pop()
+          .split(`/`)
         const prefix = path.join(root, `/packages/`, packageName)
 
         // Copy it over local version.
@@ -71,14 +80,14 @@ function watch(root, packages, { scanOnce, quiet }) {
         allCopies = allCopies.concat(localCopies)
       }
     })
-    .on(`ready`, () => {
+    .on(`ready`, () =>
       // all files watched, quit once all files are copied if necessary
       Promise.all(allCopies).then(() => {
         if (scanOnce) {
           quit()
         }
       })
-    })
+    )
 }
 
 module.exports = watch
