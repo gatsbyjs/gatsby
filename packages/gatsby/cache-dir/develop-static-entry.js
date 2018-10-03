@@ -64,6 +64,8 @@ module.exports = (locals, callback) => {
     headComponents: headComponents.concat([
       <script key={`io`} src="/socket.io/socket.io.js" />,
     ]),
+    htmlAttributes,
+    bodyAttributes,
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`commons`} src="/commons.js" />,
