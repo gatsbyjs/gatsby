@@ -12,6 +12,10 @@ It only takes a few steps to use Gatsby with Drupal as a headless CMS (also know
 
 ## How to implement Drupal + Gatsby
 
+### Quick start
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back.
+
+### gatsby-config.js
 Hooking up Gatsby to a new or existing Drupal site takes only a few steps.
 
 - Follow the `gatsby-source-drupal` [installation instructions](/packages/gatsby-source-drupal/?=drupal) to add the plugin to your Gatsby site
