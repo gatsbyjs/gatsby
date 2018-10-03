@@ -66,7 +66,10 @@ export default class FilteredStarterLibrary extends Component {
       )
     )
 
-    let starters = data.allStartersYaml.edges
+    // filter out starters missing github information
+    let starters = data.allStartersYaml.edges.filter(({ node: starter }) => {
+      return starter.fields && starter.fields.starterShowcase
+    })
 
     if (urlState.s.length > 0) {
       starters = starters.filter(starter =>
@@ -241,7 +244,13 @@ export default class FilteredStarterLibrary extends Component {
               tag="button"
               overrideCSS={styles.loadMoreButton}
               onClick={() => {
-                this.setState({ sitesToShow: this.state.sitesToShow + 15 })
+                let showAll =
+                  this.state.sitesToShow + 15 > starters.length
+                    ? starters.length
+                    : false
+                this.setState({
+                  sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
+                })
               }}
               icon={<MdArrowDownward />}
             >
