@@ -32,6 +32,8 @@
     "babel-plugin-remove-graphql-queries": "^2.0.2-rc.3",
     "better-queue": "^3.8.6",
     "bluebird": "^3.5.0",
+    "cache-manager": "^2.9.0",
+    "cache-manager-fs-hash": "^0.0.6",
     "chalk": "^2.3.2",
     "chokidar": "^2.0.2",
     "common-tags": "^1.4.0",
