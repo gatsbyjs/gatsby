@@ -19,7 +19,7 @@ _Note: this guide uses the `gatsby-starter-default` to provide you with a knowle
 
 Essentially the Gatsby home base. The two things defined here initially (in the starter) are `siteMetadata` and `plugins` you can add to enable new functionalities on your site.
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby Default Starter",
@@ -41,7 +41,7 @@ npm install gatsby-source-wordpress
 
 In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   ...
   plugins: [
@@ -73,7 +73,7 @@ You can use `gatsby-node.js` file from the plugin demo to get started. For the p
 
 For example, below is the part of the demo `gatsby-node.js` file that iterates over all the WordPress post data.
 
-```javascript
+```javascript:title=gatsby-node.js
 const postTemplate = path.resolve(`./src/templates/post.js`)
 
 _.each(result.data.allWordpressPost.edges, edge => {
