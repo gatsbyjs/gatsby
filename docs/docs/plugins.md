@@ -80,6 +80,8 @@ module.exports = {
 
 Note that plugin options will be stringified by Gatsby, so they cannot be functions.
 
+## Loading plugins from your local plugins folder
+
 Gatsby can also load plugins from the your local website plugins folder which is a folder named `plugins` in the website's root directory.
 
 ```javascript
@@ -88,7 +90,7 @@ module.exports = {
 }
 ```
 
-If you want to reference a plugin that for some reason is not in the plugins folder then you could use something like the following:
+If you want to reference a plugin that is not in the plugins folder then you could use something like the following:
 
 ```javascript
 module.exports = {
