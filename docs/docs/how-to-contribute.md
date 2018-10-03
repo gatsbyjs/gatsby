@@ -85,7 +85,7 @@ a pull request.
 
 #### Using code titles
 
-When creating your document you'll often insert code blocks (with three back-ticks) to show code examples. As switchting between multiple files in the course of the document can confuse some readers it's best to explicitly tell the users where the code example should go. You can use syntax highlighting as usual, you need to add `:title=your-path-name` to it. Use it like so:
+When creating your document you'll often insert code blocks (with three back-ticks) to show code examples. As switchting between multiple files in the course of the document can confuse some readers it's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, you need to add `:title=your-path-name` to it. Use it like so:
 
 ````
 ```javascript:title=src/util/alert.js
