@@ -10,7 +10,7 @@ Before you start to code, you’ll need to familiarize with some core web techno
 It’s not necessary to be an expert with these already — if you’re not, don’t worry! You’ll pick up a lot through the course of this tutorial series; These are some of the main web technologies you’ll use when building a Gatsby site:
 
 - **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
-- **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc).
+- **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
 - **JavaScript**: A programming language that helps us make the web dynamic and interactive.
 - **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
 - **GraphQL**: A query language; A programming language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
@@ -51,7 +51,7 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 - On the npm website, you can browse what JavaScript packages are available in the npm registry.
 - The npm registry is a large database of information about JavaScript packages available on npm.
-- Once you’ve identified a package you want, you can use the npm CLI to install it in your project. The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
+- Once you’ve identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
 
 > 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
 
@@ -59,7 +59,7 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter.
 
-If your system does not have Git installed, install it from [https://git-scm.com/downloads](https://git-scm.com/downloads)
+If your system does not have Git installed, install it from the [**Git downloads page**](https://git-scm.com/downloads).
 
 ## Install the Gatsby CLI
 
@@ -114,10 +114,10 @@ What just happened?
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-- Starting with `gatsby` says, ‘hey, we want to use the gatsby-cli tool!’
+- Starting with `gatsby` says, ‘hey, we want to use the gatsby-cli tool!’.
 - `new` is a gatsby command to create a new Gatsby project.
 - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
-- Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use. If you aren't familiar yet with git and GitHub, you can [learn more here](https://try.github.io/).
+- Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use. If you aren't familiar yet with Git and GitHub, you can [learn more here](https://try.github.io/).
 
 ```bash
 cd hello-world
@@ -139,7 +139,7 @@ Open up a new tab in your browser and navigate to [**http://localhost:8000**](ht
 
 Congrats! This is the beginning of your very first Gatsby site! 🎉
 
-You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. (That’s the process you started by running the `gatsby develop` command). To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
+You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. (That’s the process you started by running the `gatsby develop` command.) To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
 
 **Note:** If you are using VM setup like `vagrant`, and/or would like to listen on your local ip address, run `gatsby develop --host=0.0.0.0`. Now, the development server listens on both 'localhost' and your local ip.
 
@@ -149,7 +149,7 @@ A code editor is a program designed specifically for editing computer code. Ther
 
 ### ✋ Download VS Code
 
-Visit the [VS code site](https://code.visualstudio.com/#alt-downloads), and download the version appropriate for your platform.
+Visit the [VS Code site](https://code.visualstudio.com/#alt-downloads), and download the version appropriate for your platform.
 
 ### ✋ Install Prettier plugin
 
@@ -157,8 +157,8 @@ We also recommend using [Prettier](https://github.com/prettier/prettier) -- Pret
 
 You can use Prettier directly in your editor using the [Prettier VS Code plugin](https://github.com/prettier/prettier-vscode):
 
-1.  Open the extensions view on VS Code (View => Extensions)
-2.  Search for "Prettier - Code formatter"
+1.  Open the extensions view on VS Code (View => Extensions).
+2.  Search for "Prettier - Code formatter".
 3.  Click "Install". After installation you'll be prompted to restart VS Code to enable the extension.
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
