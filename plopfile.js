@@ -1,7 +1,7 @@
 module.exports = function(plop) {
   // Add new package
   plop.setGenerator(`package`, {
-    description: `This is sets up the basic files for a new package.`,
+    description: `This sets up the basic files for a new package.`,
     prompts: [
       {
         type: `input`,
@@ -59,7 +59,7 @@ module.exports = function(plop) {
   })
   // Add new example site
   plop.setGenerator(`example`, {
-    description: `This is sets up the basic files for a new example site.`,
+    description: `This sets up the basic files for a new example site.`,
     prompts: [
       {
         type: `input`,
