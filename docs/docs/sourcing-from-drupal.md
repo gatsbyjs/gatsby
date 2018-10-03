@@ -13,45 +13,46 @@ It only takes a few steps to use Gatsby with Drupal as a headless CMS (also know
 
 ### How to implement Drupal + Gatsby
 
-Hooking up Gatsby to a new or existing Drupal site takes just a few steps:
+Hooking up Gatsby to a new or existing Drupal site is simple.
 
 - Add the `gatsby-source-drupal` plugin to your Gatsby site
-- Configure the plugin with your Drupal credentials & hosted URL
-- Access all your Drupal data using GraphQL queries
 
 An example code is given below :
 
-    module.exports = {
-      siteMetadata: {
-        title: `Gatsby with Drupal`,
-      },
-      plugins: [
-        {
-          resolve: `gatsby-source-drupal`,
-          options: {
-            baseUrl: `https://live-contentacms.pantheonsite.io/`,
-            apiBase: `api`,
-          },
-        },
-        {
-          resolve: `gatsby-plugin-google-analytics`,
-          options: {
-            trackingId: `UA-93349937-2`,
-          },
-        },
-        `gatsby-plugin-offline`,
-        `gatsby-plugin-glamor`,
-        `gatsby-plugin-sharp`,
-        `gatsby-transformer-sharp`,
-        {
-          resolve: `gatsby-plugin-typography`,
-          options: {
-            pathToConfigModule: `src/utils/typography.js`,
-          },
-        },
-      ],
-    }
+```
+javascript:title=gatsby-config.js
 
+module.exports = {
+  siteMetadata: {
+    title: `Gatsby with Drupal`,
+  },
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: `UA-93349937-2`,
+      },
+    },
+    `gatsby-plugin-offline`,
+    `gatsby-plugin-glamor`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography.js`,
+      },
+    },
+  ],
+}
+```
 ### Why use Gatsby and Drupal together?
 
 [“Decoupled Drupal”](https://www.acquia.com/drupal/decoupled-drupal) has become an increasingly popular approach to building enterprise-grade websites, and has the [full-throated support](https://dri.es/how-to-decouple-drupal-in-2018) of Drupal community leaders. Using Gatsby in a decoupled Drupal setup allows your team to access the powerful content modeling and access workflow capabilities of Drupal 8, as well as the powerful UI creation & performance toolset of Gatsby.
