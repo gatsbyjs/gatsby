@@ -78,7 +78,7 @@ plugins.
 
 ## Installing your first Gatsby plugin
 
-Let's start by creating a new site. At this point it probably makes sense to close the terminal windows you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
+Start by creating a new site. At this point it probably makes sense to close the terminal windows you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
 
 Just like in part one, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-two`. Then, change to this new directory:
 
@@ -101,7 +101,7 @@ This is the minimal setup for a Gatsby site.
 To install a plugin, there are two steps. First, you install the plugin's NPM
 package and second, you add the plugin to your site's `gatsby-config.js`.
 
-Typography.js has a Gatsby plugin, so let's install that along with some additional required packages by running:
+Typography.js has a Gatsby plugin, so install that along with some additional required packages by running:
 
 ```shell
 npm install --save gatsby-plugin-typography react-typography typography
@@ -245,7 +245,7 @@ _Note that if you use `gatsby-plugin-typography` with the default starter, you'l
 
 There are
 [many themes available](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes)
-for Typography.js. Let's try a couple. In your terminal at the root of your
+for Typography.js. Try a couple. In your terminal at the root of your
 site, run:
 
 ```shell
@@ -317,9 +317,9 @@ React in general).
 
 Gatsby works out of the box with CSS Modules.
 
-Let's build a page using CSS Modules.
+Build a page using CSS Modules.
 
-First, let's create a new `Container` component. Create a new directory at
+First, create a new `Container` component. Create a new directory at
 `src/components` and then, in this new directory, create a file named
 `container.js` and paste the following:
 
@@ -363,10 +363,10 @@ If you visit `http://localhost:8000/about-css-modules/`, your page should now lo
 
 ![css-modules-1](css-modules-1.png)
 
-Let's create a list of people with names, avatars, and short latin
+Create a list of people with names, avatars, and short latin
 biographies.
 
-First, let's create the file for the CSS at
+First, create the file for the CSS at
 `src/pages/about-css-modules.module.css`. You'll notice that the file name ends
 with `.module.css` instead of `.css` like normal. This is how you tell Gatsby
 that this CSS file should be processed as CSS modules.
@@ -426,9 +426,9 @@ Modules generates. They're guaranteed to be unique across your site. And because
 you have to import them to use the classes, there's never any question about
 where some CSS is being used.
 
-Let's use your styles to create a `User` component.
+Use your styles to create a `User` component.
 
-Let's create the new component inline in the `about-css-modules.js` page
+Create the new component inline in the `about-css-modules.js` page
 component. The general rule of thumb is this: if you use a component in multiple
 places on a site, it should be in its own module file in the `components`
 directory. But, if it's used only in one file, create it inline.
