@@ -4,7 +4,7 @@ title: ESLint
 
 ## Why ESLint
 
-Gatsby ships with Prettier, which is a simple, opinionated code *formatter*. [ESLint](https://eslint.org) can be both a *linter* and *formatter*, meaning you can use it to check for syntactical errors as well as formatting. Prettier will work for most sites, however if you'd like to add linting capabilities *and* highly-configurable formatting you should implement ESLint into your new Gatsby project.
+Gatsby ships with Prettier, which is a simple, opinionated code *formatter*. [ESLint](https://eslint.org) can be both a *linter* and *formatter*, meaning you can use it to check for syntactical errors as well as formatting. Prettier will work for most sites, however if you'd like to add linting capabilities *and* highly-configurable formatting you should implement ESLint into your Gatsby project.
 
 ## How to use ESLint
 
@@ -35,7 +35,7 @@ touch .eslintrc.js
 
 We recommend copying our default .eslintrc.js content below to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options.
 
-```js
+```js:title=.eslintrc.js
 module.exports = {
   extends: ['standard'],
   plugins: ['standard', 'react'],
