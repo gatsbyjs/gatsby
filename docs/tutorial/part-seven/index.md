@@ -37,7 +37,7 @@ you'll see used in many sites and plugins.
 We do our best to make Gatsby APIs simple to implement. To implement an API, you export a function
 with the name of the API from `gatsby-node.js`.
 
-So do that. In the root of your site, create a file named
+So here's where you'll do that. In the root of your site, create a file named
 `gatsby-node.js`. Then add the following.
 
 ```javascript:title=gatsby-node.js
@@ -84,7 +84,7 @@ files.
 
 ![markdown-relative-path](markdown-relative-path.png)
 
-Now create slugs. As the logic for creating slugs from file names can get
+Now you'll have to create slugs. As the logic for creating slugs from file names can get
 tricky, the `gatsby-source-filesystem` plugin ships with a function for creating
 slugs. Let's use that.
 
@@ -102,7 +102,7 @@ The function handles finding the parent `File` node along with creating the
 slug. Run the development server again and you should see logged to the terminal
 two slugs, one for each markdown file.
 
-Now add your new slugs directly onto the `MarkdownRemark` nodes. This is
+Now you can add your new slugs directly onto the `MarkdownRemark` nodes. This is
 powerful, as any data you add to nodes is available to query later with GraphQL.
 So it'll be easy to get the slug when it comes time to create the pages.
 
@@ -286,7 +286,7 @@ Visit one of them and you see:
 
 ![hello-world-blog-post](hello-world-blog-post.png)
 
-Which is a bit boring and not what you want. Now pull in data from your markdown post. Change
+Which is a bit boring and not what you want. Now you can pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
 ```jsx{5-6,9-12,15-26}:title=src/templates/blog-post.js

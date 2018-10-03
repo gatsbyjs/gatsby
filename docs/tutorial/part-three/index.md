@@ -58,7 +58,7 @@ module.exports = {
 }
 ```
 
-Now, add a few different pages: a front page, an about page, and a contact
+Now, you can add a few different pages: a front page, an about page, and a contact
 page.
 
 ```jsx:title=src/pages/index.js

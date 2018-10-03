@@ -205,7 +205,7 @@ Add the above files and then run `gatsby develop`, per usual, and you should see
 
 You have another small site with a layout and two pages.
 
-Now to start querying 😋
+Now you can start querying 😋
 
 ## Your first GraphQL query
 

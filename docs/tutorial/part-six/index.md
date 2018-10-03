@@ -96,7 +96,7 @@ data transformation you might need when building a Gatsby site.
 
 ## Create a list of your site's markdown files in `src/pages/index.js`
 
-Now create a list of your markdown files on the front page. Like many
+Now you'll have to create a list of your markdown files on the front page. Like many
 blogs, you want to end up with a list of links on the front page pointing to each
 blog post. With GraphQL you can _query_ for the current list of markdown blog
 posts so you won't need to maintain the list manually.
