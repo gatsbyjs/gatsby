@@ -38,7 +38,13 @@ export default class FilteredStarterLibrary extends Component {
     })
   resetFilters = () =>
     this.props.setURLState({ c: null, d: null, v: null, s: `` })
-
+  showMoreSites = starters => {
+    let showAll =
+      this.state.sitesToShow + 15 > starters.length ? starters.length : false
+    this.setState({
+      sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
+    })
+  }
   render() {
     const { data, urlState, setURLState } = this.props
     const {
@@ -66,7 +72,7 @@ export default class FilteredStarterLibrary extends Component {
       )
     )
 
-    // filter out starters missing github information
+    // stopgap for missing gh data (#8763)
     let starters = data.allStartersYaml.edges.filter(({ node: starter }) => {
       return starter.fields && starter.fields.starterShowcase
     })
@@ -243,15 +249,7 @@ export default class FilteredStarterLibrary extends Component {
             <Button
               tag="button"
               overrideCSS={styles.loadMoreButton}
-              onClick={() => {
-                let showAll =
-                  this.state.sitesToShow + 15 > starters.length
-                    ? starters.length
-                    : false
-                this.setState({
-                  sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
-                })
-              }}
+              onClick={() => this.showMoreSites(starters)}
               icon={<MdArrowDownward />}
             >
               Load More
