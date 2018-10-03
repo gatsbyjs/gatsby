@@ -86,7 +86,7 @@
           items:
             - title: Sourcing from Netlify CMS
               link: /docs/sourcing-from-netlify-cms/
-            - title: Sourcing from WordPress*
+            - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal*
               link: /docs/sourcing-from-drupal/
