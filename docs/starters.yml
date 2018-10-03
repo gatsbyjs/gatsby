@@ -705,9 +705,9 @@
     - Jest/Enzyme testing
     - Storybook
     - Markdown linting
-- url: https://gatsby-wordpress-starter.netlify.com/
-  repo: https://github.com/ericwindmill/gatsby-starter-wordpress
-  description: n/a
+- url: https://gatsby-starter-wordpress.netlify.com/
+  repo: https://github.com/GatsbyCentral/gatsby-starter-wordpress
+  description: Gatsby starter using WordPress as the content source.
   tags:
     - Styling:CSS-in-JS
     - Wordpress
