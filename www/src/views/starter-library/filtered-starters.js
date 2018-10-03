@@ -96,6 +96,7 @@ export default class FilteredStarterLibrary extends Component {
               <ResetFilters onClick={resetFilters} />
             )}
             <LHSFilter
+              fixed={130}
               heading="Gatsby Version"
               data={Array.from(
                 count(
