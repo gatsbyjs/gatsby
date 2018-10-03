@@ -1,20 +1,16 @@
-- title: Quick start
+- title: Quick Start
   items:
-    - title: Quick start
+    - title: Getting Started
       link: /docs/
     - title: Starter Library
       link: /starters/
     - title: Recipes
       link: /docs/recipes/
-    - title: Overview of the docs*
-      link: /docs/overview/
 - title: Guides
   items:
     - title: Preparing your environment
       link: /docs/preparing-your-environment/
       items:
-        - title: Basic hardware and software requirements*
-          link: /docs/basic-hardware-software-requirements/
         - title: Browser Support
           link: /docs/browser-support/
         - title: Gatsby on Windows
