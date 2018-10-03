@@ -2,7 +2,7 @@
 title: Sourcing from WordPress
 ---
 
-This guide will walk you trough the process of using [Gatsby](https://www.gatsbyjs.org/) with [Wordpress Rest Api](https://developer.wordpress.org/rest-api/reference/).
+This guide will walk you through the process of using [Gatsby](https://www.gatsbyjs.org/) with [Wordpress Rest Api](https://developer.wordpress.org/rest-api/reference/).
 
 WordPress is a free and open-source content management system (CMS). Let's say you have a site built with Wordpress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress). Let's begin!
 
@@ -11,11 +11,11 @@ _Note: this guide uses the `gatsby-starter-default` to provide you with a knowle
 
 ## Setup
 
-###Quick start
+### Quick start
 
-"This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back."
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back.
 
-###gatsby-config.js
+### gatsby-config.js
 
 Essentially the Gatsby home base. The two things defined here initially (in the starter) are `siteMetadata` and `plugins` you can add to enable new functionalities on your site.
 
@@ -29,7 +29,7 @@ module.exports = {
 }
 ```
 
-###Plugin: gatsby-source-wordpress
+### Plugin: gatsby-source-wordpress
 
 Now that you have some understanding of project structure lets add fetching Wordpress data functionality. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WordPress JSON REST API. You can install it by running the following command:
 
@@ -37,7 +37,7 @@ Now that you have some understanding of project structure lets add fetching Word
 npm install gatsby-source-wordpress
 ```
 
-###Configuring plugin
+### Configuring the plugin
 
 In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
 
@@ -62,7 +62,7 @@ module.exports = {
 }
 ```
 
-##Using wordpress data
+## Using WordPress data
 Once your source plugin is pulling data, you can construct your site pages by implementing the `createPages` API in `gatsby-node.js`. When this is called, your data has already been fetched and is available to query with GraphQL. Gatsby uses [GraphQL at build time](/docs/querying-with-graphql/#how-does-graphql-and-gatsby-work-together); Your source plugin (in this case, `gatsby-source-wordpress`) fetches your data, and Gatsby uses that data to "[automatically _infer_ a GraphQL schema](/docs/querying-with-graphql/#how-does-graphql-and-gatsby-work-together)" that you can query against.
 
 The `createPages` API exposes the `graphql` function:
