@@ -1,4 +1,8 @@
 const loadPlugins = require(`../index`)
+const load = require(`../load`)
+const path = require(`path`)
+
+const pathSpy = jest.spyOn(path, `resolve`)
 
 describe(`Load plugins`, () => {
   /**
@@ -38,5 +42,36 @@ describe(`Load plugins`, () => {
     plugins = replaceFieldsThatCanVary(plugins)
 
     expect(plugins).toMatchSnapshot()
+  })
+
+  it(`Correctly adjusts plugins folder`, () => {
+    const config = {
+      plugins: [
+        `nonexisting`,
+      ],
+    }
+    pathSpy.mockClear()
+    try {
+      load(config)
+    } catch(err) {
+      expect(err.message).toMatch(`Unable to find plugin "nonexisting". Perhaps you need to install its package?`)
+      expect(pathSpy).toBeCalledWith(`./plugins/nonexisting`)
+    }
+  })
+
+  it(`Correctly searches at desired plugin location`, () => {
+    const config = {
+      pluginsFolder: `./anotherLocation`,
+      plugins: [
+        `nonexisting`,
+      ],
+    }
+    pathSpy.mockClear()
+    try {
+      load(config)
+    } catch(err) {
+      expect(err.message).toMatch(`Unable to find plugin "nonexisting". Perhaps you need to install its package?`)
+      expect(pathSpy).toHaveBeenCalledWith(`./anotherLocation/nonexisting`)
+    }
   })
 })
