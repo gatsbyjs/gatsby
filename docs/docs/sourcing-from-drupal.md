@@ -8,7 +8,7 @@ Using Drupal as a headless CMS with Gatsby is a great way to get an enterprise-q
 
 It only takes a few steps to use Gatsby with Drupal as a headless CMS (also known as decoupled Drupal).
 
-[An example Gatsby + Drupal site](https://using-drupal.gatsbyjs.org/)
+[An example Gatsby + Drupal site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal)
 
 ## How to implement Drupal + Gatsby
 
