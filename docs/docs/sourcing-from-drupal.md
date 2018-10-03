@@ -22,8 +22,7 @@ Hooking up Gatsby to a new or existing Drupal site takes only a few steps.
 
 An example of how to include the `gatsby-source-drupal` plugin in your `gatsby-config.js` file:
 
-```
-javascript:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 
 module.exports = {
   siteMetadata: {
