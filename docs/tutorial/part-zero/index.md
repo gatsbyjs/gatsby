@@ -94,7 +94,7 @@ If successfully installed, running `gatsby --version` should return a version nu
 
 ## Create a site
 
-Now let’s use the gatsby-cli tool to create your first Gatsby site. Using the tool, you can use “starters”, or partially built sites with some default configuration, to help you get moving faster on creating a certain type of site. The “Hello World” starter we’ll be using here is a starter with the bare essentials needed for a [Gatsby](/) site.
+Now you can use the gatsby-cli tool to create your first Gatsby site. Using the tool, you can use “starters”, or partially built sites with some default configuration, to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a [Gatsby](/) site.
 
 ### ✋ Create a Gatsby site
 
@@ -173,4 +173,4 @@ To summarize, in this section you:
 - Downloaded a code editor
 - Installed a code formatter called Prettier
 
-Now, let’s move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
+Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
