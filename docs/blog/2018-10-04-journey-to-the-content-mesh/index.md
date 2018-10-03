@@ -25,7 +25,7 @@ Change is being spurred by the confluence of three revolutions in how we create 
 - _Performance._ As mobile surpasses 50% of internet traffic, high-performance is becoming a must-have, not a nice-to-have.
 
 <figure>
-  <img alt="The modularization of the CMS" height="300" src="./modular-cms-architecture.png" />
+  <img alt="The modularization of the CMS" height="400" src="./modular-cms-architecture.png" />
   <figcaption>
    The modularization of the CMS
   </figcaption>
