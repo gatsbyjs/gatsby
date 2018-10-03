@@ -756,7 +756,7 @@
     - styled-components
     - JavaScript Standard Style
 - url: https://happy-pare-dff451.netlify.com/
-  repo: https://github.com/fhavrlent/gastby-contentful-typescript-starter
+  repo: https://github.com/fhavrlent/gatsby-contentful-typescript-starter
   description: Contentful and TypeScript starter based on default starter.
   tags:
     - Contentful
