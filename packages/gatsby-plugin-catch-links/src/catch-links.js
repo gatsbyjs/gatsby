@@ -9,7 +9,7 @@ export const userIsForcingNavigation = event => (
   event.shiftKey
 )
 
-// IE does not include starting slash in anchor.pathname
+// IE does not include leading slash in anchor.pathname
 export const slashedPathname = pathname => (
   pathname[0] === `/` ? pathname : `/${pathname}`
 )
