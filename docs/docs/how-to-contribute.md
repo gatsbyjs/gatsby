@@ -83,6 +83,24 @@ a pull request.
 - Commit and push to your fork.
 - Create a pull request from your branch.
 
+#### Using code titles
+
+When creating your document you'll often insert code blocks (with three back-ticks) to show code examples. As switchting between multiple files in the course of the document can confuse some readers it's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, you need to add `:title=your-path-name` to it. Use it like so:
+
+````
+```javascript:title=src/util/alert.js
+const s = "I solemnly swear that I'm up to no good.";
+alert(s);
+```
+````
+
+Which will then look like:
+
+```javascript:title=src/util/alert.js
+const s = "I solemnly swear that I'm up to no good.";
+alert(s);
+```
+
 ### Contributing to the blog
 
 Note: Before adding a blog post ensure you have approval from a member of the Gatsby team. You can do this by [opening an issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) or contacting [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs).
