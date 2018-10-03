@@ -11,22 +11,9 @@ _Note: this guide uses the `gatsby-starter-default` to provide you with a knowle
 
 ## Setup
 
-###Bootstrapping a project
+###Quick start
 
-First, you need to make sure that you have installed Gatsby CLI. To do that run the following command in shell:
-
-```shell
-npm install -g gatsby-cli
-```
-
-Now you are ready to create a default starter project that you will use to work with Wordpress and proceed to newly created directory:
-
-```shell
-gatsby new gatsby-wordpress-example
-cd gatsby-wordpress-example
-```
-
-That gets you to a new site directory with a couple (mostly) empty “gatsby”-prefixed files and a src directory with some basic scaffolding. The configuration and lifecycle hooks for Gatsby get put in those “gatsby”-prefixed files, you will need to have a closer look at `gatsby-config.js.`.
+"This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back."
 
 ###gatsby-config.js
 
@@ -63,7 +50,7 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         // your wordpress source
-        baseUrl: `amberley.me`,
+        baseUrl: `wpexample.com`,
         protocol: `https`,
         // is it hosted on wordpress.com, or self-hosted?
         hostingWPCOM: false,
