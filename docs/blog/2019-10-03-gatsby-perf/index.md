@@ -46,7 +46,7 @@ Maximizing this trace coupled with a concept known as TTI, or Time to Interactiv
 
 Running a performance audit on a Gatsby v1 site gives us these results in Lighthouse:
 
-![Gatsby v1 Lighthouse](./images/v1-perf.png)
+![Gatsby v1 Lighthouse](./images/lighthouse-v1.png)
 
 💯 Pretty speedy! We had our work cut out for us in improving upon this standard, but we did 💪
 
@@ -62,7 +62,7 @@ WebPagetest allows you to collect performance measurements in running on a _real
 
 Running a test in WebPagetest will pull up the specified site on the browser/network specified, and then collect performance measurements that can be reviewed and analyzed. These tests can serve as a baseline that can be compared against after changes are made, e.g. like a change in comparing the Gatsby v1 site to the Gatsby v2 site 🤓 Additionally, it's helpful to run these tests fairly often after meaningful changes and features are added to your web site, to ensure that you're guarding against performance regressions! For your consideration, check out Gatsby v1's metrics in WebPagetest.
 
-![WebPagetest v1](./images/v1-webpagetest.png)
+[![WebPagetest v1](./images/webpagetest-v1.png)][webpagetestv1-results]
 
 Armed with the powerful combo of Lighthouse, WebPagetest, and a knowledge of some useful performance terms like TTI, we can now shift into a discussion of the changes in Gatsby v2 that _improve_ performance over Gatsby v1 in meaningful, real-world ways. We'll come back to both of these tools as it relates to the Gatsby v2 site to actually _prove_ that we've improved performance over our Gatsby v1 baseline!
 
@@ -99,7 +99,7 @@ Let's take another look at performance in Gatsby v2 by revisiting our trusty fri
 
 ### Lighthouse
 
-![Gatsby v2 lighthouse](./images/v2-perf.png)
+![Gatsby v2 lighthouse](./images/lighthouse-v2.png)
 
 ![Comparison](./images/lighthouse-chart.png)
 
@@ -107,14 +107,14 @@ _Oncemore: lower is better 😉_
 
 ### WebPagetest
 
-![Gatsby v2 WebPagetest](./images/v2-webpagetest.png)
+[![Gatsby v2 WebPagetest](./images/webpagetest-v2.png)][webpagetestv2-results]
 
 | Version | Speed Index | Time to Interactive |
 | :-----: | :---------: | :-----------------: |
-|   v1    |   `1728`    |      `2.635s`       |
-|   v2    |   `1712`    |       `2.486`       |
+|   v1    |  `1.787s`   |      `2.532s`       |
+|   v2    |  `1.657s`   |      `2.457s`       |
 
-We've shaved off ~200ms from Time to Interactive, while also improving the Speed Index score 💪
+We've shaved off ~75ms from Time to Interactive, while also improving the Speed Index score 💪
 
 ## Wrap Up
 
@@ -132,3 +132,5 @@ Gatsby v2 is an iterative approach to improving the solid foundational base that
 [gatsby-plugin-typescript]: /packages/gatsby-plugin-typescript
 [migration-guide]: /docs/migrating-from-v1-to-v2/
 [webpagetest]: https://webpagetest.org
+[webpagetestv1-results]: https://www.webpagetest.org/result/181003_VD_1f8cbe4e27749d9725031de0be11c677/
+[webpagetestv2-results]: https://www.webpagetest.org/result/181003_X2_97d4ff779e4dafae2734af0e7dd7d70f/
