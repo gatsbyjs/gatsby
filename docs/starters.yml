@@ -706,18 +706,18 @@
     - Storybook
     - Markdown linting
 - url: https://gatsby-wordpress-starter.netlify.com/
-  repo: https://github.com/ericwindmill/gatsby-starter-wordpress
+  repo: https://github.com/GatsbyCentral/gatsby-starter-wordpress
   description: n/a
   tags:
     - Styling:CSS-in-JS
     - Wordpress
   features:
-    - All the features from gatsby-advanced-starter, plus
-    - Leverages the WordPress plugin for Gatsby for data
+    - Leverages the WordPress source plugin for data
     - Configured to work with WordPress Advanced Custom Fields
     - Auto generated Navigation for your Wordpress Pages
-    - Minimal UI and Styling — made to customize.
+    - Minimal UI and Styling — made to customize
     - Styled Components
+    - All the features from gatsby-advanced-starter
 - url: https://www.concisejavascript.org/
   repo: https://github.com/rwieruch/open-crowd-fund
   description: n/a
