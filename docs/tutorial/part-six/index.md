@@ -26,7 +26,7 @@ Let's add a markdown file to your site at
 blog post) and learn how to _transform_ it to HTML using transformer plugins and
 GraphQL.
 
-```markdown
+```markdown:title=src/pages/sweet-pandas-eating-sweets.md
 ---
 title: "Sweet Pandas Eating Sweets"
 date: "2017-08-10"
@@ -53,7 +53,7 @@ npm install --save gatsby-transformer-remark
 
 Then add it to the `gatsby-config.js` like normal:
 
-```javascript{13}
+```javascript{13}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -104,7 +104,7 @@ posts so you won't need to maintain the list manually.
 Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
 the following to add a GraphQL query with some initial HTML and styling.
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
 import { css } from "react-emotion"
@@ -175,7 +175,7 @@ Now the frontpage should look like:
 But your one blog post looks a bit lonely. So let's add another one at
 `src/pages/pandas-and-bananas.md`
 
-```markdown
+```markdown:title=src/pages/pandas-and-bananas.md
 ---
 title: "Pandas and Bananas"
 date: "2017-08-21"

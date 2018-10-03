@@ -11,7 +11,7 @@ import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import get from "lodash/get"
 
-const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
+const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
     // empty state!
     const emptyStateReason =
@@ -58,6 +58,7 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
         {starters.map(({ node: starter }) => {
           const {
             description,
+            gatsbyMajorVersion,
             gatsbyDependencies,
             name,
             githubFullName,
@@ -66,15 +67,7 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
             stars,
             stub,
           } = starter.fields.starterShowcase
-          const { url: demoUrl, repo: repoUrl } = starter
-          const gatsbyVersion = gatsbyDependencies.find(
-            ([k, v]) => k === `gatsby`
-          )[1]
-          const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/) // we just want x.x
-          const minorVersion = match ? match[0] : gatsbyVersion // default to version if no match
-          const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(
-            minorVersion
-          ) // either 2.x or next or latest
+          const { url: demoUrl } = starter
 
           return (
             starter.fields && ( // have to filter out null fields from bad data
@@ -165,6 +158,9 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
                       {stars}
                     </div>
                     <div css={{ display: `inline-block` }}>
+                      {`Gatsby v${gatsbyMajorVersion[0][1]}`}
+                    </div>
+                    <div css={{ display: `inline-block` }}>
                       Updated {new Date(lastUpdated).toLocaleDateString()}
                     </div>
                   </div>
@@ -179,12 +175,12 @@ const ShowcaseList = ({ urlState, starters, count, sortRecent }) => {
   }
 }
 
-export default ShowcaseList
+export default StartersList
 
 function sortingFunction(sortRecent) {
   return function({ node: nodeA }, { node: nodeB }) {
-    const metricA = get(nodeA, "fields.starterShowcase.stars", 0)
-    const metricB = get(nodeB, "fields.starterShowcase.stars", 0)
+    const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
+    const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)
     return metricB - metricA
   }
 }

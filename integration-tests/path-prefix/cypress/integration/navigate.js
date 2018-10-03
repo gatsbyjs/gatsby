@@ -5,7 +5,7 @@ const withTrailingSlash = url => `${url}/`
 
 describe('navigate', () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForRouteChange()
+    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
   })
 
   it(`uses pathPrefix`, () => {

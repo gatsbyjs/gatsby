@@ -7,14 +7,14 @@ const slash = require(`slash`)
 const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
-const parseGHUrl = require("parse-github-url")
-const { GraphQLClient } = require("graphql-request")
+const parseGHUrl = require(`parse-github-url`)
+const { GraphQLClient } = require(`graphql-request`)
 
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-if (process.env.NODE_ENV === "production" && !process.env.GITHUB_API_TOKEN) {
+if (process.env.NODE_ENV === `production` && !process.env.GITHUB_API_TOKEN) {
   throw new Error(
     `A GitHub token is required to build the site. Check the README.`
   )
@@ -65,9 +65,8 @@ exports.createPages = ({ graphql, actions }) => {
 
   createRedirect({
     fromPath: `/docs/netlify-cms/`,
-    isPermanent: true,
-    redirectInBrowser: true,
     toPath: `/docs/sourcing-from-netlify-cms/`,
+    isPermanent: true,
   })
 
   createRedirect({
@@ -75,12 +74,29 @@ exports.createPages = ({ graphql, actions }) => {
     toPath: `/starters/`,
     isPermanent: true,
   })
-  
+
+  createRedirect({
+    fromPath: `/docs/gatsby-starters/`, // Main Gatsby starters page is the starter library
+    toPath: `/starters/`,
+    isPermanent: true,
+  })
+
   createRedirect({
     fromPath: `/docs/adding-third-party-services/`,
-    isPermanent: true,
-    redirectInBrowser: true,
     toPath: `/docs/adding-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/bound-action-creators/`,
+    toPath: `/docs/actions/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/bound-action-creators`,
+    toPath: `/docs/actions`,
+    isPermanent: true,
   })
 
   return new Promise((resolve, reject) => {
@@ -104,22 +120,7 @@ exports.createPages = ({ graphql, actions }) => {
       `src/templates/template-creator-details.js`
     )
 
-    createRedirect({
-      fromPath: `/docs/bound-action-creators/`,
-      isPermanent: true,
-      redirectInBrowser: true,
-      toPath: `/docs/actions/`,
-    })
-
-    createRedirect({
-      fromPath: `/docs/bound-action-creators`,
-      isPermanent: true,
-      redirectInBrowser: true,
-      toPath: `/docs/actions`,
-    })
-
     // Query for markdown nodes to use in creating pages.
-
     graphql(
       `
         query {
@@ -280,7 +281,7 @@ exports.createPages = ({ graphql, actions }) => {
       })
 
       const starterTemplate = path.resolve(
-        `src/templates/template-starter-showcase.js`
+        `src/templates/template-starter-page.js`
       )
 
       starters.forEach((edge, index) => {
@@ -443,17 +444,18 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     // Default fields are to avoid graphql errors.
     const { owner, name: repoStub } = parseGHUrl(node.repo)
     const defaultFields = {
-      slug: ``,
-      stub: ``,
+      slug: `/${repoStub}/`,
+      stub: repoStub,
       name: ``,
       description: ``,
       stars: 0,
       lastUpdated: ``,
       owner: ``,
       githubFullName: ``,
-      allDependencies: [],
-      gatsbyDependencies: [],
-      miscDependencies: [],
+      gatsbyMajorVersion: [[`no data`, `0`]],
+      allDependencies: [[`no data`, `0`]],
+      gatsbyDependencies: [[`no data`, `0`]],
+      miscDependencies: [[`no data`, `0`]],
     }
 
     if (!process.env.GITHUB_API_TOKEN) {
@@ -464,78 +466,92 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           ...defaultFields,
         },
       })
-    }
-
-    Promise.all([
-      getpkgjson(node.repo),
-      githubApiClient.request(`
-          query {
-            repository(owner:"${owner}", name:"${repoStub}") {
-              name
-              stargazers {
-                totalCount
+    } else {
+      Promise.all([
+        getpkgjson(node.repo),
+        githubApiClient.request(`
+            query {
+              repository(owner:"${owner}", name:"${repoStub}") {
+                name
+                stargazers {
+                  totalCount
+                }
+                createdAt
+                updatedAt
+                owner {
+                  login
+                }
+                nameWithOwner
               }
-              createdAt
-              updatedAt
-              owner {
-                login
-              }
-              nameWithOwner
             }
-          }
-        `),
-    ])
-      .then(results => {
-        const [pkgjson, githubData] = results
-        const {
-          stargazers: { totalCount: stars },
-          updatedAt: lastUpdated,
-          owner: { login: owner },
-          name,
-          nameWithOwner: githubFullName,
-        } = githubData.repository
+          `),
+      ])
+        .then(results => {
+          const [pkgjson, githubData] = results
+          const {
+            stargazers: { totalCount: stars },
+            updatedAt: lastUpdated,
+            owner: { login: owner },
+            name,
+            nameWithOwner: githubFullName,
+          } = githubData.repository
 
-        const { dependencies = [], devDependencies = [] } = pkgjson
-        const allDependencies = Object.entries(dependencies).concat(
-          Object.entries(devDependencies)
-        )
-        const starterShowcaseFields = {
-          slug: `/${repoStub}/`,
-          stub: repoStub,
-          name,
-          description: pkgjson.description,
-          stars,
-          lastUpdated,
-          owner,
-          githubFullName,
-          allDependencies,
-          gatsbyDependencies: allDependencies
-            .filter(
-              ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
-            )
-            .filter(([key, _]) => key.includes(`gatsby`)),
-          miscDependencies: allDependencies.filter(
-            ([key, _]) => !key.includes(`gatsby`)
-          ),
-        }
-        createNodeField({
-          node,
-          name: `starterShowcase`,
-          value: starterShowcaseFields,
+          const { dependencies = [], devDependencies = [] } = pkgjson
+          const allDependencies = Object.entries(dependencies).concat(
+            Object.entries(devDependencies)
+          )
+
+          const gatsbyMajorVersion = allDependencies
+            .filter(([key, _]) => key === `gatsby`)
+            .map(version => {
+              let [gatsby, versionNum] = version
+              if (versionNum === `latest` || versionNum === `next`) {
+                return [gatsby, `2`]
+              }
+              return [gatsby, versionNum.replace(/\D/g, ``).charAt(0)]
+            })
+
+          // If a new field is added here, make sure a corresponding
+          // change is made to "defaultFields" to not break DX
+          const starterShowcaseFields = {
+            slug: `/${repoStub}/`,
+            stub: repoStub,
+            name,
+            description: pkgjson.description,
+            stars,
+            lastUpdated,
+            owner,
+            githubFullName,
+            gatsbyMajorVersion,
+            allDependencies,
+            gatsbyDependencies: allDependencies
+              .filter(
+                ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
+              )
+              .filter(([key, _]) => key.includes(`gatsby`)),
+            miscDependencies: allDependencies.filter(
+              ([key, _]) => !key.includes(`gatsby`)
+            ),
+          }
+          createNodeField({
+            node,
+            name: `starterShowcase`,
+            value: starterShowcaseFields,
+          })
         })
-      })
-      .catch(err => {
-        console.log(
-          `\nError getting repo data. Your GitHub token may be invalid`
-        )
-        return createNodeField({
-          node,
-          name: `starterShowcase`,
-          value: {
-            ...defaultFields,
-          },
+        .catch(err => {
+          console.log(
+            `\nError getting repo data. Your GitHub token may be invalid`
+          )
+          return createNodeField({
+            node,
+            name: `starterShowcase`,
+            value: {
+              ...defaultFields,
+            },
+          })
         })
-      })
+    }
   }
 
   // Community/Creators Pages

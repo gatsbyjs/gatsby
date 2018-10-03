@@ -379,6 +379,7 @@
   main_url: "https://www.ventura-digital.de/"
   url: "https://www.ventura-digital.de/"
   featured: false
+  built_by: Ventura Digitalagentur
   categories:
     - Agency
     - Marketing
@@ -1257,15 +1258,6 @@
 - title: Joe Seifi's Blog
   main_url: "http://seifi.org/"
   url: "http://seifi.org/"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
-- title: Bartosz Dominiak Blog/Portfolio
-  main_url: "http://bartoszdominiak.com/"
-  url: "http://bartoszdominiak.com/"
-  source_url: "https://github.com/bartdominiak/blog"
   featured: false
   categories:
     - Portfolio
@@ -2651,4 +2643,63 @@
     - Web development
   built_by: Ema Suriano
   built_by_url: https://emasuriano.com/
+  featured: false
+- title: Luan Orlandi
+  main_url: https://luanorlandi.github.io
+  url: https://luanorlandi.github.io
+  source_url: https://github.com/luanorlandi/luanorlandi.github.io
+  description: >
+    Luan Orlandi's personal website. Brazilian web developer, enthusiast in React and Gatsby.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Luan Orlandi
+  built_by_url: https://github.com/luanorlandi
+- title: Mobius Labs
+  main_url: https://mobius.ml
+  url: https://mobius.ml
+  description: >
+    Mobius Labs landing page, a Start-up working on Computer Vision
+  categories:
+    - Landing page
+    - Marketing
+    - Technology
+    - AI
+  built_by: sktt
+  built_by_url: https://github.com/sktt
+- title: EZAgrar
+  main_url: https://www.ezagrar.at/en/
+  url: https://www.ezagrar.at/en/
+  description: >
+    EZAgrar.at is the homepage of the biggest agricultural machinery dealership in Austria. In total 8 pages will be built for this client reusing a lot of components between them.
+  categories:
+    - eCommerce
+    - Marketing
+    - Multilingual
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
+- title: OAsome blog
+  main_url: https://oasome.blog/
+  url: https://oasome.blog/
+  source_url: https://github.com/oorestisime/oasome
+  description: >
+    Paris-based Cypriot adventurers. A and O. Lovers of life and travel. Want to get a glimpse of the OAsome world?
+  categories:
+    - Blog
+    - Photography
+    - Travel
+  built_by: Orestis Ioannou
+  featured: false
+- title: Brittany Chiang
+  main_url: https://brittanychiang.com/
+  url: https://brittanychiang.com/
+  source_url: https://github.com/bchiang7/v4
+  description: >
+    Personal website and portfolio of Brittany Chiang built with Gatsby v2
+  categories:
+    - Portfolio
+  built_by: Brittany Chiang
+  built_by_url: https://github.com/bchiang7
   featured: false
