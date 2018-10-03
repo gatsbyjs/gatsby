@@ -37,4 +37,5 @@ plugins:
   - name: webpage
 ```
 
-Learn more about Gatsy and Aerobatic at <https://www.aerobatic.com/docs/static-site-generators/#react>.
+## Other resources
+- Learn more about Gatsy and Aerobatic on [Aerobatic's site](https://www.aerobatic.com/docs/static-site-generators/#react).
