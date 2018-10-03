@@ -27,7 +27,7 @@ APIs. Transformer plugins make use of the `setFieldsOnGraphQLNodeType` function 
 
 Your `gatsby-node.js` should look something like:
 
-```javascript
+```javascript:title=gatsby-node.js
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
 ```
 
@@ -39,7 +39,7 @@ Sometimes transforming properties costs time and resources and in order to avoid
 
 Cache keys should at least contain an explicit name of the plugin, the contentDigest of the concerned node and the property it caches. For example the `gatsby-transformer-remark` uses the following cache key for the html node:
 
-```javascript
+```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>
   `transformer-remark-markdown-html-${
     node.internal.contentDigest
@@ -48,7 +48,7 @@ const htmlCacheKey = node =>
 
 Accessing and setting content in the cache is as simple as:
 
-```javascript
+```javascript:title=extend-node-type.js
 const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
 
 cache.set(htmlCacheKey(markdownNode), html)
