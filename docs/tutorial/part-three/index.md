@@ -108,7 +108,7 @@ centered on the screen like in part two of the tutorial. And second, you should
 really have some sort of global navigation so it's easy for visitors to find and
 visit each of the sub-pages.
 
-Tackle these problems by creating your first layout component.
+You'll tackle these problems by creating your first layout component.
 
 ## Your first layout component
 
