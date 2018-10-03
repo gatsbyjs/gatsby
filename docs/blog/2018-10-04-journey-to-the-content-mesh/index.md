@@ -25,7 +25,7 @@ Change is being spurred by the confluence of three revolutions in how we create 
 - _Performance._ As mobile surpasses 50% of internet traffic, high-performance is becoming a must-have, not a nice-to-have.
 
 <figure>
-  <img alt="The modularization of the CMS" src="./modular-cms-architecture.png" />
+  <img alt="The modularization of the CMS" height="300" src="./modular-cms-architecture.png" />
   <figcaption>
    The modularization of the CMS
   </figcaption>
@@ -38,7 +38,7 @@ Each change primarily affects a different stakeholder --- marketing, development
 The key challenge is that without a content mesh, integrating these systems together is a lot of work. Forrester titled one of their report sections: "Warning: Headless Content Management Is For Do-It-Yourself Shops." But _with_ a content mesh, all of these systems can be brought together in a unified, low-cost, low-defect whole.
 
 <figure>
-  <img alt="Three areas of rapid innovation" src="./three-website-revolutions.png" />
+  <img alt="Three areas of rapid innovation" height="300" src="./three-website-revolutions.png" />
   <figcaption>
     Three areas of rapid innovation
   </figcaption>
@@ -55,7 +55,7 @@ In Part 4, Why Mobile Performance Has Become Crucial, we’ll discuss the ROI of
 In our conclusion, Creating Compelling Experiences, we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing an "content mesh" that makes all the other choices easy. We’ll also explore how one clear option -- Gatsby -- emerges as the most feature-complete of any content mesh alternatives.
 
 <figure>
-  <img alt="The modern website landscape" src="./content-mesh.png" />
+  <img alt="The modern website landscape" src="./content-mesh.png" height="300" />
   <figcaption>
     The modern website landscape
   </figcaption>
