@@ -92,10 +92,13 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer>
           <SidebarHeader />
           <SidebarBody>
-            {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
-              <ResetFilters onClick={resetFilters} />
-            )}
+            <div css={{ height: `3.5rem` }}>
+              {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
+                <ResetFilters onClick={resetFilters} />
+              )}
+            </div>
             <LHSFilter
+              fixed={150}
               heading="Gatsby Version"
               data={Array.from(
                 count(

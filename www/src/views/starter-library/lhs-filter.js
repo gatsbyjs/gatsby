@@ -15,9 +15,10 @@ export default function LHSFilter({
   data,
   filters,
   setFilters,
+  fixed,
 }) {
   return (
-    <Collapsible heading={heading}>
+    <Collapsible heading={heading} fixed={fixed}>
       {data
         .sort(([a, anum], [b, bnum]) => {
           if (sortRecent) {
@@ -69,4 +70,8 @@ export default function LHSFilter({
         ))}
     </Collapsible>
   )
+}
+
+LHSFilter.defaultProps = {
+  fixed: false,
 }
