@@ -45,4 +45,6 @@ class StarterLibraryPage extends Component {
   }
 }
 
-export default RRSM({ s: ``, c: [], d: [], sort: `recent` })(StarterLibraryPage)
+export default RRSM({ s: ``, c: [], d: [], v: [], sort: `recent` })(
+  StarterLibraryPage
+)

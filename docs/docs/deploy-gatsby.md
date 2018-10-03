@@ -61,7 +61,7 @@ script to **deploy** your project by running `npm install gh-pages --save-dev`.
 
 Then add a `deploy` script in your `package.json` file.
 
-```json
+```json:title=package.json
 "scripts": {
   "deploy": "gatsby build --prefix-paths && gh-pages -d public",
 }
@@ -73,7 +73,7 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/project-name`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   pathPrefix: `/project-name`,
 }
@@ -98,7 +98,7 @@ repository dedicated to files for the site. The sites must be published from the
 kept in a branch named `source` or something similar. We also don't need to
 prefix links like we do with project sites.
 
-```json
+```json:title=package.json
 "scripts": {
   "deploy": "gatsby build && gh-pages -b master -d public",
 }
@@ -145,7 +145,7 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/examplerepository`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   pathPrefix: `/examplerepository`,
 }
@@ -167,7 +167,7 @@ the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
 If adding this manually to your project, the file needs to contain a few required
 fields:
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 image: node:latest
 
 # This folder is cached between builds
@@ -225,7 +225,7 @@ You can use the [heroku buildpack static](https://github.com/heroku/heroku-build
 
 Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
 
-```json
+```json:title=app.json
 {
   "buildpacks": [
     {
@@ -242,7 +242,7 @@ Sometimes specifying buildpacks via the `app.json` file doesn't work. If this is
 
 Add a `heroku-postbuild` script in your `package.json`:
 
-```json
+```json:title=package.json
 {
   // ...
   "scripts": {
@@ -327,7 +327,7 @@ Your site will be ready on our CDN at https://<your-site-name>.aerobaticapp.com 
 
 There are some additional HTTP header optimizations you can configure in your `aerobatic.yml` file:
 
-```yaml
+```yaml:title=aerobatic.yml
 deploy:
   # Note with below setting it is not necessary to pass --directory to aero deploy command
   directory: public

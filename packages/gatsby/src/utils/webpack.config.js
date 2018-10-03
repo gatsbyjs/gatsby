@@ -285,6 +285,7 @@ module.exports = async (
     // Common config for every env.
     // prettier-ignore
     let configRules = [
+      rules.mjs(),
       rules.js(),
       rules.yaml(),
       rules.fonts(),
@@ -359,10 +360,7 @@ module.exports = async (
       // modules. But also make it possible to install modules within the src
       // directory if you need to install a specific version of a module for a
       // part of your site.
-      modules: [
-        directoryPath(path.join(`node_modules`)),
-        `node_modules`,
-      ],
+      modules: [directoryPath(path.join(`node_modules`)), `node_modules`],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
         // Using directories for module resolution is mandatory because

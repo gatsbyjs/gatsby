@@ -39,7 +39,7 @@ npm install --save gatsby-transformer-json
 
 Then in your site's `gatsby-config.js` you add `gatsby-transformer-json` to the plugins array like:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-transformer-json`],
 }
@@ -47,7 +47,7 @@ module.exports = {
 
 Plugins can take options. For example:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     // Shortcut for adding plugins without options.

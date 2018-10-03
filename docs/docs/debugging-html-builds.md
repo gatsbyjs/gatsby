@@ -16,10 +16,10 @@ Errors while building static HTML files generally happen for one of the followin
     sub-directories) are exporting either a React component or string. Gatsby
     treats any JS file listed under the pages dir as a page component, so it must
     have a default export that's a component or string.
-    
-1.  You mix up `import` and `require` calls in the same file. This might lead to 
-    "WebpackError: Invariant Violation: Minified React error #130" [since Webpack 4 
-    is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6). 
+
+1.  You mix up `import` and `require` calls in the same file. This might lead to
+    "WebpackError: Invariant Violation: Minified React error #130" [since Webpack 4
+    is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
     The solution is to only use `import`.
 
 1.  Some other reason :-) #1 is the most common reason building static files
@@ -51,7 +51,7 @@ rendering.
 
 `gatsby-node.js` in the project root:
 
-```js
+```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   if (stage === "build-html") {
     actions.setWebpackConfig({

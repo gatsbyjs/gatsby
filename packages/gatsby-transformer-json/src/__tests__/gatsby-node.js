@@ -11,6 +11,7 @@ const bootstrapTest = async (node, pluginOptions = {}) => {
   const actions = { createNode, createParentChildLink }
   const createNodeId = jest.fn()
   createNodeId.mockReturnValue(`uuid-from-gatsby`)
+  const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
   return await onCreateNode(
     {
@@ -18,6 +19,7 @@ const bootstrapTest = async (node, pluginOptions = {}) => {
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     },
     pluginOptions
   ).then(() => {

@@ -2,8 +2,8 @@
   items:
     - title: Quick start
       link: /docs/
-    - title: Starters
-      link: /docs/gatsby-starters/
+    - title: Starter Library
+      link: /starters/
     - title: Recipes
       link: /docs/recipes/
     - title: Overview of the docs*
@@ -97,7 +97,7 @@
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
-        - title: Introducing GraphiQL*
+        - title: Introducing GraphiQL
           link: /docs/introducing-graphiql/
         - title: Creating and modifying pages
           link: /docs/creating-and-modifying-pages/
@@ -126,6 +126,11 @@
           link: /docs/create-source-plugin/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
+    - title: Starters
+      link: /docs/starters/
+      items:
+        - title: Create a Starter*
+          link: /docs/create-a-starter/
     - title: Styling
       link: /docs/styling/
       items:
@@ -379,8 +384,8 @@
       link: /docs/site-showcase-submissions/
     - title: Submit to Creator Showcase
       link: /docs/submit-to-creator-showcase/
-    - title: Submit to Starter Showcase*
-      link: /docs/submit-to-starter-showcase/
+    - title: Submit to Starter Library
+      link: /docs/submit-to-starter-library/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)*
