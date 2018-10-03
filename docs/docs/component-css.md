@@ -8,6 +8,8 @@ Gatsby has a wealth of options available for styling components. This example wi
 
 ### CSS Module Example
 
+CSS Modules enable the use of writing normal CSS safely. Gone are the worries of selector name collisions.
+
 There are two important parts in utilizing CSS Modules. Since it works out of the box with Gatsby, all you need are:
 
 - A React component
