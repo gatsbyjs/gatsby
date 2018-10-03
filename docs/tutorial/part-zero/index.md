@@ -163,6 +163,10 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 
+### ✋ Further Tweaks and tuning
+
+* [Here](/docs/vscode-setup) is a guide to get IntelliSense and Chrome Debugging up and running smoothly.
+
 ## ➡️ What’s Next?
 
 To summarize, in this section you:
