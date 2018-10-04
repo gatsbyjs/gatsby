@@ -14,11 +14,11 @@ There are only two major steps :)
 
     For example,
 
-    **name:** _Fabian Schultz_
+    **if name is:** _Fabian Schultz_
 
     **image name should be,** _fabian-schultz.jpg_
 
-    **name:** _Iron Cove Solutions_
+    **if name is:** _Iron Cove Solutions_
 
     **image name should be,** _iron-cove-solutions.jpg_
 
