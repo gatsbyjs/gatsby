@@ -41,7 +41,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": ">=2.0.15"
+    "gatsby": ">2.0.0-alpha"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark",
   "scripts": {
