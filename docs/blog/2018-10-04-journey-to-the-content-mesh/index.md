@@ -10,7 +10,7 @@ Today, a website team running an e-commerce site can store product inventory in 
 
 When website teams want to add search, they can turn to [Algolia](https://www.algolia.com/); for payments, [Stripe](http://stripe.com); for analytics, [Segment](https://segment.com/); for A/B testing, [Optimizely](https://www.optimizely.com/); for personalization, [Evergage](https://www.evergage.com/).
 
-Teams are adopting these services because each is tailored to a specific use-case, while the generic enterprise CMS alternative is optimized for none.
+Teams are adopting these services because each is tailored to a specific use-case; the generic enterprise CMS alternative is often optimized for none.
 
 This is the first post in a series, Journey to the Content Mesh, intended to explain the emergence of a "content mesh" -- the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
 
