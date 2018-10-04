@@ -34,16 +34,16 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 
     if (!cacheId) {
       cacheId = crypto
-        .createHash("sha1")
+        .createHash(`sha1`)
         .update(fs.readFileSync(`public${favicon}`))
-        .digest("hex")
+        .digest(`hex`)
     }
 
     setHeadComponents([
       <link
         key={`gatsby-plugin-manifest-icon-link`}
         rel="shortcut icon"
-        href={[withPrefix(favicon), cacheId].join("?")}
+        href={[withPrefix(favicon), cacheId].join(`?`)}
       />,
     ])
   }
