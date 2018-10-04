@@ -41,7 +41,7 @@
           link: /docs/custom-html/
         - title: Environment variables
           link: /docs/environment-variables/
-        - title: ESlint*
+        - title: ESLint
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
