@@ -14,64 +14,27 @@ const remove = require("unist-util-remove");
 const toString = require("mdast-util-to-string");
 const generateTOC = require("mdast-util-toc");
 const stripMarkdown = require("strip-markdown");
-const grayMatter = require("gray-matter");
-const { createMdxAstCompiler } = require("@mdx-js/mdx");
+
 const prune = require("underscore.string/prune");
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
-const BabelPluginPluckImports = require("babel-plugin-pluck-imports");
-const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
-const babel = require("@babel/core");
-const rawMDX = require("@mdx-js/mdx");
 const { MDX_SCOPES_LOCATION } = require("../constants");
 
 const debug = require("debug")("gatsby-mdx:extend-node-type");
-const mdx = require("../utils/mdx");
 const getTableOfContents = require("../utils/get-table-of-content");
 const defaultOptions = require("../utils/default-options");
-const getSourcePluginsAsRemarkPlugins = require("../utils/get-source-plugins-as-remark-plugins");
-
-const stripFrontmatter = source => grayMatter(source).content;
-/* 
- * function mutateNode({
- *   pluginOptions,
- *   mdxNode,
- *   getNode,
- *   files,
- *   reporter,
- *   cache
- * }) {
- *   return Promise.each(pluginOptions.gatsbyRemarkPlugins, plugin => {
- *     const requiredPlugin = require(plugin.resolve);
- *     if (_.isFunction(requiredPlugin.mutateSource)) {
- *       return requiredPlugin.mutateSource(
- *         {
- *           mdxNode,
- *           files: fileNodes,
- *           getNode,
- *           reporter,
- *           cache
- *         },
- *         plugin.pluginOptions
- *       );
- *     } else {
- *       return Promise.resolve();
- *     }
- *   });
- * }
- *  */
+const genMDX = require("../utils/gen-mdx");
 
 module.exports = (
   { type /*store*/, pathPrefix, getNode, getNodes, cache, reporter },
   pluginOptions
 ) => {
-  if (!type.name.endsWith(`Mdx`)) {
+  if (type.name !== `Mdx`) {
     return {};
   }
 
   const options = defaultOptions(pluginOptions);
-  const compiler = createMdxAstCompiler(options);
 
   for (let plugin of options.gatsbyRemarkPlugins) {
     if (!plugin.resolve) {
@@ -90,61 +53,36 @@ module.exports = (
           const [parser, parserPluginOptions] = parserPlugin;
           debug("adding mdPlugin with options", plugin, parserPluginOptions);
           options.mdPlugins.push([parser, parserPluginOptions]);
-          //          remark = remark.use(parser, options);
         } else {
           debug("adding mdPlugin", plugin);
           options.mdPlugins.push(parserPlugin);
-          //          remark = remark.use(parserPlugin);
         }
       }
     }
   }
 
+  const processMDX = ({ node }) =>
+    genMDX({ node, getNode, getNodes, reporter, cache, pathPrefix, options });
   return new Promise((resolve /*, reject*/) => {
-    async function getAST(mdxNode) {
-      return compiler.parse(stripFrontmatter(mdxNode.rawBody));
-    }
-
     async function getText(mdxNode) {
-      const ast = await getAST(mdxNode);
+      const { mdast } = await processMDX({ node: mdxNode });
 
       // convert the mdxast to back to mdast
-      remove(ast, "import");
-      remove(ast, "export");
-      visit(ast, "jsx", node => {
+      remove(mdast, "import");
+      remove(mdast, "export");
+      visit(mdast, "jsx", node => {
         node.type = "html";
       });
 
       const textAst = await remark()
         .use(stripMarkdown)
-        .run(ast);
+        .run(mdast);
 
       return remark().stringify(textAst);
     }
 
-    async function getCode(mdxNode, overrideOptions) {
-      /* await mutateNode({
-       *   pluginOptions,
-       *   mdxNode,
-       *   files: getNodes().filter(n => n.internal.type === `File`),
-       *   getNode,
-       *   reporter,
-       *   cache
-       * }); */
-
-      const code = await mdx(mdxNode.rawBody, {
-        ...options,
-        ...overrideOptions
-      });
-
-      return `import React from 'react'
-import { MDXTag } from '@mdx-js/tag'
-
-${code}`;
-    }
-
     const HeadingType = new GraphQLObjectType({
-      name: `MdxHeading${type.name}`,
+      name: `MdxHeadingMdx`,
       fields: {
         value: {
           type: GraphQLString,
@@ -161,7 +99,7 @@ ${code}`;
       }
     });
     const Headings = new GraphQLEnumType({
-      name: `Headings${type.name}`,
+      name: `HeadingsMdx`,
       values: {
         h1: { value: 1 },
         h2: { value: 2 },
@@ -172,72 +110,19 @@ ${code}`;
       }
     });
 
-    async function rawMDXWithGatsbyRemarkPlugins(content, opts, mdxNode) {
-      const gatsbyRemarkPluginsAsMDPlugins = await getSourcePluginsAsRemarkPlugins(
-        {
-          gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
-          mdxNode,
-          //          files,
-          getNode,
-          getNodes,
-          reporter,
-          cache,
-          pathPrefix
-        }
-      );
-
-      return rawMDX(content, {
-        ...options,
-        mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins)
-      });
-    }
-
     return resolve({
       code: {
         resolve(mdxNode) {
           return mdxNode;
         },
         type: new GraphQLObjectType({
-          name: `MDXCode${type.name}`,
+          name: `MDXCodeMdx`,
           fields: {
-            raw: {
-              type: GraphQLString,
-              resolve(markdownNode) {
-                return getCode(markdownNode);
-              }
-            },
             body: {
               type: GraphQLString,
               async resolve(mdxNode) {
-                /* await mutateNode({
-                 *   pluginOptions,
-                 *   mdxNode,
-                 *   files: getNodes().filter(n => n.internal.type === `File`),
-                 *   getNode,
-                 *   reporter,
-                 *   cache
-                 * }); */
-
-                const { content } = grayMatter(mdxNode.rawBody);
-
-                let code = await rawMDXWithGatsbyRemarkPlugins(
-                  content,
-                  {
-                    ...options
-                  },
-                  mdxNode
-                );
-
-                const instance = new BabelPluginPluckImports();
-                const result = babel.transform(code, {
-                  plugins: [instance.plugin, objRestSpread],
-                  presets: [require("@babel/preset-react")]
-                });
-
-                // TODO: be more sophisticated about these replacements
-                return result.code
-                  .replace("export default", "return")
-                  .replace(/\nexport /g, "\n");
+                const { body } = await processMDX({ node: mdxNode });
+                return body;
               }
             },
             scope: {
@@ -256,35 +141,12 @@ ${code}`;
                     .update(str)
                     .digest(`hex`);
 
-                const { content } = grayMatter(mdxNode.rawBody);
-
-                let code = await rawMDXWithGatsbyRemarkPlugins(
-                  content,
-                  {
-                    ...options
-                  },
-                  mdxNode
-                );
-
-                const instance = new BabelPluginPluckImports();
-                babel.transform(code, {
-                  plugins: [instance.plugin, objRestSpread],
-                  presets: [require("@babel/preset-react")]
+                const { scopeImports, scopeIdentifiers } = await processMDX({
+                  node: mdxNode
                 });
+                const scopeFileContent = `${scopeImports.join("\n")}
 
-                const identifiers = Array.from(instance.state.identifiers);
-                const imports = Array.from(instance.state.imports);
-                if (!identifiers.includes("React")) {
-                  identifiers.push("React");
-                  imports.push("import React from 'react'");
-                }
-                if (!identifiers.includes("MDXTag")) {
-                  identifiers.push("MDXTag");
-                  imports.push("import { MDXTag } from '@mdx-js/tag'");
-                }
-                const scopeFileContent = `${imports.join("\n")}
-
-export default { ${identifiers.join(", ")} }`;
+export default { ${scopeIdentifiers.join(", ")} }`;
 
                 const filePath = createFilePath(
                   options.root,
@@ -311,10 +173,10 @@ export default { ${identifiers.join(", ")} }`;
           if (mdxNode.excerpt) {
             return Promise.resolve(mdxNode.excerpt);
           }
-          const ast = await getAST(mdxNode);
+          const { mdast } = await processMDX({ node: mdxNode });
 
           const excerptNodes = [];
-          visit(ast, node => {
+          visit(mdast, node => {
             if (node.type === "text" || node.type === "inlineCode") {
               excerptNodes.push(node.value);
             }
@@ -332,9 +194,10 @@ export default { ${identifiers.join(", ")} }`;
           }
         },
         async resolve(mdxNode, { depth }) {
-          const ast = await getAST(mdxNode);
+          // TODO: change this to operate on html instead of mdast
+          const { mdast } = await processMDX({ node: mdxNode });
           let headings = [];
-          visit(ast, "heading", heading => {
+          visit(mdast, "heading", heading => {
             headings.push({
               value: toString(heading),
               depth: heading.depth
@@ -355,8 +218,8 @@ export default { ${identifiers.join(", ")} }`;
           }
         },
         async resolve(mdxNode, { maxDepth }) {
-          const ast = await getAST(mdxNode);
-          const toc = generateTOC(ast, maxDepth);
+          const { mdast } = await processMDX({ node: mdxNode });
+          const toc = generateTOC(mdast, maxDepth);
 
           return getTableOfContents(toc.map, {});
         }
@@ -377,7 +240,7 @@ export default { ${identifiers.join(", ")} }`;
       },
       wordCount: {
         type: new GraphQLObjectType({
-          name: `wordCounts${type.name}`,
+          name: `wordCountsMdx`,
           fields: {
             paragraphs: {
               type: GraphQLInt
