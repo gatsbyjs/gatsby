@@ -252,6 +252,13 @@
   categories:
     - eCommerce
     - Featured
+- title: AirBnB Cereal
+  main_url: "https://airbnb.design/cereal"
+  url: "https://airbnb.design/cereal"
+  featured: false
+  categories:
+    - Marketing
+    - Design
 - title: Cardiogram
   main_url: "https://cardiogr.am/"
   url: "https://cardiogr.am/"
