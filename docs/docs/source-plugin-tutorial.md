@@ -206,7 +206,7 @@ Note that Gatsby is warning that your plugin doesn't do anything yet. Time to fi
 
 Update `gatsby-node.js` in your `plugins/gatsby-source-pixabay/` directory:
 
-```js{11-30}:title=gatsby-node.js
+```js{10-29}:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
