@@ -12,7 +12,7 @@ When website teams want to add search, they can turn to [Algolia](https://www.al
 
 Teams are adopting these services because each is tailored to a specific use-case, while the generic enterprise CMS alternative is optimized for none.
 
-This series is intended to explain the emergence of a content mesh -- the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
+This is the first post in a series, Journey to the Content Mesh, intended to explain the emergence of a "content mesh" -- the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
 
 The previous generation of enterprise CMS offered a set of mediocre components; a generic content editing experience glued to out-of-date development and deployment environments. The emerging strategy for content management selects best-of-breed solutions, tailored to specific use-cases like e-commerce or blogging; it provides a modern framework for rapid iteration and it generates lightning fast websites out of the box.
 
@@ -44,7 +44,7 @@ The key challenge is that without a content mesh, integrating these systems toge
   </figcaption>
 </figure>
 
-This post is the first in a series. As we continue, we’ll explore the rise of this "content mesh" -- that allows enterprises to adopt these new technologies without needing to DIY themselves.
+As this series continues, we’ll explore the rise of this "content mesh" -- that allows enterprises to adopt these new technologies without needing to DIY themselves.
 
 In Part 2, The Unbundling of the CMS, we’ll explore the rise of headless CMSs and best-of-breed website content and functionality systems.
 
