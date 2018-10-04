@@ -4,7 +4,7 @@ The CMS was born to make content sites _possible_. Now, it’s being reimagined 
 
 In the early 2000s, publishing on the web was difficult. The CMS emerged as a single application to store content, build sites, and deliver them to users.
 
-Over time, tools in each category got better and more specialized, while the quality of monolithic enterprise CMS applications like Adobe Experience Manager and Sitecore has stayed roughly the same.
+Over time, the feature landscape broadened -- key areas like search, analytics, payments, personalization, e-commerce emerged. In each category, specialized tools improved rapidly, while the quality of monolithic enterprise CMS applications like Adobe Experience Manager and Sitecore has stayed roughly the same.
 
 Today, a website team running an e-commerce site can store product inventory in [Shopify](https://www.shopify.com/), product listings in [Salsify](https://www.salsify.com/) and reviews in [Bazaarvoice](https://www.bazaarvoice.com/). A team running a paywalled content site can create stories in [Wordpress](https://wordpress.org/), store video in [JWPlayer](https://www.jwplayer.com/), user data in [Auth0](https://auth0.com/), and subscription data in [Recurly](https://recurly.com/).
 
