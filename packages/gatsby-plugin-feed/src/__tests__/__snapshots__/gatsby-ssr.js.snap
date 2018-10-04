@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Adds <Link> for feed to head creates Link if feeds does exist 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Adds <Link> for feed to head creates Link if feeds does exist 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/gryffindor/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+        <link
+          href="/ravenclaw/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
