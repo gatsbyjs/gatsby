@@ -11,7 +11,7 @@ aliases:
     docker:
       - image: circleci/node:10
 
-  node10verdaccio: &node10
+  node10verdaccio: &node10verdaccio
     docker:
       - image: circleci/node:10
       - image: verdaccio/verdaccio
