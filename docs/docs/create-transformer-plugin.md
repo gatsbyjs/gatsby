@@ -13,7 +13,7 @@ The [`gatsby-transform-remark`](/packages/gatsby-transform-remark/) plugin
 ## What do transformer plugins do?
 
 Each transformer plugin is responsible for "enhancing" the existing source nodes they
-are provided to provide additional information. Therefore, you'll often use both source plugins and transformer plugins in your Gatsby sites. Transformer plugins can be heavily opinionated since they choose they way they transform their source.
+are provided to provide additional information. Therefore, you'll often use both source plugins and transformer plugins in your Gatsby sites.
 
 This loose coupling between the data source and transformer plugins allow Gatsby
 site builders to quickly assemble complex data transformation pipelines with
