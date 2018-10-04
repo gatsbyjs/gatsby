@@ -35,15 +35,7 @@ exports.sourceNodes = async (
     perPage = 100,
     searchAndReplaceContentUrls = {},
     concurrentRequests = 10,
-    includedRoutes = [
-      `/*/*/categories`,
-      `/*/*/posts`,
-      `/*/*/pages`,
-      `/*/*/media`,
-      `/*/*/tags`,
-      `/*/*/taxonomies`,
-      `/*/*/users`,
-    ],
+    includedRoutes = [`**`],
     excludedRoutes = [],
     normalizer,
   }

@@ -128,32 +128,6 @@ plugins: [
 ]
 ```
 
-## Fetching Data: WordPress REST API Route Selection
-
-The `gatsby-source-wordpress` plugin will fetch the most commonly used [WordPress data structures](https://developer.wordpress.org/rest-api/reference/#rest-api-developer-endpoint-reference):
-
-* Posts
-* Pages
-* Media
-* Categories
-* Tags
-* Users
-* Taxonomies
-
-By default, it will ignore all other endpoints listed in the root `/wp-json` endpoint.
-
-To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/).
-
-If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
-
-### Migrating from gatsby-source-wordpress v2
-
-All routes were fetched by default in versions 2.x and lower. In versions 3.x, only the routes shown in the `includedRoutes` option in the sample config above will be fetched by default.
-
-If you would like to either add or remove whitelisted routes, add `includedRoutes` to the plugin config in `gatsby-config.js`. Setting `includedRoutes` to `["**"]` will whitelist all routes, effectively restoring v2 settings.
-
-If you had previously been using `excludedRoutes`, it will continue to work as expected, though there's a good chance you don't need it anymore!
-
 ## WordPress Plugins
 
 These plugins were tested. We welcome PRs adding support for data from other
@@ -204,6 +178,38 @@ will behave like a self-hosted instance.
 Before you run your first query, ensure the WordPress JSON API is working correctly by visiting /wp-json at your WordPress install. The result should be similar to the [WordPress demo API](https://demo.wp-api.org/wp-json/).
 
 If you see a page on your site, rather than the JSON output, check if your permalink settings are set to “Plain”. After changing this to any of the other settings, the JSON API should be accessible.
+
+## Fetching Data: WordPress REST API Route Selection
+
+By default `gatsby-source-wordpress` plugin will fetch data from all endpoints provided by introspection `/wp-json` response. To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/). You can inspect discovered routes by using `verboseOutput: true` configuration option.
+
+If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
+
+### Example:
+
+```javascript
+includedRoutes: [
+  "/*/*/posts",
+  "/*/*/pages",
+  "/*/*/media",
+  "/*/*/categories",
+  "/*/*/tags",
+  "/*/*/taxonomies",
+  "/*/*/users",
+],
+```
+
+Which would include most commonly used endpoints:
+
+* Posts
+* Pages
+* Media
+* Categories
+* Tags
+* Taxonomies
+* Users
+
+and would skip pulling Comments.
 
 ## How to query
 
