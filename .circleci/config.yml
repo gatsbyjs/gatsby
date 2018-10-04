@@ -59,11 +59,6 @@ aliases:
     requires:
       - bootstrap
 
-executors:
-  verdaccio:
-    docker:
-      - image: verdaccio/verdaccio
-
 commands:
   integration_test:
     parameters:
@@ -85,9 +80,13 @@ version: 2.1
 jobs:
   bootstrap:
     <<: *node10
-    executor: verdaccio
     steps:
       - checkout
+      - run:
+          name: Setup verdaccio container
+          command: |
+            docker run -it --rm --name verdaccio -p 4873:4873 verdaccio/verdaccio
+          background: true
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
