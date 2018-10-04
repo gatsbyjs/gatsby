@@ -1,4 +1,9 @@
-# Delivering Modern Website Experiences: The Journey to a Content Mesh
+---
+title: "Delivering Modern Website Experiences: The Journey to a Content Mesh"
+date: 2018-10-04
+author: "Sam Bhagwat"
+tags: ["headless-cms", "content-mesh"]
+---
 
 The CMS was born to make content sites _possible_. Now, it’s being reimagined to make them _incredible_.
 
@@ -35,7 +40,7 @@ These technological changes have made modern web technology both _essential_ for
 
 Each change primarily affects a different stakeholder --- marketing, development/IT, and the end-user, respectively.
 
-The key challenge is that without a content mesh, integrating these systems together is a lot of work. Forrester titled one of their report sections: "Warning: Headless Content Management Is For Do-It-Yourself Shops." But _with_ a content mesh, all of these systems can be brought together in a unified, low-cost, low-defect whole.
+The key challenge is that without a content mesh, integrating these systems together is a lot of work. Forrester titled one of their [report sections](https://www.tangomodem.com/wp-content/uploads/2017/09/the-rise-of-the-headless-cms.pdf): "Warning: Headless Content Management Is For Do-It-Yourself Shops." But _with_ a content mesh, all of these systems can be brought together in a unified, low-cost, low-defect whole.
 
 <figure>
   <img alt="Three areas of rapid innovation" height="300" src="./three-website-revolutions.png" />
