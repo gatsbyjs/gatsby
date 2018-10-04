@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
+  GraphQLList,
   GraphQLBoolean,
   GraphQLString,
   GraphQLInt,
@@ -262,6 +263,10 @@ const fluidNodeType = ({
       sizes: {
         type: GraphQLString,
         defaultValue: ``,
+      },
+      requestedSizes: {
+        type: GraphQLList(GraphQLInt),
+        defaultValue: [],
       },
     },
     resolve: (image, fieldArgs, context) => {

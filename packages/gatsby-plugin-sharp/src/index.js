@@ -548,13 +548,17 @@ async function fluid({ file, args = {}, reporter }) {
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const fluidSizes = []
-  fluidSizes.push(options[fixedDimension] / 4)
-  fluidSizes.push(options[fixedDimension] / 2)
-  fluidSizes.push(options[fixedDimension])
-  fluidSizes.push(options[fixedDimension] * 1.5)
-  fluidSizes.push(options[fixedDimension] * 2)
-  fluidSizes.push(options[fixedDimension] * 3)
+  let fluidSizes = []
+  if (!options.requestedSizes.length) {
+    fluidSizes.push(options[fixedDimension] / 4)
+    fluidSizes.push(options[fixedDimension] / 2)
+    fluidSizes.push(options[fixedDimension])
+    fluidSizes.push(options[fixedDimension] * 1.5)
+    fluidSizes.push(options[fixedDimension] * 2)
+    fluidSizes.push(options[fixedDimension] * 3)
+  } else {
+    fluidSizes = options.requestedSizes.slice()
+  }
   const filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
