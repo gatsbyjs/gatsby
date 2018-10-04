@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.18"></a>
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.17...gatsby@2.0.18) (2018-10-03)
+
+### Features
+
+- **gatsby:** switch to different caching mechanism backed by fs ([#8435](https://github.com/gatsbyjs/gatsby/issues/8435)) ([5386e1d](https://github.com/gatsbyjs/gatsby/commit/5386e1d))
+
 <a name="2.0.17"></a>
 
 ## [2.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.16...gatsby@2.0.17) (2018-10-02)

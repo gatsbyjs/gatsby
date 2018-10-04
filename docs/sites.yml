@@ -2714,4 +2714,15 @@
     - Blog
   built_by: Burak Tokak
   built_by_url: "https://www.buraktokak.com"
+- title: Serverless
+  main_url: https://serverless.com
+  url: https://serverless.com
+  source_url: https://github.com/serverless/site
+  description: >
+    Serverless.com – Build web, mobile and IoT applications with serverless architectures using AWS Lambda, Azure Functions, Google CloudFunctions & more!
+  categories:
+    - Technology
+    - Web Development
+  built_by: Codebrahma
+  built_by_url: https://codebrahma.com
   featured: false

@@ -47,7 +47,7 @@ Once this starts, you can now view your site at `localhost:9000`.
 
 ### Run a Lighthouse audit
 
-Now let's run your first Lighthouse test.
+Now you're going to run your first Lighthouse test.
 
 1.  Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
 

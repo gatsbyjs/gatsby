@@ -83,7 +83,7 @@ Gatsby uses GraphQL to enable components to declare the data they need.
 
 ## Create a new example site
 
-Let's create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
+Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
 
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`, and navigate to the new directory:
 
@@ -99,7 +99,7 @@ Then install some other needed dependencies at the root of the project. You'll u
 npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion react-emotion emotion-server
 ```
 
-Let's set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
+Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
@@ -205,7 +205,7 @@ Add the above files and then run `gatsby develop`, per usual, and you should see
 
 You have another small site with a layout and two pages.
 
-Now let's start querying 😋
+Now you can start querying 😋
 
 ## Your first GraphQL query
 
@@ -213,7 +213,7 @@ When building sites, you'll probably want to reuse common bits of data -- like t
 
 But what if you want to change the site title in the future? You'd have to search for the title across all your components and edit each instance. This is both cumbersome and error-prone, especially for larger, more complex sites. Instead, you can store the title in one location and reference that location from other files; Change the title in a single place, and Gatsby will _pull_ your updated title into files that reference it.
 
-The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Let's add your site title to the `gatsby-config.js` file:
+The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Add your site title to the `gatsby-config.js` file:
 
 ```javascript{2-4}:title=gatsby-config.js
 module.exports = {
@@ -236,7 +236,7 @@ Restart the development server.
 
 ### Use a page query
 
-Now the site title is available to be queried; Let's add it to the `about.js` file using a [page query](/docs/page-query):
+Now the site title is available to be queried; Add it to the `about.js` file using a [page query](/docs/page-query):
 
 ```jsx{2,5,7,14-23}:title=src/pages/about.js
 import React from "react"
@@ -280,7 +280,7 @@ The basic GraphQL query that retrieves the `title` in our `layout.js` changes ab
 }
 ```
 
-> 💡 In [part five](/tutorial/part-five/#introducing-graphiql), we'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
+> 💡 In [part five](/tutorial/part-five/#introducing-graphiql), you'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
 
 Page queries live outside of the component definition -- by convention at the end of a page component file -- and are only available on page components.
 
