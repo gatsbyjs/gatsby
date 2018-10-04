@@ -4,7 +4,7 @@ title: Querying data in components using StaticQuery
 
 Gatsby v2 introduces `StaticQuery`, a new API that allows components to retrieve data via GraphQL query.
 
-In this guide, we'll walk through an example using `StaticQuery`, and discuss [the difference between a StaticQuery and a page query](/static-query/#how-staticquery-differs-from-page-query).
+In this guide, we'll walk through an example using `StaticQuery`, and discuss [the difference between a StaticQuery and a page query](#how-staticquery-differs-from-page-query).
 
 ## How to use `StaticQuery` in components
 
@@ -16,11 +16,11 @@ Video hosted on [egghead.io][egghead].
 
 ### Basic example
 
-We'll create a new `Header` component located at `src/components/header.js`:
+We'll create a new `Header` component:
 
-```jsx
-import React from 'react';
-import { StaticQuery, graphql } from 'gatsby';
+```jsx:title=src/components/header.js
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
 
 export default () => (
   <StaticQuery
@@ -39,7 +39,7 @@ export default () => (
       </header>
     )}
   />
-);
+)
 ```
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
@@ -48,9 +48,9 @@ Using `StaticQuery`, you can colocate a component with its data. No longer is it
 
 With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
 
-```jsx
+```jsx:title=src/components/header.js
 import React from "react"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 
 const Header = ({ data }) => (

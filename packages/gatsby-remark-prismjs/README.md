@@ -44,7 +44,10 @@ plugins: [
             // right after importing the prism color scheme:
             //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
             // Defaults to false.
-            showLineNumbers: false
+            showLineNumbers: false,
+            // If setting this to true, the parser won't handle and highlight inline
+            // code used in markdown i.e. single backtick code like `this`.
+            noInlineHighlight: false,
           },
         },
       ],
@@ -127,7 +130,7 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
   min-width: 100%; /* 2 */
 }
 .gatsby-highlight pre[class*="language-"].line-numbers {
-  paddingLeft: 2.8em; /* 3 */
+  padding-left: 2.8em; /* 3 */
 }
 ```
 
@@ -139,7 +142,7 @@ colorscheme in `layout/index.js`:
 
 ```javascript
 // layouts/index.js
-require("prismjs/plugins/line-numbers/prism-line-numbers.css");
+require("prismjs/plugins/line-numbers/prism-line-numbers.css")
 ```
 
 ### Usage in Markdown
@@ -262,9 +265,9 @@ to facilitate the desired line highlight behavior.
 
 Because [the line numbering PrismJS plugin][7] runs client-side, a few adaptations were required to make it work:
 
-* A class `.line-numbers` is dynamically added to the `<pre>` element.
-* A new node `<span class="line-numbers-rows">` is added right before the closing `</pre>`
-containing as many empty `<span>`s as there are lines.
+- A class `.line-numbers` is dynamically added to the `<pre>` element.
+- A new node `<span class="line-numbers-rows">` is added right before the closing `</pre>`
+  containing as many empty `<span>`s as there are lines.
 
 See the [client-side PrismJS implementation][8] for reference.
 

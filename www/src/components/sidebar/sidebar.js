@@ -50,9 +50,12 @@ class SidebarBody extends Component {
 
     this._toggleSection = this._toggleSection.bind(this)
     this.state = { ...this._getInitialState(props) }
+    this.scrollRef = React.createRef()
   }
 
   componentDidMount() {
+    const node = this.scrollRef.current
+
     if (hasLocalStorage) {
       const key = this.props.itemList[0].key
       const initialState = this.state
@@ -79,8 +82,11 @@ class SidebarBody extends Component {
         }
 
         state.expandAll = Object.entries(state.openSectionHash).every(k => k[1])
-
-        this.setState(state)
+        this.setState(state, () => {
+          if (node && this.props.position) {
+            node.scrollTop = this.props.position
+          }
+        })
       } else {
         this._writeLocalStorage(this.state, key)
       }
@@ -184,25 +190,41 @@ class SidebarBody extends Component {
   }
 
   render() {
-    const { closeSidebar, itemList, location } = this.props
+    const { closeSidebar, itemList, location, onPositionChange } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
     return (
-      <div className="docSearch-sidebar" css={{ height: `100%` }}>
+      <section
+        aria-label="Secondary Navigation"
+        id="SecondaryNavigation"
+        className="docSearch-sidebar"
+        css={{ height: `100%` }}
+      >
         {!itemList[0].disableExpandAll && (
-          <div css={{ ...styles.utils }}>
+          <header css={{ ...styles.utils }}>
             <ExpandAllButton
               onClick={this._expandAll}
               expandAll={this.state.expandAll}
             />
-          </div>
+          </header>
         )}
-        <div
+        <nav
+          onScroll={({ nativeEvent }) => {
+            // get proper scroll position
+            const position = nativeEvent.target.scrollTop
+            const { pathname } = location
+            const sidebarType = pathname.split(`/`)[1]
+
+            requestAnimationFrame(() => {
+              onPositionChange(sidebarType, position)
+            })
+          }}
+          ref={this.scrollRef}
           css={{
             ...styles.sidebarScrollContainer,
             height: itemList[0].disableExpandAll
-              ? `calc(100%)`
-              : `calc(100% - ${presets.sidebarUtilityHeight} + 1px)`,
+              ? `100%`
+              : `calc(100% - ${presets.sidebarUtilityHeight})`,
             [presets.Tablet]: {
               ...styles.sidebarScrollContainerTablet,
             },
@@ -224,8 +246,8 @@ class SidebarBody extends Component {
               />
             ))}
           </ul>
-        </div>
-      </div>
+        </nav>
+      </section>
     )
   }
 }
@@ -268,7 +290,7 @@ const styles = {
   },
   sidebarScrollContainerTablet: {
     backgroundColor: colors.ui.whisper,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
   },
   list: {
     margin: 0,
@@ -279,10 +301,8 @@ const styles = {
       fontSize: scale(-4 / 10).fontSize,
       paddingBottom: 20,
     },
-    "&&": {
-      "& a": {
-        fontFamily: options.systemFontFamily.join(`,`),
-      },
+    "& a": {
+      fontFamily: options.systemFontFamily.join(`,`),
     },
     "& li": {
       margin: 0,

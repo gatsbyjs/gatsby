@@ -33,10 +33,7 @@ exports.onPostBootstrap = (args, pluginOptions) =>
     }
 
     // Determine destination path for icons.
-    const iconPath = path.join(
-      `public`,
-      manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`))
-    )
+    const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
 
     //create destination directory if it doesn't exist
     if (!fs.existsSync(iconPath)) {

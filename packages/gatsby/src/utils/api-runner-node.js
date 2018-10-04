@@ -4,9 +4,12 @@ const _ = require(`lodash`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
-const cache = require(`./cache`)
+const Cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
+const createContentDigest = require(`./create-content-digest`)
+
+let caches = new Map()
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -91,6 +94,12 @@ const runAPI = (plugin, api, args) => {
 
     const tracing = initAPICallTracing(pluginSpan)
 
+    let cache = caches.get(plugin.name)
+    if (!cache) {
+      cache = new Cache({ name: plugin.name }).init()
+      caches.set(plugin.name, cache)
+    }
+
     const apiCallArgs = [
       {
         ...args,
@@ -107,6 +116,7 @@ const runAPI = (plugin, api, args) => {
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
+        createContentDigest,
         tracing,
       },
       plugin.pluginOptions,

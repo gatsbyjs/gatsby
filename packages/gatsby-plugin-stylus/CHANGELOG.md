@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1"></a>
+
+## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus/compare/gatsby-plugin-stylus@2.0.0-rc.2...gatsby-plugin-stylus@2.0.1) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+<a name="2.0.0-rc.2"></a>
+
+# [2.0.0-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus/compare/gatsby-plugin-stylus@2.0.0-rc.1...gatsby-plugin-stylus@2.0.0-rc.2) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+<a name="2.0.0-rc.1"></a>
+
+# [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus/compare/gatsby-plugin-stylus@2.0.0-rc.0...gatsby-plugin-stylus@2.0.0-rc.1) (2018-08-29)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+<a name="2.0.0-rc.0"></a>
+
+# [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus/compare/gatsby-plugin-stylus@2.0.0-beta.6...gatsby-plugin-stylus@2.0.0-rc.0) (2018-08-21)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
 <a name="2.0.0-beta.6"></a>
 
 # [2.0.0-beta.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus/compare/gatsby-plugin-stylus@2.0.0-beta.5...gatsby-plugin-stylus@2.0.0-beta.6) (2018-08-02)

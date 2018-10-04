@@ -14,7 +14,7 @@ familiar with SQL, it works in a very similar way. Using a special syntax, you d
 the data you want in your component and then that data is given
 to you.
 
-Gatsby uses GraphQL to enable [page and layout
+Gatsby uses GraphQL to enable [page and StaticQuery
 components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
@@ -311,8 +311,8 @@ Now, we can use the component together with the exported fragment in our index p
 ```jsx{26}
 // src/pages/index.jsx
 
-import React from "react";
-import IndexPost from "../components/IndexPost";
+import React from "react"
+import IndexPost from "../components/IndexPost"
 import { graphql } from "gatsby"
 
 export default ({ data }) => {
@@ -326,8 +326,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query {
@@ -340,7 +340,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## Further reading

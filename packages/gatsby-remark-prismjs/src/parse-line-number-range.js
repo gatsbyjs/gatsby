@@ -6,9 +6,11 @@ module.exports = language => {
   }
   if (language.split(`{`).length > 1) {
     let [splitLanguage, ...options] = language.split(`{`)
-    let highlightLines = [], numberLines = false, numberLinesStartAt
+    let highlightLines = [],
+      numberLines = false,
+      numberLinesStartAt
     // Options can be given in any order and are optional
-    options.forEach((option) => {
+    options.forEach(option => {
       option = option.slice(0, -1)
       // Test if the option is for line hightlighting
       if (rangeParser.parse(option).length > 0) {
@@ -19,15 +21,17 @@ module.exports = language => {
       // Option must look like `numberLines: true` or `numberLines: <integer>`
       // Otherwise we disable line numbering
       if (
-          option.length === 2 
-          && option[0] === `numberLines`
-          && (option[1].trim() === `true` || Number.isInteger(parseInt(option[1].trim(), 10)))
+        option.length === 2 &&
+        option[0] === `numberLines` &&
+        (option[1].trim() === `true` ||
+          Number.isInteger(parseInt(option[1].trim(), 10)))
       ) {
         numberLines = true
-        numberLinesStartAt = option[1].trim() === `true` ? 1 : parseInt(option[1].trim(), 10)
+        numberLinesStartAt =
+          option[1].trim() === `true` ? 1 : parseInt(option[1].trim(), 10)
       }
     })
-    
+
     return {
       splitLanguage,
       highlightLines,

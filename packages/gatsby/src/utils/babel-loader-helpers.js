@@ -1,7 +1,7 @@
 const path = require(`path`)
 const _ = require(`lodash`)
 
-const prepareOptions = (babel, resolve = require.resolve) => {
+const loadCachedConfig = () => {
   let pluginBabelConfig = { test: { plugins: [], presets: [] } }
   if (process.env.NODE_ENV !== `test`) {
     pluginBabelConfig = require(path.join(
@@ -9,6 +9,17 @@ const prepareOptions = (babel, resolve = require.resolve) => {
       `./.cache/babelState.json`
     ))
   }
+  return pluginBabelConfig
+}
+
+const getCustomOptions = () => {
+  const pluginBabelConfig = loadCachedConfig()
+  const stage = process.env.GATSBY_BUILD_STAGE || `test`
+  return pluginBabelConfig[stage].options
+}
+
+const prepareOptions = (babel, resolve = require.resolve) => {
+  let pluginBabelConfig = loadCachedConfig()
 
   const stage = process.env.GATSBY_BUILD_STAGE || `test`
 
@@ -85,12 +96,6 @@ const prepareOptions = (babel, resolve = require.resolve) => {
     )
   )
 
-  fallbackPresets.push(
-    babel.createConfigItem([resolve(`@babel/preset-flow`)], {
-      type: `preset`,
-    })
-  )
-
   fallbackPlugins.push(
     babel.createConfigItem(
       [
@@ -124,7 +129,6 @@ const prepareOptions = (babel, resolve = require.resolve) => {
         {
           helpers: true,
           regenerator: true,
-          polyfill: false,
         },
       ],
       {
@@ -184,6 +188,8 @@ const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
 
   return items
 }
+
+exports.getCustomOptions = getCustomOptions
 
 // Export helper functions for testing
 exports.prepareOptions = prepareOptions

@@ -173,7 +173,7 @@ module.exports = (
   <span
     class="gatsby-resp-image-wrapper"
     style="position: relative; display: block; ${
-      showCaptions ? null : options.wrapperStyle 
+      showCaptions ? null : options.wrapperStyle
     }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span

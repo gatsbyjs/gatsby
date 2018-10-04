@@ -105,7 +105,6 @@ const fixedNodeType = ({
     args: {
       width: {
         type: GraphQLInt,
-        defaultValue: 400,
       },
       height: {
         type: GraphQLInt,
@@ -217,12 +216,13 @@ const fluidNodeType = ({
         sizes: { type: GraphQLString },
         originalImg: { type: GraphQLString },
         originalName: { type: GraphQLString },
+        presentationWidth: { type: GraphQLInt },
+        presentationHeight: { type: GraphQLInt },
       },
     }),
     args: {
       maxWidth: {
         type: GraphQLInt,
-        defaultValue: 800,
       },
       maxHeight: {
         type: GraphQLInt,
@@ -258,6 +258,10 @@ const fluidNodeType = ({
       rotate: {
         type: GraphQLInt,
         defaultValue: 0,
+      },
+      sizes: {
+        type: GraphQLString,
+        defaultValue: ``,
       },
     },
     resolve: (image, fieldArgs, context) => {
@@ -377,7 +381,6 @@ module.exports = ({
       args: {
         width: {
           type: GraphQLInt,
-          defaultValue: 400,
         },
         height: {
           type: GraphQLInt,
