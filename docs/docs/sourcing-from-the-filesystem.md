@@ -78,13 +78,13 @@ module.exports = {
 Restart the development server then refresh (or open again) Graph_i_QL and look
 at the autocomplete:
 
-![markdown-autocomplete](./images/markdown-autocomplete.png)
+![markdown-autocomplete](/images/markdown-autocomplete.png)
 
 Select `allMarkdownRemark` again and run it like you did for `allFile`. You'll
 see there the markdown file you recently added. Explore the fields that are
 available on the `MarkdownRemark` node.
 
-![markdown-query](./images/markdown-query.png)
+![markdown-query](/images/markdown-query.png)
 
 Ok! Hopefully some basics are starting to fall into place. Source plugins bring
 data _into_ Gatsby's data system and _transformer_ plugins transform raw content
@@ -167,7 +167,7 @@ export const query = graphql`
 
 Now the frontpage should look like:
 
-![frontpage](frontpage.png)
+![frontpage](images/frontpage.png)
 
 But your one blog post looks a bit lonely. So let's add another one at
 `src/pages/pandas-and-bananas.md`
@@ -184,7 +184,7 @@ seem to really enjoy bananas!
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4SZl1r2O_bY" frameborder="0" allowfullscreen></iframe>
 ```
 
-![two-posts](two-posts.png)
+![two-posts](images/two-posts.png)
 
 Which looks great! Except… the order of the posts is wrong.
 
