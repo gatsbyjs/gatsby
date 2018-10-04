@@ -1,7 +1,7 @@
-import { withMDXComponents } from "@mdx-js/tag/dist/mdx-provider";
-import { withMDXScope } from "./context";
+const { withMDXComponents } = require("@mdx-js/tag/dist/mdx-provider");
+const { withMDXScope } = require("./context");
 
-export default withMDXScope(
+module.exports = withMDXScope(
   withMDXComponents(({ scope = {}, components = {}, children, ...props }) => {
     const fullScope = {
       components,
