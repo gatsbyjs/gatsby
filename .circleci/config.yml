@@ -83,6 +83,11 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - run:
+          name: Setup verdaccio container
+          command: |
+            docker run -it --rm --name verdaccio -p 4873:4873 verdaccio/verdaccio
+          background: true
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
