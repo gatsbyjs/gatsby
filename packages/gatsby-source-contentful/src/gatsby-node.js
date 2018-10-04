@@ -130,13 +130,9 @@ exports.sourceNodes = async (
   const nextSyncToken = currentSyncData.nextSyncToken
 
   // Store our sync state for the next sync.
-  // TODO: we do not store the token if we are using preview, since only initial sync is possible there
-  // This might change though
-  if (options.host !== `preview.contentful.com`) {
-    const newState = {}
-    newState[`${options.spaceId}-${options.environment}`] = nextSyncToken
-    setPluginStatus(newState)
-  }
+  const newState = {}
+  newState[`${options.spaceId}-${options.environment}`] = nextSyncToken
+  setPluginStatus(newState)
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
