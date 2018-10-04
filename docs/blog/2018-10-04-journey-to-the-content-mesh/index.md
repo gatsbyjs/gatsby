@@ -67,6 +67,8 @@ In Part 4, Why Mobile Performance Has Become Crucial, we’ll discuss the ROI of
 
 In our conclusion, Creating Compelling Experiences, we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing an "content mesh" that makes all the other choices easy. We’ll also explore how one clear option -- Gatsby -- emerges as the most feature-complete of any content mesh alternatives.
 
+## The modern website landscape
+
 <figure>
   <img alt="The modern website landscape" src="./content-mesh.png" height="300" />
   <figcaption>
