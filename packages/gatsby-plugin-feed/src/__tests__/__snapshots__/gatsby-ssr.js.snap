@@ -22,7 +22,7 @@ exports[`Adds <Link> for feed to head creates Link if feeds does exist 1`] = `
 }
 `;
 
-exports[`Adds <Link> for feed to head creates Link if feeds does exist 2`] = `
+exports[`Adds <Link> for feed to head creates multiple Link if feeds are several 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
