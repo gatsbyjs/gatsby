@@ -37,7 +37,7 @@ you'll see used in many sites and plugins.
 We do our best to make Gatsby APIs simple to implement. To implement an API, you export a function
 with the name of the API from `gatsby-node.js`.
 
-So let's do that. In the root of your site, create a file named
+So here's where you'll do that. In the root of your site, create a file named
 `gatsby-node.js`. Then add the following.
 
 ```javascript:title=gatsby-node.js
@@ -51,7 +51,7 @@ This `onCreateNode` function will be called by Gatsby whenever a new node is cre
 Stop and restart the development server. As you do, you'll see quite a few newly
 created nodes get logged to the terminal console.
 
-Let's use this API to add the slugs for your markdown pages to `MarkdownRemark`
+Use this API to add the slugs for your markdown pages to `MarkdownRemark`
 nodes.
 
 Change your function so it now only logs `MarkdownRemark` nodes.
@@ -84,7 +84,7 @@ files.
 
 ![markdown-relative-path](markdown-relative-path.png)
 
-Now let's create slugs. As the logic for creating slugs from file names can get
+Now you'll have to create slugs. As the logic for creating slugs from file names can get
 tricky, the `gatsby-source-filesystem` plugin ships with a function for creating
 slugs. Let's use that.
 
@@ -102,7 +102,7 @@ The function handles finding the parent `File` node along with creating the
 slug. Run the development server again and you should see logged to the terminal
 two slugs, one for each markdown file.
 
-Now let's add your new slugs directly onto the `MarkdownRemark` nodes. This is
+Now you can add your new slugs directly onto the `MarkdownRemark` nodes. This is
 powerful, as any data you add to nodes is available to query later with GraphQL.
 So it'll be easy to get the slug when it comes time to create the pages.
 
@@ -286,7 +286,7 @@ Visit one of them and you see:
 
 ![hello-world-blog-post](hello-world-blog-post.png)
 
-Which is a bit boring and not what you want. Let's pull in data from your markdown post. Change
+Which is a bit boring and not what you want. Now you can pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
 ```jsx{5-6,9-12,15-26}:title=src/templates/blog-post.js
@@ -326,7 +326,7 @@ Sweet!
 
 The last step is to link to your new pages from the index page.
 
-Return to `src/pages/index.js` and let's query for your markdown slugs and create
+Return to `src/pages/index.js` and query for your markdown slugs and create
 links.
 
 ```jsx{3,22-28,44,63-65}:title=src/pages/index.js

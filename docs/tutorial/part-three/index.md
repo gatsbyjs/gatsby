@@ -26,7 +26,7 @@ cd tutorial-part-three
 ```
 
 Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see Part Two of the tutorials. For
-the Typography.js theme, let's try the "Fairy Gates" typography theme this time:
+the Typography.js theme, try the "Fairy Gates" typography theme this time:
 
 ```shell
 npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
@@ -58,7 +58,7 @@ module.exports = {
 }
 ```
 
-Now, let's add a few different pages: a front page, an about page, and a contact
+Now, you can add a few different pages: a front page, an about page, and a contact
 page.
 
 ```jsx:title=src/pages/index.js
@@ -108,7 +108,7 @@ centered on the screen like in part two of the tutorial. And second, you should
 really have some sort of global navigation so it's easy for visitors to find and
 visit each of the sub-pages.
 
-Let's tackle these problems by creating your first layout component.
+You'll tackle these problems by creating your first layout component.
 
 ## Your first layout component
 
@@ -154,7 +154,7 @@ But try navigating to one of the other pages e.g. `/about/`. That page still
 isn't centered. Try now importing and adding the layout component to `about.js` and
 `contact.js`.
 
-Let's now add your site title to the layout component:
+Now add your site title to the layout component:
 
 ```jsx{5}:title=src/components/layout.js
 import React from "react"
@@ -172,7 +172,7 @@ If you go to any of your three pages you'll see the same title added e.g. the
 
 ![with-title](with-title.png)
 
-Let's add navigation links to each of your three pages:
+Add navigation links to each of your three pages:
 
 ```jsx{2-10,13-23}:title=src/components/layout.js
 import React from "react"

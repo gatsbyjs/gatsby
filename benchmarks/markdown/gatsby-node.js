@@ -1,8 +1,5 @@
-let NUM_PAGES = 5000
-
-if (process.env.NUM_PAGES) {
-  NUM_PAGES = process.env.NUM_PAGES
-}
+const NUM_PAGES = parseInt(process.env.NUM_PAGES || 5000, 10)
+const template = require(`./page-template`)
 
 exports.sourceNodes = ({ actions: { createNode } }) => {
   // Create markdown nodes
@@ -15,7 +12,7 @@ exports.sourceNodes = ({ actions: { createNode } }) => {
       internal: {
         type: `FakeMarkdown`,
         mediaType: `text/markdown`,
-        content: `---\ntitle: "hi"\n---\nWhat up folks? This is _lit_\n\n##Page #${step}`,
+        content: template(step),
         contentDigest: step.toString(),
       },
     })
