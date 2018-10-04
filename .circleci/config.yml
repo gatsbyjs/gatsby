@@ -11,11 +11,6 @@ aliases:
     docker:
       - image: circleci/node:10
 
-  node10verdaccio: &node10verdaccio
-    docker:
-      - image: circleci/node:10
-      - image: verdaccio/verdaccio
-
   node10_browsers: &node10_browsers
     docker:
       - image: circleci/node:10-browsers
@@ -64,6 +59,11 @@ aliases:
     requires:
       - bootstrap
 
+executors:
+  verdaccio:
+    docker:
+      - image: verdaccio/verdaccio
+
 commands:
   integration_test:
     parameters:
@@ -84,7 +84,8 @@ version: 2.1
 
 jobs:
   bootstrap:
-    <<: *node10verdaccio
+    <<: *node10
+    executor: verdaccio
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
