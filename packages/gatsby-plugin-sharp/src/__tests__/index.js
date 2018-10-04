@@ -62,8 +62,8 @@ describe(`gatsby-plugin-sharp`, () => {
         file,
       })
 
-      expect(result.src.indexOf(file.name)).toBe(8)
-      expect(result.srcSet.indexOf(file.name)).toBe(8)
+      expect(result.src.indexOf(file.name)).toBe(19)
+      expect(result.srcSet.indexOf(file.name)).toBe(19)
     })
 
     it(`accounts for pixel density`, async () => {
