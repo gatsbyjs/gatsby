@@ -11,15 +11,28 @@ In the early 2000s, publishing on the web was difficult. The CMS emerged as a si
 
 Over time, the feature landscape broadened -- key areas like search, analytics, payments, personalization, e-commerce emerged. In each category, specialized tools improved rapidly, while the quality of monolithic enterprise CMS applications like Adobe Experience Manager and Sitecore has stayed roughly the same.
 
+## Modularizing the CMS
+
 Today, a website team running an e-commerce site can store product inventory in [Shopify](https://www.shopify.com/), product listings in [Salsify](https://www.salsify.com/) and reviews in [Bazaarvoice](https://www.bazaarvoice.com/). A team running a paywalled content site can create stories in [Wordpress](https://wordpress.org/), store video in [JWPlayer](https://www.jwplayer.com/), user data in [Auth0](https://auth0.com/), and subscription data in [Recurly](https://recurly.com/).
 
 When website teams want to add search, they can turn to [Algolia](https://www.algolia.com/); for payments, [Stripe](http://stripe.com); for analytics, [Segment](https://segment.com/); for A/B testing, [Optimizely](https://www.optimizely.com/); for personalization, [Evergage](https://www.evergage.com/).
 
 Teams are adopting these services because each is tailored to a specific use-case; the generic enterprise CMS alternative is often optimized for none.
 
+<figure>
+  <img alt="The modularization of the CMS" height="400" src="./modular-cms-architecture.png" />
+  <figcaption>
+   The modularization of the CMS
+  </figcaption>
+</figure>
+
+## Emergence of the Content Mesh
+
 This is the first post in a series, Journey to the Content Mesh, intended to explain the emergence of a "content mesh" -- the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
 
 The previous generation of enterprise CMS offered a set of mediocre components; an often-generic content editing experience glued to out-of-date development and deployment environments. The emerging strategy for content management selects best-of-breed solutions, tailored to specific use-cases like e-commerce or blogging; it provides a modern framework for rapid iteration and it generates lightning fast websites out of the box.
+
+## Three Areas of Rapid Innovation
 
 Change is being spurred by the confluence of three revolutions in how we create and consume content:
 
@@ -30,9 +43,9 @@ Change is being spurred by the confluence of three revolutions in how we create 
 - _Performance._ As mobile surpasses 50% of internet traffic, high-performance is becoming a must-have, not a nice-to-have.
 
 <figure>
-  <img alt="The modularization of the CMS" height="400" src="./modular-cms-architecture.png" />
+  <img alt="Three areas of rapid innovation" height="300" src="./three-website-revolutions.png" />
   <figcaption>
-   The modularization of the CMS
+    Three areas of rapid innovation
   </figcaption>
 </figure>
 
@@ -42,12 +55,7 @@ Each change primarily affects a different stakeholder --- marketing, development
 
 The key challenge is that without a content mesh, integrating these systems together is a lot of work. Forrester titled one of their [report sections](https://www.tangomodem.com/wp-content/uploads/2017/09/the-rise-of-the-headless-cms.pdf): "Warning: Headless Content Management Is For Do-It-Yourself Shops." But _with_ a content mesh, all of these systems can be brought together in a unified, low-cost, low-defect whole.
 
-<figure>
-  <img alt="Three areas of rapid innovation" height="300" src="./three-website-revolutions.png" />
-  <figcaption>
-    Three areas of rapid innovation
-  </figcaption>
-</figure>
+## Integrating Modern Technologies Without the DIY Work
 
 As this series continues, we’ll explore the rise of this "content mesh" -- that allows enterprises to adopt these new technologies without needing to DIY themselves.
 
