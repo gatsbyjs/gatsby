@@ -130,7 +130,6 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   const origin = document.createElement(`a`)
   origin.href = window.location.href
 
-  console.log(destination)
   if (urlsAreOnSameOrigin(origin, destination) === false) return true
 
   if (pathIsNotHandledByApp(destination)) return true
