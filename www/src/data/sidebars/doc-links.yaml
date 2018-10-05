@@ -41,7 +41,7 @@
           link: /docs/custom-html/
         - title: Environment variables
           link: /docs/environment-variables/
-        - title: ESlint*
+        - title: ESLint
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
@@ -384,5 +384,5 @@
       link: /docs/submit-to-starter-library/
 - title: Glossary*
   link: /docs/glossary/
-- title: Commands (Gatsby CLI)*
+- title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/

@@ -25,7 +25,7 @@ Gatsby ships with a default .babelrc setup that should work for most sites. If y
 to add custom Babel presets or plugins, we recommend copying our default .babelrc below
 to the root of your site and modifying it per your needs.
 
-```json5
+```json5:title=.babelrc
 {
   presets: [
     [

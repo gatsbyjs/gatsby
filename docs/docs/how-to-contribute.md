@@ -13,7 +13,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Adding unit or functional tests
 - Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
 - [Reporting bugs or issues](/docs/how-to-file-an-issue/)
-- Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
+- Searching for Gatsby on [Discord](https://discordapp.com/invite/jUFVxtB) or [Spectrum](https://spectrum.chat/gatsby-js) and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
 As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
@@ -53,7 +53,7 @@ There are two ways to contribute. This is the most usual way:
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
-  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).  
+  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
   Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.

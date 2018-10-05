@@ -330,18 +330,28 @@
     - Font styles taken from Tachyons.
 - url: https://gcn.netlify.com/
   repo: https://github.com/ryanwiemer/gatsby-starter-gcn
-  description: n/a
+  description: A starter template to build amazing static websites with Gatsby, Contentful and Netlify
   tags:
     - Contentful
+    - Blog
     - Netlify Form
     - Styling:CSS-in-JS
   features:
-    - Inspired by gatsby-contentful-starter
     - Contentful integration with ready to go placeholder content
     - Netlify integration including a pre-built contact form
     - Minimal responsive design - made to customize or tear apart
+    - Pagination logic
     - Styled components
-    - SEO friendly
+    - SEO Friendly Component
+    - JSON-LD Schema
+    - OpenGraph sharing support
+    - Sitemap Generation
+    - Google Analytics
+    - Progressive Web app
+    - Offline Support
+    - RSS Feed
+    - Gatsby Standard module for linting Javascript with StandardJS
+    - Stylelint support for Styled Components to lint the CSS in JS
 - url: https://alampros.github.io/gatsby-starter-grommet/
   repo: https://github.com/alampros/gatsby-starter-grommet
   description: n/a
