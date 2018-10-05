@@ -37,7 +37,7 @@ Information on the purpose of this function can be found in the [API reference](
 
 Sometimes transforming properties costs time and resources and in order to avoid recreating these properties at each run you can profit from the global cache mechanism Gatsby provides.
 
-Cache keys should at least contain an explicit name of the plugin, the contentDigest of the concerned node and the property it caches. For example the `gatsby-transformer-remark` uses the following cache key for the html node:
+Cache keys should at least contain the contentDigest of the concerned. For example the `gatsby-transformer-remark` uses the following cache key for the html node:
 
 ```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>
