@@ -264,7 +264,7 @@ const fluidNodeType = ({
         type: GraphQLString,
         defaultValue: ``,
       },
-      requestedSizes: {
+      customSizes: {
         type: GraphQLList(GraphQLInt),
         defaultValue: [],
       },

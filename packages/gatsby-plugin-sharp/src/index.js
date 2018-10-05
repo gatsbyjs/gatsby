@@ -540,15 +540,15 @@ async function fluid({ file, args = {}, reporter }) {
     options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
-  // Create sizes (in width) for the image if none are provided. If the max
-  // width of the container for the rendered markdown file is 800px, the sizes
-  // would then be: 200, 400, 800, 1200, 1600, 2400.
+  // Create sizes (in width) for the image if no custom sizes are provided. If
+  // the max width of the container for the rendered markdown file is 800px,
+  // the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const fluidSizes = !options.requestedSizes || !options.requestedSizes.length
+  const fluidSizes = !options.customSizes || !options.customSizes.length
     ? [
       options[fixedDimension] / 4,
       options[fixedDimension] / 2,
@@ -557,7 +557,7 @@ async function fluid({ file, args = {}, reporter }) {
       options[fixedDimension] * 2,
       options[fixedDimension] * 3,
     ]
-    : options.requestedSizes.slice()
+    : options.customSizes.slice()
   const filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
