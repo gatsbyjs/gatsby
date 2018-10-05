@@ -156,14 +156,13 @@ module.exports = ({
     )
 
     nodePromise.then(node => {
-        if(node) {
-          createPageDependency({
-            path,
-            nodeId: node.id,
-          })
-        }
+      if (node) {
+        createPageDependency({
+          path,
+          nodeId: node.id,
+        })
       }
-    )
+    })
 
     return nodePromise
   }
