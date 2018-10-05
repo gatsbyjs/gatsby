@@ -49,6 +49,35 @@ exports[`Adds <Link> for feed to head creates Link if feeds does exist 1`] = `
 }
 `;
 
+exports[`Adds <Link> for feed to head creates Link with a title if it does exist 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/gryffindor/feed.xml"
+          rel="alternate"
+          title="Gryffindor's RSS Feed"
+          type="application/rss+xml"
+        />,
+        <link
+          href="/ravenclaw/feed.xml"
+          rel="alternate"
+          title="Ravenclaw's RSS Feed"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`Adds <Link> for feed to head creates multiple Link if feeds are several 1`] = `
 [MockFunction] {
   "calls": Array [
