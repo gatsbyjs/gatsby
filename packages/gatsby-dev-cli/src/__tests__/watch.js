@@ -67,7 +67,7 @@ describe(`watching`, () => {
       expect(fs.copy).toHaveBeenCalledTimes(1)
       expect(fs.copy).toHaveBeenCalledWith(
         filePath,
-        `node_modules/gatsby/dist/index.js`,
+        path.join(`node_modules`, `gatsby`, `dist`, `index.js`),
         expect.any(Function)
       )
     })
@@ -84,7 +84,7 @@ describe(`watching`, () => {
       expect(fs.copy).toHaveBeenCalledTimes(2)
       expect(fs.copy).toHaveBeenLastCalledWith(
         filePath,
-        `.cache/register-service-worker.js`,
+        path.join(`.cache`, `register-service-worker.js`),
         expect.any(Function)
       )
     })
