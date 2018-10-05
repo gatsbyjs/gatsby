@@ -9,6 +9,11 @@ export const userIsForcingNavigation = event => (
   event.shiftKey
 )
 
+// IE does not include leading slash in anchor.pathname
+export const slashedPathname = pathname => (
+  pathname[0] === `/` ? pathname : `/${pathname}`
+)
+
 export const navigationWasHandledElsewhere = event => (
   event.defaultPrevented
 )
@@ -102,7 +107,7 @@ export const pathIsNotHandledByApp = destination => {
      * will navigate to an external link instead of doing a pushState resulting
      * in `https://example.com/myapp/https://example.com/not-my-app`
      */
-    pathStartRegEx.test(`${destination.pathname}`) === false ||
+    pathStartRegEx.test(slashedPathname(destination.pathname)) === false ||
 
     /**
      * Don't catch links pointed at what look like file extensions (other than
@@ -158,7 +163,7 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   event.preventDefault()
 
-  hrefHandler(`${destination.pathname}${destination.search}${destination.hash}`)
+  hrefHandler(`${slashedPathname(destination.pathname)}${destination.search}${destination.hash}`)
 
   return false
 }
