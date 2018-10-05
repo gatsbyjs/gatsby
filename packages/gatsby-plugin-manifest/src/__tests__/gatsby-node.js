@@ -1,8 +1,12 @@
+jest.mock(`fs`, () => {
+  return {
+    existsSync: jest.fn().mockImplementation(() => true),
+    writeFileSync: jest.fn(),
+    statSync: jest.fn(),
+  }
+})
 const fs = require(`fs`)
 const { onPostBootstrap } = require(`../gatsby-node`)
-jest.mock(`fs`)
-fs.existsSync.mockImplementation(() => true)
-fs.writeFileSync = jest.fn()
 
 describe(`Test plugin manifest options`, () => {
   it(`correctly works with default parameters`, async () => {
@@ -17,7 +21,7 @@ describe(`Test plugin manifest options`, () => {
     expect(fs.writeFileSync.mock.calls).toMatchSnapshot()
   })
   it(`fails on non existing icon`, (done) => {
-    fs.statSync.mockReturnValue({ isFile: () => false })
+    fs.statSync.mockReturnValueOnce({ isFile: () => false })
     onPostBootstrap([], {
       name: `GatsbyJS`,
       short_name: `GatsbyJS`,
