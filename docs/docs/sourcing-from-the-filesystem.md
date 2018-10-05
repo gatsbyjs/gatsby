@@ -2,55 +2,52 @@
 title: Sourcing from the Filesystem
 ---
 
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) before continuing here.
+
 ## What's in this tutorial?
 
-The previous tutorial showed how source plugins bring data _into_ Gatsby’s data system. In this tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site.
+In this tutorial, you'll be learning about how to pull data into your Gatsby site using GraphQL and source plugins. Before you learn about these plugins, however, you'll want to know how to use something called Graph_i_QL, a tool that helps you structure your queries correctly.
 
-## Transformer plugins
+## Introducing Graph_i_QL
 
-Often, the format of the data you get from source plugins isn't what you want to
-use to build your website. The filesystem source plugin lets you query data
-_about_ files but what if you want to query data _inside_ files?
+Graph_i_QL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool
+you'll use often while building Gatsby websites.
 
-To make this possible, Gatsby supports transformer plugins which take raw
-content from source plugins and _transform_ it into something more usable.
+You can access it when your site's development server is running—normally at
+<http://localhost:8000/___graphql>.
 
-For example, markdown files. Markdown is nice to write in but when you build a
-page with it, you need the markdown to be HTML.
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
 
-Let's add a markdown file to your site at
-`src/pages/sweet-pandas-eating-sweets.md` (This will become your first markdown
-blog post) and learn how to _transform_ it to HTML using transformer plugins and
-GraphQL.
+Here you poke around the built-in `Site` "type" and see what fields are available
+on it—including the `siteMetadata` object you queried earlier. Try opening
+Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up
+the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be
+using Graph_i_QL a lot more through the remainder of the tutorial.
 
-```markdown:title=src/pages/sweet-pandas-eating-sweets.md
----
-title: "Sweet Pandas Eating Sweets"
-date: "2017-08-10"
----
+## Source plugins
 
-Pandas are really sweet.
+Data in Gatsby sites can come from anywhere: APIs, databases, CMSs,
+local files, etc.
 
-Here's a video of a panda eating sweets.
+Source plugins fetch data from their source. E.g. the filesystem source plugin
+knows how to fetch data from the file system. The WordPress plugin knows how to
+fetch data from the WordPress API.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4n0xNbfJLR8" frameborder="0" allowfullscreen></iframe>
+Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
+explore how it works.
+
+First install the plugin at the root of the project:
+
+```sh
+npm install --save gatsby-source-filesystem
 ```
 
-Once you save the file, look at `/my-files/` again—the new markdown file is in
-the table. This is a very powerful feature of Gatsby. Like the earlier
-`siteMetadata` example, source plugins can live reload data.
-`gatsby-source-filesystem` is always scanning for new files to be added and when
-they are, re-runs your queries.
+Then add it to your `gatsby-config.js`:
 
-Let's add a transformer plugin that can transform markdown files:
-
-```shell
-npm install --save gatsby-transformer-remark
-```
-
-Then add it to the `gatsby-config.js` like normal:
-
-```javascript{13}:title=gatsby-config.js
+```javascript{6-12}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -63,7 +60,6 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-transformer-remark`,
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -75,89 +71,65 @@ module.exports = {
 }
 ```
 
-Restart the development server then refresh (or open again) Graph_i_QL and look
-at the autocomplete:
+Save that and restart the gatsby development server. Then open up Graph_i_QL
+again.
 
-![markdown-autocomplete](images/markdown-autocomplete.png)
+If you bring up the autocomplete window, you'll see:
 
-Select `allMarkdownRemark` again and run it like you did for `allFile`. You'll
-see there the markdown file you recently added. Explore the fields that are
-available on the `MarkdownRemark` node.
+![graphiql-filesystem](images/graphiql-filesystem.png)
 
-![markdown-query](images/markdown-query.png)
+Hit <kbd>Enter</kbd> on `allFile` then type <kbd>Ctrl + Enter</kbd> to run a
+query.
 
-Ok! Hopefully some basics are starting to fall into place. Source plugins bring
-data _into_ Gatsby's data system and _transformer_ plugins transform raw content
-brought by source plugins. This pattern can handle all data sourcing and
-data transformation you might need when building a Gatsby site.
+![filesystem-query](images/filesystem-query.png)
 
-## Create a list of your site's markdown files in `src/pages/index.js`
+Delete the `id` from the query and bring up the autocomplete again (<kbd>Ctrl +
+Space</kbd>).
 
-Let's now create a list of your markdown files on the front page. Like many
-blogs, you want to end up with a list of links on the front page pointing to each
-blog post. With GraphQL you can _query_ for the current list of markdown blog
-posts so you won't need to maintain the list manually.
+![filesystem-autocomplete](images/filesystem-autocomplete.png)
 
-Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
-the following to add a GraphQL query with some initial HTML and styling.
+Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
+each time to re-run the query. You'll see something like this:
 
-```jsx:title=src/pages/index.js
+![allfile-query](images/allfile-query.png)
+
+The result is an array of File "nodes" (node is a fancy name for an object in a
+"graph"). Each File object has the fields you queried for.
+
+## Build a page with a GraphQL query
+
+Building new pages with Gatsby often starts in Graph_i_QL. You first sketch out
+the data query by playing in Graph_i_QL then copy this to a React page component
+to start building the UI.
+
+Let's try this.
+
+Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
+created:
+
+```jsx{6}:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
-import { css } from "react-emotion"
-import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
   console.log(data)
   return (
     <Layout>
-      <div>
-        <h1
-          className={css`
-            display: inline-block;
-            border-bottom: 1px solid;
-          `}
-        >
-          Amazing Pandas Eating Things
-        </h1>
-        <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
-        {data.allMarkdownRemark.edges.map(({ node }) => (
-          <div key={node.id}>
-            <h3
-              className={css`
-                margin-bottom: ${rhythm(1 / 4)};
-              `}
-            >
-              {node.frontmatter.title}{" "}
-              <span
-                className={css`
-                  color: #bbb;
-                `}
-              >
-                — {node.frontmatter.date}
-              </span>
-            </h3>
-            <p>{node.excerpt}</p>
-          </div>
-        ))}
-      </div>
+      <div>Hello world</div>
     </Layout>
   )
 }
 
 export const query = graphql`
   query {
-    allMarkdownRemark {
-      totalCount
+    allFile {
       edges {
         node {
-          id
-          frontmatter {
-            title
-            date(formatString: "DD MMMM, YYYY")
-          }
-          excerpt
+          relativePath
+          prettySize
+          extension
+          birthTime(fromNow: true)
         }
       }
     }
@@ -165,44 +137,75 @@ export const query = graphql`
 `
 ```
 
-Now the frontpage should look like:
+The `console.log(data)` line is highlighted above. It's often helpful when
+creating a new component to console out the data you're getting from the GraphQL query
+so you can explore the data in your browser console while building the UI.
 
-![frontpage](images/frontpage.png)
+If you visit the new page at `/my-files/` and open up your browser console
+you will see something like:
 
-But your one blog post looks a bit lonely. So let's add another one at
-`src/pages/pandas-and-bananas.md`
+![data-in-console](images/data-in-console.png)
 
-```markdown:title=src/pages/pandas-and-bananas.md
----
-title: "Pandas and Bananas"
-date: "2017-08-21"
----
+The shape of the data matches the shape of the GraphQL query.
 
-Do Pandas eat bananas? Check out this short video that shows that yes! pandas do
-seem to really enjoy bananas!
+Add some code to your component to print out the File data.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4SZl1r2O_bY" frameborder="0" allowfullscreen></iframe>
+```jsx{9-31}:title=src/pages/my-files.js
+import React from "react"
+import { graphql } from "gatsby"
+import Layout from "../components/layout"
+
+export default ({ data }) => {
+  console.log(data)
+  return (
+    <Layout>
+      <div>
+        <h1>My Site's Files</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>relativePath</th>
+              <th>prettySize</th>
+              <th>extension</th>
+              <th>birthTime</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.allFile.edges.map(({ node }, index) => (
+              <tr key={index}>
+                <td>{node.relativePath}</td>
+                <td>{node.prettySize}</td>
+                <td>{node.extension}</td>
+                <td>{node.birthTime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Layout>
+  )
+}
+
+export const query = graphql`
+  query {
+    allFile {
+      edges {
+        node {
+          relativePath
+          prettySize
+          extension
+          birthTime(fromNow: true)
+        }
+      }
+    }
+  }
+`
 ```
 
-![two-posts](images/two-posts.png)
+And… 😲
 
-Which looks great! Except… the order of the posts is wrong.
+![my-files-page](images/my-files-page.png)
 
-But this is easy to fix. When querying a connection of some type, you can pass a
-variety of arguments to the GraphQL query. You can `sort` and `filter` nodes, set how
-many nodes to `skip`, and choose the `limit` of how many nodes to retrieve. With
-this powerful set of operators, you can select any data you want—in the format you
-need.
+## What's coming next?
 
-In your index page's GraphQL query, change `allMarkdownRemark` to
-`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. Save
-this and the sort order should be fixed.
-
-Try opening Graph_i_QL and playing with different sort options. You can sort the
-`allFile` connection along with other connections.
-
-For more documentation on our query operators, explore our [GraphQL reference guide.](/docs/graphql-reference/)
-
-## Challenge
-
-Try creating a new page containing a blog post and see what happens to the list of blog posts on the homepage!
+Now you've learned how source plugins bring data _into_ Gatsby’s data system. In the next tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site. Click here for the [next tutorial to learn about transformer plugins](/tutorial/part-six/).
