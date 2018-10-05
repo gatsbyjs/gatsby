@@ -28,6 +28,15 @@
     - Offline support
     - Web App Manifest
     - SEO
+- url: https://gatsby-tailwind-emotion-starter.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-tailwind-emotion-starter
+  description: A Gatsby Starter with Tailwind CSS + Emotion JS
+  tags:
+    - Styling:Tailwind
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Offline support
+    - Web App Manifest
 - url: https://dschau.github.io/gatsby-blog-starter-kit/
   repo: https://github.com/dschau/gatsby-blog-starter-kit
   description: n/a
