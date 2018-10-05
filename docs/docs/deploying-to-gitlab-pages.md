@@ -31,7 +31,7 @@ module.exports = {
 
 To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml` configuration file. This is the file that GitLab uses to manage the CI job.
 
-It can easily be added to your repository by the [GitLab](https://gitlab.com) website, as the online editor contains a pre-built template for Gatsby deployment.
+The online editor on the [GitLab](https://gitlab.com) website contains a pre-built template for Gatsby deployment.
 
 To use the template open your repository on their website, select the 'Setup CI/CD' option on the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now select the 'Apply a GitLab CI Yaml Template' drop-down, and type 'Gatsby' into the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
 
