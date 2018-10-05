@@ -17,7 +17,6 @@
     "gatsby-plugin-catch-links": "^2.0.2",
     "gatsby-plugin-emotion": "^2.0.5",
     "gatsby-plugin-feed": "^2.0.5",
-    "gatsby-plugin-glamor": "^2.0.5",
     "gatsby-plugin-google-analytics": "^2.0.5",
     "gatsby-plugin-google-tagmanager": "^2.0.5",
     "gatsby-plugin-guess-js": "^1.0.0",
