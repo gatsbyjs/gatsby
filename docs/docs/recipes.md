@@ -51,7 +51,7 @@ Starters are boilerplate Gatsby sites maintained officially, or by the community
 
 ## Creating pages
 
-You can create pages in Gatsby explicitly by definining React components in `src/pages/`, or programmatically by using the `createPages` API.
+You can create pages in Gatsby explicitly by defining React components in `src/pages/`, or programmatically by using the `createPages` API.
 
 - Walk through creating a page by defining a React component in `src/pages` in [tutorial part one](/tutorial/part-one/#familiarizing-with-gatsby-pages)
 - Walk through programmatically creating pages in [tutorial part seven](/tutorial/part-seven/)
@@ -88,7 +88,7 @@ To wrap pages with layouts, use normal React components.
 Showtime.
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn how to make sure your site is configured properly to be [searchable, sharable, and properly navigable](/docs/preparing-for-site-launch/)
+- Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/deploying-and-hosting/)
 
