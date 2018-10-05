@@ -107,6 +107,39 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.presentationWidth).toEqual(41)
     })
+
+    it(`accepts custom sizes`, async () => {
+      const customSizes = [
+        50,
+        70,
+        150,
+        250,
+        300, // this shouldn't be in the output as it's wider than the original
+      ]
+      const args = { customSizes }
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      // width of the image tested
+      const originalWidth = 281
+      const expected = customSizes
+        // filter out the widths that are larger than the source image width
+        // (in this case it's the last value of the array: 300)
+        .filter((size) => size < originalWidth)
+        .map((size) => `${size}w`)
+      // add the original size of `144-density.png`
+      expected.push(`${originalWidth}w`)
+
+      // RegEx to find all occurrences of 'Xw', where 'X' can be any int
+      const regEx = /[0-9]+w/g
+      const actual = result.srcSet.match(regEx)
+      // should contain all requested sizes as well as the original size
+      expect(actual).toEqual(expect.arrayContaining(expected))
+      // should contain no other sizes
+      expect(actual.length).toEqual(expected.length)
+    })
   })
 
   describe(`fixed`, () => {
