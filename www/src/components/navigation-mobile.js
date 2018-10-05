@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { style } from "glamor"
-
+import { css } from "emotion"
 import SvgDefs from "../assets/svg-defs"
 import {
   BlogIcon,
@@ -14,20 +13,19 @@ import presets, { colors } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 import typography, { rhythm, scale, options } from "../utils/typography"
 
-const getNavItemStyles = ({ isPartiallyCurrent }) =>
-  isPartiallyCurrent
-    ? {
-        ...styles.link.default,
-        ...styles.link.active,
-        ...styles.svg.active,
-      }
-    : {
-        ...styles.link.default,
-        ...styles.svg.default,
-      }
-
 const MobileNavItem = ({ linkTo, label, icon }) => (
-  <Link to={linkTo} getProps={getNavItemStyles}>
+  <Link
+    to={linkTo}
+    css={{
+      ...styles.link.default,
+      ...styles.svg.default,
+    }}
+    activeClassName={css({
+      ...styles.link.default,
+      ...styles.link.active,
+      ...styles.svg.active,
+    })}
+  >
     <span dangerouslySetInnerHTML={{ __html: icon }} />
     <div>{label}</div>
   </Link>
@@ -79,13 +77,13 @@ const MobileNavigation = () => (
 
 export default MobileNavigation
 
-const svgActive = style({
+const svgActive = {
   ...svgStyles.active,
-})
+}
 
 const styles = {
   svg: {
-    default: style({
+    default: {
       "& .svg-stroke": {
         strokeMiterlimit: 10,
         strokeWidth: 1.4173,
@@ -104,11 +102,11 @@ const styles = {
       "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
       "& .svg-fill-wisteria": { fill: `transparent` },
       "&:hover": { ...svgActive },
-    }),
+    },
     active: svgActive,
   },
   link: {
-    default: style({
+    default: {
       color: colors.lavender,
       borderRadius: presets.radius,
       fontSize: scale(-1 / 2).fontSize,
@@ -130,13 +128,13 @@ const styles = {
           }`,
         },
       },
-    }),
-    active: style({
+    },
+    active: {
       "&&": {
         color: colors.gatsby,
         fontWeight: `bold`,
         // WebkitFontSmoothing: `antialiased`,
       },
-    }),
+    },
   },
 }
