@@ -331,7 +331,7 @@ const Result = ({ hit, pathname, search }) => {
           "&:before": {
             background: colors.ui.border,
             bottom: 0,
-            content: ` `,
+            content: `''`,
             height: 1,
             left: 0,
             position: `absolute`,
@@ -341,7 +341,7 @@ const Result = ({ hit, pathname, search }) => {
           "&:after": {
             background: selected ? colors.gatsby : false,
             bottom: 0,
-            content: ` `,
+            content: `''`,
             position: `absolute`,
             left: 0,
             top: -1,

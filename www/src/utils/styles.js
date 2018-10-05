@@ -61,7 +61,7 @@ export const buttonStyles = {
       boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
     },
     ":after": {
-      content: ``,
+      content: `''`,
       display: `block`,
     },
     "& svg": {
