@@ -12,7 +12,5 @@ steps:
       versionSpec: "8.x"
     displayName: "Install Node.js"
 
-  - script: |
-      yarn bootstrap
-      yarn test
-    displayName: "unit_tests_node8"
+  - script: yarn bootstrap
+  - script: yarn test
