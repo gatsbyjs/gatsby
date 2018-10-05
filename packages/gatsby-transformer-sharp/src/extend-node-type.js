@@ -267,6 +267,7 @@ const fluidNodeType = ({
       customSizes: {
         type: GraphQLList(GraphQLInt),
         defaultValue: [],
+        description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
       },
     },
     resolve: (image, fieldArgs, context) => {
