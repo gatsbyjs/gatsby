@@ -30,7 +30,7 @@
     - SEO
 - url: https://gatsby-tailwind-emotion-starter.netlify.com/
   repo: https://github.com/muhajirframe/gatsby-tailwind-emotion-starter
-  description: n/a
+  description: A Gatsby Starter with Tailwind CSS + Emotion JS
   tags:
     - Styling:Tailwind
   features:
