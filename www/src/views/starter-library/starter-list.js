@@ -36,7 +36,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             <small>
               Maybe you should write one and
               {` `}
-              <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md">
+              <a href="https://www.gatsbyjs.org/docs/submit-to-starter-library/">
                 submit it
               </a>
               ?
