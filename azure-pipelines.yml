@@ -4,15 +4,15 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 pool:
-  vmImage: 'vs2017-win2016'
+  vmImage: "vs2017-win2016"
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "8.x"
+    displayName: "Install Node.js"
 
-- script: |
-    yarn bootstrap
-    yarn test
-  displayName: 'unit_tests_node8'
+  - script: |
+      yarn bootstrap
+      yarn test
+    displayName: "unit_tests_node8"
