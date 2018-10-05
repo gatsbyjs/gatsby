@@ -6,6 +6,7 @@ jest.mock(`fs`, () => {
   }
 })
 const fs = require(`fs`)
+const path = require(`path`)
 const { onPostBootstrap } = require(`../gatsby-node`)
 
 describe(`Test plugin manifest options`, () => {
@@ -18,7 +19,9 @@ describe(`Test plugin manifest options`, () => {
       theme_color: `#a2466c`,
       display: `minimal-ui`,
     })
-    expect(fs.writeFileSync.mock.calls).toMatchSnapshot()
+    const [filePath, contents] = fs.writeFileSync.mock.calls[0]
+    expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
+    expect(contents).toMatchSnapshot()
   })
   it(`fails on non existing icon`, (done) => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
