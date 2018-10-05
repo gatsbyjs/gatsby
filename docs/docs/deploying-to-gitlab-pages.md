@@ -2,9 +2,9 @@
 title: Deploying to GitLab Pages
 ---
 
-GitLab Pages are very similar to GitHub Pages. It also supports custom domain names and SSL certificates. The process of setting GitLab pages up is made a lot easier with GitLab's included continuous integration platform.
+GitLab Pages are very similar to GitHub Pages. GitLab Pages also supports custom domain names and SSL certificates and includes a continuous integration platform.
 
-Create a new GitLab repository, [create a new Gatsby site](https://www.gatsbyjs.org/docs/) if you haven't already, and add the GitLab remote.
+Create a new GitLab repository, [create a new Gatsby site](/docs/) if you haven't already, and add the GitLab remote.
 
 ```bash
 git init
