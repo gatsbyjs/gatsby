@@ -221,7 +221,7 @@ Article header or subhead:
 
 #### Code titles
 
-It's also possible to add code titles to your code blocks. As switchting between multiple files in the course of the document can confuse some readers it's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, you need to add `:title=your-path-name` to it. Use it like so:
+It's also possible to add code titles to your code blocks. As switching between multiple files in the course of the document can confuse some readers it's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, you need to add `:title=your-path-name` to it. Use it like so:
 
 ````
 ```javascript:title=src/util/alert.js

@@ -252,6 +252,13 @@
   categories:
     - eCommerce
     - Featured
+- title: AirBnB Cereal
+  main_url: "https://airbnb.design/cereal"
+  url: "https://airbnb.design/cereal"
+  featured: false
+  categories:
+    - Marketing
+    - Design
 - title: Cardiogram
   main_url: "https://cardiogr.am/"
   url: "https://cardiogr.am/"
@@ -2725,4 +2732,14 @@
     - Web Development
   built_by: Codebrahma
   built_by_url: https://codebrahma.com
+  featured: false
+- title: Dive Bell
+  main_url: https://divebell.band/
+  url: https://divebell.band/
+  description: >
+    Simple site for a band to list shows dates and videos (499 on lighthouse)
+  categories:
+    - Music
+  built_by: Matt Bagni
+  built_by_url: https://mattbag.github.io
   featured: false
