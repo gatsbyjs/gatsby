@@ -2,11 +2,11 @@
 title: Sourcing from the Filesystem
 ---
 
-> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) before continuing here.
+This guide will walk you through sourcing from the filesystem.
 
-## What's in this tutorial?
+## Setup
 
-In this tutorial, you'll be learning about how to pull data into your Gatsby site using GraphQL and source plugins. Before you learn about these plugins, however, you'll want to know how to use something called Graph_i_QL, a tool that helps you structure your queries correctly.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](https://github.com/gatsbyjs/gatsby/tree/master/docs). In addition, it will be useful if you are familiar with Graph_i_QL, a tool that helps you structure your queries correctly.
 
 ## Introducing Graph_i_QL
 
@@ -27,19 +27,19 @@ Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>S
 the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be
 using Graph_i_QL a lot more through the remainder of the tutorial.
 
-## Source plugins
+## Sourcing plugins
 
 Data in Gatsby sites can come from anywhere: APIs, databases, CMSs,
 local files, etc.
 
 Source plugins fetch data from their source. E.g. the filesystem source plugin
 knows how to fetch data from the file system. The WordPress plugin knows how to
-fetch data from the WordPress API.
+fetch data from the WordPress API. We will focus on sourcing from the filesystem.
 
-Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
+First, we will add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
 explore how it works.
 
-First install the plugin at the root of the project:
+Install the plugin at the root of the project:
 
 ```sh
 npm install --save gatsby-source-filesystem
@@ -96,115 +96,6 @@ each time to re-run the query. You'll see something like this:
 The result is an array of File "nodes" (node is a fancy name for an object in a
 "graph"). Each File object has the fields you queried for.
 
-## Build a page with a GraphQL query
-
-Building new pages with Gatsby often starts in Graph_i_QL. You first sketch out
-the data query by playing in Graph_i_QL then copy this to a React page component
-to start building the UI.
-
-Let's try this.
-
-Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
-created:
-
-```jsx{6}:title=src/pages/my-files.js
-import React from "react"
-import { graphql } from "gatsby"
-import Layout from "../components/layout"
-
-export default ({ data }) => {
-  console.log(data)
-  return (
-    <Layout>
-      <div>Hello world</div>
-    </Layout>
-  )
-}
-
-export const query = graphql`
-  query {
-    allFile {
-      edges {
-        node {
-          relativePath
-          prettySize
-          extension
-          birthTime(fromNow: true)
-        }
-      }
-    }
-  }
-`
-```
-
-The `console.log(data)` line is highlighted above. It's often helpful when
-creating a new component to console out the data you're getting from the GraphQL query
-so you can explore the data in your browser console while building the UI.
-
-If you visit the new page at `/my-files/` and open up your browser console
-you will see something like:
-
-![data-in-console](images/data-in-console.png)
-
-The shape of the data matches the shape of the GraphQL query.
-
-Add some code to your component to print out the File data.
-
-```jsx{9-31}:title=src/pages/my-files.js
-import React from "react"
-import { graphql } from "gatsby"
-import Layout from "../components/layout"
-
-export default ({ data }) => {
-  console.log(data)
-  return (
-    <Layout>
-      <div>
-        <h1>My Site's Files</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>relativePath</th>
-              <th>prettySize</th>
-              <th>extension</th>
-              <th>birthTime</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.allFile.edges.map(({ node }, index) => (
-              <tr key={index}>
-                <td>{node.relativePath}</td>
-                <td>{node.prettySize}</td>
-                <td>{node.extension}</td>
-                <td>{node.birthTime}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Layout>
-  )
-}
-
-export const query = graphql`
-  query {
-    allFile {
-      edges {
-        node {
-          relativePath
-          prettySize
-          extension
-          birthTime(fromNow: true)
-        }
-      }
-    }
-  }
-`
-```
-
-And… 😲
-
-![my-files-page](images/my-files-page.png)
 
 ## What's coming next?
 
