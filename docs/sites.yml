@@ -2733,3 +2733,13 @@
   built_by: Codebrahma
   built_by_url: https://codebrahma.com
   featured: false
+- title: Dive Bell
+  main_url: https://divebell.band/
+  url: https://divebell.band/
+  description: >
+    Simple site for a band to list shows dates and videos (499 on lighthouse)
+  categories:
+    - Music
+  built_by: Matt Bagni
+  built_by_url: https://mattbag.github.io
+  featured: false
