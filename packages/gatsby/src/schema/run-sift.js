@@ -155,11 +155,14 @@ module.exports = ({
       type.getFields()
     )
 
-    nodePromise.then(node =>
-      createPageDependency({
-        path,
-        nodeId: node.id,
-      })
+    nodePromise.then(node => {
+        if(node) {
+          createPageDependency({
+            path,
+            nodeId: node.id,
+          })
+        }
+      }
     )
 
     return nodePromise
