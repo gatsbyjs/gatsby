@@ -2750,6 +2750,7 @@
 - title: Subtle UI
   main_url: "https://subtle-ui.netlify.com/"
   url: "https://subtle-ui.netlify.com/"
+  source_url: https://github.com/ryanwiemer/subtle-ui
   description: >
     A collection of clever yet understated user interactions found on the web.
   categories:
