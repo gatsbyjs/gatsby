@@ -13,6 +13,14 @@ const queue = require(`async/queue`)
 const path = require(`path`)
 const existsSync = require(`fs-exists-cached`).sync
 
+const base64CacheKey = (contentDigest, options) =>
+  `plugin-sharp-base64-${contentDigest}${
+  options.duotone ? `-duotoned` : ``}-${
+  options.cropFocus}${
+  options.grayscale ? `-grayscale` : ``}-${
+  options.toFormat}-${options.width}-${options.height}`
+
+
 const imageSizeCache = new Map()
 const getImageSize = file => {
   if (
@@ -433,7 +441,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-async function notMemoizedbase64({ file, args = {}, reporter }) {
+async function notMemoizedbase64({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, { width: 20 })
   let pipeline
   try {
@@ -443,19 +451,33 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
     return null
   }
 
+  // Not all tranformer plugins are going to provide this parameter hence the fallback
+  if (cache) {
+    const cachedBase64 = await cache.get(base64CacheKey(file.internal.contentDigest, options))
+    if (cachedBase64) {
+      return {
+        src: `data:image/${cachedBase64.info.format};base64,${cachedBase64.base64output}`,
+        width: cachedBase64.info.width,
+        height: cachedBase64.info.height,
+        aspectRatio: cachedBase64.info.width / cachedBase64.info.height,
+        originalName: file.base,
+      }
+    }
+  }
+
   pipeline
-    .resize(options.width, options.height)
-    .crop(options.cropFocus)
-    .png({
-      compressionLevel: options.pngCompressionLevel,
-      adaptiveFiltering: false,
-      force: args.toFormat === `png`,
-    })
-    .jpeg({
-      quality: options.quality,
-      progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
-    })
+  .resize(options.width, options.height)
+  .crop(options.cropFocus)
+  .png({
+    compressionLevel: options.pngCompressionLevel,
+    adaptiveFiltering: false,
+    force: args.toFormat === `png`,
+  })
+  .jpeg({
+    quality: options.quality,
+    progressive: options.jpegProgressive,
+    force: args.toFormat === `jpg`,
+  })
 
   // grayscale
   if (options.grayscale) {
@@ -475,29 +497,30 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
       pipeline
     )
   }
-
   const [buffer, info] = await pipeline.toBufferAsync()
-  const originalName = file.base
-
+  const base64output = buffer.toString(`base64`)
+  if (cache) {
+    cache.set(base64(file.internal.contentDigest, options), { base64: base64output, info })
+  }
   return {
-    src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
+    src: `data:image/${info.format};base64,${base64output}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
-    originalName: originalName,
+    originalName: file.base,
   }
 }
 
-const memoizedBase64 = _.memoize(
-  notMemoizedbase64,
-  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
-)
+// const memoizedBase64 = _.memoize(
+//   notMemoizedbase64,
+//   ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+// )
 
 async function base64(args) {
-  return await memoizedBase64(args)
+  return await notMemoizedbase64(args)
 }
 
-async function fluid({ file, args = {}, reporter }) {
+async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
 
   // Account for images with a high pixel density. We assume that these types of
@@ -600,7 +623,7 @@ async function fluid({ file, args = {}, reporter }) {
   }
 
   // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter })
+  const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -648,7 +671,7 @@ async function fluid({ file, args = {}, reporter }) {
   }
 }
 
-async function fixed({ file, args = {}, reporter }) {
+async function fixed({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
 
   // if no width is passed, we need to resize the image based on the passed height
@@ -710,7 +733,7 @@ async function fixed({ file, args = {}, reporter }) {
   }
 
   // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter })
+  const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
   const fallbackSrc = images[0].src
   const srcSet = images
