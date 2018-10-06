@@ -120,24 +120,35 @@ const createScreenshotNode = async ({
   createNodeId,
 }) => {
   try {
-    const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
+    let fileNode, expires
+    if (process.env.GATSBY_SCREENSHOT_PLACEHOLDER) {
+      const getPlaceholderFileNode = require(`./placeholder-file-node`)
+      fileNode = await getPlaceholderFileNode({
+        createNode,
+        createNodeId,
+      })
+      expires = new Date(2999, 1, 1).getTime()
+    } else {
+      const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
 
-    const fileNode = await createRemoteFileNode({
-      url: screenshotResponse.data.url,
-      store,
-      cache,
-      createNode,
-      createNodeId,
-    })
+      fileNode = await createRemoteFileNode({
+        url: screenshotResponse.data.url,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+      })
+      expires = screenshotResponse.data.expires
 
-    if (!fileNode) {
-      throw new Error(`Remote file node is null`, screenshotResponse.data.url)
+      if (!fileNode) {
+        throw new Error(`Remote file node is null`, screenshotResponse.data.url)
+      }
     }
 
     const screenshotNode = {
       id: createNodeId(`${parent} >>> Screenshot`),
       url,
-      expires: screenshotResponse.data.expires,
+      expires,
       parent,
       children: [],
       internal: {
@@ -153,7 +164,7 @@ const createScreenshotNode = async ({
     return screenshotNode
   } catch (e) {
     console.log(`Failed to screenshot ${url}. Retrying...`)
-
+    console.log(e)
     throw e
   }
 }
