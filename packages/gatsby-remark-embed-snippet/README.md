@@ -117,22 +117,44 @@ It's also possible to specify a range of lines to be hidden.
 #### JavaScript example
 
 ```js
-// hideline-range{1-3,9-11}
-import React from "react"
-import ReactDOM from "react-dom"
+// hideline-range{1-2}
+import React from "react";
+import ReactDOM from "react-dom";
 
 function App() {
   return (
-    <h1>Hello world!</h1>
-  )
+    <div className="App">
+       <ul>
+        <li>Not hidden</li>
+        <li>Not hidden</li>
+        // hideline-range{1-2}
+        <li>Hidden</li>
+        <li>Hidden</li>
+        // hideline-next-line
+        <li>Hidden</li>
+      </ul>
+    </div>
+  );
 }
 
-const rootElement = document.getElementById("root")
-ReactDOM.render(<App />, rootElement)
+// hideline-range{1-2}
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
 ```
 
 Will produce something like this:
-![screenshot from 2018-06-21 20-21-58](https://i.imgur.com/cYlAKZg.png)
+```js
+function App() {
+  return (
+    <div className="App">
+       <ul>
+        <li>Not hidden</li>
+        <li>Not hidden</li>
+      </ul>
+    </div>
+  );
+}
+```
 
 ## Installation
 
