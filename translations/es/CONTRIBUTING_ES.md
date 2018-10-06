@@ -14,7 +14,7 @@ Queremos contribuir con Gatsby para que sea divertido, agradable y educativo par
 - Agregar unidades o pruebas funcionales
 - Ayudar con [problemas de GitHub](https://github.com/gatsbyjs/gatsby/issues) -- especialmente determinando si un problema persiste o es reproducible
 - [Reportar errores o problemas encontrados](/docs/how-to-file-an-issue/)
-- Buscar a Gatsby en Discord o Spectrum y ayudar a alguien más que lo necesite
+- Buscar a Gatsby en [Discord](https://discordapp.com/invite/jUFVxtB) o [Spectrum](https://spectrum.chat/gatsby-js) y ayudar a alguien más que lo necesite
 - ¡Enseñar a otros cómo contribuir al repositorio de Gatsby!
 
 Si estás preocupado o no sabes por dónde empezar, siempre puedes comunicarte con Shannon Soper (@shannonb_ux) en Twitter o simplemente presentar el problema en github y una persona encargada del mantenimiento podrá ayudarlo a orientarse.
@@ -61,7 +61,7 @@ Los pasos habituales para contribuir son:
 Gatsby, como era de esperar, utiliza Gatsby en la documentación de su sitio web.
 
 Si desea agregar/modificar cualquier documentación de Gatsby,debe ir a la
-[carpeta docs en Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) y utilizar el editor de archivos para editar y luego ver una vista previa de tus cambios. Github luego te permite
+[carpeta docs en GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs) y utilizar el editor de archivos para editar y luego ver una vista previa de tus cambios. GitHub luego te permite
 que hagas el cambio a un commit y subas a PR justo en la interfaz de usuario. Esta es la _manera más facil_
 en la que puedes colaborar con el proyecto!
 
@@ -77,46 +77,3 @@ propia instancia del sitio web Gatsby y hacer/previsualizar sus cambios antes de
 - Asegúrese de verificar que tu gramática sea la más apropiada.
 - Haga el _commit_ y llévelo a su _fork_.
 - Cree un <tt>pull request</tt> desde su <tt>branch</tt>.
-
-## Herramientas de desarrollo
-
-### <tt>Redux devtools</tt>
-
-Gatsby utiliza <tt>Redux</tt> para administrar el estado durante el desarrollo y la construcción. A menudo es
-útil para ver el flujo de acciones y el estado acumulado de un sitio en el que se está trabajando
-o si agrega una nueva funcionalidad al núcleo. Aprovechamos
-_[Remote Redux Devtools](https://github.com/zalmoxisus/remote-redux-devtools)_ y
-_[RemoteDev Server](https://github.com/zalmoxisus/remotedev-server)_ para ayudarte depurar Gatsby.
-
-Para usar esto, primero instale
-[redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
-en su navegador. Luego, en su repositorio de Gatsby, utilice `npm run remotedev`. Entonces en tu
-sitio directorio utilice `REDUX_DEVTOOLS=true gatsby develop`.Depende de tu
-sistema operativo y coraza, es posible que deba modificar la forma de configurar el
-`REDUX_DEVTOOLS` Variable ambiental.
-
-En este punto, su sitio enviará acciones de <tt>Redux</tt> y estados al servidor
-<tt>remote</tt>.
-
-Para conectarse a esto, necesita configurar la extensión devtools
-para hablar con el servidor <tt>remote</tt>.
-
-Primero abra las herramientas remotas (<tt>remote devtools</tt>).
-
-![Como abrir el servidor de remote redux extension](../../docs/docs/images/open-remote-dev-tools.png)
-
-A continuación, haga clic en configuración en el menú inferior y configure el <tt>host</tt> y el puerto.
-
-![cómo configurar el host/puerto para el remote devtools extension para conectarse en Gatsby](../../docs/docs/images/remote-dev-settings.png)
-
-Luego de esto, el devtools extension _debería_ conectarse al <tt>remote server</tt>
-y verás que las acciones comienzan a aparecer.
-
-![gatsby redux remote devtools](.../../docs/docs/images/running-redux-devtools.png)
-
-**¡¡Advertencia!! Un montón de errores**. Si bien tener esto disponible es extremadamente
-útil, esta configuración es muy defectuosa y frágil. Hay una pérdida de memoria en la extensión que se activa,
-parece que cada vez que reinicia el servidor de desarrollo Gatsby.
-También la extensión a menudo, sin razón aparente, simplemente no mostrará ninguna acción desde el servidor <tt>remote</tt>.También a menudo se congela.
-La mejor solución parece ser apagar y volver a encender todo.Reparar estas herramientas sería muy útil para nosotros y muchos otros que usan estas herramientas si alguien
-quiere tomar este proyecto!

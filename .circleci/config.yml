@@ -1,0 +1,174 @@
+aliases:
+  node6: &node6
+    docker:
+      - image: circleci/node:6
+
+  node8: &node8
+    docker:
+      - image: circleci/node:8
+
+  node10: &node10
+    docker:
+      - image: circleci/node:10
+
+  node10_browsers: &node10_browsers
+    docker:
+      - image: circleci/node:10-browsers
+
+  restore_node_modules: &restore_node_modules
+    restore_cache:
+      name: Restore node_modules cache
+      keys:
+        - node-modules-{{ checksum "yarn.lock" }}
+
+  install_node_modules: &install_node_modules
+    run:
+      name: Install node modules
+      command: |
+        yarn
+
+  persist_node_modules: &persist_node_modules
+    save_cache:
+      name: Save node modules cache
+      key: node-modules-{{ checksum "yarn.lock" }}
+      paths:
+        - node_modules
+
+  attach_to_bootstrap: &attach_to_bootstrap
+    attach_workspace:
+      at: packages
+
+  ignore_master: &ignore_master
+    filters:
+      branches:
+        ignore:
+          - master
+
+  test_template: &test_template
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+      - <<: *attach_to_bootstrap
+      - run: yarn jest -w 1
+
+  integration_test_workflow: &integration_test_workflow
+    <<: *ignore_master
+    requires:
+      - bootstrap
+
+commands:
+  integration_test:
+    parameters:
+      ignore_pattern:
+        type: string
+        default: packages/*|integration-tests/*
+      test_path:
+        type: string
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "<< parameters.ignore_pattern >>"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/integration-test.sh "<< parameters.test_path >>"
+
+version: 2.1
+
+jobs:
+  bootstrap:
+    <<: *node10
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+      - run: yarn bootstrap
+      - persist_to_workspace:
+          root: packages
+          paths:
+            - "*"
+
+  lint:
+    <<: *node10
+    steps:
+      - checkout
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+      - run: yarn lint
+
+  unit_tests_node6:
+    <<: *node6
+    <<: *test_template
+
+  unit_tests_node8:
+    <<: *node8
+    <<: *test_template
+
+  unit_tests_node10:
+    <<: *node10
+    <<: *test_template
+
+  integration_tests:
+    <<: *node10
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *persist_node_modules
+      - run: yarn test:integration
+
+  e2e_tests_gatsbygram:
+    <<: *node10_browsers
+    steps:
+      - integration_test:
+          ignore_pattern: "packages/*|integration-tests/*|examples/gatsbygram/*"
+          test_path: examples/gatsbygram
+
+  e2e_tests_path-prefix:
+    <<: *node10_browsers
+    steps:
+      - integration_test:
+          test_path: integration-tests/path-prefix
+
+  e2e_tests_gatsby-image:
+    <<: *node10_browsers
+    steps:
+      - integration_test:
+          test_path: integration-tests/gatsby-image
+
+  e2e_tests_runtime:
+    <<: *node10_browsers
+    steps:
+      - integration_test:
+          test_path: integration-tests/production-runtime
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - bootstrap
+      - lint
+      - unit_tests_node6:
+          requires:
+            - bootstrap
+      - unit_tests_node8:
+          requires:
+            - bootstrap
+      - unit_tests_node10:
+          requires:
+            - bootstrap
+      - integration_tests
+      - e2e_tests_gatsbygram:
+          <<: *integration_test_workflow
+      - e2e_tests_path-prefix:
+          <<: *integration_test_workflow
+      - e2e_tests_gatsby-image:
+          <<: *integration_test_workflow
+      - e2e_tests_runtime:
+          <<: *integration_test_workflow

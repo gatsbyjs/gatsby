@@ -10,7 +10,11 @@ En la [**sección previa**](/tutorial/part-zero/), preparaste tu entorno de desa
 En el [**tutorial parte cero**](/tutorial/part-zero/), creaste un nuevo sitio basado en el inicio "hello world" utilizando el siguiente comando:
 
 ```bash
+<<<<<<< HEAD
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+=======
+gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 ```
 
 Al crear un nuevo sitio de Gatsby, puedes usar la siguiente estructura de comando para crear un nuevo sitio basado en cualquier iniciador de Gatsby existente:
@@ -55,7 +59,11 @@ Abre el archivo en `/src/pages/index.js`. El código en este archivo crea un com
 1. Hagamos nuestros cambios un poco más visibles. Intenta reemplazar el código en `/src/pages/index.js` con el siguiente código y vuelve a guardarlo. Verás cambios en el texto; El color del texto será violeta y el tamaño de la fuente será mayor.
 
 ```jsx
+<<<<<<< HEAD
 import React from 'react'
+=======
+import React from "react"
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 
 export default () => (
   <div style={{ color: `purple`, fontSize: `72px` }}>¡Hola Gatsby!</div>
@@ -70,10 +78,17 @@ export default () => (
 import React from "react"
 
 export default () => (
+<<<<<<< HEAD
     <div style={{ color: `purple` }}>
         <h1>¡Hola Gatsby!</h1>
         <p>Increíble.</p>
     </div>
+=======
+  <div style={{ color: `purple` }}>
+    <h1>¡Hola Gatsby!</h1>
+    <p>Increíble.</p>
+  </div>
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 )
 ```
 
@@ -85,11 +100,19 @@ export default () => (
 import React from "react"
 
 export default () => (
+<<<<<<< HEAD
     <div style={{ color: `purple` }}>
         <h1>¡Hola Gatsby!</h1>
         <p>Increíble.</p>
         <img src="https://source.unsplash.com/random/400x200" alt="" />
     </div>
+=======
+  <div style={{ color: `purple` }}>
+    <h1>¡Hola Gatsby!</h1>
+    <p>Increíble.</p>
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
+  </div>
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 )
 ```
 
@@ -145,7 +168,11 @@ En el mundo de los componentes, en su lugar creas un componente `PrimaryButton` 
 ```
 
 Los componentes se convierten en los bloques de construcción básicos de tu sitio. En vez de ser
+<<<<<<< HEAD
 limitado a los bloques de construcción que el navegador proporciona, ejemplo: `<button/>`, puedes crear fácilmente nuevos bloques de construcción que satisfagan elegantemente las necesidades de tus proyectos.
+=======
+limitado a los bloques de construcción que el navegador proporciona, ejemplo: `<button />`, puedes crear fácilmente nuevos bloques de construcción que satisfagan elegantemente las necesidades de tus proyectos.
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 
 > 💡 Consulta la página [Building with Components](/docs/building-with-components/) para obtener más información sobre componentes en Gatsby y enlaces a otros recursos.
 
@@ -162,7 +189,11 @@ import React from "react"
 
 export default () => (
   <div style={{ color: `teal` }}>
+<<<<<<< HEAD
     <h1>A  cerca de Gatsby</h1>
+=======
+    <h1>A cerca de Gatsby</h1>
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -187,17 +218,28 @@ import React from "react"
 export default () => <h1>Este es un encabezado.</h1>
 ```
 
+<<<<<<< HEAD
 3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con ` <Header/> `:
+=======
+3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con `<Header />`:
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 
 ```jsx{2,6}
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
+<<<<<<< HEAD
     <div style={{ color: `teal` }}>
         <Header />
         <p>Es fácil usar react en Gatsby.</p>
     </div>
+=======
+  <div style={{ color: `teal` }}>
+    <Header />
+    <p>Es fácil usar react en Gatsby.</p>
+  </div>
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 )
 ```
 
@@ -220,10 +262,17 @@ import React from "react"
 import Header from "../components/header"
 
 export default () => (
+<<<<<<< HEAD
     <div style={{ color: `teal` }}>
         <Header headerText="A cerca de Gatsby" />
         <p>Es fácil usar react en Gatsby.</p>
     </div>
+=======
+  <div style={{ color: `teal` }}>
+    <Header headerText="A cerca de Gatsby" />
+    <p>Es fácil usar react en Gatsby.</p>
+  </div>
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 )
 ```
 
@@ -249,7 +298,11 @@ En "header.js", el componente del encabezado espera recibir la propiedad `header
 
 > 💡 En JSX, puedes incrustar cualquier expresión de JavaScript envolviéndola con `{}`. Así es como podemos acceder a la propiedad `headerText` (o" prop! ") Desde el objeto "props".
 
+<<<<<<< HEAD
 Si hubiéramos pasado otra propiedad a nuestro componente `<Header/>`, como...
+=======
+Si hubiéramos pasado otra propiedad a nuestro componente `<Header />`, como...
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 
 ```jsx
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
@@ -264,11 +317,19 @@ import React from "react"
 import Header from "../components/header"
 
 export default () => (
+<<<<<<< HEAD
     <div style={{ color: `teal` }}>
         <Header headerText="A cerca de Gatsby" />
         <Header headerText="Es asombroso" />
         <p>Es fácil usar react en Gatsby.</p>
     </div>
+=======
+  <div style={{ color: `teal` }}>
+    <Header headerText="A cerca de Gatsby" />
+    <Header headerText="Es asombroso" />
+    <p>Es fácil usar react en Gatsby.</p>
+  </div>
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 )
 ```
 
@@ -286,9 +347,15 @@ Exploraremos los componentes de layout en la [parte tres](/tutorial/part-three).
 
 A menudo querrás vincular las páginas. Veamos el enrutamiento en un sitio de Gatsby.
 
+<<<<<<< HEAD
 ### ✋ Usando el componente `<Link/>`
 
 1. Abre el componente de la página índice (`/src/pageindex.js`). Importe el componente `<Link/>` de Gatsby. Agregue un componente `<Link/>` debajo del encabezado y asígnele una propiedad `to`, con el valor de `"/contact/"`para el nombre de ruta:
+=======
+### ✋ Usando el componente `<Link />`
+
+1. Abre el componente de la página índice (`/src/pageindex.js`). Importe el componente `<Link />` de Gatsby. Agregue un componente `<Link />` debajo del encabezado y asígnele una propiedad `to`, con el valor de `"/contact/"`para el nombre de ruta:
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 
 ```jsx{2,7}
 import React from "react"
@@ -296,12 +363,21 @@ import { Link } from "gatsby"
 import Header from "../components/header"
 
 export default () => (
+<<<<<<< HEAD
     <div style={{ color: `purple` }}>
         <Link to="/contact/">Contacto</Link>
         <Header headerText="!Hola Gatsby!" />
         <p>Increible</p>
         <img src="https://source.unsplash.com/random/400x200" alt="" />
     </div>
+=======
+  <div style={{ color: `purple` }}>
+    <Link to="/contact/">Contacto</Link>
+    <Header headerText="!Hola Gatsby!" />
+    <p>Increible</p>
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
+  </div>
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 )
 ```
 
@@ -336,7 +412,11 @@ Después de guardar el archivo, deberías ver la página de contacto y poder est
   <p>Sorry! You browser doesn't support this video.</p>
 </video>
 
+<<<<<<< HEAD
 El componente `<Link/>` de Gatsby es para vincular las páginas de tu sitio. Para enlaces externos a páginas que no maneja tu sitio Gatsby, usa la etiqueta de HTML `<a>`.
+=======
+El componente `<Link />` de Gatsby es para vincular las páginas de tu sitio. Para enlaces externos a páginas que no maneja tu sitio Gatsby, usa la etiqueta de HTML `<a>`.
+>>>>>>> f2992e6f57afdd4ed16c1eabeed2931cd1c1e031
 
 > 💡 Ve más detalles sobre el enrutamiento en Gatsby en [API docs para Gatsby Link](/docs/gatsby-link/).
 
