@@ -203,7 +203,7 @@ event API that took the built HTML from each article. The library did the magic
 of converting the HTML to JSON, then I iterated through the JSON. While keeping
 track of the last linked heading (h tag), I set the index record’s page link
 accordingly for each article section. The index was then uploaded to Algolia via
-their node.js client.
+their Node.js client.
 
 It wasn’t pretty, but it worked.
 

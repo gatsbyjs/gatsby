@@ -19,7 +19,7 @@ To add environment variables for the JavaScript run in Node.js, e.g. in
 normal ways e.g. when calling gatsby on the command line or by adding
 environment variables through your hosting/build tool.
 
-If you want to access variables in `.env.*` files in your node.js code, use the
+If you want to access variables in `.env.*` files in your Node.js code, use the
 NPM package [dotenv](https://www.npmjs.com/package/dotenv). Install the package and
 require it in your `gatsby-config.js` or `gatsby-node.js` the following way on top of your file:
 
