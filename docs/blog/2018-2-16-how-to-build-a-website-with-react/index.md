@@ -21,7 +21,7 @@ Almost all frameworks nowadays (e.g. Angular, Vue, etc.) are approaching similar
 
 ## Easy to add to the rest of your stack
 
-Switching your site(s) to new technologies optimally involves incrementally transferring your site over, page by page, to the new technology. This is difficult to do with some new frontend technologies which want to control the entire page. These technologies are like your friend who wants to take over every social event they get invited to.
+Switching your site(s) to new technologies optimally involves incrementally transferring your site over, page by page, to the new technology. This is difficult to do with some new front-end technologies which want to control the entire page. These technologies are like your friend who wants to take over every social event they get invited to.
 
 React is not picky; it is happy to be used in only parts of your site, so you can incrementally refactor your code in React. It's more like an easy-going friend who is happy to help with just part of the party you're throwing. It plays nicely with others!
 

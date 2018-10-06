@@ -644,7 +644,7 @@
   featured: false
   description: >-
     Hello, I’m Fabian — a product designer and developer based in Potsdam,
-    Germany. I’ve been working both as a product designer and frontend developer
+    Germany. I’ve been working both as a product designer and front-end developer
     for over 5 years now. I particularly enjoy working with companies that try
     to meet broad and unique user needs.
   categories:
@@ -833,7 +833,7 @@
   source_url: "https://github.com/pravdomil/pravdomil.com"
   featured: false
   description: >-
-    I’ve been working both as a product designer and frontend developer for over
+    I’ve been working both as a product designer and front-end developer for over
     5 years now. I particularly enjoy working with companies that try to meet
     broad and unique user needs.
   categories:
@@ -1280,9 +1280,9 @@
   built_by_url: "https://github.com/LekoArts"
   description: >-
     Hi, I'm Lennart — a self-taught and passionate graphic/web designer &
-    frontend developer based in Darmstadt, Germany. I love it to realize complex
+    front-end developer based in Darmstadt, Germany. I love it to realize complex
     projects in a creative manner and face new challenges. Since 6 years I do
-    graphic design, my love for frontend development came up 3 years ago. I
+    graphic design, my love for front-end development came up 3 years ago. I
     enjoy acquiring new skills and cementing this knowledge by writing blogposts
     and creating tutorials.
   categories:
@@ -1899,7 +1899,7 @@
     - Nonprofit
 - title: Artem Sapegin
   description: >
-    Little homepage of Artem Sapegin, a frontend developer, passionate
+    Little homepage of Artem Sapegin, a front-end developer, passionate
     photographer, coffee drinker and crazy dogs’ owner.
   main_url: "https://sapegin.me/"
   url: "https://sapegin.me/"
@@ -1994,7 +1994,7 @@
   url: "https://www.webpurple.net/"
   source_url: "https://github.com/WebPurple/site"
   description: >-
-    Site of local (Russia, Ryazan) frontend community. Main purpose is to show
+    Site of local (Russia, Ryazan) front-end community. Main purpose is to show
     info about meetups and keep blog.
   categories:
     - Nonprofit
@@ -2258,7 +2258,7 @@
   main_url: https://gedd.ski
   url: https://gedd.ski
   description: >
-    Frontend mastery blog - level up your UI game.
+    front-end mastery blog - level up your UI game.
   categories:
     - Web Development
     - Education

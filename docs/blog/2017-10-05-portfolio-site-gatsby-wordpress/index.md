@@ -54,7 +54,7 @@ my content from good ol' Markdown files. Then I saw it... too good to be true,
 the mention of connecting it to WordPress... I have been writing WordPress
 themes for almost 2 years now, so naturally this got me super excited. To have
 my back-end as WordPress (including
-[ACF](https://www.advancedcustomfields.com/)) and the front-end in React… I had
+[ACF](https://www.advancedcustomfields.com/)) and the front end in React… I had
 found the perfect place to test my front-end abilities.
 
 I was skeptical at first: would I have to parse large amounts of JSON to get the

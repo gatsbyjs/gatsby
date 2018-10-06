@@ -30,7 +30,7 @@ The downside is that WordPress is implemented with [PHP](http://www.php.net/), a
 
 In addition, because WordPress is so broadly adopted it is often the subject of a lot of hacking effort. As exploits are discovered, they can be widely utilized because of the number of targets available.
 
-To work around these issues, we decided to go with a “headless” WordPress instance that only functions as an admin interface. Using tools like [Advanced Custom Fields](https://www.advancedcustomfields.com/) and the [Custom Post Type UI](https://wordpress.org/plugins/custom-post-type-ui/), we created a very flexible repository for homepage content that is then available via the [REST API](https://developer.wordpress.org/rest-api/). This frees us up to use whatever frontend tools are the best for the job, and adds a layer of separation from WordPress’s performance and security challenges.
+To work around these issues, we decided to go with a “headless” WordPress instance that only functions as an admin interface. Using tools like [Advanced Custom Fields](https://www.advancedcustomfields.com/) and the [Custom Post Type UI](https://wordpress.org/plugins/custom-post-type-ui/), we created a very flexible repository for homepage content that is then available via the [REST API](https://developer.wordpress.org/rest-api/). This frees us up to use whatever front-end tools are the best for the job, and adds a layer of separation from WordPress’s performance and security challenges.
 
 ## Static Site Generation with Gatsby
 

@@ -223,7 +223,7 @@ around, but it wouldn't be anything special.
 ## Reducing the complexity around the _entire_ process of building a website
 
 If we think about the process of building for the web, there are many steps
-before we get to actually coding the frontend.
+before we get to actually coding the front end.
 
 For example, how does a single image typically get on a website?
 

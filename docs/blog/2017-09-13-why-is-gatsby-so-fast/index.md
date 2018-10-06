@@ -191,7 +191,7 @@ What is the magic here? How are Gatsby sites consistently so fast?
 
 ![reactnext-gatsby-performance.046](reactnext-gatsby-performance.046.png)
 
-Most frameworks leave frontend performance to users to figure out. With Gatsby
+Most frameworks leave front-end performance to users to figure out. With Gatsby
 it's fundamental.
 
 ![reactnext-gatsby-performance.047](reactnext-gatsby-performance.047.png)

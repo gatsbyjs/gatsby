@@ -2,7 +2,7 @@
   type: individual
   description: >-
     Hello, I’m Fabian — a product designer and developer based in Potsdam,
-    Germany. I’ve been working both as a product designer and frontend developer
+    Germany. I’ve been working both as a product designer and front-end developer
     for over 5 years now. I particularly enjoy working with companies that try
     to meet broad and unique user needs.
   location: "Potsdam, Germany"
@@ -160,7 +160,7 @@
 - name: LekoArts
   type: individual
   description: >-
-    Hi, I'm Lennart — a self-taught and passionate graphic/web designer & frontend developer. I create accessible, fast and beautiful designed websites with Gatsby.
+    Hi, I'm Lennart — a self-taught and passionate graphic/web designer & front-end developer. I create accessible, fast and beautiful designed websites with Gatsby.
     I regularly create Gatsby starters, tutorials and contribute to the project. I know Gatsby by heart & can help you transition your website to the JAMStack.
     Feel free to contact me if you want to launch a blazingly fast website!
   location: "Darmstadt, Germany"
