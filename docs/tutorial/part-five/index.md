@@ -37,7 +37,7 @@ Source plugins fetch data from their source. E.g. the filesystem source plugin
 knows how to fetch data from the file system. The WordPress plugin knows how to
 fetch data from the WordPress API.
 
-Let's add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
+Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
 explore how it works.
 
 First install the plugin at the root of the project:
@@ -48,7 +48,7 @@ npm install --save gatsby-source-filesystem
 
 Then add it to your `gatsby-config.js`:
 
-```javascript{6-12}
+```javascript{6-12}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -108,7 +108,7 @@ Let's try this.
 Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
 created:
 
-```jsx{6}
+```jsx{6}:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -149,9 +149,9 @@ you will see something like:
 
 The shape of the data matches the shape of the GraphQL query.
 
-Let's add some code to your component to print out the File data.
+Add some code to your component to print out the File data.
 
-```jsx{9-31}
+```jsx{9-31}:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"

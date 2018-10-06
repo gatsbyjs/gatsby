@@ -68,7 +68,7 @@ npm install gatsby-plugin-stripe-checkout
 
 Open the root site directory in a text editor and navigate to `gatsby-config.js` and add the Stripe Checkout plugin to `gatsby-config.js` in the plugins section. Your `gatsby-config.js` should look like the following code example:
 
-```jsx
+```jsx:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby Default Starter",
@@ -119,7 +119,7 @@ In order to launch the Stripe Checkout modal (shown above), you need to call the
 
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
 
-```jsx
+```jsx:title=src/components/checkout.js
 import React from "react"
 
 // hardcoded amount (in US cents) to charge users
@@ -253,7 +253,7 @@ The tags in the `render()` function define the structure of HTML elements that l
 
 Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports and replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this:
 
-```js{3,7}
+```js{3,7}:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
 import Checkout from "../components/checkout"
@@ -288,7 +288,7 @@ Add your Stripe publishable key to `src/components/checkout.js`.
 
 Inside the `componentDidMount()` function, you are calling configure on `StripeCheckout`. Replace the text in the single quotes with your own public key. This tells Stripe to send any payments through to your account.
 
-```js
+```js:title=src/components/checkout.js
 componentDidMount() {
    this.stripeHandler = StripeCheckout.configure({
      // You’ll need to add your own Stripe public test key here.

@@ -2,13 +2,13 @@
 
 describe(`Production build tests`, () => {
   it(`should render properly`, () => {
-    cy.visit(`/`).waitForRouteChange()
+    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
   })
 
   it(`should restore scroll position only when going back in history`, () => {
     cy.getTestElement(`long-page`)
       .click()
-      .waitForRouteChange()
+      .waitForAPI(`onRouteUpdate`)
 
     cy.scrollTo(`bottom`)
 
@@ -19,22 +19,22 @@ describe(`Production build tests`, () => {
 
     cy.getTestElement(`below-the-fold`)
       .click()
-      .waitForRouteChange()
+      .waitForAPI(`onRouteUpdate`)
 
     // after going back we expect page will
     // be restore previous scroll position
-    cy.go(`back`).waitForRouteChange()
+    cy.go(`back`).waitForAPI(`onRouteUpdate`)
 
     cy.window().then(win => {
       expect(win.scrollY).not.to.eq(0, 0)
     })
 
-    cy.go(`forward`).waitForRouteChange()
+    cy.go(`forward`).waitForAPI(`onRouteUpdate`)
 
     // after clicking link we expect page will be scrolled to top
     cy.getTestElement(`long-page`)
       .click()
-      .waitForRouteChange()
+      .waitForAPI(`onRouteUpdate`)
 
     cy.window().then(win => {
       expect(win.scrollY).to.eq(0, 0)
@@ -43,19 +43,19 @@ describe(`Production build tests`, () => {
     // reset to index page
     cy.getTestElement(`index-link`)
       .click()
-      .waitForRouteChange()
+      .waitForAPI(`onRouteUpdate`)
   })
 
   it(`should navigate back after a reload`, () => {
     cy.getTestElement(`page2`).click()
 
-    cy.waitForRouteChange()
+    cy.waitForAPI(`onRouteUpdate`)
       .location(`pathname`)
       .should(`equal`, `/page-2/`)
 
     cy.reload().go(`back`)
 
-    cy.waitForRouteChange()
+    cy.waitForAPI(`onRouteUpdate`)
       .getTestElement(`page2`)
       .should(`exist`)
       .location(`pathname`)
@@ -65,7 +65,7 @@ describe(`Production build tests`, () => {
   it(`should show 404 page when visiting non-existent page route`, () => {
     cy.getTestElement(`404`).click()
 
-    cy.waitForRouteChange()
+    cy.waitForAPI(`onRouteUpdate`)
       .location(`pathname`)
       .should(`equal`, `/page-3/`)
       .getTestElement(`404`)

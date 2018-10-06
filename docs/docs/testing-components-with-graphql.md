@@ -30,9 +30,7 @@ done.
 As this is testing a page component you will need to put your tests in another
 folder so that Gatsby doesn't try to turn the tests into pages.
 
-```js
-// src/__tests__/index.js
-
+```js:title=src/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
@@ -47,9 +45,7 @@ describe("BlogIndex", () =>
 If you run this test you will get an error, as the component is expecting a
 location object. You can fix this by passing one in:
 
-```js
-// src/__tests__/index.js
-
+```js:title=src/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
@@ -165,9 +161,7 @@ When you have the result, copy the `data` value from the output panel. Good
 practice is to store your fixtures in a separate file, but for simplicity here
 you will be defining it directly inside your test file:
 
-```js
-// src/__tests__/index.js
-
+```js:title=src/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
@@ -233,8 +227,7 @@ test.
 Here is the example of a header component that queries the page data itself,
 rather than needing it to be passed from the layout:
 
-```js
-// src/components/Header.js
+```js:title=src/components/Header.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 
@@ -263,8 +256,7 @@ export default props => (
 This is almost ready: all you need to do is export the pure component that you
 are passing to StaticQuery. Rename it first to avoid confusion:
 
-```js
-// src/components/Header.js
+```js:title=src/components/Header.js
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
@@ -308,9 +300,7 @@ This means it's very easy to test, and a snapshot should never change.
 
 Here's how:
 
-```js
-// src/components/Header.test.js
-
+```js:title=src/components/Header.test.js
 import React from "react"
 import renderer from "react-test-renderer"
 import { PureHeader as Header } from "./Header"

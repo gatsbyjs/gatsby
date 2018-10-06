@@ -11,7 +11,7 @@ In this guide you will learn how to debug some code using:
 
 As an example let's use the following code snippet in a `gatsby-node.js` file:
 
-```js
+```js:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = args => {
@@ -104,9 +104,7 @@ Using built in debuggers in code editors is very convenient. You will be able to
 
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
-`launch.json`:
-
-```json
+```json:title=launch.json
 {
   "version": "0.2.0",
   "configurations": [

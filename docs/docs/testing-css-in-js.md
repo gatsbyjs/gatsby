@@ -20,7 +20,7 @@ As [Gatsby's emotion plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-emo
 
 If you followed along with the [Unit testing guide](/docs/unit-testing) you'll have the file `jest-preprocess.js` at the root of your project. Open that file and add the plugin:
 
-```diff
+```diff:title=jest-preprocess.js
 const babelOptions = {
   presets: ["@babel/react", "@babel/env"],
   plugins: [
@@ -35,7 +35,7 @@ module.exports = require("babel-jest").createTransformer(babelOptions)
 
 In order to tell Jest to use the serializer you'll need to create the file `setup-test-env.js` which will be run automatically before every test. Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
-```js
+```js:title=setup-test-env.js
 import { createSerializer } from "jest-emotion"
 import * as emotion from "emotion"
 
@@ -44,7 +44,7 @@ expect.addSnapshotSerializer(createSerializer(emotion))
 
 Lastly you need to tell Jest where to find this file. Open your `package.json` and add this entry to your `"jest"` section:
 
-```json
+```json:title=package.json
 "jest": {
   "setupTestFrameworkScriptFile": "<rootDir>/setup-test-env.js"
 }
@@ -54,9 +54,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 In this example you'll use `react-test-renderer` but you can also use [react-testing-library](/docs/testing-react-components) or any other appropriate library. Because you created the `setup-test-env.js` file you can write your unit tests like you used to do. But now you'll also get the styling information!
 
-```js
-// src/components/Button.test.js
-
+```js:title=src/components/Button.test.js
 import React from "react"
 import styled from "react-emotion"
 import renderer from "react-test-renderer"
@@ -99,9 +97,7 @@ And this is where snapshots tests really shine. If you change, e.g. the primary 
 
 This example uses the first option:
 
-```js
-// src/components/Wrapper.test.js
-
+```js:title=src/components/Wrapper.test.js
 import React from "react"
 import { ThemeProvider } from "emotion-theming"
 import renderer from "react-test-renderer"

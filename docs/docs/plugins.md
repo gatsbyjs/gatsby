@@ -39,7 +39,7 @@ npm install --save gatsby-transformer-json
 
 Then in your site's `gatsby-config.js` you add `gatsby-transformer-json` to the plugins array like:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-transformer-json`],
 }
@@ -47,7 +47,7 @@ module.exports = {
 
 Plugins can take options. For example:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     // Shortcut for adding plugins without options.
@@ -79,6 +79,31 @@ module.exports = {
 ```
 
 Note that plugin options will be stringified by Gatsby, so they cannot be functions.
+
+## Loading plugins from your local plugins folder
+
+Gatsby can also load plugins from the your local website plugins folder which is a folder named `plugins` in the website's root directory.
+
+```javascript
+module.exports = {
+  plugins: [`gatsby-local-plugin`],
+}
+```
+
+If you want to reference a plugin that is not in the plugins folder then you could use something like the following:
+
+```javascript
+module.exports = {
+  plugins: [
+    // Shortcut for adding plugins without options.
+    "gatsby-plugin-react-helmet",
+    {
+      // Standard plugin with options example
+      resolve: require.resolve(`/path/to/gatsby-local-plugin`),
+    },
+  ],
+}
+```
 
 ## What don't you need plugins for?
 
