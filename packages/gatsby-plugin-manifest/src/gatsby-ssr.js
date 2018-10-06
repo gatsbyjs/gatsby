@@ -2,10 +2,9 @@ import React from "react"
 import { withPrefix } from "gatsby"
 import { defaultIcons } from "./common.js"
 import fs from "fs"
-import crypto from "crypto"
 let cacheId = null
 
-exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
+exports.onRenderBody = ({ createContentDigest, setHeadComponents }, pluginOptions) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
@@ -33,10 +32,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     }
 
     if (!cacheId) {
-      cacheId = crypto
-        .createHash(`sha1`)
-        .update(fs.readFileSync(`public${favicon}`))
-        .digest(`hex`)
+      cacheId = createContentDigest(fs.readFileSync(`public${favicon}`))
     }
 
     setHeadComponents([
