@@ -43,7 +43,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 }
 ```
 
-- [Install]((https://yarnpkg.com/en/docs/install))/confirm your installation of Yarn (>= 1.0.2).
+- [Install](https://yarnpkg.com/en/docs/install)/confirm your installation of Yarn (>= 1.0.2).
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
 - Setup up repo and install dependencies: `yarn run bootstrap`
