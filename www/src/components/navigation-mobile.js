@@ -13,19 +13,24 @@ import presets, { colors } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 import typography, { rhythm, scale, options } from "../utils/typography"
 
+const getNavItemStyles = ({ isPartiallyCurrent }) =>
+  isPartiallyCurrent
+    ? {
+        className: css({
+          ...styles.link.default,
+          ...styles.link.active,
+          ...styles.svg.active,
+        }),
+      }
+    : {
+        className: css({
+          ...styles.link.default,
+          ...styles.svg.default,
+        }),
+      }
+
 const MobileNavItem = ({ linkTo, label, icon }) => (
-  <Link
-    to={linkTo}
-    css={{
-      ...styles.link.default,
-      ...styles.svg.default,
-    }}
-    activeClassName={css({
-      ...styles.link.default,
-      ...styles.link.active,
-      ...styles.svg.active,
-    })}
-  >
+  <Link to={linkTo} getProps={getNavItemStyles}>
     <span dangerouslySetInnerHTML={{ __html: icon }} />
     <div>{label}</div>
   </Link>
