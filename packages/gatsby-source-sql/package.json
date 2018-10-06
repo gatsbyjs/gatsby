@@ -1,0 +1,16 @@
+{
+  "name": "gatsby-source-sql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.2.0",
+    "query-string": "^6.2.0"
+  }
+}
