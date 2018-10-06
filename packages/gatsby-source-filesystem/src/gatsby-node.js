@@ -55,18 +55,27 @@ const createFSMachine = () =>
           IDLE: {
             on: {
               EMIT_FS_EVENT: `PROCESSING`,
+              QUERY_ENQUEUED: `QUERIES_ENQUEUED`,
             },
           },
           PROCESSING: {
             on: {
               QUERY_QUEUE_DRAINED: `IDLE`,
               TOUCH_NODE: `IDLE`,
+              QUERY_ENQUEUED: `QUERIES_ENQUEUED`,
+            },
+          },
+          QUERIES_ENQUEUED: {
+            on: {
+              QUERY_QUEUE_DRAINED: `IDLE`,
             },
           },
         },
       },
     },
   })
+
+let currentState
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
@@ -94,7 +103,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   }
 
   const fsMachine = createFSMachine()
-  let currentState = fsMachine.initialState
+  currentState = fsMachine.initialState
   let fileNodeQueue = new Map()
 
   // Once bootstrap is finished, we only let one File node update go through
@@ -105,11 +114,28 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `BOOTSTRAP_FINISHED`
     )
   })
+  emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
+    console.log(`API_RUNNING_QUEUE_EMPTY`)
+  })
   emitter.on(`TOUCH_NODE`, () => {
     // If we create a node which is the same as the previous version, createNode
     // returns TOUCH_NODE and then nothing else happens so we listen to that
     // to return the state back to IDLE.
-    currentState = fsMachine.transition(currentState.value, `TOUCH_NODE`)
+    //
+    // creating pages causes a lot of TOUCH_NODE events which can spuriously
+    // cause our state machine to think it should be moved back to idle so
+    // we delay before those.
+    //
+    // This isn't the ideal solution — but API_RUNNING_QUEUE_EMPTY fires too often
+    // and we don't have any other way to say "all work triggered by x node being
+    // added finished".
+    setTimeout(() => {
+      currentState = fsMachine.transition(currentState.value, `TOUCH_NODE`)
+    }, 200)
+  })
+
+  emitter.on(`QUERY_ENQUEUED`, () => {
+    currentState = fsMachine.transition(currentState.value, `QUERY_ENQUEUED`)
   })
 
   emitter.on(`QUERY_QUEUE_DRAINED`, () => {
@@ -147,7 +173,11 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       createNodeId,
       pluginOptions
     ).then(fileNode => {
-      if (currentState.value.PROCESSING === `PROCESSING`) {
+      if (
+        [`PROCESSING`, `QUERIES_ENQUEUED`].includes(
+          currentState.value.PROCESSING
+        )
+      ) {
         fileNodeQueue.set(fileNode.id, fileNode)
       } else {
         currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
