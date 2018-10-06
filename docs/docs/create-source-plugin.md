@@ -145,7 +145,7 @@ It's often convenient for querying to add to the schema backwards references. Fo
 
 If you want to call this field on `Author` `posts`, you would create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
 
-Here's an example from the [Wordpress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
+Here's an example from the [WordPress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
 
 #### Union types
 

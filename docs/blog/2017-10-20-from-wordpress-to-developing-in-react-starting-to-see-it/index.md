@@ -14,7 +14,7 @@ creating websites with functionality that our clients require, whilst maximising
 their budget.
 
 We're also bracing ourselves for what we’re anticipating to be the stormfront of
-[Gutenberg](https://wordpress.org/plugins/gutenberg/ "Gutenberg Wordpress plugins")
+[Gutenberg](https://wordpress.org/plugins/gutenberg/ "Gutenberg WordPress plugins")
 for our WordPress projects. Once it's included in the WordPress Core, writing
 components in JavaScript for the Gutenberg editor will be necessary for every
 developer on a project.
