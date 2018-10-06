@@ -338,7 +338,7 @@ Open gatsby-stripe-serverless-backend in your code editor.
 - Rename the `secrets.example.json` file to `secrets.json`.
 - Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret test key from your Stripe account, and keep the quotation marks around it (using the test keys allows orders to go through without needing real credit card details, which is useful for testing)
 
-Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
+Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any Git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
 
 ## How does the code work on this site?
 

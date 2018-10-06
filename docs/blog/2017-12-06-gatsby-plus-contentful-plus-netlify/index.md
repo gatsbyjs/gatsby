@@ -84,7 +84,7 @@ Our site has a lot of content (~300 articles) that needs to be maintained by
 non-developers, my co-workers. This meant we needed an approachable interface
 for copy and content editing. I wanted to make it as convenient as logging into
 Wordpress and publishing from there, without the Wordpress. So the publishing
-experience couldn’t rely on creating a file and committing changes to a git
+experience couldn’t rely on creating a file and committing changes to a Git
 repo.
 
 > Sidebar: There is
