@@ -7,16 +7,15 @@ showImageInArticle: false
 tags: ["deployment", "azure"]
 ---
 
-In this post we will walk through the process of deploying a Gatsby blog to Microsoft Azure from a local Git repository.
+In this post we will walk through the process of deploying a Gatsby blog to Microsoft Azure Storage using VS Code.
 
 ## Prerequisites
 
 To complete this tutorial you will need the following tools:
 
 - Node - To run the rest of the tools
-- Git - To handle our local source control
 - Gatsby CLI - To create your blazingly fast blog!
-- Azure CLI - To deploy your blog to Azure
+- VS Code - as a code editor
 
 ### Prerequisites Installation
 
@@ -27,12 +26,7 @@ $ node -v
 $ v10.9.0
 ```
 
-Install Git in whatever way works for you, on windows use [Git for windows](https://git-scm.com/download/win) then check the version from your terminal.
-
-```bash
-$ git --version
-$ git version 2.18.0.windows.1
-```
+Install VS Code from the [VS Code website](https://code.visualstudio.com/).
 
 Next, we can install the important part! [Gatsby](https://gatsbyjs.org/) from your terminal, run:
 
@@ -41,18 +35,6 @@ $ npm install --global gatsby-cli
 + gatsby-cli@2.4.2
 updated 1 package in 4.868s
 ```
-
-Finally, we can install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) which will allow us to create resources in azure.
-
-> If you don't have an Azure account, [sign up today](https://azure.microsoft.com/en-us/free/) for a free 30 day account with $200 in Azure credits.
-
-Once you've downloaded the Azure CLI, run the login command and authenticate to make sure it's working OK before carrying on.
-
-```bash
-$ az login
-```
-
-> Note: This will launch a web browser to login.
 
 ## Creating your blog
 
@@ -90,106 +72,83 @@ You should now see your blog in the flesh!
 
 ## Setting up Azure
 
-The Azure CLI lets you interact with Azure from the command line, these tasks can also be performed from the [Azure Web Portal](https://azure.microsoft.com/en-gb/features/azure-portal/) if you are more comfortable.
+Microsoft Azure is a cloud hosting provider which offers a wide range of tools and services. Today you are going to use Azure Storage to host our static Gatsby blog.
 
-You will do the following:
+> If you don't have an Azure account, [sign up today](https://azure.microsoft.com/en-us/free/) for a free 30 day account with $200 in Azure credits.
 
-- Create a `Resource Group` to contain your `App Service`
-- Create an `App Service Plan` to contain your `Web App`
-- Create the `Web App` to contain your blog
+As part of this tutorial you will:
 
-### Create the resource group
+- Create an `Azure Storage Account` for our blog
+- Install the `Azure Storage` VS Code extension
+- Create a production build of your blog
+- Deploy your blog to Azure
 
-A resource group is basically a container for Azure resource. Run the following command to create a resource group called `blogResourceGroup` and set an appropriate [location](https://azure.microsoft.com/en-gb/global-infrastructure/geographies/)
+### Create the Azure Storage Account
 
-```bash
-$ az group create --name blogResourceGroup --location ukwest
-```
+Login to the [Azure Web Portal]() and select `+ Add Resource`, find and select `Storage Account` in the list.
 
-You can then set it as the default to avoid needing to type it in each time.
+Fill in the form by selecting your subscription, creating a new resource group if you don't have one and giving your storage account a name and region. Your form should look something like this.
 
-```bash
-$ az configure --defaults group=blogResourceGroup location=ukwest
-```
+![Azure Storage Account Form](createstorageaccount.png)
 
-### Create the App Service Plan
+Click on `review + create` then `create`, after a few seconds, your account will be created.
 
-An `App Service Plan` defines the physical resources available to our Web App, for this tutorial we will use the free plan in Azure (`--sku F1`), but you can scale this up if you need more advanced features.
+Next, click on `Go to resource`
 
-```bash
-$ az appservice plan create --name blogAppService --sku F1
-```
+![Azure storage account created](createstorageaccountcomplete.png)
 
-### Create the Web App
+### Setup your account for static site usage
 
-Now you can create your Web App.
+Find the `Static Website (preview)` link in the left hand panel and select it.
 
-```bash
-$ az webapp create --name gatsbyAzureBlog-dougmcdonald --plan blogAppService
-```
+Change the option to `enabled`, set a default document name of `index.html` and hit `Save`.
 
-> Note: This must have a globally unique name as it will automatically be given a URL in the format http://unique-name.azurewebsites.net.
+![Set default document](setdefaultdocument.png)
 
-### Run the website
+> Note down the `Primary Endpoint` that azure gives you, that will be the web address that our blog will be deployed (https://gatsbyblogstorage.z35.web.core.windows.net/)
 
-You can now run the website with following command
+### Create a production build
+
+You are now ready to produce a production build of your blog. Make sure you're in the blog folder and then run.
 
 ```bash
-$ az webapp browse --name gatsbyAzureBlog-dougmcdonald
+$ gatsby build
+success open and validate gatsby-config — 0.010 s
+success load plugins — 0.352 s
+success onPreInit — 2.785 s
+success delete html and css files from previous builds — 0.041 s
+success initialize cache — 0.009 s
+success copy gatsby files — 0.139 s
+success onPreBootstrap — 0.016 s
+success source and transform nodes — 0.147 s
+success building schema — 0.521 s
+success createPages — 0.072 s
+success createPagesStatefully — 0.037 s
+...
 ```
 
-You should see a website like this
+This will output a production build of your blog into the `public` folder.
 
-![Default azure website running](websiterunning.png)
+## Install the Azure Storage extension
 
-## Deploy your website
+The easiest way to deploy your blog to your storage account is to use the `Azure Storage Extension` within VS Code.
 
-To deploy our website we can create a Git repository and add a `remote` which allows the changes to push and deploy to Azure.
+[Install the Azure Storage Extension](vscode:extension/ms-azuretools.vscode-azurestorage)
 
-### Creating a Git repository
+> Alternatively, select the extension option from VS Code and search for `Azure Storage`.
 
-Next, we need to create a git repository in the same folder as your blog, navigate to your blog folder and run
+Once installed you will need to sign in.
 
-```bash
-$ git init
-```
+## Deploy your blog
 
-We can now `commit` your blog files through git by running
+Now you can finally deploy your blog!
 
-```bash
-$ git add -A
-$ git commit -m "Initial commit"
-```
+Right click on the `public` folder in VS code and select `Deploy to Static Website...`, you will need to select your subscription and storage account.
 
-### Setup a remote
+![Deploy to Azure Storage](deploytostorage.png)
 
-To configure your website to be deployed from our local git repository we must add a `remote`. First we need to set our credentials in the `Azure CLI`.
+You will see a message in the bottom right of VS Code confirming that your blog has been deployed.
 
-```bash
-$ az webapp deployment user set --user-name <username> --password <password>
-```
+![Successful deployment](deploymentcomplete.png)
 
-### Set up the deployment
-
-Now you can set the deployment source within Azure, in our case `local-git`, the following command will setup the deployment and return an endpoint which we can set as our `remote`.
-
-```bash
-$ az webapp deployment source config-local-git --name gatsbyAzureBlog-dougmcdonald
-{
-  "url": "https://dougajmcdonald@gatsbyazureblog-dougmcdonald.scm.azurewebsites.net/gatsbyAzureBlog-dougmcdonald.git"
-}
-```
-
-We can now add the `remote` to Git using the url which the Azure CLI just returned. Here we've called the remote `azure`
-
-```bash
-$ git remote add azure https://dougajmcdonald@gatsbyazureblog-dougmcdonald.scm.azurewebsites.net/gatsbyAzureBlog-dougmcdonald.git
-```
-
-## Perform the deployment
-
-Finally, the moment you've been waiting for! You can push your local git changes to the `azure` remote to perform the deployment.
-
-```bash
-$ git push azure master
-```
+You can now browse to your blog! congratulations! you've just deployed your Gatsby blog to Azure!
