@@ -2,7 +2,7 @@
 title: Creating global styles
 ---
 
-In nearly every site, there will be some global styles, such as a reset or typography defaults. This guide will walk through how to add global styles to your site, whether you use standard `.css` files (or with preprocessors like Sass/LESS) or a CSS-in-JS solution.
+In nearly every site, there will be some global styles, such as a reset or typography defaults. This guide will walk through how to add global styles to your site, whether you use standard `.css` files (or with preprocessors like Sass/Less) or a CSS-in-JS solution.
 
 ## Table of Contents
 
