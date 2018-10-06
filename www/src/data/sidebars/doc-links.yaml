@@ -144,6 +144,8 @@
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
+        - title: Layout Components
+          link: /docs/layout-components/
     - title: Testing
       link: /docs/testing/
       items:
