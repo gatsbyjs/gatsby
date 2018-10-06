@@ -2743,3 +2743,62 @@
   built_by: Matt Bagni
   built_by_url: https://mattbag.github.io
   featured: false
+- title: Carbon Design System
+  main_url: http://www.carbondesignsystem.com/
+  url: http://www.carbondesignsystem.com/
+  description: >
+    Carbon is the design system for IBM web and product. It is a series of individual styles, components, and guidelines used for creating unified UI.
+  categories:
+    - Science
+    - Web Development
+    - Technology
+  built_by: IBM
+  built_by_url: https://ibm.com
+  featured: false
+- title: The Retirement Community
+  main_url: https://retirementcommunity.fastcompany.com/
+  url: https://retirementcommunity.fastcompany.com/
+  description: >
+    Fast Company is the world's leading progressive business media brand, with a unique editorial focus on innovation in technology, leadership, and design.
+  categories:
+    - Portfolio
+    - Agency
+    - Marketing
+  built_by: Fastcompany
+  built_by_url: https://fastcompany.com/
+  featured: false
+- title: McDonald's
+  main_url: https://design.mcdonalds.com/
+  url: https://design.mcdonalds.com/
+  description: >
+    McDonalds.com is your hub for everything McDonald's. Find out more about our menu items and promotions today!
+  categories:
+    - Marketing
+  built_by: McDonald's
+  built_by_url: https://mcdonalds.com
+  featured: false
+- title: Mozilla Mixed Reality
+  main_url: https://mixedreality.mozilla.org/
+  url: https://mixedreality.mozilla.org/
+  description: >
+    Build immersive virtual worlds with a few lines of code. Reach an audience of millions using open standards.
+  categories:
+    - Science
+    - Web Development
+    - Technology
+  built_by: Mozilla
+  built_by_url: https://www.mozilla.org
+  featured: false
+- title: Hudl Uniform
+  main_url: uniform.hudl.com
+  url: uniform.hudl.com
+  description: >
+    Uniform is Hudl's design system. It exists to unify Hudl's products through design and code implementation.
+  categories:
+    - Science
+    - Web Development
+    - Technology
+  built_by: Agile Sports Technologies
+  built_by_url: https://hudl.com
+  featured: false
+  
