@@ -72,7 +72,7 @@ This is the entrypoint to webpack that outputs `app-[contenthash].js` bundle. It
 
 ### First load
 
-To show how `production-app` works, let's imagine that we've just refreshed the browser on our site's `/blog/2` page. The HTML loads immediately, painting our page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in our js code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
+To show how `production-app` works, let's imagine that we've just refreshed the browser on our site's `/blog/2` page. The HTML loads immediately, painting our page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in our JavaScript code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
 
 ```html
 /*
