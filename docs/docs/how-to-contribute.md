@@ -35,24 +35,15 @@ Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
 
 #### Using Yarn
 
-Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple package.json files in sub-folders, enabling a faster and lighter installation process.
+Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple `package.json` files in sub-folders, enabling a faster and lighter installation process.
 
-```
-// package.json
+```json:title=package.json
 {
   "workspaces": ["workspace-a", "workspace-b"]
 }
 ```
 
-You can install the latest version of Gatsby by following these steps:
-
-- Clone the repo, navigate to its directory.
-- Ensure you have the latest version of Yarn installed (>= 1.0.2)
-  https://yarnpkg.com/en/docs/install. 
-- Install dependencies using `yarn run bootstrap` in the root of the repo.
-
-There are two ways to contribute. This is the most usual way:
-
+- [Install]((https://yarnpkg.com/en/docs/install))/confirm your installation of Yarn (>= 1.0.2).
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
 - Setup up repo and install dependencies: `yarn run bootstrap`
