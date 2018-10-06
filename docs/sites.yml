@@ -1920,7 +1920,7 @@
   featured: false
 - title: Malik Browne Portfolio 2018
   description: >
-    The portfolio blog of Malik Browne, a full stack engineer, foodie, and avid
+    The portfolio blog of Malik Browne, a full-stack engineer, foodie, and avid
     blogger/YouTuber.
   main_url: "https://www.malikbrowne.com/about"
   url: "https://www.malikbrowne.com"
@@ -2127,7 +2127,7 @@
   source_url: "https://github.com/mhjadav/mojaave"
   description: >
     mojaave.com is Mahipat's portfolio, I have developed it using Gatsby v2 and
-    Bootstrap, To get in touch with people looking for full stack developer.
+    Bootstrap, To get in touch with people looking for full-stack developer.
   categories:
     - Portfolio
     - Web Development
@@ -2324,7 +2324,7 @@
   url: "https://www.cameronmaske.com/courses/introduction-to-pytest/"
   source_url: "https://github.com/cameronmaske/cameronmaske.com-v2"
   description: >
-    The homepage of Cameron Maske, a freelance full stack developer, who is currently working on a free pytest video course
+    The homepage of Cameron Maske, a freelance full-stack developer, who is currently working on a free pytest video course
   categories:
     - Education
     - Video
@@ -2351,7 +2351,7 @@
   main_url: "https://joseph.michael-chambers.com/"
   url: "https://joseph.michael-chambers.com/"
   description: >
-    The homepage of Joseph Chambers, a freelance full stack developer, who is currently looking for work.
+    The homepage of Joseph Chambers, a freelance full-stack developer, who is currently looking for work.
   categories:
     - Portfolio
     - Freelance
@@ -2374,7 +2374,7 @@
   description: >
     Madvoid is a team of expert developers dedicated to creating simple, clear, usable and blazing fast web and mobile apps.
     We are coders that help companies and agencies to create social & interactive experiences.
-    This includes full stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
+    This includes full-stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
   categories:
     - Portfolio
     - Technology
@@ -2445,7 +2445,7 @@
     - B2B Services
 - title: "Luciano Mammino's blog"
   description: >
-    Tech & programming blog of Luciano Mammino a.k.a. "loige", Fullstack Web Developer and International Speaker
+    Tech & programming blog of Luciano Mammino a.k.a. "loige", Full-Stack Web Developer and International Speaker
   main_url: https://loige.co
   url: https://loige.co
   featured: false
