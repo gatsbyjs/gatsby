@@ -3,7 +3,7 @@ title: "Proxying API Requests in Development"
 ---
 
 People often serve the front-end React app from the same host and port as their
-backend implementation.
+back-end implementation.
 
 To tell the development server to proxy any unknown requests to your API server
 in development, add a `proxy` field to your `gatsby-config.js`, for example:

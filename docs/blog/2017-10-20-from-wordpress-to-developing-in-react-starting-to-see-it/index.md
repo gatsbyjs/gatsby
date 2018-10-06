@@ -158,7 +158,7 @@ now live at
 
 Together with my colleagues at
 [Indigo Tree](https://indigotree.co.uk "Indigo Tree: We Build Awesome Websites")
-we’re now looking at using WordPress as a backend, where clients can edit their
+we’re now looking at using WordPress as a back end, where clients can edit their
 content without the worries of insecure plugins or other methods of being
 hacked.
 

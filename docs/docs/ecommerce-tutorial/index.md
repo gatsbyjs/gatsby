@@ -29,7 +29,7 @@ title: "Gatsby E-Commerce Tutorial"
 
 # Why use Gatsby for an e-commerce site?
 
-In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with Stripe as the backend for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
+In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with Stripe as the back end for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
 
 - Security inherent in static sites
 - Blazing fast performance when your pages are converted from React into static files

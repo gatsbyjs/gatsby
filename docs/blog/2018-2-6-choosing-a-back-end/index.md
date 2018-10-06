@@ -1,11 +1,11 @@
 ---
-title: Picking a back-end for GatsbyJS
+title: Picking a back end for GatsbyJS
 date: "2018-02-06"
 author: "Ross Whitehouse"
 tags: ["headless-cms", "wordpress", "contentful", "netlify-cms", "jamstack"]
 ---
 
-A little while ago I had the six-monthly itch to redo my portfolio site, and I decided I was going to learn to use Gatsby. But that seems to be only half the battle. After you’ve built your front end, how do you decide on the back-end? There’s so many out there!
+A little while ago I had the six-monthly itch to redo my portfolio site, and I decided I was going to learn to use Gatsby. But that seems to be only half the battle. After you’ve built your front end, how do you decide on the back end? There’s so many out there!
 
 ![GatsbyJS](gatsby.jpeg)
 
@@ -29,7 +29,7 @@ So if you have any experience with React, or if you’re just getting started, t
 
 You build your site. You’ve got your Sass, you’ve got your Markdown files (or not), but everything’s blank! So now what? How do we populate it with content?
 
-## The Next Step: A back-end
+## The Next Step: A back end
 
 Now we need a system to manage and deliver our content in a nice API (instructed by our GraphQL of course). And there’s a whole bunch of them about. To help us out, Gatsby has plugins that cater to some Headless CMS like the WordPress API, Contentful, Cockpit, Prismic and NetlifyCMS - which Gatsby actually has a guide for. I’ll be going through a few of these to see which one might be more useful for this small project, and going forward.
 
@@ -124,7 +124,7 @@ Cockpit also seems to share a lot of the same features except for two big differ
 
 ---
 
-## Conclusion - Which Back-End is right?
+## Conclusion - Which back end is right?
 
 If nothing else, writing this article has given me a checklist that I need a CMS to fulfill. Some other CMSs have great features, but a couple of them are much more important to my use-case than others.
 
