@@ -557,7 +557,7 @@ async function fluid({ file, args = {}, reporter }) {
       options[fixedDimension] * 2,
       options[fixedDimension] * 3,
     ]
-    : options.customSizes.slice()
+    : options.customSizes
   const filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
