@@ -52,7 +52,6 @@ module.exports = Object.assign(reporter, {
 
   panicOnBuild(...args) {
     this.error(...args)
-    console.log(process.env)
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
     }
