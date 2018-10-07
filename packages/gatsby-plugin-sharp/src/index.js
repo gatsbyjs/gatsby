@@ -558,6 +558,9 @@ async function fluid({ file, args = {}, reporter }) {
     fluidSizes.push(options[fixedDimension] * 3)
   } else {
     options.srcSetBreakpoints.forEach((breakpoint) => {
+      if (breakpoint < 0) {
+        throw new Error(`All ints in srcSetBreakpoints should be positive (>=0), found ${breakpoint}`)
+      }
       fluidSizes.push(breakpoint)
     })
   }

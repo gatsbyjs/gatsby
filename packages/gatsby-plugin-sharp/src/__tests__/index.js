@@ -140,6 +140,20 @@ describe(`gatsby-plugin-sharp`, () => {
       // should contain no other sizes
       expect(actual.length).toEqual(expected.length)
     })
+
+    it(`should throw on negative srcSet breakpoints`, async () => {
+      const srcSetBreakpoints = [
+        50,
+        -100,
+      ]
+      const args = { srcSetBreakpoints }
+      const result = fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      await expect(result).rejects.toThrow()
+    })
   })
 
   describe(`fixed`, () => {
