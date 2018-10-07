@@ -238,6 +238,8 @@
           link: /docs/seo/
         - title: Optimize Prefetching with Guess.js*
           link: /docs/optimize-prefetching-with-guessjs/
+        - title: Optimizing Plugins with Guess.js*
+          link: /docs/optimizing-plugins-with-guessjs/
 - title: API Reference
   items:
     - title: Gatsby Link
