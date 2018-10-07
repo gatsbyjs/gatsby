@@ -74,7 +74,9 @@ size / screen resolution.
 
 If you want more control over which sizes are output you can use the `srcSetBreakpoints`
 parameter. For example, if you want images that are 200, 340, 520, and 890 wide you
-can add `srcSetBreakpoints: [ 200, 340, 520, 890 ]` as a parameter.
+can add `srcSetBreakpoints: [ 200, 340, 520, 890 ]` as a parameter. You will also get
+`maxWidth` as a breakpoint (which is 800 by default), so you will actually get
+`[ 200, 340, 520, 800, 890 ]` as breakpoints.
 
 On top of that, `fluid` returns everything else (namely aspectRatio and
 a base64 image to use as a placeholder) you need to implement the "blur up"
