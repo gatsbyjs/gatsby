@@ -2747,6 +2747,61 @@
   built_by: Matt Bagni
   built_by_url: https://mattbag.github.io
   featured: false
+- title: Carbon Design Systems
+  main_url: http://www.carbondesignsystem.com/
+  url: http://www.carbondesignsystem.com/
+  descripton: >
+    The Carbon Design System is integrating the new IBM Design Ethos and Language. It represents a completely fresh approach to the design of all things at IBM.
+  categories:
+    - Documentation
+  built_by: IBM
+  built_by_url: https://www.ibm.com/
+  featured: false
+- title: Retirement Community
+  main_url: https://retirementcommunity.fastcompany.com/
+  url: https://retirementcommunity.fastcompany.com/
+  description: >
+    Bye Bye Funny Business, Pete Holmes and Jamie Lee enter retirement
+  categories:
+    - Entertainment
+    - Retirement
+    - Education
+  built_by: FastCompany
+  built_by_url: https://www.fastcompany.com/
+  featured: false
+- title: McDonald's Design System
+  main_url: https://design.mcdonalds.com/
+  url: https://design.mcdonalds.com/
+  description: >
+    McDonald's Design System
+  categories:
+    - Design
+    - DesignSystems
+  built_by: McDonald's
+  built_by_url: https://www.mcdonalds.com/us/en-us.html
+  featured: false
+- title: Mozilla Mixed Reality
+  main_url: https://mixedreality.mozilla.org/
+  url: https://mixedreality.mozilla.org/
+  description: >
+    Virtual Reality for the free and open Web.
+  categories:
+    - Virtual Reality
+    - Open Source
+  built_by: Mozilla
+  built_by_url: https://www.mozilla.org/
+  featured: false
+- title: Uniform Hudl Design System
+  main_url: http://uniform.hudl.com/
+  url: http://uniform.hudl.com/
+  description: >
+    A single design system to ensure every interface feels like Hudl. From the colors we use to the size of our buttons and what those buttons say, Uniform has you covered. Check the guidelines, copy the code and get to building.
+  categories:
+    - DesignSystems
+    - Open Source
+    - Design
+  built_by: Hudl
+  built_by_url: https://www.hudl.com/
 - title: Subtle UI
   main_url: "https://subtle-ui.netlify.com/"
   url: "https://subtle-ui.netlify.com/"
