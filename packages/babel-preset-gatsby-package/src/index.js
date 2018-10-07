@@ -1,28 +1,24 @@
 const r = m => require.resolve(m)
 
 function preset(context, options = {}) {
-  const { browser = false, debug = false, targets = false } = options
+  const { browser = false, debug = false } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
   const PRODUCTION = (BABEL_ENV || NODE_ENV) === `production`
 
   const browserConfig = {
     useBuiltIns: false,
-    targets: targets
-      ? targets
-      : {
-          browsers: PRODUCTION
-            ? [`last 4 versions`, `safari >= 7`, `ie >= 9`]
-            : [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
-        },
+    targets: {
+      browsers: PRODUCTION
+        ? [`last 4 versions`, `safari >= 7`, `ie >= 9`]
+        : [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
+    },
   }
 
   const nodeConfig = {
-    targets: targets
-      ? targets
-      : {
-          node: PRODUCTION ? 6.0 : `current`,
-        },
+    targets: {
+      node: PRODUCTION ? 6.0 : `current`,
+    },
   }
 
   return {

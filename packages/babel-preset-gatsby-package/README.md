@@ -13,10 +13,10 @@ This [Babel](https://babeljs.io/) preset is used for our internal packages. If y
 
 ## Usage
 
-Install `babel-preset-gatsby` and add a `.babelrc` file with the following content to the root of your project:
+Install `babel-preset-gatsby-package` and add a `.babelrc` file with the following content to the root of your project:
 
 ```bash
-npm install --dev babel-preset-gatsby
+npm install --dev babel-preset-gatsby-package
 ```
 
 ```json
@@ -38,4 +38,3 @@ Defines if [`@babel/preset-env`](https://babeljs.io/docs/en/babel-preset-env) is
 `boolean`, defaults to `false`.
 
 Outputs the targets/plugins used and the version specified in [plugin data version](https://github.com/babel/babel/blob/master/packages/babel-preset-env/data/plugins.json) to `console.log`.
-
