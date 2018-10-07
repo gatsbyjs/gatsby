@@ -23,11 +23,11 @@ async function onCreateNode(
     internal: {
       type: `Asciidoc`,
       mediaType: `text/html`,
-      content: html
+      content: html,
     },
     children: [],
     html,
-    relativePath: node.relativePath
+    relativePath: node.relativePath,
   }
 
   asciiNode.internal.contentDigest = createContentDigest(asciiNode)
