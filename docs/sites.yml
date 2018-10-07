@@ -205,16 +205,15 @@
 - title: KNW Photography
   main_url: "https://www.knw.io/"
   url: "https://www.knw.io/galleries/"
-  source_url: "https://github.com/ryanwiemer/knw"
   featured: true
-  description: >-
-    Hi there! I’m Kirsten and I’m currently living in Oakland with my husband
-    and fluffy pup Birch. I’ve always been an excessive photo taker and decided
-    to turn my love for taking photos into a career.
+  description: >
+    Digital portfolio for San Francisco Bay Area photographer Kirsten Wiemer.
   categories:
     - Photography
     - Portfolio
     - Featured
+  built_by: Ryan Wiemer
+  built_by_url: "https://www.ryanwiemer.com/"
 - title: NEON
   main_url: "http://neonrated.com/"
   url: "http://neonrated.com/"
@@ -379,9 +378,14 @@
   url: "https://www.ryanwiemer.com/knw-photography/"
   source_url: "https://github.com/ryanwiemer/rw"
   featured: false
+  description: >
+    Digital portfolio for Oakland, CA based account manager Ryan Wiemer.
   categories:
     - Portfolio
     - Web Development
+    - Design
+  built_by: Ryan Wiemer
+  built_by_url: "https://www.ryanwiemer.com/"
 - title: Ventura Digitalagentur Köln
   main_url: "https://www.ventura-digital.de/"
   url: "https://www.ventura-digital.de/"
@@ -2742,4 +2746,17 @@
     - Music
   built_by: Matt Bagni
   built_by_url: https://mattbag.github.io
+  featured: false
+- title: Subtle UI
+  main_url: "https://subtle-ui.netlify.com/"
+  url: "https://subtle-ui.netlify.com/"
+  source_url: "https://github.com/ryanwiemer/subtle-ui"
+  description: >
+    A collection of clever yet understated user interactions found on the web.
+  categories:
+    - Web Development
+    - Open Source
+    - User Experience
+  built_by: Ryan Wiemer
+  built_by_url: "https://www.ryanwiemer.com/"
   featured: false
