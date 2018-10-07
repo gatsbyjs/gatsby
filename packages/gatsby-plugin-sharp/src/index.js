@@ -563,6 +563,10 @@ async function fluid({ file, args = {}, reporter }) {
       if (breakpoint < 0) {
         throw new Error(`All ints in srcSetBreakpoints should be positive (>=0), found ${breakpoint}`)
       }
+      // ensure no duplicates are added
+      if (fluidSizes.includes(breakpoint)) {
+        return
+      }
       fluidSizes.push(breakpoint)
     })
   }

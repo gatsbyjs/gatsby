@@ -206,6 +206,39 @@ describe(`gatsby-plugin-sharp`, () => {
       // should contain no other sizes
       expect(actual.length).toEqual(expected.length)
     })
+
+    it(`prevents duplicate breakpoints`, async () => {
+      const srcSetBreakpoints = [
+        50,
+        50,
+        100,
+        100,
+        100,
+        250,
+        250,
+      ]
+      const maxWidth = 100
+      const args = {
+        maxWidth,
+        srcSetBreakpoints,
+      }
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      const originalWidth = 281
+      const expected = [
+        `50w`,
+        `100w`,
+        `250w`,
+        `${originalWidth}w`,
+      ]
+
+      const actual = findAllBreakpoints(result.srcSet)
+      expect(actual).toEqual(expect.arrayContaining(expected))
+      expect(actual.length).toEqual(expected.length)
+    })
   })
 
   describe(`fixed`, () => {
