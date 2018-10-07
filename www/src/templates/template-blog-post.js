@@ -12,10 +12,14 @@ import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
+import Chart from "../components/chart"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
-  components: { "hubspot-form": HubspotForm },
+  components: {
+    "hubspot-form": HubspotForm,
+    "date-chart": Chart,
+  },
 }).Compiler
 
 class BlogPostTemplate extends React.Component {
