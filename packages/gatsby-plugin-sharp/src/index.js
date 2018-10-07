@@ -520,8 +520,8 @@ async function fluid({ file, args = {}, reporter }) {
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
 
-  if (options[fixedDimension] < 0) {
-    throw new Error(`${fixedDimension} has to be a positive int (>=0), now it's ${options[fixedDimension]}`)
+  if (options[fixedDimension] < 1) {
+    throw new Error(`${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`)
   }
 
   let presentationWidth, presentationHeight
@@ -564,8 +564,8 @@ async function fluid({ file, args = {}, reporter }) {
     fluidSizes.push(options[fixedDimension] * 3)
   } else {
     options.srcSetBreakpoints.forEach((breakpoint) => {
-      if (breakpoint < 0) {
-        throw new Error(`All ints in srcSetBreakpoints should be positive (>=0), found ${breakpoint}`)
+      if (breakpoint < 1) {
+        throw new Error(`All ints in srcSetBreakpoints should be positive ints larger than (> 0), found ${breakpoint}`)
       }
       // ensure no duplicates are added
       if (fluidSizes.includes(breakpoint)) {

@@ -115,8 +115,8 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result.presentationWidth).toEqual(41)
     })
 
-    it(`should throw if maxWidth is negative`, async () => {
-      const args = { maxWidth: -20 }
+    it(`should throw if maxWidth is less than 1`, async () => {
+      const args = { maxWidth: 0 }
       const result = fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args,
@@ -150,10 +150,10 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(actual).toEqual(expect.arrayContaining(expected))
     })
 
-    it(`should throw on negative srcSet breakpoints`, async () => {
+    it(`should throw on srcSet breakpoints less than 1`, async () => {
       const srcSetBreakpoints = [
         50,
-        -100,
+        0,
       ]
       const args = { srcSetBreakpoints }
       const result = fluid({
