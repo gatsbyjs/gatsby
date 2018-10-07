@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "dependencies": {
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0"
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-macros": "^2.4.2"
   },
   "license": "MIT",
   "main": "src/index.js"

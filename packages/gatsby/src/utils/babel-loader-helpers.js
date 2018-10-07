@@ -48,95 +48,14 @@ const prepareOptions = (babel, resolve = require.resolve) => {
     )
   }
 
-  // Fallback presets/plugins
+  // Fallback preset
   const fallbackPresets = []
-  const fallbackPlugins = []
-
-  let targets
-  if (stage === `build-html`) {
-    targets = {
-      node: `current`,
-    }
-  } else {
-    targets = {
-      browsers: pluginBabelConfig.browserslist,
-    }
-  }
 
   fallbackPresets.push(
-    babel.createConfigItem(
-      [
-        resolve(`@babel/preset-env`),
-        {
-          loose: true,
-          modules: false,
-          useBuiltIns: `usage`,
-          targets,
-        },
-      ],
-      {
-        type: `preset`,
-      }
-    )
-  )
-
-  fallbackPresets.push(
-    babel.createConfigItem(
-      [
-        resolve(`@babel/preset-react`),
-        {
-          useBuiltIns: true,
-          pragma: `React.createElement`,
-          development: stage === `develop`,
-        },
-      ],
-      {
-        type: `preset`,
-      }
-    )
-  )
-
-  fallbackPlugins.push(
-    babel.createConfigItem(
-      [
-        resolve(`@babel/plugin-proposal-class-properties`),
-        {
-          loose: true,
-        },
-      ],
-      {
-        type: `plugin`,
-      }
-    )
-  )
-
-  fallbackPlugins.push(
-    babel.createConfigItem([resolve(`babel-plugin-macros`)], {
-      type: `plugin`,
+    babel.createConfigItem([resolve(`babel-preset-gatsby`)], {
+      type: `preset`,
     })
   )
-
-  fallbackPlugins.push(
-    babel.createConfigItem([resolve(`@babel/plugin-syntax-dynamic-import`)], {
-      type: `plugin`,
-    })
-  )
-
-  fallbackPlugins.push(
-    babel.createConfigItem(
-      [
-        resolve(`@babel/plugin-transform-runtime`),
-        {
-          helpers: true,
-          regenerator: true,
-        },
-      ],
-      {
-        type: `plugin`,
-      }
-    )
-  )
-
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins = []
   const reduxPresets = []
@@ -160,7 +79,6 @@ const prepareOptions = (babel, resolve = require.resolve) => {
     reduxPlugins,
     requiredPresets,
     requiredPlugins,
-    fallbackPlugins,
     fallbackPresets,
   ]
 }
@@ -173,7 +91,7 @@ const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
 
   // If this exist, merge the options, otherwise, add it to the array
   if (index !== -1) {
-    items[index] = babel.createConfigItem(
+    items[index] = babel.babel(
       [
         itemToMerge.file.resolved,
         _.merge({}, items[index].options, itemToMerge.options),
