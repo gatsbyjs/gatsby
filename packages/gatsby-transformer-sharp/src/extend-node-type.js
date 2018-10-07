@@ -264,7 +264,7 @@ const fluidNodeType = ({
         type: GraphQLString,
         defaultValue: ``,
       },
-      customSizes: {
+      srcSetBreakpoints: {
         type: GraphQLList(GraphQLInt),
         defaultValue: [],
         description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,

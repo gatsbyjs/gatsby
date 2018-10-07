@@ -108,15 +108,15 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result.presentationWidth).toEqual(41)
     })
 
-    it(`accepts custom sizes`, async () => {
-      const customSizes = [
+    it(`accepts srcSet breakpoints`, async () => {
+      const srcSetBreakpoints = [
         50,
         70,
         150,
         250,
         300, // this shouldn't be in the output as it's wider than the original
       ]
-      const args = { customSizes }
+      const args = { srcSetBreakpoints }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args,
@@ -124,7 +124,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       // width of the image tested
       const originalWidth = 281
-      const expected = customSizes
+      const expected = srcSetBreakpoints
         // filter out the widths that are larger than the source image width
         // (in this case it's the last value of the array: 300)
         .filter((size) => size < originalWidth)
