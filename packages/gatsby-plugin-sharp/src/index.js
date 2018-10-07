@@ -520,6 +520,10 @@ async function fluid({ file, args = {}, reporter }) {
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
 
+  if (options[fixedDimension] < 0) {
+    throw new Error(`${fixedDimension} has to be a positive int (>=0), now it's ${options[fixedDimension]}`)
+  }
+
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
     presentationWidth = Math.min(
