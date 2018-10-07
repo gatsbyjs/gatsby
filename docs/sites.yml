@@ -2747,6 +2747,18 @@
   built_by: Matt Bagni
   built_by_url: https://mattbag.github.io
   featured: false
+- title: Jan Czizikow Portfolio
+  main_url: https://www.janczizikow.com/
+  url: https://www.janczizikow.com/
+  source_url: https://github.com/janczizikow/janczizikow-portfolio
+  description: >
+    Simple personal portfolio site built with Gatsby
+  categories:
+    - Portfolio
+    - Freelance
+    - Web Development
+  built_by: Jan Czizikow
+  built_by_url: https://github.com/janczizikow
 - title: Carbon Design Systems
   main_url: http://www.carbondesignsystem.com/
   url: http://www.carbondesignsystem.com/
