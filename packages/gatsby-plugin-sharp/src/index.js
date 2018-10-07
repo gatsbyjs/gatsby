@@ -16,9 +16,9 @@ const existsSync = require(`fs-exists-cached`).sync
 const base64CacheKey = (contentDigest, options) =>
   `plugin-sharp-base64-${contentDigest}${
   options.duotone ? `-duotoned` : ``}-${
-  options.cropFocus}${
+  options.cropFocus ? options.cropFocus : `` }${
   options.grayscale ? `-grayscale` : ``}-${
-  options.toFormat}-${options.width}-${options.height}`
+  options.width}-${options.height}`
 
 
 const imageSizeCache = new Map()
@@ -441,7 +441,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-async function notMemoizedbase64({ file, args = {}, reporter, cache }) {
+async function base64({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, { width: 20 })
   let pipeline
   try {
@@ -500,7 +500,7 @@ async function notMemoizedbase64({ file, args = {}, reporter, cache }) {
   const [buffer, info] = await pipeline.toBufferAsync()
   const base64output = buffer.toString(`base64`)
   if (cache) {
-    cache.set(base64(file.internal.contentDigest, options), { base64: base64output, info })
+    cache.set(base64CacheKey(file.internal.contentDigest, options), { base64: base64output, info })
   }
   return {
     src: `data:image/${info.format};base64,${base64output}`,
@@ -509,15 +509,6 @@ async function notMemoizedbase64({ file, args = {}, reporter, cache }) {
     aspectRatio: info.width / info.height,
     originalName: file.base,
   }
-}
-
-// const memoizedBase64 = _.memoize(
-//   notMemoizedbase64,
-//   ({ file, args }) => `${file.id}${JSON.stringify(args)}`
-// )
-
-async function base64(args) {
-  return await notMemoizedbase64(args)
 }
 
 async function fluid({ file, args = {}, reporter, cache }) {
