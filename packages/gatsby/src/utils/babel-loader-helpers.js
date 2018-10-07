@@ -91,7 +91,7 @@ const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
 
   // If this exist, merge the options, otherwise, add it to the array
   if (index !== -1) {
-    items[index] = babel.babel(
+    items[index] = babel.createConfigItem(
       [
         itemToMerge.file.resolved,
         _.merge({}, items[index].options, itemToMerge.options),

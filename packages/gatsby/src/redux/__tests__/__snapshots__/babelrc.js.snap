@@ -167,70 +167,10 @@ Array [
   ],
   Array [
     Array [
-      "/path/to/module/@babel/preset-env",
-      Object {
-        "loose": true,
-        "modules": false,
-        "targets": Object {
-          "browsers": undefined,
-        },
-        "useBuiltIns": "usage",
-      },
+      "/path/to/module/babel-preset-gatsby",
     ],
     Object {
       "type": "preset",
-    },
-  ],
-  Array [
-    Array [
-      "/path/to/module/@babel/preset-react",
-      Object {
-        "development": false,
-        "pragma": "React.createElement",
-        "useBuiltIns": true,
-      },
-    ],
-    Object {
-      "type": "preset",
-    },
-  ],
-  Array [
-    Array [
-      "/path/to/module/@babel/plugin-proposal-class-properties",
-      Object {
-        "loose": true,
-      },
-    ],
-    Object {
-      "type": "plugin",
-    },
-  ],
-  Array [
-    Array [
-      "/path/to/module/babel-plugin-macros",
-    ],
-    Object {
-      "type": "plugin",
-    },
-  ],
-  Array [
-    Array [
-      "/path/to/module/@babel/plugin-syntax-dynamic-import",
-    ],
-    Object {
-      "type": "plugin",
-    },
-  ],
-  Array [
-    Array [
-      "/path/to/module/@babel/plugin-transform-runtime",
-      Object {
-        "helpers": true,
-        "regenerator": true,
-      },
-    ],
-    Object {
-      "type": "plugin",
     },
   ],
 ]
