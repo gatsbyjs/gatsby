@@ -37,4 +37,6 @@ Following the same logic, you have the ability of creating multiple `module.css`
 
 You may take a look at a more in-depth [Component CSS tutorial](https://www.gatsbyjs.org/tutorial/part-two/#component-css) if you would like to see an example with explanation of multiple complex React components utilizing multiple `module.css` files and why you may want to use CSS Modules in your next project.
 
+### Other resources
 
+- [Introduction to postcss](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
