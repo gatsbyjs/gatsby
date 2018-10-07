@@ -790,9 +790,9 @@
   repo: https://github.com/xydac/xylo-gatsby-bulma-starter
   description: Gatsby v2 Starter with Bulma based on default starter.
   tags:
-    - sass
-    - bulma-css
-    - Styling:Sass
+  tags:
+    - Styling:SCSS
+    - Styling:Bulma
   features:
     - Based on default starter
     - Bulma Css
