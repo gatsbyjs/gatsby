@@ -2747,6 +2747,19 @@
   built_by: Matt Bagni
   built_by_url: https://mattbag.github.io
   featured: false
+- title: Mayer Media Co.
+  main_url: https://mayermediaco.com/
+  url: https://mayermediaco.com/
+  description: >
+    Freelance Web Development and Digital Marketing
+  categories:
+    - Web Development
+    - Marketing
+    - Blog
+  source_url: https://github.com/MayerMediaCo/MayerMediaCo2.0
+  built_by: Danny Mayer
+  built_by_url: https://twitter.com/mayermediaco
+  featured: false
 - title: Jan Czizikow Portfolio
   main_url: https://www.janczizikow.com/
   url: https://www.janczizikow.com/
