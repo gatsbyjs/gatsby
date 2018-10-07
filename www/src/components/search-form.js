@@ -23,7 +23,6 @@ css.insert(`
     right: ${rhythm(0.5)} !important;
     min-width: calc(100vw - ${rhythm(1)}) !important;
     max-width: calc(100vw - 2rem) !important;
-    max-height: calc(100vh - 5rem) !important;
     box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
   }
 
@@ -78,6 +77,7 @@ css.insert(`
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+    max-height: calc(100vh - 7rem) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;
   }
