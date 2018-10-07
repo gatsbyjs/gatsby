@@ -548,11 +548,13 @@ async function fluid({ file, args = {}, reporter }) {
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const fluidSizes = []
+  const fluidSizes = [
+    options[fixedDimension], // ensure maxWidth (or maxHeight) is added
+  ]
+  // use standard breakpoints if no custom breakpoints are specified
   if (!options.srcSetBreakpoints || !options.srcSetBreakpoints.length) {
     fluidSizes.push(options[fixedDimension] / 4)
     fluidSizes.push(options[fixedDimension] / 2)
-    fluidSizes.push(options[fixedDimension])
     fluidSizes.push(options[fixedDimension] * 1.5)
     fluidSizes.push(options[fixedDimension] * 2)
     fluidSizes.push(options[fixedDimension] * 3)

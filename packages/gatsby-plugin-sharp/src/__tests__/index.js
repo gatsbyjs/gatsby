@@ -23,6 +23,13 @@ describe(`gatsby-plugin-sharp`, () => {
   const absolutePath = path.join(__dirname, `images/test.png`)
   const file = getFileObject(absolutePath)
 
+  // used to find all breakpoints in a srcSet string
+  const findAllBreakpoints = (srcSet) => {
+    // RegEx to find all occurrences of 'Xw', where 'X' can be any int
+    const regEx = /[0-9]+w/g
+    return srcSet.match(regEx)
+  }
+
   describe(`queueImageResizing`, () => {
     it(`should round height when auto-calculated`, () => {
       // Resize 144-density.png (281x136) with a 3px width
@@ -114,7 +121,6 @@ describe(`gatsby-plugin-sharp`, () => {
         70,
         150,
         250,
-        300, // this shouldn't be in the output as it's wider than the original
       ]
       const args = { srcSetBreakpoints }
       const result = await fluid({
@@ -125,20 +131,13 @@ describe(`gatsby-plugin-sharp`, () => {
       // width of the image tested
       const originalWidth = 281
       const expected = srcSetBreakpoints
-        // filter out the widths that are larger than the source image width
-        // (in this case it's the last value of the array: 300)
-        .filter((size) => size < originalWidth)
         .map((size) => `${size}w`)
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`)
 
-      // RegEx to find all occurrences of 'Xw', where 'X' can be any int
-      const regEx = /[0-9]+w/g
-      const actual = result.srcSet.match(regEx)
+      const actual = findAllBreakpoints(result.srcSet)
       // should contain all requested sizes as well as the original size
       expect(actual).toEqual(expect.arrayContaining(expected))
-      // should contain no other sizes
-      expect(actual.length).toEqual(expected.length)
     })
 
     it(`should throw on negative srcSet breakpoints`, async () => {
@@ -153,6 +152,25 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       await expect(result).rejects.toThrow()
+    })
+
+    it(`ensure maxWidth is in srcSet breakpoints`, async () => {
+      const srcSetBreakpoints = [
+        50,
+        70,
+        150,
+      ]
+      const maxWidth = 200
+      const args = {
+        maxWidth,
+        srcSetBreakpoints,
+      }
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      expect(result.srcSet).toEqual(expect.stringContaining(`${maxWidth}w`))
     })
   })
 
