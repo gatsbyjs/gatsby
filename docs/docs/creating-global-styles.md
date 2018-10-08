@@ -38,7 +38,7 @@ Open your new site in your code editor and create a new directory at `/src/compo
 
 Inside `src/components/layout.css`, add some global styles:
 
-```css
+```css:title=src/components/layout.css
 div {
   background: red;
   color: white;
@@ -47,7 +47,7 @@ div {
 
 In `src/components/layout.js`, include the stylesheet and export a layout component:
 
-```js
+```js:title=src/components/layout.js
 import React from "react"
 import "./layout.css"
 
@@ -56,7 +56,7 @@ export default ({ children }) => <div>{children}</div>
 
 Finally, update `src/pages/index.js` to use the new layout component:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -82,7 +82,7 @@ npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
 
 Create `gatsby-config.js` and add the Emotion plugin:
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-emotion`],
 }
@@ -90,7 +90,7 @@ module.exports = {
 
 Next, add a layout component at `src/components/layout.js`:
 
-```jsx
+```jsx:title=src/components/layout.js
 import React from "react"
 import styled from "react-emotion"
 import { injectGlobal } from "emotion"
@@ -112,7 +112,7 @@ export default ({ children }) => <Wrapper>{children}</Wrapper>
 
 Then, update `src/pages/index.js` to use the layout:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -136,7 +136,7 @@ gatsby develop
 
 Second, create a css file and define any styles you wish. An arbitrary example:
 
-```css
+```css:title=src/styles/global.css
 html {
   background-color: lavenderblush;
 }
@@ -151,7 +151,7 @@ Then, include the stylesheet in your site's `gatsby-browser.js` file.
 > **NOTE:** This solution works when including css as those styles are extracted when building the js but not for css-in-js.
 > Including styles in a layout component or a global-styles.js is your best bet for that.
 
-```javascript
+```javascript:title=gatsby-browser.js
 import "./src/styles/global.css"
 
 // or:
