@@ -1557,7 +1557,6 @@
   categories:
     - Blog
     - Portfolio
-    - Salesforce
   built_by: Gourav Sood
   built_by_url: "https://www.gouravsood.com/"
 - title: Jonas Tebbe Portfolio
@@ -2651,7 +2650,7 @@
   categories:
     - Portfolio
     - Technology
-    - Web development
+    - Web Development
   built_by: Ema Suriano
   built_by_url: https://emasuriano.com/
   featured: false
