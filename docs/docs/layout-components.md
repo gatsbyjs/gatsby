@@ -8,30 +8,17 @@ In this guide, you'll learn how to create layout components.
 
 Layout components are for sections of your site that you want to share across multiple pages. For example, Gatsby sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts are a sidebar and/or navigation menu. On this page for example, the header at the top is part of gatsbyjs.org’s layout component.
 
-Let’s dive in and explore creating layouts.
+### Setup
 
-### Get up and running with Gatsby
-
-First, you'll want to create a new Gatsby site. If you don't already have Gatsby installed, install it:
+Create a new Gatsby site from the [Hello World](https://github.com/gatsbyjs/gatsby-starter-hello-world) starter:
 
 ```shell
-npm install -g gatsby-cli
+gatsby new my-site https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Next, create a new Gatsby site using the "Hello World" starter:
+If you need more step-by-step instructions, check out the [Set Up Your Development Environment](https://www.gatsbyjs.org/tutorial/part-zero/#create-a-site) tutorial.
 
-```shell
-gatsby new my-gatsby-site https://github.com/gatsbyjs/gatsby-starter-hello-world
-```
-
-Next, change into the new site directory and start the site in `develop` mode:
-
-```shell
-cd my-gatsby-site
-gatsby develop
-```
-
-Your site is now running at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit the front page:
+Open your site's directory in your code editor of choice and edit the front page:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -47,11 +34,11 @@ export default () => (
 )
 ```
 
-Save your changes and the browser will update in real time! You now have the start of a nice personal site!
+Save your changes. You now have the start of a nice personal site!
 
 ![no-layout](./images/no-layout-no-typography.png)
 
-But it would be nice if the page content was centered on the screen.
+But it would be nice if the page content was centered on the screen. Fix this by creating your first layout component.
 
 ### Your first layout component
 
@@ -93,7 +80,7 @@ export default () => (
 Sweet, the layout is working! Now, your text is centered and constrained to
 a column 650 pixels wide, as you specified.
 
-### Import and add layout component to other pages
+### Import and add layout components to other pages
 
 Create an `about` page:
 
@@ -124,15 +111,9 @@ export default () => (
 )
 ```
 
-And there you have it!
+Now your layout will also be applied to your `about` page!
 
-_Challenge:_ With your new "layout component" powers, trying adding headers, footers,
-global navigation, sidebars, etc. to your Gatsby sites!
-
-### References
+### Other resources
 
 - [Creating nested layout components in Gatsby](https://www.gatsbyjs.org/tutorial/part-three/)
-
-### See also
-
 - [Life After Layouts in Gatsby V2](https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts/)
