@@ -25,9 +25,7 @@ A fragment consists of three components:
 
 A fragment can be created inside any GraphQL query, but it's good practice to create the query separately. More organization advice in the [Conceptual Guide](/docs/querying-with-graphql/#fragments).
 
-```jsx
-// src/components/IndexPost.jsx
-
+```jsx:title=src/components/IndexPost.jsx
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -47,9 +45,7 @@ export const query = graphql`
 
 This defines a fragment named `SiteInformation`. Now it can be used from within the page's GraphQL query:
 
-```jsx
-// src/pages/Main.jsx
-
+```jsx:title=src/pages/Main.jsx
 import React from "react"
 import { graphql } from "gatsby"
 import IndexPost from "../components/IndexPost"
