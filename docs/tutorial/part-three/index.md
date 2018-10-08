@@ -174,7 +174,7 @@ If you go to any of your three pages you'll see the same title added e.g. the
 
 Add navigation links to each of your three pages:
 
-```jsx{2-10,13-23}:title=src/components/layout.js
+```jsx{2-9,12-21}:title=src/components/layout.js
 import React from "react"
 import { Link } from "gatsby"
 
