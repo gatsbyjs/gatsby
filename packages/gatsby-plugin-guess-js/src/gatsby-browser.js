@@ -39,44 +39,26 @@ const prefetch = url => {
 }
 
 exports.onPrefetchPathname = (
-  { onPostPrefetchPathname, pathPrefix },
+  { onPostPrefetchPathname, getResourcesForPathname, pathPrefix },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV === `production`) {
-    const matchedPaths = Object.keys(
-      guess({
-        path: window.location.pathname,
-        threshold: pluginOptions.minimumThreshold,
-      })
-    )
+  if (process.env.NODE_ENV !== `production`) return
 
-    // Don't prefetch from client for the initial path as we did that
-    // during SSR
-    if (notNavigated && initialPath === window.location.pathname) {
-      return
-    }
+  const matchedPaths = Object.keys(
+    guess({
+      path: window.location.pathname,
+      threshold: pluginOptions.minimumThreshold,
+    })
+  )
 
-    if (matchedPaths.length > 0) {
-      matchedPaths.forEach(p => {
-        chunks(p).then(chunk => {
-          // eslint-disable-next-line
-          const page = ___loader.getPage(p)
-          if (!page) return
+  // Don't prefetch from client for the initial path as we did that
+  // during SSR
+  if (notNavigated && initialPath === window.location.pathname) return
 
-          let resources = []
-          if (chunk.assetsByChunkName[page.componentChunkName]) {
-            resources = resources.concat(
-              chunk.assetsByChunkName[page.componentChunkName]
-            )
-          }
-          // eslint-disable-next-line
-          resources.push(`static/d/${___dataPaths[page.jsonName]}.json`)
-          // TODO add support for pathPrefix
-          resources.forEach(r => prefetch(`/${r}`))
-
-          onPostPrefetchPathname({ pathname: p })
-        })
-      })
-    }
-  }
+  matchedPaths.forEach(p => {
+    getResourcesForPathname(p).then(() => {
+      // TODO: add / check support for pathPrefix
+      onPostPrefetchPathname({ pathname: p })
+    })
+  })
 }
