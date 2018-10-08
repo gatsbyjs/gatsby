@@ -140,6 +140,15 @@
   tags:
     - Official
     - Blog
+  features:
+    - Basic setup for a full-featured blog
+    - Support for an RSS feed
+    - Google Analytics support
+    - Automatic optimization of images in Markdown posts
+    - Support for code syntax highlighting
+    - Includes plugins for easy, beautiful typography
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
 - url: https://gatsby-starter-bloomer.netlify.com/
   repo: https://github.com/Cethy/gatsby-starter-bloomer
   description: n/a
@@ -260,6 +269,9 @@
   description: official default
   tags:
     - Official
+  features:
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
 - url: http://gatsby-dimension.surge.sh/
   repo: https://github.com/codebushi/gatsby-starter-dimension
   description: Single page starter based on the Dimension site template
@@ -374,6 +386,10 @@
   description: official hello world
   tags:
     - Official
+  features:
+    - A no-frills Gatsby install
+    - No plugins, no boilerplate
+    - Great for advanced users
 - url: https://gatsby-starter-hero-blog.greglobinski.com/
   repo: https://github.com/greglobinski/gatsby-starter-hero-blog
   description: no description yet
