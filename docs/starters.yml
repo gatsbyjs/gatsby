@@ -796,3 +796,20 @@
     - Based on default starter
     - Bulma Css
     - Sass based Styling
+- url: https://i18n.smakosh.com/
+  repo: https://github.com/smakosh/gatsby-starter-i18n
+  description: Gatsby v2 Starter with i18n using react-intl and more cool features.
+  tags:
+    - styled-components
+    - recompose
+    - i18n
+    - react-intl
+    - formik
+    - yup
+    - netlify
+  features:
+    - Based on default starter
+    - i18n with change of direction
+    - Stateless components using Recompose
+    - Font changes depending on the chosen language
+    - SEO (meta tags, openGraph, structured data, twitter and more...)
