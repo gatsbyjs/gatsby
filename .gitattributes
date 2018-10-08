@@ -1,1 +1,2 @@
 **/*.js.snap text eol=lf
+packages/gatsby-codemods/src/transforms/__testfixtures__/*/*.output.js text eol=lf
