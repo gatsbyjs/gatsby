@@ -8,12 +8,14 @@ global.Date = jest.fn(() => DATE_TO_USE)
 global.Date.UTC = _Date.UTC
 global.Date.now = _Date.now
 
+const whenWindows = { it: process.platform === `win32` ? it : it.skip }
+const whenOthers = { it: process.platform === `win32` ? it.skip : it }
 
 describe(`Test plugin feed`, async () => {
   fs.existsSync = jest.fn()
   fs.existsSync.mockReturnValue(true)
 
-  it(`default settings work properly`, async () => {
+  const defaultSettingsWorkProperly = async () => {
     internals.writeFile = jest.fn()
     internals.writeFile.mockResolvedValue(true)
     const graphql = jest.fn()
@@ -38,9 +40,9 @@ describe(`Test plugin feed`, async () => {
     } })
     await onPostBuild({ graphql }, {})
     expect(internals.writeFile).toMatchSnapshot()
-  })
+  }
 
-  it(`custom query runs`, async () => {
+  const customQueryRuns = async () => {
     internals.writeFile = jest.fn()
     internals.writeFile.mockResolvedValue(true)
     const graphql = jest.fn()
@@ -106,5 +108,11 @@ describe(`Test plugin feed`, async () => {
     await onPostBuild({ graphql }, options)
     expect(internals.writeFile).toMatchSnapshot()
     expect(graphql).toMatchSnapshot()
-  })
+  }
+
+  whenWindows.it(`custom query runs in Windows`, customQueryRuns)
+  whenOthers.it(`custom query runs`, customQueryRuns)
+
+  whenWindows.it(`default settings work properly in Windows`, defaultSettingsWorkProperly)
+  whenOthers.it(`default settings work properly`, defaultSettingsWorkProperly)
 })
