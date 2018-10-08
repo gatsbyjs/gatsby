@@ -8,8 +8,8 @@ global.Date = jest.fn(() => DATE_TO_USE)
 global.Date.UTC = _Date.UTC
 global.Date.now = _Date.now
 
-const whenWindows = { it: process.platform === "win32" ? it : it.skip }
-const whenOthers = { it: process.platform === "win32" ? it.skip : it }
+const whenWindows = { it: process.platform === `win32` ? it : it.skip }
+const whenOthers = { it: process.platform === `win32` ? it.skip : it }
 
 describe(`Test plugin feed`, async () => {
   fs.existsSync = jest.fn()
