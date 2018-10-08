@@ -544,9 +544,9 @@ async function fluid({ file, args = {}, reporter }) {
     options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
-  // Create sizes (in width) for the image if no custom sizes are provided. If
-  // the max width of the container for the rendered markdown file is 800px,
-  // the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
+  // Create sizes (in width) for the image if no custom breakpoints are
+  // provided. If the max width of the container for the rendered markdown file
+  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution while (hopefully) not requiring too much
@@ -565,7 +565,7 @@ async function fluid({ file, args = {}, reporter }) {
   } else {
     options.srcSetBreakpoints.forEach((breakpoint) => {
       if (breakpoint < 1) {
-        throw new Error(`All ints in srcSetBreakpoints should be positive ints larger than (> 0), found ${breakpoint}`)
+        throw new Error(`All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`)
       }
       // ensure no duplicates are added
       if (fluidSizes.includes(breakpoint)) {
