@@ -40,7 +40,7 @@ updated 1 package in 4.868s
 
 Next you will create the blog from the handy [Gatsby Starter Blog](https://github.com/gatsbyjs/gatsby-starter-blog).
 
-> If you already have a site you want to deploy, skip forwards to [Deploy your website](#)
+> If you already have a site you want to deploy, skip forwards to [Setting up Azure](#setting-up-azure)
 
 From your terminal run
 
