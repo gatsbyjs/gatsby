@@ -53,7 +53,7 @@ There are two ways to contribute. This is the most usual way:
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
-  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).  
+  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
   Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
@@ -76,12 +76,24 @@ a pull request.
 
 - Clone the repo and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
-- Run `gatsby develop` to preview the website in `http://localhost:8000`
+- Run `yarn develop` to preview the website in `http://localhost:8000`
 - The Markdown files for the documentation live in `/docs` folder. Make
   additions or modifications here.
 - Make sure to double check your grammar and capitalise correctly.
 - Commit and push to your fork.
 - Create a pull request from your branch.
+
+To develop on the starter showcase, you'll need to supply a GitHub personal access token.
+
+1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
+2. In the new token's settings, grant that token the "public_repo" scope.
+3. Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
+
+```
+GITHUB_API_TOKEN=YOUR_TOKEN_HERE
+```
+
+The `.env.development` file is ignored by git. Your token should never be committed.
 
 ### Contributing to the blog
 
