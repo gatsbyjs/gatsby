@@ -2839,3 +2839,13 @@
   built_by: Ryan Wiemer
   built_by_url: "https://www.ryanwiemer.com/"
   featured: false
+- title: Bitcoin Developer Platform
+  main_url: https://developer.bitcoin.com/
+  url: https://developer.bitcoin.com/
+  description: >
+    The bitcoin.com platform to allow for development on Bitcoin Cash
+  categories:
+    - Blockchain
+  built_by: Bitcoin
+  built_by_url: https://bitcoin.com/
+  featured: false
