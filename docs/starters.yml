@@ -786,3 +786,13 @@
     - TypeScript
     - CSS in JS (Emotion)
     - Contentful
+- url: https://xylo-gatsby-bulma-starter.netlify.com/
+  repo: https://github.com/xydac/xylo-gatsby-bulma-starter
+  description: Gatsby v2 Starter with Bulma based on default starter.
+  tags:
+    - Styling:SCSS
+    - Styling:Bulma
+  features:
+    - Based on default starter
+    - Bulma Css
+    - Sass based Styling
