@@ -170,7 +170,7 @@ Let's make a quick improvement. Many sites have a single column of text centered
 in the middle of the page. To create this, add the following styles to the
 `<div>` in `src/pages/index.js`.
 
-```jsx{4,25}:title=src/pages/index.js
+```jsx{4}:title=src/pages/index.js
 import React from "react"
 
 export default () => (
@@ -435,7 +435,7 @@ directory. But, if it's used only in one file, create it inline.
 
 Modify `about-css-modules.js` so it looks like the following:
 
-```jsx{7-19,25-34}:title=src/pages/about-css-modules.js
+```jsx{7-15,21-30}:title=src/pages/about-css-modules.js
 import React from "react"
 import styles from "./about-css-modules.module.css"
 import Container from "../components/container"
