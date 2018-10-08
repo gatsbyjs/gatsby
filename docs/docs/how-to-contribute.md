@@ -31,13 +31,24 @@ If you create a loader or plugin, we would <3 for you to open source it and put 
 ### Contributing to the repo
 
 Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
-lerna and yarn to configure the repository for active development.
+[Lerna](https://lernajs.io/) and [Yarn](https://yarnpkg.com/en/) to configure the repository for active development.
+
+#### Using Yarn
+
+Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple package.json files in sub-folders, enabling a faster and lighter installation process.
+
+```
+// package.json
+{
+  "workspaces": ["workspace-a", "workspace-b"]
+}
+```
 
 You can install the latest version of Gatsby by following these steps:
 
 - Clone the repo, navigate to its directory.
-- ensure you have the latest version of yarn installed (>= 1.0.2)
-  https://yarnpkg.com/en/docs/install
+- Ensure you have the latest version of Yarn installed (>= 1.0.2)
+  https://yarnpkg.com/en/docs/install. 
 - Install dependencies using `yarn run bootstrap` in the root of the repo.
 
 There are two ways to contribute. This is the most usual way:
