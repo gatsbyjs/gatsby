@@ -65,7 +65,9 @@ module.exports = async function onCreateNode(
     createParentChildLink({ parent: node, child: markdownNode })
   } catch (err) {
     reporter.panicOnBuild(
-      `Error processing Markdown file ${node.absolutePath}:\n
+      `Error processing Markdown file${
+        node.absolutePath ? ` ${node.absolutePath}` : ``
+      }:\n
       ${err.message}`
     )
   }
