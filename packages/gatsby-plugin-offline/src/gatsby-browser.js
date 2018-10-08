@@ -3,7 +3,7 @@ exports.registerServiceWorker = () => true
 let swNotInstalled = true
 const prefetchedPathnames = []
 
-exports.onPostPrefetchPathname = ({ pathname }) => {
+exports.onPrefetchPathname = ({ pathname }) => {
   // if SW is not installed, we need to record any prefetches
   // that happen so we can then add them to SW cache once installed
   if (swNotInstalled && `serviceWorker` in navigator) {

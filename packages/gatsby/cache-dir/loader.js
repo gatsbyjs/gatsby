@@ -236,9 +236,6 @@ const queue = {
       prefetchResource(page.componentChunkName)
     }
 
-    // Tell plugins the path has been successfully prefetched
-    apiRunner(`onPostPrefetchPathname`, { pathname: path })
-
     return true
   },
 
