@@ -33,6 +33,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "axios": "^0.18.0",
     "cross-env": "^5.0.5"
   }
 }
