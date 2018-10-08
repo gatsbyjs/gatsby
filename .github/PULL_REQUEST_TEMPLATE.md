@@ -1,7 +1,6 @@
 <!--
   Q. Which branch should I use for my pull request?
   - Adding a new feature? Use `master` branch
-  - Fixing a bug for Gatsby v1? Use the `v1` branch
   - Unsure? Use `master` branch and ask in the PR. A Gatsby mantainer will be happy to help :)
 
   Note: We will only accept bug fixes for Gatsby v1. New features should be added to Gatsby v2.
