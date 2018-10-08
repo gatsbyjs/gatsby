@@ -12,32 +12,6 @@ exports.onRouteUpdate = ({ location }) => {
   initialPath = location.pathname
 }
 
-let chunksPromise
-const chunks = () => {
-  if (!chunksPromise) {
-    chunksPromise = fetch(`${window.location.origin}/webpack.stats.json`).then(
-      res => res.json()
-    )
-  }
-
-  return chunksPromise
-}
-
-let hasPrefetched = {}
-const prefetch = url => {
-  if (hasPrefetched[url]) {
-    return
-  }
-  hasPrefetched[url] = true
-  const link = document.createElement(`link`)
-  link.setAttribute(`rel`, `prefetch`)
-  link.setAttribute(`href`, url)
-  const parentElement =
-    document.getElementsByTagName(`head`)[0] ||
-    document.getElementsByName(`script`)[0].parentNode
-  parentElement.appendChild(link)
-}
-
 exports.onPrefetchPathname = (
   { onPostPrefetchPathname, getResourcesForPathname, pathPrefix },
   pluginOptions
