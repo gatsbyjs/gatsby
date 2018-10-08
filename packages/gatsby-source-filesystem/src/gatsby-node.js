@@ -134,6 +134,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `**/.npmignore`,
       `**/.babelrc`,
       `**/yarn.lock`,
+      `**/bower_components`,
       `**/node_modules`,
       `../**/dist/**`,
       ...(pluginOptions.ignore || []),

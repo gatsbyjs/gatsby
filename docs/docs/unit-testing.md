@@ -30,7 +30,7 @@ tell Jest to use `babel-jest`. The easiest way to do this is to add a `"jest"`
 section in your `package.json`. You can set up some useful defaults at the same
 time:
 
-```json
+```json:title=package.json
   "jest": {
     "transform": {
       "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
@@ -59,8 +59,7 @@ transformed using a `jest-preprocess.js` file in the project root. Go ahead and
 create this file now. This is where you set up your Babel config. You can start
 with a minimal config.
 
-```js
-// jest-preprocess.js
+```js:title=jest-preprocess.js
 const babelOptions = {
   presets: ["@babel/react", "@babel/env"],
   plugins: [
@@ -89,8 +88,7 @@ assets rather than code. For stylesheets you need to use the package
 directory called `__mocks__` in the root directory for this. Note the pair of
 double underscores in the name.
 
-```js
-// __mocks__/fileMock.js
+```js:title=__mocks__/fileMock.js
 module.exports = "test-file-stub"
 ```
 
@@ -123,9 +121,7 @@ There's one more global that you need to set, but as it's a function you can't
 set it here in the JSON. The `setupFiles` array lets you list files that will be
 included before all tests are run, so it's perfect for this.
 
-```js
-// loadershim.js
-
+```js:title=loadershim.js
 global.___loader = {
   enqueue: jest.fn(),
 }
@@ -135,8 +131,7 @@ Finally it's a good idea to mock the gatsby module itself. This may not be
 needed at first, but will make things a lot easier if you want to test
 components that use `Link` or GraphQL.
 
-```js
-// __mocks__/gatsby.js
+```js:title=__mocks__/gatsby.js
 const gatsby = jest.requireActual("gatsby")
 module.exports = { ...gatsby, graphql: jest.fn(), Link: "Link" }
 ```
@@ -154,7 +149,7 @@ the extension `.spec.js` or `.test.js`. The decision comes down to your own
 taste. For this guide you will be testing the `<Bio />` component, so create a
 `Bio.test.js` file next to it in `src/components`:
 
-```js
+```js:title=src/components/Bio.test.js
 import React from "react"
 import renderer from "react-test-renderer"
 import Bio from "./Bio"
@@ -178,7 +173,7 @@ If you look inside `package.json` you will probably find that there is already a
 script for `test`, which just outputs an error message. Change this to simply
 `jest`:
 
-```json
+```json:title=package.json
   "scripts": {
     "test": "jest"
   }
@@ -231,7 +226,7 @@ npm install --save-dev ts-jest
 
 Then edit the Jest config in your `package.json` to match this:
 
-```json
+```json:title=package.json
   "jest": {
     "transform": {
         "^.+\\.tsx?$": "ts-jest",
@@ -274,8 +269,7 @@ We can use a small workaround to avoid an error.
 
 First, remove the `Link` mock from `gatsby`:
 
-```js
-// __mocks__/gatsby.js
+```js:title=__mocks__/gatsby.js
 const gatsby = jest.requireActual("gatsby")
 module.exports = { ...gatsby, graphql: jest.fn() }
 ```
@@ -287,8 +281,7 @@ You need to create a mock for `gatsby-link`, even though it will actually be the
 real module. You do this so that you can tell it to not try and use the mock
 `gatsby`:
 
-```js
-// __mocks__/gatsby-link.js
+```js:title=__mocks__/gatsby-link.js
 jest.unmock("gatsby")
 module.exports = jest.requireActual("gatsby-link")
 ```
@@ -297,9 +290,7 @@ One more issue that you may encounter is that some components expect to be able
 to use the `location` prop that is passed in by `Router`. You can fix this by
 manually passing in the prop:
 
-```js
-// src/__tests__/index.js
-
+```js:title=src/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"

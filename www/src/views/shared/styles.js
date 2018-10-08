@@ -261,6 +261,8 @@ const styles = {
     color: colors.lilac,
     fontWeight: `normal`,
   },
+  gutter: rhythm(3 / 4),
+  gutterDesktop: rhythm(6 / 4),
 }
 
 export default styles
