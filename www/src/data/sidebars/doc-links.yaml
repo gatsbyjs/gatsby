@@ -107,6 +107,8 @@
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
           link: /docs/adding-a-list-of-markdown-blog-posts/
+        - title: Using fragments
+          link: /docs/using-fragments/
         - title: Creating slugs for pages*
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
