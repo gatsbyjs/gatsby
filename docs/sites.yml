@@ -2839,3 +2839,11 @@
   built_by: Ryan Wiemer
   built_by_url: "https://www.ryanwiemer.com/"
   featured: false
+- title: developer.bitcoin.com
+  main_url: "https://www.bitcoin.com/"
+  url: "https://developer.bitcoin.com/"
+  description: >
+    Bitbox based bitcoin.com developer platform and resources.
+  categories:
+    - Blockchain
+  featured: false
