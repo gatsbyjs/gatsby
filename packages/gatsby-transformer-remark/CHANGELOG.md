@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.6"></a>
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.5...gatsby-transformer-remark@2.1.6) (2018-10-02)
+
+### Bug Fixes
+
+- support path-prefix for reference links in Markdown files ([#8607](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/8607)) ([fb43fda](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/fb43fda)), closes [#8588](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/8588)
+
 <a name="2.1.5"></a>
 
 ## [2.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.4...gatsby-transformer-remark@2.1.5) (2018-10-01)

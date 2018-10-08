@@ -2,8 +2,6 @@
 title: Introducing GraphiQL
 ---
 
-## What's in this tutorial?
-
 In this guide, you'll be learning to use something called Graph_i_QL, a tool that helps you structure GraphQL queries correctly.
 
 ## What is Graph_i_QL?

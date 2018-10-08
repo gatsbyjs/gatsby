@@ -11,7 +11,7 @@ const {
 const extendNodeType = require(`../extend-node-type`)
 
 // given a set of nodes and a query, return the result of the query
-async function queryResult(nodes, fragment, { types = [] } = {}) {
+async function queryResult(nodes, fragment, { types = [] } = {}, additionalParameters) {
   const inferredFields = inferObjectStructureFromNodes({
     nodes,
     types: [...types],
@@ -24,6 +24,7 @@ async function queryResult(nodes, fragment, { types = [] } = {}) {
         set: () => null,
       },
       getNodes: () => [],
+      ...additionalParameters,
     },
     {
       plugins: [],
@@ -89,7 +90,8 @@ const bootstrapTest = (label, content, query, test, additionalParameters = {}) =
         query,
         {
           types: [{ name: `MarkdownRemark` }],
-        }
+        },
+        additionalParameters
       ).then(result => {
         try {
           test(result.data.listNode[0])
@@ -348,7 +350,27 @@ final text
     frontmatter {
         title
     }`,
+  (node) => {
+    expect(node).toMatchSnapshot()
+  })
+})
+
+describe(`Links are correctly prefixed`, () => {
+  bootstrapTest(
+    `correctly prefixes links`,
+    `
+This is [a link](/path/to/page1).
+
+This is [a reference]
+
+[a reference]: /path/to/page2
+`,
+    `html`,
     (node) => {
       expect(node).toMatchSnapshot()
-    })
-  })
+      expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
+      expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
+    },
+    { pathPrefix: `/prefix` }
+  )
+})

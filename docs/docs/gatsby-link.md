@@ -159,3 +159,29 @@ const Link = ({ children, to, ...other }) => {
 
 export default Link
 ```
+
+### File Downloads
+
+You can similarly check for file downloads:
+
+```
+  const file = /\.[0-9a-z]+$/i.test(to)
+  
+  ...
+  
+  if (internal) {
+    if (file) {
+        return (
+          <a href={to} {...other}>
+            {children}
+          </a>
+      )
+    }
+    return (
+      <GatsbyLink to={to} {...other}>
+        {children}
+      </GatsbyLink>
+    )
+  }
+  
+```
