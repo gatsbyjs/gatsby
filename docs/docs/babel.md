@@ -28,7 +28,7 @@ to add custom Babel presets or plugins, you can create your own `.babelrc` at th
 npm install --save babel-preset-gatsby
 ```
 
-```json5
+```json5:title=.babelrc
 {
   presets: [
     [

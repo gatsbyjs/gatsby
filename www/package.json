@@ -4,6 +4,7 @@
   "version": "2.0.0-beta",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@reach/skip-nav": "^0.1.1",
     "bluebird": "^3.5.1",
     "dotenv": "^6.0.0",
     "email-validator": "^1.1.1",

@@ -1,20 +1,16 @@
-- title: Quick start
+- title: Quick Start
   items:
-    - title: Quick start
+    - title: Getting Started
       link: /docs/
     - title: Starter Library
       link: /starters/
     - title: Recipes
       link: /docs/recipes/
-    - title: Overview of the docs*
-      link: /docs/overview/
 - title: Guides
   items:
     - title: Preparing your environment
       link: /docs/preparing-your-environment/
       items:
-        - title: Basic hardware and software requirements*
-          link: /docs/basic-hardware-software-requirements/
         - title: Browser Support
           link: /docs/browser-support/
         - title: Gatsby on Windows
@@ -45,7 +41,7 @@
           link: /docs/custom-html/
         - title: Environment variables
           link: /docs/environment-variables/
-        - title: ESlint*
+        - title: ESLint
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
@@ -86,7 +82,7 @@
           items:
             - title: Sourcing from Netlify CMS
               link: /docs/sourcing-from-netlify-cms/
-            - title: Sourcing from WordPress*
+            - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal*
               link: /docs/sourcing-from-drupal/
@@ -111,6 +107,8 @@
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
           link: /docs/adding-a-list-of-markdown-blog-posts/
+        - title: Using fragments
+          link: /docs/using-fragments/
         - title: Creating slugs for pages*
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
@@ -388,5 +386,5 @@
       link: /docs/submit-to-starter-library/
 - title: Glossary*
   link: /docs/glossary/
-- title: Commands (Gatsby CLI)*
+- title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/

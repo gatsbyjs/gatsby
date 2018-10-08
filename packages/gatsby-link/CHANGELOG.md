@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.3...gatsby-link@2.0.4) (2018-10-03)
+
+### Bug Fixes
+
+- navigateTo deprecation message ([#8745](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/8745)) ([3c824f3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/3c824f3))
+
 <a name="2.0.3"></a>
 
 ## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.2...gatsby-link@2.0.3) (2018-10-01)

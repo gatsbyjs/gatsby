@@ -21,7 +21,7 @@ content from source plugins and _transform_ it into something more usable.
 For example, markdown files. Markdown is nice to write in but when you build a
 page with it, you need the markdown to be HTML.
 
-Let's add a markdown file to your site at
+Add a markdown file to your site at
 `src/pages/sweet-pandas-eating-sweets.md` (This will become your first markdown
 blog post) and learn how to _transform_ it to HTML using transformer plugins and
 GraphQL.
@@ -45,7 +45,7 @@ the table. This is a very powerful feature of Gatsby. Like the earlier
 `gatsby-source-filesystem` is always scanning for new files to be added and when
 they are, re-runs your queries.
 
-Let's add a transformer plugin that can transform markdown files:
+Add a transformer plugin that can transform markdown files:
 
 ```shell
 npm install --save gatsby-transformer-remark
@@ -96,7 +96,7 @@ data transformation you might need when building a Gatsby site.
 
 ## Create a list of your site's markdown files in `src/pages/index.js`
 
-Let's now create a list of your markdown files on the front page. Like many
+Now you'll have to create a list of your markdown files on the front page. Like many
 blogs, you want to end up with a list of links on the front page pointing to each
 blog post. With GraphQL you can _query_ for the current list of markdown blog
 posts so you won't need to maintain the list manually.
