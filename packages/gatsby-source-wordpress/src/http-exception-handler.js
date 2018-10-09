@@ -20,6 +20,7 @@ function httpExceptionHandler(e) {
     status,
     statusText,
     data: { message },
+    request: { path },
   } = response
   console.log(
     colorized.out(
@@ -30,10 +31,11 @@ function httpExceptionHandler(e) {
   if (message) {
     console.log(
       colorized.out(
-        `Inner exception message : "${message}"`,
+        `Inner exception message: "${message}"`,
         colorized.color.Font.FgRed
       )
     )
+    console.log(colorized.out(`Path: ${path}`, colorized.color.Font.FgRed))
   }
 }
 
