@@ -21,6 +21,7 @@ function httpExceptionHandler(e) {
     status,
     statusText,
     data: { message },
+    request: { path },
   } = response
   console.log(
     colorized.out(
@@ -35,6 +36,7 @@ function httpExceptionHandler(e) {
         colorized.color.Font.FgRed
       )
     )
+    console.log(colorized.out(`Path: ${path}`, colorized.color.Font.FgRed))
   }
 }
 
