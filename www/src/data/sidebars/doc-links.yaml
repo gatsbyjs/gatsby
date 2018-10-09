@@ -41,7 +41,7 @@
           link: /docs/custom-html/
         - title: Environment variables
           link: /docs/environment-variables/
-        - title: ESlint*
+        - title: ESLint
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
@@ -107,6 +107,8 @@
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
           link: /docs/adding-a-list-of-markdown-blog-posts/
+        - title: Using fragments
+          link: /docs/using-fragments/
         - title: Creating slugs for pages*
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
@@ -384,5 +386,5 @@
       link: /docs/submit-to-starter-library/
 - title: Glossary*
   link: /docs/glossary/
-- title: Commands (Gatsby CLI)*
+- title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/

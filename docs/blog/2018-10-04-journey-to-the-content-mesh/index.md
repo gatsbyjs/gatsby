@@ -9,7 +9,7 @@ The CMS was born to make content sites _possible_. Now, it’s being reimagined 
 
 In the early 2000s, publishing on the web was difficult. The CMS emerged as a single application to store content, build sites, and deliver them to users.
 
-Over time, the feature landscape broadened -- key areas like search, analytics, payments, personalization, e-commerce emerged. In each category, specialized tools improved rapidly, while the quality of monolithic enterprise CMS applications like Adobe Experience Manager and Sitecore has stayed roughly the same.
+Over time, the feature landscape broadened -- key areas like search, analytics, payments, personalization, and e-commerce emerged. In each category, specialized tools improved rapidly, while the quality of monolithic enterprise CMS applications like Adobe Experience Manager and Sitecore has stayed roughly the same.
 
 ## Modularizing the CMS
 
@@ -30,7 +30,7 @@ Teams are adopting these services because each is tailored to a specific use-cas
 
 This is the first post in a series, Journey to the Content Mesh, intended to explain the emergence of a "content mesh" -- the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
 
-The previous generation of enterprise CMS offered a set of mediocre components; an often-generic content editing experience glued to out-of-date development and deployment environments. The emerging strategy for content management selects best-of-breed solutions, tailored to specific use-cases like e-commerce or blogging; it provides a modern framework for rapid iteration and it generates lightning fast websites out of the box.
+The previous generation of enterprise CMS offered an often-generic content editing experience glued to out-of-date development and deployment environments. The emerging strategy for content management selects best-of-breed solutions, tailored to specific use-cases like e-commerce or blogging; it provides a modern framework for rapid iteration and it generates lightning fast websites out of the box.
 
 ## Three Areas of Rapid Innovation
 

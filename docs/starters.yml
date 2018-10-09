@@ -28,6 +28,15 @@
     - Offline support
     - Web App Manifest
     - SEO
+- url: https://gatsby-tailwind-emotion-starter.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-tailwind-emotion-starter
+  description: A Gatsby Starter with Tailwind CSS + Emotion JS
+  tags:
+    - Styling:Tailwind
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Offline support
+    - Web App Manifest
 - url: https://dschau.github.io/gatsby-blog-starter-kit/
   repo: https://github.com/dschau/gatsby-blog-starter-kit
   description: n/a
@@ -146,7 +155,7 @@
   description: n/a
   tags:
     - Styling:Bootstrap
-    - NetlifyCMS
+    - Netlify CMS
   features:
     - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
 - url: https://jaxx2104.github.io/gatsby-starter-bootstrap/
@@ -175,7 +184,7 @@
   tags:
     - Styling:Bulma
     - PWA
-    - NetlifyCMS
+    - Netlify CMS
     - Disqus
   features:
     - Complete Business Website Suite - Home Page, About Page, Pricing Page, Contact Page and Blog
@@ -284,7 +293,7 @@
   tags:
     - Styling:Semantic
     - Stripe
-    - Ecommerce:Moltin
+    - Moltin
   features:
     - Uses the Moltin eCommerce Api
     - React 16 (gatsby-plugin-react-next)
@@ -330,18 +339,28 @@
     - Font styles taken from Tachyons.
 - url: https://gcn.netlify.com/
   repo: https://github.com/ryanwiemer/gatsby-starter-gcn
-  description: n/a
+  description: A starter template to build amazing static websites with Gatsby, Contentful and Netlify
   tags:
     - Contentful
+    - Blog
     - Netlify Form
     - Styling:CSS-in-JS
   features:
-    - Inspired by gatsby-contentful-starter
     - Contentful integration with ready to go placeholder content
     - Netlify integration including a pre-built contact form
     - Minimal responsive design - made to customize or tear apart
+    - Pagination logic
     - Styled components
-    - SEO friendly
+    - SEO Friendly Component
+    - JSON-LD Schema
+    - OpenGraph sharing support
+    - Sitemap Generation
+    - Google Analytics
+    - Progressive Web app
+    - Offline Support
+    - RSS Feed
+    - Gatsby Standard module for linting Javascript with StandardJS
+    - Stylelint support for Styled Components to lint the CSS in JS
 - url: https://alampros.github.io/gatsby-starter-grommet/
   repo: https://github.com/alampros/gatsby-starter-grommet
   description: n/a
@@ -440,7 +459,7 @@
   tags:
     - Blog
     - Styling:Bulma
-    - NetlifyCMS
+    - Netlify CMS
   features:
     - A simple blog built with Netlify CMS
     - Basic directory organization
@@ -496,7 +515,7 @@
   description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images & big typography. The Onepage is powered by the Headless CMS Prismic.io. and has programatically created pages for your projects. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
-    - Prismic.io
+    - Prismic
     - Styling:CSS-in-JS
     - Onepage
     - PWA
@@ -676,7 +695,7 @@
   description: n/a
   tags:
     - Styling:CSS-in-JS
-    - Typescript
+    - TypeScript
     - Markdown
   features:
     - TypeScript
@@ -688,14 +707,14 @@
   repo: https://github.com/haysclark/gatsby-starter-typescript
   description: n/a
   tags:
-    - Typescript
+    - TypeScript
   features:
     - TypeScript
 - url: https://fabien0102-gatsby-starter.netlify.com/
   repo: https://github.com/fabien0102/gatsby-starter
   description: n/a
   tags:
-    - Typescript
+    - TypeScript
     - Styling:Semantic
   features:
     - Semantic-ui for styling
@@ -767,3 +786,13 @@
     - TypeScript
     - CSS in JS (Emotion)
     - Contentful
+- url: https://xylo-gatsby-bulma-starter.netlify.com/
+  repo: https://github.com/xydac/xylo-gatsby-bulma-starter
+  description: Gatsby v2 Starter with Bulma based on default starter.
+  tags:
+    - Styling:SCSS
+    - Styling:Bulma
+  features:
+    - Based on default starter
+    - Bulma Css
+    - Sass based Styling

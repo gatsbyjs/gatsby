@@ -112,7 +112,7 @@ const LegendTable = () => {
 }
 
 const FeaturesHeader = () => (
-  <div>
+  <section>
     <h1 id="introduction" style={{ marginTop: 0 }}>
       Features
     </h1>
@@ -158,7 +158,7 @@ const FeaturesHeader = () => (
       Legend
     </h6>
     <LegendTable />
-  </div>
+  </section>
 )
 
 const getFeaturesData = function(data) {
@@ -212,12 +212,14 @@ class FeaturesPage extends Component {
         enableScrollSync={true}
       >
         <Container>
-          <FeaturesHeader />
-          <EvaluationTable
-            sections={sections}
-            sectionHeaders={sectionHeaders}
-          />
-          <FeaturesFooter />
+          <main id={`reach-skip-nav`}>
+            <FeaturesHeader />
+            <EvaluationTable
+              sections={sections}
+              sectionHeaders={sectionHeaders}
+            />
+            <FeaturesFooter />
+          </main>
         </Container>
       </Layout>
     )
