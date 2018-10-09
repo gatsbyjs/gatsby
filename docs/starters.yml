@@ -134,7 +134,7 @@
     - Styling:None
   features:
     - Same as official gatsby-starter-blog but with all styling removed
-- url: http://gatsbyjs.github.io/gatsby-starter-blog/
+- url: https://gatsby-starter-blog-demo.netlify.com/
   repo: https://github.com/gatsbyjs/gatsby-starter-blog
   description: official blog
   tags:
@@ -264,7 +264,7 @@
     - i18n
   features:
     - localization (Multilanguage)
-- url: http://gatsbyjs.github.io/gatsby-starter-default/
+- url: https://gatsby-starter-default-demo.netlify.com/
   repo: https://github.com/gatsbyjs/gatsby-starter-default
   description: official default
   tags:
@@ -381,7 +381,7 @@
   features:
     - Barebones configuration for using the Grommet design system
     - Uses Sass (with CSS modules support)
-- url: https://aberrant-fifth.surge.sh/
+- url: https://gatsby-starter-hello-world-demo.netlify.com/
   repo: https://github.com/gatsbyjs/gatsby-starter-hello-world
   description: official hello world
   tags:
