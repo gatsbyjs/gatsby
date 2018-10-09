@@ -58,6 +58,9 @@ exports.sourceNodes = async (
     return
   }
 
+  const createSyncToken = () =>
+    `${options.spaceId}-${options.environment}-${options.host}`
+
   options.host = options.host || `cdn.contentful.com`
   options.environment = options.environment || `master` // default is always master
   // Get sync token if it exists.
@@ -66,11 +69,11 @@ exports.sourceNodes = async (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
     store.getState().status.plugins[`gatsby-source-contentful`][
-      `${options.spaceId}-${options.environment}`
+      createSyncToken()
     ]
   ) {
     syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
-      `${options.spaceId}-${options.environment}`
+      createSyncToken()
     ]
   }
 
@@ -131,7 +134,7 @@ exports.sourceNodes = async (
 
   // Store our sync state for the next sync.
   const newState = {}
-  newState[`${options.spaceId}-${options.environment}`] = nextSyncToken
+  newState[createSyncToken()] = nextSyncToken
   setPluginStatus(newState)
 
   // Create map of resolvable ids so we can check links against them while creating
