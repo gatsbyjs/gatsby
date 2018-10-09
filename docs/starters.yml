@@ -862,3 +862,23 @@
     - Stateless components using Recompose
     - Font changes depending on the chosen language
     - SEO (meta tags, openGraph, structured data, twitter and more...)
+- url: https://gatsby-starter-mate.netlify.com
+  repo: https://github.com/EmaSuriano/gatsby-starter-mate
+  description: A portfolio starter for Gatsby integrated with Contentful CMS.
+  tags:
+    - Styling:CSS-in-JS
+    - Contentful
+    - Portfolio
+  features:
+    - Gatsby v2
+    - Rebass (Styled-components system)
+    - React Reveal
+    - Dynamic content from Contentful
+    - Offline support
+    - PWA ready
+    - SEO
+    - Responsive design
+    - Icons from font-awesome
+    - Netlify Deployment Friendly
+    - Medium integration
+    - Social sharing (Twitter, Facebook, Google, LinkedIn)
