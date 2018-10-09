@@ -812,3 +812,24 @@
     - Based on default starter
     - Bulma Css
     - Sass based Styling
+- url: https://www.maxpou.fr/gatsby-starter-morning-dew/
+  repo: https://github.com/maxpou/gatsby-starter-morning-dew
+  description: Gatsby v2 blog starter
+  tags:
+    - Blog
+    - Markdown
+    - PWA
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
+    - Fully configurable
+    - Multilang support (blog post only)
+    - Syntax highlighting
+    - Fully Responsive
+    - Tags
+    - Google Analytics
+    - Disqus
+    - Offline support
+    - Web App Manifest
+    - ESLint
+    - Prettier
+    - Travis CI
