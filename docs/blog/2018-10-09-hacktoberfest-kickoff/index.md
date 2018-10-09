@@ -1,6 +1,6 @@
 ---
 title: "Hacktoberfest with Gatsby!"
-date: 2018-10-08
+date: 2018-10-09
 author: "Amberley Romo"
 tags: ["hacktoberfest", "open source"]
 ---
