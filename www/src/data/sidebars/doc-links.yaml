@@ -132,6 +132,8 @@
     - title: Styling
       link: /docs/styling/
       items:
+        - title: Layout Components
+          link: /docs/layout-components/
         - title: CSS Modules
           link: /docs/css-modules/
         - title: Typography.js*

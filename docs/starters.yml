@@ -833,6 +833,35 @@
     - ESLint
     - Prettier
     - Travis CI
+- url: https://gatsby-starter-blog-jumpalottahigh.netlify.com/
+  repo: https://github.com/jumpalottahigh/gatsby-starter-blog-jumpalottahigh
+  description: Gatsby v2 blog starter with SEO, search, filter, reading progress, mobile menu fab
+  tags:
+    - Blog
+    - Markdown
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
+    - Google structured data
+    - Mobile-friendly menu toggled with a floating action button (FAB)
+    - Article read progress
+    - User feedback component
+- url: https://i18n.smakosh.com/
+  repo: https://github.com/smakosh/gatsby-starter-i18n
+  description: Gatsby v2 Starter with i18n using react-intl and more cool features.
+  tags:
+    - Styling:CSS-in-JS
+    - Recompose
+    - i18n
+    - react-intl
+    - Formik
+    - Yup
+    - Netlify Form
+  features:
+    - Based on default starter
+    - i18n with rtl text
+    - Stateless components using Recompose
+    - Font changes depending on the chosen language
+    - SEO (meta tags, openGraph, structured data, twitter and more...)
 - url: https://gatsby-starter-mate.netlify.com
   repo: https://github.com/EmaSuriano/gatsby-starter-mate
   description: A portfolio starter for Gatsby integrated with Contentful CMS.
