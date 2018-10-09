@@ -1,5 +1,14 @@
 import { apiRunner } from "./api-runner-browser"
 
+if (
+  window.location.protocol !== `https:` &&
+  window.location.hostname !== `localhost`
+) {
+  throw new TypeError(
+    `Service workers can only be used over HTTPS, or on localhost for development`
+  )
+}
+
 if (`serviceWorker` in navigator) {
   navigator.serviceWorker
     .register(`${__PATH_PREFIX__}/sw.js`)
