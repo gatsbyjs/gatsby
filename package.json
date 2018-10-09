@@ -66,6 +66,7 @@
     "lint:yaml": "prettier --list-different \"**/*.y?(a)ml\"",
     "plop": "plop",
     "prebootstrap": "yarn",
+    "prepublish": "node scripts/check-publish-access",
     "publish": "lerna publish",
     "publish-canary": "lerna publish --canary --yes",
     "publish-next": "lerna publish --npm-tag=next --bump=prerelease",
