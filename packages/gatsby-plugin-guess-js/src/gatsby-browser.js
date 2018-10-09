@@ -12,10 +12,7 @@ exports.onRouteUpdate = ({ location }) => {
   initialPath = location.pathname
 }
 
-exports.onPrefetchPathname = (
-  { onPostPrefetchPathname, getResourcesForPathname, pathPrefix },
-  pluginOptions
-) => {
+exports.onPrefetchPathname = ({ getResourcesForPathname }, pluginOptions) => {
   if (process.env.NODE_ENV !== `production`) return
 
   const matchedPaths = Object.keys(
