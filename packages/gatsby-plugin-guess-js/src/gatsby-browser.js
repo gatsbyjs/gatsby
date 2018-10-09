@@ -27,8 +27,6 @@ exports.onPrefetchPathname = (
 
   // Don't prefetch from client for the initial path as we did that
   // during SSR
-  if (notNavigated && initialPath === window.location.pathname) return
-
-  // TODO: add support for pathPrefix / check if it works
-  matchedPaths.forEach(getResourcesForPathname)
+  if (!(notNavigated && initialPath === window.location.pathname))
+    matchedPaths.forEach(getResourcesForPathname)
 }
