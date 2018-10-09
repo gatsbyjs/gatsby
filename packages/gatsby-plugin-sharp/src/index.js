@@ -143,8 +143,9 @@ const processFile = (file, jobs, cb, reporter) => {
     }
 
     clonedPipeline
-      .resize(roundedWidth, roundedHeight)
-      .crop(args.cropFocus)
+      .resize(roundedWidth, roundedHeight, {
+        position: options.cropFocus
+      })
       .png({
         compressionLevel: args.pngCompressionLevel,
         adaptiveFiltering: false,
@@ -444,8 +445,9 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
   }
 
   pipeline
-    .resize(options.width, options.height)
-    .crop(options.cropFocus)
+    .resize(options.width, options.height, {
+      position: options.cropFocus
+    })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
@@ -769,8 +771,9 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   }
 
   pipeline
-    .resize(options.width, options.height)
-    .crop(options.cropFocus)
+    .resize(options.width, options.height, {
+      position: options.cropFocus
+    })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
