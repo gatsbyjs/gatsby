@@ -124,6 +124,7 @@ const processFile = (file, jobs, cb, reporter) => {
 
   jobs.forEach(async job => {
     const args = job.args
+    const options = healOptions(args, {})
     let clonedPipeline
     if (jobs.length > 1) {
       clonedPipeline = pipeline.clone()
