@@ -2,16 +2,16 @@
 title: Uptick in docs contributions for Gatsby Hacktoberfest
 date: 2018-10-09
 author: Shannon Soper
-tags: ["documentation"]
+tags: ["documentation", "hacktoberfest"]
 ---
 
 ## Hacktoberfest docs explosion!
 
-Since October 1st--the start of Hacktoberfest--the Gatsby OSS community has seen a huge uptick in docs contributions. In the first 5 days of October we [merged 28 PR's with the `documentation` label](https://github.com/gatsbyjs/gatsby/pulls?utf8=%E2%9C%93&q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed+label%3A%22type%3A+documentation%22+language%3Aswift+closed%3A%3E2018-10-01) (and by the time you click on that link, it will likely be more than 28, especially if PR’s are labelled correctly!).
+Since October 1st -- the start of Hacktoberfest -- the Gatsby OSS community has seen a huge uptick in docs contributions. In the first 5 days of October we [merged 28 PR's with the `documentation` label](https://github.com/gatsbyjs/gatsby/pulls?utf8=%E2%9C%93&q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed+label%3A%22type%3A+documentation%22+language%3Aswift+closed%3A%3E2018-10-01) (and by the time you click on that link, it will likely be more than 28, especially if PR’s are labelled correctly!).
 
-A big thanks to every contributor who jumped in to help Gatsby docs keep becoming more polished, comprehensive, and clear. In fact, many of the PR’s fixed problems we hadn’t even created issues for yet! And we’re increasing the number of `hacktoberfest` + `documentation` labelled issues to account for the surge of helpful contributions. A special thanks to @amberley, @jlengstorf, @dustin, and @pieh for their hard work giving feedback and merging PR’s!
+A big thanks to every contributor who jumped in to help Gatsby docs keep becoming more polished, comprehensive, and clear. In fact, many of the PR’s fixed problems we hadn’t even created issues for yet! And we’re increasing the number of `hacktoberfest` + `documentation` labelled issues to account for the surge of helpful contributions. A special thanks to [@amberleyromo](https://github.com/amberleyromo), [@jlengstorf](https://github.com/jlengstorf), [@DSchau](https://github.com/DSchau), and [@pieh](https://github.com/pieh) for their hard work giving feedback and merging PR’s!
 
-- See how to participate in [Gatsby Hacktoberfest](https://github.com/gatsbyjs/gatsby/issues/7928)
+Read more on how to participate in Gatsby Hacktoberfest in our [Hacktoberfest kickoff post](/blog/2018-10-09-hacktoberfest-kickoff/)
 
 ## With great contributions comes great responsibility
 
@@ -19,7 +19,7 @@ The increase in contributions means the Gatsby community makes more frequent dec
 
 This has led to two changes:
 
-1.  @jlengstorf created the [@docsteam](https://github.com/orgs/gatsbyjs/teams/docs) in GitHub that automatically notifies whomever is on the team whenever a PR includes edits to anything within /docs/.
+1.  [@jlengstorf](https://github.com/jlengstorf) created the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) in GitHub that automatically notifies whomever is on the team whenever a PR includes edits to anything within /docs/.
 
 2.  With the help of many people, I created a “docs decision tree,” so that when the @docsteam is notified, they can make decisions in a unified manner according to a set of agreed-upon principles (which can be adjusted over time). This will help anyone making decisions pertaining to docs escape any biases and fickleness. The “docs decision tree” will be tested over Hacktoberfest with all issues labelled `documentation` and collect discussion in the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14).
 
@@ -33,11 +33,11 @@ Here is a summary of the “docs decision tree,” a tool we’ll use to make de
 
 A doc qualifies to be in the .org site if it:
 
-1.  Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the Gatsby OSS repository [www.github.com/gatsbyjs/gatsby](www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
+1.  Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the [Gatsby OSS repository](www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
 
-Yes? --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
+**Yes** --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
 
-No --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin library, etc.
+**No** --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin library, etc.
 
 2.  Helps further something on the [developer journey](https://pronovix.com/blog/analyzing-api-docs-and-dx-patterns-best-banking-developer-portals):
 
@@ -48,44 +48,53 @@ No --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin lib
 - Celebrate & Share
 - Contribute & Maintain
 
-Yes? --> Belongs in the docs
-No? --> Does not belong in the docs
+**Yes** --> Belongs in the docs
+
+**No** --> Does not belong in the docs
+
+## Handling proposed doc changes
 
 ### Someone wants to create a new doc
 
 Does doc already exist?
 
-- Yes --> Is there a discovery problem? If so, solve it
-- No --> move ahead
+**Yes** --> Is there a discovery problem? If so, solve it
+
+**No** --> move ahead
 
 Is there a demand to create the doc?
 
-- No --> don't create it
-- Yes --> move ahead
+**Yes** --> move ahead
+
+**No** --> don't create it
 
 Does the doc qualify to be in the /docs/?
 
-- Yes --> Create it
-- No --> Don't create it
+**Yes** --> Create it
+
+**No** --> Don't create it
 
 ### Someone wants to create new categories in the docs sidebar
 
 Is there a category that the doc(s) could fit in that has more than 5-7 docs in it?
 
-- No --> Move on
-- Yes --> Put in existing category
+**Yes** --> Put in existing category
+
+**No** --> Move on
 
 Would the new category have more than 2 docs in it?
 
-- No --> consider waiting to create the category until there is more than 2 docs
-- Yes --> Create new category
+**Yes** --> Create new category
+
+**No** --> consider waiting to create the category until there is more than 2 docs
 
 ### Someone wants to reorder the categories in the sidebar or shift docs to new categories
 
 Is there evidence that the reorganization would help further one of the steps on the developer journey?
 
-- No --> Don't reorder the categories
-- Yes --> Reorder them and do usability testing to measure the value of the change
+**Yes** --> Reorder them and do usability testing to measure the value of the change
+
+**No** --> Don't reorder the categories
 
 ## Naming criteria
 
@@ -102,6 +111,6 @@ Names for guides, tutorial sections, and sub-headings in the .org site should:
 
 ## Thanks and keep Hacktoberfesting with Gatsby
 
-It’s been incredible to see how many hard-working contributors have gotten PR’s merged this week for Gatsby. Check out [how to participate in Gatsby Hacktoberfest](https://github.com/gatsbyjs/gatsby/issues/7928) and filter out `hacktoberfest - claimed` issues to see which ones are left unclaimed!
+It’s been incredible to see how many hard-working contributors have gotten PR’s merged this week for Gatsby. Don't forget to check out [how to participate in Gatsby Hacktoberfest!](/blog/2018-10-09-hacktoberfest-kickoff/)
 
-And don’t forget to read the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14) and leave your comments before October 31st, when the commenting period will be closed.
+And don’t forget to also read the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14) and leave your comments before October 31st, when the commenting period will be closed.
