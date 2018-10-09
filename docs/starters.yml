@@ -845,3 +845,20 @@
     - Mobile-friendly menu toggled with a floating action button (FAB)
     - Article read progress
     - User feedback component
+- url: https://i18n.smakosh.com/
+  repo: https://github.com/smakosh/gatsby-starter-i18n
+  description: Gatsby v2 Starter with i18n using react-intl and more cool features.
+  tags:
+    - Styling:CSS-in-JS
+    - Recompose
+    - i18n
+    - react-intl
+    - Formik
+    - Yup
+    - Netlify Form
+  features:
+    - Based on default starter
+    - i18n with rtl text
+    - Stateless components using Recompose
+    - Font changes depending on the chosen language
+    - SEO (meta tags, openGraph, structured data, twitter and more...)
