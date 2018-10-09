@@ -47,8 +47,6 @@ const createFSMachine = () =>
     },
   })
 
-let currentState
-
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
   pluginOptions
@@ -75,7 +73,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   }
 
   const fsMachine = createFSMachine()
-  currentState = fsMachine.initialState
+  let currentState = fsMachine.initialState
 
   // Once bootstrap is finished, we only let one File node update go through
   // the system at a time.
