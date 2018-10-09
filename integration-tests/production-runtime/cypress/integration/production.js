@@ -79,4 +79,16 @@ describe(`Production build tests`, () => {
       .getTestElement(`404`)
       .should(`exist`)
   })
+
+  it(`should navigate back after a 404 from direct link entry`, () => {
+    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+
+    cy.visit(`/non-existent-page/`, { failOnStatusCode: false })
+
+    cy.waitForAPI(`onRouteUpdate`)
+      .go(`back`)
+      .waitForAPI(`onRouteUpdate`)
+      .getTestElement(`index-link`)
+      .should(`exist`)
+  })
 })
