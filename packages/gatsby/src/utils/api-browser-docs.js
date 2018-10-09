@@ -161,21 +161,6 @@ exports.wrapRootElement = true
  * @param {object} $0
  * @param {string} $0.pathname The pathname whose resources should now be prefetched
  * @param {function} $0.getResourcesForPathname Function for fetching resources related to pathname
- * @param {function} $0.onPostPrefetchPathname Function for calling the
- * post-prefetch API. If you use custom prefetching, you should call this
- * function once pageCache has been populated - probably after calling
- * getResourcesForPathname - as well as using `disableCorePrefetching` to
- * prevent Gatsby automatically running this API too early.
- * @example
- * exports.onPrefetchPathname = ({
- *   pathname,
- *   getResourcesForPathname,
- *   onPostPrefetchPathname,
- * }) => {
- *   getResourcesForPathname(pathname).then(() => {
- *     onPostPrefetchPathname({ pathname })
- *   })
- * }
  */
 exports.onPrefetchPathname = true
 

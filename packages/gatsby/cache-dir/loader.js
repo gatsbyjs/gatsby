@@ -147,11 +147,11 @@ const handleResourceLoadError = (path, message) => {
   }
 }
 
-const onPostPrefetchPathname = args => {
-  if (prefetchedPaths.includes(args.pathname)) return
+const onPostPrefetchPathname = pathname => {
+  if (prefetchedPaths.includes(pathname)) return
 
-  prefetchedPaths.push(args.pathname)
-  apiRunner(`onPostPrefetchPathname`, args)
+  prefetchedPaths.push(pathname)
+  apiRunner(`onPostPrefetchPathname`, { pathname })
 }
 
 // Note we're not actively using the path data atm. There
@@ -200,10 +200,7 @@ const queue = {
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
     if (!prefetchTriggered[path]) {
-      apiRunner(`onPrefetchPathname`, {
-        pathname: path,
-        onPostPrefetchPathname,
-      })
+      apiRunner(`onPrefetchPathname`, { pathname: path })
       prefetchTriggered[path] = true
     }
 
@@ -245,7 +242,7 @@ const queue = {
     }
 
     // Tell plugins the path has been successfully prefetched
-    onPostPrefetchPathname({ pathname: path })
+    onPostPrefetchPathname(path)
 
     return true
   },
@@ -375,7 +372,7 @@ const queue = {
           resolve(pageResources)
 
           // Tell plugins the path has been successfully prefetched
-          onPostPrefetchPathname({ pathname: path })
+          onPostPrefetchPathname(path)
 
           emitter.emit(`onPostLoadPageResources`, {
             page,

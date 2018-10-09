@@ -29,10 +29,6 @@ exports.onPrefetchPathname = (
   // during SSR
   if (notNavigated && initialPath === window.location.pathname) return
 
-  matchedPaths.forEach(p => {
-    getResourcesForPathname(p).then(() => {
-      // TODO: add / check support for pathPrefix
-      onPostPrefetchPathname({ pathname: p })
-    })
-  })
+  // TODO: add support for pathPrefix / check if it works
+  matchedPaths.forEach(getResourcesForPathname)
 }
