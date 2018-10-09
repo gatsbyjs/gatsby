@@ -38,5 +38,4 @@ plugins:
 ```
 
 ## Other resources
-
 - Learn more about Gatsy and Aerobatic on [Aerobatic's site](https://www.aerobatic.com/docs/static-site-generators/#react).

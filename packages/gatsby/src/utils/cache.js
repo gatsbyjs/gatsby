@@ -7,7 +7,10 @@ const MAX_CACHE_SIZE = 250
 const TTL = Number.MAX_SAFE_INTEGER
 
 class Cache {
-  constructor({ name = `db`, store = fsStore } = {}) {
+  constructor({
+    name = `db`,
+    store = fsStore,
+  } = {}) {
     this.name = name
     this.store = store
   }
