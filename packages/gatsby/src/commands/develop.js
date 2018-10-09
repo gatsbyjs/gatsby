@@ -26,6 +26,7 @@ const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -157,6 +158,8 @@ async function startServer(program) {
       req.pipe(request(proxiedUrl)).pipe(res)
     })
   }
+
+  await apiRunnerNode(`onCreateDevServer`, { app })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
