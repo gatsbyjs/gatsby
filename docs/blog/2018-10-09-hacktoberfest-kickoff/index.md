@@ -16,6 +16,8 @@ Hacktoberfest encourages open source contributions by motivating open source pro
 - [sign up](https://hacktoberfest.digitalocean.com/sign_up/register) to participate, and
 - submit five quality pull requests to public GitHub repositories (within the time frame of October 1–31).
 
+So far, [30+ people have contributed](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+sort%3Aupdated-desc+label%3AHacktoberfest+is%3Aclosed) to close out Gatsby Hacktoberfest issues, and [there are 35 open](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+sort%3Aupdated-desc+label%3AHacktoberfest+is%3Aopen) Hacktoberfest issues, with more on the way.
+
 If you are one of the first 50,000 people to complete five pull requests, the Hacktoberfest project will send you a t-shirt!
 
 Check out the complete participation details and rules over at the [Hacktoberfest site](https://hacktoberfest.digitalocean.com/details).
@@ -41,9 +43,13 @@ We so appreciate everyone who puts in the time to contribute to making Gatsby, a
 
 ## How do first-time contributors get started?
 
-If you’re considering contributing to Gatsby for the first time, we’re so glad you’re here! Check out [the main issue](https://github.com/gatsbyjs/gatsby/issues/8719) that’s organizing our Hacktoberfest efforts. While you don’t need to close out an issue labeled with “Hacktoberfest” specifically to participate (just submit a PR to public repos), issues marked with “Hacktoberfest” are specifically designed and written to be more accessible to first-time contributors!
+Here are [all the open Hacktoberfest issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+sort%3Aupdated-desc+label%3AHacktoberfest+is%3Aopen)!
 
-Through the month, we’ll be continuously curating and adding “Hacktoberfest” labeled issues targeting many different facets of the Gatsby ecosystem (docs, core, packages, etc). If everything is claimed, don’t worry! More issues are being added regularly. (And of course feel free to peruse [other open issues](https://github.com/gatsbyjs/gatsby/issues) in the queue). This is our first time actively organizing around Hacktoberfest, and we aim to be as responsive and supportive as possible!
+You may also want to check out [the main issue](https://github.com/gatsbyjs/gatsby/issues/8719) that’s organizing our Hacktoberfest efforts. While you don’t need to close out an issue labeled with “Hacktoberfest” specifically to participate (just submit a PR to public repos), issues marked with “Hacktoberfest” are specifically designed and written to be more accessible to first-time contributors!
+
+Through the month, we’ll be continuously curating and adding “Hacktoberfest” labeled issues targeting many different facets of the Gatsby ecosystem (docs, core, packages, etc). If everything is claimed, don’t worry! More issues are being added regularly. (And of course feel free to peruse [other open issues](https://github.com/gatsbyjs/gatsby/issues) in the queue). This is our first time actively organizing around Hacktoberfest, and we aim to be as responsive and supportive as possible.
+
+If you’re considering contributing to Gatsby for the first time -- or if you've already contributed --  we’re so glad you’re here!
 
 ## Still have questions?
 
