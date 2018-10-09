@@ -805,6 +805,6 @@
   features:
     - Blog post listing with previews (image + summary) for each blog post
     - Google structured data
-    - Mobile-friendly menu toggled with a FAB
+    - Mobile-friendly menu toggled with a floating action button (FAB)
     - Article read progress
     - User feedback component
