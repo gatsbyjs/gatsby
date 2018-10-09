@@ -296,6 +296,25 @@ module.exports = async ({
     rules.js = js
   }
 
+  /**
+   * mjs loader:
+   * webpack 4 has issues automatically dealing with
+   * the .mjs extension, thus we need to explicitly
+   * add this rule to use the default webpack js loader
+   */
+  {
+    let mjs = (options = {}) => {
+      return {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: `javascript/auto`,
+        ...options,
+      }
+    }
+
+    rules.mjs = mjs
+  }
+
   {
     let eslint = schema => {
       return {

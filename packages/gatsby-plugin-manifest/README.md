@@ -1,8 +1,8 @@
 # gatsby-plugin-manifest
 
 Adds support for shipping a manifest.webmanifest with your site. The web application
-manifest is a JSON file that lets users (on Android Chrome, Firefox, and Opera —
-[support in MS Edge & Safari is under development](http://caniuse.com/#feat=web-app-manifest))
+manifest is a JSON file that lets users (on Chrome, Edge, Firefox, Safari Mobile, and Opera —
+[support in Safari Desktop is under development](http://caniuse.com/#feat=web-app-manifest))
 save your web application to their smartphone home screen so it behaves similar
 to native apps.
 

@@ -18,7 +18,8 @@ class BlogPostsIndex extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <div
+        <main
+          id={`reach-skip-nav`}
           css={{
             [presets.Tablet]: {
               background: colors.ui.whisper,
@@ -100,7 +101,7 @@ class BlogPostsIndex extends React.Component {
             <Pagination context={this.props.pageContext} />
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
           </Container>
-        </div>
+        </main>
       </Layout>
     )
   }

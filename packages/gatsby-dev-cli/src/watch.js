@@ -50,9 +50,9 @@ function watch(root, packages, { scanOnce, quiet }) {
       const watchEvents = [`change`, `add`]
       if (_.includes(watchEvents, event)) {
         const [packageName] = filePath
-          .split(`packages/`)
+          .split(/packages[/\\]/)
           .pop()
-          .split(`/`)
+          .split(/[/\\]/)
         const prefix = path.join(root, `/packages/`, packageName)
 
         // Copy it over local version.

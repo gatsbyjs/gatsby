@@ -66,7 +66,6 @@
   categories:
     - Technology
     - Featured
-  plugins: "gatsby-plugin-react-helmet, gatsby-plugin-react-next"
   built_by: Studio Lovelock
   built_by_url: "http://www.studiolovelock.com/"
 - title: Hopper
@@ -205,16 +204,15 @@
 - title: KNW Photography
   main_url: "https://www.knw.io/"
   url: "https://www.knw.io/galleries/"
-  source_url: "https://github.com/ryanwiemer/knw"
   featured: true
-  description: >-
-    Hi there! I’m Kirsten and I’m currently living in Oakland with my husband
-    and fluffy pup Birch. I’ve always been an excessive photo taker and decided
-    to turn my love for taking photos into a career.
+  description: >
+    Digital portfolio for San Francisco Bay Area photographer Kirsten Wiemer.
   categories:
     - Photography
     - Portfolio
     - Featured
+  built_by: Ryan Wiemer
+  built_by_url: "https://www.ryanwiemer.com/"
 - title: NEON
   main_url: "http://neonrated.com/"
   url: "http://neonrated.com/"
@@ -252,6 +250,13 @@
   categories:
     - eCommerce
     - Featured
+- title: AirBnB Cereal
+  main_url: "https://airbnb.design/cereal"
+  url: "https://airbnb.design/cereal"
+  featured: false
+  categories:
+    - Marketing
+    - Design
 - title: Cardiogram
   main_url: "https://cardiogr.am/"
   url: "https://cardiogr.am/"
@@ -372,9 +377,14 @@
   url: "https://www.ryanwiemer.com/knw-photography/"
   source_url: "https://github.com/ryanwiemer/rw"
   featured: false
+  description: >
+    Digital portfolio for Oakland, CA based account manager Ryan Wiemer.
   categories:
     - Portfolio
     - Web Development
+    - Design
+  built_by: Ryan Wiemer
+  built_by_url: "https://www.ryanwiemer.com/"
 - title: Ventura Digitalagentur Köln
   main_url: "https://www.ventura-digital.de/"
   url: "https://www.ventura-digital.de/"
@@ -745,8 +755,6 @@
   url: "https://lengstorf.com"
   source_url: "https://github.com/jlengstorf/lengstorf.com"
   featured: false
-  date_added: Apr 10
-  gatsby_version: V1
   categories:
     - Blog
   built_by: Jason Lengstorf
@@ -1263,46 +1271,7 @@
     - Portfolio
     - Web Development
     - Blog
-- title: HBTU MUN 2018 (source)
-  featured: false
-- title: Jamie Henson's Blog (source)
-  featured: false
-- title: Ruben's Blog (source)
-  featured: false
-- title: Thao Am Private Enterprise
-  featured: false
-- title: Bakadono
-  featured: false
-- title: Travellers.cafe
-  featured: false
-- title: Oliver Benns' Portfolio (source)
-  featured: false
-- title: angeloocana.com (source)
-  featured: false
-- title: Overlap.show (source)
-  featured: false
-- title: smartive Company Website
-  featured: false
-- title: Haboba Find Jobs at Phu Quoc Island
-  featured: false
-- title: Song Wang’s website (source)
-  featured: false
-- title: Magicly's blog (source)
-  featured: false
-- title: Phu Quoc Works
-  featured: false
-- title: Kabir Goel's website (source)
-  featured: false
-- title: David James' Portfolio (source)
-  featured: false
-- title: Tic Tac Toe AI (source)
-  featured: false
-- title: Random Screencast
-  featured: false
-- title: Phu Quoc Tea & Coffee Store
-  featured: false
-- title: Steven Natera's blog
-  featured: false
+
 - title: LekoArts
   main_url: "https://www.lekoarts.de"
   url: "https://www.lekoarts.de"
@@ -1320,14 +1289,6 @@
   categories:
     - Portfolio
     - Blog
-- title: Georgi Yanev (source)
-  featured: false
-- title: Hallingdata
-  featured: false
-- title: "@swyx (source)"
-  featured: false
-- title: 伊撒尔の窝
-  featured: false
 - title: 杨二小的博客
   main_url: "https://blog.yangerxiao.com/"
   url: "https://blog.yangerxiao.com/"
@@ -1546,7 +1507,6 @@
   categories:
     - Blog
     - Portfolio
-    - Salesforce
   built_by: Gourav Sood
   built_by_url: "https://www.gouravsood.com/"
 - title: Jonas Tebbe Portfolio
@@ -1876,12 +1836,16 @@
     - Visualization
   url: >-
     https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-status/?initialWidth=782
+  main_url: >-
+    https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-status/?initialWidth=782
   built_by: David Eads
   built_by_url: "https://github.com/eads"
   featured: false
 - title: Chicago South Side Traffic Ticketing rates
   description: |
     ProPublica data visualization of traffic ticket rates by community
+  main_url: >-
+    https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-rate/?initialWidth=782
   url: >-
     https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-rate/?initialWidth=782
   categories:
@@ -2640,7 +2604,7 @@
   categories:
     - Portfolio
     - Technology
-    - Web development
+    - Web Development
   built_by: Ema Suriano
   built_by_url: https://emasuriano.com/
   featured: false
@@ -2702,4 +2666,172 @@
     - Portfolio
   built_by: Brittany Chiang
   built_by_url: https://github.com/bchiang7
+  featured: false
+- title: Fitekran
+  description: >
+    One of the most visited Turkish blog about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using Wordpress.
+  main_url: "https://www.fitekran.com"
+  url: "https://www.fitekran.com"
+  categories:
+    - Science
+    - Healthcare
+    - Blog
+  built_by: Burak Tokak
+  built_by_url: "https://www.buraktokak.com"
+- title: Serverless
+  main_url: https://serverless.com
+  url: https://serverless.com
+  source_url: https://github.com/serverless/site
+  description: >
+    Serverless.com – Build web, mobile and IoT applications with serverless architectures using AWS Lambda, Azure Functions, Google CloudFunctions & more!
+  categories:
+    - Technology
+    - Web Development
+  built_by: Codebrahma
+  built_by_url: https://codebrahma.com
+  featured: false
+- title: Dive Bell
+  main_url: https://divebell.band/
+  url: https://divebell.band/
+  description: >
+    Simple site for a band to list shows dates and videos (499 on lighthouse)
+  categories:
+    - Music
+  built_by: Matt Bagni
+  built_by_url: https://mattbag.github.io
+  featured: false
+- title: Mayer Media Co.
+  main_url: https://mayermediaco.com/
+  url: https://mayermediaco.com/
+  description: >
+    Freelance Web Development and Digital Marketing
+  categories:
+    - Web Development
+    - Marketing
+    - Blog
+  source_url: https://github.com/MayerMediaCo/MayerMediaCo2.0
+  built_by: Danny Mayer
+  built_by_url: https://twitter.com/mayermediaco
+  featured: false
+- title: Jan Czizikow Portfolio
+  main_url: https://www.janczizikow.com/
+  url: https://www.janczizikow.com/
+  source_url: https://github.com/janczizikow/janczizikow-portfolio
+  description: >
+    Simple personal portfolio site built with Gatsby
+  categories:
+    - Portfolio
+    - Freelance
+    - Web Development
+  built_by: Jan Czizikow
+  built_by_url: https://github.com/janczizikow
+- title: Carbon Design Systems
+  main_url: http://www.carbondesignsystem.com/
+  url: http://www.carbondesignsystem.com/
+  descripton: >
+    The Carbon Design System is integrating the new IBM Design Ethos and Language. It represents a completely fresh approach to the design of all things at IBM.
+  categories:
+    - Documentation
+  built_by: IBM
+  built_by_url: https://www.ibm.com/
+  featured: false
+- title: Retirement Community
+  main_url: https://retirementcommunity.fastcompany.com/
+  url: https://retirementcommunity.fastcompany.com/
+  description: >
+    Bye Bye Funny Business, Pete Holmes and Jamie Lee enter retirement
+  categories:
+    - Entertainment
+    - Retirement
+    - Education
+  built_by: FastCompany
+  built_by_url: https://www.fastcompany.com/
+  featured: false
+- title: McDonald's Design System
+  main_url: https://design.mcdonalds.com/
+  url: https://design.mcdonalds.com/
+  description: >
+    McDonald's Design System
+  categories:
+    - Design
+    - DesignSystems
+  built_by: McDonald's
+  built_by_url: https://www.mcdonalds.com/us/en-us.html
+  featured: false
+- title: Mozilla Mixed Reality
+  main_url: https://mixedreality.mozilla.org/
+  url: https://mixedreality.mozilla.org/
+  description: >
+    Virtual Reality for the free and open Web.
+  categories:
+    - Virtual Reality
+    - Open Source
+  built_by: Mozilla
+  built_by_url: https://www.mozilla.org/
+  featured: false
+- title: Uniform Hudl Design System
+  main_url: http://uniform.hudl.com/
+  url: http://uniform.hudl.com/
+  description: >
+    A single design system to ensure every interface feels like Hudl. From the colors we use to the size of our buttons and what those buttons say, Uniform has you covered. Check the guidelines, copy the code and get to building.
+  categories:
+    - DesignSystems
+    - Open Source
+    - Design
+  built_by: Hudl
+  built_by_url: https://www.hudl.com/
+- title: Subtle UI
+  main_url: "https://subtle-ui.netlify.com/"
+  url: "https://subtle-ui.netlify.com/"
+  source_url: "https://github.com/ryanwiemer/subtle-ui"
+  description: >
+    A collection of clever yet understated user interactions found on the web.
+  categories:
+    - Web Development
+    - Open Source
+    - User Experience
+  built_by: Ryan Wiemer
+  built_by_url: "https://www.ryanwiemer.com/"
+  featured: false
+- title: developer.bitcoin.com
+  main_url: "https://www.bitcoin.com/"
+  url: "https://developer.bitcoin.com/"
+  description: >
+    Bitbox based bitcoin.com developer platform and resources.
+  categories:
+    - Blockchain
+  featured: false
+- title: Barmej
+  main_url: "https://app.barmej.com/"
+  url: "https://app.barmej.com/"
+  description: >
+    An interactive platform to learn different programming languages in Arabic for FREE
+  categories:
+    - Education
+    - Programming
+    - Learning
+  built_by: Obytes
+  built_by_url: "https://www.obytes.com/"
+  featured: false
+- title: Vote Save America
+  main_url: "https://votesaveamerica.com"
+  url: "https://votesaveamerica.com"
+  description: >
+    Be a voter. Save America.
+  categories:
+    - Education
+    - Government
+  featured: false
+  built_by: Jeremy E. Miller
+  built_by_url: "https://jeremyemiller.com/"
+- title: Emergence
+  main_url: https://emcap.com/
+  url: https://emcap.com/
+  description: >
+    Emergence is a top enterprise cloud venture capital firm. We fund early stage ventures focusing on enterprise & SaaS applications. Emergence is one of the top VC firms in Silicon Valley.
+  categories:
+    - Marketing
+    - Blog
+  built_by: Upstatement
+  built_by_url: https://www.upstatement.com/
   featured: false
