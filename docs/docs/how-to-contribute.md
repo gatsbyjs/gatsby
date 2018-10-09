@@ -43,15 +43,8 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 }
 ```
 
-You can install the latest version of Gatsby by following these steps:
-
-- Clone the repo, navigate to its directory.
-- Ensure you have the latest version of Yarn installed (>= 1.0.2)
-  https://yarnpkg.com/en/docs/install.
-- Install dependencies using `yarn run bootstrap` in the root of the repo.
-
-There are two ways to contribute. This is the most usual way:
-
+- [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
+- Ensure you have the latest version of Yarn installed (>= 1.0.2). `yarn --version`
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
 - Set up repo and install dependencies: `yarn run bootstrap`
