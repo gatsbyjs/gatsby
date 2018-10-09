@@ -48,7 +48,7 @@ You can install the latest version of Gatsby by following these steps:
 
 - Clone the repo, navigate to its directory.
 - Ensure you have the latest version of Yarn installed (>= 1.0.2)
-  https://yarnpkg.com/en/docs/install. 
+  https://yarnpkg.com/en/docs/install.
 - Install dependencies using `yarn run bootstrap` in the root of the repo.
 
 There are two ways to contribute. This is the most usual way:
@@ -87,7 +87,7 @@ a pull request.
 
 - Clone the repo and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
-- Run `yarn develop` to preview the website in `http://localhost:8000`
+- Run `gatsby develop` to preview the website in `http://localhost:8000`
 - The Markdown files for the documentation live in `/docs` folder. Make
   additions or modifications here.
 - Make sure to double check your grammar and capitalise correctly.
