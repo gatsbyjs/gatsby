@@ -800,12 +800,12 @@
   repo: https://github.com/EmaSuriano/gatsby-starter-mate
   description: A portfolio starter for Gatsby integrated with Contentful CMS.
   tags:
-    - Styled-components
+    - Styling:CSS-in-JS
     - Contentful
     - Portfolio
   features:
     - Gatsby v2
-    - Rebass: styled component system
+    - Rebass (Styled-components system)
     - React Reveal
     - Dynamic content from Contentful
     - Offline support
