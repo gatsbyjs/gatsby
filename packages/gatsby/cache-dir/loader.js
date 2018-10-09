@@ -5,7 +5,6 @@ import prefetchHelper from "./prefetch"
 
 const preferDefault = m => (m && m.default) || m
 
-let prefetcher
 let devGetPageData
 let inInitialRender = true
 let hasFetched = Object.create(null)
@@ -15,6 +14,7 @@ let jsonDataPaths = {}
 let fetchHistory = []
 let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
+let prefetchedPaths = []
 let apiRunner
 const failedPaths = {}
 const failedResources = {}
@@ -147,6 +147,13 @@ const handleResourceLoadError = (path, message) => {
   }
 }
 
+const onPostPrefetchPathname = args => {
+  if (prefetchedPaths.includes(args.pathname)) return
+
+  prefetchedPaths.push(args.pathname)
+  apiRunner(`onPostPrefetchPathname`, args)
+}
+
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
 // we load all resources for likely-to-be-visited paths.
@@ -195,8 +202,7 @@ const queue = {
     if (!prefetchTriggered[path]) {
       apiRunner(`onPrefetchPathname`, {
         pathname: path,
-        onPostPrefetchPathname: args =>
-          apiRunner(`onPostPrefetchPathname`, args),
+        onPostPrefetchPathname,
       })
       prefetchTriggered[path] = true
     }
@@ -239,7 +245,7 @@ const queue = {
     }
 
     // Tell plugins the path has been successfully prefetched
-    apiRunner(`onPostPrefetchPathname`, { pathname: path })
+    onPostPrefetchPathname({ pathname: path })
 
     return true
   },
@@ -367,6 +373,9 @@ const queue = {
           )
           pathScriptsCache[path] = pageResources
           resolve(pageResources)
+
+          // Tell plugins the path has been successfully prefetched
+          onPostPrefetchPathname({ pathname: path })
 
           emitter.emit(`onPostLoadPageResources`, {
             page,
