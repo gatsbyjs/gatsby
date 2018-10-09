@@ -86,6 +86,18 @@ a pull request.
 - Commit and push to your fork.
 - Create a pull request from your branch.
 
+To develop on the starter showcase, you'll need to supply a GitHub personal access token.
+
+1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
+2. In the new token's settings, grant that token the "public_repo" scope.
+3. Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
+
+```
+GITHUB_API_TOKEN=YOUR_TOKEN_HERE
+```
+
+The `.env.development` file is ignored by git. Your token should never be committed.
+
 ### Contributing to the blog
 
 Note: Before adding a blog post ensure you have approval from a member of the Gatsby team. You can do this by [opening an issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) or contacting [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs).
