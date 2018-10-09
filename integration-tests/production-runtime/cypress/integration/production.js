@@ -71,4 +71,12 @@ describe(`Production build tests`, () => {
       .getTestElement(`404`)
       .should(`exist`)
   })
+
+  it(`should show 404 page when directly entering an invalid URL`, () => {
+    cy.visit(`/non-existent-page/`, { failOnStatusCode: false })
+
+    cy.waitForAPI(`onRouteUpdate`)
+      .getTestElement(`404`)
+      .should(`exist`)
+  })
 })
