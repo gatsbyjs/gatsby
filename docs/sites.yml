@@ -87,7 +87,7 @@
     - Sports
     - Featured
   built_by: Escalade Sports
-  built_by_url: "http://escaladesports.com/"
+  built_by_url: "https://www.escaladesports.com/"
 - title: GM Capital One
   description: |
     Introducing the new online experience for your GM Rewards Credit Card
@@ -2835,3 +2835,12 @@
   built_by: Upstatement
   built_by_url: https://www.upstatement.com/
   featured: false
+- title: Bear Archery
+  main_url: "https://beararchery.com/"
+  url: "https://beararchery.com/"
+  featured: false
+  categories:
+    - eCommerce
+    - Sports
+  built_by: Escalade Sports
+  built_by_url: "https://www.escaladesports.com/"
