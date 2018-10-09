@@ -44,34 +44,6 @@ const createFSMachine = () =>
           },
         },
       },
-      PROCESSING: {
-        initial: `BOOTSTRAPPING`,
-        states: {
-          BOOTSTRAPPING: {
-            on: {
-              BOOTSTRAP_FINISHED: `IDLE`,
-            },
-          },
-          IDLE: {
-            on: {
-              EMIT_FS_EVENT: `PROCESSING`,
-              QUERY_ENQUEUED: `QUERIES_ENQUEUED`,
-            },
-          },
-          PROCESSING: {
-            on: {
-              QUERY_QUEUE_DRAINED: `IDLE`,
-              TOUCH_NODE: `IDLE`,
-              QUERY_ENQUEUED: `QUERIES_ENQUEUED`,
-            },
-          },
-          QUERIES_ENQUEUED: {
-            on: {
-              QUERY_QUEUE_DRAINED: `IDLE`,
-            },
-          },
-        },
-      },
     },
   })
 
@@ -104,7 +76,6 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 
   const fsMachine = createFSMachine()
   currentState = fsMachine.initialState
-  let fileNodeQueue = new Map()
 
   // Once bootstrap is finished, we only let one File node update go through
   // the system at a time.
@@ -113,40 +84,6 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       currentState.value,
       `BOOTSTRAP_FINISHED`
     )
-  })
-  emitter.on(`TOUCH_NODE`, () => {
-    // If we create a node which is the same as the previous version, createNode
-    // returns TOUCH_NODE and then nothing else happens so we listen to that
-    // to return the state back to IDLE.
-    //
-    // creating pages causes a lot of TOUCH_NODE events which can spuriously
-    // cause our state machine to think it should be moved back to idle so
-    // we delay before those.
-    //
-    // This isn't the ideal solution — but API_RUNNING_QUEUE_EMPTY fires too often
-    // and we don't have any other way to say "all work triggered by x node being
-    // added finished".
-    setTimeout(() => {
-      currentState = fsMachine.transition(currentState.value, `TOUCH_NODE`)
-    }, 200)
-  })
-
-  emitter.on(`QUERY_ENQUEUED`, () => {
-    currentState = fsMachine.transition(currentState.value, `QUERY_ENQUEUED`)
-  })
-
-  emitter.on(`QUERY_QUEUE_DRAINED`, () => {
-    currentState = fsMachine.transition(
-      currentState.value,
-      `QUERY_QUEUE_DRAINED`
-    )
-    // If we have any updates queued, run one of them now.
-    if (fileNodeQueue.size > 0) {
-      const toProcess = fileNodeQueue.get(Array.from(fileNodeQueue.keys())[0])
-      fileNodeQueue.delete(toProcess.id)
-      currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
-      createNode(toProcess)
-    }
   })
 
   const watcher = chokidar.watch(pluginOptions.path, {
@@ -170,17 +107,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       createNodeId,
       pluginOptions
     ).then(fileNode => {
-      if (
-        [`PROCESSING`, `QUERIES_ENQUEUED`].includes(
-          currentState.value.PROCESSING
-        )
-      ) {
-        fileNodeQueue.set(fileNode.id, fileNode)
-      } else {
-        currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
-        createNode(fileNode)
-      }
-
+      createNode(fileNode)
       return null
     })
     return fileNodePromise
@@ -228,7 +155,6 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     // It's possible the file node was never created as sometimes tools will
     // write and then immediately delete temporary files to the file system.
     if (node) {
-      currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
       deleteNode({ node })
     }
   })
