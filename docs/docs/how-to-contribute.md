@@ -43,10 +43,11 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 }
 ```
 
-- [Install](https://yarnpkg.com/en/docs/install)/confirm your installation of Yarn (>= 1.0.2).
+- [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
+- Ensure you have the latest version of Yarn installed (>= 1.0.2). `yarn --version`
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
-- Setup up repo and install dependencies: `yarn run bootstrap`
+- Set up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `yarn run watch -- --scope=gatsby`.
