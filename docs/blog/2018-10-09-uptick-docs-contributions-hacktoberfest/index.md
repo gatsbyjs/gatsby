@@ -35,21 +35,21 @@ A doc qualifies to be in the .org site if it:
 
 1.  Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the Gatsby OSS repository [www.github.com/gatsbyjs/gatsby](www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
 
-- Yes? --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
+Yes? --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
 
-- No --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin library, etc.
+No --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin library, etc.
 
 2.  Helps further something on the [developer journey](https://pronovix.com/blog/analyzing-api-docs-and-dx-patterns-best-banking-developer-portals):
 
-_Discover_
-_Evaluate_
-_Get Started_
-_Implement & Troubleshoot_
-_Celebrate & Share_
-_Contribute & Maintain_
+- Discover
+- Evaluate
+- Get Started
+- Implement & Troubleshoot
+- Celebrate & Share
+- Contribute & Maintain
 
-- Yes? --> Belongs in the docs
-- No? --> Does not belong in the docs
+Yes? --> Belongs in the docs
+No? --> Does not belong in the docs
 
 ### Someone wants to create a new doc
 
