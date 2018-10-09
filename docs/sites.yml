@@ -66,7 +66,6 @@
   categories:
     - Technology
     - Featured
-  plugins: "gatsby-plugin-react-helmet, gatsby-plugin-react-next"
   built_by: Studio Lovelock
   built_by_url: "http://www.studiolovelock.com/"
 - title: Hopper
@@ -756,8 +755,6 @@
   url: "https://lengstorf.com"
   source_url: "https://github.com/jlengstorf/lengstorf.com"
   featured: false
-  date_added: Apr 10
-  gatsby_version: V1
   categories:
     - Blog
   built_by: Jason Lengstorf
@@ -1274,46 +1271,7 @@
     - Portfolio
     - Web Development
     - Blog
-- title: HBTU MUN 2018 (source)
-  featured: false
-- title: Jamie Henson's Blog (source)
-  featured: false
-- title: Ruben's Blog (source)
-  featured: false
-- title: Thao Am Private Enterprise
-  featured: false
-- title: Bakadono
-  featured: false
-- title: Travellers.cafe
-  featured: false
-- title: Oliver Benns' Portfolio (source)
-  featured: false
-- title: angeloocana.com (source)
-  featured: false
-- title: Overlap.show (source)
-  featured: false
-- title: smartive Company Website
-  featured: false
-- title: Haboba Find Jobs at Phu Quoc Island
-  featured: false
-- title: Song Wang’s website (source)
-  featured: false
-- title: Magicly's blog (source)
-  featured: false
-- title: Phu Quoc Works
-  featured: false
-- title: Kabir Goel's website (source)
-  featured: false
-- title: David James' Portfolio (source)
-  featured: false
-- title: Tic Tac Toe AI (source)
-  featured: false
-- title: Random Screencast
-  featured: false
-- title: Phu Quoc Tea & Coffee Store
-  featured: false
-- title: Steven Natera's blog
-  featured: false
+
 - title: LekoArts
   main_url: "https://www.lekoarts.de"
   url: "https://www.lekoarts.de"
@@ -1331,14 +1289,6 @@
   categories:
     - Portfolio
     - Blog
-- title: Georgi Yanev (source)
-  featured: false
-- title: Hallingdata
-  featured: false
-- title: "@swyx (source)"
-  featured: false
-- title: 伊撒尔の窝
-  featured: false
 - title: 杨二小的博客
   main_url: "https://blog.yangerxiao.com/"
   url: "https://blog.yangerxiao.com/"
@@ -1886,12 +1836,16 @@
     - Visualization
   url: >-
     https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-status/?initialWidth=782
+  main_url: >-
+    https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-status/?initialWidth=782
   built_by: David Eads
   built_by_url: "https://github.com/eads"
   featured: false
 - title: Chicago South Side Traffic Ticketing rates
   description: |
     ProPublica data visualization of traffic ticket rates by community
+  main_url: >-
+    https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-rate/?initialWidth=782
   url: >-
     https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-rate/?initialWidth=782
   categories:
