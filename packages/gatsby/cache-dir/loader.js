@@ -14,7 +14,6 @@ let jsonDataPaths = {}
 let fetchHistory = []
 let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
-let prefetchedPaths = []
 let apiRunner
 const failedPaths = {}
 const failedResources = {}
@@ -147,11 +146,18 @@ const handleResourceLoadError = (path, message) => {
   }
 }
 
-const onPostPrefetchPathname = pathname => {
-  if (prefetchedPaths.includes(pathname)) return
+const onPrefetchPathname = pathname => {
+  if (!prefetchTriggered[pathname]) {
+    apiRunner(`onPrefetchPathname`, { pathname: pathname })
+    prefetchTriggered[pathname] = true
+  }
+}
 
-  prefetchedPaths.push(pathname)
-  apiRunner(`onPostPrefetchPathname`, { pathname })
+const onPostPrefetchPathname = pathname => {
+  if (!prefetchCompleted[pathname]) {
+    apiRunner(`onPostPrefetchPathname`, { pathname: pathname })
+    prefetchCompleted[pathname] = true
+  }
 }
 
 // Note we're not actively using the path data atm. There
@@ -170,6 +176,7 @@ const sortResourcesByCount = (a, b) => {
 let findPage
 let pathScriptsCache = {}
 let prefetchTriggered = {}
+let prefetchCompleted = {}
 let disableCorePrefetching = false
 
 const queue = {
@@ -199,10 +206,7 @@ const queue = {
 
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
-    if (!prefetchTriggered[path]) {
-      apiRunner(`onPrefetchPathname`, { pathname: path })
-      prefetchTriggered[path] = true
-    }
+    onPrefetchPathname(path)
 
     // If a plugin has disabled core prefetching, stop now.
     if (disableCorePrefetching.some(a => a)) {
