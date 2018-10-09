@@ -833,3 +833,15 @@
     - ESLint
     - Prettier
     - Travis CI
+- url: https://gatsby-starter-blog-jumpalottahigh.netlify.com/
+  repo: https://github.com/jumpalottahigh/gatsby-starter-blog-jumpalottahigh
+  description: Gatsby v2 blog starter with SEO, search, filter, reading progress, mobile menu fab
+  tags:
+    - Blog
+    - Markdown
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
+    - Google structured data
+    - Mobile-friendly menu toggled with a floating action button (FAB)
+    - Article read progress
+    - User feedback component
