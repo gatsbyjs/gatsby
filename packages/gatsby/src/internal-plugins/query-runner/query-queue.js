@@ -61,8 +61,22 @@ const queue = new Queue((plObj, callback) => {
     )
 }, queueOptions)
 
+// Pause running queries when new nodes are added (processing starts).
+emitter.on(`CREATE_NODE`, () => {
+  queue.pause()
+})
+
+// Resume running queries as soon as the api queue is empty.
+emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
+  queue.resume()
+})
+
 queue.on(`drain`, () => {
   emitter.emit(`QUERY_QUEUE_DRAINED`)
+})
+
+queue.on(`task_queued`, () => {
+  emitter.emit(`QUERY_ENQUEUED`)
 })
 
 module.exports = queue

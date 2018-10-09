@@ -44,27 +44,6 @@ const createFSMachine = () =>
           },
         },
       },
-      PROCESSING: {
-        initial: `BOOTSTRAPPING`,
-        states: {
-          BOOTSTRAPPING: {
-            on: {
-              BOOTSTRAP_FINISHED: `IDLE`,
-            },
-          },
-          IDLE: {
-            on: {
-              EMIT_FS_EVENT: `PROCESSING`,
-            },
-          },
-          PROCESSING: {
-            on: {
-              QUERY_QUEUE_DRAINED: `IDLE`,
-              TOUCH_NODE: `IDLE`,
-            },
-          },
-        },
-      },
     },
   })
 
@@ -95,7 +74,6 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 
   const fsMachine = createFSMachine()
   let currentState = fsMachine.initialState
-  let fileNodeQueue = new Map()
 
   // Once bootstrap is finished, we only let one File node update go through
   // the system at a time.
@@ -104,26 +82,6 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       currentState.value,
       `BOOTSTRAP_FINISHED`
     )
-  })
-  emitter.on(`TOUCH_NODE`, () => {
-    // If we create a node which is the same as the previous version, createNode
-    // returns TOUCH_NODE and then nothing else happens so we listen to that
-    // to return the state back to IDLE.
-    currentState = fsMachine.transition(currentState.value, `TOUCH_NODE`)
-  })
-
-  emitter.on(`QUERY_QUEUE_DRAINED`, () => {
-    currentState = fsMachine.transition(
-      currentState.value,
-      `QUERY_QUEUE_DRAINED`
-    )
-    // If we have any updates queued, run one of them now.
-    if (fileNodeQueue.size > 0) {
-      const toProcess = fileNodeQueue.get(Array.from(fileNodeQueue.keys())[0])
-      fileNodeQueue.delete(toProcess.id)
-      currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
-      createNode(toProcess)
-    }
   })
 
   const watcher = chokidar.watch(pluginOptions.path, {
@@ -147,13 +105,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       createNodeId,
       pluginOptions
     ).then(fileNode => {
-      if (currentState.value.PROCESSING === `PROCESSING`) {
-        fileNodeQueue.set(fileNode.id, fileNode)
-      } else {
-        currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
-        createNode(fileNode)
-      }
-
+      createNode(fileNode)
       return null
     })
     return fileNodePromise
@@ -201,7 +153,6 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     // It's possible the file node was never created as sometimes tools will
     // write and then immediately delete temporary files to the file system.
     if (node) {
-      currentState = fsMachine.transition(currentState.value, `EMIT_FS_EVENT`)
       deleteNode({ node })
     }
   })
