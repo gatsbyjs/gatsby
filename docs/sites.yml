@@ -2835,3 +2835,29 @@
   built_by: Upstatement
   built_by_url: https://www.upstatement.com/
   featured: false
+- title: FPVtips
+  main_url: https://fpvtips.com
+  url: https://fpvtips.com
+  source_url: https://github.com/jumpalottahigh/fpvtips
+  description: >
+    FPVtips is all about bringing racing drone pilots closer together, and getting more people into the hobby! 
+  categories:
+    - Community
+    - Education
+    - Drones
+  built_by: Georgi Yanev
+  built_by_url: https://twitter.com/jumpalottahigh
+  featured: false
+- title: Georgi Yanev
+  main_url: https://blog.georgi-yanev.com/
+  url: https://blog.georgi-yanev.com/
+  source_url: https://github.com/jumpalottahigh/blog.georgi-yanev.com
+  description: >
+    I write articles about FPV quads (building and flying), web development, smart home automation, life-long learning and other topics from my personal experience.
+  categories:
+    - Blog
+    - Electronics
+    - Drones
+  built_by: Georgi Yanev
+  built_by_url: https://twitter.com/jumpalottahigh
+  featured: false
