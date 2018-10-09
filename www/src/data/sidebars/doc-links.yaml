@@ -45,6 +45,8 @@
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
+        - title: Using service workers with Gatsby
+          link: /docs/using-service-workers-with-gatsby
     - title: Images and files
       link: /docs/images-and-files/
       items:
