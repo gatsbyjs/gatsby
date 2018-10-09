@@ -4,7 +4,7 @@ if (
   window.location.protocol !== `https:` &&
   window.location.hostname !== `localhost`
 ) {
-  throw new TypeError(
+  console.error(
     `Service workers can only be used over HTTPS, or on localhost for development`
   )
 }
