@@ -89,8 +89,9 @@ module.exports = async (args: BootstrapArgs) => {
         return {
           ...themeConfigObj,
           plugins: [
-            { resolve: themeName, options: themeConfig },
             ...(themeConfigObj.plugins || []),
+            // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
+            { resolve: themeName, options: themeConfig },
           ],
         }
       }

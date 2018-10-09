@@ -36,10 +36,40 @@ describe(`Merge gatsby config`, () => {
     })
   })
 
+  it(`Merging plugins uniqs them, keeping the first occurrence`, () => {
+    const basicConfig = {
+      plugins: [`gatsby-mdx`],
+    }
+    const morePlugins = {
+      plugins: [
+        `a-plugin`,
+        `gatsby-mdx`,
+        `b-plugin`,
+        { resolve: `c-plugin`, options: {} },
+      ],
+    }
+    expect(mergeGatsbyConfig(basicConfig, morePlugins)).toEqual({
+      plugins: [
+        `gatsby-mdx`,
+        `a-plugin`,
+        `b-plugin`,
+        { resolve: `c-plugin`, options: {} },
+      ],
+    })
+    expect(mergeGatsbyConfig(morePlugins, basicConfig)).toEqual({
+      plugins: [
+        `a-plugin`,
+        `gatsby-mdx`,
+        `b-plugin`,
+        { resolve: `c-plugin`, options: {} },
+      ],
+    })
+  })
+
   it(`Merging siteMetadata is recursive`, () => {
     const a = {
       siteMetadata: {
-        title: "my site",
+        title: `my site`,
         something: { else: 1 },
       },
     }
@@ -52,7 +82,7 @@ describe(`Merge gatsby config`, () => {
 
     expect(mergeGatsbyConfig(a, b)).toEqual({
       siteMetadata: {
-        title: "my site",
+        title: `my site`,
         something: { else: 1, nested: 2 },
       },
     })
@@ -61,22 +91,22 @@ describe(`Merge gatsby config`, () => {
   it(`Merging proxy is overriden`, () => {
     const a = {
       proxy: {
-        prefix: "/something-not/api",
-        url: "http://examplesite.com/api/",
+        prefix: `/something-not/api`,
+        url: `http://examplesite.com/api/`,
       },
     }
 
     const b = {
       proxy: {
-        prefix: "/api",
-        url: "http://examplesite.com/api/",
+        prefix: `/api`,
+        url: `http://examplesite.com/api/`,
       },
     }
 
     expect(mergeGatsbyConfig(a, b)).toEqual({
       proxy: {
-        prefix: "/api",
-        url: "http://examplesite.com/api/",
+        prefix: `/api`,
+        url: `http://examplesite.com/api/`,
       },
     })
   })
