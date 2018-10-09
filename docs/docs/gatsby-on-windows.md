@@ -78,3 +78,7 @@ further instructions and contact the `node-gyp`team on
 ## gatsby-plugin-sharp requires Node x64
 
 Some plugins which depend on native NPM dependencies require the Node x64 build of Node.js. If you're struggling to install gatsby-plugin-sharp, try installing Node x64 and removing `node_modules` and running `npm install`.
+
+## Windows Subsystem for Linux
+
+If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides an great alternative: [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. In the above scenario you would download e.g. Ubuntu, open the terminal, [install Node](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions), and run `sudo apt-get install build-essential` in the terminal — and the compilation works way more reliable. Please note that you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
