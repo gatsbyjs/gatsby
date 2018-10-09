@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-pdf",
-  "description": "Gatsby transformer plugin for pdf",
+  "description": "Gatsby transformer plugin for pdf files",
   "version": "1.0.10",
   "author": "Alex Munoz <almunozdo@gmail.com>",
   "bugs": {
