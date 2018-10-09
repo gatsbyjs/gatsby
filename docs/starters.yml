@@ -800,13 +800,13 @@
   repo: https://github.com/smakosh/gatsby-starter-i18n
   description: Gatsby v2 Starter with i18n using react-intl and more cool features.
   tags:
-    - styled-components
-    - recompose
+    - Styling:Styled-Components
+    - Recompose
     - i18n
     - react-intl
-    - formik
-    - yup
-    - netlify
+    - Formik
+    - Yup
+    - Netlify
   features:
     - Based on default starter
     - i18n with change of direction
