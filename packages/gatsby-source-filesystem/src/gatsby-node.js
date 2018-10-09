@@ -114,9 +114,6 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `BOOTSTRAP_FINISHED`
     )
   })
-  emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
-    console.log(`API_RUNNING_QUEUE_EMPTY`)
-  })
   emitter.on(`TOUCH_NODE`, () => {
     // If we create a node which is the same as the previous version, createNode
     // returns TOUCH_NODE and then nothing else happens so we listen to that
