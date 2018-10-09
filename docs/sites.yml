@@ -2813,3 +2813,14 @@
   built_by: Obytes
   built_by_url: "https://www.obytes.com/"
   featured: false
+- title: Vote Save America
+  main_url: "https://votesaveamerica.com"
+  url: "https://votesaveamerica.com"
+  description: >
+    Be a voter. Save America.
+  categories:
+    - Education
+    - Government
+  featured: false
+  built_by: Jeremy E. Miller
+  built_by_url: "https://jeremyemiller.com/"
