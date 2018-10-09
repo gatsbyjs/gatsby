@@ -7,9 +7,7 @@ if (
   console.error(
     `Service workers can only be used over HTTPS, or on localhost for development`
   )
-}
-
-if (`serviceWorker` in navigator) {
+} else if (`serviceWorker` in navigator) {
   navigator.serviceWorker
     .register(`${__PATH_PREFIX__}/sw.js`)
     .then(function(reg) {
