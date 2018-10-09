@@ -11,7 +11,7 @@ Since October 1st--the start of Hacktoberfest--the Gatsby OSS community has seen
 
 A big thanks to every contributor who jumped in to help Gatsby docs keep becoming more polished, comprehensive, and clear. In fact, many of the PR’s fixed problems we hadn’t even created issues for yet! And we’re increasing the number of `hacktoberfest` + `documentation` labelled issues to account for the surge of helpful contributions. A special thanks to @amberley, @jlengstorf, @dustin, and @pieh for their hard work giving feedback and merging PR’s!
 
-See how to participate in [Gatsby Hacktoberfest](https://github.com/gatsbyjs/gatsby/issues/7928)
+- See how to participate in [Gatsby Hacktoberfest](https://github.com/gatsbyjs/gatsby/issues/7928)
 
 ## With great contributions comes great responsibility
 
@@ -33,51 +33,59 @@ Here is a summary of the “docs decision tree,” a tool we’ll use to make de
 
 A doc qualifies to be in the .org site if it:
 
-Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the Gatsby OSS repository [www.github.com/gatsbyjs/gatsby](www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
+1.  Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the Gatsby OSS repository [www.github.com/gatsbyjs/gatsby](www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
 
-Yes? --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
-No --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin library, etc.
+- Yes? --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
 
-Helps further something on the developer experience journey:
+- No --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin library, etc.
 
-- Discover
-- Evaluate
-- Get Started
-- Implement & Troubleshoot
-- Celebrate & Share
-- Contribute & Maintain
-  Yes? --> Belongs in the docs
-  No? --> Does not belong in the docs
+2.  Helps further something on the [developer journey](https://pronovix.com/blog/analyzing-api-docs-and-dx-patterns-best-banking-developer-portals):
+
+_Discover_
+_Evaluate_
+_Get Started_
+_Implement & Troubleshoot_
+_Celebrate & Share_
+_Contribute & Maintain_
+
+- Yes? --> Belongs in the docs
+- No? --> Does not belong in the docs
 
 ### Someone wants to create a new doc
 
 Does doc already exist?
-Yes --> Is there a discovery problem? If so, solve it
-No --> move ahead
+
+- Yes --> Is there a discovery problem? If so, solve it
+- No --> move ahead
 
 Is there a demand to create the doc?
-No --> don't create it
-Yes --> move ahead
+
+- No --> don't create it
+- Yes --> move ahead
 
 Does the doc qualify to be in the /docs/?
-Yes --> Create it
-No --> Don't create it
+
+- Yes --> Create it
+- No --> Don't create it
 
 ### Someone wants to create new categories in the docs sidebar
 
 Is there a category that the doc(s) could fit in that has more than 5-7 docs in it?
-No --> Move on
-Yes --> Put in existing category
+
+- No --> Move on
+- Yes --> Put in existing category
 
 Would the new category have more than 2 docs in it?
-No --> consider waiting to create the category until there is more than 2 docs
-Yes --> Create new category
+
+- No --> consider waiting to create the category until there is more than 2 docs
+- Yes --> Create new category
 
 ### Someone wants to reorder the categories in the sidebar or shift docs to new categories
 
 Is there evidence that the reorganization would help further one of the steps on the developer journey?
-No --> Don't reorder the categories
-Yes --> Reorder them and do usability testing to measure the value of the change
+
+- No --> Don't reorder the categories
+- Yes --> Reorder them and do usability testing to measure the value of the change
 
 ## Naming criteria
 
@@ -87,7 +95,7 @@ Names categories in the .org site should:
 - communicate a core concept of Gatsby (TBD) and/or a core value (TBD)
 - be a noun, like "plugins, styling, guides, core concepts" etc.
 
-Names for guides, tutorial sections, and sub-headings in the .org site ought should:
+Names for guides, tutorial sections, and sub-headings in the .org site should:
 
 - be SEO friendly (common google search term, easy-to-remember URL that is not likely to change anytime soon)
 - nearly always start with an -ing verb, like "adding", since all tasks are action-oriented.
