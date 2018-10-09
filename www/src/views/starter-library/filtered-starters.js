@@ -210,7 +210,11 @@ export default class FilteredStarterLibrary extends Component {
                   small
                   icon={<ArrowForwardIcon />}
                   overrideCSS={{
+                    display: `none`,
                     marginLeft: 10,
+                    [presets.Desktop]: {
+                      display: `inline-flex`,
+                    },
                   }}
                 >
                   Submit a Starter
