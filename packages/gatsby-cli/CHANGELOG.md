@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.4.3"></a>
+
+## [2.4.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.2...gatsby-cli@2.4.3) (2018-10-09)
+
+### Features
+
+- add error message with filename on Markdown error, fix bug in panicOnBuild ([#8866](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/8866)) ([bbff3be](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/bbff3be))
+
 <a name="2.4.2"></a>
 
 ## [2.4.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.1...gatsby-cli@2.4.2) (2018-09-27)
