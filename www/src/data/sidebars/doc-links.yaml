@@ -130,6 +130,8 @@
     - title: Styling
       link: /docs/styling/
       items:
+        - title: Layout Components
+          link: /docs/layout-components/
         - title: CSS Modules
           link: /docs/css-modules/
         - title: Typography.js*
@@ -144,8 +146,6 @@
           link: /docs/component-css/
         - title: PostCSS*
           link: /docs/post-css/
-        - title: Layout Components
-          link: /docs/layout-components/
     - title: Testing
       link: /docs/testing/
       items:
