@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 
-import { Link } from "gatsby"
+// import { Link } from "gatsby"
 import { colors } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
