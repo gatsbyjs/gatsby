@@ -106,9 +106,9 @@ The query below defines a fragment to get the site title, and then uses the frag
 
 Want to run two queries on the same datasource? You can do this by aliasing your queries. See below for an example:
 
-<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0AallEntries%3AallMarkdownRemark%7B%0A%20%20%20edges%7B%0A%20%20%20%20%20node%7B%0A%20%20%20%20%20%20%20id%0A%20%20%20%20%20%7D%0A%20%20%20%7D%0A%20%7D%0A%20someEntries%3AallMarkdownRemark(limit%3A3)%7B%0A%20%20%20edges%7B%0A%20%20%20%20%20node%7B%0A%20%20%20%20%20%20%20id%0A%20%20%20%20%20%7D%0A%20%20%20%7D%0A%20%7D%0A%7D" width="600" height="400"></iframe>
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0AsomeEntries%3AallMarkdownRemark(limit%3A3)%7B%0A%20%20%20edges%7B%0A%20%20%20%20%20node%7B%0A%20%20%20%20%20%20%20id%0A%20%20%20%20%20%7D%0A%20%20%20%7D%0A%20%7D%0A%20someMoreEntries%3AallMarkdownRemark(limit%3A3)%7B%0A%20%20%20edges%7B%0A%20%20%20%20%20node%7B%0A%20%20%20%20%20%20%20id%0A%20%20%20%20%20%7D%0A%20%20%20%7D%0A%20%7D%0A%7D" width="600" height="400"></iframe>
 
-When you use your data, you will be able to reference it using the alias instead of the root query name. In this example, that would be `data.someEntries` or `data.allEntries` instead of `data.allMarkdownRemark`.
+When you use your data, you will be able to reference it using the alias instead of the root query name. In this example, that would be `data.someEntries` or `data.someMoreEntries` instead of `data.allMarkdownRemark`.
 
 ## Where next?
 
