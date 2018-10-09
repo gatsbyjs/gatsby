@@ -28,7 +28,7 @@ class ActionCreatorsDocs extends React.Component {
             {` `}
             <a href="http://redux.js.org">Redux</a>
             {` `}
-            internally to manage state. When you implement a Gatsby API, you're
+            internally to manage state. When you implement a Gatsby API, you are
             passed a collection of actions (equivalent to boundActionCreators in
             redux) which you can use to manipulate state on your site.
           </p>

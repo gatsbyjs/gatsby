@@ -68,7 +68,7 @@ const _getItemIds = section => {
   let list = []
 
   section.forEach(subSection => {
-    if (subSection.hasOwnProperty("hash")) list.push(subSection.hash)
+    if (subSection.hasOwnProperty(`hash`)) list.push(subSection.hash)
     if (subSection.items) list.push(..._getItemIds(subSection.items))
   })
 

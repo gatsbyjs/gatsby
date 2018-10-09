@@ -117,7 +117,7 @@ const FeaturesHeader = () => (
       Features
     </h1>
     <FuturaParagraph>
-      There are many ways to build a website. If you're considering Gatsby, you
+      There are many ways to build a website. If you’re considering Gatsby, you
       may also be looking at some alternatives:
     </FuturaParagraph>
     <ul css={{ fontFamily: options.headerFontFamily.join(`,`) }}>
@@ -127,7 +127,7 @@ const FeaturesHeader = () => (
         <a href="http://jekyllrb.com/">Jekyll</a> let you put text or markdown
         in a specific directory such as <code>pages/</code> in a
         version-controlled codebase. They then build a specific kind of site,
-        usually a blog, as HTML files from the content you've added. These files
+        usually a blog, as HTML files from the content you’ve added. These files
         can be cached and served from a CDN.
       </li>
       <li>
@@ -145,12 +145,12 @@ const FeaturesHeader = () => (
         {` `}
         <a href="http://squarespace.com/">Squarespace</a> are a type of hosted
         closed-source CMS. They focus on making it fast to build a website;
-        however, they don't allow self-hosting or enable you to export your
+        however, they don’t allow self-hosting or enable you to export your
         website and customize it.
       </li>
     </ul>
     <FuturaParagraph>
-      The chart below details Gatsby's capabilities in comparison with a
+      The chart below details Gatsby’s capabilities in comparison with a
       representative from each category. Click on any row to see a more detailed
       explanation on that feature and our rating for each system.
     </FuturaParagraph>
