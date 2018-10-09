@@ -8,32 +8,26 @@ This guide will walk you through integrating [Guess.js](https://github.com/guess
 
 Guess.js will fetch data from Google Analytics and use that data to generate a model for predictive pre-fetching. As a user browses the site, Guess will lookup which pages are most likely to be viewed next and pre-fetch that content. The data from Google Analytics is downloaded when the application builds and is included in the bundle.
 
-### Prerequisites
-
-Use the following command to install `guess-webpack`.
+### Installing Guess
 
 `npm i guess-webpack --save-dev`
 
-Use the following webpack config:
+### Configuring Guess
 
 ```js
 new GuessPlugin({
   // GA view ID.
   GA: GAViewID,
 
-  // Hints Guess to not perform pre-fetching and delegate this logic to
-  // its consumer.
+  // Tell Guess to pre-fetching or delegate this logic to its consumer.
   runtime: {
     delegate: true,
   },
 
-  // Since Gatsby already has the required metadata for pre-fetching,
-  // Guess does not have to collect the routes and the corresponding
-  // bundle entry points.
+  // set custom route mappings
   routeProvider: false,
 
-  // Optional argument. It takes the data for the last year if not
-  // specified.
+  // Optional
   period: period ? period : undefined,
 })
 ```
