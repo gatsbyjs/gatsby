@@ -375,9 +375,6 @@ const queue = {
           pathScriptsCache[path] = pageResources
           resolve(pageResources)
 
-          // Tell plugins the path has been successfully prefetched
-          onPostPrefetchPathname(path)
-
           emitter.emit(`onPostLoadPageResources`, {
             page,
             pageResources,
@@ -390,6 +387,9 @@ const queue = {
           }
         })
       }
+
+      // Tell plugins the path has been successfully prefetched
+      onPostPrefetchPathname(path)
     }),
 }
 
