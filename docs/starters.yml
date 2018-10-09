@@ -882,3 +882,11 @@
     - Netlify Deployment Friendly
     - Medium integration
     - Social sharing (Twitter, Facebook, Google, LinkedIn)
+- url: https://gatsby-starter-typescript-sass.netlify.com
+  repo: https://github.com/tdharmon/gatsby-starter-typescript-sass
+  description: A basic starter with Typescript and Sass built in
+  tags:
+    - TypeScript
+    - Styling:SCSS
+  features:
+    - Barebones for getting up and running with TypeScript and Sass
