@@ -796,3 +796,23 @@
     - Based on default starter
     - Bulma Css
     - Sass based Styling
+- url: https://gatsby-starter-mate.netlify.com
+  repo: https://github.com/EmaSuriano/gatsby-starter-mate
+  description: A portfolio starter for Gatsby integrated with Contentful CMS.
+  tags:
+    - Styled-components
+    - Contentful
+    - Portfolio
+  features:
+    - Gatsby v2
+    - Rebass: styled component system
+    - React Reveal
+    - Dynamic content from Contentful
+    - Offline support
+    - PWA ready
+    - SEO
+    - Responsive design
+    - Icons from font-awesome
+    - Netlify Deployment Friendly
+    - Medium integration
+    - Social sharing (Twitter, Facebook, Google, LinkedIn)
