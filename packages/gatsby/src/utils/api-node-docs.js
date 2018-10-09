@@ -277,5 +277,13 @@ exports.onPreExtractQueries = true
 /**
  * Run when gatsby develop server is started, its useful to add proxy and middleware
  * to the dev server app
+ * @param {object} $0
+ * @param {Express} $0.app The [Express app](https://expressjs.com/en/4x/api.html#app) used to run the dev server
+ * @example
+ * exports.onCreateDevServer = ({ app }) => {
+ *   app.get('/hello', function (req, res) {
+ *     res.send('hello world')
+ *   })
+ * }
  */
 exports.onCreateDevServer = true
