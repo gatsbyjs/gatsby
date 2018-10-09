@@ -886,7 +886,7 @@
   repo: https://github.com/tdharmon/gatsby-starter-typescript-sass
   description: A basic starter with Typescript and Sass built in
   tags:
-    - Typescript
-    - SASS
+    - TypeScript
+    - Styling:SCSS
   features:
-    - Barebones for getting up and running with Typescript and Sass
+    - Barebones for getting up and running with TypeScript and Sass
