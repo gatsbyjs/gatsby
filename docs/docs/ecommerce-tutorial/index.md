@@ -31,7 +31,7 @@ You can see the working demo hosted here: https://gatsby-ecommerce.netlify.com/
 
 # Prerequisites
 
-- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see main tutorial here](/tutorial/))
+- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/))
 - Stripe account: [register for an account here](https://dashboard.stripe.com/register)
 - AWS account (free tier that covers anywhere from several thousand to a million requests per month): [register for an account here](https://aws.amazon.com/free/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=cloud_computing_b&sc_content=aws_account_e_control_q32016&sc_detail=create%20an%20aws%20account&sc_category=cloud_computing&sc_segment=102882721242&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!102882721242!e!!g!!create%20an%20aws%20account&ef_id=Wd_k7wAAAVgVBk9m:20180604172833:s)
 - Willingness to navigate around janky AWS UIs
@@ -107,15 +107,15 @@ Essentially, this is the sequence of events:
 - _some time passes..._
 - _user clicks button_ -> `open()`
 
-The next paragraphs describe how to setup these events.
+The next paragraphs describe how to set up these events.
 
-There is a default checkout modal that is available through the plugin we’re using, shown in the image below. When we call the `.open()` method through Stripe Checkout, the rest of the screen is darkened and a modal appears over the top, directing the user’s attention to the checkout form. You’ll need to create a button component that calls this method or triggers Stripe from your site.
+There is a default checkout modal that is available through the plugin we’re using, shown in the image below. When we call the `.open()` method through Stripe Checkout, the rest of the screen is darkened, and a modal appears over the top, directing the user’s attention to the checkout form. You’ll need to create a button component that calls this method or triggers Stripe from your site.
 
 ![Stripe card payments modal](card-payments-modal.png)
 
 > Notice the input fields for email and credit card information—this design is already made by Stripe for you to use without styling anything.
 
-In order to launch the Stripe Checkout modal (shown above), you need to call the `.configure()` method from Stripe Checkout in your Gatsby site. The only information you are required to provide is your publishable API key so that Stripe knows what account on their platform to send payments to. You can read about other recommended and optional configurations like currency or shipping information in the Stripe Checkout Reference. You are going to make a `checkout.js` file that handles this configuration.
+To launch the Stripe Checkout modal (shown above), you need to call the `.configure()` method from Stripe Checkout in your Gatsby site. The only information you are required to provide is your publishable API key so that Stripe knows what account on their platform to send payments to. You can read about other recommended and optional configurations like currency or shipping information in the Stripe Checkout Reference. You are going to make a `checkout.js` file that handles this configuration.
 
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
 
@@ -149,7 +149,7 @@ const buttonStyles = {
 }
 
 // Below is where the checkout component is defined.
-// It has several functions, and some default state variables.
+// It has several functions and some default state variables.
 const Checkout = class extends React.Component {
   state = {
     disabled: false,
@@ -250,7 +250,7 @@ The `openStripeCheckout()` function gives additional information to Stripe as a 
 
 The tags in the `render()` function define the structure of HTML elements that lay out how the component is structured.
 
-# Importing checkout component into homepage
+# Importing checkout component into the homepage
 
 Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports and replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this:
 
@@ -281,7 +281,7 @@ You have 2 keys in both test mode and production mode:
 - a publishable key
 - a secret key
 
-While testing, you can use the keys that begins with pk*test* and sk*test*. For production code, you will want to use the keys that don’t say test. As the names imply, your publishable key may be included in code that you share publicly (for example, in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
+While testing, you can use the keys that begin with pk*test* and sk*test*. For production code, you will want to use the keys that don’t say test. As the names imply, your publishable key may be included in code that you share publicly (for example, in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
 # Configuring Stripe in Gatsby
 
@@ -329,7 +329,7 @@ npm install
 
 ## What did you just do?
 
-By running `npm install`, you’ve created a node_modules folder that you’ll upload to AWS along with your code to make a charge. All of the code in this file will be hosted online by Amazon, and you need to provide it with the libraries you utilize in your project. By making this repository separate from our Gatsby project, we can decouple it from our site making it easier to switch to a different cloud hosting provider, and greatly decreasing the size of the files we upload to Amazon’s servers.
+By running `npm install`, you’ve created a node_modules folder that you’ll upload to AWS along with your code to make a charge. All of the code in this file will be hosted online by Amazon, and you need to provide it with the libraries you utilize in your project. By making this repository separate from our Gatsby project, we can decouple it from our site making it easier to switch to a different cloud hosting provider, and significantly decreasing the size of the files we upload to Amazon’s servers.
 
 # Editing your new repo
 
@@ -340,7 +340,7 @@ Open gatsby-stripe-serverless-backend in your code editor.
 
 Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
 
-## How does the code work in this site?
+## How does the code work on this site?
 
 You don’t need to change any code in the `checkout.js` (not to be confused with the `checkout.js` file we used to create our component in Gatsby), but go ahead and open it up to review what it’s doing.
 
@@ -434,7 +434,7 @@ You can read more about the configurations you’ll use in the `serverless.yml` 
 
 # Configuring serverless with your AWS credentials
 
-Configure serverless with your AWS credentials so you can make updates on AWS through the serverless tools with this command:
+Configure serverless with your AWS credentials, so you can make updates on AWS through the serverless tools with this command:
 
 > **NOTE**: It’s helpful to edit this command somewhere other than the terminal as you replace the dummy keys with your real keys, or else it might run halfway through your editing process
 
