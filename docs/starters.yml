@@ -806,7 +806,7 @@
     - react-intl
     - Formik
     - Yup
-    - Netlify
+    - Netlify Form
   features:
     - Based on default starter
     - i18n with change of direction
