@@ -12,8 +12,8 @@ CSS Modules enable the use of writing normal CSS safely. Gone are the worries of
 
 There are two important parts in utilizing CSS Modules. Since it works out of the box with Gatsby, all you need are:
 
-* A React component
-* A `module.css` file
+- A React component
+- A `module.css` file
 
 For the sake of an example, a `module.css` file called `container.module.css` will be created under a new directory called `src/components` with the following contents.
 
