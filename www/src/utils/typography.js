@@ -315,11 +315,20 @@ const _options = {
       ".token.atrule, .token.attr-value, .token.keyword, .token.class-name": {
         color: colors.code.keyword,
       },
+      ".token.inserted:before, .token.deleted:before": {
+        content: " ",
+      },
       ".token.inserted": {
         color: colors.code.add,
       },
+      ".token.inserted:before": {
+        content: `"+ "`,
+      },
       ".token.deleted": {
         color: colors.code.remove,
+      },
+      ".token.deleted:before": {
+        content: `"- "`,
       },
       ".token.regex, .token.important": {
         color: colors.code.regex,

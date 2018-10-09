@@ -27,6 +27,11 @@ const createGuideList = guides =>
     .map(guide => `<li><a href="${guide.link}">${guide.title}</a></li>`)
     .join(``)
 
+// this function will remove + and - from Markdown html in favor of pseudo ::before to add + and - automatically
+const trimPlusMinusInMarkdownDiff = html => {
+  return html.replace(/">-/gi, '"> ').replace(/">\+/gi, `"> `)
+}
+
 const getPageHTML = page => {
   if (!page.frontmatter.overview) {
     return page.html
@@ -61,7 +66,7 @@ class DocsTemplate extends React.Component {
   render() {
     const page = this.props.data.markdownRemark
     const isDocsPage = this.props.location.pathname.slice(0, 5) === `/docs`
-    const html = getPageHTML(page)
+    const html = trimPlusMinusInMarkdownDiff(getPageHTML(page))
 
     return (
       <React.Fragment>
