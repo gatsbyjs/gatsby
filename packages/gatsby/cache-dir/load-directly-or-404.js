@@ -4,7 +4,7 @@ export function getRedirectUrl(path) {
   // This should never happen, but check just in case - otherwise, there would
   // be an infinite redirect loop
   if (url.search.match(/\?(.*&)?no-cache=1(&|$)/)) {
-    console.log(
+    console.error(
       `Found no-cache=1 while attempting to load a page directly; ` +
         `this is likely due to a bug in Gatsby, or a misconfiguration in your project.`
     )
