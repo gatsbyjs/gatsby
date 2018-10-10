@@ -1,6 +1,5 @@
 const fs = require(`fs-extra`)
 const got = require(`got`)
-const crypto = require(`crypto`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
@@ -45,20 +44,6 @@ const cacheId = url => `create-remote-file-node-${url}`
 /*********
  * utils *
  *********/
-
-/**
- * createHash
- * --
- *
- * Create an md5 hash of the given str
- * @param  {Stringq} str
- * @return {String}
- */
-const createHash = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
@@ -172,6 +157,7 @@ async function processRemoteNode({
   store,
   cache,
   createNode,
+  createContentDigest,
   auth = {},
   createNodeId,
 }) {
@@ -195,7 +181,7 @@ async function processRemoteNode({
   }
 
   // Create the temp and permanent file names for the url.
-  const digest = createHash(url)
+  const digest = createContentDigest(url)
   const ext = getRemoteFileExtension(url)
 
   const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
@@ -221,7 +207,12 @@ async function processRemoteNode({
     }
 
     // Create the file node.
-    const fileNode = await createFileNode(filename, createNodeId, {})
+    const fileNode = await createFileNode(
+      filename,
+      createNodeId,
+      createContentDigest,
+      {}
+    )
     fileNode.internal.description = `File "${url}"`
     // Override the default plugin as gatsby-source-filesystem needs to
     // be the owner of File nodes or there'll be conflicts if any other

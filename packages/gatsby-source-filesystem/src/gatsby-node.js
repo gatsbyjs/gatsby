@@ -48,7 +48,15 @@ const createFSMachine = () =>
   })
 
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
+  {
+    actions,
+    getNode,
+    createNodeId,
+    createContentDigest,
+    hasNodeChanged,
+    reporter,
+    emitter,
+  },
   pluginOptions
 ) => {
   const { createNode, deleteNode } = actions
