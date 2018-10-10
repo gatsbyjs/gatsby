@@ -24,7 +24,7 @@ But creating compelling experiences is challenging:
 
 When compared with purpose-built CMSs like Shopify for e-commerce or Wordpress for blogging, enterprise CMS applications like Sitecore, Evoq or Adobe Experience Manager (AEM) provide generic content modules.
 
-The enterprise CMS core development experience experiences are based in C#, ASP.NET, and J2EE -- languages a decade out of date for frontend development. Add-ons are expensive and are difficult-to-use compared to pure-play alternatives.
+The enterprise CMS core development experience experiences are based in C#, ASP.NET, and J2EE -- languages and frameworks a decade out of date for frontend development. Add-ons are expensive and are difficult-to-use compared to pure-play alternatives.
 
 Best-of-breed products have emerged to provide top-notch alternatives in each of these areas, but have been difficult to integrate.
 
