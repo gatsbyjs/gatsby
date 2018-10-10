@@ -23,7 +23,7 @@
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
   "peerDependencies": {
-    "aphrodite": "^2.2.3",
+    "aphrodite": "^2.0.0",
     "gatsby": "^2.0.19"
   }
 }

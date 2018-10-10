@@ -1,7 +1,6 @@
 # gatsby-plugin-aphrodite
 
-Provide support for using the css-in-js library
-[Aphrodite](https://github.com/Khan/aphrodite) including server side
+Provide support for using the css-in-js library [Aphrodite](https://github.com/Khan/aphrodite) including server side
 rendering.
 
 ## Install
@@ -16,8 +15,6 @@ Add the plugin to your `gatsby-config.js`.
 
 ```js
 module.exports = {
-  plugins: [
-    'gatsby-plugin-aphrodite'
-  ],
+  plugins: ["gatsby-plugin-aphrodite"],
 }
 ```
