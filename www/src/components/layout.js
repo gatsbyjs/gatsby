@@ -20,7 +20,6 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 // Other fonts
 import "typeface-spectral"
-import "typeface-space-mono"
 
 let windowWidth
 
