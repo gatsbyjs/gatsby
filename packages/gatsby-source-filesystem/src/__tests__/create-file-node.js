@@ -8,9 +8,11 @@ describe(`create-file-node`, () => {
   it(`creates a file node`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
     return createFileNode(
       path.resolve(`${__dirname}/fixtures/file.json`),
       createNodeId,
+      createContentDigest,
       {}
     )
   })
