@@ -16,9 +16,9 @@ Video hosted on [egghead.io][egghead].
 
 ### Basic example
 
-We'll create a new `Header` component located at `src/components/header.js`:
+We'll create a new `Header` component:
 
-```jsx
+```jsx:title=src/components/header.js
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
@@ -42,41 +42,15 @@ export default () => (
 )
 ```
 
-Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`. It’s important that you write your query within the `StaticQuery` component, rather than referencing a variable from elsewhere. (Using queries will be added in the future; see [this issue](https://github.com/gatsbyjs/gatsby/issues/6545) for details.) For example, this won’t work:
-
-```jsx
-import React from "react"
-import { StaticQuery, graphql } from "gatsby"
-
-const query = graphql`
-  query HeadingQuery {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`
-
-export default () => (
-  <StaticQuery
-    query={query}
-    render={data => (
-      <header>
-        <h1>{data.site.siteMetadata.title}</h1>
-      </header>
-    )}
-  />
-)
-```
+Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
 
 ### Typechecking
 
 With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
 
-```jsx
+```jsx:title=src/components/header.js
 import React from "react"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 
 const Header = ({ data }) => (

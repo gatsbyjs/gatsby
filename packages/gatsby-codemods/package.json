@@ -1,7 +1,7 @@
 {
   "name": "gatsby-codemods",
-  "version": "1.0.0-rc.1",
-  "description": "Stub description for gatsby-codemods",
+  "version": "1.0.5",
+  "description": "A collection of codemod scripts for use with JSCodeshift that help migrate to newer versions of Gatsby.",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
@@ -30,5 +30,6 @@
     "@babel/core": "^7.0.0",
     "cross-env": "^5.0.5",
     "jscodeshift": "^0.5.1"
-  }
+  },
+  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
 }

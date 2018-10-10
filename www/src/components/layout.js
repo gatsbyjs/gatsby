@@ -1,7 +1,7 @@
 import React from "react"
 import Modal from "react-modal"
 import Helmet from "react-helmet"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
@@ -9,7 +9,6 @@ import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
-import "../css/prism-coy.css"
 
 import mousetrap from "mousetrap"
 
@@ -58,12 +57,7 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const {
-      location = {
-        pathname: `/starter-showcase`,
-      },
-    } = this.props // location will be undefined if on 'starter-showcase'
-    const isHomepage = location.pathname === `/`
+    const isHomepage = this.props.location.pathname === `/`
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
@@ -164,11 +158,12 @@ class DefaultLayout extends React.Component {
           />
           <html lang="en" />
         </Helmet>
+        <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2 beta.
+          These are the docs for v2.
           {` `}
-          <OutboundLink
-            href="https://gatsbyjs.org/"
+          <a
+            href="https://v1.gatsbyjs.org/"
             css={{
               color: `#fff`,
             }}
@@ -185,7 +180,7 @@ class DefaultLayout extends React.Component {
               {` `}
               instead
             </span>
-          </OutboundLink>
+          </a>
           .
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
@@ -213,6 +208,34 @@ class DefaultLayout extends React.Component {
       </div>
     )
   }
+}
+
+const styles = {
+  skipLink: {
+    "[data-reach-skip-link]": {
+      border: `0`,
+      clip: `rect(0 0 0 0)`,
+      height: `1px`,
+      width: `1px`,
+      margin: `-1px`,
+      padding: `0`,
+      overflow: `hidden`,
+      position: `absolute`,
+      zIndex: `100`,
+      fontSize: `0.85rem`,
+      ":focus": {
+        padding: `0.9rem`,
+        position: `fixed`,
+        top: `10px`,
+        left: `10px`,
+        background: `white`,
+        textDecoration: `none`,
+        width: `auto`,
+        height: `auto`,
+        clip: `auto`,
+      },
+    },
+  },
 }
 
 export default DefaultLayout

@@ -43,7 +43,7 @@ cd netlify-cms-tutorial && npm install --save netlify-cms gatsby-plugin-netlify-
 Gatsby plugins are registered in a file called `gatsby-config.js` in the site root. Create that file
 if it's not already there, and add the following to register the Netlify CMS plugin:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-netlify-cms`],
 }
@@ -55,10 +55,10 @@ want to put the configuration file in that same directory.
 
 Still in the root directory, add a "static" folder. Gatsby will copy everything in the static folder
 into the output, so we'll want to place the Netlify CMS configuration file as
-"static/admin/config.yml". Let's create a test configuration now - add this to your new
+`static/admin/config.yml`. Let's create a test configuration now - add this to your new
 `config.yml`:
 
-```yaml
+```yaml:title=static/admin/config.yml
 backend:
   name: test-repo
 
@@ -78,7 +78,7 @@ collections:
 ```
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server. Once the server
-is running, it will print the address to open for viewing. Its typically `localhost:8000`. Open that
+is running, it will print the address to open for viewing. It's typically `localhost:8000`. Open that
 in a browser and you should see the text "Hello World" in the top left corner. Now navigate to
 `/admin/` - so if your site is at `localhost:8000`, go to `localhost:8000/admin/`. **The trailing
 slash is required!**
@@ -136,7 +136,7 @@ example below. Note that the `repo` value must be your GitHub username followed 
 forward slash, and then your repository name. If your username is "test-user" and your repo name is
 "test-repo", you would put "test-user/test-repo".
 
-```yaml
+```yaml:title=static/admin/config.yml
 backend:
   name: github
   repo: your-username/your-repo-name

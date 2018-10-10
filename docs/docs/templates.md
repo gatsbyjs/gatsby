@@ -18,25 +18,13 @@ title: Docs templates
 
 Here are templates (models) to follow when contributing to Gatsby docs to ensure that the docs accomplish their purpose. If you have a good reason to deviate from the following template structures, mention those reasons in the PR so others can give proper feedback.
 
-### Decision tree: what content goes where?
-
-Is the content a step-by-step tutorial or a shorter article?
-
-- a step-by-step tutorial ought to go under Advanced Tutorials in the Tutuorial section of the .org site
-- a shorter article ought to go under the Docs
-
-Does the step-by-step tutorial deal with a high-demand and/or Gatsby core technology?
-
-- Yes --> Put it in the Advanced Tutorials in the Tutorial section of the .org site
-- No -->
-
 ## Guide
 
 ### What are guide articles?
 
 Guide articles are found under the "Guides" category in the docs.
 
-### Example of a guide article
+### Near-perfect example of a guide article
 
 [Add a 404 page](/docs/add-404-page/) is an example of a guide that isn't perfect yet. As you read through this template, take note of where that article can be improved.
 
@@ -67,8 +55,8 @@ Guides cover the smallest possible topic, while tutorials can cover a series of 
 Topics should be chosen based on these priorities:
 
 1.  Stub articles (already exist on the site but just don't have content in them yet)
-2.  Articles requested in the In Progress epics in Github Zenhub
-3.  Articles requested in the Roadmap in Github Zenhub
+2.  Articles requested in the In Progress epics in GitHub Zenhub
+3.  Articles requested in the Roadmap in GitHub Zenhub
 4.  Articles that you or other community members would like to see
 
 ### Length of a guide
@@ -136,7 +124,7 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 ## Guide overview
 
-### Perfect example of a guide overview
+### Near-perfect example of a guide overview
 
 [Deploying and Hosting](/docs/deploying-and-hosting/)
 
@@ -157,8 +145,8 @@ If it needs to extend beyond the fold, try to keep it to the length of a piece o
 Guide overview articles are essentially new parent categories that help organize all the guide articles. Here’s how to decide if you should create a new guide overview article:
 
 1.  Stub articles (already exist on the site but just don't have content in them yet)
-2.  Articles requested in the In Progress epics in Github Zenhub
-3.  Articles requested in the Roadmap in Github Zenhub
+2.  Articles requested in the In Progress epics in GitHub Zenhub
+3.  Articles requested in the Roadmap in GitHub Zenhub
 4.  Articles that you or other community members would like to see
 
 ## Guide overview template
@@ -202,9 +190,9 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Tutorial
 
-### Perfect example of a tutorial
+### Near perfect example of a tutorial
 
-[link]()
+[Main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/)
 
 ### What should a tutorial be about?
 
@@ -221,19 +209,19 @@ Guides cover the smallest possible topic, while tutorials can cover a series of 
 Topics should be chosen based on these priorities:
 
 1.  Stub articles (already exist on the site but just don't have content in them yet)
-2.  Tutorials requested in the In Progress epics in Github Zenhub
-3.  Tutorials requested in the Roadmap in Github Zenhub
+2.  Tutorials requested in the In Progress epics in GitHub Zenhub
+3.  Tutorials requested in the Roadmap in GitHub Zenhub
 4.  Tutorials that you or other community members would like to see
 
 ## Length of a tutorial
 
-If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers and you’re finding yourself creating a Table of Contents at the top, the it probably will be easier to read and easier for readers to complete if you turn into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/).
+If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers and you’re finding yourself creating a Table of Contents at the top, it will probably be easier to read and easier for readers to complete if you turn it into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/).
 
 If you have a tutorial that falls into this category, it is likely a big enough project that you’ll benefit from the feedback process provided by creating an [RFC (Request for Comments) document](https://github.com/gatsbyjs/rfcs).
 
 ## Tutorial template
 
-You can copy and paste the markdown text below and fill it in with your own information
+You can copy and paste the markdown text below and fill it in with your own information.
 
 ```markdown
 ---
@@ -307,9 +295,9 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 ## Plugin READme template
 
-### Example of a plugin READme
+### Near-perfect example of a plugin READme
 
-[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
+`[gatsby-source-filesystem]`(/packages/gatsby-source-filesystem/)
 
 ```markdown
 ## Description
@@ -361,9 +349,9 @@ If you have unanswered questions, would like help with enhancing or debugging th
 
 ## Starter READme template
 
-### Example of a starter READme
+### Near-perfect example of a starter READme
 
-[Default Starter READme](https://github.com/gatsbyjs/gatsby-starter-default))
+[Default Starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
 
 ```markdown
 ## Name of starter

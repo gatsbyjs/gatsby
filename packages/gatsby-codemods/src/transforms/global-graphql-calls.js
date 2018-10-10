@@ -32,15 +32,17 @@ function addEsmImport(j, root, tag) {
     return // already exists
 
   if (!existingImport.length) {
+    const first = root.find(j.Program).get(`body`, 0)
+    const comments = first.node.comments.splice(0)
+    const importStatement = j.importDeclaration(
+      [j.importSpecifier(j.identifier(IMPORT_NAME))],
+      j.literal(MODULE_NAME)
+    )
+    importStatement.comments = comments
     root
       .find(j.Program)
       .get(`body`, 0)
-      .insertBefore(
-        j.importDeclaration(
-          [j.importSpecifier(j.identifier(IMPORT_NAME))],
-          j.literal(MODULE_NAME)
-        )
-      )
+      .insertBefore(importStatement)
     return
   }
 
@@ -119,7 +121,12 @@ module.exports = (file, api, options) => {
   let tag = tags.get(0)
 
   const useImportSyntax =
-    root.find(j.ImportDeclaration, { importKind: `value` }).length > 0
+    root.find(j.ImportDeclaration, { importKind: `value` }).length > 0 ||
+    root.find(j.VariableDeclarator, {
+      init: {
+        callee: { name: `require` },
+      },
+    }).length === 0
 
   if (useImportSyntax) {
     addEsmImport(j, root, tag)

@@ -14,7 +14,7 @@ Queremos contribuir con Gatsby para que sea divertido, agradable y educativo par
 - Agregar unidades o pruebas funcionales
 - Ayudar con [problemas de GitHub](https://github.com/gatsbyjs/gatsby/issues) -- especialmente determinando si un problema persiste o es reproducible
 - [Reportar errores o problemas encontrados](/docs/how-to-file-an-issue/)
-- Buscar a Gatsby en Discord o Spectrum y ayudar a alguien más que lo necesite
+- Buscar a Gatsby en [Discord](https://discordapp.com/invite/jUFVxtB) o [Spectrum](https://spectrum.chat/gatsby-js) y ayudar a alguien más que lo necesite
 - ¡Enseñar a otros cómo contribuir al repositorio de Gatsby!
 
 Si estás preocupado o no sabes por dónde empezar, siempre puedes comunicarte con Shannon Soper (@shannonb_ux) en Twitter o simplemente presentar el problema en github y una persona encargada del mantenimiento podrá ayudarlo a orientarse.
@@ -61,7 +61,7 @@ Los pasos habituales para contribuir son:
 Gatsby, como era de esperar, utiliza Gatsby en la documentación de su sitio web.
 
 Si desea agregar/modificar cualquier documentación de Gatsby,debe ir a la
-[carpeta docs en Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) y utilizar el editor de archivos para editar y luego ver una vista previa de tus cambios. Github luego te permite
+[carpeta docs en GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs) y utilizar el editor de archivos para editar y luego ver una vista previa de tus cambios. GitHub luego te permite
 que hagas el cambio a un commit y subas a PR justo en la interfaz de usuario. Esta es la _manera más facil_
 en la que puedes colaborar con el proyecto!
 

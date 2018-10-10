@@ -6,7 +6,7 @@ Gatsby packages to Gatsby sites that you're testing your changes on.
 
 ## Install
 
-`npm install -g gatsby-dev-cli@canary`
+`npm install -g gatsby-dev-cli`
 
 ## Configuration / First time setup
 
@@ -57,3 +57,7 @@ https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
 
 Don't output anything except for a quit message when used together with
 `--scan-once`.
+
+#### `--copy-all`
+
+Copy all modules/files in the gatsby source repo in packages/

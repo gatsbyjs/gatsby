@@ -28,6 +28,7 @@ const IndexPage = ({ data }) => {
 
 export default IndexPage
 
+// Increase the `limit` parameter to get more posts
 export const pageQuery = graphql`
   query {
     allMediumPost(limit: 5, sort: { fields: [createdAt], order: DESC }) {

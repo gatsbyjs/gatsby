@@ -12,6 +12,7 @@ const createLink = ({
   isActive,
   isParentOfActiveItem,
   stepsUI,
+  customCSS,
 }) => {
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
@@ -40,6 +41,7 @@ const createLink = ({
           isDraft && styles.draft,
           isActive && styles.activeLink,
           isParentOfActiveItem && styles.parentOfActiveLink,
+          customCSS && customCSS,
         ]}
         onClick={onLinkClick}
         to={item.link}

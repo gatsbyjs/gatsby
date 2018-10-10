@@ -3,6 +3,18 @@
 Gatsby plugin that automatically creates pages from React components in specified directories. Gatsby
 includes this plugin automatically in all sites for creating pages from components in `src/pages`.
 
+With this plugin, *any* file that lives in the `src/pages` folder (or subfolders) will be expected to export a React Component to generate a Page. The following files are automatically excluded:
+
+- `template-*`
+- `__tests__/*`
+- `*.test.jsx?`
+- `*.spec.jsx?`
+- `*.d.tsx?`
+- `*.json`
+- `*.yaml`
+- `_*`
+- `.*`
+
 ## Install
 
 `npm install --save gatsby-plugin-page-creator`

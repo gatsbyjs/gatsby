@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-csv/compare/gatsby-transformer-csv@2.0.1...gatsby-transformer-csv@2.0.2) (2018-10-04)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+<a name="2.0.1"></a>
+
+## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-csv/compare/gatsby-transformer-csv@2.0.0...gatsby-transformer-csv@2.0.1) (2018-10-02)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+<a name="2.0.0"></a>
+
+# [2.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-csv/compare/gatsby-transformer-csv@2.0.0-rc.2...gatsby-transformer-csv@2.0.0) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+<a name="2.0.0-rc.2"></a>
+
+# [2.0.0-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-csv/compare/gatsby-transformer-csv@2.0.0-rc.1...gatsby-transformer-csv@2.0.0-rc.2) (2018-09-05)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
 <a name="2.0.0-rc.1"></a>
 
 # [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-csv/compare/gatsby-transformer-csv@2.0.0-rc.0...gatsby-transformer-csv@2.0.0-rc.1) (2018-08-29)

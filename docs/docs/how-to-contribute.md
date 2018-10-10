@@ -6,14 +6,14 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 
 - Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs) and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them 😄) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
 - [Submitting new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
-- Submitting new documentation; titles in _italics_ on gatsbyjs.org are stubs and need contributions
+- Submitting new documentation; titles in the side navigation on [docs](/docs) which are lighter in color on gatsbyjs.org are stubs and need contributions
 - Tweeting about things you [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby) (make sure to use the hashtag and/or @ mention us!)
 - Submitting documentation updates, enhancements, designs, or bugfixes
 - Submitting spelling or grammar fixes
 - Adding unit or functional tests
 - Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
 - [Reporting bugs or issues](/docs/how-to-file-an-issue/)
-- Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
+- Searching for Gatsby on [Discord](https://discordapp.com/invite/jUFVxtB) or [Spectrum](https://spectrum.chat/gatsby-js) and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
 As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
@@ -31,31 +31,23 @@ If you create a loader or plugin, we would <3 for you to open source it and put 
 ### Contributing to the repo
 
 Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
-lerna and yarn to configure the repository for active development.
+[Lerna](https://lernajs.io/) and [Yarn](https://yarnpkg.com/en/) to configure the repository for active development.
 
-We're currently gearing up to release a new major version, v2.
+#### Using Yarn
 
-During this time, please choose the correct branch for your pull request:
+Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple `package.json` files in sub-folders, enabling a faster and lighter installation process.
 
-- `master` branch for Gatsby version 2 bug fixes
-- `master` branch for any new features (these will be released in the Gatsby v2 betas)
-- `master` branch for updates to the `www` and `docs` directories
-- `v1` branch for Gatsby version 1 bug fixes
+```json:title=package.json
+{
+  "workspaces": ["workspace-a", "workspace-b"]
+}
+```
 
-Note: We will only accept bug fixes for Gatsby v1. New features should be added to Gatsby v2.
-
-You can install the latest version of Gatsby by following these steps:
-
-- Clone the repo, navigate to its directory.
-- ensure you have the latest version of yarn installed (>= 1.0.2)
-  https://yarnpkg.com/en/docs/install
-- Install dependencies using `yarn run bootstrap` in the root of the repo.
-
-There are two ways to contribute. This is the most usual way:
-
+- [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
+- Ensure you have the latest version of Yarn installed (>= 1.0.2). `yarn --version`
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
-- Setup up repo and install dependencies: `yarn run bootstrap`
+- Set up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `yarn run watch -- --scope=gatsby`.
@@ -65,6 +57,7 @@ There are two ways to contribute. This is the most usual way:
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
+  Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
 - Commit and push to your fork.
@@ -92,6 +85,18 @@ a pull request.
 - Make sure to double check your grammar and capitalise correctly.
 - Commit and push to your fork.
 - Create a pull request from your branch.
+
+To develop on the starter showcase, you'll need to supply a GitHub personal access token.
+
+1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
+2. In the new token's settings, grant that token the "public_repo" scope.
+3. Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
+
+```
+GITHUB_API_TOKEN=YOUR_TOKEN_HERE
+```
+
+The `.env.development` file is ignored by git. Your token should never be committed.
 
 ### Contributing to the blog
 

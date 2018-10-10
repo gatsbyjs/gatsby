@@ -6,12 +6,13 @@ import { hot } from "react-hot-loader"
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import { reportQueryErrorOverlay } from './error-overlay-handler'
-import loader from "./loader"
+import { reportQueryErrorOverlay } from "./error-overlay-handler"
+import loader, { setApiRunnerForLoader } from "./loader"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
 window.___emitter = emitter
+setApiRunnerForLoader(apiRunner)
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
@@ -59,7 +60,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   })
 
-  emitter.on(`pageQueryError`, (payload) => {
+  emitter.on(`pageQueryError`, payload => {
     const error = payload && payload.length ? payload[0].error : ``
     reportQueryErrorOverlay(error, {
       clearCondition: !payload.length,

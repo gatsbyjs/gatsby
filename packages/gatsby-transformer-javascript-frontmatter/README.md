@@ -19,24 +19,24 @@ module.exports = {
 
 ## Parsing algorithm
 
-This plugin uses @babel/parser and traverse (from the babel family of code) to
+This plugin uses [@babel/parser](https://www.npmjs.com/package/@babel/parser) and [@babel/traverse](https://www.npmjs.com/package/@babel/traverse) to
 statically read the frontmatter exports.
 
-In a .js file, export a frontmatter object to set your metadata variables, like so:
+In a `.js` file, export a frontmatter object to set your metadata variables, like so:
 
 ```javascript
-import React from 'react'
+import React from "react"
 
 exports.frontmatter = {
-    title: 'Choropleth on d3v4',
-    written: '2017-05-04',
-    layoutType: 'post',
-    path: 'choropleth-on-d3v4',
-    category: 'data science',
-    description: 'Things about the choropleth.'
+  title: "Choropleth on d3v4",
+  written: "2017-05-04",
+  layoutType: "post",
+  path: "choropleth-on-d3v4",
+  category: "data science",
+  description: "Things about the choropleth.",
 }
 
-export default MyComponent ...
+export default MyComponent
 ```
 
 You can also use a named export for the frontmatter object:
@@ -105,13 +105,15 @@ Which would return something like:
 Any attribute on "frontmatter" across your js files will be exported. If a file is
 missing it, the value will be null.
 
-The error field will contain `false` or an object with error information just to
+The `error` field will contain `false` or an object with error information just to
 give a surface level view of what the query is pulling out.
 
-```javascript
-"error": {
-          "err": true,
-          "message": "we threw an error",
-          "stack": "This is a stringified stack trace"
-        },
+```json
+{
+  "error": {
+    "err": true,
+    "message": "we threw an error",
+    "stack": "This is a stringified stack trace"
+  }
+}
 ```
