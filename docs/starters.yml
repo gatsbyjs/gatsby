@@ -890,3 +890,16 @@
     - Styling:SCSS
   features:
     - Barebones for getting up and running with TypeScript and Sass
+- url: https://www.gatsby-typescript-template.com/
+  repo: https://github.com/ikeryo1182/gatsby-typescript-template
+  description: This is so standard starter with Typescript , TSLint, Prettier, Lint-Staged(Husky) and SASS
+  tags:
+    - TypeScript
+    - TSLint
+    - Prettier
+    - Lint-Staged
+    - Sass
+  features:
+    - Category and Tag for post
+    - Type Safe by TypeScript
+    - Format Safe by TSLint and Prettier with Lint-Staged(Husky)
