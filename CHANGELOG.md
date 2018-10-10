@@ -267,7 +267,7 @@
 - Add missing npmignore files #1298 @kyleamathews
 - Move creating 404.html page into plugin so can enforce pages only created by
   plugins #1300 @kyleamathews
-- Fix occassionally out-of-order query watching which would throw errors #1301
+- Fix occasionally out-of-order query watching which would throw errors #1301
   @kyleamathews
 - Waiting for query extraction wasn't actually waiting #1303 @kyleamathews
 - Improved plugin error without exit #1309 @0x80
