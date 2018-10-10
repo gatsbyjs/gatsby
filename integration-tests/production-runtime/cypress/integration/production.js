@@ -5,6 +5,12 @@ describe(`Production build tests`, () => {
     cy.visit(`/`).waitForAPI(`onRouteUpdate`)
   })
 
+  if (process.env.TEST_PLUGIN_OFFLINE) {
+    it(`should activate the service worker`, () => {
+      cy.waitForAPI(`onServiceWorkerActive`)
+    })
+  }
+
   it(`should restore scroll position only when going back in history`, () => {
     cy.getTestElement(`long-page`)
       .click()
@@ -62,7 +68,7 @@ describe(`Production build tests`, () => {
       .should(`equal`, `/`)
   })
 
-  it(`should show 404 page when visiting non-existent page route`, () => {
+  it(`should show 404 page when clicking a link to a non-existent page route`, () => {
     cy.getTestElement(`404`).click()
 
     cy.waitForAPI(`onRouteUpdate`)
@@ -73,17 +79,21 @@ describe(`Production build tests`, () => {
   })
 
   it(`should show 404 page when directly entering an invalid URL`, () => {
-    cy.visit(`/non-existent-page/`, { failOnStatusCode: false })
+    cy.visit(`/non-existent-page/`, {
+      failOnStatusCode: false,
+    })
 
     cy.waitForAPI(`onRouteUpdate`)
       .getTestElement(`404`)
       .should(`exist`)
   })
 
-  it(`should navigate back after a 404 from direct link entry`, () => {
+  it(`should navigate back after a 404 from a direct link entry`, () => {
     cy.visit(`/`).waitForAPI(`onRouteUpdate`)
 
-    cy.visit(`/non-existent-page/`, { failOnStatusCode: false })
+    cy.visit(`/non-existent-page/`, {
+      failOnStatusCode: false,
+    })
 
     cy.waitForAPI(`onRouteUpdate`)
       .go(`back`)
