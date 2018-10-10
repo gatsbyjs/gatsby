@@ -2898,16 +2898,3 @@
   built_by: "https://fcfcu.com/"
   built_by_url: "https://fcfcu.com/"
   featured: false
-- title: David James Portfolio
-  main_url: https://dfjames.com/
-  url: https://dfjames.com/
-  source_url: https://github.com/daviddeejjames/dfjames-gatsby
-  description: >
-    Portfolio Site using GatsbyJS and headless WordPress
-  categories:
-    - WordPress
-    - Portfolio
-    - Blog
-  built_by: David James
-  built_by_url: https://twitter.com/daviddeejjames
-  featured: false
