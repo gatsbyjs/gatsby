@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.4"></a>
+
+## [3.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.3...gatsby-source-wordpress@3.0.4) (2018-10-10)
+
+### Features
+
+- **gatsby-source-wordpress:** improve error logging for wordpress API requests ([#8967](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/8967)) ([3bac0c4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/3bac0c4)), closes [#8928](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/8928)
+
 <a name="3.0.3"></a>
 
 ## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.2...gatsby-source-wordpress@3.0.3) (2018-10-09)
