@@ -4,7 +4,7 @@ import ReactHighcharts from "react-highcharts"
 const dateToUTC = date => {
   const d = String(date)
   const year = Number(d.slice(0, 4))
-  const monthNum = Number(d.slice(4))
+  const monthNum = Number(d.slice(5))
 
   return Date.UTC(year, monthNum - 1, 0)
 }
@@ -56,12 +56,17 @@ const highchartsOptions = {
   },
 }
 
-const DateChart = ({ props }) => {
-  const data = { props }
+const DateChart = props => {
+  const seriesData = JSON.parse(props.seriesData || props[`series-data`])
+  const yAxisLabel = props.yAxisLabel || props[`y-axis-label`]
+  console.log(props)
   const config = {
     chart: {
       type: "spline",
       zoomType: "x",
+    },
+    tooltip: {
+      //pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
     },
     title: {
       text: props.title,
@@ -69,17 +74,20 @@ const DateChart = ({ props }) => {
     xAxis: {
       type: "datetime",
       title: {
-        text: "Month",
+        text: "Date",
       },
     },
     yAxis: {
       title: {
-        text: props.yAxisLabel,
+        text: yAxisLabel,
       },
     },
-    series: props.data.allSeries.map(series => ({
+    series: seriesData.map(series => ({
       name: series.name,
-      data: series.data.map(edge => [dateToUTC(edge.date), edge.value]),
+      data: series.data.map(edge => [
+        dateToUTC(edge.date),
+        parseFloat(edge.value),
+      ]),
     })),
   }
   return (
