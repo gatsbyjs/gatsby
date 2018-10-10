@@ -285,19 +285,19 @@ In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can
 
 4.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
 
+Note: The following steps assume that you have `now` installed on your machine.
+
 If you don't wish to use a node server package, alternatively do:
 
-1.  Install the Now CLI
+1.  Run `gatsby build` at the root of your project.
 
-`npm install -g now`
+2.  Run `now` inside `public/`. This will upload your project to the cloud.
 
-2.  Run `gatsby build` at the root of your project
+To deploy a custom path, run `now` as:
 
-3.  Switch to the `public/` directory
-
-`cd public/`
-
-4.  Run `now` inside `public/`. This will upload your project to the cloud.
+```shell
+$ now /usr/src/project
+```
 
 ## Debugging tips
 
