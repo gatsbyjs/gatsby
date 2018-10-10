@@ -54,6 +54,7 @@ describe(`the click event`, () => {
   it(`checks if the destination/origin URLs have matching origins`, () => {})
   it(`checks if the destination/origin URLs have matching top level paths`, () => {})
   it(`checks if the destination URL wants to scroll the page with a hash anchor`, () => {})
+  it(`checks if pathPrefix is handled`, () => {})
   it(`routes the destination href through gatsby`, () => {})
 })
 
@@ -350,4 +351,50 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
 
     withSearch.dispatchEvent(clickEvent)
   })
+})
+
+describe(`pathPrefix is handled if`, () => {
+  // We're going to manually set up the event listener here
+  let hrefHandler
+  let eventDestroyer
+
+  beforeAll(() => {
+    global.__PATH_PREFIX__ = `/pathPrefix`
+    hrefHandler = jest.fn()
+    eventDestroyer = catchLinks.default(window, hrefHandler)
+  })
+
+  afterAll(() => {
+    global.__PATH_PREFIX__ = ``
+    eventDestroyer()
+  })
+
+  it(`href with /\${pathPrefix}/someSubPath is passed to hrefHandler as /someSubPath`, done => {
+    const withPathPrefix = document.createElement(`a`)
+    withPathPrefix.setAttribute(
+      `href`,
+      `${window.location.href}/someSubPath`
+    )
+    document.body.appendChild(withPathPrefix)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    hrefHandler.mockImplementation(() => {
+      expect(hrefHandler).toHaveBeenCalledWith(
+        `/someSubPath`
+      )
+
+      withPathPrefix.remove()
+
+      done()
+    })
+
+    withPathPrefix.dispatchEvent(clickEvent)
+  })
+
 })
