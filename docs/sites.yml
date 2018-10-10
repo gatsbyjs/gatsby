@@ -2879,7 +2879,7 @@
   built_by: Swapcard
   built_by_url: "https://www.swapcard.com/"
   featured: false
-- title: attn:
+- title: "attn:"
   main_url: "https://www.attn.com/"
   url: "https://www.attn.com/"
   categories:
@@ -2895,6 +2895,6 @@
     - Banking
     - Business
     - Education
-  built_by: "attn:"
+  built_by: "https://fcfcu.com/"
   built_by_url: "https://fcfcu.com/"
   featured: false
