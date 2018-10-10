@@ -41,12 +41,14 @@ Where oh where is my little pony?
       const actions = { createNode, createParentChildLink }
       const createNodeId = jest.fn()
       createNodeId.mockReturnValue(`uuid-from-gatsby`)
+      const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
       await onCreateNode({
         node,
         loadNodeContent,
         actions,
         createNodeId,
+        createContentDigest,
       }).then(() => {
         expect(createNode.mock.calls).toMatchSnapshot()
         expect(
@@ -83,6 +85,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
       const actions = { createNode, createParentChildLink }
       const createNodeId = jest.fn()
       createNodeId.mockReturnValue(`uuid-from-gatsby`)
+      const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
       await onCreateNode(
         {
@@ -90,6 +93,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
           loadNodeContent,
           actions,
           createNodeId,
+          createContentDigest,
         },
         { excerpt_separator: `<!-- end -->` }
       ).then(() => {
@@ -194,6 +198,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       const actions = { createNode, createParentChildLink }
       const createNodeId = jest.fn()
       createNodeId.mockReturnValue(`uuid-from-gatsby`)
+      const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
       onCreateNode(
         {
@@ -201,6 +206,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           loadNodeContent,
           actions,
           createNodeId,
+          createContentDigest,
         },
         { excerpt_separator: `<!-- end -->` }
       )
@@ -250,12 +256,14 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
       const actions = { createNode, createParentChildLink }
       const createNodeId = jest.fn()
       createNodeId.mockReturnValue(`uuid-from-gatsby`)
+      const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
       onCreateNode({
         node,
         loadNodeContent,
         actions,
         createNodeId,
+        createContentDigest,
       })
     })
   })

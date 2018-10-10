@@ -106,11 +106,13 @@ const bootstrapTest = (label, content, query, test, additionalParameters = {}) =
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     },
     { ...additionalParameters }
     )

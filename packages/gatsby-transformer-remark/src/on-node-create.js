@@ -1,9 +1,16 @@
 const grayMatter = require(`gray-matter`)
-const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
-  { node, getNode, loadNodeContent, actions, createNodeId, reporter },
+  {
+    node,
+    getNode,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    createContentDigest,
+    reporter,
+  },
   pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
@@ -56,10 +63,7 @@ module.exports = async function onCreateNode(
       markdownNode.fileAbsolutePath = node.absolutePath
     }
 
-    markdownNode.internal.contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(markdownNode))
-      .digest(`hex`)
+    markdownNode.internal.contentDigest = createContentDigest(markdownNode)
 
     createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
