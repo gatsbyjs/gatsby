@@ -21,7 +21,7 @@ This has led to two changes:
 
 1.  [@jlengstorf](https://github.com/jlengstorf) created the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) in GitHub that automatically notifies whomever is on the team whenever a PR includes edits to anything within /docs/.
 
-2.  With the help of many people, I created a “docs decision tree,” so that when the @docsteam is notified, they can make decisions in a unified manner according to a set of agreed-upon principles (which can be adjusted over time). This will help anyone making decisions pertaining to docs escape any biases and fickleness. The “docs decision tree” will be tested over Hacktoberfest with all issues labelled `documentation` and collect discussion in the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14).
+2.  With the help of many people, I created a “docs decision tree,” so that when the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) is notified, they can make decisions in a unified manner according to a set of agreed-upon principles (which can be adjusted over time). This will help anyone making decisions pertaining to docs escape any biases and fickleness. The “docs decision tree” will be tested over Hacktoberfest with all issues labelled `documentation` and collect discussion in the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14).
 
 ## Docs Decision Tree and Examples
 
