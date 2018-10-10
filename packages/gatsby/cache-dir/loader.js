@@ -166,13 +166,6 @@ const onPostPrefetchPathname = pathname => {
 // let pathArray = []
 // let pathCount = {}
 
-let resourcesCount = Object.create(null)
-const sortResourcesByCount = (a, b) => {
-  if (resourcesCount[a] > resourcesCount[b]) return 1
-  else if (resourcesCount[a] < resourcesCount[b]) return -1
-  else return 0
-}
-
 let findPage
 let pathScriptsCache = {}
 let prefetchTriggered = {}
@@ -280,7 +273,7 @@ const queue = {
   // if necessary and then the code/data bundles. Used for prefetching
   // and getting resources for page changes.
   getResourcesForPathname: path =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => { /* eslint-disable-line consistent-return */
       const doingInitialRender = inInitialRender
       inInitialRender = false
 
