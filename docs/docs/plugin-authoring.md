@@ -75,4 +75,5 @@ to use JavaScript syntax which isn't supported by your version of Node.js, you
 can place the files in a `src` subfolder and build them to the plugin folder
 root.
 
-## [Publishing a plugin to the library](/docs/submit-to-plugin-library/)
+## Publishing a plugin to the library
+If you'd like to publish your plugin to the Gatsby Plugin Library (please do!), [follow these steps](/docs/submit-to-plugin-library/).
