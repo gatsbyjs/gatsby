@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const json2csv = require(`json2csv`)
 
+const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
 const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process  nodes correctly`, () => {
@@ -30,7 +31,6 @@ describe(`Process  nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode({
       node,
@@ -54,7 +54,6 @@ describe(`Process  nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode(
       {
