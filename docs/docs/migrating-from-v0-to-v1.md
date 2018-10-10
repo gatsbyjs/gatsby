@@ -167,7 +167,7 @@ module.exports = {
 
 ### Create slugs for markdown files
 
-It's handy to store the pathname of "slug" for each markdown page with the
+It's handy to store the pathname or "slug" for each markdown page with the
 markdown data. This let's you query the slug from multiple places.
 
 Here's how you do that.

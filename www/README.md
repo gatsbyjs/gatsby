@@ -2,10 +2,12 @@
 
 The main Gatsby site at gatsbyjs.org
 
-Run locally with
+Run locally with:
 
 - `yarn install`
-- `yarn run develop`
+- `gatsby develop`
+
+See the full contributing instructions at https://www.gatsbyjs.org/docs/how-to-contribute/.
 
 ## Working with the starter showcase
 
