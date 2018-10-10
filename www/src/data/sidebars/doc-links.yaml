@@ -45,8 +45,6 @@
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
-        - title: Using service workers with Gatsby
-          link: /docs/using-service-workers-with-gatsby
     - title: Images and files
       link: /docs/images-and-files/
       items:
@@ -236,6 +234,8 @@
           link: /docs/add-a-manifest-file/
         - title: Add Offline Support
           link: /docs/add-offline-support/
+        - title: Add a Service Worker
+          link: /docs/add-a-service-worker
         - title: Add Page Metadata
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)
