@@ -1,7 +1,7 @@
 ---
 title: "Journey to the Content Mesh, Part 2: Unbundling of the CMS"
 author: "Sam Bhagwat"
-date: 2018-10-09
+date: 2018-10-10
 tags: ["content-mesh"]
 ---
 
