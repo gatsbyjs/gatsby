@@ -2,6 +2,7 @@
 const fs = require(`fs`)
 const traverse = require(`babel-traverse`).default
 const get = require(`lodash/get`)
+const { codeFrameColumns } = require(`@babel/code-frame`)
 const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
 const report = require(`gatsby-cli/lib/reporter`)
 
@@ -25,7 +26,30 @@ module.exports = (modulePath, resolver = require.resolve) => {
   }
   const code = fs.readFileSync(absPath, `utf8`) // get file contents
 
-  const ast = babelParseToAst(code, absPath)
+  let ast
+  try {
+    ast = babelParseToAst(code, absPath)
+  } catch (err) {
+    if (err instanceof SyntaxError) {
+      // Pretty print syntax errors
+      const codeFrame = codeFrameColumns(
+        code,
+        {
+          start: err.loc,
+        },
+        {
+          highlightCode: true,
+        }
+      )
+
+      report.panic(
+        `Syntax error in "${absPath}":\n${err.message}\n${codeFrame}`
+      )
+    } else {
+      // if it's not syntax error, just throw it
+      throw err
+    }
+  }
 
   let isCommonJS = false
   let isES6 = false

@@ -1,6 +1,13 @@
 import { apiRunner } from "./api-runner-browser"
 
-if (`serviceWorker` in navigator) {
+if (
+  window.location.protocol !== `https:` &&
+  window.location.hostname !== `localhost`
+) {
+  console.error(
+    `Service workers can only be used over HTTPS, or on localhost for development`
+  )
+} else if (`serviceWorker` in navigator) {
   navigator.serviceWorker
     .register(`${__PATH_PREFIX__}/sw.js`)
     .then(function(reg) {

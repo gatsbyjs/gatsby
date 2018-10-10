@@ -59,7 +59,7 @@ follow this pattern.
 
 Your `gatsby-node.js` should look something like:
 
-```javascript
+```javascript:title=gatsby-node.js
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
   // Create nodes here, generally by downloading data

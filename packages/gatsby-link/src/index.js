@@ -177,7 +177,7 @@ export const replace = to => {
 // TODO: Remove navigateTo for Gatsby v3
 export const navigateTo = to => {
   console.warn(
-    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "push" instead.`
+    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
   )
   return push(to)
 }

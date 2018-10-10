@@ -47,7 +47,7 @@ Once this starts, you can now view your site at `localhost:9000`.
 
 ### Run a Lighthouse audit
 
-Now let's run your first Lighthouse test.
+Now you're going to run your first Lighthouse test.
 
 1.  Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
 
@@ -87,7 +87,7 @@ npm install --save gatsby-plugin-manifest
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
   plugins: [
     {
@@ -124,7 +124,7 @@ npm install --save gatsby-plugin-offline
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
     plugins: [
         {
@@ -160,7 +160,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
   plugins: [`gatsby-plugin-react-helmet`]
 }

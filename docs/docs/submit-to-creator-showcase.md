@@ -14,17 +14,17 @@ There are only two major steps :)
 
     For example,
 
-    **name:** _Fabian Schultz_
+    **if name is:** _Fabian Schultz_
 
     **image name should be,** _fabian-schultz.jpg_
 
-    **name:** _Iron Cove Solutions_
+    **if name is:** _Iron Cove Solutions_
 
     **image name should be,** _iron-cove-solutions.jpg_
 
 3.  Edit the [`creators.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/community/creators.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
-```yaml
+```yaml:title=docs/community/creators.yml
 - name: Your Name
   # You can choose one of three `types`: agency, company, or individual
   type: agency

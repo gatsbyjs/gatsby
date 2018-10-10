@@ -1,22 +1,16 @@
 const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const path = require(`path`)
 
-async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId, createContentDigest }) {
   function transformObject(obj, id, type) {
-    const objStr = JSON.stringify(obj)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(objStr)
-      .digest(`hex`)
     const yamlNode = {
       ...obj,
       id,
       children: [],
       parent: node.id,
       internal: {
-        contentDigest,
+        contentDigest: createContentDigest(obj),
         type,
       },
     }

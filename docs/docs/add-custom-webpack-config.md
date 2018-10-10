@@ -40,7 +40,7 @@ e.g. [Sass](/packages/gatsby-plugin-sass/),
 
 Here is an example adding an additional global variable via the `DefinePlugin` and the `less-loader`:
 
-```js
+```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({
   stage,
   rules,
@@ -80,7 +80,7 @@ exports.onCreateWebpackConfig = ({
 
 Instead of writing `import Header from '../../components/Header'` over and over again you can just write `import Header from 'components/Header'` with absolute imports:
 
-```js
+```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
     resolve: {
@@ -96,7 +96,7 @@ You can always find more information on _resolve_ and other options in the offic
 
 You need this if you want to do things like transpile parts of `node_modules`.
 
-```js
+```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
   const config = getConfig()
 

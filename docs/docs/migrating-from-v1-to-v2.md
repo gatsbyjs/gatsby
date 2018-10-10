@@ -10,6 +10,14 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 > If you want to start fresh, check out the [starting a new project section](#for-explorers)
 
+## Why you should migrate
+
+This documentation page covers the _how_ of migrating from v1 to v2. The _why_ is covered in various blog posts:
+
+* [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
+* [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
+* [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
+
 ## What we'll cover
 
 - [Updating Your Dependencies](#updating-your-dependencies)
@@ -72,9 +80,7 @@ The very first thing you will need to do is update your dependencies and install
 
 You need update your `package.json` to use the latest version of Gatsby.
 
-`package.json`
-
-```json
+```json:title=package.json
 "dependencies": {
   "gatsby": "^2.0.0",
 }
@@ -160,9 +166,7 @@ git mv src/layouts/index.js src/components/layout.js
 
 Adhering to the normal React composition model, import your layout component and use it to wrap the content of the page.
 
-`src/pages/index.js`
-
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -179,9 +183,7 @@ Repeat for every page and template that needs this layout.
 
 In v1, the layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
 
-`src/components/layout.js`
-
-```jsx
+```jsx:title=src/components/layout.js
 import React from "react"
 
 export default ({ children, location }) => (
@@ -192,9 +194,7 @@ export default ({ children, location }) => (
 )
 ```
 
-`src/pages/index.js`
-
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -211,9 +211,7 @@ If you were using the `data` prop in your Gatsby v1 layout, you now need to make
 
 Replacing a layout's query with `StaticQuery`:
 
-`src/components/layout.js`
-
-```diff
+```diff:title=src/components/layout.js
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
@@ -337,15 +335,13 @@ To have the same configuration that you had in v1 (if you were using these plugi
 
 #### 2. Include `gatsby-plugin-postcss` in your `gatsby-config.js` file
 
-```js
-// in gatsby-config.js
+```js:title=gatsby-config.js
 plugins: [`gatsby-plugin-postcss`],
 ```
 
 #### 3. Include PostCSS plugins in your `postcss.config.js` file
 
-```js
-// in postcss.config.js
+```js:title=postcss.config.js
 const postcssImport = require(`postcss-import`)
 const postcssCssNext = require(`postcss-cssnext`)
 const postcssBrowserReporter = require(`postcss-browser-reporter`)
@@ -458,7 +454,7 @@ If you have more advanced styling needs, [use the `getProps` prop](https://reach
 
 When creating a client route in `gatsby-node.js`, use a `*` to select all child routes instead of `:path`.
 
-```diff
+```diff:title=gatsby-node.js
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions
 
@@ -649,9 +645,7 @@ The GraphQL root type has been changed from `RootQueryType` to `Query`. This is 
 
 If you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
 
-`src/utils/typography.js`
-
-```diff
+```diff:title=src/utils/typography.js
 - const typography = new Typography();
 - export default typography;
 
@@ -716,7 +710,7 @@ export default props => (
 
 Furthermore you can remove the package from the `package.json`.
 
-```diff
+```diff:title=package.json
 "dependencies": {
   "gatsby": "next",
   "gatsby-image": "next",
@@ -866,7 +860,7 @@ In most cases you won't have to do anything to be v2 compatible, however there a
 
 `gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
 
-```diff
+```diff:title=package.json
 "peerDependencies": {
 -  "gatsby": "1"
 +  "gatsby": ">=1"

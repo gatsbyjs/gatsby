@@ -159,10 +159,19 @@ exports.wrapRootElement = true
  * Called when prefetching for a pathname is triggered. Allows
  * for plugins with custom prefetching logic.
  * @param {object} $0
- * @param {object} $0.pathname The pathname whose resources should now be prefetched
- * @param {object} $0.getResourcesForPathname Function for fetching resources related to pathname
+ * @param {string} $0.pathname The pathname whose resources should now be prefetched
+ * @param {function} $0.getResourcesForPathname Function for fetching resources related to pathname
  */
 exports.onPrefetchPathname = true
+
+/**
+ * Called when prefetching for a pathname is successful. Allows
+ * for plugins with custom prefetching logic.
+ * @param {object} $0
+ * @param {string} $0.pathname The pathname whose resources have now been prefetched
+ * @param {function} $0.getResourceURLsForPathname Function for fetching URLs for resources related to the pathname
+ */
+exports.onPostPrefetchPathname = true
 
 /**
  * Plugins can take over prefetching logic. If they do, they should call this

@@ -57,9 +57,7 @@ const Navigation = ({ pathname }) => {
   )
 
   return (
-    <nav
-      className="navigation"
-      aria-label="Primary Navigation"
+    <header
       css={{
         backgroundColor: isHomepage ? `transparent` : `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : `relative`,
@@ -125,26 +123,41 @@ const Navigation = ({ pathname }) => {
             : {}),
         }}
       >
-        <Link to="/" css={styles.logoLink} aria-label="Go to homepage">
-          <img src={logo} css={styles.logo} alt="Gatsby logo" />
+        <Link
+          to="/"
+          css={styles.logoLink}
+          aria-label="Gatsby, Back to homepage"
+        >
+          <img
+            src={logo}
+            css={styles.logo}
+            alt="Gatsby Logo"
+            aria-hidden="true"
+          />
         </Link>
-        <ul css={styles.navContainer}>
-          <NavItem linkTo="/docs/">Docs</NavItem>
-          <NavItem linkTo="/tutorial/">Tutorial</NavItem>
-          <NavItem linkTo="/plugins/">Plugins</NavItem>
-          <NavItem linkTo="/features/">Features</NavItem>
-          <NavItem linkTo="/blog/">Blog</NavItem>
-          <NavItem linkTo="/showcase/">Showcase</NavItem>
-          {/* <li css={styles.li}>
-              <Link
-                to="/community/"
-                css={styles.navItem}
-                state={{ filter: `` }}
-              >
-                Community
-              </Link>
-            </li> */}
-        </ul>
+        <nav
+          className="navigation"
+          aria-label="Primary Navigation"
+          css={styles.navContainer}
+        >
+          <ul css={styles.ulContainer}>
+            <NavItem linkTo="/docs/">Docs</NavItem>
+            <NavItem linkTo="/tutorial/">Tutorial</NavItem>
+            <NavItem linkTo="/plugins/">Plugins</NavItem>
+            <NavItem linkTo="/features/">Features</NavItem>
+            <NavItem linkTo="/blog/">Blog</NavItem>
+            <NavItem linkTo="/showcase/">Showcase</NavItem>
+            {/* <li css={styles.li}>
+                <Link
+                  to="/community/"
+                  css={styles.navItem}
+                  state={{ filter: `` }}
+                >
+                  Community
+                </Link>
+              </li> */}
+          </ul>
+        </nav>
         <div css={styles.searchAndSocialContainer}>
           <SearchForm
             key="SearchForm"
@@ -187,7 +200,7 @@ const Navigation = ({ pathname }) => {
           </SocialNavItem>
         </div>
       </div>
-    </nav>
+    </header>
   )
 }
 
@@ -199,6 +212,13 @@ const styles = {
     marginRight: navItemHorizontalSpacing,
   },
   navContainer: {
+    display: `none`,
+    [presets.Tablet]: {
+      alignSelf: `flex-end`,
+      display: `flex`,
+    },
+  },
+  ulContainer: {
     display: `none`,
     [presets.Tablet]: {
       alignSelf: `flex-end`,

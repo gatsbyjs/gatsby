@@ -76,12 +76,28 @@ class RouteHandler extends React.Component {
       )
     } else {
       const dev404Page = pages.find(p => /^\/dev-404-page\/?$/.test(p.path))
-      return createElement(
-        syncRequires.components[dev404Page.componentChunkName],
-        {
-          pages,
-          ...this.props,
-        }
+      const custom404 = locationAndPageResources =>
+        loader.getPage(`/404.html`) ? (
+          <JSONStore
+            pages={pages}
+            {...this.props}
+            {...locationAndPageResources}
+          />
+        ) : null
+
+      return (
+        <EnsureResources location={location}>
+          {locationAndPageResources =>
+            createElement(
+              syncRequires.components[dev404Page.componentChunkName],
+              {
+                pages,
+                custom404: custom404(locationAndPageResources),
+                ...this.props,
+              }
+            )
+          }
+        </EnsureResources>
       )
     }
   }
