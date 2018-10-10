@@ -149,20 +149,22 @@ module.exports = ({
     Object.keys(fieldsToSift).length === 1 &&
     Object.keys(fieldsToSift)[0] === `id`
   ) {
-    const node = resolveRecursive(
+    const nodePromise = resolveRecursive(
       getNode(siftArgs[0].id[`$eq`]),
       fieldsToSift,
       type.getFields()
     )
 
-    if (node) {
-      createPageDependency({
-        path,
-        nodeId: node.id,
-      })
-    }
+    nodePromise.then(node => {
+      if (node) {
+        createPageDependency({
+          path,
+          nodeId: node.id,
+        })
+      }
+    })
 
-    return node
+    return nodePromise
   }
 
   const nodesPromise = () => {

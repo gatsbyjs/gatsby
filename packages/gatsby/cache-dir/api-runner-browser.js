@@ -1,10 +1,31 @@
 const plugins = require(`./api-runner-browser-plugins`)
+const {
+  getResourcesForPathname,
+  getResourcesForPathnameSync,
+  getResourceURLsForPathname,
+} = require(`./loader`).publicLoader
 
-exports.apiRunner = (api, args, defaultReturn, argTransform) => {
+exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
+  // Hooks for cypress-gatsby's API handler
+  if (window.Cypress) {
+    if (window.___apiHandler) {
+      window.___apiHandler(api)
+    } else if (window.___resolvedAPIs) {
+      window.___resolvedAPIs.push(api)
+    } else {
+      window.___resolvedAPIs = [api]
+    }
+  }
+
   let results = plugins.map(plugin => {
     if (!plugin.plugin[api]) {
       return undefined
     }
+
+    args.getResourcesForPathnameSync = getResourcesForPathnameSync
+    args.getResourcesForPathname = getResourcesForPathname
+    args.getResourceURLsForPathname = getResourceURLsForPathname
+
     const result = plugin.plugin[api](args, plugin.options)
     if (result && argTransform) {
       args = argTransform({ args, result, plugin })

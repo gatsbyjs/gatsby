@@ -32,6 +32,12 @@ There are several ways to reduce the number of results from a query. Here `total
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20limit%3A%202%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
 
+## Skip
+
+Skip over a number of results. In this query `skip` is used to omit the first 3 results.
+
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(skip%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
+
 ## Filter
 
 In this query `filter` and the `ne` (not equals) operator is used to show only results that have a title.
@@ -76,7 +82,7 @@ In addition to adding query arguments directly to queries, GraphQL allows to pas
 
 The query below is the same one as the previous example, but with the input arguments passed in as "query variables".
 
-To add variables to page component queries, pass these in the `context` object [when creating pages](https://deploy-preview-4795--gatsbyjs.netlify.com/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs).
+To add variables to page component queries, pass these in the `context` object [when creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs).
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=query%20GetBlogPosts(%24limit%3A%20Int%2C%20%24filter%3A%20filterMarkdownRemark%2C%20%24sort%3A%20markdownRemarkConnectionSort)%20%7B%0A%09allMarkdownRemark(%0A%20%20%20%20limit%3A%20%24limit%2C%0A%20%20%20%20filter%3A%20%24filter%2C%0A%20%20%20%20sort%3A%20%24sort%0A%20%20)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20fields%7B%0A%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date(formatString%3A%20%22dddd%20DD%20MMMM%20YYYY%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%20%20%20%20%0A%7D&operationName=GetBlogPosts&variables=%7B%0A%20%20%22limit%22%3A%203%2C%0A%20%20%22filter%22%3A%20%7B%0A%20%20%20%20%22frontmatter%22%3A%20%7B%0A%20%20%20%20%20%20%22date%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22ne%22%3A%20null%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20%22sort%22%3A%20%7B%0A%20%20%20%20%22fields%22%3A%20%22frontmatter___date%22%2C%0A%20%20%20%20%22order%22%3A%20%22DESC%22%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
 
@@ -87,6 +93,22 @@ You can also group values on the basis of a field e.g. the title, date or catego
 The query below gets us all authors (`fieldValue`) who wrote a blogpost and how many blogposts (`totalCount`) they wrote. In addition we're grabbing the `title` and `slug` of the author's articles.
 
 <iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7BfileAbsolutePath%3A%20%7Bregex%3A%20%22%2Fdocs.blog%2F%22%7D%7D)%20%7B%0A%20%20%20%20group(field%3A%20frontmatter___author)%20%7B%0A%20%20%20%20%20%20fieldValue%0A%20%20%20%20%20%20totalCount%0A%20%20%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
+
+## Fragments
+
+Fragments are a way to save frequently used queries for re-use. To create a fragment, define it in a query and export it as a named export from any file Gatsby is aware of. A fragment is available for use in any other GraphQL query, regardless of location in the project. Fragments defined in a Gatsby project are global, so names must be unique.
+
+The query below defines a fragment to get the site title, and then uses the fragment to access this information.
+
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=%23%20Code%20borrowed%20from%20https%3A%2F%2Fwww.gatsbycentral.com%2Freusable-graphql-queries-in-gatsby%0Afragment%20fragName%20on%20Site%20%7B%0A%20%20siteMetadata%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D%0A%0A%7B%0A%20%20site%20%7B%0A%20%20%20%20...fragName%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
+
+## Aliasing
+
+Want to run two queries on the same datasource? You can do this by aliasing your queries. See below for an example:
+
+<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0AsomeEntries%3AallMarkdownRemark(limit%3A3)%7B%0A%20%20%20edges%7B%0A%20%20%20%20%20node%7B%0A%20%20%20%20%20%20%20id%0A%20%20%20%20%20%7D%0A%20%20%20%7D%0A%20%7D%0A%20someMoreEntries%3AallMarkdownRemark(limit%3A3)%7B%0A%20%20%20edges%7B%0A%20%20%20%20%20node%7B%0A%20%20%20%20%20%20%20id%0A%20%20%20%20%20%7D%0A%20%20%20%7D%0A%20%7D%0A%7D" width="600" height="400"></iframe>
+
+When you use your data, you will be able to reference it using the alias instead of the root query name. In this example, that would be `data.someEntries` or `data.someMoreEntries` instead of `data.allMarkdownRemark`.
 
 ## Where next?
 

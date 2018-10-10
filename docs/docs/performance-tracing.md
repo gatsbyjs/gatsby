@@ -63,7 +63,7 @@ The default tracing that comes with Gatsby can give you a good idea of which plu
 
 To provide custom tracing, you can use the `tracing` object, which is present in the args passed to API implementers. This tracing object contains a function called `startSpan`. This simply wraps [open tracing startSpan](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts#L79), but provides the default `childOf: parentSpan` span args. `startSpan` returns a span object that you must explicitly end by calling its `.finish()` method. For example:
 
-```javascript
+```javascript:title=gatsby-node.js
 exports.sourceNodes = async ({ actions, tracing }) => {
   const span = tracing.startSpan(`foo`)
 

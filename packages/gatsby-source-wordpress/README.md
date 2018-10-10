@@ -99,11 +99,26 @@ plugins: [
       },
       // Set how many simultaneous requests are sent at once.
       concurrentRequests: 10,
-      // Exclude specific routes using glob parameters
+      // Set WP REST API routes whitelists
+      // and blacklists using glob patterns.
+      // Defaults to whitelist the routes shown
+      // in the example below.
       // See: https://github.com/isaacs/minimatch
-      // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
+      // Example:  `["/*/*/comments", "/yoast/**"]`
+      // ` will either include or exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
-      excludedRoutes: ["/*/*/comments", "/yoast/**"],
+      // Whitelisted routes using glob patterns
+      includedRoutes: [
+        "/*/*/categories",
+        "/*/*/posts",
+        "/*/*/pages",
+        "/*/*/media",
+        "/*/*/tags",
+        "/*/*/taxonomies",
+        "/*/*/users",
+      ],
+      // Blacklisted routes using glob patterns
+      excludedRoutes: ["/*/*/posts/1456"],
       // use a custom normalizer which is applied after the built-in ones.
       normalizer: function({ entities }) {
         return entities
@@ -143,7 +158,10 @@ plugins.
       you the menus and menu locations endpoint.
 
 - [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
-      the current locale and available translations to all post types.
+      the current locale and available translations to all post types translated with WPML.
+
+- [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
+      the current locale and available translations to all post types translated with Polylang.
 
 ## How to use Gatsby with Wordpress.com hosting
 
@@ -160,6 +178,38 @@ will behave like a self-hosted instance.
 Before you run your first query, ensure the WordPress JSON API is working correctly by visiting /wp-json at your WordPress install. The result should be similar to the [WordPress demo API](https://demo.wp-api.org/wp-json/).
 
 If you see a page on your site, rather than the JSON output, check if your permalink settings are set to “Plain”. After changing this to any of the other settings, the JSON API should be accessible.
+
+## Fetching Data: WordPress REST API Route Selection
+
+By default `gatsby-source-wordpress` plugin will fetch data from all endpoints provided by introspection `/wp-json` response. To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/). You can inspect discovered routes by using `verboseOutput: true` configuration option.
+
+If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
+
+### Example:
+
+```javascript
+includedRoutes: [
+  "/*/*/posts",
+  "/*/*/pages",
+  "/*/*/media",
+  "/*/*/categories",
+  "/*/*/tags",
+  "/*/*/taxonomies",
+  "/*/*/users",
+],
+```
+
+Which would include most commonly used endpoints:
+
+* Posts
+* Pages
+* Media
+* Categories
+* Tags
+* Taxonomies
+* Users
+
+and would skip pulling Comments.
 
 ## How to query
 
@@ -453,6 +503,84 @@ Full example:
           wordpress_id
           post_title
           href
+        }
+      }
+    }
+  }
+}
+```
+
+### Query posts with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPost {
+    edges {
+      node {
+        id
+        slug
+        title
+        content
+        excerpt
+        date
+        modified
+        author
+        featured_media
+        template
+        categories
+        tags
+        polylang_current_lang
+        polylang_translations {
+          id
+          slug
+          title
+          content
+          excerpt
+          date
+          modified
+          author
+          featured_media
+          template
+          categories
+          tags
+          polylang_current_lang
+        }
+      }
+    }
+  }
+}
+```
+
+### Query pages with the Polylang Fields Node
+
+```graphql
+{
+  allWordpressPage {
+    edges {
+      node {
+        id
+        title
+        content
+        excerpt
+        date
+        modified
+        slug
+        author
+        featured_media
+        template
+        polylang_current_lang
+        polylang_translations {
+          id
+          title
+          content
+          excerpt
+          date
+          modified
+          slug
+          author
+          featured_media
+          template
+          polylang_current_lang
         }
       }
     }

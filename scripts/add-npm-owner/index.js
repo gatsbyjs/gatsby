@@ -1,11 +1,33 @@
-const lernaGetPackages = require(`lerna-get-packages`)
-const path = require(`path`)
-const shell = require(`shelljs`)
+#!/usr/bin/env node
+const argv = require(`yargs`)
+  .command(`$0 <user>`, `Add new owner to gatsby packages`)
+  .help().argv
+const getUnownedPackages = require(`../get-unowned-packages`)
 
-const packages = lernaGetPackages(path.join(`../..`, __dirname))
+const user = argv.user
 
-packages.forEach(p => {
-  const command = `npm owner add ${process.argv.slice(2, 3)} ${p.package.name}`
-  shell.exec(command)
-  // console.log(command)
+getUnownedPackages({ user }).then(async ({ packages }) => {
+  if (!packages.length) {
+    console.log(`${user} has write access to all packages`)
+    return
+  } else {
+    console.log(`Will be adding ${user} to packages:`)
+    packages.forEach(pkg => {
+      console.log(` - ${pkg.name}`)
+    })
+  }
+
+  for (let pkg of packages) {
+    const cmd = `npm owner add ${user} ${pkg.name}`
+    try {
+      const { stderr } = await exec(cmd)
+      if (stderr) {
+        console.error(`Error adding ${user} to ${pkg.name}:\n`, stderr)
+      } else {
+        console.log(`Added ${user} to ${pkg.name}`)
+      }
+    } catch (e) {
+      console.error(`Error adding ${user} to ${pkg.name}:\n`, e.stderr)
+    }
+  }
 })
