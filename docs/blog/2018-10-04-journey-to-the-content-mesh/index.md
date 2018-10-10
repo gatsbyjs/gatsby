@@ -59,7 +59,7 @@ The key challenge is that without a content mesh, integrating these systems toge
 
 As this series continues, we’ll explore the rise of this "content mesh" -- that allows enterprises to adopt these new technologies without needing to DIY themselves.
 
-In Part 2, The Unbundling of the CMS, we’ll explore the rise of headless CMSs and best-of-breed website content and functionality systems.
+In Part 2, <a href="/blog/2018-10-10-unbundling-of-the-cms">The Unbundling of the CMS</a>, we’ll explore the rise of headless CMSs and best-of-breed website content and functionality systems.
 
 In Part 3, The Rise of Modern Web Development, we’ll detail the maturing of the Javascript ecosystem, the emergence of stable UI libraries like React for creating rich web technologies, and how they help website teams at scale build high-quality sites.
 
