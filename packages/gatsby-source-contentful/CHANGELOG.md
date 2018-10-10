@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.2...gatsby-source-contentful@2.0.3) (2018-10-10)
+
+### Features
+
+- store sync token for contentful preview ([#8814](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/8814)) ([365942b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/365942b))
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.1...gatsby-source-contentful@2.0.2) (2018-10-03)
