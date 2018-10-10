@@ -202,23 +202,6 @@ export default class FilteredStarterLibrary extends Component {
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
-                <Button
-                  to="https://gatsbyjs.org/docs/submit-to-starter-library/"
-                  tag="href"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  small
-                  icon={<ArrowForwardIcon />}
-                  overrideCSS={{
-                    display: `none`,
-                    marginLeft: 10,
-                    [presets.Desktop]: {
-                      display: `inline-flex`,
-                    },
-                  }}
-                >
-                  Submit a Starter
-                </Button>
                 <SearchIcon
                   overrideCSS={{
                     fill: colors.lilac,
@@ -233,6 +216,25 @@ export default class FilteredStarterLibrary extends Component {
                 />
               </label>
             </div>
+            <Button
+              to="https://gatsbyjs.org/docs/submit-to-starter-library/"
+              tag="href"
+              target="_blank"
+              rel="noopener noreferrer"
+              small
+              icon={<ArrowForwardIcon />}
+              overrideCSS={{
+                marginLeft: 10,
+                [presets.Mobile]: {
+                  padding: `${rhythm(2 / 5)} ${rhythm(1 / 4)}`,
+                },
+                [presets.Desktop]: {
+                  padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
+                },
+              }}
+            >
+              Submit a Starter
+            </Button>
           </ContentHeader>
           <StarterList
             urlState={urlState}
