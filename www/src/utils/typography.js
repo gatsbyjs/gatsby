@@ -87,18 +87,19 @@ const _options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
+      "tt, code, kbd, samp": {
+        // reset line-height: 1.4rem set by
+        // https://github.com/KyleAMathews/typography.js/blob/3c99e905414d19cda124a7baabeb7a99295fec79/packages/typography/src/utils/createStyles.js#L198
+        lineHeight: `inherit`,
+      },
       "tt, code, kbd": {
         background: colors.code.bg,
-        paddingTop: `0.1em`,
-        paddingBottom: `0.1em`,
+        paddingTop: `0.2em`,
+        paddingBottom: `0.2em`,
       },
       "tt, code, kbd, .gatsby-code-title": {
         fontFamily: options.monospaceFontFamily.join(`,`),
         fontSize: `80%`,
-        // Disable ligatures as they look funny w/ Space Mono as code.
-        fontVariant: `none`,
-        WebkitFontFeatureSettings: `"clig" 0, "calt" 0`,
-        fontFeatureSettings: `"clig" 0, "calt" 0`,
       },
       ".gatsby-highlight": {
         background: colors.code.bg,
@@ -121,8 +122,10 @@ const _options = {
       },
       ".gatsby-highlight pre code": {
         display: `block`,
-        fontSize: `92%`,
+        fontSize: `94%`,
         lineHeight: 1.5,
+        // reset code vertical padding declared earlier
+        padding: 0,
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
