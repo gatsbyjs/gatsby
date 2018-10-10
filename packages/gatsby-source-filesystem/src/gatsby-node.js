@@ -111,6 +111,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     const fileNodePromise = createFileNode(
       path,
       createNodeId,
+      createContentDigest,
       pluginOptions
     ).then(fileNode => {
       createNode(fileNode)
