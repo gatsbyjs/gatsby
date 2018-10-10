@@ -519,10 +519,10 @@ const prepareACFChildNodes = (
   _.each(obj, (value, key) => {
     if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
       obj[`${key}___NODE`] = value.map(
-        v =>
+        (v, indexItem) =>
           prepareACFChildNodes(
             v,
-            entityId,
+            `${entityId}_${indexItem}`,
             topLevelIndex,
             type + key,
             children,
