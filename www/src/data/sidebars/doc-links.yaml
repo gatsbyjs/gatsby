@@ -236,6 +236,8 @@
           link: /docs/add-a-manifest-file/
         - title: Add Offline Support
           link: /docs/add-offline-support/
+        - title: Add a Service Worker
+          link: /docs/add-a-service-worker/
         - title: Add Page Metadata
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)
