@@ -2898,16 +2898,26 @@
   built_by: "https://fcfcu.com/"
   built_by_url: "https://fcfcu.com/"
   featured: false
-- title: David James Portfolio
-  main_url: https://dfjames.com/
-  url: https://dfjames.com/
-  source_url: https://github.com/daviddeejjames/dfjames-gatsby
+- title: Mirror Conf
   description: >
-    Portfolio Site using GatsbyJS and headless WordPress
+    Mirror Conf is a conference designed to empower designers and front-end developers who have a thirst for knowledge and want to broaden their horizons.
+  main_url: "https://www.mirrorconf.com/"
+  url: "https://www.mirrorconf.com/"
   categories:
-    - WordPress
-    - Portfolio
-    - Blog
-  built_by: David James
-  built_by_url: https://twitter.com/daviddeejjames
+    - Conference
+    - Design
+    - Frontend
+  featured: false
+- title: Startarium
+  main_url: https://www.startarium.ro
+  url: https://www.startarium.ro
+  description: >
+    Free entrepreneurship educational portal with more than 20000 users, hundreds of resources, crowdfunding, mentoring and investor pitching events facilitated.
+  categories:
+    - Education
+    - Crowdfunding
+    - Nonprofit
+    - Entrepreneurship
+  built_by: Cezar Neaga
+  built_by_url: https://twitter.com/cezarneaga
   featured: false
