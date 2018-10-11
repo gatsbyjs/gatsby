@@ -16,15 +16,28 @@ To get your site added to the starter library, follow the two steps below.
 - url: Link to a demo of your starter
   repo: Link to GitHub repo
   description: Your starter description
+
   # These correspond to the category filters in the library
   # Make an effort to use the existing tags, and add more if needed!
   tags:
     - Redux
+
   # Add your site features
   # These will be included on your starter's detail page.
   features:
     - Blog post listing with previews (image + summary) for each blog post
-    - Categories and tags for blog posts with pagination
+```
+
+Use the following template to ensure required fields are filled:
+
+```yaml:title=docs/starters.yml
+- url: (required)
+  repo: (required - https://github.com/{username}/{titleofthesite})
+  description: (optional)
+  tags:
+    - (required)
+  features:
+    - (optional, but encouraged)
 ```
 
 Check out the [`starters.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/starters.yml) file for examples.
