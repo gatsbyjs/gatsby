@@ -273,7 +273,7 @@ const queue = {
   // if necessary and then the code/data bundles. Used for prefetching
   // and getting resources for page changes.
   getResourcesForPathname: path =>
-    new Promise((resolve, reject) => { /* eslint-disable-line consistent-return */
+    new Promise((resolve, reject) => {
       const doingInitialRender = inInitialRender
       inInitialRender = false
 
@@ -383,6 +383,8 @@ const queue = {
 
       // Tell plugins the path has been successfully prefetched
       onPostPrefetchPathname(path)
+
+      return undefined
     }),
 }
 
