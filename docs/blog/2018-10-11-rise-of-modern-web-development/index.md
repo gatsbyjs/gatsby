@@ -15,7 +15,7 @@ And while creating rich user experiences is never an easy task, walled-garden CM
 
 Some challenges of traditional CMS development environments include:
 
-- **Walled-garden development.** Work on projects across CMS systems often requires reimplement basic functionality like carousels or banners. Development can be blocked due to CMS access restrictions or code freezes. Upgrade paths can be challenging when CMSs don’t support component UI versioning.
+- **Walled-garden development.** Work on projects across CMS systems often requires reimplementing basic functionality like carousels or banners. Development can be blocked due to CMS access restrictions or code freezes. Upgrade paths can be challenging when CMSs don’t support component UI versioning.
 
 - **Maintaining local environments**. Setting up a local app server and database and keeping it up to date with team members’ changes is time-consuming, especially when switching between projects or returning after a gap in development.
 
