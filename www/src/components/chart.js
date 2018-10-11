@@ -59,14 +59,14 @@ const highchartsOptions = {
 const DateChart = props => {
   const seriesData = JSON.parse(props.seriesData || props[`series-data`])
   const yAxisLabel = props.yAxisLabel || props[`y-axis-label`]
-  console.log(props)
   const config = {
     chart: {
       type: "spline",
       zoomType: "x",
     },
     tooltip: {
-      //pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+      pointFormat:
+        '<span style="color:{point.color}">●</span> {series.name}: <b>{point.y:.2f}%</b><br/>',
     },
     title: {
       text: props.title,
@@ -81,12 +81,15 @@ const DateChart = props => {
       title: {
         text: yAxisLabel,
       },
+      labels: {
+        format: `{value}%`,
+      },
     },
     series: seriesData.map(series => ({
       name: series.name,
       data: series.data.map(edge => [
         dateToUTC(edge.date),
-        parseFloat(edge.value),
+        100 * parseFloat(edge.value),
       ]),
     })),
   }
