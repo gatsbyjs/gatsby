@@ -31,7 +31,7 @@ Your `gatsby-node.js` should look something like:
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
 ```
 
-Information on the purpose of this function can be found in the [API reference](docs/node-apis/#setFieldsOnGraphQLNodeType).
+Information on the purpose of this function can be found in the [API reference](/docs/node-apis/#setFieldsOnGraphQLNodeType).
 
 ## Using the cache
 
