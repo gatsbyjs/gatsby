@@ -9,7 +9,7 @@ _This is Part 3 of a series. Part 1 is_ [The Journey to a Content Mesh](/blog/20
 
 Developing for the web is _hard_. With millions of properties on the Internet, website developers have to create experiences that are compelling enough to engage audiences when new destinations are only a few keystrokes away.
 
-And while creating rich user experiences is never an easy task, standard content web development environments introduce additional challenges. Teams are forced to work around them, but ultimately deliver less rich experiences at higher cost.
+And while creating rich user experiences is never an easy task, walled-garden CMS development environments introduce additional challenges. Teams are forced to work around them, but ultimately deliver less rich experiences at higher cost.
 
 ## Traditional CMS development presents challenges
 
