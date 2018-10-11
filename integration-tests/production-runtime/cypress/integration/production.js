@@ -59,10 +59,12 @@ describe(`Production build tests`, () => {
       .location(`pathname`)
       .should(`equal`, `/page-2/`)
 
-    cy.reload().go(`back`)
+    cy.reload()
+      .waitForAPI(`onRouteUpdate`)
+      .go(`back`)
+      .waitForAPI(`onRouteUpdate`)
 
-    cy.waitForAPI(`onRouteUpdate`)
-      .getTestElement(`page2`)
+    cy.getTestElement(`page2`)
       .should(`exist`)
       .location(`pathname`)
       .should(`equal`, `/`)
