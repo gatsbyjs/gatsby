@@ -7,7 +7,7 @@ Transformer plugins are responsible for "transforming" data provided by
 
 ## Transformer plugin example
 
-The [`gatsby-transform-remark`](/packages/gatsby-transform-remark/) plugin
+The [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) plugin
 "transforms" markdown nodes (fetched for example from the filesystem source plugin) into html and provides additional node details such as for example the `timeToRead` the `tableOfContents` and the `excerpt`.
 
 ## What do transformer plugins do?
