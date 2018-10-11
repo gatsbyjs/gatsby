@@ -5,7 +5,7 @@ date: 2018-10-11
 tags: ["editor", "source", "documentation"]
 ---
 
-In this article I will talk about using VS Code Editor if you want to contribute to the core [Gatsby project](https://github.com/gatsbyjs/gatsby). We'll learn how to easily configure the Editor to make development easier and help ensure your Pull Requests are ✅ and get accepted. That being said everything mentioned here can be applied to just about _any_ JavaScript project.
+VS Code is a truly great choice for your code editing needs. In this article, I'll show you some great tips and tricks, extensions, and more to maximize your productivity and get to what matters, building out great products. Some of these tips and tricks will make it even easier to contribute to the [Gatsby core repo](https://github.com/gatsbyjs/gatsby), and help ensure your pull requests are ✅ and accepted. That being said everything mentioned here can be applied to just about _any_ JavaScript project.
 
 ## Editors - Make Your Selection
 
@@ -80,6 +80,6 @@ In this article we have learned some of the basics about configuring and using V
 
 You may want to browse through the [VS Code Updates page](https://code.visualstudio.com/updates/) to see some of the recent features added. You'll notice they publish major updates monthly. It seems they are listening to the user community and continually adding features to the Editor and improvements to the user expereince.
 
-If you want to get involved with Gatsby, the first thing you should do is review the existing [how to contribute guide](/docs/how-to-contribute/). That will go over the basics of checking out the project and getting set up. You can then browse the [Open Issues on Github](https://github.com/gatsbyjs/gatsby/issues).
+A great way to contribute is to browse the [open issues on Github](https://github.com/gatsbyjs/gatsby/issues), and find some that look interesting! Armed with some of the techniques I've shown here today, authoring these fixes, features, and more will be a breeze thanks to some of the great features of VS Code.
 
 Do you use an Extension that I missed in this tutorial? Send send a message to [@mikelax on Twitter](https://twitter.com/mikelax) to let me know.
