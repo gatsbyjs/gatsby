@@ -32,6 +32,10 @@ export const clearError = errorID => {
 }
 
 export const reportError = (errorID, error) => {
-  errorMap[errorID] = error
+  if (error) {
+    errorMap[errorID] = error
+  }
   handleErrorOverlay()
 }
+
+export { errorMap }
