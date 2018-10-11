@@ -1,6 +1,12 @@
 const pathPrefix = `/pathPrefix`
 
+import { navigate } from "gatsby-link"
 import * as catchLinks from "../catch-links"
+
+const getNavigate = () => {
+  global.___navigate = jest.fn()
+  return navigate
+}
 
 beforeAll(() => {
   global.__PATH_PREFIX__ = ``
@@ -353,13 +359,12 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
   })
 })
 
-describe(`pathPrefix is handled if`, () => {
+describe(`pathPrefix is handled if href with ${pathPrefix}/someSubPath triggeres navigate to ${pathPrefix}/someSubPath`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer
 
   beforeAll(() => {
-    global.__PATH_PREFIX__ = `/pathPrefix`
     hrefHandler = jest.fn()
     eventDestroyer = catchLinks.default(window, hrefHandler)
   })
@@ -369,7 +374,8 @@ describe(`pathPrefix is handled if`, () => {
     eventDestroyer()
   })
 
-  it(`href with /\${pathPrefix}/someSubPath is passed to hrefHandler as /someSubPath`, done => {
+  it(`with pathPrefix='${pathPrefix}'`, done => {
+    global.__PATH_PREFIX__ = pathPrefix
     const withPathPrefix = document.createElement(`a`)
     withPathPrefix.setAttribute(
       `href`,
@@ -384,9 +390,42 @@ describe(`pathPrefix is handled if`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
-      expect(hrefHandler).toHaveBeenCalledWith(
-        `/someSubPath`
+    hrefHandler.mockImplementation((path) => {
+      getNavigate()(path)
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${pathPrefix}/someSubPath`,
+        undefined
+      )
+
+      withPathPrefix.remove()
+
+      done()
+    })
+
+    withPathPrefix.dispatchEvent(clickEvent)
+  })
+
+  it(`with pathPrefix unset`, done => {
+    global.__PATH_PREFIX__ = ``
+    const withPathPrefix = document.createElement(`a`)
+    withPathPrefix.setAttribute(
+      `href`,
+      `${window.location.href}/someSubPath`
+    )
+    document.body.appendChild(withPathPrefix)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    hrefHandler.mockImplementation((path) => {
+      getNavigate()(path)
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${pathPrefix}/someSubPath`,
+        undefined
       )
 
       withPathPrefix.remove()
