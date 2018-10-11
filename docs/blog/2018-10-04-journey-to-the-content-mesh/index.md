@@ -61,7 +61,7 @@ As this series continues, we’ll explore the rise of this "content mesh" -- tha
 
 In Part 2, <a href="/blog/2018-10-10-unbundling-of-the-cms">The Unbundling of the CMS</a>, we’ll explore the rise of headless CMSs and best-of-breed website content and functionality systems.
 
-In Part 3, The Rise of Modern Web Development, we’ll detail the maturing of the Javascript ecosystem, the emergence of stable UI libraries like React for creating rich web technologies, and how they help website teams at scale build high-quality sites.
+In Part 3, <a href="/blog/2018-10-11-rise-of-modern-web-development">The Rise of Modern Web Development</a>, we’ll detail the maturing of the Javascript ecosystem, the emergence of stable UI libraries like React for creating rich web technologies, and how they help website teams at scale build high-quality sites.
 
 In Part 4, Why Mobile Performance Has Become Crucial, we’ll discuss the ROI of site speed, explore two modern, complementary trends for improving web performance and how website teams can get the best of both out of the box.
 
