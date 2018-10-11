@@ -332,7 +332,7 @@
     - title: Webpack and SSR
       link: /docs/webpack-and-ssr/
       items:
-        - title: Building the Javascript App
+        - title: Building the JavaScript App
           link: /docs/production-app/
         - title: Page HTML Generation
           link: /docs/html-generation/
