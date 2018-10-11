@@ -1,4 +1,3 @@
-const crypto = require(`crypto`)
 const axios = require(`axios`)
 const Queue = require(`better-queue`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
@@ -16,14 +15,8 @@ const screenshotQueue = new Queue(
   { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 }
 )
 
-const createContentDigest = obj =>
-  crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(obj))
-    .digest(`hex`)
-
 exports.onPreBootstrap = (
-  { store, cache, actions, createNodeId, getNodes },
+  { store, cache, actions, createNodeId, getNodes, createContentDigest },
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions
@@ -53,6 +46,7 @@ exports.onPreBootstrap = (
         cache,
         createNode,
         createNodeId,
+        createContentDigest,
       })
     } else {
       // Screenshot hasn't yet expired, touch the image node
@@ -73,7 +67,7 @@ exports.onPreBootstrap = (
 }
 
 exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId },
+  { node, actions, store, cache, createNodeId, createContentDigest },
   pluginOptions
 ) => {
   const { createNode, createParentChildLink } = actions
@@ -97,6 +91,7 @@ exports.onCreateNode = async (
           cache,
           createNode,
           createNodeId,
+          createContentDigest,
         })
         .on(`finish`, r => {
           resolve(r)
@@ -122,6 +117,7 @@ const createScreenshotNode = async ({
   cache,
   createNode,
   createNodeId,
+  createContentDigest,
 }) => {
   try {
     let fileNode, expires
