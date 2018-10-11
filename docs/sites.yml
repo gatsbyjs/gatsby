@@ -2908,3 +2908,16 @@
     - Design
     - Frontend
   featured: false
+- title: Startarium
+  main_url: https://www.startarium.ro
+  url: https://www.startarium.ro
+  description: >
+    Free entrepreneurship educational portal with more than 20000 users, hundreds of resources, crowdfunding, mentoring and investor pitching events facilitated.
+  categories:
+    - Education
+    - Crowdfunding
+    - Nonprofit
+    - Entrepreneurship
+  built_by: Cezar Neaga
+  built_by_url: https://twitter.com/cezarneaga
+  featured: false
