@@ -76,6 +76,8 @@ Microsoft Azure is a cloud hosting provider which offers a wide range of tools a
 
 > If you don't have an Azure account, [sign up today](https://azure.microsoft.com/en-us/free/) for a free 30 day account with $200 in Azure credits.
 
+> Note: You will need to verify your identity with a credit card, but will not be charged unless you begin to use paid service and exceed the free allowance.
+
 As part of this tutorial you will:
 
 - Create an `Azure Storage Account` for our blog
@@ -85,7 +87,7 @@ As part of this tutorial you will:
 
 ### Create the Azure Storage Account
 
-Login to the [Azure Web Portal]() and select `+ Add Resource`, find and select `Storage Account` in the list.
+Login to the [Azure Web Portal](https://azure.microsoft.com/en-gb/features/azure-portal/) and select `+ Create a Resource`, find and select `Storage Account` in the list.
 
 Fill in the form by selecting your subscription, creating a new resource group if you don't have one and giving your storage account a name and region. Your form should look something like this.
 
