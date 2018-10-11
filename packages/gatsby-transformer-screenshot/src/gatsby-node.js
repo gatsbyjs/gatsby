@@ -5,6 +5,7 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
 const LAMBDA_CONCURRENCY_LIMIT = 50
+const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
 
 const screenshotQueue = new Queue(
   (input, cb) => {
@@ -39,7 +40,10 @@ exports.onPreBootstrap = (
   // Check for updated screenshots
   // and prevent Gatsby from garbage collecting remote file nodes
   screenshotNodes.forEach(n => {
-    if (n.expires && new Date() >= new Date(n.expires)) {
+    if (
+      (n.expires && new Date() >= new Date(n.expires)) ||
+      USE_PLACEHOLDER_IMAGE !== n.usingPlaceholder
+    ) {
       anyQueued = true
       // Screenshot expired, re-run Lambda
       screenshotQueue.push({
@@ -121,7 +125,7 @@ const createScreenshotNode = async ({
 }) => {
   try {
     let fileNode, expires
-    if (process.env.GATSBY_SCREENSHOT_PLACEHOLDER) {
+    if (USE_PLACEHOLDER_IMAGE) {
       const getPlaceholderFileNode = require(`./placeholder-file-node`)
       fileNode = await getPlaceholderFileNode({
         createNode,
@@ -155,6 +159,7 @@ const createScreenshotNode = async ({
         type: `Screenshot`,
       },
       screenshotFile___NODE: fileNode.id,
+      usingPlaceholder: USE_PLACEHOLDER_IMAGE,
     }
 
     screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)
