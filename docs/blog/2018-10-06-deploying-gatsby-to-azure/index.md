@@ -76,7 +76,7 @@ Microsoft Azure is a cloud hosting provider which offers a wide range of tools a
 
 > If you don't have an Azure account, [sign up today](https://azure.microsoft.com/en-us/free/) for a free 30 day account with $200 in Azure credits.
 
-> Note: You will need to verify your identity with a credit card, but will not be charged unless you begin to use paid service and exceed the free allowance.
+> Note: You will need to verify your identity with a credit card, but will not be charged unless you begin to use paid service and exceed the free allowance. The cost per GB for storage is in the region of £0.04 so it should last a while.
 
 As part of this tutorial you will:
 
@@ -135,7 +135,8 @@ This will output a production build of your blog into the `public` folder.
 
 The easiest way to deploy your blog to your storage account is to use the `Azure Storage Extension` within VS Code.
 
-[Install the Azure Storage Extension](vscode:extension/ms-azuretools.vscode-azurestorage)
+[Install the Azure Storage Extension - VS Code](vscode:extension/ms-azuretools.vscode-azurestorage)
+[Install the Azure Storage Extension - Extensions Gallery](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestorage)
 
 > Alternatively, select the extension option from VS Code and search for `Azure Storage`.
 
