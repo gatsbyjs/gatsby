@@ -1,7 +1,7 @@
 ---
 title: "Journey to the Content Mesh Part 3: The Rise of Modern Web Development"
 author: "Sam Bhagwat"
-"date": 2018-10-09
+"date": 2018-10-11
 tags: ["content-mesh"]
 ---
 
