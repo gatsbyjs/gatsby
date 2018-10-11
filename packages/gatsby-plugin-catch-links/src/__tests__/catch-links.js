@@ -1,6 +1,12 @@
 const pathPrefix = `/pathPrefix`
 
+import { navigate } from "gatsby-link"
 import * as catchLinks from "../catch-links"
+
+const getNavigate = () => {
+  global.___navigate = jest.fn()
+  return navigate
+}
 
 beforeAll(() => {
   global.__PATH_PREFIX__ = ``
@@ -54,7 +60,7 @@ describe(`the click event`, () => {
   it(`checks if the destination/origin URLs have matching origins`, () => {})
   it(`checks if the destination/origin URLs have matching top level paths`, () => {})
   it(`checks if the destination URL wants to scroll the page with a hash anchor`, () => {})
-  it(`removes pathPrefix if necessary before passing to navigate`, () => {})
+  it(`handles pathPrefix if necessary`, () => {})
   it(`routes the destination href through gatsby`, () => {})
 })
 
@@ -353,7 +359,7 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
   })
 })
 
-describe(`pathPrefix is handled if target href /pathPrefix/someSubPath`, () => {
+describe(`pathPrefix is handled if href with ${pathPrefix}/someSubPath triggeres navigate to ${pathPrefix}/someSubPath`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer
@@ -368,8 +374,7 @@ describe(`pathPrefix is handled if target href /pathPrefix/someSubPath`, () => {
     eventDestroyer()
   })
 
-  // gatsby-link adds pathPrefix, so this module must pass without
-  it(`is passed to hrefHandler as /someSubPath when pathPrefix='${pathPrefix}'`, done => {
+  test(`with pathPrefix='${pathPrefix}'`, done => {
     global.__PATH_PREFIX__ = pathPrefix
     const withPathPrefix = document.createElement(`a`)
     withPathPrefix.setAttribute(
@@ -385,9 +390,11 @@ describe(`pathPrefix is handled if target href /pathPrefix/someSubPath`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
-      expect(hrefHandler).toHaveBeenCalledWith(
-        `/someSubPath`
+    hrefHandler.mockImplementation((path) => {
+      getNavigate()(path)
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${pathPrefix}/someSubPath`,
+        undefined
       )
 
       withPathPrefix.remove()
@@ -398,7 +405,7 @@ describe(`pathPrefix is handled if target href /pathPrefix/someSubPath`, () => {
     withPathPrefix.dispatchEvent(clickEvent)
   })
 
-  it(`is passed to hrefHandler as is when pathPrefix is unset`, done => {
+  test(`with pathPrefix unset`, done => {
     global.__PATH_PREFIX__ = ``
     const withPathPrefix = document.createElement(`a`)
     withPathPrefix.setAttribute(
@@ -414,9 +421,11 @@ describe(`pathPrefix is handled if target href /pathPrefix/someSubPath`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
-      expect(hrefHandler).toHaveBeenCalledWith(
-        `/someSubPath`
+    hrefHandler.mockImplementation((path) => {
+      getNavigate()(path)
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${pathPrefix}/someSubPath`,
+        undefined
       )
 
       withPathPrefix.remove()
