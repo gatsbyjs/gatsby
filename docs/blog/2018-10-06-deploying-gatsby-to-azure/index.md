@@ -109,7 +109,7 @@ Change the option to `enabled`, set a default document name of `index.html` and 
 
 > Note down the `Primary Endpoint` that azure gives you, that will be the web address that our blog will be deployed, it will be in the format (https://<the-name-of-your-storage>.<the-zone>.web.core.windows.net/)
 
-### Create a production build
+### Create a production Gatsby build
 
 You are now ready to produce a production build of your blog. Make sure you're in the blog folder and then run.
 
@@ -140,18 +140,36 @@ The easiest way to deploy your blog to your storage account is to use the `Azure
 
 > Alternatively, select the extension option from VS Code and search for `Azure Storage`.
 
-Once installed you will need to sign in.
-
 ## Deploy your blog
 
 Now you can finally deploy your blog!
 
-Right click on the `public` folder in VS code and select `Deploy to Static Website...`, you will need to select your subscription and storage account.
+Right click on the `public` folder in VS code and select `Deploy to Static Website...`.
 
 ![Deploy to Azure Storage](deploytostorage.png)
 
-You will see a message in the bottom right of VS Code confirming that your blog has been deployed.
+If you haven't logged in before, this will show you a prompt in VS Code where you will need to select `Sign in to Azure`.
+
+![Sign in to Azure](signintoazure.png)
+
+You will see a dialog in the bottom right, asking you to load a webpage and enter a device code. Click on `Copy & open` and enter the code provided.
+
+![Sign in to Azure device code](signintoazurecode.png)
+
+The webpage should show you are trying to link your Azure device to VS Code, click `Continue` and login to Azure if you weren't already.
+
+If everything worked correctly you should see a page confirming you signed in.
+
+![Successful sign in](successfullysignedin.png)
+
+You can now return to VS Code and select your subscription and then your storage account. There will only be one option for each.
+
+Selecting the storage account will begin the deployment.
+
+> If you have previously deployed you will see a dialog asking if you want to delete your files and redeploy.
+
+Next you will see a message in the bottom right of VS Code confirming that your blog has been deployed.
 
 ![Successful deployment](deploymentcomplete.png)
 
-You can now browse to your blog! congratulations! you've just deployed your Gatsby blog to Azure!
+Good news! you can now browse to your blog! congratulations! you've just deployed your Gatsby blog to Azure!
