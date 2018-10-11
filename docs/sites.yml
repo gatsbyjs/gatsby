@@ -2898,3 +2898,13 @@
   built_by: "https://fcfcu.com/"
   built_by_url: "https://fcfcu.com/"
   featured: false
+- title: Mirror Conf
+  description: >
+    Mirror Conf is a conference designed to empower designers and front-end developers who have a thirst for knowledge and want to broaden their horizons.
+  main_url: "https://www.mirrorconf.com/"
+  url: "https://www.mirrorconf.com/"
+  categories:
+    - Conference
+    - Design
+    - Frontend
+  featured: false
