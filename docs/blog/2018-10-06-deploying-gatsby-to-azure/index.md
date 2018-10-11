@@ -162,14 +162,14 @@ If everything worked correctly you should see a page confirming you signed in.
 
 ![Successful sign in](successfullysignedin.png)
 
-You can now return to VS Code and select your subscription and then your storage account. There will only be one option for each.
+You can now return to VS Code and select your subscription and then your storage account.
 
 Selecting the storage account will begin the deployment.
 
 > If you have previously deployed you will see a dialog asking if you want to delete your files and redeploy.
 
-Next you will see a message in the bottom right of VS Code confirming that your blog has been deployed.
+In a few seconds, you will see a message in the bottom right of VS Code confirming that your blog has been deployed!
 
 ![Successful deployment](deploymentcomplete.png)
 
-Good news! you can now browse to your blog! congratulations! you've just deployed your Gatsby blog to Azure!
+Good news! you can now browse to your blog! on the address given in the dialog. Congratulations! you've just deployed your Gatsby blog to Azure!
