@@ -203,7 +203,6 @@ export default class FilteredStarterLibrary extends Component {
                   onChange={this.onChangeUrlWithText}
                   placeholder="Search starters"
                   aria-label="Search starters"
-                  delay={500}
                 />
                 <Button
                   to="https://gatsbyjs.org/docs/submit-to-starter-library/"

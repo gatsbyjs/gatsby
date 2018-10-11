@@ -1,7 +1,19 @@
 import React, { Component } from "react"
 import debounce from "lodash/debounce"
+import PropTypes from "prop-types"
 
-class DebounceInput extends React.Component {
+class DebounceInput extends Component {
+  static propTypes = {
+    onChange: PropTypes.func.isRequired,
+    initialValue: PropTypes.string,
+    delay: PropTypes.number,
+  }
+
+  static defaultProps = {
+    initialValue: "",
+    number: 500,
+  }
+
   state = {
     value: this.props.initialValue,
   }
