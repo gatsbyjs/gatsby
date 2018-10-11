@@ -13,17 +13,21 @@ import loader from "./loader"
 import JSONStore from "./json-store"
 import EnsureResources from "./ensure-resources"
 
-import { ERROR_TYPES, reportGenericErrorOverlay, clearErrorOverlay } from "./error-overlay-handler"
+import { reportError, clearError } from "./error-overlay-handler"
 
 if (window.__webpack_hot_middleware_reporter__ !== undefined) {
+  const overlayErrorID = `webpack`
   // Report build errors
   window.__webpack_hot_middleware_reporter__.useCustomOverlay({
     showProblems(type, obj) {
-      const error = obj && obj.length ? obj[0] : ``
-      reportGenericErrorOverlay(error, { clearCondition: type !== `errors` })
+      if (type !== `errors`) {
+        clearError(overlayErrorID)
+        return
+      }
+      reportError(overlayErrorID, obj[0])
     },
     clear() {
-      clearErrorOverlay(ERROR_TYPES.GENERIC)
+      clearError(overlayErrorID)
     },
   })
 }

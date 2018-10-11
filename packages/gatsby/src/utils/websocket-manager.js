@@ -92,6 +92,7 @@ const getRoomNameFromPath = (path: string): string => `path-${path}`
 class WebsocketManager {
   pageResults: QueryResultsMap
   staticQueryResults: QueryResultsMap
+  errors: Map<string, QueryResult>
   isInitialised: boolean
   activePaths: Set<string>
   programDir: string
@@ -101,7 +102,7 @@ class WebsocketManager {
     this.activePaths = new Set()
     this.pageResults = new Map()
     this.staticQueryResults = new Map()
-    this.pageErrors = []
+    this.errors = new Map()
     this.websocket
     this.programDir
 
@@ -109,7 +110,7 @@ class WebsocketManager {
     this.getSocket = this.getSocket.bind(this)
     this.emitPageData = this.emitPageData.bind(this)
     this.emitStaticQueryData = this.emitStaticQueryData.bind(this)
-    this.emitQueryError = this.emitQueryError.bind(this)
+    this.emitError = this.emitError.bind(this)
   }
 
   init({ server, directory }) {
@@ -141,9 +142,14 @@ class WebsocketManager {
           payload: result,
         })
       })
-      this.websocket.send({
-        type: `pageQueryError`,
-        payload: this.pageErrors,
+      this.errors.forEach((message, errorID) => {
+        this.websocket.send({
+          type: `overlayError`,
+          payload: {
+            id: errorID,
+            message,
+          },
+        })
       })
 
       const leaveRoom = path => {
@@ -199,9 +205,6 @@ class WebsocketManager {
   }
 
   emitStaticQueryData(data: QueryResult) {
-    if (data.result.data) {
-      this.pageErrors = []
-    }
     this.staticQueryResults.set(data.id, data.result)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
@@ -209,18 +212,20 @@ class WebsocketManager {
   }
 
   emitPageData(data: QueryResult) {
-    if (data.result.data) {
-      this.pageErrors = []
-    }
     this.pageResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
     }
   }
-  emitQueryError(data) {
-    this.pageErrors.push(data)
+  emitError(id: string, message?: string) {
+    if (message) {
+      this.errors.set(id, message)
+    } else {
+      this.errors.delete(id)
+    }
+
     if (this.isInitialised) {
-      this.websocket.send({ type: `pageQueryError`, payload: this.pageErrors })
+      this.websocket.send({ type: `overlayError`, payload: { id, message } })
     }
   }
 }

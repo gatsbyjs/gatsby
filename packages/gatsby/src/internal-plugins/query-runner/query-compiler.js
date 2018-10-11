@@ -61,9 +61,13 @@ const validationRules = [
   VariablesInAllowedPositionRule,
 ]
 
+let lastRunHadErrors = null
+const overlayErrorID = `graphql-compiler`
+
 class Runner {
   baseDir: string
   schema: GraphQLSchema
+  errors: string[]
   fragmentsDir: string
 
   constructor(baseDir: string, fragmentsDir: string, schema: GraphQLSchema) {
@@ -73,14 +77,11 @@ class Runner {
   }
 
   reportError(message) {
-    if (process.env.NODE_ENV === `production`) {
-      report.panic(`${report.format.red(`GraphQL Error`)} ${message}`)
-    } else {
-      const queryError = `${report.format.red(`GraphQL Error`)} ${message}`
-      report.log(queryError)
-      websocketManager.emitQueryError({
-        error: queryError,
-      })
+    const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
+    report.panicOnBuild(queryErrorMessage)
+    if (process.env.gatsby_executing_command === `develop`) {
+      websocketManager.emitError(overlayErrorID, queryErrorMessage)
+      lastRunHadErrors = true
     }
   }
 
@@ -204,6 +205,14 @@ class Runner {
       }
       compiledNodes.set(filePath, query)
     })
+
+    if (
+      process.env.gatsby_executing_command === `develop` &&
+      lastRunHadErrors
+    ) {
+      websocketManager.emitError(overlayErrorID, null)
+      lastRunHadErrors = false
+    }
 
     return compiledNodes
   }

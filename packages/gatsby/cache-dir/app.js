@@ -6,7 +6,6 @@ import { hot } from "react-hot-loader"
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import { reportQueryErrorOverlay } from "./error-overlay-handler"
 import loader, { setApiRunnerForLoader } from "./loader"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
@@ -57,14 +56,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
       })
-    })
-  })
-
-  emitter.on(`pageQueryError`, payload => {
-    const error = payload && payload.length ? payload[0].error : ``
-    reportQueryErrorOverlay(error, {
-      clearCondition: !payload.length,
-      callback: () => console.error(new Error(error)),
     })
   })
 })

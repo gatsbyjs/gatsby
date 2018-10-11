@@ -1,15 +1,5 @@
 import * as ErrorOverlay from "react-error-overlay"
 
-export const ERROR_TYPES = {
-  GENERIC: `GENERIC`,
-  QUERY: `QUERY`,
-}
-
-export const ERRORS = {
-  GENERIC: [],
-  QUERY: [],
-}
-
 // Report runtime errors
 ErrorOverlay.startReportingRuntimeErrors({
   onError: () => {},
@@ -24,33 +14,24 @@ ErrorOverlay.setEditorHandler(errorLocation =>
   )
 )
 
-export function clearErrorOverlay(type, clearCondition = true) {
-  ERRORS[type] = []
-  if (clearCondition && !ERRORS.GENERIC.length && !ERRORS.QUERY.length) {
+const errorMap = {}
+
+const handleErrorOverlay = () => {
+  const errors = Object.values(errorMap)
+  if (errors.length > 0) {
+    const errorMsg = errors.join(`\n\n`)
+    ErrorOverlay.reportBuildError(errorMsg)
+  } else {
     ErrorOverlay.dismissBuildError()
-    return true
-  }
-  return false
-}
-
-export const reportErrorOverlay = (type) => (error, { clearCondition, callback } = {}) => {
-  if (error) {
-    ERRORS[type].push(error)
-  }
-  if (!error && clearErrorOverlay(type, clearCondition)) {
-    return
-  }
-  if (ERRORS.GENERIC.length) {
-    ErrorOverlay.reportBuildError(ERRORS.GENERIC[0])
-  }
-  if(ERRORS.QUERY.length) {
-    ErrorOverlay.reportBuildError(ERRORS.QUERY[0])
-  }
-  if (callback && typeof callback === `function`) {
-    callback()
   }
 }
 
-export const reportQueryErrorOverlay = reportErrorOverlay(ERROR_TYPES.QUERY)
+export const clearError = errorID => {
+  delete errorMap[errorID]
+  handleErrorOverlay()
+}
 
-export const reportGenericErrorOverlay = reportErrorOverlay(ERROR_TYPES.GENERIC)
+export const reportError = (errorID, error) => {
+  errorMap[errorID] = error
+  handleErrorOverlay()
+}
