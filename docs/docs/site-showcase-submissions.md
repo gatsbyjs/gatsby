@@ -44,6 +44,22 @@ There are only three major steps :)
   featured: false
 ```
 
+Use the following template to ensure required fields are filled:
+
+```yaml:title=docs/sites.yml
+- title: (required)
+  url: (required)
+  main_url: (required)
+  source_url: (optional - https://github.com/{username}/{titleofthesite})
+  description: >
+    (optional)
+  categories:
+    - (required)
+  built_by: (optional)
+  built_by_url: (optional)
+  featured: false
+```
+
 ## Helpful information
 
 ### Categories
