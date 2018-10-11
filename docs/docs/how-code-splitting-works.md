@@ -4,7 +4,7 @@ title: Code Splitting and Prefetching
 
 Code splitting in Gatsby occurs during webpack compilation via [Dynamic Splitting](https://webpack.js.org/guides/code-splitting/#dynamic-imports). During compilation, if webpack finds an `import` function invocation, it will split the imported file into a separate bundle. If modules are instead loaded with `require`, they are not code split and are instead included in the original bundle.
 
-But how do we figure out what modules/files to split? Thankfully, there is a natural answer. Pages! When you load a page, there's no reason we need to also load the JavaScript/css for all the other pages on the site (except to prefetch them which we'll get to [later](/docs/how-code-splitting-works/#prefetching-chunks)). Gatsby's job is to do the heavy lifting of generating the right JavaScript in the form that webpack expects to perform this code splitting.
+But how do we figure out what modules/files to split? Thankfully, there is a natural answer. Pages! When you load a page, there's no reason we need to also load the JavaScript/CSS for all the other pages on the site (except to prefetch them which we'll get to [later](/docs/how-code-splitting-works/#prefetching-chunks)). Gatsby's job is to do the heavy lifting of generating the right JavaScript in the form that webpack expects to perform this code splitting.
 
 ## .cache/async-requires.js
 
@@ -112,7 +112,7 @@ It turns out that webpack provides a way to record the mapping. It provides a co
 
 ##### chunk-map.json
 
-`webpack.stats.json` maps chunk groups (componentChunkNames) to the chunk asset names they depend on. Our [Gatsby webpack compiler hook](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L234) also outputs `chunk-map.json` which is a mapping from chunkGroup to the core chunk for the component, as opposed to the shared chunks (id0 and id1 in [primer diagram](/docs/how-code-splitting-works/#primer-on-chunkgroups-and-chunks)). This will render a single component chunk for js and css within each chunk group. E.g
+`webpack.stats.json` maps chunk groups (componentChunkNames) to the chunk asset names they depend on. Our [Gatsby webpack compiler hook](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L234) also outputs `chunk-map.json` which is a mapping from chunkGroup to the core chunk for the component, as opposed to the shared chunks (id0 and id1 in [primer diagram](/docs/how-code-splitting-works/#primer-on-chunkgroups-and-chunks)). This will render a single component chunk for JavaScript and CSS within each chunk group. E.g
 
 ```javascript
 {
