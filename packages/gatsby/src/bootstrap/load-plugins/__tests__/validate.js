@@ -81,7 +81,7 @@ describe(`collatePluginAPIs`, () => {
 
 describe(`handleBadExports`, () => {
   it(`Does nothing when there are no bad exports`, async () => {
-    const result = handleBadExports({
+    handleBadExports({
       apis: {
         node: [`these`, `can`, `be`],
         browser: [`anything`, `as there`],
@@ -93,30 +93,6 @@ describe(`handleBadExports`, () => {
         ssr: [],
       },
     })
-
-    expect(result).toEqual(false)
-  })
-
-  it(`Returns true and logs a message when bad exports are detected`, async () => {
-    const result = handleBadExports({
-      apis: {
-        node: [``],
-        browser: [``],
-        ssr: [`notFoo`, `bar`],
-      },
-      badExports: {
-        node: [],
-        browser: [],
-        ssr: [
-          {
-            exportName: `foo`,
-            pluginName: `default-site-plugin`,
-          },
-        ],
-      },
-    })
-    // TODO: snapshot console.log()'s from handleBadExports?
-    expect(result).toEqual(true)
   })
 })
 
