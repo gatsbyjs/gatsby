@@ -2898,3 +2898,15 @@
   built_by: "https://fcfcu.com/"
   built_by_url: "https://fcfcu.com/"
   featured: false
+- title: Kevin Legrand
+  main_url: "https://k-legrand.com"
+  source_url: "https://github.com/Manoz/k-legrand.com"
+  description: >
+    Personal website and blog built with love with Gatsby v2
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Kevin Legrand
+  built_by_url: https://k-legrand.com
+  featured: false
