@@ -890,3 +890,17 @@
     - Styling:SCSS
   features:
     - Barebones for getting up and running with TypeScript and Sass
+- url: https://gatsby-simple-contentful-starter.netlify.com/
+  repo: https://github.com/cwlsn/gatsby-simple-contentful-starter
+  description: A simple starter to display Contentful data in Gatsby, ready to deploy on Netlify. Comes with a detailed article detailing the process.
+  tags:
+    - Contentful
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Gatsby v2
+    - Query Contentful data via Gatsby's GraphQL
+    - Styled-Components for CSS-in-JS
+    - Simple format, easy to create your own site quickly
+    - React Helmet for Header Modification
+    - Remark for loading Markdown into React
