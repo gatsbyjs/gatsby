@@ -298,5 +298,5 @@ prop. e.g. `<Img fluid={fluid} />`
   parsed, but unless `fadeIn` is set to `false`, the transition from placeholder
   to final image will not occur until after the component is mounted.
 - Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for
-  media types to be chosen by the browser without using javascript. It also is
+  media types to be chosen by the browser without using JavaScript. It also is
   backward compatible to older browsers (IE 11, etc)

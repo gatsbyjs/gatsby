@@ -371,7 +371,7 @@
     - Progressive Web app
     - Offline Support
     - RSS Feed
-    - Gatsby Standard module for linting Javascript with StandardJS
+    - Gatsby Standard module for linting JavaScript with StandardJS
     - Stylelint support for Styled Components to lint the CSS in JS
 - url: https://alampros.github.io/gatsby-starter-grommet/
   repo: https://github.com/alampros/gatsby-starter-grommet
