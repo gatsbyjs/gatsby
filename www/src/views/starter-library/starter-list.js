@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import CopyToClipboardIcon from "react-icons/lib/go/clippy"
@@ -36,10 +37,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             <small>
               Maybe you should write one and
               {` `}
-              <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md">
-                submit it
-              </a>
-              ?
+              <Link to="/docs/submit-to-starter-library/">submit it</Link>?
             </small>
           </div>
         </h1>

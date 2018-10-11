@@ -135,7 +135,7 @@ const FeaturesHeader = () => (
         {` `}
         <a href="http://wordpress.org/">Wordpress</a> give you an online text
         editor to create content. You customize the look and feel through
-        choosing themes and plugins, or writing custom PHP or Javascript code.
+        choosing themes and plugins, or writing custom PHP or JavaScript code.
         Content is saved in a database, which is retrieved and sent to users
         when they visit the website. Depending on your requirements you can
         self-host your website, or use an official hosting provider.

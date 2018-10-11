@@ -331,7 +331,7 @@ export const pageQuery = graphql`
 `
 ```
 
-If you're not familar with GraphQL, this may seem slightly confusing, but we can
+If you're not familiar with GraphQL, this may seem slightly confusing, but we can
 break down what's going down here piece by piece.
 
 _Note: To learn more about GraphQL, consider this [excellent
