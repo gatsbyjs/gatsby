@@ -25,7 +25,9 @@
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --browser chrome"
+    "cy:run": "cypress run --browser chrome",
+    "cy:open:TEST_PLUGIN_OFFLINE": "cypress open --env TEST_PLUGIN_OFFLINE=y",
+    "cy:run:TEST_PLUGIN_OFFLINE": "cypress run --browser chrome --env TEST_PLUGIN_OFFLINE=y"
   },
   "devDependencies": {
     "prettier": "^1.14.3",

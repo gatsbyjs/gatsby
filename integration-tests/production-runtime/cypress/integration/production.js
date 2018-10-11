@@ -1,11 +1,11 @@
-/* global cy */
+/* global Cypress, cy */
 
 describe(`Production build tests`, () => {
   it(`should render properly`, () => {
     cy.visit(`/`).waitForAPI(`onRouteUpdate`)
   })
 
-  if (process.env.TEST_PLUGIN_OFFLINE) {
+  if (Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
     it(`should activate the service worker`, () => {
       cy.waitForAPI(`onServiceWorkerActive`)
     })
@@ -68,7 +68,18 @@ describe(`Production build tests`, () => {
       .should(`equal`, `/`)
   })
 
+  it(`should work when visiting a page with direct URL entry or an external link`, () => {
+    cy.visit(`/page-2/`)
+      .waitForAPI(`onRouteUpdate`)
+      .getTestElement(`index-link`)
+      .should(`exist`)
+      .location(`pathname`)
+      .should(`equal`, `/page-2/`)
+  })
+
   it(`should show 404 page when clicking a link to a non-existent page route`, () => {
+    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+
     cy.getTestElement(`404`).click()
 
     cy.waitForAPI(`onRouteUpdate`)
