@@ -60,7 +60,7 @@ describe(`the click event`, () => {
   it(`checks if the destination/origin URLs have matching origins`, () => {})
   it(`checks if the destination/origin URLs have matching top level paths`, () => {})
   it(`checks if the destination URL wants to scroll the page with a hash anchor`, () => {})
-  it(`checks if pathPrefix is handled`, () => {})
+  it(`handles pathPrefix if necessary`, () => {})
   it(`routes the destination href through gatsby`, () => {})
 })
 
@@ -374,7 +374,7 @@ describe(`pathPrefix is handled if href with ${pathPrefix}/someSubPath triggeres
     eventDestroyer()
   })
 
-  it(`with pathPrefix='${pathPrefix}'`, done => {
+  test(`with pathPrefix='${pathPrefix}'`, done => {
     global.__PATH_PREFIX__ = pathPrefix
     const withPathPrefix = document.createElement(`a`)
     withPathPrefix.setAttribute(
@@ -405,7 +405,7 @@ describe(`pathPrefix is handled if href with ${pathPrefix}/someSubPath triggeres
     withPathPrefix.dispatchEvent(clickEvent)
   })
 
-  it(`with pathPrefix unset`, done => {
+  test(`with pathPrefix unset`, done => {
     global.__PATH_PREFIX__ = ``
     const withPathPrefix = document.createElement(`a`)
     withPathPrefix.setAttribute(
