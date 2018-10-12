@@ -111,6 +111,7 @@ module.exports = async (args: BootstrapArgs) => {
     `public/**/*.{html,css}`,
     `!public/static`,
     `!public/static/**/*.{html,css}`,
+    `!public/${store.getState().config.assetPath}/static/**/*.{html,css}`,
   ])
   activity.end()
 
@@ -178,7 +179,7 @@ module.exports = async (args: BootstrapArgs) => {
   initCache()
 
   // Ensure the public/static directory
-  await fs.ensureDir(`${program.directory}/public/static`)
+  await fs.ensureDir(path.join(program.directory, `public`, store.getState().config.assetPath, `static`))
 
   activity.end()
 

@@ -132,6 +132,7 @@ ${formatErrorDetails(errorDetails)}`)
     const resultPath = path.join(
       program.directory,
       `public`,
+      store.getState().config.assetPath,
       `static`,
       `d`,
       modInt,

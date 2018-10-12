@@ -3,6 +3,7 @@
     "browser": true
   },
   "globals": {
+    "__ASSET_PATH__": false,
     "__PATH_PREFIX__": false,
     "___emitter": false
   }

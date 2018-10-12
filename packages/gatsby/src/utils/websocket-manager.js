@@ -20,6 +20,7 @@ const readCachedResults = (dataFileName: string, directory: string): object => {
   const filePath = path.join(
     directory,
     `public`,
+    store.getState().config.assetPath,
     `static`,
     `d`,
     `${dataFileName}.json`

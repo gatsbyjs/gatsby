@@ -110,12 +110,17 @@ export default (pagePath, callback) => {
 
   let dataAndContext = {}
   if (page.jsonName in dataPaths) {
-    const pathToJsonData = `../public/` + dataPaths[page.jsonName]
+    const pathToJsonData = join(
+      process.cwd(),
+      `public`,
+      __ASSET_PATH__,
+      `static`,
+      `d`,
+      `${dataPaths[page.jsonName]}.json`
+    )
     try {
       dataAndContext = JSON.parse(
-        fs.readFileSync(
-          `${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`
-        )
+        fs.readFileSync(pathToJsonData)
       )
     } catch (e) {
       console.log(`error`, pathToJsonData, e)
@@ -264,15 +269,13 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={`${__PATH_PREFIX__}/${script.name}`}
+          href={`${__ASSET_PATH__ || __PATH_PREFIX__}/${script.name}`}
         />
       )
     })
 
   if (page.jsonName in dataPaths) {
-    const dataPath = `${__PATH_PREFIX__}/static/d/${
-      dataPaths[page.jsonName]
-    }.json`
+    const dataPath = join(__ASSET_PATH__ || __PATH_PREFIX__, `static`, `d`, `${dataPaths[page.jsonName]}.json`)
     headComponents.push(
       <link
         rel="preload"
@@ -297,16 +300,16 @@ export default (pagePath, callback) => {
             as="style"
             rel={style.rel}
             key={style.name}
-            href={`${__PATH_PREFIX__}/${style.name}`}
+            href={`${__ASSET_PATH__ || __PATH_PREFIX__}/${style.name}`}
           />
         )
       } else {
         headComponents.unshift(
           <style
-            data-href={`${__PATH_PREFIX__}/${style.name}`}
+            data-href={`${__ASSET_PATH__ || __PATH_PREFIX__}/${style.name}`}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
-                join(process.cwd(), `public`, style.name),
+                join(process.cwd(), `public`, __ASSET_PATH__, style.name),
                 `utf-8`
               ),
             }}
@@ -359,7 +362,7 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+    const scriptPath = `${__ASSET_PATH__ || __PATH_PREFIX__}/${JSON.stringify(s.name).slice(
       1,
       -1
     )}`
