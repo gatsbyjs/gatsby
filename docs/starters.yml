@@ -904,3 +904,11 @@
     - Simple format, easy to create your own site quickly
     - React Helmet for Header Modification
     - Remark for loading Markdown into React
+- url: https://gatsby-blog-cosmicjs.netlify.com/
+  repo: https://github.com/cosmicjs/gatsby-blog-cosmicjs
+  description: Blog that utilizes the power of the Cosmic JS headless CMS for easy content management
+  tags:
+    - Cosmic JS
+    - Blog
+  features:
+    - Uses the Cosmic JS Gatsby source plugin
