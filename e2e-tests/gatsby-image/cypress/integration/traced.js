@@ -10,11 +10,9 @@ describe(`fixed`, () => {
       .find(`.gatsby-image-wrapper > img`)
       .should(`have.attr`, `src`)
       .and(src => {
-        [
-          `data:image/svg+xml`,
-          `fill='white'`
-        ]
-          .forEach(part => expect(src).to.include(part) )
+        ;[`data:image/svg+xml`, `fill='white'`].forEach(part =>
+          expect(src).to.include(part)
+        )
       })
   })
 })

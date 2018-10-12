@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   pathPrefix: '/blog',
@@ -11,8 +11,8 @@ module.exports = {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
-        path: path.join(__dirname, 'content/images')
-      }
+        path: path.join(__dirname, 'content/images'),
+      },
     },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
