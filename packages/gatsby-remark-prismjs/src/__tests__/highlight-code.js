@@ -48,9 +48,11 @@ class Counter extends React.Component {
 
 export default Counter
 `
-    expect(
-      highlightCode(language, code, lineNumbersHighlight)
-    ).toMatchSnapshot()
+    const processed = highlightCode(language, code, lineNumbersHighlight)
+
+    expect(processed).toMatchSnapshot()
+    // expect spans to not contain \n as it would break line highlighting
+    expect(/<span[^>]*>[^<]*\n[^<]*<\/span>/g.exec(processed)).not.toBeTruthy()
   })
 
   describe(`with language-text`, () => {

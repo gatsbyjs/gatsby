@@ -904,6 +904,14 @@
     - Simple format, easy to create your own site quickly
     - React Helmet for Header Modification
     - Remark for loading Markdown into React
+- url: https://gatsby-blog-cosmicjs.netlify.com/
+  repo: https://github.com/cosmicjs/gatsby-blog-cosmicjs
+  description: Blog that utilizes the power of the Cosmic JS headless CMS for easy content management
+  tags:
+    - Cosmic JS
+    - Blog
+  features:
+    - Uses the Cosmic JS Gatsby source plugin
 - url: https://www.gatsby-typescript-template.com/
   repo: https://github.com/ikeryo1182/gatsby-typescript-template
   description: This is a standard starter with Typescript, TSLint, Prettier, Lint-Staged(Husky) and Sass
@@ -917,4 +925,3 @@
     - Category and Tag for post
     - Type Safe by TypeScript
     - Format Safe by TSLint and Prettier with Lint-Staged(Husky)
-  
