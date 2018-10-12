@@ -235,8 +235,7 @@ class FeaturedSites extends Component {
                   <a
                     href="#showcase"
                     css={{
-                      marginRight: `
-                      ${rhythm(3 / 4)} !important`,
+                      marginRight: `${rhythm(3 / 4)} !important`,
                       backgroundColor: hex2rgba(colors.ui.light, 0.25),
                       borderRadius: presets.radius,
                       textAlign: `center`,
