@@ -2728,7 +2728,7 @@
 - title: Carbon Design Systems
   main_url: http://www.carbondesignsystem.com/
   url: http://www.carbondesignsystem.com/
-  descripton: >
+  description: >
     The Carbon Design System is integrating the new IBM Design Ethos and Language. It represents a completely fresh approach to the design of all things at IBM.
   categories:
     - Documentation
@@ -2932,4 +2932,17 @@
     - SDK
   built_by: Kiko Beats
   built_by_url: https://kikobeats.com/
+  featured: false
+- title: Kevin Legrand
+  url: "https://k-legrand.com"
+  main_url: "https://k-legrand.com"
+  source_url: "https://github.com/Manoz/k-legrand.com"
+  description: >
+    Personal website and blog built with love with Gatsby v2
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Kevin Legrand
+  built_by_url: https://k-legrand.com
   featured: false
