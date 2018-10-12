@@ -64,7 +64,7 @@ commands:
     parameters:
       trigger_pattern:
         type: string
-        default: "packages/*"
+        default: "packages/*|.circleci/*"
       test_path:
         type: string
     steps:
@@ -117,7 +117,7 @@ jobs:
     <<: *node10
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|.circleci/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
