@@ -1,8 +1,6 @@
 import { navigate } from "gatsby-link"
 import catchLinks from "gatsby-plugin-catch-links/catch-links"
 
-// dummy change for ci to run this test
-
 const pathPrefix = `/anything`
 
 const getNavigate = () => {
