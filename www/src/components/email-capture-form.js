@@ -1,10 +1,7 @@
 import React from "react"
-import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import { formInput } from "../utils/form-styles"
+import { rhythm } from "../utils/typography"
+import { colors } from "../utils/presets"
 import HubspotForm from "./hubspot-form"
-import { css, merge } from "glamor"
-import hex2rgba from "hex2rgba"
 
 class EmailCaptureForm extends React.Component {
   render() {
