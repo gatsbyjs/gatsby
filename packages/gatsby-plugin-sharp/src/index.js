@@ -12,15 +12,10 @@ const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
 const existsSync = require(`fs-exists-cached`).sync
-
-const digestObject = obj => crypto
-  .createHash(`md5`)
-  .update(JSON.stringify(obj))
-  .digest(`hex`)
-
+const createContentDigest = require(`gatsby/dist/utils/create-content-digest`)
 
 const base64CacheKey = (contentDigest, options) =>
-  `plugin-sharp-base64-${contentDigest}-${digestObject(options)}`
+  `plugin-sharp-base64-${contentDigest}-${createContentDigest(options)}`
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -452,17 +447,12 @@ async function base64({ file, args = {}, reporter, cache }) {
     return null
   }
 
+  const cacheKey = base64CacheKey(file.internal.contentDigest, options)
   // Not all tranformer plugins are going to provide this parameter hence the fallback
   if (cache) {
-    const cachedBase64 = await cache.get(base64CacheKey(file.internal.contentDigest, options))
+    const cachedBase64 = await cache.get(cacheKey)
     if (cachedBase64) {
-      return {
-        src: `data:image/${cachedBase64.info.format};base64,${cachedBase64.base64output}`,
-        width: cachedBase64.info.width,
-        height: cachedBase64.info.height,
-        aspectRatio: cachedBase64.info.width / cachedBase64.info.height,
-        originalName: file.base,
-      }
+      return cachedBase64
     }
   }
 
@@ -499,17 +489,17 @@ async function base64({ file, args = {}, reporter, cache }) {
     )
   }
   const [buffer, info] = await pipeline.toBufferAsync()
-  const base64output = buffer.toString(`base64`)
-  if (cache) {
-    await cache.set(base64CacheKey(file.internal.contentDigest, options), { base64: base64output, info })
-  }
-  return {
-    src: `data:image/${info.format};base64,${base64output}`,
+  const base64output = {
+    src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
     originalName: file.base,
   }
+  if (cache) {
+    await cache.set(cacheKey, base64output)
+  }
+  return base64output
 }
 
 async function fluid({ file, args = {}, reporter, cache }) {
