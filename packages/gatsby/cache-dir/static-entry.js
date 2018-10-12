@@ -275,7 +275,7 @@ export default (pagePath, callback) => {
     })
 
   if (page.jsonName in dataPaths) {
-    const dataPath = join(__ASSET_PATH__ || __PATH_PREFIX__, `static`, `d`, `${dataPaths[page.jsonName]}.json`)
+    const dataPath = join(__ASSET_PATH__ || __PATH_PREFIX__ || `/`, `static`, `d`, `${dataPaths[page.jsonName]}.json`)
     headComponents.push(
       <link
         rel="preload"
