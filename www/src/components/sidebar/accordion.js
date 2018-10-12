@@ -165,7 +165,7 @@ const styles = {
     "&:after": {
       background: colors.ui.bright,
       bottom: `1.5rem`,
-      content: ` `,
+      content: `''`,
       left: 0,
       position: `absolute`,
       top: `1.5rem`,
@@ -174,7 +174,7 @@ const styles = {
     "&:before": {
       borderLeft: `1px dashed ${colors.ui.bright}`,
       bottom: 0,
-      content: ` `,
+      content: `''`,
       height: `100%`,
       left: 0,
       position: `absolute`,
