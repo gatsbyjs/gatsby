@@ -2921,3 +2921,15 @@
   built_by: Cezar Neaga
   built_by_url: https://twitter.com/cezarneaga
   featured: false
+- title: Microlink
+  main_url: https://microlink.io/
+  url: https://microlink.io/
+  description: >
+    Extract structured data from any website.
+  categories:
+    - Web Development
+    - API
+    - SDK
+  built_by: Kiko Beats
+  built_by_url: https://kikobeats.com/
+  featured: false
