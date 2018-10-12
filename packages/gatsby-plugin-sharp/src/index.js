@@ -13,13 +13,14 @@ const queue = require(`async/queue`)
 const path = require(`path`)
 const existsSync = require(`fs-exists-cached`).sync
 
-const base64CacheKey = (contentDigest, options) =>
-  `plugin-sharp-base64-${contentDigest}${
-  options.duotone ? `-duotoned` : ``}-${
-  options.cropFocus ? options.cropFocus : `` }${
-  options.grayscale ? `-grayscale` : ``}-${
-  options.width}-${options.height}`
+const digestObject = obj => crypto
+  .createHash(`md5`)
+  .update(JSON.stringify(obj))
+  .digest(`hex`)
 
+
+const base64CacheKey = (contentDigest, options) =>
+  `plugin-sharp-base64-${contentDigest}-${digestObject(options)}`
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -500,7 +501,7 @@ async function base64({ file, args = {}, reporter, cache }) {
   const [buffer, info] = await pipeline.toBufferAsync()
   const base64output = buffer.toString(`base64`)
   if (cache) {
-    cache.set(base64CacheKey(file.internal.contentDigest, options), { base64: base64output, info })
+    await cache.set(base64CacheKey(file.internal.contentDigest, options), { base64: base64output, info })
   }
   return {
     src: `data:image/${info.format};base64,${base64output}`,
