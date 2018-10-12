@@ -2,11 +2,11 @@ const fs = require(`fs-extra`)
 const got = require(`got`)
 const crypto = require(`crypto`)
 const path = require(`path`)
-const Url = require(`url`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 
 const { createFileNode } = require(`./create-file-node`)
+const { getRemoteFileExtension } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 /********************
@@ -196,7 +196,7 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
-  const ext = path.parse(Url.parse(url).pathname).ext
+  const ext = getRemoteFileExtension(url)
 
   const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
   const filename = createFilePath(programDir, digest, ext)
