@@ -23,7 +23,7 @@ If you want to access variables in `.env.*` files in your node.js code, use the
 NPM package [dotenv](https://www.npmjs.com/package/dotenv). Install the package and
 require it in your `gatsby-config.js` or `gatsby-node.js` the following way on top of your file:
 
-```javascript
+```javascript:title=gatsby-config.js
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -85,9 +85,7 @@ For instance. If you would like to add a staging environment with a custom Googl
 GATSBY_GA_TRACKING_ID="UA-1234567890"
 ```
 
-```javascript
-// gatsby-config.js
-
+```javascript:title=gatsby-config.js
 let activeEnv = process.env.ACTIVE_ENV
 
 if (!activeEnv) {

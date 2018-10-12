@@ -20,7 +20,7 @@ The `cache-control` header should be `cache-control: public,max-age=31536000,imm
 
 ## JavaScript
 
-Other files e.g. JavaScript files are _not_ (yet) cachable. Gatsby v1 is using webpack 1 which doesn't make it possible to produce paths tied directly to the content of the file. Gatsby v2 will ship with webpack 3 which [will make possible long-term caching of our JavaScript files](https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31).
+Other files e.g. JavaScript files are _not_ (yet) cachable. Gatsby v1 is using webpack 1 which doesn't make it possible to produce paths tied directly to the content of the file. Gatsby v2 will ship with webpack 4 which [will make possible long-term caching of our JavaScript files](https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31).
 
 The `cache-control` header should be `cache-control: public, max-age=0, must-revalidate`
 

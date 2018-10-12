@@ -12,7 +12,7 @@ With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to 
 
 <iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components/embed" />
 
-Video hosted on [egghead.io][https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components].
+Video hosted on [egghead.io](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components).
 
 First, open a new terminal window and run the following to create a new site:
 
@@ -28,7 +28,7 @@ npm install --save gatsby-plugin-styled-components styled-components babel-plugi
 
 And then add it to your site's `gatsby-config.js`:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-styled-components`],
 }
@@ -38,7 +38,7 @@ Then in your terminal run `gatsby develop` to start the Gatsby development serve
 
 Now let's create a sample Styled Components page at `src/pages/index.js`:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import styled from "styled-components"
 

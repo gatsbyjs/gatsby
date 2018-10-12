@@ -14,6 +14,8 @@
           link: /tutorial/part-zero/#install-nodejs
         - title: Familiarize with npm
           link: /tutorial/part-zero/#familiarize-with-npm
+        - title: Install Git
+          link: /tutorial/part-zero/#install-git
         - title: Install the Gatsby CLI
           link: /tutorial/part-zero/#install-the-gatsby-cli
         - title: Create a Gatsby site
@@ -54,7 +56,7 @@
       items:
         - title: Your first layout component
           link: /tutorial/part-three/#your-first-layout-component
-    - title: 4. Querying for data in a blog
+    - title: 4. Data in Gatsby
       link: /tutorial/part-four/
       ui: steps
       items:

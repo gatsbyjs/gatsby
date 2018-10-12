@@ -2,12 +2,13 @@ const React = require(`react`)
 const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { ServerLocation, Router } = require(`@reach/router`)
+const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
 const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
+const { version: gatsbyVersion } = require(`gatsby/package.json`)
 
 // Speed up looking up pages.
 const pagesObjectMap = new Map()
@@ -50,7 +51,9 @@ const createElement = React.createElement
 
 export default (pagePath, callback) => {
   let bodyHtml = ``
-  let headComponents = []
+  let headComponents = [
+    <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />
+  ]
   let htmlAttributes = {}
   let bodyAttributes = {}
   let preBodyComponents = []
@@ -181,7 +184,12 @@ export default (pagePath, callback) => {
 
   // If no one stepped up, we'll handle it.
   if (!bodyHtml) {
-    bodyHtml = renderToString(bodyComponent)
+    try {
+      bodyHtml = renderToString(bodyComponent)
+    } catch (e) {
+      // ignore @reach/router redirect errors
+      if (!isRedirect(e)) throw e
+    }
   }
 
   // Create paths to scripts
@@ -307,15 +315,6 @@ export default (pagePath, callback) => {
       }
     })
 
-  apiRunner(`onPreRenderHTML`, {
-    getHeadComponents,
-    replaceHeadComponents,
-    getPreBodyComponents,
-    replacePreBodyComponents,
-    getPostBodyComponents,
-    replacePostBodyComponents,
-  })
-
   // Add page metadata for the current page
   const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
     page.jsonName in dataPaths
@@ -359,6 +358,15 @@ export default (pagePath, callback) => {
   })
 
   postBodyComponents.push(...bodyScripts)
+
+  apiRunner(`onPreRenderHTML`, {
+    getHeadComponents,
+    replaceHeadComponents,
+    getPreBodyComponents,
+    replacePreBodyComponents,
+    getPostBodyComponents,
+    replacePostBodyComponents,
+  })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
     <Html

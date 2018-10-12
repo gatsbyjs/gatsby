@@ -96,7 +96,7 @@ We’ll be hearing more about Netlify in another article - their original produc
 
 One big difference from the others here is that the content in NetlifyCMS is kept in your Git repo, meaning that code and content are versioned together. You won’t ever lose content if you still have the repo, and you can see the history at the press of a button - same as you can with your code.
 
-[Gatsby has a handy tutorial for NetlifyCMS](/docs/netlify-cms/) but they do stress that in order to save to Github etc, you will need your own server:
+[Gatsby has a handy tutorial for NetlifyCMS](/docs/netlify-cms/) but they do stress that in order to save to GitHub etc, you will need your own server:
 
 > To save your content in a Git repo, the repo will need to be hosted on a service like GitHub, and you’ll need a way to authenticate with that service so Netlify CMS can make changes through the service’s API. For most services, including GitHub, authentication will require a server.
 
@@ -138,6 +138,6 @@ Cloud-hosted or Git-hosted seem to be the best for this. I don’t need a server
 
 In terms of which CMS to go with, they all have great merits and I can see them all being useful for different projects. But for my needs - for smaller side projects and for personal sites - Contentful and Prismic seem like the ones to go for. They’re both cloud-based with minimal setup and work via an API so I can access them wherever I need to. Also their free tiers have great features, and scale easily so that if I have a ‘proper’ project, I can get a version that will suit any needs.
 
-Was this post useful? Do you use any of these CMSs, or a different one? Please let me know, I’d love to hear about how you get one with them. And look out for a future post about hosting. I mentioned that NetlifyCMS runs great with Netlify, but there are other options! I’ll be looking at Github Pages, Heroku and more!
+Was this post useful? Do you use any of these CMSs, or a different one? Please let me know, I’d love to hear about how you get one with them. And look out for a future post about hosting. I mentioned that NetlifyCMS runs great with Netlify, but there are other options! I’ll be looking at GitHub Pages, Heroku and more!
 
 You can find me on [Twitter](https://twitter.com/RossWhitehouse) and [Instagram](https://www.instagram.com/ross.dw/), and [check out my other posts](https://medium.com/@RossWhitehouse)!

@@ -112,7 +112,7 @@ const LegendTable = () => {
 }
 
 const FeaturesHeader = () => (
-  <div>
+  <section>
     <h1 id="introduction" style={{ marginTop: 0 }}>
       Features
     </h1>
@@ -135,7 +135,7 @@ const FeaturesHeader = () => (
         {` `}
         <a href="http://wordpress.org/">Wordpress</a> give you an online text
         editor to create content. You customize the look and feel through
-        choosing themes and plugins, or writing custom PHP or Javascript code.
+        choosing themes and plugins, or writing custom PHP or JavaScript code.
         Content is saved in a database, which is retrieved and sent to users
         when they visit the website. Depending on your requirements you can
         self-host your website, or use an official hosting provider.
@@ -158,7 +158,7 @@ const FeaturesHeader = () => (
       Legend
     </h6>
     <LegendTable />
-  </div>
+  </section>
 )
 
 const getFeaturesData = function(data) {
@@ -212,12 +212,14 @@ class FeaturesPage extends Component {
         enableScrollSync={true}
       >
         <Container>
-          <FeaturesHeader />
-          <EvaluationTable
-            sections={sections}
-            sectionHeaders={sectionHeaders}
-          />
-          <FeaturesFooter />
+          <main id={`reach-skip-nav`}>
+            <FeaturesHeader />
+            <EvaluationTable
+              sections={sections}
+              sectionHeaders={sectionHeaders}
+            />
+            <FeaturesFooter />
+          </main>
         </Container>
       </Layout>
     )

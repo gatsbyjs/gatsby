@@ -16,7 +16,10 @@ import docsHierarchy from "../data/sidebars/doc-links.yaml"
 const guides = docsHierarchy.find(group => group.title === `Guides`).items
 
 // Finds child items for a given guide overview page using its slug.
-const getChildGuides = slug => guides.find(guide => guide.link === slug).items
+const getChildGuides = slug => {
+  const found = guides.find(guide => guide.link === slug)
+  return found ? found.items : []
+}
 
 // Create a table of contents from the child guides.
 const createGuideList = guides =>
@@ -43,10 +46,12 @@ const getPageHTML = page => {
   }
 
   const guideList = createGuideList(guides)
-  const toc = `
+  const toc = guideList
+    ? `
     <h2>Guides in this section:</h2>
     <ul>${guideList}</ul>
   `
+    : ``
 
   // This is probably a capital offense in Reactland. 😱😱😱
   return page.html.replace(`[[guidelist]]`, toc)

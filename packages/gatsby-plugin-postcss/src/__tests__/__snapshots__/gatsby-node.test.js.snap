@@ -140,6 +140,24 @@ exports[`gatsby-plugin-postcss Stage: build-html / No options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -691,6 +709,24 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -773,6 +809,16 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / No options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -969,6 +1015,16 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / PostCss options 1`] = `
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -1013,6 +1069,12 @@ exports[`gatsby-plugin-postcss Stage: develop / No options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -1082,6 +1144,12 @@ exports[`gatsby-plugin-postcss Stage: develop / PostCss options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -1195,6 +1263,20 @@ exports[`gatsby-plugin-postcss Stage: develop-html / No options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -1547,6 +1629,20 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
         },
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
   ],
 }
 `;

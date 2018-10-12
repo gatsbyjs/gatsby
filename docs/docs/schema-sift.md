@@ -4,9 +4,9 @@ title: Querying with Sift
 
 ## Summary
 
-Gatsby stores all data loaded during the source-nodes phase in redux. And it allows you to write GraphQL queries to query that data. But Redux is a plain javascript object store. So how does Gatsby query over those nodes using the GraphQL Query language?
+Gatsby stores all data loaded during the source-nodes phase in redux. And it allows you to write GraphQL queries to query that data. But Redux is a plain JavaScript object store. So how does Gatsby query over those nodes using the GraphQL Query language?
 
-The answer is that it uses the [sift.js](https://github.com/crcn/sift.js/tree/master) library. It is a port of the MongoDB query language that works over plain javascript objects. It turns out that mongo's query language is very compatible with GraphQL.
+The answer is that it uses the [sift.js](https://github.com/crcn/sift.js/tree/master) library. It is a port of the MongoDB query language that works over plain JavaScript objects. It turns out that mongo's query language is very compatible with GraphQL.
 
 Most of the logic below is in the the [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js) file, which is called from the [ProcessedNodeType `resolve()`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L191) function.
 
@@ -100,7 +100,7 @@ Note that the graphql-js library has NOT been invoked yet. We're instead calling
 
 The resolve method in this case would return a paragraph node, which also needs to be properly resolved. So We descend the `fieldsToSift` arg tree and perform the above operation on the paragraph node (using the found paragraph gqlType).
 
-After `resolveRecursive` has finished, we will have "realized" all the query fields in each node, giving us confidence that we can perform the query with all the data being there. 
+After `resolveRecursive` has finished, we will have "realized" all the query fields in each node, giving us confidence that we can perform the query with all the data being there.
 
 ### 4. Track newly realized fields
 
