@@ -73,7 +73,7 @@ commands:
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
-      - run: ./scripts/integration-test.sh "<< parameters.test_path >>"
+      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>"
 
 version: 2.1
 
@@ -120,7 +120,6 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
-      - <<: *persist_node_modules
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 
