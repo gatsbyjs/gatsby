@@ -171,4 +171,4 @@ In a few seconds, you will see a message in the bottom right of VS Code confirmi
 
 ![Successful deployment](deploymentcomplete.png)
 
-Good news! you can now browse to your blog! on the address given in the dialog. Congratulations! you've just deployed your Gatsby blog to Azure!
+Congratulations! You've successfully completed the tutorial just deployed your Gatsby blog to Azure!
