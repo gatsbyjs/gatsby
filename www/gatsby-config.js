@@ -69,7 +69,12 @@ module.exports = {
         showSpinner: false,
       },
     },
-    `gatsby-plugin-glamor`,
+    {
+      resolve: `gatsby-plugin-emotion`,
+      options: {
+        // Accepts all options defined by `babel-plugin-emotion` plugin.
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,

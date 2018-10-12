@@ -1,10 +1,10 @@
 import hex2rgba from "hex2rgba"
-import { css } from "glamor"
+import { keyframes } from "react-emotion"
 
 import presets, { colors } from "./presets"
 import { rhythm, scale, options } from "./typography"
 
-const stripeAnimation = css.keyframes({
+const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
   "100%": { backgroundPosition: `30px 60px` },
 })

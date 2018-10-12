@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import { buttonStyles } from "../utils/styles"
+import { css } from "react-emotion"
 
 const components = {
   link: Link,
@@ -24,7 +25,7 @@ const Button = ({
   const props = {
     to: !tag ? to : undefined,
     href: tag === `href` ? to : undefined,
-    css: {
+    className: css({
       "&&": {
         ...buttonStyles.default,
         ...overrideCSS,
@@ -32,7 +33,7 @@ const Button = ({
         ...(large && { ...buttonStyles.large }),
         ...(small && { ...buttonStyles.small }),
       },
-    },
+    }),
     ...rest,
   }
 
