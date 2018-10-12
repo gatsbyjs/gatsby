@@ -1,7 +1,7 @@
 ---
 title: "Deploying a Gatsby blog to Azure"
 author: Doug McDonald
-date: 2018-10-06
+date: 2018-10-15
 image: images/rocket.jpg
 showImageInArticle: false
 tags: ["deployment", "azure"]
