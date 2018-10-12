@@ -135,7 +135,6 @@ This will output a production build of your blog into the `public` folder.
 
 The easiest way to deploy your blog to your storage account is to use the `Azure Storage Extension` within VS Code.
 
-[Install the Azure Storage Extension - VS Code](vscode:extension/ms-azuretools.vscode-azurestorage)
 [Install the Azure Storage Extension - Extensions Gallery](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestorage)
 
 > Alternatively, select the extension option from VS Code and search for `Azure Storage`.
