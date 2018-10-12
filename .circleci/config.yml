@@ -60,7 +60,7 @@ aliases:
       - bootstrap
 
 commands:
-  e2e_test:
+  e2e-test:
     parameters:
       trigger_pattern:
         type: string
