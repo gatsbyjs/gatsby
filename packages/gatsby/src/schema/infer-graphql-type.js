@@ -24,7 +24,7 @@ const {
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
-const unionTypes = []
+const unionTypes = {}
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -257,13 +257,17 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     let type
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
-      type = unionTypes.find(type =>
-        _.isEqual(type.getTypes(), fields.map(f => f.nodeObjectType))
-      )
+      const typeName = `Union_${key}`
+
+      if (unionTypes[typeName]) {
+        type = unionTypes[typeName].find(type =>
+          _.isEqual(type.getTypes(), fields.map(f => f.nodeObjectType))
+        )
+      }
 
       if (!type) {
         type = new GraphQLUnionType({
-          name: createTypeName(`Union_${key}`),
+          name: createTypeName(typeName),
           description: `Union interface for the field "${key}" for types [${fields
             .map(f => f.name)
             .sort()
@@ -272,7 +276,7 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
           resolveType: data =>
             fields.find(f => f.name == data.internal.type).nodeObjectType,
         })
-        unionTypes.push(type)
+        ;(unionTypes[typeName] = unionTypes[typeName] || []).push(type)
       }
     } else {
       type = fields[0].nodeObjectType
