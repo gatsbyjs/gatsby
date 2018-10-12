@@ -905,7 +905,7 @@
     - React Helmet for Header Modification
     - Remark for loading Markdown into React
 - url: https://example.org
-  repo: https://github.com/
+  repo: https://github.com/foo/bar
   description: YOLO
   tags:
     - yolo
