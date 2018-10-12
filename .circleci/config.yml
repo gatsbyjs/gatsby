@@ -120,7 +120,6 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
-      - <<: *persist_node_modules
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 
