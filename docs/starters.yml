@@ -1,10 +1,3 @@
-- url: https://cosmicjs-gatsby-starter.netlify.com/
-  repo: https://github.com/cosmicjs/gatsby-starter
-  description: Gatsby starter connected to the Cosmic JS headless CMS for easy content management
-  tags:
-    - Cosmic JS
-  features:
-    - Uses the Cosmic JS Gatsby source plugin
 - url: https://wonism.github.io/
   repo: https://github.com/wonism/gatsby-advanced-blog
   description: n/a
