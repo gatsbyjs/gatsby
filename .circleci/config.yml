@@ -121,6 +121,7 @@ jobs:
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *persist_node_modules
+      - run: yarn bootstrap
       - run: yarn test:integration
 
   e2e_tests_gatsbygram:
