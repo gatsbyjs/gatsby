@@ -68,11 +68,11 @@ export type LoaderUtils = {
 }
 
 /**
- * Utils that prodcue webpack rule objects
+ * Utils that produce webpack rule objects
  */
 export type RuleUtils = {
   /**
-   * Handles Javascript compilation via babel
+   * Handles JavaScript compilation via babel
    */
   js: RuleFactory<*>,
   yaml: RuleFactory<*>,
@@ -282,7 +282,7 @@ module.exports = async ({
   const rules = {}
 
   /**
-   * Javascript loader via babel, excludes node_modules
+   * JavaScript loader via babel, excludes node_modules
    */
   {
     let js = (options = {}) => {
@@ -435,7 +435,7 @@ module.exports = async ({
   const plugins = { ...builtinPlugins }
 
   /**
-   * Minify javascript code without regard for IE8. Attempts
+   * Minify JavaScript code without regard for IE8. Attempts
    * to parallelize the work to save time. Generally only add in Production
    */
   plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
