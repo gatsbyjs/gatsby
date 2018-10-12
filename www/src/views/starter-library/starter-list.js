@@ -73,8 +73,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 key={starter.id}
                 css={{
                   ...styles.showcaseItem,
+                  ...styles.withTitleHover,
                 }}
-                {...styles.withTitleHover}
               >
                 <ThumbnailLink
                   slug={`/starters/${stub}`}
