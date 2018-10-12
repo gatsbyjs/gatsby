@@ -333,7 +333,7 @@ Después de guardar el archivo, deberías ver la página de contacto y poder est
 
 <video controls="controls" loop="true">
   <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
-  <p>Sorry! You browser doesn't support this video.</p>
+  <p>Disculpa! Tu navegador no apoya Este video.</p>
 </video>
 
 El componente `<Link />` de Gatsby es para vincular las páginas de tu sitio. Para enlaces externos a páginas que no maneja tu sitio Gatsby, usa la etiqueta de HTML `<a>`.
