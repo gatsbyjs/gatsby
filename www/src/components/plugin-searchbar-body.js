@@ -18,7 +18,7 @@ import unescape from "lodash/unescape"
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
-import { injectGlobal } from "emotion"
+import { injectGlobal } from "react-emotion"
 import removeMD from "remove-markdown"
 
 // This is for the urlSync
