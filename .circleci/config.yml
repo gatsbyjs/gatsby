@@ -163,7 +163,8 @@ workflows:
       - unit_tests_node10:
           requires:
             - bootstrap
-      - integration_tests
+      - integration_tests:
+          <<: *integration_test_workflow
       - e2e_tests_gatsbygram:
           <<: *integration_test_workflow
       - e2e_tests_path-prefix:
