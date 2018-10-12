@@ -904,3 +904,10 @@
     - Simple format, easy to create your own site quickly
     - React Helmet for Header Modification
     - Remark for loading Markdown into React
+- url: https://example.org
+  repo: https://github.com/foo/bar
+  description: YOLO
+  tags:
+    - yolo
+  features:
+    - also yolo
