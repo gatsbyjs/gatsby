@@ -1,16 +1,11 @@
-const pathPrefix = `/pathPrefix`
+const pathPrefix = `/blog`
 
 import { navigate } from "gatsby-link"
 import * as catchLinks from "../catch-links"
 
-const getNavigate = () => {
-  global.___navigate = jest.fn()
-  return navigate
-}
-
 beforeAll(() => {
   global.__PATH_PREFIX__ = ``
-  // Set the base URL we will be testing against to http://localhost:8000/pathPrefix
+  // Set the base URL we will be testing against to http://localhost:8000/blog
   window.history.pushState({}, `APP Url`, `${pathPrefix}`)
 })
 
@@ -359,7 +354,7 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
   })
 })
 
-describe(`pathPrefix is handled if href with ${pathPrefix}/someSubPath triggeres navigate to ${pathPrefix}/someSubPath`, () => {
+describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer
@@ -374,14 +369,17 @@ describe(`pathPrefix is handled if href with ${pathPrefix}/someSubPath triggeres
     eventDestroyer()
   })
 
-  test(`with pathPrefix='${pathPrefix}'`, done => {
+  test(`on sites with pathPrefix '${pathPrefix}'`, done => {
+    // simulate case with --prefix-paths and prefix /blog
     global.__PATH_PREFIX__ = pathPrefix
-    const withPathPrefix = document.createElement(`a`)
-    withPathPrefix.setAttribute(
+
+    // create the element with href /blog/article
+    const clickElement = document.createElement(`a`)
+    clickElement.setAttribute(
       `href`,
-      `${window.location.href}/someSubPath`
+      `${window.location.href}/article`
     )
-    document.body.appendChild(withPathPrefix)
+    document.body.appendChild(clickElement)
 
     // create the click event we'll be using for testing
     const clickEvent = new MouseEvent(`click`, {
@@ -390,29 +388,38 @@ describe(`pathPrefix is handled if href with ${pathPrefix}/someSubPath triggeres
       view: window,
     })
 
+    // fake module handler
     hrefHandler.mockImplementation((path) => {
-      getNavigate()(path)
-      expect(global.___navigate).toHaveBeenCalledWith(
-        `${pathPrefix}/someSubPath`,
+      // place a mock where processing exits gatsby-link
+      const checkPoint = global.___navigate = jest.fn()
+      // call gatsby-link.navigate as the default handler does
+      navigate(path)
+      // compare href past gatsby-link against our clickElement
+      expect(checkPoint).toHaveBeenCalledWith(
+        `${pathPrefix}/article`,
         undefined
       )
 
-      withPathPrefix.remove()
-
+      // cleanup
+      clickElement.remove()
       done()
     })
 
-    withPathPrefix.dispatchEvent(clickEvent)
+    // and trigger click
+    clickElement.dispatchEvent(clickEvent)
   })
 
-  test(`with pathPrefix unset`, done => {
+  test(`on sites without pathPrefix`, done => {
+    // simulate default case without --prefix-paths
     global.__PATH_PREFIX__ = ``
-    const withPathPrefix = document.createElement(`a`)
-    withPathPrefix.setAttribute(
+
+    // create the element with href /blog/article
+    const clickElement = document.createElement(`a`)
+    clickElement.setAttribute(
       `href`,
-      `${window.location.href}/someSubPath`
+      `${window.location.href}/article`
     )
-    document.body.appendChild(withPathPrefix)
+    document.body.appendChild(clickElement)
 
     // create the click event we'll be using for testing
     const clickEvent = new MouseEvent(`click`, {
@@ -421,19 +428,25 @@ describe(`pathPrefix is handled if href with ${pathPrefix}/someSubPath triggeres
       view: window,
     })
 
+    // fake module handler
     hrefHandler.mockImplementation((path) => {
-      getNavigate()(path)
-      expect(global.___navigate).toHaveBeenCalledWith(
-        `${pathPrefix}/someSubPath`,
+      // place a mock where processing exits gatsby-link
+      const checkPoint = global.___navigate = jest.fn()
+      // call gatsby-link.navigate as the default handler does
+      navigate(path)
+      // compare href past gatsby-link against our clickElement
+      expect(checkPoint).toHaveBeenCalledWith(
+        `${pathPrefix}/article`,
         undefined
       )
 
-      withPathPrefix.remove()
-
+      // cleanup
+      clickElement.remove()
       done()
     })
 
-    withPathPrefix.dispatchEvent(clickEvent)
+    // and trigger click
+    clickElement.dispatchEvent(clickEvent)
   })
 
 })
