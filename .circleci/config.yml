@@ -133,19 +133,19 @@ jobs:
     <<: *node10_browsers
     steps:
       - e2e-test:
-          test_path: e2e-test/path-prefix
+          test_path: e2e-tests/path-prefix
 
   e2e_tests_gatsby-image:
     <<: *node10_browsers
     steps:
       - e2e-test:
-          test_path: e2e-test/gatsby-image
+          test_path: e2e-tests/gatsby-image
 
   e2e_tests_runtime:
     <<: *node10_browsers
     steps:
       - e2e-test:
-          test_path: e2e-test/production-runtime
+          test_path: e2e-tests/production-runtime
 
 workflows:
   version: 2
