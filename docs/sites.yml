@@ -1704,6 +1704,11 @@
     - Loans
     - Finance
     - Nonprofit
+    - Banking
+    - Business
+    - Education
+  built_by: "https://fcfcu.com/"
+  built_by_url: "https://fcfcu.com/"
   featured: false
 - title: Office of Institutional Research and Assessment
   description: |
@@ -2871,16 +2876,6 @@
     - Entertainment
   built_by: "attn:"
   built_by_url: "https://www.attn.com/"
-  featured: false
-- title: Financial center
-  main_url: "https://fcfcu.com/"
-  url: "https://fcfcu.com/"
-  categories:
-    - Banking
-    - Business
-    - Education
-  built_by: "https://fcfcu.com/"
-  built_by_url: "https://fcfcu.com/"
   featured: false
 - title: Mirror Conf
   description: >
