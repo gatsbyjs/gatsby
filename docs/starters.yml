@@ -3,6 +3,7 @@
   description: Blog that utilizes the power of the Cosmic JS headless CMS for easy content management
   tags:
     - Cosmic JS
+    - Blog
   features:
     - Uses the Cosmic JS Gatsby source plugin
 - url: https://cosmicjs-gatsby-starter.netlify.com/
