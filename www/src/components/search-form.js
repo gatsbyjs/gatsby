@@ -15,10 +15,12 @@ import { css } from "glamor"
 const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
+const searchDropdownOffsetTop = rhythm(2)
+const homepageSearchDropdownOffsetTop = rhythm(4.5)
 css.insert(`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
-    top: ${rhythm(2)} !important;
+    top: calc(${searchDropdownOffsetTop} + ${presets.bannerHeight}) !important;
     left: ${rhythm(0.5)} !important;
     right: ${rhythm(0.5)} !important;
     min-width: calc(100vw - ${rhythm(1)}) !important;
@@ -27,7 +29,7 @@ css.insert(`
   }
 
   .is-homepage .algolia-autocomplete .ds-dropdown-menu {
-    top: ${rhythm(2.5)} !important;
+    top: ${homepageSearchDropdownOffsetTop} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -77,9 +79,17 @@ css.insert(`
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
-    max-height: calc(100vh - 7rem) !important;
+    max-height: calc(100vh - ${presets.headerHeight} - ${
+  presets.bannerHeight
+}) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;
+  }
+
+  .is-homepage .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+    max-height: calc(100vh - ${homepageSearchDropdownOffsetTop} - ${
+  presets.headerHeight
+} - ${presets.bannerHeight}) !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
@@ -208,6 +218,12 @@ css.insert(`
       min-width: 500px !important;
     }
 
+    .is-homepage .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+      max-height: calc(100vh - ${homepageSearchDropdownOffsetTop} - ${
+  presets.bannerHeight
+}) !important;
+    }
+
     /* .searchWrap to beat docsearch.css' !important */
     .searchWrap .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu {
       right: 0 !important;
@@ -264,7 +280,8 @@ class SearchForm extends Component {
       apiKey: `71af1f9c4bd947f0252e17051df13f9c`,
       indexName: `gatsbyjs`,
       inputSelector: `#doc-search`,
-      debug: false,
+      // debug: false,
+      debug: true,
       autocompleteOptions: {
         openOnFocus: true,
         autoselect: true,
