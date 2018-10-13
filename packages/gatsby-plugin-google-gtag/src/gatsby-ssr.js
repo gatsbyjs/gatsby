@@ -1,4 +1,5 @@
-import React from 'react'
+import React from "react"
+import { Minimatch } from "minimatch"
 
 export const onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
@@ -13,7 +14,6 @@ export const onRenderBody = (
 
   const excludeGtagPaths = []
   if (typeof pluginOptions.pluginConfig.exclude !== `undefined`) {
-    const Minimatch = require(`minimatch`).Minimatch
     pluginOptions.pluginConfig.exclude.map(exclude => {
       const mm = new Minimatch(exclude)
       excludeGtagPaths.push(mm.makeRe())
@@ -24,8 +24,7 @@ export const onRenderBody = (
     ? setHeadComponents
     : setPostBodyComponents
 
-  const renderHtml = () => {
-    return `
+  const renderHtml = () => `
       ${
         excludeGtagPaths.length
           ? `window.excludeGtagPaths=[${excludeGtagPaths.join(`,`)}];`
@@ -39,7 +38,7 @@ export const onRenderBody = (
       }
       if(${
         typeof pluginOptions.respectDNT !== `undefined` &&
-        pluginOptions.respectDNT == true
+        pluginOptions.respectDNT === true
           ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
           : `true`
       }) {
@@ -57,7 +56,6 @@ export const onRenderBody = (
           .join(``)}
       }
       `
-  }
 
   return setComponents([
     <script

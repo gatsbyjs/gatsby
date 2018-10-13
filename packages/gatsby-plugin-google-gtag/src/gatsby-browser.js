@@ -8,10 +8,12 @@ export const onRouteUpdate = function({ location }) {
     typeof window.excludeGtagPaths !== `undefined` &&
     window.excludeGtagPaths.some(rx => rx.test(location.pathname))
 
-  if (pathIsExcluded) return
+  if (pathIsExcluded) return null
 
   const pagePath = location
     ? location.pathname + location.search + location.hash
     : undefined
   window.gtag(`event`, `page_view`, { page_path: pagePath })
+
+  return null
 }

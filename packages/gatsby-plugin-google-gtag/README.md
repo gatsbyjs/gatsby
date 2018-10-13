@@ -8,7 +8,7 @@ Easily add Google Global Site Tag to your Gatsby site.
 
 ## How to use
 
-```javascript
+```js
 // In your gatsby-config.js
 module.exports = {
   plugins: [
@@ -48,14 +48,20 @@ This plugin automatically sends a "pageview" event to all products given as "tra
 
 If you want to call a custom event you have access to `window.gtag` where you can call an event for all products:
 
-```bash
+```js
 window.gtag('event', 'click', { ...data });
 ```
 
 or you can target a specific product:
 
-```bash
+```js
 window.gtag('event', 'click', { send_to: 'AW-CONVERSION_ID', ...data });
+```
+
+In either case don't forget to guard against SSR:
+
+```js
+typeof window !== 'undefined' && window.gtag('event', 'click', {...data);
 ```
 
 ## `<OutboundLink>` component
@@ -65,7 +71,7 @@ To make it easy to track clicks on outbound links the plugin provides a componen
 To use it, simply import it and use it like you would the `<a>` element e.g.
 
 ```jsx
-import React
+import React from 'react';
 import { OutboundLink } from 'gatsby-plugin-google-gtag'
 
 export default () => {
@@ -86,7 +92,7 @@ Some countries (such as Germany) require you to use the
 Google Site Tag. Otherwise you are not allowed to use it. The option adds the
 block of code below:
 
-```javascript
+```js
 function gaOptout() {
   ;(document.cookie =
     disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/'),
