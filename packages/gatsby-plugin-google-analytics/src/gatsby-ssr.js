@@ -82,6 +82,11 @@ exports.onRenderBody = (
         pluginOptions.anonymize === true
           ? `ga('set', 'anonymizeIp', true);`
           : ``
+      }
+      ${
+        typeof pluginOptions.optimizeId !== `undefined`
+          ? `ga('require', '${pluginOptions.optimizeId}');`
+          : ``
       }}
       `,
         }}

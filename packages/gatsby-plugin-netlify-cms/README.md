@@ -2,7 +2,7 @@
 
 **Gatsby v1 and Netlify CMS 1.x require [`gatsby-plugin-netlify-cms@^2.0.0`](https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@2.0.1/packages/gatsby-plugin-netlify-cms/README.md).**
 
-**Gatsby v2 and Netlify CMS 2.x require `gatsby-plugin-netlify-cms@^3.0.0-beta.0`, which is documented below.**
+**Gatsby v2 and Netlify CMS 2.x require `gatsby-plugin-netlify-cms@^3.0.0`, which is documented below.**
 
 ## Overview
 
@@ -16,7 +16,7 @@ site](https://netlifycms.org).
 ## Install
 
 ```shell
-npm install --save netlify-cms gatsby-plugin-netlify-cms@next
+npm install --save netlify-cms gatsby-plugin-netlify-cms
 ```
 
 ## How to use

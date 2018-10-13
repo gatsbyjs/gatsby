@@ -22,7 +22,7 @@ The second is the simplest choice. [Disqus](https://disqus.com/) is a popular cl
 
 There are also open source alternatives like [commento](https://github.com/adtac/commento). You need to install them. You need to manage and maintain a server. This is probably too much work to be worthwhile.
 
-How do they work? You insert a javascript tag. That loads the comment service. It inserts the comments **client side**. This means your comments are not part of your Gatsby output. This means Google probably won't see them.
+How do they work? You insert a JavaScript tag. That loads the comment service. It inserts the comments **client side**. This means your comments are not part of your Gatsby output. This means Google probably won't see them.
 
 ## Comments in git
 

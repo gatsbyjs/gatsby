@@ -5,7 +5,6 @@ import prefetchHelper from "./prefetch"
 
 const preferDefault = m => (m && m.default) || m
 
-let prefetcher
 let devGetPageData
 let inInitialRender = true
 let hasFetched = Object.create(null)
@@ -147,6 +146,20 @@ const handleResourceLoadError = (path, message) => {
   }
 }
 
+const onPrefetchPathname = pathname => {
+  if (!prefetchTriggered[pathname]) {
+    apiRunner(`onPrefetchPathname`, { pathname: pathname })
+    prefetchTriggered[pathname] = true
+  }
+}
+
+const onPostPrefetchPathname = pathname => {
+  if (!prefetchCompleted[pathname]) {
+    apiRunner(`onPostPrefetchPathname`, { pathname: pathname })
+    prefetchCompleted[pathname] = true
+  }
+}
+
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
 // we load all resources for likely-to-be-visited paths.
@@ -163,6 +176,7 @@ const sortResourcesByCount = (a, b) => {
 let findPage
 let pathScriptsCache = {}
 let prefetchTriggered = {}
+let prefetchCompleted = {}
 let disableCorePrefetching = false
 
 const queue = {
@@ -192,12 +206,7 @@ const queue = {
 
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
-    if (!prefetchTriggered[path]) {
-      apiRunner(`onPrefetchPathname`, {
-        pathname: path,
-      })
-      prefetchTriggered[path] = true
-    }
+    onPrefetchPathname(path)
 
     // If a plugin has disabled core prefetching, stop now.
     if (disableCorePrefetching.some(a => a)) {
@@ -236,6 +245,9 @@ const queue = {
       prefetchResource(page.componentChunkName)
     }
 
+    // Tell plugins the path has been successfully prefetched
+    onPostPrefetchPathname(path)
+
     return true
   },
 
@@ -257,6 +269,8 @@ const queue = {
     const page = findPage(path)
     if (page) {
       return pathScriptsCache[page.path]
+    } else if (path !== `/404.html`) {
+      return queue.getResourcesForPathnameSync(`/404.html`)
     } else {
       return null
     }
@@ -297,9 +311,9 @@ const queue = {
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
 
-        // Preload the custom 404 page when running `gatsby develop`
-        if (path !== `/404.html` && process.env.NODE_ENV !== `production`) {
-          queue.getResourcesForPathname(`/404.html`)
+        // Preload the custom 404 page
+        if (path !== `/404.html`) {
+          return resolve(queue.getResourcesForPathname(`/404.html`))
         }
 
         return resolve()
@@ -326,7 +340,6 @@ const queue = {
       // In development we know the code is loaded already
       // so we just return with it immediately.
       if (process.env.NODE_ENV !== `production`) {
-        const page = findPage(path)
         const pageResources = {
           component: syncRequires.components[page.componentChunkName],
           page,
@@ -346,6 +359,11 @@ const queue = {
           getResourceModule(page.componentChunkName),
           getResourceModule(page.jsonName),
         ]).then(([component, json]) => {
+          if (!(component && json)) {
+            resolve(null)
+            return
+          }
+
           const pageResources = {
             component,
             json,
@@ -369,6 +387,9 @@ const queue = {
           }
         })
       }
+
+      // Tell plugins the path has been successfully prefetched
+      onPostPrefetchPathname(path)
     }),
 }
 

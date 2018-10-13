@@ -4,6 +4,7 @@ const Configstore = require(`configstore`)
 const pkg = require(`../package.json`)
 const _ = require(`lodash`)
 const path = require(`path`)
+const os = require(`os`)
 const watch = require(`./watch`)
 
 const argv = require(`yargs`)
@@ -40,9 +41,12 @@ if (!havePackageJsonFile) {
   process.exit()
 }
 
-const pathToRepo = argv.setPathToRepo
+let pathToRepo = argv.setPathToRepo
+
 if (pathToRepo) {
-  console.log(`Saving path to your Gatsby repo`)
+  if (pathToRepo.includes(`~`)) {
+    pathToRepo = path.join(os.homedir(), pathToRepo.split(`~`).pop())
+  }
   conf.set(`gatsby-location`, path.resolve(pathToRepo))
   process.exit()
 }

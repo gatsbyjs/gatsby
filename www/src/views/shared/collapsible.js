@@ -17,7 +17,7 @@ class Collapsible extends Component {
   }
 
   render() {
-    const { heading, children } = this.props
+    const { heading, fixed, children } = this.props
     const { collapsed } = this.state
 
     return (
@@ -26,6 +26,9 @@ class Collapsible extends Component {
           borderBottom: collapsed ? 0 : `1px solid ${colors.ui.light}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
+          minHeight: fixed ? `${fixed}px` : `initial`,
+          maxHeight: fixed ? `${fixed}px` : `initial`,
+          flexBasis: 0,
           // paddingBottom: collapsed ? 0 : rhythm(options.blockMarginBottom),
         }}
       >

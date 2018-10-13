@@ -2,13 +2,12 @@
 
 Plugin for connecting arbitrary GraphQL APIs to Gatsby GraphQL. Remote schemas are stitched together by adding a type that wraps the remote schema Query type and putting it under field of Gatsby GraphQL Query.
 
-- [Example website]([See it here](https://using-gatsby-source-graphql.netlify.com/)
-  )
-- [Example website source]([See it here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
+- [Example website](https://using-gatsby-source-graphql.netlify.com/)
+- [Example website source](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
 
 ## Install
 
-`npm install --save gatsby-source-graphql@next`
+`npm install --save gatsby-source-graphql`
 
 ## How to use
 
@@ -87,7 +86,7 @@ module.exports = {
 
 By default schema is introspected from the remote schema. Schema is cached in `.cache` in this case and refreshing the schema requires deleting the cache.
 
-To control schema consumpiton, you can alternatively construct schema definition by passing `createSchema` callback. This way you could, for example, read schema SDL or introspection JSON. When `createSchema` callback is used, schema isn't cached. `createSchema` can return a Promise to GraphQLSchema instance or GraphQLSchema instance.
+To control schema consumption, you can alternatively construct schema definition by passing `createSchema` callback. This way you could, for example, read schema SDL or introspection JSON. When `createSchema` callback is used, schema isn't cached. `createSchema` can return a Promise to GraphQLSchema instance or GraphQLSchema instance.
 
 ```js
 const fs = require("fs")

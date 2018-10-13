@@ -44,8 +44,8 @@ The sequence of the **main** bootstrap Node API lifecycles are:
   - within this `createPage` can be called any number of times, which then triggers [onCreatePage](https://www.gatsbyjs.org/docs/node-apis/#onCreatePage)
 - [onPreExtractQueries](https://www.gatsbyjs.org/docs/node-apis/#onPreExtractQueries) e.g. implemented by [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/gatsby-node.js) and [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/gatsby-node.js)
 - (schema update happens here)
-- **extract queries from components** where the [queryCompiler](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js#L189) replaces page GraphQL queries and `StaticQueries`
-- The [queries are run](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L100), and the [pages are written out](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/pages-writer.js)
+- **extract queries from components** where the [queryCompiler](https://github.com/gatsbyjs/gatsby/blob/6de0e4408e14e599d4ec73948eb4153dc3cde849/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js#L189) replaces page GraphQL queries and `StaticQueries`
+- The [queries are run](https://github.com/gatsbyjs/gatsby/blob/6de0e4408e14e599d4ec73948eb4153dc3cde849/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L120), and the [pages are written out](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/pages-writer.js)
 - [onPostBoostrap](https://www.gatsbyjs.org/docs/node-apis/#onPostBootstrap) is called (but it is not often used)
 
 ## Build sequence

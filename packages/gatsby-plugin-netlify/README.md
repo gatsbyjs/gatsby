@@ -118,6 +118,8 @@ createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true })
 createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" })
 ```
 
+> NOTE: You can pass the `force` option to override existing content in the path. This is particularly useful for domain alias redirects. See the Netlify documentation on this option [here](https://www.netlify.com/docs/redirects/#structured-configuration).
+
 You can also create a `_redirects` file in the `static` folder for the same effect. Any programmatically created redirects will be appended to the file.
 
 ```sh

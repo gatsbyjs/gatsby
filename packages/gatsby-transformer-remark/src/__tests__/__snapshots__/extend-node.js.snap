@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
+Object {
+  "excerpt": "",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to default value 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum…",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter with truncate 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?
+",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Links are correctly prefixed correctly prefixes links 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Table of contents is generated correctly from schema correctly generates table of contents 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "tableOfContents": "<ul>
+<li>
+<p><a href=\\"/my%20little%20pony/#first-title\\">first title</a></p>
+<ul>
+<li><a href=\\"/my%20little%20pony/#second-title\\">second title</a></li>
+</ul>
+</li>
+<li><a href=\\"/my%20little%20pony/#third-title\\">third title</a></li>
+</ul>",
+}
+`;
+
+exports[`Table of contents is generated correctly from schema returns null on non existing table of contents field 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "tableOfContents": null,
+}
+`;
+
+exports[`Wordcount and timeToRead are generated correctly from schema correctly uses a default value for timeToRead 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "timeToRead": 1,
+}
+`;
+
+exports[`Wordcount and timeToRead are generated correctly from schema correctly uses a default value for wordCount 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "wordCount": Object {
+    "paragraphs": null,
+    "sentences": null,
+    "words": null,
+  },
+}
+`;
+
+exports[`Wordcount and timeToRead are generated correctly from schema correctly uses wordCount parameters 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "wordCount": Object {
+    "paragraphs": 2,
+    "sentences": 19,
+    "words": 150,
+  },
+}
+`;

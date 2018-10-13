@@ -31,3 +31,6 @@ node_modules
 /yarn.lock
 src/cache
 /package-lock.json
+
+# Env variables
+.env.development

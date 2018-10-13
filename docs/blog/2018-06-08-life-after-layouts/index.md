@@ -48,7 +48,7 @@ This ultimately boils down to two breaking changes and one recommendation:
 2.  **BREAKING CHANGE:** The `children` prop in our layout components is no longer a function (unless you explicitly provide a function).
 3.  We now recommend moving your layout components alongside the rest of your components (e.g. into `src/components/`).
 
-If we upgrade our simplified app by running `yarn add gatsby@next react react-dom` (see [the V1 => V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/) for more information on why we need to install React here), we need to upgrade our layout by moving `src/layouts/index.js` to `src/components/layout.js` and changing `children` from a function to a regular prop:
+If we upgrade our simplified app by running `yarn add gatsby react react-dom` (see [the V1 => V2 migration guide](/docs/migrating-from-v1-to-v2/) for more information on why we need to install React here), we need to upgrade our layout by moving `src/layouts/index.js` to `src/components/layout.js` and changing `children` from a function to a regular prop:
 
 ```jsx
 import React from "react"
@@ -109,18 +109,18 @@ Removing layouts isn't the only improvement coming in Gatsby V2. We're really ex
 
   <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br><br>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
 
-- We can now add GraphQL queries to any component in our app (not just page components) using [`StaticQuery`](https://next.gatsbyjs.org/docs/static-query/)
+- We can now add GraphQL queries to any component in our app (not just page components) using [`StaticQuery`](/docs/static-query/)
 - Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
 - Better support for CSS inlining and splitting, which will boost performance
 
-For a full list of what's new, check out our [V2 migration guide](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](https://www.gatsbyjs.org/blog/2018-06-16-announcing-gatsby-v2-beta-launch/).
+For a full list of what's new, check out our [V2 migration guide](/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](/blog/2018-06-16-announcing-gatsby-v2-beta-launch/).
 
 ## What's next?
 
 - You can get started using Gatsby V2 right now by installing our V2 default starter:
 
   ```
-  gatsby new my-gatsby-v2-site https://github.com/gatsbyjs/gatsby-starter-default#v2
+  gatsby new my-gatsby-v2-site https://github.com/gatsbyjs/gatsby-starter-default
   ```
 
   Huge thanks to [Yuki Takemoto](https://github.com/mottox2) for upgrading the starter to V2!

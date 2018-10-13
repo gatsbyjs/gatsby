@@ -16,9 +16,9 @@ Video hosted on [egghead.io][egghead].
 
 ### Basic example
 
-We'll create a new `Header` component located at `src/components/header.js`:
+We'll create a new `Header` component:
 
-```jsx
+```jsx:title=src/components/header.js
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
@@ -48,7 +48,7 @@ Using `StaticQuery`, you can colocate a component with its data. No longer is it
 
 With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
 
-```jsx
+```jsx:title=src/components/header.js
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"

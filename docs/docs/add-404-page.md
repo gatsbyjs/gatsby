@@ -12,5 +12,5 @@ site another way, you'll need to setup a custom rule to serve this file for 404
 errors.
 
 When developing, Gatsby adds a default 404 page that overrides your custom 404
-page. But you can still visit the exact url for your 404 page to verify it's
-working as expected.
+page. But you can still preview your 404 page by clicking "Preview custom 404
+page" to verify it's working as expected.

@@ -3,6 +3,220 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.22"></a>
+
+## [2.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.21...gatsby@2.0.22) (2018-10-12)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.21"></a>
+
+## [2.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.20...gatsby@2.0.21) (2018-10-10)
+
+### Features
+
+- add onCreateDevServer node api ([#7556](https://github.com/gatsbyjs/gatsby/issues/7556)) ([a1d3d70](https://github.com/gatsbyjs/gatsby/commit/a1d3d70))
+- store sync token for contentful preview ([#8814](https://github.com/gatsbyjs/gatsby/issues/8814)) ([365942b](https://github.com/gatsbyjs/gatsby/commit/365942b))
+
+<a name="2.0.20"></a>
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.19...gatsby@2.0.20) (2018-10-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** delay adding resources for paths until we have urls ([#8613](https://github.com/gatsbyjs/gatsby/issues/8613)) ([2605aa0](https://github.com/gatsbyjs/gatsby/commit/2605aa0))
+- **register-service-worker:** show an error if installing SW not over HTTPS ([#8958](https://github.com/gatsbyjs/gatsby/issues/8958)) ([2ba57ea](https://github.com/gatsbyjs/gatsby/commit/2ba57ea))
+- more work to prevent queries from running when there's in-progress node processing ([#8859](https://github.com/gatsbyjs/gatsby/issues/8859)) ([00eeef0](https://github.com/gatsbyjs/gatsby/commit/00eeef0))
+
+<a name="2.0.19"></a>
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.18...gatsby@2.0.19) (2018-10-05)
+
+### Bug Fixes
+
+- hot-reload page updates when querying by id ([#8799](https://github.com/gatsbyjs/gatsby/issues/8799)) ([508d3b6](https://github.com/gatsbyjs/gatsby/commit/508d3b6))
+- pretty print syntax error in gatsby api files ([#8723](https://github.com/gatsbyjs/gatsby/issues/8723)) ([1ef38c2](https://github.com/gatsbyjs/gatsby/commit/1ef38c2))
+
+<a name="2.0.18"></a>
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.17...gatsby@2.0.18) (2018-10-03)
+
+### Features
+
+- **gatsby:** switch to different caching mechanism backed by fs ([#8435](https://github.com/gatsbyjs/gatsby/issues/8435)) ([5386e1d](https://github.com/gatsbyjs/gatsby/commit/5386e1d))
+
+<a name="2.0.17"></a>
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.16...gatsby@2.0.17) (2018-10-02)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.16"></a>
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.15...gatsby@2.0.16) (2018-10-02)
+
+### Bug Fixes
+
+- **gatsby:** add mjs config to webpack and resolve correctly ([#8717](https://github.com/gatsbyjs/gatsby/issues/8717)) ([a0cbbcb](https://github.com/gatsbyjs/gatsby/commit/a0cbbcb)), closes [#8655](https://github.com/gatsbyjs/gatsby/issues/8655)
+
+<a name="2.0.15"></a>
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.14...gatsby@2.0.15) (2018-10-02)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.14"></a>
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.13...gatsby@2.0.14) (2018-10-01)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.13"></a>
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.12...gatsby@2.0.13) (2018-10-01)
+
+### Bug Fixes
+
+- run onPreRenderHTML after gatsby-script-loader and gatsby-chunk-mapper ([#8043](https://github.com/gatsbyjs/gatsby/issues/8043)) ([3bec55e](https://github.com/gatsbyjs/gatsby/commit/3bec55e))
+
+<a name="2.0.12"></a>
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.11...gatsby@2.0.12) (2018-09-28)
+
+### Bug Fixes
+
+- add missing html and body attributes from ssr apis to develop mode ([#8594](https://github.com/gatsbyjs/gatsby/issues/8594)) ([e4dcd85](https://github.com/gatsbyjs/gatsby/commit/e4dcd85))
+
+<a name="2.0.11"></a>
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.10...gatsby@2.0.11) (2018-09-27)
+
+### Bug Fixes
+
+- fix unhandled rejection when no browser found when running with --open flag ([#8507](https://github.com/gatsbyjs/gatsby/issues/8507)) ([f497b74](https://github.com/gatsbyjs/gatsby/commit/f497b74))
+
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.9...gatsby@2.0.10) (2018-09-27)
+
+### Bug Fixes
+
+- fix displaying and hydrating 404 page in production builds ([#8510](https://github.com/gatsbyjs/gatsby/issues/8510)) ([c42924a](https://github.com/gatsbyjs/gatsby/commit/c42924a))
+
+### Features
+
+- **cache-dir:** Add a button for custom 404s in development ([#8548](https://github.com/gatsbyjs/gatsby/issues/8548)) ([0658f0b](https://github.com/gatsbyjs/gatsby/commit/0658f0b)), closes [#8234](https://github.com/gatsbyjs/gatsby/issues/8234)
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.8...gatsby@2.0.9) (2018-09-26)
+
+### Bug Fixes
+
+- scroll behaviour when navigating back to anchor on the same page ([#8061](https://github.com/gatsbyjs/gatsby/issues/8061)) ([ef44cff](https://github.com/gatsbyjs/gatsby/commit/ef44cff))
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.7...gatsby@2.0.8) (2018-09-24)
+
+### Bug Fixes
+
+- check for INVALID_VALUE to avoid throwing exceptions on bad data ([#8346](https://github.com/gatsbyjs/gatsby/issues/8346)) ([bb5c0d2](https://github.com/gatsbyjs/gatsby/commit/bb5c0d2))
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.6...gatsby@2.0.7) (2018-09-21)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.5...gatsby@2.0.6) (2018-09-19)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.4...gatsby@2.0.5) (2018-09-19)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.3...gatsby@2.0.4) (2018-09-19)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.2...gatsby@2.0.3) (2018-09-18)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.1...gatsby@2.0.2) (2018-09-18)
+
+### Features
+
+- add --prefix-paths option to gatsby serve cli ([#8060](https://github.com/gatsbyjs/gatsby/issues/8060)) ([98c8e91](https://github.com/gatsbyjs/gatsby/commit/98c8e91))
+
+<a name="2.0.1"></a>
+
+## [2.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.28...gatsby@2.0.1) (2018-09-18)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0"></a>
+
+# [2.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.28...gatsby@2.0.0) (2018-09-17)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.28"></a>
+
+# [2.0.0-rc.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.27...gatsby@2.0.0-rc.28) (2018-09-17)
+
+### Features
+
+- add generator meta tag for gatsby version ([#8221](https://github.com/gatsbyjs/gatsby/issues/8221)) ([0de459a](https://github.com/gatsbyjs/gatsby/commit/0de459a))
+
+<a name="2.0.0-rc.27"></a>
+
+# [2.0.0-rc.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.26...gatsby@2.0.0-rc.27) (2018-09-17)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.26"></a>
+
+# [2.0.0-rc.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.25...gatsby@2.0.0-rc.26) (2018-09-17)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.25"></a>
+
+# [2.0.0-rc.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.24...gatsby@2.0.0-rc.25) (2018-09-14)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.24"></a>
+
+# [2.0.0-rc.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.23...gatsby@2.0.0-rc.24) (2018-09-13)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.23"></a>
+
+# [2.0.0-rc.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.22...gatsby@2.0.0-rc.23) (2018-09-13)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.0-rc.22"></a>
+
+# [2.0.0-rc.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.21...gatsby@2.0.0-rc.22) (2018-09-13)
+
+**Note:** Version bump only for package gatsby
+
 <a name="2.0.0-rc.21"></a>
 
 # [2.0.0-rc.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.0-rc.20...gatsby@2.0.0-rc.21) (2018-09-12)

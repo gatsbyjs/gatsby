@@ -34,7 +34,7 @@ You could of course hard code all your content, but it’s likely you’ll want 
 
 Gatsby’s data layer is powered by GraphQL, and the tutorial walks through how to build database queries with Gatsby’s GraphiQL tool. It’s very visual, showing you exactly what your database queries will return, which for someone like me (who finds anything database-related a little scary) is a blessing.
 
-I write my blog posts in markdown files, but you could configure Gatsby to work with Github Pages, or the CMS of your choice for a better editorial experience.
+I write my blog posts in markdown files, but you could configure Gatsby to work with GitHub Pages, or the CMS of your choice for a better editorial experience.
 
 ### Deployment
 
