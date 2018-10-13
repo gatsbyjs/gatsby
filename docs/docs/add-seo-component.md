@@ -2,8 +2,7 @@
 title: "Adding a SEO component"
 ---
 
-Every website on the web has basic _meta-tags_ like the title, favicon or description of the page in their `<head>` element. This information gets displayed in the browser and is used when someone, e.g. shares your website on Twitter. You can give your users and these websites additional data to embed your website with more data — and that's where this guide for a SEO component comes in. At the end you'll have a component you can place in your layout file and
-have rich previews for other clients, smartphone users, and search engines.
+Every site on the web has basic _meta-tags_ like the title, favicon or description of the page in their `<head>` element. This information gets displayed in the browser and is used when someone, e.g. shares your website on Twitter. You can give your users and these websites additional data to embed your website with more data — and that's where this guide for a SEO component comes in. At the end you'll have a component you can place in your layout file and have rich previews for other clients, smartphone users, and search engines.
 
 _Note: This component will use StaticQuery. If you're unfamiliar with that, have a look at the [StaticQuery documentation](/docs/static-query/). You also have to have `react-helmet` installed for which you can have a look at [this document](/docs/add-page-metadata)._
 
@@ -14,12 +13,13 @@ Gatsby makes all data put into the `siteMetadata` section of your `gatsby-config
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: 'Severus Snape',
-    titleTemplate: '%s · The Real Hero',
-    description: 'Hogwarts Potions master, Head of Slytherin house and former Death Eater.',
-    url: 'https://www.doe.com', // No trailing slash allowed!
-    image: '/images/snape.jpg', // Path to your image you placed in the 'static' folder
-    twitterUsername: '@occlumency',
+    title: "Severus Snape",
+    titleTemplate: "%s · The Real Hero",
+    description:
+      "Hogwarts Potions master, Head of Slytherin house and former Death Eater.",
+    url: "https://www.doe.com", // No trailing slash allowed!
+    image: "/images/snape.jpg", // Path to your image you placed in the 'static' folder
+    twitterUsername: "@occlumency",
   },
 }
 ```
@@ -54,6 +54,8 @@ SEO.defaultProps = {
   article: false,
 }
 ```
+
+**Note:** `propTypes` are included in this example to help you ensure you’re getting all the data you need in the component, and to help serve as a guide while destructuring / using those props.
 
 As the SEO component should also be usable in other files, e.g. a template file, the component also accepts properties for which you set sensible defaults in the `SEO.defaultProps` section. This way the information you put into `siteMetadata` gets used everytime unless you define the property explicitly.
 
@@ -138,14 +140,14 @@ const SEO = ({ title, description, image, pathname, article }) => (
           siteUrl,
           defaultImage,
           twitterUsername,
-        }
-      }
+        },
+      },
     }) => {
       const seo = {
         title: title || defaultTitle,
         description: description || defaultDescription,
         image: `${siteUrl}${image || defaultImage}`,
-        url: `${siteUrl}${pathname || '/'}`,
+        url: `${siteUrl}${pathname || "/"}`,
       }
 
       return (
@@ -154,14 +156,22 @@ const SEO = ({ title, description, image, pathname, article }) => (
             <meta name="description" content={seo.description} />
             <meta name="image" content={seo.image} />
             {seo.url && <meta property="og:url" content={seo.url} />}
-            {(article ? true : null) && <meta property="og:type" content="article" />}
+            {(article ? true : null) && (
+              <meta property="og:type" content="article" />
+            )}
             {seo.title && <meta property="og:title" content={seo.title} />}
-            {seo.description && <meta property="og:description" content={seo.description} />}
+            {seo.description && (
+              <meta property="og:description" content={seo.description} />
+            )}
             {seo.image && <meta property="og:image" content={seo.image} />}
             <meta name="twitter:card" content="summary_large_image" />
-            {twitterUsername && <meta name="twitter:creator" content={twitterUsername} />}
+            {twitterUsername && (
+              <meta name="twitter:creator" content={twitterUsername} />
+            )}
             {seo.title && <meta name="twitter:title" content={seo.title} />}
-            {seo.description && <meta name="twitter:description" content={seo.description} />}
+            {seo.description && (
+              <meta name="twitter:description" content={seo.description} />
+            )}
             {seo.image && <meta name="twitter:image" content={seo.image} />}
           </Helmet>
         </>
