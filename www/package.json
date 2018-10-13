@@ -91,11 +91,13 @@
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
+    "lint:js": "eslint --ext .js,.jsx src/",
     "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1",
     "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js"
   },
   "devDependencies": {
+    "eslint-plugin-react": "^7.11.1",
     "front-matter": "^2.3.0",
     "get-package-json-from-github": "^1.2.1",
     "github-api": "^3.0.0",
