@@ -191,7 +191,7 @@ SEO.defaultProps = {
 
 ## Examples
 
-You could also put the Facebook and Twitter meta-tags into their own components, add custom favicons you placed in your `static` folder, and add JSONLD data. To see how that works you can have a look at these two examples:
+You could also put the Facebook and Twitter meta-tags into their own components, add custom favicons you placed in your `static` folder, and add [schema.org](https://schema.org/) data (Google will use that for their [Structured Data](https://developers.google.com/search/docs/guides/intro-structured-data)). To see how that works you can have a look at these two examples:
 
 - [marisamorby.com](https://github.com/jlengstorf/marisamorby.com/blob/master/src/components/SEO/SEO.js)
 - [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic/blob/master/src/components/SEO/SEO.jsx)
