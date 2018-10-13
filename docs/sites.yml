@@ -662,12 +662,6 @@
   url: "https://housemanager.calstate.aaa.com/"
   categories:
     - Insurance
-- title: Gatsby Manor
-  main_url: "https://gatsbymanor.com/"
-  url: "https://gatsbymanor.com/themes"
-  featured: false
-  categories:
-    - Web Development
 - title: The freeCodeCamp Guide
   main_url: "https://guide.freecodecamp.org/"
   url: "https://guide.freecodecamp.org/"
@@ -801,7 +795,11 @@
     - Technology
     - Entertainment
     - Podcast
-- title: openFDA
+- title: Open FDA
+  description: >
+    Provides APIs and raw download access to a number of high-value, high
+    priority and scalable structured datasets, including adverse events, drug
+    product labeling, and recall enforcement reports.
   main_url: "https://open.fda.gov/"
   url: "https://open.fda.gov/"
   source_url: "https://github.com/FDA/open.fda.gov"
@@ -810,6 +808,8 @@
     - Government
     - Open Source
     - Web Development
+    - API
+    - Data
 - title: NYC Planning Labs (New York City Department of City Planning)
   main_url: "https://planninglabs.nyc/"
   url: "https://planninglabs.nyc/about/"
@@ -1653,6 +1653,10 @@
   categories:
     - Event
     - Community
+    - Personal Training
+    - Marketing
+  built_by: Swapcard
+  built_by_url: "https://www.swapcard.com/"
   featured: false
 - title: Kalix
   description: >
@@ -1700,17 +1704,11 @@
     - Loans
     - Finance
     - Nonprofit
-  featured: false
-- title: Open FDA
-  description: >
-    Provides APIs and raw download access to a number of high-value, high
-    priority and scalable structured datasets, including adverse events, drug
-    product labeling, and recall enforcement reports.
-  main_url: "https://open.fda.gov/"
-  url: "https://open.fda.gov/"
-  categories:
-    - API
-    - Data
+    - Banking
+    - Business
+    - Education
+  built_by: "https://fcfcu.com/"
+  built_by_url: "https://fcfcu.com/"
   featured: false
 - title: Office of Institutional Research and Assessment
   description: |
@@ -2870,15 +2868,6 @@
   built_by: Escalade Sports
   built_by_url: "https://www.escaladesports.com/"
   featured: false
-- title: Swapcard
-  main_url: "https://www.swapcard.com/"
-  url: "https://www.swapcard.com/"
-  categories:
-    - Personal Training
-    - Marketing
-  built_by: Swapcard
-  built_by_url: "https://www.swapcard.com/"
-  featured: false
 - title: "attn:"
   main_url: "https://www.attn.com/"
   url: "https://www.attn.com/"
@@ -2887,16 +2876,6 @@
     - Entertainment
   built_by: "attn:"
   built_by_url: "https://www.attn.com/"
-  featured: false
-- title: Financial center
-  main_url: "https://fcfcu.com/"
-  url: "https://fcfcu.com/"
-  categories:
-    - Banking
-    - Business
-    - Education
-  built_by: "https://fcfcu.com/"
-  built_by_url: "https://fcfcu.com/"
   featured: false
 - title: Mirror Conf
   description: >
