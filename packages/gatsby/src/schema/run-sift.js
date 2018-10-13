@@ -84,6 +84,12 @@ module.exports = ({
   function extractFieldsToSift(prekey, key, preobj, obj, val) {
     if (_.isPlainObject(val)) {
       _.forEach((val: any), (v, k) => {
+        if (k === `elemMatch`) {
+          // elemMatch is operator for arrays and not field we want to prepare
+          // so we need to skip it
+          extractFieldsToSift(prekey, key, preobj, obj, v)
+          return
+        }
         preobj[prekey] = obj
         extractFieldsToSift(key, k, obj, {}, v)
       })
@@ -120,17 +126,34 @@ module.exports = ({
               _.isObject(innerSift) &&
               v != null &&
               innerGqConfig &&
-              innerGqConfig.type &&
-              _.isFunction(innerGqConfig.type.getFields)
+              innerGqConfig.type
             ) {
-              return resolveRecursive(
-                v,
-                innerSift,
-                innerGqConfig.type.getFields()
-              )
-            } else {
-              return v
+              if (_.isFunction(innerGqConfig.type.getFields)) {
+                // this is single object
+                return resolveRecursive(
+                  v,
+                  innerSift,
+                  innerGqConfig.type.getFields()
+                )
+              } else if (
+                _.isArray(v) &&
+                innerGqConfig.type.ofType &&
+                _.isFunction(innerGqConfig.type.ofType.getFields)
+              ) {
+                // this is array
+                return Promise.all(
+                  v.map(item =>
+                    resolveRecursive(
+                      item,
+                      innerSift,
+                      innerGqConfig.type.ofType.getFields()
+                    )
+                  )
+                )
+              }
             }
+
+            return v
           })
           .then(v => [k, v])
       )

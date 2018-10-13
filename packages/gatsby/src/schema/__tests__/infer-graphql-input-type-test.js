@@ -910,6 +910,16 @@ describe(`filtering on linked nodes`, () => {
         { linked___NODE: [`child_1`, `child_2`], foo: `bar` },
         { linked___NODE: [`child_1`], foo: `baz` },
         { linked___NODE: [`child_2`], foo: `foo` },
+        { array: [{ linked___NODE: [`child_1`, `child_2`] }], foo: `lorem` },
+        {
+          array: [
+            { linked___NODE: [`child_1`] },
+            { linked___NODE: [`child_2`] },
+          ],
+          foo: `ipsum`,
+        },
+        { array: [{ linked___NODE: [`child_1`] }], foo: `sit` },
+        { array: [{ linked___NODE: [`child_2`] }], foo: `dolor` },
         { foo: `ipsum` },
       ],
       `
@@ -918,6 +928,12 @@ describe(`filtering on linked nodes`, () => {
             edges { node { foo } }
           }
           in:allNode(filter: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } }) {
+            edges { node { foo } }
+          }
+          insideInlineArrayEq:allNode(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { eq: "brown" } } } } } }) {
+            edges { node { foo } }
+          }
+          insideInlineArrayIn:allNode(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } } } }) {
             edges { node { foo } }
           }
         }
@@ -933,6 +949,17 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.in.edges[0].node.foo).toEqual(`bar`)
     expect(result.data.in.edges[1].node.foo).toEqual(`baz`)
     expect(result.data.in.edges[2].node.foo).toEqual(`foo`)
+
+    expect(result.data.insideInlineArrayEq.edges.length).toEqual(3)
+    expect(result.data.insideInlineArrayEq.edges[0].node.foo).toEqual(`lorem`)
+    expect(result.data.insideInlineArrayEq.edges[1].node.foo).toEqual(`ipsum`)
+    expect(result.data.insideInlineArrayEq.edges[2].node.foo).toEqual(`sit`)
+
+    expect(result.data.insideInlineArrayIn.edges.length).toEqual(4)
+    expect(result.data.insideInlineArrayIn.edges[0].node.foo).toEqual(`lorem`)
+    expect(result.data.insideInlineArrayIn.edges[1].node.foo).toEqual(`ipsum`)
+    expect(result.data.insideInlineArrayIn.edges[2].node.foo).toEqual(`sit`)
+    expect(result.data.insideInlineArrayIn.edges[3].node.foo).toEqual(`dolor`)
   })
 
   it(`doesn't mutate node object`, async () => {
