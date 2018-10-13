@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import Helmet from "react-helmet"

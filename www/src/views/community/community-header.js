@@ -6,6 +6,7 @@ import Checkmark from "./check.svg"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
+// eslint-disable-next-line
 const CommunityHeaderLink = ({ linkTo, children }) => (
   <li
     css={{
@@ -32,7 +33,7 @@ const CommunityHeaderLink = ({ linkTo, children }) => (
 
 class CommunityHeader extends Component {
   render() {
-    const { forHire, hiring, submissionText } = this.props
+    const { submissionText } = this.props
     return (
       <div
         css={{

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { Component } from "react"
 import presets, { colors } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
@@ -114,12 +115,14 @@ class EvaluationTable extends Component {
           {flatten(
             sections.map((section, s) =>
               [
+                /* eslint-disable react/jsx-key */
                 <SectionTitle text={sectionHeaders[s]} />,
                 <SectionHeaderTop />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
                     [].concat([
+                      /* eslint-disable react/jsx-key */
                       <SectionHeaderBottom
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}

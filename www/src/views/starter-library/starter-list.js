@@ -12,6 +12,7 @@ import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import get from "lodash/get"
 
+// eslint-disable-next-line
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
     // empty state!
@@ -57,7 +58,6 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
           const {
             description,
             gatsbyMajorVersion,
-            gatsbyDependencies,
             name,
             githubFullName,
             lastUpdated,
