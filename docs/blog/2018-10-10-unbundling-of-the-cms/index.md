@@ -8,6 +8,7 @@ tags: ["content-mesh"]
 _This is Part 2 of a series. You may want to read Part 1:_ [Delivering Modern Website Experiences: The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh).
 
 Web users’ expectations follow a simple law: they always increase over time.  
+
 Creating compelling web content experiences has become _crucial_ in the battlefield for customer loyalty. But you can’t get _fresh_, _novel_, and _engaging_, without up-to-date content and development architectures.
 
 Today, enterprise CPG, clothing, and consumer durables companies face dual threats from Amazon and hip DNVBs like Dollar Shave Club and Bonobos. Enterprise travel companies face off with Kayak and Expedia. News organizations have taken heavy losses from upstart content sites and Facebook/Google. And so on.

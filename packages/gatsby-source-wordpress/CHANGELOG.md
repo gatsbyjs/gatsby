@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.5"></a>
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.4...gatsby-source-wordpress@3.0.5) (2018-10-12)
+
+### Bug Fixes
+
+- id generation for nested acf flexible content fields ([#9006](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9006)) ([f458faf](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/f458faf)), closes [#8910](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/8910) [#8910](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/8910)
+
+### Features
+
+- **gatsby-source-wordpress:** add newline to error log message ([#9033](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9033)) ([57b57e1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/57b57e1))
+- **gatsby-source-wordpress:** add support for route whitelist to complement route blacklist option ([#6036](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/6036)) ([a088b51](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/a088b51)), closes [#6556](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/6556)
+
 <a name="3.0.4"></a>
 
 ## [3.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.3...gatsby-source-wordpress@3.0.4) (2018-10-10)

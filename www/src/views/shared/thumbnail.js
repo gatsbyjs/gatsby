@@ -20,8 +20,8 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
     <Link
       to={slug}
       state={{ isModal: true }}
-      {...styles.withTitleHover}
       css={{
+        ...styles.withTitleHover,
         "&&": {
           borderBottom: `none`,
           boxShadow: `none`,

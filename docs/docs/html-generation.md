@@ -2,8 +2,8 @@
 title: Page HTML Generation
 ---
 
-In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack to build the javascript bundles required to take over the user experience once the first HTML page has finished loading. But ho
-w do the original HTML pages get generated? 
+In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack to build the JavaScript bundles required to take over the user experience once the first HTML page has finished loading. But ho
+w do the original HTML pages get generated?
 
 The high level process is:
 
@@ -61,7 +61,7 @@ Now we're ready to create a React component for the page (inside the Html contai
 
 #### 5. Add preload Link and Script Tags
 
-This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON. 
+This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON.
 
 #### 6. Inject Page Info to CDATA
 
