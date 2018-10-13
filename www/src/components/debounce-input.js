@@ -11,7 +11,7 @@ class DebounceInput extends Component {
 
   static defaultProps = {
     initialValue: "",
-    number: 500,
+    delay: 500,
   }
 
   state = {
@@ -28,7 +28,14 @@ class DebounceInput extends Component {
 
   render() {
     const { value } = this.state
-    return <input {...this.props} value={value} onChange={this.onChangeText} />
+    return (
+      <input
+        {...this.props}
+        type="text"
+        value={value}
+        onChange={this.onChangeText}
+      />
+    )
   }
 }
 
