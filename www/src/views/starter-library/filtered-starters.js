@@ -40,10 +40,7 @@ export default class FilteredStarterLibrary extends Component {
   resetFilters = () =>
     this.props.setURLState({ c: null, d: null, v: null, s: `` })
 
-  onChangeUrlWithText = e => {
-    console.log(e)
-    this.props.setURLState({ s: e.target.value })
-  }
+  onChangeUrlWithText = e => this.props.setURLState({ s: e.target.value })
 
   render() {
     const { data, urlState, setURLState } = this.props
