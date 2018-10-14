@@ -1,11 +1,12 @@
 const preset = require(`../`)
+const path = require(`path`)
 
 it(`Specifies proper presets and plugins in Node mode`, () => {
   const { presets, plugins } = preset()
 
   expect(presets).toEqual([
     [
-      expect.stringContaining(`@babel/preset-env`),
+      expect.stringContaining(path.join(`@babel`,`preset-env`)),
       {
         debug: false,
         loose: true,
@@ -17,13 +18,13 @@ it(`Specifies proper presets and plugins in Node mode`, () => {
         useBuiltIns: `entry`,
       },
     ],
-    [expect.stringContaining(`@babel/preset-react`), { development: true }],
-    expect.stringContaining(`@babel/preset-flow`),
+    [expect.stringContaining(path.join(`@babel`,`preset-react`)), { development: true }],
+    expect.stringContaining(path.join(`@babel`,`preset-flow`)),
   ])
   expect(plugins).toEqual([
-    expect.stringContaining(`@babel/plugin-proposal-class-properties`),
-    expect.stringContaining(`@babel/plugin-proposal-optional-chaining`),
-    expect.stringContaining(`@babel/plugin-transform-runtime`),
+    expect.stringContaining(path.join(`@babel`,`plugin-proposal-class-properties`)),
+    expect.stringContaining(path.join(`@babel`,`plugin-proposal-optional-chaining`)),
+    expect.stringContaining(path.join(`@babel`,`plugin-transform-runtime`)),
   ])
 })
 
@@ -32,7 +33,7 @@ it(`Specifies proper presets and plugins in debug Node mode`, () => {
 
   expect(presets).toEqual([
     [
-      expect.stringContaining(`@babel/preset-env`),
+      expect.stringContaining(path.join(`@babel`,`preset-env`)),
       {
         debug: true,
         loose: true,
@@ -44,13 +45,13 @@ it(`Specifies proper presets and plugins in debug Node mode`, () => {
         useBuiltIns: `entry`,
       },
     ],
-    [expect.stringContaining(`@babel/preset-react`), { development: true }],
-    expect.stringContaining(`@babel/preset-flow`),
+    [expect.stringContaining(path.join(`@babel`,`preset-react`)), { development: true }],
+    expect.stringContaining(path.join(`@babel`,`preset-flow`)),
   ])
   expect(plugins).toEqual([
-    expect.stringContaining(`@babel/plugin-proposal-class-properties`),
-    expect.stringContaining(`@babel/plugin-proposal-optional-chaining`),
-    expect.stringContaining(`@babel/plugin-transform-runtime`),
+    expect.stringContaining(path.join(`@babel`,`plugin-proposal-class-properties`)),
+    expect.stringContaining(path.join(`@babel`,`plugin-proposal-optional-chaining`)),
+    expect.stringContaining(path.join(`@babel`,`plugin-transform-runtime`)),
   ])
 })
 
@@ -59,7 +60,7 @@ it(`Specifies proper presets and plugins in browser mode`, () => {
 
   expect(presets).toEqual([
     [
-      expect.stringContaining(`@babel/preset-env`),
+      expect.stringContaining(path.join(`@babel`,`preset-env`)),
       {
         debug: false,
         loose: true,
@@ -71,13 +72,13 @@ it(`Specifies proper presets and plugins in browser mode`, () => {
         useBuiltIns: false,
       },
     ],
-    [expect.stringContaining(`@babel/preset-react`), { development: true }],
-    expect.stringContaining(`@babel/preset-flow`),
+    [expect.stringContaining(path.join(`@babel`,`preset-react`)), { development: true }],
+    expect.stringContaining(path.join(`@babel`,`preset-flow`)),
   ])
   expect(plugins).toEqual([
-    expect.stringContaining(`@babel/plugin-proposal-class-properties`),
-    expect.stringContaining(`@babel/plugin-proposal-optional-chaining`),
-    expect.stringContaining(`@babel/plugin-transform-runtime`),
+    expect.stringContaining(path.join(`@babel`,`plugin-proposal-class-properties`)),
+    expect.stringContaining(path.join(`@babel`,`plugin-proposal-optional-chaining`)),
+    expect.stringContaining(path.join(`@babel`,`plugin-transform-runtime`)),
   ])
 })
 
@@ -86,7 +87,7 @@ it(`Specifies proper presets and plugins in debug browser mode`, () => {
 
   expect(presets).toEqual([
     [
-      expect.stringContaining(`@babel/preset-env`),
+      expect.stringContaining(path.join(`@babel`,`preset-env`)),
       {
         debug: true,
         loose: true,
@@ -98,12 +99,12 @@ it(`Specifies proper presets and plugins in debug browser mode`, () => {
         useBuiltIns: false,
       },
     ],
-    [expect.stringContaining(`@babel/preset-react`), { development: true }],
-    expect.stringContaining(`@babel/preset-flow`),
+    [expect.stringContaining(path.join(`@babel`,`preset-react`)), { development: true }],
+    expect.stringContaining(path.join(`@babel`,`preset-flow`)),
   ])
   expect(plugins).toEqual([
-    expect.stringContaining(`@babel/plugin-proposal-class-properties`),
-    expect.stringContaining(`@babel/plugin-proposal-optional-chaining`),
-    expect.stringContaining(`@babel/plugin-transform-runtime`),
+    expect.stringContaining(path.join(`@babel`,`plugin-proposal-class-properties`)),
+    expect.stringContaining(path.join(`@babel`,`plugin-proposal-optional-chaining`)),
+    expect.stringContaining(path.join(`@babel`,`plugin-transform-runtime`)),
   ])
 })
