@@ -165,7 +165,7 @@ const createScreenshotNode = async ({
     return screenshotNode
   } catch (e) {
     console.log(`Failed to screenshot ${url}. Retrying...`)
-    console.log(e)
+
     throw e
   }
 }
