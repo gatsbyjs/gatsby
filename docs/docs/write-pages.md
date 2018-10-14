@@ -2,7 +2,7 @@
 title: Write Out Pages
 ---
 
-This is one of the last boostrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the redux information that was built up during bootstrap. So instead, we create dynamic javascript and json files that are dependend on by the webpack application in the `.cache` directory (see [Building the Javascript App](/docs/production-app/)).
+This is one of the last boostrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and json files that are dependend on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app/)).
 
 You can think of this step as taking all the data that was generated during bootstrap and saving it to disk for consumption by webpack.
 
@@ -75,7 +75,7 @@ e.g
 
 ### sync-requires.js
 
-This is a dynamically generated javascript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g `component---src-blog-2-js`), and the values are expressions that require the component. E.g `/home/site/src/blog/2.js`. The file will look something like this:
+This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g `component---src-blog-2-js`), and the values are expressions that require the component. E.g `/home/site/src/blog/2.js`. The file will look something like this:
 
 ```javascript
 exports.components = {
@@ -90,7 +90,7 @@ It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/mast
 
 ***************
 
-`async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated javascript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it instead uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
+`async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it instead uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
 
 `async-requires.js` also exports a `data` function that imports `data.json` ([see below](/docs/write-pages/#datajson))
 
@@ -107,7 +107,7 @@ exports.components = {
 exports.data = () => import("/home/site/.cache/data.json")
 ```
 
-Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-generation/). And `async-requires.js` is used by [Building the Javascript App](/docs/production-app/).
+Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-generation/). And `async-requires.js` is used by [Building the JavaScript App](/docs/production-app/).
 
 ### data.json
 

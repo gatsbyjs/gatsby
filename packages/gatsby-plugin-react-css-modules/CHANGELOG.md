@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/compare/gatsby-plugin-react-css-modules@2.0.1...gatsby-plugin-react-css-modules@2.0.2) (2018-10-12)
+
+### Bug Fixes
+
+- fix "additionalProperties" error with gatsby-plugin-react-css-modules ([#8994](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/issues/8994)) ([688e112](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/commit/688e112))
+
 <a name="2.0.1"></a>
 
 ## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/compare/gatsby-plugin-react-css-modules@2.0.0...gatsby-plugin-react-css-modules@2.0.1) (2018-09-26)

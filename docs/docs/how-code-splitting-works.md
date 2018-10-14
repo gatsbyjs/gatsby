@@ -4,7 +4,7 @@ title: Code Splitting and Prefetching
 
 Code splitting in Gatsby occurs during webpack compilation via [Dynamic Splitting](https://webpack.js.org/guides/code-splitting/#dynamic-imports). During compilation, if webpack finds an `import` function invocation, it will split the imported file into a separate bundle. If modules are instead loaded with `require`, they are not code split and are instead included in the original bundle.
 
-But how do we figure out what modules/files to split? Thankfully, there is a natural answer. Pages! When you load a page, there's no reason we need to also load the javascript/css for all the other pages on the site (except to prefetch them which we'll get to [later](/docs/how-code-splitting-works/#prefetching-chunks)). Gatsby's job is to do the heavy lifting of generating the right javascript in the form that webpack expects to perform this code splitting.
+But how do we figure out what modules/files to split? Thankfully, there is a natural answer. Pages! When you load a page, there's no reason we need to also load the JavaScript/CSS for all the other pages on the site (except to prefetch them which we'll get to [later](/docs/how-code-splitting-works/#prefetching-chunks)). Gatsby's job is to do the heavy lifting of generating the right JavaScript in the form that webpack expects to perform this code splitting.
 
 ## .cache/async-requires.js
 
@@ -82,9 +82,9 @@ Remember that the chunk group name was assigned by the `/* webpackChunkName: ...
 
 ## Referencing chunks in build HTML
 
-Webpack can now split our code into different bundles, and we've named them appropriately. But those bundles will still be named with a content hash. E.g for a component `component--src-blog-js`, the output chunk bundle might be named something like `component--src-blog-js-2e49587d85e03a033f58.js`. Webpack will replace `import()` calls with links to the generated bundle filenames. This works great for our pure javascript bundles. But things get complicated when generating our page HTML files.
+Webpack can now split our code into different bundles, and we've named them appropriately. But those bundles will still be named with a content hash. E.g for a component `component--src-blog-js`, the output chunk bundle might be named something like `component--src-blog-js-2e49587d85e03a033f58.js`. Webpack will replace `import()` calls with links to the generated bundle filenames. This works great for our pure JavaScript bundles. But things get complicated when generating our page HTML files.
 
-HTML file generation is covered under the [Page HTML Generation](/docs/html-generation/) docs. In summary, webpack builds `static-entry.js` which produces a `page-renderer.js` bundle. This is a function that accepts a page and renders its HTML. The HTML is enough to drive a site, and enhance SEO, but once the page is loaded, Gatsby also loads the javascript bundle so that page rendering occurs clientside from then on. This gives the advantage of fast initial page loads combined with client side rendering for future page clicks.
+HTML file generation is covered under the [Page HTML Generation](/docs/html-generation/) docs. In summary, webpack builds `static-entry.js` which produces a `page-renderer.js` bundle. This is a function that accepts a page and renders its HTML. The HTML is enough to drive a site, and enhance SEO, but once the page is loaded, Gatsby also loads the JavaScript bundle so that page rendering occurs clientside from then on. This gives the advantage of fast initial page loads combined with client side rendering for future page clicks.
 
 To do this, we need to be able to create `<link>` and `<script>` tags in the HTML the Gatsby runtime chunk, and the page chunk (e.g index). But as mentioned above, only webpack knows the name of the generated filename for each chunk. All Gatsby knows is the `componentChunkName`.
 
@@ -112,7 +112,7 @@ It turns out that webpack provides a way to record the mapping. It provides a co
 
 ##### chunk-map.json
 
-`webpack.stats.json` maps chunk groups (componentChunkNames) to the chunk asset names they depend on. Our [Gatsby webpack compiler hook](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L234) also outputs `chunk-map.json` which is a mapping from chunkGroup to the core chunk for the component, as opposed to the shared chunks (id0 and id1 in [primer diagram](/docs/how-code-splitting-works/#primer-on-chunkgroups-and-chunks)). This will render a single component chunk for js and css within each chunk group. E.g
+`webpack.stats.json` maps chunk groups (componentChunkNames) to the chunk asset names they depend on. Our [Gatsby webpack compiler hook](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L234) also outputs `chunk-map.json` which is a mapping from chunkGroup to the core chunk for the component, as opposed to the shared chunks (id0 and id1 in [primer diagram](/docs/how-code-splitting-works/#primer-on-chunkgroups-and-chunks)). This will render a single component chunk for JavaScript and CSS within each chunk group. E.g
 
 ```javascript
 {
@@ -160,7 +160,7 @@ If the asset is css, we [inject it inline in the head](https://github.com/gatsby
 
 ##### Prefetching chunks
 
-As shown above, Gatsby uses "preload" to speed up loading of resources required by the page. These are its css and its core javascript needed to run the page. But if we stopped there, then when a user clicked a link to another page, we would have to wait for that pages resources to download before showing it. To speed this up, once the current page has loaded, Gatsby looks for all links on the page, and for each starts prefetching the page that the link points to.
+As shown above, Gatsby uses "preload" to speed up loading of resources required by the page. These are its css and its core JavaScript needed to run the page. But if we stopped there, then when a user clicked a link to another page, we would have to wait for that pages resources to download before showing it. To speed this up, once the current page has loaded, Gatsby looks for all links on the page, and for each starts prefetching the page that the link points to.
 
 It does this using the `<link rel="prefetch" href="..." />` parameter. When the browser sees this tag, it will start downloading the resource but at an extremely low priority and only when the resources for the current page have finished loading. Check out the [MDN prefetch docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) for more.
 

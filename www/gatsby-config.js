@@ -69,7 +69,7 @@ module.exports = {
         showSpinner: false,
       },
     },
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
