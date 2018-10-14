@@ -30,7 +30,7 @@ exports.onPreBootstrap = (
 
   let anyQueued = false
 
-  // Check for updated screenshots
+  // Check for updated screenshots and placeholder flag
   // and prevent Gatsby from garbage collecting remote file nodes
   screenshotNodes.forEach(n => {
     if (
