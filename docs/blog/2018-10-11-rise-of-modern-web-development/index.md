@@ -55,8 +55,8 @@ React and Angular, along with mature ES2015+ JavaScript, and stable dependency/b
 While React and Angular were originally created as web _app_ solutions, with the rise of the headless CMS, usage of React and Angular on _websites_ has skyrocketed, growing 5-10X since early 2017.
 
 <date-chart
-    title="React and Angular usage"
-    y-axis-label="% of top 10,000 sites"
+    title="React and Angular usage among top 10k sites"
+    y-axis-label="% of top 10k sites"
     series-data='[{ "name": "React", "data": [{ "date": "2017/01", "value": "0.0170"}, { "date": "2017/04", "value": "0.0223"}, { "date": "2017/06", "value": "0.0251"}, { "date": "2017/08", "value": "0.0283"}, { "date": "2018/01", "value": "0.0538"}, { "date": "2018/08", "value": "0.0738"}] },{ "name": "Angular", "data": [{ "date": "2017/06", "value": "0.0001"}, { "date": "2017/08", "value": "0.0007"}, { "date": "2018/01", "value": "0.0018"}, { "date": "2018/08", "value": "0.0184"}] }]'>
 </date-chart>
 
