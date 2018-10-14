@@ -6,7 +6,7 @@ it(`Specifies proper presets and plugins for test stage`, () => {
 
   expect(presets).toEqual([
     [
-      expect.stringContaining(path.join(`@babel`,`preset-env`)),
+      expect.stringContaining(path.join(`@babel`, `preset-env`)),
       {
         loose: true,
         modules: false,
@@ -17,7 +17,7 @@ it(`Specifies proper presets and plugins for test stage`, () => {
       },
     ],
     [
-      expect.stringContaining(path.join(`@babel`,`preset-react`)),
+      expect.stringContaining(path.join(`@babel`, `preset-react`)),
       {
         development: false,
         pragma: `React.createElement`,
@@ -27,13 +27,17 @@ it(`Specifies proper presets and plugins for test stage`, () => {
   ])
   expect(plugins).toEqual([
     [
-      expect.stringContaining(path.join(`@babel`,`plugin-proposal-class-properties`)),
+      expect.stringContaining(
+        path.join(`@babel`, `plugin-proposal-class-properties`)
+      ),
       { loose: true },
     ],
     expect.stringContaining(`babel-plugin-macros`),
-    expect.stringContaining(path.join(`@babel`,`plugin-syntax-dynamic-import`)),
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-syntax-dynamic-import`)
+    ),
     [
-      expect.stringContaining(path.join(`@babel`,`plugin-transform-runtime`)),
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
       {
         helpers: true,
         regenerator: true,
@@ -56,7 +60,7 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
 
   expect(presets).toEqual([
     [
-      expect.stringContaining(path.join(`@babel`,`preset-env`)),
+      expect.stringContaining(path.join(`@babel`, `preset-env`)),
       {
         loose: true,
         modules: false,
@@ -67,7 +71,7 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
       },
     ],
     [
-      expect.stringContaining(path.join(`@babel`,`preset-react`)),
+      expect.stringContaining(path.join(`@babel`, `preset-react`)),
       {
         development: false,
         pragma: `React.createElement`,
@@ -77,13 +81,17 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
   ])
   expect(plugins).toEqual([
     [
-      expect.stringContaining(path.join(`@babel`,`plugin-proposal-class-properties`)),
+      expect.stringContaining(
+        path.join(`@babel`, `plugin-proposal-class-properties`)
+      ),
       { loose: true },
     ],
     expect.stringContaining(`babel-plugin-macros`),
-    expect.stringContaining(path.join(`@babel`,`plugin-syntax-dynamic-import`)),
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-syntax-dynamic-import`)
+    ),
     [
-      expect.stringContaining(path.join(`@babel`,`plugin-transform-runtime`)),
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
       {
         helpers: true,
         regenerator: true,
@@ -98,7 +106,7 @@ it(`Allows to configure browser targets`, () => {
   })
 
   expect(presets[0]).toEqual([
-    expect.stringContaining(path.join(`@babel`,`preset-env`)),
+    expect.stringContaining(path.join(`@babel`, `preset-env`)),
     {
       loose: true,
       modules: false,
