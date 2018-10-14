@@ -4,7 +4,7 @@ title: Typography.js
 
 # Using Typography.js in Gatsby
 
-Typography.js is a javascript library that enables you to define and explore the typographic design of your website and define beautiful custom and pre-existing typographic themes. It limits the number of tedious changes you need to make to your website just to change the font. Typography.js currently maintains over 30 themes for you to use, however you can also define your own custom font themes if none of the available themes meet your requirements. Implementing Typography into your project involves specifying a configuration object for Typography and installing a Gatsby plugin.
+Typography.js is a JavaScript library that enables you to define and explore the typographic design of your website and define beautiful custom and pre-existing typographic themes. It limits the number of tedious changes you need to make to your website just to change the font. Typography.js currently maintains over 30 themes for you to use, however you can also define your own custom font themes if none of the available themes meet your requirements. Implementing Typography into your project involves specifying a configuration object for Typography and installing a Gatsby plugin.
 
 ## Installing the Typography plugin
 

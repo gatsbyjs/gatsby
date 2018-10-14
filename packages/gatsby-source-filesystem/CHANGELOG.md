@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.2...gatsby-source-filesystem@2.0.3) (2018-10-09)
+
+### Bug Fixes
+
+- more work to prevent queries from running when there's in-progress node processing ([#8859](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/8859)) ([00eeef0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/00eeef0))
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.1-rc.6...gatsby-source-filesystem@2.0.2) (2018-10-05)

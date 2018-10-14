@@ -363,7 +363,7 @@ own page on smaller screens.
 
 ## Client routing and pre-caching
 
-Gatsby loads first a static server-rendered HTML page and then the JavasScript
+Gatsby loads first a static server-rendered HTML page and then the JavaScript
 to convert the site into a web application. Which means that clicking around the
 site doesn't require a page reload. Gatsby _pre-caches_ code and data needed for
 other pages so that clicking on a link loads the next page instantly.

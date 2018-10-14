@@ -14,15 +14,18 @@ There are two important parts in utilizing CSS Modules. Since it works out of th
 
 - A React component
 - A `module.css` file
-  
-For the sake of an example, a `module.css` file called `container.module.css` will be created under a new directory called `src/components` with the following contents. 
+
+For the sake of an example, a `module.css` file called `container.module.css` will be created under a new directory called `src/components` with the following contents.
+
 ```css:title=src/components/container.module.css
 .container {
   margin: 3rem auto;
   max-width: 600px;
 }
 ```
+
 Now, a React component called `Container` (`container.js`) will be created in the same directory `src/components` with the following contents. Make note that the `module.css` file created earlier is imported.
+
 ```javascript:title=src/components/container.js
 import React from "react"
 import containerStyles from "./container.module.css"
@@ -31,10 +34,9 @@ export default ({ children }) => (
   <div className={containerStyles.container}>{children}</div>
 )
 ```
+
 Also make sure to notice that the `.container` style that you created is referred to as `containerStyles.container` because of the name of the import.
 
 Following the same logic, you have the ability of creating multiple `module.css` files for multiple React components.
 
 You may take a look at a more in-depth [Component CSS tutorial](https://www.gatsbyjs.org/tutorial/part-two/#component-css) if you would like to see an example with explanation of multiple complex React components utilizing multiple `module.css` files and why you may want to use CSS Modules in your next project.
-
-
