@@ -1,8 +1,22 @@
+const path = require(`path`)
+
 const r = m => require.resolve(m)
+
+const loadCachedConfig = () => {
+  let pluginBabelConfig = {}
+  if (process.env.NODE_ENV !== `test`) {
+    pluginBabelConfig = require(path.join(
+      process.cwd(),
+      `./.cache/babelState.json`
+    ))
+  }
+  return pluginBabelConfig
+}
 
 function preset(context, options = {}) {
   let { targets = null } = options
 
+  const pluginBabelConfig = loadCachedConfig()
   const stage = process.env.GATSBY_BUILD_STAGE || `test`
 
   if (!targets) {
@@ -12,7 +26,7 @@ function preset(context, options = {}) {
       }
     } else {
       targets = {
-        browsers: [`>0.25%`, `not dead`],
+        browsers: pluginBabelConfig.browserslist,
       }
     }
   }

@@ -12,7 +12,7 @@ it(`Specifies proper presets and plugins for test stage`, () => {
         modules: false,
         useBuiltIns: `usage`,
         targets: {
-          browsers: [`>0.25%`, `not dead`],
+          browsers: undefined,
         },
       },
     ],
