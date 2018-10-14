@@ -212,7 +212,7 @@ and then select the job to get more information about why your build may have
 failed.
 
 If all went well, you should now be able to access your site. It will be hosted
-under gitlab.io - for example if you have have a repository under your
+under gitlab.io - for example if you have a repository under your
 namespace, the url will be yourname.gitlab.io/examplerepository.
 
 Visit the
