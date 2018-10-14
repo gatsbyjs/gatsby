@@ -52,6 +52,12 @@ const typography = new Typography({
   ],
   bodyFontFamily: ["Georgia", "serif"],
 })
+
+// Hot reload typography in development.
+if (process.env.NODE_ENV !== 'production') {
+  typography.injectStyles();
+}
+
 ```
 
 ## Gatsby plugins
@@ -215,6 +221,10 @@ In your site, create a new directory at `src/utils`. In that directory, create a
 import Typography from "typography"
 
 const typography = new Typography({ baseFontSize: "18px" })
+// Hot reload typography in development.
+if (process.env.NODE_ENV !== 'production') {
+  typography.injectStyles();
+}
 
 export default typography
 ```
@@ -259,6 +269,10 @@ import Typography from "typography"
 import bootstrapTheme from "typography-theme-bootstrap"
 
 const typography = new Typography(bootstrapTheme)
+// Hot reload typography in development.
+if (process.env.NODE_ENV !== 'production') {
+  typography.injectStyles();
+}
 
 export default typography
 ```
