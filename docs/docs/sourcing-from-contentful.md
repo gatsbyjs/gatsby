@@ -2,32 +2,6 @@
 title: Sourcing from Contentful
 ---
 
-A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college until it ripped beyond repair. I loved that poster.
-
-My poster of _Starry Night_ often led to debates with my sister (a professional artist) about the merits and demerits of reprinting great works of art.
-
-As much as I revere the original, I also love that printing technology can put _Starry Night_ on tote bags, coffee mugs, posters, t-shirts, and more. Technology has made great art accessible to a wide range of people (without advanced printers and computers, original paintings can only be shared with people through painstaking replication via the original medium: oil painting on a canvas).
-
-![Starry Night painting by Vincent Van Gogh](starry-night.jpeg)
-
-For the same reason that I love seeing _Starry Night_ on a poster, I loved building a website with React and Contentful; together, they allow images and text to easily appear in various formats across multiple platforms.
-
-It’s much faster and easier to resize and reuse the content you already have when you don’t have to painstakingly re-create for mobile, for web, etc. You basically just print it, again, and again, and again, in small and large and medium formats, in websites, mobile apps, multiple languages. Just...push a button on a printer to make copies. Easy, right?
-
-Well, easy if you already know React, at least. I wanted to make little site about my dog, Watson, yet didn’t know how to code.
-
-Sometimes a friend or family member babysits him, and it's time-consuming to either write instructions or update and print new guides for babysitters since he learns new commands every day. A website seemed like a better way to manage this.
-
-Here’s the site I built for my dog's babysitters after learning the basics of Contentful and React: http://watson.surge.sh/. Following are instructions on how you can also build a site with Contentful and React with tips I learned while building my site.
-
-![Home page of the new site about my dog](watson-welcome-page.png)
-
-## What is React? Why choose it?
-
-![React logo](React-logo.png)
-
-React is a JavaScript library for building user interfaces. React helps developers and designers create composable UI components that painlessly adapt to data changes.
-
 ## What is Contentful? Why choose it?
 
 ![Contentful logo](contentful-logo.png)
