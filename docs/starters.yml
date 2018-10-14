@@ -925,3 +925,11 @@
     - Category and Tag for post
     - Type Safe by TypeScript
     - Format Safe by TSLint and Prettier with Lint-Staged(Husky)
+- url: https://zandersparrow.github.io/gatsby-simple-redux/
+  repo: https://github.com/zandersparrow/gatsby-simple-redux
+  description: The default starter plus redux
+  tags:
+    - Redux
+  features:
+    - Minimal starter based on the official default
+    - Includes redux and a simple counter example
