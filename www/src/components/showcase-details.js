@@ -1,7 +1,6 @@
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 import url from "url"
-import hex2rgba from "hex2rgba"
 import Img from "gatsby-image"
 import qs from "qs"
 

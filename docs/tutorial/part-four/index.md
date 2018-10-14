@@ -290,7 +290,7 @@ Page queries live outside of the component definition -- by convention at the en
 
 Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
-```jsx{3,8-18,35,48}:title=src/components/layout.js
+```jsx{3,8-18,35,48-49}:title=src/components/layout.js
 import React from "react"
 import { css } from "react-emotion"
 import { StaticQuery, Link, graphql } from "gatsby"

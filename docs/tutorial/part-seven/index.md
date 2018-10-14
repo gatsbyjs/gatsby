@@ -289,7 +289,7 @@ Visit one of them and you see:
 Which is a bit boring and not what you want. Now you can pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
-```jsx{5-6,9-12,15-26}:title=src/templates/blog-post.js
+```jsx{2,5-6,9-12,15-26}:title=src/templates/blog-post.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"

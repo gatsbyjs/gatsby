@@ -52,7 +52,7 @@ module.exports = Object.assign(reporter, {
 
   panicOnBuild(...args) {
     this.error(...args)
-    if (process.env.gatsby_executing_command !== `build`) {
+    if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
     }
   },

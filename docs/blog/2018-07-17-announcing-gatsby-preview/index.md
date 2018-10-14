@@ -9,7 +9,7 @@ Today we’re excited to announce our first commercial offering, a hosted Gatsby
 
 Since [launching Gatsby Inc.](/blog/2018-05-24-launching-new-gatsby-company/), we’ve loved hearing the increasing excitement from developers as more and more of you try out Gatsby and get hooked on the ability to easily create compelling, performant web experiences.
 
-With modern Javascript, React’s component model, and Progressive Web App features built in, Gatsby is a compelling alternative to traditional CMS site building, while still allowing content teams to use mature CMS content workflows.
+With modern JavaScript, React’s component model, and Progressive Web App features built in, Gatsby is a compelling alternative to traditional CMS site building, while still allowing content teams to use mature CMS content workflows.
 
 But in our conversations with website teams at agencies and enterprises adopting Gatsby, we’ve heard a repeated concern.
 

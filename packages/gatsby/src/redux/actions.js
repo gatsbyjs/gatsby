@@ -891,7 +891,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
- * @param {Object} config An options object in the shape of a normal babelrc javascript object
+ * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
  * @example
  * setBabelOptions({
  *   options: {

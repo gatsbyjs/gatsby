@@ -10,14 +10,15 @@ import SearchIcon from "./search-icon"
 const loadJS = () => import(`./docsearch.min.js`)
 let loadedJs = false
 
-import { css } from "glamor"
+import { injectGlobal } from "react-emotion"
 
 const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
 const searchDropdownOffsetTop = rhythm(2)
 const homepageSearchDropdownOffsetTop = rhythm(4.5)
-css.insert(`
+
+injectGlobal`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
     top: calc(${searchDropdownOffsetTop} + ${presets.bannerHeight}) !important;
@@ -250,7 +251,8 @@ css.insert(`
       max-width: 65% !important;
     }
   }
-`)
+`
+
 class SearchForm extends Component {
   constructor() {
     super()
