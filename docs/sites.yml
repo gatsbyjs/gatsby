@@ -2326,10 +2326,10 @@
   featured: false
 - title: Studenten bilden Schüler
   description: >
-    Site for German student-run nonprofit initiative that works to provide free
-    tutoring to children from underprivileged families as well as refugees. Built
-    using styled-components and Contentful. Supports Google Analytics, fluid typography
-    and Algolia search.
+    Studenten bilden Schüler e.V. is a German student-run nonprofit initiative that aims to
+    contribute to more equal educational opportunities by providing free tutoring to refugees
+    and children from underprivileged families. The site is built on Gatsby v2, styled-components
+    and Contentful. It supports Google Analytics, fluid typography and Algolia search.
   main_url: "https://studenten-bilden-schueler.de"
   url: "https://studenten-bilden-schueler.de"
   source_url: "https://github.com/StudentenBildenSchueler/homepage"
