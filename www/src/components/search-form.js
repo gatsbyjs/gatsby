@@ -280,8 +280,7 @@ class SearchForm extends Component {
       apiKey: `71af1f9c4bd947f0252e17051df13f9c`,
       indexName: `gatsbyjs`,
       inputSelector: `#doc-search`,
-      // debug: false,
-      debug: true,
+      debug: false,
       autocompleteOptions: {
         openOnFocus: true,
         autoselect: true,
