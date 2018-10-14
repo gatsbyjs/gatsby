@@ -2925,3 +2925,14 @@
   built_by: Kevin Legrand
   built_by_url: https://k-legrand.com
   featured: false
+- title: Hypertext Candy
+  url: https://www.hypertextcandy.com/
+  main_url: https://www.hypertextcandy.com/
+  description: >
+    Blog about web development. Laravel, Vue.js, etc.
+  categories:
+    - Blog
+    - Web Development
+  built_by: Masahiro Harada
+  built_by_url: https://twitter.com/_Masahiro_H_
+  featured: false
