@@ -32,7 +32,7 @@ npm install --save babel-preset-gatsby
 {
   presets: [
     [
-      "gatsby",
+      "babel-preset-gatsby",
       {
         targets: {
           browsers: [">0.25%", "not dead"],
