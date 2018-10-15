@@ -25,7 +25,7 @@ gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-
 cd tutorial-part-three
 ```
 
-Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see Part Two of the tutorials. For
+Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see [Part Two](/tutorial/part-two/) of the tutorials. For
 the Typography.js theme, try the "Fairy Gates" typography theme this time:
 
 ```shell

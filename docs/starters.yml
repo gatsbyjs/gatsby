@@ -925,3 +925,28 @@
     - Category and Tag for post
     - Type Safe by TypeScript
     - Format Safe by TSLint and Prettier with Lint-Staged(Husky)
+- url: https://gatsby-universal.netlify.com
+  repo: https://github.com/fabe/gatsby-universal
+  description: An opinionated Gatsby v2 starter for state-of-the-art marketing sites
+  tags:
+    - Transitions
+    - PWA
+    - Styling:CSS-in-JS
+    - Linting
+    - Markdown
+    - Prettier
+    - SEO
+  features:
+    - Page Transitions
+    - IntersectionObserver, component-based
+    - React Context for global UI state
+    - styled-components v4
+    - Generated media queries for easy use
+    - Optimized with Google Lighthouse (100/100)
+    - Offline support
+    - Manifest support
+    - Sitemap support
+    - All favicons generated
+    - SEO (with Schema JSONLD) & Social Tags
+    - Prettier
+    - ESLint

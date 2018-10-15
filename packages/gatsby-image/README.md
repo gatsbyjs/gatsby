@@ -300,3 +300,6 @@ prop. e.g. `<Img fluid={fluid} />`
 - Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for
   media types to be chosen by the browser without using JavaScript. It also is
   backward compatible to older browsers (IE 11, etc)
+- Gifs can't be resized the same way as pngs and jpegs, unfortunately—if you try
+  to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
+  to [import the gif directly](/docs/adding-images-fonts-files).
