@@ -143,11 +143,14 @@ module.exports = ({
     })
   }
 
-  // If the the query only has a filter for an "id", then we'll just grab
-  // that ID and return it.
+  // If the the query for single node only has a filter for an "id"
+  // using "eq" operator, then we'll just grab that ID and return it.
   if (
+    !connection &&
     Object.keys(fieldsToSift).length === 1 &&
-    Object.keys(fieldsToSift)[0] === `id`
+    Object.keys(fieldsToSift)[0] === `id` &&
+    Object.keys(siftArgs[0].id).length === 1 &&
+    Object.keys(siftArgs[0].id)[0] === `$eq`
   ) {
     const nodePromise = resolveRecursive(
       getNode(siftArgs[0].id[`$eq`]),

@@ -712,9 +712,9 @@ Furthermore you can remove the package from the `package.json`.
 
 ```diff:title=package.json
 "dependencies": {
-  "gatsby": "next",
-  "gatsby-image": "next",
-  "gatsby-plugin-sharp": "next",
+  "gatsby": "latest",
+  "gatsby-image": "latest",
+  "gatsby-plugin-sharp": "latest",
 - "gatsby-link": "^1.6.39"
 }
 ```
