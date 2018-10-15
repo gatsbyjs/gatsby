@@ -15,20 +15,22 @@ import { injectGlobal } from "react-emotion"
 const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
+const searchDropdownOffsetTop = rhythm(2)
+const homepageSearchDropdownOffsetTop = rhythm(4.5)
+
 injectGlobal`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
-    top: ${rhythm(2)} !important;
+    top: calc(${searchDropdownOffsetTop} + ${presets.bannerHeight}) !important;
     left: ${rhythm(0.5)} !important;
     right: ${rhythm(0.5)} !important;
     min-width: calc(100vw - ${rhythm(1)}) !important;
     max-width: calc(100vw - 2rem) !important;
-    max-height: calc(100vh - 5rem) !important;
     box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
   }
 
   .is-homepage .algolia-autocomplete .ds-dropdown-menu {
-    top: ${rhythm(2.5)} !important;
+    top: ${homepageSearchDropdownOffsetTop} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -78,8 +80,17 @@ injectGlobal`
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+    max-height: calc(100vh - ${presets.headerHeight} - ${
+  presets.bannerHeight
+}) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;
+  }
+
+  .is-homepage .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+    max-height: calc(100vh - ${homepageSearchDropdownOffsetTop} - ${
+  presets.headerHeight
+} - ${presets.bannerHeight}) !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
@@ -208,6 +219,12 @@ injectGlobal`
       min-width: 500px !important;
     }
 
+    .is-homepage .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+      max-height: calc(100vh - ${homepageSearchDropdownOffsetTop} - ${
+  presets.bannerHeight
+}) !important;
+    }
+
     /* .searchWrap to beat docsearch.css' !important */
     .searchWrap .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu {
       right: 0 !important;
@@ -235,6 +252,7 @@ injectGlobal`
     }
   }
 `
+
 class SearchForm extends Component {
   constructor() {
     super()
