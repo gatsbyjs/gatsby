@@ -31,10 +31,10 @@ async function onCreateNode(
     xlsxOptions.raw = xlsxOptions.rawOutput
   }
   if (!_.has(xlsxOptions, `defval`) && _.has(xlsxOptions, `defaultValue`)) {
-    xlsxOptions.defval = xlsxOptions.defaultValue;
+    xlsxOptions.defval = xlsxOptions.defaultValue
   }
-  delete xlsxOptions.rawOutput;
-  delete xlsxOptions.defaultValue;
+  delete xlsxOptions.rawOutput
+  delete xlsxOptions.defaultValue
   delete xlsxOptions.plugins
 
   // Parse
