@@ -91,11 +91,11 @@ If your site pulls a lot of screenshots it might be beneficial to use placeholde
 You can use placeholder image by setting `GATSBY_SCREENSHOT_PLACEHOLDER` environment variable when running `gatsby develop`:
 
 ```shell
-GATSBY_SCREENSHOT_PLACEHOLDER=1 gatsby develop
+GATSBY_SCREENSHOT_PLACEHOLDER=true gatsby develop
 ```
 
 or by adding it to `.env.development` file in root of your project:
 
 ```shell:title=.env.development
-GATSBY_SCREENSHOT_PLACEHOLDER=1
+GATSBY_SCREENSHOT_PLACEHOLDER=true
 ```
