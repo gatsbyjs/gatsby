@@ -277,7 +277,7 @@ In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can
 
 2.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
 
-For alternate [Now](https://zeit.co/now) deployment options, check out [this](/docs/deploying-to-now) document.
+For alternate [Now](https://zeit.co/now) deployment options, check out [this document](/docs/deploying-to-now).
 
 ## Debugging tips
 
