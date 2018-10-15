@@ -1,0 +1,21 @@
+{
+  "name": "using-path-prefix",
+  "private": true,
+  "description": "Gatsby example site using assetPath",
+  "author": "Jim Skerritt <jrskerritt@gmail.com>",
+  "dependencies": {
+    "gatsby": "^2.0.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  }
+}
