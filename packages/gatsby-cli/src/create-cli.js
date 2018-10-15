@@ -2,7 +2,6 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
-const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 
 const handlerP = fn => (...args) => {
@@ -220,30 +219,7 @@ function buildLocalCommands(cli, isLocalSite) {
         default: false,
         describe: `Automagically copy environment information to clipboard`,
       }),
-    handler: args => {
-      try {
-        envinfo.run(
-          {
-            System: [`OS`, `CPU`, `Shell`],
-            Binaries: [`Node`, `npm`, `Yarn`],
-            Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
-            npmPackages: `gatsby*`,
-            npmGlobalPackages: `gatsby*`,
-          },
-          {
-            console: true,
-            // Clipboard is not accessible when on a linux tty
-            clipboard:
-              process.platform === `linux` && !process.env.DISPLAY
-                ? false
-                : args.clipboard,
-          }
-        )
-      } catch (err) {
-        console.log(`Error: unable to print environment info`)
-        console.log(err)
-      }
-    },
+    handler: getCommandHandler(`info`),
   })
 
   cli.command({
@@ -258,6 +234,12 @@ function buildLocalCommands(cli, isLocalSite) {
   cli.command({
     command: `clean`,
     desc: `Wipe the local gatsby environment when something has gone wrong`,
+    builder: _ =>
+      _.option(`env-info`, {
+        type: `boolean`,
+        default: false,
+        describe: `Automagically log environment information to console`,
+      }),
     handler: getCommandHandler(`clean`),
   })
 }
