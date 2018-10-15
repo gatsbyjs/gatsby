@@ -3,6 +3,8 @@ const { execSync } = require(`child_process`)
 const execa = require(`execa`)
 const path = require(`path`)
 
+const YARN_COMMAND = `yarnpkg`
+
 const spawn = cmd => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args, { stdio: `inherit` })
@@ -10,7 +12,7 @@ const spawn = cmd => {
 
 const shouldUseYarn = () => {
   try {
-    execSync(`yarnpkg --version`, { stdio: `ignore` })
+    execSync(`${YARN_COMMAND} --version`, { stdio: `ignore` })
     return true
   } catch (e) {
     return false
@@ -25,7 +27,7 @@ const install = async ({ directory: rootPath, report }) => {
   process.chdir(rootPath)
 
   try {
-    let cmd = shouldUseYarn() ? spawn(`yarnpkg`) : spawn(`npm install`)
+    let cmd = shouldUseYarn() ? spawn(YARN_COMMAND) : spawn(`npm install`)
     await cmd
   } finally {
     process.chdir(prevDir)
