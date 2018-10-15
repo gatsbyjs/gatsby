@@ -13,7 +13,6 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
-const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
@@ -175,7 +174,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Now that we know the .cache directory is safe, initialize the cache
   // directory.
-  initCache()
+  await fs.ensureDir(`${program.directory}/.cache`)
 
   // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)

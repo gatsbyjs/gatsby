@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.4"></a>
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-json/compare/gatsby-transformer-json@2.1.3...gatsby-transformer-json@2.1.4) (2018-10-04)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+<a name="2.1.3"></a>
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-json/compare/gatsby-transformer-json@2.1.2...gatsby-transformer-json@2.1.3) (2018-10-02)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+<a name="2.1.2"></a>
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-json/compare/gatsby-transformer-json@2.1.1...gatsby-transformer-json@2.1.2) (2018-09-27)
+
+### Bug Fixes
+
+- don't expect `application/json` type nodes to be files ([#8544](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-json/issues/8544)) ([cd780aa](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-json/commit/cd780aa))
+
 <a name="2.1.1"></a>
 
 ## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-json/compare/gatsby-transformer-json@2.1.1-rc.6...gatsby-transformer-json@2.1.1) (2018-09-17)

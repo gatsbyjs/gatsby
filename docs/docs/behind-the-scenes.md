@@ -25,7 +25,7 @@ digraph graphname {
     redux [ label = "redux namespace", shape = box, fillcolor = skyblue, width=1 ];
     cache [ label = "site/.cache/", shape = cylinder, fillcolor = moccasin, width=1 ];
     public [ label ="site/public/", shape = cylinder, fillcolor = palegreen, width=1 ];
-    siteData [ label = "site/external data", fillcolor = gray, width=1 ];
+    siteData [ label = "site/external data", shape = cylinder, fillcolor = gray, width=1 ];
 
     siteData -> gatsby [ style = invis ];
     gatsby -> redux [ style = invis ] ;
@@ -39,7 +39,7 @@ digraph graphname {
   sourceNodes [ label = "source nodes" URL = "/docs/node-creation/" ];
   nodes [ label = "nodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/" ];
   nodesTouched [ label = "touchedNodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/#freshstale-nodes" ];
-  rootNodeMap [ label = "rootNodeMap", shape = box, fillcolor = skyblue, URL = "docs/node-tracking/" ];
+  rootNodeMap [ label = "rootNodeMap", shape = box, fillcolor = skyblue, URL = "/docs/node-tracking/" ];
 
   dataSource -> sourceNodes;
   sourceNodes -> nodes;
@@ -48,7 +48,7 @@ digraph graphname {
 
   ## Schema
 
-  pluginResolvers [ label = "plugin resolvers", fillcolor = gray, URL = "/docs/schema-input-gql/#inferring-input-filters-from-plugin-fields" ];
+  pluginResolvers [ label = "plugin resolvers", shape = cylinder, fillcolor = gray, URL = "/docs/schema-input-gql/#inferring-input-filters-from-plugin-fields" ];
   generateSchema [ label = "generate schema", URL = "/docs/schema-generation/" ];
   schema [ label = "schema\l (inc resolvers)", shape = box, fillcolor = skyblue ];
 

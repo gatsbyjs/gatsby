@@ -1,5 +1,5 @@
 import React from "react"
-import { css } from "glamor"
+import { keyframes } from "react-emotion"
 
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -11,7 +11,7 @@ import TechWithIcon from "../components/tech-with-icon"
 
 const stripeColor = `255, 255, 255, 0.9`
 const stripeSize = 15
-const stripeAnimation = css.keyframes({
+const stripeAnimation = keyframes({
   "0%": {
     backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
   },
@@ -23,7 +23,7 @@ const stripeBg = {
   backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
 }
-const lineAnimation = css.keyframes({
+const lineAnimation = keyframes({
   to: {
     strokeDashoffset: 10,
   },

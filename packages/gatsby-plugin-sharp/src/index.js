@@ -6,6 +6,7 @@ const Promise = require(`bluebird`)
 const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
+const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
@@ -100,6 +101,8 @@ const healOptions = (args, defaultArgs) => {
   return options
 }
 
+const useMozjpeg = process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`
+
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
@@ -147,11 +150,6 @@ const processFile = (file, jobs, cb, reporter) => {
         adaptiveFiltering: false,
         force: args.toFormat === `png`,
       })
-      .jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
-        force: args.toFormat === `jpg`,
-      })
       .webp({
         quality: args.quality,
         force: args.toFormat === `webp`,
@@ -160,6 +158,15 @@ const processFile = (file, jobs, cb, reporter) => {
         quality: args.quality,
         force: args.toFormat === `tiff`,
       })
+
+    // jpeg
+    if (!useMozjpeg) {
+      clonedPipeline = clonedPipeline.jpeg({
+        quality: args.quality,
+        progressive: args.jpegProgressive,
+        force: args.toFormat === `jpg`,
+      })
+    }
 
     // grayscale
     if (args.grayscale) {
@@ -223,6 +230,31 @@ const processFile = (file, jobs, cb, reporter) => {
             .catch(onFinish)
         )
         .catch(onFinish)
+      // Compress jpeg
+    } else if (
+      useMozjpeg &&
+      ((job.file.extension === `jpg` && args.toFormat === ``) ||
+        (job.file.extension === `jpeg` && args.toFormat === ``) ||
+        args.toFormat === `jpg`)
+    ) {
+      clonedPipeline
+        .toBuffer()
+        .then(sharpBuffer =>
+          imagemin
+            .buffer(sharpBuffer, {
+              plugins: [
+                imageminMozjpeg({
+                  quality: args.quality,
+                  progressive: args.jpegProgressive,
+                }),
+              ],
+            })
+            .then(imageminBuffer => {
+              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+            })
+            .catch(onFinish)
+        )
+        .catch(onFinish)
       // Compress webp
     } else if (
       (job.file.extension === `webp` && args.toFormat === ``) ||
@@ -241,7 +273,7 @@ const processFile = (file, jobs, cb, reporter) => {
             .catch(onFinish)
         )
         .catch(onFinish)
-      // any other format (jpeg, tiff) - don't compress it just handle output
+      // any other format (tiff) - don't compress it just handle output
     } else {
       clonedPipeline.toFile(job.outputPath, onFinish)
     }

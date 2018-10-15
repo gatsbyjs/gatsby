@@ -67,9 +67,9 @@ There are two types of routes:
 Let's assume you have the following static routes in your `create-react-app` project:
 
 ```js
-<Route exact path='/' component={Home}/>
-<Route path='/blog' component={Blog}/>
-<Route path='/contact' component={Contact}/>
+<Route exact path='/' component={Home} />
+<Route path='/blog' component={Blog} />
+<Route path='/contact' component={Contact} />
 ```
 
 Gatsby will create these routes automatically based on files you create in your `pages` folder. The good news is you've already created the React components so it's a matter of copying them to the right place. The exception is the home page which should be named `index.js`.  You will end up with something like this:

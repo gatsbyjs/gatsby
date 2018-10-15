@@ -11,7 +11,7 @@ const {
 const extendNodeType = require(`../extend-node-type`)
 
 // given a set of nodes and a query, return the result of the query
-async function queryResult(nodes, fragment, { types = [] } = {}) {
+async function queryResult(nodes, fragment, { types = [] } = {}, additionalParameters) {
   const inferredFields = inferObjectStructureFromNodes({
     nodes,
     types: [...types],
@@ -24,6 +24,7 @@ async function queryResult(nodes, fragment, { types = [] } = {}) {
         set: () => null,
       },
       getNodes: () => [],
+      ...additionalParameters,
     },
     {
       plugins: [],
@@ -69,7 +70,7 @@ async function queryResult(nodes, fragment, { types = [] } = {}) {
   return result
 }
 
-describe(`Excerpt is generated correctly from schema`, () => {
+const bootstrapTest = (label, content, query, test, additionalParameters = {}) => {
   const node = {
     id: `whatever`,
     children: [],
@@ -78,37 +79,22 @@ describe(`Excerpt is generated correctly from schema`, () => {
       mediaType: `text/markdown`,
     },
   }
-
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  it(`correctly loads an excerpt`, async (done) => {
-    const content = `---
-title: "my little pony"
-date: "2017-09-18T23:19:51.246Z"
----
-Where oh where is my little pony?
-`
-
+  it(label, async (done) => {
     node.content = content
-
     const createNode = markdownNode => {
       queryResult(
         [markdownNode],
-        `
-                excerpt
-                frontmatter {
-                    title
-                }
-            `,
+        query,
         {
           types: [{ name: `MarkdownRemark` }],
-        }
+        },
+        additionalParameters
       ).then(result => {
         try {
-          const createdNode = result.data.listNode[0]
-          expect(createdNode).toMatchSnapshot()
-          expect(createdNode.excerpt).toMatch(`Where oh where is my little pony?`)
+          test(result.data.listNode[0])
           done()
         }
         catch(err) {
@@ -120,63 +106,57 @@ Where oh where is my little pony?
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
+    },
+    { ...additionalParameters }
+    )
     })
-  })
+}
 
-  it(`correctly loads a default excerpt`, async (done) => {
-    const content = `---
+describe(`Excerpt is generated correctly from schema`, () => {
+
+  bootstrapTest(
+    `correctly loads an excerpt`,
+    `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
-`
-
-    node.content = content
-
-    const createNode = markdownNode => {
-      queryResult(
-        [markdownNode],
-        `
-                excerpt
-                frontmatter {
-                    title
-                }
-            `,
-        {
-          types: [{ name: `MarkdownRemark` }],
-        }
-      ).then(result => {
-        try {
-          const createdNode = result.data.listNode[0]
-          expect(createdNode).toMatchSnapshot()
-          expect(createdNode.excerpt).toMatch(``)
-          done()
-        }
-        catch(err) {
-          done.fail(err)
-        }
-      })
+Where oh where is my little pony?`,
+    `excerpt
+    frontmatter {
+        title
     }
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    `,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+    }
+  )
 
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-    })
-  })
+  bootstrapTest(
+    `correctly loads a default excerpt`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---`,
+    `excerpt
+    frontmatter {
+        title
+    }
+    `,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(``)
+    }
+  )
 
-  it(`correctly uses excerpt separator`, async (done) => {
-    const content = `---
+  bootstrapTest(
+    `correctly uses excerpt separator`,
+    `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
@@ -185,197 +165,212 @@ Where oh where is my little pony?
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-
-`
-
-    node.content = content
-
-    const createNode = markdownNode => {
-      queryResult(
-        [markdownNode],
-        `
-                excerpt
-                frontmatter {
-                    title
-                }
-            `,
-        {
-          types: [{ name: `MarkdownRemark` }],
-        }
-      ).then(result => {
-        try {
-          const createdNode = result.data.listNode[0]
-          expect(createdNode).toMatchSnapshot()
-          expect(createdNode.excerpt).toMatch(`Where oh where is my little pony?`)
-          done()
-        }
-        catch(err) {
-          done.fail(err)
-        }
-      })
+    `,
+    `excerpt
+    frontmatter {
+        title
     }
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
-
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
+    `,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     },
     { excerpt_separator: `<!-- end -->` }
-    )
-  })
+  )
 
-  it(`correctly prunes length to default value`, async (done) => {
-    const content = `---
+  const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-
 `
 
-    node.content = content
-
-    const createNode = markdownNode => {
-      queryResult(
-        [markdownNode],
-        `
-                excerpt
-                frontmatter {
-                    title
-                }
-            `,
-        {
-          types: [{ name: `MarkdownRemark` }],
-        }
-      ).then(result => {
-        try {
-          const createdNode = result.data.listNode[0]
-          expect(createdNode).toMatchSnapshot()
-          expect(createdNode.excerpt.length).toBe(139)
-          done()
-        }
-        catch(err) {
-          done.fail(err)
-        }
-      })
+  bootstrapTest(
+    `correctly prunes length to default value`,
+    content,
+    `excerpt
+    frontmatter {
+        title
     }
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    `,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt.length).toBe(139)
+    }
+  )
 
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-    },
-    )
-  })
+  bootstrapTest(
+    `correctly prunes length to provided parameter`,
+    content,
+    `excerpt(pruneLength: 50)
+    frontmatter {
+        title
+    }
+    `,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt.length).toBe(46)
+    }
+  )
 
-  it(`correctly prunes length to provided parameter`, async (done) => {
-    const content = `---
+  bootstrapTest(
+    `correctly prunes length to provided parameter with truncate`,
+    content,
+    `excerpt(pruneLength: 50, truncate: true)
+    frontmatter {
+        title
+    }
+    `,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt.length).toBe(50)
+    }
+  )
+})
+
+describe(`Wordcount and timeToRead are generated correctly from schema`, () => {
+  bootstrapTest(
+    `correctly uses wordCount parameters`,
+    `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-
-`
-
-    node.content = content
-
-    const createNode = markdownNode => {
-      queryResult(
-        [markdownNode],
-        `
-                excerpt(pruneLength: 50)
-                frontmatter {
-                    title
-                }
-            `,
-        {
-          types: [{ name: `MarkdownRemark` }],
-        }
-      ).then(result => {
-        try {
-          const createdNode = result.data.listNode[0]
-          expect(createdNode).toMatchSnapshot()
-          expect(createdNode.excerpt.length).toBe(46)
-          done()
-        }
-        catch(err) {
-          done.fail(err)
-        }
-      })
+`,
+    `wordCount {
+      words
+      paragraphs
+      sentences
     }
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    frontmatter {
+        title
+    }`,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.wordCount).toEqual(
+        {
+        paragraphs: 2,
+        sentences: 19,
+        words: 150,
+        }
+      )
+    })
 
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-    },
-    )
-  })
-
-  it(`correctly prunes length to provided parameter with truncate`, async (done) => {
-    const content = `---
+  const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
-Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
-In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-
 `
 
-    node.content = content
-
-    const createNode = markdownNode => {
-      queryResult(
-        [markdownNode],
-        `
-                excerpt(pruneLength: 50, truncate: true)
-                frontmatter {
-                    title
-                }
-            `,
-        {
-          types: [{ name: `MarkdownRemark` }],
-        }
-      ).then(result => {
-        try {
-          const createdNode = result.data.listNode[0]
-          expect(createdNode).toMatchSnapshot()
-          expect(createdNode.excerpt.length).toBe(50)
-          done()
-        }
-        catch(err) {
-          done.fail(err)
-        }
-      })
+  bootstrapTest(
+    `correctly uses a default value for wordCount`,
+    content,
+    `wordCount {
+      words
+      paragraphs
+      sentences
     }
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    frontmatter {
+        title
+    }`,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.wordCount).toEqual(
+        {
+        paragraphs: null,
+        sentences: null,
+        words: null,
+        }
+      )
+    })
 
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-    },
-    )
+  bootstrapTest(
+    `correctly uses a default value for timeToRead`,
+    content,
+    `timeToRead
+    frontmatter {
+        title
+    }`,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.timeToRead).toBe(1)
+    })
+})
+
+describe(`Table of contents is generated correctly from schema`, () => {
+  // Used to verify that console.warn is called when field not found
+  jest.spyOn(global.console, `warn`)
+
+  bootstrapTest(
+    `returns null on non existing table of contents field`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+`,
+    `tableOfContents
+    frontmatter {
+        title
+    }`,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(console.warn).toBeCalled()
+      expect(node.tableOfContents).toBe(null)
+    })
+
+  bootstrapTest(
+    `correctly generates table of contents`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+
+# third title
+
+final text
+`,
+    `tableOfContents(pathToSlugField: "frontmatter.title")
+    frontmatter {
+        title
+    }`,
+  (node) => {
+    expect(node).toMatchSnapshot()
   })
+})
+
+describe(`Links are correctly prefixed`, () => {
+  bootstrapTest(
+    `correctly prefixes links`,
+    `
+This is [a link](/path/to/page1).
+
+This is [a reference]
+
+[a reference]: /path/to/page2
+`,
+    `html`,
+    (node) => {
+      expect(node).toMatchSnapshot()
+      expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
+      expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
+    },
+    { pathPrefix: `/prefix` }
+  )
 })

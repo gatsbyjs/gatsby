@@ -46,10 +46,10 @@ You can also query for any `context` data you or plugins added to pages.
 Often you will need to programmatically create pages. For example, you have
 markdown files where each should be a page.
 
-This example assumes that each markdown page has a "path" set in the frontmatter
+This example assumes that each markdown page has a `path` set in the frontmatter
 of the markdown file.
 
-```javascript
+```javascript:title=gatsby-node.js
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ graphql, actions }) => {
@@ -113,7 +113,7 @@ To do this, in your site's `gatsby-node.js` add code similar to the following:
 _Note: There's also a plugin that will remove all trailing slashes from pages automatically:
 [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
 
-```javascript
+```javascript:title=gatsby-node.js
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {

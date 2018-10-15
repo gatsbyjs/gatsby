@@ -81,6 +81,23 @@ Using the following GraphQL query you'll be able to get the table of contents
 
 By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null.
 
+### Excerpt length
+
+By default, excerpts have a maximum length of 140 characters. You can change the default using the ```pruneLength``` argument. For example, if you need 500 characters, you can specify:
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        html
+        excerpt(pruneLength: 500)
+      }
+    }
+  }
+}
+```
+
 ## Troubleshooting
 
 ### Excerpts for non-latin languages
