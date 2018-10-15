@@ -21,6 +21,7 @@ import {
   ContentContainer,
 } from "../shared/sidebar"
 import ResetFilters from "../shared/reset-filters"
+import DebounceInput from "../../components/debounce-input"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
@@ -38,6 +39,8 @@ export default class FilteredStarterLibrary extends Component {
     })
   resetFilters = () =>
     this.props.setURLState({ c: null, d: null, v: null, s: `` })
+
+  onChangeUrlWithText = e => this.props.setURLState({ s: e.target.value })
 
   render() {
     const { data, urlState, setURLState } = this.props
@@ -173,7 +176,7 @@ export default class FilteredStarterLibrary extends Component {
                 {urlState.sort === `recent` ? `Most recent` : `Most stars`}
               </label>
               <label css={{ position: `relative` }}>
-                <input
+                <DebounceInput
                   css={{
                     border: 0,
                     borderRadius: presets.radiusLg,
@@ -195,10 +198,8 @@ export default class FilteredStarterLibrary extends Component {
                       }`,
                     },
                   }}
-                  type="text"
-                  value={urlState.s}
-                  // TODO: SWYX: i know this is spammy, we can finetune history vs search later
-                  onChange={e => setURLState({ s: e.target.value })}
+                  initialValue={urlState.s}
+                  onChange={this.onChangeUrlWithText}
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
