@@ -812,7 +812,7 @@
     - Based on default starter
     - Bulma Css
     - Sass based Styling
-- url: https://www.maxpou.fr/gatsby-starter-morning-dew/
+- url: https://maxpou.github.io/gatsby-starter-morning-dew/
   repo: https://github.com/maxpou/gatsby-starter-morning-dew
   description: Gatsby v2 blog starter
   tags:
