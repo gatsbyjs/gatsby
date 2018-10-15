@@ -1,7 +1,7 @@
 ---
 title: "Using VS Code for Supercharged Gatsby.js Development"
 author: Michael Holtzman
-date: 2018-10-11
+date: 2018-10-15
 tags: ["editor", "source", "documentation"]
 ---
 
