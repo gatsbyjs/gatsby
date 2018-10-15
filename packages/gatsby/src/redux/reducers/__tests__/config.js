@@ -74,4 +74,42 @@ describe(`config reducer`, () => {
     }
     expect(reducer(undefined, action).pathPrefix).toBe(``)
   })
+
+  it(`It corrects assetPaths without a forward slash at beginning`, () => {
+    const action = {
+      type: `SET_SITE_CONFIG`,
+      payload: {
+        assetPath: `assets`,
+      },
+    }
+    expect(reducer(undefined, action).assetPath).toBe(`/assets`)
+  })
+
+  it(`It removes trailing forward slash`, () => {
+    const action = {
+      type: `SET_SITE_CONFIG`,
+      payload: {
+        assetPath: `/assets/`,
+      },
+    }
+    expect(reducer(undefined, action).assetPath).toBe(`/assets`)
+  })
+
+  it(`It removes assetPaths that are a single forward slash`, () => {
+    const action = {
+      type: `SET_SITE_CONFIG`,
+      payload: {
+        assetPath: `/`,
+      },
+    }
+    expect(reducer(undefined, action).assetPath).toBe(``)
+  })
+
+  it(`It sets the assetPath to an empty string if it's not set`, () => {
+    const action = {
+      type: `SET_SITE_CONFIG`,
+      payload: {},
+    }
+    expect(reducer(undefined, action).assetPath).toBe(``)
+  })
 })

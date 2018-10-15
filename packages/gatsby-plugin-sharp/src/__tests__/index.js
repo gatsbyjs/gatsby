@@ -19,6 +19,7 @@ describe(`gatsby-plugin-sharp`, () => {
     duotone: false,
     grayscale: false,
     rotate: false,
+    assetPath: ``,
   }
   const absolutePath = path.join(__dirname, `images/test.png`)
   const file = getFileObject(absolutePath)
@@ -28,18 +29,41 @@ describe(`gatsby-plugin-sharp`, () => {
       // Resize 144-density.png (281x136) with a 3px width
       const result = queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: { width: 3 },
+        args: { assetPath: ``, width: 3 },
       })
 
       // Width should be: w = (3 * 136) / 281 = 1.451957295
       // We expect value to be rounded to 1
       expect(result.height).toBe(1)
     })
+
+    it(`should add the assetPath to src`, () => {
+      const assetPath = `/assets`
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { assetPath, width: 3 },
+      })
+
+      expect(result.src.indexOf(assetPath)).toBe(0)
+    })
+
+    it(`should add the assetPath to absolutePath`, () => {
+      const assetPath = `/assets`
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { assetPath, width: 3 },
+      })
+
+      expect(result.absolutePath.indexOf(assetPath)).toBeGreaterThan(-1)
+    })
   })
 
   describe(`fluid`, () => {
     it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
-      const result = await fluid({ file })
+      const result = await fluid({
+        file,
+        args: { assetPath: `` },
+      })
 
       expect(result).toMatchSnapshot()
     })
@@ -50,6 +74,7 @@ describe(`gatsby-plugin-sharp`, () => {
         file,
         args: {
           pathPrefix,
+          assetPath: ``,
         },
       })
 
@@ -57,9 +82,21 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result.srcSet.indexOf(pathPrefix)).toBe(0)
     })
 
+    it(`adds assetPath if defined`, async () => {
+      const assetPath = `/assets`
+      const result = await fluid({
+        file,
+        args: { assetPath },
+      })
+
+      expect(result.src.indexOf(assetPath)).toBe(0)
+      expect(result.srcSet.indexOf(assetPath)).toBeGreaterThan(-1)
+    })
+
     it(`keeps original file name`, async () => {
       const result = await fluid({
         file,
+        args: { assetPath: `` },
       })
 
       expect(result.src.indexOf(file.name)).toBe(8)
@@ -71,6 +108,7 @@ describe(`gatsby-plugin-sharp`, () => {
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: {
           sizeByPixelDensity: true,
+          assetPath: ``,
         },
       })
 
@@ -82,6 +120,7 @@ describe(`gatsby-plugin-sharp`, () => {
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: {
           sizeByPixelDensity: false,
+          assetPath: ``,
         },
       })
 
@@ -89,17 +128,17 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`does not change the arguments object it is given`, async () => {
-      const args = { maxWidth: 400 }
+      const args = { maxWidth: 400, assetPath: `` }
       await fluid({
         file,
         args,
       })
 
-      expect(args).toEqual({ maxWidth: 400 })
+      expect(args).toEqual({ maxWidth: 400, assetPath: `` })
     })
 
     it(`infers the maxWidth if only maxHeight is given`, async () => {
-      const args = { maxHeight: 20 }
+      const args = { maxHeight: 20, assetPath: `` }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args,
@@ -121,7 +160,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`does not warn when the requested width is equal to the image width`, async () => {
-      const args = { width: 1 }
+      const args = { width: 1, assetPath: `` }
 
       const result = await fixed({
         file,
@@ -133,7 +172,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`warns when the requested width is greater than the image width`, async () => {
-      const args = { width: 2 }
+      const args = { width: 2, assetPath: `` }
 
       const result = await fixed({
         file,
@@ -145,7 +184,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`correctly infers the width when only the height is given`, async () => {
-      const args = { height: 10 }
+      const args = { height: 10, assetPath: `` }
 
       const result = await fixed({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),

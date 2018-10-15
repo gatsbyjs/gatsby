@@ -3,8 +3,8 @@ import DevelopStaticEntry from "../develop-static-entry"
 
 jest.mock(`fs`)
 jest.mock(`gatsby/package.json`, () => ({
-  version: '2.0.0'
-}));
+  version: `2.0.0`,
+}))
 
 jest.mock(
   `../sync-requires`,
@@ -134,6 +134,7 @@ describe(`develop-static-entry`, () => {
 describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__ASSET_PATH__ = ``
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
