@@ -14,7 +14,7 @@ server or rebuild your site after changing them.
 In addition to `.env.*` files, any variable in the environment prefixed with
 `GATSBY_` will be made available in browser JavaScript.
 
-To add environment variables for the JavaScript run in node.js, e.g. in
+To add environment variables for the JavaScript run in Node.js, e.g. in
 `gatsby-config.js` or `gatsby-node.js`, you can add environment variables the
 normal ways e.g. when calling gatsby on the command line or by adding
 environment variables through your hosting/build tool.

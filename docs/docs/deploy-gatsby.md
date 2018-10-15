@@ -79,10 +79,10 @@ module.exports = {
 }
 ```
 
-If you have not yet initialized a git repository in your working gatsby site
-repo, set up git in your project with `git init`. Then tell Gatsby where to
-deploy your site by adding the git remote address with https or ssh. Here is how
-to do it with https: `git remote add origin git@github.com:username/project-name.git`.
+If you have not yet initialized a git repository in your working Gatsby site
+repo, set up Git in your project with `git init`. Then tell Gatsby where to
+deploy your site by adding the Git remote address with HTTPS or SSH. Here is how
+to do it with HTTPS: `git remote add origin git@github.com:username/project-name.git`.
 
 Now run `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
@@ -133,7 +133,7 @@ git add .
 git push -u origin master
 ```
 
-You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
+You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the `gitlab-ci.yml` file.
 
 ### Path Prefix
 

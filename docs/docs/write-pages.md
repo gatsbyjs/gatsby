@@ -2,7 +2,7 @@
 title: Write Out Pages
 ---
 
-This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and json files that are dependent on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app/)).
+This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the Redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and JSON files that are depended on by the webpack application in the `.cache` directory (see [Building the Javascript App](/docs/production-app/)).
 
 You can think of this step as taking all the data that was generated during bootstrap and saving it to disk for consumption by webpack.
 
@@ -61,13 +61,13 @@ The pages are sorted such that those with `matchPath`s come before those without
 e.g
 
 ```javascript
-[
-    {
-        "componentChunkName": "component---src-blog-2-js",
-        "jsonName": "blog-c06",
-        "path": "/blog"
-    },
-    // more pages
+;[
+  {
+    componentChunkName: "component---src-blog-2-js",
+    jsonName: "blog-c06",
+    path: "/blog",
+  },
+  // more pages
 ]
 ```
 
@@ -88,7 +88,7 @@ It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/mast
 
 ### async-requires.js
 
-***************
+---
 
 `async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it instead uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
 
@@ -98,9 +98,8 @@ An example of async-requires is:
 
 ```javascript
 exports.components = {
-  "component---src-blog-2-js": () => import(
-    "/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */
-  ),
+  "component---src-blog-2-js": () =>
+    import("/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */),
   // more components
 }
 
