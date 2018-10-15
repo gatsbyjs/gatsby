@@ -37,7 +37,7 @@ const readStats = () => {
 }
 
 exports.onRenderBody = (
-  { setHeadComponents, pathname, pathPrefix },
+  { setHeadComponents, pathname, pathPrefix, assetPath },
   pluginOptions
 ) => {
   if (process.env.NODE_ENV === `production`) {
@@ -65,7 +65,7 @@ exports.onRenderBody = (
           rel:
             c.slice(-2) === `js` ? `prefetch` : `prefetch alternate stylesheet`,
           key: c,
-          href: urlJoin(pathPrefix, c),
+          href: urlJoin((assetPath || pathPrefix), c),
         })
       )
 

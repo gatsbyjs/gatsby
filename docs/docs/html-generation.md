@@ -2,8 +2,7 @@
 title: Page HTML Generation
 ---
 
-In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack to build the javascript bundles required to take over the user experience once the first HTML page has finished loading. But ho
-w do the original HTML pages get generated? 
+In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack to build the JavaScript bundles required to take over the user experience once the first HTML page has finished loading. But how do the original HTML pages get generated?
 
 The high level process is:
 
@@ -61,7 +60,7 @@ Now we're ready to create a React component for the page (inside the Html contai
 
 #### 5. Add preload Link and Script Tags
 
-This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON. 
+This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON.
 
 #### 6. Inject Page Info to CDATA
 
@@ -92,6 +91,6 @@ So, we've built the means to generate HTML for a page. This webpack bundle is sa
 
 Page HTML does not depend on other pages. So we can perform this step in parallel. We use the [jest-worker](https://github.com/facebook/jest/tree/master/packages/jest-worker) library to make this easier. The [html-renderer-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/html-renderer-queue.js) creates a pool of workers equal to the number of cores on your machine. It then partitions the pages into groups and sends them to the workers, which run [worker.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker.js).
 
-The workers simply iterate over each page in their partition, and call the `page-renderer.js` with the page. It then saves the html fo the page's path in `/public`.
+The workers simply iterate over each page in their partition, and call the `page-renderer.js` with the page. It then saves the html for the page's path in `/public`.
 
 Once all workers have finished, we're done!

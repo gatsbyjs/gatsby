@@ -318,15 +318,6 @@ export default (pagePath, callback) => {
       }
     })
 
-  apiRunner(`onPreRenderHTML`, {
-    getHeadComponents,
-    replaceHeadComponents,
-    getPreBodyComponents,
-    replacePreBodyComponents,
-    getPostBodyComponents,
-    replacePostBodyComponents,
-  })
-
   // Add page metadata for the current page
   const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
     page.jsonName in dataPaths
@@ -370,6 +361,15 @@ export default (pagePath, callback) => {
   })
 
   postBodyComponents.push(...bodyScripts)
+
+  apiRunner(`onPreRenderHTML`, {
+    getHeadComponents,
+    replaceHeadComponents,
+    getPreBodyComponents,
+    replacePreBodyComponents,
+    getPostBodyComponents,
+    replacePostBodyComponents,
+  })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
     <Html

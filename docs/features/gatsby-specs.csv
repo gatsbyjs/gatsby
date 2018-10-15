@@ -36,7 +36,7 @@ Gatsby supports this out of the box; adoption is possible with <a href=""https:/
 <p>Gatsby offers this out of the box; in other frameworks it is usually possible but requires a lot of custom code, often written on a per-page basis.</p>"
 ,,Font self-hosting,3,3,3,0,"<p>Google Fonts and other open-source font libraries are helpful in building beautiful sites. The hard part is what you don't see -- a page load blocking request to Google's servers. While this request is pretty fast, even faster is hosting fonts on your own server, so you can just load them from your local filesystem. </p>
 
-<p>This is doable with Wordpress and Jekyll; Gatsby <a href=""https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/"">open-sourced a library enabling this</a> for Gatsby and other Javascipt-based apps; it's baked into the framework.</p>"
+<p>This is doable with Wordpress and Jekyll; Gatsby <a href=""https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/"">open-sourced a library enabling this</a> for Gatsby and other JavaScript-based apps; it's baked into the framework.</p>"
 Developer Experience,Maintenance & Extensibility,Serverless,3,3,2,2,"<p>Serverless means not having to worry about security and framework upgrades. It means reduced ops -- you don't have to ssh into a live production server and see what's going on.</p>
 
 <p>Hosted is not quite as good as serverless -- they still have a server you just don't see it.</p>"

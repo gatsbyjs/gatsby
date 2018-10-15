@@ -14,18 +14,19 @@ There are only two major steps :)
 
     For example,
 
-    **name:** _Fabian Schultz_
+    **if name is:** _Fabian Schultz_
 
     **image name should be,** _fabian-schultz.jpg_
 
-    **name:** _Iron Cove Solutions_
+    **if name is:** _Iron Cove Solutions_
 
     **image name should be,** _iron-cove-solutions.jpg_
 
 3.  Edit the [`creators.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/community/creators.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
-```yaml
+```yaml:title=docs/community/creators.yml
 - name: Your Name
+
   # You can choose one of three `types`: agency, company, or individual
   type: agency
   description: >-
@@ -36,11 +37,29 @@ There are only two major steps :)
   website: "https://yourname.io/"
   github: "https://github.com/githubusername"
   image: images/image.jpg
+
   # Right now, you can only answer true to either `for_hire` or for `hiring`, but not for both.
   for_hire: true
   hiring: false
+
   # If you mark `portfolio: true`, any sites you have in the Site Showcase that say `built_by: [imagine your name here]` will be linked to your Creator Profile. So make sure that `name`in `creators.yml` is exactly the same as `built_by` in `sites.yml`.
   portfolio: true
+```
+
+Use the following template to ensure required fields are filled:
+
+```yaml:title=docs/community/creators.yml
+- name: (required)
+  type: (required - agency, company, or individual)
+  image: (required - images/{filename}.{ext})
+  description: >-
+    (optional)
+  location: (optional)
+  website: (optional)
+  github: (optional)
+  for_hire: (optional)
+  hiring: (optional)
+  portfolio: (optional)
 ```
 
 4. If you sent your websites to the Showcase before but have not filled out the "built_by" field, you should edit [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) and add your name (and the built_by field if it is not there) there as well to make sure your portfolio pieces are linked to your page.

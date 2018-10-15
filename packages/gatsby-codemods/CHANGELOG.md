@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.5"></a>
+
+## [1.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.0.4...gatsby-codemods@1.0.5) (2018-10-01)
+
+**Note:** Version bump only for package gatsby-codemods
+
 <a name="1.0.4"></a>
 
 ## [1.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.0.3...gatsby-codemods@1.0.4) (2018-09-24)

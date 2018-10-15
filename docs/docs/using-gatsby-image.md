@@ -6,7 +6,7 @@ _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s op
 
 [Demo](https://using-gatsby-image.gatsbyjs.org/)
 
-`gatsby-images` incluedes the tricks you’d expect from a modern image component. It:
+`gatsby-image` includes the tricks you’d expect from a modern image component. It:
 
 - uses the new [IntersectionObserver API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to cheaply lazy load images
 - holds an image’s position so your page doesn’t jump around as images load
@@ -35,7 +35,7 @@ This isn’t ideal. Optimized images should be easy and the default.
 
 With Gatsby, we can make images way way better.
 
-`gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images, you need only:
+`gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images, you only need to:
 
 1. Import gatsby-image and use it in place of the built-in img
 1. Write a GraphQL query using one of the included GraphQL “fragments” which specify the fields needed by `gatsby-image`.

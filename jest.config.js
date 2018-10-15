@@ -32,10 +32,10 @@ module.exports = {
   coverageReporters: [`json-summary`, `text`, `html`],
   coverageThreshold: {
     global: {
-      lines: 42,
-      statements: 43,
-      functions: 40,
-      branches: 42,
+      lines: 45,
+      statements: 44,
+      functions: 42,
+      branches: 43,
     },
   },
   collectCoverageFrom: coverageDirs,

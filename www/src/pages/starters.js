@@ -30,6 +30,7 @@ export const showcaseQuery = graphql`
               owner
               name
               githubFullName
+              gatsbyMajorVersion
               allDependencies
               gatsbyDependencies
               miscDependencies

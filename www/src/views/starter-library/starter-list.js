@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import CopyToClipboardIcon from "react-icons/lib/go/clippy"
@@ -36,10 +37,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             <small>
               Maybe you should write one and
               {` `}
-              <a href="https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md">
-                submit it
-              </a>
-              ?
+              <Link to="/docs/submit-to-starter-library/">submit it</Link>?
             </small>
           </div>
         </h1>
@@ -58,6 +56,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
         {starters.map(({ node: starter }) => {
           const {
             description,
+            gatsbyMajorVersion,
             gatsbyDependencies,
             name,
             githubFullName,
@@ -66,15 +65,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             stars,
             stub,
           } = starter.fields.starterShowcase
-          const { url: demoUrl, repo: repoUrl } = starter
-          const gatsbyVersion = gatsbyDependencies.find(
-            ([k, v]) => k === `gatsby`
-          )[1]
-          const match = gatsbyVersion.match(/([0-9]+)([.])([0-9]+)/) // we just want x.x
-          const minorVersion = match ? match[0] : gatsbyVersion // default to version if no match
-          const isGatsbyVersionWarning = !/(2..+|next|latest)/g.test(
-            minorVersion
-          ) // either 2.x or next or latest
+          const { url: demoUrl } = starter
 
           return (
             starter.fields && ( // have to filter out null fields from bad data
@@ -82,8 +73,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 key={starter.id}
                 css={{
                   ...styles.showcaseItem,
+                  ...styles.withTitleHover,
                 }}
-                {...styles.withTitleHover}
               >
                 <ThumbnailLink
                   slug={`/starters/${stub}`}
@@ -163,6 +154,9 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         }}
                       />
                       {stars}
+                    </div>
+                    <div css={{ display: `inline-block` }}>
+                      {`Gatsby v${gatsbyMajorVersion[0][1]}`}
                     </div>
                     <div css={{ display: `inline-block` }}>
                       Updated {new Date(lastUpdated).toLocaleDateString()}

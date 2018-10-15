@@ -50,8 +50,8 @@ With Gatsby, we can make images way _way_ better.
 processing capabilities powered by GraphQL and Sharp. To produce perfect images,
 you need only:
 
-1.  Import `gatsby-image` and use it in place of the built-in `img`
-2.  Write a GraphQL query using one of the included GraphQL "fragments"
+1. Import `gatsby-image` and use it in place of the built-in `img`
+2. Write a GraphQL query using one of the included GraphQL "fragments"
     which specify the fields needed by `gatsby-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
@@ -64,14 +64,14 @@ effect as well as lazy loading of images further down the screen.
 
 Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
 
-```
+```bash
 npm install --save gatsby-transformer-sharp
 npm install --save gatsby-plugin-sharp
 ```
 
 Then in your `gatsby-config.js`:
 
-```
+```js
 plugins: [
   `gatsby-transformer-sharp`,
   `gatsby-plugin-sharp`
@@ -134,8 +134,8 @@ For other explanations of how to get started with gatsby-image, see this blog po
 
 There are two types of responsive images supported by gatsby-image.
 
-1.  Images that have a _fixed_ width and height
-2.  Images that stretch across a _fluid_ container
+1. Images that have a _fixed_ width and height
+2. Images that stretch across a _fluid_ container
 
 In the first scenario, you want to vary the image's size for different screen
 resolutions -- in other words, create retina images.
@@ -298,5 +298,8 @@ prop. e.g. `<Img fluid={fluid} />`
   parsed, but unless `fadeIn` is set to `false`, the transition from placeholder
   to final image will not occur until after the component is mounted.
 - Gatsby-Image now is backed by newer `<picture>` tag. This newer standard allows for
-  media types to be chosen by the browser without using javascript. It also is
+  media types to be chosen by the browser without using JavaScript. It also is
   backward compatible to older browsers (IE 11, etc)
+- Gifs can't be resized the same way as pngs and jpegs, unfortunately—if you try
+  to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
+  to [import the gif directly](/docs/adding-images-fonts-files).

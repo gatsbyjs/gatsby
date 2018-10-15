@@ -28,7 +28,7 @@ npm install --save gatsby-plugin-styled-components styled-components babel-plugi
 
 And then add it to your site's `gatsby-config.js`:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-styled-components`],
 }
@@ -38,7 +38,7 @@ Then in your terminal run `gatsby develop` to start the Gatsby development serve
 
 Now let's create a sample Styled Components page at `src/pages/index.js`:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import styled from "styled-components"
 

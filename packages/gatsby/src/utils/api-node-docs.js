@@ -82,9 +82,7 @@ exports.createPagesStatefully = true
  *
  * See also the documentation for [`createNode`](/docs/actions/#createNode).
  * @example
- * const crypto = require(`crypto`)
- *
- * exports.sourceNodes = ({ actions, createNodeId }) => {
+ * exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
  *   const { createNode } = actions
  *
  *   // Data can come from anywhere, but for now create it manually
@@ -95,10 +93,6 @@ exports.createPagesStatefully = true
  *   }
  *
  *   const nodeContent = JSON.stringify(myData)
- *   const nodeContentDigest = crypto
- *     .createHash(`md5`)
- *     .update(nodeContent)
- *     .digest(`hex`)
  *
  *   const nodeMeta = {
  *     id: createNodeId(`my-data-${myData.key}`),
@@ -108,7 +102,7 @@ exports.createPagesStatefully = true
  *       type: `MyNodeType`,
  *       mediaType: `text/html`,
  *       content: nodeContent,
- *       contentDigest: nodeContentDigest
+ *       contentDigest: createContentDigest(myData)
  *     }
  *   }
  *
@@ -279,3 +273,17 @@ exports.onPostBuild = true
  * See gatsby-transformer-remark and gatsby-source-contentful for examples.
  */
 exports.onPreExtractQueries = true
+
+/**
+ * Run when gatsby develop server is started, its useful to add proxy and middleware
+ * to the dev server app
+ * @param {object} $0
+ * @param {Express} $0.app The [Express app](https://expressjs.com/en/4x/api.html#app) used to run the dev server
+ * @example
+ * exports.onCreateDevServer = ({ app }) => {
+ *   app.get('/hello', function (req, res) {
+ *     res.send('hello world')
+ *   })
+ * }
+ */
+exports.onCreateDevServer = true

@@ -6,6 +6,7 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 
 const { createFileNode } = require(`./create-file-node`)
+const { getRemoteFileExtension } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 /********************
@@ -195,7 +196,7 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
-  const ext = path.parse(url).ext
+  const ext = getRemoteFileExtension(url)
 
   const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
   const filename = createFilePath(programDir, digest, ext)

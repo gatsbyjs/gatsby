@@ -1,4 +1,4 @@
---- 
+---
 title: Add page metadata
 ---
 
@@ -20,7 +20,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
   plugins: [`gatsby-plugin-react-helmet`]
 }

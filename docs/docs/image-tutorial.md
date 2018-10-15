@@ -31,7 +31,7 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```javascript{32-58}
+```javascript{32-58}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby Wordpress Tutorial",
@@ -77,7 +77,7 @@ npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
 
 Place these plugins in your `gatsby-config.js` like this:
 
-```javascript{112-121}
+```javascript{112-121}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby Wordpress Tutorial",
@@ -197,7 +197,7 @@ In either case, you can add traced SVG support by adding `_tracedSVG` to the end
 
 Here is what your `index.js` should look like with the query added:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"

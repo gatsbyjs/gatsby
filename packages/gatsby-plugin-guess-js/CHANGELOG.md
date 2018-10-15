@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.1"></a>
+
+## [1.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.0.0-rc.1...gatsby-plugin-guess-js@1.0.1) (2018-10-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** delay adding resources for paths until we have urls ([#8613](https://github.com/gatsbyjs/gatsby/issues/8613)) ([2605aa0](https://github.com/gatsbyjs/gatsby/commit/2605aa0))
+
 <a name="1.0.0"></a>
 
 # [1.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.0.0-rc.1...gatsby-plugin-guess-js@1.0.0) (2018-09-17)

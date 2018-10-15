@@ -14,7 +14,7 @@ npm install gatsby-source-graphql
 
 Provided there is a GraphQL API under a `url`, adding it to an API just requires adding this to the config.
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -66,7 +66,7 @@ Note that types of the third-party API will be prefixed with `${typeName}_`. You
 
 You can also create pages dynamically by adding a `createPages` callback in `gatsby-node.js`. For example you can create a page for every Star Wars species.
 
-```js
+```js:title=gatsby-node.js
 const path = require(`path`)
 
 exports.createPages = async ({ actions, graphql }) => {
@@ -99,3 +99,4 @@ exports.createPages = async ({ actions, graphql }) => {
 - [Example with Github API](https://github.com/freiksenet/gatsby-github-displayer)
 - [Example with GraphCMS](https://github.com/freiksenet/gatsby-graphcms)
 - [Example with Hasura](https://github.com/hasura/graphql-engine/tree/master/community/boilerplates/gatsby-postgres-graphql)
+- [Example with AWS AppSync](https://github.com/aws-samples/aws-appsync-gatsby-sample)

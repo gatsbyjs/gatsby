@@ -61,7 +61,7 @@ script to **deploy** your project by running `npm install gh-pages --save-dev`.
 
 Then add a `deploy` script in your `package.json` file.
 
-```json
+```json:title=package.json
 "scripts": {
   "deploy": "gatsby build --prefix-paths && gh-pages -d public",
 }
@@ -73,16 +73,16 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/project-name`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   pathPrefix: `/project-name`,
 }
 ```
 
-If you have not yet initialized a git repository in your working gatsby site
-repo, set up git in your project with `git init`. Then tell Gatsby where to
-deploy your site by adding the git remote address with https or ssh. Here is how
-to do it with https: `git remote add origin git@github.com:username/project-name.git`.
+If you have not yet initialized a git repository in your working Gatsby site
+repo, set up Git in your project with `git init`. Then tell Gatsby where to
+deploy your site by adding the Git remote address with HTTPS or SSH. Here is how
+to do it with HTTPS: `git remote add origin git@github.com:username/project-name.git`.
 
 Now run `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
@@ -98,7 +98,7 @@ repository dedicated to files for the site. The sites must be published from the
 kept in a branch named `source` or something similar. We also don't need to
 prefix links like we do with project sites.
 
-```json
+```json:title=package.json
 "scripts": {
   "deploy": "gatsby build && gh-pages -b master -d public",
 }
@@ -133,7 +133,7 @@ git add .
 git push -u origin master
 ```
 
-You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
+You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the `gitlab-ci.yml` file.
 
 ### Path Prefix
 
@@ -145,7 +145,7 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/examplerepository`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   pathPrefix: `/examplerepository`,
 }
@@ -167,7 +167,7 @@ the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
 If adding this manually to your project, the file needs to contain a few required
 fields:
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 image: node:latest
 
 # This folder is cached between builds
@@ -212,7 +212,7 @@ and then select the job to get more information about why your build may have
 failed.
 
 If all went well, you should now be able to access your site. It will be hosted
-under gitlab.io - for example if you have have a repository under your
+under gitlab.io - for example if you have a repository under your
 namespace, the url will be yourname.gitlab.io/examplerepository.
 
 Visit the
@@ -225,7 +225,7 @@ You can use the [heroku buildpack static](https://github.com/heroku/heroku-build
 
 Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
 
-```json
+```json:title=app.json
 {
   "buildpacks": [
     {
@@ -242,7 +242,7 @@ Sometimes specifying buildpacks via the `app.json` file doesn't work. If this is
 
 Add a `heroku-postbuild` script in your `package.json`:
 
-```json
+```json:title=package.json
 {
   // ...
   "scripts": {
@@ -327,7 +327,7 @@ Your site will be ready on our CDN at https://<your-site-name>.aerobaticapp.com 
 
 There are some additional HTTP header optimizations you can configure in your `aerobatic.yml` file:
 
-```yaml
+```yaml:title=aerobatic.yml
 deploy:
   # Note with below setting it is not necessary to pass --directory to aero deploy command
   directory: public

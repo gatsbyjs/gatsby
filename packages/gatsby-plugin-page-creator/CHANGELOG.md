@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1"></a>
+
+## [2.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.0-rc.5...gatsby-plugin-page-creator@2.0.1) (2018-10-01)
+
+### Bug Fixes
+
+- ignore dot files in page creator plugin ([#8573](https://github.com/gatsbyjs/gatsby/issues/8573)) ([482416b](https://github.com/gatsbyjs/gatsby/commit/482416b))
+
 <a name="2.0.0"></a>
 
 # [2.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.0-rc.5...gatsby-plugin-page-creator@2.0.0) (2018-09-17)

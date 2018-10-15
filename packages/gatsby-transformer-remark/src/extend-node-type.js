@@ -138,7 +138,7 @@ module.exports = (
 
               if (pathPrefix) {
                 // Ensure relative links include `pathPrefix`
-                visit(markdownAST, `link`, node => {
+                visit(markdownAST, [`link`, `definition`], node => {
                   if (
                     node.url &&
                     node.url.startsWith(`/`) &&

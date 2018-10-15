@@ -55,6 +55,13 @@ Object {
 }
 `;
 
+exports[`Links are correctly prefixed correctly prefixes links 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
 exports[`Table of contents is generated correctly from schema correctly generates table of contents 1`] = `
 Object {
   "frontmatter": Object {

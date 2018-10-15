@@ -1,20 +1,16 @@
-- title: Quick start
+- title: Quick Start
   items:
-    - title: Quick start
+    - title: Getting Started
       link: /docs/
-    - title: Starters
-      link: /docs/gatsby-starters/
+    - title: Starter Library
+      link: /starters/
     - title: Recipes
       link: /docs/recipes/
-    - title: Overview of the docs*
-      link: /docs/overview/
 - title: Guides
   items:
     - title: Preparing your environment
       link: /docs/preparing-your-environment/
       items:
-        - title: Basic hardware and software requirements*
-          link: /docs/basic-hardware-software-requirements/
         - title: Browser Support
           link: /docs/browser-support/
         - title: Gatsby on Windows
@@ -45,7 +41,7 @@
           link: /docs/custom-html/
         - title: Environment variables
           link: /docs/environment-variables/
-        - title: ESlint*
+        - title: ESLint
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
@@ -68,7 +64,7 @@
           link: /docs/working-with-images/
         - title: Using gatsby-image
           link: /docs/using-gatsby-image/
-    - title: Sourcing content and data*
+    - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
         - title: Using Unstructured Data
@@ -86,7 +82,7 @@
           items:
             - title: Sourcing from Netlify CMS
               link: /docs/sourcing-from-netlify-cms/
-            - title: Sourcing from WordPress*
+            - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal*
               link: /docs/sourcing-from-drupal/
@@ -97,7 +93,7 @@
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
-        - title: Introducing GraphiQL*
+        - title: Introducing GraphiQL
           link: /docs/introducing-graphiql/
         - title: Creating and modifying pages
           link: /docs/creating-and-modifying-pages/
@@ -111,6 +107,8 @@
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
           link: /docs/adding-a-list-of-markdown-blog-posts/
+        - title: Using fragments
+          link: /docs/using-fragments/
         - title: Creating slugs for pages*
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
@@ -126,12 +124,19 @@
           link: /docs/create-source-plugin/
         - title: Source plugin tutorial
           link: /docs/source-plugin-tutorial/
+    - title: Starters
+      link: /docs/starters/
+      items:
+        - title: Create a Starter*
+          link: /docs/create-a-starter/
     - title: Styling
       link: /docs/styling/
       items:
+        - title: Layout Components
+          link: /docs/layout-components/
         - title: CSS Modules
           link: /docs/css-modules/
-        - title: Typography.js*
+        - title: Typography.js
           link: /docs/typography-js/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
@@ -139,9 +144,9 @@
           link: /docs/styled-components/
         - title: Creating global styles
           link: /docs/creating-global-styles/
-        - title: Component CSS*
+        - title: Component CSS
           link: /docs/component-css/
-        - title: PostCSS*
+        - title: PostCSS
           link: /docs/post-css/
     - title: Testing
       link: /docs/testing/
@@ -201,7 +206,7 @@
           link: /docs/adding-pagination/
         - title: Creating a sitemap*
           link: /docs/creating-a-sitemap/
-        - title: Linking between pages*
+        - title: Linking between pages
           link: /docs/linking-between-pages/
         - title: Interactive pages*
           link: /docs/interactive-pages/
@@ -231,6 +236,8 @@
           link: /docs/add-a-manifest-file/
         - title: Add Offline Support
           link: /docs/add-offline-support/
+        - title: Add a Service Worker
+          link: /docs/add-a-service-worker/
         - title: Add Page Metadata
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)
@@ -325,7 +332,7 @@
     - title: Webpack and SSR
       link: /docs/webpack-and-ssr/
       items:
-        - title: Building the Javascript App
+        - title: Building the JavaScript App
           link: /docs/production-app/
         - title: Page HTML Generation
           link: /docs/html-generation/
@@ -367,7 +374,7 @@
       link: /docs/pair-programming/
     - title: Gatsby Style Guide
       link: /docs/gatsby-style-guide/
-    - title: RFC process*
+    - title: RFC process
       link: /docs/rfc-process/
     - title: Docs templates
       link: /docs/templates/
@@ -379,9 +386,11 @@
       link: /docs/site-showcase-submissions/
     - title: Submit to Creator Showcase
       link: /docs/submit-to-creator-showcase/
-    - title: Submit to Starter Showcase*
-      link: /docs/submit-to-starter-showcase/
+    - title: Submit to Starter Library
+      link: /docs/submit-to-starter-library/
+    - title: Submit to Plugin Library
+      link: /docs/submit-to-plugin-library/
 - title: Glossary*
   link: /docs/glossary/
-- title: Commands (Gatsby CLI)*
+- title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/

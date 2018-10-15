@@ -18,7 +18,7 @@ import unescape from "lodash/unescape"
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
-import { css as glam } from "glamor"
+import { injectGlobal } from "react-emotion"
 import removeMD from "remove-markdown"
 
 // This is for the urlSync
@@ -29,7 +29,7 @@ const searchInputHeight = rhythm(7 / 4)
 const searchMetaHeight = rhythm(8 / 4)
 const searchInputWrapperMargin = rhythm(3 / 4)
 
-glam.insert(`
+injectGlobal`
   .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
     display: block;
   }
@@ -168,7 +168,7 @@ glam.insert(`
   .ais-InfiniteHits__loadMore[disabled] {
     display: none;
   }
-`)
+`
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
@@ -331,7 +331,7 @@ const Result = ({ hit, pathname, search }) => {
           "&:before": {
             background: colors.ui.border,
             bottom: 0,
-            content: ` `,
+            content: `''`,
             height: 1,
             left: 0,
             position: `absolute`,
@@ -341,7 +341,7 @@ const Result = ({ hit, pathname, search }) => {
           "&:after": {
             background: selected ? colors.gatsby : false,
             bottom: 0,
-            content: ` `,
+            content: `''`,
             position: `absolute`,
             left: 0,
             top: -1,
