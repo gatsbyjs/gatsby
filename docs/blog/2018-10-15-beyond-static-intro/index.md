@@ -1,6 +1,6 @@
 ---
 title: "Beyond Static: Building Dynamic Apps with Gatsby"
-date: "10-15-2018"
+date: 2018-10-15
 author: Dustin Schau
 image: images/dynamic.jpg
 showImageInArticle: false
