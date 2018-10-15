@@ -55,15 +55,10 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
     errorDetails.set(`Plugin`, queryJob.pluginCreatorId || `none`)
     errorDetails.set(`Query`, queryJob.query)
 
-    report.log(`
+    report.panicOnBuild(`
 The GraphQL query from ${queryJob.componentPath} failed.
 
 ${formatErrorDetails(errorDetails)}`)
-
-    // Perhaps this isn't the best way to see if we're building?
-    if (program._[0] === `build`) {
-      process.exit(1)
-    }
   }
 
   // Add the page context onto the results.

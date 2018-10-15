@@ -213,12 +213,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (noPageOrComponent) {
-    console.log(``)
-    console.log(
+    report.panic(
       `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
     )
-    console.log(``)
-    process.exit(1)
   }
 
   let jsonName
@@ -280,25 +277,16 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
         )
-        console.log(``)
-        // TODO actually do die during builds.
-        // process.exit(1)
       }
 
       if (!includesDefaultExport) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `[${fileName}] The page component must export a React component for it to be valid`
         )
-        console.log(``)
       }
-
-      // TODO actually do die during builds.
-      // process.exit(1)
     }
 
     fileOkCache[internalPage.component] = true
@@ -494,13 +482,12 @@ actions.createNode = (
 
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
-    console.log(JSON.stringify(node, null, 4))
-    console.log(
+    report.error(JSON.stringify(node, null, 4))
+    report.panic(
       chalk.bold.red(
         `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
-    process.exit(1)
   }
 
   // Add the plugin name to the internal object.
