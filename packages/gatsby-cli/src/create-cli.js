@@ -91,7 +91,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, useYarn }
+      let args = { ...argv, ...siteInfo, useYarn, report }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -233,7 +233,10 @@ function buildLocalCommands(cli, isLocalSite) {
           {
             console: true,
             // Clipboard is not accessible when on a linux tty
-            clipboard: (process.platform === `linux` && !process.env.DISPLAY) ? false : args.clipboard,
+            clipboard:
+              process.platform === `linux` && !process.env.DISPLAY
+                ? false
+                : args.clipboard,
           }
         )
       } catch (err) {
@@ -250,6 +253,12 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
     }),
+  })
+
+  cli.command({
+    command: `clean`,
+    desc: `Wipe the local gatsby environment when something has gone wrong`,
+    handler: getCommandHandler(`clean`),
   })
 }
 
