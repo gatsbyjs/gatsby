@@ -8,7 +8,7 @@ For JavaScript loaded into the browser, just add a `.env.development` and/or
 `.env.production` file in your root folder for development or production builds
 respectively. The environment variables are embedded during build time using
 Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/). Because
-these variables are provided at build time, you will need restart your dev
+these variables are provided at build time, you will need to restart your dev
 server or rebuild your site after changing them.
 
 In addition to `.env.*` files, any variable in the environment prefixed with
