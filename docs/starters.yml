@@ -925,6 +925,18 @@
     - Category and Tag for post
     - Type Safe by TypeScript
     - Format Safe by TSLint and Prettier with Lint-Staged(Husky)
+- url: https://gatsby-casper.netlify.com/
+  repo: https://github.com/scttcper/gatsby-casper
+  description: This is a starter blog that looks like the Ghost.io default theme, casper.
+  tags:
+    - Blog
+    - TypeScript
+    - Styling:CSS-in-JS
+  features:
+    - Emotion CSS-in-JS
+    - Typescript
+    - Author and tag pages
+    - RSS
 - url: https://gatsby-universal.netlify.com
   repo: https://github.com/fabe/gatsby-universal
   description: An opinionated Gatsby v2 starter for state-of-the-art marketing sites
