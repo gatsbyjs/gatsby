@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.2"></a>
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-excel/compare/gatsby-transformer-excel@2.1.1-rc.7...gatsby-transformer-excel@2.1.2) (2018-10-15)
+
+### Features
+
+- added option to support 'defval' option ([#8980](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-excel/issues/8980)) ([95c1eac](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-excel/commit/95c1eac))
+
 <a name="2.1.1"></a>
 
 ## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-excel/compare/gatsby-transformer-excel@2.1.1-rc.7...gatsby-transformer-excel@2.1.1) (2018-09-17)
