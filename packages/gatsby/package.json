@@ -160,7 +160,7 @@
     "website"
   ],
   "license": "MIT",
-  "main": "cache-dir/commonjs/gatsby-browser-entry-cjs.js",
+  "main": "cache-dir/commonjs/gatsby-browser-entry.js",
   "module": "cache-dir/gatsby-browser-entry.js",
   "peerDependencies": {
     "react": "^16.4.2",
