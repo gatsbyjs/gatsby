@@ -1,5 +1,5 @@
 module.exports = {
-  notify: true,
+  rootDir: `../`,
   roots: [`<rootDir>/integration-tests`],
   testPathIgnorePatterns: [
     `/examples/`,
@@ -9,5 +9,4 @@ module.exports = {
     `__tests__/fixtures`,
   ],
   transform: { "^.+\\.js$": `<rootDir>/jest-transformer.js` },
-  verbose: true,
 }
