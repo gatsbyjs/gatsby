@@ -912,6 +912,13 @@
     - Blog
   features:
     - Uses the Cosmic JS Gatsby source plugin
+- url: https://cosmicjs-gatsby-starter.netlify.com/
+  repo: https://github.com/cosmicjs/gatsby-starter
+  description: Simple Gatsby starter connected to the Cosmic JS headless CMS for easy content management
+  tags:
+    - Cosmic JS
+  features:
+    - Uses the Cosmic JS Gatsby source plugin
 - url: https://www.gatsby-typescript-template.com/
   repo: https://github.com/ikeryo1182/gatsby-typescript-template
   description: This is a standard starter with Typescript, TSLint, Prettier, Lint-Staged(Husky) and Sass
