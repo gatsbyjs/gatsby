@@ -2950,3 +2950,14 @@
   built_by: Masahiro Harada
   built_by_url: https://twitter.com/_Masahiro_H_
   featured: false
+- title: "Maxence Poutord's blog"
+  description: >
+    Tech & programming blog of Maxence Poutord, Software Engineer, Serial Traveler and Public Speaker
+  main_url: https://www.maxpou.fr
+  url: https://www.maxpou.fr
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+  built_by: Maxence Poutord
+  built_by_url: https://www.maxpou.fr
