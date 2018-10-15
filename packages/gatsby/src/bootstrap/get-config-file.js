@@ -37,8 +37,7 @@ module.exports = async function getConfigFile(
         err
       )
     } else if (nearMatch) {
-      console.log(``)
-      report.error(
+      report.panic(
         `It looks like you were trying to add the config file? Please rename "${chalk.bold(
           nearMatch
         )}" to "${chalk.bold(configName)}"`

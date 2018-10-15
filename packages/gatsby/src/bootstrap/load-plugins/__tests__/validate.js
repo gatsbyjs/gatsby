@@ -1,5 +1,12 @@
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    panicOnBuild: jest.fn(),
+    warn: jest.fn(),
+  }
+})
 jest.mock(`../../resolve-module-exports`)
 
+const reporter = require(`gatsby-cli/lib/reporter`)
 const {
   collatePluginAPIs,
   handleBadExports,
@@ -93,6 +100,28 @@ describe(`handleBadExports`, () => {
         ssr: [],
       },
     })
+  })
+
+  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {	
+    handleBadExports({
+      apis: {
+        node: [``],
+        browser: [``],
+        ssr: [`notFoo`, `bar`],
+      },
+      badExports: {
+        node: [],
+        browser: [],
+        ssr: [
+          {
+            exportName: `foo`,
+            pluginName: `default-site-plugin`,
+          },
+        ],
+      },
+    })
+
+    expect(reporter.panicOnBuild.mock.calls.length).toBe(1)
   })
 })
 
