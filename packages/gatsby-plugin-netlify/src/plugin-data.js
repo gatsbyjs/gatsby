@@ -17,7 +17,7 @@ function normalizeStats(stats) {
 // This function assembles data across the manifests and store to match a similar
 // shape of `static-entry.js`. With it, we can build headers that point to the correct
 // hashed filenames and ensure we pull in the componentChunkName.
-export default function makePluginData(store, assetsManifest, pathPrefix) {
+export default function makePluginData(store, assetsManifest, pathPrefix, assetPath) {
   const { program, pages: storePages } = store.getState()
   const publicFolder = buildPrefixer(program.directory, `public`)
   const stats = require(publicFolder(`webpack.stats.json`))
@@ -31,6 +31,7 @@ export default function makePluginData(store, assetsManifest, pathPrefix) {
     pages,
     manifest,
     pathPrefix,
+    assetPath,
     publicFolder,
   }
 }

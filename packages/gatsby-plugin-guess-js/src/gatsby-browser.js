@@ -38,7 +38,7 @@ const prefetch = url => {
   parentElement.appendChild(link)
 }
 
-exports.onPrefetchPathname = ({ pathPrefix }, pluginOptions) => {
+exports.onPrefetchPathname = ({ pathPrefix, assetPath }, pluginOptions) => {
   if (process.env.NODE_ENV === `production`) {
     const matchedPaths = Object.keys(
       guess({
@@ -68,7 +68,7 @@ exports.onPrefetchPathname = ({ pathPrefix }, pluginOptions) => {
           // eslint-disable-next-line
           resources.push(`static/d/${___dataPaths[page.jsonName]}.json`)
           // TODO add support for pathPrefix
-          resources.forEach(r => prefetch(`/${r}`))
+          resources.forEach(r => prefetch(`${assetPath}/${r}`))
         })
       })
     }

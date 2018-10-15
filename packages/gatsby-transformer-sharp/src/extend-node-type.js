@@ -47,6 +47,7 @@ const getTracedSVG = async ({ file, image, fieldArgs }) =>
 const fixedNodeType = ({
   type,
   pathPrefix,
+  assetPath,
   getNodeAndSavePathDependency,
   reporter,
   name,
@@ -73,7 +74,7 @@ const fixedNodeType = ({
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, pathPrefix, assetPath, toFormat: `webp` }
             return Promise.resolve(
               fixed({
                 file,
@@ -89,7 +90,7 @@ const fixedNodeType = ({
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, pathPrefix, assetPath, toFormat: `webp` }
             return Promise.resolve(
               fixed({
                 file,
@@ -144,7 +145,7 @@ const fixedNodeType = ({
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs, pathPrefix }
+      const args = { ...fieldArgs, pathPrefix, assetPath }
       return Promise.resolve(
         fixed({
           file,
@@ -165,6 +166,7 @@ const fixedNodeType = ({
 const fluidNodeType = ({
   type,
   pathPrefix,
+  assetPath,
   getNodeAndSavePathDependency,
   reporter,
   name,
@@ -187,7 +189,7 @@ const fluidNodeType = ({
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, pathPrefix, assetPath, toFormat: `webp` }
             return Promise.resolve(
               fluid({
                 file,
@@ -203,7 +205,7 @@ const fluidNodeType = ({
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, pathPrefix, assetPath, toFormat: `webp` }
             return Promise.resolve(
               fluid({
                 file,
@@ -266,7 +268,7 @@ const fluidNodeType = ({
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs, pathPrefix }
+      const args = { ...fieldArgs, pathPrefix, assetPath }
       return Promise.resolve(
         fluid({
           file,
@@ -287,6 +289,7 @@ const fluidNodeType = ({
 module.exports = ({
   type,
   pathPrefix,
+  assetPath,
   getNodeAndSavePathDependency,
   reporter,
 }) => {
@@ -297,6 +300,7 @@ module.exports = ({
   const nodeOptions = {
     type,
     pathPrefix,
+    assetPath,
     getNodeAndSavePathDependency,
     reporter,
   }
@@ -339,6 +343,7 @@ module.exports = ({
         const publicPath = path.join(
           process.cwd(),
           `public`,
+          assetPath,
           `static`,
           imageName
         )
@@ -359,7 +364,7 @@ module.exports = ({
         return {
           width: dimensions.width,
           height: dimensions.height,
-          src: `${pathPrefix}/static/${imageName}`,
+          src: `${assetPath || pathPrefix}/static/${imageName}`,
         }
       },
     },
@@ -428,7 +433,7 @@ module.exports = ({
       },
       resolve: (image, fieldArgs, context) => {
         const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const args = { ...fieldArgs, pathPrefix }
+        const args = { ...fieldArgs, pathPrefix, assetPath }
         return new Promise(resolve => {
           if (fieldArgs.base64) {
             resolve(

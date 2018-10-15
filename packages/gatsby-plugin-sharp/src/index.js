@@ -339,7 +339,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const imgSrc = `/${file.name}-${
     file.internal.contentDigest
   }-${argsDigestShort}.${fileExtension}`
-  const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
+  const filePath = path.join(process.cwd(), `public`, options.assetPath, `static`, imgSrc)
 
   // Create function to call when the image is finished.
   let outsideResolve, outsideReject
@@ -388,7 +388,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   queueJob(job, reporter)
 
   // Prefix the image src.
-  const prefixedSrc = options.pathPrefix + `/static` + imgSrc
+  const prefixedSrc = (options.assetPath || options.pathPrefix) + `/static` + imgSrc
 
   return {
     src: prefixedSrc,

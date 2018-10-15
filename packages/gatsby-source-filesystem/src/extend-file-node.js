@@ -2,7 +2,12 @@ const { GraphQLString } = require(`gatsby/graphql`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
+module.exports = ({
+  type,
+  getNodeAndSavePathDependency,
+  pathPrefix = ``,
+  assetPath = ``,
+}) => {
   if (type.name !== `File`) {
     return {}
   }
@@ -21,6 +26,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
         const publicPath = path.join(
           process.cwd(),
           `public`,
+          assetPath,
           `static`,
           fileName
         )
@@ -38,7 +44,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
           })
         }
 
-        return `${pathPrefix}/static/${fileName}`
+        return `${assetPath || pathPrefix}/static/${fileName}`
       },
     },
   }

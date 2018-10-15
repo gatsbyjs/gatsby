@@ -25,8 +25,8 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
-exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
-  const pluginData = makePluginData(store, assetsManifest, pathPrefix)
+exports.onPostBuild = async ({ store, pathPrefix, assetPath }, userPluginOptions) => {
+  const pluginData = makePluginData(store, assetsManifest, pathPrefix, assetPath)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
   const { redirects } = store.getState()

@@ -6,7 +6,6 @@ import { HEADER_COMMENT } from "./constants"
 import {
   COMMON_BUNDLES,
   SECURITY_HEADERS,
-  CACHING_HEADERS,
   LINK_REGEX,
   NETLIFY_HEADERS_FILENAME,
 } from "./constants"
@@ -208,12 +207,16 @@ const applySecurityHeaders = ({ mergeSecurityHeaders }) => headers => {
   return defaultMerge(headers, SECURITY_HEADERS)
 }
 
-const applyCachingHeaders = ({ mergeCachingHeaders }) => headers => {
+const applyCachingHeaders = ({ assetPath }, { mergeCachingHeaders }) => headers => {
   if (!mergeCachingHeaders) {
     return headers
   }
 
-  return defaultMerge(headers, CACHING_HEADERS)
+  const cachingHeaders = {
+    [`${assetPath}/static/*`]: [`Cache-Control: public, max-age=31536000, immutable`],
+  }
+
+  return defaultMerge(headers, cachingHeaders)
 }
 
 const applyTransfromHeaders = ({ transformHeaders }) => headers =>
@@ -230,7 +233,7 @@ export default function buildHeadersProgram(pluginData, pluginOptions) {
     validateUserOptions(pluginOptions),
     mapUserLinkHeaders(pluginData, pluginOptions),
     applySecurityHeaders(pluginOptions),
-    applyCachingHeaders(pluginOptions),
+    applyCachingHeaders(pluginData, pluginOptions),
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),

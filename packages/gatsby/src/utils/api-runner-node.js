@@ -95,6 +95,7 @@ const runAPI = (plugin, api, args) => {
       {
         ...args,
         pathPrefix,
+        assetPath: store.getState().config.assetPath,
         boundActionCreators: doubleBoundActionCreators,
         actions: doubleBoundActionCreators,
         loadNodeContent,
