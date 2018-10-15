@@ -39,7 +39,7 @@ module.exports = async function clean(args) {
 
   const directories = [`.cache`, `public`, `node_modules`]
 
-  report.info(`Deleting ${directories.join(", ")}`)
+  report.info(`Deleting ${directories.join(`, `)}`)
 
   await Promise.all(
     directories.map(dir => fs.remove(path.join(directory, dir)))
