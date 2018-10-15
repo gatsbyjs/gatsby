@@ -12,6 +12,7 @@ const {
 const {
   inferObjectStructureFromNodes,
 } = require(`../../../gatsby/src/schema/infer-graphql-type`)
+const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
 
 describe(`Process markdown content correctly`, () => {
   const node = {
@@ -41,7 +42,6 @@ Where oh where is my little pony?
       const actions = { createNode, createParentChildLink }
       const createNodeId = jest.fn()
       createNodeId.mockReturnValue(`uuid-from-gatsby`)
-      const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
       await onCreateNode({
         node,
@@ -85,7 +85,6 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
       const actions = { createNode, createParentChildLink }
       const createNodeId = jest.fn()
       createNodeId.mockReturnValue(`uuid-from-gatsby`)
-      const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
       await onCreateNode(
         {
@@ -198,7 +197,6 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       const actions = { createNode, createParentChildLink }
       const createNodeId = jest.fn()
       createNodeId.mockReturnValue(`uuid-from-gatsby`)
-      const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
       onCreateNode(
         {
@@ -256,7 +254,6 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
       const actions = { createNode, createParentChildLink }
       const createNodeId = jest.fn()
       createNodeId.mockReturnValue(`uuid-from-gatsby`)
-      const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
       onCreateNode({
         node,
