@@ -22,3 +22,7 @@ GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
 The `.env.development` file is ignored by git. Your token should never be committed.
+
+## Screenshots placeholder
+
+If you are not working on starter or site showcase it might be beneficial to use placeholder image instead of actual screenshots. It will skip downloading screenshots and generating responsive images for all screenshots and replace them with placeholder image. Check [`gatsby-transformer-screenshot` docs](http://www.gatsbyjs.org/packages/gatsby-transformer-screenshot#placeholder-image) to learn how to use it.
