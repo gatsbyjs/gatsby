@@ -73,7 +73,7 @@
     "test:coverage": "jest --coverage",
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
-    "test:integration": "jest --config=jest.integration.js",
+    "test:integration": "jest --config=integration-tests/jest.config.js",
     "version": "prettier --write \"**/CHANGELOG.md\" --no-semi",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
