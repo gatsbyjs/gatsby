@@ -27,5 +27,6 @@ module.exports = function info({
   } catch (err) {
     report.error(`Unable to print environment info`)
     report.error(err)
+    return Promise.reject(err)
   }
 }
