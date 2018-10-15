@@ -21,7 +21,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": ">2.0.0-alpha",
+    "gatsby-source-filesystem": "^2.0.3"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter",
   "scripts": {
