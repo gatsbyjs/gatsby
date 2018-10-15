@@ -1,5 +1,4 @@
 const axios = require(`axios`)
-const crypto = require(`crypto`)
 const url = require(`url`)
 const _ = require(`lodash`)
 
@@ -12,6 +11,7 @@ exports.sourceNodes = async ({
   actions,
   getNode,
   createNodeId,
+  createContentDigest,
   hasNodeChanged,
 }) => {
   const { createNode } = actions
@@ -117,10 +117,7 @@ fragment commentsFragment on HackerNewsItem {
     storyNode.by = storyNode.by.id
 
     // Get content digest of node.
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(storyNode))
-      .digest(`hex`)
+    const contentDigest = createContentDigest(storyNode)
 
     storyNode.internal.contentDigest = contentDigest
     createNode(storyNode)
@@ -147,10 +144,7 @@ fragment commentsFragment on HackerNewsItem {
         const nodeStr = JSON.stringify(commentNode)
 
         // Get content digest of comment node.
-        const contentDigest = crypto
-          .createHash(`md5`)
-          .update(nodeStr)
-          .digest(`hex`)
+        const contentDigest = createContentDigest(nodeStr)
 
         commentNode.internal.contentDigest = contentDigest
         commentNode.internal.content = nodeStr
