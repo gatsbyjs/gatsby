@@ -1,4 +1,4 @@
-const runSfit = require(`../run-sift`)
+const runSift = require(`../run-sift`)
 const {
   GraphQLObjectType,
   GraphQLNonNull,
@@ -61,7 +61,7 @@ describe(`run-sift`, () => {
         },
       }
 
-      const resultSingular = await runSfit({
+      const resultSingular = await runSift({
         type,
         nodes,
         typeName,
@@ -69,7 +69,7 @@ describe(`run-sift`, () => {
         connection: false,
       })
 
-      const resultConnection = await runSfit({
+      const resultConnection = await runSift({
         type,
         nodes,
         typeName,
@@ -89,7 +89,7 @@ describe(`run-sift`, () => {
         },
       }
 
-      const resultSingular = await runSfit({
+      const resultSingular = await runSift({
         type,
         nodes,
         typeName,
@@ -97,7 +97,7 @@ describe(`run-sift`, () => {
         connection: false,
       })
 
-      const resultConnection = await runSfit({
+      const resultConnection = await runSift({
         type,
         nodes,
         typeName,
