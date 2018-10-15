@@ -941,25 +941,22 @@ describe(`filtering on linked nodes`, () => {
       { types }
     )
 
-    expect(result.data.eq.edges.length).toEqual(2)
-    expect(result.data.eq.edges[0].node.foo).toEqual(`bar`)
-    expect(result.data.eq.edges[1].node.foo).toEqual(`baz`)
+    const itemToEdge = item => {
+      return {
+        node: {
+          foo: item,
+        },
+      }
+    }
 
-    expect(result.data.in.edges.length).toEqual(3)
-    expect(result.data.in.edges[0].node.foo).toEqual(`bar`)
-    expect(result.data.in.edges[1].node.foo).toEqual(`baz`)
-    expect(result.data.in.edges[2].node.foo).toEqual(`foo`)
-
-    expect(result.data.insideInlineArrayEq.edges.length).toEqual(3)
-    expect(result.data.insideInlineArrayEq.edges[0].node.foo).toEqual(`lorem`)
-    expect(result.data.insideInlineArrayEq.edges[1].node.foo).toEqual(`ipsum`)
-    expect(result.data.insideInlineArrayEq.edges[2].node.foo).toEqual(`sit`)
-
-    expect(result.data.insideInlineArrayIn.edges.length).toEqual(4)
-    expect(result.data.insideInlineArrayIn.edges[0].node.foo).toEqual(`lorem`)
-    expect(result.data.insideInlineArrayIn.edges[1].node.foo).toEqual(`ipsum`)
-    expect(result.data.insideInlineArrayIn.edges[2].node.foo).toEqual(`sit`)
-    expect(result.data.insideInlineArrayIn.edges[3].node.foo).toEqual(`dolor`)
+    expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
+    expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
+    expect(result.data.insideInlineArrayEq.edges).toEqual(
+      [`lorem`, `ipsum`, `sit`].map(itemToEdge)
+    )
+    expect(result.data.insideInlineArrayIn.edges).toEqual(
+      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
+    )
   })
 
   it(`doesn't mutate node object`, async () => {
