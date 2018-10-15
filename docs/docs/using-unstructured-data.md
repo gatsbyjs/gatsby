@@ -41,7 +41,7 @@ If you're building a small site, one efficient way to build it is to pull in uns
 
 ### Other resources
 
-- Link to a blogpost
+- Link to a blog post
 - Link to a YouTube tutorial
 - Link to an example site
 - Link to source code for a live site
