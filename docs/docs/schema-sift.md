@@ -4,7 +4,7 @@ title: Querying with Sift
 
 ## Summary
 
-Gatsby stores all data loaded during the source-nodes phase in redux. And it allows you to write GraphQL queries to query that data. But Redux is a plain JavaScript object store. So how does Gatsby query over those nodes using the GraphQL Query language?
+Gatsby stores all data loaded during the source-nodes phase in Redux. And it allows you to write GraphQL queries to query that data. But Redux is a plain JavaScript object store. So how does Gatsby query over those nodes using the GraphQL query language?
 
 The answer is that it uses the [sift.js](https://github.com/crcn/sift.js/tree/master) library. It is a port of the MongoDB query language that works over plain JavaScript objects. It turns out that mongo's query language is very compatible with GraphQL.
 
