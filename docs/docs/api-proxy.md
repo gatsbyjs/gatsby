@@ -48,4 +48,4 @@ module.exports = {
 }
 ```
 
-Keep in mind that middleware only has effect in development (with gatsby develop).
+Keep in mind that middleware only has effect in development (with `gatsby develop`).
