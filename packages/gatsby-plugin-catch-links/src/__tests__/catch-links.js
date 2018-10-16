@@ -1,6 +1,6 @@
 const pathPrefix = `/blog`
 
-import { navigate } from "gatsby-link"
+import { navigate } from "gatsby"
 import * as catchLinks from "../catch-links"
 
 beforeAll(() => {
