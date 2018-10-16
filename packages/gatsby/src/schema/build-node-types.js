@@ -229,7 +229,7 @@ module.exports = async ({ parentSpan }) => {
   }
 
   // Create node types and node fields for nodes that have a resolve function.
-  // Ensure that File nodes are created first, so FileType can be imported
+  // Ensure that File type is created first, so it can be imported
   // in setFieldsOnGraphQLNodeType.
   const { File: fileNodes, ...otherTypes } = types
 
