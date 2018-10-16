@@ -15,7 +15,9 @@ Unfortunately, in practice, great performance is surprisingly hard to achieve --
 
 Why is that? Increased site complexity often distributes bottlenecks across multiple code points and teams of stakeholders. While performance checklists exist, they’ve ballooned to 40+ items -- making them costly and time-consuming for teams to implement.
 
-As my co-founder Kyle Mathews likes to say (paraphrasing Tolstoy): "All fast websites are alike, but all slow websites are slow in different ways."
+As Gatsby's co-founder Kyle Mathews likes to say (paraphrasing Tolstoy): 
+
+> "All fast websites are alike, but all slow websites are slow in different ways."
 
 Ultimately, we’ll argue, performance must be solved _at the framework level_ -- that is, in the content mesh.
 
@@ -60,12 +62,12 @@ This has generally driven by increased page complexity driven by increased user 
 
 Second, the **growing complexity of websites**. Non-critical images, CSS, JS libraries, and 3rd party tracking software will often unintentionally end up on the critical path to page load:
 
-- A marketing analyst drops a `<script>` tag from a hot new vendor inside a Google Tag Manager container. This triggering a blocking network call to a pixel provider on page loads. Time To Interactive (TTI) now averages 800ms longer.
+- A marketing analyst drops a `<script>` tag from a hot new vendor inside a Google Tag Manager container. This triggers a blocking network call to a pixel provider on page loads. Time To Interactive (TTI) now averages 800ms longer.
 - After a team whiteboarding session, the lead designer for a popular lifestyle magazine decides to switch to a custom default site font. On Friday afternoon, a developer scans the JIRA ticket, thinks "this should be easy" and implements a two-line code change. The site now takes 20% longer to load.
 
 - The business unit of an e-commerce store needs additional inventory management tools, so they purchase a popular plugin in their CMS ecosystem that offers this functionality. What they don’t know is that this plugin adds additional database calls every time a user loads a product page, delaying overall page loads by 500ms.
 
-With website performance rarely tracked, almost never systematically, and with no performance "owner", load times balloon by default.
+With website performance rarely tracked, almost never systematically, and with no performance "owner", it's easy to see how load times can balloon.
 
 Like factory floors before the advent of [just-in-time manufacturing](https://en.wikipedia.org/wiki/Just-in-time_manufacturing), website page loading paths are clogged with work being done prematurely, creating resource contention and increasing cycle time.
 
@@ -114,7 +116,7 @@ For example, if you use a CDN to serve 3MB Javascript bundles, your site is stil
   </figcaption>
 </figure>
 
-Performance is an _emergent characteristic_ of a system. It requires getting a lot little things right and is easy to mess up. Hence the Tolstoy quote.
+Performance is an _emergent characteristic_ of a system. It requires getting a lot little things right and is easy to mess up. That's _why_ fast websites are similar, but slow websites are slow in different ways.
 
 ## Optimizing performance is difficult and expensive
 
