@@ -49,14 +49,14 @@ describe(`catchLinks`, () => {
 
 // https://github.com/facebook/jest/issues/936#issuecomment-214939935
 describe(`the click event`, () => {
-  it(`checks if the user might be forcing navigation`, () => {})
-  it(`checks if we clicked on an anchor`, () => {})
-  it(`checks if the document author might be forcing navigation`, () => {})
-  it(`checks if the destination/origin URLs have matching origins`, () => {})
-  it(`checks if the destination/origin URLs have matching top level paths`, () => {})
-  it(`checks if the destination URL wants to scroll the page with a hash anchor`, () => {})
-  it(`handles pathPrefix if necessary`, () => {})
-  it(`routes the destination href through gatsby`, () => {})
+  it.skip(`checks if the user might be forcing navigation`, () => {})
+  it.skip(`checks if we clicked on an anchor`, () => {})
+  it.skip(`checks if the document author might be forcing navigation`, () => {})
+  it.skip(`checks if the destination/origin URLs have matching origins`, () => {})
+  it.skip(`checks if the destination/origin URLs have matching top level paths`, () => {})
+  it.skip(`checks if the destination URL wants to scroll the page with a hash anchor`, () => {})
+  it.skip(`handles pathPrefix if necessary`, () => {})
+  it.skip(`routes the destination href through gatsby`, () => {})
 })
 
 describe(`a user may be forcing navigation if`, () => {
