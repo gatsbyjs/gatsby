@@ -528,7 +528,7 @@
     - Styling with SCSS
 - url: https://portfolio-bella.netlify.com/
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-bella
-  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images & big typography. The Onepage is powered by the Headless CMS Prismic.io. and has programatically created pages for your projects. General settings and colors can be changed in a config & theme file.
+  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images & big typography. The Onepage is powered by the Headless CMS Prismic.io. and has programmatically created pages for your projects. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
     - Prismic
@@ -560,7 +560,7 @@
     - And other good stuff (SEO, Responsive images, Offline Support, WebApp Manifest Support)
 - url: https://portfolio-emilia.netlify.com/
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-emilia
-  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The dark themed website shows your work with large images in a grid-layout (powered by CSS Grid). The transition effects on the header add a playful touch to the overall minimal design. The website is a Onepage design with programatically created pages for your projects. General settings and colors can be changed in a config & theme file.
+  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The dark themed website shows your work with large images in a grid-layout (powered by CSS Grid). The transition effects on the header add a playful touch to the overall minimal design. The website is a Onepage design with programmatically created pages for your projects. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
     - Onepage
@@ -578,7 +578,7 @@
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 - url: https://portfolio-emma.netlify.com/
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-emma
-  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images in a full-width grid-layout. The randomized color overlays add a playful touch to the overall minimal design. The website has three pages (Index, About, Contact) and programatically created pages for your projects. General settings and colors can be changed in a config & theme file.
+  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images in a full-width grid-layout. The randomized color overlays add a playful touch to the overall minimal design. The website has three pages (Index, About, Contact) and programmatically created pages for your projects. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
     - Markdown
