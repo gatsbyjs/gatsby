@@ -281,7 +281,7 @@ Whoa, neat! This React component will be rendered to a static HTML string (for
 each route/blog post we define), which will serve as the basis of our
 routing/navigation for our blog.
 
-At this point, there is a reasonable level of confusion and "magic" occuring,
+At this point, there is a reasonable level of confusion and "magic" occurring,
 particularly with the props injection. What is `markdownRemark`? Where is this
 `data` prop injected from? All good questions, so let's answer them by writing a
 GraphQL query to seed our `<Template />` component with content!

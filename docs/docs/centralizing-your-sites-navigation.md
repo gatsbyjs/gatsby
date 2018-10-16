@@ -251,7 +251,7 @@ const Header = ({ siteTitle, menuLinks }) => (
 )
 ```
 
-Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically genrated menu links on your page.
+Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically generated menu links on your page.
 
 If you have made it this far, good job! You can now add new site links to your website dynamically by adding entries to the `gatsby-config.js` file.
 

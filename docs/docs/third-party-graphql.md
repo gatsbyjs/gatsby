@@ -93,7 +93,7 @@ exports.createPages = async ({ actions, graphql }) => {
 }
 ```
 
-## Futher reading
+## Further reading
 
 - [graphql-source-graphql docs](/packages/gatsby-source-graphql)
 - [Example with GitHub API](https://github.com/freiksenet/gatsby-github-displayer)
