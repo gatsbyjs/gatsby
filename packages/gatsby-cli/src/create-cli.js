@@ -238,7 +238,11 @@ function buildLocalCommands(cli, isLocalSite) {
       _.option(`env-info`, {
         type: `boolean`,
         default: false,
-        describe: `Automagically log environment information to console`,
+        describe: `Log environment information (e.g. system info, package info, etc.) to console`,
+      }).option(`no-install`, {
+        type: `boolean`,
+        default: false,
+        describe: `Do not run yarn or npm install after cleaning directories`,
       }),
     handler: getCommandHandler(`clean`),
   })

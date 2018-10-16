@@ -27,7 +27,7 @@ const install = async ({ directory: rootPath, report, useYarn }) => {
 }
 
 module.exports = async function clean(args) {
-  const { directory, report } = args
+  const { directory, noInstall, report } = args
 
   const directories = [`.cache`, `public`, `node_modules`]
 
@@ -44,5 +44,7 @@ module.exports = async function clean(args) {
 
   report.info(`Successfully deleted local directories`)
 
-  await install(args)
+  if (!noInstall) {
+    await install(args)
+  }
 }
