@@ -448,7 +448,7 @@
     - Google Analytics support.
     - Disqus Comments support.
 - url: https://minimal-blog.netlify.com/
-  repo: https://github.com/LeKoArts/gatsby-starter-minimal-blog
+  repo: https://github.com/LekoArts/gatsby-starter-minimal-blog
   description: This starter is part of a german tutorial series on Gatsby. The starter will change over time to use more advanced stuff (feel free to express your ideas in the repository). Its first priority is a minimalistic style coupled with a lot of features for the content.
   tags:
     - Blog
@@ -527,7 +527,7 @@
     - Custom grid made with CSS Grid
     - Styling with SCSS
 - url: https://portfolio-bella.netlify.com/
-  repo: https://github.com/LeKoArts/gatsby-starter-portfolio-bella
+  repo: https://github.com/LekoArts/gatsby-starter-portfolio-bella
   description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images & big typography. The Onepage is powered by the Headless CMS Prismic.io. and has programatically created pages for your projects. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
@@ -544,7 +544,7 @@
     - Easily configurable
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 - url: https://portfolio-cara.netlify.com/
-  repo: https://github.com/LeKoArts/gatsby-starter-portfolio-cara
+  repo: https://github.com/LekoArts/gatsby-starter-portfolio-cara
   description: A portfolio starter for Gatsby. The target audience are designers and photographers. The playful & colorful Onepage has beautiful parallax effects (made possible by React Spring) and has a Hero, Projects, About and Contact section. The styling is defined by TailwindCSS which enables easy edits and a consistent look. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
@@ -559,7 +559,7 @@
     - Easily configurable
     - And other good stuff (SEO, Responsive images, Offline Support, WebApp Manifest Support)
 - url: https://portfolio-emilia.netlify.com/
-  repo: https://github.com/LeKoArts/gatsby-starter-portfolio-emilia
+  repo: https://github.com/LekoArts/gatsby-starter-portfolio-emilia
   description: A portfolio starter for Gatsby. The target audience are designers and photographers. The dark themed website shows your work with large images in a grid-layout (powered by CSS Grid). The transition effects on the header add a playful touch to the overall minimal design. The website is a Onepage design with programatically created pages for your projects. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
@@ -577,7 +577,7 @@
     - Create your projects in Markdown (automatic import of images)
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 - url: https://portfolio-emma.netlify.com/
-  repo: https://github.com/LeKoArts/gatsby-starter-portfolio-emma
+  repo: https://github.com/LekoArts/gatsby-starter-portfolio-emma
   description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images in a full-width grid-layout. The randomized color overlays add a playful touch to the overall minimal design. The website has three pages (Index, About, Contact) and programatically created pages for your projects. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
@@ -969,3 +969,20 @@
     - SEO (with Schema JSONLD) & Social Tags
     - Prettier
     - ESLint
+- url: https://gatsby-starter-prismic.netlify.com/
+  repo: https://github.com/LekoArts/gatsby-starter-prismic
+  description: A typography-heavy & light-themed Gatsby Starter which uses the Headless CMS Prismic.
+  tags:
+    - Prismic
+    - Styling:CSS-in-JS
+    - SEO
+    - Blog
+    - PWA
+  features:
+    - Prismic as Headless CMS
+    - Uses multiple features of Prismic - Slices, Labels, Relationship fields, Custom Types
+    - Emotion for Styling
+    - Prism.js highlighting
+    - Responsive images with gatsby-image
+    - Extensive SEO
+    - ESLint & Prettier
