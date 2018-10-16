@@ -103,6 +103,7 @@ jobs:
     executor: node
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*"
       - <<: *restore_node_modules
       - <<: *install_node_modules
       - <<: *attach_to_bootstrap
