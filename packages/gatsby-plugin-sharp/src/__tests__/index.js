@@ -155,7 +155,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`should throw if maxWidth is less than 1`, async () => {
-      const args = { maxWidth: 0 }
+      const args = { maxWidth: 0, assetPath: `` }
       const result = fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args,
@@ -171,7 +171,7 @@ describe(`gatsby-plugin-sharp`, () => {
         150,
         250,
       ]
-      const args = { srcSetBreakpoints }
+      const args = { srcSetBreakpoints, assetPath: `` }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args,
@@ -194,7 +194,7 @@ describe(`gatsby-plugin-sharp`, () => {
         50,
         0,
       ]
-      const args = { srcSetBreakpoints }
+      const args = { srcSetBreakpoints, assetPath: `` }
       const result = fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args,
@@ -213,6 +213,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = {
         maxWidth,
         srcSetBreakpoints,
+        assetPath: ``,
       }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
@@ -234,6 +235,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = {
         maxWidth,
         srcSetBreakpoints,
+        assetPath: ``,
       }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
@@ -270,6 +272,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = {
         maxWidth,
         srcSetBreakpoints,
+        assetPath: ``,
       }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
