@@ -37,10 +37,10 @@ cd my-gatsby-site
 
 ## Getting Started - Netlify
 
-Now, that the Gatsby site is running, we need to upload your Gatsby site to [Github](https://github.com/), [Gitlab](https://about.gitlab.com/) or [Bitbucket](https://bitbucket.org/).
+Now, that the Gatsby site is running, we need to upload your Gatsby site to [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/) or [Bitbucket](https://bitbucket.org/).
 
 Now, go to Netlify and signup if you haven't already.
-We connect to Github (or Gitlab/Bitbucket) and select the repository.
+We connect to GitHub (or GitLab/Bitbucket) and select the repository.
 
 We can change how Netlify builds and deploys the site.
 If we change nothing, Netlify will build the `master` branch of the repository and will invoke the `gatsby build` command after we clicked deploy.

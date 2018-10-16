@@ -8,18 +8,18 @@ For JavaScript loaded into the browser, just add a `.env.development` and/or
 `.env.production` file in your root folder for development or production builds
 respectively. The environment variables are embedded during build time using
 Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/). Because
-these variables are provided at build time, you will need restart your dev
+these variables are provided at build time, you will need to restart your dev
 server or rebuild your site after changing them.
 
 In addition to `.env.*` files, any variable in the environment prefixed with
 `GATSBY_` will be made available in browser JavaScript.
 
-To add environment variables for the JavaScript run in node.js, e.g. in
+To add environment variables for the JavaScript run in Node.js, e.g. in
 `gatsby-config.js` or `gatsby-node.js`, you can add environment variables the
 normal ways e.g. when calling gatsby on the command line or by adding
 environment variables through your hosting/build tool.
 
-If you want to access variables in `.env.*` files in your node.js code, use the
+If you want to access variables in `.env.*` files in your Node.js code, use the
 NPM package [dotenv](https://www.npmjs.com/package/dotenv). Install the package and
 require it in your `gatsby-config.js` or `gatsby-node.js` the following way on top of your file:
 

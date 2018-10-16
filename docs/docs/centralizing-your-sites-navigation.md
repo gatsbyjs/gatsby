@@ -13,7 +13,7 @@ What this section will cover:
 - Pulling the data into a component using StaticQuery
 - Dynamically rendering your navigation
 
-You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old javascript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages.
+You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old JavaScript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages.
 
 This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default#v2`.
 
@@ -251,7 +251,7 @@ const Header = ({ siteTitle, menuLinks }) => (
 )
 ```
 
-Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically genrated menu links on your page.
+Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically generated menu links on your page.
 
 If you have made it this far, good job! You can now add new site links to your website dynamically by adding entries to the `gatsby-config.js` file.
 
@@ -259,5 +259,5 @@ If you have made it this far, good job! You can now add new site links to your w
 
 Be sure to check out more documentation for further in-depth examples and guides on achieving tasks using Gatsby.
 
-- [Authentication in Gatsby](/docs/authentication/)
-- [E-commerce in Gatsby](/docs/e-commerce/)
+- [Authentication in Gatsby](/docs/authentication-tutorial/)
+- [E-commerce in Gatsby](/docs/ecommerce-tutorial/)

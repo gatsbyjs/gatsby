@@ -47,4 +47,4 @@ If you want to run Cypress in Continuous Integration (CI) you have to use `cypre
 }
 ```
 
-Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or Gitlab with Cypress.
+Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or GitLab with Cypress.

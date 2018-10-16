@@ -25,7 +25,7 @@ Plugins can extend Gatsby in many ways:
   sitemap, RSS feed)
 
 A single plugin can use multiple APIs to accomplish its purpose. E.g. the plugin
-for the css-in-js library [Glamor](/packages/gatsby-plugin-glamor/):
+for the CSS-in-JS library [Glamor](/packages/gatsby-plugin-glamor/):
 
 1.  modifies the webpack config to add its plugin
 2.  adds a Babel plugin to replace React's default createElement

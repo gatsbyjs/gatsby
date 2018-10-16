@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.3...gatsby-source-filesystem@2.0.4) (2018-10-15)
+
+### Bug Fixes
+
+- first parse url and then path to retrieve extension ([#9011](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/9011)) ([eb7648c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/eb7648c))
+
 <a name="2.0.3"></a>
 
 ## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.2...gatsby-source-filesystem@2.0.3) (2018-10-09)
