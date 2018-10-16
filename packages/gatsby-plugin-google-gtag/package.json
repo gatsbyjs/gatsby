@@ -1,0 +1,36 @@
+{
+  "name": "gatsby-plugin-google-gtag",
+  "description": "Gatsby plugin to add google gtag onto a site",
+  "version": "1.0.0-beta.0",
+  "author": "Tyler Buchea <tyler@buchea.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "minimatch": "^3.0.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "cross-env": "^5.1.4"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "google gtag",
+    "google global site tag"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
+  },
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  }
+}
