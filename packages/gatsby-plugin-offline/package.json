@@ -28,7 +28,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">2.0.0-beta"
+    "gatsby": ">=2.0.20"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline",
   "scripts": {
