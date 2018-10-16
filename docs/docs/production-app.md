@@ -72,7 +72,7 @@ This is the entrypoint to webpack that outputs `app-[contenthash].js` bundle. It
 
 ### First load
 
-To show how `production-app` works, let's imagine that we've just refreshed the browser on our site's `/blog/2` page. The HTML loads immediately, painting our page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in our js code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
+To show how `production-app` works, let's imagine that we've just refreshed the browser on our site's `/blog/2` page. The HTML loads immediately, painting our page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in our JavaScript code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
 
 ```html
 /*
@@ -95,7 +95,7 @@ Then, the app, webpack-runtime, component, and data json bundles are loaded via 
 
 The first thing our app does is run the [onClientEntry](/docs/browser-apis/#onClientEntry) browser API. This allows plugins to perform any operations before we hit the rest of the page loading logic. For example [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/) will call rehydrate.
 
-It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
+It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in Node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
 
 One thing to note is that it gets the list of plugins from `./cache/api-runner-browser-plugins.js`, which is generated [early in bootstrap](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js#L289).
 
