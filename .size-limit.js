@@ -9,8 +9,7 @@ const configs = fs
   .reduce((packages, folder) => {
     const configFile = path.join(base, folder, `.size-limit.js`)
     if (fs.existsSync(configFile)) {
-      let config = require(configFile)
-      config = config.map(part => {
+      const config = require(configFile).map(part => {
         part.path = path.join(base, folder, part.path)
         part.name = part.name || folder
         return part
