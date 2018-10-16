@@ -1,5 +1,5 @@
 ---
-title: Add page metadata
+title: Adding page metadata
 ---
 
 If you've run an [audit with Lighthouse](/audit-with-lighthouse/), you may have noticed a lackluster score in the "SEO" category. Let's address how you can improve that score.

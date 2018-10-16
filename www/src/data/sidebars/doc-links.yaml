@@ -200,6 +200,10 @@
           link: /docs/adding-forms/
         - title: Adding a 404 Page
           link: /docs/add-404-page/
+        - title: Adding page metadata
+          link: /docs/add-page-metadata/
+        - title: Adding a SEO component
+          link: /docs/add-seo-component/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Adding pagination

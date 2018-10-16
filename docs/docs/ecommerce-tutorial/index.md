@@ -81,7 +81,7 @@ module.exports = {
 
 Run `gatsby develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](http://localhost8000.com/) and you should see a default homepage.
 
-> **NOTE**: If you have already started your gatsby development server using `gatsby develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `gatsby develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost8000.com/)
+> **NOTE**: If you have already started your Gatsby development server using `gatsby develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `gatsby develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost8000.com/)
 
 ## How does the Stripe Checkout plugin work?
 
@@ -182,7 +182,7 @@ const Checkout = class extends React.Component {
       token: token => {
         fetch(`AWS_LAMBDA_URL`, {
           method: "POST",
-          mode: 'no-cors',
+          mode: "no-cors",
           body: JSON.stringify({
             token,
             amount,

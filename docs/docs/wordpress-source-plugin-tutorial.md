@@ -74,7 +74,7 @@ module.exports = {
 
 ### Creating GraphQL queries that pull data from WordPress
 
-Now you are ready to create a GraphQL query to pull in some data from the WordPress site. You will create a query that pulls in the title of the blogposts, date they were posted, and blogpost content.
+Now you are ready to create a GraphQL query to pull in some data from the WordPress site. You will create a query that pulls in the title of the blog posts, date they were posted, and blogpost content.
 
 Run:
 
@@ -102,7 +102,7 @@ query {
 }
 ```
 
-This next query will pull in a sorted list of the blogposts:
+This next query will pull in a sorted list of the blog posts:
 
 ```graphql
 {
@@ -118,7 +118,7 @@ This next query will pull in a sorted list of the blogposts:
 }
 ```
 
-## Rendering the blogposts to `index.js`
+## Rendering the blog posts to `index.js`
 
 Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 
@@ -157,9 +157,9 @@ export const pageQuery = graphql`
 `
 ```
 
-Save these changes and look at localhost:8000 to see your new homepage with list of sorted blogposts!
+Save these changes and look at localhost:8000 to see your new homepage with list of sorted blog posts!
 
-> **NOTE:** to future editors: it would be useful to also have examples of how to load blogposts to their own individual pages. And helpful to insert a screenshot of the final result here
+> **NOTE:** to future editors: it would be useful to also have examples of how to load blog posts to their own individual pages. And helpful to insert a screenshot of the final result here
 
 ### Create slugs for each blogpost
 
