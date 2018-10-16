@@ -30,12 +30,12 @@ development server.
 
 #### Options
 
-|     Option      | Description                                     |
-| :-------------: | ----------------------------------------------- |
-| `-H`, `--host`  | Set host. Defaults to localhost                 |
-| `-p`, `--port`  | Set port. Defaults to 8000                      |
-| `-o`, `--open`  | Open the site in your (default) browser for you |
-| `-S`, `--https` | Use HTTPS                                       |
+|     Option      | Description                                     |   Default   |
+| :-------------: | ----------------------------------------------- | :---------: |
+| `-H`, `--host`  | Set host.                                       | `localhost` |
+| `-p`, `--port`  | Set port.                                       |   `8000`    |
+| `-o`, `--open`  | Open the site in your (default) browser for you |             |
+| `-S`, `--https` | Use HTTPS                                       |             |
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
@@ -47,11 +47,11 @@ site.
 
 #### Options
 
-|            Option            | Description                                                                                                 |
-| :--------------------------: | ----------------------------------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                         |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                     |
-| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |
+|            Option            | Description                                                                                                 | Default |
+| :--------------------------: | ----------------------------------------------------------------------------------------------------------- | :-----: |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                         | `false` |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                     | `false` |
+| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
 
 ### `serve`
 
@@ -60,12 +60,12 @@ the site for testing.
 
 #### Options
 
-|      Option      | Description                                                                              |
-| :--------------: | ---------------------------------------------------------------------------------------- |
-|  `-H`, `--host`  | Set host. Defaults to localhost                                                          |
-|  `-p`, `--port`  | Set port. Defaults to 8000                                                               |
-|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
-| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
+|      Option      | Description                                                                              |   Default   |
+| :--------------: | ---------------------------------------------------------------------------------------- | :---------: |
+|  `-H`, `--host`  | Set host.                                                                                | `localhost` |
+|  `-p`, `--port`  | Set port.                                                                                |   `8000`    |
+|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |             |
+| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |   `false`   |
 
 ### `clean`
 
@@ -73,10 +73,10 @@ At the root of a Gatsby site run `gatsby clean` to wipe out `node_modules`, cach
 
 #### Options
 
-|     Option     | Description                                                                   |
-| :------------: | ----------------------------------------------------------------------------- |
-|  `--env-info`  | Log environment information (e.g. system info, package info, etc.) to console |
-| `--no-install` | Do not run yarn or npm install after cleaning directories                     |
+|     Option     | Description                                                                    | Default |
+| :------------: | ------------------------------------------------------------------------------ | :-----: |
+|  `--env-info`  | Log environment information (e.g. system info, package info, etc.) to console. | `false` |
+| `--no-install` | Do not run yarn or npm install after cleaning directories                      | `false` |
 
 ### `info`
 
@@ -84,9 +84,9 @@ At the root of a Gatsby site run `gatsby info` to get helpful environment inform
 
 #### Options
 
-|       Option        | Description                                             |
-| :-----------------: | ------------------------------------------------------- |
-| `-C`, `--clipboard` | Automagically copy environment information to clipboard |
+|       Option        | Description                                             | Default |
+| :-----------------: | ------------------------------------------------------- | :-----: |
+| `-C`, `--clipboard` | Automagically copy environment information to clipboard | `false` |
 
 ### `repl`
 
