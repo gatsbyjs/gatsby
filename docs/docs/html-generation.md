@@ -6,13 +6,13 @@ In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack
 
 The high level process is:
 
-1. Create a webpack configuration for node.js Server Side Rendering (SSR)
+1. Create a webpack configuration for Node.js Server Side Rendering (SSR)
 1. Build a `page-renderer.js` that takes a page path and renders its HTML
 1. For each page in redux, call `page-renderer.js`
 
 ## Webpack
 
-For the first step, we use webpack to build an optimized node.js bundle. The entry point for this is called `static-entry.js`
+For the first step, we use webpack to build an optimized Node.js bundle. The entry point for this is called `static-entry.js`
 
 ## static-entry.js
 

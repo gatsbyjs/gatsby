@@ -79,7 +79,7 @@ module.exports = {
 }
 ```
 
-If you have not yet initialized a git repository in your working Gatsby site
+If you have not yet initialized a Git repository in your working Gatsby site
 repo, set up Git in your project with `git init`. Then tell Gatsby where to
 deploy your site by adding the Git remote address with HTTPS or SSH. Here is how
 to do it with HTTPS: `git remote add origin git@github.com:username/project-name.git`.

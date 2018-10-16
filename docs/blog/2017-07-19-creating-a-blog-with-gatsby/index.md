@@ -65,7 +65,7 @@ Plugins can be broken up into three main categories: **functional** plugins,
 
 Functional plugins either implement some functionality (e.g. offline support,
 generating a sitemap, etc.) _or_ they extend Gatsby's webpack configuration
-adding support for typescript, sass, etc.
+adding support for TypeScript, Sass, etc.
 
 For this particular blog post, we want a single page app-like feel (without page
 reloads), as well as the ability to dynamically change the `title` tag within

@@ -10,7 +10,7 @@ Here's the steps Gatsby follows for making this happen.
 1.  Read files into Gatsby from the filesystem
 2.  Transform markdown to HTML and frontmatter to data
 3.  Create a page component for the markdown files
-4.  Programmatically create pages using Gatsby's node.js `createPage` API
+4.  Programmatically create pages using Gatsby's Node.js `createPage` API
 
 ### Read files into Gatsby from the filesystem - `gatsby-source-filesystem`
 
