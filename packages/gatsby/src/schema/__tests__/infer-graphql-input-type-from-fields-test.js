@@ -11,6 +11,7 @@ const {
   GraphQLInputObjectType,
   Kind,
 } = require(`graphql`)
+const GraphQLJSON = require(`graphql-type-json`)
 
 const {
   inferInputObjectStructureFromFields,
@@ -363,5 +364,32 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     })
 
     expect(sort.sort()).toEqual([`bar`, `baz___ka`, `baz___ma`, `foo`])
+  })
+
+  it(`handles JSON fields`, async () => {
+    const fields = {
+      foo: { type: GraphQLJSON },
+    }
+
+    const { inferredFields } = inferInputObjectStructureFromFields({ fields })
+
+    expect(inferredFields).toEqual({})
+  })
+
+  it(`handles custom types with JSON fields`, async () => {
+    const TypeA = new GraphQLObjectType({
+      name: `TypeA`,
+      fields: {
+        bar: { type: GraphQLJSON },
+      },
+    })
+
+    const fields = {
+      foo: { type: TypeA },
+    }
+
+    const { inferredFields } = inferInputObjectStructureFromFields({ fields })
+
+    expect(inferredFields).toEqual({})
   })
 })
