@@ -7,7 +7,7 @@ const buildNodeTypes = require(`./build-node-types`)
 const buildNodeConnections = require(`./build-node-connections`)
 const { store } = require(`../redux`)
 const invariant = require(`invariant`)
-const { clearUnionTypes } = require('./infer-graphql-type')
+const { clearUnionTypes } = require(`./infer-graphql-type`)
 
 module.exports = async ({ parentSpan }) => {
   clearUnionTypes()
