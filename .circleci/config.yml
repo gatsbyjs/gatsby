@@ -99,6 +99,15 @@ jobs:
       - <<: *persist_node_modules
       - run: yarn lint
 
+  bundle-size:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_node_modules
+      - <<: *install_node_modules
+      - <<: *attach_to_bootstrap
+      - run: yarn size
+
   unit_tests_node6:
     executor:
       name: node
@@ -155,6 +164,9 @@ workflows:
     jobs:
       - bootstrap
       - lint
+      - bundle-size:
+          requires:
+            - bootstrap
       - unit_tests_node6:
           requires:
             - bootstrap
