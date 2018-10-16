@@ -30,7 +30,7 @@ This framework would have to be:
   new features is easy and complexity is contained.
 - **internet scale**, launch your site to millions without crashing your site
   (or your wallet).
-- **secure**, doesn't put your your users' data at risk of hacking.
+- **secure**, doesn't put your users' data at risk of hacking.
 
 I believe that Gatsby fulfills these requirements. After several years of
 working on the project and seeing it used successfully by many people on a wide
