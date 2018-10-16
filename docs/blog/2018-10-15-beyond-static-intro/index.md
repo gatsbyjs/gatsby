@@ -7,7 +7,11 @@ showImageInArticle: false
 tags: ["apps", "beyond static", "webinar"]
 ---
 
-We hear it regularly. Gatsby is for static sites, Next.js (or similar) is for when your data changes regularly and/or you need an "app." This raises a question... what actually _is_ an app? If this question interests you, consider attending [the upcoming webinar][webinar] where we'll focus on shedding some light on this very question as well as talk about how to build dynamic web apps with Gatsby. Until then, I’d like to offer some brief teasers of some of the content we’ll be discussing during the webinar and some introductory information in _how_ Gatsby enables app development.
+We hear it regularly. Gatsby is for static sites, Next.js (or similar) is for when your data changes regularly and/or you need an "app." This raises a question... what actually _is_ an app? 
+
+If this question interests you, consider attending [the upcoming webinar][webinar] where we'll focus on shedding some light on this very question as well as talk about how to build dynamic web apps with Gatsby. 
+
+Until then, I’d like to offer some brief teasers of some of the content we’ll be discussing during the webinar and some introductory information in _how_ Gatsby enables app development.
 
 > My first impression of Gatsby is that it is more of a static site generator which I interpret as being aimed at content or marketing websites and not as focused on web apps. That is a complete assumption so please correct me if I am wrong.
 >
@@ -15,11 +19,17 @@ We hear it regularly. Gatsby is for static sites, Next.js (or similar) is for wh
 
 ## What is an app?
 
-It's surprisingly challenging to define what separates an app from a static site. Authentication? Reacting to remote data changes? A shopping cart? In fact, it's surprisingly murky where that line is drawn and why exactly many seem to clearly delineate the two _separate_ concepts.
+It's surprisingly challenging to define what separates an app from a static site. 
+
+- Authentication? 
+- Reacting to remote data changes? 
+- A shopping cart? 
+
+It's surprisingly murky where that line is drawn and why exactly many seem to clearly delineate the two _separate_ concepts.
 
 In fact, I contend that the line between these two concepts is extremely blurry. There isn't some magic percentage threshold that, when crossed, indicates that a static site is now an application. Nor is the inverse true, that an "app" is somehow static because some percentage of its content never or rarely changes.
 
-From this perspective, I think it's fair to consider dynamic content as the key determinant between static sites and apps. The more dynamic content an application has, the more app-like that application feels. From this basis, Gatsby is an excellent choice because it enables dynamic functionality just as easily as it enables static site generation.
+From this perspective, it's fair to consider dynamic content as the key determinant between static sites and apps. The more dynamic content an application has, the more app-like that application feels. From this basis, Gatsby is an excellent choice because it enables dynamic functionality just as easily as it enables static site generation.
 
 ## How does Gatsby enable app functionality?
 
@@ -33,7 +43,9 @@ One of the central ideas of Gatsby is that we statically generate our HTML conte
 1. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
 1. Transfer rendering to the [React reconciler][reconciler]
 
-It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make data calls, authenticate users, and perform all the app-like functionality you desire. It's really that easy.
+It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make data calls, authenticate users, and perform all the app-like functionality you desire. 
+
+It's really that easy.
 
 ## Use cases
 
