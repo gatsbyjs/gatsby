@@ -64,7 +64,7 @@
           link: /docs/working-with-images/
         - title: Using gatsby-image
           link: /docs/using-gatsby-image/
-    - title: Sourcing content and data*
+    - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
         - title: Using Unstructured Data
@@ -107,6 +107,8 @@
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
           link: /docs/adding-a-list-of-markdown-blog-posts/
+        - title: Using fragments
+          link: /docs/using-fragments/
         - title: Creating slugs for pages*
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
@@ -130,9 +132,11 @@
     - title: Styling
       link: /docs/styling/
       items:
+        - title: Layout Components
+          link: /docs/layout-components/
         - title: CSS Modules
           link: /docs/css-modules/
-        - title: Typography.js*
+        - title: Typography.js
           link: /docs/typography-js/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
@@ -140,9 +144,9 @@
           link: /docs/styled-components/
         - title: Creating global styles
           link: /docs/creating-global-styles/
-        - title: Component CSS*
+        - title: Component CSS
           link: /docs/component-css/
-        - title: PostCSS*
+        - title: PostCSS
           link: /docs/post-css/
     - title: Testing
       link: /docs/testing/
@@ -196,13 +200,17 @@
           link: /docs/adding-forms/
         - title: Adding a 404 Page
           link: /docs/add-404-page/
+        - title: Adding page metadata
+          link: /docs/add-page-metadata/
+        - title: Adding a SEO component
+          link: /docs/add-seo-component/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Adding pagination
           link: /docs/adding-pagination/
         - title: Creating a sitemap*
           link: /docs/creating-a-sitemap/
-        - title: Linking between pages*
+        - title: Linking between pages
           link: /docs/linking-between-pages/
         - title: Interactive pages*
           link: /docs/interactive-pages/
@@ -232,6 +240,8 @@
           link: /docs/add-a-manifest-file/
         - title: Add Offline Support
           link: /docs/add-offline-support/
+        - title: Add a Service Worker
+          link: /docs/add-a-service-worker/
         - title: Add Page Metadata
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)
@@ -326,7 +336,7 @@
     - title: Webpack and SSR
       link: /docs/webpack-and-ssr/
       items:
-        - title: Building the Javascript App
+        - title: Building the JavaScript App
           link: /docs/production-app/
         - title: Page HTML Generation
           link: /docs/html-generation/
@@ -368,7 +378,7 @@
       link: /docs/pair-programming/
     - title: Gatsby Style Guide
       link: /docs/gatsby-style-guide/
-    - title: RFC process*
+    - title: RFC process
       link: /docs/rfc-process/
     - title: Docs templates
       link: /docs/templates/
@@ -382,6 +392,8 @@
       link: /docs/submit-to-creator-showcase/
     - title: Submit to Starter Library
       link: /docs/submit-to-starter-library/
+    - title: Submit to Plugin Library
+      link: /docs/submit-to-plugin-library/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)

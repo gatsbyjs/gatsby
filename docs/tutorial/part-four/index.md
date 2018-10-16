@@ -266,7 +266,7 @@ export const query = graphql`
 
 It worked! 🎉
 
-![Page title pulling from siteMetadata](/site-metadata-title.png)
+![Page title pulling from siteMetadata](site-metadata-title.png)
 
 The basic GraphQL query that retrieves the `title` in our `layout.js` changes above is:
 
@@ -345,7 +345,7 @@ export default ({ children }) => (
 
 Another success! 🎉
 
-![Page title and layout title both pulling from siteMetadata](/site-metadata-two-titles.png)
+![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
 
 But let's restore the real title.
 
@@ -353,7 +353,7 @@ One of the core principles of Gatsby is that _creators need an immediate connect
 
 So almost everywhere, changes you make will immediately take effect. Edit the `gatsby-config.js` file again, this time changing the `title` back to "Pandas Eating Lots". The change should show up very quickly in your site pages.
 
-![Both titles say Pandas Eating Lots](/pandas-eating-lots-titles.png)
+![Both titles say Pandas Eating Lots](pandas-eating-lots-titles.png)
 
 ## What's coming next?
 

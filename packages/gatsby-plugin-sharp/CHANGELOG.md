@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.6...gatsby-plugin-sharp@2.0.7) (2018-10-16)
+
+### Features
+
+- add custom sizes for fluid images ([#8825](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/8825)) ([6cb4ee6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/6cb4ee6)), closes [#8621](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/8621)
+
 <a name="2.0.6"></a>
 
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.5...gatsby-plugin-sharp@2.0.6) (2018-10-03)

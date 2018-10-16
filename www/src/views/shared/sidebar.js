@@ -1,10 +1,9 @@
 import React from "react"
-import { merge, css } from "glamor"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import styles from "../shared/styles"
 
 export const SidebarContainer = ({ children }) => (
-  <div css={merge(styles.sidebarContainer, styles.sticky)}>{children}</div>
+  <div css={[styles.sidebarContainer, styles.sticky]}>{children}</div>
 )
 
 export const SidebarBody = ({ children }) => (
