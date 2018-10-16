@@ -129,7 +129,7 @@ These two files are loaded by [static-entry.js](https://github.com/gatsbyjs/gats
 
 ##### Construct link and script tags for current page
 
-As mentioned above, `static-entry.js` generates HTML, but also loads the Gatsby JS runtime and the JS for the page we're generating HTML for. These are added as a `link` tags in the `<head>` (see [link tag preloading](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content)), and then referenced at the bottom of the body in `script` tags.
+As mentioned above, `static-entry.js` generates HTML, but also loads the Gatsby JavaScript runtime and the JavaScript for the page we're generating HTML for. These are added as a `link` tags in the `<head>` (see [link tag preloading](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content)), and then referenced at the bottom of the body in `script` tags.
 
 The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L164)). We [lookup assetsByChunkName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L195) by `app` to get its chunk asset files. Then we do the same for the component by looking up the same collection by `componentChunkName` (e.g. `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, we create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259).
 

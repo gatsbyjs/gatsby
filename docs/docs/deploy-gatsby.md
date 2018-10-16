@@ -79,7 +79,7 @@ module.exports = {
 }
 ```
 
-If you have not yet initialized a git repository in your working Gatsby site
+If you have not yet initialized a Git repository in your working Gatsby site
 repo, set up Git in your project with `git init`. Then tell Gatsby where to
 deploy your site by adding the Git remote address with HTTPS or SSH. Here is how
 to do it with HTTPS: `git remote add origin git@github.com:username/project-name.git`.
@@ -275,15 +275,9 @@ In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can
 
 `npm install -g now`
 
-2.  Install a node server package (such as `serve`, or `http-server`)
+2.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
 
-`npm install --save serve`
-
-3.  Add a `start` script to your `package.json` file, this is what Now will use to run your application:
-
-`"start": "serve public/"`
-
-4.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
+For alternate [Now](https://zeit.co/now) deployment options, check out [this document](/docs/deploying-to-now).
 
 ## Debugging tips
 
