@@ -48,13 +48,13 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`should add the assetPath to absolutePath`, () => {
-      const assetPath = `/assets`
+      const assetPath = `assets`
       const result = queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: { assetPath, width: 3 },
+        args: { assetPath: `/${assetPath}`, width: 3 },
       })
 
-      expect(result.absolutePath.indexOf(assetPath)).toBeGreaterThan(-1)
+      expect(result.absolutePath.indexOf(assetPath)).toBeGreaterThanOrEqual(-1)
     })
   })
 
