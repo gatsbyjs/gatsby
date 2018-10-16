@@ -269,7 +269,8 @@ export function inferInputObjectStructureFromNodes({
 
     if (_.includes(key, `___NODE`)) {
       // TODO: Union the objects in array
-      const nodeToFind = _.isArray(value) ? value[0] : value
+      const isArray = _.isArray(value)
+      const nodeToFind = isArray ? value[0] : value
       const linkedNode = findLinkedNode(nodeToFind)
 
       // Get from cache if found, else store into it
@@ -287,7 +288,7 @@ export function inferInputObjectStructureFromNodes({
         linkedNodeCache[linkedNode.internal.type] = value
       }
 
-      if (_.isArray(value)) {
+      if (isArray) {
         value = [value]
       }
 
@@ -300,7 +301,7 @@ export function inferInputObjectStructureFromNodes({
       prefix: `${prefix}${_.upperFirst(key)}`,
     })
 
-    if (field == null) return
+    if (field === null) return
     inferredFields[createKey(key)] = field
   })
 
