@@ -43,20 +43,19 @@ module.exports = function getUnownedPackages({
 
     const alreadyOwnedPackages = await getPackagesWithReadWriteAccess(user)
 
-    const publicGatsbyPackagesWithoutAccess = publicGatsbyPackages.filter(
-      async pkg => {
-        const isOwned = alreadyOwnedPackages[pkg.name]
+    let publicGatsbyPackagesWithoutAccess = await Promise.all(
+      publicGatsbyPackages.map(pkg => {
+        const isOwned = typeof alreadyOwnedPackages[pkg.name] === `string`
         if (isOwned) {
-          return false
+          return null
         }
 
-        const isPublished = await exec(`npm view ${pkg.name} version`)
+        return exec(`npm view ${pkg.name} version`)
           .then(() => true)
           .catch(() => false)
-
-        return !isPublished
-      }
-    )
+          .then(isPublished => (isPublished ? null : pkg.name))
+      })
+    ).then(packages => packages.filter(pkg => typeof pkg === `string`))
 
     return {
       packages: publicGatsbyPackagesWithoutAccess,
