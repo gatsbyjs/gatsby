@@ -21,7 +21,7 @@ aliases:
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: yarn
+      command: yarn --frozen-lockfile
 
   persist_cache: &persist_cache
     save_cache:
