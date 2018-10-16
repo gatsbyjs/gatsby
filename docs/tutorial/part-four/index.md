@@ -268,7 +268,7 @@ It worked! 🎉
 
 ![Page title pulling from siteMetadata](site-metadata-title.png)
 
-The basic GraphQL query that retrieves the `title` in our `layout.js` changes above is:
+The basic GraphQL query that retrieves the `title` in our `about.js` changes above is:
 
 ```
 {
