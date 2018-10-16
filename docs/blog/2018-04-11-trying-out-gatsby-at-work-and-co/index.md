@@ -275,7 +275,7 @@ If you’ve ever used `yarn link` to modify a dependency locally, this provides 
 
 As I said, I was impressed by the Gatsby team’s quick turnaround time with PR approvals, but even so, when doing client work on a tight deadline, it can be stressful waiting for your changes to be merged. For ultimate peace of mind, you should be able to move forward using your forked work even if — in the worst case scenario — your PR is never approved.
 
-Of course, this is something developers do all the time. They push their fork to git and link to it in their project’s `package.json`:
+Of course, this is something developers do all the time. They push their fork to Git and link to it in their project’s `package.json`:
 
 ```
 “dependencies”: {

@@ -246,7 +246,7 @@
   features:
     - Simple portfolio to quick start a site with DatoCMS
     - Contents and media from DatoCMS
-    - Custom sass style
+    - Custom Sass style
     - SEO
 - url: https://gatsby-deck.netlify.com/
   repo: https://github.com/fabe/gatsby-starter-deck

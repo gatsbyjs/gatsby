@@ -107,7 +107,7 @@ retrieve data from databases and/or other APIs.
 
 Gatsby uses GraphQL at _build-time_ and _not_ for live
 sites. This is unique, and it means you don't need to run additional services (e.g. a database
-and node.js service) to use GraphQL for production websites.
+and Node.js service) to use GraphQL for production websites.
 
 Gatsby is a great framework for building apps so it's possible and encouraged
 to pair Gatsby's native build-time GraphQL with GraphQL queries running against

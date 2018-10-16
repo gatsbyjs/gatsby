@@ -380,7 +380,7 @@ createPage({
 
 Initially, I tried to use the `git-gateway` identity management approach in
 Netlify, but it didn't work for me. I could not reach the point to validate or
-reset the password for my user 1, so I kept the "old-school" way of github
+reset the password for my user 1, so I kept the "old-school" way of GitHub
 integration which works just fine for me at the moment, having the fact I will
 be 1 user to work on the site.
 
