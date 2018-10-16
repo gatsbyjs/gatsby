@@ -28,7 +28,7 @@ aliases:
       name: Save node modules cache
       key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
       paths:
-        - ~/.cache # yarn + cypress cache
+        - ~/.cache
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
