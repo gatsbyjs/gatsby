@@ -142,12 +142,12 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   // See issue #8907: destination.pathname already includes pathPrefix added
   // by gatsby-transformer-remark but gatsby-link.navigate needs href without
-  const destinationPathname = slashedPathname(destination.pathname)
-    .replace(pathStartRegEx, `/`)
-
-  hrefHandler(
-    `${destinationPathname}${destination.search}${destination.hash}`
+  const destinationPathname = slashedPathname(destination.pathname).replace(
+    pathStartRegEx,
+    `/`
   )
+
+  hrefHandler(`${destinationPathname}${destination.search}${destination.hash}`)
 
   return false
 }

@@ -375,10 +375,7 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
 
     // create the element with href /blog/article
     const clickElement = document.createElement(`a`)
-    clickElement.setAttribute(
-      `href`,
-      `${window.location.href}/article`
-    )
+    clickElement.setAttribute(`href`, `${window.location.href}/article`)
     document.body.appendChild(clickElement)
 
     // create the click event we'll be using for testing
@@ -389,9 +386,9 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
     })
 
     // fake module handler
-    hrefHandler.mockImplementation((path) => {
+    hrefHandler.mockImplementation(path => {
       // place a mock where processing exits gatsby-link
-      const checkPoint = global.___navigate = jest.fn()
+      const checkPoint = (global.___navigate = jest.fn())
       // call gatsby-link.navigate as the default handler does
       navigate(path)
       // compare href past gatsby-link against our clickElement
@@ -415,10 +412,7 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
 
     // create the element with href /blog/article
     const clickElement = document.createElement(`a`)
-    clickElement.setAttribute(
-      `href`,
-      `${window.location.href}/article`
-    )
+    clickElement.setAttribute(`href`, `${window.location.href}/article`)
     document.body.appendChild(clickElement)
 
     // create the click event we'll be using for testing
@@ -429,9 +423,9 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
     })
 
     // fake module handler
-    hrefHandler.mockImplementation((path) => {
+    hrefHandler.mockImplementation(path => {
       // place a mock where processing exits gatsby-link
-      const checkPoint = global.___navigate = jest.fn()
+      const checkPoint = (global.___navigate = jest.fn())
       // call gatsby-link.navigate as the default handler does
       navigate(path)
       // compare href past gatsby-link against our clickElement
@@ -448,5 +442,4 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
     // and trigger click
     clickElement.dispatchEvent(clickEvent)
   })
-
 })
