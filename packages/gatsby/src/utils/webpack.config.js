@@ -130,7 +130,8 @@ module.exports = async (
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public/${store.getState().config.assetPath}`),
-          publicPath: `${store.getState().config.assetPath}/`,
+          publicPath: `${store.getState().config.assetPath ||
+            store.getState().config.pathPrefix}/`,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
