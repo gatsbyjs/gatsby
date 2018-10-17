@@ -21,6 +21,76 @@ gatsby new gatsby-auth
 cd gatsby-auth
 ```
 
+Then, add a more apt title to your newly created site, changing the content of `gatsby-config.js`:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: "Gatsby Authentication Tutorial",
+  },
+  plugins: ["gatsby-plugin-react-helmet", "gatsby-plugin-offline"],
+}
+```
+
+## Authentication service
+
+For this tutorial you will use a hardcode user/password. Create the folder `src/services` and add the follwing content to the file `auth.js`:
+
+```javascript:title=src/services/auth.js
+export const getUser = () =>
+  window.localStorage.gatsbyUser
+    ? JSON.parse(window.localStorage.gatsbyUser)
+    : {}
+
+const setUser = user => (window.localStorage.gatsbyUser = JSON.stringify(user))
+
+export const handleLogin = ({ username, password }) => {
+  if (username === `john` && password === `pass`) {
+    return setUser({
+      username: `john`,
+      name: `Johnny`,
+      email: `johnny@example.org`,
+    })
+  }
+
+  return false
+}
+
+export const isLoggedIn = () => {
+  const user = getUser()
+
+  return !!user.username
+}
+
+export const logout = callback => {
+  setUser({})
+  callback()
+}
+```
+
+## Creating client-only routes
+
+Up until now, you created a common Gatsby site. But, using the [@reach/router](https://reach.tech/router/) library, you can create routes available only to logged-in users. This library is used by Gatsby under the hood, so you don't even have to install it.
+
+First, edit `gatsby-node.js`. You will define that any route that starts with `/app/` is part of your restricted content and the page will be created on demand:
+
+```javascript:title=gatsby-config.js
+// Implement the Gatsby API “onCreatePage”. This is
+// called after every page is created.
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
+
+  // page.matchPath is a special key that's used for matching pages
+  // only on the client.
+  if (page.path.match(/^\/app/)) {
+    page.matchPath = "/app/*"
+
+    // Update the page.
+    createPage(page)
+  }
+}
+```
+
 WIP
 
 # Further reading
