@@ -3,6 +3,8 @@ const HJSON = require(`hjson`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 
+const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
+
 describe(`Process HJSON nodes correctly`, () => {
   const node = {
     name: `nodeName`,
@@ -37,6 +39,7 @@ describe(`Process HJSON nodes correctly`, () => {
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -61,6 +64,7 @@ describe(`Process HJSON nodes correctly`, () => {
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
