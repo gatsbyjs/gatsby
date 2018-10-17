@@ -36,6 +36,10 @@
     "rimraf": "^2.6.1",
     "yargs": "^10.0.3"
   },
+  "peerDependencies": {
+    "inferno": "6.x",
+    "inferno-compat": "6.x"
+  },
   "engines": {
     "yarn": "^1.2.1",
     "node": ">=6.11.5"
