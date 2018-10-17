@@ -1,8 +1,9 @@
 const MongoClient = require(`mongodb`).MongoClient
-const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const _ = require(`lodash`)
 const queryString = require(`query-string`)
+
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged },
@@ -85,10 +86,7 @@ function createNodes(
           internal: {
             type: `mongodb${caps(dbName)}${caps(collectionName)}`,
             content: JSON.stringify(item),
-            contentDigest: crypto
-              .createHash(`md5`)
-              .update(JSON.stringify(item))
-              .digest(`hex`),
+            contentDigest: createContentDigest(item),
           },
         }
         const childrenNodes = []
@@ -109,7 +107,8 @@ function createNodes(
                 mediaItemFieldKey,
                 node[mediaItemFieldKey],
                 mapObj[mediaItemFieldKey],
-                createNode
+                createNode,
+                createContentDigest
               )
 
               node[`${mediaItemFieldKey}___NODE`] = mappingChildNode.id
