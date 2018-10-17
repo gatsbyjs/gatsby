@@ -1,14 +1,9 @@
 const algoliasearch = require(`algoliasearch`)
-const crypto = require(`crypto`)
+
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
 const client = algoliasearch(`OFCNCOG2CU`, `6fbcaeafced8913bf0e4d39f0b541957`)
 var index = client.initIndex(`npm-search`)
-
-const createContentDigest = obj =>
-  crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(obj))
-    .digest(`hex`)
 
 function browse({ index, ...params }) {
   let hits = []
