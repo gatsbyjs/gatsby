@@ -1,0 +1,203 @@
+---
+title: Using unstructured data in Gatsby
+date: 2018-10-16
+author: Amberley Romo
+tags: ["sourcing", "data"]
+---
+
+Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightfully so! Gatsby's data layer is powerful and extremely effective.
+
+> _[Source plugins](/docs/create-source-plugin/)_ “source” data from remote or local locations into Gatsby nodes. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
+
+**However, you don't _need_ to use source plugins (or create Gatsby nodes) to pull data into a Gatsby site!** We'll explore how to use an "unstructured data" approach in Gatsby sites, and some of the pros and cons of doing so.
+
+_For our purposes here, "unstructured data" means data "handled outside of Gatsby's data layer" (we're using the data directly, and not transforming the data into Gatsby nodes)._
+
+## Fetch data and use Gatsby's `createPages` API
+
+We'll take a look at a (very serious) example of how this works. In the example, we'll:
+
+1. Load data from the [PokéAPI’s](https://pokeapi.co/) REST endpoints
+2. Create pages (and nested pages) using Gatsby's `createPages` API.
+
+That's it!
+
+### The tldr; (in tweet form)
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">➡ Did you know you can create pages in <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> w/unstructured data? This code will:<br><br>✅ Load data from the <a href="https://twitter.com/PokeAPI?ref_src=twsrc%5Etfw">@PokeAPI</a> <br>✅ Create a page with links to all Pokémon<br>✅ Create individual Pokémon pages<br>✅ Create pages for abilities of each Pokémon<br><br>Repo: <a href="https://t.co/GoQoOYteLW">https://t.co/GoQoOYteLW</a> <a href="https://t.co/CrQWIGnVfl">pic.twitter.com/CrQWIGnVfl</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1050855455759593472?ref_src=twsrc%5Etfw">October 12, 2018</a></blockquote>
+
+### Breaking down the example
+
+> Note: This walkthrough assumes you have working knowledge of Gatsby fundamentals. If you're not (yet!) familiar with Gatsby, you may want to take a look at our [Quick Start doc](/docs/) first.
+
+#### 1. Use Gatsby's `createPages` API.
+
+`createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
+
+By [exporting createPages](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) from our example Gatsby site's `gatsby-node.js` file, we're saying, "at this point in the bootstrapping sequence, run this code".
+
+```javascript{1,3}:title=gatsby-node.js
+exports.createPages = () => {
+  // Run this code
+}
+```
+
+#### 2. [Fetch the data](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L22) from the PokéAPI.
+
+```javascript{2}:title=gatsby-node.js
+exports.createPages = async () => {
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
+}
+```
+
+_Note: [`getPokemonData`](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L5) is an async function which fetches the relevant desired data for all of our Pokémon._
+
+#### 3. Grab the `createPage` action
+
+When you hook into a Gatsby API (like `createPages` from step one), you are passed a collection of actions. In this example, we're extracting the [`createPage` action](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) using ES6 object destructuring:
+
+```javascript{1}:title=gatsby-node.js
+exports.createPages = async ({ actions: { createPage } }) => {
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
+}
+```
+
+#### 4. Create a page that [lists all Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L25).
+
+```javascript{4-9}:title=gatsby-node.js
+exports.createPages = async ({ actions: { createPage } }) => {
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
+
+  // Create a page that lists all Pokémon.
+  createPage({
+    path: `/`,
+    component: require.resolve("./src/templates/all-pokemon.js"),
+    context: { allPokemon },
+  })
+}
+```
+
+The [`createPage` action](/docs/actions/#createPage) is passed an object containing:
+
+- `path`: This is the relative url you'd like your new page will be available at.
+- `component`: This is the absolute path to the React component you've defined for this page.
+- `context`: Context data for this page. Available either as props to the component (`this.props.pageContext`) or as `graphql` arguments.
+
+In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4) (working outside of the data layer! It's just props).
+
+```jsx{1,3,5,12-14}:title=src/templates/all-pokemon.js
+export default ({ pageContext: { allPokemon } }) => (
+    {...}
+        {allPokemon.map(pokemon => (
+            <li
+                key={pokemon.id}
+                style={{
+                    textAlign: 'center',
+                    listStyle: 'none',
+                    display: 'inline-block'
+                }}
+            >
+                <Link to={`/pokemon/${pokemon.name}`}>
+                    <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+                    <p>{pokemon.name}</p>
+                </Link>
+            </li>
+        ))}
+    {...}
+);
+```
+
+#### 5. Create a page [for each Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L32).
+
+```javascript{11-18}:title=gatsby-node.js
+exports.createPages = async ({ actions: { createPage } }) => {
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
+
+  // Create a page that lists all Pokémon.
+  createPage({
+    path: `/`,
+    component: require.resolve("./src/templates/all-pokemon.js"),
+    context: { allPokemon },
+  })
+
+  // Create a page for each Pokémon.
+  allPokemon.forEach(pokemon => {
+    createPage({
+      path: `/pokemon/${pokemon.name}/`,
+      component: require.resolve("./src/templates/pokemon.js"),
+      context: { pokemon },
+    })
+  })
+}
+```
+
+#### 6. Create a page [for each ability of each Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L40).
+
+```javascript{19-26}:title=gatsby-node.js
+exports.createPages = async ({ actions: { createPage } }) => {
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
+
+  // Create a page that lists all Pokémon.
+  createPage({
+    path: `/`,
+    component: require.resolve("./src/templates/all-pokemon.js"),
+    context: { allPokemon },
+  })
+
+  // Create a page for each Pokémon.
+  allPokemon.forEach(pokemon => {
+    createPage({
+      path: `/pokemon/${pokemon.name}/`,
+      component: require.resolve("./src/templates/pokemon.js"),
+      context: { pokemon },
+    })
+
+    // Create a page for each ability of the current Pokémon.
+    pokemon.abilities.forEach(ability => {
+      createPage({
+        path: `/pokemon/${pokemon.name}/ability/${ability.name}/`,
+        component: require.resolve("./src/templates/ability.js"),
+        context: { pokemon, ability },
+      })
+    })
+  })
+}
+```
+
+For each type of page, we are invoking the `createPage` action, and supplying it with our desired path, React component, and data (as props on the context).
+
+## When might using "unstructured data" make sense?
+
+You may find this approach useful when you have a use case where using Gatsby's data layer feels like swatting flies with a sledgehammer -- it'll get the job done, but perhaps feels too heavy-handed for your project scope.
+
+## The pros of using unstructured data
+
+- The approach is familiar and comfortable, especially if you’re new to GraphQL
+- There’s no intermediate step: you fetch some data, then build pages with it
+
+## The tradeoffs of foregoing Gatsby's data layer
+
+Using Gatsby's data layer provides the following benefits:
+
+- Enables you to declaratively specify what data a page component needs
+- Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it’ll show up when you need it
+- Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries
+- It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
+- Improves performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
+
+> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
+
+Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
+
+- [`gatsby-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) (speedy optimized images),
+- [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp) (provides queryable fields for processing your images in a variety of ways including resizing, cropping, and creating responsive images)
+- ... the whole Gatsby ecosystem of official and community-created [transformer plugins](/plugins/?=transformer).
+
+## Links potentially of interest
+
+- Kyle Mathews' reasoning for [going with GraphQL](https://github.com/gatsbyjs/gatsby/issues/4994#issuecomment-382110077).
+- The issue [introducing 1.0 GraphQL data layer](https://github.com/gatsbyjs/gatsby/issues/420).
+
+## Thanks
+
+- Thank you to [Tanner Linsley](https://github.com/tannerlinsley) of [`react-static`](https://github.com/nozzle/react-static), who helped us realize that directly querying APIs and passing them into pages is a great way to build smaller sites, and came up with the term "unstructured data".
