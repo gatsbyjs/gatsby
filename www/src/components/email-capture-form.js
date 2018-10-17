@@ -1,5 +1,5 @@
 import React from "react"
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import { colors } from "../utils/presets"
 import HubspotForm from "./hubspot-form"
 
@@ -11,6 +11,7 @@ class EmailCaptureForm extends React.Component {
       <div
         css={{
           borderTop: `2px solid ${colors.lilac}`,
+          fontFamily: options.headerFontFamily.join(`,`),
           marginTop: rhythm(3),
           paddingTop: `${rhythm(1)}`,
           ...overrideCSS,
