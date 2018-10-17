@@ -6,11 +6,11 @@ In this guide, we'll walk through setting up a site with content management usin
 
 Prismic is a hosted, proprietary Headless CMS (SaaS) with a web app for creating and publishing content. It's suitable for marketers, editors and developers as it has both a "Writing Room" and a fully-fledged API & Content backend. Besides the usual advantages of a SaaS CMS (hosting, security, updates) Prismic offers features like: Custom type builder, scheduling and content versioning and multi-language support.
 
-<!-- TODO: What other content could go here? -->
+Moreover their _Content Slices_ feature enables you to build dynamic layouts by defining reusable custom components and placing them on your landing page, case studies or in your blogposts. Fortunately you can use those in Gatsby to realize features like PrismJS highlighting or using `gatsby-image`. The linked [starter](https://github.com/LekoArts/gatsby-starter-prismic) shows you how to implement that.
 
 The written instructions get accompanied by uncommented YouTube videos which will show the described steps in action. The video playlist can be found [here](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
-_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, we highly recommend to check out their [official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See the [official tutorial](/tutorial))._
+_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, we highly recommend to check out their [official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See the [official tutorial](/tutorial))._
 
 ## Setup
 
@@ -55,7 +55,7 @@ API_KEY=your-secret-access-token-wou7evoh0eexuf6chooz2
 
 _Note: If you want to locally build your project you'll also have to create a `.env.production` file with the same content._
 
-Now you need to configure the plugin (See all [available options](https://github.com/angeloashmore/gatsby-source-prismic/tree/master)). The `repositoryName` is the name you have entered at the creation of the repository (you'll also find it as the subdomain in the URL). The `linkResolver` function is used to process links in your content. Fields with rich text formatting or links to internal content use this function to generate the correct link URL. The document node, field key (i.e. API ID), and field value are provided to the function. This allows you to use different link resolver logic for each field if necessary ([More information](https://prismic.io/docs/javascript/query-the-api/link-resolving)).
+Now you need to configure the plugin (See all [available options](https://github.com/angeloashmore/gatsby-source-prismic/tree/master)). The `repositoryName` is the name you have entered at the creation of the repository (you'll also find it as the subdomain in the URL). The `linkResolver` function is used to process links in your content. Fields with rich text formatting or links to internal content use this function to generate the correct link URL. The document node, field key (i.e. API ID), and field value are provided to the function. This allows you to use different [link resolver logic](https://prismic.io/docs/javascript/query-the-api/link-resolving) for each field if necessary.
 
 Add the following to register the plugin:
 
@@ -154,7 +154,7 @@ export const pageQuery = graphql`
 
 ## Deploying to Netlify
 
-Netlify can not only automatically start builds on pushes to a repository but also accepts webhooks to do so. Fortunately Prismic can trigger webhook URLs when publishing content. Hence new content will automatically appear on your Netlify site.
+Netlify can not only automatically start builds on pushes to a repository but also accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately Prismic can trigger webhook URLs when publishing content. Hence new content will automatically appear on your Netlify site.
 
 Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive an URL of the format `https://api.netlify.com/build_hooks/-randomstring-` after clicking `Add build hook`.
 
@@ -164,7 +164,7 @@ On your Prismic project visit the `Webhooks` setting and insert the copied URL i
 
 ### Categories
 
-Prismic offers a [Content Relationship](https://user-guides.prismic.io/content-modeling-and-custom-types/field-reference/content-relationship) field which is used to link to another document in your Prismic repository. You can use that in combination with a custom type to create a tagging system (in this example categories). And what's cool about that? You can edit your entries any time and they'll update in every post! Read the [official docs](https://user-guides.prismic.io/how-to-guides/create-a-custom-tagging-system) on that or watch the video:
+Prismic offers a [Content Relationship](https://user-guides.prismic.io/content-modeling-and-custom-types/field-reference/content-relationship) field which is used to link to another document in your Prismic repository. You can use that in combination with a custom type to create a tagging system (in this example _categories_). And what's cool about that? You can edit your entries any time and they'll update in every post! Read the [official docs](https://user-guides.prismic.io/how-to-guides/create-a-custom-tagging-system) on that or watch the video:
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/67yir-jQrFk?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
@@ -178,7 +178,7 @@ When creating a new custom type you are able to choose `Single Type`, too. In th
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/bvDAUEaJXrM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-Single pages (like your homepage, privacy policy page etc.) don't need GraphQL connections (e.g. `allPrismicHomepage`) due to the fact that only one document for that type exists in Prismic anyway. Therefore you need to use `prismicHomepage` for your query. This also has the benefit that you don't need to map over an array. Your page could look something like this:
+Single pages (like your homepage, privacy policy page etc.) don't need [GraphQL connections](https://blog.apollographql.com/explaining-graphql-connections-c48b7c3d6976) (e.g. `allPrismicHomepage`) due to the fact that only one document for that type exists in Prismic anyway. Therefore you need to use `prismicHomepage` for your query. This also has the benefit that you don't have to map over an array. Your page could look something like this:
 
 ```jsx:title=src/pages/index.js
 import React from 'react'
