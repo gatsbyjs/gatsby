@@ -1,4 +1,3 @@
-const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const stringify = require(`json-stringify-safe`)
 
@@ -6,16 +5,14 @@ const conflictFieldPrefix = `lever_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+
 /**
  * Encrypts a String using md5 hash of hexadecimal digest.
  *
  * @param {any} str
  */
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
+const digest = str => createContentDigest(str)
 
 /**
  * Create the Graph QL Node
