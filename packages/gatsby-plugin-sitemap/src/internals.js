@@ -1,6 +1,7 @@
 import fs from "fs"
 import pify from "pify"
 import minimatch from "minimatch"
+import path from "path"
 
 const withoutTrailingSlash = path =>
   path === `/` ? path : path.replace(/\/$/, ``)
@@ -59,7 +60,7 @@ export const defaultOptions = {
   serialize: ({ site, allSitePage }) =>
     allSitePage.edges.map(edge => {
       return {
-        url: site.siteMetadata.siteUrl + edge.node.path,
+        url: path.join(site.siteMetadata.siteUrl, edge.node.path),
         changefreq: `daily`,
         priority: 0.7,
       }
