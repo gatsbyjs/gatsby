@@ -1,8 +1,8 @@
 import _ from "lodash"
-import crypto from "crypto"
 import fs from "fs-extra"
 import { store, emitter } from "../../redux/"
 import { joinPath } from "../../utils/path"
+import createContentDigest from "../../utils/create-content-digest"
 
 let lastHash = null
 
@@ -14,10 +14,7 @@ const writeRedirects = async () => {
   // Filter for redirects that are meant for the browser.
   const browserRedirects = redirects.filter(r => r.redirectInBrowser)
 
-  const newHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(browserRedirects))
-    .digest(`hex`)
+  const newHash = createContentDigest(browserRedirects)
 
   if (newHash === lastHash) {
     return Promise.resolve()
