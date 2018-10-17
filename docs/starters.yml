@@ -17,7 +17,7 @@
   repo: https://github.com/muhajirframe/gatsby-starter-firebase
   description: A Gatsby + Firebase Starter. With Authentication
   tags:
-    - Styling:Tailwind
+    - Styling:None
   features:
     - Eslint Airbnb without semicolon and without .jsx extension
     - Firebase
