@@ -1,8 +1,9 @@
-const crypto = require(`crypto`)
 const { resolve, parse } = require(`path`)
 
 const axios = require(`axios`)
 const { pathExists, createWriteStream } = require(`fs-extra`)
+
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
 module.exports = async function cacheImage(store, image, options) {
   const program = store.getState().program
@@ -37,10 +38,7 @@ module.exports = async function cacheImage(store, image, options) {
     params.push(`bg=${background}`)
   }
 
-  const optionsHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify([url, ...params]))
-    .digest(`hex`)
+  const optionsHash = createContentDigest([url, ...params])
 
   const { name, ext } = parse(fileName)
   const absolutePath = resolve(CACHE_DIR, `${name}-${optionsHash}${ext}`)

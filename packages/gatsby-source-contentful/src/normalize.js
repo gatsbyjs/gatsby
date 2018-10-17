@@ -1,13 +1,10 @@
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
 
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+
+const digest = str => createContentDigest(str)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
