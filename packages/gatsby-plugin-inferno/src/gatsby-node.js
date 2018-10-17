@@ -1,8 +1,9 @@
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
-  // Requiring the server version of React-dom is hardcoded right now
-  // in the development server. So we'll just avoid loading Inferno there
-  // for now.
-  if (stage !== `develop-html`) {
+  /*
+   * Inferno doesn't currently support Hot Module Reloading
+   * in development mode, so we'll exclude it from the process then
+   */
+  if (stage !== `develop-html` && stage !== `develop`) {
     actions.setWebpackConfig({
       resolve: {
         alias: {
