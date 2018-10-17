@@ -229,7 +229,17 @@ module.exports = async ({ parentSpan }) => {
   }
 
   // Create node types and node fields for nodes that have a resolve function.
-  await Promise.all(_.map(types, createType))
+  // Ensure that File type is created first, so it can be imported
+  // in setFieldsOnGraphQLNodeType.
+  const { File: fileNodes, ...otherTypes } = types
+
+  if (fileNodes && fileNodes.length) {
+    await createType(fileNodes, `File`)
+  }
+
+  await Promise.all(
+    Object.entries(otherTypes).map(([name, nodes]) => createType(nodes, name))
+  )
 
   span.finish()
 
