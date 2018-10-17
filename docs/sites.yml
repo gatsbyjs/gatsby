@@ -2961,3 +2961,19 @@
     - Web Development
   built_by: Maxence Poutord
   built_by_url: https://www.maxpou.fr
+- title: "Dante Calderón"
+  description: >
+    Personal Website and Blog of Dante Calderón
+  main_url: https://dantecalderon.com/
+  url: https://dantecalderon.com/
+  source_url: https://github.com/dantehemerson/dantecalderon.com
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+    - Open Source
+    - Technology
+    - Education
+  built_by: Dante Calderón
+  built_by_url: https://github.com/dantehemerson
