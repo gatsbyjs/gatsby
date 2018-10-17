@@ -32,7 +32,7 @@ Create a new component with this initial boilerplate:
 import React from "react"
 import Helmet from "react-helmet"
 import PropTypes from "prop-types"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 const SEO = ({ title, description, image, pathname, article }) => ()
 
@@ -126,7 +126,7 @@ The last step is to return this data with the help of `Helmet`. Your complete SE
 import React from "react"
 import Helmet from "react-helmet"
 import PropTypes from "prop-types"
-import { StaticQuery } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 const SEO = ({ title, description, image, pathname, article }) => (
   <StaticQuery
@@ -152,7 +152,7 @@ const SEO = ({ title, description, image, pathname, article }) => (
 
       return (
         <>
-          <Helmet>
+          <Helmet title={seo.title} titleTemplate={titleTemplate}>
             <meta name="description" content={seo.description} />
             <meta name="image" content={seo.image} />
             {seo.url && <meta property="og:url" content={seo.url} />}
@@ -197,6 +197,21 @@ SEO.defaultProps = {
   pathname: null,
   article: false,
 }
+
+const query = graphql`
+  query SEO {
+    site {
+      siteMetadata {
+        defaultTitle: title
+        titleTemplate
+        defaultDescription: description
+        siteUrl: url
+        defaultImage: image
+        twitterUsername
+      }
+    }
+  }
+`;
 ```
 
 ## Examples
