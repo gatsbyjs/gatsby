@@ -177,7 +177,9 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       reporter.info(`directory deleted at ${path}`)
     }
     const node = getNode(createNodeId(path))
-    deleteNode({ node })
+    if (node) {
+      deleteNode({ node })
+    }
   })
 
   return new Promise((resolve, reject) => {
