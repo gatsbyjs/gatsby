@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
 import { css } from "emotion"
+import facepaint from "facepaint"
 
 import presets, { colors } from "../../utils/presets"
 import TopBanner from "./top-banner"
@@ -30,7 +31,7 @@ class Layout extends React.Component {
     const isHomepage = pathname === `/`
 
     return (
-      <React.Fragment>
+      <div className={`${layout} ${isHomepage ? `isHomepage` : ``}`}>
         <Helmet>
           <title>{pageTitle ? `${pageTitle} | GatsbyJS` : "GatsbyJS"}</title>
           <meta name="twitter:site" content="@gatsbyjs" />
@@ -40,29 +41,16 @@ class Layout extends React.Component {
           <html lang="en" />
         </Helmet>
 
-        <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
+        <SkipNavLink className={skipNavLink}>Skip to main content</SkipNavLink>
 
         <TopBanner />
 
         <Navigation pathname={this.props.location.pathname} />
 
-        <div
-          className={`main-body`}
-          css={{
-            paddingTop: presets.bannerHeight,
-            [presets.Tablet]: {
-              margin: `0 auto`,
-              paddingTop: isHomepage
-                ? presets.bannerHeight
-                : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
-            },
-          }}
-        >
-          {children}
-        </div>
+        <div className={content}>{children}</div>
 
         <MobileNavigation />
-      </React.Fragment>
+      </div>
     )
   }
 }
@@ -75,28 +63,53 @@ Layout.propTypes = {
 
 export default Layout
 
-const styles = {
-  skipLink: {
-    border: `0`,
-    clip: `rect(0 0 0 0)`,
-    height: 1,
-    width: 1,
-    margin: -1,
-    padding: 0,
-    overflow: `hidden`,
-    position: `absolute`,
-    zIndex: 100,
-    fontSize: `0.85rem`,
-    ":focus": {
-      padding: `0.9rem`,
-      position: `fixed`,
-      top: 10,
-      left: 10,
-      background: `white`,
-      textDecoration: `none`,
-      width: `auto`,
-      height: `auto`,
-      clip: `auto`,
-    },
-  },
-}
+/* STYLES */
+
+const {
+  breakpoints: { tablet },
+  bannerHeight,
+  headerHeight,
+} = presets
+
+const breakpoints = [tablet]
+const mq = facepaint(breakpoints.map(bp => `@media (min-width: ${bp}px)`))
+
+const layout = css``
+
+const content = css`
+  padding-top: ${bannerHeight};
+
+  ${mq({
+    margin: ["", "0 auto"],
+    paddingTop: [`${bannerHeight}`, `calc(${bannerHeight} + ${headerHeight})`],
+  })};
+
+  .is-homepage & {
+    paddingtop: ${bannerHeight};
+  }
+`
+
+const skipNavLink = css`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 100;
+  font-size: 0.85rem;
+
+  &:focus {
+    padding: 0.9rem;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: white;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    clip: auto;
+  }
+`
