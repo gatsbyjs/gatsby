@@ -124,6 +124,6 @@ Today, there's a multitude of vendors, frameworks, and approaches for content mo
 
 The key question becomes: how to bring these pieces into a unified whole?
 
-Yesterday, our challenge was _creating a digital experence_.
+Yesterday, our challenge was _creating a digital experience_.
 
 Today, our challenge is _making that experience incredible_.
