@@ -32,6 +32,111 @@ module.exports = {
 }
 ```
 
+Create a new component to hold the links, and edit the layout component to include it. For now, it will act as a placeholder:
+
+```javascript:title=src/components/navBar.js
+import React from "react"
+import { Link } from "gatsby"
+
+export default () => (
+  <div
+    style={{
+      display: "flex",
+      flex: "1",
+      justifyContent: "space-between",
+      borderBottom: "1px solid #d1c1e0",
+    }}
+  >
+    <span>You are not logged in</span>
+
+    <nav>
+      <Link to="/">Home</Link>
+      {` `}
+      <Link to="/">Profile</Link>
+      {` `}
+      <Link to="/">Logout</Link>
+      {` `}
+    </nav>
+  </div>
+)
+```
+
+```javascript{7,41}:title=src/components/layout.js
+import React from "react"
+import PropTypes from "prop-types"
+import Helmet from "react-helmet"
+import { StaticQuery, graphql } from "gatsby"
+
+import Header from "./header"
+import NavBar from "./navBar"
+import "./layout.css"
+
+const Layout = ({ children }) => (
+  <StaticQuery
+    query={graphql`
+      query SiteTitleQuery {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+    `}
+    render={data => (
+      <>
+        <Helmet
+          title={data.site.siteMetadata.title}
+          meta={[
+            { name: "description", content: "Sample" },
+            { name: "keywords", content: "sample, something" },
+          ]}
+        >
+          <html lang="en" />
+        </Helmet>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <div
+          style={{
+            margin: "0 auto",
+            maxWidth: 960,
+            padding: "0px 1.0875rem 1.45rem",
+            paddingTop: 0,
+          }}
+        >
+          <NavBar />
+          {children}
+        </div>
+      </>
+    )}
+  />
+)
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
+export default Layout
+```
+
+Lastly, change the index page to a more adequate content:
+
+```javascript{9-11}:title=src/pages/index.js
+import React from "react"
+import { Link } from "gatsby"
+
+import Layout from "../components/layout"
+
+const IndexPage = () => (
+  <Layout>
+    <h1>Hi people</h1>
+    <p>
+      You should <Link to="/">log in</Link> to see restricted content
+    </p>
+  </Layout>
+)
+
+export default IndexPage
+```
+
 ## Authentication service
 
 For this tutorial you will use a hardcode user/password. Create the folder `src/services` and add the follwing content to the file `auth.js`:
@@ -70,7 +175,7 @@ export const logout = callback => {
 
 ## Creating client-only routes
 
-Up until now, you created a common Gatsby site. But, using the [@reach/router](https://reach.tech/router/) library, you can create routes available only to logged-in users. This library is used by Gatsby under the hood, so you don't even have to install it.
+Up until now, you created a "default" Gatsby site. But, using the [@reach/router](https://reach.tech/router/) library, you can create routes available only to logged-in users. This library is used by Gatsby under the hood, so you don't even have to install it.
 
 First, edit `gatsby-node.js`. You will define that any route that starts with `/app/` is part of your restricted content and the page will be created on demand:
 
@@ -89,6 +194,28 @@ exports.onCreatePage = async ({ page, actions }) => {
     createPage(page)
   }
 }
+```
+
+Now, you must create a generic page that will have the task to generate the restricted content:
+
+```javascript:title={src/pages/app.js}
+import React from "react"
+import { Link } from "gatsby"
+import { Router } from "@reach/router"
+import Layout from "../components/layout"
+import Profile from "../components/profile"
+import Login from "../components/login"
+
+const App = () => (
+  <Layout>
+    <Router>
+      <Profile path="/app/profile" />
+      <Login path="/app/login" />
+    </Router>
+  </Layout>
+)
+
+export default App
 ```
 
 WIP
