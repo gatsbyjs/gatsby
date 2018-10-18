@@ -27,7 +27,7 @@ when Node.Js is running. They aren't immediately available at run time of the cl
 need to be actively captured and embedded into our client-side JavaScript.
 This is achieved during the build using Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
 
-Once the Environment Variables have been embedded into the client-side, they are accessible from the
+Once the environment variables have been embedded into the client-side, they are accessible from the
 global variable `process.env`.
 OS Environment Variables are accessible in Node.js from the same `process.env` global variable.
 
