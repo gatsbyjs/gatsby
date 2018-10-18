@@ -8,7 +8,7 @@ const path = require(`path`)
 const normalizePath = require(`normalize-path`)
 const { clearTypeExampleValues } = require(`../data-tree-utils`)
 const { typeConflictReporter } = require(`../type-conflict-reporter`)
-const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
+const { inferObjectStructureFromNodes, clearUnionTypes } = require(`../infer-graphql-type`)
 
 function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
   const schema = new GraphQLSchema({
@@ -764,6 +764,14 @@ describe(`GraphQL type inferance`, () => {
         types: types.concat([{ name: `Toy` }]),
       })
       expect(fields.test.type).not.toEqual(fields2.test.type)
+    })
+
+    it(`Creates a new type after schema updates clear union types`, () => {
+      const nodes = [{ test___NODE: [`pet_1`, `child_1`] } ]
+      const fields = inferObjectStructureFromNodes({ nodes, types })
+      clearUnionTypes()
+      const updatedFields = inferObjectStructureFromNodes({ nodes, types })
+      expect(fields.test.type).not.toEqual(updatedFields.test.type)
     })
   })
 
