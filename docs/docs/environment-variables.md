@@ -18,7 +18,7 @@ By default gatsby supports only 2 environments:
  * If you run `gatsby develop`, then you will be in the 'development' environment.
  * If you run `gatsby build` + `gatsby serve`, then you will be in the 'production' environment.
  
-If you want to define other Environments then you'll need to do a little more work. See 'Additional Environments' below.
+If you want to define other environments then you'll need to do a little more work. See 'Additional Environments' below.
 
 ## Accessing Environment Variables in JavaScript
 
