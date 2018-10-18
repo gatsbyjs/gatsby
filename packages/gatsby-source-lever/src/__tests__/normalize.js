@@ -2,6 +2,8 @@ const normalize = require(`../normalize`)
 
 let entities = require(`./data.json`)
 
+const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
+
 describe(`Process Lever data`, () => {
   it(`Creates entities from object collections of entities`, () => {
     entities = normalize.normalizeEntities(entities)
@@ -22,7 +24,11 @@ describe(`Process Lever data`, () => {
   })
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
-    normalize.createNodesFromEntities({ entities, createNode })
+    normalize.createNodesFromEntities({
+      entities,
+      createNode,
+      createContentDigest,
+    })
     expect(createNode.mock.calls).toMatchSnapshot()
   })
 })
