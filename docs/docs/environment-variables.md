@@ -110,7 +110,7 @@ render() {
 
 ## Additional Environments (Staging, Test, etc)
 
-As just noted `NODE_ENV` is a reserved environment variable in Gatsby as it is needed by the build system to make key optimizations when compiling React and other modules. For this reason it is necessary to make use of a secondary environment variable for additional environment support, and manually make the Env.Vars available to the client-side code.
+As noted above `NODE_ENV` is a reserved environment variable in Gatsby as it is needed by the build system to make key optimizations when compiling React and other modules. For this reason it is necessary to make use of a secondary environment variable for additional environment support, and manually make the environment variables available to the client-side code.
 
 You can define your own OS Env Var to track the active environment, and then to locate the relevant Project Env Vars to load. Gatsby itself will not do anything with that OS Env Var, but you can use it in `gatsby-config.js`.
 Specifically, you can use `dotenv` and your individual OS Env Var to locate the `.env.myCustomEnvironment` file, and then use module.exports to store those Project Env Vars somewhere that the client-side Javascript can access the values (via GraphQL queries).
