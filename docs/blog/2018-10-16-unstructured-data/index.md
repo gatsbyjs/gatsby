@@ -168,7 +168,7 @@ For each type of page, we are invoking the `createPage` action, and supplying it
 
 ## When might using "unstructured data" make sense?
 
-You may find this approach useful when you have a use case where using Gatsby's data layer feels like swatting flies with a sledgehammer -- it'll get the job done, but perhaps feels too heavy-handed for your project scope.
+You may find this approach useful when you have a use case where using Gatsby's data layer feels a bit too heavy-handed for your project scope.
 
 ## The pros of using unstructured data
 
