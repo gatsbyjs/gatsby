@@ -4,7 +4,7 @@ title: "Environment Variables"
 
 ## Environments and Environment Variables
 
-You can easily provide environment variables to your site.
+You can provide environment variables to your site to customise it's behaviour in different environments. 
 
 Note that we need to distinguish in this discussion between variables which are been defined in
 special places in order to be used in different deployment environments, and true OS-level 
