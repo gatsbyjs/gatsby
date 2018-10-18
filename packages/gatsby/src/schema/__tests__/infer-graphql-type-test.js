@@ -783,10 +783,10 @@ describe(`GraphQL type inferance`, () => {
 
       it(`Uses a reliable naming convention for union types`, () => {
         const nodes = [{ test___NODE: [`pet_1`, `child_1`] } ]
-        const fields = inferObjectStructureFromNodes({ nodes, types })
+        inferObjectStructureFromNodes({ nodes, types })
         clearUnionTypes()
         const updatedFields = inferObjectStructureFromNodes({ nodes, types })
-        expect(updatedFields.test.type.ofType.name).toEqual('unionTestNode_2')
+        expect(updatedFields.test.type.ofType.name).toEqual(`unionTestNode_2`)
       })
     })
   })
