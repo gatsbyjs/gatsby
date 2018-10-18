@@ -38,7 +38,7 @@ or rebuild your site after changing them.
 
 #### Client-side JavaScript
 
-For Project Enviroment Variables that you want to access in client-side browser JavaScript, you can define
+For Project Env Vars that you want to access in client-side browser JavaScript, you can define
 an environment config file, `.env.development` and/or `.env.production`, in your root folder.
 Depending on your active environment, the correct one will be found and its values embedded as environment variables in the
 browser JavaScript.
