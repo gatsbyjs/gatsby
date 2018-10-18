@@ -724,6 +724,27 @@ describe(`GraphQL type inferance`, () => {
         payload: { id: `baz`, internal: { type: `Bar` } },
       })
     })
+
+    it(`Uses same union type for same key`, () => {
+      const fields = inferObjectStructureFromNodes({
+        nodes: [
+          {
+            test___NODE: [`pet_1`, `child_1`],
+          },
+        ],
+        types,
+      })
+
+      const fields2 = inferObjectStructureFromNodes({
+        nodes: [
+          {
+            test___NODE: [`pet_1`, `child_1`],
+          },
+        ],
+        types,
+      })
+      expect(fields.test.type).toEqual(fields2.test.type)
+    })
   })
 
   it(`Infers graphql type from array of nodes`, () =>
