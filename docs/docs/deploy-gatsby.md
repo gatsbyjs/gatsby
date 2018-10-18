@@ -25,9 +25,7 @@ continuous deployment from public or private repos and more.
 
 ### Deploying to Netlify
 
-To deploy your Gatsby site to Netlify, go to the [create a new
-site](https://app.netlify.com/start) page, select your project repo from GitHub,
-GitLab, or Bitbucket, and follow the prompts.
+To deploy your Gatsby site to Netlify, go to [hosting on netlify](/docs/hosting-on-netlify/) page and follow the documentation. The documentation explains how to create a Gatsby website to connect it with your custom domain.
 
 ## Amazon S3 and Cloudfront
 
