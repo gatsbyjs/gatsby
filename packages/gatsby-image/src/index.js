@@ -221,6 +221,13 @@ class Image extends React.Component {
       ...imgStyle,
     }
 
+    const placeholderImageProps = {
+      title, 
+      alt: !this.state.isVisible ? alt : ``,
+      style: imagePlaceholderStyle,
+      className: placeholderClassName,
+    } 
+
     if (fluid) {
       const image = fluid
 
@@ -245,24 +252,12 @@ class Image extends React.Component {
 
             {/* Show the blurry base64 image. */}
             {image.base64 && (
-              <Img
-                alt={!this.state.isVisible ? alt : ``}
-                title={title}
-                src={image.base64}
-                style={imagePlaceholderStyle}
-                className={placeholderClassName}
-              />
-            )}
+              <Img src={image.base64} {...placeholderImageProps} />
+              )}
 
             {/* Show the traced SVG image. */}
             {image.tracedSVG && (
-              <Img
-                alt={!this.state.isVisible ? alt : ``}
-                title={title}
-                src={image.tracedSVG}
-                style={imagePlaceholderStyle}
-                className={placeholderClassName}
-              />
+              <Img src={image.tracedSVG} {...placeholderImageProps} />
             )}
 
             {/* Show a solid background color. */}
@@ -344,24 +339,12 @@ class Image extends React.Component {
         >
           {/* Show the blurry base64 image. */}
           {image.base64 && (
-            <Img
-              alt={!this.state.isVisible ? alt : ``}
-              title={title}
-              src={image.base64}
-              style={imagePlaceholderStyle}
-              className={placeholderClassName}
-            />
+            <Img src={image.base64} {...placeholderImageProps} />
           )}
 
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
-            <Img
-              alt={!this.state.isVisible ? alt : ``}
-              title={title}
-              src={image.tracedSVG}
-              style={imagePlaceholderStyle}
-              className={placeholderClassName}
-            />
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Show a solid background color. */}
