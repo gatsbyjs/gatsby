@@ -3,10 +3,8 @@ const prepareMappingChildNode = require(`./mapping`)
 const _ = require(`lodash`)
 const queryString = require(`query-string`)
 
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
-
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, hasNodeChanged },
+  { actions, getNode, createNodeId, createContentDigest, hasNodeChanged },
   pluginOptions
 ) => {
   const { createNode } = actions
@@ -36,7 +34,15 @@ exports.sourceNodes = (
 
       return Promise.all(
         collection.map(col =>
-          createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
+          createNodes(
+            db,
+            pluginOptions,
+            dbName,
+            createNode,
+            createNodeId,
+            createContentDigest,
+            col
+          )
         )
       )
         .then(() => {
@@ -60,6 +66,7 @@ function createNodes(
   dbName,
   createNode,
   createNodeId,
+  createContentDigest,
   collectionName
 ) {
   return new Promise((resolve, reject) => {
