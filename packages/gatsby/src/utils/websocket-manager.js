@@ -3,6 +3,7 @@
 const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
+const getAssetPath = require(`../utils/get-asset-path`)
 
 type QueryResult = {
   id: string,
@@ -20,10 +21,7 @@ const readCachedResults = (dataFileName: string, directory: string): object => {
   const filePath = path.join(
     directory,
     `public`,
-    store.getState().config.assetPath,
-    `static`,
-    `d`,
-    `${dataFileName}.json`
+    getAssetPath(`${dataFileName}.json`).forData().asOutputPath()
   )
   return JSON.parse(fs.readFileSync(filePath, `utf-8`))
 }

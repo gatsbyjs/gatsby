@@ -9,6 +9,7 @@ const path = require(`path`)
 const { store } = require(`../../redux`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
+const getAssetPath = require(`../../utils/get-asset-path`)
 const mod = require(`hash-mod`)(999)
 
 const resultHashes = {}
@@ -127,11 +128,7 @@ ${formatErrorDetails(errorDetails)}`)
     const resultPath = path.join(
       program.directory,
       `public`,
-      store.getState().config.assetPath,
-      `static`,
-      `d`,
-      modInt,
-      `${dataPath}.json`
+      getAssetPath(`${modInt}/${dataPath}.json`).forData().asOutputPath(),
     )
 
     if (queryJob.isPage) {

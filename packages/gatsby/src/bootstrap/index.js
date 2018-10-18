@@ -208,7 +208,14 @@ module.exports = async (args: BootstrapArgs) => {
   await fs.ensureDir(`${program.directory}/.cache`)
 
   // Ensure the public/static directory
-  await fs.ensureDir(path.join(program.directory, `public`, store.getState().config.assetPath, `static`))
+  await fs.ensureDir(
+    path.join(
+      program.directory,
+      `public`,
+      store.getState().config.assetPath,
+      `static`,
+    )
+  )
 
   activity.end()
 

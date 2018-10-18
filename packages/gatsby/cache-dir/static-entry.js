@@ -7,6 +7,7 @@ const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
+const getAssetPath = require(`../src/utils/get-asset-path`)
 const { dataPaths, pages } = require(`./data.json`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 
@@ -113,10 +114,7 @@ export default (pagePath, callback) => {
     const pathToJsonData = join(
       process.cwd(),
       `public`,
-      __ASSET_PATH__,
-      `static`,
-      `d`,
-      `${dataPaths[page.jsonName]}.json`
+      getAssetPath(`${dataPaths[page.jsonName]}.json`).forData().asOutputPath()
     )
     try {
       dataAndContext = JSON.parse(
@@ -269,13 +267,13 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={`${__ASSET_PATH__ || __PATH_PREFIX__}/${script.name}`}
+          href={getAssetPath(script.name).asRoute()}
         />
       )
     })
 
   if (page.jsonName in dataPaths) {
-    const dataPath = join(__ASSET_PATH__ || __PATH_PREFIX__ || `/`, `static`, `d`, `${dataPaths[page.jsonName]}.json`)
+    const dataPath = getAssetPath(`${dataPaths[page.jsonName]}.json`).forData().asRoute()
     headComponents.push(
       <link
         rel="preload"
@@ -300,16 +298,16 @@ export default (pagePath, callback) => {
             as="style"
             rel={style.rel}
             key={style.name}
-            href={`${__ASSET_PATH__ || __PATH_PREFIX__}/${style.name}`}
+            href={getAssetPath(style.name).asRoute()}
           />
         )
       } else {
         headComponents.unshift(
           <style
-            data-href={`${__ASSET_PATH__ || __PATH_PREFIX__}/${style.name}`}
+            data-href={getAssetPath(style.name).asRoute()}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
-                join(process.cwd(), `public`, __ASSET_PATH__, style.name),
+                join(process.cwd(), `public`, getAssetPath(style.name).asOutputPath),
                 `utf-8`
               ),
             }}
@@ -353,10 +351,7 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${__ASSET_PATH__ || __PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-      1,
-      -1
-    )}`
+    const scriptPath = getAssetPath(JSON.stringify(s.name).slice(1, -1)).asRoute()
     return <script key={scriptPath} src={scriptPath} async />
   })
 
