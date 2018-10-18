@@ -9,6 +9,7 @@ const normalizePath = require(`normalize-path`)
 const { clearTypeExampleValues } = require(`../data-tree-utils`)
 const { typeConflictReporter } = require(`../type-conflict-reporter`)
 const { inferObjectStructureFromNodes, clearUnionTypes } = require(`../infer-graphql-type`)
+const { clearTypeNames } = require(`../create-type-name`)
 
 function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
   const schema = new GraphQLSchema({
@@ -700,6 +701,7 @@ describe(`GraphQL type inferance`, () => {
 
     describe(`Creation of union types when array field is linking to multiple types`, () => {
       beforeEach(() => {
+        clearTypeNames()
         clearUnionTypes()
       })
 
@@ -777,6 +779,14 @@ describe(`GraphQL type inferance`, () => {
         clearUnionTypes()
         const updatedFields = inferObjectStructureFromNodes({ nodes, types })
         expect(fields.test.type).not.toEqual(updatedFields.test.type)
+      })
+
+      it(`Uses a reliable naming convention for union types`, () => {
+        const nodes = [{ test___NODE: [`pet_1`, `child_1`] } ]
+        const fields = inferObjectStructureFromNodes({ nodes, types })
+        clearUnionTypes()
+        const updatedFields = inferObjectStructureFromNodes({ nodes, types })
+        expect(updatedFields.test.type.ofType.name).toEqual('unionTestNode_2')
       })
     })
   })
