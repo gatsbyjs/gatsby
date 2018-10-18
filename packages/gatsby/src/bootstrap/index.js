@@ -11,6 +11,7 @@ const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const createContentDigest = require(`../utils/create-content-digest`)
 const mergeGatsbyConfig = require(`../utils/merge-gatsby-config`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
@@ -460,7 +461,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await writeRedirects()
+  await writeRedirects(createContentDigest)
   activity.end()
 
   const checkJobsDone = _.debounce(resolve => {

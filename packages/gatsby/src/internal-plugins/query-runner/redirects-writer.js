@@ -2,11 +2,10 @@ import _ from "lodash"
 import fs from "fs-extra"
 import { store, emitter } from "../../redux/"
 import { joinPath } from "../../utils/path"
-import createContentDigest from "../../utils/create-content-digest"
 
 let lastHash = null
 
-const writeRedirects = async () => {
+const writeRedirects = async createContentDigest => {
   bootstrapFinished = true
 
   let { program, redirects } = store.getState()
