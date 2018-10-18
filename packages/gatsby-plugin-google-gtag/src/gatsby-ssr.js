@@ -1,7 +1,7 @@
 import React from "react"
 import { Minimatch } from "minimatch"
 
-export const onRenderBody = (
+exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
