@@ -745,7 +745,7 @@ describe(`GraphQL type inferance`, () => {
       })
 
 
-      it(`Uses a different type for the same child node types but a different key`, () => {
+      it(`Uses a different type for the same child node types with a different key`, () => {
         const fields = inferObjectStructureFromNodes({
           nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
           types,
@@ -757,7 +757,7 @@ describe(`GraphQL type inferance`, () => {
         expect(fields.test.type).not.toEqual(fields2.differentKey.type)
       })
 
-      it(`Uses a different type for the different child node types but the same key`, () => {
+      it(`Uses a different type for different child node types with the same key`, () => {
         store.dispatch({
           type: `CREATE_NODE`,
           payload: { id: `toy_1`, internal: { type: `Toy` } },
@@ -781,7 +781,7 @@ describe(`GraphQL type inferance`, () => {
         expect(fields.test.type).not.toEqual(updatedFields.test.type)
       })
 
-      it(`Uses a reliable naming convention for union types`, () => {
+      it(`Uses a reliable naming convention`, () => {
         const nodes = [{ test___NODE: [`pet_1`, `child_1`] } ]
         inferObjectStructureFromNodes({ nodes, types })
         clearUnionTypes()
