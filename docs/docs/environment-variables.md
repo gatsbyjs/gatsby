@@ -54,7 +54,7 @@ OS Env Vars will already be available when Node is running, so you can add envir
 normal ways e.g. by adding environment variables through your hosting/build tool, your OS, or when
 calling Gatsby on the command line.
 
-In Linux terminals, that is as simple as
+In Linux terminals this can be done with:
 ```
 MY_ENV_VAR=foo gatsby develop
 ```
