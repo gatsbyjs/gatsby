@@ -6,7 +6,7 @@ import { formInput } from "../utils/form-styles"
 import { buttonStyles } from "../utils/styles"
 
 const Label = props => (
-  <label>
+  <label htmlFor="newsletter-signup-email">
     {props.children}
     {props.isRequired && (
       <span
@@ -24,6 +24,7 @@ const Label = props => (
 
 const SingleLineInput = React.forwardRef((props, ref) => (
   <input
+    id="newsletter-signup-email"
     ref={ref}
     css={{
       ...formInput,
