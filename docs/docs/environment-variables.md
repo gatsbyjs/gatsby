@@ -158,7 +158,7 @@ module.exports = {
 
 This will then load the values from the relevant environment's `.env.*` file and make them available via GraphQL queries and the analytics plugin respectively.
 
-Note that `ACTIVE_ENV` could be called anything - it's not used or known about by anything else in Gatsby (as opposed to `NODE_ENV` which is, as previously discussed.
+Note that `ACTIVE_ENV` could be called anything - it's not used or known about by anything else in Gatsby (as opposed to `NODE_ENV` which is, as previously discussed).
 
 Local testing of the `staging` environment can be done with:
 
