@@ -8,33 +8,9 @@ Netlify is an excellent option for deploying Gatsby sites. Netlify is a unified 
 
 Their free tier includes unlimited personal and commercial projects, HTTPS, continuous deployment from public or private repos and more.
 
-## Gatsby Setup
+## Prerequisites
 
-First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
-
-```sh
-npm install --global gatsby-cli
-```
-
-Next, we'll create a new Gatsby site:
-
-```sh
-gatsby new my-gatsby-site
-```
-
-Change into the new site directory:
-
-```sh
-cd my-gatsby-site
-```
-
-Run below command to start Gatsby in development mode:
-
-```
-gatsby develop
-```
-
-You should be able to see `Gatsby Default Starter` at [http://localhost:8000](http://localhost:8000). Once you are ready with Gatsby setup, it's time to host the site.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back.
 
 ### Hosting Setup
 
