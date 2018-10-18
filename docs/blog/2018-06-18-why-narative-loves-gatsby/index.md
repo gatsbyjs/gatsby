@@ -9,7 +9,7 @@ canonicalLink: "https://medium.com/narative/why-narative-loves-gatsbyjs-825b6b3b
 
 ![Why Narative loves Gatsby hero](narative-gatsby-hero.jpg)
 
-To understand why we love Gatsby you have to understand what we do at Narative. Narative is a digital studio that focuses on creating the best brands and products in the world. Our team works on everything from page based websites to complex web apps. The core of our engineering team works in the React ecosystem and has experience from some of the best startups in Canada.
+To understand why we love Gatsby you have to understand what we do at Narative. Narative is a venture studio that focuses on developing the best brands and products in the world. Our team works on everything from page based websites to complex web apps. The core of our engineering team works in the React ecosystem and has experience from some of the best startups in Canada. Narative wildly outgrew our expectations, growing from 2 to 6 people in only a 5 month time span. We're proud to announce that, in these 5 months alone, we've exceeded our 7 figure revenue target. The accomplishments we've reached so quickly would not be possible without Gatsby at the core of our techncial infrastructure.
 
 Traditionally, building page based websites, such as marketing websites, landing pages, or blogs, would require a vastly different skillset from building interactive web apps. There are popular tools such as WordPress or Drupal that are written in their own flavour of PHP or static site generators such as Jekyll, Hugo, and Middleman that leverage templating to build static websites. _The problem we've found with these tools is that there is very little overlap between web app development and page based development_. Within the last couple years, React has taken over web app development and popularized an intuitive API for building user interfaces. React has also created an astonishing community of developers that are focused on creating amazing tools to accelerate and improve UI development.
 
@@ -51,7 +51,7 @@ Narative strives for technical excellence for all its products, which can be ach
 
 Gatsby streamlines our process with an excellent developer experience and all the features you could ask for in 2018. The heavy lifting of delivering a technically sound website with performance that users will love has slowly shifted towards frameworks such as Gatsby, which has freed up our team to focus on even better experiences and products.
 
-To conclude, Gatsby may not be the perfect solution for your project, but for our needs it's perfect. By building with Gatsby, we've extended our team to an amazing group of people that are working hard to improve page based websites. We're excited to see where Gatsby takes us next.
+To conclude, Gatsby may not be the perfect solution for your project, but for our needs it's perfect. By building with Gatsby, we've extended our team to an amazing group of people that are working hard to improve page based websites. With all of the benefits from Gatsby our company has quickly surpassed We're excited to see where Gatsby takes us next.
 
 # Narative
 
