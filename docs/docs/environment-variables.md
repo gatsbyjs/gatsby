@@ -50,7 +50,7 @@ browser JavaScript.
 #### Server-side Node.js
 
 Gatsby runs several Node.js scripts at build time, notably `gatsby-config.js` and `gatsby-node.js`.
-OS Env.Vars will already be available when Node is running, so you can add environment variables the
+OS Env Vars will already be available when Node is running, so you can add environment variables the
 normal ways e.g. by adding environment variables through your hosting/build tool, your OS, or when
 calling gatsby on the command line.
 
