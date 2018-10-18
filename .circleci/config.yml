@@ -9,28 +9,26 @@ executors:
 
 aliases:
   e2e-executor: &e2e-executor
-    executor:
-      name: node
-      image: 10-browsers
+    docker:
+      - image: cypress/browsers:chrome69
 
-  restore_node_modules: &restore_node_modules
+  restore_cache: &restore_cache
     restore_cache:
       name: Restore node_modules cache
       keys:
-        - node-modules-{{ checksum "yarn.lock" }}
+        - yarn-cypress-cache-{{ checksum "yarn.lock" }}
 
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: |
-        yarn
+      command: yarn --frozen-lockfile
 
-  persist_node_modules: &persist_node_modules
+  persist_cache: &persist_cache
     save_cache:
       name: Save node modules cache
-      key: node-modules-{{ checksum "yarn.lock" }}
+      key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
       paths:
-        - node_modules
+        - ~/.cache
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
@@ -45,10 +43,10 @@ aliases:
   test_template: &test_template
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
-      - <<: *restore_node_modules
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *restore_cache
       - <<: *install_node_modules
-      - <<: *persist_node_modules
+      - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - run: yarn jest -w 1
 
@@ -68,8 +66,9 @@ commands:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-      - <<: *restore_node_modules
+      - <<: *restore_cache
       - <<: *install_node_modules
+      - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>"
 
@@ -80,10 +79,10 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*"
-      - <<: *restore_node_modules
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - <<: *restore_cache
       - <<: *install_node_modules
-      - <<: *persist_node_modules
+      - <<: *persist_cache
       - run: yarn bootstrap
       - persist_to_workspace:
           root: packages
@@ -94,9 +93,9 @@ jobs:
     executor: node
     steps:
       - checkout
-      - <<: *restore_node_modules
+      - <<: *restore_cache
       - <<: *install_node_modules
-      - <<: *persist_node_modules
+      - <<: *persist_cache
       - run: yarn lint
 
   unit_tests_node6:
@@ -120,8 +119,9 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|.circleci/*"
-      - <<: *restore_node_modules
+      - <<: *restore_cache
       - <<: *install_node_modules
+      - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 

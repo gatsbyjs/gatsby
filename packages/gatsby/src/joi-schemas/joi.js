@@ -1,6 +1,7 @@
 const Joi = require(`joi`)
 
 export const gatsbyConfigSchema = Joi.object().keys({
+  __experimentalThemes: Joi.array(),
   polyfill: Joi.boolean(),
   siteMetadata: Joi.object(),
   pathPrefix: Joi.string(),

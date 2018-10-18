@@ -138,15 +138,19 @@ function convertToInputFilter(
       fields: fields,
     })
   } else if (type instanceof GraphQLInputObjectType) {
+    const fields = _.transform(type.getFields(), (out, fieldConfig, key) => {
+      const type = convertToInputFilter(
+        `${prefix}${_.upperFirst(key)}`,
+        fieldConfig.type
+      )
+      if (type) out[key] = { type }
+    })
+    if (Object.keys(fields).length === 0) {
+      return null
+    }
     return new GraphQLInputObjectType({
       name: createTypeName(`${prefix}{type.name}`),
-      fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
-        const type = convertToInputFilter(
-          `${prefix}${_.upperFirst(key)}`,
-          fieldConfig.type
-        )
-        if (type) out[key] = { type }
-      }),
+      fields: fields,
     })
   } else if (type instanceof GraphQLList) {
     const innerType = type.ofType
