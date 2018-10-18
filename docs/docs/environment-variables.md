@@ -6,7 +6,7 @@ title: "Environment Variables"
 
 You can provide environment variables to your site to customise it's behaviour in different environments. 
 
-Note that we need to distinguish in this discussion between variables which are been defined in
+Note that we need to distinguish in this discussion between variables which have been defined in
 special places in order to be used in different deployment environments, and true OS-level 
 environment variables that could be used in, for example, command-line calls.
 We'll call the former "Project Environment Variables" and the latter "OS Environment Variables".
