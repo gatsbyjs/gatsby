@@ -736,6 +736,19 @@ describe(`GraphQL type inferance`, () => {
       })
       expect(fields.test.type).toEqual(fields2.test.type)
     })
+
+
+    it(`Uses a different type for the same child node types but a different key`, () => {
+      const fields = inferObjectStructureFromNodes({
+        nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
+        types,
+      })
+      const fields2 = inferObjectStructureFromNodes({
+        nodes: [{ differentKey___NODE: [`pet_1`, `child_2`] }],
+        types,
+      })
+      expect(fields.test.type).not.toEqual(fields2.differentKey.type)
+    })
   })
 
   it(`Infers graphql type from array of nodes`, () =>
