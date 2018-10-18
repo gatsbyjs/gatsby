@@ -32,6 +32,8 @@ TopBanner.propTypes = {}
 
 export default TopBanner
 
+/* STYLES */
+
 const horizontalPadding = rhythm(1 / 2)
 
 const topBanner = css`
