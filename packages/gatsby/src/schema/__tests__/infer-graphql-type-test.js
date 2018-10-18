@@ -725,22 +725,13 @@ describe(`GraphQL type inferance`, () => {
       })
     })
 
-    it(`Uses same union type for same key`, () => {
+    it(`Uses same union type for same child node types and key`, () => {
       const fields = inferObjectStructureFromNodes({
-        nodes: [
-          {
-            test___NODE: [`pet_1`, `child_1`],
-          },
-        ],
+        nodes: [{ test___NODE: [`pet_1`, `child_1`] } ],
         types,
       })
-
       const fields2 = inferObjectStructureFromNodes({
-        nodes: [
-          {
-            test___NODE: [`pet_1`, `child_1`],
-          },
-        ],
+        nodes: [{ test___NODE: [`pet_1`, `child_2`] }],
         types,
       })
       expect(fields.test.type).toEqual(fields2.test.type)
