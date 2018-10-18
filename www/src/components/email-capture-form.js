@@ -202,7 +202,9 @@ class EmailCaptureForm extends React.Component {
             }}
           >
             {this.state.successMessage ? (
-              <p>{this.state.successMessage}</p>
+              <div
+                dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
+              />
             ) : (
               <Form
                 onSuccess={this.onSuccess}
