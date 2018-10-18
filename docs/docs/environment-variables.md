@@ -52,7 +52,7 @@ browser JavaScript.
 Gatsby runs several Node.js scripts at build time, notably `gatsby-config.js` and `gatsby-node.js`.
 OS Env Vars will already be available when Node is running, so you can add environment variables the
 normal ways e.g. by adding environment variables through your hosting/build tool, your OS, or when
-calling gatsby on the command line.
+calling Gatsby on the command line.
 
 In Linux terminals, that is as simple as
 ```
