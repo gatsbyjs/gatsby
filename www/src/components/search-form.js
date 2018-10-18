@@ -306,6 +306,14 @@ class SearchForm extends Component {
       document.head.appendChild(link)
     }
   }
+  componentWillUnmount() {
+    loadedJs = false
+    window.removeEventListener(
+      `autocomplete:selected`,
+      this.autocompleteSelected,
+      true
+    )
+  }
   loadAlgoliaJS() {
     !loadedJs &&
       loadJS().then(a => {
