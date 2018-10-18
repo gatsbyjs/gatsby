@@ -5,6 +5,8 @@ const sqip = require(`sqip`)
 
 const generateSqip = require(`../generate-sqip.js`)
 
+const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
+
 jest.mock(`sqip`, () =>
   jest.fn(() => {
     return {
@@ -52,6 +54,7 @@ describe(`gatsby-transformer-sqip`, async () => {
         numberOfPrimitives,
         blur,
         mode,
+        createContentDigest,
       })
       expect(result).toMatchSnapshot()
 
@@ -81,6 +84,7 @@ describe(`gatsby-transformer-sqip`, async () => {
         numberOfPrimitives,
         blur,
         mode,
+        createContentDigest,
       })
 
       expect(result).toMatchSnapshot()
