@@ -145,9 +145,8 @@ class Form extends React.Component {
           </Label>
           <SingleLineInput
             name="email"
-            type="text"
-            // type="email"
-            // required
+            type="email"
+            required
             autoComplete="email"
             ref={this.email}
           />
