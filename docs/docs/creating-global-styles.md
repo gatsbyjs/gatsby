@@ -2,7 +2,7 @@
 title: Creating global styles
 ---
 
-In nearly every site, there will be some global styles, such as a reset or typography defaults. This guide will walk through how to add global styles to your site, whether you use standard `.css` files (or with preprocessors like Sass/LESS) or a CSS-in-JS solution.
+In nearly every site, there will be some global styles, such as a reset or typography defaults. This guide will walk through how to add global styles to your site, whether you use standard `.css` files (or with preprocessors like Sass/Less) or a CSS-in-JS solution.
 
 ## Table of Contents
 
@@ -148,7 +148,7 @@ a {
 
 Then, include the stylesheet in your site's `gatsby-browser.js` file.
 
-> **NOTE:** This solution works when including css as those styles are extracted when building the js but not for css-in-js.
+> **NOTE:** This solution works when including css as those styles are extracted when building the JavaScript but not for css-in-js.
 > Including styles in a layout component or a global-styles.js is your best bet for that.
 
 ```javascript:title=gatsby-browser.js

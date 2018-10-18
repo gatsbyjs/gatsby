@@ -62,7 +62,7 @@ export default () => (
 )
 ```
 
-> 💡 We’ll be covering more about styling in Gatsby in part two of the tutorial.
+> 💡 We’ll be covering more about styling in Gatsby in [**part two**](/tutorial/part-two/) of the tutorial.
 
 3.  Remove the font size styling. Change the “Hello Gatsby!” text to a level-one header. Add a paragraph beneath the header.
 
@@ -281,7 +281,7 @@ And there you have it; A second header — without rewriting any code — by pas
 
 Layout components are for sections of a site that you want to share across multiple pages. For example, Gatsby sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts include a sidebar, and/or a navigation menu.
 
-You’ll explore layout components in [part three](/tutorial/part-three).
+You’ll explore layout components in [**part three**](/tutorial/part-three/).
 
 ## Linking between pages
 

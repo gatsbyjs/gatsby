@@ -1,12 +1,11 @@
 import typography, { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
-import { style } from "glamor"
 import hex2rgba from "hex2rgba"
 
 const { curveDefault, speedDefault } = presets.animation
 
 const styles = {
-  featuredSitesCard: style({
+  featuredSitesCard: {
     display: `flex`,
     flexDirection: `column`,
     flexGrow: 0,
@@ -21,7 +20,7 @@ const styles = {
     [presets.VHd]: {
       width: 400,
     },
-  }),
+  },
   showcaseList: {
     display: `flex`,
     flexWrap: `wrap`,
@@ -65,7 +64,7 @@ const styles = {
     margin: `0 auto`,
     display: `block`,
   },
-  withTitleHover: style({
+  withTitleHover: {
     "& .title": {
       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
       boxShadow: `inset 0 0px 0px 0px ${colors.ui.whisper}`,
@@ -73,7 +72,7 @@ const styles = {
     "&:hover .title": {
       boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
     },
-  }),
+  },
   loadMoreButton: {
     alignItems: `center`,
     display: `flex`,

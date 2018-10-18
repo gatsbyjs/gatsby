@@ -82,7 +82,7 @@ perfect fit for a number of reasons:
 
 [Contentful](https://www.contentful.com/) is a “headless” [Content Management
 System](https://en.wikipedia.org/wiki/Content_management_system), or CMS.
-Traditional CMS platforms, like Wordpress or Drupal, allow authors and editors
+Traditional CMS platforms, like WordPress or Drupal, allow authors and editors
 to easily create websites and publish content such as text articles, image, or
 video embeds. A headless CMS takes those publishing features (and the easy admin
 tools that come with them) and additionally gives you total flexibility as to

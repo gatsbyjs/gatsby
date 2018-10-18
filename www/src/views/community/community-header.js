@@ -34,8 +34,7 @@ class CommunityHeader extends Component {
   render() {
     const { forHire, hiring, submissionText } = this.props
     return (
-      <header
-        role="header"
+      <div
         css={{
           ...styles.header,
         }}
@@ -126,7 +125,7 @@ class CommunityHeader extends Component {
             </Button>
           </div>
         </div>
-      </header>
+      </div>
     )
   }
 }

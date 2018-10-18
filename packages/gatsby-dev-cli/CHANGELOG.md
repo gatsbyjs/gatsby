@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.4.5"></a>
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.4...gatsby-dev-cli@2.4.5) (2018-10-05)
+
+### Bug Fixes
+
+- check for for both unix and win32 path separators ([#8837](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/8837)) ([57cd191](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/57cd191))
+
 <a name="2.4.4"></a>
 
 ## [2.4.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.3...gatsby-dev-cli@2.4.4) (2018-10-02)
