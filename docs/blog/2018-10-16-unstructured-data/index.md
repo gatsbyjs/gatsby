@@ -194,6 +194,8 @@ Working outside of the data layer also means foregoing the optimizations provide
 - [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp) (provides queryable fields for processing your images in a variety of ways including resizing, cropping, and creating responsive images)
 - ... the whole Gatsby ecosystem of official and community-created [transformer plugins](/plugins/?=transformer).
 
+Another difficulty added when working with unstructured data is that your data fetching code becomes increasingly hairy when you source directly from multiple locations.
+
 ## Links potentially of interest
 
 - Kyle Mathews' reasoning for [going with GraphQL](https://github.com/gatsbyjs/gatsby/issues/4994#issuecomment-382110077).
