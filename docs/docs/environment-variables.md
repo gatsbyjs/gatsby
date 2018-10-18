@@ -58,7 +58,7 @@ In Linux terminals this can be done with:
 ```
 MY_ENV_VAR=foo gatsby develop
 ```
-In Windows, it's a little harder. https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only documents some options.
+In Windows it's a little more complex. [Check out this Stack Overflow article for some options](https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only documents some options.)
 
 However, the Project Env. Vars that you defined in the `.env.*` files will *NOT* be immediately available
 in your Node.js scripts. To use those variables, use NPM package [dotenv](https://www.npmjs.com/package/dotenv) to
