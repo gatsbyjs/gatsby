@@ -22,7 +22,7 @@ If you want to define other environments then you'll need to do a little more wo
 
 ## Accessing Environment Variables in JavaScript
 
-All of the Project and OS Environment Variables are only directly available at build time, or
+All of the Project and OS Env Vars are only directly available at build time, or
 when Node.Js is running. They aren't immediately available at run time of the client code; they
 need to be actively captured and embedded into our client-side JavaScript.
 This is achieved during the build using Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
