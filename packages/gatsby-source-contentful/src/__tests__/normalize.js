@@ -6,6 +6,8 @@ const {
   locales,
 } = require(`./data.json`)
 
+const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
+
 let entryList
 let resolvable
 let foreignReferenceMap
@@ -62,6 +64,7 @@ describe(`Process contentful data`, () => {
         entries: entryList[i].map(normalize.fixIds),
         createNode,
         createNodeId,
+        createContentDigest,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
@@ -81,6 +84,7 @@ describe(`Process contentful data`, () => {
         assetItem,
         createNode,
         createNodeId,
+        createContentDigest,
         defaultLocale,
         locales,
       })
