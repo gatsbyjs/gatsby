@@ -179,7 +179,7 @@ You may find this approach useful when you have a use case where using Gatsby's 
 
 Using Gatsby's data layer provides the following benefits:
 
-- Enables you to declaratively specify what data a page component needs
+- Enables you to declaratively specify what data a page component needs, alongside the page component
 - Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it’ll show up when you need it
 - Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries
 - It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
