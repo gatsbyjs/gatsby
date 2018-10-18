@@ -29,7 +29,7 @@ This is achieved during the build using Webpack's [DefinePlugin](https://webpack
 
 Once the environment variables have been embedded into the client-side, they are accessible from the
 global variable `process.env`.
-OS Environment Variables are accessible in Node.js from the same `process.env` global variable.
+OS Env Vars are accessible in Node.js from the same `process.env` global variable.
 
 Note that since these variables are embedded at build time, you will need to restart your dev server
 or rebuild your site after changing them.
