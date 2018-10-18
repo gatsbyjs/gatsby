@@ -44,7 +44,7 @@ Depending on your active environment, the correct one will be found and its valu
 browser JavaScript.
 
 In addition to these Project Environment Variables defined in `.env.*` files, you could also define
-OS Environment Variables. And such OS Env.Vars which are prefixed with `GATSBY_` will become available in
+OS Env Vars. OS Env Vars which are prefixed with `GATSBY_` will become available in
 browser JavaScript.
 
 #### Server-side Node.js
