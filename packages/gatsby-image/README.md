@@ -276,7 +276,7 @@ prop. e.g. `<Img fluid={fluid} />`
 | `style`            | `object`            | Spread into the default styles of the wrapper element                                                                       |
 | `imgStyle`         | `object`            | Spread into the default styles of the actual `img` element                                                                  |
 | `placeholderStyle` | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
-| `placeholderClass` | `string`            | A class that is passed to the placeholder `img` element                                                                     |
+| `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                     |
 | `backgroundColor`  | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`           | `func`              | A callback that is called when the full-size image has loaded.                                                              |
 | `onError`          | `func`              | A callback that is called when the image fails to load.                                                                     |

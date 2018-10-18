@@ -198,7 +198,7 @@ class Image extends React.Component {
       style = {},
       imgStyle = {},
       placeholderStyle = {},
-      placeholderClass,
+      placeholderClassName,
       fluid,
       fixed,
       backgroundColor,
@@ -250,7 +250,7 @@ class Image extends React.Component {
                 title={title}
                 src={image.base64}
                 style={imagePlaceholderStyle}
-                className={placeholderClass}
+                className={placeholderClassName}
               />
             )}
 
@@ -261,7 +261,7 @@ class Image extends React.Component {
                 title={title}
                 src={image.tracedSVG}
                 style={imagePlaceholderStyle}
-                className={placeholderClass}
+                className={placeholderClassName}
               />
             )}
 
@@ -349,7 +349,7 @@ class Image extends React.Component {
               title={title}
               src={image.base64}
               style={imagePlaceholderStyle}
-              className={placeholderClass}
+              className={placeholderClassName}
             />
           )}
 
@@ -360,7 +360,7 @@ class Image extends React.Component {
               title={title}
               src={image.tracedSVG}
               style={imagePlaceholderStyle}
-              className={placeholderClass}
+              className={placeholderClassName}
             />
           )}
 
@@ -470,7 +470,7 @@ Image.propTypes = {
   style: PropTypes.object,
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,
-  placeholderClass: PropTypes.string,
+  placeholderClassName: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
