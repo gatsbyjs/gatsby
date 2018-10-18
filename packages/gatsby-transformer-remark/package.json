@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
     "gray-matter": "^4.0.0",
-    "hast-util-raw": "^2.0.2",
+    "hast-util-raw": "^4.0.0",
     "hast-util-to-html": "^3.0.0",
     "lodash": "^4.17.10",
     "mdast-util-to-hast": "^3.0.0",
