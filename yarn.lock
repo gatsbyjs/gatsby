@@ -4197,6 +4197,13 @@ builtins@^1.0.3:
   resolved "https://registry.yarnpkg.com/builtins/-/builtins-1.0.3.tgz#cb94faeb61c8696451db36534e1422f94f0aee88"
   integrity sha1-y5T662HIaWRR2zZTThQi+U8K7og=
 
+builtins@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/builtins/-/builtins-2.0.0.tgz#018999641e11252188652dbb2db01ad386fcdc46"
+  integrity sha512-8srrxpDx3a950BHYcbse+xMjupHHECvQYnShkoPz2ZLhTBrk/HQO6nWMh4o4ui8YYp2ourGVYXlGqFm+UYQwmA==
+  dependencies:
+    semver "^5.4.1"
+
 byline@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/byline/-/byline-5.0.0.tgz#741c5216468eadc457b03410118ad77de8c1ddb1"
@@ -7346,6 +7353,11 @@ estree-walker@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.2.1.tgz#bdafe8095383d8414d5dc2ecf4c9173b6db9412e"
   integrity sha1-va/oCVOD2EFNXcLs9MkXO225QS4=
+
+estree-walker@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.5.2.tgz#d3850be7529c9580d815600b53126515e146dd39"
+  integrity sha512-XpCnW/AE10ws/kDAs37cngSkvgIR8aN3G0MS85m7dUpuK2EREo9VJ00uvw6Dg/hXEpfsE1I1TvJOJr+Z+TL+ig==
 
 esutils@^2.0.0, esutils@^2.0.2:
   version "2.0.2"
@@ -16337,6 +16349,24 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+rollup-plugin-auto-external@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-auto-external/-/rollup-plugin-auto-external-2.0.0.tgz#98fd137d66c1cbe0f4e245b31560a72dbde896aa"
+  integrity sha512-HQM3ZkZYfSam1uoZtAB9sK26EiAsfs1phrkf91c/YX+S07wugyRXSigBxrIwiLr5EPPilKYmoMxsrnlGBsXnuQ==
+  dependencies:
+    builtins "^2.0.0"
+    read-pkg "^3.0.0"
+    safe-resolve "^1.0.0"
+    semver "^5.5.0"
+
+rollup-plugin-babel@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-4.0.3.tgz#8282b0e22233160d679e9c7631342e848422fb02"
+  integrity sha512-/PP0MgbPQyRywI4zRIJim6ySjTcOLo4kQbEbROqp9kOR3kHC3FeU++QpBDZhS2BcHtJTVZMVbBV46flbBN5zxQ==
+  dependencies:
+    "@babel/helper-module-imports" "^7.0.0"
+    rollup-pluginutils "^2.3.0"
+
 rollup-plugin-hypothetical@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-hypothetical/-/rollup-plugin-hypothetical-2.1.0.tgz#7fec9a865ed7d0eac14ca6ee2b2c4088acdb1955"
@@ -16361,10 +16391,26 @@ rollup-pluginutils@^1.3.1:
     estree-walker "^0.2.1"
     minimatch "^3.0.2"
 
+rollup-pluginutils@^2.3.0:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.3.3.tgz#3aad9b1eb3e7fe8262820818840bf091e5ae6794"
+  integrity sha512-2XZwja7b6P5q4RZ5FhyX1+f46xi1Z3qBKigLRZ6VTZjwbN0K1IFGMlwm06Uu0Emcre2Z63l77nq/pzn+KxIEoA==
+  dependencies:
+    estree-walker "^0.5.2"
+    micromatch "^2.3.11"
+
 rollup@^0.59.4:
   version "0.59.4"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.59.4.tgz#6f80f7017c22667ff1bf3e62adf8624a44cc44aa"
   integrity sha512-ISiMqq/aJa+57QxX2MRcvLESHdJ7wSavmr6U1euMr+6UgFe6KM+3QANrYy8LQofwhTC1I7BcAdlLnDiaODs1BA==
+  dependencies:
+    "@types/estree" "0.0.39"
+    "@types/node" "*"
+
+rollup@^0.66.6:
+  version "0.66.6"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.66.6.tgz#ce7d6185beb7acea644ce220c25e71ae03275482"
+  integrity sha512-J7/SWanrcb83vfIHqa8+aVVGzy457GcjA6GVZEnD0x2u4OnOd0Q1pCrEoNe8yLwM6z6LZP02zBT2uW0yh5TqOw==
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "*"
@@ -16443,6 +16489,11 @@ safe-regex@^1.1.0:
   integrity sha1-QKNmnzsHfR6UPURinhV91IAjvy4=
   dependencies:
     ret "~0.1.10"
+
+safe-resolve@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/safe-resolve/-/safe-resolve-1.0.0.tgz#fe34f8d29d7a3becfd249d0aa8a799b5c3cf6559"
+  integrity sha1-/jT40p16O+z9JJ0KqKeZtcPPZVk=
 
 "safer-buffer@>= 2.1.2 < 3", safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
   version "2.1.2"

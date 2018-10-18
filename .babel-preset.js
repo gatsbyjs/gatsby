@@ -1,7 +1,7 @@
 const r = m => require.resolve(m)
 
 function preset(context, options = {}) {
-  const { browser = false, debug = false } = options
+  const { browser = false, debug = false, modules = 'commonjs' } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
   const PRODUCTION = (BABEL_ENV || NODE_ENV) === "production"
@@ -31,7 +31,7 @@ function preset(context, options = {}) {
             debug: !!debug,
             useBuiltIns: "entry",
             shippedProposals: true,
-            modules: "commonjs",
+            modules,
           },
           browser ? browserConfig : nodeConfig
         ),
