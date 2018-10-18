@@ -273,6 +273,10 @@ class SearchForm extends Component {
     navigate(`${a.pathname}${a.hash}`)
   }
   init() {
+    if (this.algoliaInitialized) {
+      return
+    }
+
     window.addEventListener(
       `autocomplete:selected`,
       this.autocompleteSelected,
@@ -290,6 +294,7 @@ class SearchForm extends Component {
         keyboardShortcuts: [`s`],
       },
     })
+    this.algoliaInitialized = true
   }
   componentDidMount() {
     if (
@@ -307,7 +312,6 @@ class SearchForm extends Component {
     }
   }
   componentWillUnmount() {
-    loadedJs = false
     window.removeEventListener(
       `autocomplete:selected`,
       this.autocompleteSelected,
@@ -315,12 +319,15 @@ class SearchForm extends Component {
     )
   }
   loadAlgoliaJS() {
-    !loadedJs &&
+    if (!loadedJs) {
       loadJS().then(a => {
         loadedJs = true
         window.docsearch = a.default
         this.init()
       })
+    } else {
+      this.init()
+    }
   }
   render() {
     const { focussed } = this.state
