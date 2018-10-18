@@ -101,7 +101,7 @@ render() {
 ```
 
 
-## Reserved environment variables:
+## Reserved Environment Variables:
 > You can not override certain environment variables as some are used internally
 > for optimizations during build
 
