@@ -51,7 +51,7 @@ Narative strives for technical excellence for all its products, which can be ach
 
 Gatsby streamlines our process with an excellent developer experience and all the features you could ask for in 2018. The heavy lifting of delivering a technically sound website with performance that users will love has slowly shifted towards frameworks such as Gatsby, which has freed up our team to focus on even better experiences and products.
 
-To conclude, Gatsby may not be the perfect solution for your project, but for our needs it's perfect. By building with Gatsby, we've extended our team to an amazing group of people that are working hard to improve page based websites. With all of the benefits from Gatsby our company has quickly surpassed We're excited to see where Gatsby takes us next.
+To conclude, Gatsby may not be the perfect solution for your project, but for our needs it's perfect. By building with Gatsby, we've extended our team to an amazing group of people that are working hard to improve page based websites. We're excited to see where Gatsby takes us next.
 
 # Narative
 
