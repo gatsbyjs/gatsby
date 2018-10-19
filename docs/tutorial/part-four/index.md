@@ -350,7 +350,7 @@ Another success! 🎉
 Why use two different queries here? These examples were quick introductions to
 the query types, how they are formatted, and where they can be used. For now,
 keep in mind, only pages can make page queries and only non-page components, such as
-Layout, can use StaticQuery. In part 7 the tutorial explains these in greater
+Layout, can use StaticQuery. In [part 7](/tutorial/part-seven/) the tutorial explains these in greater
 depth.
 
 But let's restore the real title.
