@@ -55,9 +55,9 @@ exports.createPages = ({ graphql, actions }) => {
 
 For each page we want to create we must specify the `path` for visiting that
 page, the `component` template used to render that page, and any `context`
-we need in the component for rendering. Often times the context will include
-a unique identifier that can be used to query for associated data that will
-be rendered to the page.
+we need in the component for rendering. The `context` parameter is
+_optional_ though often times it will include a unique identifier that can
+be used to query for associated data that will be rendered to the page.
 
 ### Specifying A Template
 
@@ -98,7 +98,9 @@ export const query = graphql`
 
 Notice that the `slug` value we specified in the `createPage` context is
 used in the template's GraphQL query. As a result we can provide the `title`
-and `html` from the matching `markdownRemark` record to our component.
+and `html` from the matching `markdownRemark` record to our component. The
+context is also available as the `pageContext` prop in the template
+component itself.
 
 ### Not Just Markdown
 
