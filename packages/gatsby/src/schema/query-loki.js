@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const Promise = require(`bluebird`)
 const { db } = require(`../db`)
 
 // Takes a raw graphql filter and converts it into a mongo-like args
@@ -152,7 +153,7 @@ module.exports = ({ type, rawGqlArgs }) => {
 
   const coll = db.getCollection(type.name)
 
-  const lokiResult = execLokiQuery(coll, lokiArgs, gqlArgs)
+  const result = execLokiQuery(coll, lokiArgs, gqlArgs)
 
-  return lokiResult
+  return Promise.resolve(result)
 }
