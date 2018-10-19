@@ -641,7 +641,7 @@ export const pageQuery = graphql`
   [commit](https://github.com/gatsbyjs/gatsby/commit/5173bdc5424e7c874b3f2abfad706cea2e38ebc3)
 
 ### Fixed
-
+This is my test change
 - hot reloading now fully works. Apparently you can't use function components
   for top-level routes on react-router with react-hot-loader 3.0 `¯\_( ツ )_/¯`
   [#532](https://github.com/gatsbyjs/gatsby/pull/532) and
@@ -783,3 +783,4 @@ export const pageQuery = graphql`
 
 - Initial versions of new GraphQL data layer, PRPL pattern, programmatic routes,
   code splitting, supporting long-term caching of JS files.
+  This is my test change
