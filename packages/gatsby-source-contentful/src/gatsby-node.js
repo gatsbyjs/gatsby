@@ -5,6 +5,7 @@ const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
+const { defaultOptions, validateOptions } = require(`./plugin-options`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -32,7 +33,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store },
+  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store, reporter },
   options
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
@@ -58,11 +59,19 @@ exports.sourceNodes = async (
     return
   }
 
+  options = { ...options, ...defaultOptions }
+  const validationErrors = validateOptions(options)
+  if (validationErrors.length) {
+    reporter.panic(
+      `Problems with plugin options in gatsby-config:\n${validationErrors
+        .map(s => ` - ${s}`)
+        .join(`\n`)}`
+    )
+  }
+
   const createSyncToken = () =>
     `${options.spaceId}-${options.environment}-${options.host}`
 
-  options.host = options.host || `cdn.contentful.com`
-  options.environment = options.environment || `master` // default is always master
   // Get sync token if it exists.
   let syncToken
   if (
@@ -84,6 +93,7 @@ exports.sourceNodes = async (
     locales,
   } = await fetchData({
     syncToken,
+    reporter,
     ...options,
   })
 

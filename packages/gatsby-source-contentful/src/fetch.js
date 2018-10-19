@@ -1,17 +1,20 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const normalize = require(`./normalize`)
+const { formatOptionsSummary } = require(`./plugin-options`)
 
-module.exports = async ({ spaceId, syncToken, ...options }) => {
+module.exports = async ({ spaceId, syncToken, reporter, ...options }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
 
   console.log(`Starting to fetch data from Contentful`)
 
-  const client = contentful.createClient({
+  const contentfulClientOptions = {
     space: spaceId,
     ...options,
-  })
+  }
+
+  const client = contentful.createClient(contentfulClientOptions)
 
   // The sync API puts the locale in all fields in this format { fieldName:
   // {'locale': value} } so we need to get the space and its default local.
@@ -25,14 +28,25 @@ module.exports = async ({ spaceId, syncToken, ...options }) => {
     defaultLocale = _.find(locales, { default: true }).code
     console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
-    console.log(
-      `Accessing your Contentful space failed. Perhaps you're offline or the spaceId/accessToken is incorrect.`
-    )
-    console.log(
-      `Try running setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.`
-    )
+    let details
+    if (e.code === `ENOTFOUND`) {
+      details = `You seem to be offline`
+    } else if (e.response) {
+      if (e.response.status === 404) {
+        // host and space used to generate url
+        details = `Endpoint not found. Check if host and space settings are correct`
+      } else if (e.response.status === 401) {
+        // authorization error
+        details = `Authorization error. Check if accessToken and environment is correct`
+      }
+    }
+    const errorMessage = `Accessing your Contentful space failed.
+Try running setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
+${details ? `\n${details}\n` : ``}
+Used options:
+${formatOptionsSummary(contentfulClientOptions)}`
 
-    process.exit(1)
+    reporter.panic(errorMessage)
   }
 
   let currentSyncData
