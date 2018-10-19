@@ -1,6 +1,4 @@
 const _ = require(`lodash`)
-const { connectionFromArray } = require(`graphql-skip-limit`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const queryLoki = require(`../query-loki`)
 const querySift = require(`../query-sift`)
 const { pluginFieldTracking } = require(`../redux`)
@@ -11,53 +9,34 @@ function hasPluginFields(queryArgs) {
   )
 }
 
-function chooseQueryFunction(args) {
-  if (hasPluginFields(args.queryArgs)) {
+function chooseQueryEngine(queryArgs) {
+  if (hasPluginFields(queryArgs)) {
     return querySift
   } else {
     return queryLoki
   }
 }
 
-function handleSingle({ results, queryArgs, path }) {
-  if (results.length > 0) {
-    const nodeId = results[0].id
-    createPageDependency({ path, nodeId })
-    return results
-  } else {
-    return null
-  }
+// Selects the appropriate query engine and executes the query. The
+// two query engines are sift and loki. Sift is used if the query
+// includes plugin fields, i.e those declared by plugins during the
+// `setFieldsOnGraphQLNodeType` API. If true, then we must iterate
+// through all nodes calling the plugin field to make sure it's
+// realized, then we can perform the query. See `query-sift.js` for
+// more.
+//
+// If the query does *not* include plugin fields, then we can perform
+// a much faster pure data query using loki. See `query-loki.js` for
+// more.
+//
+// In both cases, a promise is returned that will eventually have the
+// query results (as an array, even if the query was for a connection)
+function runQuery(args) {
+  const { type, queryArgs } = args
+
+  const queryFunction = chooseQueryEngine(queryArgs)
+
+  return queryFunction({ rawGqlArgs: queryArgs, type })
 }
 
-function handleConnection({ results, queryArgs, path }) {
-  if (results && results.length) {
-    const connection = connectionFromArray(results, queryArgs)
-    connection.totalCount = results.length
-
-    if (results.length > 0 && results[0].internal) {
-      const connectionType = connection.edges[0].node.internal.type
-      createPageDependency({
-        path,
-        connection: connectionType,
-      })
-    }
-    return connection
-  } else {
-    return null
-  }
-}
-
-async function runResolver(args) {
-  const { type, queryArgs, isConnection, path } = args
-
-  const queryFunction = chooseQueryFunction(args)
-
-  queryArgs = !isConnection ? { filter: queryArgs } : queryArgs
-  const results = await queryFunction({ rawGqlArgs: queryArgs, ...args })
-
-  if (isConnection) {
-    return handleConnection({ results, ...args })
-  } else {
-    return handleSingle({ results, ...args })
-  }
-}
+module.exports.runQuery = runQuery

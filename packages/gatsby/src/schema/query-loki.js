@@ -1,20 +1,6 @@
 const _ = require(`lodash`)
 const { db } = require(`../db`)
 
-const exampleGqlFilter = {
-  internal: {
-    type: {
-      eq: "TestNode",
-    },
-    content: {
-      glob: "et",
-    },
-  },
-  id: {
-    glob: "12*",
-  },
-}
-
 // Takes a raw graphql filter and converts it into a mongo-like args
 // object. E.g `eq` becomes `$eq`. gqlFilter should be the raw graphql
 // filter returned from graphql-js. e.g:
@@ -111,22 +97,6 @@ function dotNestedFields(o, path = ``) {
       return { [_.trimStart(path, `.`)]: o }
     }
   }
-}
-
-const exampleRawGqlArgs = {
-  filter: {
-    internal: {
-      type: {
-        eq: "TestNode",
-      },
-      content: {
-        glob: "et",
-      },
-    },
-    id: {
-      glob: "12*",
-    },
-  },
 }
 
 // Converts graphQL args to a loki query

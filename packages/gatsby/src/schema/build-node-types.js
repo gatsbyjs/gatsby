@@ -21,14 +21,13 @@ const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
+const { runQuery } = require(`./run-query`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
 type TypeMap = {
   [typeName: string]: ProcessedNodeType,
 }
-
-const nodesCache = new Map()
 
 module.exports = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -187,35 +186,24 @@ module.exports = async ({ parentSpan }) => {
         name: typeName,
         type: gqlType,
         args: filterFields,
-        resolve(a, args, context) {
-          const runSift = require(`./run-sift`)
-          let latestNodes
-          if (
-            process.env.NODE_ENV === `production` &&
-            nodesCache.has(typeName)
-          ) {
-            latestNodes = nodesCache.get(typeName)
+        async resolve(a, args, context) {
+          let path = context.path ? context.path : ``
+
+          // run-query expects queries to have a filter field. For
+          // connection fields, the field will already present. We
+          // have to manually add it to single result queries
+          let queryArgs = _.isObject(args) ? args : {}
+          queryArgs = { filter: queryArgs }
+
+          const results = await runQuery({ type: gqlType, queryArgs })
+
+          if (results.length > 0) {
+            const nodeId = results[0].id
+            createPageDependency({ path, nodeId })
+            return results
           } else {
-            latestNodes = _.filter(
-              getNodes(),
-              n => n.internal.type === typeName
-            )
-            nodesCache.set(typeName, latestNodes)
+            return null
           }
-          if (!_.isObject(args)) {
-            args = {}
-          }
-          return runSift({
-            args: {
-              filter: {
-                ...args,
-              },
-            },
-            nodes: latestNodes,
-            path: context.path ? context.path : ``,
-            typeName: typeName,
-            type: gqlType,
-          })
         },
       },
     }
@@ -234,4 +222,14 @@ module.exports = async ({ parentSpan }) => {
   span.finish()
 
   return processedTypes
+}
+
+function handleSingle({ results, queryArgs, path }) {
+  if (results.length > 0) {
+    const nodeId = results[0].id
+    createPageDependency({ path, nodeId })
+    return results
+  } else {
+    return null
+  }
 }
