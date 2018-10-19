@@ -107,3 +107,8 @@ The
 plugin is just one of a multitude of Gatsby plugins that can provide data
 through the GraphQL interface. Any of that data can be used to
 programmatically create pages.
+
+### Other Resources
+
+- [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
+- [Using Unstructured Data](https://www.gatsbyjs.org/docs/using-unstructured-data/)
