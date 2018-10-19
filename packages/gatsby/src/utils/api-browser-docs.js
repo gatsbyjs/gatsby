@@ -1,7 +1,7 @@
 /**
  * Called when the Gatsby browser runtime first starts.
  * @example
- * exports.onClientEntry = () => {
+ * export const onClientEntry = () => {
  *   console.log("We've started!")
  *   callAnalyticsAPI()
  * }
@@ -11,7 +11,7 @@ exports.onClientEntry = true
 /**
  * Called when the initial (but not subsequent) render of Gatsby App is done on the client.
  * @example
- * exports.onInitialClientRender = () => {
+ * export const onInitialClientRender = () => {
  *   console.log("ReactDOM.render has executed")
  * }
  */
@@ -23,7 +23,7 @@ exports.onInitialClientRender = true
  * @param {object} $0.location A location object
  * @param {object} $0.action The "action" that caused the route change
  * @example
- * exports.onPreRouteUpdate = ({ location }) => {
+ * exports const onPreRouteUpdate = ({ location }) => {
  *   console.log("Gatsby started to change location", location.pathname)
  * }
  */
@@ -35,7 +35,7 @@ exports.onPreRouteUpdate = true
  * @param {object} $0.location A location object
  * @param {object} $0.action The "action" that caused the route change
  * @example
- * exports.onRouteUpdateDelayed = () => {
+ * export const onRouteUpdateDelayed = () => {
  *   console.log("We can show loading indicator now")
  * }
  */
@@ -47,7 +47,7 @@ exports.onRouteUpdateDelayed = true
  * @param {object} $0.location A location object
  * @param {object} $0.action The "action" that caused the route change
  * @example
- * exports.onRouteUpdate = ({ location }) => {
+ * export const onRouteUpdate = ({ location }) => {
  *   console.log('new pathname', location.pathname)
  *
  *   // Track pageview with google analytics
@@ -77,7 +77,7 @@ exports.onRouteUpdate = true
  * scroll to, `false` to not update the scroll position, or `true` for the
  * default behavior.
  * @example
- * exports.shouldUpdateScroll = ({
+ * exports const shouldUpdateScroll = ({
  *   routerProps: { location },
  *   getSavedScrollPosition
  * }) => {
@@ -94,7 +94,7 @@ exports.shouldUpdateScroll = true
 /**
  * Allow a plugin to register a Service Worker. Should be a function that returns true.
  * @example
- * exports.registerServiceWorker = () => true
+ * export const registerServiceWorker = () => true
  */
 exports.registerServiceWorker = true
 
@@ -184,7 +184,7 @@ exports.disableCorePrefetching = true
  * This method takes no param and should return a function with same signature as ReactDOM.render()
  * Note it's very important to call the callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
  * @example
- * exports.replaceHydrateFunction = () => {
+ * export const replaceHydrateFunction = () => {
  *   return (element, container, callback) => {
  *     console.log("rendering!");
  *     ReactDOM.render(element, container, callback);
