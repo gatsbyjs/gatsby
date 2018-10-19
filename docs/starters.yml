@@ -994,6 +994,19 @@
     - Responsive images with gatsby-image
     - Extensive SEO
     - ESLint & Prettier
+- url: https://gatsby-starter-v2-casper.netlify.com/
+  repo: https://github.com/GatsbyCentral/gatsby-v2-starter-casper
+  description: A blog starter based on the Casper (v1.4) theme.
+  tags:
+    - PWA
+  features:
+    - Page pagination
+    - CSS
+    - Tags
+    - Google Analytics
+    - Offline support
+    - Web App Manifest
+    - SEO
 - url: https://lumen-v2.netlify.com/
   repo: https://github.com/GatsbyCentral/gatsby-v2-starter-lumen
   description: A Gatsby v2 fork of the lumen starter.
