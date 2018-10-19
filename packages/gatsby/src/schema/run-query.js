@@ -20,7 +20,7 @@ function chooseQueryEngine(queryArgs) {
 // Selects the appropriate query engine and executes the query. The
 // two query engines are sift and loki. Sift is used if the query
 // includes plugin fields, i.e those declared by plugins during the
-// `setFieldsOnGraphQLNodeType` API. If true, then we must iterate
+// `setFieldsOnGraphQLNodeType` API. If it does, then we must iterate
 // through all nodes calling the plugin field to make sure it's
 // realized, then we can perform the query. See `query-sift.js` for
 // more.

@@ -14,7 +14,7 @@ const { runQuery } = require(`./run-query`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
 
-function handleQueryResult({ results, queryArgs, path }) {
+function handleQueryResult({ results, resolverArgs: queryArgs, path }) {
   if (results && results.length) {
     const connection = connectionFromArray(results, queryArgs)
     connection.totalCount = results.length
@@ -95,7 +95,7 @@ module.exports = (types: any) => {
           path,
         })
 
-        return handleQueryResult({ results, queryArgs: resolveArgs, path })
+        return handleQueryResult({ results, resolveArgs, path })
       },
     }
   })

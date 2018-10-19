@@ -223,13 +223,3 @@ module.exports = async ({ parentSpan }) => {
 
   return processedTypes
 }
-
-function handleSingle({ results, queryArgs, path }) {
-  if (results.length > 0) {
-    const nodeId = results[0].id
-    createPageDependency({ path, nodeId })
-    return results
-  } else {
-    return null
-  }
-}
