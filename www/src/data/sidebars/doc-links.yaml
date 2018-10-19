@@ -24,6 +24,8 @@
           link: /docs/deploy-gatsby/
         - title: Deploying to S3 and CloudFront
           link: /docs/deploying-to-s3-cloudfront
+        - title: Hosting on Netlify
+          link: /docs/hosting-on-netlify
         - title: Path Prefix
           link: /docs/path-prefix/
         - title: How Gatsby works with GitHub pages
