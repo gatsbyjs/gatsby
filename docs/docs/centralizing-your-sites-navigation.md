@@ -92,7 +92,7 @@ Perfect! You now have a way of obtaining data from the `gatsby-config.js` file. 
 
 Inside your project, locate the `src/components` folder and navigate to the `layout.js` file. Within this layout component you should notice a component named `StaticQuery`.
 
-StaticQuery is a new component introduced in Gatsby V2, which allows you to run GraphQL queries within your components, not just pages. It allows developers to colocate data with their components.
+StaticQuery is a new component introduced in Gatsby V2, which allows you to run GraphQL queries within your components, not just pages. It allows developers to collocate data with their components.
 
 Let's extend the query within this component to include the menu links, so it looks like so:
 
