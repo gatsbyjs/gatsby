@@ -476,7 +476,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         },
       })
     } else {
-      Promise.all([
+      return Promise.all([
         getpkgjson(node.repo),
         githubApiClient.request(`
             query {
