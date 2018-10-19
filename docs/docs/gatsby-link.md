@@ -68,7 +68,7 @@ render () {
     <Link
       to="/another-page/"
       replace
-    />
+    >
       Go and prevent back to bring you back here
     </Link>
   )
