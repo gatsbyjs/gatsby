@@ -24,6 +24,14 @@
           link: /docs/deploy-gatsby/
         - title: Deploying to S3 and CloudFront
           link: /docs/deploying-to-s3-cloudfront
+        - title: Deploying to Aerobatic
+          link: /docs/deploying-to-aerobatic/
+        - title: Deploying to Heroku
+          link: /docs/deploying-to-heroku/
+        - title: Deploying to Now
+          link: /docs/deploying-to-now/
+        - title: Deploying to GitLab Pages
+          link: /docs/deploying-to-gitlab-pages/
         - title: Hosting on Netlify
           link: /docs/hosting-on-netlify
         - title: Path Prefix
