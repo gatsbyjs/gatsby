@@ -21,7 +21,7 @@ const {
 } = require(`./data-tree-utils`)
 
 const { findLinkedNode } = require(`./infer-graphql-type`)
-const { getNodes } = require(`../redux`)
+const { getNodes } = require(`../db`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type {

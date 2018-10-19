@@ -12064,6 +12064,11 @@ loglevel@^1.4.1:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
   integrity sha1-4PyVEztu8nbNyIh82vJKpvFW+Po=
 
+lokijs@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/lokijs/-/lokijs-1.5.5.tgz#1c21f82af7579037fade7b9e4813485c23708bb6"
+  integrity sha1-HCH4KvdXkDf63nueSBNIXCNwi7Y=
+
 longest-streak@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/longest-streak/-/longest-streak-1.0.0.tgz#d06597c4d4c31b52ccb1f5d8f8fe7148eafd6965"

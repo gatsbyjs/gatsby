@@ -36,7 +36,7 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
-module.exports = ({ type, rawGqlArgs, isConnection }) => {
+function runQuery({ type, rawGqlArgs, isConnection }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(rawGqlArgs))
@@ -271,4 +271,8 @@ module.exports = ({ type, rawGqlArgs, isConnection }) => {
   })
 
   return tempPromise
+}
+
+module.exports = {
+  runQuery,
 }

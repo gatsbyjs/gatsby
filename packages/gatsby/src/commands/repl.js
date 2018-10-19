@@ -1,7 +1,8 @@
 const repl = require(`repl`)
 const { graphql } = require(`graphql`)
 const bootstrap = require(`../bootstrap`)
-const { store, loadNodeContent, getNodes, getNode } = require(`../redux`)
+const { store, loadNodeContent } = require(`../redux`)
+const { getNodes, getNode } = require(`../db`)
 
 module.exports = async program => {
   // run bootstrap
@@ -16,8 +17,9 @@ module.exports = async program => {
     pages,
     components,
     staticQueryComponents,
-    nodes,
   } = store.getState()
+
+  const nodes = getNodes()
 
   const query = async query => {
     const result = await graphql(schema, query, {}, {}, {})

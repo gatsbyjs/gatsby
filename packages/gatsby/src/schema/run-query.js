@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
-const queryLoki = require(`../query-loki`)
-const querySift = require(`../query-sift`)
+const queryLoki = require(`./query-loki`)
+const querySift = require(`./query-sift`)
 const { pluginFieldTracking } = require(`../redux`)
 
 function hasPluginFields(queryArgs) {
@@ -11,9 +11,9 @@ function hasPluginFields(queryArgs) {
 
 function chooseQueryEngine(queryArgs) {
   if (hasPluginFields(queryArgs)) {
-    return querySift
+    return querySift.runQuery
   } else {
-    return queryLoki
+    return queryLoki.runQuery
   }
 }
 

@@ -6,7 +6,7 @@ const isRelativeUrl = require(`is-relative-url`)
 const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 
-const { getNodes } = require(`../../redux`)
+const { getNodes } = require(`../../db`)
 const { findRootNodeAncestor } = require(`../node-tracking`)
 const {
   createPageDependency,

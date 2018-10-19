@@ -17,7 +17,13 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
-const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
+const {
+  getNodes,
+  getNode,
+  getNodeGroups,
+  getNodeAndSavePathDependency,
+} = require(`../db`)
+const { pluginFieldTracking } = require(`../redux`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
@@ -33,10 +39,7 @@ module.exports = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
-  const types = _.groupBy(
-    getNodes().filter(node => node.internal && !node.internal.ignoreType),
-    node => node.internal.type
-  )
+  const types = getNodeGroups()
   const processedTypes: TypeMap = {}
 
   clearTypeExampleValues()
@@ -159,6 +162,13 @@ module.exports = async ({ parentSpan }) => {
       fields: mergedFieldsFromPlugins,
     })
 
+    const inferredFieldNames = _.keys(
+      inferredInputFieldsFromPlugins.inferredFields
+    )
+    _.forEach(inferredFieldNames, fieldName => {
+      pluginFieldTracking.add(fieldName)
+    })
+
     const gqlType = new GraphQLObjectType({
       name: typeName,
       description: `Node of type ${typeName}`,
@@ -187,21 +197,26 @@ module.exports = async ({ parentSpan }) => {
         type: gqlType,
         args: filterFields,
         async resolve(a, args, context) {
-          let path = context.path ? context.path : ``
+          try {
+            let path = context.path || ``
 
-          // run-query expects queries to have a filter field. For
-          // connection fields, the field will already present. We
-          // have to manually add it to single result queries
-          let queryArgs = _.isObject(args) ? args : {}
-          queryArgs = { filter: queryArgs }
+            // run-query expects queries to have a filter field. For
+            // connection fields, the field will already present. We
+            // have to manually add it to single result queries
+            let queryArgs = _.isObject(args) ? args : {}
+            queryArgs = { filter: queryArgs }
 
-          const results = await runQuery({ type: gqlType, queryArgs })
+            const results = await runQuery({ type: gqlType, queryArgs })
 
-          if (results.length > 0) {
-            const nodeId = results[0].id
-            createPageDependency({ path, nodeId })
-            return results
-          } else {
+            if (results.length > 0) {
+              const nodeId = results[0].id
+              createPageDependency({ path, nodeId })
+              return results
+            } else {
+              return null
+            }
+          } catch (e) {
+            console.log(e)
             return null
           }
         },

@@ -68,15 +68,13 @@ const runAPI = (plugin, api, args) => {
     pluginSpan.setTag(`plugin`, plugin.name)
 
     let pathPrefix = ``
+    const { store, emitter, loadNodeContent } = require(`../redux`)
     const {
-      store,
-      emitter,
-      loadNodeContent,
       getNodes,
       getNode,
       hasNodeChanged,
       getNodeAndSavePathDependency,
-    } = require(`../redux`)
+    } = require(`../db`)
     const { boundActionCreators } = require(`../redux/actions`)
 
     const doubleBoundActionCreators = doubleBind(

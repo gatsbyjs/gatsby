@@ -11,6 +11,9 @@ const emitter = mitt()
 // Reducers
 const reducers = require(`./reducers`)
 
+// Hack to track pluginFields
+exports.pluginFieldTracking = new Set()
+
 const objectToMap = obj => {
   let map = new Map()
   Object.keys(obj).forEach(key => {
@@ -121,44 +124,6 @@ exports.emitter = emitter
 exports.store = store
 
 /**
- * Get all nodes from redux store.
- *
- * @returns {Array}
- */
-exports.getNodes = () => {
-  const nodes = store.getState().nodes
-  if (nodes) {
-    return Array.from(nodes.values())
-  } else {
-    return []
-  }
-}
-const getNode = id => store.getState().nodes.get(id)
-
-/** Get node by id from store.
- *
- * @param {string} id
- * @returns {Object}
- */
-exports.getNode = getNode
-
-/**
- * Determine if node has changed.
- *
- * @param {string} id
- * @param {string} digest
- * @returns {boolean}
- */
-exports.hasNodeChanged = (id, digest) => {
-  const node = store.getState().nodes.get(id)
-  if (!node) {
-    return true
-  } else {
-    return node.internal.contentDigest !== digest
-  }
-}
-
-/**
  * Get content for a node from the plugin that created it.
  *
  * @param {Object} node
@@ -186,20 +151,6 @@ exports.loadNodeContent = node => {
       })
     })
   }
-}
-
-/**
- * Get node and save path dependency.
- *
- * @param {string} id
- * @param {string} path
- * @returns {Object} node
- */
-exports.getNodeAndSavePathDependency = (id, path) => {
-  const { createPageDependency } = require(`./actions/add-page-dependency`)
-  const node = getNode(id)
-  createPageDependency({ path, nodeId: id })
-  return node
 }
 
 // Start plugin runner which listens to the store

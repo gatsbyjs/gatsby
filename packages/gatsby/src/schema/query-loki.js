@@ -59,7 +59,9 @@ function toMongoArgs(gqlFilter) {
   return mongoArgs
 }
 
-// Converts a nested mongo args object into a dotted notation. E.g
+// Converts a nested mongo args object into a dotted notation. acc
+// must be a reference to an empty object. The converted fields will
+// be added to tit. E.g
 //
 // {
 //   internal: {
@@ -75,7 +77,7 @@ function toMongoArgs(gqlFilter) {
 //   }
 // }
 //
-// Would return
+// After execution, acc would be:
 //
 // {
 //   "internal.type": {
@@ -88,14 +90,14 @@ function toMongoArgs(gqlFilter) {
 //     $regex: // as above
 //   }
 // }
-function dotNestedFields(o, path = ``) {
+function dotNestedFields(acc, o, path = ``) {
   if (_.isPlainObject(o)) {
     if (_.isPlainObject(_.sample(o))) {
-      return _.flatMap(o, (v, k) => {
-        return dotNestedFields(v, path + `.` + k)
+      _.forEach(o, (v, k) => {
+        dotNestedFields(acc, v, path + `.` + k)
       })
     } else {
-      return { [_.trimStart(path, `.`)]: o }
+      acc[_.trimStart(path, `.`)] = o
     }
   }
 }
@@ -104,7 +106,9 @@ function dotNestedFields(o, path = ``) {
 function convertArgs(gqlArgs) {
   // TODO: Might have to omit `skip`, `limit` and `sort` keys from
   // inside gqlArgs.filter first
-  return dotNestedFields(toMongoArgs(gqlArgs.filter))
+  const dottedFields = {}
+  dotNestedFields(dottedFields, toMongoArgs(gqlArgs.filter))
+  return dottedFields
 }
 
 // Converts graphql Sort args into the form expected by loki, which
@@ -144,7 +148,7 @@ function execLokiQuery(coll, findArgs, gqlArgs) {
 //   { filter: { fields { slug: { eq: "/somepath" } } } }
 // type: the gqlType we're querying for
 // TODO: It might need filter: added
-module.exports = ({ type, rawGqlArgs }) => {
+function runQuery({ type, rawGqlArgs }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(rawGqlArgs))
@@ -156,4 +160,10 @@ module.exports = ({ type, rawGqlArgs }) => {
   const result = execLokiQuery(coll, lokiArgs, gqlArgs)
 
   return Promise.resolve(result)
+}
+
+module.exports = {
+  // exported for testing purposes only
+  convertArgs,
+  runQuery,
 }
