@@ -34,7 +34,7 @@ module.exports = {
 
 Create a new component to hold the links, and edit the layout component to include it. For now, it will act as a placeholder:
 
-```javascript:title=src/components/navBar.js
+```jsx:title=src/components/navBar.js
 import React from "react"
 import { Link } from "gatsby"
 
@@ -61,7 +61,7 @@ export default () => (
 )
 ```
 
-```javascript{7,41}:title=src/components/layout.js
+```jsx{7,41}:title=src/components/layout.js
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
@@ -119,7 +119,7 @@ export default Layout
 
 Lastly, change the index page to a more adequate content:
 
-```javascript{9-11}:title=src/pages/index.js
+```jsx{9-11}:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
 
@@ -139,7 +139,7 @@ export default IndexPage
 
 ## Authentication service
 
-For this tutorial you will use a hardcode user/password. Create the folder `src/services` and add the follwing content to the file `auth.js`:
+For this tutorial you will use a hardcode user/password. Create the folder `src/services` and add the following content to the file `auth.js`:
 
 ```javascript:title=src/services/auth.js
 export const getUser = () =>
@@ -196,11 +196,12 @@ exports.onCreatePage = async ({ page, actions }) => {
 }
 ```
 
+> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](https://www.gatsbyjs.org/packages/gatsby-plugin-create-client-paths/)
+
 Now, you must create a generic page that will have the task to generate the restricted content:
 
-```javascript:title={src/pages/app.js}
+```jsx:title=src/pages/app.js
 import React from "react"
-import { Link } from "gatsby"
 import { Router } from "@reach/router"
 import Layout from "../components/layout"
 import Profile from "../components/profile"
@@ -210,6 +211,126 @@ const App = () => (
   <Layout>
     <Router>
       <Profile path="/app/profile" />
+      <Login path="/app/login" />
+    </Router>
+  </Layout>
+)
+
+export default App
+```
+
+Add also the components regarding those new routes:
+
+```jsx:title=src/components/profile.js
+import React from "react"
+
+const Profile = () => (
+  <>
+    <h1>Your profile</h1>
+    <ul>
+      <li>Name: Your name will appear here</li>
+      <li>E-mail: And here goes the mail</li>
+    </ul>
+  </>
+)
+
+export default Profile
+```
+
+```jsx:title=src/components/login.js
+class Login extends React.Component {
+  state = {
+    username: ``,
+    password: ``,
+  }
+
+  handleUpdate = event => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    handleLogin(this.state)
+  }
+
+  render() {
+    console.log(this.setState)
+    if (isLoggedIn()) {
+      navigate(`/app/profile`)
+    }
+
+    return (
+      <>
+        <h1>Log in</h1>
+        <form
+          method="post"
+          onSubmit={event => {
+            this.handleSubmit(event)
+            navigate(`/app/profile`)
+          }}
+        >
+          <label>
+            Username
+            <input type="text" name="username" onChange={this.handleUpdate} />
+          </label>
+          <label>
+            Password
+            <input
+              type="password"
+              name="password"
+              onChange={this.handleUpdate}
+            />
+          </label>
+          <input type="submit" value="Log In" />
+        </form>
+      </>
+    )
+  }
+}
+
+export default Login
+```
+
+Though the routing is working now, you still can access all routes unrestrictedly.
+
+## Controlling private routes
+
+To check if an user can access the content, you can wrap the restricted content inside a PrivateRoute component:
+
+```jsx:title=scr/components/privateRoute.js
+import React from "react"
+import { navigate } from "gatsby"
+import { isLoggedIn } from "../services/auth"
+
+const PrivateRoute = ({ component: Component, location, ...rest }) => {
+  if (!isLoggedIn() && location.pathname !== `/app/login`) {
+    // If the user is not logged in, redirect to the login page.
+    navigate(`/app/login`)
+    return null
+  }
+
+  return <Component {...rest} />
+}
+
+export default PrivateRoute
+```
+
+And now you can edit your Router to use the PrivateRoute component:
+
+```jsx{4,11}:title={src/pages/app.js}
+import React from "react"
+import { Router } from "@reach/router"
+import Layout from "../components/layout"
+import PrivateRoute from "../components/privateRoute"
+import Profile from "../components/profile"
+import Login from "../components/login"
+
+const App = () => (
+  <Layout>
+    <Router>
+      <PrivateRoute path="/app/profile" component={Profile} />
       <Login path="/app/login" />
     </Router>
   </Layout>
