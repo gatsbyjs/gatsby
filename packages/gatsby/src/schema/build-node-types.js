@@ -209,9 +209,10 @@ module.exports = async ({ parentSpan }) => {
             const results = await runQuery({ type: gqlType, queryArgs })
 
             if (results.length > 0) {
-              const nodeId = results[0].id
+              const result = results[0]
+              const nodeId = result.id
               createPageDependency({ path, nodeId })
-              return results
+              return result
             } else {
               return null
             }

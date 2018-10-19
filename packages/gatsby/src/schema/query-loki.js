@@ -132,6 +132,14 @@ function toSortFields(sortArgs) {
   ])
 }
 
+// Ensure there is an index for each query field. If the index already
+// exists, this is a noop (handled by lokijs).
+function ensureIndexes(coll, findArgs) {
+  _.forEach(findArgs, (v, fieldName) => {
+    coll.ensureIndex(fieldName)
+  })
+}
+
 function execLokiQuery(coll, findArgs, gqlArgs) {
   let chain = coll.chain().find(findArgs)
   const { sort } = gqlArgs
@@ -156,6 +164,8 @@ function runQuery({ type, rawGqlArgs }) {
   const lokiArgs = convertArgs(gqlArgs)
 
   const coll = db.getCollection(type.name)
+
+  ensureIndexes(coll, lokiArgs)
 
   const result = execLokiQuery(coll, lokiArgs, gqlArgs)
 
