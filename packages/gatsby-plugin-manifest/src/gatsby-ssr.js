@@ -1,7 +1,7 @@
 import React from "react"
 import { withPrefix } from "gatsby"
 import { defaultIcons } from "./common.js"
-import fs from "fs"
+import fs from "fs-extra"
 let cacheId = null
 
 exports.onRenderBody = ({ createContentDigest, setHeadComponents }, pluginOptions) => {
