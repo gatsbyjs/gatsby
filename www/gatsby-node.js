@@ -14,7 +14,10 @@ require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-if (process.env.NODE_ENV === `production` && !process.env.GITHUB_API_TOKEN) {
+if (
+  process.env.gatsby_executing_command === `build` &&
+  !process.env.GITHUB_API_TOKEN
+) {
   throw new Error(
     `A GitHub token is required to build the site. Check the README.`
   )
@@ -384,7 +387,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
+exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
@@ -546,16 +549,10 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           })
         })
         .catch(err => {
-          console.log(
-            `\nError getting repo data. Your GitHub token may be invalid`
+          reporter.panicOnBuild(
+            `Error getting repo data for starter "${repoStub}":\n
+            ${err.message}`
           )
-          return createNodeField({
-            node,
-            name: `starterShowcase`,
-            value: {
-              ...defaultFields,
-            },
-          })
         })
     }
   }
