@@ -34,3 +34,4 @@ src/cache
 
 # Env variables
 .env.development
+.env.production
