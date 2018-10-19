@@ -1,3 +1,5 @@
+const Joi = require(`joi`)
+
 const defaultOptions = {
   host: `cdn.contentful.com`,
 
@@ -5,28 +7,34 @@ const defaultOptions = {
   environment: `master`,
 }
 
+const optionsSchema = Joi.object().keys({
+  accessToken: Joi.string()
+    .required()
+    .empty(),
+  spaceId: Joi.string()
+    .required()
+    .empty(),
+  host: Joi.string()
+    .required()
+    .empty(),
+  environment: Joi.string()
+    .required()
+    .empty(),
+  // default plugins passed by gatsby
+  plugins: Joi.array(),
+})
+
 const validateOptions = options => {
-  const errors = []
-  ;[`spaceId`, `accessToken`].forEach(option => {
-    if (!options[option]) {
-      errors.push(`Missing ${option}`)
-    }
-  })
+  const result = optionsSchema.validate(options, { abortEarly: false })
+  if (result.error) {
+    const errors = {}
+    result.error.details.forEach(detail => {
+      errors[detail.path[0]] = detail.message
+    })
+    return errors
+  }
 
-  return errors
+  return null
 }
 
-const formatOptionsSummary = options => {
-  const fields = [`space`, `accessToken`, `host`, `environment`]
-
-  return fields
-    .map(
-      option =>
-        `${option.padEnd(11)} : ${options[option].padEnd(66)}${
-          options[option] === defaultOptions[option] ? ` [default value]` : ``
-        }`
-    )
-    .join(`\n`)
-}
-
-export { defaultOptions, validateOptions, formatOptionsSummary }
+export { defaultOptions, validateOptions }

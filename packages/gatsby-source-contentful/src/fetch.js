@@ -1,7 +1,7 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const normalize = require(`./normalize`)
-const { formatOptionsSummary } = require(`./plugin-options`)
+const { defaultOptions } = require(`./plugin-options`)
 
 module.exports = async ({ spaceId, syncToken, reporter, ...options }) => {
   // Fetch articles.
@@ -40,11 +40,17 @@ module.exports = async ({ spaceId, syncToken, reporter, ...options }) => {
         details = `Authorization error. Check if accessToken and environment is correct`
       }
     }
+
+    const optionsSummary = reporter.formatOptionsSummary({
+      options: contentfulClientOptions,
+      defaults: defaultOptions,
+    })
+
     const errorMessage = `Accessing your Contentful space failed.
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
-${formatOptionsSummary(contentfulClientOptions)}`
+${optionsSummary}`
 
     reporter.panic(errorMessage)
   }

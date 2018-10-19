@@ -59,13 +59,17 @@ exports.sourceNodes = async (
     return
   }
 
-  options = { ...options, ...defaultOptions }
+  options = { ...defaultOptions, ...options }
   const validationErrors = validateOptions(options)
-  if (validationErrors.length) {
+  if (validationErrors) {
+    const optionsSummary = reporter.formatOptionsSummary(
+      options,
+      defaultOptions,
+      validationErrors
+    )
+
     reporter.panic(
-      `Problems with plugin options in gatsby-config:\n${validationErrors
-        .map(s => ` - ${s}`)
-        .join(`\n`)}`
+      `Problems with plugin options in gatsby-config:\n${optionsSummary}`
     )
   }
 

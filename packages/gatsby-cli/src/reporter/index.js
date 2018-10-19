@@ -1,6 +1,7 @@
 // @flow
 
 const { createReporter } = require(`yurnalist`)
+const columnify = require(`columnify`)
 const { stripIndent } = require(`common-tags`)
 const convertHrtime = require(`convert-hrtime`)
 const tracer = require(`opentracing`).globalTracer()
@@ -110,5 +111,31 @@ module.exports = Object.assign(reporter, {
       },
       span: span,
     }
+  },
+
+  formatOptionsSummary({ options, defaults = {}, errors = {} }) {
+    // process data - for only simplest 1-level object
+    const data = []
+    const optionKeys = new Set(
+      Object.keys(options).concat(Object.keys(defaults))
+    )
+    optionKeys.forEach(key => {
+      if (key === `plugins`) {
+        // skip plugins field automatically added by gatsby
+        return
+      }
+
+      data.push({
+        option: key,
+        value: options[key],
+        details:
+          errors[key] ||
+          (options[key] === defaults[key] ? `(default value)` : ``),
+      })
+    })
+
+    return columnify(data, {
+      showHeaders: false,
+    })
   },
 })
