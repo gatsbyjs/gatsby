@@ -162,8 +162,7 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     // Check that the API is documented.
     if (!apiList[api]) {
-      reporter.error(`api: "${api}" is not a valid Gatsby api`)
-      process.exit()
+      reporter.panic(`api: "${api}" is not a valid Gatsby api`)
     }
 
     const { store } = require(`../redux`)
@@ -243,13 +242,8 @@ module.exports = async (api, args = {}, pluginSource) =>
       )
     })
       .catch(err => {
-        if (err) {
-          if (process.env.NODE_ENV === `production`) {
-            return reporter.panic(`${pluginName} returned an error`, err)
-          }
-          return reporter.error(`${pluginName} returned an error`, err)
-        }
-        return null
+        reporter.panicOnBuild(`${pluginName} returned an error`, err)
+        return []
       })
       .then(results => {
         // Remove runner instance
