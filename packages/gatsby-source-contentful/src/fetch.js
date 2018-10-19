@@ -41,7 +41,7 @@ module.exports = async ({ spaceId, syncToken, reporter, ...options }) => {
       }
     }
     const errorMessage = `Accessing your Contentful space failed.
-Try running setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
+Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
 ${formatOptionsSummary(contentfulClientOptions)}`
