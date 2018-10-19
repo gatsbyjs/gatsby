@@ -229,22 +229,19 @@ module.exports = async (api, args = {}, pluginSource) =>
       apisRunningByTraceId.set(apiRunInstance.traceId, 1)
     }
 
-    let pluginName = null
+   
 
     Promise.mapSeries(noSourcePluginPlugins, plugin => {
-      if (plugin.name === `default-site-plugin`) {
-        pluginName = `gatsby-node.js`
-      } else {
-        pluginName = `Plugin ${plugin.name}`
-      }
+      let pluginName = plugin.name === `default-site-plugin` ? 
+          `gatsby-node.js` : `Plugin ${plugin.name}`
+
       return Promise.resolve(
         runAPI(plugin, api, { ...args, parentSpan: apiSpan })
-      )
-    })
-      .catch(err => {
+      ).catch(err => { 
         reporter.panicOnBuild(`${pluginName} returned an error`, err)
-        return []
+        return null
       })
+    })
       .then(results => {
         // Remove runner instance
         apisRunningById.delete(apiRunInstance.id)
