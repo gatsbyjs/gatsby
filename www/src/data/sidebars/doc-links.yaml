@@ -24,6 +24,8 @@
           link: /docs/deploy-gatsby/
         - title: Deploying to S3 and CloudFront
           link: /docs/deploying-to-s3-cloudfront
+        - title: Hosting on Netlify
+          link: /docs/hosting-on-netlify
         - title: Path Prefix
           link: /docs/path-prefix/
         - title: How Gatsby works with GitHub pages
@@ -64,7 +66,7 @@
           link: /docs/working-with-images/
         - title: Using gatsby-image
           link: /docs/using-gatsby-image/
-    - title: Sourcing content and data*
+    - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
         - title: Using Unstructured Data
@@ -136,7 +138,7 @@
           link: /docs/layout-components/
         - title: CSS Modules
           link: /docs/css-modules/
-        - title: Typography.js*
+        - title: Typography.js
           link: /docs/typography-js/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
@@ -144,9 +146,9 @@
           link: /docs/styled-components/
         - title: Creating global styles
           link: /docs/creating-global-styles/
-        - title: Component CSS*
+        - title: Component CSS
           link: /docs/component-css/
-        - title: PostCSS*
+        - title: PostCSS
           link: /docs/post-css/
     - title: Testing
       link: /docs/testing/
@@ -200,13 +202,17 @@
           link: /docs/adding-forms/
         - title: Adding a 404 Page
           link: /docs/add-404-page/
+        - title: Adding page metadata
+          link: /docs/add-page-metadata/
+        - title: Adding a SEO component
+          link: /docs/add-seo-component/
         - title: Adding tags and categories to blog posts
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Adding pagination
           link: /docs/adding-pagination/
         - title: Creating a sitemap*
           link: /docs/creating-a-sitemap/
-        - title: Linking between pages*
+        - title: Linking between pages
           link: /docs/linking-between-pages/
         - title: Interactive pages*
           link: /docs/interactive-pages/
@@ -332,7 +338,7 @@
     - title: Webpack and SSR
       link: /docs/webpack-and-ssr/
       items:
-        - title: Building the Javascript App
+        - title: Building the JavaScript App
           link: /docs/production-app/
         - title: Page HTML Generation
           link: /docs/html-generation/
@@ -374,7 +380,7 @@
       link: /docs/pair-programming/
     - title: Gatsby Style Guide
       link: /docs/gatsby-style-guide/
-    - title: RFC process*
+    - title: RFC process
       link: /docs/rfc-process/
     - title: Docs templates
       link: /docs/templates/
@@ -388,9 +394,8 @@
       link: /docs/submit-to-creator-showcase/
     - title: Submit to Starter Library
       link: /docs/submit-to-starter-library/
-      items:
-        - title: Submit to Plugin Library
-          link: /docs/submit-to-plugin-library/
+    - title: Submit to Plugin Library
+      link: /docs/submit-to-plugin-library/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)

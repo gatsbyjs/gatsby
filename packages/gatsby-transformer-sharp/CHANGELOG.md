@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.4"></a>
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.3...gatsby-transformer-sharp@2.1.4) (2018-10-16)
+
+### Features
+
+- add custom sizes for fluid images ([#8825](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/8825)) ([6cb4ee6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/6cb4ee6)), closes [#8621](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/8621)
+
 <a name="2.1.3"></a>
 
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.2...gatsby-transformer-sharp@2.1.3) (2018-09-28)

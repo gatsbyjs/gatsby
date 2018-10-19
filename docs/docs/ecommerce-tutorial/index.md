@@ -81,7 +81,7 @@ module.exports = {
 
 Run `gatsby develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](http://localhost8000.com/) and you should see a default homepage.
 
-> **NOTE**: If you have already started your gatsby development server using `gatsby develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `gatsby develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost8000.com/)
+> **NOTE**: If you have already started your Gatsby development server using `gatsby develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `gatsby develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost8000.com/)
 
 ## How does the Stripe Checkout plugin work?
 
@@ -182,7 +182,7 @@ const Checkout = class extends React.Component {
       token: token => {
         fetch(`AWS_LAMBDA_URL`, {
           method: "POST",
-          mode: 'no-cors',
+          mode: "no-cors",
           body: JSON.stringify({
             token,
             amount,
@@ -338,7 +338,7 @@ Open gatsby-stripe-serverless-backend in your code editor.
 - Rename the `secrets.example.json` file to `secrets.json`.
 - Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret test key from your Stripe account, and keep the quotation marks around it (using the test keys allows orders to go through without needing real credit card details, which is useful for testing)
 
-Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
+Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any Git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
 
 ## How does the code work on this site?
 

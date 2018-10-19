@@ -151,6 +151,7 @@ class DefaultLayout extends React.Component {
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
+          <meta name="docsearch:version" content="2.0" />
           <link
             rel="canonical"
             href={`https://gatsbyjs.org${this.props.location.pathname}`}
@@ -211,28 +212,26 @@ class DefaultLayout extends React.Component {
 
 const styles = {
   skipLink: {
-    "[data-reach-skip-link]": {
-      border: `0`,
-      clip: `rect(0 0 0 0)`,
-      height: `1px`,
-      width: `1px`,
-      margin: `-1px`,
-      padding: `0`,
-      overflow: `hidden`,
-      position: `absolute`,
-      zIndex: `100`,
-      fontSize: `0.85rem`,
-      ":focus": {
-        padding: `0.9rem`,
-        position: `fixed`,
-        top: `10px`,
-        left: `10px`,
-        background: `white`,
-        textDecoration: `none`,
-        width: `auto`,
-        height: `auto`,
-        clip: `auto`,
-      },
+    border: `0`,
+    clip: `rect(0 0 0 0)`,
+    height: 1,
+    width: 1,
+    margin: -1,
+    padding: 0,
+    overflow: `hidden`,
+    position: `absolute`,
+    zIndex: 100,
+    fontSize: `0.85rem`,
+    ":focus": {
+      padding: `0.9rem`,
+      position: `fixed`,
+      top: 10,
+      left: 10,
+      background: `white`,
+      textDecoration: `none`,
+      width: `auto`,
+      height: `auto`,
+      clip: `auto`,
     },
   },
 }
