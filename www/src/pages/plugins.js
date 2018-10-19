@@ -11,6 +11,14 @@ class Plugins extends Component {
   render() {
     return (
       <Layout location={this.props.location}>
+        <Helmet>
+          <link
+            rel="search"
+            href="/opensearch.xml"
+            type="application/opensearchdescription+xml"
+            title="GatsbyJS"
+          />
+        </Helmet>
         <PageWithPluginSearchBar isPluginsIndex location={this.props.location}>
           <Container
             css={{

@@ -1,0 +1,7 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>GatsbyJS</ShortName>
+  <Description>Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby.</Description>
+  <Url type="text/html" method="get" template="https://www.gatsbyjs.org/plugins/?={searchTerms}"/>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image height="32" width="32" type="image/x-icon">https://www.gatsbyjs.org/icons/icon-48x48.png</Image>
+</OpenSearchDescription>
