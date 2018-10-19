@@ -234,10 +234,10 @@ module.exports = async (api, args = {}, pluginSource) =>
     Promise.mapSeries(noSourcePluginPlugins, plugin => {
       let pluginName = plugin.name === `default-site-plugin` ? 
           `gatsby-node.js` : `Plugin ${plugin.name}`
-
-      return Promise.resolve(
-        runAPI(plugin, api, { ...args, parentSpan: apiSpan })
-      ).catch(err => { 
+      
+      return new Promise((resolve) => {
+        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
+      }).catch(err => { 
         reporter.panicOnBuild(`${pluginName} returned an error`, err)
         return null
       })
