@@ -19,4 +19,4 @@ module.exports = {
 }
 ```
 
-Now you can start to write cxs and it will do the ssr for you.
+Now you can start to write cxs and it will do the SSR for you.
