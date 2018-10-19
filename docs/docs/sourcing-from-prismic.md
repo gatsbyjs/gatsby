@@ -8,9 +8,9 @@ Prismic is a hosted, proprietary Headless CMS (SaaS) with a web app for creating
 
 Moreover their _Content Slices_ feature enables you to build dynamic layouts by defining reusable custom components and placing them on your landing page, case studies or in your blogposts. Fortunately you can use those in Gatsby to realize features like PrismJS highlighting or using `gatsby-image`. The linked [starter](https://github.com/LekoArts/gatsby-starter-prismic) shows you how to implement that.
 
-The written instructions get accompanied by uncommented YouTube videos which will show the described steps in action. The video playlist can be found [here](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
+The written instructions get accompanied by uncommented YouTube videos which will show the described steps in action. You can also watch the full [video playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
-_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, we highly recommend to check out their [official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See the [official tutorial](/tutorial))._
+_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, we highly recommend to check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
 
 ## Setup
 
@@ -18,11 +18,11 @@ _Note: This guide uses the Gatsby Hello World starter to provide a very basic un
 
 Before initializing the Gatsby project you should sign up for an account on [Prismic.io](https://prismic.io/). The free plan is a perfect fit for personal or smaller projects. Create a new blank repository to get to the content overview of your repository.
 
-Create your first custom type (Repeatable Type) with the name `Post` and add some fields to it. Choose rational names for the `API ID` input while configuring a field because these names will appear in your queries. You should always add the `uid` field in order to have a unique identifier. Then switch to the content overview and create a new document with your `Post` type. Fill out the fields and publish the item.
+Create your first custom type (Repeatable Type) with the name `Post` and add some fields to it. Choose rational names for the `API ID` input while configuring a field because these names will appear in your queries. You should always add the `uid` field in order to have a unique identifier (e.g. for filtering). Then switch to the content overview and create a new document with your `Post` type. Fill out the fields and publish the item.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/yrOYLNiYtBQ?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-So that Gatsby can grab all information from Prismic you'll need to generate an Access Token. Head over to `Settings → API & Security`, fill out the `Application name` field (the Callback URL one can be left empty), and press `Add this application`.
+So that Gatsby can grab all information from Prismic you'll need to generate an Access Token. Head over to `Settings → API & Security`, fill out the `Application name` field (the Callback URL can be left empty), and press `Add this application`.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/iH0P4KcOeVc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
@@ -50,7 +50,7 @@ npm install --save-dev dotenv
 Create a file called `.env.development` at the root of your project with the following content:
 
 ```
-API_KEY=your-secret-access-token-wou7evoh0eexuf6chooz2
+API_KEY=paste-your-secret-access-token-here-wou7evoh0eexuf
 ```
 
 _Note: If you want to locally build your project you'll also have to create a `.env.production` file with the same content._
@@ -78,7 +78,7 @@ module.exports = {
 }
 ```
 
-The best way to create your queries now is to first develop them in *GraphiQL* at `http://localhost:8000/___graphql` and then paste them into your files. For that start the local development server and experiment a bit with the available queries. You should be able to get this query:
+The best way to create your queries now is to first develop them in *GraphiQL* at `http://localhost:8000/___graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
 
 ![Prismic Index Query](./images/prismic-index-query.jpg)
 
@@ -154,7 +154,7 @@ export const pageQuery = graphql`
 
 ## Deploying to Netlify
 
-Netlify can not only automatically start builds on pushes to a repository but also accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately Prismic can trigger webhook URLs when publishing content. Hence new content will automatically appear on your Netlify site.
+Netlify can not only automatically start builds on pushes to a repository but also accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately Prismic can [trigger webhook](https://user-guides.prismic.io/webhooks/webhooks) URLs when publishing content. Hence new content will automatically appear on your Netlify site.
 
 Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive an URL of the format `https://api.netlify.com/build_hooks/-randomstring-` after clicking `Add build hook`.
 
@@ -174,15 +174,15 @@ The video shows the usage of a group field and relationship field — if you onl
 
 ### Single Type
 
-When creating a new custom type you are able to choose `Single Type`, too. In this example you'll fill the homepage with content from Prismic and therefore have complete control over the content of your site. The goal is to eliminate the need to change the website code, and rather your content in Prismic. Visit your Prismic repository and follow the video:
+When creating a new custom type you are able to choose `Single Type`, too. In this example you'll fill the homepage with content from Prismic and therefore have complete control over the content of your site. The goal is to eliminate the need to change website code, but rather your content in Prismic. Visit your Prismic repository and follow the video:
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/bvDAUEaJXrM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 Single pages (like your homepage, privacy policy page etc.) don't need [GraphQL connections](https://blog.apollographql.com/explaining-graphql-connections-c48b7c3d6976) (e.g. `allPrismicHomepage`) due to the fact that only one document for that type exists in Prismic anyway. Therefore you need to use `prismicHomepage` for your query. This also has the benefit that you don't have to map over an array. Your page could look something like this:
 
 ```jsx:title=src/pages/index.js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
+import React from "react"
+import { graphql, Link } from "gatsby"
 
 const Index = ({ data: { prismicHomepage } }) => (
   <React.Fragment>
