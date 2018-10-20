@@ -8,7 +8,6 @@ Contentful is a headless Content Management System (CMS) that lets you organize 
 
 Actually, the way Contentful handles bits of content means that you can push content out when new technology develops without having to redesign, rewrite, or rethink all of it for a new format.
 
-
 ## Getting Started - Gatsby
 
 First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
@@ -73,6 +72,3 @@ plugins: [
   },
 ]
 ```
-## TODO
-- [ ] Pull off a real example from contentful.com
-- [ ] Spell check
