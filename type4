@@ -1,0 +1,8 @@
+{
+  "env": {
+    "browser": t
+  },
+  "globals": {
+    "graphql": f
+  }
+}
