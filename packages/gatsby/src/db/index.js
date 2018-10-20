@@ -5,6 +5,10 @@ const invariant = require(`invariant`)
 
 console.log(`creating db`)
 
+function getDb() {
+  return db
+}
+
 // Deletes all data from all collections, including indexes
 function clearAll() {
   _.forEach(db.listCollections(), collInfo => {
@@ -71,7 +75,7 @@ function hasNodeChanged(id, digest) {
 }
 
 module.exports = {
-  db,
+  getDb,
   clearAll,
   getNode,
   getNodes,

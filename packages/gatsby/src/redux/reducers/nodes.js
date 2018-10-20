@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const db = require(`../../db`)
+const { getDb, getNode, clearAll } = require(`../../db`)
 const invariant = require(`invariant`)
 
 function createNode(node) {
@@ -9,9 +9,9 @@ function createNode(node) {
 
   const type = node.internal.type
 
-  let coll = db.db.getCollection(type)
+  let coll = getDb().getCollection(type)
   if (!coll) {
-    coll = db.db.addCollection(type, { unique: [`id`], indices: [`id`] })
+    coll = getDb().addCollection(type, { unique: [`id`], indices: [`id`] })
   }
 
   return coll.insert(node)
@@ -24,12 +24,18 @@ function deleteNode(node) {
 
   const type = node.internal.type
 
-  let coll = db.db.getCollection(type)
+  let coll = getDb().getCollection(type)
   if (!coll) {
     invariant(coll, `${type} collection doesn't exist. When trying to delete?`)
   }
 
-  coll.remove(node)
+  if (coll.by(`id`, node.id)) {
+    coll.remove(node)
+  } else {
+    console.log(
+      `WARN: deletion of node failed because it wasn't in coll. Node = [${node}]`
+    )
+  }
 }
 
 function updateNode(node, oldNode) {
@@ -39,13 +45,13 @@ function updateNode(node, oldNode) {
 
   const type = node.internal.type
 
-  let coll = db.db.getCollection(type)
+  let coll = getDb().getCollection(type)
   if (!coll) {
     invariant(coll, `${type} collection doesn't exist. When trying to update?`)
   }
 
   if (!oldNode) {
-    oldNode = db.getNode(node.id)
+    oldNode = getNode(node.id)
   }
   const updateNode = _.merge(oldNode, node)
 
@@ -55,7 +61,7 @@ function updateNode(node, oldNode) {
 module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      db.clearAll()
+      clearAll()
       return new Map()
     case `CREATE_NODE`: {
       if (action.oldNode) {

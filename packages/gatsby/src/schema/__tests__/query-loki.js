@@ -1,4 +1,9 @@
 const queryLoki = require(`../query-loki`)
+const loki = require(`lokijs`)
+const db = new loki("loki-test.json")
+const dbModule = require(`../../db`)
+
+jest.mock(`../../db`)
 
 describe(`query-loki`, () => {
   describe(`convertArgs`, () => {
@@ -92,6 +97,73 @@ describe(`query-loki`, () => {
       }
       const result = queryLoki.convertArgs(gqlArgs)
       expect(result).toEqual(expectedArgs)
+    })
+  })
+
+  describe(`queries`, () => {
+    it(`regex`, async () => {
+      dbModule.getDb.mockReturnValue(db)
+
+      const typeName = `testType`
+      const type = { name: typeName }
+      const node = {
+        id: `0`,
+        foo: `src/foobar.js`,
+      }
+
+      const coll = db.addCollection(typeName)
+      coll.insert(node)
+
+      const rawGqlArgs = {
+        filter: {
+          foo: {
+            regex: "/src.*bar.js/",
+          },
+        },
+      }
+
+      const result = await queryLoki.runQuery({ type, rawGqlArgs })
+
+      expect(result).toHaveLength(1)
+      expect(result[0]).toHaveProperty(`id`, `0`)
+    })
+
+    it(`nested sorting`, async () => {
+      dbModule.getDb.mockReturnValue(db)
+
+      const typeName = `NestedSorting`
+      const type = { name: typeName }
+      const nodes = [
+        {
+          id: `0`,
+          foo: { bar: "2017" },
+        },
+        {
+          id: `1`,
+          foo: { bar: "2016" },
+        },
+        {
+          id: `2`,
+          foo: { bar: "2018" },
+        },
+      ]
+
+      const coll = db.addCollection(typeName)
+      coll.insert(nodes)
+
+      const rawGqlArgs = {
+        sort: {
+          order: "DESC",
+          fields: ["foo___bar"],
+        },
+      }
+
+      const result = await queryLoki.runQuery({ type, rawGqlArgs })
+
+      expect(result).toHaveLength(3)
+      expect(result[0]).toHaveProperty(`id`, `2`)
+      expect(result[1]).toHaveProperty(`id`, `0`)
+      expect(result[2]).toHaveProperty(`id`, `1`)
     })
   })
 })

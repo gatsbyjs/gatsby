@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const { db } = require(`../db`)
+const { getDb } = require(`../db`)
+const prepareRegex = require(`./prepare-regex`)
 
 // Takes a raw graphql filter and converts it into a mongo-like args
 // object. E.g `eq` becomes `$eq`. gqlFilter should be the raw graphql
@@ -45,7 +46,9 @@ function toMongoArgs(gqlFilter) {
       mongoArgs[k] = toMongoArgs(v)
     } else {
       // Compile regex first.
-      if (k === `glob`) {
+      if (k === `regex`) {
+        mongoArgs[`$regex`] = prepareRegex(v)
+      } else if (k === `glob`) {
         const Minimatch = require(`minimatch`).Minimatch
         const mm = new Minimatch(v)
         mongoArgs[`$regex`] = mm.makeRe()
@@ -128,7 +131,7 @@ function toSortFields(sortArgs) {
   const { fields, order } = sortArgs
   return _.map(fields, field => [
     field.replace(/___/g, `.`),
-    sortArgs === `desc`,
+    _.lowerCase(order) === `desc`,
   ])
 }
 
@@ -163,7 +166,7 @@ function runQuery({ type, rawGqlArgs }) {
 
   const lokiArgs = convertArgs(gqlArgs)
 
-  const coll = db.getCollection(type.name)
+  const coll = getDb().getCollection(type.name)
 
   ensureIndexes(coll, lokiArgs)
 
