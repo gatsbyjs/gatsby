@@ -6,6 +6,7 @@ const crypto = require(`crypto`)
 const glob = require(`glob`)
 const { store } = require(`../../redux`)
 const existsSync = require(`fs-exists-cached`).sync
+const createNodeId = require(`../../utils/create-node-id`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -48,7 +49,7 @@ function resolvePlugin(pluginName) {
         return {
           resolve: resolvedPath,
           name: packageJSON.name || pluginName,
-          id: `Plugin ${packageJSON.name || pluginName}`,
+          id: createNodeId(packageJSON.name, `Plugin`),
           version:
             packageJSON.version || createFileContentHash(resolvedPath, `**`),
         }
@@ -72,7 +73,7 @@ function resolvePlugin(pluginName) {
 
     return {
       resolve: resolvedPath,
-      id: `Plugin ${packageJSON.name}`,
+      id: createNodeId(packageJSON.name, `Plugin`),
       name: packageJSON.name,
       version: packageJSON.version,
     }
@@ -126,6 +127,13 @@ module.exports = (config = {}) => {
 
       return {
         ...info,
+        // Make sure ID is unique to any plugin options. E.g multiple source-filesystem nodes
+        id: createNodeId(
+          plugin.options
+            ? plugin.name + JSON.stringify(plugin.options)
+            : plugin.name,
+          `Plugin`
+        ),
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
@@ -154,7 +162,7 @@ module.exports = (config = {}) => {
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
     resolve: slash(process.cwd()),
-    id: `Plugin default-site-plugin`,
+    id: createNodeId(`default-site-plugin`, `Plugin`),
     name: `default-site-plugin`,
     version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
