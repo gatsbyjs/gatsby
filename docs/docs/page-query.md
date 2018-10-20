@@ -1,5 +1,5 @@
 ---
-title: Querying data in pages with graphql
+title: Querying data in pages with GraphQL
 ---
 
 Gatsby's `graphql` tag enables page components to retrieve data via GraphQL query.
@@ -122,7 +122,7 @@ export default HomePage
 
 After restarting `gatsby develop`, your home page will now display "This is where I write my thoughts." from the description set in `gatsby-config.js`!
 
-## How does the graphql tag work?
+## How does the `graphql` tag work?
 
 `graphql` is a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals). Behind the scenes Gatsby handles these tags in a particular way:
 

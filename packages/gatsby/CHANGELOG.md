@@ -3,6 +3,81 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.28"></a>
+
+## [2.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.27...gatsby@2.0.28) (2018-10-19)
+
+### Bug Fixes
+
+- **schema:** share union type instances ([#9052](https://github.com/gatsbyjs/gatsby/issues/9052)) ([d87881a](https://github.com/gatsbyjs/gatsby/commit/d87881a))
+- fix builds without gatsby-config [#8917](https://github.com/gatsbyjs/gatsby/issues/8917) ([#9256](https://github.com/gatsbyjs/gatsby/issues/9256)) ([27fcc4d](https://github.com/gatsbyjs/gatsby/commit/27fcc4d))
+
+<a name="2.0.27"></a>
+
+## [2.0.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.26...gatsby@2.0.27) (2018-10-19)
+
+### Bug Fixes
+
+- **gatsby:** ignore `__esModule` property when resolving module exports ([#9226](https://github.com/gatsbyjs/gatsby/issues/9226)) ([c57f1e0](https://github.com/gatsbyjs/gatsby/commit/c57f1e0))
+
+<a name="2.0.26"></a>
+
+## [2.0.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.25...gatsby@2.0.26) (2018-10-18)
+
+### Bug Fixes
+
+- check for empty fields in InputFilter inference ([#9057](https://github.com/gatsbyjs/gatsby/issues/9057)) ([4a0563e](https://github.com/gatsbyjs/gatsby/commit/4a0563e))
+
+<a name="2.0.25"></a>
+
+## [2.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.24...gatsby@2.0.25) (2018-10-16)
+
+### Bug Fixes
+
+- **gatsby:** Prevent minifier from compressing output using ES6+ syntax ([#9135](https://github.com/gatsbyjs/gatsby/issues/9135)) ([fed6d35](https://github.com/gatsbyjs/gatsby/commit/fed6d35))
+
+<a name="2.0.24"></a>
+
+## [2.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.23...gatsby@2.0.24) (2018-10-16)
+
+### Bug Fixes
+
+- **gatsby:** add main field pointing to transpiled commonjs entry ([#9123](https://github.com/gatsbyjs/gatsby/issues/9123)) ([eeca436](https://github.com/gatsbyjs/gatsby/commit/eeca436))
+- make elemMatch operator work with \_\_\_NODE arrays ([#8076](https://github.com/gatsbyjs/gatsby/issues/8076)) ([d0b9d94](https://github.com/gatsbyjs/gatsby/commit/d0b9d94))
+
+<a name="2.0.23"></a>
+
+## [2.0.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.22...gatsby@2.0.23) (2018-10-15)
+
+### Bug Fixes
+
+- querying nodes by id and operator different than eq ([#9101](https://github.com/gatsbyjs/gatsby/issues/9101)) ([ccc3082](https://github.com/gatsbyjs/gatsby/commit/ccc3082))
+
+<a name="2.0.22"></a>
+
+## [2.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.21...gatsby@2.0.22) (2018-10-12)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.21"></a>
+
+## [2.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.20...gatsby@2.0.21) (2018-10-10)
+
+### Features
+
+- add onCreateDevServer node api ([#7556](https://github.com/gatsbyjs/gatsby/issues/7556)) ([a1d3d70](https://github.com/gatsbyjs/gatsby/commit/a1d3d70))
+- store sync token for contentful preview ([#8814](https://github.com/gatsbyjs/gatsby/issues/8814)) ([365942b](https://github.com/gatsbyjs/gatsby/commit/365942b))
+
+<a name="2.0.20"></a>
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.19...gatsby@2.0.20) (2018-10-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** delay adding resources for paths until we have urls ([#8613](https://github.com/gatsbyjs/gatsby/issues/8613)) ([2605aa0](https://github.com/gatsbyjs/gatsby/commit/2605aa0))
+- **register-service-worker:** show an error if installing SW not over HTTPS ([#8958](https://github.com/gatsbyjs/gatsby/issues/8958)) ([2ba57ea](https://github.com/gatsbyjs/gatsby/commit/2ba57ea))
+- more work to prevent queries from running when there's in-progress node processing ([#8859](https://github.com/gatsbyjs/gatsby/issues/8859)) ([00eeef0](https://github.com/gatsbyjs/gatsby/commit/00eeef0))
+
 <a name="2.0.19"></a>
 
 ## [2.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.18...gatsby@2.0.19) (2018-10-05)

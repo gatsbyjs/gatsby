@@ -12,7 +12,7 @@ web developer and all.
 
 There is certainly no shortage of options when it comes to platforms and CMSs to
 build a blog these days: From the more traditional, cumbersome and usually
-troublesome PHP based ones -- I'm looking at you Wordpress -- to the more
+troublesome PHP based ones -- I'm looking at you WordPress -- to the more
 minimal and modern ones like Ghost, Medium and Tumblr.
 
 However, in my experience, I found that pretty much all of these options
@@ -25,7 +25,7 @@ typically force you to give up at least one of the following:
   performance and architecture.
 
 This last point refers more than anything to online publishing platforms like
-Medium and Wordpress.com -- not to be confused with the self-hosted Wordpress
+Medium and WordPress.com -- not to be confused with the self-hosted WordPress
 alternative, which we'll discuss in a moment. And while that lack of control
 might not represent a problem to many bloggers, I often find it too limiting for
 my taste. I like to have my own domain, my own URL structures, my own color
@@ -42,7 +42,7 @@ It will be your problem, however, if you decide to create your own custom blog
 using a typical self-hosted Content Management System, and you will most likely
 have to solve that problem by either throwing money or time at it.
 
-Let's take a Wordpress self-hosted installation, for example, simply because
+Let's take a WordPress self-hosted installation, for example, simply because
 it's the most common type of CMS out there and it's the one I have the most
 experience with.
 
@@ -59,30 +59,30 @@ Digital Ocean and host the blog yourself. This, in turn, will allow you to have
 greater control over your site. However, you will also to pay for that droplet,
 even if it's the cheaper $5/month one.
 
-Whatever path you take, let's say that you now have your new Wordpress blog up
+Whatever path you take, let's say that you now have your new WordPress blog up
 and running. Now what?
 
 Well, you're most likely gonna want to spend some time securing that site
-against hackers. Why? Because hackers love Wordpress sites. Don't believe me?
-Ok, just Google the words "Wordpress hacked" and be prepared to read some really
-nasty horror stories. As someone who spent three years working as a Wordpress
+against hackers. Why? Because hackers love WordPress sites. Don't believe me?
+Ok, just Google the words "WordPress hacked" and be prepared to read some really
+nasty horror stories. As someone who spent three years working as a WordPress
 developer I could tell you some of those myself, but let's leave that for
 another day.
 
-Now, I am not saying that the Wordpress Core is an insecure piece of software --
-because I genuinely believe it is not. However, I do believe that Wordpress
+Now, I am not saying that the WordPress Core is an insecure piece of software --
+because I genuinely believe it is not. However, I do believe that WordPress
 suffers from the same kind of "ironic luck" that Windows has as an Operating
 System; that is, because of its massive popularity, hackers have a lot of
-incentives to try and find security vulnerabilities on Wordpress installations,
+incentives to try and find security vulnerabilities on WordPress installations,
 and they often succeed at that. In that regard, you might even say that
-Wordpress is _the_ Windows of Content Management Systems.
+WordPress is _the_ Windows of Content Management Systems.
 
 Alright, let's say that you have done enough to secure your site and start
 writing your posts.
 
 <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/VBwXWPvUdxzPi" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/funny-computer-virus-VBwXWPvUdxzPi">via GIPHY</a></p>
 
-Unfortunately, you start realizing that your new awesome Wordpress blog is
+Unfortunately, you start realizing that your new awesome WordPress blog is
 actually kind of slow...
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/kkpcRessCvNyo" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/angry-computer-frustrated-kkpcRessCvNyo">via GIPHY</a></p>
@@ -100,13 +100,13 @@ your setup and technical expertise.
 If you were clever enough to get your own Digital Ocean droplet and configure
 your own Apache instance, then you could definitely implement a cache layer with
 something like Varnish, which could help make your blog run a lot faster. If
-not, you will probably have to leverage one of those "magic" Wordpress cache and
+not, you will probably have to leverage one of those "magic" WordPress cache and
 minification plugins, which in my experience are very unpredictable and
 unreliable, and which might also introduce more security vulnerabilities to your
 site.
 
 Well, let's assume that despite all of this, one way or another, you manage to
-establish a fairly successful Wordpress blog with a decent reader base. Now the
+establish a fairly successful WordPress blog with a decent reader base. Now the
 million dollar question is: "But will it scale?"
 
 What will happen if one of your posts gets picked by Reddit or HackerNews and
@@ -117,11 +117,11 @@ If you are managing your own server, did you configure Varnish correctly? What
 if MySQL crashes while you are away on vacations? _What if? What if?_
 
 Now, I'm not trying to be pessimistic here. These are very realistic scenarios
-that I regularly came across in my years of experience as a Wordpress developer.
+that I regularly came across in my years of experience as a WordPress developer.
 Turns out that managing and scaling traditional monolithic LAMP stack
 applications is usually a time-consuming task, to say the least.
 
-You might decide to take the easy route and host your blog on a Wordpress
+You might decide to take the easy route and host your blog on a WordPress
 specialized hosting service like [WP Engine](https://wpengine.com/), which will
 take care of all things related to security and scaling for you. But then you
 better be prepared to set aside $29 each month, which is what their cheapest
@@ -177,7 +177,7 @@ manage content -- that is, adding it, updating it, deleting it, publishing it as
 a draft, etc.
 
 The problem is that the monolithic and highly coupled architecture of most
-Content Management Systems out there (i.e. Wordpress, Drupal, etc) usually means
+Content Management Systems out there (i.e. WordPress, Drupal, etc) usually means
 that your CMS will not only manage your content but will also be in charge of
 rendering it to the screen; and this architectural choice, in my opinion, is at
 the root of many of the headaches I described previously.
@@ -271,7 +271,7 @@ its entries via an HTTP endpoint, as well as setting up webhooks that can be
 triggered when those entries are created, updated or deleted. Fortunately, most
 popular CMSs nowadays already support those features, either natively or by
 installing plugins (i.e.
-[Wordpress REST API](https://wordpress.org/plugins/rest-api/)).
+[WordPress REST API](https://wordpress.org/plugins/rest-api/)).
 
 Personally, however, I found the idea of maintaining a CMS server and a database
 just for my simple blog not very appealing. Yes, our decoupled architecture

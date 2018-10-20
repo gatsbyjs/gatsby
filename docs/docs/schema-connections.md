@@ -22,7 +22,7 @@ Other features covered by schema connections are aggregators and reducers such a
 
 ### Connection/Edge
 
-A connection is an abstraction that describes a collection of nodes of a type, and how to query and navigate through them. In the above example query, `allMarkdownRemark` is a Connection Type. Its field `edges` is analagous to `results`. Each Edge points at a `node` (in the collection of all markdownRemark nodes), but it also points to the logical `next` and `previous` nodes, relative to the `node` in the collection (meaningful if you provided a `sort` arg). 
+A connection is an abstraction that describes a collection of nodes of a type, and how to query and navigate through them. In the above example query, `allMarkdownRemark` is a Connection Type. Its field `edges` is analogous to `results`. Each Edge points at a `node` (in the collection of all markdownRemark nodes), but it also points to the logical `next` and `previous` nodes, relative to the `node` in the collection (meaningful if you provided a `sort` arg). 
 
 _Fun Fact: This stuff is all based on [relay connections](https://facebook.github.io/relay/graphql/connections.htm) concepts_
 
@@ -72,7 +72,7 @@ Let's see this in practice. Say we were trying to group all markdown nodes by th
 
 The `frontmatter___author` value is interesting. It describes a nested field. I.e, we want to group all markdown nodes by their `frontmatter.author` field. The author field in each frontmatter subobject. So why not use a period? The problem is that GraphQL doesn't allow periods in fields names, so we instead use `___`, and then in the [resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-connection-fields.js#L69), we convert it back to a period.
 
-The second interesting thing is that `frontmatter___author` is not a string, but rather a GraphQL enum. You can verify this by using intellisense in GraphiQL to see all possible values. This implies that Gatsby has generated all possible field names. Which is true! To do this, we create an [exampleValue](/docs/schema-gql-type#gqltype-creation) and then use the [flat](https://www.npmjs.com/package/flat) library to flatten the nested object into string keys, using `___` delimeters. This is handled by the [data-tree-utils.js/buildFieldEnumValues](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/data-tree-utils.js#L277) function.
+The second interesting thing is that `frontmatter___author` is not a string, but rather a GraphQL enum. You can verify this by using intellisense in GraphiQL to see all possible values. This implies that Gatsby has generated all possible field names. Which is true! To do this, we create an [exampleValue](/docs/schema-gql-type#gqltype-creation) and then use the [flat](https://www.npmjs.com/package/flat) library to flatten the nested object into string keys, using `___` delimiters. This is handled by the [data-tree-utils.js/buildFieldEnumValues](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/data-tree-utils.js#L277) function.
 
 Note, the same enum mechanism is used for creation of `distinct` fields
 
