@@ -1,7 +1,7 @@
 const sift = require(`sift`)
 const _ = require(`lodash`)
 const prepareRegex = require(`./prepare-regex`)
-const { getNodes, getNode } = require(`../redux`)
+const { getNodesByType, getNode } = require(`../redux`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
 
 const nodesCache = new Map()
@@ -42,13 +42,7 @@ function runQuery({ type, rawGqlArgs, isConnection }) {
   const clonedArgs = JSON.parse(JSON.stringify(rawGqlArgs))
   const typeName = type.name
 
-  let nodes
-  if (process.env.NODE_ENV === `production` && nodesCache.has(typeName)) {
-    nodes = nodesCache.get(typeName)
-  } else {
-    nodes = _.filter(getNodes(), n => n.internal.type === typeName)
-    nodesCache.set(typeName, nodes)
-  }
+  let nodes = getNodesByType(typeName)
 
   const siftifyArgs = object => {
     const newObject = {}

@@ -72,6 +72,7 @@ const runAPI = (plugin, api, args) => {
     const {
       getNodes,
       getNode,
+      getNodesByType,
       hasNodeChanged,
       getNodeAndSavePathDependency,
     } = require(`../db`)
@@ -109,6 +110,7 @@ const runAPI = (plugin, api, args) => {
         emitter,
         getNodes,
         getNode,
+        getNodesByType,
         hasNodeChanged,
         reporter,
         getNodeAndSavePathDependency,

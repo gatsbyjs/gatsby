@@ -18,7 +18,6 @@ const {
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
 const {
-  getNodes,
   getNode,
   getNodeGroups,
   getNodeAndSavePathDependency,
@@ -206,7 +205,11 @@ module.exports = async ({ parentSpan }) => {
             let queryArgs = _.isObject(args) ? args : {}
             queryArgs = { filter: queryArgs }
 
-            const results = await runQuery({ type: gqlType, queryArgs })
+            const results = await runQuery({
+              type: gqlType,
+              queryArgs,
+              context,
+            })
 
             if (results.length > 0) {
               const result = results[0]

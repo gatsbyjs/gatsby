@@ -91,6 +91,7 @@ module.exports = (types: any) => {
         const results = await runQuery({
           type: type.node.type,
           queryArgs: resolveArgs,
+          context: b,
           isConnection: true,
           path,
         })

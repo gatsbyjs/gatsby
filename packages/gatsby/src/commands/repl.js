@@ -2,7 +2,7 @@ const repl = require(`repl`)
 const { graphql } = require(`graphql`)
 const bootstrap = require(`../bootstrap`)
 const { store, loadNodeContent } = require(`../redux`)
-const { getNodes, getNode } = require(`../db`)
+const { getNodes, getNodesByType, getNode } = require(`../db`)
 
 module.exports = async program => {
   // run bootstrap
@@ -37,6 +37,7 @@ module.exports = async program => {
   _.context.dataPaths = jsonDataPaths
   _.context.getNode = getNode
   _.context.getNodes = getNodes
+  _.context.getNodesByType = getNodesByType
   _.context.loadNodeContent = loadNodeContent
   _.context.nodes = [...nodes.entries()]
   _.context.pages = [...pages.entries()]

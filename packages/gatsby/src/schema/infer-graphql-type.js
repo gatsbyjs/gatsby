@@ -13,7 +13,7 @@ const invariant = require(`invariant`)
 const { oneLine } = require(`common-tags`)
 
 const { store } = require(`../redux`)
-const { getNode, getNodes } = require(`../db`)
+const { getNode, getNodes, getNodesByType } = require(`../db`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
@@ -154,9 +154,8 @@ function inferFromMapping(
 
   const findNode = (fieldValue, path) => {
     const linkedNode = _.find(
-      getNodes(),
-      n =>
-        n.internal.type === linkedType && _.get(n, linkedField) === fieldValue
+      getNodesByType(linkedType),
+      n => _.get(n, linkedField) === fieldValue
     )
     if (linkedNode) {
       createPageDependency({ path, nodeId: linkedNode.id })

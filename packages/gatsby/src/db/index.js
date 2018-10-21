@@ -30,11 +30,16 @@ function getNode(id) {
   }
 }
 
+function getNodesByType(typeName) {
+  const coll = db.getCollection(typeName)
+  if (!coll) return null
+  return coll.data
+}
+
 function getNodes() {
-  return _.flatMap(db.listCollections(), collInfo => {
-    const coll = db.getCollection(collInfo.name)
-    return coll.data
-  })
+  return _.flatMap(db.listCollections(), collInfo =>
+    getNodesByType(collInfo.name)
+  )
 }
 
 function getNodeGroups() {
@@ -79,6 +84,7 @@ module.exports = {
   clearAll,
   getNode,
   getNodes,
+  getNodesByType,
   getNodeGroups,
   getNodeAndSavePathDependency,
   hasNodeChanged,

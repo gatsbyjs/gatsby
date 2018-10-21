@@ -62,7 +62,7 @@ const withPathPrefix = (url, pathPrefix) =>
 const ASTPromiseMap = new Map()
 
 module.exports = (
-  { type, store, pathPrefix, getNode, getNodes, cache, reporter },
+  { type, store, pathPrefix, getNode, getNodesByType, cache, reporter },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -74,7 +74,13 @@ module.exports = (
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const { commonmark = true, footnotes = true, pedantic = true, gfm = true, blocks } = pluginOptions
+    const {
+      commonmark = true,
+      footnotes = true,
+      pedantic = true,
+      gfm = true,
+      blocks,
+    } = pluginOptions
     const remarkOptions = {
       gfm,
       commonmark,
@@ -113,7 +119,7 @@ module.exports = (
       } else {
         const ASTGenerationPromise = new Promise(async resolve => {
           if (process.env.NODE_ENV !== `production` || !fileNodes) {
-            fileNodes = getNodes().filter(n => n.internal.type === `File`)
+            fileNodes = getNodesByType(`File`)
           }
           const ast = await new Promise((resolve, reject) => {
             // Use Bluebird's Promise function "each" to run remark plugins serially.
@@ -180,7 +186,7 @@ module.exports = (
               // typegen plugins just modify the auto-generated types to add derived fields
               // as well as computationally expensive fields.
               if (process.env.NODE_ENV !== `production` || !fileNodes) {
-                fileNodes = getNodes().filter(n => n.internal.type === `File`)
+                fileNodes = getNodesByType(`File`)
               }
               // Use Bluebird's Promise function "each" to run remark plugins serially.
               Promise.each(pluginOptions.plugins, plugin => {
@@ -249,10 +255,16 @@ module.exports = (
           const addSlugToUrl = function(node) {
             if (node.url) {
               if (_.get(markdownNode, pathToSlugField) === undefined) {
-                console.warn(`Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`)
+                console.warn(
+                  `Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`
+                )
                 return null
               }
-              node.url = [pathPrefix, _.get(markdownNode, pathToSlugField), node.url]
+              node.url = [
+                pathPrefix,
+                _.get(markdownNode, pathToSlugField),
+                node.url,
+              ]
                 .join(`/`)
                 .replace(/\/\//g, `/`)
             }
