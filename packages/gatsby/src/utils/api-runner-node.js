@@ -229,56 +229,53 @@ module.exports = async (api, args = {}, pluginSource) =>
       apisRunningByTraceId.set(apiRunInstance.traceId, 1)
     }
 
-   
-
     Promise.mapSeries(noSourcePluginPlugins, plugin => {
-      let pluginName = plugin.name === `default-site-plugin` ? 
-          `gatsby-node.js` : `Plugin ${plugin.name}`
-      
-      return new Promise((resolve) => {
+      let pluginName =
+        plugin.name === `default-site-plugin`
+          ? `gatsby-node.js`
+          : `Plugin ${plugin.name}`
+
+      return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
-      }).catch(err => { 
+      }).catch(err => {
         reporter.panicOnBuild(`${pluginName} returned an error`, err)
         return null
       })
-    })
-      .then(results => {
-        // Remove runner instance
-        apisRunningById.delete(apiRunInstance.id)
-        const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
-        apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
+    }).then(results => {
+      // Remove runner instance
+      apisRunningById.delete(apiRunInstance.id)
+      const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
+      apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
 
-        if (apisRunningById.size === 0) {
-          const { emitter } = require(`../redux`)
-          emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
-        }
+      if (apisRunningById.size === 0) {
+        const { emitter } = require(`../redux`)
+        emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+      }
 
-        // Filter empty results
-        apiRunInstance.results = results.filter(result => !_.isEmpty(result))
+      // Filter empty results
+      apiRunInstance.results = results.filter(result => !_.isEmpty(result))
 
-        // Filter out empty responses and return if the
-        // api caller isn't waiting for cascading actions to finish.
-        if (!args.waitForCascadingActions) {
-          apiSpan.finish()
-          resolve(apiRunInstance.results)
-        }
+      // Filter out empty responses and return if the
+      // api caller isn't waiting for cascading actions to finish.
+      if (!args.waitForCascadingActions) {
+        apiSpan.finish()
+        resolve(apiRunInstance.results)
+      }
 
-        // Check if any of our waiters are done.
-        waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
-          instance => {
-            // If none of its trace IDs are running, it's done.
-            const apisByTraceIdCount = apisRunningByTraceId.get(
-              instance.traceId
-            )
-            if (apisByTraceIdCount === 0) {
-              instance.span.finish()
-              instance.resolve(instance.results)
-              return false
-            } else {
-              return true
-            }
+      // Check if any of our waiters are done.
+      waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
+        instance => {
+          // If none of its trace IDs are running, it's done.
+          const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId)
+          if (apisByTraceIdCount === 0) {
+            instance.span.finish()
+            instance.resolve(instance.results)
+            return false
+          } else {
+            return true
           }
-        )
-        return
-      })
+        }
+      )
+      return
+    })
   })
