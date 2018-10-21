@@ -3,16 +3,19 @@ const _ = require(`lodash`)
 const normalize = require(`./normalize`)
 const { defaultOptions } = require(`./plugin-options`)
 
-module.exports = async ({ spaceId, syncToken, reporter, ...options }) => {
+module.exports = async ({ syncToken, reporter, ...pluginOptions }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
 
   console.log(`Starting to fetch data from Contentful`)
 
+  // it would be great to streamline plugin options to match contentful client options
+  // but for now need to keep current behaviour
   const contentfulClientOptions = {
-    space: spaceId,
-    ...options,
+    ...pluginOptions,
+    space: pluginOptions.spaceId,
   }
+  delete contentfulClientOptions.spaceId
 
   const client = contentful.createClient(contentfulClientOptions)
 
@@ -42,7 +45,7 @@ module.exports = async ({ spaceId, syncToken, reporter, ...options }) => {
     }
 
     const optionsSummary = reporter.formatOptionsSummary({
-      options: contentfulClientOptions,
+      options: pluginOptions,
       defaults: defaultOptions,
     })
 
