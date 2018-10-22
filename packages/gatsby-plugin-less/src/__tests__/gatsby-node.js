@@ -35,6 +35,11 @@ describe(`gatsby-plugin-less`, () => {
       "PostCss plugins": {
         postCssPlugins: [`test1`],
       },
+      "css-loader options": {
+        cssLoaderOptions: {
+          camelCase: false,
+        },
+      },
     },
   }
 
