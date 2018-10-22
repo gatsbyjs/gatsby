@@ -7,7 +7,7 @@ import Layout from "../components/layout/layout-default"
 import ContentContainer from "../components/layout/content-container"
 import PageHeading from "../components/layout/page-heading"
 
-import { BlogIcon } from "../assets/mobile-nav-icons"
+import { EcosystemIcon } from "../assets/mobile-nav-icons"
 
 class EcosystemPage extends Component {
   render() {
@@ -15,8 +15,12 @@ class EcosystemPage extends Component {
     const pageTitle = "Ecosystem"
 
     return (
-      <Layout location={location} pageTitle={pageTitle} pageIcon={BlogIcon}>
-        &nbsp;
+      <Layout
+        location={location}
+        pageTitle={pageTitle}
+        pageIcon={EcosystemIcon}
+      >
+        This is content of Ecosystem
       </Layout>
     )
   }
