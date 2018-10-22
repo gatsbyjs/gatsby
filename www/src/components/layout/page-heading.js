@@ -8,7 +8,7 @@ import { rhythm, options, scale } from "../../utils/typography"
 
 const PageHeading = ({ title, icon }) => (
   <header className={pageHeading}>
-    <h1>
+    <h1 data-title={title}>
       <span dangerouslySetInnerHTML={{ __html: icon }} />
       {title}
     </h1>
@@ -65,7 +65,7 @@ const pageHeading = css`
 
     &::after {
       bottom: 2rem;
-      content: "Ecosystem";
+      content: attr(data-title);
       font-size: 12rem;
       opacity: 0.03;
       position: absolute;
@@ -129,20 +129,3 @@ const pageHeading = css`
     }
   }
 `
-
-/*
-      "& .svg-stroke-accent": { stroke: colors.lavender },
-      "& .svg-stroke-lilac": { stroke: colors.lavender },
-      "& .svg-fill-lilac": { fill: colors.lavender },
-      "& .svg-fill-gatsby": { fill: colors.lavender },
-      "& .svg-fill-brightest": { fill: `#fff` },
-      "& .svg-fill-accent": { fill: colors.lavender },
-      "& .svg-stroke-gatsby": { stroke: colors.lavender },
-      "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-bottom": { fill: `#fff` },
-      "& .svg-fill-gradient-purple": { fill: colors.lavender },
-      "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
-      "& .svg-fill-wisteria": { fill: `transparent` },
-      "&:hover": { ...svgActive },
-*/
