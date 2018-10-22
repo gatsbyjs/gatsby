@@ -8,7 +8,7 @@ Processes [graphviz](https://www.graphviz.org/) (`dot` and `circo`) code blocks 
 
 `npm install --save gatsby-remark-graphviz`
 
-Note that you do **not** need graphviz installed on your machine as this project depends on viz.js which is a pure javascript port of graphviz.
+Note that you do **not** need graphviz installed on your machine as this project depends on viz.js which is a pure JavaScript port of graphviz.
 
 ## How to use
 
@@ -39,6 +39,10 @@ Then, add `dot` code blocks to your markdown. E.g
 Which will be rendered using viz.js and the output html will replace the code block with the actual SVG.
 
 ![rendered-graph](/packages/gatsby-remark-graphviz/rendered-graph.svg)
+
+## Caveats
+
+In your gatsby-config.js, make sure you place this plugin before other remark plugins that modify code blocks (like prism).
 
 ## Caveats
 

@@ -2,6 +2,7 @@ const babelLoader = require(`babel-loader`)
 
 const {
   prepareOptions,
+  getCustomOptions,
   mergeConfigItemOptions,
 } = require(`./babel-loader-helpers`)
 
@@ -28,6 +29,7 @@ module.exports = babelLoader.custom(babel => {
         loader: {
           cacheDirectory: true,
           sourceType: `unambiguous`,
+          ...getCustomOptions(),
           ...options,
         },
       }

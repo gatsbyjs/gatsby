@@ -2,8 +2,7 @@ const tests = [
   `import-default`,
   `import-named-exports`,
   `import-namespace`,
-  // TODO: update
-  // `no-import-esm`,
+  `no-import-esm`,
   `require-destructure`,
   `require-namespace`,
 ]

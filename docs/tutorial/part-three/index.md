@@ -21,12 +21,12 @@ Let's dive in and explore creating layouts.
 As we mentioned in Part Two, at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
-gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-three
 ```
 
-Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see Part Two of the tutorials. For
-the Typography.js theme, let's try the "Fairy Gates" typography theme this time:
+Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see [Part Two](/tutorial/part-two/) of the tutorials. For
+the Typography.js theme, try the "Fairy Gates" typography theme this time:
 
 ```shell
 npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
@@ -34,7 +34,7 @@ npm install --save gatsby-plugin-typography react-typography typography typograp
 
 Create a `src/utils` directory, and then create the typography config file at `src/utils/typography.js`:
 
-```javascript
+```javascript:title=src/utils/typography.js
 import Typography from "typography"
 import fairyGateTheme from "typography-theme-fairy-gates"
 
@@ -45,7 +45,7 @@ export default typography
 
 Then create your site's `gatsby-config.js` at the root of the site, and add the following code to it:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -58,12 +58,10 @@ module.exports = {
 }
 ```
 
-Now, let's add a few different pages: a front page, an about page, and a contact
+Now, you can add a few different pages: a front page, an about page, and a contact
 page.
 
-`src/pages/index.js`
-
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
@@ -77,9 +75,7 @@ export default () => (
 )
 ```
 
-`src/pages/about.js`
-
-```jsx
+```jsx:title=src/pages/about.js
 import React from "react"
 
 export default () => (
@@ -90,9 +86,7 @@ export default () => (
 )
 ```
 
-`src/pages/contact.js`
-
-```jsx
+```jsx:title=src/pages/contact.js
 import React from "react"
 
 export default () => (
@@ -114,7 +108,7 @@ centered on the screen like in part two of the tutorial. And second, you should
 really have some sort of global navigation so it's easy for visitors to find and
 visit each of the sub-pages.
 
-Let's tackle these problems by creating your first layout component.
+You'll tackle these problems by creating your first layout component.
 
 ## Your first layout component
 
@@ -122,7 +116,7 @@ First, create a new directory at `src/components`.
 
 Now create a very basic layout component at `src/components/layout.js`:
 
-```jsx
+```jsx:title=src/components/layout.js
 import React from "react"
 
 export default ({ children }) => (
@@ -136,7 +130,7 @@ Now you need to import this new layout component into your page components.
 
 Change `src/pages/index.js` to look like:
 
-```jsx{2,5,11}
+```jsx{2,5,11}:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -160,9 +154,9 @@ But try navigating to one of the other pages e.g. `/about/`. That page still
 isn't centered. Try now importing and adding the layout component to `about.js` and
 `contact.js`.
 
-Let's now add to the layout component your site title:
+Now add your site title to the layout component:
 
-```jsx{5}
+```jsx{5}:title=src/components/layout.js
 import React from "react"
 
 export default ({ children }) => (
@@ -178,11 +172,9 @@ If you go to any of your three pages you'll see the same title added e.g. the
 
 ![with-title](with-title.png)
 
-Let's add navigation links to each of your three pages:
+Add navigation links to each of your three pages:
 
-`src/components/layout.js`
-
-```jsx{2-10,13-23}
+```jsx{2-9,12-21}:title=src/components/layout.js
 import React from "react"
 import { Link } from "gatsby"
 

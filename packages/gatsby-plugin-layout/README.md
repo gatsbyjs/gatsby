@@ -5,7 +5,7 @@ This plugin reimplements the behavior of layout components in `gatsby@1`, which 
 ## Install
 
 ```
-npm install --save gatsby-plugin-layout@next
+npm install --save gatsby-plugin-layout
 ```
 
 ## How to use
@@ -73,7 +73,7 @@ In version 2, the layout component is no longer special, and it's included in ev
 </Root>
 ```
 
-This can make it complicated to support transitions or state without using the [`wrapPageElement` browser API](https://next.gatsbyjs.org/docs/browser-apis/#wrapPageElement) (and the [SSR equivalent](https://next.gatsbyjs.org/docs/ssr-apis/#wrapPageElement)). This plugin implements those APIs for you, which reimplements the behavior of Gatsby V1.
+This can make it complicated to support transitions or state without using the [`wrapPageElement` browser API](https://gatsbyjs.org/docs/browser-apis/#wrapPageElement) (and the [SSR equivalent](https://gatsbyjs.org/docs/ssr-apis/#wrapPageElement)). This plugin implements those APIs for you, which reimplements the behavior of Gatsby V1.
 
 ## Troubleshooting
 
@@ -163,9 +163,9 @@ import ContextConsumer from "./Context"
 const ComponentThatChangeState = () => (
   <ContextConsumer>
     {({ data, set }) => (
-        <div onClick={() => set({menuOpen: !data.menuOpen})}>
-            {data.menuOpen ? `Opened Menu` : `Closed Menu`}
-        </div>
+      <div onClick={() => set({ menuOpen: !data.menuOpen })}>
+        {data.menuOpen ? `Opened Menu` : `Closed Menu`}
+      </div>
     )}
   </ContextConsumer>
 )

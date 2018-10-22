@@ -1,5 +1,5 @@
 ---
-title: Querying for data in a blog
+title: Data in Gatsby
 typora-copy-images-to: ./
 ---
 
@@ -39,7 +39,7 @@ Which is an _excellent_ way to build many websites. But, often you want to store
 data _outside_ components and then bring the data _into_ the component as
 needed.
 
-For example, if you're building a site with WordPress (so other contributors
+If you're building a site with WordPress (so other contributors
 have a nice interface for adding & maintaining content) and Gatsby, the _data_
 for the site (pages and posts) are in WordPress and you _pull_ that data, as
 needed, into your components.
@@ -50,7 +50,22 @@ and APIs of all sorts.
 **Gatsby's data layer lets you pull data from these (and any other source)
 directly into your components**—in the shape and form you want.
 
-## How Gatsby's data layer uses GraphQL to pull data into components
+## Using Unstructured Data vs GraphQL
+
+### Do I have to use GraphQL and source plugins to pull data into Gatsby sites?
+
+Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+
+See the [Using Unstructured Data](/docs/using-unstructured-data/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
+
+### When do I use unstructured data vs GraphQL?
+
+If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
+
+1.  Check out the [Plugin Library](/packages/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2.  If they don't exist, read the [Plugin Authoring](/docs/plugin-authoring/) guide and consider building your own!
+
+### How Gatsby's data layer uses GraphQL to pull data into components
 
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
@@ -68,12 +83,12 @@ Gatsby uses GraphQL to enable components to declare the data they need.
 
 ## Create a new example site
 
-Let's create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
+Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
 
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`, and navigate to the new directory:
 
 ```shell
-gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world#v2
+gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-four
 ```
 
@@ -84,11 +99,9 @@ Then install some other needed dependencies at the root of the project. You'll u
 npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion react-emotion emotion-server
 ```
 
-Let's set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
+Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
 
-`src/components/layout.js`
-
-```jsx
+```jsx:title=src/components/layout.js
 import React from "react"
 import { css } from "react-emotion"
 import { Link } from "gatsby"
@@ -128,9 +141,7 @@ export default ({ children }) => (
 )
 ```
 
-`src/pages/index.js`
-
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -147,9 +158,7 @@ export default () => (
 )
 ```
 
-`src/pages/about.js`
-
-```jsx
+```jsx:title=src/pages/about.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -164,9 +173,7 @@ export default () => (
 )
 ```
 
-`src/utils/typography.js`
-
-```javascript
+```javascript:title=src/utils/typography.js
 import Typography from "typography"
 import kirkhamTheme from "typography-theme-kirkham"
 
@@ -178,7 +185,7 @@ export const rhythm = typography.rhythm
 
 `gatsby-config.js` (must be in the root of your project, not under src)
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-emotion`,
@@ -198,17 +205,17 @@ Add the above files and then run `gatsby develop`, per usual, and you should see
 
 You have another small site with a layout and two pages.
 
-Now let's start querying 😋
+Now you can start querying 😋
 
 ## Your first GraphQL query
 
-When building sites, you'll probably want to reuse common bits of data -- like the _site title_ for example. Look at the `/about/` page. You'll notice that you have the site title (`Pandas Eating Lots`) in both the layout component (the site header) as well as in the `<h1/>` of the `about.js` page (the page header).
+When building sites, you'll probably want to reuse common bits of data -- like the _site title_ for example. Look at the `/about/` page. You'll notice that you have the site title (`Pandas Eating Lots`) in both the layout component (the site header) as well as in the `<h1 />` of the `about.js` page (the page header).
 
 But what if you want to change the site title in the future? You'd have to search for the title across all your components and edit each instance. This is both cumbersome and error-prone, especially for larger, more complex sites. Instead, you can store the title in one location and reference that location from other files; Change the title in a single place, and Gatsby will _pull_ your updated title into files that reference it.
 
-The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Let's add your site title to the `gatsby-config.js` file:
+The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Add your site title to the `gatsby-config.js` file:
 
-```javascript{2-4}
+```javascript{2-4}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Title from siteMetadata`,
@@ -229,9 +236,9 @@ Restart the development server.
 
 ### Use a page query
 
-Now the site title is available to be queried; Let's add it to the `about.js` file using a [page query](/docs/page-query):
+Now the site title is available to be queried; Add it to the `about.js` file using a [page query](/docs/page-query):
 
-```jsx{2,5,7,14-23}
+```jsx{2,5,7,14-23}:title=src/pages/about.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -259,9 +266,9 @@ export const query = graphql`
 
 It worked! 🎉
 
-![Page title pulling from siteMetadata](/site-metadata-title.png)
+![Page title pulling from siteMetadata](site-metadata-title.png)
 
-The basic GraphQL query that retrieves the `title` in our `layout.js` changes above is:
+The basic GraphQL query that retrieves the `title` in our `about.js` changes above is:
 
 ```
 {
@@ -273,7 +280,7 @@ The basic GraphQL query that retrieves the `title` in our `layout.js` changes ab
 }
 ```
 
-> 💡 In [part five](/tutorial/part-five/#introducing-graphiql), we'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
+> 💡 In [part five](/tutorial/part-five/#introducing-graphiql), you'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
 
 Page queries live outside of the component definition -- by convention at the end of a page component file -- and are only available on page components.
 
@@ -281,9 +288,9 @@ Page queries live outside of the component definition -- by convention at the en
 
 [StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
 
-Go ahead and add a `<StaticQuery/>` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
+Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
-```jsx{3,8-18,35,48}
+```jsx{3,8-18,35,48-49}:title=src/components/layout.js
 import React from "react"
 import { css } from "react-emotion"
 import { StaticQuery, Link, graphql } from "gatsby"
@@ -338,7 +345,7 @@ export default ({ children }) => (
 
 Another success! 🎉
 
-![Page title and layout title both pulling from siteMetadata](/site-metadata-two-titles.png)
+![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
 
 But let's restore the real title.
 
@@ -346,7 +353,7 @@ One of the core principles of Gatsby is that _creators need an immediate connect
 
 So almost everywhere, changes you make will immediately take effect. Edit the `gatsby-config.js` file again, this time changing the `title` back to "Pandas Eating Lots". The change should show up very quickly in your site pages.
 
-![Both titles say Pandas Eating Lots](/pandas-eating-lots-titles.png)
+![Both titles say Pandas Eating Lots](pandas-eating-lots-titles.png)
 
 ## What's coming next?
 

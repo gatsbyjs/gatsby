@@ -51,7 +51,7 @@ class PackageReadMe extends React.Component {
             <GithubIcon style={{ verticalAlign: `text-top` }} />
           </a>
           {githubUrl && (
-            <Link to={`/starter-showcase?d=${packageName}`}>
+            <Link to={`/starters?d=${packageName}`}>
               See starters that use this
             </Link>
           )}

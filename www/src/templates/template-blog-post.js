@@ -5,8 +5,6 @@ import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
-
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
@@ -14,10 +12,14 @@ import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
+import Chart from "../components/chart"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
-  components: { "hubspot-form": HubspotForm },
+  components: {
+    "hubspot-form": HubspotForm,
+    "date-chart": Chart,
+  },
 }).Compiler
 
 class BlogPostTemplate extends React.Component {
@@ -69,174 +71,181 @@ class BlogPostTemplate extends React.Component {
     return (
       <Layout location={this.props.location}>
         <Container className="post" css={{ paddingBottom: `0` }}>
-          {/* Add long list of social meta tags */}
-          <Helmet>
-            <title>{post.frontmatter.title}</title>
-            <link
-              rel="author"
-              href={`https://gatsbyjs.org${
-                post.frontmatter.author.fields.slug
-              }`}
-            />
-            <meta
-              name="description"
-              content={
-                post.frontmatter.excerpt
-                  ? post.frontmatter.excerpt
-                  : post.excerpt
-              }
-            />
+          <main id={`reach-skip-nav`}>
+            {/* Add long list of social meta tags */}
+            <Helmet>
+              <title>{post.frontmatter.title}</title>
+              <link
+                rel="author"
+                href={`https://gatsbyjs.org${
+                  post.frontmatter.author.fields.slug
+                }`}
+              />
+              <meta
+                name="description"
+                content={
+                  post.frontmatter.excerpt
+                    ? post.frontmatter.excerpt
+                    : post.excerpt
+                }
+              />
 
-            <meta name="og:description" content={post.excerpt} />
-            <meta name="twitter:description" content={post.excerpt} />
-            <meta name="og:title" content={post.frontmatter.title} />
-            {post.frontmatter.image && (
-              <meta
-                name="og:image"
-                content={`https://gatsbyjs.org${
-                  post.frontmatter.image.childImageSharp.resize.src
-                }`}
-              />
-            )}
-            {post.frontmatter.image && (
-              <meta
-                name="twitter:image"
-                content={`https://gatsbyjs.org${
-                  post.frontmatter.image.childImageSharp.resize.src
-                }`}
-              />
-            )}
-            <meta name="og:type" content="article" />
-            <meta name="article:author" content={post.frontmatter.author.id} />
-            <meta
-              name="twitter:creator"
-              content={post.frontmatter.author.twitter}
-            />
-            <meta name="author" content={post.frontmatter.author.id} />
-            <meta name="twitter:label1" content="Reading time" />
-            <meta
-              name="twitter:data1"
-              content={`${post.timeToRead} min read`}
-            />
-            <meta
-              name="article:published_time"
-              content={post.frontmatter.rawDate}
-            />
-            {canonicalLink}
-          </Helmet>
-          <header
-            css={{
-              display: `flex`,
-              marginTop: rhythm(-1 / 4),
-              marginBottom: rhythm(1),
-              [presets.Tablet]: {
-                marginTop: rhythm(1 / 2),
-                marginBottom: rhythm(2),
-              },
-            }}
-          >
-            <div
-              css={{
-                flex: `0 0 auto`,
-              }}
-            >
-              <Link to={post.frontmatter.author.fields.slug}>
-                <Img
-                  fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
-                  css={{
-                    height: rhythm(2.3),
-                    width: rhythm(2.3),
-                    margin: 0,
-                    borderRadius: `100%`,
-                    display: `inline-block`,
-                    verticalAlign: `middle`,
-                  }}
+              <meta name="og:description" content={post.excerpt} />
+              <meta name="twitter:description" content={post.excerpt} />
+              <meta name="og:title" content={post.frontmatter.title} />
+              {post.frontmatter.image && (
+                <meta
+                  name="og:image"
+                  content={`https://gatsbyjs.org${
+                    post.frontmatter.image.childImageSharp.resize.src
+                  }`}
                 />
-              </Link>
-            </div>
-            <div
+              )}
+              {post.frontmatter.image && (
+                <meta
+                  name="twitter:image"
+                  content={`https://gatsbyjs.org${
+                    post.frontmatter.image.childImageSharp.resize.src
+                  }`}
+                />
+              )}
+              <meta name="og:type" content="article" />
+              <meta
+                name="article:author"
+                content={post.frontmatter.author.id}
+              />
+              <meta
+                name="twitter:creator"
+                content={post.frontmatter.author.twitter}
+              />
+              <meta name="author" content={post.frontmatter.author.id} />
+              <meta name="twitter:label1" content="Reading time" />
+              <meta
+                name="twitter:data1"
+                content={`${post.timeToRead} min read`}
+              />
+              <meta
+                name="article:published_time"
+                content={post.frontmatter.rawDate}
+              />
+              {canonicalLink}
+            </Helmet>
+            <section
               css={{
-                flex: `1 1 auto`,
-                marginLeft: rhythm(1 / 2),
+                display: `flex`,
+                marginTop: rhythm(-1 / 4),
+                marginBottom: rhythm(1),
+                [presets.Tablet]: {
+                  marginTop: rhythm(1 / 2),
+                  marginBottom: rhythm(2),
+                },
               }}
             >
-              <Link to={post.frontmatter.author.fields.slug}>
-                <h4
-                  css={{
-                    ...scale(0),
-                    fontWeight: 400,
-                    margin: 0,
-                    color: `${colors.gatsby}`,
-                  }}
-                >
-                  <span
-                    css={{
-                      borderBottom: `1px solid ${colors.ui.bright}`,
-                      boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
-                      transition: `all ${presets.animation.speedFast} ${
-                        presets.animation.curveDefault
-                      }`,
-                      "&:hover": {
-                        background: colors.ui.bright,
-                      },
-                    }}
-                  >
-                    {post.frontmatter.author.id}
-                  </span>
-                </h4>
-              </Link>
-              <BioLine>{post.frontmatter.author.bio}</BioLine>
-              <BioLine>
-                {post.timeToRead} min read · {post.frontmatter.date}
-                {post.frontmatter.canonicalLink && (
-                  <span>
-                    {` `}
-                    (originally published at
-                    {` `}
-                    <OutboundLink href={post.frontmatter.canonicalLink}>
-                      {post.frontmatter.publishedAt}
-                    </OutboundLink>
-                    )
-                  </span>
-                )}
-              </BioLine>
-            </div>
-          </header>
-          <h1
-            css={{
-              marginTop: 0,
-              [presets.Desktop]: {
-                marginBottom: rhythm(5 / 4),
-              },
-            }}
-          >
-            {this.props.data.markdownRemark.frontmatter.title}
-          </h1>
-          {post.frontmatter.image &&
-            !(post.frontmatter.showImageInArticle === false) && (
               <div
                 css={{
-                  marginBottom: rhythm(1),
+                  flex: `0 0 auto`,
                 }}
               >
-                <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
-                {post.frontmatter.imageAuthor &&
-                  post.frontmatter.imageAuthorLink && (
-                    <em>
-                      Image by
-                      {` `}
-                      <OutboundLink href={post.frontmatter.imageAuthorLink}>
-                        {post.frontmatter.imageAuthor}
-                      </OutboundLink>
-                    </em>
-                  )}
+                <Link to={post.frontmatter.author.fields.slug}>
+                  <Img
+                    fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
+                    css={{
+                      height: rhythm(2.3),
+                      width: rhythm(2.3),
+                      margin: 0,
+                      borderRadius: `100%`,
+                      display: `inline-block`,
+                      verticalAlign: `middle`,
+                    }}
+                  />
+                </Link>
               </div>
-            )}
-          <div className="post-body">
-            {renderAst(this.props.data.markdownRemark.htmlAst)}
-          </div>
-          <TagsSection tags={this.props.data.markdownRemark.frontmatter.tags} />
-          <EmailCaptureForm />
+              <div
+                css={{
+                  flex: `1 1 auto`,
+                  marginLeft: rhythm(1 / 2),
+                }}
+              >
+                <Link to={post.frontmatter.author.fields.slug}>
+                  <h4
+                    css={{
+                      ...scale(0),
+                      fontWeight: 400,
+                      margin: 0,
+                      color: `${colors.gatsby}`,
+                    }}
+                  >
+                    <span
+                      css={{
+                        borderBottom: `1px solid ${colors.ui.bright}`,
+                        boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
+                        transition: `all ${presets.animation.speedFast} ${
+                          presets.animation.curveDefault
+                        }`,
+                        "&:hover": {
+                          background: colors.ui.bright,
+                        },
+                      }}
+                    >
+                      {post.frontmatter.author.id}
+                    </span>
+                  </h4>
+                </Link>
+                <BioLine>{post.frontmatter.author.bio}</BioLine>
+                <BioLine>
+                  {post.timeToRead} min read · {post.frontmatter.date}
+                  {post.frontmatter.canonicalLink && (
+                    <span>
+                      {` `}
+                      (originally published at
+                      {` `}
+                      <a href={post.frontmatter.canonicalLink}>
+                        {post.frontmatter.publishedAt}
+                      </a>
+                      )
+                    </span>
+                  )}
+                </BioLine>
+              </div>
+            </section>
+            <h1
+              css={{
+                marginTop: 0,
+                [presets.Desktop]: {
+                  marginBottom: rhythm(5 / 4),
+                },
+              }}
+            >
+              {this.props.data.markdownRemark.frontmatter.title}
+            </h1>
+            {post.frontmatter.image &&
+              !(post.frontmatter.showImageInArticle === false) && (
+                <div
+                  css={{
+                    marginBottom: rhythm(1),
+                  }}
+                >
+                  <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
+                  {post.frontmatter.imageAuthor &&
+                    post.frontmatter.imageAuthorLink && (
+                      <em>
+                        Image by
+                        {` `}
+                        <a href={post.frontmatter.imageAuthorLink}>
+                          {post.frontmatter.imageAuthor}
+                        </a>
+                      </em>
+                    )}
+                </div>
+              )}
+            <section className="post-body">
+              {renderAst(this.props.data.markdownRemark.htmlAst)}
+            </section>
+            <TagsSection
+              tags={this.props.data.markdownRemark.frontmatter.tags}
+            />
+            <EmailCaptureForm />
+          </main>
         </Container>
         <div
           css={{

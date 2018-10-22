@@ -83,7 +83,7 @@ function resolvePlugin(pluginName) {
   }
 }
 
-module.exports = async (config = {}) => {
+module.exports = (config = {}) => {
   // Instantiate plugins.
   const plugins = []
 

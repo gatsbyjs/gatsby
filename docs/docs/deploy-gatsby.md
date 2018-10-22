@@ -25,9 +25,7 @@ continuous deployment from public or private repos and more.
 
 ### Deploying to Netlify
 
-To deploy your Gatsby site to Netlify, go to the [create a new
-site](https://app.netlify.com/start) page, select your project repo from GitHub,
-GitLab, or Bitbucket, and follow the prompts.
+To deploy your Gatsby site to Netlify, go to [hosting on netlify](/docs/hosting-on-netlify/) page and follow the documentation. The documentation explains how to create a Gatsby website to connect it with your custom domain.
 
 ## Amazon S3 and Cloudfront
 
@@ -61,7 +59,7 @@ script to **deploy** your project by running `npm install gh-pages --save-dev`.
 
 Then add a `deploy` script in your `package.json` file.
 
-```
+```json:title=package.json
 "scripts": {
   "deploy": "gatsby build --prefix-paths && gh-pages -d public",
 }
@@ -73,16 +71,16 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/project-name`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```
+```js:title=gatsby-config.js
 module.exports = {
   pathPrefix: `/project-name`,
 }
 ```
 
-If you have not yet initialized a git repository in your working gatsby site
-repo, set up git in your project with `git init`. Then tell Gatsby where to
-deploy your site by adding the git remote address with https or ssh. Here is how
-to do it with https: `git remote add origin git@github.com:username/project-name.git`.
+If you have not yet initialized a Git repository in your working Gatsby site
+repo, set up Git in your project with `git init`. Then tell Gatsby where to
+deploy your site by adding the Git remote address with HTTPS or SSH. Here is how
+to do it with HTTPS: `git remote add origin git@github.com:username/project-name.git`.
 
 Now run `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
@@ -98,7 +96,7 @@ repository dedicated to files for the site. The sites must be published from the
 kept in a branch named `source` or something similar. We also don't need to
 prefix links like we do with project sites.
 
-```
+```json:title=package.json
 "scripts": {
   "deploy": "gatsby build && gh-pages -b master -d public",
 }
@@ -126,14 +124,14 @@ platform.
 Create a new GitLab repository, initialize your Gatsby project folder if you
 haven't already, and add the GitLab remote.
 
-```
+```bash
 git init
 git remote add origin git@gitlab.com:examplerepository
 git add .
 git push -u origin master
 ```
 
-You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
+You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the `gitlab-ci.yml` file.
 
 ### Path Prefix
 
@@ -145,7 +143,7 @@ paths. The `pathPrefix` should be the project name in your repository. (ex.
 `/examplerepository`). See
 [the docs page on path prefixing for more](/docs/path-prefix/).
 
-```
+```js:title=gatsby-config.js
 module.exports = {
   pathPrefix: `/examplerepository`,
 }
@@ -154,37 +152,37 @@ module.exports = {
 ### Build and Deploy with GitLab CI
 
 To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml`
-configuration file. This is the file that Gitlab uses to manage the CI job.
+configuration file. This is the file that GitLab uses to manage the CI job.
 
-It can easily be added to your repository by the [Gitlab](https://gitlab.com)
+It can easily be added to your repository by the [GitLab](https://gitlab.com)
 website, as the online editor contains a pre-built template for Gatsby deployment.
 
 To use the template open your repository on their website, select the 'Setup CI/CD' option on
 the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now
-select the 'Apply a Gitlab CI Yaml Template' drop-down, and type 'Gatsby' into
+select the 'Apply a GitLab CI Yaml Template' drop-down, and type 'Gatsby' into
 the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
 
 If adding this manually to your project, the file needs to contain a few required
 fields:
 
-```
+```yaml:title=.gitlab-ci.yml
 image: node:latest
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
   paths:
-  - node_modules/
+    - node_modules/
 
 pages:
   script:
-  - npm install
-  - ./node_modules/.bin/gatsby build --prefix-paths
+    - npm install
+    - ./node_modules/.bin/gatsby build --prefix-paths
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - master
+    - master
 ```
 
 The CI platform uses Docker images/containers, so `image: node:latest` tells the
@@ -212,7 +210,7 @@ and then select the job to get more information about why your build may have
 failed.
 
 If all went well, you should now be able to access your site. It will be hosted
-under gitlab.io - for example if you have have a repository under your
+under gitlab.io - for example if you have a repository under your
 namespace, the url will be yourname.gitlab.io/examplerepository.
 
 Visit the
@@ -225,7 +223,7 @@ You can use the [heroku buildpack static](https://github.com/heroku/heroku-build
 
 Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
 
-```
+```json:title=app.json
 {
   "buildpacks": [
     {
@@ -242,9 +240,8 @@ Sometimes specifying buildpacks via the `app.json` file doesn't work. If this is
 
 Add a `heroku-postbuild` script in your `package.json`:
 
-```
+```json:title=package.json
 {
-
   // ...
   "scripts": {
     // ...
@@ -276,15 +273,9 @@ In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can
 
 `npm install -g now`
 
-2.  Install a node server package (such as `serve`, or `http-server`)
+2.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
 
-`npm install --save serve`
-
-3.  Add a `start` script to your `package.json` file, this is what Now will use to run your application:
-
-`"start": "serve public/"`
-
-4.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
+For alternate [Now](https://zeit.co/now) deployment options, check out [this document](/docs/deploying-to-now).
 
 ## Debugging tips
 
@@ -328,7 +319,7 @@ Your site will be ready on our CDN at https://<your-site-name>.aerobaticapp.com 
 
 There are some additional HTTP header optimizations you can configure in your `aerobatic.yml` file:
 
-```yaml
+```yaml:title=aerobatic.yml
 deploy:
   # Note with below setting it is not necessary to pass --directory to aero deploy command
   directory: public

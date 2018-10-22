@@ -53,13 +53,13 @@ What does the code look like?
 A source plugin is a normal NPM package. It has a package.json with optional
 dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
 APIs. Gatsby supports node versions back to Node 4 and as it's common to want to
-use more modern node.js and JavaScript syntax, many plugins write code in a
+use more modern Node.js and JavaScript syntax, many plugins write code in a
 `src` directory and compile the code. All plugins maintained in the Gatsby repo
 follow this pattern.
 
 Your `gatsby-node.js` should look something like:
 
-```javascript
+```javascript:title=gatsby-node.js
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
   // Create nodes here, generally by downloading data
@@ -145,7 +145,7 @@ It's often convenient for querying to add to the schema backwards references. Fo
 
 If you want to call this field on `Author` `posts`, you would create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
 
-Here's an example from the [Wordpress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
+Here's an example from the [WordPress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
 
 #### Union types
 

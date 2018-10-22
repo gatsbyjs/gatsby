@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.4"></a>
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.3...gatsby-transformer-sharp@2.1.4) (2018-10-16)
+
+### Features
+
+- add custom sizes for fluid images ([#8825](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/8825)) ([6cb4ee6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/6cb4ee6)), closes [#8621](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/8621)
+
+<a name="2.1.3"></a>
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.2...gatsby-transformer-sharp@2.1.3) (2018-09-28)
+
+### Features
+
+- provide fragments without gatsby-image ([#8459](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/8459)) ([3389b89](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/3389b89))
+
+<a name="2.1.2"></a>
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-rc.3...gatsby-transformer-sharp@2.1.2) (2018-09-24)
+
+### Features
+
+- **gatsby-transformer-sharp:** expose sizes argument for fluid query ([#8466](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/8466)) ([efe95a4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/efe95a4))
+
+<a name="2.1.1"></a>
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-rc.3...gatsby-transformer-sharp@2.1.1) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+<a name="2.1.1-rc.3"></a>
+
+## [2.1.1-rc.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-rc.2...gatsby-transformer-sharp@2.1.1-rc.3) (2018-09-07)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
 <a name="2.1.1-rc.2"></a>
 
 ## [2.1.1-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.1-rc.1...gatsby-transformer-sharp@2.1.1-rc.2) (2018-08-29)

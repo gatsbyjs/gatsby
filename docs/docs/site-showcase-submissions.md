@@ -2,25 +2,25 @@
 title: Site Showcase Submissions
 ---
 
-Want to submit a site to the [Site Showcase](https://next.gatsbyjs.org/showcase/)? Follow these instructions.
+Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructions.
 
 ## Steps
 
 There are only three major steps :)
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](https://next.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-repo) to get push access rights.
+1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/docs/how-to-contribute/#contributing-to-the-repo).
 
 2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
 3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
-```yaml
+```yaml:title=docs/sites.yml
 - title: Title of the Site
 
-  # this URL is used to generate a screenshot
+  # this is the URL that is linked from the showcase
   main_url: https://titleofthesite.com
 
-  # this is the URL that is linked from the showcase
+  # this URL is used to generate a screenshot
   url: https://titleofthesite.com/portfolio
 
   # optional: for open-source sites, this URL points to the repo that powers the site
@@ -44,6 +44,22 @@ There are only three major steps :)
   featured: false
 ```
 
+Use the following template to ensure required fields are filled:
+
+```yaml:title=docs/sites.yml
+- title: (required)
+  url: (required)
+  main_url: (required)
+  source_url: (optional - https://github.com/{username}/{titleofthesite})
+  description: >
+    (optional)
+  categories:
+    - (required)
+  built_by: (optional)
+  built_by_url: (optional)
+  featured: false
+```
+
 ## Helpful information
 
 ### Categories
@@ -58,23 +74,20 @@ Categories currently include both _type of site_ (structure) and the _content of
 - eCommerce
 - Education
 - Gallery
-- Landing
-- Marketing
 - Portfolio
 - (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
 
 #### Content of site:
 
-A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web dev" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web dev is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web dev.
+A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web development" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web development is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web development.
 
 - Agency
-- Corporate
 - Cinema
-- Creative
 - Education
 - Entertainment
 - Finance
 - Food
+- Health & Wellness
 - Healthcare
 - Hosting
 - Gallery
@@ -86,14 +99,12 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - News
 - Nonprofit
 - Open Source
-- Personal
 - Photography
 - Podcast
 - Real Estate
-- Retail
 - Science
 - Technology
-- Web Dev
+- Web Development
 - (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
 
 ### Note on Featured Sites
@@ -104,14 +115,20 @@ By default, all sites submitted to the Site Showcase will be reviewed by the Gat
 
 Featured sites will be chosen quarterly based on the following criteria:
 
-- how the site performs according to a set of criteria TBD by the Gatsby Site Review Board
-- voting by the community
+- Well known brands
+- Use case diversity
+- Visual appeal
+- Visual diversity
+
+#### How many can be featured at a time?
+
+9, since that’s what can fit on one page of the site showcase
 
 #### How to Set a Site as Featured
 
 _Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
 
-If you're site is chosen as featured, here's what to do next:
+If your site is chosen as featured, here's what to do next:
 
 1.  Change `featured: false` to `featured: true`
 

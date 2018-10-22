@@ -107,7 +107,7 @@ retrieve data from databases and/or other APIs.
 
 Gatsby uses GraphQL at _build-time_ and _not_ for live
 sites. This is unique, and it means you don't need to run additional services (e.g. a database
-and node.js service) to use GraphQL for production websites.
+and Node.js service) to use GraphQL for production websites.
 
 Gatsby is a great framework for building apps so it's possible and encouraged
 to pair Gatsby's native build-time GraphQL with GraphQL queries running against
@@ -214,9 +214,7 @@ If you wish to define your own fragments for use in your application, you can us
 
 For example if I put a fragment in a helper component, I can use that fragment in any other query:
 
-```jsx
-// src/components/PostItem.js
-
+```jsx:title=src/components/PostItem.js
 export const markdownFrontmatterFragment = graphql`
   fragment MarkdownFrontmatter on MarkdownRemark {
     frontmatter {
@@ -240,9 +238,7 @@ query($path: String!) {
 
 It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page might map over all of your posts to show them in a list.
 
-```jsx
-// src/pages/index.jsx
-
+```jsx:title=src/pages/index.jsx
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -282,9 +278,7 @@ export const query = graphql`
 
 If the index component becomes too large, you might want to refactor it into smaller components.
 
-```jsx
-// src/components/IndexPost.jsx
-
+```jsx:title=src/components/IndexPost.jsx
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -308,9 +302,7 @@ export const query = graphql`
 
 Now, we can use the component together with the exported fragment in our index page.
 
-```jsx{26}
-// src/pages/index.jsx
-
+```jsx:title=src/pages/index.jsx
 import React from "react"
 import IndexPost from "../components/IndexPost"
 import { graphql } from "gatsby"

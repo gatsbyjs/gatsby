@@ -1,5 +1,10 @@
-const scrollToHash = offsetY => {
-  // Make sure React has had a chance to flush to DOM first.
+import { globalHistory as history } from "@reach/router/lib/history"
+
+let currentPathName
+let offsetY = 0
+
+const scrollToHash = () => {
+  // Make sure React has had a chance to flush to DOM first and apply styles.
   setTimeout(() => {
     const hash = window.decodeURI(window.location.hash.replace(`#`, ``))
     if (hash !== ``) {
@@ -12,23 +17,19 @@ const scrollToHash = offsetY => {
   }, 10)
 }
 
+history.listen(() => {
+  if (location.pathname === currentPathName) {
+    scrollToHash()
+  }
+})
+
 exports.onClientEntry = (args, pluginOptions) => {
-  let offsetY = 0
   if (pluginOptions.offsetY) {
     offsetY = pluginOptions.offsetY
-  }
-  // This code is only so scrolling to header hashes works in development.
-  // For production, the equivalent code is in gatsby-ssr.js.
-  if (process.env.NODE_ENV !== `production`) {
-    scrollToHash(offsetY)
   }
 }
 
-exports.onRouteUpdate = (args, pluginOptions) => {
-  let offsetY = 0
-  if (pluginOptions.offsetY) {
-    offsetY = pluginOptions.offsetY
-  }
-
-  scrollToHash(offsetY)
+exports.onRouteUpdate = ({ location }, pluginOptions) => {
+  scrollToHash()
+  currentPathName = location.pathname
 }

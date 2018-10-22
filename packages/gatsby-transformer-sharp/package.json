@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-sharp",
   "description": "Gatsby transformer plugin for images using Sharp",
-  "version": "2.1.1-rc.2",
+  "version": "2.1.4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,7 +10,6 @@
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
     "fs-extra": "^4.0.2",
-    "lodash": "^4.16.4",
     "potrace": "^2.1.1",
     "probe-image-size": "^4.0.0",
     "sharp": "^0.20.2"

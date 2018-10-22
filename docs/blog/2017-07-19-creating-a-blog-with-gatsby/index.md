@@ -65,7 +65,7 @@ Plugins can be broken up into three main categories: **functional** plugins,
 
 Functional plugins either implement some functionality (e.g. offline support,
 generating a sitemap, etc.) _or_ they extend Gatsby's webpack configuration
-adding support for typescript, sass, etc.
+adding support for TypeScript, Sass, etc.
 
 For this particular blog post, we want a single page app-like feel (without page
 reloads), as well as the ability to dynamically change the `title` tag within
@@ -93,7 +93,7 @@ After installing each of these functional plugins, we'll edit
 `gatsby-config.js`, which Gatsby loads at build-time to implement the exposed
 functionality of the specified plugins.
 
-```javascript{6-9}
+```javascript{6-9}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Your Name - Blog`,
@@ -127,7 +127,7 @@ into our `gatsby-config.js`, like so:
 yarn add gatsby-source-filesystem
 ```
 
-```javascript{6-12}
+```javascript{6-12}:title=gatsby-config.js
 module.exports = {
   // previous configuration
   plugins: [
@@ -178,7 +178,7 @@ yarn add gatsby-transformer-remark
 
 and editing `gatsby-config.js`
 
-```javascript{13-18}
+```javascript{13-18}:title=gatsby-config.js
 module.exports = {
   // previous setup
   plugins: [
@@ -220,7 +220,7 @@ for blog posts is to name the folder something like `MM-DD-YYYY-title`, e.g.
 The content of this Markdown file will be our blog post, authored in Markdown
 (of course!). Here's what it'll look like:
 
-```markdown
+```markdown:title=src/pages/07-12-2017-getting-started/index.md
 ---
 path: "/hello-world"
 date: "2017-07-12T17:12:33.962Z"
@@ -252,7 +252,7 @@ write our template in... you guessed it, React! (Or
 We'll want to create the file `src/templates/blog-post.js` (please create the
 `src/templates` folder if it does not yet exist!).
 
-```javascript
+```javascript:title=src/templates/blog-post.js
 import React from "react"
 import Helmet from "react-helmet"
 
@@ -281,7 +281,7 @@ Whoa, neat! This React component will be rendered to a static HTML string (for
 each route/blog post we define), which will serve as the basis of our
 routing/navigation for our blog.
 
-At this point, there is a reasonable level of confusion and "magic" occuring,
+At this point, there is a reasonable level of confusion and "magic" occurring,
 particularly with the props injection. What is `markdownRemark`? Where is this
 `data` prop injected from? All good questions, so let's answer them by writing a
 GraphQL query to seed our `<Template />` component with content!
@@ -294,7 +294,7 @@ very simply the pieces of data that we want to display for our blog post. Each
 piece of data our query selects will be injected via the `data` property we
 specified earlier.
 
-```javascript{21-32}
+```javascript{23-32}:title=src/templates/blog-post.js
 import React from "react"
 import Helmet from "react-helmet"
 import { graphql } from "gatsby"
@@ -331,7 +331,7 @@ export const pageQuery = graphql`
 `
 ```
 
-If you're not familar with GraphQL, this may seem slightly confusing, but we can
+If you're not familiar with GraphQL, this may seem slightly confusing, but we can
 break down what's going down here piece by piece.
 
 _Note: To learn more about GraphQL, consider this [excellent
@@ -376,11 +376,11 @@ level as `gatsby-config.js`. Each export found in this file will be parsed by
 Gatsby, as detailed in its [Node API specification][node-spec]. However, we only
 care about one particular API in this instance, `createPages`.
 
-```javascript
+```javascript:title=gatsby-node.js
 const path = require("path")
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 }
@@ -389,20 +389,20 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 Nothing super complex yet! We're using the `createPages` API (which Gatsby will
 call at build time with injected parameters). We're also grabbing the _path_ to
 our blogPostTemplate we created earlier. Finally, we're using the `createPage`
-action creator/function made available in boundActionCreators. Gatsby uses Redux
-internally to manage its state, and `boundActionCreators` are simply the exposed
+action creator/function made available in actions. Gatsby uses Redux
+internally to manage its state, and `actions` are simply the exposed
 action creators of Gatsby, of which `createPage` is one of the action creators!
 For the full list of exposed action creators, check out [Gatsby's
-documentation][gatsby-bound-action-creators]. We can now construct the GraphQL
+documentation][gatsby-actions]. We can now construct the GraphQL
 query, which will fetch all of our Markdown posts.
 
 ### Querying for posts
 
-```javascript{8-31}
+```javascript{8-31}:title=gatsby-node.js
 const path = require("path")
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
@@ -447,11 +447,11 @@ pages (with the `createPage` action creator). Let's do that!
 
 ### Creating the pages
 
-```javascript{32-39}
+```javascript{28-34}:title=gatsby-node.js
 const path = require("path")
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
@@ -531,7 +531,7 @@ component!) will get a corresponding static HTML file. For instance, if we
 create `src/pages/tags.js`, the path `http://localhost:8000/tags/` will be
 available within the browser and the statically generated site.
 
-```javascript
+```javascript:title=src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 import Helmet from "react-helmet"
@@ -649,7 +649,7 @@ Now go build something great.
 [frontmatter]: https://jekyllrb.com/docs/frontmatter/
 [learn-graphql]: https://www.howtographql.com
 [node-spec]: /docs/node-apis/
-[gatsby-bound-action-creators]: /docs/bound-action-creators/
+[gatsby-actions]: /docs/actions/
 [styled-components]: https://github.com/styled-components/styled-components
 [yarn]: https://yarnpkg.com/en/
 [source-code]: https://github.com/dschau/gatsby-blog-starter-kit

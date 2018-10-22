@@ -17,6 +17,7 @@ const {
   getExampleValues,
   extractFieldNames,
   isEmptyObjectOrArray,
+  INVALID_VALUE,
 } = require(`./data-tree-utils`)
 
 const { findLinkedNode } = require(`./infer-graphql-type`)
@@ -35,6 +36,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         eq: { type: GraphQLBoolean },
         ne: { type: GraphQLBoolean },
         in: { type: new GraphQLList(GraphQLBoolean) },
+        nin: { type: new GraphQLList(GraphQLBoolean) },
       }
     case `string`:
       return {
@@ -43,6 +45,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         regex: { type: GraphQLString },
         glob: { type: GraphQLString },
         in: { type: new GraphQLList(GraphQLString) },
+        nin: { type: new GraphQLList(GraphQLString) },
       }
     case `int`:
       return {
@@ -53,6 +56,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         lt: { type: GraphQLInt },
         lte: { type: GraphQLInt },
         in: { type: new GraphQLList(GraphQLInt) },
+        nin: { type: new GraphQLList(GraphQLInt) },
       }
     case `float`:
       return {
@@ -63,6 +67,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         lt: { type: GraphQLFloat },
         lte: { type: GraphQLFloat },
         in: { type: new GraphQLList(GraphQLFloat) },
+        nin: { type: new GraphQLList(GraphQLFloat) },
       }
   }
   return {}
@@ -218,6 +223,9 @@ const recursiveOmitBy = (value, fn) => {
   if (_.isObject(value)) {
     if (_.isPlainObject(value)) {
       value = _.omitBy(value, fn)
+    } else if (_.isArray(value)) {
+      // don't mutate original value
+      value = _.clone(value)
     }
     _.each(value, (v, k) => {
       value[k] = recursiveOmitBy(v, fn)
@@ -257,11 +265,12 @@ export function inferInputObjectStructureFromNodes({
     let key = k
     // Remove fields for traversing through nodes as we want to control
     // setting traversing up not try to automatically infer them.
-    if (isRoot && EXCLUDE_KEYS[key]) return
+    if (value === INVALID_VALUE || (isRoot && EXCLUDE_KEYS[key])) return
 
     if (_.includes(key, `___NODE`)) {
       // TODO: Union the objects in array
-      const nodeToFind = _.isArray(value) ? value[0] : value
+      const isArray = _.isArray(value)
+      const nodeToFind = isArray ? value[0] : value
       const linkedNode = findLinkedNode(nodeToFind)
 
       // Get from cache if found, else store into it
@@ -279,7 +288,7 @@ export function inferInputObjectStructureFromNodes({
         linkedNodeCache[linkedNode.internal.type] = value
       }
 
-      if (_.isArray(value)) {
+      if (isArray) {
         value = [value]
       }
 
@@ -292,7 +301,7 @@ export function inferInputObjectStructureFromNodes({
       prefix: `${prefix}${_.upperFirst(key)}`,
     })
 
-    if (field == null) return
+    if (field === null) return
     inferredFields[createKey(key)] = field
   })
 

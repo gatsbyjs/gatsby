@@ -277,6 +277,24 @@ exports.mapElementsToParent = entities =>
     return e
   })
 
+exports.mapPolylangTranslations = entities =>
+  entities.map(entity => {
+    if (entity.polylang_translations) {
+      entity.polylang_translations___NODE = entity.polylang_translations.map(
+        translation =>
+          entities.find(
+            t =>
+              t.wordpress_id === translation.wordpress_id &&
+              entity.__type === t.__type
+          ).id
+      )
+
+      delete entity.polylang_translations
+    }
+
+    return entity
+  })
+
 exports.searchReplaceContentUrls = function({
   entities,
   searchAndReplaceContentUrls,
@@ -501,10 +519,10 @@ const prepareACFChildNodes = (
   _.each(obj, (value, key) => {
     if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
       obj[`${key}___NODE`] = value.map(
-        v =>
+        (v, indexItem) =>
           prepareACFChildNodes(
             v,
-            entityId,
+            `${entityId}_${indexItem}`,
             topLevelIndex,
             type + key,
             children,

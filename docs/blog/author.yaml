@@ -3,7 +3,7 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Consultant @ Object Partners, Inc. Likes all things front-end, and travel. And other things too. Blogs at dustinschau.com/blog.
+  bio: Software Engineer @ GatsbyJS. Likes all things front-end, and travel. And other things too. Blogs at blog.dustinschau.com.
   avatar: avatars/dustin-schau.jpeg
   twitter: "@schaudustin"
 - id: Kostas Bariotis
@@ -157,7 +157,15 @@
   bio: Software developer and full-time opensourcerer at @contentful. He speaks multiple languages and is often overheard saying "Bonjour" in HTML.
   avatar: avatars/khaled-garbaya.jpg
   twitter: "@khaled_garbaya"
+- id: Mikhail Novikov
+  bio: GraphQL sommelier. Did Reindex, GraphQL Delegation, Schema Stitching, Launchpad. Organizer @GraphQLFinland.
+  avatar: avatars/freiksenet.jpg
+  twitter: "@freiksenet"
 - id: Horacio Herrera
   avatar: avatars/horacio-herrera.jpg
   twitter: "@hhg2288"
   bio: Designer, Developer & Coach • husband • dad • web • mobile • React Native • ReactJS • GraphQL
+- id: Nader Dabit
+  avatar: avatars/nader-dabit.jpg
+  twitter: "@dabit3"
+  bio: Developer Advocate at AWS

@@ -18,6 +18,7 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 
 ## Table of Contents
 
+- [Using Unstructured Data](#using-unstructured-data)
 - [Using a starter](#using-a-starter)
 - [Creating pages](#creating-pages)
 - [Linking between pages](#linking-between-pages)
@@ -27,6 +28,18 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 - [Querying data](#querying-data)
 - [Sourcing data](#sourcing-data)
 - [Transforming data](#transforming-data)
+- [Gatsby project structure](#gatsby-project-structure)
+
+## Using Unstructured Data
+
+You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+
+- Learn how to pull unstructured data into Gatsby sites in [Using Unstructured Data](/docs/using-unstructured-data/)
+- Learn when and how to use GraphQL and source plugins for more complex Gatsby sites in [Querying data with GraphQL](/docs/querying-with-graphql/)
+
+## Gatsby project structure
+
+Read the [Gatsby project structure](/docs/gatsby-project-structure/) guide for a tour of the folders and files you may see inside a Gatsby project.
 
 ## Using a starter
 
@@ -38,7 +51,7 @@ Starters are boilerplate Gatsby sites maintained officially, or by the community
 
 ## Creating pages
 
-You can create pages in Gatsby explicitly by definining React components in `src/pages/`, or programmatically by using the `createPages` API.
+You can create pages in Gatsby explicitly by defining React components in `src/pages/`, or programmatically by using the `createPages` API.
 
 - Walk through creating a page by defining a React component in `src/pages` in [tutorial part one](/tutorial/part-one/#familiarizing-with-gatsby-pages)
 - Walk through programmatically creating pages in [tutorial part seven](/tutorial/part-seven/)
@@ -75,7 +88,7 @@ To wrap pages with layouts, use normal React components.
 Showtime.
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn how to make sure your site is configured properly to be [searchable, sharable, and properly navigable](/docs/preparing-for-site-launch/)
+- Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/deploying-and-hosting/)
 

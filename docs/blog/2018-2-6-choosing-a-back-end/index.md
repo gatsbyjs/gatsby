@@ -18,16 +18,16 @@ Gatsby pitches as a “Blazing-fast static site generator for React”. So if I 
 > **What-stack?** JAM stands for JavaScript, API, Markup. There are lots of benefits to this type of site, but the one I’m interested in is that your CMS is detached from your site - no hefty WordPress build for your tiny blog site.
 > [You can read more on the JAMstack website](https://jamstack.org/).
 
-I found Gatsby a real pleasure. You can find tutorials on their site for setup and once you see the code it’s fairly simple. I can personally recommend [Scott Tolinski’s series - available on Youtube](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg). Gatsby nicely wraps up React and React Router with a nice folder structure, webkit, ES6, SASS support and - importantly - GraphQL.
+I found Gatsby a real pleasure. You can find tutorials on their site for setup and once you see the code it’s fairly simple. I can personally recommend [Scott Tolinski’s series - available on Youtube](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg). Gatsby nicely wraps up React and React Router with a nice folder structure, webkit, ES6, Sass support and - importantly - GraphQL.
 
 > **What-QL?** GraphQL is a query language for APIs. Where in the WordPress Days I’d have to get the whole post just to display the title, with GraphQL I can tell the API to give me just the title.
 > [Their site is pretty handy too](http://graphql.org/).
 
 I got the site setup pretty quickly after learning about it. There’s a tonne of tutorials and instructional material around. And you can use as much or as little React as you want. There’s also a [massive list of available plugins](/docs/plugins/), which is only going to grow.
 
-So if you have any experience with React, or if you’re just getting started, this is a great choice. Gatsby doesn’t tell you how your code has to look. In fact it’s setup so you can use Markdown files for pages, but I didn’t fancy that, so I don’t. Simple as that! Likewise, if I want to scale this to build websites for other people, I don’t want to spend ages teaching them how to use Markdown, clone a git repo and add it to the git repo. Queue a Headless CMS.
+So if you have any experience with React, or if you’re just getting started, this is a great choice. Gatsby doesn’t tell you how your code has to look. In fact it’s setup so you can use Markdown files for pages, but I didn’t fancy that, so I don’t. Simple as that! Likewise, if I want to scale this to build websites for other people, I don’t want to spend ages teaching them how to use Markdown, clone a Git repo and add it to the Git repo. Queue a Headless CMS.
 
-You build your site. You’ve got your SASS, you’ve got your Markdown files (or not), but everything’s blank! So now what? How do we populate it with content?
+You build your site. You’ve got your Sass, you’ve got your Markdown files (or not), but everything’s blank! So now what? How do we populate it with content?
 
 ## The Next Step: A back-end
 
@@ -96,7 +96,7 @@ We’ll be hearing more about Netlify in another article - their original produc
 
 One big difference from the others here is that the content in NetlifyCMS is kept in your Git repo, meaning that code and content are versioned together. You won’t ever lose content if you still have the repo, and you can see the history at the press of a button - same as you can with your code.
 
-[Gatsby has a handy tutorial for NetlifyCMS](/docs/netlify-cms/) but they do stress that in order to save to Github etc, you will need your own server:
+[Gatsby has a handy tutorial for NetlifyCMS](/docs/netlify-cms/) but they do stress that in order to save to GitHub etc, you will need your own server:
 
 > To save your content in a Git repo, the repo will need to be hosted on a service like GitHub, and you’ll need a way to authenticate with that service so Netlify CMS can make changes through the service’s API. For most services, including GitHub, authentication will require a server.
 
@@ -118,7 +118,7 @@ Prismic has a similar pricing structure to Contentful - but has a few more optio
 
 Cockpit also seems to share a lot of the same features except for two big differences:
 
-- It’s open source - anyone can download it, anyone can contribute to the git repository and improve it, meaning it’s fully free and will be available - in one form or another - forever. I could see an issue with Contentful if the service ever stopped working. They have backups on AWS and create nightly backups on their premium plans, but the actual interface may become unavailable. Because Cockpit is open source they could go out of business or go offline for a night or just stop working altogether, and there’s a repo available with your CMS on.
+- It’s open source - anyone can download it, anyone can contribute to the Git repository and improve it, meaning it’s fully free and will be available - in one form or another - forever. I could see an issue with Contentful if the service ever stopped working. They have backups on AWS and create nightly backups on their premium plans, but the actual interface may become unavailable. Because Cockpit is open source they could go out of business or go offline for a night or just stop working altogether, and there’s a repo available with your CMS on.
 
 - It’s self-hosted - this ties into the last point and if it did all come crashing down, as long as your site is still active so will your CMS be. Great news for the tech-paranoid!
 
@@ -138,6 +138,6 @@ Cloud-hosted or Git-hosted seem to be the best for this. I don’t need a server
 
 In terms of which CMS to go with, they all have great merits and I can see them all being useful for different projects. But for my needs - for smaller side projects and for personal sites - Contentful and Prismic seem like the ones to go for. They’re both cloud-based with minimal setup and work via an API so I can access them wherever I need to. Also their free tiers have great features, and scale easily so that if I have a ‘proper’ project, I can get a version that will suit any needs.
 
-Was this post useful? Do you use any of these CMSs, or a different one? Please let me know, I’d love to hear about how you get one with them. And look out for a future post about hosting. I mentioned that NetlifyCMS runs great with Netlify, but there are other options! I’ll be looking at Github Pages, Heroku and more!
+Was this post useful? Do you use any of these CMSs, or a different one? Please let me know, I’d love to hear about how you get one with them. And look out for a future post about hosting. I mentioned that NetlifyCMS runs great with Netlify, but there are other options! I’ll be looking at GitHub Pages, Heroku and more!
 
 You can find me on [Twitter](https://twitter.com/RossWhitehouse) and [Instagram](https://www.instagram.com/ross.dw/), and [check out my other posts](https://medium.com/@RossWhitehouse)!

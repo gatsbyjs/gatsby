@@ -72,7 +72,7 @@ If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-p
 
 First, we'll add a tags template at `src/templates/tags.js`:
 
-```jsx
+```jsx:title=src/templates/tags.js
 import React from "react"
 import PropTypes from "prop-types"
 
@@ -158,8 +158,9 @@ export const pageQuery = graphql`
 
 Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
 
-```js
+```js:title=gatsby-node.js
 const path = require("path")
+const _ = require("lodash")
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
@@ -225,14 +226,14 @@ exports.createPages = ({ actions, graphql }) => {
 
 Some notes:
 
-- Our graphql query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
+- Our GraphQL query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
 - While making the tag pages, note that we pass `tag` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
 
 Our `/tags` page will simply list out all tags, followed by the number of posts with that tag:
 
-```jsx
+```jsx:title=src/pages/tags.js
 import React from "react"
 import PropTypes from "prop-types"
 

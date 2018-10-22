@@ -29,21 +29,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `StarterShowcaseImages`,
-        path: `${__dirname}/src/data/StarterShowcase/generatedScreenshots`,
-      },
-    },
-    //   need to have the img processing first? https://github.com/gatsbyjs/gatsby/issues/5196
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `StarterShowcaseData`,
-        path: `${__dirname}/src/data/StarterShowcase/startersData`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
@@ -55,6 +40,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-graphviz`,
+          `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -82,7 +69,7 @@ module.exports = {
         showSpinner: false,
       },
     },
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
@@ -103,26 +90,13 @@ module.exports = {
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-93349937-1`,
+        trackingId: `UA-93349937-5`,
       },
     },
-    {
-      resolve: `gatsby-plugin-google-tagmanager`,
-      options: {
-        id: `GTM-KLZLVML`,
-      },
-    },
-
-    {
-      resolve: `gatsby-plugin-fullstory`,
-      options: {
-        fs_org: `B2TRP`,
-      },
-    },
-    `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -194,6 +168,23 @@ module.exports = {
         endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
       },
     },
-    `gatsby-transformer-screenshot`,
+    {
+      resolve: `gatsby-transformer-screenshot`,
+      options: {
+        nodeTypes: [`StartersYaml`],
+      },
+    },
+    `gatsby-plugin-subfont`,
+    // {
+    // resolve: `gatsby-plugin-guess-js`,
+    // options: {
+    // GAViewID: `142357465`,
+    // // The "period" for fetching analytic data.
+    // period: {
+    // startDate: new Date(`2018-1-1`),
+    // endDate: new Date(),
+    // },
+    // },
+    // },
   ],
 }

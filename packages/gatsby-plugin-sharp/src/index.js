@@ -6,6 +6,7 @@ const Promise = require(`bluebird`)
 const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
+const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
@@ -100,6 +101,8 @@ const healOptions = (args, defaultArgs) => {
   return options
 }
 
+const useMozjpeg = process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`
+
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
@@ -147,11 +150,6 @@ const processFile = (file, jobs, cb, reporter) => {
         adaptiveFiltering: false,
         force: args.toFormat === `png`,
       })
-      .jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
-        force: args.toFormat === `jpg`,
-      })
       .webp({
         quality: args.quality,
         force: args.toFormat === `webp`,
@@ -160,6 +158,15 @@ const processFile = (file, jobs, cb, reporter) => {
         quality: args.quality,
         force: args.toFormat === `tiff`,
       })
+
+    // jpeg
+    if (!useMozjpeg) {
+      clonedPipeline = clonedPipeline.jpeg({
+        quality: args.quality,
+        progressive: args.jpegProgressive,
+        force: args.toFormat === `jpg`,
+      })
+    }
 
     // grayscale
     if (args.grayscale) {
@@ -223,6 +230,31 @@ const processFile = (file, jobs, cb, reporter) => {
             .catch(onFinish)
         )
         .catch(onFinish)
+      // Compress jpeg
+    } else if (
+      useMozjpeg &&
+      ((job.file.extension === `jpg` && args.toFormat === ``) ||
+        (job.file.extension === `jpeg` && args.toFormat === ``) ||
+        args.toFormat === `jpg`)
+    ) {
+      clonedPipeline
+        .toBuffer()
+        .then(sharpBuffer =>
+          imagemin
+            .buffer(sharpBuffer, {
+              plugins: [
+                imageminMozjpeg({
+                  quality: args.quality,
+                  progressive: args.jpegProgressive,
+                }),
+              ],
+            })
+            .then(imageminBuffer => {
+              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+            })
+            .catch(onFinish)
+        )
+        .catch(onFinish)
       // Compress webp
     } else if (
       (job.file.extension === `webp` && args.toFormat === ``) ||
@@ -241,7 +273,7 @@ const processFile = (file, jobs, cb, reporter) => {
             .catch(onFinish)
         )
         .catch(onFinish)
-      // any other format (jpeg, tiff) - don't compress it just handle output
+      // any other format (tiff) - don't compress it just handle output
     } else {
       clonedPipeline.toFile(job.outputPath, onFinish)
     }
@@ -488,6 +520,10 @@ async function fluid({ file, args = {}, reporter }) {
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
 
+  if (options[fixedDimension] < 1) {
+    throw new Error(`${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`)
+  }
+
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
     presentationWidth = Math.min(
@@ -508,21 +544,36 @@ async function fluid({ file, args = {}, reporter }) {
     options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
-  // Create sizes (in width) for the image. If the max width of the container
-  // for the rendered markdown file is 800px, the sizes would then be: 200,
-  // 400, 800, 1200, 1600, 2400.
+  // Create sizes (in width) for the image if no custom breakpoints are
+  // provided. If the max width of the container for the rendered markdown file
+  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const fluidSizes = []
-  fluidSizes.push(options[fixedDimension] / 4)
-  fluidSizes.push(options[fixedDimension] / 2)
-  fluidSizes.push(options[fixedDimension])
-  fluidSizes.push(options[fixedDimension] * 1.5)
-  fluidSizes.push(options[fixedDimension] * 2)
-  fluidSizes.push(options[fixedDimension] * 3)
+  const fluidSizes = [
+    options[fixedDimension], // ensure maxWidth (or maxHeight) is added
+  ]
+  // use standard breakpoints if no custom breakpoints are specified
+  if (!options.srcSetBreakpoints || !options.srcSetBreakpoints.length) {
+    fluidSizes.push(options[fixedDimension] / 4)
+    fluidSizes.push(options[fixedDimension] / 2)
+    fluidSizes.push(options[fixedDimension] * 1.5)
+    fluidSizes.push(options[fixedDimension] * 2)
+    fluidSizes.push(options[fixedDimension] * 3)
+  } else {
+    options.srcSetBreakpoints.forEach((breakpoint) => {
+      if (breakpoint < 1) {
+        throw new Error(`All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`)
+      }
+      // ensure no duplicates are added
+      if (fluidSizes.includes(breakpoint)) {
+        return
+      }
+      fluidSizes.push(breakpoint)
+    })
+  }
   const filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )

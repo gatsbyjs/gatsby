@@ -37,10 +37,10 @@ you'll see used in many sites and plugins.
 We do our best to make Gatsby APIs simple to implement. To implement an API, you export a function
 with the name of the API from `gatsby-node.js`.
 
-So let's do that. In the root of your site, create a file named
+So here's where you'll do that. In the root of your site, create a file named
 `gatsby-node.js`. Then add the following.
 
-```javascript
+```javascript:title=gatsby-node.js
 exports.onCreateNode = ({ node }) => {
   console.log(node.internal.type)
 }
@@ -51,12 +51,12 @@ This `onCreateNode` function will be called by Gatsby whenever a new node is cre
 Stop and restart the development server. As you do, you'll see quite a few newly
 created nodes get logged to the terminal console.
 
-Let's use this API to add the slugs for your markdown pages to `MarkdownRemark`
+Use this API to add the slugs for your markdown pages to `MarkdownRemark`
 nodes.
 
 Change your function so it now only logs `MarkdownRemark` nodes.
 
-```javascript{2-4}
+```javascript{2-4}:title=gatsby-node.js
 exports.onCreateNode = ({ node }) => {
   if (node.internal.type === `MarkdownRemark`) {
     console.log(node.internal.type)
@@ -70,7 +70,7 @@ the file name from the `MarkdownRemark` node? To get it, you need to _traverse_
 the "node graph" to its _parent_ `File` node, as `File` nodes contain data you
 need about files on disk. To do that, modify your function again:
 
-```javascript{1,3-4}
+```javascript{1,3-4}:title=gatsby-node.js
 exports.onCreateNode = ({ node, getNode }) => {
   if (node.internal.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)
@@ -84,11 +84,11 @@ files.
 
 ![markdown-relative-path](markdown-relative-path.png)
 
-Now let's create slugs. As the logic for creating slugs from file names can get
+Now you'll have to create slugs. As the logic for creating slugs from file names can get
 tricky, the `gatsby-source-filesystem` plugin ships with a function for creating
 slugs. Let's use that.
 
-```javascript{1,5}
+```javascript{1,5}:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode }) => {
@@ -102,7 +102,7 @@ The function handles finding the parent `File` node along with creating the
 slug. Run the development server again and you should see logged to the terminal
 two slugs, one for each markdown file.
 
-Now let's add your new slugs directly onto the `MarkdownRemark` nodes. This is
+Now you can add your new slugs directly onto the `MarkdownRemark` nodes. This is
 powerful, as any data you add to nodes is available to query later with GraphQL.
 So it'll be easy to get the slug when it comes time to create the pages.
 
@@ -113,7 +113,7 @@ the original creator of a node can directly modify the node—all other plugins
 (including your `gatsby-node.js`) must use this function to create additional
 fields.
 
-```javascript{3,4,6-11}
+```javascript{3,4,6-11}:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -152,7 +152,7 @@ Now that the slugs are created, you can create the pages.
 
 In the same `gatsby-node.js` file, add the following.
 
-```javascript{15-34}
+```javascript{15-34}:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -211,7 +211,7 @@ components. When creating a page, you need to specify which component to use.
 Create a directory at `src/templates` and then add the following in a file named
 `src/templates/blog-post.js`.
 
-```jsx
+```jsx:title=src/templates/blog-post.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -226,7 +226,7 @@ export default () => {
 
 Then update `gatsby-node.js`
 
-```javascript{1,17,32-42}
+```javascript{1,17,32-42}:title=gatsby-node.js
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
@@ -286,10 +286,10 @@ Visit one of them and you see:
 
 ![hello-world-blog-post](hello-world-blog-post.png)
 
-Which is a bit boring and not what you want. Let's pull in data from your markdown post. Change
+Which is a bit boring and not what you want. Now you can pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
-```jsx{5-6,9-12,15-26}
+```jsx{2,5-6,9-12,15-26}:title=src/templates/blog-post.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -326,10 +326,10 @@ Sweet!
 
 The last step is to link to your new pages from the index page.
 
-Return to `src/pages/index.js` and let's query for your markdown slugs and create
+Return to `src/pages/index.js` and query for your markdown slugs and create
 links.
 
-```jsx{3,23-29,45,64-66}
+```jsx{3,22-28,44,63-65}:title=src/pages/index.js
 import React from "react"
 import { css } from "react-emotion"
 import { Link, graphql } from "gatsby"

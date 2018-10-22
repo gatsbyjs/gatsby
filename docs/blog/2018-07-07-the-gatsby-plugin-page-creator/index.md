@@ -29,7 +29,7 @@ as an internal plugin. There was no way to have a different folder
 automatically create pages from components because the default **src/pages**
 path was hardcoded. The side effect of this behavior
 is that you have a hard time creating folder structures that best fit your needs.
-If you wanted all your javascript to live in a single folder, you would
+If you wanted all your JavaScript to live in a single folder, you would
 lose the ability to automatically create pages.
 
 # The community asks for a solution
