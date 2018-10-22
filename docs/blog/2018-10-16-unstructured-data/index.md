@@ -5,7 +5,7 @@ author: Amberley Romo
 tags: ["sourcing", "data"]
 ---
 
-When creating a experiences on the web, one of the questions you can't get around asking (unless you're writing hard-coded HTML) is: how do I get my data from point A (wherever it lives) to point B (where I want it). When wanting to take advantage of modern tooling like React, webpack, babel, etc., this can end up being a deceptively complex question.
+When creating experiences on the web, one of the questions you can't get around asking (unless you're writing hard-coded HTML) is, "how do I get my data from point A (wherever it lives) to point B (where I want it)?". When wanting to take advantage of modern tooling like React, webpack, babel, etc., this can end up being a deceptively complex question.
 
 Gatsby’s rich data plugin ecosystem lets you build sites with the data you want — from one or many sources; Pull data from headless CMSs, SaaS services, APIs, databases, your file system & more directly into your pages.
 
