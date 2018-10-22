@@ -10,9 +10,9 @@ _Note: There are many sample configs which may be helpful to reference in the di
 
 Options available to set within `gatsby-config.js` include:
 
-1.  [siteMetadata](#siteMetadata) (object)
+1.  [siteMetadata](#sitemetadata) (object)
 2.  [plugins](#plugins) (array)
-3.  [pathPrefix](#pathPrefix) (string)
+3.  [pathPrefix](#pathprefix) (string)
 4.  [polyfill](#polyfill) (boolean)
 5.  [mapping](#mapping-node-types) (object)
 6.  [proxy](#proxy) (object)
