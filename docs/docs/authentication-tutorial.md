@@ -319,7 +319,7 @@ export default PrivateRoute
 
 And now you can edit your Router to use the PrivateRoute component:
 
-```jsx{4,11}:title={src/pages/app.js}
+```jsx{4,11}:title=src/pages/app.js
 import React from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/layout"
@@ -339,7 +339,104 @@ const App = () => (
 export default App
 ```
 
-WIP
+## Refactoring to use new routes and user data
+
+With the client-only routes in place, you must now refactor some files to account for the user data available:
+
+```jsx{2-3,5-13,22,27,29-38,43}:title=src/components/navBar.js
+import React from "react"
+import { Link, navigate } from "gatsby"
+import { getUser, isLoggedIn, logout } from "../services/auth"
+
+export default () => {
+  const content = { message: "", login: true }
+  if (isLoggedIn()) {
+    content.message = `Hello, ${getUser().name}`
+  } else {
+    content.message = "You are not logged in"
+  }
+  return (
+    <div
+      style={{
+        display: "flex",
+        flex: "1",
+        justifyContent: "space-between",
+        borderBottom: "1px solid #d1c1e0",
+      }}
+    >
+      <span>{content.message}</span>
+
+      <nav>
+        <Link to="/">Home</Link>
+        {` `}
+        <Link to="/app/profile">Profile</Link>
+        {` `}
+        {isLoggedIn() ? (
+          <a
+            href="/"
+            onClick={event => {
+              event.preventDefault()
+              logout(() => navigate(`/app/login`))
+            }}
+          >
+            Logout
+          </a>
+        ) : null}
+      </nav>
+    </div>
+  )
+}
+```
+
+```jsx{3,7-8,10-23,26}:title=src/pages/index.js
+import React from "react"
+import { Link } from "gatsby"
+import { getUser, isLoggedIn } from "../services/auth"
+
+import Layout from "../components/layout"
+
+const IndexPage = () => {
+  return (
+    <Layout>
+      <h1>Hi {isLoggedIn() ? getUser().name : "people"}</h1>
+      <p>
+        {isLoggedIn() ? (
+          <>
+            You are logged in, so check your{" "}
+            <Link to="/app/profile">profile</Link>
+          </>
+        ) : (
+          <>
+            You should <Link to="/app/login">log in</Link> to see restricted
+            content
+          </>
+        )}
+      </p>
+    </Layout>
+  )
+}
+
+export default IndexPage
+```
+
+```jsx{2,8,9}:title=src/components/profile.js
+import React from "react"
+import { getUser } from "../services/auth"
+
+const Profile = () => (
+  <>
+    <h1>Your profile</h1>
+    <ul>
+      <li>Name: {getUser().name}</li>
+      <li>E-mail: {getUser().email}</li>
+    </ul>
+  </>
+)
+
+export default Profile
+```
+
+You should now have a complete authentication workflow, functioning with login and user-restricted area!
 
 # Further reading
 
