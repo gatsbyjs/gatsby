@@ -5,6 +5,7 @@ import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
+import gatsbyIcon from "../assets/gatsby-icon.png"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -151,6 +152,7 @@ class DefaultLayout extends React.Component {
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
+          <meta name="og:image" content={gatsbyIcon} />
           <meta name="docsearch:version" content="2.0" />
           <link
             rel="canonical"
