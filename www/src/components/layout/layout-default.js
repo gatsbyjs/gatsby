@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
-import { css } from "emotion"
+import { css } from "react-emotion"
 import facepaint from "facepaint"
 
 import TopBanner from "./top-banner"
