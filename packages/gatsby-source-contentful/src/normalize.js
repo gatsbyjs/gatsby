@@ -399,15 +399,15 @@ exports.createContentTypeNodes = ({
           process.env.GATSBY_CONTENTFUL_RICH_TEXT === `enabled` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
-          const stNode = prepareStructuredTextNode(
+          const richTextNode = prepareStructuredTextNode(
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
             createNodeId
           )
 
-          childrenNodes.push(stNode)
-          entryItemFields[`${entryItemFieldKey}___NODE`] = stNode.id
+          childrenNodes.push(richTextNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
 
           delete entryItemFields[entryItemFieldKey]
         } else if (
