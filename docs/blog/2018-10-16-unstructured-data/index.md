@@ -5,13 +5,33 @@ author: Amberley Romo
 tags: ["sourcing", "data"]
 ---
 
-Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightfully so! Gatsby's data layer is powerful and extremely effective.
+When creating a experiences on the web, one of the questions you can't get around asking (unless you're writing hard-coded HTML) is: how do I get my data from point A (wherever it lives) to point B (where I want it). When wanting to take advantage of modern tooling like React, webpack, babel, etc., this can end up being a deceptively complex question.
+
+Gatsby’s rich data plugin ecosystem lets you build sites with the data you want — from one or many sources; Pull data from headless CMSs, SaaS services, APIs, databases, your file system & more directly into your pages.
+
+<figure>
+  <img alt="An assortment of possible data sources (CMSs, Markdown, APIs, etc)" height="400" src="./data_sources.png" />
+  <figcaption>
+    Your data could come from anywhere
+  </figcaption>
+</figure>
+
+Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightly so! Gatsby's data layer is powerful and extremely effective; It solves the "integration problem" of decoupled CMSs -- it's the glue between presentation layer and wherever your data is sourced from.
+
+<figure>
+  <img alt="" height="400" src="./integration_layer.png" />
+  <figcaption>
+    Gatsby's GraphQL integration layer is the glue between presentation layer and where your data lives
+  </figcaption>
+</figure>
 
 > _[Source plugins](/docs/create-source-plugin/)_ “source” data from remote or local locations into Gatsby nodes. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
 
+We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh)).
+
 **However, you don't _need_ to use source plugins (or create Gatsby nodes) to pull data into a Gatsby site!** We'll explore how to use an "unstructured data" approach in Gatsby sites, and some of the pros and cons of doing so.
 
-_For our purposes here, "unstructured data" means data "handled outside of Gatsby's data layer" (we're using the data directly, and not transforming the data into Gatsby nodes)._
+> _Note_: For our purposes here, "unstructured data" means data "handled outside of Gatsby's data layer" (we're using the data directly, and not transforming the data into Gatsby nodes).
 
 ## Fetch data and use Gatsby's `createPages` API
 
@@ -198,6 +218,7 @@ Another difficulty added when working with unstructured data is that your data f
 
 ## Links potentially of interest
 
+- GitHub issue: ["Choosing not to use the GraphQL feature of Gatsby – a bad idea?"](https://github.com/gatsbyjs/gatsby/issues/4994)
 - Kyle Mathews' reasoning for [going with GraphQL](https://github.com/gatsbyjs/gatsby/issues/4994#issuecomment-382110077).
 - The issue [introducing 1.0 GraphQL data layer](https://github.com/gatsbyjs/gatsby/issues/420).
 
