@@ -149,7 +149,7 @@
     "graphql.js",
     "index.d.ts"
   ],
-  "homepage": "https://github.com/gatsbyjs/gatsby#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
     "blog",
     "generator",
