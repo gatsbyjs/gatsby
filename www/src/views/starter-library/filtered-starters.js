@@ -46,7 +46,7 @@ export default class FilteredStarterLibrary extends Component {
       sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
     })
   }
-  onChangeUrlWithText = e => this.props.setURLState({ s: e.target.value })
+  onChangeUrlWithText = value => this.props.setURLState({ s: value })
 
   render() {
     const { data, urlState, setURLState } = this.props
@@ -207,7 +207,7 @@ export default class FilteredStarterLibrary extends Component {
                       }`,
                     },
                   }}
-                  initialValue={urlState.s}
+                  value={urlState.s}
                   onChange={this.onChangeUrlWithText}
                   placeholder="Search starters"
                   aria-label="Search starters"
