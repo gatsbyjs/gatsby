@@ -188,13 +188,13 @@ function prepareStructuredTextNode(node, key, content, createNode, createNodeId)
   const str = JSON.stringify(content)
   const structuredTextNode = {
     ...content,
-    id: createNodeId(`${node.id}${key}StructuredTextNode`),
+    id: createNodeId(`${node.id}${key}RichTextNode`),
     parent: node.id,
     children: [],
     [key]: str,
     internal: {
-      type: _.camelCase(`${node.internal.type} ${key} StructuredTextNode`),
-      mediaType: `application/structuredtext`,
+      type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
+      mediaType: `text/richtext`,
       content: str,
       contentDigest: digest(str),
     },
@@ -395,8 +395,8 @@ exports.createContentTypeNodes = ({
 
           delete entryItemFields[entryItemFieldKey]
         } else if (
-          fieldType === `StructuredText` &&
-          process.env.CF_STRUCTURED_TEXT === `enabled` &&
+          fieldType === `RichText` &&
+          process.env.GATSBY_CONTENTFUL_RICH_TEXT === `enabled` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
           const stNode = prepareStructuredTextNode(
