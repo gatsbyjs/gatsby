@@ -38,8 +38,10 @@ If you need to override the default options passed into [`css-loader`](https://g
 plugins: [
   {
     resolve: `gatsby-plugin-less`,
-    cssLoaderOptions: {
-      camelCase: false,
+    options: {
+      cssLoaderOptions: {
+        camelCase: false,
+      },
     },
   },
 ]
