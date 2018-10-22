@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0",
     "cheerio": "^1.0.0-rc.2",
     "lodash": "^4.17.10",
-    "workbox-build": "^3.4.1"
+    "workbox-build": "^3.6.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
