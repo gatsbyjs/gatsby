@@ -1,6 +1,5 @@
 import React from "react"
-
-import { css } from "glamor"
+import { keyframes } from "react-emotion"
 
 export default ({ items, color }) => (
   <div
@@ -35,7 +34,7 @@ export default ({ items, color }) => (
   </div>
 )
 
-const topToBottom = css.keyframes({
+const topToBottom = keyframes({
   "0%": {
     opacity: 0,
   },

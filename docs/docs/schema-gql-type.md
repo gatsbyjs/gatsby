@@ -90,7 +90,7 @@ mapping: {
 },
 ```
 
-The field generaton in this case is handled by [inferFromMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L129). The first step is to find the type that is mapped to. In this case, `AuthorYaml`. This is known as the `linkedType`. That type will have a field to link by. In this case `name`. If one is not supplied, it defaults to `id`. This field is known as `linkedField`
+The field generation in this case is handled by [inferFromMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L129). The first step is to find the type that is mapped to. In this case, `AuthorYaml`. This is known as the `linkedType`. That type will have a field to link by. In this case `name`. If one is not supplied, it defaults to `id`. This field is known as `linkedField`
 
 Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which we look up in list of other `gqlTypes`). The field resolver will get the value for the node (in this case, the author string), and then search through the react nodes until it finds one whose type is `AuthorYaml` and whose `name` field matches the author string.
 

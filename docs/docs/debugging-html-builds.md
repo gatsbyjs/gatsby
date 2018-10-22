@@ -4,17 +4,17 @@ title: Debugging HTML Builds
 
 Errors while building static HTML files generally happen for one of the following reasons:
 
-1.  Some of your code references "browser globals" like window or document. If
+1.  Some of your code references "browser globals" like `window` or `document`. If
     this is your problem you should see an error above like "window is not
     defined". To fix this, find the offending code and either a) check before
-    calling the code if window is defined so the code doesn't run while gatsby is
+    calling the code if window is defined so the code doesn't run while Gatsby is
     building (see code sample below) or b) if the code is in the render function
-    of a React.js component, move that code into "componentDidMount" which
+    of a React.js component, move that code into `componentDidMount` which
     ensures the code doesn't run unless it's in the browser.
 
 1.  Check that each of your JS files listed in your `pages` directory (and any
     sub-directories) are exporting either a React component or string. Gatsby
-    treats any JS file listed under the pages dir as a page component, so it must
+    treats any JS file listed under the `pages` dir as a page component, so it must
     have a default export that's a component or string.
 
 1.  You mix up `import` and `require` calls in the same file. This might lead to

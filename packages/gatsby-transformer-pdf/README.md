@@ -1,6 +1,6 @@
 # gatsby-transformer-pdf
 
-Use [pdf2Json](`https://github.com/modesty/pdf2json`) to extract textual content of pdf files.
+Use [pdf2Json](https://github.com/modesty/pdf2json) to extract textual content of pdf files.
 
 ## Install
 
