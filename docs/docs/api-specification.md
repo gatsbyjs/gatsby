@@ -56,9 +56,9 @@ See
 ## Concepts
 
 - _Page_ — a site page with a pathname, a template component, and optional
-  graphql query.
+  GraphQL query.
 - _Page Component_ — React.js component that renders a page and can optionally
-  specify a graphql query
+  specify a GraphQL query
 - _Component extensions_ — extensions that are resolvable as components. `.js`
   and `.jsx` are supported by core. But plugins can add support for other
   compile-to-js languages.

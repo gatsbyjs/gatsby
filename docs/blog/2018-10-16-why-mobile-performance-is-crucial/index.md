@@ -154,7 +154,7 @@ To overcome these obstacles, high-performing website teams should look to a cont
 
 One example is Gatsby, which includes [both delivery optimization and payload optimization out of the box](/features/#legend).
 
-In the next and final post in this series, Creating Compelling Experiences, we’ll explain how to implement a content mesh and get all the benefits of best-of-breed content systems, modern development frameworks, and high-performing websites.
+In the next and final post in this series, [Creating Compelling Experiences](/blog/2018-10-18-creating-compelling-experiences), we’ll explain how to implement a content mesh and get all the benefits of best-of-breed content systems, modern development frameworks, and high-performing websites.
 
 <figure>
   <img alt="" src="./modern-website-performance.png" />

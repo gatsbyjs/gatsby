@@ -9,7 +9,7 @@ Justin Hall, Senior Web Developer at SendGrid had to find a way to rebuild the [
 
 SendGrid is a customer communication platform that drives engagement and growth. The [SendGrid Knowledge Center](https://sendgrid.com/docs/) is used by their customers to learn how to get the most out of SendGrid’s features, answer questions, and learn best practices. It’s an essential customer success and retention tool but the team was having issues with the website. The site was somewhat confusing, complex, and outdated, creating a challenging user experience. Justin used Gatsby to build an organized, fast, reliable site that created a much better experience for the developers and users of the Knowledge Center.
 
-![Sendgrid knowledge center](./sendgrid_screenshot.png)
+![SendGrid Knowledge Center](./sendgrid_screenshot.png)
 
 ## The Problem
 

@@ -73,7 +73,7 @@ module.exports = async (args: BootstrapArgs) => {
   )
 
   // theme gatsby configs can be functions or objects
-  if (config.__experimentalThemes) {
+  if (config && config.__experimentalThemes) {
     const themesConfig = await Promise.mapSeries(
       config.__experimentalThemes,
       async ([themeName, themeConfig]) => {
