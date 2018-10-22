@@ -1026,3 +1026,13 @@
     - Offline support.
     - Google Analytics support.
     - Disqus Comments support.
+- url: https://gatsby-starter-firebase.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-starter-firebase
+  description: A Gatsby + Firebase Starter. With Authentication
+  tags:
+    - Styling:None
+    - Firebase
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Firebase
+    - Web App Manifest
