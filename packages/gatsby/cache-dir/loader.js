@@ -283,7 +283,8 @@ const queue = {
           path,
           `Previously detected load failure for "${path}"`
         )
-        return reject()
+        reject()
+        return
       }
       const page = findPage(path)
 
@@ -296,9 +297,10 @@ const queue = {
       ) {
         // If page wasn't found check and we didn't fetch resources map for
         // all pages, wait for fetch to complete and try to get resources again
-        return fetchPageResourceMap().then(() =>
+        fetchPageResourceMap().then(() =>
           resolve(queue.getResourcesForPathname(path))
         )
+        return
       }
 
       if (!page) {
@@ -306,10 +308,12 @@ const queue = {
 
         // Preload the custom 404 page
         if (path !== `/404.html`) {
-          return resolve(queue.getResourcesForPathname(`/404.html`))
+          resolve(queue.getResourcesForPathname(`/404.html`))
+          return
         }
 
-        return resolve()
+        resolve()
+        return
       }
 
       // Use the path from the page so the pathScriptsCache uses
@@ -322,7 +326,8 @@ const queue = {
           page,
           pageResources: pathScriptsCache[path],
         })
-        return resolve(pathScriptsCache[path])
+        resolve(pathScriptsCache[path])
+        return
       }
 
       // Nope, we need to load resource(s)
@@ -383,8 +388,6 @@ const queue = {
 
       // Tell plugins the path has been successfully prefetched
       onPostPrefetchPathname(path)
-
-      return undefined
     }),
 }
 
