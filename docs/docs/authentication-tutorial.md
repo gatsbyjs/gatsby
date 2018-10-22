@@ -139,7 +139,7 @@ export default IndexPage
 
 ## Authentication service
 
-For this tutorial you will use a hardcode user/password. Create the folder `src/services` and add the following content to the file `auth.js`:
+For this tutorial you will use a hardcoded user/password. Create the folder `src/services` and add the following content to the file `auth.js`:
 
 ```javascript:title=src/services/auth.js
 export const getUser = () =>
