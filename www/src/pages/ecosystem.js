@@ -16,7 +16,7 @@ class EcosystemPage extends Component {
 
     return (
       <Layout location={location} pageTitle={pageTitle} pageIcon={BlogIcon}>
-        <ContentContainer>This is the Content</ContentContainer>
+        &nbsp;
       </Layout>
     )
   }
