@@ -20,8 +20,6 @@
       items:
         - title: Preparing your site for deployment*
           link: /docs/preparing-for-deployment/
-        - title: Deploying
-          link: /docs/deploy-gatsby/
         - title: Deploying to S3 and CloudFront
           link: /docs/deploying-to-s3-cloudfront
         - title: Deploying to Aerobatic
