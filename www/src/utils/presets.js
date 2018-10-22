@@ -2,15 +2,6 @@ const colors = require(`./colors`).default
 
 module.exports = {
   colors,
-  breakpoints: {
-    mobile: 400,
-    phablet: 550,
-    tablet: 750,
-    desktop: 1000,
-    hd: 1200,
-    vhd: 1450,
-    vvhd: 1650,
-  },
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
   phablet: `(min-width: 550px)`,
