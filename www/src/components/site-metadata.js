@@ -12,14 +12,13 @@ const SiteMetadata = ({ pathname }) => (
           siteMetadata {
             siteUrl
             title
-            description
           }
         }
       }
     `}
     render={({
       site: {
-        siteMetadata: { siteUrl, title, description },
+        siteMetadata: { siteUrl, title },
       },
     }) => (
       <Helmet defaultTitle={title} titleTemplate={`%s · ${title}`}>
@@ -30,9 +29,7 @@ const SiteMetadata = ({ pathname }) => (
         <meta property="og:url" content={siteUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content={title} />
         <meta property="og:site_name" content={title} />
-        <meta property="og:description" content={description} />
         <meta property="og:image" content={`${siteUrl}${gatsbyIcon}`} />
         <meta property="og:image:width" content="512" />
         <meta property="og:image:height" content="512" />
