@@ -188,7 +188,7 @@ For each type of page, we are invoking the `createPage` action, and supplying it
 
 ## When might using "unstructured data" make sense?
 
-You may find this approach useful when you have a use case where using Gatsby's data layer feels a bit too heavy-handed for your project scope.
+You may find this approach useful when using Gatsby's data layer feels a bit too heavy-handed for your project scope.
 
 ## The pros of using unstructured data
 
@@ -211,7 +211,7 @@ Using Gatsby's data layer provides the following benefits:
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 
 - [`gatsby-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) (speedy optimized images),
-- [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp) (provides queryable fields for processing your images in a variety of ways including resizing, cropping, and creating responsive images)
+- [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp) (provides queryable fields for processing your images in a variety of ways including resizing, cropping, and creating responsive images),
 - ... the whole Gatsby ecosystem of official and community-created [transformer plugins](/plugins/?=transformer).
 
 Another difficulty added when working with unstructured data is that your data fetching code becomes increasingly hairy when you source directly from multiple locations.
