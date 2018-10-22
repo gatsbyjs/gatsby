@@ -94,7 +94,7 @@
               link: /docs/sourcing-from-netlify-cms/
             - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
-            - title: Sourcing from Drupal*
+            - title: Sourcing from Drupal
               link: /docs/sourcing-from-drupal/
             - title: Sourcing from Contentful*
               link: /docs/sourcing-from-contentful/
@@ -119,7 +119,7 @@
           link: /docs/adding-a-list-of-markdown-blog-posts/
         - title: Using fragments
           link: /docs/using-fragments/
-        - title: Creating slugs for pages*
+        - title: Creating slugs for pages
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
           link: /docs/programmatically-create-pages-from-data/
@@ -128,7 +128,7 @@
       items:
         - title: Plugin authoring
           link: /docs/plugin-authoring/
-        - title: Create a Transformer Plugin*
+        - title: Create a Transformer Plugin
           link: /docs/create-transformer-plugin/
         - title: Create a Source Plugin
           link: /docs/create-source-plugin/
@@ -200,7 +200,7 @@
         - title: Building an image-heavy site*
           link: /docs/building-an-image-heavy-site/
     - title: Adding website functionality
-      link: /docs/adding-third-party-services/
+      link: /docs/adding-website-functionality/
       items:
         - title: Adding search
           link: /docs/adding-search/
@@ -220,8 +220,6 @@
           link: /docs/creating-a-sitemap/
         - title: Linking between pages
           link: /docs/linking-between-pages/
-        - title: Interactive pages*
-          link: /docs/interactive-pages/
         - title: Routing
           link: /docs/routing/
           items:
@@ -278,9 +276,9 @@
       link: /docs/api-specification/
 - title: Releases & Migration
   items:
-    - title: v2 release notes*
+    - title: v2 release notes
       link: /docs/v2-release-notes/
-    - title: v1 release notes*
+    - title: v1 release notes
       link: /docs/v1-release-notes/
     - title: Migrating from v1 to v2
       link: /docs/migrating-from-v1-to-v2/
@@ -298,8 +296,6 @@
       link: /docs/building-with-components/
     - title: Lifecycle APIs
       link: /docs/gatsby-lifecycle-apis/
-    - title: Plugins
-      link: /docs/plugins/
     - title: PRPL pattern
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
@@ -307,7 +303,7 @@
 - title: Behind the Scenes
   link: /docs/behind-the-scenes/
   items:
-    - title: How APIS/Plugins Are Run
+    - title: How APIs/Plugins Are Run
       link: /docs/how-plugins-apis-are-run/
     - title: Node Creation
       link: /docs/node-creation/
