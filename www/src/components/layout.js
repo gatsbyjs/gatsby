@@ -152,7 +152,10 @@ class DefaultLayout extends React.Component {
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
-          <meta name="og:image" content={`https://gatsbyjs.org${gatsbyIcon}`} />
+          <meta
+            name="og:image"
+            content={`https://www.gatsbyjs.org${gatsbyIcon}`}
+          />
           <meta name="docsearch:version" content="2.0" />
           <link
             rel="canonical"
