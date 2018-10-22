@@ -2,11 +2,11 @@
 title: Making a site with user authentication
 ---
 
-Sometimes, you need to create a site with gated content, available only to authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/#client-only-routes),to define which pages an user can view only after logging in.
+Sometimes, you need to create a site with gated content, available only to authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/#client-only-routes),to define which pages a user can view only after logging in.
 
 # Prerequisites
 
-You should have already configured your environment to be able to use the gatsby-cli. A good starting point is the [main tutorial](https://www.gatsbyjs.org/tutorial/)
+You should have already configured your environment to be able to use the `gatsby-cli`. A good starting point is the [main tutorial](https://www.gatsbyjs.org/tutorial/)
 
 # Security notice
 
@@ -117,7 +117,7 @@ Layout.propTypes = {
 export default Layout
 ```
 
-Lastly, change the index page to a more adequate content:
+Lastly, change the index page to include this new content:
 
 ```jsx{9-11}:title=src/pages/index.js
 import React from "react"
@@ -175,7 +175,7 @@ export const logout = callback => {
 
 ## Creating client-only routes
 
-Up until now, you created a "default" Gatsby site. But, using the [@reach/router](https://reach.tech/router/) library, you can create routes available only to logged-in users. This library is used by Gatsby under the hood, so you don't even have to install it.
+At the beginning of this tutorial, you created a "default" Gatsby site, which includes the `@reach/router` library. Now, using the [@reach/router](https://reach.tech/router/) library, you can create routes available only to logged-in users. This library is used by Gatsby under the hood, so you don't even have to install it.
 
 First, edit `gatsby-node.js`. You will define that any route that starts with `/app/` is part of your restricted content and the page will be created on demand:
 
@@ -219,7 +219,7 @@ const App = () => (
 export default App
 ```
 
-Add also the components regarding those new routes:
+Next, add the components regarding those new routes:
 
 ```jsx:title=src/components/profile.js
 import React from "react"
@@ -293,7 +293,7 @@ class Login extends React.Component {
 export default Login
 ```
 
-Though the routing is working now, you still can access all routes unrestrictedly.
+Though the routing is working now, you still can access all routes without restriction.
 
 ## Controlling private routes
 
@@ -436,7 +436,7 @@ const Profile = () => (
 export default Profile
 ```
 
-You should now have a complete authentication workflow, functioning with login and user-restricted area!
+You should now have a complete authentication workflow, functioning with both login and a user-restricted area!
 
 # Further reading
 
