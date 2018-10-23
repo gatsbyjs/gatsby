@@ -45,6 +45,9 @@ exports.sourceNodes = ({ actions: { createNode } }) => {
   })
 }
 
+// Total hack. It would be nice if we could programatically generate
+// graphQL per component. But in the meantime, we just generate the
+// actual component js file with the graphql
 function createPageTemplateJs(typeName) {
   const lowerTypeName = _.lowerFirst(typeName)
   return `
@@ -71,7 +74,17 @@ export const query = graphql\`
 }
 
 function allTypeQuery(typeName) {
-  return `{ all${typeName}(sort: { fields: [id] }) { edges { node { id } } } }`
+  return `
+{
+  all${typeName}(sort: { fields: [id] }) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+`
 }
 
 async function createTypePages({ graphql, actions }, typeName) {
