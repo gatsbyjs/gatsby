@@ -2991,11 +2991,11 @@
   main_url: https://thenotedproject.org
   source_url: https://github.com/ianbusko/the-noted-project
   description: >
-    Website to showcase the ethnomusicology research of The Noted Project.
+    Website to showcase the ethnomusicology research for The Noted Project.
   categories:
-  - Portfolio
-  - Education
-  - Gallery
+    - Portfolio
+    - Education
+    - Gallery
   built_by: Ian Busko
   built_by_url: https://github.com/ianbusko
   featured: false
