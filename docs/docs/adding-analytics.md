@@ -45,7 +45,7 @@ npm install --save gatsby-plugin-google-analytics
 
 Here replace `UA-XXXXXXXXX-X` with your own Tracking ID.
 
-Full documentation for the plugin can be found in the Gatsby plugins documentation [here](/packages/gatsby-plugin-google-analytics/) or on the Github page [here](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics)
+Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics/).
 
 There are a number of extra configuration options both with the Gatsby plugin and also on Google Analytics itself so you can tailor to meet your website's needs.
 
