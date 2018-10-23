@@ -71,19 +71,27 @@ Mama Route URL: ${url}
         password: _auth.htaccess_pass,
       }
     }
-    
+
     if (_hostingWPCOM && _accessToken) {
       options.headers = {
         Authorization: `Bearer ${_accessToken}`,
       }
     }
-    
+
     allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)
   }
 
-  let entities = []
+  let entities = [
+    {
+      __type: "wordpress__site_metadata",
+      name: allRoutes.data.name,
+      description: allRoutes.data.description,
+      url: allRoutes.data.url,
+      home: allRoutes.data.home,
+    },
+  ]
 
   if (allRoutes) {
     let validRoutes = getValidRoutes({
@@ -111,6 +119,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
     }
 
     for (let route of validRoutes) {
+      // console.log(entities)
       entities = entities.concat(
         await fetchData({
           route,
@@ -122,6 +131,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _concurrentRequests,
         })
       )
+      // console.log(entities)
       if (_verbose) console.log(``)
     }
 
@@ -133,6 +143,8 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
     )
   }
 
+  //console.log(allRoutes.data)
+  // console.log(entities)
   return entities
 }
 
