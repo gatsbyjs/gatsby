@@ -35,6 +35,7 @@ type TypeMap = {
   [typeName: string]: ProcessedNodeType,
 }
 
+// Returns a map of type to all the nodes of that type
 function getNodeGroups() {
   const typeNames = getNodeTypes()
   return _.reduce(
@@ -177,6 +178,10 @@ module.exports = async ({ parentSpan }) => {
     const inferredFieldNames = _.keys(
       inferredInputFieldsFromPlugins.inferredFields
     )
+
+    // Track which fields are supplied by plugins. This will determine
+    // if we can query by pure data or whether we have to resolve the
+    // fields first. See `./run-query.js`
     _.forEach(inferredFieldNames, fieldName => {
       pluginFieldTracking.add(fieldName)
     })

@@ -63,8 +63,8 @@ function toMongoArgs(gqlFilter) {
 }
 
 // Converts a nested mongo args object into a dotted notation. acc
-// must be a reference to an empty object. The converted fields will
-// be added to tit. E.g
+// (accumulator) must be a reference to an empty object. The converted
+// fields will be added to it. E.g
 //
 // {
 //   internal: {
@@ -107,17 +107,15 @@ function dotNestedFields(acc, o, path = ``) {
 
 // Converts graphQL args to a loki query
 function convertArgs(gqlArgs) {
-  // TODO: Might have to omit `skip`, `limit` and `sort` keys from
-  // inside gqlArgs.filter first
   const dottedFields = {}
   dotNestedFields(dottedFields, toMongoArgs(gqlArgs.filter))
   return dottedFields
 }
 
-// Converts graphql Sort args into the form expected by loki, which
-// expects a vector where the first value is a field, and the second
-// is a boolean `isDesc`. Nested fields delimited by `___` are
-// replaced by periods. E.g
+// Converts graphql Sort args into the form expected by loki, which is
+// a vector where the first value is a field name, and the second is a
+// boolean `isDesc`. Nested fields delimited by `___` are replaced by
+// periods. E.g
 //
 // {
 //   fields: [ `frontmatter___date`, `id` ],
