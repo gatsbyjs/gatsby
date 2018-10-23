@@ -1037,7 +1037,7 @@
     - Firebase
     - Web App Manifest
 - url: http://gatsby-lightbox.416serg.me
-  repo: https://github.com/416serg/gatsby-starter-lightbox/blob/master/package.json
+  repo: https://github.com/416serg/gatsby-starter-lightbox
   description: Showcasing a custom lightbox implementation using `gatsby-image`
   tags:
     - Portfolio
