@@ -1,5 +1,14 @@
 # gatsby-plugin-layout
 
+This plugin enables adding components which live above the page components and persist across page changes.
+
+This can be helpful for:
+
+- Persisting layout between page changes
+- Keeping state when navigating pages
+- Custom error handling using componentDidCatch
+- Inject additional data into pages using React Context.
+
 This plugin reimplements the behavior of layout components in `gatsby@1`, which [was removed in version 2](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
 ## Install
