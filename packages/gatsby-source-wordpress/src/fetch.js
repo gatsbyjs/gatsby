@@ -85,7 +85,7 @@ Mama Route URL: ${url}
 
   let entities = [
     {
-      __type: "wordpress__site_metadata",
+      __type: `wordpress__site_metadata`,
       name: allRoutes.data.name,
       description: allRoutes.data.description,
       url: allRoutes.data.url,
