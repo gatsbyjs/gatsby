@@ -137,13 +137,11 @@ const resetLastHash = () => {
 exports.resetLastHash = resetLastHash
 
 let bootstrapFinished = false
-let oldPages
 const debouncedWritePages = _.debounce(
   () => {
     // Don't write pages again until bootstrap has finished.
-    if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
+    if (bootstrapFinished) {
       writePages()
-      oldPages = store.getState().pages
     }
   },
   500,

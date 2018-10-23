@@ -1,5 +1,5 @@
 ---
-title: How APIs/plugins are run
+title: How APIs/Plugins Are Run
 ---
 
 For most sites, plugins take up the majority of the build time. So what's really happening when APIs are called?

@@ -77,6 +77,7 @@ plugins: [
             }
           `,
           output: "/rss.xml",
+          title: "Gatsby RSS Feed",
         },
       ],
     },

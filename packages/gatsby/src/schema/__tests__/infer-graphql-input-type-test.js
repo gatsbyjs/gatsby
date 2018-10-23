@@ -551,7 +551,7 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the in operator for array of objects`, async () => {
+  it(`handles the elemMatch operator for array of objects`, async () => {
     let result = await queryResult(
       nodes,
       `
@@ -902,6 +902,61 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.allNode.edges[0].node.linked.height).toEqual(101)
     expect(result.data.allNode.edges[0].node.foo).toEqual(`bar`)
     expect(result.data.allNode.edges[1].node.foo).toEqual(`baz`)
+  })
+
+  it(`handles elemMatch operator`, async () => {
+    let result = await queryResult(
+      [
+        { linked___NODE: [`child_1`, `child_2`], foo: `bar` },
+        { linked___NODE: [`child_1`], foo: `baz` },
+        { linked___NODE: [`child_2`], foo: `foo` },
+        { array: [{ linked___NODE: [`child_1`, `child_2`] }], foo: `lorem` },
+        {
+          array: [
+            { linked___NODE: [`child_1`] },
+            { linked___NODE: [`child_2`] },
+          ],
+          foo: `ipsum`,
+        },
+        { array: [{ linked___NODE: [`child_1`] }], foo: `sit` },
+        { array: [{ linked___NODE: [`child_2`] }], foo: `dolor` },
+        { foo: `ipsum` },
+      ],
+      `
+        {
+          eq:allNode(filter: { linked: { elemMatch: { hair: { eq: "brown" } } } }) {
+            edges { node { foo } }
+          }
+          in:allNode(filter: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } }) {
+            edges { node { foo } }
+          }
+          insideInlineArrayEq:allNode(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { eq: "brown" } } } } } }) {
+            edges { node { foo } }
+          }
+          insideInlineArrayIn:allNode(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } } } }) {
+            edges { node { foo } }
+          }
+        }
+      `,
+      { types }
+    )
+
+    const itemToEdge = item => {
+      return {
+        node: {
+          foo: item,
+        },
+      }
+    }
+
+    expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
+    expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
+    expect(result.data.insideInlineArrayEq.edges).toEqual(
+      [`lorem`, `ipsum`, `sit`].map(itemToEdge)
+    )
+    expect(result.data.insideInlineArrayIn.edges).toEqual(
+      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
+    )
   })
 
   it(`doesn't mutate node object`, async () => {

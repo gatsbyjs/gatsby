@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.4...gatsby-plugin-catch-links@2.0.5) (2018-10-16)
+
+### Bug Fixes
+
+- **plugin-catch-links:** handle pathPrefix ([#9000](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/issues/9000)) ([6fed3e5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/commit/6fed3e5))
+
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.3...gatsby-plugin-catch-links@2.0.4) (2018-10-05)
+
+### Bug Fixes
+
+- handle more edge cases and fix IE ([#8646](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/issues/8646)) ([4383a57](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/commit/4383a57)), closes [#8685](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/issues/8685)
+
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-rc.1...gatsby-plugin-catch-links@2.0.3) (2018-09-24)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-rc.1...gatsby-plugin-catch-links@2.0.2) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
 <a name="2.0.2-rc.1"></a>
 
 ## [2.0.2-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.2-rc.0...gatsby-plugin-catch-links@2.0.2-rc.1) (2018-08-29)

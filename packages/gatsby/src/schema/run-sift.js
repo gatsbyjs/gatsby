@@ -84,6 +84,12 @@ module.exports = ({
   function extractFieldsToSift(prekey, key, preobj, obj, val) {
     if (_.isPlainObject(val)) {
       _.forEach((val: any), (v, k) => {
+        if (k === `elemMatch`) {
+          // elemMatch is operator for arrays and not field we want to prepare
+          // so we need to skip it
+          extractFieldsToSift(prekey, key, preobj, obj, v)
+          return
+        }
         preobj[prekey] = obj
         extractFieldsToSift(key, k, obj, {}, v)
       })
@@ -120,17 +126,34 @@ module.exports = ({
               _.isObject(innerSift) &&
               v != null &&
               innerGqConfig &&
-              innerGqConfig.type &&
-              _.isFunction(innerGqConfig.type.getFields)
+              innerGqConfig.type
             ) {
-              return resolveRecursive(
-                v,
-                innerSift,
-                innerGqConfig.type.getFields()
-              )
-            } else {
-              return v
+              if (_.isFunction(innerGqConfig.type.getFields)) {
+                // this is single object
+                return resolveRecursive(
+                  v,
+                  innerSift,
+                  innerGqConfig.type.getFields()
+                )
+              } else if (
+                _.isArray(v) &&
+                innerGqConfig.type.ofType &&
+                _.isFunction(innerGqConfig.type.ofType.getFields)
+              ) {
+                // this is array
+                return Promise.all(
+                  v.map(item =>
+                    resolveRecursive(
+                      item,
+                      innerSift,
+                      innerGqConfig.type.ofType.getFields()
+                    )
+                  )
+                )
+              }
             }
+
+            return v
           })
           .then(v => [k, v])
       )
@@ -143,26 +166,31 @@ module.exports = ({
     })
   }
 
-  // If the the query only has a filter for an "id", then we'll just grab
-  // that ID and return it.
+  // If the the query for single node only has a filter for an "id"
+  // using "eq" operator, then we'll just grab that ID and return it.
   if (
+    !connection &&
     Object.keys(fieldsToSift).length === 1 &&
-    Object.keys(fieldsToSift)[0] === `id`
+    Object.keys(fieldsToSift)[0] === `id` &&
+    Object.keys(siftArgs[0].id).length === 1 &&
+    Object.keys(siftArgs[0].id)[0] === `$eq`
   ) {
-    const node = resolveRecursive(
+    const nodePromise = resolveRecursive(
       getNode(siftArgs[0].id[`$eq`]),
       fieldsToSift,
       type.getFields()
     )
 
-    if (node) {
-      createPageDependency({
-        path,
-        nodeId: node.id,
-      })
-    }
+    nodePromise.then(node => {
+      if (node) {
+        createPageDependency({
+          path,
+          nodeId: node.id,
+        })
+      }
+    })
 
-    return node
+    return nodePromise
   }
 
   const nodesPromise = () => {

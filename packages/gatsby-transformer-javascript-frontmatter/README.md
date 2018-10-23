@@ -4,16 +4,25 @@ Parses JavaScript files to extract frontmatter from exports.
 
 ## Install
 
-`npm install --save gatsby-transformer-javascript-frontmatter`
+`npm install --save gatsby-source-filesystem gatsby-transformer-javascript-frontmatter`
 
 ## How to use
 
-To use this plugin you also need [gatsby-source-filesystem](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem) installed.
+To use this plugin you also need [gatsby-source-filesystem](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem) installed and configured.
 
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-transformer-javascript-frontmatter`],
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`
+      }
+    },
+    'gatsby-transformer-javascript-frontmatter'
+  ]
 }
 ```
 

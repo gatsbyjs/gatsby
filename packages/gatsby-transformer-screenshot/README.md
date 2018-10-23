@@ -2,7 +2,7 @@
 
 Plugin for creating screenshots of website URLs using an AWS Lambda
 Function. This plugin looks for `SitesYaml` nodes with a `url`
-property, and creates `Screenshot` child nodes with an `screenshotFile` field.
+property, and creates `Screenshot` child nodes with a `screenshotFile` field.
 
 [Live demo](https://thatotherperson.github.io/gatsby-screenshot-demo/)
 ([source](https://github.com/ThatOtherPerson/gatsby-screenshot-demo))
@@ -28,6 +28,24 @@ Data should be in a yaml file named `sites.yml` and look like:
 // in your gatsby-config.js
 module.exports = {
   plugins: [`gatsby-transformer-screenshot`],
+}
+```
+
+By default, the plugin will target nodes sourced from a yaml file named `sites.yml`.
+
+To source additional node types, supply an array of the types to a `nodeTypes` option on the plugin.
+
+```javascript
+// in your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-screenshot`,
+      options: {
+        nodeTypes: [`StartersYaml`, `WhateverType`],
+      },
+    },
+  ],
 }
 ```
 
@@ -65,3 +83,19 @@ First, you will need to [create a S3 bucket](https://docs.aws.amazon.com/AmazonS
 To build the Lambda package, run `npm run build-lambda-package` in this directory. A file called `lambda-package.zip` will be generated - upload this as the source of your AWS Lambda. Finally, you will need to set `S3_BUCKET` as an environment variable for the lambda.
 
 To set up the HTTP interface, you will need to use AWS API Gateway. Create a new API, create a new resource under `/`, select "Configure as proxy resource", and leave all the settings with their defaults. Create a method on the new resource, selecting "Lambda Function Proxy" as the integration type, and fill in the details of your lambda.
+
+## Placeholder image
+
+If your site pulls a lot of screenshots it might be beneficial to use placeholder image instead of downloading and processing all the screenshots. It will help with data sourcing and query running times.
+
+You can use placeholder image by setting `GATSBY_SCREENSHOT_PLACEHOLDER` environment variable when running `gatsby develop`:
+
+```shell
+GATSBY_SCREENSHOT_PLACEHOLDER=true gatsby develop
+```
+
+or by adding it to `.env.development` file in root of your project:
+
+```shell:title=.env.development
+GATSBY_SCREENSHOT_PLACEHOLDER=true
+```

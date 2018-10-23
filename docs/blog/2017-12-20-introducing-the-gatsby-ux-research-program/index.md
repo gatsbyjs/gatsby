@@ -80,7 +80,7 @@ Other salient feedback includes that people who have used WordPress for a long t
 
 > If you ever decide to sell to consumers, I really think that the speed / responsiveness of Gatsby is a really good selling point. Like when I tried to sell my idea of building the new site in Gatsby (which would take a little longer compared to building it in Squarespace) to my husband, I simply showed him how quick it is to navigate around a Gatsby site and he was instantly sold. The explicit awareness that website speed matters a lot is currently kinda limited to Silicon Valley etc, but the benefits are definitely apparent as well to the average consumer. Pair that with stats around how speed increases conversions and it'd definitely be a pretty appealing offer to people.
 >
-> – Juliette Pichot, Germany, web dev
+> – Juliette Pichot, Germany, web developer
 
 ## So what does this all mean?
 
@@ -102,9 +102,9 @@ Some specific problems with searching for plugins that interviewees described to
 
 We’re working on the final prototypes for the plugin search tool and welcome contributions from the community. Here are ways you can contribute:
 
-- Follow the plugin search tool’s progress and contribute to it on the [Github issue](https://github.com/gatsbyjs/gatsby/issues/3003).
+- Follow the plugin search tool’s progress and contribute to it on the [GitHub issue](https://github.com/gatsbyjs/gatsby/issues/3003).
 - [Contact me here](https://twitter.com/shannonb_ux/status/938551014956732418) if you have feedback that differs from or provides deeper insight into any of the pain points this article mentions
 - Follow us on [Twitter](https://twitter.com/gatsbyjs)
-- Contribute to issues in the [Github repo](https://github.com/gatsbyjs/gatsby/issues)
+- Contribute to issues in the [GitHub repo](https://github.com/gatsbyjs/gatsby/issues)
 
 Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the plugin search tool and future Gatsby UX research projects!

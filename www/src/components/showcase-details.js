@@ -1,7 +1,6 @@
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 import url from "url"
-import hex2rgba from "hex2rgba"
 import Img from "gatsby-image"
 import qs from "qs"
 
@@ -265,14 +264,14 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <title>{data.sitesYaml.title}</title>
                 <meta
                   name="og:image"
-                  content={`https://next.gatsbyjs.org${
+                  content={`https://www.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
                   }`}
                 />
                 <meta
                   name="twitter:image"
-                  content={`https://next.gatsbyjs.org${
+                  content={`https://www.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
                   }`}
@@ -477,7 +476,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   <ShareMenu
                     url={data.sitesYaml.main_url}
                     title={data.sitesYaml.title}
-                    image={`https://next.gatsbyjs.org${
+                    image={`https://www.gatsbyjs.org${
                       data.sitesYaml.childScreenshot.screenshotFile
                         .childImageSharp.resize.src
                     }`}
