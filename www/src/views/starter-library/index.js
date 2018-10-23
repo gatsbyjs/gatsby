@@ -35,8 +35,6 @@ class StarterLibraryPage extends Component {
             content={`Gatsby Starters: ${filtersApplied}`}
           />
           <meta property="og:title" content={filtersApplied} />
-          <meta property="og:image" content={`../../logo.svg`} />
-          <meta property="og:image:alt" content="Gatsby Logo" />
           <meta property="og:type" content="article" />
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`1 min read`} />

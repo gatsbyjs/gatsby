@@ -71,8 +71,6 @@ class DocsTemplate extends React.Component {
           <meta property="og:description" content={page.excerpt} />
           <meta property="og:title" content={page.frontmatter.title} />
           <meta property="og:type" content="article" />
-          <meta property="og:image" content={`../../logo.svg`} />
-          <meta property="og:image:alt" content="Gatsby Logo" />
           <meta name="twitter:description" content={page.excerpt} />
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`${page.timeToRead} min read`} />

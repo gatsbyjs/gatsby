@@ -61,7 +61,7 @@ class StarterTemplate extends React.Component {
               <title>{`${repoName}: Gatsby Starter`}</title>
               <meta
                 property="og:image"
-                content={`../logo.svg`}
+                content={screenshotFile.childImageSharp.fluid.src}
               />
               <meta property="og:image:alt" content="Gatsby Logo" />
               <meta
