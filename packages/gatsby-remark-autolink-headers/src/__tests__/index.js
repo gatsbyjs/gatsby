@@ -127,4 +127,23 @@ describe(`gatsby-remark-autolink-headers`, () => {
       expect(node.data.id).toBeDefined()
     })
   })
+
+  it(`maintain case of markdown header for id`, () => {
+    const markdownAST = remark.parse(`
+# Heading One
+
+## Heading Two
+
+### Heading Three
+    `)
+    const maintainCase = true
+
+    const transformed = plugin({ markdownAST }, { maintainCase })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.id).toBeDefined()
+
+      expect(node).toMatchSnapshot()
+    })
+  })
 })
