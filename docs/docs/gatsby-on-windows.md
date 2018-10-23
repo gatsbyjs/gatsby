@@ -81,7 +81,7 @@ Some plugins which depend on native NPM dependencies require the Node x64 build 
 
 ## gatsby-plugin-sharp requires libvips
 
-Sharp uses a c library, libvips, if you are having issuees while installing sharp try removing ```C:\Users\[user]\AppData\Roaming\npm-cache\_libvips```
+Sharp uses a c library, libvips. If you are having issues while installing Sharp, try removing ```C:\Users\[user]\AppData\Roaming\npm-cache\_libvips```.
 
 ## Windows Subsystem for Linux
 
