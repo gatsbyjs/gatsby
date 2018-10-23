@@ -4,15 +4,15 @@ title: Making a site with user authentication
 
 Sometimes, you need to create a site with gated content, available only to authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/#client-only-routes), to define which pages a user can view only after logging in.
 
-# Prerequisites
+## Prerequisites
 
 You should have already configured your environment to be able to use the `gatsby-cli`. A good starting point is the [main tutorial](https://www.gatsbyjs.org/tutorial/).
 
-# Security notice
+## Security notice
 
 In production, you should use a tested and robust solution to handle the authentication. [Auth0](https://www.auth0.com), [Firebase](https://firebase.google.com), and [Passport.js](passportjs.org) are good examples. This tutorial will only cover the authentication workflow, but you should take the security of your app as seriously as possible.
 
-# Building your Gatsby app
+## Building your Gatsby app
 
 Start by creating a new Gatsby project:
 
@@ -55,7 +55,6 @@ export default () => (
       <Link to="/">Profile</Link>
       {` `}
       <Link to="/">Logout</Link>
-      {` `}
     </nav>
   </div>
 )
@@ -256,7 +255,6 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log(this.setState)
     if (isLoggedIn()) {
       navigate(`/app/profile`)
     }
@@ -297,7 +295,7 @@ Though the routing is working now, you still can access all routes without restr
 
 ## Controlling private routes
 
-To check if an user can access the content, you can wrap the restricted content inside a PrivateRoute component:
+To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
 ```jsx:title=scr/components/privateRoute.js
 import React from "react"
@@ -438,7 +436,7 @@ export default Profile
 
 You should now have a complete authentication workflow, functioning with both login and a user-restricted area!
 
-# Further reading
+## Further reading
 
 If you want to learn more about using production-ready auth solutions, these links may help:
 
