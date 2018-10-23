@@ -22,10 +22,12 @@ If you followed along with the [Unit testing guide](/docs/unit-testing) you'll h
 
 ```diff:title=jest-preprocess.js
 const babelOptions = {
-  presets: ["babel-preset-gatsby"],
-+  plugins: [
+  presets: ["@babel/react", "@babel/env"],
+  plugins: [
 +    "emotion",
-+  ],
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-class-properties",
+  ],
 }
 
 module.exports = require("babel-jest").createTransformer(babelOptions)
