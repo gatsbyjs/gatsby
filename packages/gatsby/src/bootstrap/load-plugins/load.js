@@ -127,7 +127,9 @@ module.exports = (config = {}) => {
 
       return {
         ...info,
-        // Make sure ID is unique to any plugin options. E.g multiple source-filesystem nodes
+        // Make sure key is unique to plugin options. E.g there could
+        // be multiple source-filesystem plugins, with different names
+        // (docs, blogs).
         id: createNodeId(
           plugin.options
             ? plugin.name + JSON.stringify(plugin.options)

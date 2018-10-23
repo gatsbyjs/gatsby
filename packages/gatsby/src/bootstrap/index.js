@@ -212,8 +212,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  // Start the nodes database. If data was saved from a previous
-  // build, it will be loaded here
+  // Start the nodes database (in memory loki js with interval disk
+  // saves). If data was saved from a previous build, it will be
+  // loaded here
   activity = report.activityTimer(`start nodes db`, {
     parentSpan: bootstrapSpan,
   })
