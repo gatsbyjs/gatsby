@@ -141,8 +141,10 @@ export default IndexPage
 For this tutorial you will use a hardcoded user/password. Create the folder `src/services` and add the following content to the file `auth.js`:
 
 ```javascript:title=src/services/auth.js
+export const isBrowser = () => typeof window !== "undefined"
+
 export const getUser = () =>
-  window.localStorage.gatsbyUser
+  isBrowser() && window.localStorage.gatsbyUser
     ? JSON.parse(window.localStorage.gatsbyUser)
     : {}
 
