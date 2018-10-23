@@ -124,7 +124,6 @@ const processFile = (file, jobs, cb, reporter) => {
 
   jobs.forEach(async job => {
     const args = job.args
-    const options = healOptions(args, {})
     let clonedPipeline
     if (jobs.length > 1) {
       clonedPipeline = pipeline.clone()
@@ -145,7 +144,7 @@ const processFile = (file, jobs, cb, reporter) => {
 
     clonedPipeline
       .resize(roundedWidth, roundedHeight, {
-        position: options.cropFocus,
+        position: args.cropFocus,
       })
       .png({
         compressionLevel: args.pngCompressionLevel,
@@ -524,7 +523,11 @@ async function fluid({ file, args = {}, reporter }) {
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
 
   if (options[fixedDimension] < 1) {
-    throw new Error(`${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`)
+    throw new Error(
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${
+        options[fixedDimension]
+      }`
+    )
   }
 
   let presentationWidth, presentationHeight
@@ -566,9 +569,11 @@ async function fluid({ file, args = {}, reporter }) {
     fluidSizes.push(options[fixedDimension] * 2)
     fluidSizes.push(options[fixedDimension] * 3)
   } else {
-    options.srcSetBreakpoints.forEach((breakpoint) => {
+    options.srcSetBreakpoints.forEach(breakpoint => {
       if (breakpoint < 1) {
-        throw new Error(`All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`)
+        throw new Error(
+          `All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`
+        )
       }
       // ensure no duplicates are added
       if (fluidSizes.includes(breakpoint)) {
