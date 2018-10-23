@@ -29,8 +29,23 @@ query $ NUM_TYPES=100 NUM_PAGES=20000 bin/runQueryTiming.sh
 - loki nested index patch
 
 ```
-query $ NUM_PAGES=10000 bin/runQueryTiming.sh
-16.512
+query $ NUM_TYPES=1 NUM_PAGES=10000 bin/runQueryTiming.sh
+14.834
+```
+
+```
+query $ NUM_TYPES=100 NUM_PAGES=10000 bin/runQueryTiming.sh
+14.676
+```
+
+```
+query $ NUM_TYPES=1 NUM_PAGES=20000 bin/runQueryTiming.sh
+58.377
+```
+
+```
+query $ NUM_TYPES=100 NUM_PAGES=20000 bin/runQueryTiming.sh
+27.486
 ```
 
 ## Gatsby loki with index
@@ -40,6 +55,21 @@ query $ NUM_PAGES=10000 bin/runQueryTiming.sh
 - loki nested index patch
 
 ```
-query $ NUM_PAGES=10000 bin/runQueryTiming.sh
-7.713
+query $ NUM_TYPES=1 NUM_PAGES=10000 bin/runQueryTiming.sh
+8.126
+```
+
+```
+query $ NUM_TYPES=100 NUM_PAGES=10000 bin/runQueryTiming.sh
+15.050
+```
+
+```
+query $ NUM_TYPES=1 NUM_PAGES=20000 bin/runQueryTiming.sh
+12.797
+```
+
+```
+query $ NUM_TYPES=100 NUM_PAGES=20000 bin/runQueryTiming.sh
+27.020
 ```
