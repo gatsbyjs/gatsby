@@ -89,7 +89,16 @@ exports.buildResolvableSet = ({
   defaultLocale,
 }) => {
   const resolvable = new Set()
-  existingNodes.forEach(n => resolvable.add(n.id))
+  existingNodes.forEach(n => {
+    if (n.contentful_id) {
+      // We need to add only root level resolvable (assets and entries)
+      // derived nodes (markdown or JSON) will be recreated if needed.
+      // We also need to apply `fixId` as some objects will have ids
+      // prefixed with `c` and fixIds will recursively apply that
+      // and resolvable ids need to match that.
+      resolvable.add(fixId(n.contentful_id))
+    }
+  })
 
   entryList.forEach(entries => {
     entries.forEach(entry => {
