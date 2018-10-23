@@ -5,6 +5,10 @@ const invariant = require(`invariant`)
 const loki = require(`lokijs`)
 const lokiFsStructuredAdapter = require(`lokijs/src/loki-fs-structured-adapter`)
 
+/////////////////////////////////////////////////////////////////////
+// DB Initialization
+/////////////////////////////////////////////////////////////////////
+
 // Must be set using `start()`
 let db
 
@@ -52,7 +56,7 @@ async function start({ saveFile }) {
  * Returns a reference to the database. If undefined, the db has not been
  * initalized yet. Call `start()`
  *
- * @returns {object} database, or undefined
+ * @returns {Object} database, or undefined
  */
 function getDb() {
   return db
@@ -84,6 +88,91 @@ function deleteEmptyCollections() {
     })
   }
 }
+
+/////////////////////////////////////////////////////////////////////
+// Insertions/Updates/Deletions
+/////////////////////////////////////////////////////////////////////
+
+/**
+ * Creates a node in the DB. Will create a collection for the node
+ * type if one hasn't been created yet
+ *
+ * @param {Object} node The ndoe to add. Must have an `id` and
+ * `internal.type`
+ */
+function createNode(node) {
+  invariant(node.internal, `node has no "internal" field`)
+  invariant(node.internal.type, `node has no "internal.type" field`)
+  invariant(node.id, `node has no "id" field`)
+
+  const type = node.internal.type
+
+  let coll = db.getCollection(type)
+  if (!coll) {
+    coll = db.addCollection(type, { unique: [`id`], indices: [`id`] })
+  }
+
+  return coll.insert(node)
+}
+
+/**
+ * Updates a node in the DB
+ *
+ * @param {Object} node The new node information. Will be merged over
+ * the old one (shallow merge)
+ * @param {Object} oldNode The old node to merge the new node
+ * over. Optional. If not supplied, the old node is found by querying
+ * by node.id
+ */
+function updateNode(node, oldNode) {
+  invariant(node.internal, `node has no "internal" field`)
+  invariant(node.internal.type, `node has no "internal.type" field`)
+  invariant(node.id, `node has no "id" field`)
+
+  const type = node.internal.type
+
+  let coll = db.getCollection(type)
+  if (!coll) {
+    invariant(coll, `${type} collection doesn't exist. When trying to update`)
+  }
+
+  if (!oldNode) {
+    oldNode = getNode(node.id)
+  }
+  const updateNode = _.merge(oldNode, node)
+
+  coll.update(updateNode)
+}
+
+/**
+ * Deletes a node from its type collection.
+ *
+ * @param {Object} the node to delete. Must have an `id`
+ */
+function deleteNode(node) {
+  invariant(node.internal, `node has no "internal" field`)
+  invariant(node.internal.type, `node has no "internal.type" field`)
+  invariant(node.id, `node has no "id" field`)
+
+  const type = node.internal.type
+
+  let coll = db.getCollection(type)
+  if (!coll) {
+    invariant(coll, `${type} collection doesn't exist. When trying to delete`)
+  }
+
+  if (coll.by(`id`, node.id)) {
+    coll.remove(node)
+  } else {
+    console.log(
+      `WARN: deletion of node failed because it wasn't in coll. Node = [${node}]`
+    )
+  }
+}
+
+/////////////////////////////////////////////////////////////////////
+// Queries
+/////////////////////////////////////////////////////////////////////
 
 /**
  * Returns the node with `id` == id, or null if not found
@@ -143,7 +232,7 @@ function getNodeTypes() {
  * @param {string} id node id to lookup
  * @param {string} path the page path to record a node dependency
  * against
- * @returns {object} node or undefined if not found
+ * @returns {Object} node or undefined if not found
  */
 function getNodeAndSavePathDependency(id, path) {
   const {

@@ -23,7 +23,7 @@ const {
   getNodeTypes,
   getNodeAndSavePathDependency,
 } = require(`../db`)
-const { pluginFieldTracking } = require(`../redux`)
+const { pluginFieldTracking } = require(`./plugin-fields`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)

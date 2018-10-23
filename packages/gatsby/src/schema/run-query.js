@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const queryLoki = require(`./query-loki`)
 const querySift = require(`./query-sift`)
-const { pluginFieldTracking } = require(`../redux`)
+const { pluginFieldTracking } = require(`./plugin-fields`)
 
 function hasPluginFields(queryArgs) {
   return _.some(queryArgs.filter, (v, fieldName) =>
