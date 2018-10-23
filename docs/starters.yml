@@ -1036,3 +1036,14 @@
     - Eslint Airbnb without semicolon and without .jsx extension
     - Firebase
     - Web App Manifest
+- url: http://gatsby-lightbox.416serg.me
+  repo: https://github.com/416serg/gatsby-starter-lightbox
+  description: Showcasing a custom lightbox implementation using `gatsby-image`
+  tags:
+    - Portfolio
+    - SEO
+    - Styling:Styled Components
+  features:
+    - Features a custom, accessible lightbox with gatsby-image
+    - Styled with styled-components using CSS Grid
+    - React Helmet for SEO
