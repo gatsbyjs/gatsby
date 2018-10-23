@@ -28,7 +28,7 @@ You can find this tracking ID later by going to `Admin > Tracking Info > Trackin
 
 Now to configure Gatsby to send page views to your Google Analytics account.
 
-We are going to use `gatsby-plugin-google-analytics`, for other analytics options (includeing Google Analytics gtag.js ang Google Tag Manager) check [Other Gatsby analytics plugins](#other-plugins)
+We are going to use `gatsby-plugin-google-analytics`, for other analytics options (including Google Analytics gtag.js ang Google Tag Manager) check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins)
 
 ```bash
 npm install --save gatsby-plugin-google-analytics
