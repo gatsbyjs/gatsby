@@ -51,13 +51,13 @@ The actual json file is written to disk after [Query Execution](/docs/query-exec
 
 ### component
 
-The path on disk to the javascript file containing the React component. E.g
+The path on disk to the JavaScript file containing the React component. E.g
 
 `/src/templates/template-blog-post.js`
 
 Think of this as `componentPath` instead.
 
-### Redux `components ` namespace
+### Redux `components` namespace
 
 Mapping from `component` (path on disk) to its [Page object](#page-object). It is created every time a page is created (by listening to `CREATE_PAGE`).
 

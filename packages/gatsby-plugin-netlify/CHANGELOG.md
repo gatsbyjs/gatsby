@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.1...gatsby-plugin-netlify@2.0.2) (2018-10-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** Broken links updated ([#9286](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/issues/9286)) ([21830b4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/commit/21830b4))
+
 <a name="2.0.1"></a>
 
 ## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.0...gatsby-plugin-netlify@2.0.1) (2018-10-02)

@@ -21,6 +21,7 @@ import {
   ContentContainer,
 } from "../shared/sidebar"
 import ResetFilters from "../shared/reset-filters"
+import DebounceInput from "../../components/debounce-input"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
@@ -38,6 +39,14 @@ export default class FilteredStarterLibrary extends Component {
     })
   resetFilters = () =>
     this.props.setURLState({ c: null, d: null, v: null, s: `` })
+  showMoreSites = starters => {
+    let showAll =
+      this.state.sitesToShow + 15 > starters.length ? starters.length : false
+    this.setState({
+      sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
+    })
+  }
+  onChangeUrlWithText = e => this.props.setURLState({ s: e.target.value })
 
   render() {
     const { data, urlState, setURLState } = this.props
@@ -66,7 +75,10 @@ export default class FilteredStarterLibrary extends Component {
       )
     )
 
-    let starters = data.allStartersYaml.edges
+    // stopgap for missing gh data (#8763)
+    let starters = data.allStartersYaml.edges.filter(({ node: starter }) => {
+      return starter.fields && starter.fields.starterShowcase
+    })
 
     if (urlState.s.length > 0) {
       starters = starters.filter(starter =>
@@ -173,7 +185,7 @@ export default class FilteredStarterLibrary extends Component {
                 {urlState.sort === `recent` ? `Most recent` : `Most stars`}
               </label>
               <label css={{ position: `relative` }}>
-                <input
+                <DebounceInput
                   css={{
                     border: 0,
                     borderRadius: presets.radiusLg,
@@ -195,10 +207,8 @@ export default class FilteredStarterLibrary extends Component {
                       }`,
                     },
                   }}
-                  type="text"
-                  value={urlState.s}
-                  // TODO: SWYX: i know this is spammy, we can finetune history vs search later
-                  onChange={e => setURLState({ s: e.target.value })}
+                  initialValue={urlState.s}
+                  onChange={this.onChangeUrlWithText}
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
@@ -240,9 +250,7 @@ export default class FilteredStarterLibrary extends Component {
             <Button
               tag="button"
               overrideCSS={styles.loadMoreButton}
-              onClick={() => {
-                this.setState({ sitesToShow: this.state.sitesToShow + 15 })
-              }}
+              onClick={() => this.showMoreSites(starters)}
               icon={<MdArrowDownward />}
             >
               Load More
