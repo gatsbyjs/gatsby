@@ -19,7 +19,8 @@ const {
 const { nodeInterface } = require(`./node-interface`)
 const {
   getNode,
-  getNodeGroups,
+  getNodesByType,
+  getNodeTypes,
   getNodeAndSavePathDependency,
 } = require(`../db`)
 const { pluginFieldTracking } = require(`../redux`)
@@ -32,6 +33,18 @@ import type { ProcessedNodeType } from "./infer-graphql-type"
 
 type TypeMap = {
   [typeName: string]: ProcessedNodeType,
+}
+
+function getNodeGroups() {
+  const typeNames = getNodeTypes()
+  return _.reduce(
+    typeNames,
+    (groups, typeName) => {
+      groups[typeName] = getNodesByType(typeName)
+      return groups
+    },
+    {}
+  )
 }
 
 module.exports = async ({ parentSpan }) => {
