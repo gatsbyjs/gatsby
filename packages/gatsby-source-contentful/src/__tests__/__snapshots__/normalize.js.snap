@@ -1741,6 +1741,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       },
     },
   ],
+  Array [],
   Array [
     Object {
       "fields": Object {
@@ -3859,6 +3860,34 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "name",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "type": "ContentfulContentType",
+      },
+      "name": "StTest",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "name",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "type": "ContentfulContentType",
+      },
+      "name": "StTest",
+      "parent": null,
     },
   ],
   Array [
