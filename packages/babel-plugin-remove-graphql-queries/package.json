@@ -4,7 +4,8 @@
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "devDependencies": {
     "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0"
+    "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.1.1"
   },
   "license": "MIT",
   "main": "index.js",
