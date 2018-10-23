@@ -174,7 +174,7 @@
     "graphql": "^0.13.2"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
+    "build": "rimraf dist && rimraf cache-dir/commonjs && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore **/__tests__",
