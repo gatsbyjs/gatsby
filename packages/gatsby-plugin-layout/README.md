@@ -4,8 +4,8 @@ This plugin enables adding components which live above the page components and p
 
 This can be helpful for:
 
-- Persisting layout between page changes
-- Keeping state when navigating pages
+- Persisting layout between page changes for e.g. animating navigation
+- Storing state when navigating pages
 - Custom error handling using componentDidCatch
 - Inject additional data into pages using React Context.
 
