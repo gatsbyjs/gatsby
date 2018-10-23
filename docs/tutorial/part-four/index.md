@@ -28,7 +28,7 @@ sites.
 
 What is data?
 
-A very computer science-y answer would be: data is things like `"strings"`,
+A very computer science-y answer would be: data are things like `"strings"`,
 integers (`42`), objects (`{ pizza: true }`), etc.
 
 For the purpose of working in Gatsby, however, a more useful answer is
