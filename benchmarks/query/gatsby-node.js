@@ -18,6 +18,8 @@ function newTypeName() {
 
 let types = []
 
+// Create NUM_PAGES nodes, split over NUM_TYPES types. Each node has
+// the bare minimum of content
 exports.sourceNodes = ({ actions: { createNode } }) => {
   for (var i = 0; i < NUM_TYPES; i++) {
     types.push(newTypeName())
@@ -88,6 +90,8 @@ function allTypeQuery(typeName) {
 `
 }
 
+// Create a page for each node, and write out a new component js for
+// each different type to .cache/${typeName}Template.js
 async function createTypePages({ graphql, actions }, typeName) {
   const templateSrc = createPageTemplateJs(typeName)
   const templateFilename = `./.cache/${typeName}Template.js`

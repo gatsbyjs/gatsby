@@ -1,4 +1,15 @@
-## Gatsby master
+## Summary
+
+Key findings:
+
+- loki without indexes is overall slightly faster than master, except when there are many types
+- loki with indexes is about 2x faster on sites with 10k pages, and 5x faster with 20k pages. But is ever so slightly slower when those pages are split across 100 types.
+
+Overall, loki is a big win for sites with lots of pages of the same type. For smaller sites, the difference is negligible.
+
+## Benchmarks
+
+### Gatsby master
 
 - Gatsby: master
 
@@ -22,7 +33,7 @@ query $ NUM_TYPES=100 NUM_PAGES=20000 bin/runQueryTiming.sh
 24.656
 ```
 
-## Gatsby loki without index
+### Gatsby loki without index
 
 - Gatsby:loki
 - Index = false
@@ -48,7 +59,7 @@ query $ NUM_TYPES=100 NUM_PAGES=20000 bin/runQueryTiming.sh
 27.486
 ```
 
-## Gatsby loki with index
+### Gatsby loki with index
 
 - Gatsby:loki
 - Index = true
