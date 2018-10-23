@@ -30,13 +30,14 @@ exports.sourceNodes = ({ actions: { createNode } }) => {
   _.forEach(types, typeName => {
     for (var i = 0; i < pagesPerType; i++) {
       step++
+      const id = `${typeName}${step.toString()}`
       createNode({
-        id: step.toString(),
+        id,
         parent: null,
         children: [],
         internal: {
           type: typeName,
-          nestedId: step.toString(),
+          nestedId: id,
           content: faker.lorem.word(),
           contentDigest: step.toString(),
         },

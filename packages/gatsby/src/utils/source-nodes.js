@@ -3,7 +3,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const apiRunner = require(`./api-runner-node`)
 const { store } = require(`../redux`)
-const { getNode, getNodes } = require(`../db`)
+const { getNode, getNodes, deleteEmptyCollections } = require(`../db`)
 const { boundActionCreators } = require(`../redux/actions`)
 const { deleteNode } = boundActionCreators
 
@@ -70,5 +70,6 @@ module.exports = async ({ parentSpan } = {}) => {
 
   if (staleNodes.length > 0) {
     staleNodes.forEach(node => deleteNode({ node }))
+    deleteEmptyCollections()
   }
 }

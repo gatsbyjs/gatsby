@@ -19,6 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
+const db = require(`../db`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -209,6 +210,24 @@ module.exports = async (args: BootstrapArgs) => {
   // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)
 
+  activity.end()
+
+  // Start the nodes database. If data was saved from a previous
+  // build, it will be loaded here
+  activity = report.activityTimer(`start nodes db`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  const dbSaveFile = `${program.directory}/.cache/loki/loki.db`
+  try {
+    await db.start({
+      saveFile: dbSaveFile,
+    })
+  } catch (e) {
+    report.error(
+      `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
+    )
+  }
   activity.end()
 
   // Copy our site files to the root of the site.

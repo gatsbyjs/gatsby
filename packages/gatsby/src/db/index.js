@@ -1,9 +1,43 @@
 const _ = require(`lodash`)
+const fs = require(`fs-extra`)
+const path = require(`path`)
 const loki = require(`lokijs`)
-const db = new loki("loki.json")
+const lokiFsStructuredAdapter = require(`lokijs/src/loki-fs-structured-adapter`)
 const invariant = require(`invariant`)
 
 console.log(`creating db`)
+
+// Must be set using `start`
+let db
+
+function startDb(saveFile) {
+  return new Promise((resolve, reject) => {
+    const adapter = new lokiFsStructuredAdapter()
+    const dbOptions = {
+      adapter,
+      autoload: true,
+      autoloadCallback: err => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      },
+      autosave: true,
+      autosaveInterval: 1000,
+    }
+    db = new loki(saveFile, dbOptions)
+  })
+}
+
+async function start({ saveFile }) {
+  if (!_.isString(saveFile)) {
+    throw new Error(`saveFile must be a path`)
+  }
+  const saveDir = path.dirname(saveFile)
+  await fs.ensureDir(saveDir)
+  await startDb(saveFile)
+}
 
 function getDb() {
   return db
@@ -11,10 +45,23 @@ function getDb() {
 
 // Deletes all data from all collections, including indexes
 function clearAll() {
-  _.forEach(db.listCollections(), collInfo => {
-    const coll = db.getCollection(collInfo.name)
-    coll.clear({ removeIndices: true })
-  })
+  if (db) {
+    _.forEach(db.listCollections(), collInfo => {
+      const coll = db.getCollection(collInfo.name)
+      coll.clear({ removeIndices: true })
+    })
+  }
+}
+
+function deleteEmptyCollections() {
+  if (db) {
+    _.forEach(db.listCollections(), collInfo => {
+      const coll = db.getCollection(collInfo.name)
+      if (coll.count() === 0) {
+        db.removeCollection(collInfo.name)
+      }
+    })
+  }
 }
 
 // TODO: Create ID to coll lookup
@@ -88,4 +135,6 @@ module.exports = {
   getNodeGroups,
   getNodeAndSavePathDependency,
   hasNodeChanged,
+  deleteEmptyCollections,
+  start,
 }

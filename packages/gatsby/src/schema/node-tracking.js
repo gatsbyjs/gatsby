@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const { getNode, getNodes } = require(`../db`)
+const { getNode, getNodes, getDb } = require(`../db`)
 
 /**
  * Map containing links between inline objects or arrays
@@ -87,6 +87,8 @@ const findRootNodeAncestor = (obj, predicate = null) => {
 exports.findRootNodeAncestor = findRootNodeAncestor
 
 // Track nodes that are already in store
-_.each(getNodes(), node => {
-  trackInlineObjectsInRootNode(node)
-})
+if (getDb()) {
+  _.each(getNodes(), node => {
+    trackInlineObjectsInRootNode(node)
+  })
+}
