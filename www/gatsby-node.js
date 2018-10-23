@@ -453,7 +453,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     // Default fields are to avoid graphql errors.
     const { owner, name: repoStub } = parseGHUrl(node.repo)
     const defaultFields = {
-      slug: `/${repoStub}/`,
+      slug: `/${owner}/${repoStub}/`,
       stub: repoStub,
       name: ``,
       description: ``,
@@ -523,7 +523,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           // If a new field is added here, make sure a corresponding
           // change is made to "defaultFields" to not break DX
           const starterShowcaseFields = {
-            slug: `/${repoStub}/`,
+            slug: `/${owner}/${repoStub}/`,
             stub: repoStub,
             name,
             description: pkgjson.description,
