@@ -28,12 +28,13 @@ You can find this tracking ID later by going to `Admin > Tracking Info > Trackin
 
 Now to configure Gatsby to send page views to your Google Analytics account.
 
-We are going to use `gatsby-plugin-google-analytics`
+We are going to use `gatsby-plugin-google-analytics`, for other analytics options (includeing Google Analytics gtag.js ang Google Tag Manager) check [Other Gatsby analytics plugins](#other-plugins)
 
-```npm install --save gatsby-plugin-google-analytics```
+```bash
+npm install --save gatsby-plugin-google-analytics
+```
 
-In your gatsby-config.js:
-```jsx
+```js:title=gatsby-config.js
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -45,14 +46,16 @@ In your gatsby-config.js:
 
 Here replace `UA-XXXXXXXXX-X` with your own Tracking ID.
 
-Full documentation for the plugin can be found in the Gatsby plugins documentation [here](https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/) or on the Github page [here](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics)
+Full documentation for the plugin can be found in the Gatsby plugins documentation [here](/packages/gatsby-plugin-google-analytics/) or on the Github page [here](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics)
 
 In the example we have used `head: true` as [suggested in Google's documentation](https://developers.google.com/analytics/devguides/collection/analyticsjs/). This will put the tracking script in the head. This defaults to false which will instead put it in the body. There are a number of extra configuration options both with the Gatsby plugin and also on Google Analytics itself so you can tailor to meet your website's needs.
 
 Once this is configured you can deploy your site to test! If you navigate to Home on Google Analytics you should see a dashboard with different statistics.
 
-### Other Gatsby analytics plugins
-- [Segment](https://www.gatsbyjs.org/packages/gatsby-plugin-segment)
-- [Amplitude Analytics](https://www.gatsbyjs.org/packages/gatsby-plugin-amplitude-analytics)
-- [Fathom](https://www.gatsbyjs.org/packages/gatsby-plugin-fathom/)
-- [Baidu](https://www.gatsbyjs.org/packages/gatsby-plugin-baidu-analytics/)
+### <a name="other-plugins"></a>Other Gatsby analytics plugins
+- [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
+- [Google Analytics gtag.js](/packages/gatsby-plugin-gtag/)
+- [Segment](/packages/gatsby-plugin-segment)
+- [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
+- [Fathom](/packages/gatsby-plugin-fathom/)
+- [Baidu](/packages/gatsby-plugin-baidu-analytics/)
