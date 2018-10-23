@@ -43,6 +43,7 @@ module.exports = babelLoader.custom(babel => {
         reduxPlugins,
         requiredPresets,
         requiredPlugins,
+        fallbackPlugins,
         fallbackPresets,
       ] = prepareOptions(babel)
 
@@ -51,7 +52,7 @@ module.exports = babelLoader.custom(babel => {
       if (!partialConfig.hasFilesystemConfig()) {
         options = {
           ...options,
-          plugins: requiredPlugins,
+          plugins: [...fallbackPlugins, ...requiredPlugins],
           presets: [...fallbackPresets, ...requiredPresets],
         }
       } else {
