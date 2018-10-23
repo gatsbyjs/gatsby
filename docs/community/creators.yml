@@ -196,6 +196,17 @@
   image: images/steven-natera.jpg
   for_hire: true
   portfolio: true
+- name: Ramón Chancay
+  type: individual
+  description: >-
+    Frontend web developer in Guayaquil Ecuador. Currently at EveryMundo, Before in El Universo, I enjoy building things with code. Organizer and Speaker in Meetups for pizza and beer. 🍕🍻
+  location: "Guayaquil, Ecuador"
+  website: "https://ramonchancay.me"
+  github: "https://github.com/devrchancay"
+  image: images/ramon-chancay.png
+  for_hire: true
+  hiring: false
+  portfolio: false
 - name: Kevin Legrand
   type: individual
   description: >-

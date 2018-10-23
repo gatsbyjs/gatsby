@@ -14,7 +14,7 @@ In order to build this new resource we applied a [human-centered design process]
 
 #### **Mapping Design Considerations to Technical Scoping**
 
-![](design-mapping.jpeg)
+![Design Mapping](design-mapping.jpeg)
 _Journey mapping for a tenant organizing process!_
 
 We started this process with a pretty strong sense of our average user’s
@@ -99,7 +99,7 @@ pages in order to construct the structure of the site and its content. For
 Eviction Free NYC, some sample _Content Models_ are **Providers**, **Housing
 Court Action Steps**, and meta-level page models, such as **LandingPage**.
 
-![](provider-example.png)
+![Provider Model](provider-example.png)
 _An example of the Provider content model_
 
 As GatsbyJS compiles the site (either in dev or building for production), it
@@ -149,7 +149,7 @@ This doesn’t include additional pages we built afterwards to account for NYCHA
 tenants and other situations. Here’s an example of what this looks like in
 Contentful:
 
-![](housing-court-example.png)
+![Housing Court Example](housing-court-example.png)
 
 There are 6 potential pathways that a user could be taken (seen above as
 Holdover, Qualifies; Holdover, Doesn’t Qualify, etc) per housing court. These
@@ -192,7 +192,7 @@ functionality will fire an event when content is edited or published. Once you
 link the two together, Netlify will receive the event, rebuild the site, and
 deploy everything. Done!
 
-![](mobile-comps.png)
+![Mobile Comps](mobile-comps.png)
 _Mobile comps for Eviction Free NYC_
 
 #### In Conclusion
