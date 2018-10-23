@@ -1,8 +1,4 @@
 ---
 title: Gatsby core philosophy
 ---
-
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+Gatsby believes that making and using web applications should be fast and have a low cost.
