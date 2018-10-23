@@ -119,7 +119,6 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
     }
 
     for (let route of validRoutes) {
-      // console.log(entities)
       entities = entities.concat(
         await fetchData({
           route,
@@ -131,7 +130,6 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _concurrentRequests,
         })
       )
-      // console.log(entities)
       if (_verbose) console.log(``)
     }
 
@@ -143,8 +141,6 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
     )
   }
 
-  //console.log(allRoutes.data)
-  // console.log(entities)
   return entities
 }
 
