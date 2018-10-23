@@ -48,14 +48,95 @@ const prepareOptions = (babel, resolve = require.resolve) => {
     )
   }
 
-  // Fallback preset
+  // Fallback presets/plugins
   const fallbackPresets = []
+  const fallbackPlugins = []
+
+  let targets
+  if (stage === `build-html`) {
+    targets = {
+      node: `current`,
+    }
+  } else {
+    targets = {
+      browsers: pluginBabelConfig.browserslist,
+    }
+  }
 
   fallbackPresets.push(
-    babel.createConfigItem([resolve(`babel-preset-gatsby`)], {
-      type: `preset`,
+    babel.createConfigItem(
+      [
+        resolve(`@babel/preset-env`),
+        {
+          loose: true,
+          modules: false,
+          useBuiltIns: `usage`,
+          targets,
+        },
+      ],
+      {
+        type: `preset`,
+      }
+    )
+  )
+
+  fallbackPresets.push(
+    babel.createConfigItem(
+      [
+        resolve(`@babel/preset-react`),
+        {
+          useBuiltIns: true,
+          pragma: `React.createElement`,
+          development: stage === `develop`,
+        },
+      ],
+      {
+        type: `preset`,
+      }
+    )
+  )
+
+  fallbackPlugins.push(
+    babel.createConfigItem(
+      [
+        resolve(`@babel/plugin-proposal-class-properties`),
+        {
+          loose: true,
+        },
+      ],
+      {
+        type: `plugin`,
+      }
+    )
+  )
+
+  fallbackPlugins.push(
+    babel.createConfigItem([resolve(`babel-plugin-macros`)], {
+      type: `plugin`,
     })
   )
+
+  fallbackPlugins.push(
+    babel.createConfigItem([resolve(`@babel/plugin-syntax-dynamic-import`)], {
+      type: `plugin`,
+    })
+  )
+
+  fallbackPlugins.push(
+    babel.createConfigItem(
+      [
+        resolve(`@babel/plugin-transform-runtime`),
+        {
+          helpers: true,
+          regenerator: true,
+        },
+      ],
+      {
+        type: `plugin`,
+      }
+    )
+  )
+
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins = []
   const reduxPresets = []
@@ -79,6 +160,7 @@ const prepareOptions = (babel, resolve = require.resolve) => {
     reduxPlugins,
     requiredPresets,
     requiredPlugins,
+    fallbackPlugins,
     fallbackPresets,
   ]
 }
