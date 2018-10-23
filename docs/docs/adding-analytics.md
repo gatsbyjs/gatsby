@@ -39,7 +39,6 @@ npm install --save gatsby-plugin-google-analytics
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: "UA-XXXXXXXXX-X",
-        head: true,
       },
     },
 ```
@@ -48,7 +47,7 @@ Here replace `UA-XXXXXXXXX-X` with your own Tracking ID.
 
 Full documentation for the plugin can be found in the Gatsby plugins documentation [here](/packages/gatsby-plugin-google-analytics/) or on the Github page [here](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics)
 
-In the example we have used `head: true` as [suggested in Google's documentation](https://developers.google.com/analytics/devguides/collection/analyticsjs/). This will put the tracking script in the head. This defaults to false which will instead put it in the body. There are a number of extra configuration options both with the Gatsby plugin and also on Google Analytics itself so you can tailor to meet your website's needs.
+There are a number of extra configuration options both with the Gatsby plugin and also on Google Analytics itself so you can tailor to meet your website's needs.
 
 Once this is configured you can deploy your site to test! If you navigate to Home on Google Analytics you should see a dashboard with different statistics.
 
