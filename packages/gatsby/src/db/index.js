@@ -74,6 +74,8 @@ function getNode(id) {
   if (collInfo) {
     const coll = db.getCollection(collInfo.name)
     return coll.by(`id`, id)
+  } else {
+    return null
   }
 }
 

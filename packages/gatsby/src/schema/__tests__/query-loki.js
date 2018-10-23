@@ -1,6 +1,6 @@
 const queryLoki = require(`../query-loki`)
 const loki = require(`lokijs`)
-const db = new loki("loki-test.json")
+const db = new loki(`loki-test.json`)
 const dbModule = require(`../../db`)
 
 jest.mock(`../../db`)
@@ -11,13 +11,13 @@ describe(`query-loki`, () => {
       const gqlArgs = {
         filter: {
           id: {
-            eq: "1",
+            eq: `1`,
           },
         },
       }
       const expectedArgs = {
         id: {
-          $eq: "1",
+          $eq: `1`,
         },
       }
       const result = queryLoki.convertArgs(gqlArgs)
@@ -29,14 +29,14 @@ describe(`query-loki`, () => {
         filter: {
           fields: {
             slug: {
-              eq: "1",
+              eq: `1`,
             },
           },
         },
       }
       const expectedArgs = {
         "fields.slug": {
-          $eq: "1",
+          $eq: `1`,
         },
       }
       const result = queryLoki.convertArgs(gqlArgs)
@@ -48,20 +48,20 @@ describe(`query-loki`, () => {
         filter: {
           fields: {
             slug: {
-              eq: "1",
+              eq: `1`,
             },
             bar: {
-              eq: "2",
+              eq: `2`,
             },
           },
         },
       }
       const expectedArgs = {
         "fields.slug": {
-          $eq: "1",
+          $eq: `1`,
         },
         "fields.bar": {
-          $eq: "2",
+          $eq: `2`,
         },
       }
       const result = queryLoki.convertArgs(gqlArgs)
@@ -73,26 +73,26 @@ describe(`query-loki`, () => {
         filter: {
           fields: {
             slug: {
-              eq: "1",
+              eq: `1`,
             },
             bar: {
-              eq: "2",
+              eq: `2`,
             },
           },
           id: {
-            eq: "3",
+            eq: `3`,
           },
         },
       }
       const expectedArgs = {
         "fields.slug": {
-          $eq: "1",
+          $eq: `1`,
         },
         "fields.bar": {
-          $eq: "2",
+          $eq: `2`,
         },
         id: {
-          $eq: "3",
+          $eq: `3`,
         },
       }
       const result = queryLoki.convertArgs(gqlArgs)
@@ -117,7 +117,7 @@ describe(`query-loki`, () => {
       const rawGqlArgs = {
         filter: {
           foo: {
-            regex: "/src.*bar.js/",
+            regex: `/src.*bar.js/`,
           },
         },
       }
@@ -136,15 +136,15 @@ describe(`query-loki`, () => {
       const nodes = [
         {
           id: `0`,
-          foo: { bar: "2017" },
+          foo: { bar: `2017` },
         },
         {
           id: `1`,
-          foo: { bar: "2016" },
+          foo: { bar: `2016` },
         },
         {
           id: `2`,
-          foo: { bar: "2018" },
+          foo: { bar: `2018` },
         },
       ]
 
@@ -153,8 +153,8 @@ describe(`query-loki`, () => {
 
       const rawGqlArgs = {
         sort: {
-          order: "DESC",
-          fields: ["foo___bar"],
+          order: `DESC`,
+          fields: [`foo___bar`],
         },
       }
 

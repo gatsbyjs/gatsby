@@ -4,8 +4,6 @@ const prepareRegex = require(`./prepare-regex`)
 const { getNodesByType, getNode } = require(`../redux`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
 
-const nodesCache = new Map()
-
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
 const enhancedNodePromiseCache = new Map()
@@ -72,7 +70,7 @@ function runQuery({ type, rawGqlArgs, isConnection }) {
   // this avoids including { eq: x } when resolving fields.
   function extractFieldsToSift(prekey, key, preobj, obj, val) {
     if (_.isPlainObject(val)) {
-      _.forEach((val: any), (v, k) => {
+      _.forEach(val, (v, k) => {
         if (k === `elemMatch`) {
           // elemMatch is operator for arrays and not field we want to prepare
           // so we need to skip it
