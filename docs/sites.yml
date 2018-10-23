@@ -2999,3 +2999,19 @@
   built_by: Ian Busko
   built_by_url: https://github.com/ianbusko
   featured: false
+- title: "LANDR"
+  url: https://www.landr.com/
+  main_url: https://www.landr.com/
+  description: >
+    LANDR is the place to create, master and sell your music.
+  categories:
+    - AI
+    - Business
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Media
+    - Music
+  built_by: LANDR
+  built_by_url: https://twitter.com/landr_music
+  featured: false
