@@ -20,9 +20,11 @@ The `cache-control` header should be `cache-control: public,max-age=31536000,imm
 
 ## JavaScript
 
-Other files e.g. JavaScript files are _not_ (yet) cachable. Gatsby v1 is using webpack 1 which doesn't make it possible to produce paths tied directly to the content of the file. Gatsby v2 will ship with webpack 4 which [will make possible long-term caching of our JavaScript files](https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31).
+Other files e.g. JavaScript files are cachable via webpack 4's new features. Best practices state that all JavaScript must be cached but not served until the server has confirmed that the cache has the most recent version of the files.
 
-The `cache-control` header should be `cache-control: public, max-age=0, must-revalidate`
+The `cache-control` header should be `cache-control: public, max-age=0, no-cache`
+
+For further reading: [MDN docs defining no-cache](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#Cacheability)
 
 How you setup caching depends on how you're hosting your site. We encourage people to create Gatsby plugins which automate the creation of caching headers for Gatsby sites. The following plugins have been created:
 
