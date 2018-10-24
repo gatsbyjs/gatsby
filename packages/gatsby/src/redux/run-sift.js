@@ -1,5 +1,5 @@
 // @flow
-const sift = require(`sift`)
+const { default: sift, indexOf: siftIndexOf } = require(`sift`)
 const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
 const Promise = require(`bluebird`)
@@ -243,7 +243,7 @@ module.exports = ({ queryArgs, gqlType, firstOnly = false }: Object) => {
     if (firstOnly) {
       const index = _.isEmpty(siftArgs)
         ? 0
-        : sift.indexOf(
+        : siftIndexOf(
             {
               $and: siftArgs,
             },
