@@ -82,11 +82,12 @@ module.exports = (types: any) => {
           }),
         },
       },
-      async resolve(object, resolveArgs, b, { rootValue }) {
+      async resolve(object, resolveArgs, context, { rootValue }) {
         const results = await runQuery({
           gqlType: type.node.type,
           queryArgs: resolveArgs,
-          context: b,
+          context,
+          firstOnly: false,
         })
 
         let path

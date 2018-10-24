@@ -34,7 +34,7 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
-function runQuery({ gqlType, rawGqlArgs, isConnection }) {
+function runQuery({ gqlType, rawGqlArgs, firstOnly }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(rawGqlArgs))
@@ -153,24 +153,6 @@ function runQuery({ gqlType, rawGqlArgs, isConnection }) {
     })
   }
 
-  // If the the query for single node only has a filter for an "id"
-  // using "eq" operator, then we'll just grab that ID and return it.
-  if (
-    !isConnection &&
-    Object.keys(fieldsToSift).length === 1 &&
-    Object.keys(fieldsToSift)[0] === `id` &&
-    Object.keys(siftArgs[0].id).length === 1 &&
-    Object.keys(siftArgs[0].id)[0] === `$eq`
-  ) {
-    const nodePromise = resolveRecursive(
-      getNode(siftArgs[0].id[`$eq`]),
-      fieldsToSift,
-      gqlType.getFields()
-    )
-
-    return nodePromise
-  }
-
   const nodesPromise = () => {
     const nodesCacheKey = JSON.stringify({
       // typeName + count being the same is a pretty good
@@ -218,7 +200,7 @@ function runQuery({ gqlType, rawGqlArgs, isConnection }) {
     }
   }
   const tempPromise = nodesPromise().then(myNodes => {
-    if (!isConnection) {
+    if (firstOnly) {
       const index = _.isEmpty(siftArgs)
         ? 0
         : sift.indexOf(
@@ -228,38 +210,36 @@ function runQuery({ gqlType, rawGqlArgs, isConnection }) {
             myNodes
           )
 
-      // If a node is found, create a dependency between the resulting node and
-      // the path.
       if (index !== -1) {
-        return myNodes[index]
+        return [myNodes[index]]
       } else {
-        return null
+        return []
       }
+    } else {
+      let result = _.isEmpty(siftArgs)
+        ? myNodes
+        : sift(
+            {
+              $and: siftArgs,
+            },
+            myNodes
+          )
+
+      if (!result || !result.length) return null
+
+      // Sort results.
+      if (clonedArgs.sort) {
+        // create functions that return the item to compare on
+        // uses _.get so nested fields can be retrieved
+        const convertedFields = clonedArgs.sort.fields
+          .map(field => field.replace(/___/g, `.`))
+          .map(field => v => _.get(v, field))
+
+        result = _.orderBy(result, convertedFields, clonedArgs.sort.order)
+      }
+
+      return result
     }
-
-    let result = _.isEmpty(siftArgs)
-      ? myNodes
-      : sift(
-          {
-            $and: siftArgs,
-          },
-          myNodes
-        )
-
-    if (!result || !result.length) return null
-
-    // Sort results.
-    if (clonedArgs.sort) {
-      // create functions that return the item to compare on
-      // uses _.get so nested fields can be retrieved
-      const convertedFields = clonedArgs.sort.fields
-        .map(field => field.replace(/___/g, `.`))
-        .map(field => v => _.get(v, field))
-
-      result = _.orderBy(result, convertedFields, clonedArgs.sort.order)
-    }
-
-    return result
   })
 
   return tempPromise

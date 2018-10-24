@@ -227,6 +227,7 @@ module.exports = async ({ parentSpan }) => {
               gqlType,
               queryArgs,
               context,
+              firstOnly: true,
             })
 
             if (results.length > 0) {

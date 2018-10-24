@@ -164,7 +164,7 @@ function execLokiQuery(coll, findArgs, gqlArgs) {
  *
  * {Object} context: The context from the QueryJob
  */
-function runQuery({ gqlType, rawGqlArgs, context = {} }) {
+function runQuery({ gqlType, rawGqlArgs, context = {}, firstOnly }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(rawGqlArgs))
@@ -179,7 +179,7 @@ function runQuery({ gqlType, rawGqlArgs, context = {} }) {
     ensureIndexes(coll, lokiArgs)
   }
 
-  let chain = coll.chain().find(lokiArgs)
+  let chain = coll.chain().find(lokiArgs, firstOnly)
 
   const { sort } = gqlArgs
   if (sort) {

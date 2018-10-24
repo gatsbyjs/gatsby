@@ -32,11 +32,11 @@ function chooseQueryEngine(queryArgs) {
 // In both cases, a promise is returned that will eventually have the
 // query results (as an array, even if the query was for a connection)
 function runQuery(args) {
-  const { gqlType, queryArgs, context } = args
+  const { gqlType, queryArgs, context, firstOnly } = args
 
   const queryFunction = chooseQueryEngine(queryArgs)
 
-  return queryFunction({ rawGqlArgs: queryArgs, gqlType, context })
+  return queryFunction({ rawGqlArgs: queryArgs, gqlType, context, firstOnly })
 }
 
 module.exports.runQuery = runQuery

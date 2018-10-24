@@ -101,6 +101,37 @@ describe(`query-loki`, () => {
   })
 
   describe(`queries`, () => {
+    it(`firstOnly`, async () => {
+      dbModule.getDb.mockReturnValue(db)
+
+      const typeName = `testType`
+      const gqlType = { name: typeName }
+      const node1 = { id: `0` }
+      const node2 = { id: `1` }
+      const coll = db.addCollection(typeName)
+      coll.insert([node1, node2])
+
+      const rawGqlArgs = {
+        filter: {
+          id: {
+            gte: 0,
+          },
+        },
+        sort: {
+          fields: ["id"],
+        },
+      }
+
+      const result = await queryLoki.runQuery({
+        gqlType,
+        rawGqlArgs,
+        firstOnly: true,
+      })
+
+      expect(result).toHaveLength(1)
+      expect(result[0]).toHaveProperty(`id`, `0`)
+    })
+
     it(`regex`, async () => {
       dbModule.getDb.mockReturnValue(db)
 
