@@ -1,49 +1,98 @@
 ---
-title: Using Unstructured Data
+title: Using unstructured data
 ---
 
-This is a stub. Help our community expand it.
+Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. However, source plugins (or even Gatsby nodes) aren't strictly necessary to pull data into a Gatsby site! It's also possible to use an “unstructured data” approach in Gatsby sites.
 
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+> Note: For our purposes here, “unstructured data” means data “handled outside of Gatsby’s data layer” (we’re using the data directly, and not transforming the data into Gatsby nodes).
 
-Initial notes:
-[GitHub Issue #8482](https://github.com/gatsbyjs/gatsby/issues/8482)
+## The approach: Fetch data and use Gatsby's `createPages` API
 
-### Do I have to use GraphQL and source plugins to pull data into Gatsby sites?
+> _Note_: This example is drawn from an example repo built specifically to model how to use this "unstructured data" approach. [View the full repo on GitHub](https://github.com/jlengstorf/gatsby-with-unstructured-data).
 
-Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+In your Gatsby project's `gatsby-node.js` file, fetch the needed data, and supply it to the `createPage` action within the `createPages` API:
 
-### Prerequisites (if any)
+```javascript{9,15,17}:title=gatsby-node.js
+exports.createPages = async ({ actions: { createPage } }) => {
+  // `getPokemonData` is a function that fetches our data
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
 
-### The facts
+  // Create a page that lists all Pokémon.
+  createPage({
+    path: `/`,
+    component: require.resolve("./src/templates/all-pokemon.js"),
+    context: { allPokemon },
+  })
 
-### Example
+  // Create a page for each Pokémon.
+  allPokemon.forEach(pokemon => {
+    createPage({
+      path: `/pokemon/${pokemon.name}/`,
+      component: require.resolve("./src/templates/pokemon.js"),
+      context: { pokemon },
+    })
+  })
+}
+```
 
-**to do** Possibly pull from these examples
-https://twitter.com/thekitze/status/1043532445742784515
-https://jsonplaceholder.typicode.com/
+- `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
+- The [`createPage` action](https://www.gatsbyjs.org/docs/actions/#createPage) is what actually creates the page.
 
-### Tradeoffs to this approach
+On the highlighted lines, the data is being supplied to the page template, where it can be accessed as props:
 
-While using the node `createPages` API can be the most straightforward way to build a smaller site, there are tradeoffs to this approach.
+```javascript{1,3-4,7-10}:title=/src/templates/pokemon.js
+export default ({ pageContext: { pokemon } }) => (
+  <div style={{ width: 960, margin: "4rem auto" }}>
+    <h1>{pokemon.name}</h1>
+    <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+    <h2>Abilities</h2>
+    <ul>
+      {pokemon.abilities.map(ability => (
+        <li key={ability.name}>
+          <Link to={`./pokemon/${pokemon.name}/ability/${ability.name}`}>
+            {ability.name}
+          </Link>
+        </li>
+      ))}
+    </ul>
+    <Link to="/">Back to all Pokémon</Link>
+  </div>
+)
+```
 
-The first tradeoff is that you cannot transform your data with transformer plugins like `gatsby-image`, which provides image optimization out of the box.
+## When might using "unstructured data" make sense?
 
-The second tradeoff is that pulling data in medium+ complex sites could become more difficult.
+You may find this approach useful when using Gatsby's data layer feels a bit too heavy-handed for your project scope.
 
-### The Gatsby recommendation
+## The pros of using unstructured data
+
+- The approach is familiar and comfortable, especially if you’re new to GraphQL
+- There’s no intermediate step: you fetch some data, then build pages with it
+
+## The tradeoffs of foregoing Gatsby's data layer
+
+Using Gatsby's data layer provides the following benefits:
+
+- Enables you to declaratively specify what data a page component needs, alongside the page component
+- Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it’ll show up when you need it
+- Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries
+- It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
+- Improves performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
+- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
+
+> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
+
+Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
+
+- [`gatsby-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) (speedy optimized images),
+- [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp) (provides queryable fields for processing your images in a variety of ways including resizing, cropping, and creating responsive images),
+- ... the whole Gatsby ecosystem of official and community-created [transformer plugins](/plugins/?=transformer).
+
+Another difficulty added when working with unstructured data is that your data fetching code becomes increasingly hairy when you source directly from multiple locations.
+
+## The Gatsby recommendation
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
 1.  Check out the [Plugin Library](/packages/) to see if the source plugins and/or transformer plugins you'd like to use already exist
 2.  If they don't exist, read the [Plugin Authoring](/docs/plugin-authoring/) guide and consider building your own!
-
-### Other resources
-
-- Link to a blog post
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
