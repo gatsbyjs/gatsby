@@ -2923,6 +2923,12 @@
   built_by: Kiko Beats
   built_by_url: https://kikobeats.com/
   featured: false
+- title: Markets.com
+  main_url: "https://www.markets.com/"
+  url: "https://www.markets.com/"
+  featured: false
+  categories:
+    - Finance
 - title: Kevin Legrand
   url: "https://k-legrand.com"
   main_url: "https://k-legrand.com"
