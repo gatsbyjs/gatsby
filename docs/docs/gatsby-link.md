@@ -17,7 +17,7 @@ any unnecessary latency when changing pages should be avoided. So to avoid that,
 Gatsby preloads code chunks and page data.
 
 Preloading is triggered by a link entering the viewport; Gatsby uses
-`Link`'s `innerRef` property to create a new InteractionObserver (on
+`Link`'s `innerRef` property to create a new IntersectionObserver (on
 supported browsers) to monitor visible links. This way, Gatsby only prefetches
 code/data chunks for pages the user is likely to navigate to. You can also get
 access to the link element by passing in a `innerRef` prop.

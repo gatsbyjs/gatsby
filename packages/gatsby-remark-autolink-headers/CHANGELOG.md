@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.7...gatsby-remark-autolink-headers@2.0.8) (2018-10-23)
+
+### Features
+
+- **gatsby-remark-autolink-headers:** add option to maintain case ([#9313](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/issues/9313)) ([4265ff3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/commit/4265ff3))
+
 <a name="2.0.7"></a>
 
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.6...gatsby-remark-autolink-headers@2.0.7) (2018-10-15)

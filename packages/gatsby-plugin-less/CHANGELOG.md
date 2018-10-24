@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.5...gatsby-plugin-less@2.0.6) (2018-10-23)
+
+### Features
+
+- **gatsby-plugin-less:** add support for overriding the default options of `css-loader` ([#9237](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/issues/9237)) ([ba82bc4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/commit/ba82bc4)), closes [#9142](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/issues/9142)
+
 <a name="2.0.5"></a>
 
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-rc.2...gatsby-plugin-less@2.0.5) (2018-09-17)

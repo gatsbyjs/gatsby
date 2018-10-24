@@ -126,7 +126,7 @@ Cockpit also seems to share a lot of the same features except for two big differ
 
 ## Conclusion - Which Back-End is right?
 
-If nothing else, writing this article has given me a checklist that I need a CMS to fulfil. Some other CMSs have great features, but a couple of them are much more important to my use-case than others.
+If nothing else, writing this article has given me a checklist that I need a CMS to fulfill. Some other CMSs have great features, but a couple of them are much more important to my use-case than others.
 
 ### Free Option
 

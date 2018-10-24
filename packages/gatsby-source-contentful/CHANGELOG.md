@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.5...gatsby-source-contentful@2.0.6) (2018-10-24)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.4...gatsby-source-contentful@2.0.5) (2018-10-23)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** fix missing linked assets when editing unrelated fields ([#9303](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/9303)) ([3969a94](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/3969a94))
+
+### Features
+
+- **gatsby-source-contentful:** add structured text node type ([#8214](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/8214)) ([57f48ef](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/57f48ef))
+
 <a name="2.0.4"></a>
 
 ## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.3...gatsby-source-contentful@2.0.4) (2018-10-16)

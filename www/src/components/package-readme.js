@@ -23,10 +23,10 @@ const PackageReadMe = props => {
       <Helmet>
         <title>{packageName}</title>
         <meta name="description" content={excerpt} />
-        <meta name="og:description" content={excerpt} />
+        <meta property="og:description" content={excerpt} />
         <meta name="twitter:description" content={excerpt} />
-        <meta name="og:title" content={packageName} />
-        <meta name="og:type" content="article" />
+        <meta property="og:title" content={packageName} />
+        <meta property="og:type" content="article" />
         <meta name="twitter.label1" content="Reading time" />
         <meta name="twitter:data1" content={`${timeToRead} min read`} />
       </Helmet>
