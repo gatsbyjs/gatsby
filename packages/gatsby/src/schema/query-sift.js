@@ -34,6 +34,25 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
+/**
+ * Runs the graphql query over the nodes in loki, but uses sift.js for
+ * querying instead of loki. It does this because it needs to first
+ * iterate over all nodes calling plugin field resolvers to make sure
+ * they have been realized before querying occurs
+ *
+ * @param {Object} args. Object with:
+ *
+ * {Object} gqlType: built during `./build-node-types.js`
+ *
+ * {Object} rawGqlArgs: The raw graphql query as a js object. E.g `{
+ * filter: { fields { slug: { eq: "/somepath" } } } }`
+ *
+ * {boolean} firstOnly: Whether to return the first found match, or
+ * all matching result.
+ *
+ * @returns {promise} A promise that will eventually be resolved with
+ * a collection of matching objects (even if `firstOnly` is true)
+ */
 function runQuery({ gqlType, rawGqlArgs, firstOnly }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.

@@ -163,6 +163,12 @@ function execLokiQuery(coll, findArgs, gqlArgs) {
  * filter: { fields { slug: { eq: "/somepath" } } } }`
  *
  * {Object} context: The context from the QueryJob
+ *
+ * {boolean} firstOnly: Whether to return the first found match, or
+ * all matching result.
+ *
+ * @returns {promise} A promise that will eventually be resolved with
+ * a collection of matching objects (even if `firstOnly` is true)
  */
 function runQuery({ gqlType, rawGqlArgs, context = {}, firstOnly }) {
   // Clone args as for some reason graphql-js removes the constructor
