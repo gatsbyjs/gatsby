@@ -48,6 +48,7 @@ exports.sourceNodes = async (
       if (!type) return
       const getNext = async (url, data = []) => {
         let d
+        if (typeof url === 'object') url = url.href
         try {
           d = await axios.get(url)
         } catch (error) {
