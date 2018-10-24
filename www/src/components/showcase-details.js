@@ -263,7 +263,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <Helmet>
                 <title>{data.sitesYaml.title}</title>
                 <meta
-                  name="og:image"
+                  property="og:image"
                   content={`https://www.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
