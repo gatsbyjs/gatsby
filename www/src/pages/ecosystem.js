@@ -4,7 +4,6 @@ import { rhythm } from "../utils/typography"
 import { colors } from "../utils/presets"
 
 import Layout from "../components/layout/layout-default"
-import ContentContainer from "../components/layout/content-container"
 import PageHeading from "../components/layout/page-heading"
 
 import { EcosystemIcon } from "../assets/mobile-nav-icons"
