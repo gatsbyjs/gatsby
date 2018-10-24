@@ -49,7 +49,7 @@ const StyledSkipNavLink = styled(SkipNavLink)`
   }
 `
 
-class LayoutDefault extends React.Component {
+class LayoutWithHeading extends React.Component {
   render() {
     const {
       children,
@@ -88,11 +88,11 @@ class LayoutDefault extends React.Component {
   }
 }
 
-LayoutDefault.propTypes = {
+LayoutWithHeading.propTypes = {
   children: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
   pageTitle: PropTypes.string,
   pageIcon: PropTypes.string,
 }
 
-export default LayoutDefault
+export default LayoutWithHeading
