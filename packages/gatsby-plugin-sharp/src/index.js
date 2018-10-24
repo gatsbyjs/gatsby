@@ -521,7 +521,11 @@ async function fluid({ file, args = {}, reporter }) {
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
 
   if (options[fixedDimension] < 1) {
-    throw new Error(`${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`)
+    throw new Error(
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${
+        options[fixedDimension]
+      }`
+    )
   }
 
   let presentationWidth, presentationHeight
@@ -563,9 +567,11 @@ async function fluid({ file, args = {}, reporter }) {
     fluidSizes.push(options[fixedDimension] * 2)
     fluidSizes.push(options[fixedDimension] * 3)
   } else {
-    options.srcSetBreakpoints.forEach((breakpoint) => {
+    options.srcSetBreakpoints.forEach(breakpoint => {
       if (breakpoint < 1) {
-        throw new Error(`All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`)
+        throw new Error(
+          `All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`
+        )
       }
       // ensure no duplicates are added
       if (fluidSizes.includes(breakpoint)) {
@@ -778,7 +784,10 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
     turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
   }
   const optionsSVG = _.defaults(args, defaultArgs)
-  const options = healOptions(fileArgs, {})
+  const options = healOptions(fileArgs, {
+    ...(fileArgs.maxHeight ? { height: fileArgs.maxHeight } : {}),
+    ...(fileArgs.maxWidth ? { width: fileArgs.maxWidth } : {}),
+  })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -841,7 +850,8 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
 
 const memoizedTraceSVG = _.memoize(
   notMemoizedtraceSVG,
-  ({ file, args }) => `${file.absolutePath}${JSON.stringify(args)}`
+  ({ file, args, fileArgs }) =>
+    `${file.absolutePath}${JSON.stringify(args)}${JSON.stringify(fileArgs)}`
 )
 
 async function traceSVG(args) {
