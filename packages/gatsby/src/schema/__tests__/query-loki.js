@@ -105,7 +105,7 @@ describe(`query-loki`, () => {
       dbModule.getDb.mockReturnValue(db)
 
       const typeName = `testType`
-      const type = { name: typeName }
+      const gqlType = { name: typeName }
       const node = {
         id: `0`,
         foo: `src/foobar.js`,
@@ -122,7 +122,7 @@ describe(`query-loki`, () => {
         },
       }
 
-      const result = await queryLoki.runQuery({ type, rawGqlArgs })
+      const result = await queryLoki.runQuery({ gqlType, rawGqlArgs })
 
       expect(result).toHaveLength(1)
       expect(result[0]).toHaveProperty(`id`, `0`)
@@ -132,7 +132,7 @@ describe(`query-loki`, () => {
       dbModule.getDb.mockReturnValue(db)
 
       const typeName = `NestedSorting`
-      const type = { name: typeName }
+      const gqlType = { name: typeName }
       const nodes = [
         {
           id: `0`,
@@ -158,7 +158,7 @@ describe(`query-loki`, () => {
         },
       }
 
-      const result = await queryLoki.runQuery({ type, rawGqlArgs })
+      const result = await queryLoki.runQuery({ gqlType, rawGqlArgs })
 
       expect(result).toHaveLength(3)
       expect(result[0]).toHaveProperty(`id`, `2`)

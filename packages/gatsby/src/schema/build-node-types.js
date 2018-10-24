@@ -224,7 +224,7 @@ module.exports = async ({ parentSpan }) => {
             queryArgs = { filter: queryArgs }
 
             const results = await runQuery({
-              type: gqlType,
+              gqlType,
               queryArgs,
               context,
             })

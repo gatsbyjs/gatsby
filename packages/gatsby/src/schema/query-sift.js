@@ -34,11 +34,11 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
-function runQuery({ type, rawGqlArgs, isConnection }) {
+function runQuery({ gqlType, rawGqlArgs, isConnection }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(rawGqlArgs))
-  const typeName = type.name
+  const typeName = gqlType.name
 
   let nodes = getNodesByType(typeName)
 
@@ -165,7 +165,7 @@ function runQuery({ type, rawGqlArgs, isConnection }) {
     const nodePromise = resolveRecursive(
       getNode(siftArgs[0].id[`$eq`]),
       fieldsToSift,
-      type.getFields()
+      gqlType.getFields()
     )
 
     return nodePromise
@@ -198,7 +198,7 @@ function runQuery({ type, rawGqlArgs, isConnection }) {
           }
 
           const enhancedNodeGenerationPromise = new Promise(resolve => {
-            resolveRecursive(node, fieldsToSift, type.getFields()).then(
+            resolveRecursive(node, fieldsToSift, gqlType.getFields()).then(
               resolvedNode => {
                 trackInlineObjectsInRootNode(resolvedNode)
                 if (cacheKey) {

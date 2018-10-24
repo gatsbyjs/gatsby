@@ -152,29 +152,48 @@ function execLokiQuery(coll, findArgs, gqlArgs) {
   return chain.data()
 }
 
-// Runs the graphql query through the loki nodes db.
-// rawGqlArgs - The raw graphql query object as a js object. E.g
-//   { filter: { fields { slug: { eq: "/somepath" } } } }
-// type: the gqlType we're querying for
-// TODO: It might need filter: added
-function runQuery({ type, rawGqlArgs }) {
+/**
+ * Runs the graphql query over the loki nodes db.
+ *
+ * @param {Object} args. Object with:
+ *
+ * {Object} gqlType: built during `./build-node-types.js`
+ *
+ * {Object} rawGqlArgs: The raw graphql query as a js object. E.g `{
+ * filter: { fields { slug: { eq: "/somepath" } } } }`
+ *
+ * {Object} context: The context from the QueryJob
+ */
+function runQuery({ gqlType, rawGqlArgs, context = {} }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(rawGqlArgs))
 
   const lokiArgs = convertArgs(gqlArgs)
 
-  const coll = getDb().getCollection(type.name)
+  const coll = getDb().getCollection(gqlType.name)
 
-  ensureIndexes(coll, lokiArgs)
+  // Allow page creators to specify that they want indexes
+  // automatically created for their pages.
+  if (context.useQueryIndex) {
+    ensureIndexes(coll, lokiArgs)
+  }
 
-  const result = execLokiQuery(coll, lokiArgs, gqlArgs)
+  let chain = coll.chain().find(lokiArgs)
 
-  return Promise.resolve(result)
+  const { sort } = gqlArgs
+  if (sort) {
+    const sortFields = toSortFields(sort)
+    _.forEach(sortFields, ([fieldName]) => {
+      coll.ensureIndex(fieldName)
+    })
+    chain = chain.compoundsort(sortFields)
+  }
+
+  return Promise.resolve(chain.data())
 }
 
 module.exports = {
-  // exported for testing purposes only
   convertArgs,
   runQuery,
 }

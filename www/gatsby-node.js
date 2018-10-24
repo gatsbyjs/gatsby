@@ -244,6 +244,7 @@ exports.createPages = ({ graphql, actions }) => {
             skip: i * postsPerPage,
             numPages,
             currentPage: i + 1,
+            useQueryIndex: true,
           },
         })
       })
