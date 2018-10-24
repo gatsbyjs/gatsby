@@ -66,7 +66,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 - **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
   splitting, image optimization, inlining critical styles, lazy-loading, and prefetching resources,
-  and more to ensure your site is fast ‚Äî no manual tuning required.
+  and more to ensure your site is fast ‚Ä?no manual tuning required.
 
 - **Host at Scale for Pennies.** Gatsby sites don‚Äôt require servers so you can host your entire
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
@@ -119,7 +119,7 @@ Full documentation for Gatsby lives [on the website](https://gatsbyjs.org/).
 
 - **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-- **To dive straight into code samples head [to our documentation](https://gatsbyjs.org/docs/).** In particular, check out the ‚Äú<i>Guides</i>‚Äù, ‚Äú<i>API Reference</i>‚Äù, and ‚Äú<i>Advanced Tutorials</i>‚Äù sections in the sidebar.
+- **To dive straight into code samples head [to our documentation](https://gatsbyjs.org/docs/).** In particular, check out the ‚Ä?i>Guides</i>‚Ä? ‚Ä?i>API Reference</i>‚Ä? and ‚Ä?i>Advanced Tutorials</i>‚Ä?sections in the sidebar.
 
 We welcome suggestions for improving our docs. See the [‚Äúhow to contribute‚Äù](https://gatsbyjs.org/docs/how-to-contribute/) documentation for more details.
 
@@ -136,7 +136,7 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 
 Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
 
-Check out our [contributor onboarding docs](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repos up and running on your local machine.
+Check out our [contributor onboarding docs](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
 [**Read the Contributing Guide**](https://gatsbyjs.org/docs/how-to-contribute/)
 
