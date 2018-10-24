@@ -19,7 +19,7 @@
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby is released under the MIT license." />
   </a>
   <a href="https://circleci.com/gh/gatsbyjs/gatsby/tree/master">
-    <img src="https://circleci.com/gh/gatsbyjs/gatsby/tree/master.svg?style=shield" alt="Current CircleCi build status." />
+    <img src="https://circleci.com/gh/gatsbyjs/gatsby/tree/master.svg?style=shield" alt="Current CircleCI build status." />
   </a>
   <a href="https://www.npmjs.org/package/gatsby">
     <img src="https://img.shields.io/npm/v/gatsby.svg" alt="Current npm package version." />
