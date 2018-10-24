@@ -347,6 +347,12 @@ Another success! 🎉
 
 ![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
 
+Why use two different queries here? These examples were quick introductions to
+the query types, how they are formatted, and where they can be used. For now,
+keep in mind that only pages can make page queries. Non-page components, such as
+Layout, can use StaticQuery. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater
+depth.
+
 But let's restore the real title.
 
 One of the core principles of Gatsby is that _creators need an immediate connection to what they're creating_ ([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principle/)). In other words, when you make any change to code you should immediately see the effect of that change. You manipulate an input of Gatsby and you see the new output showing up on the screen.
