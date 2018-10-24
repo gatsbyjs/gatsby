@@ -3015,3 +3015,14 @@
   built_by: LANDR
   built_by_url: https://twitter.com/landr_music
   featured: false
+- title: People For Bikes
+  url: https://2017.peopleforbikes.org/
+  main_url: https://2017.peopleforbikes.org/
+  categories:
+    - Community
+    - Sport
+    - Gallery
+    - Nonprofit
+  built_by: PeopleForBikes
+  built_by_url: https://peopleforbikes.org/about-us/who-we-are/staff/
+  featured: false
