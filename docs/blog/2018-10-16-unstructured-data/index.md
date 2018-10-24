@@ -186,6 +186,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 For each type of page, we are invoking the `createPage` action, and supplying it with our desired path, React component, and data (as props on the context).
 
+> View the full source code of this example at Jason Lengstorf's ["gatsby-with-unstructured-data" repo](https://github.com/jlengstorf/gatsby-with-unstructured-data). Also check out the ["using-gatsby-data-layer" branch](https://github.com/jlengstorf/gatsby-with-unstructured-data/tree/using-gatsby-data-layer) of that repo, to compare a refactor that uses Gatsby's data layer in the same example.
+
 ## When might using "unstructured data" make sense?
 
 You may find this approach useful when using Gatsby's data layer feels a bit too heavy-handed for your project scope.
