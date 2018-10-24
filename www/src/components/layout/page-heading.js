@@ -30,7 +30,7 @@ const H1 = styled.h1({
     transformOrigin: "top left",
   },
 
-  "&:after": {
+  ":after": {
     bottom: "2rem",
     content: "attr(data-title)",
     display: "none",
@@ -52,23 +52,23 @@ const Icon = styled.span({
   height: "32px",
   margin: "0.1rem 0.1rem 0 - 0.3rem",
 
-  "& .svg-stroke": {
+  ".svg-stroke": {
     strokeMiterlimit: 10,
     strokeWidth: 1.4173,
   },
-  "& .svg-stroke-accent": { stroke: colors.lavender },
-  "& .svg-stroke-lilac": { stroke: colors.lavender },
-  "& .svg-fill-lilac": { fill: colors.lavender },
-  "& .svg-fill-gatsby": { fill: colors.lavender },
-  "& .svg-fill-brightest": { fill: `#fff` },
-  "& .svg-fill-accent": { fill: colors.lavender },
-  "& .svg-stroke-gatsby": { stroke: colors.lavender },
-  "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
-  "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
-  "& .svg-fill-gradient-accent-white-bottom": { fill: `#fff` },
-  "& .svg-fill-gradient-purple": { fill: colors.lavender },
-  "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
-  "& .svg-fill-wisteria": { fill: `transparent` },
+  ".svg-stroke-accent": { stroke: colors.lavender },
+  ".svg-stroke-lilac": { stroke: colors.lavender },
+  ".svg-fill-lilac": { fill: colors.lavender },
+  ".svg-fill-gatsby": { fill: colors.lavender },
+  ".svg-fill-brightest": { fill: `#fff` },
+  ".svg-fill-accent": { fill: colors.lavender },
+  ".svg-stroke-gatsby": { stroke: colors.lavender },
+  ".svg-fill-gradient-accent-white-top": { fill: `transparent` },
+  ".svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
+  ".svg-fill-gradient-accent-white-bottom": { fill: `#fff` },
+  ".svg-fill-gradient-purple": { fill: colors.lavender },
+  ".svg-stroke-gradient-purple": { stroke: colors.lavender },
+  ".svg-fill-wisteria": { fill: `transparent` },
 })
 
 const PageHeading = ({ title, icon }) => (
