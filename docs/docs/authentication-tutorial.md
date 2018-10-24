@@ -146,11 +146,12 @@ For this tutorial you will use a hardcoded user/password. Create the folder `src
 export const isBrowser = () => typeof window !== "undefined"
 
 export const getUser = () =>
-  isBrowser() && window.localStorage.gatsbyUser
-    ? JSON.parse(window.localStorage.gatsbyUser)
+  isBrowser() && window.localStorage.getItem("gatsbyUser")
+    ? JSON.parse(window.localStorage.getItem("gatsbyUser"))
     : {}
 
-const setUser = user => (window.localStorage.gatsbyUser = JSON.stringify(user))
+const setUser = user =>
+  window.localStorage.setItem("gatsbyUser", JSON.stringify(user))
 
 export const handleLogin = ({ username, password }) => {
   if (username === `john` && password === `pass`) {
