@@ -8,13 +8,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "prop-types": "^15.6.1",
-    "react-testing-library": "^4.1.7"
+    "prop-types": "^15.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "cross-env": "^5.1.4"
+    "cross-env": "^5.1.4",
+    "react-testing-library": "^5.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image#readme",
   "keywords": [
