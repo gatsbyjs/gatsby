@@ -57,8 +57,9 @@ const UnsplashMasonry = edges => (
             "& .gatsby-image-wrapper:hover": {
               "& div + img": {
                 opacity: `1 !important`,
+                transition: `none !important`,
               },
-              "& img + img": {
+              "& img + picture > img": {
                 opacity: `0 !important`,
               },
               "& span": {
@@ -138,6 +139,7 @@ class TracedSVG extends React.Component {
 
         <h2>Unsplash</h2>
         <UnsplashMasonry images={data.unsplashImages.edges} />
+        <UnsplashMasonry images={data.unsplashImagesCropped.edges} />
 
         <Ipsum />
 
@@ -175,12 +177,34 @@ export const query = graphql`
         }
       }
     }
-    unsplashImages: allFile(filter: { relativePath: { regex: "/unsplash/" } }) {
+    unsplashImages: allFile(
+      filter: { relativePath: { regex: "/unsplash/" } }
+      limit: 10
+    ) {
       edges {
         node {
           childImageSharp {
             fluid(
               maxWidth: 430
+              quality: 80
+              traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
+            ) {
+              ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
+      }
+    }
+    unsplashImagesCropped: allFile(
+      filter: { relativePath: { regex: "/unsplash/" } }
+      skip: 10
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid(
+              maxWidth: 430
+              maxHeight: 430
               quality: 80
               traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
             ) {
