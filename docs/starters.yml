@@ -998,6 +998,7 @@
   repo: https://github.com/GatsbyCentral/gatsby-v2-starter-casper
   description: A blog starter based on the Casper (v1.4) theme.
   tags:
+    - Blog
     - PWA
   features:
     - Page pagination
@@ -1011,6 +1012,7 @@
   repo: https://github.com/GatsbyCentral/gatsby-v2-starter-lumen
   description: A Gatsby v2 fork of the lumen starter.
   tags:
+    - Blog
     - RSS
     - Disqus
   features:
