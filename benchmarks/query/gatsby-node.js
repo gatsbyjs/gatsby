@@ -104,6 +104,7 @@ async function createTypePages({ graphql, actions }, typeName) {
       component: require.resolve(templateFilename),
       context: {
         id: node.id,
+        useQueryIndex: true,
       },
     })
   })

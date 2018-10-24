@@ -196,7 +196,7 @@ function getNode(id) {
     const coll = db.getCollection(collInfo.name)
     return coll.by(`id`, id)
   } else {
-    return null
+    return undefined
   }
 }
 
@@ -263,11 +263,17 @@ function hasNodeChanged(id, digest) {
 module.exports = {
   start,
   getDb,
+  deleteAllCollections,
+  deleteEmptyCollections,
+
+  createNode,
+  updateNode,
+  deleteNode,
+
   getNode,
   getNodes,
+  getNodeTypes,
   getNodesByType,
   getNodeAndSavePathDependency,
   hasNodeChanged,
-  deleteAllCollections,
-  deleteEmptyCollections,
 }

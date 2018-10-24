@@ -51,6 +51,7 @@ module.exports = async ({ parentSpan } = {}) => {
     let rootNode = node
     let whileCount = 0
     while (
+      rootNode &&
       rootNode.parent &&
       getNode(rootNode.parent) !== undefined &&
       whileCount < 101
