@@ -9,6 +9,8 @@ Overall, loki is a big win for sites with lots of pages of the same type. For sm
 
 ## Benchmarks
 
+Performed on 2018 13" MBP. 4-core 2.7 GHz Intel Core i7. 16 GB 2133 MHz LPDDR3
+
 ### Gatsby master
 
 - Gatsby: master
