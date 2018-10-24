@@ -241,9 +241,13 @@ const Profile = () => (
 export default Profile
 ```
 
-The login component will allow - as you may have guessed - the login process:
+The login component will handle - as you may have guessed - the login process:
 
 ```jsx:title=src/components/login.js
+import React from "react"
+import { navigate } from "gatsby"
+import { handleLogin, isLoggedIn } from "../services/auth"
+
 class Login extends React.Component {
   state = {
     username: ``,
