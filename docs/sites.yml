@@ -3033,3 +3033,22 @@
   built_by: PeopleForBikes
   built_by_url: "https://peopleforbikes.org/about-us/who-we-are/staff/"
   featured: false
+- title: Wide Eye
+  description: >
+    Creative agency specializing in interactive design, web development, and digital communications.
+  url: https://wideeye.co/
+  main_url: https://wideeye.co/
+  categories:
+    - Design
+    - Web Development
+  built_by: Wide Eye
+  built_by_url: https://wideeye.co/about-us/
+  featured: false
+- title: Guster
+  description: >
+    American alternative rock band from Boston, Massachusetts.
+  url: http://guster.com/
+  main_url: http://guster.com/
+  categories:
+    - Music
+  featured: false
