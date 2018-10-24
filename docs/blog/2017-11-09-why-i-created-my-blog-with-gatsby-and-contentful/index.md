@@ -320,7 +320,7 @@ comes to hosting static sites, providing you with an amazing Continuous
 Deployment infrastructure to generate and deploy static sites on demand, which
 incidentally is perfect for this kind of architecture.
 
-Just like Contentful, Netlify also has a very genereous free tier which is more
+Just like Contentful, Netlify also has a very generous free tier which is more
 than enough for simple projects like this. If you ever need to scale, though,
 they also offer several other tiers that can easily meet the demands of bigger
 projects.
