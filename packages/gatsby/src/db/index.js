@@ -14,9 +14,7 @@ let db
 
 function startDb(saveFile) {
   return new Promise((resolve, reject) => {
-    const adapter = new lokiFsStructuredAdapter()
     const dbOptions = {
-      adapter,
       autoload: true,
       autoloadCallback: err => {
         if (err) {
@@ -38,8 +36,7 @@ function startDb(saveFile) {
  * created.
  *
  * @param {string} saveFile on disk file that the database will be
- * saved to. We use a loki-fs-structured-adapter which will result in
- * db.0, db.1, db.2... being written to disk in the containing folder.
+ * saved and loaded from.
  * @returns {Promise} promise that is resolved once the database and
  * (optionally) the existing state has been loaded
  */
