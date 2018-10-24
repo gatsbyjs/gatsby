@@ -89,15 +89,12 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
 
 const handleBadExports = ({ apis, badExports }) => {
   // Output error messages for all bad exports
-  let isBad = false
   _.toPairs(badExports).forEach(badItem => {
     const [exportType, entries] = badItem
     if (entries.length > 0) {
-      isBad = true
-      console.log(getBadExportsMessage(entries, exportType, apis[exportType]))
+      reporter.panicOnBuild(getBadExportsMessage(entries, exportType, apis[exportType]))
     }
   })
-  return isBad
 }
 
 /**

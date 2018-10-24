@@ -53,9 +53,7 @@ otherwise your build will fail.
 
 Example:
 
-`src/pages/about.jsx`
-
-```jsx
+```jsx:title=src/pages/about.jsx
 import React, { Component } from "react"
 
 class AboutPage extends Component {
@@ -84,7 +82,7 @@ introduction to programmatically creating pages.
 
 Example:
 
-```jsx
+```jsx:title=src/templates/post.jsx
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -129,7 +127,7 @@ have an html.js.
 
 Example:
 
-```jsx
+```jsx:title=src/html.jsx
 import React from "react"
 import favicon from "./favicon.png"
 

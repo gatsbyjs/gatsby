@@ -89,7 +89,16 @@ exports.buildResolvableSet = ({
   defaultLocale,
 }) => {
   const resolvable = new Set()
-  existingNodes.forEach(n => resolvable.add(n.id))
+  existingNodes.forEach(n => {
+    if (n.contentful_id) {
+      // We need to add only root level resolvable (assets and entries)
+      // derived nodes (markdown or JSON) will be recreated if needed.
+      // We also need to apply `fixId` as some objects will have ids
+      // prefixed with `c` and fixIds will recursively apply that
+      // and resolvable ids need to match that.
+      resolvable.add(fixId(n.contentful_id))
+    }
+  })
 
   entryList.forEach(entries => {
     entries.forEach(entry => {
@@ -184,6 +193,26 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
   return textNode
 }
 
+function prepareStructuredTextNode(node, key, content, createNode, createNodeId) {
+  const str = JSON.stringify(content)
+  const structuredTextNode = {
+    ...content,
+    id: createNodeId(`${node.id}${key}RichTextNode`),
+    parent: node.id,
+    children: [],
+    [key]: str,
+    internal: {
+      type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
+      mediaType: `text/richtext`,
+      content: str,
+      contentDigest: digest(str),
+    },
+  }
+
+  node.children = node.children.concat([structuredTextNode.id])
+
+  return structuredTextNode
+}
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
@@ -227,7 +256,6 @@ exports.createContentTypeNodes = ({
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,
-      defaultLocale,
     })
 
     // Warn about any field conflicts
@@ -247,7 +275,13 @@ exports.createContentTypeNodes = ({
     // First create nodes for each of the entries of that content type
     const entryNodes = entries.map(entryItem => {
       // Get localized fields.
-      const entryItemFields = _.mapValues(entryItem.fields, v => getField(v))
+      const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
+        const fieldProps = contentTypeItem.fields.find(field => field.id === k)
+        if (fieldProps.localized) {
+          return getField(v)
+        }
+        return v[defaultLocale]
+      })
 
       // Prefix any conflicting fields
       // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
@@ -370,6 +404,22 @@ exports.createContentTypeNodes = ({
 
           delete entryItemFields[entryItemFieldKey]
         } else if (
+          fieldType === `RichText` &&
+          process.env.GATSBY_CONTENTFUL_RICH_TEXT === `enabled` &&
+          _.isPlainObject(entryItemFields[entryItemFieldKey])
+        ) {
+          const richTextNode = prepareStructuredTextNode(
+            entryNode,
+            entryItemFieldKey,
+            entryItemFields[entryItemFieldKey],
+            createNodeId
+          )
+
+          childrenNodes.push(richTextNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
+
+          delete entryItemFields[entryItemFieldKey]
+        } else if (
           fieldType === `Object` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
@@ -462,7 +512,6 @@ exports.createAssetNodes = ({
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,
-      defaultLocale,
     })
 
     const localizedAsset = { ...assetItem }

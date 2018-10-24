@@ -2,7 +2,7 @@
 title: Using Decoupled Drupal with Gatsby
 date: "2018-08-13"
 author: Shannon Soper
-tags: ["cms", "gatsby", "drupal"]
+tags: ["cms", "drupal"]
 ---
 
 ## Why use Drupal + Gatsby together?

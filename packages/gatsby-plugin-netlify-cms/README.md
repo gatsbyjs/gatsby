@@ -2,7 +2,7 @@
 
 **Gatsby v1 and Netlify CMS 1.x require [`gatsby-plugin-netlify-cms@^2.0.0`](https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@2.0.1/packages/gatsby-plugin-netlify-cms/README.md).**
 
-**Gatsby v2 and Netlify CMS 2.x require `gatsby-plugin-netlify-cms@^3.0.0-beta.0`, which is documented below.**
+**Gatsby v2 and Netlify CMS 2.x require `gatsby-plugin-netlify-cms@^3.0.0`, which is documented below.**
 
 ## Overview
 
@@ -16,7 +16,7 @@ site](https://netlifycms.org).
 ## Install
 
 ```shell
-npm install --save netlify-cms gatsby-plugin-netlify-cms@next
+npm install --save netlify-cms gatsby-plugin-netlify-cms
 ```
 
 ## How to use
@@ -73,7 +73,7 @@ The js module might look like this:
  * extension registration methods, such as `registerWidget` and
  * `registerPreviewTemplate`.
  */
-import CMS from `netlify-cms`
+import CMS from 'netlify-cms'
 
 /**
  * Any imported styles will automatically be applied to the editor preview
@@ -81,16 +81,16 @@ import CMS from `netlify-cms`
  * All of the example imports below would result in styles being applied to the
  * preview pane.
  */
-import `module-that-imports-styles.js`
-import `styles.scss`
-import `../other-styles.css`
+import 'module-that-imports-styles.js'
+import 'styles.scss'
+import '../other-styles.css'
 
 /**
  * Let's say you've created widget and preview components for a custom image
  * gallery widget in separate files:
  */
-import ImageGalleryWidget from `./image-gallery-widget.js`
-import ImageGalleryPreview from `./image-gallery-preview.js`
+import ImageGalleryWidget from './image-gallery-widget.js'
+import ImageGalleryPreview from './image-gallery-preview.js'
 
 /**
  * Register the imported widget:
@@ -118,7 +118,7 @@ plugins: [
 The js module might look like this:
 
 ```javascript
-import CMS, { init } from `netlify-cms`
+import CMS, { init } from 'netlify-cms'
 
 /**
  * Optionally pass in a config object. This object will be merged into `config.yml` if it exists
@@ -179,7 +179,7 @@ plugins: [
     options: {
       modulePath: `path/to/custom/script.js`, // default: undefined
       stylesPath: `path/to/styles.sass`, // default: undefined
-      enableIdentityWidget: `true`,
+      enableIdentityWidget: true,
       publicPath: `admin`,
       htmlTitle: `Content Manager`,
     },

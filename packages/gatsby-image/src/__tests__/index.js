@@ -10,12 +10,14 @@ const fixedShapeMock = {
   height: 100,
   src: `test_image.jpg`,
   srcSet: `some srcSet`,
+  srcSetWebp: `some srcSetWebp`,
 }
 
 const fluidShapeMock = {
   aspectRatio: 1.5,
   src: `test_image.jpg`,
   srcSet: `some srcSet`,
+  srcSetWebp: `some srcSetWebp`,
   sizes: `(max-width: 600px) 100vw, 600px`,
 }
 

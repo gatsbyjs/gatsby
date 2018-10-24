@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
-
+import Helmet from "react-helmet"
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
@@ -17,8 +16,7 @@ import CardHeadline from "../components/card-headline"
 import Diagram from "../components/diagram"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
-import CtaButton from "../components/cta-button"
-import EmailCaptureForm from "../components/email-capture-form"
+import Button from "../components/button"
 import TechWithIcon from "../components/tech-with-icon"
 
 class IndexRoute extends React.Component {
@@ -26,6 +24,12 @@ class IndexRoute extends React.Component {
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <Layout location={this.props.location}>
+        <Helmet>
+          <meta
+            name="Description"
+            content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
+          />
+        </Helmet>
         <div css={{ position: `relative` }}>
           <MastheadBg />
           <div
@@ -49,7 +53,8 @@ class IndexRoute extends React.Component {
                 },
               }}
             >
-              <div
+              <main
+                id={`reach-skip-nav`}
                 css={{
                   display: `flex`,
                   flexDirection: `row`,
@@ -96,14 +101,12 @@ class IndexRoute extends React.Component {
                   <Card>
                     <CardHeadline>Future-proof your website</CardHeadline>
                     <FuturaParagraph>
-                      Don't build a website with last decade's tech. The future
+                      Do not build a website with last decade’s tech. The future
                       of the web is mobile, JavaScript and APIs—the {` `}
-                      <OutboundLink href="https://jamstack.org/">
-                        JAMstack
-                      </OutboundLink>
-                      . Every website is a web app and every web app is a
-                      website. Gatsby.js is the universal JavaScript framework
-                      you’ve been waiting for.
+                      <a href="https://jamstack.org/">JAMstack</a>. Every
+                      website is a web app and every web app is a website.
+                      Gatsby.js is the universal JavaScript framework you’ve
+                      been waiting for.
                     </FuturaParagraph>
                   </Card>
                   <Card>
@@ -147,12 +150,13 @@ class IndexRoute extends React.Component {
                         <FuturaParagraph>
                           It only takes a few minutes to get up and running!
                         </FuturaParagraph>
-                        <CtaButton
+                        <Button
+                          secondary
                           to="/docs/"
                           overrideCSS={{ marginTop: `1rem` }}
                         >
                           Get Started
-                        </CtaButton>
+                        </Button>
                       </div>
                     </Container>
                   </div>
@@ -173,14 +177,6 @@ class IndexRoute extends React.Component {
                         paddingBottom: `0 !important`,
                       }}
                     >
-                      <EmailCaptureForm
-                        signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
-                        overrideCSS={{
-                          marginTop: 0,
-                          marginBottom: rhythm(1),
-                          border: `none`,
-                        }}
-                      />
                       <h2
                         css={{
                           textAlign: `left`,
@@ -200,18 +196,19 @@ class IndexRoute extends React.Component {
                           css={{ marginBottom: rhythm(2) }}
                         />
                       ))}
-                      <CtaButton
+                      <Button
+                        secondary
                         to="/blog/"
                         overrideCSS={{
                           marginBottom: rhythm(options.blockMarginBottom * 2),
                         }}
                       >
                         Read More
-                      </CtaButton>
+                      </Button>
                     </Container>
                   </div>
                 </Cards>
-              </div>
+              </main>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 const colors = require(`./colors`).default
 
 module.exports = {
-  colors: colors,
+  colors,
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
   phablet: `(min-width: 550px)`,
@@ -35,6 +35,6 @@ module.exports = {
   },
   logoOffset: 1.8,
   headerHeight: `3.5rem`,
-  bannerHeight: `2.55rem`,
+  bannerHeight: `2.5rem`,
   sidebarUtilityHeight: `2.5rem`,
 }

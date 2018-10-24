@@ -23,6 +23,22 @@ it(`Transforms queries in <StaticQuery>`, () => {
   `)
 })
 
+it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, StaticQuery } from 'gatsby'
+
+  const query = graphql\`{site { siteMetadata { title }}}\`
+
+  export default () => (
+    <StaticQuery
+      query={query}
+      render={data => <div>{data.site.siteMetadata.title}</div>}
+    />
+  )
+  `)
+})
+
 it(`Transforms queries in page components`, () => {
   matchesSnapshot(`
   import { graphql } from 'gatsby'

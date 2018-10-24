@@ -36,6 +36,7 @@ const getAssetsForChunks = chunks => {
 }
 
 exports.onPostBuild = (args, pluginOptions) => {
+  const { pathPrefix } = args
   const rootDir = `public`
 
   // Get exact asset filenames for app and offline app shell chunks
@@ -45,6 +46,11 @@ exports.onPostBuild = (args, pluginOptions) => {
     `component---node-modules-gatsby-plugin-offline-app-shell-js`,
   ])
 
+  // Remove the custom prefix (if any) so Workbox can find the files.
+  // This is added back at runtime (see modifyUrlPrefix) in order to serve
+  // from the correct location.
+  const omitPrefix = path => path.slice(pathPrefix.length)
+
   const criticalFilePaths = _.uniq(
     _.concat(
       getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`),
@@ -53,7 +59,7 @@ exports.onPostBuild = (args, pluginOptions) => {
         `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
       )
     )
-  )
+  ).map(omitPrefix)
 
   const globPatterns = files.concat([
     `index.html`,
@@ -67,15 +73,15 @@ exports.onPostBuild = (args, pluginOptions) => {
   })
 
   const options = {
+    importWorkboxFrom: `local`,
     globDirectory: rootDir,
     globPatterns,
     modifyUrlPrefix: {
-      rootDir: ``,
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
-      "": args.pathPrefix || ``,
+      "/": `${pathPrefix}/`,
     },
-    navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
+    navigateFallback: `${pathPrefix}/offline-plugin-app-shell-fallback/index.html`,
     // Only match URLs without extensions or the query `no-cache=1`.
     // So example.com/about/ will pass but
     // example.com/about/?no-cache=1 and
@@ -87,13 +93,18 @@ exports.onPostBuild = (args, pluginOptions) => {
     navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
     navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
     cacheId: `gatsby-plugin-offline`,
-    // Don't cache-bust JS files and anything in the static directory
-    dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
+    // Don't cache-bust JS or CSS files, and anything in the static directory
+    dontCacheBustUrlsMatching: /(.*\.js$|.*\.css$|\/static\/)/,
     runtimeCaching: [
       {
         // Add runtime caching of various page resources.
         urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `staleWhileRevalidate`,
+      },
+      {
+        // Use the Network First handler for external resources
+        urlPattern: /^https:/,
+        handler: `networkFirst`,
       },
     ],
     skipWaiting: true,
@@ -111,6 +122,10 @@ exports.onPostBuild = (args, pluginOptions) => {
     .generateSW({ swDest, ...combinedOptions })
     .then(({ count, size, warnings }) => {
       if (warnings) warnings.forEach(warning => console.warn(warning))
+
+      const swAppend = fs.readFileSync(`${__dirname}/sw-append.js`)
+      fs.appendFileSync(`public/sw.js`, swAppend)
+
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )

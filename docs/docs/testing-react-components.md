@@ -20,7 +20,7 @@ npm install --save-dev react-testing-library jest-dom
 
 Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
-```js
+```js:title=setup-test-env.js
 import "jest-dom/extend-expect"
 
 // this is basically: afterEach(cleanup)
@@ -31,7 +31,7 @@ This file gets run automatically by Jest before every test and therefore you don
 
 Lastly you need to tell Jest where to find this file. Open your `package.json` and add this entry to your `"jest"` section:
 
-```json
+```json:title=package.json
 "jest": {
   "setupTestFrameworkScriptFile": "<rootDir>/setup-test-env.js"
 }

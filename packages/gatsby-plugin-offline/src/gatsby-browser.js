@@ -1,23 +1,17 @@
 exports.registerServiceWorker = () => true
 
 let swNotInstalled = true
-const pathnameResources = []
+const prefetchedPathnames = []
 
-exports.onPrefetchPathname = ({ pathname, getResourcesForPathname }) => {
+exports.onPostPrefetchPathname = ({ pathname }) => {
   // if SW is not installed, we need to record any prefetches
   // that happen so we can then add them to SW cache once installed
   if (swNotInstalled && `serviceWorker` in navigator) {
-    pathnameResources.push(
-      new Promise(resolve => {
-        getResourcesForPathname(pathname).then(resources => {
-          resolve(resources)
-        })
-      })
-    )
+    prefetchedPathnames.push(pathname)
   }
 }
 
-exports.onServiceWorkerInstalled = () => {
+exports.onServiceWorkerActive = ({ getResourceURLsForPathname, serviceWorker }) => {
   // stop recording prefetch events
   swNotInstalled = false
 
@@ -34,15 +28,17 @@ exports.onServiceWorkerInstalled = () => {
     .call(nodes)
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
-  for (const resource of resources) {
-    fetch(resource)
-  }
+  // Loop over all resources and fetch the page component and JSON
+  // to add it to the sw cache.
+  const prefetchedResources = []
+  prefetchedPathnames.forEach(path =>
+    getResourceURLsForPathname(path).forEach(resource =>
+      prefetchedResources.push(resource)
+    )
+  )
 
-  // loop over all resources and fetch the page component and JSON
-  // thereby storing it in SW cache
-  Promise.all(pathnameResources).then(pageResources => {
-    for (const pageResource of pageResources) {
-      if (pageResource) fetch(pageResource.page.jsonURL)
-    }
+  serviceWorker.active.postMessage({
+    api: `gatsby-runtime-cache`,
+    resources: [...resources, ...prefetchedResources],
   })
 }

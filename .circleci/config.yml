@@ -1,0 +1,175 @@
+executors:
+  node:
+    parameters:
+      image:
+        type: string
+        default: "10"
+    docker:
+      - image: circleci/node:<< parameters.image >>
+
+aliases:
+  e2e-executor: &e2e-executor
+    docker:
+      - image: cypress/browsers:chrome69
+
+  restore_cache: &restore_cache
+    restore_cache:
+      name: Restore node_modules cache
+      keys:
+        - yarn-cypress-cache-{{ checksum "yarn.lock" }}
+
+  install_node_modules: &install_node_modules
+    run:
+      name: Install node modules
+      command: yarn --frozen-lockfile
+
+  persist_cache: &persist_cache
+    save_cache:
+      name: Save node modules cache
+      key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
+      paths:
+        - ~/.cache
+
+  attach_to_bootstrap: &attach_to_bootstrap
+    attach_workspace:
+      at: packages
+
+  ignore_master: &ignore_master
+    filters:
+      branches:
+        ignore:
+          - master
+
+  test_template: &test_template
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: yarn jest -w 1
+
+  e2e-test-workflow: &e2e-test-workflow
+    <<: *ignore_master
+    requires:
+      - bootstrap
+
+commands:
+  e2e-test:
+    parameters:
+      trigger_pattern:
+        type: string
+        default: "packages/*|.circleci/*"
+      test_path:
+        type: string
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>"
+
+version: 2.1
+
+jobs:
+  bootstrap:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: yarn bootstrap
+      - persist_to_workspace:
+          root: packages
+          paths:
+            - "*"
+
+  lint:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: yarn lint
+
+  unit_tests_node6:
+    executor:
+      name: node
+      image: "6"
+    <<: *test_template
+
+  unit_tests_node8:
+    executor:
+      name: node
+      image: "8"
+    <<: *test_template
+
+  unit_tests_node10:
+    executor: node
+    <<: *test_template
+
+  integration_tests:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|.circleci/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: yarn test:integration
+
+  e2e_tests_gatsbygram:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: examples/gatsbygram
+
+  e2e_tests_path-prefix:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/path-prefix
+
+  e2e_tests_gatsby-image:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-image
+
+  e2e_tests_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - bootstrap
+      - lint
+      - unit_tests_node6:
+          requires:
+            - bootstrap
+      - unit_tests_node8:
+          requires:
+            - bootstrap
+      - unit_tests_node10:
+          requires:
+            - bootstrap
+      - integration_tests
+      - e2e_tests_gatsbygram:
+          <<: *e2e-test-workflow
+      - e2e_tests_path-prefix:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_runtime:
+          <<: *e2e-test-workflow

@@ -5,7 +5,6 @@ Object {
   "stages": Object {
     "build-html": Object {
       "options": Object {
-        "babelrc": false,
         "cacheDirectory": true,
         "sourceType": "unambiguous",
       },
@@ -19,7 +18,6 @@ Object {
     },
     "build-javascript": Object {
       "options": Object {
-        "babelrc": false,
         "cacheDirectory": true,
         "sourceType": "unambiguous",
       },
@@ -33,7 +31,6 @@ Object {
     },
     "develop": Object {
       "options": Object {
-        "babelrc": false,
         "cacheDirectory": true,
         "sourceType": "unambiguous",
       },
@@ -47,7 +44,6 @@ Object {
     },
     "develop-html": Object {
       "options": Object {
-        "babelrc": false,
         "cacheDirectory": true,
         "sourceType": "unambiguous",
       },
@@ -68,7 +64,6 @@ Object {
   "stages": Object {
     "build-html": Object {
       "options": Object {
-        "babelrc": false,
         "cacheDirectory": true,
         "sourceType": "unambiguous",
       },
@@ -82,7 +77,6 @@ Object {
     },
     "build-javascript": Object {
       "options": Object {
-        "babelrc": false,
         "cacheDirectory": true,
         "sourceType": "unambiguous",
       },
@@ -96,7 +90,6 @@ Object {
     },
     "develop": Object {
       "options": Object {
-        "babelrc": false,
         "cacheDirectory": true,
         "sourceType": "unambiguous",
       },
@@ -110,7 +103,6 @@ Object {
     },
     "develop-html": Object {
       "options": Object {
-        "babelrc": false,
         "cacheDirectory": true,
         "sourceType": "unambiguous",
       },

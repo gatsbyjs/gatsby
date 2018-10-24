@@ -174,8 +174,8 @@ module.exports = (
   <span
     class="${imageWrapperClass}"
     style="position: relative; display: block; ${
-      showCaptions ? null : options.wrapperStyle
-    }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+      showCaptions ? `` : options.wrapperStyle
+    } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <img
       class="${imageBackgroundClass}"

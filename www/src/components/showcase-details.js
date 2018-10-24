@@ -1,7 +1,6 @@
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 import url from "url"
-import hex2rgba from "hex2rgba"
 import Img from "gatsby-image"
 import qs from "qs"
 
@@ -164,7 +163,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     ...styles.prevNextImage,
                   }}
                   backgroundColor
-                  resolutions={{
+                  fixed={{
                     srcSet: ``,
                     src:
                       nextSite.childScreenshot.screenshotFile.childImageSharp
@@ -216,7 +215,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     ...styles.prevNextImage,
                   }}
                   backgroundColor
-                  resolutions={{
+                  fixed={{
                     srcSet: ``,
                     src:
                       previousSite.childScreenshot.screenshotFile
@@ -264,15 +263,15 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <Helmet>
                 <title>{data.sitesYaml.title}</title>
                 <meta
-                  name="og:image"
-                  content={`https://next.gatsbyjs.org${
+                  property="og:image"
+                  content={`https://www.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
                   }`}
                 />
                 <meta
                   name="twitter:image"
-                  content={`https://next.gatsbyjs.org${
+                  content={`https://www.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
                   }`}
@@ -436,8 +435,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <div
                   css={{
                     position: `absolute`,
-                    right: gutter,
-                    top: gutter,
+                    right: rhythm(3 / 4),
+                    top: rhythm(-15 / 8),
                     left: `auto`,
                     zIndex: 1,
                     display: `flex`,
@@ -477,7 +476,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   <ShareMenu
                     url={data.sitesYaml.main_url}
                     title={data.sitesYaml.title}
-                    image={`https://next.gatsbyjs.org${
+                    image={`https://www.gatsbyjs.org${
                       data.sitesYaml.childScreenshot.screenshotFile
                         .childImageSharp.resize.src
                     }`}
@@ -485,9 +484,9 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 </div>
                 <Img
                   key={data.sitesYaml.id}
-                  sizes={
+                  fluid={
                     data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.sizes
+                      .childImageSharp.fluid
                   }
                   alt={`Screenshot of ${data.sitesYaml.title}`}
                   css={{

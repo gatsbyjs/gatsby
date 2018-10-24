@@ -74,11 +74,17 @@ module.exports = (
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    let remark = new Remark().data(`settings`, {
-      commonmark: true,
-      footnotes: true,
-      pedantic: true,
-    })
+    const { commonmark = true, footnotes = true, pedantic = true, gfm = true, blocks } = pluginOptions
+    const remarkOptions = {
+      gfm,
+      commonmark,
+      footnotes,
+      pedantic,
+    }
+    if (_.isArray(blocks)) {
+      remarkOptions.blocks = blocks
+    }
+    let remark = new Remark().data(`settings`, remarkOptions)
 
     for (let plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
@@ -132,7 +138,7 @@ module.exports = (
 
               if (pathPrefix) {
                 // Ensure relative links include `pathPrefix`
-                visit(markdownAST, `link`, node => {
+                visit(markdownAST, [`link`, `definition`], node => {
                   if (
                     node.url &&
                     node.url.startsWith(`/`) &&
@@ -230,7 +236,7 @@ module.exports = (
       }
     }
 
-    async function getTableOfContents(markdownNode) {
+    async function getTableOfContents(markdownNode, pathToSlugField) {
       const cachedToc = await cache.get(tableOfContentsCacheKey(markdownNode))
       if (cachedToc) {
         return cachedToc
@@ -242,7 +248,11 @@ module.exports = (
         if (tocAst.map) {
           const addSlugToUrl = function(node) {
             if (node.url) {
-              node.url = [pathPrefix, markdownNode.fields.slug, node.url]
+              if (_.get(markdownNode, pathToSlugField) === undefined) {
+                console.warn(`Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`)
+                return null
+              }
+              node.url = [pathPrefix, _.get(markdownNode, pathToSlugField), node.url]
                 .join(`/`)
                 .replace(/\/\//g, `/`)
             }
@@ -408,8 +418,14 @@ module.exports = (
       },
       tableOfContents: {
         type: GraphQLString,
-        resolve(markdownNode) {
-          return getTableOfContents(markdownNode)
+        args: {
+          pathToSlugField: {
+            type: GraphQLString,
+            defaultValue: `fields.slug`,
+          },
+        },
+        resolve(markdownNode, { pathToSlugField }) {
+          return getTableOfContents(markdownNode, pathToSlugField)
         },
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071

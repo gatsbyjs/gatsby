@@ -15,7 +15,10 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
 const createSortField = require(`../create-sort-field`)
-const { clearTypeExampleValues } = require(`../data-tree-utils`)
+const {
+  getExampleValues,
+  clearTypeExampleValues,
+} = require(`../data-tree-utils`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -548,7 +551,7 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
-  it(`handles the in operator for array of objects`, async () => {
+  it(`handles the elemMatch operator for array of objects`, async () => {
     let result = await queryResult(
       nodes,
       `
@@ -573,6 +576,72 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.test2.edges[1].node.index).toEqual(2)
     expect(result.data.test3.edges.length).toEqual(1)
     expect(result.data.test3.edges[0].node.index).toEqual(1)
+  })
+
+  it(`handles the nin operator for array`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {anArray: { nin: [5] }}) {
+            edges { node { anArray }}
+          }
+        }
+      `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+
+    result.data.allNode.edges.forEach(edge => {
+      expect(edge.node.anArray).not.toEqual(expect.arrayContaining([5]))
+    })
+  })
+
+  it(`handles the nin operator for scalars`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          string:allNode(filter: { string: { nin: ["b", "c"] }}) {
+            edges { node { string }}
+          }
+          int:allNode(filter: { index: { nin: [0, 2] }}) {
+            edges { node { index }}
+          }
+          float:allNode(filter: { float: { nin: [1.5] }}) {
+            edges { node { float }}
+          }
+          boolean:allNode(filter: { boolean: { nin: [true, null] }}) {
+            edges { node { boolean }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+
+    expect(result.data.string.edges.length).toEqual(1)
+    result.data.string.edges.forEach(edge => {
+      expect(edge.node.string).not.toEqual(`b`)
+      expect(edge.node.string).not.toEqual(`c`)
+    })
+
+    expect(result.data.int.edges.length).toEqual(1)
+    result.data.int.edges.forEach(edge => {
+      expect(edge.node.index).not.toEqual(0)
+      expect(edge.node.index).not.toEqual(2)
+    })
+
+    expect(result.data.float.edges.length).toEqual(2)
+    result.data.float.edges.forEach(edge => {
+      expect(edge.node.float).not.toEqual(1.5)
+    })
+
+    expect(result.data.boolean.edges.length).toEqual(1)
+    result.data.boolean.edges.forEach(edge => {
+      expect(edge.node.boolean).not.toEqual(null)
+      expect(edge.node.boolean).not.toEqual(true)
+    })
   })
 
   it(`handles the glob operator`, async () => {
@@ -753,48 +822,44 @@ describe(`GraphQL Input args`, () => {
 
 describe(`filtering on linked nodes`, () => {
   let types
-  beforeEach(() => {
-    const { store } = require(`../../redux`)
-    types = [
-      {
-        name: `Child`,
-        nodeObjectType: new GraphQLObjectType({
-          name: `Child`,
-          fields: inferObjectStructureFromNodes({
-            nodes: [{ id: `child_1`, hair: `brown`, height: 101 }],
-            types: [{ name: `Child` }],
-          }),
-        }),
-      },
-      {
-        name: `Pet`,
-        nodeObjectType: new GraphQLObjectType({
-          name: `Pet`,
-          fields: inferObjectStructureFromNodes({
-            nodes: [{ id: `pet_1`, species: `dog` }],
-            types: [{ name: `Pet` }],
-          }),
-        }),
-      },
-    ]
+  const allNodes = [
+    { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
+    {
+      id: `child_2`,
+      internal: { type: `Child` },
+      hair: `blonde`,
+      height: 101,
+    },
+    {
+      id: `linked_A`,
+      internal: { type: `Linked_A` },
+      array: [{ linked___NODE: `linked_B` }],
+      single: { linked___NODE: `linked_B` },
+    },
+    { id: `linked_B`, internal: { type: `Linked_B` } },
+  ]
+  const typeMap = _.groupBy(allNodes, node => node.internal.type)
 
+  const { store } = require(`../../redux`)
+  allNodes.forEach(node => {
     store.dispatch({
       type: `CREATE_NODE`,
-      payload: { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
+      payload: node,
     })
-    store.dispatch({
-      type: `CREATE_NODE`,
-      payload: {
-        id: `child_2`,
-        internal: { type: `Child` },
-        hair: `blonde`,
-        height: 101,
-      },
-    })
-    store.dispatch({
-      type: `CREATE_NODE`,
-      payload: { id: `pet_1`, internal: { type: `Pet` }, species: `dog` },
-    })
+  })
+
+  types = _.toPairs(typeMap).map(([type, nodes]) => {
+    return {
+      name: type,
+      nodeObjectType: new GraphQLObjectType({
+        name: type,
+        fields: () =>
+          inferObjectStructureFromNodes({
+            nodes,
+            types,
+          }),
+      }),
+    }
   })
 
   it(`filters on linked nodes via id`, async () => {
@@ -837,5 +902,87 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.allNode.edges[0].node.linked.height).toEqual(101)
     expect(result.data.allNode.edges[0].node.foo).toEqual(`bar`)
     expect(result.data.allNode.edges[1].node.foo).toEqual(`baz`)
+  })
+
+  it(`handles elemMatch operator`, async () => {
+    let result = await queryResult(
+      [
+        { linked___NODE: [`child_1`, `child_2`], foo: `bar` },
+        { linked___NODE: [`child_1`], foo: `baz` },
+        { linked___NODE: [`child_2`], foo: `foo` },
+        { array: [{ linked___NODE: [`child_1`, `child_2`] }], foo: `lorem` },
+        {
+          array: [
+            { linked___NODE: [`child_1`] },
+            { linked___NODE: [`child_2`] },
+          ],
+          foo: `ipsum`,
+        },
+        { array: [{ linked___NODE: [`child_1`] }], foo: `sit` },
+        { array: [{ linked___NODE: [`child_2`] }], foo: `dolor` },
+        { foo: `ipsum` },
+      ],
+      `
+        {
+          eq:allNode(filter: { linked: { elemMatch: { hair: { eq: "brown" } } } }) {
+            edges { node { foo } }
+          }
+          in:allNode(filter: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } }) {
+            edges { node { foo } }
+          }
+          insideInlineArrayEq:allNode(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { eq: "brown" } } } } } }) {
+            edges { node { foo } }
+          }
+          insideInlineArrayIn:allNode(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } } } }) {
+            edges { node { foo } }
+          }
+        }
+      `,
+      { types }
+    )
+
+    const itemToEdge = item => {
+      return {
+        node: {
+          foo: item,
+        },
+      }
+    }
+
+    expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
+    expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
+    expect(result.data.insideInlineArrayEq.edges).toEqual(
+      [`lorem`, `ipsum`, `sit`].map(itemToEdge)
+    )
+    expect(result.data.insideInlineArrayIn.edges).toEqual(
+      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
+    )
+  })
+
+  it(`doesn't mutate node object`, async () => {
+    await queryResult(
+      [
+        {
+          test: [
+            {
+              linked___NODE: `linked_A`,
+            },
+          ],
+        },
+      ],
+      `
+        {
+          allNode {
+            edges { node { hair } }
+          }
+        }
+      `,
+      { types }
+    )
+    const originalNode = allNodes.find(
+      node => node.internal.type === `Linked_A`
+    )
+
+    expect(getExampleValues({ typeName: `Linked_A` })).toEqual(originalNode)
   })
 })

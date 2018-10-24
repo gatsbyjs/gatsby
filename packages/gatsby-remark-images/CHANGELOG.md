@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.3...gatsby-remark-images@2.0.4) (2018-10-09)
+
+### Bug Fixes
+
+- don't add extra semicolon after wrapperStyle ([#8864](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/8864)) ([9944450](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/9944450))
+
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.2...gatsby-remark-images@2.0.3) (2018-09-26)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-rc.5...gatsby-remark-images@2.0.2) (2018-09-24)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+<a name="2.0.1"></a>
+
+## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-rc.5...gatsby-remark-images@2.0.1) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+<a name="2.0.1-rc.5"></a>
+
+## [2.0.1-rc.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-rc.4...gatsby-remark-images@2.0.1-rc.5) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+<a name="2.0.1-rc.4"></a>
+
+## [2.0.1-rc.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-rc.3...gatsby-remark-images@2.0.1-rc.4) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+<a name="2.0.1-rc.3"></a>
+
+## [2.0.1-rc.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-rc.2...gatsby-remark-images@2.0.1-rc.3) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+<a name="2.0.1-rc.2"></a>
+
+## [2.0.1-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-rc.1...gatsby-remark-images@2.0.1-rc.2) (2018-09-11)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 <a name="2.0.1-rc.1"></a>
 
 ## [2.0.1-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.1-rc.0...gatsby-remark-images@2.0.1-rc.1) (2018-08-29)

@@ -4,7 +4,7 @@ exports[`it handles goofy nesting properly 1`] = `
 "
   <span
     class=\\"gatsby-resp-image-wrapper\\"
-    style=\\"position: relative; display: block; ; max-width: 300px; margin-left: auto; margin-right: auto;\\"
+    style=\\"position: relative; display: block;  max-width: 300px; margin-left: auto; margin-right: auto;\\"
   >
     <img
       class=\\"gatsby-resp-image-background-image\\"
@@ -40,7 +40,7 @@ exports[`it leaves images that are already linked alone 1`] = `
 "
   <span
     class=\\"gatsby-resp-image-wrapper\\"
-    style=\\"position: relative; display: block; ; max-width: 300px; margin-left: auto; margin-right: auto;\\"
+    style=\\"position: relative; display: block;  max-width: 300px; margin-left: auto; margin-right: auto;\\"
   >
     <img
       class=\\"gatsby-resp-image-background-image\\"
@@ -153,7 +153,7 @@ exports[`it transforms images in markdown 1`] = `
   
   <span
     class=\\"gatsby-resp-image-wrapper\\"
-    style=\\"position: relative; display: block; ; max-width: 300px; margin-left: auto; margin-right: auto;\\"
+    style=\\"position: relative; display: block;  max-width: 300px; margin-left: auto; margin-right: auto;\\"
   >
     <img
       class=\\"gatsby-resp-image-background-image\\"

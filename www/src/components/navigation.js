@@ -1,226 +1,296 @@
 import React from "react"
 import { Link } from "gatsby"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import typography, { rhythm, scale } from "../utils/typography"
+import typography, { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "./gutters"
 
-const navItemStyles = {
-  ...scale(-1 / 3),
-  boxSizing: `border-box`,
-  display: `inline-block`,
-  color: `inherit`,
-  textDecoration: `none`,
-  textTransform: `uppercase`,
-  letterSpacing: `0.03em`,
-  lineHeight: `calc(${presets.headerHeight} - 6px)`,
-  padding: `6px ${rhythm(1 / 4)} 0 ${rhythm(1 / 2)}`,
-  position: `relative`,
-  top: 0,
-  transition: `color .15s ease-out`,
-  "&:hover": {
-    opacity: 0.8,
-  },
-}
+// what we need to nudge down the navItems to sit
+// on the baseline of the logo's wordmark
+const navItemTopOffset = `0.6rem`
+const navItemHorizontalSpacing = rhythm(1 / 3)
+
+const iconColor = colors.lilac
+const iconColorHomepage = colors.ui.light
+
+const assignActiveStyles = ({ isPartiallyCurrent }) =>
+  isPartiallyCurrent ? { style: styles.navItem.active } : {}
+
 const NavItem = ({ linkTo, children }) => (
-  <li
-    css={{
-      display: `inline-block`,
-      margin: 0,
-    }}
-  >
-    <Link to={linkTo} css={navItemStyles}>
+  <li css={styles.li}>
+    <Link to={linkTo} getProps={assignActiveStyles} css={styles.navItem}>
       {children}
     </Link>
   </li>
 )
 
-export default ({ pathname }) => {
+const Navigation = ({ pathname }) => {
   const isHomepage = pathname === `/`
-  const isBlog = pathname === `/blog/`
-  let styles = {}
-  if (isHomepage) {
-    styles.backgroundColor = `rgba(255,255,255,0)`
-    styles.borderBottomColor = `transparent`
-    styles[presets.Tablet] = {
-      position: isHomepage || isBlog ? `absolute` : `fixed`,
-    }
-  } else if (isBlog) {
-    styles.backgroundColor = `#fff`
-    styles[presets.Tablet] = {
-      borderBottomColor: `transparent`,
-      position: isHomepage || isBlog ? `absolute` : `fixed`,
-      backgroundColor: colors.ui.whisper,
-    }
-  }
+  const isBlog = pathname === `/blog/` || pathname.indexOf(`/blog/page/`) === 0
+
   const socialIconsStyles = {
-    color: colors.lilac,
+    ...styles.navItem,
+    ...styles.socialIconItem,
     [presets.Phablet]: {
-      color: isHomepage ? colors.ui.light : false,
+      color: isHomepage ? iconColorHomepage : false,
+      "&:hover": {
+        color: isHomepage ? colors.ui.bright : colors.gatsby,
+      },
     },
   }
-  const gutters = isHomepage
-    ? {
-        paddingLeft: vP,
-        paddingRight: vP,
-        paddingTop: rhythm(1.5),
-        [presets.Hd]: {
-          paddingLeft: vPHd,
-          paddingRight: vPHd,
-        },
-        [presets.VHd]: {
-          paddingLeft: vPVHd,
-          paddingRight: vPVHd,
-        },
-        [presets.VVHd]: {
-          paddingLeft: vPVVHd,
-          paddingRight: vPVVHd,
-        },
-      }
-    : {}
+
+  const SocialNavItem = ({ href, title, children, overrideCSS }) => (
+    <a
+      href={href}
+      title={title}
+      css={{
+        ...socialIconsStyles,
+        ...overrideCSS,
+      }}
+    >
+      {children}
+    </a>
+  )
 
   return (
-    <div
-      role="navigation"
-      className="navigation"
+    <header
       css={{
-        borderBottom: `1px solid ${colors.ui.light}`,
-        backgroundColor: `rgba(255,255,255,0.975)`,
+        backgroundColor: isHomepage ? `transparent` : `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : `relative`,
         height: presets.headerHeight,
-        zIndex: `2`,
         left: 0,
         right: 0,
-        top: `calc(${presets.bannerHeight} - 1px)`,
+        top: isHomepage
+          ? `calc(${presets.bannerHeight} + ${rhythm(
+              options.blockMarginBottom
+            )})`
+          : presets.bannerHeight,
+        zIndex: 2,
+        "&:after": {
+          content: `''`,
+          position: `absolute`,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          width: `100%`,
+          height: 1,
+          zIndex: -1,
+          background: isHomepage ? `transparent` : colors.ui.light,
+        },
+        // use this to test if the header items are properly aligned to the logo
+        // wordmark
+        // "&:before": {
+        //   content: `''`,
+        //   position: `absolute`,
+        //   bottom: `1.25rem`,
+        //   left: 0,
+        //   right: 0,
+        //   width: `100%`,
+        //   height: 1,
+        //   zIndex: 10,
+        //   background: `red`,
+        // },
         [presets.Tablet]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
+          backgroundColor: isBlog ? colors.ui.whisper : false,
         },
-        ...styles,
       }}
     >
       <div
         css={{
-          //maxWidth: rhythm(presets.maxWidth),
-          margin: `0 auto`,
-          paddingLeft: rhythm(3 / 4),
-          paddingRight: rhythm(3 / 4),
-          ...gutters,
-          fontFamily: typography.options.headerFontFamily.join(`,`),
-          display: `flex`,
-          alignItems: `center`,
-          width: `100%`,
-          height: `100%`,
+          ...styles.containerInner,
+          ...(isHomepage
+            ? {
+                paddingLeft: vP,
+                paddingRight: vP,
+                [presets.Hd]: {
+                  paddingLeft: vPHd,
+                  paddingRight: vPHd,
+                },
+                [presets.VHd]: {
+                  paddingLeft: vPVHd,
+                  paddingRight: vPVHd,
+                },
+                [presets.VVHd]: {
+                  paddingLeft: vPVVHd,
+                  paddingRight: vPVVHd,
+                },
+              }
+            : {}),
         }}
       >
         <Link
           to="/"
-          css={{
-            alignItems: `center`,
-            color: `inherit`,
-            display: `flex`,
-            textDecoration: `none`,
-            marginRight: rhythm(1 / 2),
-          }}
+          css={styles.logoLink}
+          aria-label="Gatsby, Back to homepage"
         >
           <img
             src={logo}
-            css={{
-              width: 106,
-              margin: 0,
-            }}
-            alt=""
+            css={styles.logo}
+            alt="Gatsby Logo"
+            aria-hidden="true"
           />
         </Link>
-        <ul
-          css={{
-            display: `none`,
-            [presets.Tablet]: {
-              display: `flex`,
-              margin: 0,
-              padding: 0,
-              listStyle: `none`,
-              flexGrow: 1,
-              overflowX: `auto`,
-              maskImage: `linear-gradient(to right, transparent, white ${rhythm(
-                1 / 8
-              )}, white 98%, transparent)`,
-            },
-          }}
+        <nav
+          className="navigation"
+          aria-label="Primary Navigation"
+          css={styles.navContainer}
         >
-          <NavItem linkTo="/docs/">Docs</NavItem>
-          <NavItem linkTo="/tutorial/">Tutorial</NavItem>
-          <NavItem linkTo="/plugins/">Plugins</NavItem>
-          <NavItem linkTo="/features/">Features</NavItem>
-          <NavItem linkTo="/blog/">Blog</NavItem>
-          <NavItem linkTo="/showcase/">Showcase</NavItem>
-        </ul>
-        <div
-          css={{
-            display: `flex`,
-            marginLeft: `auto`,
-          }}
-        >
+          <ul css={styles.ulContainer}>
+            <NavItem linkTo="/docs/">Docs</NavItem>
+            <NavItem linkTo="/tutorial/">Tutorial</NavItem>
+            <NavItem linkTo="/plugins/">Plugins</NavItem>
+            <NavItem linkTo="/features/">Features</NavItem>
+            <NavItem linkTo="/blog/">Blog</NavItem>
+            <NavItem linkTo="/showcase/">Showcase</NavItem>
+            {/* <li css={styles.li}>
+                <Link
+                  to="/community/"
+                  css={styles.navItem}
+                  state={{ filter: `` }}
+                >
+                  Community
+                </Link>
+              </li> */}
+          </ul>
+        </nav>
+        <div css={styles.searchAndSocialContainer}>
           <SearchForm
             key="SearchForm"
-            iconStyles={{ ...socialIconsStyles }}
+            iconColor={isHomepage ? iconColorHomepage : iconColor}
             isHomepage={isHomepage}
+            offsetVertical="-0.2175rem"
           />
-          <OutboundLink
+          <SocialNavItem
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
-            css={{
-              ...navItemStyles,
-              ...socialIconsStyles,
-            }}
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
-          </OutboundLink>
+          </SocialNavItem>
           <div
             css={{
               display: `none`,
-              [presets.Desktop]: { display: !isHomepage && `inline-block` },
-              [presets.Hd]: { display: `inline-block` },
+              [presets.Desktop]: { display: !isHomepage && `flex` },
+              [presets.Hd]: { display: `flex` },
             }}
           >
-            <OutboundLink
+            <SocialNavItem
               href="https://discord.gg/0ZcbPKXt5bVoxkfV"
               title="Discord"
-              css={{
-                ...navItemStyles,
-                ...socialIconsStyles,
-              }}
             >
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
-            </OutboundLink>
-            <OutboundLink
+            </SocialNavItem>
+            <SocialNavItem
               href="https://twitter.com/gatsbyjs"
               title="@gatsbyjs"
-              css={{
-                ...navItemStyles,
-                ...socialIconsStyles,
-              }}
             >
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
-            </OutboundLink>
+            </SocialNavItem>
           </div>
-          <OutboundLink
+          <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
-            css={{
-              ...navItemStyles,
-              ...socialIconsStyles,
-              paddingRight: 0,
-            }}
+            overrideCSS={{ paddingRight: 0 }}
           >
             .com
-          </OutboundLink>
+          </SocialNavItem>
         </div>
       </div>
-    </div>
+    </header>
   )
 }
+
+const styles = {
+  li: {
+    display: `block`,
+    margin: 0,
+    marginLeft: navItemHorizontalSpacing,
+    marginRight: navItemHorizontalSpacing,
+  },
+  navContainer: {
+    display: `none`,
+    [presets.Tablet]: {
+      alignSelf: `flex-end`,
+      display: `flex`,
+    },
+  },
+  ulContainer: {
+    display: `none`,
+    [presets.Tablet]: {
+      alignSelf: `flex-end`,
+      display: `flex`,
+      flexGrow: 1,
+      margin: 0,
+      marginLeft: rhythm(1 / 4),
+      listStyle: `none`,
+      maskImage: `linear-gradient(to right, transparent, white ${rhythm(
+        1 / 8
+      )}, white 98%, transparent)`,
+      overflowX: `auto`,
+    },
+  },
+  containerInner: {
+    margin: `0 auto`,
+    paddingLeft: rhythm(3 / 4),
+    paddingRight: rhythm(3 / 4),
+    fontFamily: typography.options.headerFontFamily.join(`,`),
+    display: `flex`,
+    alignItems: `center`,
+    width: `100%`,
+    height: `100%`,
+  },
+  navItem: {
+    ...scale(-1 / 3),
+    borderBottom: `0.125rem solid transparent`,
+    color: `inherit`,
+    display: `block`,
+    letterSpacing: `0.03em`,
+    WebkitFontSmoothing: `antialiased`,
+    lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
+    position: `relative`,
+    textDecoration: `none`,
+    textTransform: `uppercase`,
+    top: 0,
+    transition: `color ${presets.animation.speedDefault} ${
+      presets.animation.curveDefault
+    }`,
+    zIndex: 1,
+    "&:hover": {
+      color: colors.gatsby,
+    },
+    active: {
+      borderBottomColor: colors.gatsby,
+      color: colors.gatsby,
+    },
+  },
+  socialIconItem: {
+    color: iconColor,
+    paddingLeft: navItemHorizontalSpacing,
+    paddingRight: navItemHorizontalSpacing,
+  },
+  searchAndSocialContainer: {
+    alignSelf: `flex-end`,
+    display: `flex`,
+    marginLeft: `auto`,
+  },
+  logo: {
+    height: 28,
+    margin: 0,
+    [presets.Tablet]: {
+      height: `1.55rem`,
+    },
+  },
+  logoLink: {
+    alignItems: `center`,
+    color: `inherit`,
+    display: `flex`,
+    marginRight: rhythm(1 / 2),
+    textDecoration: `none`,
+  },
+}
+
+export default Navigation

@@ -12,7 +12,7 @@ npm install --save-dev cypress start-server-and-test
 
 We also want the urls used by `cy.visit()` or `cy.request()` to be prefixed hence you have to create the file `cypress.json` at the root of your project with the following content:
 
-```json
+```json:title=cypress.json
 {
   "baseUrl": "http://localhost:8000/"
 }
@@ -20,7 +20,7 @@ We also want the urls used by `cy.visit()` or `cy.request()` to be prefixed henc
 
 Last but not least you add additional scripts to your `package.json` to run Cypress:
 
-```json
+```json:title=package.json
 {
   "scripts": {
     "develop": "gatsby develop",
@@ -36,7 +36,7 @@ Run `test:e2e` in your command line and see Cypress running for the first time. 
 
 If you want to run Cypress in Continuous Integration (CI) you have to use `cypress run` instead of `cypress open`:
 
-```json
+```json:title=package.json
 {
   "scripts": {
     "develop": "gatsby develop",
@@ -47,4 +47,4 @@ If you want to run Cypress in Continuous Integration (CI) you have to use `cypre
 }
 ```
 
-Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or Gitlab with Cypress.
+Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or GitLab with Cypress.

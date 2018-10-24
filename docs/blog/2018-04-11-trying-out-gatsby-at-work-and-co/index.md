@@ -101,7 +101,7 @@ We ran into one schematic limitation working with Gatsby that’s helpful to be 
 
 [GraphQL](https://github.com/graphql/graphql-js) requires all queried fields to be defined in a schema, and Gatsby generates this schema from your site’s existing data. This means, for example, that if you don’t have a `Carousel` content model on your site right now, but you have a GraphQL query checking for it, the site will fail to build.
 
-The are some really promising discussions on the topic on Github, including an [RFC to refactor Gatsby’s schema generation](https://github.com/gatsbyjs/gatsby/issues/4261), but in the meantime, most users are getting around this issue by creating placeholder content on Contentful (or whatever their data source is) to guarantee a fully built-up schema.
+The are some really promising discussions on the topic on GitHub, including an [RFC to refactor Gatsby’s schema generation](https://github.com/gatsbyjs/gatsby/issues/4261), but in the meantime, most users are getting around this issue by creating placeholder content on Contentful (or whatever their data source is) to guarantee a fully built-up schema.
 
 This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like ‘PlaceholderContentIndex` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
 
@@ -111,7 +111,7 @@ While we were getting familiar with our Gatsby/Contentful setup, we also needed 
 
 ![our Netlify setup](./netlify.png)
 
-Unlike a single page app, which would fetch data from Contentful on the fly, our static site must rebuild anytime an editor publishes new or updated content. At the same time, we need to rebuild whenever code is updated on Github. With Netlify (and Contentful’s webhooks), I was able to set all of this up in about five minutes.
+Unlike a single page app, which would fetch data from Contentful on the fly, our static site must rebuild anytime an editor publishes new or updated content. At the same time, we need to rebuild whenever code is updated on GitHub. With Netlify (and Contentful’s webhooks), I was able to set all of this up in about five minutes.
 
 Although our China setup was still a bit of a mystery, we moved forward with dev, QA, and staging environments on Netlify, and wound up using it for US production as well.
 
@@ -151,7 +151,7 @@ To enforce such validations, we set up a static validator page that runs a repor
 
 #### 3. Communicating site status
 
-That same validation page also served as a site status page, containing the time and Github hash of the last build. The build time was particularly important. Since builds happen quite frequently (whenever content is updated), it’s helpful for the team to be able to easily see the time of the last build for a given environment. (We also had Netlify integrated to Slack, but this contained notifications about every branch and was a bit noisy for a less tech-savvy audience.)
+That same validation page also served as a site status page, containing the time and GitHub hash of the last build. The build time was particularly important. Since builds happen quite frequently (whenever content is updated), it’s helpful for the team to be able to easily see the time of the last build for a given environment. (We also had Netlify integrated to Slack, but this contained notifications about every branch and was a bit noisy for a less tech-savvy audience.)
 
 Capturing this information was easy and only took a few additional lines in our `createPages` hook. Netlify exposes a lot of interesting [environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables) (including some I hope to play with more on a future project, like `WEBHOOK_TITLE`, which can help you deduce the origin of the current build). In order to display these variables on the front end, we needed to rename them to begin with `GATSBY_`:
 
@@ -275,7 +275,7 @@ If you’ve ever used `yarn link` to modify a dependency locally, this provides 
 
 As I said, I was impressed by the Gatsby team’s quick turnaround time with PR approvals, but even so, when doing client work on a tight deadline, it can be stressful waiting for your changes to be merged. For ultimate peace of mind, you should be able to move forward using your forked work even if — in the worst case scenario — your PR is never approved.
 
-Of course, this is something developers do all the time. They push their fork to git and link to it in their project’s `package.json`:
+Of course, this is something developers do all the time. They push their fork to Git and link to it in their project’s `package.json`:
 
 ```
 “dependencies”: {
@@ -285,11 +285,11 @@ Of course, this is something developers do all the time. They push their fork to
 
 Gatsby, however, uses a monorepo architecture, so pushing up a fork with a change to a specific package is not such a trivial manner; npm and yarn just don’t support it. (If you feel like being depressed, check out the npm thread about [supporting github paths to monorepo packages](https://github.com/npm/npm/issues/2974).)
 
-Our workaround was to create a new repo for the package in question and push the build directly to Github. Here’s how it would work if you were making an update to, say, `gatsby-source-contentful`:
+Our workaround was to create a new repo for the package in question and push the build directly to GitHub. Here’s how it would work if you were making an update to, say, `gatsby-source-contentful`:
 
 - Go to your local fork of Gatsby, on the branch with your changes, and run `yarn watch` to compile a built version of your modified package.
 - Copy that package to a new directory `cp -a packages/gatsby-source-contentful path-to-my-repo`
-- Push the contents of this directory to Github and link it in your `package.json` as usual.
+- Push the contents of this directory to GitHub and link it in your `package.json` as usual.
 
 ## Following up
 
