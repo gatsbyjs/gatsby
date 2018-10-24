@@ -9,41 +9,43 @@ const horizontalPadding = rhythm(1 / 2)
 const backgroundColor = props =>
   props.background ? props.background : colors.gatsby
 
-const TopBannerContainer = styled("div")(props => ({
-  backgroundColor: backgroundColor(props),
-  height: presets.bannerHeight,
-  position: `fixed`,
-  width: `100%`,
-  zIndex: 3,
-}))
+const TopBannerContainer = styled("div")`
+  background-color: ${props => backgroundColor(props)};
+  height: ${presets.bannerHeight};
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+`
 
-const InnerContainer = styled("div")(props => ({
-  alignItems: `center`,
-  display: `flex`,
-  height: presets.bannerHeight,
-  overflowX: `auto`,
-  maskImage: `linear-gradient(to right, transparent, ${backgroundColor(
-    props
-  )} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`,
-}))
+const InnerContainer = styled("div")`
+  align-items: center;
+  display: flex;
+  height: ${presets.bannerHeight};
+  overflow-x: auto;
+  mask-image: ${`linear-gradient(to right, transparent, ${props =>
+    backgroundColor(props)} ${horizontalPadding}, ${props =>
+    backgroundColor(props)} 96%, transparent)`};
+`
 
-const Content = styled.div({
-  color: colors.ui.bright,
-  fontFamily: options.headerFontFamily.join(`,`),
-  fontSize: scale(-1 / 5).fontSize,
-  paddingLeft: horizontalPadding,
-  paddingRight: horizontalPadding,
-  WebkitFontSmoothing: `antialiased`,
-  whiteSpace: `nowrap`,
-})
+const Content = styled("div")`
+  color: ${colors.ui.bright};
+  font-family: ${options.headerFontFamily.join(`,`)};
+  font-size: ${scale(-1 / 5).fontSize};
+  padding-left: ${horizontalPadding};
+  padding-right: ${horizontalPadding};
+  -webkit-font-smoothing: antialiased;
+  white-space: nowrap;
+`
 
-const Link = styled.a({
-  color: `#fff`,
-  "& span": {
-    display: `none`,
-    [presets.Mobile]: { display: `inline` },
-  },
-})
+const Link = styled("a")`
+  color: #fff;
+  span {
+    display: none;
+    ${presets.Mobile}: {
+      display: inline;
+    }
+  }
+`
 
 const TopBanner = () => {
   return (
