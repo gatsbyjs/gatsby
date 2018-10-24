@@ -18,7 +18,6 @@
     "gatsby-source-filesystem": "^2.0.1",
     "gatsby-transformer-remark": "^2.1.1",
     "gatsby-transformer-sharp": "^2.1.1",
-    "hast-util-to-html": "^3.1.0",
     "lodash": "^4.15.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
