@@ -20,6 +20,7 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const db = require(`../db`)
+const nodeTracking = require(`../schema/node-tracking`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -224,6 +225,7 @@ module.exports = async (args: BootstrapArgs) => {
     await db.start({
       saveFile: dbSaveFile,
     })
+    nodeTracking.trackDbNodes()
   } catch (e) {
     report.error(
       `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`

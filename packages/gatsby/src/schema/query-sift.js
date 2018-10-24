@@ -1,7 +1,7 @@
 const sift = require(`sift`)
 const _ = require(`lodash`)
 const prepareRegex = require(`./prepare-regex`)
-const { getNodesByType, getNode } = require(`../redux`)
+const { getNodesByType } = require(`../db`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
 
 const resolvedNodesCache = new Map()

@@ -79,16 +79,16 @@ const findRootNodeAncestor = (obj, predicate = null) => {
   return !predicate || predicate(rootNode) ? rootNode : null
 }
 
+function trackDbNodes() {
+  _.each(getNodes(), node => {
+    trackInlineObjectsInRootNode(node)
+  })
+}
+
 /**
  * @callback nodePredicate
  * @param {Node} node Node that is examined
  */
 
 exports.findRootNodeAncestor = findRootNodeAncestor
-
-// Track nodes that are already in store
-if (getDb()) {
-  _.each(getNodes(), node => {
-    trackInlineObjectsInRootNode(node)
-  })
-}
+exports.trackDbNodes = trackDbNodes
