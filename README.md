@@ -18,8 +18,8 @@
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby is released under the MIT license." />
   </a>
-  <a href="https://travis-ci.org/gatsbyjs/gatsby">
-    <img src="https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master" alt="Current TravisCI build status." />
+  <a href="https://circleci.com/gh/gatsbyjs/gatsby">
+    <img src="https://circleci.com/gh/gatsbyjs/gatsby.svg?style=shield" alt="Current CircleCI build status." />
   </a>
   <a href="https://www.npmjs.org/package/gatsby">
     <img src="https://img.shields.io/npm/v/gatsby.svg" alt="Current npm package version." />
