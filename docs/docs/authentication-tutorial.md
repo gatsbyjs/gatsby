@@ -354,7 +354,7 @@ With the client-only routes in place, you must now refactor some files to accoun
 
 The navigation bar will show the user name and logout option to registered users:
 
-```jsx{2-3,5-13,22,27,29-38,43}:title=src/components/navBar.js
+```jsx{2-3,5-12,21,26,28-38,42}:title=src/components/navBar.js
 import React from "react"
 import { Link, navigate } from "gatsby"
 import { getUser, isLoggedIn, logout } from "../services/auth"
