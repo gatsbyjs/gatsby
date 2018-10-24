@@ -32,7 +32,7 @@ module.exports = {
 }
 ```
 
-Create a new component to hold the links, and edit the layout component to include it. For now, it will act as a placeholder:
+Create a new component to hold the links. For now, it will act as a placeholder:
 
 ```jsx:title=src/components/navBar.js
 import React from "react"
@@ -59,6 +59,8 @@ export default () => (
   </div>
 )
 ```
+
+And edit the layout component to include it:
 
 ```jsx{7,41}:title=src/components/layout.js
 import React from "react"
@@ -220,7 +222,7 @@ const App = () => (
 export default App
 ```
 
-Next, add the components regarding those new routes:
+Next, add the components regarding those new routes. The profile component to show the user data:
 
 ```jsx:title=src/components/profile.js
 import React from "react"
@@ -237,6 +239,8 @@ const Profile = () => (
 
 export default Profile
 ```
+
+The login component will allow - as you may have guessed - the login process:
 
 ```jsx:title=src/components/login.js
 class Login extends React.Component {
@@ -341,7 +345,9 @@ export default App
 
 ## Refactoring to use new routes and user data
 
-With the client-only routes in place, you must now refactor some files to account for the user data available:
+With the client-only routes in place, you must now refactor some files to account for the user data available.
+
+The navigation bar will show the user name and logout option to registered users:
 
 ```jsx{2-3,5-13,22,27,29-38,43}:title=src/components/navBar.js
 import React from "react"
@@ -388,6 +394,8 @@ export default () => {
 }
 ```
 
+The index page will suggest to login or check the profile accordingly:
+
 ```jsx{3,7-8,10-23,26}:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
@@ -418,6 +426,8 @@ const IndexPage = () => {
 
 export default IndexPage
 ```
+
+And the profile will show the user data:
 
 ```jsx{2,8,9}:title=src/components/profile.js
 import React from "react"
