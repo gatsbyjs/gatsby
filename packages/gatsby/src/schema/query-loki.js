@@ -141,17 +141,6 @@ function ensureIndexes(coll, findArgs) {
   })
 }
 
-function execLokiQuery(coll, findArgs, gqlArgs) {
-  let chain = coll.chain().find(findArgs)
-  const { sort } = gqlArgs
-
-  if (sort) {
-    chain = chain.compoundsort(toSortFields(sort))
-  }
-
-  return chain.data()
-}
-
 /**
  * Runs the graphql query over the loki nodes db.
  *
