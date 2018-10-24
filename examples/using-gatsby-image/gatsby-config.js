@@ -1,6 +1,6 @@
 module.exports = {
   plugins: [
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     `gatsby-plugin-netlify`,
     `gatsby-transformer-sharp`,
     {

@@ -3,41 +3,20 @@ import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
+import FloatingImage from "../components/floating-image"
+import PageTitle from "../components/page-title"
 import Layout from "../layouts"
 
-import { rhythm, options } from "../utils/typography"
-
 const BlurUp = ({ data, location }) => (
-  <Layout location={location}>
-    <h2>Background color</h2>
-    <Img
-      backgroundColor
-      style={{ display: `inherit` }}
-      css={{
-        marginBottom: rhythm(options.blockMarginBottom * 2),
-        marginLeft: rhythm(options.blockMarginBottom * 2),
-        float: `right`,
-        "@media (min-width: 500px)": {
-          display: `none`,
-        },
-      }}
-      title={`Photo by Redd Angelo on Unsplash`}
-      fixed={data.reddImageMobile.childImageSharp.fixed}
-    />
-    <Img
-      backgroundColor
-      style={{ display: `inherit` }}
-      css={{
-        marginBottom: rhythm(options.blockMarginBottom * 2),
-        marginLeft: rhythm(options.blockMarginBottom * 2),
-        float: `right`,
-        display: `none`,
-        "@media (min-width: 500px)": {
-          display: `inline-block`,
-        },
-      }}
-      title={`Photo by Redd Angelo on Unsplash`}
-      fixed={data.reddImage.childImageSharp.fixed}
+  <Layout
+    location={location}
+    image={data.file.childImageSharp.fluid}
+    imageBackgroundColor="#F0C450"
+  >
+    <PageTitle>Background Color</PageTitle>
+    <FloatingImage
+      imageMobile={data.floatingImageMobile.childImageSharp.fixed}
+      imageDesktop={data.floatingImage.childImageSharp.fixed}
     />
     <Lorem />
     <Img
@@ -53,21 +32,32 @@ export default BlurUp
 
 export const query = graphql`
   query {
-    reddImageMobile: file(relativePath: { regex: "/redd/" }) {
+    file(relativePath: { regex: "/charles-deluvio-695732-unsplash/" }) {
+      childImageSharp {
+        fluid(maxWidth: 1000, quality: 80) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    floatingImageMobile: file(
+      relativePath: { regex: "/charles-deluvio-542217-unsplash/" }
+    ) {
       childImageSharp {
         fixed(width: 126) {
           ...GatsbyImageSharpFixed_noBase64
         }
       }
     }
-    reddImage: file(relativePath: { regex: "/redd/" }) {
+    floatingImage: file(
+      relativePath: { regex: "/charles-deluvio-542217-unsplash/" }
+    ) {
       childImageSharp {
         fixed(width: 201) {
           ...GatsbyImageSharpFixed_noBase64
         }
       }
     }
-    kenImage: file(relativePath: { regex: "/ken-treloar/" }) {
+    kenImage: file(relativePath: { regex: "/martin-reisch-113179/" }) {
       childImageSharp {
         fluid(maxWidth: 599) {
           ...GatsbyImageSharpFluid_noBase64
