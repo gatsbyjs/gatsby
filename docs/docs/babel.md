@@ -8,7 +8,7 @@ support for writing modern JavaScript — while still supporting older browsers.
 ## How to specify which browsers to support
 
 Gatsby supports by default the last two versions of major browsers, IE 9+, as well as
-any browser that still as 1%+ browser share.
+any browser that still has 1%+ browser share.
 
 This means we automatically compile your JavaScript to ensure it works on older browsers.
 We also automatically add polyfills as needed — no more shipping code which mysteriously
