@@ -22,7 +22,7 @@ class DebounceInput extends Component {
     this.setInputValue(this.props.value)
   }
 
-  componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
+  componentDidUpdate(prevProps) {
     if (prevProps.value != this.props.value)
       this.setInputValue(this.props.value)
   }
