@@ -255,7 +255,9 @@ exports.createPages = ({ graphql, actions }) => {
 
       // Create blog-post pages.
       blogPosts.forEach((edge, index) => {
-        const next = index === 0 ? null : blogPosts[index - 1].node
+        let next = index === 0 ? null : blogPosts[index - 1].node
+        if (next && !_.get(next, `fields.released`)) next = null
+
         const prev =
           index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
 
