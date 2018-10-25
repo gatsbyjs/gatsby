@@ -10,12 +10,15 @@ A sitemap can help web crawlers and search engines to quickly determine the page
 
 ## How to Use
 
-```javascript
-// In your gatsby-config.js
-siteMetadata: {
-  siteUrl: `https://www.example.com`,
-},
-plugins: [`gatsby-plugin-sitemap`]
+```javascript{3,6}:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+	siteUrl: `https://www.example.com`,
+  },
+  plugins: [
+    `gatsby-plugin-sitemap`
+  ]
+}
 ```
 
 Above is the minimal configuration required to have it work. By default, the
