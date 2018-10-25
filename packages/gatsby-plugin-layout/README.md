@@ -9,7 +9,9 @@ This can be helpful for:
 - Custom error handling using componentDidCatch
 - Inject additional data into pages using React Context.
 
-This plugin reimplements the behavior of layout components in `gatsby@1`, which [was removed in version 2](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
+This plugin reimplements the behavior of layout components in `gatsby@1`, which [was removed in version 2](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md). 
+
+Note: This plugin is all-or-nothing. If you choose to use `gatsby-plugin-layout`, all of your page elements will be wrapped by `<Layout />`. Do not try to refactor some components to use the `<Layout />` component from `gatsby-plugin-layout` and some components to use `<Layout />` as described in `gatsby@2`. This will cause Gatsby to render multiple layouts.
 
 ## Install
 
