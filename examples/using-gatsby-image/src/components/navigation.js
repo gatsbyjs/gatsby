@@ -97,6 +97,7 @@ const Nav = styled(`nav`)({
     marginLeft: 0,
     marginRight: 0,
     paddingLeft: 0,
+    paddingTop: 0,
   },
 })
 
