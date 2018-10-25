@@ -143,6 +143,7 @@ exports.createPages = ({ graphql, actions }) => {
                 fields {
                   slug
                   package
+                  released
                 }
                 frontmatter {
                   title
@@ -231,9 +232,13 @@ exports.createPages = ({ graphql, actions }) => {
         return undefined
       })
 
+      const releasedBlogPosts = blogPosts.filter(post =>
+        _.get(post, `node.fields.released`)
+      )
+
       // Create blog-list pages.
       const postsPerPage = 8
-      const numPages = Math.ceil(blogPosts.length / postsPerPage)
+      const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
 
       Array.from({ length: numPages }).forEach((_, i) => {
         createPage({
@@ -265,7 +270,7 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
-      const tagLists = blogPosts
+      const tagLists = releasedBlogPosts
         .filter(post => _.get(post, `node.frontmatter.tags`))
         .map(post => _.get(post, `node.frontmatter.tags`))
 
