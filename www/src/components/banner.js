@@ -57,7 +57,7 @@ const Banner = ({ children, background }) => {
           <Content>
             These are the docs for v2.
             {` `}
-            <Link href="https://v1.gatsbyjs.org/" css={{ color: `#fff` }}>
+            <Link href="https://v1.gatsbyjs.org/">
               View the v1 docs
               <span>
                 {` `}
