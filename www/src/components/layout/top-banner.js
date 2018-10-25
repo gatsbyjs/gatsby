@@ -47,7 +47,7 @@ const Link = styled("a")`
   }
 `
 
-const TopBanner = () => {
+const TopBanner = ({ children, background }) => {
   return (
     <TopBannerContainer>
       <InnerContainer>
@@ -68,6 +68,9 @@ const TopBanner = () => {
   )
 }
 
-TopBanner.propTypes = {}
+TopBanner.propTypes = {
+  children: PropTypes.node,
+  background: PropTypes.string,
+}
 
 export default TopBanner

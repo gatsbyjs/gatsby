@@ -4,7 +4,7 @@ import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
 import styled, { css } from "react-emotion"
 
-import TopBanner from "./top-banner"
+import Banner from "../banner"
 import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
@@ -73,7 +73,7 @@ class LayoutWithHeading extends React.Component {
 
         <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
 
-        <TopBanner />
+        <Banner />
 
         <Navigation pathname={this.props.location.pathname} />
 
