@@ -2,7 +2,23 @@
 title: Creating a sitemap
 ---
 
-This is a stub. Help our community expand it.
+A sitemap can help web crawlers and search engines to quickly determine the pages that exist on your site. `gatsby-plugin-sitemap` is a plugin that automatically generates a sitemap for you during `gatsby build`.
 
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+## Install gatsby-plugin-sitemap
+
+`npm install --save gatsby-plugin-sitemap`
+
+## How to Use
+
+```javascript
+// In your gatsby-config.js
+siteMetadata: {
+  siteUrl: `https://www.example.com`,
+},
+plugins: [`gatsby-plugin-sitemap`]
+```
+
+Above is the minimal configuration required to have it work. By default, the
+generated sitemap will include all of your site's pages, except the ones you exclude.
+
+Additional configuration options can be found at the [npm package description for gatsby-plugin-sitemap](https://www.npmjs.com/package/gatsby-plugin-sitemap)
