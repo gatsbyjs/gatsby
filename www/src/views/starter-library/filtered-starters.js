@@ -25,7 +25,7 @@ import DebounceInput from "../../components/debounce-input"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
-    sitesToShow: 9,
+    sitesToShow: 12,
   }
   setFiltersCategory = filtersCategory =>
     this.props.setURLState({ c: Array.from(filtersCategory) })
