@@ -3082,3 +3082,15 @@
   categories:
     - Learning
   featured: false
+- title: Code Championship
+  description: >
+    Competitive coding competitions for students from 3rd to 8th grade. Code is Sport.
+  url: https://www.codechampionship.com
+  main_url: https://www.codechampionship.com
+  categories:
+    - Learning
+    - Education
+    - Sport
+  built_by: Abamath LLC
+  built_by_url: https://www.abamath.com
+  featured: false
