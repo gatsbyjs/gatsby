@@ -75,7 +75,7 @@
     - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
-        - title: Using Unstructured Data
+        - title: Using unstructured data
           link: /docs/using-unstructured-data/
         - title: Sourcing from the filesystem*
           link: /docs/sourcing-from-the-filesystem/
