@@ -386,7 +386,7 @@ exports.createPages = ({ graphql, actions }) => {
   })
 }
 
-// Create slugs for files.
+// Create slugs for files, set released status for blog posts.
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
@@ -418,6 +418,12 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         slug = `/${parsedFilePath.name}/`
       } else {
         slug = `/${parsedFilePath.dir}/`
+      }
+
+      // Set released status for blog posts.
+      if (_.includes(parsedFilePath.dir, `blog`)) {
+        const released = new Date(_.get(node, `frontmatter.date`)) <= new Date()
+        createNodeField({ node, name: `released`, value: released })
       }
     }
     // Add slugs for package READMEs.
