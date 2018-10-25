@@ -1,6 +1,6 @@
 ---
 title: Using unstructured data in Gatsby
-date: 2018-10-16
+date: 2018-10-25
 author: Amberley Romo
 tags: ["sourcing", "data"]
 ---
