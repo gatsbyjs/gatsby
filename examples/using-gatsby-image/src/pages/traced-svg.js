@@ -28,7 +28,7 @@ class TracedSVG extends React.Component {
         <UnsplashMasonry images={data.unsplashImages.edges} />
         <Ipsum />
         <Img
-          fluid={data.kenImage.childImageSharp.fluid}
+          fluid={data.fullWidthImage.childImageSharp.fluid}
           title={`Photo by Ken Treloar on Unsplash`}
         />
       </Layout>
@@ -69,7 +69,9 @@ export const query = graphql`
         }
       }
     }
-    kenImage: file(relativePath: { regex: "/chuttersnap-1103171-unsplash/" }) {
+    fullWidthImage: file(
+      relativePath: { regex: "/chuttersnap-1103171-unsplash/" }
+    ) {
       childImageSharp {
         fluid(maxWidth: 600) {
           ...GatsbyImageSharpFluid_tracedSVG

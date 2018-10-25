@@ -17,7 +17,7 @@ const PreferWebp = ({ data, location }) => (
     />
     <Lorem />
     <Img
-      fluid={data.kenImage.childImageSharp.fluid}
+      fluid={data.fullWidthImage.childImageSharp.fluid}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <Ipsum />
@@ -53,7 +53,7 @@ export const query = graphql`
         }
       }
     }
-    kenImage: file(relativePath: { regex: "/martin-reisch-113179/" }) {
+    fullWidthImage: file(relativePath: { regex: "/martin-reisch-113179/" }) {
       childImageSharp {
         fluid(maxWidth: 600) {
           ...GatsbyImageSharpFluid_withWebp

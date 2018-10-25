@@ -20,7 +20,7 @@ const BlurUp = ({ data, location }) => (
     />
     <Lorem />
     <Img
-      fluid={data.kenImage.childImageSharp.fluid}
+      fluid={data.fullWidthImage.childImageSharp.fluid}
       backgroundColor
       title={`Photo by Ken Treloar on Unsplash`}
     />
@@ -57,7 +57,7 @@ export const query = graphql`
         }
       }
     }
-    kenImage: file(relativePath: { regex: "/martin-reisch-113179/" }) {
+    fullWidthImage: file(relativePath: { regex: "/martin-reisch-113179/" }) {
       childImageSharp {
         fluid(maxWidth: 599) {
           ...GatsbyImageSharpFluid_noBase64
