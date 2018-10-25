@@ -164,7 +164,7 @@ class FeaturedSites extends Component {
               ...styles.scrollbar,
             }}
           >
-            {featured.slice(0, 12).map(({ node }) => (
+            {featured.slice(0, 9).map(({ node }) => (
               <div
                 key={node.id}
                 css={{
