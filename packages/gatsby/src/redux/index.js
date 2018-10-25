@@ -3,7 +3,7 @@ const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const fs = require(`fs`)
 const mitt = require(`mitt`)
-const bfj = require(`bfj`)
+const stringify = require(`json-stream-stringify`)
 
 // Create event emitter for actions
 const emitter = mitt()
@@ -80,7 +80,18 @@ const saveState = state => {
   pickedState.components = mapToObject(pickedState.components)
   pickedState.nodes = mapToObject(pickedState.nodes)
 
-  bfj.write(`${process.cwd()}/.cache/redux-state.json`, pickedState)
+  const writeStream = fs.createWriteStream(`${process.cwd()}/.cache/redux-state.json`)
+
+  new stringify(pickedState, null, 2, true)
+    .pipe(writeStream)
+    .on(`finish`, () => {
+      writeStream.destroy()
+      writeStream.end()
+    })
+    .on(`error`, () => {
+      writeStream.destroy()
+      writeStream.end()
+    })
 }
 const saveStateDebounced = _.debounce(saveState, 1000)
 
