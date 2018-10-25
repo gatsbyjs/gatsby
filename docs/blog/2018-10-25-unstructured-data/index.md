@@ -7,7 +7,7 @@ tags: ["sourcing", "data"]
 
 When creating web experiences, an inevitable question is, "how do I get my data from point A (the source) to point B (the component)?". This can end up being a deceptively complex question.
 
-Gatsby’s rich data plugin ecosystem lets you build sites with the data you want — from one or many sources; Pull data from headless CMSs, SaaS services, APIs, databases, your file system & more directly into your components.
+Gatsby’s rich data plugin ecosystem lets you build sites with the data you want — from one or many sources. You can pull data from headless CMSs, SaaS services, APIs, databases, your file system & more directly into your components.
 
 <figure>
   <img alt="An assortment of possible data sources (CMSs, Markdown, APIs, etc)" height="400" src="./data_sources.png" />
@@ -16,7 +16,7 @@ Gatsby’s rich data plugin ecosystem lets you build sites with the data you wan
   </figcaption>
 </figure>
 
-Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightly so! Gatsby's data layer is powerful and extremely effective; It solves the "integration problem" of decoupled CMSs -- it's the glue between presentation layer and wherever your data is sourced from.
+Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightly so! Gatsby's data layer is powerful and extremely effective; it solves the "integration problem" of decoupled CMSs -- it's the glue between presentation layer and wherever your data is sourced from.
 
 <figure>
   <img alt="" height="400" src="./integration_layer.png" />
@@ -54,7 +54,7 @@ That's it!
 
 `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
 
-By [exporting createPages](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) from our example Gatsby site's `gatsby-node.js` file, we're saying, "at this point in the bootstrapping sequence, run this code".
+By [exporting `createPages`](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) from our example Gatsby site's `gatsby-node.js` file, we're saying, "at this point in the bootstrapping sequence, run this code".
 
 ```javascript{1,3}:title=gatsby-node.js
 exports.createPages = () => {
@@ -103,7 +103,7 @@ The [`createPage` action](/docs/actions/#createPage) is passed an object contain
 - `component`: This is the absolute path to the React component you've defined for this page.
 - `context`: Context data for this page. Available either as props to the component (`this.props.pageContext`) or as `graphql` arguments.
 
-In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4) (working outside of the data layer! It's just props).
+In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4). This allows us to completely circumvent Gatsby’s data layer; it’s just props.
 
 ```jsx{1,3,5,12-14}:title=src/templates/all-pokemon.js
 export default ({ pageContext: { allPokemon } }) => (
@@ -184,7 +184,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 }
 ```
 
-For each type of page, we are invoking the `createPage` action, and supplying it with our desired path, React component, and data (as props on the context).
+For each type of page, we are invoking the `createPage` action, and supplying it with our desired path, React component, and data (as `context`).
 
 > View the full source code of this example at Jason Lengstorf's ["gatsby-with-unstructured-data" repo](https://github.com/jlengstorf/gatsby-with-unstructured-data). Also check out the ["using-gatsby-data-layer" branch](https://github.com/jlengstorf/gatsby-with-unstructured-data/tree/using-gatsby-data-layer) of that repo, to compare a refactor that uses Gatsby's data layer in the same example.
 
@@ -199,7 +199,7 @@ Using Gatsby's data layer provides the following benefits:
 
 - Enables you to declaratively specify what data a page component needs, alongside the page component
 - Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it’ll show up when you need it
-- Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries (e.g. markdown -> html, images -> responsive images, etc)
+- Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries (e.g. Markdown -> HTML, images -> responsive images, etc)
 - It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
 - Improves performance by removing data bloat — GraphQL enables you to select only the data you need, not whatever an API returns
 - Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
