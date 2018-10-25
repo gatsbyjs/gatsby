@@ -3058,3 +3058,27 @@
   categories:
     - Music
   featured: false
+- title: CodeSandbox
+  description: >
+    CodeSandbox is an online editor that helps you create web applications, from prototype to deployment.
+  url: https://codesandbox.io/
+  main_url: https://codesandbox.io/
+  categories:
+    - Web Development
+  featured: false
+- title: Marvel
+  description: >
+    The all-in-one platform powering design.
+  url: https://marvelapp.com/
+  main_url: https://marvelapp.com/
+  categories:
+    - Design
+  featured: false
+- title: Designcode.io
+  description: >
+    Learn to design and code React apps.
+  url: https://designcode.io
+  main_url: https://designcode.io
+  categories:
+    - Learning
+  featured: false
