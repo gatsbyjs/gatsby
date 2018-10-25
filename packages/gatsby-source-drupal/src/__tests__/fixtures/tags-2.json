@@ -2,12 +2,12 @@
   "data": [
     {
       "type": "taxonomy_term--tags",
-      "id": "tag-1",
+      "id": "tag-2",
       "attributes": {
-        "id": 11,
-        "uuid": "tag-1",
+        "id": 12,
+        "uuid": "tag-2",
         "langcode": "en",
-        "name": "Tag #1",
+        "name": "Tag #2",
         "description": null,
         "weight": 0,
         "changed": 1523031646,
@@ -20,9 +20,5 @@
       }
     }
   ],
-  "links": {
-    "next": {
-      "href": "http://fixture/jsonapi/taxonomy_term/tags-2"
-    }
-  }
+  "links": {}
 }
