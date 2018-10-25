@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Gatsby`,
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://v1.gatsbyjs.org`,
     description: `Blazing-fast static site generator for React`,
   },
   mapping: {
