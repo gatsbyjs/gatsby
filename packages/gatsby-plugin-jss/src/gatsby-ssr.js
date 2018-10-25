@@ -1,7 +1,7 @@
 import React from "react"
 import { JssProvider, SheetsRegistry, ThemeProvider } from "react-jss"
 
-const sheets = new SheetsRegistry()
+let sheets = new SheetsRegistry()
 
 // eslint-disable-next-line react/prop-types,react/display-name
 exports.wrapRootElement = ({ element }, { theme = {} }) => (
@@ -19,4 +19,6 @@ exports.onRenderBody = ({ setHeadComponents }) => {
       dangerouslySetInnerHTML={{ __html: sheets.toString() }}
     />,
   ])
+
+  sheets = new SheetsRegistry()
 }
