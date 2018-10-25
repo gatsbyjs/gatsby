@@ -20,12 +20,10 @@ The `cache-control` header should be `cache-control: public,max-age=31536000,imm
 
 ## JavaScript
 
-Other files e.g. JavaScript files are cachable via webpack 4's new features. Best practices state that all JavaScript must be cached but not served until the server has confirmed that the cache has the most recent version of the files.
+Other files e.g. JavaScript files should also be cached forever. This is because webpack 4 now also generates hashes for all files based on the content of the files, similar to what webpack 1 used to do with static files (see above).
 
-The `cache-control` header should be `cache-control: public, max-age=0, no-cache`
+The `cache-control` header should be `cache-control: public, max-age=31536000,immutable`
 
-For further reading: [MDN docs defining no-cache](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#Cacheability)
-
-How you setup caching depends on how you're hosting your site. We encourage people to create Gatsby plugins which automate the creation of caching headers for Gatsby sites. The following plugins have been created:
+How you caliberate your caching depends on how you're hosting your site. We encourage people to create Gatsby plugins which automate the creation of caching headers for Gatsby sites. The following plugins have been created:
 
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
