@@ -4,6 +4,8 @@
       "self": "http://fixture/jsonapi",
       "file--file": "http://fixture/jsonapi/file/file",
       "node--article": "http://fixture/jsonapi/node/article",
-      "taxonomy_term--tags": "http://fixture/jsonapi/taxonomy_term/tags"
+      "taxonomy_term--tags": {
+        "href": "http://fixture/jsonapi/taxonomy_term/tags"
+      }
   }
 }
