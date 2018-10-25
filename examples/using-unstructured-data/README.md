@@ -45,4 +45,4 @@ This one query accomplishes the same thing as the three different REST calls, an
 
 ## What would this look like using Gatsby's GraphQL integration layer?
 
-For quick and easy comparison, the [using-gatsby-data-layer](https://github.com/jlengstorf/gatsby-with-unstructured-data/tree/using-gatsby-data-layer) branch illustrates how you can accomplish this using Gatsby's integration layer, rather than using the unstructured data approach.
+For quick and easy comparison, the [using-gatsby-data-layer](https://github.com/jlengstorf/gatsby-with-unstructured-data/tree/using-gatsby-data-layer) branch of the original example repo illustrates how you can accomplish this using Gatsby's integration layer, rather than using the unstructured data approach.
