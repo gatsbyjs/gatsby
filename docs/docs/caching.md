@@ -24,6 +24,6 @@ Other files e.g. JavaScript files should also be cached forever. This is because
 
 The `cache-control` header should be `cache-control: public, max-age=31536000,immutable`
 
-How you caliberate your caching depends on how you're hosting your site. We encourage people to create Gatsby plugins which automate the creation of caching headers for Gatsby sites. The following plugins have been created:
+How you calibrate your caching depends on how you're hosting your site. We encourage people to create Gatsby plugins which automate the creation of caching headers for Gatsby sites. The following plugins have been created:
 
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
