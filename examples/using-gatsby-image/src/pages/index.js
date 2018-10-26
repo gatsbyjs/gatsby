@@ -4,7 +4,7 @@ import styled from "react-emotion"
 import { FaGithub } from "react-icons/fa"
 
 import Layout from "../components/layout"
-import { scale } from "../utils/typography"
+import { scale, rhythm, options } from "../utils/typography"
 import { colors } from "../utils/presets"
 
 const FeatureList = styled(`ul`)({
@@ -29,7 +29,12 @@ class IndexComponent extends React.Component {
         location={this.props.location}
         image={this.props.data.file.childImageSharp.fluid}
       >
-        <p css={{ ...scale(6 / 9), marginBottom: 60 }}>
+        <p
+          css={{
+            ...scale(0.75),
+            marginBottom: rhythm(options.blockMarginBottom * 2),
+          }}
+        >
           <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
             gatsby-image
           </a>
