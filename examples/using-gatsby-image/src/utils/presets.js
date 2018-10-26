@@ -14,8 +14,8 @@ module.exports = {
     speedSlow: `350ms`,
   },
   zIndex: {
-    overlay: 20,
     raised: 10,
+    overlay: 20,
   },
   gutter: {
     default: 20,
