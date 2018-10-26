@@ -1,5 +1,6 @@
 import React from "react"
 import { keyframes } from "react-emotion"
+import { Link } from "gatsby"
 
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -173,6 +174,12 @@ const ItemDescription = ({ children }) => (
   </small>
 )
 
+const ItemDescriptionLink = ({ to, children }) => (
+  <Link css={{ "&&": { fontWeight: "normal" } }} to={to}>
+    {children}
+  </Link>
+)
+
 const Gatsby = ({ children }) => (
   <div
     css={{
@@ -316,8 +323,30 @@ const Diagram = () => (
       >
         <ItemTitle>Static Web Host</ItemTitle>
         <ItemDescription>
-          Amazon S3, Netlify, GitHub Pages, Surge.sh, Aerobatic, Now.sh, & many
-          more
+          <ItemDescriptionLink to="/docs/deploying-to-s3-cloudfront">
+            Amazon S3
+          </ItemDescriptionLink>
+          ,{" "}
+          <ItemDescriptionLink to="/docs/hosting-on-netlify">
+            Netlify
+          </ItemDescriptionLink>
+          ,{" "}
+          <ItemDescriptionLink to="/docs/how-gatsby-works-with-github-pages/">
+            GitHub Pages
+          </ItemDescriptionLink>
+          ,{" "}
+          <ItemDescriptionLink to="/tutorial/part-one/#--deploying-a-gatsby-site">
+            Surge.sh
+          </ItemDescriptionLink>
+          ,{" "}
+          <ItemDescriptionLink to="/docs/deploying-to-aerobatic/">
+            Aerobatic
+          </ItemDescriptionLink>
+          ,{" "}
+          <ItemDescriptionLink to="/docs/deploying-to-now/">
+            Now.sh
+          </ItemDescriptionLink>
+          , & many more
         </ItemDescription>
       </div>
     </Segment>
