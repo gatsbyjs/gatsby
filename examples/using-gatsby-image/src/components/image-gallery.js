@@ -36,7 +36,6 @@ const GridItem = styled(`div`)({
 })
 
 const GridItemImage = styled(Img)({
-  "& img": { borderRadius: 2 },
   "&:hover": {
     "& div + img": {
       opacity: `1 !important`,
