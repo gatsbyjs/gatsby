@@ -1,6 +1,6 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
-const minimatch = require(`minimatch`)
+import minimatch from 'minimatch'
 
 exports.onRenderBody = (
   { setHeadComponents, pathname, setPreBodyComponents },
