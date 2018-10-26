@@ -7,7 +7,7 @@ import presets from "../utils/presets"
 import { options, scale } from "../utils/typography"
 
 const OuterContainer = styled(`div`)({
-  background: `white`,
+  background: `#fff`,
   [presets.Tablet]: {
     margin: `0 0 0 calc(-${presets.offset}vw - ${presets.gutter.tablet}px)`,
     padding: 100,

@@ -12,7 +12,7 @@ const Container = styled(`div`)({
   left: `0%`,
   padding: 20,
   marginTop: `calc(67vh - 20px)`,
-  background: `white`,
+  background: `#fff`,
   [presets.Tablet]: {
     maxWidth: 600,
     marginLeft: `${presets.offset}%`,
