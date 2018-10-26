@@ -60,6 +60,8 @@ See the [list of official and community plugins](/docs/plugins/)
 - [Kategorien & Tags zu Gatsby hinzufügen (German)](https://www.lekoarts.de/blog/kategorien-tags-zu-gatsby-hinzufugen/)
 - [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
+- [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
+
 
 ## Other resources
 
