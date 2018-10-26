@@ -17,12 +17,14 @@ const BlurUp = ({ data, location }) => (
     <FloatingImage
       imageMobile={data.floatingImageMobile.childImageSharp.fixed}
       imageDesktop={data.floatingImage.childImageSharp.fixed}
+      title={`Photo by Charles Deluvio on Unsplash`}
+      backgroundColor="#DB3225"
     />
     <Lorem />
     <Img
       fluid={data.fullWidthImage.childImageSharp.fluid}
-      backgroundColor
-      title={`Photo by Ken Treloar on Unsplash`}
+      backgroundColor="#F9D6CE"
+      title={`Photo by Charles Deluvio on Unsplash`}
     />
     <Ipsum />
   </Layout>
