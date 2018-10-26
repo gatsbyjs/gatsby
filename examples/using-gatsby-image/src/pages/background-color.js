@@ -5,7 +5,7 @@ import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
-import Layout from "../layouts"
+import Layout from "../components/layout"
 
 const BlurUp = ({ data, location }) => (
   <Layout

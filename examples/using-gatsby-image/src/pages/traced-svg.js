@@ -8,7 +8,7 @@ import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import UnsplashMasonry from "../components/image-gallery"
 
-import Layout from "../layouts"
+import Layout from "../components/layout"
 
 class TracedSVG extends React.Component {
   render() {

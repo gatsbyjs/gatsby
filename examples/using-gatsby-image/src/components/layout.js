@@ -2,7 +2,7 @@ import React from "react"
 import Img from "gatsby-image"
 import styled from "react-emotion"
 
-import Navigation from "../components/navigation"
+import Navigation from "./navigation"
 import { rhythm } from "../utils/typography"
 import logo from "../images/monogram.svg"
 import presets from "../utils/presets"

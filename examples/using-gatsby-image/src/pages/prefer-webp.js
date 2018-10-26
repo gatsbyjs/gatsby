@@ -4,7 +4,7 @@ import Img from "gatsby-image"
 
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
-import Layout from "../layouts"
+import Layout from "../components/layout"
 import Ipsum from "../components/ipsum"
 import Lorem from "../components/lorem"
 

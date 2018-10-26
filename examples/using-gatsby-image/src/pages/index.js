@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 import styled from "react-emotion"
 import { FaGithub } from "react-icons/fa"
 
-import Layout from "../layouts"
+import Layout from "../components/layout"
 import { scale } from "../utils/typography"
 import { colors } from "../utils/presets"
 
