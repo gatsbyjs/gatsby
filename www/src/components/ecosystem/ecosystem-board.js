@@ -49,7 +49,7 @@ const EcosystemBoard = ({
         icon={StartersIcon}
         links={[
           { label: "Browse Starters", to: "/starters/" },
-          { label: "Plugin Docs", to: "/docs/starters/", secondary: true },
+          { label: "Starter Docs", to: "/docs/starters/", secondary: true },
         ]}
         featuredItems={starters}
       />
