@@ -30,7 +30,7 @@ export const query = graphql`
   query {
     file(relativePath: { regex: "/igor-son-320878-unsplash/" }) {
       childImageSharp {
-        fluid(maxWidth: 800, quality: 70) {
+        fluid(maxWidth: 800) {
           ...GatsbyImageSharpFluid
         }
       }
