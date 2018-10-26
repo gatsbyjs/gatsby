@@ -43,8 +43,8 @@ export const query = graphql`
     file(relativePath: { regex: "/yoann-siloine-532511-unsplash/" }) {
       childImageSharp {
         fluid(
-          maxWidth: 1000
-          quality: 80
+          maxWidth: 800
+          quality: 70
           traceSVG: { background: "#fff", color: "#663399" }
         ) {
           ...GatsbyImageSharpFluid_tracedSVG
@@ -55,7 +55,7 @@ export const query = graphql`
       relativePath: { regex: "/charles-deluvio-716558-unsplash/" }
     ) {
       childImageSharp {
-        fixed(width: 125) {
+        fixed(width: 120) {
           ...GatsbyImageSharpFixed_tracedSVG
         }
       }
@@ -83,7 +83,7 @@ export const query = graphql`
         node {
           childImageSharp {
             fluid(
-              maxWidth: 430
+              maxWidth: 420
               quality: 80
               traceSVG: { background: "#fbfafc", color: "#f5f3f7" }
             ) {

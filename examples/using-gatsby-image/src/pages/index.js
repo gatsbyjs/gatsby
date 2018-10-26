@@ -110,7 +110,7 @@ export const query = graphql`
     ) {
       childImageSharp {
         fluid(
-          maxWidth: 1000
+          maxWidth: 800
           quality: 80
           duotone: { highlight: "#ffffff", shadow: "#663399" }
         ) {

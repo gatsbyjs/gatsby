@@ -30,7 +30,7 @@ export const query = graphql`
   query {
     file(relativePath: { regex: "/charles-deluvio-716555-unsplash.jpg/" }) {
       childImageSharp {
-        fluid(maxWidth: 1000, quality: 80) {
+        fluid(maxWidth: 800, quality: 70) {
           ...GatsbyImageSharpFluid
         }
       }
@@ -39,7 +39,7 @@ export const query = graphql`
       relativePath: { regex: "/charles-deluvio-695760-unsplash/" }
     ) {
       childImageSharp {
-        fixed(width: 125) {
+        fixed(width: 120) {
           ...GatsbyImageSharpFixed_withWebp
         }
       }

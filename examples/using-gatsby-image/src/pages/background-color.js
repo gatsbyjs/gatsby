@@ -34,7 +34,7 @@ export const query = graphql`
   query {
     file(relativePath: { regex: "/charles-deluvio-695732-unsplash/" }) {
       childImageSharp {
-        fluid(maxWidth: 1000, quality: 80) {
+        fluid(maxWidth: 800, quality: 70) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
@@ -43,7 +43,7 @@ export const query = graphql`
       relativePath: { regex: "/charles-deluvio-542217-unsplash/" }
     ) {
       childImageSharp {
-        fixed(width: 126) {
+        fixed(width: 120) {
           ...GatsbyImageSharpFixed_noBase64
         }
       }
@@ -52,14 +52,16 @@ export const query = graphql`
       relativePath: { regex: "/charles-deluvio-542217-unsplash/" }
     ) {
       childImageSharp {
-        fixed(width: 201) {
+        fixed(width: 200) {
           ...GatsbyImageSharpFixed_noBase64
         }
       }
     }
-    fullWidthImage: file(relativePath: { regex: "/martin-reisch-113179/" }) {
+    fullWidthImage: file(
+      relativePath: { regex: "/charles-deluvio-695760-unsplash/" }
+    ) {
       childImageSharp {
-        fluid(maxWidth: 599) {
+        fluid(maxWidth: 600) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
