@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
-import { injectGlobal } from "emotion"
-import styled, { css } from "react-emotion"
+import styled, { css, injectGlobal } from "react-emotion"
+// You can import everything from "react-emotion"
 
 // Emotion supports different styling options, all of which are supported by gatsby-plugin-emotion out of the box
 
@@ -11,9 +11,6 @@ injectGlobal`
     padding: 0;
     box-sizing: border-box;
   }
-`
-
-injectGlobal`
   html, body {
     font-family: -apple-system,
       BlinkMacSystemFont,
@@ -67,12 +64,9 @@ const IndexPage = () => (
       <meta name="description" content="Gatsby example site using Emotion" />
       <meta name="referrer" content="origin" />
     </Helmet>
-    ` `
     <Wrapper>
       <h1 className={title}>
-        Hello World, this is my first component styled with
-        {` `}
-        <a href="https://emotion.sh/">emotion</a>!
+        Hello World, this is my first component styled with <a href="https://emotion.sh/">emotion</a>!
       </h1>
       <p className={subtitle}>
         <a
