@@ -52,7 +52,7 @@ class IndexComponent extends React.Component {
           See the
           {` `}
           <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
-            component's documentation
+            component’s documentation
           </a>
           {` `}
           as well as
@@ -66,7 +66,7 @@ class IndexComponent extends React.Component {
               }}
             />
             {` `}
-            view this site's source
+            view this site’s source
           </a>
           {` `}
           to learn how to start using gatsby-image on your Gatsby sites.
@@ -78,15 +78,15 @@ class IndexComponent extends React.Component {
             resolution
           </FeatureListItem>
           <FeatureListItem>
-            Holds the image position while loading so your page doesn't jump
+            Holds the image position while loading so your page doesn’t jump
             around as images load
           </FeatureListItem>
           <FeatureListItem>
-            Uses the "blur-up" effect i.e. it loads a tiny version of the image
+            Uses the “blur-up” effect i.e. it loads a tiny version of the image
             to show while the full image is loading
           </FeatureListItem>
           <FeatureListItem>
-            Alternatively provides a "traced placeholder" SVG of the image.
+            Alternatively provides a “traced placeholder” SVG of the image.
           </FeatureListItem>
           <FeatureListItem>
             Lazy loads images which reduces bandwidth and speeds the initial
