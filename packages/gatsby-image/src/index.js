@@ -86,11 +86,16 @@ const noscriptImg = props => {
   const height = props.height ? `height="${props.height}" ` : ``
   const opacity = props.opacity ? props.opacity : `1`
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
-  return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+
+  // needed for object-fit-images polyfill:
+  var objectFit = props.objectFit ? props.objectFit : `cover`
+  var objectPosition = props.objectPosition ? props.objectPosition : `50% 50%`
+
+  return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:${objectFit};object-position:${objectPosition};font-family:'object-fit:${objectFit};object-position:${objectPosition};'"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
-  const { style, onLoad, onError, ...otherProps } = props
+  const { style, objectFit, objectPosition, onLoad, onError, ...otherProps } = props
 
   return (
     <img
@@ -104,8 +109,9 @@ const Img = React.forwardRef((props, ref) => {
         left: 0,
         width: `100%`,
         height: `100%`,
-        objectFit: `cover`,
-        objectPosition: `center`,
+        objectFit: objectFit,
+        objectPosition: objectPosition,
+        fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
         ...style,
       }}
     />
@@ -114,6 +120,8 @@ const Img = React.forwardRef((props, ref) => {
 
 Img.propTypes = {
   style: PropTypes.object,
+  objectFit: _propTypes.default.string,
+  objectPosition: _propTypes.default.string,
   onError: PropTypes.func,
   onLoad: PropTypes.func,
 }
@@ -203,6 +211,8 @@ class Image extends React.Component {
       className,
       style = {},
       imgStyle = {},
+      objectFit,
+      objectPosition,
       placeholderStyle = {},
       fluid,
       fixed,
@@ -217,6 +227,9 @@ class Image extends React.Component {
       opacity: this.state.imgLoaded ? 0 : 1,
       transition: `opacity 0.5s`,
       transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
+      objectFit: objectFit,
+      objectPosition: objectPosition,
+      fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
       ...imgStyle,
       ...placeholderStyle,
     }
@@ -224,6 +237,9 @@ class Image extends React.Component {
     const imageStyle = {
       opacity: this.state.imgLoaded || this.state.fadeIn === false ? 1 : 0,
       transition: this.state.fadeIn === true ? `opacity 0.5s` : `none`,
+      objectFit: objectFit,
+      objectPosition: objectPosition,
+      fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
       ...imgStyle,
     }
 
@@ -432,6 +448,8 @@ Image.defaultProps = {
   critical: false,
   fadeIn: true,
   alt: ``,
+  objectFit: `cover`,
+  objectPosition: `50% 50%`,
   Tag: `div`,
 }
 
@@ -469,6 +487,8 @@ Image.propTypes = {
   critical: PropTypes.bool,
   style: PropTypes.object,
   imgStyle: PropTypes.object,
+  objectFit: _propTypes.default.string, // needs to be separate for object-fit-image polyfill's font-family declaration
+  objectPosition: _propTypes.default.string, // needs to be separate for object-fit-image polyfill's font-family declaration
   placeholderStyle: PropTypes.object,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
