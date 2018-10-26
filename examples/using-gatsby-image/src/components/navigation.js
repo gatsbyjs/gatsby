@@ -88,7 +88,7 @@ const Nav = styled(`nav`)({
   paddingBottom: 20,
   paddingTop: 20,
   position: `relative`,
-  zIndex: presets.zIndex.header,
+  zIndex: presets.zIndex.raised,
   marginLeft: -20,
   marginRight: -20,
   paddingLeft: 20,
@@ -109,7 +109,7 @@ const SiteTitle = styled(`h1`)({
   fontSize: 20,
   transform: `rotate(90deg)`,
   [presets.Desktop]: {
-    zIndex: 100,
+    zIndex: presets.zIndex.overlay + 1,
   },
 })
 

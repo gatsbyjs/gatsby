@@ -13,7 +13,6 @@ const Container = styled(`div`)({
   padding: 20,
   marginTop: `calc(67vh - 20px)`,
   background: `white`,
-  zIndex: 2,
   [presets.Tablet]: {
     maxWidth: 600,
     marginLeft: `${presets.offset}%`,
@@ -32,7 +31,6 @@ const Image = styled(Img)({
   left: 20,
   right: 20,
   bottom: `33vh`,
-  zIndex: -1,
   [presets.Tablet]: {
     bottom: 0,
     right: `0%`,
@@ -45,7 +43,7 @@ const Image = styled(Img)({
 const Main = styled(`main`)({
   background: `#fff`,
   position: `relative`,
-  zIndex: presets.zIndex.main,
+  zIndex: presets.zIndex.overlay,
   paddingTop: 20,
 })
 
@@ -54,7 +52,6 @@ const LogoLink = styled(`a`)({
   position: `fixed`,
   top: 40,
   right: 40,
-  zIndex: 1,
   "&&": {
     background: `transparent`,
   },
@@ -65,7 +62,7 @@ const LogoLink = styled(`a`)({
     left: 40,
   },
   [presets.Desktop]: {
-    zIndex: 100,
+    zIndex: presets.zIndex.overlay + 1,
   },
 })
 

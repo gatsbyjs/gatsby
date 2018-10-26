@@ -7,8 +7,6 @@ module.exports = {
   Tablet: `@media (min-width: 750px)`,
   Desktop: `@media (min-width: 1000px)`,
   Hd: `@media (min-width: 1200px)`,
-  radius: 2,
-  radiusLg: 4,
   animation: {
     curveDefault: `cubic-bezier(0.4, 0, 0.2, 1)`,
     speedDefault: `250ms`,
@@ -16,9 +14,8 @@ module.exports = {
     speedSlow: `350ms`,
   },
   zIndex: {
-    main: 20,
-    logo: 5,
-    header: 10,
+    overlay: 20,
+    raised: 10,
   },
   gutter: {
     default: 20,
