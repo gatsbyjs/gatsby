@@ -4,10 +4,12 @@
   font-size: 3rem;
 }
 .subheader {
-  color: #485B88;
+  color: #887548;
   line-height: 0.7;
+  padding: 2 em;
 }
 
 .link {
-  color: #00ff00;
+  color: #99ff00;
+  padding:0.5 em;
 }
