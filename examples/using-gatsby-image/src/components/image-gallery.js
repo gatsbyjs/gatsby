@@ -31,8 +31,13 @@ const GridItem = styled(`div`)({
   border: `4px solid transparent`,
   breakInside: `avoid`,
   position: `relative`,
+  [presets.Mobile]: { borderWidth: 8 },
+  [presets.Desktop]: { borderWidth: 12 },
+})
+
+const GridItemImage = styled(Img)({
   "& img": { borderRadius: 2 },
-  "& .gatsby-image-wrapper:hover": {
+  "&:hover": {
     "& div + img": {
       opacity: `1 !important`,
       transition: `none !important`,
@@ -44,8 +49,6 @@ const GridItem = styled(`div`)({
       opacity: `1 !important`,
     },
   },
-  [presets.Mobile]: { borderWidth: 8 },
-  [presets.Desktop]: { borderWidth: 12 },
 })
 
 const Badge = styled(`span`)({
@@ -67,7 +70,7 @@ const UnsplashMasonry = edges => (
     <Grid>
       {edges.images.map((image, index) => (
         <GridItem key={index}>
-          <Img fluid={image.node.childImageSharp.fluid} />
+          <GridItemImage fluid={image.node.childImageSharp.fluid} />
           <Badge>
             SVG
             {` `}

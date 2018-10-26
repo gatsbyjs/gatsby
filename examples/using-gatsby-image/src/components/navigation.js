@@ -7,6 +7,7 @@ import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
 const linkFontSize = {
+  display: `inline`,
   [presets.Phablet]: {
     fontSize: 20,
   },
@@ -20,11 +21,11 @@ const linkFontSize = {
 
 const linkStyle = {
   fontFamily: options.headerFontFamily.join(`,`),
+  fontWeight: 700,
   letterSpacing: `.005em`,
+  position: `relative`,
   transition: `all 200ms cubic-bezier(.17, .67, .83, .67)`,
   whiteSpace: `nowrap`,
-  fontWeight: 700,
-  position: `relative`,
   "@media (-webkit-min-device-pixel-ratio:0)": {
     backgroundImage: `linear-gradient(45deg, #EB4D9C, #D33024, #E48233, #F4E24D, #B4DC48, #54B2EA, ${
       colors.gatsby
@@ -49,19 +50,19 @@ const assignActiveStyles = ({ isPartiallyCurrent }) =>
           color: `rgba(0, 0, 0, 1) !important`,
           "&&": {
             "&:before": {
-              content: `""`,
-              position: `absolute`,
+              backgroundColor: `#000`,
               bottom: 0,
+              content: `""`,
+              height: 2,
               left: 0,
+              position: `absolute`,
               right: 0,
               width: 12,
-              height: 2,
-              backgroundColor: `#000`,
             },
             [presets.Desktop]: {
               "&:before": {
-                width: 18,
                 height: 4,
+                width: 18,
               },
             },
           },
@@ -75,23 +76,16 @@ const assignActiveStyles = ({ isPartiallyCurrent }) =>
       }
     : { className: css({ "&&": { ...linkStyle } }) }
 
-const Header = styled(`header`)({
-  "& li": {
-    backgroundImage: `none`,
-    paddingLeft: `0 !important`,
-  },
-})
-
 const Nav = styled(`nav`)({
   background: `#fff`,
+  marginLeft: -20,
+  marginRight: -20,
   overflowX: `auto`,
   paddingBottom: 20,
+  paddingLeft: 20,
   paddingTop: 20,
   position: `relative`,
   zIndex: presets.zIndex.raised,
-  marginLeft: -20,
-  marginRight: -20,
-  paddingLeft: 20,
   [presets.Tablet]: {
     overflowX: `initial`,
     marginLeft: 0,
@@ -102,7 +96,8 @@ const Nav = styled(`nav`)({
 })
 
 const SiteTitle = styled(`h1`)({
-  marginBottom: 0,
+  lineHeight: 1,
+  margin: 0,
   position: `fixed`,
   left: -44,
   top: 128,
@@ -127,10 +122,9 @@ const NavList = styled(`ul`)({
 const NavItem = ({ title, to }) => (
   <li
     css={{
-      display: `inline`,
       ...linkFontSize,
       "&:after": {
-        color: `#639`,
+        color: colors.gatsby,
         content: `" ╱ "`,
         fontWeight: 300,
         opacity: 0.5,
@@ -150,8 +144,21 @@ const NavItem = ({ title, to }) => (
   </li>
 )
 
+const ExternalLinkIcon = styled(MdLaunch)({
+  backgroundImage: `none`,
+  bottom: `-0.2em`,
+  color: colors.gatsby,
+  fontSize: `75%`,
+  position: `relative`,
+  verticalAlign: `baseline`,
+  [presets.Tablet]: {
+    bottom: `-0.15em`,
+    fontSize: `60%`,
+  },
+})
+
 const Navigation = () => (
-  <Header>
+  <header>
     <SiteTitle>
       <Link to="/" css={{ "&&": { ...linkStyle } }}>
         Using Gatsby Image
@@ -163,37 +170,19 @@ const Navigation = () => (
         <NavItem to="/background-color/" title="Background Color" />
         <NavItem to="/traced-svg/" title="Traced SVG" />
         <NavItem to="/prefer-webp/" title="WebP" />
-        <li
-          css={{
-            ...linkFontSize,
-            display: `inline`,
-          }}
-        >
+        <li css={{ ...linkFontSize }}>
           <a
             href="https://www.gatsbyjs.org/packages/gatsby-image/"
             css={{ "&&": { ...linkStyle } }}
           >
             Docs
             {` `}
-            <MdLaunch
-              css={{
-                position: `relative`,
-                bottom: `-0.2em`,
-                verticalAlign: `baseline`,
-                backgroundImage: `none`,
-                color: colors.gatsby,
-                fontSize: `75%`,
-                [presets.Tablet]: {
-                  bottom: `-0.15em`,
-                  fontSize: `60%`,
-                },
-              }}
-            />
+            <ExternalLinkIcon />
           </a>
         </li>
       </NavList>
     </Nav>
-  </Header>
+  </header>
 )
 
 export default Navigation

@@ -22,8 +22,7 @@
     "react-typography": "^0.16.13",
     "typeface-oswald": "0.0.54",
     "typeface-pt-sans": "0.0.54",
-    "typography": "^0.16.6",
-    "typography-theme-elk-glen": "^0.16.9"
+    "typography": "^0.16.6"
   },
   "license": "MIT",
   "main": "n/a",
