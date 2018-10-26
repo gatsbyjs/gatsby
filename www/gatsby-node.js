@@ -9,6 +9,7 @@ const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
+const moment = require(`moment`)
 
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -429,7 +430,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
       // Set released status for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
-        const released = new Date(_.get(node, `frontmatter.date`)) <= new Date()
+        const released = moment().isSameOrAfter(_.get(node, `frontmatter.date`))
         createNodeField({ node, name: `released`, value: released })
       }
     }
