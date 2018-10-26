@@ -70,43 +70,41 @@ const Logo = styled(`img`)({
 })
 
 const MainLayout = ({ children, image, imageBackgroundColor }) => (
-  <React.Fragment>
-    <Container>
-      {image && (
-        <Image
-          fluid={image}
-          style={{ position: `fixed` }}
-          backgroundColor={imageBackgroundColor ? imageBackgroundColor : false}
-        />
-      )}
-      <Navigation />
-      <Main>
-        {children}
-        <h2>Documentation</h2>
-        <ul>
-          <li>
-            See the
-            {` `}
-            <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
-              project README for documentation
-            </a>
-            {` `}
-            on using the plugin.
-          </li>
-          <li>
-            Read the docs on
-            {` `}
-            <a href="https://www.gatsbyjs.org/docs/using-gatsby-image/">
-              using gatsby-image to prevent image bloat
-            </a>
-          </li>
-        </ul>
-      </Main>
-      <LogoLink href="https://www.gatsbyjs.org/">
-        <Logo src={logo} alt="Gatsby" />
-      </LogoLink>
-    </Container>
-  </React.Fragment>
+  <Container>
+    {image && (
+      <Image
+        fluid={image}
+        style={{ position: `fixed` }}
+        backgroundColor={imageBackgroundColor ? imageBackgroundColor : false}
+      />
+    )}
+    <Navigation />
+    <Main>
+      {children}
+      <h2>Documentation</h2>
+      <ul>
+        <li>
+          See the
+          {` `}
+          <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+            project README for documentation
+          </a>
+          {` `}
+          on using the plugin.
+        </li>
+        <li>
+          Read the docs on
+          {` `}
+          <a href="https://www.gatsbyjs.org/docs/using-gatsby-image/">
+            using gatsby-image to prevent image bloat
+          </a>
+        </li>
+      </ul>
+    </Main>
+    <LogoLink href="https://www.gatsbyjs.org/">
+      <Logo src={logo} alt="Gatsby" />
+    </LogoLink>
+  </Container>
 )
 
 export default MainLayout
