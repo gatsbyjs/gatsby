@@ -20,8 +20,7 @@ We recommend using this plugin together with the [manifest plugin](https://www.n
 
 Add this plugin to your `gatsby-config.js`
 
-```javascript
-// In your gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-offline`]
 ```
 

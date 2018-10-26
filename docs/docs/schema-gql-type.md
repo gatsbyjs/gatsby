@@ -172,8 +172,7 @@ It creates a new GraphQL Field Config whose type is the just created `File` GqlT
 
 Say we have a `data/posts.json` file that has been sourced (of type `File`), and then the [gatsby-transformer-json](/packages/gatsby-transformer-json) transformer creates a child node (of type `PostsJson`)
 
-```javascript
-// data/posts.json
+```javascript:title=data/posts.json
 [
   {
     "id": "1685001452849004065",
