@@ -12,3 +12,6 @@
 
   Learn more about contributing: https://www.gatsbyjs.org/docs/how-to-contribute/
 -->
+
+<!-- For fixing bugs use https://github.com/gatsbyjs/gatsby/compare/?template=bugs.md -->
+<!-- For pull requesting new features, improvements and changes use https://github.com/gatsbyjs/gatsby/compare/?template=features.md -->
