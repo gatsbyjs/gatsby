@@ -23,7 +23,12 @@ const ImageDesktop = styled(Image)({
   },
 })
 
-const FloatingImage = ({ imageMobile, imageDesktop }) => (
+const FloatingImage = ({
+  imageMobile,
+  imageDesktop,
+  title,
+  backgroundColor,
+}) => (
   <React.Fragment>
     {/*
         gatsby-image sets a couple of inline styles on its outer
@@ -37,8 +42,18 @@ const FloatingImage = ({ imageMobile, imageDesktop }) => (
 
         https://www.gatsbyjs.org/packages/gatsby-image/#gatsby-image-props
     */}
-    <Image style={{ display: `inherit` }} fixed={imageMobile} />
-    <ImageDesktop style={{ display: `inherit` }} fixed={imageDesktop} />
+    <Image
+      fixed={imageMobile}
+      backgroundColor={backgroundColor ? backgroundColor : false}
+      style={{ display: `inherit` }}
+      title={title}
+    />
+    <ImageDesktop
+      fixed={imageDesktop}
+      backgroundColor={backgroundColor ? backgroundColor : false}
+      style={{ display: `inherit` }}
+      title={title}
+    />
   </React.Fragment>
 )
 
