@@ -62,10 +62,6 @@ const Badge = styled(`span`)({
   right: 10,
 })
 
-const BadgeTitle = styled(`span`)({
-  color: options.headerColor,
-})
-
 const UnsplashMasonry = edges => (
   <OuterContainer>
     <Grid>
@@ -73,7 +69,7 @@ const UnsplashMasonry = edges => (
         <GridItem key={index}>
           <Img fluid={image.node.childImageSharp.fluid} />
           <Badge>
-            <BadgeTitle>SVG</BadgeTitle>
+            SVG
             {` `}
             {numeral(
               Buffer.byteLength(
