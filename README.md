@@ -30,6 +30,9 @@
   <a href="https://gatsbyjs.org/docs/how-to-submit-a-pr/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
+  <a href = "https://github.com/gatsbyjs/gatsby/issues">
+    <img src="http://img.shields.io/github/issues/gatsbyjs/gatsby.svg" />
+  </a>
 </p>
 
 <h3 align="center">
