@@ -33,7 +33,7 @@ const UnsplashMasonry = edges => (
         [presets.Tablet]: {
           columnCount: 3,
         },
-        "@media screen and (min-width: 1400px)": {
+        [presets.Hd]: {
           columnCount: 4,
         },
       }}

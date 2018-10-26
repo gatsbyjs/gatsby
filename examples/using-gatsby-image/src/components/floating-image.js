@@ -2,6 +2,7 @@ import React from "react"
 import Img from "gatsby-image"
 
 import { rhythm, options } from "../utils/typography"
+import presets from "../utils/presets"
 
 const FloatingImage = ({ imageMobile, imageDesktop }) => (
   <React.Fragment>
@@ -13,7 +14,7 @@ const FloatingImage = ({ imageMobile, imageDesktop }) => (
         marginRight: -20,
         float: `right`,
         "&": {
-          "@media (min-width: 500px)": {
+          [presets.Phablet]: {
             display: `none`,
           },
         },
@@ -27,7 +28,7 @@ const FloatingImage = ({ imageMobile, imageDesktop }) => (
         marginLeft: rhythm(options.blockMarginBottom * 2),
         float: `right`,
         display: `none`,
-        "@media (min-width: 500px)": {
+        [presets.Phablet]: {
           display: `inline-block`,
           marginRight: -20,
         },
