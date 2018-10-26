@@ -63,6 +63,19 @@ const assignActiveStyles = ({ isPartiallyCurrent }) =>
       }
     : { className: css({ "&&": { ...linkStyle } }) }
 
+const SiteTitle = styled(`h1`)({
+  lineHeight: 1,
+  margin: 0,
+  position: `fixed`,
+  left: -44,
+  top: 128,
+  fontSize: 20,
+  transform: `rotate(90deg)`,
+  [presets.Tablet]: {
+    zIndex: presets.zIndex.overlay + 1,
+  },
+})
+
 const Nav = styled(`nav`)({
   background: `#fff`,
   marginLeft: -20,
@@ -79,19 +92,6 @@ const Nav = styled(`nav`)({
     marginRight: 0,
     paddingLeft: 0,
     paddingTop: 0,
-  },
-})
-
-const SiteTitle = styled(`h1`)({
-  lineHeight: 1,
-  margin: 0,
-  position: `fixed`,
-  left: -44,
-  top: 128,
-  fontSize: 20,
-  transform: `rotate(90deg)`,
-  [presets.Desktop]: {
-    zIndex: presets.zIndex.overlay + 1,
   },
 })
 

@@ -57,8 +57,6 @@ const LogoLink = styled(`a`)({
     top: `auto`,
     bottom: 40,
     left: 40,
-  },
-  [presets.Desktop]: {
     zIndex: presets.zIndex.overlay + 1,
   },
 })
