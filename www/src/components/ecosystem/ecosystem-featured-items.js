@@ -8,9 +8,9 @@ import EcosystemFeaturedItem from "./ecosystem-featured-item"
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 
-const EcosystemFeaturedItemsContainer = styled("div")`
+const EcosystemFeaturedItemsRoot = styled("div")`
   overflow-x: scroll;
-  margin: 0 -${rhythm(options.blockMarginBottom)};
+  margin: ${rhythm(0.1)} -${rhythm(options.blockMarginBottom)};
 `
 
 const List = styled("ul")`
@@ -18,12 +18,17 @@ const List = styled("ul")`
   list-style: none;
   margin: 0;
   padding: 0 calc(${rhythm(options.blockMarginBottom)} - 5px) 4px;
-  width: ${props => `calc(280px * ${props.numberOfItems})`};
+  width: ${props => `calc(85vw * ${props.numberOfItems})`};
+
+  ${presets.Tablet} {
+    width: 100%;
+    flex-direction: column;
+  }
 `
 
 const EcosystemFeaturedItems = ({ items }) => {
   return (
-    <EcosystemFeaturedItemsContainer>
+    <EcosystemFeaturedItemsRoot>
       <List numberOfItems={items.length}>
         {items.map(item => {
           const { slug } = item
@@ -36,7 +41,7 @@ const EcosystemFeaturedItems = ({ items }) => {
           )
         })}
       </List>
-    </EcosystemFeaturedItemsContainer>
+    </EcosystemFeaturedItemsRoot>
   )
 }
 

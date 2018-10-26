@@ -9,10 +9,10 @@ import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
-const EcosysteSectionContainer = styled("section")`
+const EcosysteSectionRoot = styled("section")`
   background: #fff;
   flex-basis: 33.33%;
-  margin-bottom: ${rhythm(1)};
+  margin-bottom: ${rhythm(0.5)};
   padding: 0 ${rhythm(options.blockMarginBottom)};
 
   ${presets.Tablet}: {
@@ -87,7 +87,7 @@ const EcosysteSection = ({
   link,
   featuredItems,
 }) => (
-  <EcosysteSectionContainer>
+  <EcosysteSectionRoot>
     <Header>
       {links ? (
         <React.Fragment>
@@ -124,7 +124,7 @@ const EcosysteSection = ({
       featuredItems.length > 0 && (
         <EcosystemFeaturedItems items={featuredItems} />
       )}
-  </EcosysteSectionContainer>
+  </EcosysteSectionRoot>
 )
 
 EcosysteSection.propTypes = {

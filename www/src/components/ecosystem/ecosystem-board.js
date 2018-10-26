@@ -6,7 +6,8 @@ import EcosystemSection from "./ecosystem-section"
 
 import presets, { colors } from "../../utils/presets"
 
-const EcosystemBoardContainer = styled("div")`
+const EcosystemBoardRoot = styled("div")`
+  background: red;
   display: flex;
   flex-direction: column;
 
@@ -25,7 +26,7 @@ const EcosystemBoard = ({
   plugins,
 }) => {
   return (
-    <EcosystemBoardContainer>
+    <EcosystemBoardRoot>
       <EcosystemSection
         title="Plugin Library"
         description="With 429 plugins, lorem ipsum sunt we need some proper copy here pulling in data from your favorite source is only a few mouseclicks away."
@@ -58,7 +59,7 @@ const EcosystemBoard = ({
         description="More awesome Gatsby content, created by the community."
         link="/docs/awesome-gatsby/"
       />
-    </EcosystemBoardContainer>
+    </EcosystemBoardRoot>
   )
 }
 

@@ -26,6 +26,7 @@ const colors = {
     calm: gray(46, 270),
     bright: gray(64, 270),
     light: gray(80, 270),
+    superLight: gray(96, 270),
   },
   code: {
     bg: `#fdfaf6`, // colors.a[0] #fcf6f0

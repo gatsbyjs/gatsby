@@ -31,7 +31,7 @@ class EcosystemPage extends Component {
               name,
               description,
               lastUpdated,
-              starts,
+              stars,
               gatsbyMajorVersion,
             },
           },
@@ -44,17 +44,22 @@ class EcosystemPage extends Component {
         name,
         description,
         lastUpdated,
-        starts,
+        stars,
         gatsbyMajorVersion,
       }
     })
 
     const plugins = pluginsData.map(item => {
       const {
-        node: { slug, name, description, downloadsLast30Days },
+        node: { slug, name, description, humanDownloadsLast30Days },
       } = item
 
-      return { slug, name, description, downloadsLast30Days }
+      return {
+        slug,
+        name,
+        description,
+        humanDownloadsLast30Days,
+      }
     })
 
     const pageTitle = "Ecosystem"
@@ -95,7 +100,7 @@ export const ecosystemQuery = graphql`
               slug
               description
               stars
-              lastUpdated
+              lastUpdated(formatString: "MM/DD/YYYY")
               name
               gatsbyMajorVersion
             }
@@ -118,7 +123,7 @@ export const ecosystemQuery = graphql`
           slug
           name
           description
-          downloadsLast30Days
+          humanDownloadsLast30Days
         }
       }
     }
