@@ -120,8 +120,8 @@ const Img = React.forwardRef((props, ref) => {
 
 Img.propTypes = {
   style: PropTypes.object,
-  objectFit: _propTypes.default.string,
-  objectPosition: _propTypes.default.string,
+  objectFit: PropTypes.string,
+  objectPosition: PropTypes.string,
   onError: PropTypes.func,
   onLoad: PropTypes.func,
 }
@@ -487,8 +487,8 @@ Image.propTypes = {
   critical: PropTypes.bool,
   style: PropTypes.object,
   imgStyle: PropTypes.object,
-  objectFit: _propTypes.default.string, // needs to be separate for object-fit-image polyfill's font-family declaration
-  objectPosition: _propTypes.default.string, // needs to be separate for object-fit-image polyfill's font-family declaration
+  objectFit: PropTypes.string, // needs to be separate for object-fit-image polyfill's font-family declaration
+  objectPosition: PropTypes.string, // needs to be separate for object-fit-image polyfill's font-family declaration
   placeholderStyle: PropTypes.object,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
