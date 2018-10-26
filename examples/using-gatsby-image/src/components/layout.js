@@ -33,7 +33,6 @@ const Image = styled(Img)({
   bottom: `33vh`,
   [presets.Tablet]: {
     bottom: 0,
-    right: `0%`,
     left: 0,
     top: 0,
     right: `55vw`,
@@ -48,7 +47,6 @@ const Main = styled(`main`)({
 })
 
 const LogoLink = styled(`a`)({
-  position: `relative`,
   position: `fixed`,
   top: 40,
   right: 40,
@@ -57,7 +55,6 @@ const LogoLink = styled(`a`)({
   },
   [presets.Tablet]: {
     top: `auto`,
-    left: `auto`,
     bottom: 40,
     left: 40,
   },
