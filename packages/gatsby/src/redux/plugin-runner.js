@@ -5,7 +5,6 @@ const { getNode } = require(`../db/nodes`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 
 emitter.on(`CREATE_NODE`, action => {
-  console.log(getNode)
   const node = getNode(action.payload.id)
   const traceTags = { nodeId: node.id, nodeType: node.internal.type }
   apiRunnerNode(`onCreateNode`, {
