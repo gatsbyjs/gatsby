@@ -25,7 +25,7 @@ class TracedSVG extends React.Component {
         />
         <Lorem />
         <h2>Unsplash</h2>
-        <UnsplashMasonry images={data.unsplashImages.edges} />
+        <UnsplashMasonry images={data.galleryImages.edges} />
         <Ipsum />
         <Img
           fluid={data.fullWidthImage.childImageSharp.fluid}
@@ -78,14 +78,16 @@ export const query = graphql`
         }
       }
     }
-    unsplashImages: allFile(filter: { relativePath: { regex: "/unsplash/" } }) {
+    galleryImages: allFile(
+      filter: { relativeDirectory: { regex: "/gallery/" } }
+    ) {
       edges {
         node {
           childImageSharp {
             fluid(
               maxWidth: 420
               quality: 80
-              traceSVG: { background: "#fbfafc", color: "#f5f3f7" }
+              traceSVG: { background: "#fbfafc", color: "#dbd4e2" }
             ) {
               ...GatsbyImageSharpFluid_tracedSVG
             }
