@@ -60,7 +60,11 @@ effect as well as lazy loading of images further down the screen.
 
 ## Install
 
-`npm install --save gatsby-image`
+`npm install --save gatsby-image intersection-observer object-fit-images`
+
+(The [intersection-observer](https://github.com/w3c/IntersectionObserver#readme) polyfill enables `gatsby-image`'s lazy loading behaviour in browsers that don't natively support IntersectionObserver (currently Safari and IE). The polyfill will only be loaded in these browsers.)
+
+(The [object-fit-images](https://github.com/bfred-it/object-fit-images) polyfill enables the use of `object-fit` and `object-position` with `gatsby-image` in browsers that don't support these properties (currently IE). The polyfill will only be loaded in these browsers.)
 
 Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
 
@@ -72,6 +76,7 @@ Then in your `gatsby-config.js`:
 
 ```js
 plugins: [
+  `gatsby-image`,
   `gatsby-transformer-sharp`,
   `gatsby-plugin-sharp`
 ];
@@ -91,6 +96,7 @@ module.exports = {
         path: path.join(__dirname, `src`, `images`),
       },
     },
+    `gatsby-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
   ],
@@ -274,6 +280,8 @@ prop. e.g. `<Img fluid={fluid} />`
 | `className`        | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
 | `style`            | `object`            | Spread into the default styles of the wrapper element                                                                       |
 | `imgStyle`         | `object`            | Spread into the default styles of the actual `img` element                                                                  |
+| `objectFit`        | `string`            | Spread into the default styles of the actual `img` element in a way that polyfills the behavior for IE. Defaults to `cover`. |
+| `objectPosition`   | `string`            | Spread into the default styles of the actual `img` element in a way that polyfills the behavior for IE. Defaults to `50% 50%`. |
 | `placeholderStyle` | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
 | `backgroundColor`  | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`           | `func`              | A callback that is called when the full-size image has loaded.                                                              |
