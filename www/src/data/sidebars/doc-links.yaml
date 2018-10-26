@@ -242,7 +242,7 @@
           link: /docs/audit-with-lighthouse/
         - title: Add a Manifest File
           link: /docs/add-a-manifest-file/
-        - title: Add offline support with a Service Worker
+        - title: Add Offline Support with a Service Worker
           link: /docs/add-offline-support-with-a-service-worker
         - title: Add Page Metadata
           link: /docs/add-page-metadata/
