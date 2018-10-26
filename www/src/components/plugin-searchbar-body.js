@@ -29,6 +29,7 @@ const searchInputHeight = rhythm(7 / 4)
 const searchMetaHeight = rhythm(8 / 4)
 const searchInputWrapperMargin = rhythm(3 / 4)
 
+/* stylelint-disable */
 injectGlobal`
   .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
     display: block;
@@ -169,6 +170,7 @@ injectGlobal`
     display: none;
   }
 `
+/* stylelint-enable */
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {

@@ -65,8 +65,7 @@ effect as well as lazy loading of images further down the screen.
 Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
 
 ```bash
-npm install --save gatsby-transformer-sharp
-npm install --save gatsby-plugin-sharp
+npm install --save gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
 Then in your `gatsby-config.js`:

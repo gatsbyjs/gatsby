@@ -180,9 +180,11 @@ injectGlobal`
       padding: ${rhythm(0.5)} ${rhythm(0.75)} !important;
     }
 
+    /* stylelint-disable */
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       padding: ${rhythm(0.5)} ${rhythm(0.75)} !important;
     }
+    /* stylelint-enable */
 
     .algolia-autocomplete .algolia-docsearch-suggestion--content {
       width: 70% !important;
@@ -211,8 +213,8 @@ injectGlobal`
   }
 
   @media ${presets.tablet} {
-    .is-homepage .algolia-autocomplete .ds-dropdown-menu,
-    .algolia-autocomplete .ds-dropdown-menu {
+    .algolia-autocomplete .ds-dropdown-menu,
+    .is-homepage .algolia-autocomplete .ds-dropdown-menu   {
       top: 100% !important;
       position: absolute !important;
       max-width: 600px !important;

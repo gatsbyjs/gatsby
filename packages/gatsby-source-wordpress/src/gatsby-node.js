@@ -1,5 +1,6 @@
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
+const normalizeBaseUrl = require(`./normalize-base-url`)
 
 const typePrefix = `wordpress__`
 const refactoredEntityTypes = {
@@ -41,8 +42,10 @@ exports.sourceNodes = async (
   }
 ) => {
   const { createNode, touchNode } = actions
+  const normalizedBaseUrl = normalizeBaseUrl(baseUrl)
+
   _verbose = verboseOutput
-  _siteURL = `${protocol}://${baseUrl}`
+  _siteURL = `${protocol}://${normalizedBaseUrl}`
   _useACF = useACF
   _acfOptionPageIds = acfOptionPageIds
   _hostingWPCOM = hostingWPCOM
