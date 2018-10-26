@@ -35,7 +35,11 @@ class EcosystemPage extends Component {
               gatsbyMajorVersion,
             },
           },
-          childScreenshot,
+          childScreenshot: {
+            screenshotFile: {
+              childImageSharp: { fixed: thumbnail },
+            },
+          },
         },
       } = item
 
@@ -46,6 +50,7 @@ class EcosystemPage extends Component {
         lastUpdated,
         stars,
         gatsbyMajorVersion,
+        thumbnail,
       }
     })
 
@@ -108,8 +113,8 @@ export const ecosystemQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                fluid(maxWidth: 64) {
-                  ...GatsbyImageSharpFluid_noBase64
+                fixed(width: 64, height: 64) {
+                  ...GatsbyImageSharpFixed_noBase64
                 }
               }
             }

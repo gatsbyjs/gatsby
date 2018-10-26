@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 import styled from "react-emotion"
 import { Link } from "gatsby"
 
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 
@@ -42,14 +44,19 @@ const Header = styled("header")`
 `
 
 const Title = styled("h1")`
+  align-items: center;
   color: ${colors.gatsby};
   display: flex;
   font-size: 1.25rem;
+  justify-content: space-between;
   margin: 0;
   padding-bottom: ${rhythm(0.5)};
 
   span {
     margin: 0 0.3rem 0 -0.1rem;
+    :last-child {
+      flex-grow: 1;
+    }
   }
 `
 
@@ -98,7 +105,7 @@ const EcosysteSection = ({
         <React.Fragment>
           <Title>
             {icon && <Icon dangerouslySetInnerHTML={{ __html: icon }} />}
-            {title}
+            <span>{title}</span>
           </Title>
           <Description>{description}</Description>
           <Actions>
@@ -117,7 +124,7 @@ const EcosysteSection = ({
         <Link to={link}>
           <Title>
             {icon && <Icon dangerouslySetInnerHTML={{ __html: icon }} />}
-            {title}
+            {title} <ArrowForwardIcon />
           </Title>
           <Description>{description}</Description>
         </Link>

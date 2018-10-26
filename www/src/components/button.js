@@ -2,8 +2,6 @@ import React from "react"
 import { Link } from "gatsby"
 import { buttonStyles } from "../utils/styles"
 
-console.log(buttonStyles.tiny)
-
 const components = {
   link: Link,
   href: ({ children, ...rest }) => <a {...rest}>{children}</a>,

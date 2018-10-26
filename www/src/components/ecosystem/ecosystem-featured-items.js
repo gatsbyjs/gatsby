@@ -28,7 +28,7 @@ const List = styled("ul")`
   list-style: none;
   margin: 0;
   padding: 0 calc(${rhythm(options.blockMarginBottom)} - 5px) 4px;
-  width: ${props => `calc(85vw * ${props.numberOfItems})`};
+  width: ${props => `calc(90vw * ${props.numberOfItems})`};
 
   ${presets.Tablet} {
     flex-direction: column;

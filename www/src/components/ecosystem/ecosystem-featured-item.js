@@ -2,9 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "react-emotion"
 import { Link } from "gatsby"
+import Img from "gatsby-image"
 
 import StarIcon from "react-icons/lib/md/star"
-import ArrowDownIcon from "react-icons/lib/md/arrow-downward"
+import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
@@ -24,7 +25,7 @@ const EcosystemFeaturedItemRoot = styled("li")`
 const BlockLink = styled(Link)`
   border-radius: ${presets.radiusLg}px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  display: block;
+  display: flex;
   height: 100%;
   padding: ${rhythm(3 / 4)};
 
@@ -42,18 +43,23 @@ const BlockLink = styled(Link)`
 const Abstract = styled("div")`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   justify-content: space-between;
   height: 100%;
   font-family: ${options.systemFontFamily.join(`,`)};
 `
 
-const Thumbnail = styled("img")`
-  height: 64px;
-  width: 64px;
+const Thumbnail = styled("div")`
+  padding-right: ${rhythm(2 / 3)};
+  padding-top: ${rhythm(1 / 12)};
+
+  img {
+    height: 64px;
+    width: 64px;
+  }
 `
 const Header = styled("header")`
   display: flex;
-  flex-grow: 0;
   justify-content: space-between;
   h3 {
     color: ${colors.gatsbyDark};
@@ -91,7 +97,7 @@ const Details = styled("p")`
   flex-grow: 0;
   font-size: 0.8rem;
   justify-content: space-between;
-  padding: ${rhythm(0.1)} 0 0;
+  padding: ${rhythm(0.3)} 0 0;
 
   span:first-child {
     background: ${colors.gray.superLight};
@@ -114,19 +120,23 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
     stars,
     gatsbyMajorVersion,
     humanDownloadsLast30Days,
-    image,
+    thumbnail,
   } = item
 
   return (
     <EcosystemFeaturedItemRoot numberOfItems={numberOfItems}>
       <BlockLink to={slug}>
-        {image && <Thumbnail src="" alt="" />}
+        {thumbnail && (
+          <Thumbnail>
+            <Img fixed={thumbnail} alt="" />
+          </Thumbnail>
+        )}
         <Abstract>
           <Header>
             <h3>{name}</h3>
             {humanDownloadsLast30Days && (
               <span>
-                {humanDownloadsLast30Days} <ArrowDownIcon />
+                {humanDownloadsLast30Days} <ArrowDownwardIcon />
               </span>
             )}
             {stars && (
@@ -143,7 +153,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
                   gatsbyMajorVersion[0][1]
                 } `}</span>
               )}
-              {lastUpdated && <span>{lastUpdated}</span>}
+              {lastUpdated && <span>Updated {lastUpdated}</span>}
             </Details>
           )}
         </Abstract>
