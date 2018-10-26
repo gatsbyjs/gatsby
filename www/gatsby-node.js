@@ -9,6 +9,11 @@ const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
+const yaml = require("js-yaml")
+
+const ecosystemFeaturedItems = yaml.safeLoad(
+  fs.readFileSync("./src/data/ecosystem/featured-items.yaml", "utf8")
+)
 
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -578,6 +583,24 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     createNodeField({ node, name: `slug`, value: slug })
   }
   // end Community/Creators Pages
+}
+
+exports.onCreatePage = ({ page, actions }) => {
+  // add lists of featured items to Ecosystem page
+  if (page.path === "/ecosystem/") {
+    const { createPage, deletePage } = actions
+    return new Promise(resolve => {
+      const oldPage = Object.assign({}, page)
+
+      page.context.featuredStarters = ecosystemFeaturedItems.starters
+      page.context.featuredPlugins = ecosystemFeaturedItems.plugins
+
+      deletePage(oldPage)
+      createPage(page)
+
+      resolve()
+    })
+  }
 }
 
 exports.onPostBuild = () => {
