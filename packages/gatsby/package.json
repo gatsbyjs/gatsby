@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.0.28",
+  "version": "2.0.31",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -64,7 +64,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^2.4.3",
-    "gatsby-link": "^2.0.4",
+    "gatsby-link": "^2.0.5",
     "gatsby-plugin-page-creator": "^2.0.1",
     "gatsby-react-router-scroll": "^2.0.0",
     "glob": "^7.1.1",
@@ -149,7 +149,7 @@
     "graphql.js",
     "index.d.ts"
   ],
-  "homepage": "https://github.com/gatsbyjs/gatsby#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
     "blog",
     "generator",
@@ -174,12 +174,13 @@
     "graphql": "^0.13.2"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
+    "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore **/__tests__",
     "build:src": "babel src --out-dir dist --source-maps --ignore **/gatsby-cli.js,**/raw_*,**/__tests__",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
+    "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
