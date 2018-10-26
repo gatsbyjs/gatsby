@@ -2,13 +2,24 @@ import React from "react"
 import { oneLine, stripIndent } from "common-tags"
 
 exports.onRenderBody = (
-  { setHeadComponents, setPreBodyComponents },
+  { setHeadComponents, pathname, setPreBodyComponents },
   pluginOptions
 ) => {
   if (
     process.env.NODE_ENV === `production` ||
     pluginOptions.includeInDevelopment
   ) {
+    if (typeof pluginOptions.exclude !== `undefined`) {
+      const minimatch = require(`minimatch`)
+      const excludedPaths = pluginOptions.exclude
+      // loop all the excluded paths to validate if the pattern match with the 
+      // actual pathname
+      for (let i = 0; i < excludedPaths.length; i++) {
+        const exclude = excludedPaths[i]
+        if (minimatch(pathname, exclude)) return
+      }
+    }
+
     const environmentParamStr =
       pluginOptions.gtmAuth && pluginOptions.gtmPreview
         ? oneLine`
