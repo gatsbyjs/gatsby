@@ -30,8 +30,7 @@ npm install --save gatsby-source-contentful
 ## How to use
 
 ### With the Delivery API
-```javascript
-// In your gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-contentful`,
@@ -44,8 +43,7 @@ plugins: [
 ```
 
 ### With the Preview API
-```javascript
-// In your gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-contentful`,
