@@ -194,6 +194,8 @@ class DefaultLayout extends React.Component {
                 ? presets.bannerHeight
                 : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
             },
+            paddingLeft: `env(safe-area-inset-left)`,
+            paddingRight: `env(safe-area-inset-right)`,
           }}
         >
           <PageWithSidebar
