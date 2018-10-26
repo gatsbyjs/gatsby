@@ -7,18 +7,17 @@ import EcosystemSection from "./ecosystem-section"
 import presets, { colors } from "../../utils/presets"
 
 const EcosystemBoardRoot = styled("div")`
-  background: red;
   display: flex;
   flex-direction: column;
 
   ${presets.Tablet} {
     flex-direction: row;
-    height: 100%;
-    padding: 10px;
+    height: calc(
+      100vh - (${presets.bannerHeight} + ${presets.headerHeight} + 1px)
+    );
+    padding: 2rem 1rem;
   }
 `
-
-const SectionHeader = styled("header")({})
 
 const EcosystemBoard = ({
   icons: { plugins: PluginsIcon, starters: StartersIcon },

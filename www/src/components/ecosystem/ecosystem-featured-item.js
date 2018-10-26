@@ -9,13 +9,16 @@ import ArrowDownIcon from "react-icons/lib/md/arrow-downward"
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
-console.log(presets)
-
 const EcosystemFeaturedItemRoot = styled("li")`
   flex-basis: ${props => `calc(100% / ${props.numberOfItems})`};
   float: left;
   margin: 0 2px 0 0;
   padding: 5px;
+
+  ${presets.Tablet} {
+    padding: 0;
+    border-bottom: 1px solid ${colors.gray.superLight};
+  }
 `
 
 const BlockLink = styled(Link)`
@@ -24,6 +27,17 @@ const BlockLink = styled(Link)`
   display: block;
   height: 100%;
   padding: ${rhythm(3 / 4)};
+
+  ${presets.Tablet} {
+    border-radius: 0;
+    box-shadow: none;
+    transition: all ${presets.animation.speedDefault}
+      ${presets.animation.curveDefault};
+
+    :hover {
+      background: ${colors.ui.whisper};
+    }
+  }
 `
 const Abstract = styled("div")`
   display: flex;
@@ -112,13 +126,12 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
             <h3>{name}</h3>
             {humanDownloadsLast30Days && (
               <span>
-                {humanDownloadsLast30Days} <StarIcon />
+                {humanDownloadsLast30Days} <ArrowDownIcon />
               </span>
             )}
             {stars && (
               <span>
-                {stars}
-                <ArrowDownIcon />
+                {stars} <StarIcon />
               </span>
             )}
           </Header>

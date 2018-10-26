@@ -7,10 +7,20 @@ import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
+import { scrollbarStyles } from "../../utils/styles"
 
 const EcosystemFeaturedItemsRoot = styled("div")`
   overflow-x: scroll;
   margin: ${rhythm(0.1)} -${rhythm(options.blockMarginBottom)};
+
+  ${presets.Tablet} {
+    border-top: 1px solid ${colors.gray.superLight};
+    margin-top: ${rhythm(0.4)};
+    margin-bottom: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    ${scrollbarStyles};
+  }
 `
 
 const List = styled("ul")`
@@ -21,8 +31,9 @@ const List = styled("ul")`
   width: ${props => `calc(85vw * ${props.numberOfItems})`};
 
   ${presets.Tablet} {
-    width: 100%;
     flex-direction: column;
+    padding: 0;
+    width: 100%;
   }
 `
 

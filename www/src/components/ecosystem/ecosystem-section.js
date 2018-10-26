@@ -10,21 +10,24 @@ import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 const EcosysteSectionRoot = styled("section")`
-  background: #fff;
-  flex-basis: 33.33%;
   margin-bottom: ${rhythm(0.5)};
   padding: 0 ${rhythm(options.blockMarginBottom)};
 
-  ${presets.Tablet}: {
-    border-radius: ${presets.radiusLg};
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    flex-basis: 33.33%;
-    margin: 12px;
+  ${presets.Tablet} {
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+    border-radius: ${presets.radiusLg}px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    margin: 0 10px;
+    padding: ${rhythm(options.blockMarginBottom)};
+    padding-bottom: 0;
+    width: 33.33%;
 
-    :last-child: {
+    :last-child {
       align-self: flex-start;
     }
-  };
+  }
 
   a {
     text-decoration: none;
@@ -33,6 +36,8 @@ const EcosysteSectionRoot = styled("section")`
 const Header = styled("header")`
   ${presets.Tablet}: {
     padding: ${rhythm(1)};
+    padding: 10px;
+    background: yellow;
   };
 `
 
@@ -101,7 +106,7 @@ const EcosysteSection = ({
               const { to, label, secondary } = item
 
               return (
-                <Button key={to} to={to} secondary={secondary} small>
+                <Button key={to} to={to} secondary={secondary} tiny>
                   {label}
                 </Button>
               )
