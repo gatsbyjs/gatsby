@@ -6,19 +6,6 @@ import { MdLaunch } from "react-icons/md"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
-const linkFontSize = {
-  display: `inline`,
-  [presets.Phablet]: {
-    fontSize: 20,
-  },
-  [presets.Tablet]: {
-    fontSize: 24,
-  },
-  [presets.Desktop]: {
-    fontSize: 28,
-  },
-}
-
 const linkStyle = {
   fontFamily: options.headerFontFamily.join(`,`),
   fontWeight: 700,
@@ -119,10 +106,16 @@ const NavList = styled(`ul`)({
   },
 })
 
+const NavListItem = styled(`li`)({
+  display: `inline`,
+  [presets.Phablet]: { fontSize: 20 },
+  [presets.Tablet]: { fontSize: 24 },
+  [presets.Desktop]: { fontSize: 28 },
+})
+
 const NavItem = ({ title, to }) => (
-  <li
+  <NavListItem
     css={{
-      ...linkFontSize,
       "&:after": {
         color: colors.gatsby,
         content: `" ╱ "`,
@@ -141,7 +134,7 @@ const NavItem = ({ title, to }) => (
     <Link to={to} getProps={assignActiveStyles}>
       {title}
     </Link>
-  </li>
+  </NavListItem>
 )
 
 const ExternalLinkIcon = styled(MdLaunch)({
@@ -170,7 +163,7 @@ const Navigation = () => (
         <NavItem to="/background-color/" title="Background Color" />
         <NavItem to="/traced-svg/" title="Traced SVG" />
         <NavItem to="/prefer-webp/" title="WebP" />
-        <li css={{ ...linkFontSize }}>
+        <NavListItem>
           <a
             href="https://www.gatsbyjs.org/packages/gatsby-image/"
             css={{ "&&": { ...linkStyle } }}
@@ -179,7 +172,7 @@ const Navigation = () => (
             {` `}
             <ExternalLinkIcon />
           </a>
-        </li>
+        </NavListItem>
       </NavList>
     </Nav>
   </header>
