@@ -1,5 +1,6 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
+const minimatch = require(`minimatch`)
 
 exports.onRenderBody = (
   { setHeadComponents, pathname, setPreBodyComponents },
@@ -10,13 +11,9 @@ exports.onRenderBody = (
     pluginOptions.includeInDevelopment
   ) {
     if (typeof pluginOptions.exclude !== `undefined`) {
-      const minimatch = require(`minimatch`)
-      const excludedPaths = pluginOptions.exclude
-      // loop all the excluded paths to validate if the pattern match with the 
-      // actual pathname
-      for (let i = 0; i < excludedPaths.length; i++) {
-        const exclude = excludedPaths[i]
-        if (minimatch(pathname, exclude)) return
+      if (pluginOptions.exclude.some(excludedPath => minimatch(pathname, excludedPath))) {
+        // bail early if current path is excluded
+        return
       }
     }
 
