@@ -1,23 +1,17 @@
-import React, { Component } from 'react'
-
+import React ,{ Fragment } from 'react'
 import { observer, inject } from 'mobx-react'
 
-@inject('store')
-@observer
-class Counter extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    return (
-      <>
-        <div>Count: {this.props.store.Count}</div>
-        <div>
-          <button onClick={() => this.props.store.Increment()}>Add</button>
-          <button onClick={() => this.props.store.Decrement()}>Subtract</button>
-        </div>
-      </>
-    )
-  }
-}
+const Counter = inject(`store`)(
+  observer(({ store }) => (
+    <Fragment>
+      <div>Counted to: {store.Count}</div>
+      <div>
+        <button onClick={() => store.Increment()}>Add</button>
+        <button onClick={() => store.Decrement()}>Subtract</button>
+      </div>
+    </Fragment>
+  )
+  )
+)
+
 export default Counter

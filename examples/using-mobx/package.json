@@ -28,7 +28,6 @@
     "react-dom": "^16.5.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.0.0",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",

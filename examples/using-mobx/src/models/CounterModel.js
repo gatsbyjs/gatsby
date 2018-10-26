@@ -1,20 +1,20 @@
-import { observable, action } from 'mobx'
+import { observable, action, decorate } from 'mobx'
 
 class CounterModel {
-  @observable
-  Count
+  Count = 0
 
-  constructor() {
-    this.Count = 0
-  }
-  @action
   Increment() {
     this.Count += 1
   }
-  @action
+
   Decrement() {
     this.Count -= 1
   }
 }
-let CounterStore = new CounterModel()
+decorate(CounterModel, {
+  Count: observable,
+  Increment: action,
+  Decrement: action,
+})
+const CounterStore = new CounterModel()
 export default CounterStore
