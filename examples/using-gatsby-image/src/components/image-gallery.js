@@ -9,7 +9,6 @@ const UnsplashMasonry = edges => (
   <div
     css={{
       background: `white`,
-      margin: `0 -`,
       [presets.Tablet]: {
         margin: `0 0 0 calc(-${presets.offset}vw - ${presets.gutter.tablet}px)`,
         padding: 100,
