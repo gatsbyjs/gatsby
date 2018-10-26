@@ -2,6 +2,8 @@ import React from "react"
 import { Link } from "gatsby"
 import { buttonStyles } from "../utils/styles"
 
+console.log(buttonStyles.tiny)
+
 const components = {
   link: Link,
   href: ({ children, ...rest }) => <a {...rest}>{children}</a>,
@@ -16,6 +18,7 @@ const Button = ({
   tag,
   large,
   small,
+  tiny,
   secondary,
   ...rest
 }) => {
@@ -34,6 +37,7 @@ const Button = ({
       ...(secondary && { ...buttonStyles.secondary }),
       ...(large && { ...buttonStyles.large }),
       ...(small && { ...buttonStyles.small }),
+      ...(tiny && { ...buttonStyles.tiny }),
     },
   }
 
