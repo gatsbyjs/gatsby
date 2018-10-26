@@ -1,0 +1,71 @@
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "react-emotion"
+
+import EcosystemSection from "./ecosystem-section"
+
+import presets, { colors } from "../../utils/presets"
+
+const EcosystemBoardContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+
+  ${presets.Tablet} {
+    flex-direction: row;
+    height: 100%;
+    padding: 10px;
+  }
+`
+
+const SectionHeader = styled("header")({})
+
+const EcosystemBoard = ({
+  icons: { plugins: PluginsIcon, starters: StartersIcon },
+  starters,
+  plugins,
+}) => {
+  return (
+    <EcosystemBoardContainer>
+      <EcosystemSection
+        title="Plugin Library"
+        description="With 429 plugins, lorem ipsum sunt we need some proper copy here pulling in data from your favorite source is only a few mouseclicks away."
+        subTitle="Fetured Plugins"
+        icon={PluginsIcon}
+        links={[
+          { label: "Browse Library", to: "/plugins/" },
+          {
+            label: "Plugin Authoring",
+            to: "/docs/plugin-authoring/",
+            secondary: true,
+          },
+          { label: "Plugin Docs", to: "/docs/plugins/", secondary: true },
+        ]}
+        featuredItems={plugins}
+      />
+      <EcosystemSection
+        title="Starters"
+        description="Starters are boilerplate Gatsby sites maintained by the community which give you a headstart for your Gatsby project."
+        subTitle="Fetured Starters"
+        icon={StartersIcon}
+        links={[
+          { label: "Browse Starters", to: "/starters/" },
+          { label: "Plugin Docs", to: "/docs/starters/", secondary: true },
+        ]}
+        featuredItems={starters}
+      />
+      <EcosystemSection
+        title="External Resources"
+        description="More awesome Gatsby content, created by the community."
+        link="/docs/awesome-gatsby/"
+      />
+    </EcosystemBoardContainer>
+  )
+}
+
+EcosystemBoard.propTypes = {
+  icons: PropTypes.object,
+  starters: PropTypes.array,
+  plugins: PropTypes.array,
+}
+
+export default EcosystemBoard
