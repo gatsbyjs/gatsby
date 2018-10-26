@@ -28,7 +28,7 @@ export default BlurUp
 
 export const query = graphql`
   query {
-    file(relativePath: { regex: "/igor-son-320878-unsplash/" }) {
+    file(relativePath: { regex: "/igor-son-320878/" }) {
       childImageSharp {
         fluid(maxWidth: 800) {
           ...GatsbyImageSharpFluid
@@ -36,7 +36,7 @@ export const query = graphql`
       }
     }
     floatingImageMobile: file(
-      relativePath: { regex: "/charles-deluvio-782457-unsplash/" }
+      relativePath: { regex: "/charles-deluvio-782457/" }
     ) {
       childImageSharp {
         fixed(width: 120) {
@@ -44,9 +44,7 @@ export const query = graphql`
         }
       }
     }
-    floatingImage: file(
-      relativePath: { regex: "/charles-deluvio-782457-unsplash/" }
-    ) {
+    floatingImage: file(relativePath: { regex: "/charles-deluvio-782457/" }) {
       childImageSharp {
         fixed(width: 200) {
           ...GatsbyImageSharpFixed

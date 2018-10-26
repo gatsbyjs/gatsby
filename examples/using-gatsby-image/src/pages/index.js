@@ -110,9 +110,7 @@ export default IndexComponent
 
 export const query = graphql`
   query {
-    file(
-      relativePath: { regex: "/alexander-andrews-260988-unsplash_edited.jpg/" }
-    ) {
+    file(relativePath: { regex: "/alexander-andrews-260988.jpg/" }) {
       childImageSharp {
         fluid(
           maxWidth: 800

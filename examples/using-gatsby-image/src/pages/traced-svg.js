@@ -40,7 +40,7 @@ export default TracedSVG
 
 export const query = graphql`
   query {
-    file(relativePath: { regex: "/yoann-siloine-532511-unsplash/" }) {
+    file(relativePath: { regex: "/yoann-siloine-532511/" }) {
       childImageSharp {
         fluid(
           maxWidth: 800
@@ -51,7 +51,7 @@ export const query = graphql`
       }
     }
     floatingImageMobile: file(
-      relativePath: { regex: "/charles-deluvio-716558-unsplash/" }
+      relativePath: { regex: "/charles-deluvio-716558/" }
     ) {
       childImageSharp {
         fixed(width: 120) {
@@ -59,18 +59,14 @@ export const query = graphql`
         }
       }
     }
-    floatingImage: file(
-      relativePath: { regex: "/charles-deluvio-716558-unsplash/" }
-    ) {
+    floatingImage: file(relativePath: { regex: "/charles-deluvio-716558/" }) {
       childImageSharp {
         fixed(width: 200) {
           ...GatsbyImageSharpFixed_tracedSVG
         }
       }
     }
-    fullWidthImage: file(
-      relativePath: { regex: "/chuttersnap-1103171-unsplash/" }
-    ) {
+    fullWidthImage: file(relativePath: { regex: "/chuttersnap-1103171/" }) {
       childImageSharp {
         fluid(maxWidth: 600) {
           ...GatsbyImageSharpFluid_tracedSVG

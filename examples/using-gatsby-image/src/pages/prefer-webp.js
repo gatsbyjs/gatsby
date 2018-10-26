@@ -28,7 +28,7 @@ export default PreferWebp
 
 export const query = graphql`
   query {
-    file(relativePath: { regex: "/charles-deluvio-716555-unsplash.jpg/" }) {
+    file(relativePath: { regex: "/charles-deluvio-716555/" }) {
       childImageSharp {
         fluid(maxWidth: 800) {
           ...GatsbyImageSharpFluid
@@ -36,7 +36,7 @@ export const query = graphql`
       }
     }
     floatingImageMobile: file(
-      relativePath: { regex: "/charles-deluvio-695760-unsplash/" }
+      relativePath: { regex: "/charles-deluvio-695760/" }
     ) {
       childImageSharp {
         fixed(width: 120) {
@@ -44,16 +44,14 @@ export const query = graphql`
         }
       }
     }
-    floatingImage: file(
-      relativePath: { regex: "/charles-deluvio-695760-unsplash/" }
-    ) {
+    floatingImage: file(relativePath: { regex: "/charles-deluvio-695760/" }) {
       childImageSharp {
         fixed(width: 200) {
           ...GatsbyImageSharpFixed_withWebp
         }
       }
     }
-    fullWidthImage: file(relativePath: { regex: "/martin-reisch-113179/" }) {
+    fullWidthImage: file(relativePath: { regex: "/michele-feola-166138/" }) {
       childImageSharp {
         fluid(maxWidth: 600) {
           ...GatsbyImageSharpFluid_withWebp
