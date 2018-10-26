@@ -5,16 +5,16 @@ author: Joaquín Bravo Contreras
 tags: ["drupal", "tutorials"]
 ---
 
-The motivation for this blog post was the need to reduce the cost of maintaining a simple brochure or blog site. When using Drupal you need at least a shared hosting (there is no wordpress.com for drupal sites). So migrating to a static site generator like jekyll seemed like a good idea. Gatsby can do this too, and it is also a great opportunity to learn react and then get hosting for free using something like github pages. So this post is going to describe how to migrate a simple blog that has featured images on the posts, comments and tags.
+This blogpost explains how I learned to reduce the cost of maintaining a simple brochure or blog site. When using Drupal, you need at least a shared hosting platform (there is no Wordpress.com for Drupal sites). So, migrating to a static site generator, like Jekyll, seemed like a good idea. Gatsby can do this too, and it is also a great opportunity to learn React and then get hosting for free using something like GitHub Pages. So this post is going to describe how to migrate a simple blog--that has featured images on the posts, comments and tags--from Drupal to Gatsby.
 
-To facilitate exporting the site, the first thing I did was exporting the database from the mysql database server to an sqlite file that I could use locally. To do this I used the [mysql2sqlite](https://github.com/dumblob/mysql2sqlite) project, which, as described on the project page, can be done with two commands like:
+To facilitate exporting the site, the first thing I did was export the database from the mysql database server to an sqlite file that I could use locally. To do this I used the [mysql2sqlite](https://github.com/dumblob/mysql2sqlite) project, which, as described on the project page, can be done with two commands like:
 
 ```
 mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
 ./mysql2sqlite dump_mysql.sql | sqlite3 mysqlite.db
 ```
 
-Our site is a simple blog so we can use the excellent [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) project, so we will create our project and then add a [sqlite library](https://github.com/JoshuaWise/better-sqlite3) as a dev dependency:
+To do this yourself, you'll build a simple blog so we can using the excellent [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) project. Create project and then add a [sqlite library](https://github.com/JoshuaWise/better-sqlite3) as a dev dependency:
 
 ```
 gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
@@ -22,9 +22,9 @@ git init # so we can keep track of our changes
 npm i --save-dev better-sqlite3
 ```
 
-Now, it is a matter of knowing your database. The useful commands on an sqlite3 command line to explore it are `.tables` to see all tables (duh) and `.schema table_name` to see information about a specific table. Oh! and `.help` to know more.
+Now, it is a matter of knowing your database. The useful commands on an sqlite3 command line to explore are `.tables` to see all tables :) and `.schema table_name` to see information about a specific table. Oh! and `.help` to know more.
 
-So, we will be creating a new file on our project at `src/scripts/migrate.js`, and initially what we want is to iterate through all our posts and export basic data like title, created date, body and status (published or draft). All of that data is in two tables, the _node_ table and the _field_data_body_. So initially our script will look like this:
+So, you will be creating a new file on your project at `src/scripts/migrate.js`. Initially, what you want is to iterate through all your posts and export basic data like title, created date, body and status (published or draft). All of that data is in two tables, the _node_ table and the _field_data_body_. Initially, your script will look like this:
 
 ```javascript
 const Database = require('better-sqlite3');
