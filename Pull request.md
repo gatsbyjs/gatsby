@@ -31,3 +31,15 @@ And in the button that you want to show / hide / disable / enable, you would bin
 MyButton.Disabled: !enabled
 MyButton.Visible: visible
 ```
+## additional information
+We would set the OnSelect property for the "action" buttons to update a context variable:
+```
+EnableButton.OnSelect: UpdateContext({ enabled: true })
+DisableButton.OnSelect: UpdateContext({ enabled: false })
+HideButton.OnSelect: UpdateContext({ visible: false })
+ShowButton.OnSelect: UpdateContext({ visible: true })
+```
+And in the button that you want to show / hide / disable / enable, you would bind the Disabled and Visible properties to those context variables:
+
+MyButton.Disabled: !enabled
+MyButton.Visible: visible
