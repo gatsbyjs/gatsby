@@ -66,7 +66,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 - **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
   splitting, image optimization, inlining critical styles, lazy-loading, and prefetching resources,
-  and more to ensure your site is fast — no manual tuning required.
+  and more to ensure your site is fast. No manual tuning required.
 
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
