@@ -674,7 +674,7 @@ export default ({ children }) => (
 )
 ```
 
-The restore the default from Gatsby v1, see the [plugin docs](/packages/gatsby-plugin-sass#how-to-use).
+The restore the default from Gatsby v1, see the [plugin docs](/packages/gatsby-plugin-sass/README.md#how-to-use).
 
 ### Update Jest configuration
 
