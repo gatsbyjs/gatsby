@@ -5,23 +5,23 @@ import styled from "react-emotion"
 import { rhythm, options } from "../utils/typography"
 import presets from "../utils/presets"
 
-const Image = styled(Img)({
-  display: `inline-block`,
-  float: `right`,
-  marginBottom: rhythm(options.blockMarginBottom * 2),
-  marginLeft: rhythm(options.blockMarginBottom * 2),
-  marginRight: -20,
-  [presets.Phablet]: {
-    display: `none`,
-  },
-})
+const Image = styled(Img)`
+  display: inline-block;
+  float: right;
+  margin-bottom: ${rhythm(options.blockMarginBottom * 2)};
+  margin-left: ${rhythm(options.blockMarginBottom * 2)};
+  margin-right: -20px;
+  ${presets.Phablet} {
+    display: none;
+  }
+`
 
-const ImageDesktop = styled(Image)({
-  display: `none`,
-  [presets.Phablet]: {
-    display: `inline-block`,
-  },
-})
+const ImageDesktop = styled(Image)`
+  display: none;
+  ${presets.Phablet} {
+    display: inline-block;
+  }
+`
 
 const FloatingImage = ({
   imageMobile,
