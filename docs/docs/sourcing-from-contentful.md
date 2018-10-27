@@ -8,7 +8,6 @@ Contentful is a headless Content Management System (CMS) that lets you organize 
 
 Actually, the way Contentful handles bits of content means that you can push content out when new technology develops without having to redesign, rewrite, or rethink all of it for a new format.
 
-
 ## Prerequisites
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back.
@@ -30,19 +29,7 @@ npm install --save gatsby-source-contentful
 ## How to use
 
 ### With the Delivery API
-```javascript:title=gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-source-contentful`,
-    options: {
-      spaceId: `your_space_id_grab_it_from_contentful`,
-      accessToken: `your_token_id_grab_it_from_contentful`
-    },
-  },
-]
-```
 
-### With the Preview API
 ```javascript:title=gatsby-config.js
 plugins: [
   {
@@ -50,7 +37,21 @@ plugins: [
     options: {
       spaceId: `your_space_id_grab_it_from_contentful`,
       accessToken: `your_token_id_grab_it_from_contentful`,
-      host: `preview.contentful.com`
+    },
+  },
+]
+```
+
+### With the Preview API
+
+```javascript:title=gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-source-contentful`,
+    options: {
+      spaceId: `your_space_id_grab_it_from_contentful`,
+      accessToken: `your_token_id_grab_it_from_contentful`,
+      host: `preview.contentful.com`,
     },
   },
 ]

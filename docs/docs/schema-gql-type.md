@@ -112,7 +112,7 @@ The core of this step creates a GraphQL Field object, where the type is inferred
 
 If however, the value is an object or array, we recurse, using [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) to create the GraphQL fields.
 
-In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)) and `Date` ([types/type-date.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)). If the value of our field is a string that looks like a filename or a date (handled by [should-infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L52) functions), then we return the appropariate custom type. 
+In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)) and `Date` ([types/type-date.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)). If the value of our field is a string that looks like a filename or a date (handled by [should-infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L52) functions), then we return the appropariate custom type.
 
 ### Child/Parent fields
 
@@ -166,40 +166,37 @@ These are fields created by plugins that implement the [setFieldsOnGraphQLNodeTy
 
 ### File types
 
-As described in [plain object or value field](#plain-object-or-value-field), if a string field value looks like a file path, then we infer `File` as the field's type. The creation of this type occurs in [type-file.js setFileNodeRootType()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L18). It is called just after we have created the GqlType for `File` (only called once). 
+As described in [plain object or value field](#plain-object-or-value-field), if a string field value looks like a file path, then we infer `File` as the field's type. The creation of this type occurs in [type-file.js setFileNodeRootType()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L18). It is called just after we have created the GqlType for `File` (only called once).
 
 It creates a new GraphQL Field Config whose type is the just created `File` GqlType, and whose resolver converts a string into a File object. Here's how it works:
 
 Say we have a `data/posts.json` file that has been sourced (of type `File`), and then the [gatsby-transformer-json](/packages/gatsby-transformer-json) transformer creates a child node (of type `PostsJson`)
 
 ```javascript:title=data/posts.json
-[
+;[
   {
-    "id": "1685001452849004065",
-    "text": "Venice is 👌",
-    "image": "images/BdiU-TTFP4h.jpg",
-  }
+    id: "1685001452849004065",
+    text: "Venice is 👌",
+    image: "images/BdiU-TTFP4h.jpg",
+  },
 ]
 ```
 
 Notice that the image value looks like a file. Therefore, we'd like to query it as if it were a file, and get its relativePath, accessTime, etc.
 
 ```graphql
-{ 
-  postsJson( id: { eq: "1685001452849004065" } ) {
+{
+  postsJson(id: { eq: "1685001452849004065" }) {
     image {
-      relativePath, 
+      relativePath
       accessTime
     }
   }
 }
 ```
 
-The [File type resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L135) takes care of this. It gets the value (`images/BdiU-TTFP4h.jpg`). It then looks up this node's root NodeID via [Node Tracking](/docs/node-tracking/) which returns the original `data/posts.json` file. It creates a new filename by concatenating the field value onto the parent node's directory. 
+The [File type resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L135) takes care of this. It gets the value (`images/BdiU-TTFP4h.jpg`). It then looks up this node's root NodeID via [Node Tracking](/docs/node-tracking/) which returns the original `data/posts.json` file. It creates a new filename by concatenating the field value onto the parent node's directory.
 
-I.e `data` + `images/BdiU-TTFP4h.jpg` = `data/images/BdiU-TTFP4h.jpg`. 
+I.e `data` + `images/BdiU-TTFP4h.jpg` = `data/images/BdiU-TTFP4h.jpg`.
 
 And then finally it searches redux for the first `File` node whose path matches this one. This is our proper resolved node. We're done!
-
-
-
