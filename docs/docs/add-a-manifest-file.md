@@ -8,7 +8,7 @@ But first, what exactly _are_ PWAs?
 
 They are regular websites that take advantage of modern browser functionality to augment the web experience with app-like features and benefits. Check out [Google's overview](https://developers.google.com/web/progressive-web-apps/) of what defines a PWA experience and the [Progressive web apps (PWAs) doc](/docs/progressive-web-app/) to learn how a Gatsby site is a progressive web app.
 
-The Inclusion of a web app manifest is one of the three generally accepted [baseline requirements for a PWA](https://alistapart.com/article/yes-that-web-project-should-be-a-pwa#section1).
+The inclusion of a web app manifest is one of the three generally accepted [baseline requirements for a PWA](https://alistapart.com/article/yes-that-web-project-should-be-a-pwa#section1).
 
 Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest/):
 
