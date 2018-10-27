@@ -88,8 +88,8 @@ const noscriptImg = props => {
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
 
   // needed for object-fit-images polyfill:
-  var objectFit = props.objectFit ? props.objectFit : `cover`
-  var objectPosition = props.objectPosition ? props.objectPosition : `50% 50%`
+  const objectFit = props.objectFit
+  const objectPosition = props.objectPosition
 
   return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:${objectFit};object-position:${objectPosition};font-family:'object-fit:${objectFit};object-position:${objectPosition};'"/></picture>`
 }
