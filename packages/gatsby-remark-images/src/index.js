@@ -3,7 +3,7 @@ const visitWithParents = require(`unist-util-visit-parents`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { fluid } = require(`gatsby-plugin-sharp`)
+const { fluid, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -26,6 +26,7 @@ module.exports = (
     showCaptions: false,
     pathPrefix,
     withWebp: false,
+    tracedSVG: false,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -167,7 +168,23 @@ module.exports = (
       `
     }
 
+    let placeholderImageData = fluidResult.base64
+
+    // if options.tracedSVG is enabled generate the traced SVG and use that as the placeholder image
+    if (options.tracedSVG) {
+      const args =
+        typeof options.tracedSVG === "object" ? options.tracedSVG : {}
+      placeholderImageData = await traceSVG({
+        file: imageNode,
+        args,
+        fileArgs: args,
+        reporter,
+      })
+    }
+
     // Construct new image node w/ aspect ratio placeholder
+    // Note that the placeholder data must be surrounded by &quot; due to the way tracedSVGs are encoded
+    // See https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
     const showCaptions = options.showCaptions && node.title
     let rawHTML = `
   <span
@@ -178,9 +195,7 @@ module.exports = (
   >
     <span
       class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      fluidResult.base64
-    }'); background-size: cover; display: block;"
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-size: cover; display: block; background-image: url(&quot;${placeholderImageData}&quot;);"
     >${imageTag}</span>
   </span>
   `
