@@ -14,11 +14,11 @@ mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
 ./mysql2sqlite dump_mysql.sql | sqlite3 mysqlite.db
 ```
 
-To do this yourself, you'll build a simple blog so we can using the excellent [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) project. Create project and then add a [sqlite library](https://github.com/JoshuaWise/better-sqlite3) as a dev dependency:
+To do this yourself, you'll build a simple blog using the excellent [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) project. Create project and then add a [sqlite library](https://github.com/JoshuaWise/better-sqlite3) as a dev dependency:
 
 ```
 gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
-git init # so we can keep track of our changes
+git init # so you can keep track of the changes
 npm i --save-dev better-sqlite3
 ```
 
@@ -41,11 +41,11 @@ rows.forEach(row => {
   const slug = slugify(row.title);
   const folder = row.status ? '/../pages/' : '/../../drafts/';
   const path = __dirname + folder + slug;
-  // timestamp in drupal is in seconds, Date() expects microseconds
+  // timestamp in Drupal is in seconds, Date() expects microseconds
   const date = new Date(row.created * 1000);
 ```
 
-The interesting thing here is the initial query, and this is based on a Drupal 7 database, a Drupal 8 or Drupal 6 database could be different, so check your schema. Next, lets see how we can get the tags on a simple Javascript array. So, each post can have more than one tag, so we can take advantage of better-sqlite _.pluck()_ function, that retrieves only the first column of a database query, and the _.all()_ function, that retrieves all rows in a single array:
+The interesting thing here is the initial query, and this is based on a Drupal 7 database, a Drupal 8 or Drupal 6 database could be different, so check your schema. Next, lets load the tags on a simple Javascript array. Each post can have more than one tag, so you can take advantage of better-sqlite _.pluck()_ function, that retrieves only the first column of a database query, and the _.all()_ function, that retrieves all rows in a single array:
 
 ```javascript
 const tags = db
@@ -58,7 +58,7 @@ const tags = db
   .all(row.nid)
 ```
 
-For the image, we will retrieve only the URL of the image, so we can download it and store it locally. And we will replace `public://` for the URL path of the images folder on our old site:
+For the image, you will retrieve only the URL of the image, so you can download it and store it locally. And you will replace `public://` for the URL path of the images folder on our old site:
 
 ```javascript
 let image = db
@@ -73,7 +73,7 @@ if (image) {
 }
 ```
 
-And now we have all the data we wanted, so it is just a matter of creating a file with the frontmatter data and the body of the text. Luckily our Drupal blog is also using markdown. Else we would have to look for an HTML to Markdown Javascript library.
+And now you have all the data you need, now it is just a matter of creating a file with the metadata in yaml format and the body of the text in markdown format. Luckily, a Drupal blog can also use markdown. Else you can also look for an HTML to Markdown Javascript library like [turndown](https://github.com/domchristie/turndown).
 
 ```javascript
   fs.mkdir(path, (err) => { });
@@ -100,13 +100,13 @@ And now we have all the data we wanted, so it is just a matter of creating a fil
 db.close();
 ```
 
-We now can import all our blog posts to markdown files with [frontmatter](https://jekyllrb.com/docs/front-matter/) metadata by running this command:
+This script is now finished and you can execute it in your shell with this command:
 
 ```
 > node src/scripts/import.js mysqlite.db
 ```
 
-To export the comments we can use a service like disqus on our static site. Disqus has an import process that uses a [custom XML import format](https://help.disqus.com/developer/custom-xml-import-format) based on the WXR (WordPress eXtended RSS) schema. So the process would be the same. Create a script named `src/scripts/export_comments.js` to query the database and, in this case, write a single file containing all the comments of our old site:
+To have comments on your site you can use a service like [Disqus](http://disqus.com/). Disqus has an import process that uses a [custom XML import format](https://help.disqus.com/developer/custom-xml-import-format) based on the WXR (WordPress eXtended RSS) schema. So the process would be the same. Create a script named `src/scripts/export_comments.js` to query the database and, in this case, write a single file containing all the comments of our old site:
 
 ```javascript
 const Database = require("better-sqlite3")
