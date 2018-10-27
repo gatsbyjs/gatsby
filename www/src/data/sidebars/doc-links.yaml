@@ -242,10 +242,8 @@
           link: /docs/audit-with-lighthouse/
         - title: Add a Manifest File
           link: /docs/add-a-manifest-file/
-        - title: Add Offline Support
-          link: /docs/add-offline-support/
-        - title: Add a Service Worker
-          link: /docs/add-a-service-worker/
+        - title: Add Offline Support with a Service Worker
+          link: /docs/add-offline-support-with-a-service-worker
         - title: Add Page Metadata
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)

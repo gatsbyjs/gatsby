@@ -201,13 +201,13 @@ includedRoutes: [
 
 Which would include most commonly used endpoints:
 
-* Posts
-* Pages
-* Media
-* Categories
-* Tags
-* Taxonomies
-* Users
+- Posts
+- Pages
+- Media
+- Categories
+- Tags
+- Taxonomies
+- Users
 
 and would skip pulling Comments.
 
