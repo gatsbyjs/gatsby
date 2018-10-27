@@ -12,7 +12,7 @@ the content.
 
 ## Prerequisites
 
-You must know how to set up a basic Gatsby project. If you need, check the
+You must know how to set up a basic Gatsby project. If you need to, check the
 [main tutorial](/tutorial).
 
 ## Setting the authentication workflow
