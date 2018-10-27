@@ -7,11 +7,13 @@ import { rhythm } from "../utils/typography"
 import logo from "../images/monogram.svg"
 import presets from "../utils/presets"
 
+const { gutter } = presets
+
 const Container = styled(`div`)({
   position: `relative`,
   left: `0%`,
-  padding: 20,
-  marginTop: `calc(67vh - 20px)`,
+  padding: gutter.default,
+  marginTop: `calc(67vh - ${gutter.default}px)`,
   background: `#fff`,
   [presets.Tablet]: {
     maxWidth: 600,
@@ -19,7 +21,7 @@ const Container = styled(`div`)({
     background: `#fff`,
     position: `relative`,
     marginTop: 0,
-    padding: 40,
+    padding: gutter.tablet,
   },
   [presets.Desktop]: {
     padding: presets.gutter.desktop,
@@ -43,20 +45,20 @@ const Main = styled(`main`)({
   background: `#fff`,
   position: `relative`,
   zIndex: presets.zIndex.overlay,
-  paddingTop: 20,
+  paddingTop: gutter.default,
 })
 
 const LogoLink = styled(`a`)({
   position: `fixed`,
-  top: 40,
-  right: 40,
+  top: gutter.tablet,
+  right: gutter.tablet,
   "&&": {
     background: `transparent`,
   },
   [presets.Tablet]: {
     top: `auto`,
-    bottom: 40,
-    left: 40,
+    bottom: gutter.tablet,
+    left: gutter.tablet,
     zIndex: presets.zIndex.overlay + 1,
   },
 })

@@ -9,7 +9,8 @@ module.exports = {
   Hd: `@media (min-width: 1200px)`,
   animation: {
     curveDefault: `cubic-bezier(0.4, 0, 0.2, 1)`,
-    speedDefault: `250ms`,
+    curveExpo: `cubic-bezier(.17, .67, .83, .67)`,
+    speedDefault: `200ms`,
     speedFast: `100ms`,
     speedSlow: `350ms`,
   },

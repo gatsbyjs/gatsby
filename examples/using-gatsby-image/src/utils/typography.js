@@ -1,6 +1,6 @@
 import Typography from "typography"
 
-import { colors } from "./presets"
+import { colors, animation } from "./presets"
 
 const bodyFontFamily = [
   `-apple-system`,
@@ -47,9 +47,8 @@ const _options = {
         backgroundImage: `linear-gradient(to top, #e6d9f2, #e6d9f2 1px, rgba(0, 0, 0, 0) 2px)`,
         color: colors.gatsby,
         fontWeight: `bold`,
-        textShadow: `none`,
         textDecoration: `none`,
-        transition: `.2s ease-out`,
+        transition: `${animation.speedDefault} ${animation.curveDefault}`,
       },
       "a:hover": {
         backgroundColor: `#e6d9f2`,

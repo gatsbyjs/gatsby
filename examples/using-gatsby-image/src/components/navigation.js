@@ -4,14 +4,14 @@ import styled, { css } from "react-emotion"
 import { MdLaunch } from "react-icons/md"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, animation } from "../utils/presets"
 
 const linkStyle = {
   fontFamily: options.headerFontFamily.join(`,`),
   fontWeight: 700,
   letterSpacing: `.005em`,
   position: `relative`,
-  transition: `all 200ms cubic-bezier(.17, .67, .83, .67)`,
+  transition: `${animation.speedDefault} ${animation.curveExpo}`,
   whiteSpace: `nowrap`,
   "@media (-webkit-min-device-pixel-ratio:0)": {
     backgroundImage: `linear-gradient(45deg, #EB4D9C, #D33024, #E48233, #F4E24D, #B4DC48, #54B2EA, ${
