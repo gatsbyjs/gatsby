@@ -348,6 +348,10 @@ const _options = {
       ".gatsby-resp-image-link + em a[href*='//']:after": {
         content: `" " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23744C9E'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E")`,
       },
+      ".gatsby-graphviz-container": {
+        maxWidth: `100%`,
+        height: `auto`,
+      },
     }
   },
 }

@@ -28,7 +28,8 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
         // Mutate the current node. Converting from a code block to
         // HTML (with svg content)
         node.type = `html`
-        node.value = svgString
+        node.value =
+          `<div class="gatsby-graphviz-container"` + svgString`</div>`
       } catch (error) {
         console.log(
           `Error during viz.js execution. Leaving code block unchanged`

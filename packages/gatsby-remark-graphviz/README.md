@@ -36,7 +36,7 @@ Then, add `dot` code blocks to your markdown. E.g
     }
     ```
 
-Which will be rendered using viz.js and the output html will replace the code block with the actual SVG.
+Which will be rendered using viz.js and the output html will replace the code block with the actual SVG wrapped in `<div class="gatsby-graphviz-container">`.
 
 ![rendered-graph](/packages/gatsby-remark-graphviz/rendered-graph.svg)
 
