@@ -148,7 +148,11 @@ class FilteredShowcase extends Component {
                   </div>
                 </ContentHeader>
 
-                <ShowcaseList items={items} count={this.state.sitesToShow} />
+                <ShowcaseList
+                  items={items}
+                  count={this.state.sitesToShow}
+                  filters={filters}
+                />
 
                 {this.state.sitesToShow < items.length && (
                   <Button
