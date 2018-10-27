@@ -12,6 +12,6 @@ exports.onClientEntry = () => {
     typeof testImg.style.objectFit === `undefined` ||
     typeof testImg.style.objectPosition === `undefined`
   ) {
-    import(`object-fit-images`)()
+    import(`object-fit-images`).then(ObjectFitImages => ObjectFitImages())
   }
 }
