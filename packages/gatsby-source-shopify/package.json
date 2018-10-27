@@ -31,7 +31,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "gatsby-node-helpers": "^0.3.0",
-    "gatsby-source-filesystem": "^1.5.39",
+    "gatsby-source-filesystem": "^2.0.5",
     "graphql-request": "^1.6.0",
     "lodash": "^4.17.4",
     "p-iteration": "^1.1.7",
