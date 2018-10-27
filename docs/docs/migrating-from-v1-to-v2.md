@@ -674,6 +674,8 @@ export default ({ children }) => (
 )
 ```
 
+The restore the default from Gatsby v1, see the [plugin docs](/packages/gatsby-plugin-sass#how-to-use).
+
 ### Update Jest configuration
 
 If you were using Jest with Gatsby V1, you will need to make some updates to your configuration when upgrading to Gatsby V2. You can view the complete details of setting up your test environment on the [Unit Testing](/docs/unit-testing/) page of the docs.
