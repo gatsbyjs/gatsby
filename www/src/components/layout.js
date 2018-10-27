@@ -148,6 +148,10 @@ class DefaultLayout extends React.Component {
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+          />
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="GatsbyJS" />
