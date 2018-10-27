@@ -16,7 +16,7 @@ export const createClient = (shopName, accessToken) =>
  * Print an error from a GraphQL client
  */
 export const printGraphQLError = e => {
-  const prettyjsonOptions = { keysColor: 'red', dashColor: 'red' }
+  const prettyjsonOptions = { keysColor: `red`, dashColor: `red` }
 
   if (e.response && e.response.errors)
     console.error(prettyjson.render(e.response.errors, prettyjsonOptions))
@@ -44,14 +44,14 @@ export const queryAll = async (
 ) => {
   const data = await queryOnce(client, query, first, after)
 
-  const edges = get([...path, 'edges'], data)
+  const edges = get([...path, `edges`], data)
   const nodes = edges.map(edge => edge.node)
 
   aggregatedResponse
     ? (aggregatedResponse = aggregatedResponse.concat(nodes))
     : (aggregatedResponse = nodes)
 
-  if (get([...path, 'pageInfo', 'hasNextPage'], false, data))
+  if (get([...path, `pageInfo`, `hasNextPage`], false, data))
     return queryAll(
       client,
       path,

@@ -1,27 +1,22 @@
 import createNodeHelpers from 'gatsby-node-helpers'
-import { tap, camelCase } from 'lodash/fp'
+import { camelCase } from 'lodash/fp'
 import { map } from 'p-iteration'
 import { createRemoteFileNode } from 'gatsby-source-filesystem'
-import crypto from 'crypto'
 
 // Node prefix
-const TYPE_PREFIX = 'Shopify'
+const TYPE_PREFIX = `Shopify`
 
 // Node types
-const ARTICLE = 'Article'
-const BLOG = 'Blog'
-const COLLECTION = 'Collection'
-const COMMENT = 'Comment'
-const PRODUCT = 'Product'
-const PRODUCT_OPTION = 'ProductOption'
-const PRODUCT_VARIANT = 'ProductVariant'
-const SHOP_POLICY = 'ShopPolicy'
-const PRODUCT_TYPE = 'ProductType'
-const {
-  createNodeFactory,
-  generateNodeId,
-  generateTypeName,
-} = createNodeHelpers({
+const ARTICLE = `Article`
+const BLOG = `Blog`
+const COLLECTION = `Collection`
+const COMMENT = `Comment`
+const PRODUCT = `Product`
+const PRODUCT_OPTION = `ProductOption`
+const PRODUCT_VARIANT = `ProductVariant`
+const SHOP_POLICY = `ShopPolicy`
+const PRODUCT_TYPE = `ProductType`
+const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
 
@@ -88,7 +83,7 @@ export const CollectionNode = imageArgs =>
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         {
           id: node.image.id,
-          url: node.image.src && node.image.src.split('?')[0],
+          url: node.image.src && node.image.src.split(`?`)[0],
         },
         imageArgs,
       )
@@ -120,7 +115,7 @@ export const ProductNode = imageArgs =>
         edge.node.localFile___NODE = await downloadImageAndCreateFileNode(
           {
             id: edge.node.id,
-            url: edge.node.originalSrc && edge.node.originalSrc.split('?')[0],
+            url: edge.node.originalSrc && edge.node.originalSrc.split(`?`)[0],
           },
           imageArgs,
         )
@@ -138,7 +133,7 @@ export const ProductVariantNode = imageArgs =>
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         {
           id: node.image.id,
-          url: node.image.originalSrc && node.image.originalSrc.split('?')[0],
+          url: node.image.originalSrc && node.image.originalSrc.split(`?`)[0],
         },
         imageArgs,
       )
