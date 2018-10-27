@@ -24,7 +24,7 @@ An example site for this plugin is available.
 This module currently pulls from WordPress the following entities:
 
 - [x] All entities are supported (posts, pages, tags, categories, media, types,
-      users, statuses, taxonomies, ...)
+      users, statuses, taxonomies, site metadata, ...)
 - [x] Any new entity should be pulled as long the IDs are correct.
 - [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
 - [x] Custom post types (any type you could have declared using WordPress'
@@ -201,13 +201,13 @@ includedRoutes: [
 
 Which would include most commonly used endpoints:
 
-* Posts
-* Pages
-* Media
-* Categories
-* Tags
-* Taxonomies
-* Users
+- Posts
+- Pages
+- Media
+- Categories
+- Tags
+- Taxonomies
+- Users
 
 and would skip pulling Comments.
 

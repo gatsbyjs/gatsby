@@ -1,48 +1,80 @@
 import React from "react"
+import PropTypes from "prop-types"
+import styled from "react-emotion"
 
 import presets, { colors } from "../utils/presets"
 import { rhythm, scale, options } from "../utils/typography"
 
-const Banner = ({ children, background }) => {
-  const backgroundColor = background ? background : colors.gatsby
-  const horizontalPadding = rhythm(1 / 2)
+const horizontalPadding = rhythm(1 / 2)
+const backgroundColor = props =>
+  props.background ? props.background : colors.gatsby
 
+const BannerContainer = styled("div")`
+  background-color: ${props => backgroundColor(props)};
+  height: ${presets.bannerHeight};
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+`
+
+const InnerContainer = styled("div")`
+  align-items: center;
+  display: flex;
+  height: ${presets.bannerHeight};
+  overflow-x: auto;
+  mask-image: ${`linear-gradient(to right, transparent, ${props =>
+    backgroundColor(props)} ${horizontalPadding}, ${props =>
+    backgroundColor(props)} 96%, transparent)`};
+`
+
+const Content = styled("div")`
+  color: ${colors.ui.bright};
+  font-family: ${options.headerFontFamily.join(`,`)};
+  font-size: ${scale(-1 / 5).fontSize};
+  padding-left: ${horizontalPadding};
+  padding-right: ${horizontalPadding};
+  -webkit-font-smoothing: antialiased;
+  white-space: nowrap;
+`
+
+const Link = styled("a")`
+  color: #fff;
+  span {
+    display: none;
+    ${presets.Mobile} {
+      display: inline;
+    }
+  }
+`
+
+const Banner = ({ children, background }) => {
   return (
-    <div
-      className="banner"
-      css={{
-        backgroundColor: backgroundColor,
-        height: presets.bannerHeight,
-        position: `fixed`,
-        width: `100%`,
-        zIndex: 3,
-      }}
-    >
-      <div
-        css={{
-          alignItems: `center`,
-          display: `flex`,
-          height: presets.bannerHeight,
-          overflowX: `auto`,
-          maskImage: `linear-gradient(to right, transparent, ${backgroundColor} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`,
-        }}
-      >
-        <div
-          css={{
-            color: colors.ui.bright,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontSize: scale(-1 / 5).fontSize,
-            paddingLeft: horizontalPadding,
-            paddingRight: horizontalPadding,
-            WebkitFontSmoothing: `antialiased`,
-            whiteSpace: `nowrap`,
-          }}
-        >
-          {children}
-        </div>
-      </div>
-    </div>
+    <BannerContainer background={background} className="banner">
+      <InnerContainer>
+        {children ? (
+          <Content>{children}</Content>
+        ) : (
+          <Content>
+            These are the docs for v2.
+            {` `}
+            <Link href="https://v1.gatsbyjs.org/">
+              View the v1 docs
+              <span>
+                {` `}
+                instead
+              </span>
+            </Link>
+            .
+          </Content>
+        )}
+      </InnerContainer>
+    </BannerContainer>
   )
+}
+
+Banner.propTypes = {
+  children: PropTypes.node,
+  background: PropTypes.any,
 }
 
 export default Banner

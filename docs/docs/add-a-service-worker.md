@@ -20,8 +20,7 @@ We recommend using this plugin together with the [manifest plugin](https://www.n
 
 Add this plugin to your `gatsby-config.js`
 
-```javascript
-// In your gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-offline`]
 ```
 
@@ -29,4 +28,3 @@ plugins: [`gatsby-plugin-offline`]
 
 - [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
 - [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
-

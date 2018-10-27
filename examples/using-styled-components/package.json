@@ -5,7 +5,7 @@
   "version": "2.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "babel-plugin-styled-components": "^1.5.1",
+    "babel-plugin-styled-components": "^1.8.0",
     "gatsby": "^2.0.0",
     "gatsby-plugin-google-analytics": "^2.0.5",
     "gatsby-plugin-offline": "^2.0.5",
@@ -18,7 +18,7 @@
     "react-helmet": "^5.2.0",
     "react-typography": "^0.16.13",
     "slash": "^1.0.0",
-    "styled-components": "^3.3.2",
+    "styled-components": "^4.0.2",
     "typography": "^0.16.17",
     "typography-breakpoint-constants": "^0.15.10"
   },
