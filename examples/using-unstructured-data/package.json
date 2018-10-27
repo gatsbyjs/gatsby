@@ -1,0 +1,19 @@
+{
+  "name": "gatsby-source-plugin-workshop",
+  "description": "Workshop source for a source plugin workshop",
+  "license": "MIT",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "gatsby": "^2.0.0",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jason Lengstorf <jason@gatsbyjs.com>"
+}
