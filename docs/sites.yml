@@ -3126,3 +3126,16 @@
   built_by: Wieden Kennedy
   built_by_url: https://www.wk.com/about/
   featured: false
+- title: Testing JavaScript
+  description: >
+    This course will teach you the fundamentals of testing your JavaScript applications using eslint, Flow, Jest, and Cypress.
+  url: https://testingjavascript.com/
+  main_url: https://testingjavascript.com/
+  categories:
+    - Learning
+    - Education
+    - Testing
+    - JavaScript
+  built_by: Kent C. Dodds
+  built_by_url: https://kentcdodds.com/
+  featured: false
