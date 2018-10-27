@@ -6,7 +6,7 @@ import { rhythm, options } from "../utils/typography"
 import presets from "../utils/presets"
 
 const Image = styled(Img)`
-  display: inline-block;
+  display: block;
   float: right;
   margin-bottom: ${rhythm(options.blockMarginBottom * 2)};
   margin-left: ${rhythm(options.blockMarginBottom * 2)};
@@ -19,7 +19,7 @@ const Image = styled(Img)`
 const ImageDesktop = styled(Image)`
   display: none;
   ${presets.Phablet} {
-    display: inline-block;
+    display: block;
   }
 `
 
