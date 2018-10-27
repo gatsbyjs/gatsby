@@ -127,7 +127,7 @@ like the following:
 
 ## **Beta** [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
 
-if you want to use the new Rich Text feature you can opt-in by setting the following environment variable
+If you want to use the new Rich Text feature you can opt-in by setting the following environment variable:
 
 ```sh
 export GATSBY_CONTENTFUL_RICH_TEXT='enabled'
