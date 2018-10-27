@@ -3,6 +3,8 @@
 Adds syntax highlighting to code blocks in markdown files using
 [PrismJS](http://prismjs.com/).
 
+Useless edit to test the CircleCI build.
+
 ## Install
 
 `npm install --save gatsby-transformer-remark gatsby-remark-prismjs prismjs`
