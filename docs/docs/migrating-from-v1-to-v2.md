@@ -674,7 +674,9 @@ export default ({ children }) => (
 )
 ```
 
-To restore the default from Gatsby v1, see the [plugin docs](/packages/gatsby-plugin-sass/README.md#how-to-use).
+The Gatsby v1 behavior can be restored by passing in [CSS Loader options](https://github.com/webpack-contrib/css-loader#options) when configuring [gatsby-plugin-sass](/packages/gatsby-plugin-sass/README.md#how-to-use) or [gatsby-plugin-less](/packages/gatsby-plugin-less/README.md#how-to-use).
+
+To restore the default from Gatsby v1 when using, see the [plugin docs](/packages/gatsby-plugin-sass/README.md#how-to-use).
 
 ### Update Jest configuration
 

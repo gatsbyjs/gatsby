@@ -47,7 +47,7 @@ plugins: [
 ]
 ```
 
-*This particular change would restore Gatsby v1 CSS module behavior.*
+*This particular change would restore Gatsby v1 CSS modules behavior.*
 
 ### With CSS Modules
 
