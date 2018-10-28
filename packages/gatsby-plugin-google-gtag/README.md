@@ -42,6 +42,11 @@ module.exports = {
 }
 ```
 
+### No Analytics in Dev by default
+
+This plugin automatically disables google analytics when run in development, and enables sending data in a production build. Thus, you won't see any traffic in google analytics while developing. 
+If you do want to *make sure* everything works, build your site and serve it locally. 
+
 ## Custom Events
 
 This plugin automatically sends a "pageview" event to all products given as "trackingIds" on every Gatsbys route change.
