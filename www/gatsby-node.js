@@ -108,6 +108,18 @@ exports.createPages = ({ graphql, actions }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/add-a-service-worker`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/add-offline-support`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
