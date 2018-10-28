@@ -169,6 +169,8 @@
           link: /docs/testing-css-in-js/
         - title: Testing React components
           link: /docs/testing-react-components/
+        - title: Visual testing with Storybook
+          link: /docs/visual-testing-with-storybook/
     - title: Debugging
       link: /docs/debugging/
       items:
