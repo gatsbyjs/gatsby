@@ -19,7 +19,7 @@ components, css, and binary files e.g. images.
 you can modify the file directory.
 
 
-On running  `gatsby eject gatsby-core-theme` and then a list of assets will will be shown, from which you could choose which assets to
+On running  `gatsby eject gatsby-core-theme` and then a list of assets will be shown, from which you could choose which assets to
 eject. 
 A common use case would be, install Gatsby blog theme. 
 In order to override the blog's index page, eject it and tweak the react component.
