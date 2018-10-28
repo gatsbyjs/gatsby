@@ -187,7 +187,7 @@
       items:
         - title: Client data fetching*
           link: /docs/client-data-fetching/
-        - title: Building a site with authentication*
+        - title: Building a site with authentication
           link: /docs/building-a-site-with-authentication/
         - title: Building an e-commerce site*
           link: /docs/building-an-e-commerce-site/
