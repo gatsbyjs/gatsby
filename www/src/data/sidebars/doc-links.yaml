@@ -94,10 +94,8 @@
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
               link: /docs/sourcing-from-drupal/
-            - title: Sourcing from Contentful*
+            - title: Sourcing from Contentful
               link: /docs/sourcing-from-contentful/
-            - title: Sourcing from Prose*
-              link: /docs/sourcing-from-prose/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
