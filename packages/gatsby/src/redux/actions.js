@@ -1093,7 +1093,8 @@ actions.createRedirect = ({
   // url.parse will not cover protocol-relative urls so do a separate check for those
   const parsed = url.parse(toPath)
   const isRelativeProtocol = toPath.startsWith(`//`)
-  const toPathPrefix = parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+  const toPathPrefix =
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
 
   return {
     type: `CREATE_REDIRECT`,

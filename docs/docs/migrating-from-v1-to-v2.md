@@ -14,9 +14,9 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 This documentation page covers the _how_ of migrating from v1 to v2. The _why_ is covered in various blog posts:
 
-* [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
-* [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
-* [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
+- [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
+- [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
+- [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
 
 ## What we'll cover
 

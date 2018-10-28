@@ -19,7 +19,7 @@ import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 // Other fonts
 import "typeface-spectral"
 
-const Content = styled("div")`
+const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
   height: 200vh;
 `
@@ -54,7 +54,7 @@ class LayoutWithHeading extends React.Component {
     const {
       children,
       location: { pathname },
-      pageTitle = "",
+      pageTitle = ``,
       pageIcon,
     } = this.props
 
@@ -63,7 +63,7 @@ class LayoutWithHeading extends React.Component {
     return (
       <div className={` ${isHomepage ? `isHomepage` : ``}`}>
         <Helmet>
-          <title>{pageTitle ? `${pageTitle} | GatsbyJS` : "GatsbyJS"}</title>
+          <title>{pageTitle ? `${pageTitle} | GatsbyJS` : `GatsbyJS`}</title>
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />

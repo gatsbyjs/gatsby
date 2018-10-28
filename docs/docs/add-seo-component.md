@@ -211,7 +211,7 @@ const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## Examples

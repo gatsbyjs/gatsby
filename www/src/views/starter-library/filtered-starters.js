@@ -76,9 +76,7 @@ export default class FilteredStarterLibrary extends Component {
     )
 
     // stopgap for missing gh data (#8763)
-    let starters = data.allStartersYaml.edges.filter(({ node: starter }) => {
-      return starter.fields && starter.fields.starterShowcase
-    })
+    let starters = data.allStartersYaml.edges.filter(({ node: starter }) => starter.fields && starter.fields.starterShowcase)
 
     if (urlState.s.length > 0) {
       starters = starters.filter(starter =>

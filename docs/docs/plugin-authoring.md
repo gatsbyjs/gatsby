@@ -64,9 +64,7 @@ plugins
 
 ```javascript
 module.exports = {
-  plugins: [
-    'my-own-plugin',
-  ]
+  plugins: ["my-own-plugin"],
 }
 ```
 
@@ -76,4 +74,5 @@ can place the files in a `src` subfolder and build them to the plugin folder
 root.
 
 ## Publishing a plugin to the library
+
 If you'd like to publish your plugin to the Gatsby Plugin Library (please do!), [follow these steps](/docs/submit-to-plugin-library/).

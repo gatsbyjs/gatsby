@@ -257,7 +257,10 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     let type
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
-      const typeName = `Union_${key}_${fields.map(f => f.name).sort().join(`__`)}`
+      const typeName = `Union_${key}_${fields
+        .map(f => f.name)
+        .sort()
+        .join(`__`)}`
 
       if (unionTypes.has(typeName)) {
         type = unionTypes.get(typeName)

@@ -11,7 +11,7 @@ import { EcosystemIcon } from "../assets/mobile-nav-icons"
 class EcosystemPage extends Component {
   render() {
     const { location } = this.props
-    const pageTitle = "Ecosystem"
+    const pageTitle = `Ecosystem`
 
     return (
       <Layout

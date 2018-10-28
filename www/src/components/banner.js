@@ -9,7 +9,7 @@ const horizontalPadding = rhythm(1 / 2)
 const backgroundColor = props =>
   props.background ? props.background : colors.gatsby
 
-const BannerContainer = styled("div")`
+const BannerContainer = styled(`div`)`
   background-color: ${props => backgroundColor(props)};
   height: ${presets.bannerHeight};
   position: fixed;
@@ -17,7 +17,7 @@ const BannerContainer = styled("div")`
   z-index: 3;
 `
 
-const InnerContainer = styled("div")`
+const InnerContainer = styled(`div`)`
   align-items: center;
   display: flex;
   height: ${presets.bannerHeight};
@@ -27,7 +27,7 @@ const InnerContainer = styled("div")`
     backgroundColor(props)} 96%, transparent)`};
 `
 
-const Content = styled("div")`
+const Content = styled(`div`)`
   color: ${colors.ui.bright};
   font-family: ${options.headerFontFamily.join(`,`)};
   font-size: ${scale(-1 / 5).fontSize};
@@ -37,7 +37,7 @@ const Content = styled("div")`
   white-space: nowrap;
 `
 
-const Link = styled("a")`
+const Link = styled(`a`)`
   color: #fff;
   span {
     display: none;
@@ -47,8 +47,7 @@ const Link = styled("a")`
   }
 `
 
-const Banner = ({ children, background }) => {
-  return (
+const Banner = ({ children, background }) => (
     <BannerContainer background={background} className="banner">
       <InnerContainer>
         {children ? (
@@ -70,7 +69,6 @@ const Banner = ({ children, background }) => {
       </InnerContainer>
     </BannerContainer>
   )
-}
 
 Banner.propTypes = {
   children: PropTypes.node,
