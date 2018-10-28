@@ -59,8 +59,8 @@ Site hosted on Wordpress.com: ${_hostingWPCOM}
 Using ACF: ${_useACF}
 Using Auth: ${
           _auth.jwt_token
-            ? "jwt_token: " + _auth.jwt_token
-            : _auth.htaccess_user + " " + _auth.htaccess_pass
+            ? `jwt_token: ` + _auth.jwt_token
+            : _auth.htaccess_user + ` ` + _auth.htaccess_pass
         }
 Verbose output: ${_verbose}
 
