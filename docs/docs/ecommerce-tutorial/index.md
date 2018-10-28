@@ -233,7 +233,7 @@ export default Checkout
 
 You imported React, set a default price for your product, added some styles, and introduced some React functions. The `componentDidMount()` and `openStripeCheckout()` functions are most important for the Stripe functionality. The `componentDidMount()` function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to configure the Stripe Checkout handler. It looks like this:
 
-```js
+```js:title=src/components/checkout.js
  componentDidMount() {
    this.stripeHandler = StripeCheckout.configure({
      key: 'pk_test_kuhbxb0MMZsp6fj6aTNDnxUu',
@@ -346,7 +346,7 @@ You don’t need to change any code in the `checkout.js` (not to be confused wit
 
 The beginning of the file looks like this:
 
-```
+```js{1-3}:title=checkout.js
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports.handler = (event, context, callback) => {
@@ -361,61 +361,61 @@ The next line exports `handler`, a function that will handle your checkout logic
 
 The next snippet of code (shown below), pulls some of the information on the `event` object that this function receives and stores them in the variables `requestData`, `amount`, and `token`.
 
-```
+```js{6-11}:title=checkout.js
 // Pull out the amount and id for the charge from the POST
- console.log(event);
- const requestData = JSON.parse(event.body);
- console.log(requestData);
- const amount = requestData.amount;
- const token = requestData.token.id;
+console.log(event)
+const requestData = JSON.parse(event.body)
+console.log(requestData)
+const amount = requestData.amount
+const token = requestData.token.id
 ```
 
 The next 2 lines are to comply with web browser security standards. Because our Gatsby site will be at a different url than the function that we are going to upload to AWS, we have to include these headers in our response to say it’s okay to communicate with different URLs on the internet.
 
-```
- // Headers to prevent CORS issues
- const headers = {
-   "Access-Control-Allow-Origin": "*",
-   "Access-Control-Allow-Headers": "Content-Type"
- };
+```js{13-17}:title=checkout.js
+// Headers to prevent CORS issues
+const headers = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type",
+}
 ```
 
 The last section of code is where the actual Stripe charge is created, and then the information about whether that charge was successful or not is sent back as a response.
 
-```
+```js{19-50}:title=checkout.js
 return stripe.charges
-   .create({
-     // Create Stripe charge with token
-     amount,
-     source: token,
-     currency: "usd",
-     description: "Serverless test Stripe charge"
-   })
-   .then(charge => {
-     // Success response
-     console.log(charge);
-     const response = {
-       headers,
-       statusCode: 200,
-       body: JSON.stringify({
-         message: `Charge processed!`,
-         charge
-       })
-     };
-     callback(null, response);
-   })
-   .catch(err => {
-     // Error response
-     console.log(err);
-     const response = {
-       headers,
-       statusCode: 500,
-       body: JSON.stringify({
-         error: err.message
-       })
-     };
-     callback(null, response);
-   });
+  .create({
+    // Create Stripe charge with token
+    amount,
+    source: token,
+    currency: "usd",
+    description: "Serverless test Stripe charge",
+  })
+  .then(charge => {
+    // Success response
+    console.log(charge)
+    const response = {
+      headers,
+      statusCode: 200,
+      body: JSON.stringify({
+        message: `Charge processed!`,
+        charge,
+      }),
+    }
+    callback(null, response)
+  })
+  .catch(err => {
+    // Error response
+    console.log(err)
+    const response = {
+      headers,
+      statusCode: 500,
+      body: JSON.stringify({
+        error: err.message,
+      }),
+    }
+    callback(null, response)
+  })
 ```
 
 A few things happen with `stripe.charges.create()`: it takes an object as an argument that tells the amount to charge, the unique token made by stripe that hides all the credit card information from us, as well as other information like currency to provide more information about the transaction.
@@ -480,7 +480,7 @@ functions:
 
 Copy the URL after the “-” in the post endpoint section, and paste it into your ecommerce-gatsby-tutorial site in the src > components > checkout.js file where it says `AWS_LAMBDA_URL`
 
-```js{9}
+```js{9}:title=src/components/checkout.js
 openStripeCheckout(event) {
    event.preventDefault()
    this.setState({ disabled: true, buttonText: 'WAITING...' })
