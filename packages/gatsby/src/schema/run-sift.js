@@ -47,7 +47,7 @@ function awaitSiftField(fields, node, k) {
  * found. This will return a collection of size 1. Not a single
  * element
  * @returns Collection of results. Collection will be limited to size
- * if if `firstOnly` is true
+ * if `firstOnly` is true
  */
 module.exports = ({
   args,
