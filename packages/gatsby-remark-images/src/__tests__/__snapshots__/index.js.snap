@@ -117,3 +117,37 @@ exports[`it transforms images in markdown 1`] = `
   </a>
     "
 `;
+
+exports[`it uses tracedSVG placeholder when enabled 1`] = `
+"
+  <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+  
+  <span
+    class=\\"gatsby-resp-image-wrapper\\"
+    style=\\"position: relative; display: block;  max-width: 300px; margin-left: auto; margin-right: auto;\\"
+  >
+    <span
+      class=\\"gatsby-resp-image-background-image\\"
+      style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-size: cover; display: block; background-image: url(&quot;data:image/svg+xml,%3csvg 'MOCK SVG'%3c/svg%3e&quot;);\\"
+    >
+      <img
+        class=\\"gatsby-resp-image-image\\"
+        style=\\"width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;\\"
+        alt=\\"image\\"
+        title=\\"\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+      />
+    </span>
+  </span>
+  
+  </a>
+    "
+`;
