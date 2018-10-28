@@ -1,15 +1,23 @@
-const querystring = require(`querystring`)
-const axios = require(`axios`)
-const _ = require(`lodash`)
-const minimatch = require(`minimatch`)
-const colorized = require(`./output-color`)
-const httpExceptionHandler = require(`./http-exception-handler`)
-const requestInQueue = require(`./request-in-queue`)
+"use strict"
 
+const querystring = require(`querystring`)
+
+const axios = require(`axios`)
+
+const _ = require(`lodash`)
+
+const minimatch = require(`minimatch`)
+
+const colorized = require(`./output-color`)
+
+const httpExceptionHandler = require(`./http-exception-handler`)
+
+const requestInQueue = require(`./request-in-queue`)
 /**
  * High-level function to coordinate fetching data from a WordPress
  * site.
  */
+
 async function fetch({
   baseUrl,
   _verbose,
@@ -29,7 +37,9 @@ async function fetch({
   // Same entity types are exposed (excepted for medias and users which need auth)
   // but the data model contain slights variations.
   let url
+
   let _accessToken
+
   if (_hostingWPCOM) {
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
     _accessToken = await getWPCOMAccessToken(_auth)
@@ -39,7 +49,6 @@ async function fetch({
 
   if (_verbose) {
     console.time(`=END PLUGIN=====================================`)
-
     console.log(
       colorized.out(
         `
@@ -48,7 +57,11 @@ async function fetch({
 Site URL: ${_siteURL}
 Site hosted on Wordpress.com: ${_hostingWPCOM}
 Using ACF: ${_useACF}
-Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}
+Using Auth: ${
+          _auth.jwt_token
+            ? "jwt_token: " + _auth.jwt_token
+            : _auth.htaccess_user + " " + _auth.htaccess_pass
+        }
 Verbose output: ${_verbose}
 
 Mama Route URL: ${url}
@@ -56,19 +69,26 @@ Mama Route URL: ${url}
         colorized.color.Font.FgBlue
       )
     )
-  }
+  } // Call the main API Route to discover the all the routes exposed on this API.
 
-  // Call the main API Route to discover the all the routes exposed on this API.
   let allRoutes
+
   try {
     let options = {
       method: `get`,
       url: url,
     }
+
     if (_auth && (_auth.htaccess_user || _auth.htaccess_pass)) {
       options.auth = {
         username: _auth.htaccess_user,
         password: _auth.htaccess_pass,
+      }
+    }
+
+    if (_auth && _auth.jwt_token) {
+      options.headers = {
+        Authorization: `Bearer ${_auth.jwt_token}`,
       }
     }
 
@@ -143,15 +163,16 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
 
   return entities
 }
-
 /**
  * Gets wordpress.com access token so it can fetch private data like medias :/
  *
  * @returns
  */
+
 async function getWPCOMAccessToken(_auth) {
   let result
   const oauthUrl = `https://public-api.wordpress.com/oauth2/token`
+
   try {
     let options = {
       url: oauthUrl,
@@ -172,13 +193,13 @@ async function getWPCOMAccessToken(_auth) {
 
   return result
 }
-
 /**
  * Fetch the data from specified route url, using the auth provided.
  *
  * @param {any} route
  * @param {any} createNode
  */
+
 async function fetchData({
   route,
   _verbose,
@@ -198,7 +219,6 @@ async function fetchData({
       ),
       url
     )
-
     console.time(`Fetching the ${type} took`)
   }
 
@@ -214,34 +234,42 @@ async function fetchData({
     },
     1
   )
-
   let entities = []
+
   if (routeResponse) {
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse)) {
       routeResponse = routeResponse.map(r => {
         return {
           ...r,
-          ...(optionPageId ? { __acfOptionPageId: optionPageId } : {}),
+          ...(optionPageId
+            ? {
+                __acfOptionPageId: optionPageId,
+              }
+            : {}),
           __type: type,
         }
       })
       entities = entities.concat(routeResponse)
     } else {
       routeResponse.__type = type
+
       if (optionPageId) {
         routeResponse.__acfOptionPageId = optionPageId
       }
-      entities.push(routeResponse)
-    }
 
-    // WordPress exposes the menu items in meta links.
+      entities.push(routeResponse)
+    } // WordPress exposes the menu items in meta links.
+
     if (type == `wordpress__wp_api_menus_menus`) {
       for (let menu of routeResponse) {
         if (menu.meta && menu.meta.links && menu.meta.links.self) {
           entities = entities.concat(
             await fetchData({
-              route: { url: menu.meta.links.self, type: `${type}_items` },
+              route: {
+                url: menu.meta.links.self,
+                type: `${type}_items`,
+              },
               _verbose,
               _perPage,
               _hostingWPCOM,
@@ -251,14 +279,16 @@ async function fetchData({
           )
         }
       }
-    }
-    // TODO : Get the number of created nodes using the nodes in state.
+    } // TODO : Get the number of created nodes using the nodes in state.
+
     let length
+
     if (routeResponse && Array.isArray(routeResponse)) {
       length = routeResponse.length
     } else if (routeResponse && !Array.isArray(routeResponse)) {
       length = Object.keys(routeResponse).length
     }
+
     console.log(
       colorized.out(
         ` -> ${type} fetched : ${length}`,
@@ -273,7 +303,6 @@ async function fetchData({
 
   return entities
 }
-
 /**
  * Get the pages of data
  *
@@ -281,6 +310,7 @@ async function fetchData({
  * @param {number} [page=1]
  * @returns
  */
+
 async function getPages(
   {
     url,
@@ -304,29 +334,34 @@ async function getPages(
           page: page,
         })}`,
       }
+
       if (_hostingWPCOM) {
         o.headers = {
           Authorization: `Bearer ${_accessToken}`,
         }
+      } else if (_auth && _auth.jwt_token) {
+        o.headers = {
+          Authorization: `Bearer ${_auth.jwt_token}`,
+        }
       } else {
         o.auth = _auth
-          ? { username: _auth.htaccess_user, password: _auth.htaccess_pass }
+          ? {
+              username: _auth.htaccess_user,
+              password: _auth.htaccess_pass,
+            }
           : null
       }
-      return o
-    }
 
-    // Initial request gets the first page of data
+      return o
+    } // Initial request gets the first page of data
     // but also the total count of objects, used for
     // multiple concurrent requests (rather than waterfall)
+
     const options = getOptions(page)
     const { headers, data } = await axios(options)
+    result = result.concat(data) // Some resources have no paging, e.g. `/types`
 
-    result = result.concat(data)
-
-    // Some resources have no paging, e.g. `/types`
     const wpTotal = headers[`x-wp-total`]
-
     const total = parseInt(wpTotal)
     const totalPages = parseInt(headers[`x-wp-totalpages`])
 
@@ -338,9 +373,8 @@ async function getPages(
       console.log(`
 Total entities : ${total}
 Pages to be requested : ${totalPages}`)
-    }
+    } // We got page 1, now we want pages 2 through totalPages
 
-    // We got page 1, now we want pages 2 through totalPages
     const pageOptions = _.range(2, totalPages + 1).map(getPage =>
       getOptions(getPage)
     )
@@ -348,18 +382,15 @@ Pages to be requested : ${totalPages}`)
     const pages = await requestInQueue(pageOptions, {
       concurrent: _concurrentRequests,
     })
-
     const pageData = pages.map(page => page.data)
     pageData.forEach(list => {
       result = result.concat(list)
     })
-
     return result
   } catch (e) {
     return httpExceptionHandler(e)
   }
 }
-
 /**
  * Check a route against the whitelist or blacklist
  * to determine validity.
@@ -368,10 +399,10 @@ Pages to be requested : ${totalPages}`)
  * @param {Array} routeList
  * @returns {boolean}
  */
+
 function checkRouteList(routePath, routeList) {
   return routeList.some(route => minimatch(routePath, route))
 }
-
 /**
  * Extract valid routes and format its data.
  *
@@ -379,6 +410,7 @@ function checkRouteList(routePath, routeList) {
  * @param {any} url
  * @returns
  */
+
 function getValidRoutes({
   allRoutes,
   url,
@@ -394,12 +426,13 @@ function getValidRoutes({
   let validRoutes = []
 
   if (_useACF) {
-    let defaultAcfNamespace = `acf/v3`
-    // Grab ACF Version from namespaces
+    let defaultAcfNamespace = `acf/v3` // Grab ACF Version from namespaces
+
     const acfNamespace = allRoutes.data.namespaces.find(namespace =>
       namespace.includes(`acf`)
     )
     const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
+
     _includedRoutes.push(`/${acfRestNamespace}/**`)
 
     if (_verbose)
@@ -408,18 +441,18 @@ function getValidRoutes({
           `Detected ACF to REST namespace: ${acfRestNamespace}.`,
           colorized.color.Font.FgGreen
         )
-      )
-    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
+      ) // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
     // and pass ACF option page ID
     // ACF to REST v3 requires options/options
+
     let optionsRoute = acfRestNamespace.includes(`3`)
       ? `options/options/`
       : `options/`
     validRoutes.push({
       url: `${url}/${acfRestNamespace}/${optionsRoute}`,
       type: `${typePrefix}acf_options`,
-    })
-    // ACF to REST V2 does not allow ACF Option Page ID specification
+    }) // ACF to REST V2 does not allow ACF Option Page ID specification
+
     if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes(`3`)) {
       _acfOptionPageIds.forEach(function(acfOptionPageId) {
         validRoutes.push({
@@ -428,6 +461,7 @@ function getValidRoutes({
           optionPageId: acfOptionPageId,
         })
       })
+
       if (_verbose)
         console.log(
           colorized.out(
@@ -436,6 +470,7 @@ function getValidRoutes({
           )
         )
     }
+
     if (_acfOptionPageIds.length > 0 && _hostingWPCOM) {
       // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
       if (_verbose)
@@ -450,13 +485,11 @@ function getValidRoutes({
 
   for (let key of Object.keys(allRoutes.data.routes)) {
     if (_verbose) console.log(`Route discovered :`, key)
-    let route = allRoutes.data.routes[key]
+    let route = allRoutes.data.routes[key] // A valid route exposes its _links (for now)
 
-    // A valid route exposes its _links (for now)
     if (route._links) {
-      const entityType = getRawEntityType(route)
+      const entityType = getRawEntityType(route) // Excluding the "technical" API Routes
 
-      // Excluding the "technical" API Routes
       const excludedTypes = [
         `/v2/**`,
         `/v3/**`,
@@ -465,15 +498,14 @@ function getValidRoutes({
         `**/embed`,
         `**/proxy`,
         `/`,
+        `/jwt-auth/**`,
       ]
-
       const routePath = getRoutePath(url, route._links.self)
       const whiteList = _includedRoutes
-      const blackList = [...excludedTypes, ..._excludedRoutes]
+      const blackList = [...excludedTypes, ..._excludedRoutes] // Check whitelist first
 
-      // Check whitelist first
-      const inWhiteList = checkRouteList(routePath, whiteList)
-      // Then blacklist
+      const inWhiteList = checkRouteList(routePath, whiteList) // Then blacklist
+
       const inBlackList = checkRouteList(routePath, blackList)
       const validRoute = inWhiteList && !inBlackList
 
@@ -485,28 +517,32 @@ function getValidRoutes({
               colorized.color.Font.FgGreen
             )
           )
-
         const manufacturer = getManufacturer(route)
-
         let rawType = ``
+
         if (manufacturer === `wp`) {
           rawType = `${typePrefix}${entityType}`
         }
 
         let validType
+
         switch (rawType) {
           case `${typePrefix}posts`:
             validType = refactoredEntityTypes.post
             break
+
           case `${typePrefix}pages`:
             validType = refactoredEntityTypes.page
             break
+
           case `${typePrefix}tags`:
             validType = refactoredEntityTypes.tag
             break
+
           case `${typePrefix}categories`:
             validType = refactoredEntityTypes.category
             break
+
           default:
             validType = `${typePrefix}${manufacturer.replace(
               /-/g,
@@ -514,7 +550,11 @@ function getValidRoutes({
             )}_${entityType.replace(/-/g, `_`)}`
             break
         }
-        validRoutes.push({ url: route._links.self, type: validType })
+
+        validRoutes.push({
+          url: route._links.self,
+          type: validType,
+        })
       } else {
         if (_verbose) {
           const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
@@ -539,31 +579,31 @@ function getValidRoutes({
 
   return validRoutes
 }
-
 /**
  * Extract the raw entity type from route
  *
  * @param {any} route
  */
+
 const getRawEntityType = route =>
   route._links.self.substring(
     route._links.self.lastIndexOf(`/`) + 1,
     route._links.self.length
   )
-
 /**
  * Extract the route path for an endpoint
  *
  * @param {any} baseUrl The base site URL that should be removed
  * @param {any} fullUrl The full URL to retrieve the route path from
  */
-const getRoutePath = (baseUrl, fullUrl) => fullUrl.replace(baseUrl, ``)
 
+const getRoutePath = (baseUrl, fullUrl) => fullUrl.replace(baseUrl, ``)
 /**
  * Extract the route manufacturer
  *
  * @param {any} route
  */
+
 const getManufacturer = route =>
   route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
 

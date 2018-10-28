@@ -72,9 +72,11 @@ plugins: [
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.
+        // You can also specify a jwt_token to authenticate. This assumes the use of the plugin "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
         htaccess_user: "your-htaccess-username",
         htaccess_pass: "your-htaccess-password",
         htaccess_sendImmediately: false,
+        jwt_token: "your-jwt-token",
 
         // If hostingWPCOM is true then you will need to communicate with wordpress.com API
         // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
