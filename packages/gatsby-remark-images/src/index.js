@@ -172,7 +172,7 @@ module.exports = (
 
     // if options.tracedSVG is enabled generate the traced SVG and use that as the placeholder image
     if (options.tracedSVG) {
-      let args = typeof options.tracedSVG === "object" ? options.tracedSVG : {}
+      let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
 
       const argsEntries = Object.entries(args)
       if (argsEntries) {
