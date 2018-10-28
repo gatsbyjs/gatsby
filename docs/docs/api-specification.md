@@ -83,7 +83,7 @@ See
 ## Extension APIs
 
 Gatsby has multiple processes. The most prominent is the "bootstrap" process. It
-has several subprocesses. One tricky part to their design is that they run both
+has several sub processes. One tricky part to their design is that they run both
 once during the initial bootstrap but also stay alive during development to
 continue to respond to changes. This is what drives hot reloading that all
 Gatsby data is "alive" and reacts to changes in the environment.
