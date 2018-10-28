@@ -24,13 +24,13 @@ cd my-awesome-gatsby-project
 getstorybook
 ```
 
-The `getstorybook` command will then bootstrap the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, we need to update the default Storybook configuration a bit so that we don't get errors when trying to use Gatsby specific components inside of the stories.
+The `getstorybook` command will then bootstrap the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
 
 To update your Storybook config open `.storybook/config.js` and add the following before the `configure` method at the bottom of the file.
 
 ```js
 // Gatsby's Link overrides:
-// Gatsby defines a global called ___loader to prevent its method calls from creating console errors we override it here
+// Gatsby defines a global called ___loader to prevent its method calls from creating console errors you override it here
 global.___loader = {
   enqueue: () => {},
   hovering: () => {},
@@ -45,7 +45,7 @@ window.___navigate = pathname => {
 }
 ```
 
-Next make some adjustments to Storybook's default `webpack` configuration so we can transpile Gatsby source files, and to ensure we have the necessary `babel` plugins to transpile Gatsby components.
+Next make some adjustments to Storybook's default `webpack` configuration so you can transpile Gatsby source files, and to ensure you have the necessary `babel` plugins to transpile Gatsby components.
 
 Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following in that file.
 
