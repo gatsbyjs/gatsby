@@ -8,7 +8,7 @@ jest.mock(`gatsby-plugin-sharp`, () => {
         src: file.absolutePath,
         srcSet: `${file.absolutePath}, ${file.absolutePath}`,
         sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
-        base64: `url('data:image/png;base64, iVBORw)`,
+        base64: `data:image/png;base64,iVBORw`,
       })
     },
   }
