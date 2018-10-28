@@ -154,6 +154,10 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
 
+### Earn Free Swag 👕
+
+Once you’ve had your first pull request merged into Gatsby, you can come [here](https://www.gatsbyjs.org/docs/contributor-swag/) to claim free swag.
+
 ## 💜 Thanks to Our Contributors and Sponsors
 
 Thanks to our many contributors and sponsors as well as the companies sponsoring
