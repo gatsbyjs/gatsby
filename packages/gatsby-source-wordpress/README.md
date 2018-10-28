@@ -11,21 +11,19 @@ An example site for this plugin is available.
 
 ## Features
 
-- Pulls data from self-hosted WordPress sites, hosted on wordpress.com or
-  wordpress.org
-- Should work with any number of article and post (tested on a site with 900
-  posts)
+- Pulls data from self-hosted WordPress sites, or sites hosted on [https://wordpress.com](wordpress.com)
+- Should work with any number of posts (tested on a site with 900 posts)
 - Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
 - Easily create responsive images in Gatsby from WordPress images. See [image
   processing](#image-processing) section.
 
 ## WordPress and custom entities
 
-This module currently pulls from WordPress the following entities:
+This module currently pulls the following entities from WordPress:
 
 - [x] All entities are supported (posts, pages, tags, categories, media, types,
       users, statuses, taxonomies, site metadata, ...)
-- [x] Any new entity should be pulled as long the IDs are correct.
+- [x] Any new entity should be pulled as long as the IDs are correct.
 - [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
 - [x] Custom post types (any type you could have declared using WordPress'
       `functions.php`)
