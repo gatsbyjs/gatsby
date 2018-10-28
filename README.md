@@ -104,6 +104,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     ```sh
     cd my-blazing-fast-site/
+    yarn install or npm install
     gatsby develop
     ```
 
