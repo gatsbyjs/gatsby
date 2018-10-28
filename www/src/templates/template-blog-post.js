@@ -12,10 +12,14 @@ import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
+import Chart from "../components/chart"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
-  components: { "hubspot-form": HubspotForm },
+  components: {
+    "hubspot-form": HubspotForm,
+    "date-chart": Chart,
+  },
 }).Compiler
 
 class BlogPostTemplate extends React.Component {
@@ -86,12 +90,12 @@ class BlogPostTemplate extends React.Component {
                 }
               />
 
-              <meta name="og:description" content={post.excerpt} />
+              <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
-              <meta name="og:title" content={post.frontmatter.title} />
+              <meta property="og:title" content={post.frontmatter.title} />
               {post.frontmatter.image && (
                 <meta
-                  name="og:image"
+                  property="og:image"
                   content={`https://gatsbyjs.org${
                     post.frontmatter.image.childImageSharp.resize.src
                   }`}
@@ -105,7 +109,7 @@ class BlogPostTemplate extends React.Component {
                   }`}
                 />
               )}
-              <meta name="og:type" content="article" />
+              <meta property="og:type" content="article" />
               <meta
                 name="article:author"
                 content={post.frontmatter.author.id}

@@ -11,21 +11,19 @@ An example site for this plugin is available.
 
 ## Features
 
-- Pulls data from self-hosted WordPress sites, hosted on wordpress.com or
-  wordpress.org
-- Should work with any number of article and post (tested on a site with 900
-  posts)
+- Pulls data from self-hosted WordPress sites, or sites hosted on [https://wordpress.com](wordpress.com)
+- Should work with any number of posts (tested on a site with 900 posts)
 - Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
 - Easily create responsive images in Gatsby from WordPress images. See [image
   processing](#image-processing) section.
 
 ## WordPress and custom entities
 
-This module currently pulls from WordPress the following entities:
+This module currently pulls the following entities from WordPress:
 
 - [x] All entities are supported (posts, pages, tags, categories, media, types,
-      users, statuses, taxonomies, ...)
-- [x] Any new entity should be pulled as long the IDs are correct.
+      users, statuses, taxonomies, site metadata, ...)
+- [x] Any new entity should be pulled as long as the IDs are correct.
 - [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
 - [x] Custom post types (any type you could have declared using WordPress'
       `functions.php`)
@@ -99,11 +97,26 @@ plugins: [
       },
       // Set how many simultaneous requests are sent at once.
       concurrentRequests: 10,
-      // Exclude specific routes using glob parameters
+      // Set WP REST API routes whitelists
+      // and blacklists using glob patterns.
+      // Defaults to whitelist the routes shown
+      // in the example below.
       // See: https://github.com/isaacs/minimatch
-      // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
+      // Example:  `["/*/*/comments", "/yoast/**"]`
+      // ` will either include or exclude routes ending in `comments` and
       // all routes that begin with `yoast` from fetch.
-      excludedRoutes: ["/*/*/comments", "/yoast/**"],
+      // Whitelisted routes using glob patterns
+      includedRoutes: [
+        "/*/*/categories",
+        "/*/*/posts",
+        "/*/*/pages",
+        "/*/*/media",
+        "/*/*/tags",
+        "/*/*/taxonomies",
+        "/*/*/users",
+      ],
+      // Blacklisted routes using glob patterns
+      excludedRoutes: ["/*/*/posts/1456"],
       // use a custom normalizer which is applied after the built-in ones.
       normalizer: function({ entities }) {
         return entities
@@ -163,6 +176,38 @@ will behave like a self-hosted instance.
 Before you run your first query, ensure the WordPress JSON API is working correctly by visiting /wp-json at your WordPress install. The result should be similar to the [WordPress demo API](https://demo.wp-api.org/wp-json/).
 
 If you see a page on your site, rather than the JSON output, check if your permalink settings are set to “Plain”. After changing this to any of the other settings, the JSON API should be accessible.
+
+## Fetching Data: WordPress REST API Route Selection
+
+By default `gatsby-source-wordpress` plugin will fetch data from all endpoints provided by introspection `/wp-json` response. To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/). You can inspect discovered routes by using `verboseOutput: true` configuration option.
+
+If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
+
+### Example:
+
+```javascript
+includedRoutes: [
+  "/*/*/posts",
+  "/*/*/pages",
+  "/*/*/media",
+  "/*/*/categories",
+  "/*/*/tags",
+  "/*/*/taxonomies",
+  "/*/*/users",
+],
+```
+
+Which would include most commonly used endpoints:
+
+- Posts
+- Pages
+- Media
+- Categories
+- Tags
+- Taxonomies
+- Users
+
+and would skip pulling Comments.
 
 ## How to query
 

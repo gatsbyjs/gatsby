@@ -65,7 +65,7 @@ Plugins can be broken up into three main categories: **functional** plugins,
 
 Functional plugins either implement some functionality (e.g. offline support,
 generating a sitemap, etc.) _or_ they extend Gatsby's webpack configuration
-adding support for typescript, sass, etc.
+adding support for TypeScript, Sass, etc.
 
 For this particular blog post, we want a single page app-like feel (without page
 reloads), as well as the ability to dynamically change the `title` tag within
@@ -281,7 +281,7 @@ Whoa, neat! This React component will be rendered to a static HTML string (for
 each route/blog post we define), which will serve as the basis of our
 routing/navigation for our blog.
 
-At this point, there is a reasonable level of confusion and "magic" occuring,
+At this point, there is a reasonable level of confusion and "magic" occurring,
 particularly with the props injection. What is `markdownRemark`? Where is this
 `data` prop injected from? All good questions, so let's answer them by writing a
 GraphQL query to seed our `<Template />` component with content!
@@ -331,7 +331,7 @@ export const pageQuery = graphql`
 `
 ```
 
-If you're not familar with GraphQL, this may seem slightly confusing, but we can
+If you're not familiar with GraphQL, this may seem slightly confusing, but we can
 break down what's going down here piece by piece.
 
 _Note: To learn more about GraphQL, consider this [excellent

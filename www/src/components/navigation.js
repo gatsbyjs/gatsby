@@ -71,7 +71,7 @@ const Navigation = ({ pathname }) => {
           : presets.bannerHeight,
         zIndex: 2,
         "&:after": {
-          content: ` `,
+          content: `''`,
           position: `absolute`,
           bottom: 0,
           left: 0,
@@ -84,7 +84,7 @@ const Navigation = ({ pathname }) => {
         // use this to test if the header items are properly aligned to the logo
         // wordmark
         // "&:before": {
-        //   content: ` `,
+        //   content: `''`,
         //   position: `absolute`,
         //   bottom: `1.25rem`,
         //   left: 0,

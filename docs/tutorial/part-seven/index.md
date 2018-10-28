@@ -289,7 +289,7 @@ Visit one of them and you see:
 Which is a bit boring and not what you want. Now you can pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
-```jsx{5-6,9-12,15-26}:title=src/templates/blog-post.js
+```jsx{2,5-6,9-12,15-26}:title=src/templates/blog-post.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -423,5 +423,5 @@ Now that you've built a Gatsby site, where do you go next?
 - Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet, and include the hashtag #gatsbytutorial :)
 - You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
 - Explore more [plugins](/docs/plugins/)
-- See what [other people are building with Gatsby](https://github.com/gatsbyjs/gatsby/#showcase)
+- See what [other people are building with Gatsby](/showcase/)
 - Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/) or [GraphQL](/docs/graphql-reference/)

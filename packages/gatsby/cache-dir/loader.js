@@ -5,7 +5,6 @@ import prefetchHelper from "./prefetch"
 
 const preferDefault = m => (m && m.default) || m
 
-let prefetcher
 let devGetPageData
 let inInitialRender = true
 let hasFetched = Object.create(null)
@@ -147,22 +146,30 @@ const handleResourceLoadError = (path, message) => {
   }
 }
 
+const onPrefetchPathname = pathname => {
+  if (!prefetchTriggered[pathname]) {
+    apiRunner(`onPrefetchPathname`, { pathname: pathname })
+    prefetchTriggered[pathname] = true
+  }
+}
+
+const onPostPrefetchPathname = pathname => {
+  if (!prefetchCompleted[pathname]) {
+    apiRunner(`onPostPrefetchPathname`, { pathname: pathname })
+    prefetchCompleted[pathname] = true
+  }
+}
+
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
 // we load all resources for likely-to-be-visited paths.
 // let pathArray = []
 // let pathCount = {}
 
-let resourcesCount = Object.create(null)
-const sortResourcesByCount = (a, b) => {
-  if (resourcesCount[a] > resourcesCount[b]) return 1
-  else if (resourcesCount[a] < resourcesCount[b]) return -1
-  else return 0
-}
-
 let findPage
 let pathScriptsCache = {}
 let prefetchTriggered = {}
+let prefetchCompleted = {}
 let disableCorePrefetching = false
 
 const queue = {
@@ -192,12 +199,7 @@ const queue = {
 
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
-    if (!prefetchTriggered[path]) {
-      apiRunner(`onPrefetchPathname`, {
-        pathname: path,
-      })
-      prefetchTriggered[path] = true
-    }
+    onPrefetchPathname(path)
 
     // If a plugin has disabled core prefetching, stop now.
     if (disableCorePrefetching.some(a => a)) {
@@ -235,6 +237,9 @@ const queue = {
       prefetchResource(page.jsonName)
       prefetchResource(page.componentChunkName)
     }
+
+    // Tell plugins the path has been successfully prefetched
+    onPostPrefetchPathname(path)
 
     return true
   },
@@ -278,7 +283,8 @@ const queue = {
           path,
           `Previously detected load failure for "${path}"`
         )
-        return reject()
+        reject()
+        return
       }
       const page = findPage(path)
 
@@ -291,9 +297,10 @@ const queue = {
       ) {
         // If page wasn't found check and we didn't fetch resources map for
         // all pages, wait for fetch to complete and try to get resources again
-        return fetchPageResourceMap().then(() =>
+        fetchPageResourceMap().then(() =>
           resolve(queue.getResourcesForPathname(path))
         )
+        return
       }
 
       if (!page) {
@@ -301,10 +308,12 @@ const queue = {
 
         // Preload the custom 404 page
         if (path !== `/404.html`) {
-          return resolve(queue.getResourcesForPathname(`/404.html`))
+          resolve(queue.getResourcesForPathname(`/404.html`))
+          return
         }
 
-        return resolve()
+        resolve()
+        return
       }
 
       // Use the path from the page so the pathScriptsCache uses
@@ -317,7 +326,8 @@ const queue = {
           page,
           pageResources: pathScriptsCache[path],
         })
-        return resolve(pathScriptsCache[path])
+        resolve(pathScriptsCache[path])
+        return
       }
 
       // Nope, we need to load resource(s)
@@ -375,6 +385,9 @@ const queue = {
           }
         })
       }
+
+      // Tell plugins the path has been successfully prefetched
+      onPostPrefetchPathname(path)
     }),
 }
 

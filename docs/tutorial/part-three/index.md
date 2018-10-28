@@ -25,7 +25,7 @@ gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-
 cd tutorial-part-three
 ```
 
-Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see Part Two of the tutorials. For
+Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see [Part Two](/tutorial/part-two/) of the tutorials. For
 the Typography.js theme, try the "Fairy Gates" typography theme this time:
 
 ```shell
@@ -174,7 +174,7 @@ If you go to any of your three pages you'll see the same title added e.g. the
 
 Add navigation links to each of your three pages:
 
-```jsx{2-10,13-23}:title=src/components/layout.js
+```jsx{2-9,12-21}:title=src/components/layout.js
 import React from "react"
 import { Link } from "gatsby"
 

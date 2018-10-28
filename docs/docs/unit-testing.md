@@ -127,7 +127,7 @@ global.___loader = {
 }
 ```
 
-Finally it's a good idea to mock the gatsby module itself. This may not be
+Finally it's a good idea to mock the `gatsby` module itself. This may not be
 needed at first, but will make things a lot easier if you want to test
 components that use `Link` or GraphQL.
 
@@ -233,6 +233,10 @@ Then edit the Jest config in your `package.json` to match this:
         "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
     },
     "testRegex": "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
+    "moduleNameMapper": {
+      ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
+      ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    },
     "moduleFileExtensions": [
         "ts",
         "tsx",

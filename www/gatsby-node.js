@@ -14,7 +14,10 @@ require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-if (process.env.NODE_ENV === `production` && !process.env.GITHUB_API_TOKEN) {
+if (
+  process.env.gatsby_executing_command === `build` &&
+  !process.env.GITHUB_API_TOKEN
+) {
   throw new Error(
     `A GitHub token is required to build the site. Check the README.`
   )
@@ -96,6 +99,24 @@ exports.createPages = ({ graphql, actions }) => {
   createRedirect({
     fromPath: `/docs/bound-action-creators`,
     toPath: `/docs/actions`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/blog/2019-10-03-gatsby-perf`,
+    toPath: `/blog/2018-10-03-gatsby-perf`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/add-a-service-worker`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/add-offline-support`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
     isPermanent: true,
   })
 
@@ -378,7 +399,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
+exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
@@ -467,7 +488,7 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
         },
       })
     } else {
-      Promise.all([
+      return Promise.all([
         getpkgjson(node.repo),
         githubApiClient.request(`
             query {
@@ -540,16 +561,10 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           })
         })
         .catch(err => {
-          console.log(
-            `\nError getting repo data. Your GitHub token may be invalid`
+          reporter.panicOnBuild(
+            `Error getting repo data for starter "${repoStub}":\n
+            ${err.message}`
           )
-          return createNodeField({
-            node,
-            name: `starterShowcase`,
-            value: {
-              ...defaultFields,
-            },
-          })
         })
     }
   }
