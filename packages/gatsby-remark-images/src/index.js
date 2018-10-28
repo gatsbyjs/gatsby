@@ -174,11 +174,12 @@ module.exports = (
     if (options.tracedSVG) {
       let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
 
-      const argsEntries = Object.entries(args)
-      if (argsEntries) {
+      const argsKeys = Object.keys(args)
+      if (argsKeys) {
         // Translate Potrace constants (e.g. TURNPOLICY_LEFT, COLOR_AUTO) to the values Potrace expects
         const { Potrace } = require(`potrace`)
-        args = argsEntries.reduce((result, [key, value]) => {
+        args = argsKeys.reduce((result, key) => {
+          const value = args[key]
           result[key] = Potrace.hasOwnProperty(value) ? Potrace[value] : value
           return result
         }, {})
