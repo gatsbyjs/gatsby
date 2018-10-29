@@ -35,7 +35,7 @@ const Button = ({
       ...(secondary && { ...buttonStyles.secondary }),
       ...(large && { ...buttonStyles.large }),
       ...(small && { ...buttonStyles.small }),
-      ...(tiny && { ...buttonStyles.tiny }),
+      ...(tiny && buttonStyles.tiny),
     },
   }
 
