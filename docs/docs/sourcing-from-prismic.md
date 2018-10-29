@@ -6,9 +6,9 @@ In this guide, we'll walk through setting up a site with content management usin
 
 Prismic is a hosted, proprietary Headless CMS (SaaS) with a web app for creating and publishing content. It's suitable for marketers, editors and developers as it has both a "Writing Room" and a fully-fledged API & content backend. Besides the usual advantages of a SaaS CMS (hosting, security, updates) Prismic offers features like: custom type builder, scheduling and content versioning and multi-language support.
 
-Moreover their _Content Slices_ feature enables you to build dynamic layouts by defining reusable custom components and placing them on your landing page, case studies or in your blog posts. Fortunately you can use those in Gatsby to realize features like PrismJS highlighting or using `gatsby-image`. The linked [starter](https://github.com/LekoArts/gatsby-starter-prismic) shows you how to do just that!
+Moreover their [Content Slices](https://prismic.io/feature/dynamic-layout-content-components) feature enables you to build dynamic layouts by defining reusable custom components and placing them on your landing page, case studies or in your blog posts. Fortunately you can use those in Gatsby to realize features like PrismJS highlighting or using `gatsby-image`. The linked [starter](https://github.com/LekoArts/gatsby-starter-prismic) shows you how to do just that!
 
-The written instructions get accompanied by uncommented YouTube videos which will show the described steps in action. You can also watch the full [video playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
+In addition to the written instructions this guide also includes videos for the more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
 _Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, we highly recommend to check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
 
@@ -28,12 +28,13 @@ In order for Gatsby to grab all information from Prismic you'll need to generate
 
 ### Gatsby
 
-First, open a new terminal window and run the following to create a new site. This will create a new directory called `prismic-tutorial` that contains the starters site, but you can change "prismic-tutorial" in the command below to be whatever you like.
+First, open a new terminal window and run the following command to create a new site:
 
 ```shell
 gatsby new prismic-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
+This will create a new directory called `prismic-tutorial` that contains the starters site, but you can change `prismic-tutorial` in the command above to whatever name you prefer!
 Now move into the newly created directory and install the Gatsby plugin for Prismic:
 
 ```shell
@@ -78,7 +79,7 @@ module.exports = {
 }
 ```
 
-The best way to create your queries now is to first develop them in *GraphiQL* at `http://localhost:8000/___graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
+The best way to create your queries now is to first develop them in _GraphiQL_ at `http://localhost:8000/___graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
 
 ![Prismic Index Query](./images/prismic-index-query.jpg)
 
@@ -211,6 +212,14 @@ export const pageQuery = graphql`
 
 ## Wrapping Up
 
-This was a very basic example meant to help you understand how Prismic works with Gatsby. As mentioned in the beginning of this guide, if you got stuck, you can compare your code to the [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic) which is the project set up in the videos. A working example created by following this guide is available in the [commit history](https://github.com/LeKoArts/gatsby-starter-prismic/tree/4aa5d52e79a0b4d90f0a671c24eb8289eb15a42b) of the aforementioned starter. More advanced usages of Prismic in Gatsby would, e.g. be [Slices](https://intercom.help/prismicio/content-modeling-and-custom-types/field-reference/slices) and [Labels](https://intercom.help/prismicio/content-modeling-and-custom-types/structure-your-content/add-custom-styles-to-rich-text).
+This was a very basic example meant to help you understand how Prismic works with Gatsby. With your new found knowledge of Prismic (and perhaps even Gatsby) you're now able to:
+
+- Creating a Prismic repository and setting it up together with the Gatsby plugin
+- Querying data from Prismic and using it to programmatically create blogpost pages
+- Using Prismic together with Netlify
+- Adding relationships between posts, e.g. with categories
+- Querying data from Prismic for single pages
+
+As mentioned in the beginning of this guide, if you got stuck, you can compare your code to the [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic) which is the project set up in the videos. A working example created by following this guide is available in the [commit history](https://github.com/LeKoArts/gatsby-starter-prismic/tree/4aa5d52e79a0b4d90f0a671c24eb8289eb15a42b) of the aforementioned starter. More advanced usages of Prismic in Gatsby would, e.g. be [Slices](https://intercom.help/prismicio/content-modeling-and-custom-types/field-reference/slices) and [Labels](https://intercom.help/prismicio/content-modeling-and-custom-types/structure-your-content/add-custom-styles-to-rich-text).
 
 <!-- Links to more advanced tutorials will go here -->
