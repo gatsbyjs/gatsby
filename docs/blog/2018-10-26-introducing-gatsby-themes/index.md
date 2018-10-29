@@ -51,7 +51,7 @@ similarly with themes.
 ### Truly Reusable Themes in Gatsby
 
 If a single `gatsby-config.js` encodes the functionality of a whole Gatsby
-site then if we can compose the gatsby-config data structure together
+site, then if we can [compose](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-function-composition-20dfb109a1a0) the `gatsby-config.js` data structure together
 we have the base for themes. We can encode portions of our
 gatsby-config as themes and re-use them across sites.
 
