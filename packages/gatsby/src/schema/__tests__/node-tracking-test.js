@@ -40,7 +40,7 @@ describe(`Track root nodes`, () => {
   `
   require(`fs`).__setMockFiles(MOCK_FILE_INFO)
 
-  const { getNode, getNodes } = require(`../../redux`)
+  const { getNode, getNodes } = require(`../../db/nodes`)
   const { findRootNodeAncestor } = require(`../node-tracking`)
   const runSift = require(`../run-sift`)
   const buildNodeTypes = require(`../build-node-types`)

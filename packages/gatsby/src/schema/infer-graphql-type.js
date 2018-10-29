@@ -12,7 +12,8 @@ const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { oneLine } = require(`common-tags`)
 
-const { store, getNode, getNodes } = require(`../redux`)
+const { store } = require(`../redux`)
+const { getNode, getNodes, getNodesByType } = require(`../db/nodes`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
@@ -154,9 +155,8 @@ function inferFromMapping(
 
   const findNode = (fieldValue, path) => {
     const linkedNode = _.find(
-      getNodes(),
-      n =>
-        n.internal.type === linkedType && _.get(n, linkedField) === fieldValue
+      getNodesByType(linkedType),
+      n => _.get(n, linkedField) === fieldValue
     )
     if (linkedNode) {
       createPageDependency({ path, nodeId: linkedNode.id })
@@ -257,7 +257,10 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     let type
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
-      const typeName = `Union_${key}_${fields.map(f => f.name).sort().join(`__`)}`
+      const typeName = `Union_${key}_${fields
+        .map(f => f.name)
+        .sort()
+        .join(`__`)}`
 
       if (unionTypes.has(typeName)) {
         type = unionTypes.get(typeName)

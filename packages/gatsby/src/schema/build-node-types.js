@@ -17,7 +17,12 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
-const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
+const {
+  getNodes,
+  getNodesByType,
+  getNode,
+  getNodeAndSavePathDependency,
+} = require(`../db/nodes`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
@@ -196,10 +201,7 @@ module.exports = async ({ parentSpan }) => {
           ) {
             latestNodes = nodesCache.get(typeName)
           } else {
-            latestNodes = _.filter(
-              getNodes(),
-              n => n.internal.type === typeName
-            )
+            latestNodes = getNodesByType(typeName)
             nodesCache.set(typeName, latestNodes)
           }
           if (!_.isObject(args)) {
