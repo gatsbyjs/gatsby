@@ -29,7 +29,7 @@ const EcosystemBoard = ({
       <EcosystemSection
         title="Plugin Library"
         description="With 429 plugins, lorem ipsum sunt we need some proper copy here pulling in data from your favorite source is only a few mouseclicks away."
-        subTitle="Fetured Plugins"
+        subTitle="Featured Plugins"
         icon={PluginsIcon}
         links={[
           { label: "Browse Library", to: "/plugins/" },
@@ -45,7 +45,7 @@ const EcosystemBoard = ({
       <EcosystemSection
         title="Starters"
         description="Starters are boilerplate Gatsby sites maintained by the community which give you a headstart for your Gatsby project."
-        subTitle="Fetured Starters"
+        subTitle="Featured Starters"
         icon={StartersIcon}
         links={[
           { label: "Browse Starters", to: "/starters/" },
