@@ -133,7 +133,7 @@ const withThemePath = relativePath => {
 }
 ```
 
-Then in our theme's createPage call, we simply use the helper to let
+Then in our theme's `createPage` call, we simply use the helper to let
 the user optionally override the default component.
 
 ```
