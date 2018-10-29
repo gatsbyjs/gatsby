@@ -15,6 +15,8 @@ const BannerContainer = styled("div")`
   position: fixed;
   width: 100%;
   z-index: 3;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 `
 
 const InnerContainer = styled("div")`
