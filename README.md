@@ -154,6 +154,12 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
 
+### Why Gatsby?
+
+GraphQL is used by Gatsby to build it's data layer in a specific way. Data is collected from JSON, Markdown, any third party API's, etc. and an internal GraphQL server of this data is created at build time.
+Gatsby has got a well documented data source plugins.
+Gatsby definitely lives up to the hyped expectations.
+
 ## 💜 Thanks to Our Contributors and Sponsors
 
 Thanks to our many contributors and sponsors as well as the companies sponsoring
