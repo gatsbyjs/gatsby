@@ -57,7 +57,7 @@ gatsby-config as themes and re-use them across sites.
 
 ## Why Themes?
 
-Defining themes as the composition of Gatsby sites allows us to start
+Defining themes as the base composition unit of Gatsby sites allows us to start
 solving a variety of use cases. For example, when a site gets built as
 part of a wider product offering it's often the case that one team
 will build out a set of functionality, including branding elements,
