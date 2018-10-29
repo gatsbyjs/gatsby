@@ -64,7 +64,7 @@ will build out a suite of functionality, including branding elements,
 and the other teams will mostly consume this functionality. Themes
 allow us to distribute this functionality as an npm package and allow
 the customization of various branding elements through our
-gatsby-config.
+`gatsby-config.js`.
 
 # Mechanics of Theming
 
