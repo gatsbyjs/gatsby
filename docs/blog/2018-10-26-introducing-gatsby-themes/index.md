@@ -12,7 +12,7 @@ and any number of content management systems. We can process images,
 add support for our favorite styling technique, transform markdown,
 and just about anything else you can imagine.
 
-At it's core, a gatsby site is a combination of functionality centered
+At its core, a Gatsby site is a combination of functionality centered
 around a single config file, gatsby-config.js. This config file
 controls an assortment of site metadata, data type mapping, and most
 importantly plugins. Plugins contain large amounts of customizable
