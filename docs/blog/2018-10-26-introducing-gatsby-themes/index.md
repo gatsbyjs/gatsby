@@ -19,7 +19,7 @@ importantly, plugins. Plugins contain large amounts of customizable
 functionality for turning markdown into pages, processing components
 into documentation, and even processing images.
 
-# Scaling Gatsby
+## Scaling Gatsby
 
 Creating one Gatsby site is great but we had to start from scratch and
 make all the decisions ourselves. Those decisions are encoded into our
