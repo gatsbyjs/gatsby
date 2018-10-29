@@ -23,7 +23,7 @@ into documentation, and even processing images.
 
 Creating one Gatsby site is great but we had to start from scratch and
 make all the decisions ourselves. Those decisions are encoded into our
-gatsby-config. The next time we have to create a similar site for a
+`gatsby-config`. The next time we have to create a similar site for a
 new product we have to start from scratch and remake all of the
 decisions we made for our first site. Wouldn't it be great if we could
 re-use our gatsby-config across projects? That's where starters come
