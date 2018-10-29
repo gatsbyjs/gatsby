@@ -103,7 +103,7 @@ files as plugin options. This allows themes to override any settings
 inherited from the theme's own plugin declarations or apply gatsby
 lifecycle hooks such as on-create-page.
 
-# Next Steps
+## Next Steps
 
 ## Sub Themes and Overriding
 
