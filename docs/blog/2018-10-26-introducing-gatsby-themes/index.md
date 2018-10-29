@@ -55,7 +55,7 @@ site, then if we can [compose](https://medium.com/javascript-scene/master-the-ja
 we have the base for themes. We can encode portions of our
 gatsby-config as themes and re-use them across sites.
 
-# Why Themes?
+## Why Themes?
 
 Defining themes as the composition of Gatsby sites allows us to start
 solving a variety of use cases. For example, when a site gets built as
