@@ -110,7 +110,7 @@ lifecycle hooks such as on-create-page.
 This is just the first step and it enables us to experiment with
 further improvements in userland before merging them into
 core. Sub-theming, for example, is a critical part of a theming
-ecosystem that is currently missing from core. Overriding theme
+ecosystem that is currently missing from Gatsby. Overriding theme
 elements is possible on a coarse level right now in userland. If, for
 example, a theme defines a set of pages using createPage we can define
 a helper function that will look for the page component first in the
