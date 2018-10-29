@@ -29,7 +29,7 @@ decisions we made for our first site. Wouldn't it be great if we could
 re-use our config across projects? That's where starters come
 in.
 
-## Starters
+### Improving Reusability with Starters
 
 One way to create more sites with similar functionality faster is to
 use starters. Starters are basically whole Gatsby sites that can be
