@@ -59,14 +59,15 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 ## Git
 
-Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter.
+Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need Git to set up your first Gatsby site.
 
-### ✋ Check your Git installation
+### ✋ Install Git
 
-1.  Open up your terminal.
-2.  Run `git --version`.
+The steps to download and install Git depend on your operating system. Follow the guide for your system:
 
-The output of the command should be a version number (just like with Node.js above). If entering the command doesn’t show you a version number, your system does not have Git installed. Download Git from the [**Git downloads page**](https://git-scm.com/downloads) and install it.
+- [Install Git on macOS](https://www.atlassian.com/git/tutorials/install-git#mac-os-x)
+- [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
+- [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
 
 ## The Gatsby CLI
 
