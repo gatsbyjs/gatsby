@@ -66,7 +66,7 @@ allow us to distribute this functionality as an npm package and allow
 the customization of various branding elements through our
 `gatsby-config.js`.
 
-# Mechanics of Theming
+## Mechanics of Theming
 
 At a base level, theming simply combines the gatsby-config of the
 theme with the gatsby-config of your site. Since it's an experimental
