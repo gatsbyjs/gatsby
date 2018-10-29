@@ -175,9 +175,11 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 To summarize, in this section you:
 
-- Installed and learned about Node.js and the npm CLI tool
-- Installed and learned about the Gatsby CLI tool
+- Learned about web technologies used with Gatsby (HTML, CSS, JavaScript, React, and GraphQL)
+- Learned about the command line and how to use it
+- Installed and learned about Node.js and the npm CLI tool, the version control system Git, and the Gatsby CLI tool
 - Generated a new Gatsby site using the Gatsby CLI tool
+- Ran the Gatsby development server and visited your site locally
 - Downloaded a code editor
 - Installed a code formatter called Prettier
 
