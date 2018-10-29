@@ -22,7 +22,7 @@ Create your first custom type (Repeatable Type) with the name `Post` and add som
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/yrOYLNiYtBQ?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-So that Gatsby can grab all information from Prismic you'll need to generate an Access Token. Head over to `Settings → API & Security`, fill out the `Application name` field (the Callback URL can be left empty), and press `Add this application`.
+In order for Gatsby to grab all information from Prismic you'll need to generate an access token. Head over to `Settings → API & Security`, fill out the `Application name` field (the Callback URL can be left empty), and press `Add this application`.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/iH0P4KcOeVc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
