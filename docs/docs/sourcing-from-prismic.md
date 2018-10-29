@@ -6,7 +6,7 @@ In this guide, we'll walk through setting up a site with content management usin
 
 Prismic is a hosted, proprietary Headless CMS (SaaS) with a web app for creating and publishing content. It's suitable for marketers, editors and developers as it has both a "Writing Room" and a fully-fledged API & content backend. Besides the usual advantages of a SaaS CMS (hosting, security, updates) Prismic offers features like: custom type builder, scheduling and content versioning and multi-language support.
 
-Moreover their _Content Slices_ feature enables you to build dynamic layouts by defining reusable custom components and placing them on your landing page, case studies or in your blogposts. Fortunately you can use those in Gatsby to realize features like PrismJS highlighting or using `gatsby-image`. The linked [starter](https://github.com/LekoArts/gatsby-starter-prismic) shows you how to implement that.
+Moreover their _Content Slices_ feature enables you to build dynamic layouts by defining reusable custom components and placing them on your landing page, case studies or in your blog posts. Fortunately you can use those in Gatsby to realize features like PrismJS highlighting or using `gatsby-image`. The linked [starter](https://github.com/LekoArts/gatsby-starter-prismic) shows you how to do just that!
 
 The written instructions get accompanied by uncommented YouTube videos which will show the described steps in action. You can also watch the full [video playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
