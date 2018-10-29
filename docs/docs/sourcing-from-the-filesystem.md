@@ -2,55 +2,30 @@
 title: Sourcing from the Filesystem
 ---
 
-This guide will walk you through sourcing from the filesystem.
+This guide will walk you through sourcing data from the filesystem.
 
 ## Setup
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](https://github.com/gatsbyjs/gatsby/tree/master/docs). In addition, it will be useful if you are familiar with Graph_i_QL, a tool that helps you structure your queries correctly.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](https://github.com/gatsbyjs/gatsby/tree/master/docs).
 
-## Introducing Graph_i_QL
+It will also be useful if you are familiar with [Graph_i_QL](/docs/introducing-graphiql/), a tool that helps you structure your queries correctly.
 
-Graph_i_QL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool
-you'll use often while building Gatsby websites.
+## Using `gatsby-source-filesystem`
 
-You can access it when your site's development server is running—normally at
-<http://localhost:8000/___graphql>.
+`gatsby-source-filesystem` is the Gatsby plugin for creating File nodes from the file system.
 
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
-
-Here you poke around the built-in `Site` "type" and see what fields are available
-on it—including the `siteMetadata` object you queried earlier. Try opening
-Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up
-the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be
-using Graph_i_QL a lot more through the remainder of the tutorial.
-
-## Sourcing plugins
-
-Data in Gatsby sites can come from anywhere: APIs, databases, CMSs,
-local files, etc.
-
-Source plugins fetch data from their source. E.g. the filesystem source plugin
-knows how to fetch data from the file system. The WordPress plugin knows how to
-fetch data from the WordPress API. We will focus on sourcing from the filesystem.
-
-First, we will add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
-explore how it works.
-
-Install the plugin at the root of the project:
+Install the plugin at the root of your Gatsby project:
 
 ```sh
 npm install --save gatsby-source-filesystem
 ```
 
-Then add it to your `gatsby-config.js`:
+Then add it to your project's `gatsby-config.js` file:
 
 ```javascript{6-12}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Pandas Eating Lots`,
+    title: `Your Site Name`,
   },
   plugins: [
     {
@@ -60,19 +35,13 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-plugin-emotion`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
   ],
 }
 ```
 
-Save that and restart the gatsby development server. Then open up Graph_i_QL
-again.
+Save the `gatsby-config.js` file, and restart the Gatsby development server.
+
+Open up Graph_i_QL.
 
 If you bring up the autocomplete window, you'll see:
 
@@ -96,11 +65,10 @@ each time to re-run the query. You'll see something like this:
 The result is an array of File "nodes" (node is a fancy name for an object in a
 "graph"). Each File object has the fields you queried for.
 
+## Transforming File nodes
 
-## What's coming next?
+Once files have been sourced, various "transformer" plugins in the Gatsby ecosystem can then be used to transform File nodes into various other types of data. For example, a JSON file can be sourced using `gatsby-source-plugin`, and then the resulting File nodes can be transformed into JSON nodes using `gatsby-transformer-json`.
 
-Now you've learned how source plugins bring data _into_ Gatsby’s data system. In the next tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site. Click here for the [next tutorial to learn about transformer plugins](/tutorial/part-six/).
+## Further reference and examples
 
-## Other Resources
-- [https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source-](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source-)
-- [https://www.gatsbyjs.org/starter-showcase/?d=gatsby-source-filesystem](https://www.gatsbyjs.org/starter-showcase/?d=gatsby-source-filesystem)
+For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).
