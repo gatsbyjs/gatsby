@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.11"></a>
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.10...gatsby-transformer-remark@2.1.11) (2018-10-29)
+
+### Features
+
+- **gatsby:** Add nodes db module ([#9416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/9416)) ([7d31fe7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/7d31fe7)), closes [#9338](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/9338)
+
 <a name="2.1.10"></a>
 
 ## [2.1.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.9...gatsby-transformer-remark@2.1.10) (2018-10-29)
