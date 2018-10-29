@@ -136,7 +136,7 @@ const withThemePath = relativePath => {
 Then in our theme's `createPage` call, we simply use the helper to let
 the user optionally override the default component.
 
-```
+```title:gatsby-node.js
 createPage({
   path: post.node.fields.slug,
   component: withThemePath('./src/templates/blog-post.js')
