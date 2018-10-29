@@ -26,7 +26,7 @@ make all the decisions ourselves. Those decisions are encoded into our
 `gatsby-config`. The next time we have to create a similar site for a
 new product we have to start from scratch and remake all of the
 decisions we made for our first site. Wouldn't it be great if we could
-re-use our gatsby-config across projects? That's where starters come
+re-use our config across projects? That's where starters come
 in.
 
 ## Starters
