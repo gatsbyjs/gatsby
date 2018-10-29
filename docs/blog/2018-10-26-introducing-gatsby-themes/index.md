@@ -60,7 +60,7 @@ gatsby-config as themes and re-use them across sites.
 Defining themes as the base composition unit of Gatsby sites allows us to start
 solving a variety of use cases. For example, when a site gets built as
 part of a wider product offering it's often the case that one team
-will build out a set of functionality, including branding elements,
+will build out a suite of functionality, including branding elements,
 and the other teams will mostly consume this functionality. Themes
 allow us to distribute this functionality as an npm package and allow
 the customization of various branding elements through our
