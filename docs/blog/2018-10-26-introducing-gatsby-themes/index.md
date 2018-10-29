@@ -105,7 +105,7 @@ lifecycle hooks such as on-create-page.
 
 ## Next Steps
 
-## Sub Themes and Overriding
+### Sub Themes and Overriding
 
 This is just the first step and it enables us to experiment with
 further improvements in userland before merging them into
