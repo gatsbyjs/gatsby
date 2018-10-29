@@ -33,7 +33,7 @@ in.
 
 One way to create more sites with similar functionality faster is to
 use starters. Starters are basically whole Gatsby sites that can be
-scaffolded through the gatsby cli. This helps you start your project
+scaffolded through the gatsby CLI. This helps you start your project
 by cloning the boilerplate, installing dependencies, and clearing Git
 history. The community around gatsby has built a lot of different
 starters for various use cases including blogging, working with
