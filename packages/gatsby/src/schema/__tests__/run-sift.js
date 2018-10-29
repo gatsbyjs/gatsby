@@ -34,7 +34,7 @@ const mockNodes = [
   },
 ]
 
-jest.mock(`../../redux`, () => {
+jest.mock(`../../db/nodes`, () => {
   return {
     getNode: id => mockNodes.find(node => node.id === id),
   }

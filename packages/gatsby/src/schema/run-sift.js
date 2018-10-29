@@ -6,7 +6,7 @@ const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
-const { getNode } = require(`../redux`)
+const { getNode } = require(`../db/nodes`)
 
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
