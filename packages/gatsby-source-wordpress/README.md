@@ -58,6 +58,8 @@ plugins: [
       // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
       // If your site is hosted on wordpress.org, then set this to false.
       hostingWPCOM: false,
+      // Indicates wether you use JWT Authentication. This assumes the use of the plugin "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
+      useJWT: false,
       // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
       // This feature is untested for sites hosted on Wordpress.com.
       // Defaults to true.
@@ -72,12 +74,9 @@ plugins: [
       auth: {
         // If auth.user and auth.pass are filled, then the source plugin will be allowed
         // to access endpoints that are protected with .htaccess.
-        // You can also specify a jwt_token to authenticate. This assumes the use of the plugin "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
         htaccess_user: "your-htaccess-username",
         htaccess_pass: "your-htaccess-password",
         htaccess_sendImmediately: false,
-        jwt_token: "your-jwt-token",
-
         // If hostingWPCOM is true then you will need to communicate with wordpress.com API
         // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
         // then add your clientId, clientSecret, username, and password here
@@ -86,6 +85,9 @@ plugins: [
         wpcom_app_clientId: "54793",
         wpcom_user: "gatsbyjswpexample@gmail.com",
         wpcom_pass: "very-secured-password",
+        // If useJWT is true you will need to set a jwt_user and a jwt_pass in order to obtain a token.
+        jwt_user: "your-jwt-user",
+        jwt_pass: "your-jwt-password",
       },
       // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
       // It can help you debug specific API Endpoints problems.

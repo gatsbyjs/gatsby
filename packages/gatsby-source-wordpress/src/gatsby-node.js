@@ -16,6 +16,7 @@ let _siteURL
 let _useACF = true
 let _acfOptionPageIds
 let _hostingWPCOM
+let _useJWT
 let _auth
 let _perPage
 let _concurrentRequests
@@ -29,6 +30,7 @@ exports.sourceNodes = async (
     baseUrl,
     protocol,
     hostingWPCOM,
+    useJWT,
     useACF = true,
     acfOptionPageIds = [],
     auth = {},
@@ -49,6 +51,7 @@ exports.sourceNodes = async (
   _useACF = useACF
   _acfOptionPageIds = acfOptionPageIds
   _hostingWPCOM = hostingWPCOM
+  _useJWT = useJWT
   _auth = auth
   _perPage = perPage
   _concurrentRequests = concurrentRequests
@@ -63,6 +66,7 @@ exports.sourceNodes = async (
     _useACF,
     _acfOptionPageIds,
     _hostingWPCOM,
+    _useJWT,
     _auth,
     _perPage,
     _concurrentRequests,

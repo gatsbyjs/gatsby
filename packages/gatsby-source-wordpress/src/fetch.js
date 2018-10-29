@@ -17,6 +17,7 @@ async function fetch({
   _useACF,
   _acfOptionPageIds,
   _hostingWPCOM,
+  _useJWT,
   _auth,
   _perPage,
   _concurrentRequests,
@@ -32,7 +33,10 @@ async function fetch({
   let _accessToken
   if (_hostingWPCOM) {
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
-    _accessToken = await getWPCOMAccessToken(_auth)
+    _accessToken = await getAccessToken(_auth)
+  } else if (_useJWT) {
+    url = `${_siteURL}/wp-json`
+    _accessToken = await getAccessToken(_auth, url)
   } else {
     url = `${_siteURL}/wp-json`
   }
@@ -49,8 +53,8 @@ Site URL: ${_siteURL}
 Site hosted on Wordpress.com: ${_hostingWPCOM}
 Using ACF: ${_useACF}
 Using Auth: ${
-          _auth.jwt_token
-            ? `jwt_token: ` + _auth.jwt_token
+          _useJWT
+            ? _auth.jwt_user + ` ` + _auth.jwt_pass
             : _auth.htaccess_user + ` ` + _auth.htaccess_pass
         }
 Verbose output: ${_verbose}
@@ -76,9 +80,9 @@ Mama Route URL: ${url}
       }
     }
 
-    if (_auth && _auth.jwt_token) {
+    if (_useJWT && _accessToken) {
       options.headers = {
-        Authorization: `Bearer ${_auth.jwt_token}`,
+        Authorization: `Bearer ${_accessToken}`,
       }
     }
 
@@ -111,6 +115,7 @@ Mama Route URL: ${url}
       _useACF,
       _acfOptionPageIds,
       _hostingWPCOM,
+      _useJWT,
       _includedRoutes,
       _excludedRoutes,
       typePrefix,
@@ -135,6 +140,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _verbose,
           _perPage,
           _hostingWPCOM,
+          _useJWT,
           _auth,
           _accessToken,
           _concurrentRequests,
@@ -155,27 +161,45 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
 }
 
 /**
- * Gets wordpress.com access token so it can fetch private data like medias :/
+ * Gets wordpress.com or JWT access token so it can fetch private data like medias :/
  *
  * @returns
  */
-async function getWPCOMAccessToken(_auth) {
+async function getAccessToken(_auth, url) {
   let result
-  const oauthUrl = `https://public-api.wordpress.com/oauth2/token`
+  let authUrl
+
+  if (!url) {
+    authUrl = `https://public-api.wordpress.com/oauth2/token`
+  } else {
+    authUrl = `${url}/jwt-auth/v1/token`
+  }
   try {
-    let options = {
-      url: oauthUrl,
-      method: `post`,
-      data: querystring.stringify({
-        client_secret: _auth.wpcom_app_clientSecret,
-        client_id: _auth.wpcom_app_clientId,
-        username: _auth.wpcom_user,
-        password: _auth.wpcom_pass,
-        grant_type: `password`,
-      }),
+    let options
+    if (!url) {
+      options = {
+        url: authUrl,
+        method: `post`,
+        data: querystring.stringify({
+          client_secret: _auth.wpcom_app_clientSecret,
+          client_id: _auth.wpcom_app_clientId,
+          username: _auth.wpcom_user,
+          password: _auth.wpcom_pass,
+          grant_type: `password`,
+        }),
+      }
+    } else {
+      options = {
+        url: authUrl,
+        method: `post`,
+        data: {
+          username: _auth.jwt_user,
+          password: _auth.jwt_pass,
+        },
+      }
     }
     result = await axios(options)
-    result = result.data.access_token
+    result = url ? result.data.token : result.data.access_token
   } catch (e) {
     httpExceptionHandler(e)
   }
@@ -194,6 +218,7 @@ async function fetchData({
   _verbose,
   _perPage,
   _hostingWPCOM,
+  _useJWT,
   _auth,
   _accessToken,
   _concurrentRequests,
@@ -217,6 +242,7 @@ async function fetchData({
       url,
       _perPage,
       _hostingWPCOM,
+      _useJWT,
       _auth,
       _accessToken,
       _verbose,
@@ -296,6 +322,7 @@ async function getPages(
     url,
     _perPage,
     _hostingWPCOM,
+    _useJWT,
     _auth,
     _accessToken,
     _concurrentRequests,
@@ -318,9 +345,9 @@ async function getPages(
         o.headers = {
           Authorization: `Bearer ${_accessToken}`,
         }
-      } else if (_auth && _auth.jwt_token) {
+      } else if (_useJWT) {
         o.headers = {
-          Authorization: `Bearer ${_auth.jwt_token}`,
+          Authorization: `Bearer ${_accessToken}`,
         }
       } else {
         o.auth = _auth
