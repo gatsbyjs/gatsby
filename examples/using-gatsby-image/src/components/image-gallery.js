@@ -6,34 +6,51 @@ import numeral from "numeral"
 import presets from "../utils/presets"
 import { options, scale } from "../utils/typography"
 
-const OuterContainer = styled(`div`)({
-  background: `#fff`,
-  [presets.Tablet]: {
-    margin: `0 0 0 calc(-${presets.offset}vw - ${presets.gutter.tablet}px)`,
-    padding: 100,
-    paddingRight: 0,
-  },
-  [presets.Desktop]: {
-    margin: `0 0 0 calc(-${presets.offset}vw - ${presets.gutter.desktop}px)`,
-  },
-})
+const OuterContainer = styled(`div`)`
+  background: #fff;
 
-const Grid = styled(`div`)({
-  columnCount: 1,
-  columnGap: 0,
-  margin: `0 auto`,
-  [presets.Mobile]: { columnCount: 2 },
-  [presets.Tablet]: { columnCount: 3 },
-  [presets.Hd]: { columnCount: 4 },
-})
+  ${presets.Tablet} {
+    margin: 0;
+    margin-left: calc(-${presets.offset}vw - ${presets.gutter.tablet}px);
+    padding: 100px;
+    padding-right: 0;
+  }
 
-const GridItem = styled(`div`)({
-  border: `4px solid transparent`,
-  breakInside: `avoid`,
-  position: `relative`,
-  [presets.Mobile]: { borderWidth: 8 },
-  [presets.Desktop]: { borderWidth: 12 },
-})
+  ${presets.Desktop} {
+    margin-left: calc(-${presets.offset}vw - ${presets.gutter.desktop}px);
+  }
+
+  ${presets.Hd} {
+    margin-right: calc(-${presets.gutter.desktop}px);
+  }
+`
+
+const Grid = styled(`div`)`
+  column-count: 1;
+  column-gap: ${presets.gutter.default}px;
+
+  ${presets.Mobile} {
+    column-count: 2;
+  }
+
+  ${presets.Tablet} {
+    column-count: 3;
+  }
+
+  ${presets.Hd} {
+    column-gap: ${presets.gutter.tablet}px;
+  }
+`
+
+const GridItem = styled(`div`)`
+  break-inside: avoid;
+  position: relative;
+  margin-bottom: ${presets.gutter.default}px;
+
+  ${presets.Hd}: {
+    margin-bottom: ${presets.gutter.tablet}px;
+  };
+`
 
 const GridItemImage = styled(Img)({
   "&:hover": {
