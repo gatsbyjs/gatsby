@@ -71,7 +71,7 @@ the customization of various branding elements through our
 At a base level, theming combines the `gatsby-config.js` of the
 theme with the `gatsby-config.js` of your site. Since it's an experimental
 feature, we use an experimental namespace to declare themes in
-gatsby-config.
+the config.
 
 ```js
 module.exports = {
