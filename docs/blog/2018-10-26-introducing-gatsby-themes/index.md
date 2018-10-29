@@ -48,7 +48,7 @@ approach such as updating with upstream. One such project is
 create-react-app. In the gatsby world, we can improve on starters
 similarly with themes.
 
-## Themes
+### Truly Reusable Themes in Gatsby
 
 If a single gatsby-config encodes the functionality of a whole Gatsby
 site then if we can compose the gatsby-config data structure together
