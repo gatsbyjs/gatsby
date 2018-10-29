@@ -98,7 +98,7 @@ module.exports = {
 ```
 
 Themes also function as plugins and any config passed into the theme
-in your gatsby-config will also be passed to your theme's gatsby-\*
+in your `gatsby-config.js` will also be passed to your theme's `gatsby-*.js`
 files as plugin options. This allows themes to override any settings
 inherited from the theme's own plugin declarations or apply gatsby
 lifecycle hooks such as on-create-page.
