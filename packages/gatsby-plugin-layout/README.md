@@ -46,6 +46,36 @@ module.exports = {
 ];
 ```
 
+## Handling multiple layouts
+
+If you want to use different layouts for different pages, you can pass this information in the context of the pages you create, and then conditionally render in your layout file.
+
+In `gatsby-node.js`:
+
+```js
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage } = actions
+
+  if(page.path.match(/special-page/) {
+    page.context.layout = 'special'
+    createPage(page)
+  }
+}
+```
+
+And then in `src/layouts/index.js`:
+
+```js
+export default ({ children, pageContext }) => {
+  if (pageContext.layout === 'special') {
+    return <AlternativeLayout>{children}</AlternativeLayout>
+  }
+  return (
+    <RegularLayout>{children}</RegularLayout>
+  ) 
+}
+```
+
 ## Why would you want to reimplement the V1 layout behavior?
 
 There are a few scenarios where it makes sense to reimplement the V1 layout handling:
