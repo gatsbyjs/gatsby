@@ -47,17 +47,18 @@ npm config set msvs_version 2015
 npm cache clean -f
 npm install
 ```
-For Visual Studio 2017, download the [Visual Studio Community 2017](https://visualstudio.microsoft.com/vs/community/) and install the Desktop development with C++ workflow. You can uncheck everything else. 
+
+For Visual Studio 2017, download the [Visual Studio Community 2017](https://visualstudio.microsoft.com/vs/community/) and install the Desktop development with C++ workflow. You can uncheck everything else.
 
 ![Desktop development with C++ workflow](https://i.imgur.com/dPknorD.png)
 
 In case you've already installed Visual Studio 2017, run the Visual Studio Installer.
 
- ![Visual Studio Installer](https://i.imgur.com/H5PVEbu.png) 
- 
- In the products list, select the more dropdown beside Visual Studio 2017 and select Modify option. On the next screen select the Desktop Development with C++ workflow.
+![Visual Studio Installer](https://i.imgur.com/H5PVEbu.png)
 
- ![Visual Studio Installer](https://i.imgur.com/7SFsS99.png)
+In the products list, select the more dropdown beside Visual Studio 2017 and select Modify option. On the next screen select the Desktop Development with C++ workflow.
+
+![Visual Studio Installer](https://i.imgur.com/7SFsS99.png)
 
 Then run the commands on Gatsby:
 
@@ -68,6 +69,7 @@ npm config set msvs_version 2017
 npm cache clean -f
 npm install
 ```
+
 You should then be all set.
 
 If that still doesn't work, refer to the
@@ -81,7 +83,7 @@ Some plugins which depend on native NPM dependencies require the Node x64 build 
 
 ## gatsby-plugin-sharp requires libvips
 
-Sharp uses a c library, libvips. If you are having issues while installing Sharp, try removing ```C:\Users\[user]\AppData\Roaming\npm-cache\_libvips```.
+Sharp uses a c library, libvips. If you are having issues while installing Sharp, try removing `C:\Users\[user]\AppData\Roaming\npm-cache\_libvips`.
 
 ## Windows Subsystem for Linux
 
