@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.6...gatsby-source-contentful@2.0.7) (2018-10-29)
+
+### Features
+
+- **gatsby-source-contentful:** adds CENTER option to ImageCropFocusType ([#9473](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/9473)) ([cc8c60d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/cc8c60d))
+
 <a name="2.0.6"></a>
 
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.5...gatsby-source-contentful@2.0.6) (2018-10-24)
