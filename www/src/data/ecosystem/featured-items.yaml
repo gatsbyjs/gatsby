@@ -1,9 +1,11 @@
+# use slug to pick a starter
 starters:
-  - gatsby-starter-blog
-  - gatsby-starter-netlify-cms
-  - gatsby-advanced-blog
-  - gatsby-advanced-starter
-  - gatsby-starter-lumen
+  - "/gatsby-starter-blog/"
+  - "/gatsby-starter-netlify-cms/"
+  - "/gatsby-advanced-blog/"
+  - "/gatsby-advanced-starter/"
+  - "/gatsby-starter-lumen/"
+# use name to pick a plugin
 plugins:
   - gatsby-plugin-react-helmet
   - gatsby-plugin-page-creator
