@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.9...gatsby-plugin-sharp@2.0.10) (2018-10-29)
+
+### Features
+
+- use hashed folder names instead of filenames. closes [#6232](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/6232) ([#8808](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/8808)) ([2a66958](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/2a66958))
+
 <a name="2.0.9"></a>
 
 ## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.8...gatsby-plugin-sharp@2.0.9) (2018-10-29)
