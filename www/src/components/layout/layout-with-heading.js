@@ -27,7 +27,7 @@ const Content = styled("div")`
     margin-left: ${presets.pageHeadingDesktopWidth};
     padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
     padding-bottom: 0;
-  },
+  }
 `
 
 const StyledSkipNavLink = styled(SkipNavLink)`

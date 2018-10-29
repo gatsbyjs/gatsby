@@ -54,12 +54,12 @@ const Title = styled("h1")`
 
   span {
     margin: 0 0.3rem 0 -0.1rem;
+
     :last-child {
       flex-grow: 1;
     }
   }
 `
-
 const Icon = styled("span")`
   display: block;
   width: 32px;
