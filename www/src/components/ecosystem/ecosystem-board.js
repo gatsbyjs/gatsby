@@ -11,6 +11,10 @@ const EcosystemBoardRoot = styled("div")`
   flex-direction: column;
 
   ${presets.Tablet} {
+    background-image: url(${props => props.background});
+    background-position: 1.5rem 2rem;
+    background-size: cover;
+    background-repeat: no-repeat;
     flex-direction: row;
     height: calc(
       100vh - (${presets.bannerHeight} + ${presets.headerHeight} + 1px)
@@ -23,9 +27,10 @@ const EcosystemBoard = ({
   icons: { plugins: PluginsIcon, starters: StartersIcon },
   starters,
   plugins,
+  background,
 }) => {
   return (
-    <EcosystemBoardRoot>
+    <EcosystemBoardRoot background={background}>
       <EcosystemSection
         title="Plugin Library"
         description="With 429 plugins, lorem ipsum sunt we need some proper copy here pulling in data from your favorite source is only a few mouseclicks away."
@@ -56,7 +61,7 @@ const EcosystemBoard = ({
       <EcosystemSection
         title="External Resources"
         description="More awesome Gatsby content, created by the community."
-        link="/docs/awesome-gatsby/"
+        links={[{ label: "Browse Resources", to: "/docs/awesome-gatsby/" }]}
       />
     </EcosystemBoardRoot>
   )
@@ -66,6 +71,7 @@ EcosystemBoard.propTypes = {
   icons: PropTypes.object,
   starters: PropTypes.array,
   plugins: PropTypes.array,
+  background: PropTypes.string,
 }
 
 export default EcosystemBoard

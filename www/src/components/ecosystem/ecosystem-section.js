@@ -12,6 +12,7 @@ import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 const EcosysteSectionRoot = styled("section")`
+  background: #fff;
   margin-bottom: ${rhythm(0.5)};
   padding: 0 ${rhythm(options.blockMarginBottom)};
 
@@ -96,39 +97,28 @@ const EcosysteSection = ({
   subTitle,
   icon,
   links,
-  link,
   featuredItems,
 }) => (
   <EcosysteSectionRoot>
     <Header>
-      {links ? (
-        <React.Fragment>
-          <Title>
-            {icon && <Icon dangerouslySetInnerHTML={{ __html: icon }} />}
-            <span>{title}</span>
-          </Title>
-          <Description>{description}</Description>
-          <Actions>
-            {links.map((item, idx) => {
-              const { to, label, secondary } = item
+      <React.Fragment>
+        <Title>
+          {icon && <Icon dangerouslySetInnerHTML={{ __html: icon }} />}
+          <span>{title}</span>
+        </Title>
+        <Description>{description}</Description>
+        <Actions>
+          {links.map((item, idx) => {
+            const { to, label, secondary } = item
 
-              return (
-                <Button key={to} to={to} secondary={secondary} tiny>
-                  {label}
-                </Button>
-              )
-            })}
-          </Actions>
-        </React.Fragment>
-      ) : (
-        <Link to={link}>
-          <Title>
-            {icon && <Icon dangerouslySetInnerHTML={{ __html: icon }} />}
-            {title} <ArrowForwardIcon />
-          </Title>
-          <Description>{description}</Description>
-        </Link>
-      )}
+            return (
+              <Button key={to} to={to} secondary={secondary} tiny>
+                {label}
+              </Button>
+            )
+          })}
+        </Actions>
+      </React.Fragment>
       {subTitle && <SubTitle>{subTitle}</SubTitle>}
     </Header>
 
@@ -145,7 +135,6 @@ EcosysteSection.propTypes = {
   subTitle: PropTypes.string,
   icon: PropTypes.string,
   links: PropTypes.array,
-  link: PropTypes.string,
   featuredItems: PropTypes.array,
 }
 
