@@ -69,6 +69,8 @@ The steps to download and install Git depend on your operating system. Follow th
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
 - [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
 
+> 💡 You will not need to use Git yourself to work with Gatsby, but it is a very useful tool to know about as a developer. If you are interested in learning more about version control and Git, check out Github's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
+
 ## The Gatsby CLI
 
 The Gatsby CLI tool lets you quickly create new Gatsby-powered sites, and run commands for developing Gatsby sites. It is a published npm package. You can install the Gatsby CLI from the npm registry, using the npm CLI.
