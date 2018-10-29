@@ -87,7 +87,7 @@ const fileOkCache = {}
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
- * for detailed documenation about creating pages.
+ * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
