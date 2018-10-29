@@ -68,7 +68,7 @@ the customization of various branding elements through our
 
 ## Mechanics of Theming
 
-At a base level, theming simply combines the gatsby-config of the
+At a base level, theming combines the `gatsby-config.js` of the
 theme with the gatsby-config of your site. Since it's an experimental
 feature, we use an experimental namespace to declare themes in
 gatsby-config.
