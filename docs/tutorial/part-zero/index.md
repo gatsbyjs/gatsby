@@ -17,7 +17,7 @@ It’s not necessary to be an expert with these already — if you’re not, don
 
 > 💡 (Optional!) For a comprehensive introduction to what a website is, HTML, and CSS, check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web, from scratch. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css) and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
 
-## What is the command line?
+## The command line
 
 The command line is a text-based interface used to run commands on your computer. (You’ll also often see it referred to as the terminal. In this tutorial we’ll use both interchangeably). It’s a lot like using the Finder on a Mac, or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
@@ -27,7 +27,7 @@ Take a moment to locate and open up the command line interface (CLI) for your co
 
 > 💡 For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. (Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read, as it explains what the command line is, not just how to interface with it.)
 
-## What is Node.js?
+## Node.js
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
@@ -45,7 +45,7 @@ The output of each of those commands should be a version number. (Your versions 
 
 ![Check node and npm versions in terminal](01-node-npm-versions.png)
 
-## What is npm?
+## npm
 
 npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it!
 
@@ -57,7 +57,7 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 > 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
 
-## What is Git?
+## Git
 
 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter.
 
@@ -68,7 +68,7 @@ Git is a free and open source distributed version control system designed to han
 
 The output of the command should be a version number (just like with Node.js above). If entering the command doesn’t show you a version number, your system does not have Git installed. Download Git from the [**Git downloads page**](https://git-scm.com/downloads) and install it.
 
-## What is the Gatsby CLI?
+## The Gatsby CLI
 
 The Gatsby CLI tool lets you quickly create new Gatsby-powered sites, and run commands for developing Gatsby sites. It is a published npm package. You can install the Gatsby CLI from the npm registry, using the npm CLI.
 
