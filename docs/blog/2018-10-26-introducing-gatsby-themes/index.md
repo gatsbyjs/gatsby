@@ -50,7 +50,7 @@ similarly with themes.
 
 ### Truly Reusable Themes in Gatsby
 
-If a single gatsby-config encodes the functionality of a whole Gatsby
+If a single `gatsby-config.js` encodes the functionality of a whole Gatsby
 site then if we can compose the gatsby-config data structure together
 we have the base for themes. We can encode portions of our
 gatsby-config as themes and re-use them across sites.
