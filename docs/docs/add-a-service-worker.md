@@ -4,7 +4,7 @@ title: Add a Service Worker
 
 ### What is a service worker
 
-A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction.They increase your site availability in spotty connections, and are essential to making a nice user experience.
+A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction. They increase your site availability in spotty connections, and are essential to making a nice user experience.
 
 It supports features like push notifications and background sync.
 
@@ -20,8 +20,7 @@ We recommend using this plugin together with the [manifest plugin](https://www.n
 
 Add this plugin to your `gatsby-config.js`
 
-```javascript
-// In your gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-offline`]
 ```
 
@@ -29,4 +28,3 @@ plugins: [`gatsby-plugin-offline`]
 
 - [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
 - [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
-

@@ -57,7 +57,7 @@ SEO.defaultProps = {
 
 **Note:** `propTypes` are included in this example to help you ensure you’re getting all the data you need in the component, and to help serve as a guide while destructuring / using those props.
 
-As the SEO component should also be usable in other files, e.g. a template file, the component also accepts properties for which you set sensible defaults in the `SEO.defaultProps` section. This way the information you put into `siteMetadata` gets used everytime unless you define the property explicitly.
+As the SEO component should also be usable in other files, e.g. a template file, the component also accepts properties for which you set sensible defaults in the `SEO.defaultProps` section. This way the information you put into `siteMetadata` gets used every time unless you define the property explicitly.
 
 Now define the query and place it in the StaticQuery (you can also save the query in a constant). You can also alias query items, so `title` gets renamed to `defaultTitle`.
 

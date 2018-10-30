@@ -193,7 +193,13 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
   return textNode
 }
 
-function prepareStructuredTextNode(node, key, content, createNode, createNodeId) {
+function prepareStructuredTextNode(
+  node,
+  key,
+  content,
+  createNode,
+  createNodeId
+) {
   const str = JSON.stringify(content)
   const structuredTextNode = {
     ...content,
