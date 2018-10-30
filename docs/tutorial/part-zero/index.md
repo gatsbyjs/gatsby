@@ -173,4 +173,4 @@ To summarize, in this section you:
 - Downloaded a code editor
 - Installed a code formatter called Prettier
 
-Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
+Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/index.md).
