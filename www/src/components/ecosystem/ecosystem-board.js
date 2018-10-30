@@ -29,12 +29,12 @@ const EcosystemBoard = ({
   return (
     <EcosystemBoardRoot>
       <EcosystemSection
-        title="Plugin Library"
+        title="Plugins"
         description="With 429 plugins, lorem ipsum sunt we need some proper copy here pulling in data from your favorite source is only a few mouseclicks away."
         subTitle="Featured Plugins"
         icon={PluginsIcon}
         links={[
-          { label: "Browse Library", to: "/plugins/" },
+          { label: "Browse Plugins", to: "/plugins/" },
           {
             label: "Plugin Authoring",
             to: "/docs/plugin-authoring/",
