@@ -6,7 +6,7 @@ const {
   GraphQLString,
 } = require(`graphql`)
 
-jest.mock(`../node-tracking`, () => {
+jest.mock(`../../db/node-tracking`, () => {
   return {
     trackInlineObjectsInRootNode: () => jest.fn(),
   }
