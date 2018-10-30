@@ -82,6 +82,10 @@ const Thumbnail = styled("div")`
   padding-right: ${rhythm(2 / 3)};
   margin-top: ${rhythm(1 / 12)};
   height: 64px;
+
+  img {
+    border: 1px solid ${colors.gray.superLight};
+  }
 `
 
 const Description = styled("p")`
