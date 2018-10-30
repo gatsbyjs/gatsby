@@ -77,7 +77,7 @@ Examples:
 
 - Copy post attachments defined in your Markdown files:
 
-  Link to your attachments in the markdown frontmatter:
+  Link to your attachments in the markdown front matter:
 
 ```markdown
 ---
@@ -121,7 +121,7 @@ instead. This mechanism provides a number of benefits:
 - Result filenames include content hashes so you don’t need to worry about
   browsers caching their old versions.
 
-However there is an **escape hatch** that you can use to add an asset outside of
+However, there is an **escape hatch** that you can use to add an asset outside of
 the module system.
 
 If you put a file into the `static` folder, it will **not** be processed by
