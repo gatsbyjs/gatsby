@@ -1,3 +1,23 @@
+- url: https://calpa.me/
+  repo: https://github.com/calpa/gatsby-starter-calpa-blog
+  description: Blog Template X Contentful, Twitter and Facebook style
+  tags:
+    - Blog
+    - Tags
+  features:
+    - GatsbyJS v2, faster than faster
+    - Not just Contentful content source, you can use any database
+    - Custom style
+    - Google Analytics
+    - Gitalk
+    - sitemap
+    - React FontAwesome 
+    - SEO
+    - Offline support
+    - Web App Manifest
+    - Styled using SCSS
+    - Page pagination
+    - Netlify optimization
 - url: https://wonism.github.io/
   repo: https://github.com/wonism/gatsby-advanced-blog
   description: n/a
