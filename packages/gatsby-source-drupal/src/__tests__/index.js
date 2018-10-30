@@ -45,7 +45,7 @@ describe(`gatsby-source-drupal`, () => {
       },
     }
 
-    await sourceNodes(args, { baseUrl: `http://fixture`, rateLimit: 500, })
+    await sourceNodes(args, { baseUrl: `http://fixture`, rateLimit: 500 })
   })
 
   it(`Generates nodes`, () => {

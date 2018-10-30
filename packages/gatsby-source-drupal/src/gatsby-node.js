@@ -31,7 +31,7 @@ exports.sourceNodes = async (
   console.log(`Starting to fetch data from Drupal`)
 
   // Create axiosClient on baseUrl.
-  const axiosClient = axios.create({ baseURL: `${baseUrl}`, })
+  const axiosClient = axios.create({ baseURL: `${baseUrl}` })
 
   // Do we have a rate limit? Then apply.
   if (rateLimit) {
