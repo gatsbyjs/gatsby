@@ -1,9 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "react-emotion"
-import { Link } from "gatsby"
-
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
@@ -11,7 +8,7 @@ import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
-const EcosysteSectionRoot = styled("section")`
+const EcosystemSectionRoot = styled("section")`
   background: #fff;
   padding: 0 ${rhythm(options.blockMarginBottom)};
   margin-bottom: ${rhythm(1 / 2)};
@@ -105,7 +102,7 @@ const EcosysteSection = ({
   links,
   featuredItems,
 }) => (
-  <EcosysteSectionRoot>
+  <EcosystemSectionRoot>
     <Header>
       <React.Fragment>
         <Title>
@@ -132,7 +129,7 @@ const EcosysteSection = ({
       featuredItems.length > 0 && (
         <EcosystemFeaturedItems items={featuredItems} />
       )}
-  </EcosysteSectionRoot>
+  </EcosystemSectionRoot>
 )
 
 EcosysteSection.propTypes = {

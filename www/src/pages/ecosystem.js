@@ -1,12 +1,7 @@
 import React, { Component } from "react"
-import Helmet from "react-helmet"
 import { graphql } from "gatsby"
 
-import { rhythm } from "../utils/typography"
-import { colors } from "../utils/presets"
-
 import Layout from "../components/layout/layout-with-heading"
-import PageHeading from "../components/layout/page-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
 
 import { EcosystemIcon } from "../assets/mobile-nav-icons"
