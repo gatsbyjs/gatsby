@@ -71,11 +71,11 @@ The steps to download and install Git depend on your operating system. Follow th
 
 > 💡 You will not need to use Git yourself to work with Gatsby, but it is a very useful tool to know about as a developer. If you are interested in learning more about version control, Git, and Github, check out Github's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
 
-## Install the Gatsby CLI
+## Install Gatsby CLI
 
-The Gatsby CLI tool lets you quickly create new Gatsby-powered sites, and run commands for developing Gatsby sites. It is a published npm package. You can install the Gatsby CLI from the npm registry, using the npm CLI.
+Gatsby CLI is a tool that lets you quickly create new Gatsby-powered sites, and run commands for developing Gatsby sites. It is a published npm package. You can install Gatsby CLI from the npm registry, using the npm CLI.
 
-### ✋ Install the Gatsby CLI tool
+### ✋ Install Gatsby CLI
 
 1.  Navigate to the terminal.
 2.  Run `npm install --global gatsby-cli`.
@@ -88,7 +88,7 @@ A couple of different things are happening here.
 npm install --global gatsby-cli
 ```
 
-- We’re using the npm CLI to install the Gatsby CLI. `npm install` is the command used to install packages.
+- We’re using the npm CLI to install Gatsby CLI. `npm install` is the command used to install packages.
 - When installing npm packages, you can install them globally, or in a specific project. (We’ll learn about the latter, later). The `--global` flag signals that we want the first option, to install globally. This means our package will be available to us on our computer, outside of the context of a specific project.
 - `gatsby-cli` is the exact name our desired package is registered with on the [**npm registry**](https://www.npmjs.com/package/gatsby-cli).
 
@@ -104,7 +104,7 @@ If successfully installed, running `gatsby --version` should return a version nu
 
 ## Create a Gatsby site
 
-Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. Using the Gatsby CLI you can download “starters” (partially built sites with some default configuration already done) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
+Now you are ready to use Gatsby CLI to create your first Gatsby site. Using the tool, you can download “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
 
 ### ✋ Create the site
 
