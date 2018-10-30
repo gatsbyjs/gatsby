@@ -1067,9 +1067,7 @@
   tags:
     - PWA
     - Blog
-    - Personal website
     - TypeScript
-    - Progressive web app
     - Markdown
   features:
     - Mobile-First approach in development.
@@ -1083,4 +1081,4 @@
     - Pagination Ready
     - Ready to deploy to Github pages
     - Automatic RSS generation.
-    - Automatic Sitemap generation.    
+    - Automatic Sitemap generation
