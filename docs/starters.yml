@@ -1090,3 +1090,24 @@
     - Styled using SCSS
     - Page pagination
     - Netlify optimization
+- url: https://gatsby-starter-typescript-power-blog.majidhajian.com/
+  repo: https://github.com/mhadaily/gatsby-starter-typescript-power-blog
+  description: Minimal Personal Blog with Gatsby and Typescript
+  tags:
+    - PWA
+    - Blog
+    - TypeScript
+    - Markdown
+  features:
+    - Mobile-First approach in development
+    - TSLint & Prettier
+    - Offline support
+    - Category and Tag for post
+    - Type Safe by TypeScript
+    - Format Safe by TSLint, StyleLint and Prettier with Lint-Staged(Husky)
+    - Blog page
+    - Syntax highlighting in code blocks
+    - Pagination Ready
+    - Ready to deploy to Github pages
+    - Automatic RSS generation
+    - Automatic Sitemap generation
