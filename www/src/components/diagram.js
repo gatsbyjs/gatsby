@@ -1,6 +1,6 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { keyframes } from "react-emotion"
-import { Link } from "gatsby"
+import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -323,30 +323,31 @@ const Diagram = () => (
       >
         <ItemTitle>Static Web Host</ItemTitle>
         <ItemDescription>
-          <ItemDescriptionLink to="/docs/deploying-to-s3-cloudfront">
-            Amazon S3
-          </ItemDescriptionLink>
-          ,{" "}
-          <ItemDescriptionLink to="/docs/hosting-on-netlify">
-            Netlify
-          </ItemDescriptionLink>
-          ,{" "}
-          <ItemDescriptionLink to="/docs/how-gatsby-works-with-github-pages/">
-            GitHub Pages
-          </ItemDescriptionLink>
-          ,{" "}
-          <ItemDescriptionLink to="/tutorial/part-one/#--deploying-a-gatsby-site">
-            Surge.sh
-          </ItemDescriptionLink>
-          ,{" "}
-          <ItemDescriptionLink to="/docs/deploying-to-aerobatic/">
-            Aerobatic
-          </ItemDescriptionLink>
-          ,{" "}
-          <ItemDescriptionLink to="/docs/deploying-to-now/">
-            Now.sh
-          </ItemDescriptionLink>
-          , & many more
+          <StaticQuery
+            query={graphql`
+              query StaticHostsQuery {
+                allStaticHostsYaml {
+                  edges {
+                    node {
+                      title
+                      url
+                    }
+                  }
+                }
+              }
+            `}
+            render={({ allStaticHostsYaml: { edges: staticHosts } }) =>
+              staticHosts.map(({ node: staticHost }) => (
+                <Fragment key={staticHost.url}>
+                  <ItemDescriptionLink to={staticHost.url}>
+                    {staticHost.title}
+                  </ItemDescriptionLink>
+                  {", "}
+                </Fragment>
+              ))
+            }
+          />
+          & many more
         </ItemDescription>
       </div>
     </Segment>
