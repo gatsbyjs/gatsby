@@ -27,14 +27,7 @@ class EcosystemPage extends Component {
       const {
         node: {
           fields: {
-            starterShowcase: {
-              slug,
-              name,
-              description,
-              lastUpdated,
-              stars,
-              gatsbyMajorVersion,
-            },
+            starterShowcase: { slug, name, description, stars },
           },
           childScreenshot: {
             screenshotFile: {
@@ -48,9 +41,7 @@ class EcosystemPage extends Component {
         slug: `/starters${slug}`,
         name,
         description,
-        lastUpdated,
         stars,
-        gatsbyMajorVersion,
         thumbnail,
       }
     })
@@ -96,9 +87,7 @@ export const ecosystemQuery = graphql`
               slug
               description
               stars
-              lastUpdated(formatString: "MM/DD/YYYY")
               name
-              gatsbyMajorVersion
             }
           }
           childScreenshot {

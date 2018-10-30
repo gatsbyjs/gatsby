@@ -49,16 +49,11 @@ const Title = styled("h1")`
   color: ${colors.gatsby};
   display: flex;
   font-size: 1.25rem;
-  justify-content: space-between;
   margin: 0;
   padding-bottom: ${rhythm(0.5)};
 
   span {
     margin: 0 0.3rem 0 -0.1rem;
-
-    :last-child {
-      flex-grow: 1;
-    }
   }
 `
 const Icon = styled("span")`

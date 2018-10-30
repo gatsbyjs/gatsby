@@ -26,6 +26,7 @@ const BlockLink = styled(Link)`
   border-radius: ${presets.radiusLg}px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
   display: flex;
+  flex-direction: column;
   height: 100%;
   padding: ${rhythm(3 / 4)};
 
@@ -40,24 +41,7 @@ const BlockLink = styled(Link)`
     }
   }
 `
-const Abstract = styled("div")`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: space-between;
-  height: 100%;
-  font-family: ${options.systemFontFamily.join(`,`)};
-`
 
-const Thumbnail = styled("div")`
-  padding-right: ${rhythm(2 / 3)};
-  padding-top: ${rhythm(1 / 12)};
-
-  img {
-    height: 64px;
-    width: 64px;
-  }
-`
 const Header = styled("header")`
   display: flex;
   justify-content: space-between;
@@ -83,32 +67,26 @@ const Header = styled("header")`
   }
 `
 
-const Description = styled("p")`
+const Digest = styled("div")`
+  display: flex;
   flex-grow: 1;
-  font-size: 0.85rem;
-  margin: 0;
-  color: ${colors.gray.lightCopy};
+  justify-content: space-between;
+  height: 100%;
+  font-family: ${options.systemFontFamily.join(`,`)};
   padding: ${rhythm(0.5)} 0 0;
 `
 
-const Details = styled("p")`
-  color: ${colors.gray.bright};
-  display: flex;
-  flex-grow: 0;
-  font-size: 0.8rem;
-  justify-content: space-between;
-  padding: ${rhythm(0.3)} 0 0;
+const Thumbnail = styled("div")`
+  padding-right: ${rhythm(2 / 3)};
+  margin-top: ${rhythm(1 / 12)};
+  height: 64px;
+`
 
-  span:first-child {
-    background: ${colors.gray.superLight};
-    border-radius: ${rhythm(1)};
-    color: ${colors.gray.bright};
-    padding: 0 5px;
-
-    ::first-letter {
-      text-transform: uppercase;
-    }
-  }
+const Description = styled("p")`
+  color: ${colors.gray.lightCopy};
+  flex-grow: 1;
+  font-size: 0.85rem;
+  margin: 0;
 `
 
 const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
@@ -126,37 +104,28 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
   return (
     <EcosystemFeaturedItemRoot numberOfItems={numberOfItems}>
       <BlockLink to={slug}>
-        {thumbnail && (
-          <Thumbnail>
-            <Img fixed={thumbnail} alt="" />
-          </Thumbnail>
-        )}
-        <Abstract>
-          <Header>
-            <h3>{name}</h3>
-            {humanDownloadsLast30Days && (
-              <span>
-                {humanDownloadsLast30Days} <ArrowDownwardIcon />
-              </span>
-            )}
-            {stars && (
-              <span>
-                {stars} <StarIcon />
-              </span>
-            )}
-          </Header>
-          <Description>{description}</Description>
-          {(gatsbyMajorVersion || lastUpdated) && (
-            <Details>
-              {gatsbyMajorVersion && (
-                <span>{`${gatsbyMajorVersion[0][0]} v${
-                  gatsbyMajorVersion[0][1]
-                } `}</span>
-              )}
-              {lastUpdated && <span>Updated {lastUpdated}</span>}
-            </Details>
+        <Header>
+          <h3>{name}</h3>
+          {humanDownloadsLast30Days && (
+            <span>
+              {humanDownloadsLast30Days} <ArrowDownwardIcon />
+            </span>
           )}
-        </Abstract>
+          {stars && (
+            <span>
+              {stars} <StarIcon />
+            </span>
+          )}
+        </Header>
+
+        <Digest>
+          {thumbnail && (
+            <Thumbnail>
+              <Img fixed={thumbnail} alt="" />
+            </Thumbnail>
+          )}
+          <Description>{description}</Description>
+        </Digest>
       </BlockLink>
     </EcosystemFeaturedItemRoot>
   )
