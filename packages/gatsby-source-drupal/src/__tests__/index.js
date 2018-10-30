@@ -23,7 +23,7 @@ jest.mock(`axios`, () => {
         },
         interceptors: {
           request: {
-            use: fn => fn,
+            use: fn => fn(),
           },
         },
       }
