@@ -114,6 +114,10 @@ const fixedNodeType = ({
         type: GraphQLBoolean,
         defaultValue: true,
       },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: 0,
+      },
       grayscale: {
         type: GraphQLBoolean,
         defaultValue: false,
@@ -235,6 +239,10 @@ const fluidNodeType = ({
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
+      },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: 0,
       },
       duotone: {
         type: DuotoneGradientType,
@@ -402,6 +410,10 @@ module.exports = ({
         pngCompressionLevel: {
           type: GraphQLInt,
           defaultValue: 9,
+        },
+        pngCompressionSpeed: {
+          type: GraphQLInt,
+          defaultValue: 0,
         },
         grayscale: {
           type: GraphQLBoolean,
