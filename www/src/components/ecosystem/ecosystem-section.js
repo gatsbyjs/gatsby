@@ -35,7 +35,7 @@ const EcosysteSectionRoot = styled("section")`
 
   ${presets.Desktop} {
     flex-basis: calc(33.33% - 20px);
-    max-height: none;
+    max-height: 100%;
 
     :last-child {
       align-self: flex-start;
