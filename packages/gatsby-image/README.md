@@ -52,7 +52,7 @@ you need only:
 
 1. Import `gatsby-image` and use it in place of the built-in `img`
 2. Write a GraphQL query using one of the included GraphQL "fragments"
-    which specify the fields needed by `gatsby-image`.
+   which specify the fields needed by `gatsby-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
 compression. The `gatsby-image` component automatically sets up the "blur-up"
@@ -65,17 +65,13 @@ effect as well as lazy loading of images further down the screen.
 Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
 
 ```bash
-npm install --save gatsby-transformer-sharp
-npm install --save gatsby-plugin-sharp
+npm install --save gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
 Then in your `gatsby-config.js`:
 
 ```js
-plugins: [
-  `gatsby-transformer-sharp`,
-  `gatsby-plugin-sharp`
-];
+plugins: [`gatsby-transformer-sharp`, `gatsby-plugin-sharp`]
 ```
 
 Also, make sure you have set up a source plugin, so your images are available in `graphql` queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:

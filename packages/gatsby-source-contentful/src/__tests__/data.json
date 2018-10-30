@@ -62,13 +62,8 @@
                 "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
                 "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\""
               },
-              "workspaces": [
-                "packages/*"
-              ],
-              "eslintIgnore": [
-                "interfaces",
-                "**/__tests__/fixtures/"
-              ],
+              "workspaces": ["packages/*"],
+              "eslintIgnore": ["interfaces", "**/__tests__/fixtures/"],
               "devDependencies": {
                 "glob": "^7.1.1",
                 "jest": "^20.0.4",
@@ -244,13 +239,7 @@
             ]
           },
           "tags": {
-            "en-US": [
-              "wood",
-              "toy",
-              "car",
-              "sweden",
-              "design"
-            ]
+            "en-US": ["wood", "toy", "car", "sweden", "design"]
           },
           "categories": {
             "en-US": [
@@ -632,9 +621,7 @@
             "en-US": "normann@normann-copenhagen.com"
           },
           "phone": {
-            "en-US": [
-              "+45 35 55 44 59"
-            ]
+            "en-US": ["+45 35 55 44 59"]
           }
         }
       },
@@ -733,11 +720,7 @@
             ]
           },
           "tags": {
-            "en-US": [
-              "vase",
-              "flowers",
-              "accessories"
-            ]
+            "en-US": ["vase", "flowers", "accessories"]
           },
           "categories": {
             "en-US": [
@@ -929,9 +912,7 @@
                   "en-US": "normann@normann-copenhagen.com"
                 },
                 "phone": {
-                  "en-US": [
-                    "+45 35 55 44 59"
-                  ]
+                  "en-US": ["+45 35 55 44 59"]
                 }
               }
             }
@@ -1240,9 +1221,7 @@
                   "en-US": "normann@normann-copenhagen.com"
                 },
                 "phone": {
-                  "en-US": [
-                    "+45 35 55 44 59"
-                  ]
+                  "en-US": ["+45 35 55 44 59"]
                 }
               }
             }
@@ -1548,9 +1527,7 @@
                   "en-US": "info@acgears.com"
                 },
                 "phone": {
-                  "en-US": [
-                    "+1 212 260 2269"
-                  ]
+                  "en-US": ["+1 212 260 2269"]
                 }
               }
             }
@@ -1658,9 +1635,7 @@
             "en-US": "info@acgears.com"
           },
           "phone": {
-            "en-US": [
-              "+1 212 260 2269"
-            ]
+            "en-US": ["+1 212 260 2269"]
           }
         }
       },
@@ -2612,9 +2587,7 @@
             "type": "Link",
             "validations": [
               {
-                "linkContentType": [
-                  "6XwpTaSiiI2Ak2Ww0oi6qa"
-                ]
+                "linkContentType": ["6XwpTaSiiI2Ak2Ww0oi6qa"]
               }
             ],
             "linkType": "Entry"

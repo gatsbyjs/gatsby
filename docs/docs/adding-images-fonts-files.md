@@ -77,7 +77,7 @@ Examples:
 
 - Copy post attachments defined in your Markdown files:
 
-  Link to your attachments in the markdown frontmatter:
+  Link to your attachments in the markdown front matter:
 
 ```markdown
 ---

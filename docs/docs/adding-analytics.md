@@ -55,6 +55,7 @@ There are a number of extra configuration options--both with the Gatsby plugin a
 Once this is configured you can deploy your site to test! If you navigate to the homepage of Google Analytics, you should see a dashboard with different statistics.
 
 ## Other Gatsby analytics plugins
+
 - [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
 - [Google Analytics gtag.js](/packages/gatsby-plugin-gtag/)
 - [Segment](/packages/gatsby-plugin-segment)
