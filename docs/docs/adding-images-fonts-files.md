@@ -108,9 +108,7 @@ query($slug: String!) {
 
 ## Using the `static` Folder
 
-### Adding Assets Outside of the Module System
-
-You can also add other assets to a `static` folder at the root of your project.
+You can also add other assets to a `static` folder at the root of your project. Check the [static folder](/docs/static-folder/) page to learn more.
 
 Note that we normally encourage you to `import` assets in JavaScript files
 instead. This mechanism provides a number of benefits:
