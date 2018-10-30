@@ -4,35 +4,29 @@ import { rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import { scrollbarStyles } from "../utils/styles"
 
-class PageWithPluginSearchBar extends Component {
-  render() {
-    return (
-      <Fragment>
-        <section
-          css={{
-            ...styles.sidebar,
-            // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
-            display: `${!this.props.isPluginsIndex && `none`}`,
-          }}
-        >
-          <PluginSearchBar location={this.props.location} />
-        </section>
-        <main
-          id={`reach-skip-nav`}
-          css={{
-            ...styles.content,
-            // mobile: hide README on gatsbyjs.org/plugins index page
-            display: `${this.props.isPluginsIndex && `none`}`,
-          }}
-        >
-          {this.props.children}
-        </main>
-      </Fragment>
-    )
-  }
-}
-
-export default PageWithPluginSearchBar
+const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
+  <Fragment>
+    <section
+      css={{
+        ...styles.sidebar,
+        // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
+        display: `${!isPluginsIndex && `none`}`,
+      }}
+    >
+      <PluginSearchBar location={location} />
+    </section>
+    <main
+      id={`reach-skip-nav`}
+      css={{
+        ...styles.content,
+        // mobile: hide README on gatsbyjs.org/plugins index page
+        display: `${isPluginsIndex && `none`}`,
+      }}
+    >
+      {children}
+    </main>
+  </Fragment>
+)
 
 const widthDefault = rhythm(14)
 const widthLarge = rhythm(16)
@@ -65,3 +59,5 @@ const styles = {
     },
   },
 }
+
+export default PageWithPluginSearchBar
