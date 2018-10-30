@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0"
+    "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.1.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-cxs#readme",
   "keywords": [
@@ -22,8 +23,8 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">=2.0.0",
-    "cxs": ">=5.0.0"
+    "cxs": ">=5.0.0",
+    "gatsby": ">=2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-cxs",
   "scripts": {
