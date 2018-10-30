@@ -10,6 +10,8 @@ import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
+const MAX_DESCRIPTION_LENGTH = 100
+
 const EcosystemFeaturedItemRoot = styled("li")`
   flex-basis: ${props => `calc(100% / ${props.numberOfItems})`};
   float: left;
@@ -94,12 +96,18 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
     slug,
     name,
     description,
-    lastUpdated,
     stars,
-    gatsbyMajorVersion,
     humanDownloadsLast30Days,
     thumbnail,
   } = item
+
+  const cutTooLongDescription = str => {
+    if (str.length > MAX_DESCRIPTION_LENGTH) {
+      return `${str.substring(0, MAX_DESCRIPTION_LENGTH)}...`
+    }
+
+    return str
+  }
 
   return (
     <EcosystemFeaturedItemRoot numberOfItems={numberOfItems}>
@@ -124,7 +132,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
               <Img fixed={thumbnail} alt="" />
             </Thumbnail>
           )}
-          <Description>{description}</Description>
+          <Description>{cutTooLongDescription(description)}</Description>
         </Digest>
       </BlockLink>
     </EcosystemFeaturedItemRoot>
