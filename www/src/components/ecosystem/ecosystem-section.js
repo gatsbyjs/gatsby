@@ -13,8 +13,8 @@ import presets, { colors } from "../../utils/presets"
 
 const EcosysteSectionRoot = styled("section")`
   background: #fff;
-  margin-bottom: ${rhythm(0.5)};
   padding: 0 ${rhythm(options.blockMarginBottom)};
+  margin-bottom: ${rhythm(1 / 2)};
 
   ${presets.Tablet} {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
@@ -22,10 +22,20 @@ const EcosysteSectionRoot = styled("section")`
     display: flex;
     flex-direction: column;
     flex-grow: 0;
-    margin: 0 10px;
+    margin: 0 10px 20px;
     padding: ${rhythm(options.blockMarginBottom)};
     padding-bottom: 0;
-    width: 33.33%;
+    flex-basis: calc(50% - 20px);
+    max-height: 60vh;
+
+    :last-child {
+      flex-grow: 1;
+    }
+  }
+
+  ${presets.Desktop} {
+    flex-basis: calc(33.33% - 20px);
+    max-height: none;
 
     :last-child {
       align-self: flex-start;
@@ -37,6 +47,8 @@ const EcosysteSectionRoot = styled("section")`
   }
 `
 const Header = styled("header")`
+  align-items: flex-start;
+
   ${presets.Tablet}: {
     padding: ${rhythm(1)};
     padding: 10px;
@@ -45,7 +57,6 @@ const Header = styled("header")`
 `
 
 const Title = styled("h1")`
-  align-items: center;
   color: ${colors.gatsby};
   display: flex;
   font-size: 1.25rem;

@@ -12,10 +12,11 @@ const EcosystemBoardRoot = styled("div")`
 
   ${presets.Tablet} {
     flex-direction: row;
+    flex-wrap: wrap;
     height: calc(
       100vh - (${presets.bannerHeight} + ${presets.headerHeight} + 1px)
     );
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 1rem;
   }
 `
 
