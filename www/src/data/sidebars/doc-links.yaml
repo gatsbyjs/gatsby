@@ -58,7 +58,7 @@
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
-        - title: Static folder*
+        - title: Static folder
           link: /docs/static-folder/
         - title: Dropping images into static folders*
           link: /docs/dropping-images-into-static-folders/
