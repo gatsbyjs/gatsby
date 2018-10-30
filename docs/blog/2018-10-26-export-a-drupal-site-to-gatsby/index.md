@@ -112,6 +112,7 @@ To have comments on your site you can use a service like [Disqus](http://disqus.
 ```javascript
 const Database = require("better-sqlite3")
 const fs = require("fs")
+const yourSite = "http://username.github.io/yoursite/"
 
 if (process.argv.length < 3) {
   usage()
@@ -151,7 +152,7 @@ rows.forEach(row => {
     }
     console.log(`<item>
       <title>${row.title}</title>
-      <link>http://joaquin.axai.mx/${slug}</link>
+      <link>${yourSite}${slug}</link>
       <content:encoded><![CDATA[${row.body_value}]]></content:encoded>
       <dsq:thread_identifier>${row.nid}</dsq:thread_identifier>
       <wp:post_date_gmt>${getDisqusDate(date)}</wp:post_date_gmt>
@@ -208,4 +209,6 @@ function slugify(string) {
 }
 ```
 
-Run `node src/scripts/export_comments.js ../mysqlite.db > comments.xml` and that's it. You now have all your posts and all your comments ready to be used on your gatsby starter blog.
+Run `node src/scripts/export_comments.js ../mysqlite.db > comments.xml` and that's it. This will generate a **comments.xml** file that you can [import into disqus](https://import.disqus.com/). Just remember to change the **yourSite** variable in the script, and it will link each comment to the correct post in your new blog using the slug used in the posts import.
+
+You now have all the posts and all comments ready to be used on your gatsby starter blog. You can see a working example here: https://github.com/jackbravo/joaquin.axai.mx.
