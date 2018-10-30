@@ -8,7 +8,7 @@ const {
 } = require(`graphql`)
 const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 
-const runSift = require(`../run-sift`)
+const runSift = require(`../../redux/run-sift`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 const buildConnectionFields = require(`../build-connection-fields`)
 const {

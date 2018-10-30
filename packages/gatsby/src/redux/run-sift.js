@@ -1,7 +1,7 @@
 // @flow
 const sift = require(`sift`)
 const _ = require(`lodash`)
-const prepareRegex = require(`./prepare-regex`)
+const prepareRegex = require(`../utils/prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { getNode } = require(`../db/nodes`)

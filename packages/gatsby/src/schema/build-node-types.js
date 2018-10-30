@@ -194,7 +194,7 @@ module.exports = async ({ parentSpan }) => {
         args: filterFields,
         async resolve(a, args, context) {
           let path = context.path ? context.path : ``
-          const runSift = require(`./run-sift`)
+          const runSift = require(`../redux/run-sift`)
           let latestNodes
           if (
             process.env.NODE_ENV === `production` &&

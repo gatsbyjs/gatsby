@@ -87,7 +87,7 @@ module.exports = (types: any) => {
         if (typeof rootValue !== `undefined`) {
           path = rootValue.path
         }
-        const runSift = require(`./run-sift`)
+        const runSift = require(`../redux/run-sift`)
         const latestNodes = getNodesByType(type.name)
         const results = await runSift({
           args: resolveArgs,
