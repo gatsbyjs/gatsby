@@ -13,6 +13,9 @@ https://using-drupal.gatsbyjs.org/
 jsonapi used by your Drupal instance. The default value is `jsonapi`, which has
 been used since jsonapi version `8.x-1.0-alpha4`.
 
+`rateLimit` Option allows setting a request rate limit if Drupal sits on a 
+server with DDOS prevention enabled.
+
 ## Install
 
 `npm install --save gatsby-source-drupal`
@@ -27,6 +30,7 @@ plugins: [
     options: {
       baseUrl: `https://live-contentacms.pantheonsite.io/`,
       apiBase: `api`, // optional, defaults to `jsonapi`
+      rateLimit: 1000, // optional, ignored by default
     },
   },
 ]
