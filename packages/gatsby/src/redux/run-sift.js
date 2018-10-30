@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
-const { getNode } = require(`../db/nodes`)
+const { getNode, getNodesByType } = require(`../db/nodes`)
 
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
@@ -49,16 +49,12 @@ function awaitSiftField(fields, node, k) {
  * @returns Collection of results. Collection will be limited to size
  * if `firstOnly` is true
  */
-module.exports = ({
-  args,
-  nodes,
-  type,
-  typeName,
-  firstOnly = false,
-}: Object) => {
+module.exports = ({ queryArgs, gqlType, firstOnly = false }: Object) => {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
-  const clonedArgs = JSON.parse(JSON.stringify(args))
+  const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
+
+  const nodes = getNodesByType(gqlType.name)
 
   const siftifyArgs = object => {
     const newObject = {}
@@ -183,7 +179,7 @@ module.exports = ({
     return resolveRecursive(
       getNode(siftArgs[0].id[`$eq`]),
       fieldsToSift,
-      type.getFields()
+      gqlType.getFields()
     ).then(node => (node ? [node] : []))
   }
 
@@ -191,7 +187,8 @@ module.exports = ({
     const nodesCacheKey = JSON.stringify({
       // typeName + count being the same is a pretty good
       // indication that the nodes are the same.
-      typeName,
+      typeName: gqlType.name,
+      firstOnly,
       nodesLength: nodes.length,
       ...fieldsToSift,
     })
@@ -214,7 +211,7 @@ module.exports = ({
           }
 
           const enhancedNodeGenerationPromise = new Promise(resolve => {
-            resolveRecursive(node, fieldsToSift, type.getFields()).then(
+            resolveRecursive(node, fieldsToSift, gqlType.getFields()).then(
               resolvedNode => {
                 trackInlineObjectsInRootNode(resolvedNode)
                 if (cacheKey) {
