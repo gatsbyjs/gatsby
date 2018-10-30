@@ -273,6 +273,13 @@ export function inferInputObjectStructureFromNodes({
       const nodeToFind = isArray ? value[0] : value
       const linkedNode = findLinkedNode(nodeToFind)
 
+      // Fall back if the linked node can't be found. Prevents crashing, and is
+      // picked up in infer-graphql-type.js with an error that gives context to
+      // the user about which node is missing
+      if (!linkedNode) {
+        return
+      }
+
       // Get from cache if found, else store into it
       if (linkedNodeCache[linkedNode.internal.type]) {
         value = linkedNodeCache[linkedNode.internal.type]
