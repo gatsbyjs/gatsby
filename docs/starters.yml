@@ -1061,3 +1061,12 @@
     - Antd component library pre-installed
     - Uses gatsby-plugin-antd for modular imports
     - Customize the theme of Antd with `modifyVars`
+- url: http://jackbravo.github.io/gatsby-starter-i18n-blog/
+  repo: https://github.com/jackbravo/gatsby-starter-i18n-blog
+  description: Same as official gatsby-starter-blog but with i18n support
+  tags:
+    - i18n
+    - Blog
+  features:
+    - Translates site name and bio using .md files
+    - No extra libraries needed
