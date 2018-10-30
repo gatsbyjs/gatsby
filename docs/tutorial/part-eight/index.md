@@ -85,7 +85,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 npm install --save gatsby-plugin-manifest
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file (don't forget to add the icon yourself as we don't supply one).
 
 ```javascript:title=gatsby-config.js
 {
