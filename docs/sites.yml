@@ -3139,3 +3139,15 @@
   built_by: Kent C. Dodds
   built_by_url: https://kentcdodds.com/
   featured: false
+- title: Use Hooks
+  description: >
+    One new React Hook recipe every day.
+  url: https://usehooks.com/
+  main_url: https://usehooks.com/
+  categories:
+    - Learning
+    - Tips
+    - React
+  built_by: Gabe Ragland
+  built_by_url: https://twitter.com/gabe_ragland
+  featured: false
