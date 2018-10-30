@@ -27,5 +27,5 @@ and graphql fragments. For further discussion and relevant prototypes see
 [#1866](https://github.com/gatsbyjs/gatsby/issues/1866).
 
 The last thing of note is this example's `gatsby-node.js`. Gatsby by default
-will create Page on any JavaScript file within `src/pages`. This example does not
+will createPage on any JavaScript file within `src/pages`. This example does not
 use that folder to opt for more control in how pages are created.
