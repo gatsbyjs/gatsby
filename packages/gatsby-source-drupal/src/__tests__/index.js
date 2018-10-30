@@ -9,6 +9,25 @@ jest.mock(`axios`, () => {
         return null
       }
     },
+    create: path => {
+      return {
+        get: path => {
+          const last = path.split(`/`).pop()
+          try {
+            return { data: require(`./fixtures/${last}.json`) }
+          }
+          catch (e) {
+            console.log(`Error`, e)
+            return null
+          }
+        },
+        interceptors: {
+          request: {
+            use: fn => fn,
+          },
+        },
+      }
+    },
   }
 })
 
@@ -26,7 +45,7 @@ describe(`gatsby-source-drupal`, () => {
       },
     }
 
-    await sourceNodes(args, { baseUrl: `http://fixture` })
+    await sourceNodes(args, { baseUrl: `http://fixture`, rateLimit: 500, })
   })
 
   it(`Generates nodes`, () => {

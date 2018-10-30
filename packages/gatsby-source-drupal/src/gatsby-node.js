@@ -14,7 +14,7 @@ const createContentDigest = obj =>
 
 exports.sourceNodes = async (
   { actions, getNode, hasNodeChanged, store, cache, createNodeId },
-  { baseUrl, apiBase }
+  { baseUrl, apiBase, rateLimit }
 ) => {
   const { createNode } = actions
 
@@ -30,6 +30,28 @@ exports.sourceNodes = async (
   // console.time(`fetch Drupal data`)
   console.log(`Starting to fetch data from Drupal`)
 
+  // Create axiosClient on baseUrl.
+  const axiosClient = axios.create({ baseURL: `${baseUrl}`, })
+
+  // Do we have a rate limit? Then apply.
+  if (rateLimit) {
+    let lastCalled
+
+    const rateLimiter = call => {
+      const now = Date.now()
+      if (lastCalled) {
+        lastCalled += rateLimit
+        const wait = lastCalled - now
+        if (wait > 0) {
+          return new Promise(resolve => setTimeout(() => resolve(call), wait))
+        }
+      }
+      lastCalled = now
+      return call
+    }
+    axiosClient.interceptors.request.use(rateLimiter)
+  }
+
   // TODO restore this
   // let lastFetched
   // if (
@@ -40,7 +62,8 @@ exports.sourceNodes = async (
   // .lastFetched
   // }
 
-  const data = await axios.get(`${baseUrl}/${apiBase}`)
+  // Fetch data and process.
+  const data = await axiosClient.get(`/${apiBase}`)
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
@@ -54,7 +77,7 @@ exports.sourceNodes = async (
 
         let d
         try {
-          d = await axios.get(url)
+          d = await axiosClient.get(url)
         } catch (error) {
           if (error.response && error.response.status == 405) {
             // The endpoint doesn't support the GET method, so just skip it.
