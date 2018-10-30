@@ -1055,7 +1055,6 @@
   tags:
     - i18n
     - Blog
-    - Styling:None
   features:
     - Translates site name and bio using .md files
     - No extra libraries needed
