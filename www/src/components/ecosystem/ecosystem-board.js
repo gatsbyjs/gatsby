@@ -11,10 +11,6 @@ const EcosystemBoardRoot = styled("div")`
   flex-direction: column;
 
   ${presets.Tablet} {
-    background-image: url(${props => props.background});
-    background-position: 1.5rem 2rem;
-    background-size: cover;
-    background-repeat: no-repeat;
     flex-direction: row;
     height: calc(
       100vh - (${presets.bannerHeight} + ${presets.headerHeight} + 1px)
@@ -30,7 +26,7 @@ const EcosystemBoard = ({
   background,
 }) => {
   return (
-    <EcosystemBoardRoot background={background}>
+    <EcosystemBoardRoot>
       <EcosystemSection
         title="Plugin Library"
         description="With 429 plugins, lorem ipsum sunt we need some proper copy here pulling in data from your favorite source is only a few mouseclicks away."
@@ -71,7 +67,6 @@ EcosystemBoard.propTypes = {
   icons: PropTypes.object,
   starters: PropTypes.array,
   plugins: PropTypes.array,
-  background: PropTypes.string,
 }
 
 export default EcosystemBoard

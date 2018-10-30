@@ -11,7 +11,6 @@ import EcosystemBoard from "../components/ecosystem/ecosystem-board"
 
 import { EcosystemIcon } from "../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../assets/ecosystem-icons"
-import background from "../assets/ecosystem-background.svg"
 
 class EcosystemPage extends Component {
   render() {
@@ -61,7 +60,6 @@ class EcosystemPage extends Component {
           icons={boardIcons}
           starters={starters}
           plugins={plugins}
-          background={background}
         />
       </Layout>
     )
