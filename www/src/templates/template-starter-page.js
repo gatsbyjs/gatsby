@@ -60,9 +60,10 @@ class StarterTemplate extends React.Component {
             <Helmet>
               <title>{`${repoName}: Gatsby Starter`}</title>
               <meta
-                name="og:image"
+                property="og:image"
                 content={screenshotFile.childImageSharp.fluid.src}
               />
+              <meta property="og:image:alt" content="Gatsby Logo" />
               <meta
                 name="twitter:image"
                 content={screenshotFile.childImageSharp.fluid.src}
@@ -72,15 +73,16 @@ class StarterTemplate extends React.Component {
                 content={`Gatsby Starter: ${repoName}`}
               />
               <meta
-                name="og:description"
+                property="og:description"
                 content={`Gatsby Starter: ${repoName}`}
               />
               <meta
                 name="twitter:description"
                 content={`Gatsby Starter: ${repoName}`}
               />
-              <meta name="og:title" content={repoName} />
-              <meta name="og:type" content="article" />
+              <meta property="og:site_name" content={repoName} />
+              <meta property="og:title" content={repoName} />
+              <meta property="og:type" content="article" />
               <meta name="twitter.label1" content="Reading time" />
               <meta name="twitter:data1" content={`1 min read`} />
             </Helmet>

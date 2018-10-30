@@ -1,10 +1,13 @@
 const path = require(`path`)
+const fs = require(`fs-extra`)
 
 jest.mock(`async/queue`, () => () => {
   return {
     push: jest.fn(),
   }
 })
+
+fs.ensureDirSync = jest.fn()
 
 const {
   base64,
@@ -69,8 +72,8 @@ describe(`gatsby-plugin-sharp`, () => {
         file,
       })
 
-      expect(result.src.indexOf(file.name)).toBe(8)
-      expect(result.srcSet.indexOf(file.name)).toBe(8)
+      expect(path.parse(result.src).name).toBe(file.name)
+      expect(path.parse(result.srcSet).name).toBe(file.name)
     })
 
     it(`accounts for pixel density`, async () => {

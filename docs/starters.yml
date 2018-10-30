@@ -998,6 +998,7 @@
   repo: https://github.com/GatsbyCentral/gatsby-v2-starter-casper
   description: A blog starter based on the Casper (v1.4) theme.
   tags:
+    - Blog
     - PWA
   features:
     - Page pagination
@@ -1011,6 +1012,7 @@
   repo: https://github.com/GatsbyCentral/gatsby-v2-starter-lumen
   description: A Gatsby v2 fork of the lumen starter.
   tags:
+    - Blog
     - RSS
     - Disqus
   features:
@@ -1026,3 +1028,86 @@
     - Offline support.
     - Google Analytics support.
     - Disqus Comments support.
+- url: https://gatsby-starter-firebase.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-starter-firebase
+  description: A Gatsby + Firebase Starter. With Authentication
+  tags:
+    - Styling:None
+    - Firebase
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Firebase
+    - Web App Manifest
+- url: http://gatsby-lightbox.416serg.me
+  repo: https://github.com/416serg/gatsby-starter-lightbox
+  description: Showcasing a custom lightbox implementation using `gatsby-image`
+  tags:
+    - Portfolio
+    - SEO
+    - Styling:Styled Components
+  features:
+    - Features a custom, accessible lightbox with gatsby-image
+    - Styled with styled-components using CSS Grid
+    - React Helmet for SEO
+- url: https://stoic-swirles-4bd808.netlify.com/
+  repo: https://github.com/cardiv/gatsby-starter-antd
+  description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
+  tags:
+    - Antd
+    - Styling:Less
+  features:
+    - Fork of Gatsby's default starter
+    - React Helmet, Manifest and offline support retained
+    - Antd component library pre-installed
+    - Uses gatsby-plugin-antd for modular imports
+    - Customize the theme of Antd with `modifyVars`
+- url: http://jackbravo.github.io/gatsby-starter-i18n-blog/
+  repo: https://github.com/jackbravo/gatsby-starter-i18n-blog
+  description: Same as official gatsby-starter-blog but with i18n support
+  tags:
+    - i18n
+    - Blog
+  features:
+    - Translates site name and bio using .md files
+    - No extra libraries needed
+- url: https://calpa.me/
+  repo: https://github.com/calpa/gatsby-starter-calpa-blog
+  description: Blog Template X Contentful, Twitter and Facebook style
+  tags:
+    - Blog
+    - Tags
+  features:
+    - GatsbyJS v2, faster than faster
+    - Not just Contentful content source, you can use any database
+    - Custom style
+    - Google Analytics
+    - Gitalk
+    - sitemap
+    - React FontAwesome
+    - SEO
+    - Offline support
+    - Web App Manifest
+    - Styled using SCSS
+    - Page pagination
+    - Netlify optimization
+- url: https://gatsby-starter-typescript-power-blog.majidhajian.com/
+  repo: https://github.com/mhadaily/gatsby-starter-typescript-power-blog
+  description: Minimal Personal Blog with Gatsby and Typescript
+  tags:
+    - PWA
+    - Blog
+    - TypeScript
+    - Markdown
+  features:
+    - Mobile-First approach in development
+    - TSLint & Prettier
+    - Offline support
+    - Category and Tag for post
+    - Type Safe by TypeScript
+    - Format Safe by TSLint, StyleLint and Prettier with Lint-Staged(Husky)
+    - Blog page
+    - Syntax highlighting in code blocks
+    - Pagination Ready
+    - Ready to deploy to Github pages
+    - Automatic RSS generation
+    - Automatic Sitemap generation

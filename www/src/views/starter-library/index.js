@@ -27,15 +27,15 @@ class StarterLibraryPage extends Component {
             content={`Gatsby Starters: ${filtersApplied}`}
           />
           <meta
-            name="og:description"
+            property="og:description"
             content={`Gatsby Starters: ${filtersApplied}`}
           />
           <meta
             name="twitter:description"
             content={`Gatsby Starters: ${filtersApplied}`}
           />
-          <meta name="og:title" content={filtersApplied} />
-          <meta name="og:type" content="article" />
+          <meta property="og:title" content={filtersApplied} />
+          <meta property="og:type" content="article" />
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`1 min read`} />
         </Helmet>

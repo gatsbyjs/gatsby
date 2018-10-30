@@ -22,7 +22,7 @@ First you need to install Jest and some more required packages. You need to
 install Babel 7 as it's required by Jest.
 
 ```sh
-npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy 'babel-core@^7.0.0-0' @babel/core @babel/preset-env @babel/preset-react @babel/plugin-proposal-class-properties @babel/plugin-proposal-optional-chaining
+npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy 'babel-core@^7.0.0-0' @babel/core babel-preset-gatsby
 ```
 
 Because Gatsby handles its own Babel configuration, you will need to manually
@@ -61,11 +61,7 @@ with a minimal config.
 
 ```js:title=jest-preprocess.js
 const babelOptions = {
-  presets: ["@babel/react", "@babel/env"],
-  plugins: [
-    "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-class-properties",
-  ],
+  presets: ["babel-preset-gatsby"],
 }
 
 module.exports = require("babel-jest").createTransformer(babelOptions)

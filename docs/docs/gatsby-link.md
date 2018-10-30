@@ -166,9 +166,9 @@ You can similarly check for file downloads:
 
 ```
   const file = /\.[0-9a-z]+$/i.test(to)
-  
+
   ...
-  
+
   if (internal) {
     if (file) {
         return (
@@ -183,5 +183,5 @@ You can similarly check for file downloads:
       </GatsbyLink>
     )
   }
-  
+
 ```

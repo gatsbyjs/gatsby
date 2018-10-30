@@ -985,4 +985,15 @@ describe(`filtering on linked nodes`, () => {
 
     expect(getExampleValues({ typeName: `Linked_A` })).toEqual(originalNode)
   })
+
+  it(`skips fields with missing nodes`, async () => {
+    const fields = inferInputObjectStructureFromNodes({
+      nodes: [],
+      exampleValue: {
+        movie___NODE: `foobar`,
+      },
+    }).inferredFields
+
+    expect(Object.keys(fields)).toHaveLength(0)
+  })
 })

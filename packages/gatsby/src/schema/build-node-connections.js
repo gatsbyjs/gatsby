@@ -10,7 +10,7 @@ const {
 } = require(`./infer-graphql-input-fields-from-fields`)
 const createSortField = require(`./create-sort-field`)
 const buildConnectionFields = require(`./build-connection-fields`)
-const { getNodes } = require(`../redux`)
+const { getNodesByType } = require(`../db/nodes`)
 
 module.exports = (types: any) => {
   const connections = {}
@@ -68,10 +68,7 @@ module.exports = (types: any) => {
           path = rootValue.path
         }
         const runSift = require(`./run-sift`)
-        const latestNodes = _.filter(
-          getNodes(),
-          n => n.internal.type === type.name
-        )
+        const latestNodes = getNodesByType(type.name)
         return runSift({
           args: resolveArgs,
           nodes: latestNodes,

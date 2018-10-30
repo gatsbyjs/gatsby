@@ -71,19 +71,27 @@ Mama Route URL: ${url}
         password: _auth.htaccess_pass,
       }
     }
-    
+
     if (_hostingWPCOM && _accessToken) {
       options.headers = {
         Authorization: `Bearer ${_accessToken}`,
       }
     }
-    
+
     allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)
   }
 
-  let entities = []
+  let entities = [
+    {
+      __type: `wordpress__site_metadata`,
+      name: allRoutes.data.name,
+      description: allRoutes.data.description,
+      url: allRoutes.data.url,
+      home: allRoutes.data.home,
+    },
+  ]
 
   if (allRoutes) {
     let validRoutes = getValidRoutes({

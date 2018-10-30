@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.9...gatsby-plugin-offline@2.0.10) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.8...gatsby-plugin-offline@2.0.9) (2018-10-24)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.7...gatsby-plugin-offline@2.0.8) (2018-10-23)
+
+### Features
+
+- update Workbox to 3.6.3 ([#9294](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/9294)) ([f53d457](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/f53d457))
+
 <a name="2.0.7"></a>
 
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.6...gatsby-plugin-offline@2.0.7) (2018-10-16)

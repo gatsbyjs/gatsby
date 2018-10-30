@@ -1,0 +1,17 @@
+{
+  "name": "query-benchmark",
+  "description": "Benchmarks for Gatsby query performance",
+  "license": "MIT",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "faker": "^4.1.0",
+    "gatsby": "next",
+    "lodash": "^4.17.11",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
+  }
+}

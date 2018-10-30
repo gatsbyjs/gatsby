@@ -18,6 +18,7 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
 import Button from "../components/button"
 import TechWithIcon from "../components/tech-with-icon"
+import EmailCaptureForm from "../components/email-capture-form"
 
 class IndexRoute extends React.Component {
   render() {
@@ -177,6 +178,14 @@ class IndexRoute extends React.Component {
                         paddingBottom: `0 !important`,
                       }}
                     >
+                      <EmailCaptureForm
+                        signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
+                        overrideCSS={{
+                          marginTop: 0,
+                          marginBottom: rhythm(2),
+                          border: `none`,
+                        }}
+                      />
                       <h2
                         css={{
                           textAlign: `left`,
