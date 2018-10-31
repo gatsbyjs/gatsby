@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled, { keyframes } from "react-emotion"
 
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
@@ -11,6 +11,7 @@ import { scrollbarStyles } from "../../utils/styles"
 const EcosystemFeaturedItemsRoot = styled(`div`)`
   overflow-x: scroll;
   margin: ${rhythm(0.1)} -${rhythm(options.blockMarginBottom)};
+  -webkit-overflow-scrolling: touch;
 
   ${presets.Tablet} {
     border-top: 1px solid ${colors.gray.superLight};
@@ -33,25 +34,31 @@ const List = styled(`ul`)`
     flex-direction: column;
     padding: 0;
     width: 100%;
+
+    .leadAnimation & {
+      animation: none;
+    }
   }
 `
 
-const EcosystemFeaturedItems = ({ items }) => (
-  <EcosystemFeaturedItemsRoot>
-    <List numberOfItems={items.length}>
-      {items.map(item => {
-        const { slug } = item
-        return (
-          <EcosystemFeaturedItem
-            key={slug}
-            item={item}
-            numberOfItems={items.length}
-          />
-        )
-      })}
-    </List>
-  </EcosystemFeaturedItemsRoot>
-)
+const EcosystemFeaturedItems = ({ items }) => {
+  return (
+    <EcosystemFeaturedItemsRoot className="featuredItems">
+      <List numberOfItems={items.length}>
+        {items.map(item => {
+          const { slug } = item
+          return (
+            <EcosystemFeaturedItem
+              key={slug}
+              item={item}
+              numberOfItems={items.length}
+            />
+          )
+        })}
+      </List>
+    </EcosystemFeaturedItemsRoot>
+  )
+}
 
 EcosystemFeaturedItems.propTypes = {
   items: PropTypes.array,
