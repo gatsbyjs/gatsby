@@ -3176,3 +3176,19 @@
     - History
     - Models
   featured: false
+- title: Clubhouse
+  main_url: https://clubhouse.io
+  url: https://clubhouse.io
+  description: >
+    The intuitive and powerful project management platform loved by software teams of all sizes. Built with Gatsby v2 and Prismic
+  categories:
+    - Technology
+    - Project Management
+    - Blog
+    - Productivity
+    - B2B Services
+    - Community
+    - Design
+    - Open Source
+  built_by: Ueno.
+  built_by_url: https://ueno.co

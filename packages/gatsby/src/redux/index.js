@@ -79,7 +79,9 @@ const saveState = state => {
   pickedState.components = mapToObject(pickedState.components)
   pickedState.nodes = mapToObject(pickedState.nodes)
 
-  const writeStream = fs.createWriteStream(`${process.cwd()}/.cache/redux-state.json`)
+  const writeStream = fs.createWriteStream(
+    `${process.cwd()}/.cache/redux-state.json`
+  )
 
   new stringify(pickedState, null, 2, true)
     .pipe(writeStream)
