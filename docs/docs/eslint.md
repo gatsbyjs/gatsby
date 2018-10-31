@@ -16,7 +16,7 @@ npm rm prettier
 
 # Install ESLint and its packages
 npm install --save-dev eslint babel-eslint \
-  eslint-config-standard \
+  eslint-config-standard eslint-plugin-node \
   eslint-plugin-standard eslint-plugin-react \
   eslint-plugin-import eslint-plugin-promise \
 ```
