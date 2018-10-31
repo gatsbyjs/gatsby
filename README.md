@@ -74,7 +74,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 [**Learn how to use Gatsby for your next project.**](https://gatsbyjs.org/docs/)
 
-## What’s In This Document
+## What’s In This Document?
 
 - [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
 - [Learning Gatsby](#-learning-gatsby)
@@ -132,7 +132,7 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 - [Migrate a Gatsby site from v1 to v2](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/)
 - Still on v0? Start here: [Migrate a Gatsby site from v0 to v1](https://gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 
-## 🤝 How to Contribute
+## 🤝 How to Contribute?
 
 Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
 
