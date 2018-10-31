@@ -19,7 +19,7 @@ function handleQueryResult({ results, resolveArgs: queryArgs, path }) {
     const connection = connectionFromArray(results, queryArgs)
     connection.totalCount = results.length
 
-    if (results.length > 0 && results[0].internal) {
+    if (results[0].internal) {
       const connectionType = connection.edges[0].node.internal.type
       createPageDependency({
         path,
