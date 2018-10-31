@@ -364,7 +364,7 @@ Next, build your site by running the following command in the terminal at the ro
 gatsby build
 ```
 
-The Building should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
+The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
 
 Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 
