@@ -53,8 +53,8 @@ RFC merged into the RFC repo as a markdown file. At that point the RFC is
 'active' and may be implemented with the goal of eventual inclusion into
 Gatsby.
 
-* Fork the RFC repo http://github.com/gatsbyjs/rfcs Copy `0000-template.md` to
-* `text/0000-my-feature.md` (where
+* Fork the RFC repo http://github.com/gatsbyjs/rfcs 
+* Copy `0000-template.md` to `text/0000-my-feature.md` (where
 'my-feature' is descriptive. Don't assign an RFC number yet).
 * Fill in the RFC. Put care into the details: **RFCs that do not
 present convincing motivation, demonstrate understanding of the impact of the
