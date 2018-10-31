@@ -1,6 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+// TODO: remove after successfully accessing this value
+console.log(`index: process.env.GATSBY_IMAGE_LOAD_POLYFILLS`, process.env.GATSBY_IMAGE_LOAD_POLYFILLS)
+
 // Handle legacy names for image queries.
 const convertProps = props => {
   let convertedProps = { ...props }
@@ -91,11 +94,30 @@ const noscriptImg = props => {
   const objectFit = props.objectFit
   const objectPosition = props.objectPosition
 
-  return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:${objectFit};object-position:${objectPosition};font-family:'object-fit:${objectFit};object-position:${objectPosition};'"/></picture>`
+  if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
+    return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:${objectFit};object-position:${objectPosition};font-family:'object-fit:${objectFit};object-position:${objectPosition};'"/></picture>`
+  } else {
+    return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:${objectFit};object-position:${objectPosition};"/></picture>`
+  }
 }
 
 const Img = React.forwardRef((props, ref) => {
   const { style, objectFit, objectPosition, onLoad, onError, ...otherProps } = props
+
+  const imgStyle = {
+    position: `absolute`,
+    top: 0,
+    left: 0,
+    width: `100%`,
+    height: `100%`,
+    objectFit: objectFit,
+    objectPosition: objectPosition,
+    ...style,
+  }
+
+  if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
+    imgStyle.fontFamily = `"object-fit: ${objectFit}; object-position: ${objectPosition}"`
+  }
 
   return (
     <img
@@ -103,17 +125,7 @@ const Img = React.forwardRef((props, ref) => {
       onLoad={onLoad}
       onError={onError}
       ref={ref}
-      style={{
-        position: `absolute`,
-        top: 0,
-        left: 0,
-        width: `100%`,
-        height: `100%`,
-        objectFit: objectFit,
-        objectPosition: objectPosition,
-        fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
-        ...style,
-      }}
+      style={imgStyle}
     />
   )
 })
@@ -223,13 +235,17 @@ class Image extends React.Component {
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
+    imgStyle.objectFit = objectFit
+    imgStyle.objectPosition = objectPosition
+
+    if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
+      imgStyle.fontFamily = `"object-fit: ${objectFit}; object-position: ${objectPosition}"`
+    }
+
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       transition: `opacity 0.5s`,
       transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
-      objectFit: objectFit,
-      objectPosition: objectPosition,
-      fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
       ...imgStyle,
       ...placeholderStyle,
     }
@@ -237,9 +253,6 @@ class Image extends React.Component {
     const imageStyle = {
       opacity: this.state.imgLoaded || this.state.fadeIn === false ? 1 : 0,
       transition: this.state.fadeIn === true ? `opacity 0.5s` : `none`,
-      objectFit: objectFit,
-      objectPosition: objectPosition,
-      fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
       ...imgStyle,
     }
 
@@ -487,8 +500,8 @@ Image.propTypes = {
   critical: PropTypes.bool,
   style: PropTypes.object,
   imgStyle: PropTypes.object,
-  objectFit: PropTypes.string, // needs to be separate for object-fit-image polyfill's font-family declaration
-  objectPosition: PropTypes.string, // needs to be separate for object-fit-image polyfill's font-family declaration
+  objectFit: PropTypes.string, // separate from imgStyle for polyfill's fontFamily declaration
+  objectPosition: PropTypes.string, // separate from imgStyle for polyfill's fontFamily declaration
   placeholderStyle: PropTypes.object,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
