@@ -6,7 +6,7 @@ const _ = require(`lodash`)
 
 const { emitter } = require(`../../redux`)
 const { boundActionCreators } = require(`../../redux/actions`)
-const { getNode } = require(`../../redux`)
+const { getNode } = require(`../../db/nodes`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>

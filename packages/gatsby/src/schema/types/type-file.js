@@ -6,7 +6,7 @@ const isRelativeUrl = require(`is-relative-url`)
 const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 
-const { getNodes } = require(`../../redux`)
+const { getNodesByType } = require(`../../db/nodes`)
 const { findRootNodeAncestor } = require(`../node-tracking`)
 const {
   createPageDependency,
@@ -108,7 +108,7 @@ function pointsToFile(nodes, key, value) {
   }
 
   const pathToOtherNode = normalize(joinPath(rootNode.dir, value))
-  const otherFileExists = getNodes().some(
+  const otherFileExists = getNodesByType(`File`).some(
     n => n.absolutePath === pathToOtherNode
   )
   return otherFileExists
@@ -148,8 +148,8 @@ function createType(fileNodeRootType, isArray) {
 
         // Use that path to find the linked File node.
         const linkedFileNode = _.find(
-          getNodes(),
-          n => n.internal.type === `File` && n.absolutePath === fileLinkPath
+          getNodesByType(`File`),
+          n => n.absolutePath === fileLinkPath
         )
         if (linkedFileNode) {
           createPageDependency({

@@ -5,6 +5,7 @@ module.exports = {
     "stylelint-config-styled-components",
   ],
   rules: {
+    "no-descending-specificity": null,
     "property-no-unknown": [
       true,
       {
