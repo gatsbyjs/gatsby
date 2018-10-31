@@ -1,9 +1,6 @@
 "use strict"
 
 exports.onClientEntry = () => {
-  // TODO: remove after successfully accessing this value
-  console.log(`process.env.GATSBY_IMAGE_LOAD_POLYFILLS`, process.env.GATSBY_IMAGE_LOAD_POLYFILLS)
-
   if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
     // IntersectionObserver polyfill for gatsby-image (Safari, IE)
     if (typeof window.IntersectionObserver === `undefined`) {
