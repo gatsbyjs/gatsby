@@ -1,9 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-// TODO: remove after successfully accessing this value
-console.log(`index: process.env.GATSBY_IMAGE_LOAD_POLYFILLS`, process.env.GATSBY_IMAGE_LOAD_POLYFILLS)
-
 // Handle legacy names for image queries.
 const convertProps = props => {
   let convertedProps = { ...props }
