@@ -21,7 +21,13 @@ import "typeface-spectral"
 
 const Content = styled("div")`
   padding-top: ${presets.bannerHeight};
-  height: 200vh;
+  padding-bottom: 3.5rem;
+
+  ${presets.Tablet} {
+    margin-left: ${presets.pageHeadingDesktopWidth};
+    padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
+    padding-bottom: 0;
+  }
 `
 
 const StyledSkipNavLink = styled(SkipNavLink)`

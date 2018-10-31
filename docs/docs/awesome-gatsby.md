@@ -62,7 +62,6 @@ See the [list of official and community plugins](/docs/plugins/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
 - [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
 
-
 ## Other resources
 
 ### DEV Community

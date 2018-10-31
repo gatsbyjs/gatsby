@@ -77,7 +77,7 @@ Examples:
 
 - Copy post attachments defined in your Markdown files:
 
-  Link to your attachments in the markdown frontmatter:
+  Link to your attachments in the markdown front matter:
 
 ```markdown
 ---
@@ -108,9 +108,7 @@ query($slug: String!) {
 
 ## Using the `static` Folder
 
-### Adding Assets Outside of the Module System
-
-You can also add other assets to a `static` folder at the root of your project.
+You can also add other assets to a `static` folder at the root of your project. Check the [static folder](/docs/static-folder/) page to learn more.
 
 Note that we normally encourage you to `import` assets in JavaScript files
 instead. This mechanism provides a number of benefits:
@@ -121,7 +119,7 @@ instead. This mechanism provides a number of benefits:
 - Result filenames include content hashes so you don’t need to worry about
   browsers caching their old versions.
 
-However there is an **escape hatch** that you can use to add an asset outside of
+However, there is an **escape hatch** that you can use to add an asset outside of
 the module system.
 
 If you put a file into the `static` folder, it will **not** be processed by

@@ -1,5 +1,6 @@
 import React from "react"
-import { css } from "emotion"
+import PropTypes from "prop-types"
+import { css } from "react-emotion"
 import { graphql } from "gatsby"
 import { rhythm, scale } from "../utils/typography"
 
@@ -13,8 +14,8 @@ const postContainer = css`
 const postDate = css`
   ${scale(-1 / 5)};
   display: block;
-  marginbottom: ${rhythm(1)};
-  margintop: ${rhythm(-1)};
+  margin-bottom: ${rhythm(1)};
+  margin-top: ${rhythm(-1)};
 `
 
 class BlogPostTemplate extends React.Component {
@@ -35,6 +36,12 @@ class BlogPostTemplate extends React.Component {
 }
 
 export default BlogPostTemplate
+
+BlogPostTemplate.propTypes = {
+  data: PropTypes.shape({
+    markdownRemark: PropTypes.object.isRequired,
+  }).isRequired,
+}
 
 export const pageQuery = graphql`
   query($path: String!) {

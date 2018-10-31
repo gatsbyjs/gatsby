@@ -226,6 +226,7 @@ class Image extends React.Component {
       objectFit,
       objectPosition,
       placeholderStyle = {},
+      placeholderClassName,
       fluid,
       fixed,
       backgroundColor,
@@ -256,6 +257,13 @@ class Image extends React.Component {
       ...imgStyle,
     }
 
+    const placeholderImageProps = {
+      title, 
+      alt: !this.state.isVisible ? alt : ``,
+      style: imagePlaceholderStyle,
+      className: placeholderClassName,
+    } 
+
     if (fluid) {
       const image = fluid
 
@@ -280,22 +288,12 @@ class Image extends React.Component {
 
           {/* Show the blurry base64 image. */}
           {image.base64 && (
-            <Img
-              alt={!this.state.isVisible ? alt : ``}
-              title={title}
-              src={image.base64}
-              style={imagePlaceholderStyle}
-            />
-          )}
+            <Img src={image.base64} {...placeholderImageProps} />
+            )}
 
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
-            <Img
-              alt={!this.state.isVisible ? alt : ``}
-              title={title}
-              src={image.tracedSVG}
-              style={imagePlaceholderStyle}
-            />
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Show a solid background color. */}
@@ -376,22 +374,12 @@ class Image extends React.Component {
         >
           {/* Show the blurry base64 image. */}
           {image.base64 && (
-            <Img
-              alt={!this.state.isVisible ? alt : ``}
-              title={title}
-              src={image.base64}
-              style={imagePlaceholderStyle}
-            />
+            <Img src={image.base64} {...placeholderImageProps} />
           )}
 
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
-            <Img
-              alt={!this.state.isVisible ? alt : ``}
-              title={title}
-              src={image.tracedSVG}
-              style={imagePlaceholderStyle}
-            />
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Show a solid background color. */}
@@ -503,6 +491,7 @@ Image.propTypes = {
   objectFit: PropTypes.string, // separate from imgStyle for polyfill's fontFamily declaration
   objectPosition: PropTypes.string, // separate from imgStyle for polyfill's fontFamily declaration
   placeholderStyle: PropTypes.object,
+  placeholderClassName: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
