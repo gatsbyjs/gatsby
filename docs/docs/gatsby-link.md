@@ -78,7 +78,7 @@ render () {
 Using `replace` also won't scroll the page after navigation.
 ## Passing props to Link targets 
 
-Sometimes you'll want to pass "props/state" from the source page to the page being linked to. You can do this by passing a **state** prop to the Link component or call to navigate function. The target component will have a prop called *location* white a child called *state* which will have to contents you passed. 
+Sometimes you'll want to pass "props/state" from the source page to the page being linked to. You can do this by passing a **state** prop to the Link component or call the navigate function. The target component will have a prop called *location* with a child called *state* which will have the contents you passed. 
 
 ```jsx
 const NewsFeed = () => (
