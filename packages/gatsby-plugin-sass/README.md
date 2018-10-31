@@ -47,8 +47,6 @@ plugins: [
 ]
 ```
 
-*This particular change would restore Gatsby v1 CSS modules behavior.*
-
 ### With CSS Modules
 
 Using CSS Modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.scss` -> `App.module.scss`.
