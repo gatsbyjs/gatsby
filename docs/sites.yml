@@ -3193,3 +3193,15 @@
     - History
     - Models
   featured: false
+- title: QHacks
+  url: https://qhacks.io
+  main_url: https://qhacks.io
+  source_url: https://github.com/qhacks/qhacks-website
+  description: >
+    QHacks is Queen’s University’s annual hackathon! QHacks was founded in 2016 with a mission to advocate and incubate the tech community at Queen’s University and throughout Canada.
+  categories:
+    - Hackathon
+    - Education
+    - Technology
+    - Podcast
+  featured: false
