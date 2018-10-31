@@ -1,4 +1,4 @@
-import { observable, action, decorate } from 'mobx'
+import { observable, action, decorate } from "mobx"
 
 class CounterModel {
   Count = 0

@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { Link } from 'gatsby'
-import Counter from './Counter'
+import React, { Component } from "react"
+import { Link } from "gatsby"
+import Counter from "./Counter"
 
-import DevTools from 'mobx-react-devtools'
+import DevTools from "mobx-react-devtools"
 
 class DefaultLayout extends Component {
   render() {

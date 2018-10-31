@@ -1,5 +1,5 @@
 # MOBX
-[Using mobx with gatsby](https://jonniebigodes.github.io/gatsby-example-mobx/)
+[Using mobx with gatsby](https://dazzling-meninsky-6f4ac3.netlify.com/)
 
 
 Gatsby example site that shows use of mobx.

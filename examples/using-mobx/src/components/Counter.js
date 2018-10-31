@@ -1,5 +1,5 @@
-import React ,{ Fragment } from 'react'
-import { observer, inject } from 'mobx-react'
+import React, { Fragment } from "react"
+import { observer, inject } from "mobx-react"
 
 const Counter = inject(`store`)(
   observer(({ store }) => (
@@ -10,8 +10,7 @@ const Counter = inject(`store`)(
         <button onClick={() => store.Decrement()}>Subtract</button>
       </div>
     </Fragment>
-  )
-  )
+  ))
 )
 
 export default Counter
