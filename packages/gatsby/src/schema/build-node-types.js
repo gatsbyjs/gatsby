@@ -193,7 +193,7 @@ module.exports = async ({ parentSpan }) => {
         type: gqlType,
         args: filterFields,
         async resolve(a, args, context) {
-          let path = context.path ? context.path : ``
+          const path = context.path ? context.path : ``
           const runSift = require(`./run-sift`)
           let latestNodes
           if (
