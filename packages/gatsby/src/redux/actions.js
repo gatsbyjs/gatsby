@@ -9,7 +9,7 @@ const path = require(`path`)
 const fs = require(`fs`)
 const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
-const { hasNodeChanged, getNode } = require(`./index`)
+const { hasNodeChanged, getNode } = require(`../db/nodes`)
 const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
 const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
@@ -87,7 +87,7 @@ const fileOkCache = {}
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
- * for detailed documenation about creating pages.
+ * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
@@ -1093,7 +1093,8 @@ actions.createRedirect = ({
   // url.parse will not cover protocol-relative urls so do a separate check for those
   const parsed = url.parse(toPath)
   const isRelativeProtocol = toPath.startsWith(`//`)
-  const toPathPrefix = parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+  const toPathPrefix =
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
 
   return {
     type: `CREATE_REDIRECT`,

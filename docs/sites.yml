@@ -533,16 +533,19 @@
     - Web Development
     - Technology
 - title: Caddy Smells Like Trees
-  main_url: "https://caddysmellsliketrees.ru/"
-  url: "https://caddysmellsliketrees.ru/"
+  main_url: "https://caddysmellsliketrees.ru"
+  url: "https://caddysmellsliketrees.ru/en"
   source_url: "https://github.com/podabed/caddysmellsliketrees.github.io"
-  featured: false
   description: >-
     We play soul-searching songs for every day. They are merging in our forests
     in such a way that it is difficult to separate them from each other, and
     between them bellow bold deer poems.
   categories:
     - Music
+    - Gallery
+  built_by: Dmitrij Podabed, Alexander Nikitin
+  built_by_url: https://podabed.org
+  featured: false
 - title: Calpa's Blog
   main_url: "https://calpa.me/"
   url: "https://calpa.me/"
@@ -2923,6 +2926,12 @@
   built_by: Kiko Beats
   built_by_url: https://kikobeats.com/
   featured: false
+- title: Markets.com
+  main_url: "https://www.markets.com/"
+  url: "https://www.markets.com/"
+  featured: false
+  categories:
+    - Finance
 - title: Kevin Legrand
   url: "https://k-legrand.com"
   main_url: "https://k-legrand.com"
@@ -2986,3 +2995,174 @@
     - Education
   built_by: Dante Calderón
   built_by_url: https://github.com/dantehemerson
+- title: "The Noted Project"
+  url: https://thenotedproject.org
+  main_url: https://thenotedproject.org
+  source_url: https://github.com/ianbusko/the-noted-project
+  description: >
+    Website to showcase the ethnomusicology research for The Noted Project.
+  categories:
+    - Portfolio
+    - Education
+    - Gallery
+  built_by: Ian Busko
+  built_by_url: https://github.com/ianbusko
+  featured: false
+- title: "LANDR"
+  url: https://www.landr.com/
+  main_url: https://www.landr.com/
+  description: >
+    LANDR is the place to create, master and sell your music.
+  categories:
+    - AI
+    - Business
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Media
+    - Music
+  built_by: LANDR
+  built_by_url: https://twitter.com/landr_music
+  featured: false
+- title: Got Milk
+  main_url: "https://www.gotmilk.com/"
+  url: "https://www.gotmilk.com/"
+  featured: false
+  categories:
+    - Food
+    - Miscellaneous
+- title: People For Bikes
+  url: "https://2017.peopleforbikes.org/"
+  main_url: "https://2017.peopleforbikes.org/"
+  categories:
+    - Community
+    - Sport
+    - Gallery
+    - Nonprofit
+  built_by: PeopleForBikes
+  built_by_url: "https://peopleforbikes.org/about-us/who-we-are/staff/"
+  featured: false
+- title: Wide Eye
+  description: >
+    Creative agency specializing in interactive design, web development, and digital communications.
+  url: https://wideeye.co/
+  main_url: https://wideeye.co/
+  categories:
+    - Design
+    - Web Development
+  built_by: Wide Eye
+  built_by_url: https://wideeye.co/about-us/
+  featured: false
+- title: Guster
+  description: >
+    American alternative rock band from Boston, Massachusetts.
+  url: http://guster.com/
+  main_url: http://guster.com/
+  categories:
+    - Music
+  featured: false
+- title: CodeSandbox
+  description: >
+    CodeSandbox is an online editor that helps you create web applications, from prototype to deployment.
+  url: https://codesandbox.io/
+  main_url: https://codesandbox.io/
+  categories:
+    - Web Development
+  featured: false
+- title: Marvel
+  description: >
+    The all-in-one platform powering design.
+  url: https://marvelapp.com/
+  main_url: https://marvelapp.com/
+  categories:
+    - Design
+  featured: false
+- title: Designcode.io
+  description: >
+    Learn to design and code React apps.
+  url: https://designcode.io
+  main_url: https://designcode.io
+  categories:
+    - Learning
+  featured: false
+- title: Happy Design
+  description: >
+    The Brand and Product Team Behind Happy Money
+  url: https://design.happymoney.com/
+  main_url: https://design.happymoney.com/
+  categories:
+    - Design
+    - Finance
+- title: Weihnachtsmarkt.ms
+  description: >
+    Explore the christmas market in Münster (Westf).
+  url: https://weihnachtsmarkt.ms/
+  main_url: https://weihnachtsmarkt.ms/
+  source_url: https://github.com/codeformuenster/weihnachtsmarkt
+  categories:
+    - Gallery
+    - Food
+  built_by: "Code for Münster during #MSHACK18"
+  featured: false
+- title: Code Championship
+  description: >
+    Competitive coding competitions for students from 3rd to 8th grade. Code is Sport.
+  url: https://www.codechampionship.com
+  main_url: https://www.codechampionship.com
+  categories:
+    - Learning
+    - Education
+    - Sport
+  built_by: Abamath LLC
+  built_by_url: https://www.abamath.com
+  featured: false
+- title: Wieden+Kennedy
+  description: >
+    Wieden+Kennedy is an independent, global creative company.
+  categories:
+    - Technology
+    - Web Development
+    - Agency
+    - Marketing
+  url: https://www.wk.com
+  main_url: https://www.wk.com
+  built_by: Wieden Kennedy
+  built_by_url: https://www.wk.com/about/
+  featured: false
+- title: Testing JavaScript
+  description: >
+    This course will teach you the fundamentals of testing your JavaScript applications using eslint, Flow, Jest, and Cypress.
+  url: https://testingjavascript.com/
+  main_url: https://testingjavascript.com/
+  categories:
+    - Learning
+    - Education
+    - Testing
+    - JavaScript
+  built_by: Kent C. Dodds
+  built_by_url: https://kentcdodds.com/
+  featured: false
+- title: Use Hooks
+  description: >
+    One new React Hook recipe every day.
+  url: https://usehooks.com/
+  main_url: https://usehooks.com/
+  categories:
+    - Learning
+    - Tips
+    - React
+  built_by: Gabe Ragland
+  built_by_url: https://twitter.com/gabe_ragland
+  featured: false
+- title: Ambassador
+  url: https://www.getambassador.io
+  main_url: https://www.getambassador.io
+  description: >
+    Open source, Kubernetes-native API Gateway for microservices built on Envoy.
+  categories:
+    - Open Source
+    - Documentation
+    - Technology
+  built_by: Datawire
+  built_by_url: https://www.datawire.io
+  featured: false

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.10"></a>
+
+## [3.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.9...gatsby-source-wordpress@3.0.10) (2018-10-29)
+
+### Features
+
+- **gatsby-source-wordpress:** normalize baseUrl ([#9386](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9386)) ([2235bf9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/2235bf9))
+
+<a name="3.0.9"></a>
+
+## [3.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.8...gatsby-source-wordpress@3.0.9) (2018-10-24)
+
+### Features
+
+- **gatsby-source-wordpress:** create site metadata node ([#9329](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9329)) ([2103e87](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/2103e87)), closes [#8051](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/8051)
+
+<a name="3.0.8"></a>
+
+## [3.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.7...gatsby-source-wordpress@3.0.8) (2018-10-23)
+
+### Bug Fixes
+
+- throw error instead of string ([#9284](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9284)) ([bcdd834](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/bcdd834)), closes [#9283](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9283)
+
 <a name="3.0.7"></a>
 
 ## [3.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.6...gatsby-source-wordpress@3.0.7) (2018-10-19)

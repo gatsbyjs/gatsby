@@ -1,8 +1,19 @@
 *.min.js
 **/node_modules/**
-benchmarks/**/public
-examples/**/public
 flow-typed
+
+# built sites
+benchmarks/**/public
+e2e-tests/**/public
+examples/**/public
 integration-tests/**/public
-packages/**/dist
 www/public
+
+# ignore built packages
+packages/*/*.js
+packages/gatsby/cache-dir/commonjs
+packages/gatsby/dist
+
+# fixtures
+**/__testfixtures__/**
+**/__tests__/fixtures/**

@@ -20,8 +20,6 @@
       items:
         - title: Preparing your site for deployment*
           link: /docs/preparing-for-deployment/
-        - title: Deploying
-          link: /docs/deploy-gatsby/
         - title: Deploying to S3 and CloudFront
           link: /docs/deploying-to-s3-cloudfront
         - title: Deploying to Aerobatic
@@ -60,7 +58,7 @@
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
-        - title: Static folder*
+        - title: Static folder
           link: /docs/static-folder/
         - title: Dropping images into static folders*
           link: /docs/dropping-images-into-static-folders/
@@ -77,7 +75,7 @@
     - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
-        - title: Using Unstructured Data
+        - title: Using unstructured data
           link: /docs/using-unstructured-data/
         - title: Sourcing from the filesystem*
           link: /docs/sourcing-from-the-filesystem/
@@ -94,12 +92,10 @@
               link: /docs/sourcing-from-netlify-cms/
             - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
-            - title: Sourcing from Drupal*
+            - title: Sourcing from Drupal
               link: /docs/sourcing-from-drupal/
-            - title: Sourcing from Contentful*
+            - title: Sourcing from Contentful
               link: /docs/sourcing-from-contentful/
-            - title: Sourcing from Prose*
-              link: /docs/sourcing-from-prose/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
@@ -119,7 +115,7 @@
           link: /docs/adding-a-list-of-markdown-blog-posts/
         - title: Using fragments
           link: /docs/using-fragments/
-        - title: Creating slugs for pages*
+        - title: Creating slugs for pages
           link: /docs/creating-slugs-for-pages/
         - title: Programmatically create pages from data*
           link: /docs/programmatically-create-pages-from-data/
@@ -128,7 +124,7 @@
       items:
         - title: Plugin authoring
           link: /docs/plugin-authoring/
-        - title: Create a Transformer Plugin*
+        - title: Create a Transformer Plugin
           link: /docs/create-transformer-plugin/
         - title: Create a Source Plugin
           link: /docs/create-source-plugin/
@@ -171,6 +167,8 @@
           link: /docs/testing-css-in-js/
         - title: Testing React components
           link: /docs/testing-react-components/
+        - title: Visual testing with Storybook
+          link: /docs/visual-testing-with-storybook/
     - title: Debugging
       link: /docs/debugging/
       items:
@@ -187,7 +185,7 @@
       items:
         - title: Client data fetching*
           link: /docs/client-data-fetching/
-        - title: Building a site with authentication*
+        - title: Building a site with authentication
           link: /docs/building-a-site-with-authentication/
         - title: Building an e-commerce site*
           link: /docs/building-an-e-commerce-site/
@@ -200,11 +198,11 @@
         - title: Building an image-heavy site*
           link: /docs/building-an-image-heavy-site/
     - title: Adding website functionality
-      link: /docs/adding-third-party-services/
+      link: /docs/adding-website-functionality/
       items:
         - title: Adding search
           link: /docs/adding-search/
-        - title: Adding analytics*
+        - title: Adding analytics
           link: /docs/adding-analytics/
         - title: Adding forms*
           link: /docs/adding-forms/
@@ -220,8 +218,6 @@
           link: /docs/creating-a-sitemap/
         - title: Linking between pages
           link: /docs/linking-between-pages/
-        - title: Interactive pages*
-          link: /docs/interactive-pages/
         - title: Routing
           link: /docs/routing/
           items:
@@ -246,10 +242,8 @@
           link: /docs/audit-with-lighthouse/
         - title: Add a Manifest File
           link: /docs/add-a-manifest-file/
-        - title: Add Offline Support
-          link: /docs/add-offline-support/
-        - title: Add a Service Worker
-          link: /docs/add-a-service-worker/
+        - title: Add Offline Support with a Service Worker
+          link: /docs/add-offline-support-with-a-service-worker
         - title: Add Page Metadata
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)
@@ -278,9 +272,9 @@
       link: /docs/api-specification/
 - title: Releases & Migration
   items:
-    - title: v2 release notes*
+    - title: v2 release notes
       link: /docs/v2-release-notes/
-    - title: v1 release notes*
+    - title: v1 release notes
       link: /docs/v1-release-notes/
     - title: Migrating from v1 to v2
       link: /docs/migrating-from-v1-to-v2/
@@ -298,8 +292,6 @@
       link: /docs/building-with-components/
     - title: Lifecycle APIs
       link: /docs/gatsby-lifecycle-apis/
-    - title: Plugins
-      link: /docs/plugins/
     - title: PRPL pattern
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
@@ -307,7 +299,7 @@
 - title: Behind the Scenes
   link: /docs/behind-the-scenes/
   items:
-    - title: How APIS/Plugins Are Run
+    - title: How APIs/Plugins Are Run
       link: /docs/how-plugins-apis-are-run/
     - title: Node Creation
       link: /docs/node-creation/
@@ -394,7 +386,7 @@
       link: /docs/how-to-run-a-gatsby-workshop/
     - title: How to pitch Gatsby*
       link: /docs/how-to-pitch-gatsby/
-    - title: Site Showcase Submissions
+    - title: Submit to Site Showcase
       link: /docs/site-showcase-submissions/
     - title: Submit to Creator Showcase
       link: /docs/submit-to-creator-showcase/

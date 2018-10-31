@@ -1,9 +1,8 @@
 const Redux = require(`redux`)
-const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const fs = require(`fs`)
 const mitt = require(`mitt`)
-const stringify = require(`json-stringify-safe`)
+const stringify = require(`json-stream-stringify`)
 
 // Create event emitter for actions
 const emitter = mitt()
@@ -79,12 +78,19 @@ const saveState = state => {
   )
   pickedState.components = mapToObject(pickedState.components)
   pickedState.nodes = mapToObject(pickedState.nodes)
-  const stringified = stringify(pickedState, null, 2)
-  fs.writeFile(
-    `${process.cwd()}/.cache/redux-state.json`,
-    stringified,
-    () => {}
-  )
+
+  const writeStream = fs.createWriteStream(`${process.cwd()}/.cache/redux-state.json`)
+
+  new stringify(pickedState, null, 2, true)
+    .pipe(writeStream)
+    .on(`finish`, () => {
+      writeStream.destroy()
+      writeStream.end()
+    })
+    .on(`error`, () => {
+      writeStream.destroy()
+      writeStream.end()
+    })
 }
 const saveStateDebounced = _.debounce(saveState, 1000)
 
@@ -119,89 +125,3 @@ exports.emitter = emitter
 
 /** Redux store */
 exports.store = store
-
-/**
- * Get all nodes from redux store.
- *
- * @returns {Array}
- */
-exports.getNodes = () => {
-  const nodes = store.getState().nodes
-  if (nodes) {
-    return Array.from(nodes.values())
-  } else {
-    return []
-  }
-}
-const getNode = id => store.getState().nodes.get(id)
-
-/** Get node by id from store.
- *
- * @param {string} id
- * @returns {Object}
- */
-exports.getNode = getNode
-
-/**
- * Determine if node has changed.
- *
- * @param {string} id
- * @param {string} digest
- * @returns {boolean}
- */
-exports.hasNodeChanged = (id, digest) => {
-  const node = store.getState().nodes.get(id)
-  if (!node) {
-    return true
-  } else {
-    return node.internal.contentDigest !== digest
-  }
-}
-
-/**
- * Get content for a node from the plugin that created it.
- *
- * @param {Object} node
- * @returns {promise}
- */
-exports.loadNodeContent = node => {
-  if (_.isString(node.internal.content)) {
-    return Promise.resolve(node.internal.content)
-  } else {
-    return new Promise(resolve => {
-      // Load plugin's loader function
-      const plugin = store
-        .getState()
-        .flattenedPlugins.find(plug => plug.name === node.internal.owner)
-      const { loadNodeContent } = require(plugin.resolve)
-      if (!loadNodeContent) {
-        throw new Error(
-          `Could not find function loadNodeContent for plugin ${plugin.name}`
-        )
-      }
-
-      return loadNodeContent(node).then(content => {
-        // TODO update node's content field here.
-        resolve(content)
-      })
-    })
-  }
-}
-
-/**
- * Get node and save path dependency.
- *
- * @param {string} id
- * @param {string} path
- * @returns {Object} node
- */
-exports.getNodeAndSavePathDependency = (id, path) => {
-  const { createPageDependency } = require(`./actions/add-page-dependency`)
-  const node = getNode(id)
-  createPageDependency({ path, nodeId: id })
-  return node
-}
-
-// Start plugin runner which listens to the store
-// and invokes Gatsby API based on actions.
-require(`./plugin-runner`)
