@@ -533,16 +533,19 @@
     - Web Development
     - Technology
 - title: Caddy Smells Like Trees
-  main_url: "https://caddysmellsliketrees.ru/"
-  url: "https://caddysmellsliketrees.ru/"
+  main_url: "https://caddysmellsliketrees.ru"
+  url: "https://caddysmellsliketrees.ru/en"
   source_url: "https://github.com/podabed/caddysmellsliketrees.github.io"
-  featured: false
   description: >-
     We play soul-searching songs for every day. They are merging in our forests
     in such a way that it is difficult to separate them from each other, and
     between them bellow bold deer poems.
   categories:
     - Music
+    - Gallery
+  built_by: Dmitrij Podabed, Alexander Nikitin
+  built_by_url: https://podabed.org
+  featured: false
 - title: Calpa's Blog
   main_url: "https://calpa.me/"
   url: "https://calpa.me/"
@@ -3125,4 +3128,58 @@
   main_url: https://www.wk.com
   built_by: Wieden Kennedy
   built_by_url: https://www.wk.com/about/
+  featured: false
+- title: Testing JavaScript
+  description: >
+    This course will teach you the fundamentals of testing your JavaScript applications using eslint, Flow, Jest, and Cypress.
+  url: https://testingjavascript.com/
+  main_url: https://testingjavascript.com/
+  categories:
+    - Learning
+    - Education
+    - Testing
+    - JavaScript
+  built_by: Kent C. Dodds
+  built_by_url: https://kentcdodds.com/
+  featured: false
+- title: Use Hooks
+  description: >
+    One new React Hook recipe every day.
+  url: https://usehooks.com/
+  main_url: https://usehooks.com/
+  categories:
+    - Learning
+    - Tips
+    - React
+  built_by: Gabe Ragland
+  built_by_url: https://twitter.com/gabe_ragland
+  featured: false
+- title: Ambassador
+  url: https://www.getambassador.io
+  main_url: https://www.getambassador.io
+  description: >
+    Open source, Kubernetes-native API Gateway for microservices built on Envoy.
+  categories:
+    - Open Source
+    - Documentation
+    - Technology
+  built_by: Datawire
+  built_by_url: https://www.datawire.io
+  featured: false
+- title: Clubhouse
+  main_url: https://clubhouse.io
+  url: https://clubhouse.io
+  description: >
+    The intuitive and powerful project management platform loved by software teams of all sizes. Built with Gatsby v2 and Prismic
+  categories:
+    - Technology
+    - Project Management
+    - Blog
+    - Productivity
+    - B2B Services
+    - Community
+    - Design
+    - Open Source
+  built_by: Ueno.
+  built_by_url: https://ueno.co
   featured: false

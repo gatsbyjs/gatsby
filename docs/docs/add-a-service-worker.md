@@ -4,7 +4,7 @@ title: Add a Service Worker
 
 ### What is a service worker
 
-A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction.They increase your site availability in spotty connections, and are essential to making a nice user experience.
+A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction. They increase your site availability in spotty connections, and are essential to making a nice user experience.
 
 It supports features like push notifications and background sync.
 
