@@ -31,6 +31,7 @@ Fields can be strings, numbers, or arrays. Since a post can usually have many ta
 
 ```md
 ---
+path: "/blog/a-trip-to-the-zoo"
 title: "A Trip To the Zoo"
 tags: ["animals", "Chicago", "zoos"]
 ---
@@ -56,6 +57,7 @@ Try running in Graph<em>i</em>QL (`localhost:8000/___graphql`) the following que
       node {
         frontmatter {
           path
+          title
           tags
         }
       }
@@ -142,8 +144,8 @@ export const pageQuery = graphql`
       edges {
         node {
           frontmatter {
-            title
             path
+            tags
           }
         }
       }
