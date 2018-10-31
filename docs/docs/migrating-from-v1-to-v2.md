@@ -678,7 +678,7 @@ The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https:/
 
 For vanilla CSS without a preprocessor:
 
-```javascript
+```javascript:title=gatsby-node.js
 const cssLoaderRe = /\/css-loader\//
 const targetFile = `.module.css`
 
