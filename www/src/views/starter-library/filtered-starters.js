@@ -101,7 +101,7 @@ export default class FilteredStarterLibrary extends Component {
 
     return (
       <section className="showcase" css={{ display: `flex` }}>
-        <SidebarContainer style={{ overflowY: "auto" }}>
+        <SidebarContainer overrideCSS={{ overflowY: "auto" }}>
           <SidebarHeader />
           <SidebarBody>
             <div css={{ height: `3.5rem` }}>

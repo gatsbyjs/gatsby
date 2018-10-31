@@ -2,8 +2,10 @@ import React from "react"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import styles from "../shared/styles"
 
-export const SidebarContainer = ({ children, style }) => (
-  <div css={[styles.sidebarContainer, styles.sticky, style]}>{children}</div>
+export const SidebarContainer = ({ children, overrideCSS }) => (
+  <div css={[styles.sidebarContainer, styles.sticky, overrideCSS]}>
+    {children}
+  </div>
 )
 
 export const SidebarBody = ({ children }) => (
