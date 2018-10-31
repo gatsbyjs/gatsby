@@ -27,7 +27,7 @@ class IndexComponent extends React.Component {
     return (
       <Layout
         location={this.props.location}
-        image={this.props.data.file.childImageSharp.fluid}
+        image={this.props.data.camera.localFile.childImageSharp.fluid}
       >
         <p
           css={{
@@ -110,14 +110,16 @@ export default IndexComponent
 
 export const query = graphql`
   query {
-    file(relativePath: { regex: "/alexander-andrews-260988/" }) {
-      childImageSharp {
-        fluid(
-          maxWidth: 800
-          quality: 80
-          duotone: { highlight: "#ffffff", shadow: "#663399" }
-        ) {
-          ...GatsbyImageSharpFluid
+    camera: imagesYaml(title: { eq: "Vintage camera" }) {
+      localFile {
+        childImageSharp {
+          fluid(
+            maxWidth: 800
+            quality: 80
+            duotone: { highlight: "#ffffff", shadow: "#663399" }
+          ) {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
     }
