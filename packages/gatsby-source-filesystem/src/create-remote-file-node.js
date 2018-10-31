@@ -216,7 +216,7 @@ async function processRemoteNode({
 
     // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
     if (ext === ``) {
-      const buffer = readChunk.sync(tmpFilename, 0, 4100)
+      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
       const filetype = fileType(buffer)
       if (filetype) {
         ext = `.${filetype.ext}`
