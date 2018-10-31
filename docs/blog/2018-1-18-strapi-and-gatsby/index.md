@@ -19,7 +19,7 @@ Static websites and PWA both have strong advantages which make us crave for a wa
 
 ### What is Gatsby?
 
-[Gatsby](https://www.gatsbyjs.org) is a *blazing-fast **website framework** for React*. It allows developers to build React based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill  your needs.
+[Gatsby](https://www.gatsbyjs.org) is a *blazing-fast **website framework** for React*. It allows developers to build React based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill your needs.
 
 [![Gatsby Logo](logo-gatsby.jpg)](https://www.gatsbyjs.org)
 
