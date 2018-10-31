@@ -3183,3 +3183,13 @@
   built_by: Ueno.
   built_by_url: https://ueno.co
   featured: false
+- title: Asian Art Collection
+  url: http://artmuseum.princeton.edu/asian-art/
+  main_url: http://artmuseum.princeton.edu/asian-art/
+  description: >
+    Princeton University has a branch dealing with state of art.They have showcased ore than 6,000 works of Asian art are presented alongside ongoing curatorial and scholarly research
+  categories:
+    - Art
+    - History
+    - Models
+  featured: false
