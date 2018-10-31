@@ -27,7 +27,7 @@ describe(`gatsby-plugin-sharp`, () => {
   const file = getFileObject(absolutePath)
 
   // used to find all breakpoints in a srcSet string
-  const findAllBreakpoints = (srcSet) => {
+  const findAllBreakpoints = srcSet => {
     // RegEx to find all occurrences of 'Xw', where 'X' can be any int
     const regEx = /[0-9]+w/g
     return srcSet.match(regEx)
@@ -129,12 +129,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`accepts srcSet breakpoints`, async () => {
-      const srcSetBreakpoints = [
-        50,
-        70,
-        150,
-        250,
-      ]
+      const srcSetBreakpoints = [50, 70, 150, 250]
       const args = { srcSetBreakpoints }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
@@ -143,8 +138,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       // width of the image tested
       const originalWidth = 281
-      const expected = srcSetBreakpoints
-        .map((size) => `${size}w`)
+      const expected = srcSetBreakpoints.map(size => `${size}w`)
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`)
 
@@ -154,10 +148,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`should throw on srcSet breakpoints less than 1`, async () => {
-      const srcSetBreakpoints = [
-        50,
-        0,
-      ]
+      const srcSetBreakpoints = [50, 0]
       const args = { srcSetBreakpoints }
       const result = fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
@@ -168,11 +159,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`ensure maxWidth is in srcSet breakpoints`, async () => {
-      const srcSetBreakpoints = [
-        50,
-        70,
-        150,
-      ]
+      const srcSetBreakpoints = [50, 70, 150]
       const maxWidth = 200
       const args = {
         maxWidth,
@@ -208,8 +195,8 @@ describe(`gatsby-plugin-sharp`, () => {
       const originalWidth = 281
       const expected = srcSetBreakpoints
         // filter out the widths that are larger than the source image width
-        .filter((size) => size < originalWidth)
-        .map((size) => `${size}w`)
+        .filter(size => size < originalWidth)
+        .map(size => `${size}w`)
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`)
 
@@ -221,15 +208,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`prevents duplicate breakpoints`, async () => {
-      const srcSetBreakpoints = [
-        50,
-        50,
-        100,
-        100,
-        100,
-        250,
-        250,
-      ]
+      const srcSetBreakpoints = [50, 50, 100, 100, 100, 250, 250]
       const maxWidth = 100
       const args = {
         maxWidth,
@@ -241,12 +220,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       const originalWidth = 281
-      const expected = [
-        `50w`,
-        `100w`,
-        `250w`,
-        `${originalWidth}w`,
-      ]
+      const expected = [`50w`, `100w`, `250w`, `${originalWidth}w`]
 
       const actual = findAllBreakpoints(result.srcSet)
       expect(actual).toEqual(expect.arrayContaining(expected))
