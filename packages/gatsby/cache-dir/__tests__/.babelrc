@@ -34,7 +34,7 @@
       {
         helpers: true,
         regenerator: true,
-        polyfill: false,
+        corejs: false,
       },
     ],
   ],

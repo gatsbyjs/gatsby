@@ -57,3 +57,59 @@ A sample GraphQL query to get MarkdownRemark nodes:
   }
 }
 ```
+
+### Getting table of contents
+
+Using the following GraphQL query you'll be able to get the table of contents
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        html
+        tableOfContents(pathToSlugField: "frontmatter.path")
+        frontmatter {
+          # Assumes you're using path in your frontmatter.
+          path
+        }
+      }
+    }
+  }
+}
+```
+
+By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null.
+
+### Excerpt length
+
+By default, excerpts have a maximum length of 140 characters. You can change the default using the ```pruneLength``` argument. For example, if you need 500 characters, you can specify:
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        html
+        excerpt(pruneLength: 500)
+      }
+    }
+  }
+}
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
+  }
+}
+```

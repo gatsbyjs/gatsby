@@ -26,6 +26,7 @@ const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -131,7 +132,7 @@ async function startServer(program) {
     res.end()
   })
 
-  app.use(express.static(__dirname + `/public`))
+  app.use(express.static(`public`))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
@@ -158,32 +159,7 @@ async function startServer(program) {
     })
   }
 
-  // Check if the file exists in the public folder.
-  app.get(`*`, (req, res, next) => {
-    // Load file but ignore errors.
-    res.sendFile(
-      directoryPath(`/public${decodeURIComponent(req.path)}`),
-      err => {
-        // No err so a file was sent successfully.
-        if (!err || !err.path) {
-          next()
-        } else if (err) {
-          // There was an error. Let's check if the error was because it
-          // couldn't find an HTML file. We ignore these as we want to serve
-          // all HTML from our single empty SSR html file.
-          const parsedPath = parsePath(err.path)
-          if (
-            parsedPath.extname === `` ||
-            parsedPath.extname.startsWith(`.html`)
-          ) {
-            next()
-          } else {
-            res.status(404).end()
-          }
-        }
-      }
-    )
-  })
+  await apiRunnerNode(`onCreateDevServer`, { app })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
@@ -452,7 +428,13 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        require(`opn`)(urls.localUrlForBrowser)
+        require(`opn`)(urls.localUrlForBrowser).catch(err =>
+          console.log(
+            `${chalk.yellow(
+              `warn`
+            )} Browser not opened because no browser was found`
+          )
+        )
       }
     }
 

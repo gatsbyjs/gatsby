@@ -1,14 +1,18 @@
 const _ = require(`lodash`)
 
-const seenNames = {}
+const seenNames = new Map()
 
 module.exports = function createTypeName(name) {
   const cameledName = _.camelCase(name)
-  if (seenNames[cameledName]) {
-    seenNames[cameledName] += 1
-    return `${cameledName}_${seenNames[cameledName]}`
+  if (seenNames.has(cameledName)) {
+    seenNames.set(cameledName, seenNames.get(cameledName) + 1)
+    return `${cameledName}_${seenNames.get(cameledName)}`
   } else {
-    seenNames[cameledName] = 1
+    seenNames.set(cameledName, 1)
     return cameledName
   }
+}
+
+module.exports.clearTypeNames = () => {
+  seenNames.clear()
 }

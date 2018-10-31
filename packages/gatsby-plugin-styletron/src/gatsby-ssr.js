@@ -1,30 +1,27 @@
-import { createElement as h } from "react"
-import { Provider } from "styletron-react"
-import { renderToString } from "react-dom/server"
-import styletron from "./index.js"
+const React = require(`react`)
+const styletron = require(`./index`)
+const { Provider } = require(`styletron-react`)
 
-exports.replaceRenderer = (
-  { bodyComponent, setHeadComponents, replaceBodyHTMLString },
-  options
-) => {
+// eslint-disable-next-line react/prop-types
+exports.wrapRootElement = ({ element }, options) => (
+  <Provider value={styletron(options).instance}>{element}</Provider>
+)
+
+exports.onRenderBody = ({ bodyComponent, setHeadComponents }, options) => {
   const instance = styletron(options).instance
-
-  const app = h(Provider, { value: instance }, bodyComponent)
-
-  replaceBodyHTMLString(renderToString(app))
 
   const stylesheets = instance.getStylesheets()
   const headComponents = stylesheets[0].css
-    ? stylesheets.map((sheet, index) =>
-        h(`style`, {
-          className: `_styletron_hydrate_`,
-          dangerouslySetInnerHTML: {
+    ? stylesheets.map((sheet, index) => (
+        <style
+          className="_styletron_hydrate_"
+          dangerouslySetInnerHTML={{
             __html: sheet.css,
-          },
-          key: index,
-          media: sheet.attrs.media,
-        })
-      )
+          }}
+          key={index}
+          media={sheet.attrs.media}
+        />
+      ))
     : null
 
   setHeadComponents(headComponents)

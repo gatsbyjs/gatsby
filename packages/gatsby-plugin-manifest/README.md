@@ -1,8 +1,8 @@
 # gatsby-plugin-manifest
 
 Adds support for shipping a manifest.webmanifest with your site. The web application
-manifest is a JSON file that lets users (on Android Chrome, Firefox, and Opera —
-[support in MS Edge & Safari is under development](http://caniuse.com/#feat=web-app-manifest))
+manifest is a JSON file that lets users (on Chrome, Edge, Firefox, Safari Mobile, and Opera —
+[support in Safari Desktop is under development](http://caniuse.com/#feat=web-app-manifest))
 save your web application to their smartphone home screen so it behaves similar
 to native apps.
 
@@ -11,7 +11,7 @@ manifest—https://developers.google.com/web/fundamentals/engage-and-retain/web-
 
 For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozilla Docs https://developer.mozilla.org/en-US/docs/Web/Manifest.
 
-If you're using this plugin together with `gatsby-plugin-offline` (recommended),
+If you're using this plugin together with [`gatsby-plugin-offline`](https://www.gatsbyjs.org/packages/gatsby-plugin-offline) (recommended),
 this plugin should be listed _before_ the offline plugin so that it can cache
 the created manifest.webmanifest.
 
@@ -41,13 +41,13 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
-      icon: "src/images/icon.png", // This path is relative to the root of the site.
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
+      icon: `src/images/icon.png`, // This path is relative to the root of the site.
     },
   },
 ]
@@ -112,13 +112,13 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
-      icon: src/images/icon.png // This path is relative to the root of the site.
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
+      icon: `src/images/icon.png`, // This path is relative to the root of the site.
       icons: [
         {
           src: `/favicons/android-chrome-192x192.png`,
@@ -133,7 +133,7 @@ plugins: [
       ],
     },
   },
-];
+]
 ```
 
 The hybrid option allows the most flexibility while still not requiring you to create most icons sizes manually.
@@ -148,12 +148,12 @@ plugins: [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "minimal-ui",
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `minimal-ui`,
       icons: [
         {
           // Everything in /static will be copied to an equivalent

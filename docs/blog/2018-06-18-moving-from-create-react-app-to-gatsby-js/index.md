@@ -34,7 +34,7 @@ When you build your Gatsby website you will end up with static files. They are e
 
 Gatsby provides code and data splitting out-of-the-box. It loads your critical HTML and CSS first. Once that's loaded it prefetches resources for other pages. That's why clicking around feels so fast.
 
-Gatsby uses React components as a view layer so you can share and reuse them across pages/projects. Once it loads the page's javascript code, your website becomes a full React app.
+Gatsby uses React components as a view layer so you can share and reuse them across pages/projects. Once it loads the page's JavaScript code, your website becomes a full React app.
 
 Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. You only get the data you need in the page. At build time Gatsby will resolve the query and embed it in your page.
 
@@ -67,9 +67,9 @@ There are two types of routes:
 Let's assume you have the following static routes in your `create-react-app` project:
 
 ```js
-<Route exact path='/' component={Home}/>
-<Route path='/blog' component={Blog}/>
-<Route path='/contact' component={Contact}/>
+<Route exact path='/' component={Home} />
+<Route path='/blog' component={Blog} />
+<Route path='/contact' component={Contact} />
 ```
 
 Gatsby will create these routes automatically based on files you create in your `pages` folder. The good news is you've already created the React components so it's a matter of copying them to the right place. The exception is the home page which should be named `index.js`.  You will end up with something like this:
@@ -259,7 +259,7 @@ Gatsby will pick the exported `pageQuery` const and will know it's a GraphQL que
 
 ![files-1614223 1280](https://images.ctfassets.net/4x6byznv2pet/xodXA1B5OCGKW6eAkqi8e/47789915812c2ab95512f97efb1fcb79/files-1614223_1280.jpg)
 
-I will not go in depth with how to manage state with React since there are a lot of ways to achieve that. There is the new [React 16 Context API](https://reactjs.org/docs/context.html) or you can use other state libraries such as [Redux](https://github.com/reduxjs/react-redux). Using Gatsby you can request the data you need using the GraphQL data layer as shown in the previous example. This option is only available in the root components. This will change in [Gatsby v2 with the new `StaticQuery` feature](https://next.gatsbyjs.org/docs/static-query/). You can still use [Redux with Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) if you need to.
+I will not go in depth with how to manage state with React since there are a lot of ways to achieve that. There is the new [React 16 Context API](https://reactjs.org/docs/context.html) or you can use other state libraries such as [Redux](https://github.com/reduxjs/react-redux). Using Gatsby you can request the data you need using the GraphQL data layer as shown in the previous example. This option is only available in the root components. This will change in [Gatsby v2 with the new `StaticQuery` feature](/docs/static-query/). You can still use [Redux with Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) if you need to.
 
 ## Deployment
 

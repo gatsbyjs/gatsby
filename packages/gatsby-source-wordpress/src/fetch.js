@@ -20,6 +20,7 @@ async function fetch({
   _auth,
   _perPage,
   _concurrentRequests,
+  _includedRoutes,
   _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
@@ -36,48 +37,26 @@ async function fetch({
     url = `${_siteURL}/wp-json`
   }
 
-  if (_verbose) console.log()
-  if (_verbose)
+  if (_verbose) {
+    console.time(`=END PLUGIN=====================================`)
+
     console.log(
       colorized.out(
-        `=START PLUGIN=====================================`,
+        `
+=START PLUGIN=====================================
+
+Site URL: ${_siteURL}
+Site hosted on Wordpress.com: ${_hostingWPCOM}
+Using ACF: ${_useACF}
+Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}
+Verbose output: ${_verbose}
+
+Mama Route URL: ${url}
+`,
         colorized.color.Font.FgBlue
       )
     )
-  if (_verbose) console.time(`=END PLUGIN=====================================`)
-  if (_verbose) console.log(``)
-  if (_verbose)
-    console.log(
-      colorized.out(`Site URL: ${_siteURL}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(
-        `Site hosted on Wordpress.com: ${_hostingWPCOM}`,
-        colorized.color.Font.FgBlue
-      )
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(`Using ACF: ${_useACF}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(
-        `Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}`,
-        colorized.color.Font.FgBlue
-      )
-    )
-  if (_verbose)
-    console.log(
-      colorized.out(`Verbose output: ${_verbose}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose) console.log(``)
-  if (_verbose)
-    console.log(
-      colorized.out(`Mama Route URL: ${url}`, colorized.color.Font.FgBlue)
-    )
-  if (_verbose) console.log(``)
+  }
 
   // Call the main API Route to discover the all the routes exposed on this API.
   let allRoutes
@@ -86,44 +65,58 @@ async function fetch({
       method: `get`,
       url: url,
     }
-    if (_auth) {
+    if (_auth && (_auth.htaccess_user || _auth.htaccess_pass)) {
       options.auth = {
         username: _auth.htaccess_user,
         password: _auth.htaccess_pass,
       }
     }
+
+    if (_hostingWPCOM && _accessToken) {
+      options.headers = {
+        Authorization: `Bearer ${_accessToken}`,
+      }
+    }
+
     allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)
   }
 
-  let entities = []
+  let entities = [
+    {
+      __type: `wordpress__site_metadata`,
+      name: allRoutes.data.name,
+      description: allRoutes.data.description,
+      url: allRoutes.data.url,
+      home: allRoutes.data.home,
+    },
+  ]
 
   if (allRoutes) {
     let validRoutes = getValidRoutes({
       allRoutes,
       url,
-      baseUrl,
       _verbose,
       _useACF,
       _acfOptionPageIds,
       _hostingWPCOM,
+      _includedRoutes,
       _excludedRoutes,
       typePrefix,
       refactoredEntityTypes,
     })
 
-    if (_verbose) console.log(``)
-    if (_verbose)
+    if (_verbose) {
       console.log(
         colorized.out(
-          `Fetching the JSON data from ${
-            validRoutes.length
-          } valid API Routes...`,
+          `
+Fetching the JSON data from ${validRoutes.length} valid API Routes...
+`,
           colorized.color.Font.FgBlue
         )
       )
-    if (_verbose) console.log(``)
+    }
 
     for (let route of validRoutes) {
       entities = entities.concat(
@@ -197,7 +190,7 @@ async function fetchData({
 }) {
   const { type, url, optionPageId } = route
 
-  if (_verbose)
+  if (_verbose) {
     console.log(
       colorized.out(
         `=== [ Fetching ${type} ] ===`,
@@ -205,7 +198,9 @@ async function fetchData({
       ),
       url
     )
-  if (_verbose) console.time(`Fetching the ${type} took`)
+
+    console.time(`Fetching the ${type} took`)
+  }
 
   let routeResponse = await getPages(
     {
@@ -340,8 +335,9 @@ async function getPages(
     }
 
     if (_verbose) {
-      console.log(`\nTotal entities :`, total)
-      console.log(`Pages to be requested :`, totalPages)
+      console.log(`
+Total entities : ${total}
+Pages to be requested : ${totalPages}`)
     }
 
     // We got page 1, now we want pages 2 through totalPages
@@ -365,27 +361,93 @@ async function getPages(
 }
 
 /**
+ * Check a route against the whitelist or blacklist
+ * to determine validity.
+ *
+ * @param {any} routePath
+ * @param {Array} routeList
+ * @returns {boolean}
+ */
+function checkRouteList(routePath, routeList) {
+  return routeList.some(route => minimatch(routePath, route))
+}
+
+/**
  * Extract valid routes and format its data.
  *
  * @param {any} allRoutes
  * @param {any} url
- * @param {any} baseUrl
  * @returns
  */
 function getValidRoutes({
   allRoutes,
   url,
-  baseUrl,
   _verbose,
   _useACF,
   _acfOptionPageIds,
   _hostingWPCOM,
+  _includedRoutes,
   _excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
 }) {
   let validRoutes = []
-  let acfRestVersion = 3
+
+  if (_useACF) {
+    let defaultAcfNamespace = `acf/v3`
+    // Grab ACF Version from namespaces
+    const acfNamespace = allRoutes.data.namespaces.find(namespace =>
+      namespace.includes(`acf`)
+    )
+    const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
+    _includedRoutes.push(`/${acfRestNamespace}/**`)
+
+    if (_verbose)
+      console.log(
+        colorized.out(
+          `Detected ACF to REST namespace: ${acfRestNamespace}.`,
+          colorized.color.Font.FgGreen
+        )
+      )
+    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
+    // and pass ACF option page ID
+    // ACF to REST v3 requires options/options
+    let optionsRoute = acfRestNamespace.includes(`3`)
+      ? `options/options/`
+      : `options/`
+    validRoutes.push({
+      url: `${url}/${acfRestNamespace}/${optionsRoute}`,
+      type: `${typePrefix}acf_options`,
+    })
+    // ACF to REST V2 does not allow ACF Option Page ID specification
+    if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes(`3`)) {
+      _acfOptionPageIds.forEach(function(acfOptionPageId) {
+        validRoutes.push({
+          url: `${url}/acf/v3/options/${acfOptionPageId}`,
+          type: `${typePrefix}acf_options`,
+          optionPageId: acfOptionPageId,
+        })
+      })
+      if (_verbose)
+        console.log(
+          colorized.out(
+            `Added ACF Options route(s).`,
+            colorized.color.Font.FgGreen
+          )
+        )
+    }
+    if (_acfOptionPageIds.length > 0 && _hostingWPCOM) {
+      // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
+      if (_verbose)
+        console.log(
+          colorized.out(
+            `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
+            colorized.color.Effect.Blink
+          )
+        )
+    }
+  }
+
   for (let key of Object.keys(allRoutes.data.routes)) {
     if (_verbose) console.log(`Route discovered :`, key)
     let route = allRoutes.data.routes[key]
@@ -396,39 +458,26 @@ function getValidRoutes({
 
       // Excluding the "technical" API Routes
       const excludedTypes = [
-        undefined,
-        `v2`,
-        `v3`,
-        `1.0`,
-        `2.0`,
-        `embed`,
-        `proxy`,
-        ``,
-        baseUrl,
+        `/v2/**`,
+        `/v3/**`,
+        `**/1.0`,
+        `**/2.0`,
+        `**/embed`,
+        `**/proxy`,
+        `/`,
       ]
 
       const routePath = getRoutePath(url, route._links.self)
-      if (excludedTypes.includes(entityType)) {
-        // Grab ACF Version from routes
-        acfRestVersion =
-          key === `/acf/${entityType}` ? entityType.substr(1) : acfRestVersion
-        if (_verbose)
-          console.log(
-            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
-          )
-      } else if (
-        _excludedRoutes.some(excludedRoute =>
-          minimatch(routePath, excludedRoute)
-        )
-      ) {
-        if (_verbose)
-          console.log(
-            colorized.out(
-              `Excluded route from excludedRoutes pattern.`,
-              colorized.color.Font.FgYellow
-            )
-          )
-      } else {
+      const whiteList = _includedRoutes
+      const blackList = [...excludedTypes, ..._excludedRoutes]
+
+      // Check whitelist first
+      const inWhiteList = checkRouteList(routePath, whiteList)
+      // Then blacklist
+      const inBlackList = checkRouteList(routePath, blackList)
+      const validRoute = inWhiteList && !inBlackList
+
+      if (validRoute) {
         if (_verbose)
           console.log(
             colorized.out(
@@ -466,54 +515,23 @@ function getValidRoutes({
             break
         }
         validRoutes.push({ url: route._links.self, type: validType })
+      } else {
+        if (_verbose) {
+          const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
+          console.log(
+            colorized.out(
+              `Excluded route: ${invalidType}`,
+              colorized.color.Font.FgYellow
+            )
+          )
+        }
       }
     } else {
       if (_verbose)
-        console.log(colorized.out(`Invalid route.`, colorized.color.Font.FgRed))
-    }
-  }
-
-  if (_verbose)
-    console.log(
-      colorized.out(
-        `Detected ACF to REST version: v${acfRestVersion}.`,
-        colorized.color.Font.FgGreen
-      )
-    )
-
-  if (_useACF) {
-    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
-    // and pass ACF option page ID
-    // ACF to REST v3 requires options/options
-    let optionsRoute = acfRestVersion == 3 ? `options/options/` : `options/`
-    validRoutes.push({
-      url: `${url}/acf/v${acfRestVersion}/${optionsRoute}`,
-      type: `${typePrefix}acf_options`,
-    })
-    // ACF to REST V2 does not allow ACF Option Page ID specification
-    if (acfRestVersion == 3) {
-      _acfOptionPageIds.forEach(function(acfOptionPageId) {
-        validRoutes.push({
-          url: `${url}/acf/v3/options/${acfOptionPageId}`,
-          type: `${typePrefix}acf_options`,
-          optionPageId: acfOptionPageId,
-        })
-      })
-    }
-    if (_verbose)
-      console.log(
-        colorized.out(
-          `Added ACF Options route(s).`,
-          colorized.color.Font.FgGreen
-        )
-      )
-    if (_hostingWPCOM) {
-      // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
-      if (_verbose)
         console.log(
           colorized.out(
-            `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
-            colorized.color.Effect.Blink
+            `Invalid route: detail route`,
+            colorized.color.Font.FgRed
           )
         )
     }

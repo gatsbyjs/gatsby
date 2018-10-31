@@ -1,12 +1,10 @@
 // @flow
 const sift = require(`sift`)
 const _ = require(`lodash`)
-const { connectionFromArray } = require(`graphql-skip-limit`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
-const { getNode } = require(`../redux`)
+const { getNode } = require(`../db/nodes`)
 
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
@@ -38,18 +36,25 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
-/*
+/**
  * Filters a list of nodes using mongodb-like syntax.
- * Returns a single unwrapped element if connection = false.
  *
+ * @param args raw graphql query filter as an object
+ * @param nodes The nodes array to run sift over
+ * @param type gqlType
+ * @param typeName
+ * @param firstOnly true if you want to return only the first result
+ * found. This will return a collection of size 1. Not a single
+ * element
+ * @returns Collection of results. Collection will be limited to size
+ * if `firstOnly` is true
  */
 module.exports = ({
   args,
   nodes,
   type,
   typeName,
-  connection = false,
-  path = ``,
+  firstOnly = false,
 }: Object) => {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
@@ -84,6 +89,12 @@ module.exports = ({
   function extractFieldsToSift(prekey, key, preobj, obj, val) {
     if (_.isPlainObject(val)) {
       _.forEach((val: any), (v, k) => {
+        if (k === `elemMatch`) {
+          // elemMatch is operator for arrays and not field we want to prepare
+          // so we need to skip it
+          extractFieldsToSift(prekey, key, preobj, obj, v)
+          return
+        }
         preobj[prekey] = obj
         extractFieldsToSift(key, k, obj, {}, v)
       })
@@ -120,17 +131,34 @@ module.exports = ({
               _.isObject(innerSift) &&
               v != null &&
               innerGqConfig &&
-              innerGqConfig.type &&
-              _.isFunction(innerGqConfig.type.getFields)
+              innerGqConfig.type
             ) {
-              return resolveRecursive(
-                v,
-                innerSift,
-                innerGqConfig.type.getFields()
-              )
-            } else {
-              return v
+              if (_.isFunction(innerGqConfig.type.getFields)) {
+                // this is single object
+                return resolveRecursive(
+                  v,
+                  innerSift,
+                  innerGqConfig.type.getFields()
+                )
+              } else if (
+                _.isArray(v) &&
+                innerGqConfig.type.ofType &&
+                _.isFunction(innerGqConfig.type.ofType.getFields)
+              ) {
+                // this is array
+                return Promise.all(
+                  v.map(item =>
+                    resolveRecursive(
+                      item,
+                      innerSift,
+                      innerGqConfig.type.ofType.getFields()
+                    )
+                  )
+                )
+              }
             }
+
+            return v
           })
           .then(v => [k, v])
       )
@@ -143,26 +171,20 @@ module.exports = ({
     })
   }
 
-  // If the the query only has a filter for an "id", then we'll just grab
-  // that ID and return it.
+  // If the the query for single node only has a filter for an "id"
+  // using "eq" operator, then we'll just grab that ID and return it.
   if (
+    firstOnly &&
     Object.keys(fieldsToSift).length === 1 &&
-    Object.keys(fieldsToSift)[0] === `id`
+    Object.keys(fieldsToSift)[0] === `id` &&
+    Object.keys(siftArgs[0].id).length === 1 &&
+    Object.keys(siftArgs[0].id)[0] === `$eq`
   ) {
-    const node = resolveRecursive(
+    return resolveRecursive(
       getNode(siftArgs[0].id[`$eq`]),
       fieldsToSift,
       type.getFields()
-    )
-
-    if (node) {
-      createPageDependency({
-        path,
-        nodeId: node.id,
-      })
-    }
-
-    return node
+    ).then(node => (node ? [node] : []))
   }
 
   const nodesPromise = () => {
@@ -212,7 +234,7 @@ module.exports = ({
     }
   }
   const tempPromise = nodesPromise().then(myNodes => {
-    if (!connection) {
+    if (firstOnly) {
       const index = _.isEmpty(siftArgs)
         ? 0
         : sift.indexOf(
@@ -222,51 +244,35 @@ module.exports = ({
             myNodes
           )
 
-      // If a node is found, create a dependency between the resulting node and
-      // the path.
       if (index !== -1) {
-        createPageDependency({
-          path,
-          nodeId: myNodes[index].id,
-        })
-
-        return myNodes[index]
+        return [myNodes[index]]
       } else {
-        return null
+        return []
       }
+    } else {
+      let result = _.isEmpty(siftArgs)
+        ? myNodes
+        : sift(
+            {
+              $and: siftArgs,
+            },
+            myNodes
+          )
+
+      if (!result || !result.length) return null
+
+      // Sort results.
+      if (clonedArgs.sort) {
+        // create functions that return the item to compare on
+        // uses _.get so nested fields can be retrieved
+        const convertedFields = clonedArgs.sort.fields
+          .map(field => field.replace(/___/g, `.`))
+          .map(field => v => _.get(v, field))
+
+        result = _.orderBy(result, convertedFields, clonedArgs.sort.order)
+      }
+      return result
     }
-
-    let result = _.isEmpty(siftArgs)
-      ? myNodes
-      : sift(
-          {
-            $and: siftArgs,
-          },
-          myNodes
-        )
-
-    if (!result || !result.length) return null
-
-    // Sort results.
-    if (clonedArgs.sort) {
-      // create functions that return the item to compare on
-      // uses _.get so nested fields can be retrieved
-      const convertedFields = clonedArgs.sort.fields
-        .map(field => field.replace(/___/g, `.`))
-        .map(field => v => _.get(v, field))
-
-      result = _.orderBy(result, convertedFields, clonedArgs.sort.order)
-    }
-
-    const connectionArray = connectionFromArray(result, args)
-    connectionArray.totalCount = result.length
-    if (result.length > 0 && result[0].internal) {
-      createPageDependency({
-        path,
-        connection: result[0].internal.type,
-      })
-    }
-    return connectionArray
   })
 
   return tempPromise

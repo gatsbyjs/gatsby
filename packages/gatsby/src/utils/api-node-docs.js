@@ -57,7 +57,6 @@ exports.resolvableExtensions = true
  *     )
  *   })
  * }
- * @returns {Array} array of extensions
  */
 
 exports.createPages = true
@@ -83,9 +82,32 @@ exports.createPagesStatefully = true
  *
  * See also the documentation for [`createNode`](/docs/actions/#createNode).
  * @example
- * exports.sourceNodes = ({ actions }) => {
+ * exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
  *   const { createNode } = actions
- *   // Create nodes here.
+ *
+ *   // Data can come from anywhere, but for now create it manually
+ *   const myData = {
+ *     key: 123,
+ *     foo: `The foo field of my node`,
+ *     bar: `Baz`
+ *   }
+ *
+ *   const nodeContent = JSON.stringify(myData)
+ *
+ *   const nodeMeta = {
+ *     id: createNodeId(`my-data-${myData.key}`),
+ *     parent: null,
+ *     children: [],
+ *     internal: {
+ *       type: `MyNodeType`,
+ *       mediaType: `text/html`,
+ *       content: nodeContent,
+ *       contentDigest: createContentDigest(myData)
+ *     }
+ *   }
+ *
+ *   const node = Object.assign({}, myData, nodeMeta)
+ *   createNode(node)
  * }
  */
 exports.sourceNodes = true
@@ -193,8 +215,9 @@ exports.onCreateBabelConfig = true
  * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
  *
  * @param {object} $0
- * @param {'develop' | 'develop-html' | 'build-javascript' | 'build-html'} $0.stage The current build stage
- * @param {function(): object} $0.getConfig Returns the current webpack config
+ * @param {string} $0.stage The current build stage. One of 'develop', 'develop-html',
+ * 'build-javascript', or 'build-html'
+ * @param {function} $0.getConfig Returns the current webpack config
  * @param {object} $0.rules A set of preconfigured webpack config rules
  * @param {object} $0.loaders A set of preconfigured webpack config loaders
  * @param {object} $0.plugins A set of preconfigured webpack config plugins
@@ -250,3 +273,17 @@ exports.onPostBuild = true
  * See gatsby-transformer-remark and gatsby-source-contentful for examples.
  */
 exports.onPreExtractQueries = true
+
+/**
+ * Run when gatsby develop server is started, its useful to add proxy and middleware
+ * to the dev server app
+ * @param {object} $0
+ * @param {Express} $0.app The [Express app](https://expressjs.com/en/4x/api.html#app) used to run the dev server
+ * @example
+ * exports.onCreateDevServer = ({ app }) => {
+ *   app.get('/hello', function (req, res) {
+ *     res.send('hello world')
+ *   })
+ * }
+ */
+exports.onCreateDevServer = true

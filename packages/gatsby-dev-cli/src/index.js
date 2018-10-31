@@ -4,6 +4,7 @@ const Configstore = require(`configstore`)
 const pkg = require(`../package.json`)
 const _ = require(`lodash`)
 const path = require(`path`)
+const os = require(`os`)
 const watch = require(`./watch`)
 
 const argv = require(`yargs`)
@@ -21,9 +22,14 @@ const argv = require(`yargs`)
     `Set path to Gatsby repository.
 You typically only need to configure this once.`
   )
+  .alias(`C`, `copy-all`)
+  .nargs(`C`, 0)
+  .describe(`C`, `Copy all contents in packages/ instead of just gatsby packages`)
+  .array(`packages`)
+  .describe(`packages`, `Explicitly specify packages to copy`)
   .help(`h`)
   .alias(`h`, `help`)
-  .array(`packages`).argv
+  .argv
 
 const conf = new Configstore(pkg.name)
 
@@ -35,16 +41,12 @@ if (!havePackageJsonFile) {
   process.exit()
 }
 
-const localPkg = JSON.parse(fs.readFileSync(`package.json`))
-const packages = Object.keys(
-  _.merge({}, localPkg.dependencies, localPkg.devDependencies)
-)
+let pathToRepo = argv.setPathToRepo
 
-const gatsbyPackages = packages.filter(p => p.startsWith(`gatsby`))
-
-const pathToRepo = argv[`set-path-to-repo`]
 if (pathToRepo) {
-  console.log(`Saving path to your Gatsby repo`)
+  if (pathToRepo.includes(`~`)) {
+    pathToRepo = path.join(os.homedir(), pathToRepo.split(`~`).pop())
+  }
   conf.set(`gatsby-location`, path.resolve(pathToRepo))
   process.exit()
 }
@@ -63,7 +65,19 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
   process.exit()
 }
 
-if (!argv.packages && _.isEmpty(gatsbyPackages)) {
+const localPkg = JSON.parse(fs.readFileSync(`package.json`))
+let packages = Object.keys(
+  _.merge({}, localPkg.dependencies, localPkg.devDependencies)
+)
+
+if (argv.copyAll) {
+  packages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
+} else {
+  const { dependencies } = JSON.parse(fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`)))
+  packages = packages.concat(Object.keys(dependencies)).filter(p => p.startsWith(`gatsby`))
+}
+
+if (!argv.packages && _.isEmpty(packages)) {
   console.error(
     `
 You haven't got any gatsby dependencies into your current package.json
@@ -80,7 +94,7 @@ gatsby-dev will pick them up.
   process.exit()
 }
 
-watch(gatsbyLocation, argv.packages || gatsbyPackages, {
+watch(gatsbyLocation, argv.packages || packages, {
   quiet: argv.quiet,
-  scanOnce: argv[`scan-once`],
+  scanOnce: argv.scanOnce,
 })

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.2...gatsby-plugin-jss@2.0.3) (2018-10-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-jss:** use separate SheetsRegistry for each page ([#9401](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/issues/9401)) ([15375c8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/commit/15375c8)), closes [#7716](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/issues/7716)
+
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.2-rc.1...gatsby-plugin-jss@2.0.2) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-plugin-jss
+
+<a name="2.0.2-rc.1"></a>
+
+## [2.0.2-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.2-rc.0...gatsby-plugin-jss@2.0.2-rc.1) (2018-08-29)
+
+**Note:** Version bump only for package gatsby-plugin-jss
+
+<a name="2.0.2-rc.0"></a>
+
+## [2.0.2-rc.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.2-beta.4...gatsby-plugin-jss@2.0.2-rc.0) (2018-08-21)
+
+**Note:** Version bump only for package gatsby-plugin-jss
+
+<a name="2.0.2-beta.4"></a>
+
+## [2.0.2-beta.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.2-beta.3...gatsby-plugin-jss@2.0.2-beta.4) (2018-08-16)
+
+**Note:** Version bump only for package gatsby-plugin-jss
+
 <a name="2.0.2-beta.3"></a>
 
 ## [2.0.2-beta.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.2-beta.2...gatsby-plugin-jss@2.0.2-beta.3) (2018-07-21)

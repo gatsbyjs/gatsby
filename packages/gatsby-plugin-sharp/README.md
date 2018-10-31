@@ -72,6 +72,12 @@ rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
 1600, 2400 – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
+If you want more control over which sizes are output you can use the `srcSetBreakpoints`
+parameter. For example, if you want images that are 200, 340, 520, and 890 wide you
+can add `srcSetBreakpoints: [ 200, 340, 520, 890 ]` as a parameter. You will also get
+`maxWidth` as a breakpoint (which is 800 by default), so you will actually get
+`[ 200, 340, 520, 800, 890 ]` as breakpoints.
+
 On top of that, `fluid` returns everything else (namely aspectRatio and
 a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
@@ -83,6 +89,7 @@ plugin for Markdown content as gatsby-remark-images).
 - `maxHeight` (int)
 - `quality` (int, default: 50)
 - `sizeByPixelDensity` (bool, default: false)
+- `srcSetBreakpoints` (array of int, default: [])
 
 #### Returns
 
@@ -229,6 +236,18 @@ fixed(
 }
 ```
 
+### Using MozJPEG
+
+You can opt-in to use [MozJPEG][16] for jpeg-encoding. MozJPEG provides even
+better image compression than the default encoder used in `gatsby-plugin-sharp`.
+However, when using MozJPEG the build time of your Gatsby project will increase
+significantly.
+To enable MozJPEG set the [environment variable](/docs/environment-variables/#environment-variables):
+
+```shell
+GATSBY_JPEG_ENCODER=MOZJPEG
+```
+
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
 [3]: https://ines.io/blog/dynamic-duotone-svg-jade
@@ -244,3 +263,4 @@ fixed(
 [13]: https://github.com/tooolbox/node-potrace#parameters
 [14]: https://github.com/oliver-moran/jimp
 [15]: http://sharp.dimens.io/en/stable/api-operation/#flatten
+[16]: https://github.com/mozilla/mozjpeg
