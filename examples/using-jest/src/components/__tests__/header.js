@@ -10,8 +10,6 @@ describe('Header', () => {
 
     const title = getByTestId('title')
 
-    console.log(title.innerHTML)
-
     expect(title).toHaveTextContent(siteTitle)
   })
 })
