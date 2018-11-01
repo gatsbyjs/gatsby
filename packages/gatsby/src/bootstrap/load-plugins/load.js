@@ -102,9 +102,11 @@ module.exports = (config = {}) => {
         },
       }
     } else {
+      plugin.options = plugin.options || {}
+
       // Plugins can have plugins.
       const subplugins = []
-      if (plugin.options && plugin.options.plugins) {
+      if (plugin.options.plugins) {
         plugin.options.plugins.forEach(p => {
           subplugins.push(processPlugin(p))
         })
@@ -130,12 +132,7 @@ module.exports = (config = {}) => {
         // Make sure key is unique to plugin options. E.g there could
         // be multiple source-filesystem plugins, with different names
         // (docs, blogs).
-        id: createNodeId(
-          plugin.options
-            ? plugin.name + JSON.stringify(plugin.options)
-            : plugin.name,
-          `Plugin`
-        ),
+        id: createNodeId(plugin.name + JSON.stringify(plugin.options)),
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
