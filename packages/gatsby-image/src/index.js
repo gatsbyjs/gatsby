@@ -101,19 +101,21 @@ const noscriptImg = props => {
 const Img = React.forwardRef((props, ref) => {
   const { style, objectFit, objectPosition, onLoad, onError, ...otherProps } = props
 
+  // Override objectFit/objectPosition props with any values passed to imgStyle
+  style.objectFit = style.objectFit || objectFit
+  style.objectPosition = style.objectPosition || objectPosition
+
   const imgStyle = {
     position: `absolute`,
     top: 0,
     left: 0,
     width: `100%`,
     height: `100%`,
-    objectFit: objectFit,
-    objectPosition: objectPosition,
     ...style,
   }
 
   if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
-    imgStyle.fontFamily = `"object-fit: ${objectFit}; object-position: ${objectPosition}"`
+    imgStyle.fontFamily = `"object-fit: ${style.objectFit}; object-position: ${style.objectPosition}"`
   }
 
   return (
@@ -233,11 +235,12 @@ class Image extends React.Component {
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    imgStyle.objectFit = objectFit
-    imgStyle.objectPosition = objectPosition
+    // Override objectFit/objectPosition props with any values passed to imgStyle
+    imgStyle.objectFit = imgStyle.objectFit || objectFit
+    imgStyle.objectPosition = imgStyle.objectPosition || objectPosition
 
     if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
-      imgStyle.fontFamily = `"object-fit: ${objectFit}; object-position: ${objectPosition}"`
+      imgStyle.fontFamily = `"object-fit: ${imgStyle.objectFit}; object-position: ${imgStyle.objectPosition}"`
     }
 
     const imagePlaceholderStyle = {
@@ -255,11 +258,11 @@ class Image extends React.Component {
     }
 
     const placeholderImageProps = {
-      title, 
+      title,
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
       className: placeholderClassName,
-    } 
+    }
 
     if (fluid) {
       const image = fluid
@@ -286,7 +289,7 @@ class Image extends React.Component {
           {/* Show the blurry base64 image. */}
           {image.base64 && (
             <Img src={image.base64} {...placeholderImageProps} />
-            )}
+          )}
 
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
