@@ -146,7 +146,16 @@ class BlogPostTemplate extends React.Component {
                   flex: `0 0 auto`,
                 }}
               >
-                <Link to={post.frontmatter.author.fields.slug}>
+                <Link
+                  to={post.frontmatter.author.fields.slug}
+                  css={{
+                    borderBottom: `0 !important`,
+                    boxShadow: `none !important`,
+                    "&:hover": {
+                      background: `none !important`,
+                    },
+                  }}
+                >
                   <Img
                     fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
                     css={{
