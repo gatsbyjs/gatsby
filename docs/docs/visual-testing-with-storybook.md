@@ -4,8 +4,8 @@ title: Visual Testing with Storybook
 
 Knowing your components look as intended in every permutation is not only a great way to test them visually, but also provides "living documentation" for them. This makes it easier for teams to:
 
-1) know what components are available to them in a given project and 
-2) what props those components accept and what all of the states of that component are. 
+1. know what components are available to them in a given project and
+2. what props those components accept and what all of the states of that component are.
 
 As your project grows over time having this information available will be invaluable. This is the function of the Storybook library. Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
 

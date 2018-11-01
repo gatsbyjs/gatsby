@@ -19,6 +19,7 @@ const {
   getExampleValues,
   clearTypeExampleValues,
 } = require(`../data-tree-utils`)
+const { connectionFromArray } = require(`graphql-skip-limit`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -62,13 +63,20 @@ function queryResult(nodes, query, { types = [] } = {}) {
                 }),
               },
             },
-            resolve(nvi, args) {
-              return runSift({
+            async resolve(nvi, args) {
+              const results = await runSift({
                 args,
                 nodes,
-                connection: true,
+                firstOnly: false,
                 type: nodeType,
               })
+              if (results.length > 0) {
+                const connection = connectionFromArray(results, args)
+                connection.totalCount = results.length
+                return connection
+              } else {
+                return null
+              }
             },
           },
         }

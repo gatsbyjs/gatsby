@@ -61,7 +61,7 @@ window.gtag('event', 'click', { send_to: 'AW-CONVERSION_ID', ...data });
 In either case don't forget to guard against SSR:
 
 ```js
-typeof window !== 'undefined' && window.gtag('event', 'click', {...data);
+typeof window !== 'undefined' && window.gtag('event', 'click', { ...data });
 ```
 
 ## `<OutboundLink>` component
