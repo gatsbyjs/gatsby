@@ -229,6 +229,17 @@ The file node can then be queried using GraphQL. See an example of this in the [
 
 #### Retrieving the remote file extension
 
-The helper tries first to retrieve the file extension by parsing the url and the path provided. If it fails to find an extension then it tries to guess it using file-type.
+The helper tries first to retrieve the file extension by parsing the url and the path provided (e.g. if the url is https://example.com/image.jpg, the extension will be inferred as `.jpg`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the extension _can_ be explicitly passed, like so:
 
-You may use the optional parameter to force the use of a specific extension. This could come in handy if the url-parser and file-type are not able to guess the extension (i.e md is not supported by file-type).
+```javascript
+createRemoteFileNode({
+  // The source url of the remote file
+  url: `https://example.com/a-file-without-an-extension`,
+  store,
+  cache,
+  createNode,
+  createNodeId,
+  // if necessary!
+  ext: '.jpg',
+})
+```
