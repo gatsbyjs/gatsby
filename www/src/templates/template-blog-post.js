@@ -149,13 +149,13 @@ class BlogPostTemplate extends React.Component {
                 <Link
                   to={post.frontmatter.author.fields.slug}
                   css={{
-                    width:
-                      post.frontmatter.author.avatar.childImageSharp.fixed
-                        .width,
-                    height:
-                      post.frontmatter.author.avatar.childImageSharp.fixed
-                        .height,
-                    borderRadius: `100%`,
+                    "&&": {
+                      borderBottom: 0,
+                      boxShadow: `none`,
+                      "&:hover": {
+                        background: `none`,
+                      },
+                    },
                   }}
                 >
                   <Img
