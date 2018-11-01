@@ -86,13 +86,13 @@ const UnsplashMasonry = edges => (
     <Grid>
       {edges.images.map((image, index) => (
         <GridItem key={index}>
-          <GridItemImage fluid={image.node.childImageSharp.fluid} />
+          <GridItemImage fluid={image.node.localFile.childImageSharp.fluid} />
           <Badge>
             SVG
             {` `}
             {numeral(
               Buffer.byteLength(
-                image.node.childImageSharp.fluid.tracedSVG,
+                image.node.localFile.childImageSharp.fluid.tracedSVG,
                 `utf8`
               )
             ).format()}

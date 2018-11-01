@@ -10,19 +10,19 @@ import Layout from "../components/layout"
 const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.file.childImageSharp.fluid}
+    image={data.cactus.localFile.childImageSharp.fluid}
     imageBackgroundColor="#F0C450"
   >
     <PageTitle>Background Color</PageTitle>
     <FloatingImage
-      imageMobile={data.floatingImageMobile.childImageSharp.fixed}
-      imageDesktop={data.floatingImage.childImageSharp.fixed}
+      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
+      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
       title={`Photo by Charles Deluvio on Unsplash`}
       backgroundColor="#DB3225"
     />
     <Lorem />
     <Img
-      fluid={data.fullWidthImage.childImageSharp.fluid}
+      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
       backgroundColor="#F9D6CE"
       title={`Photo by Charles Deluvio on Unsplash`}
     />
@@ -34,33 +34,40 @@ export default BlurUp
 
 export const query = graphql`
   query {
-    file(relativePath: { regex: "/charles-deluvio-695732/" }) {
-      childImageSharp {
-        fluid(maxWidth: 800) {
-          ...GatsbyImageSharpFluid_noBase64
+    cactus: unsplashImagesYaml(title: { eq: "Cactus" }) {
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
         }
       }
     }
-    floatingImageMobile: file(
-      relativePath: { regex: "/charles-deluvio-542217/" }
-    ) {
-      childImageSharp {
-        fixed(width: 120) {
-          ...GatsbyImageSharpFixed_noBase64
+
+    floatingImageMobile: unsplashImagesYaml(title: { eq: "Pug with red hat" }) {
+      localFile {
+        childImageSharp {
+          fixed(width: 120) {
+            ...GatsbyImageSharpFixed_noBase64
+          }
         }
       }
     }
-    floatingImage: file(relativePath: { regex: "/charles-deluvio-542217/" }) {
-      childImageSharp {
-        fixed(width: 200) {
-          ...GatsbyImageSharpFixed_noBase64
+    floatingImage: unsplashImagesYaml(title: { eq: "Pug with red hat" }) {
+      localFile {
+        childImageSharp {
+          fixed(width: 200) {
+            ...GatsbyImageSharpFixed_noBase64
+          }
         }
       }
     }
-    fullWidthImage: file(relativePath: { regex: "/charles-deluvio-695760/" }) {
-      childImageSharp {
-        fluid(maxWidth: 600) {
-          ...GatsbyImageSharpFluid_noBase64
+    fullWidthImage: unsplashImagesYaml(title: { eq: "Cacti" }) {
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 600) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
         }
       }
     }
