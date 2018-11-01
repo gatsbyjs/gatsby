@@ -132,7 +132,7 @@ module.exports = (config = {}) => {
         // Make sure key is unique to plugin options. E.g there could
         // be multiple source-filesystem plugins, with different names
         // (docs, blogs).
-        id: createNodeId(plugin.name + JSON.stringify(plugin.options)),
+        id: createNodeId(plugin.name + JSON.stringify(plugin.options), `Plugin`),
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
