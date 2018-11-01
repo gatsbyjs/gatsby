@@ -149,6 +149,12 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/production-runtime
 
+  sync_examples:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/sync-repos.sh "examples"
+
 workflows:
   version: 2
   build-test:
@@ -173,3 +179,7 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_runtime:
           <<: *e2e-test-workflow
+      - sync_examples:
+          filters:
+            branches:
+              only: master
