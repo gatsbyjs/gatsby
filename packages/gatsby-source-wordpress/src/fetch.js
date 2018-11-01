@@ -33,10 +33,10 @@ async function fetch({
   let _accessToken
   if (_hostingWPCOM) {
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
-    _accessToken = await getAccessToken(_auth)
+    _accessToken = await getWPCOMAccessToken(_auth)
   } else if (_useJWT) {
     url = `${_siteURL}/wp-json`
-    _accessToken = await getAccessToken(_auth, url)
+    _accessToken = await getJWToken(_auth, url)
   } else {
     url = `${_siteURL}/wp-json`
   }
@@ -161,45 +161,53 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
 }
 
 /**
- * Gets wordpress.com or JWT access token so it can fetch private data like medias :/
+ * Gets wordpress.com access token so it can fetch private data like medias :/
  *
  * @returns
  */
-async function getAccessToken(_auth, url) {
+async function getWPCOMAccessToken(_auth) {
   let result
-  let authUrl
-
-  if (!url) {
-    authUrl = `https://public-api.wordpress.com/oauth2/token`
-  } else {
-    authUrl = `${url}/jwt-auth/v1/token`
-  }
+  const oauthUrl = `https://public-api.wordpress.com/oauth2/token`
   try {
-    let options
-    if (!url) {
-      options = {
-        url: authUrl,
-        method: `post`,
-        data: querystring.stringify({
-          client_secret: _auth.wpcom_app_clientSecret,
-          client_id: _auth.wpcom_app_clientId,
-          username: _auth.wpcom_user,
-          password: _auth.wpcom_pass,
-          grant_type: `password`,
-        }),
-      }
-    } else {
-      options = {
-        url: authUrl,
-        method: `post`,
-        data: {
-          username: _auth.jwt_user,
-          password: _auth.jwt_pass,
-        },
-      }
+    let options = {
+      url: oauthUrl,
+      method: `post`,
+      data: querystring.stringify({
+        client_secret: _auth.wpcom_app_clientSecret,
+        client_id: _auth.wpcom_app_clientId,
+        username: _auth.wpcom_user,
+        password: _auth.wpcom_pass,
+        grant_type: `password`,
+      }),
     }
     result = await axios(options)
-    result = url ? result.data.token : result.data.access_token
+    result = result.data.access_token
+  } catch (e) {
+    httpExceptionHandler(e)
+  }
+
+  return result
+}
+
+/**
+ * Gets JSON Web Token so it can fetch private data
+ *
+ * @returns
+ */
+async function getJWToken(_auth, url) {
+  let result
+  let authUrl = `${url}/jwt-auth/v1/token`
+  try {
+    const options = {
+      url: authUrl,
+      method: `post`,
+      data: {
+        username: _auth.jwt_user,
+        password: _auth.jwt_pass,
+      },
+    }
+    result = await axios(options)
+    result = result.data.token
   } catch (e) {
     httpExceptionHandler(e)
   }
