@@ -1949,7 +1949,7 @@
   built_by_url: "https://github.com/Novatics"
   featured: false
 - title: I migliori by Vivigratis
-  description: |
+  description: >
     Product review website
   main_url: "https://imigliori.vivigratis.com/"
   url: "https://imigliori.vivigratis.com/"
@@ -1960,6 +1960,7 @@
     - Health & Wellness
     - Fashion
   built_by: Kframe Interactive SA
+  built_by_url: http://kframeinteractive.com
   featured: false
 - title: Max McKinney
   description: >
@@ -3204,4 +3205,14 @@
     - Education
     - Technology
     - Podcast
+  featured: false
+  - title: FOX Circus  
+  main_url: "https://www.foxcircus.it/"
+  url: "https://www.foxcircus.it/"
+  categories:
+    - Event
+    - Conference
+    - Entertainment    
+  built_by: Kframe Interactive SA
+  built_by_url: http://kframeinteractive.com
   featured: false
