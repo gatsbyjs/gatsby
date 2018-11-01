@@ -27,31 +27,26 @@ npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy 'b
 
 Because Gatsby handles its own Babel configuration, you will need to manually
 tell Jest to use `babel-jest`. The easiest way to do this is to add a `"jest"`
-section in your `package.json`. You can set up some useful defaults at the same
+section in your `jest.config.js`. You can set up some useful defaults at the same
 time:
 
-```json:title=package.json
-  "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
-    },
-    "testRegex": "/.*(__tests__\\/.*)|(.*(test|spec))\\.jsx?$",
-    "moduleNameMapper": {
-      ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-      ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
-    },
-    "testPathIgnorePatterns": ["node_modules", ".cache"],
-    "transformIgnorePatterns": [
-      "node_modules/(?!(gatsby)/)"
-    ],
-    "globals": {
-      "__PATH_PREFIX__": ""
-    },
-    "testURL": "http://localhost",
-    "setupFiles": [
-      "<rootDir>/loadershim.js"
-    ]
-  }
+```json:title=jest.config.js
+module.exports = {
+  "transform": {
+    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
+  },
+  "moduleNameMapper": {
+    ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+  },
+  "testPathIgnorePatterns": ["node_modules", ".cache"],
+  "transformIgnorePatterns": ["node_modules/(?!(gatsby)/)"],
+  "globals": {
+    "__PATH_PREFIX__": ""
+  },
+  "testURL": "http://localhost",
+  "setupFiles": ["<rootDir>/loadershim.js"]
+}
 ```
 
 The `transform` section tells Jest that all `js` or `jsx` files need to be
@@ -150,11 +145,12 @@ import React from "react"
 import renderer from "react-test-renderer"
 import Bio from "./Bio"
 
-describe("Bio", () =>
+describe("Bio", () => {
   it("renders correctly", () => {
     const tree = renderer.create(<Bio />).toJSON()
     expect(tree).toMatchSnapshot()
-  }))
+  })
+})
 ```
 
 This is a very simple snapshot test, which uses `react-test-renderer` to render
@@ -220,39 +216,28 @@ config. First install `ts-jest`:
 npm install --save-dev ts-jest
 ```
 
-Then edit the Jest config in your `package.json` to match this:
+Then edit the Jest config in your `jest.config.js` to match this:
 
-```json:title=package.json
-  "jest": {
-    "transform": {
-        "^.+\\.tsx?$": "ts-jest",
-        "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
-    },
-    "testRegex": "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
-    "moduleNameMapper": {
-      ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-      ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
-    },
-    "moduleFileExtensions": [
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "json",
-        "node"
-    ],
-    "testPathIgnorePatterns": ["node_modules", ".cache"],
-    "transformIgnorePatterns": [
-      "node_modules/(?!(gatsby)/)"
-    ],
-    "globals": {
-      "__PATH_PREFIX__": ""
-    },
-    "testURL": "http://localhost",
-    "setupFiles": [
-      "<rootDir>/loadershim.js"
-    ]
-  }
+```json:title=jest.config.js
+module.exports = {
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
+  },
+  "testRegex": "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
+  "moduleNameMapper": {
+    ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+  },
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "testPathIgnorePatterns": ["node_modules", ".cache"],
+  "transformIgnorePatterns": ["node_modules/(?!(gatsby)/)"],
+  "globals": {
+    "__PATH_PREFIX__": ""
+  },
+  "testURL": "http://localhost",
+  "setupFiles": ["<rootDir>/loadershim.js"]
+}
 ```
 
 ## Testing components with Router
@@ -295,7 +280,7 @@ import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
 
-describe("BlogIndex", () =>
+describe("BlogIndex", () => {
   it("renders correctly", () => {
     const location = {
       pathname: "/",
@@ -304,6 +289,7 @@ describe("BlogIndex", () =>
     const tree = renderer.create(<BlogIndex location={location} />).toJSON()
     expect(tree).toMatchSnapshot()
   }))
+})
 ```
 
 For more information on testing page components, be sure to read the docs on
