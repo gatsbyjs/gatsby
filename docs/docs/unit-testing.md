@@ -215,7 +215,7 @@ config. First install `ts-jest`:
 npm install --save-dev ts-jest
 ```
 
-Then edit the Jest config in your `jest.config.js` to match this:
+Then update the configuration in `jest.config.js`, like so:
 
 ```json:title=jest.config.js
 module.exports = {
