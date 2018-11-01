@@ -1,5 +1,5 @@
 ---
-title: "Gatsby Hacktoberfest Wrapup"
+title: "Gatsby Hacktoberfest Wrap-up"
 date: 2018-11-01
 author: "Amberley Romo"
 tags: ["hacktoberfest", "open source"]
@@ -55,7 +55,7 @@ We’re a small team, and we weren’t fully prepared to handle the overwhelming
 
 #### ➡️ We created codeowner teams
 
-To split our time more efficiently, we [created codeowner teams](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#with-great-contributions-comes-great-responsibility) to automatically notify Inkteam members when certain areas of review were required:
+To split our time more efficiently, we [created codeowner teams](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#with-great-contributions-comes-great-responsibility) to automatically notify Gatsby team members when certain areas of review are required:
 
 - Core - Code owners for core functionality of Gatsby.
 - Docs - Maintainers who have special expertise in docs.
@@ -64,7 +64,7 @@ To split our time more efficiently, we [created codeowner teams](/blog/2018-10-1
 
 #### ➡️ We're hiring another Open Source Maintainer!
 
-We knew this was an area of need that will continue to grow (which is great!) This role will focus on helping us improve Gatsby core, the Gatsby ecosystem and support the community 🎉 Check out the [full job spec](https://www.gatsbyjs.com/careers/open-source-maintainer/) for more details.
+We knew this was an area of need that will continue to grow (which is great!) This role will focus on helping us improve Gatsby core, the Gatsby ecosystem, and support the community 🎉 Check out the [full job spec](https://www.gatsbyjs.com/careers/open-source-maintainer/) for more details.
 
 ### We experienced an influx of minor, peripheral PRs
 
@@ -81,7 +81,7 @@ Next year, we could focus on curating a backlog of accessible Hacktoberfest issu
 
 This year was a bit of an experiment. We have a lot of great lessons learned to put into play next year!
 
-## Wrapup
+## Wrap-up
 
 We had a great time and learned a lot from this year's Hacktoberfest! Thanks to everyone who participated!
 
