@@ -1,8 +1,6 @@
 // @flow
 const sift = require(`sift`)
 const _ = require(`lodash`)
-const { connectionFromArray } = require(`graphql-skip-limit`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`./node-tracking`)
@@ -38,18 +36,25 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
-/*
+/**
  * Filters a list of nodes using mongodb-like syntax.
- * Returns a single unwrapped element if connection = false.
  *
+ * @param args raw graphql query filter as an object
+ * @param nodes The nodes array to run sift over
+ * @param type gqlType
+ * @param typeName
+ * @param firstOnly true if you want to return only the first result
+ * found. This will return a collection of size 1. Not a single
+ * element
+ * @returns Collection of results. Collection will be limited to size
+ * if `firstOnly` is true
  */
 module.exports = ({
   args,
   nodes,
   type,
   typeName,
-  connection = false,
-  path = ``,
+  firstOnly = false,
 }: Object) => {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
@@ -169,28 +174,17 @@ module.exports = ({
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
   if (
-    !connection &&
+    firstOnly &&
     Object.keys(fieldsToSift).length === 1 &&
     Object.keys(fieldsToSift)[0] === `id` &&
     Object.keys(siftArgs[0].id).length === 1 &&
     Object.keys(siftArgs[0].id)[0] === `$eq`
   ) {
-    const nodePromise = resolveRecursive(
+    return resolveRecursive(
       getNode(siftArgs[0].id[`$eq`]),
       fieldsToSift,
       type.getFields()
-    )
-
-    nodePromise.then(node => {
-      if (node) {
-        createPageDependency({
-          path,
-          nodeId: node.id,
-        })
-      }
-    })
-
-    return nodePromise
+    ).then(node => (node ? [node] : []))
   }
 
   const nodesPromise = () => {
@@ -240,7 +234,7 @@ module.exports = ({
     }
   }
   const tempPromise = nodesPromise().then(myNodes => {
-    if (!connection) {
+    if (firstOnly) {
       const index = _.isEmpty(siftArgs)
         ? 0
         : sift.indexOf(
@@ -250,51 +244,35 @@ module.exports = ({
             myNodes
           )
 
-      // If a node is found, create a dependency between the resulting node and
-      // the path.
       if (index !== -1) {
-        createPageDependency({
-          path,
-          nodeId: myNodes[index].id,
-        })
-
-        return myNodes[index]
+        return [myNodes[index]]
       } else {
-        return null
+        return []
       }
+    } else {
+      let result = _.isEmpty(siftArgs)
+        ? myNodes
+        : sift(
+            {
+              $and: siftArgs,
+            },
+            myNodes
+          )
+
+      if (!result || !result.length) return null
+
+      // Sort results.
+      if (clonedArgs.sort) {
+        // create functions that return the item to compare on
+        // uses _.get so nested fields can be retrieved
+        const convertedFields = clonedArgs.sort.fields
+          .map(field => field.replace(/___/g, `.`))
+          .map(field => v => _.get(v, field))
+
+        result = _.orderBy(result, convertedFields, clonedArgs.sort.order)
+      }
+      return result
     }
-
-    let result = _.isEmpty(siftArgs)
-      ? myNodes
-      : sift(
-          {
-            $and: siftArgs,
-          },
-          myNodes
-        )
-
-    if (!result || !result.length) return null
-
-    // Sort results.
-    if (clonedArgs.sort) {
-      // create functions that return the item to compare on
-      // uses _.get so nested fields can be retrieved
-      const convertedFields = clonedArgs.sort.fields
-        .map(field => field.replace(/___/g, `.`))
-        .map(field => v => _.get(v, field))
-
-      result = _.orderBy(result, convertedFields, clonedArgs.sort.order)
-    }
-
-    const connectionArray = connectionFromArray(result, args)
-    connectionArray.totalCount = result.length
-    if (result.length > 0 && result[0].internal) {
-      createPageDependency({
-        path,
-        connection: result[0].internal.type,
-      })
-    }
-    return connectionArray
   })
 
   return tempPromise
