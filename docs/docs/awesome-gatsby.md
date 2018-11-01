@@ -61,6 +61,7 @@ See the [list of official and community plugins](/docs/plugins/)
 - [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
 - [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
+- [JAMstack Basics: How to Create a Gatsby Starter with Contentful and Deploy to Netlify](https://itnext.io/jamstack-basics-how-to-create-a-gatsby-starter-with-contentful-and-deploy-to-netlify-846354cc74bc)
 
 ## Other resources
 
