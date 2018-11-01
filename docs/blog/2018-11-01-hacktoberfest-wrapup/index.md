@@ -5,7 +5,7 @@ author: "Amberley Romo"
 tags: ["hacktoberfest", "open source"]
 ---
 
-Just like that, 👻🎃 Gatsby Hacktoberfest 🎃👻 is over! Or, "Hacktoverfest"? 😂 (Thanks for the pun, [@m-allanson](https://github.com/m-allanson)). We had a great time Hacktoberfesting with y'all and wanted to share a bit of our planning process and lessons learned in review!
+Just like that, Gatsby Hacktoberfest is over! Or, "Hacktoverfest"? 😂 (Thanks for the pun, [@m-allanson](https://github.com/m-allanson)). We had a great time Hacktoberfesting with y'all and wanted to share a bit of our planning process and lessons learned in review!
 
 ## Planning for Hacktoberfest
 
@@ -55,7 +55,7 @@ We’re a small team, and we weren’t fully prepared to handle the overwhelming
 
 #### ➡️ We created codeowner teams
 
-To split our time more efficiently, we [created codeowner teams](with-great-contributions-comes-great-responsibility) to automatically notify Inkteam members when certain areas of review were required:
+To split our time more efficiently, we [created codeowner teams](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#with-great-contributions-comes-great-responsibility) to automatically notify Inkteam members when certain areas of review were required:
 
 - Core - Code owners for core functionality of Gatsby.
 - Docs - Maintainers who have special expertise in docs.
