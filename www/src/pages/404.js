@@ -12,7 +12,7 @@ class FourOhFour extends React.Component {
           <p>
             Oops! The page you are looking for has been removed or relocated.
           </p>
-          <Link to="./">
+          <Link to="/">
             <p>Go Back</p>
           </Link>
         </Container>
