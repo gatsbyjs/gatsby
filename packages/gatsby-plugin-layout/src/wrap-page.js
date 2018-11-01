@@ -11,6 +11,7 @@ try {
         `Please create layout component in that location or specify path to layout component in gatsby-config.js`
     )
   } else {
+    console.error(e);
     throw e
   }
 }
