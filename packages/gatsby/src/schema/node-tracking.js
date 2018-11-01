@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const { getNode, getNodes } = require(`../redux`)
+const { getNode, getNodes } = require(`../db/nodes`)
 
 /**
  * Map containing links between inline objects or arrays

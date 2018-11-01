@@ -674,6 +674,79 @@ export default ({ children }) => (
 )
 ```
 
+The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader#options).
+
+For vanilla CSS without a preprocessor:
+
+```javascript:title=gatsby-node.js
+const cssLoaderRe = /\/css-loader\//
+const targetFile = `.module.css`
+
+const processRule = rule => {
+  if (rule.oneOf) {
+    return {
+      ...rule,
+      oneOf: rule.oneOf.map(processRule),
+    }
+  }
+
+  if (!rule.test.test(targetFile)) {
+    return rule
+  }
+
+  if (Array.isArray(rule.use)) {
+    return {
+      ...rule,
+      use: rule.use.map(use => {
+        if (!cssLoaderRe.test(use.loader)) {
+          return use
+        }
+
+        // adjust css-loader options
+        return {
+          ...use,
+          options: {
+            ...use.options,
+            camelCase: false,
+          },
+        }
+      }),
+    }
+  }
+
+  return rule
+}
+
+exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
+  const config = getConfig()
+
+  const newConfig = {
+    ...config,
+    module: {
+      ...config.module,
+      rules: config.module.rules.map(processRule),
+    },
+  }
+  actions.replaceWebpackConfig(newConfig)
+}
+```
+
+If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/packages/gatsby-plugin-sass/README.md#how-to-use) or [`gatsby-plugin-less`](/packages/gatsby-plugin-less/README.md#how-to-use):
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      cssLoaderOptions: {
+        camelCase: false,
+      },
+    },
+  },
+]
+```
+
 ### Update Jest configuration
 
 If you were using Jest with Gatsby V1, you will need to make some updates to your configuration when upgrading to Gatsby V2. You can view the complete details of setting up your test environment on the [Unit Testing](/docs/unit-testing/) page of the docs.
