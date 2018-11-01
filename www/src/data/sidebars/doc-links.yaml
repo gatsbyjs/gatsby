@@ -96,6 +96,8 @@
               link: /docs/sourcing-from-drupal/
             - title: Sourcing from Contentful
               link: /docs/sourcing-from-contentful/
+            - title: Sourcing from Prismic
+              link: /docs/sourcing-from-prismic/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
