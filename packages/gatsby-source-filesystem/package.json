@@ -11,11 +11,13 @@
     "better-queue": "^3.8.7",
     "bluebird": "^3.5.0",
     "chokidar": "^1.7.0",
+    "file-type": "^10.2.0",
     "fs-extra": "^5.0.0",
     "got": "^7.1.0",
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
     "pretty-bytes": "^4.0.2",
+    "read-chunk": "^3.0.0",
     "slash": "^1.0.0",
     "valid-url": "^1.0.9",
     "xstate": "^3.1.0"
