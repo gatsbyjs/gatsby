@@ -3205,3 +3205,15 @@
     - Technology
     - Podcast
   featured: false
+- title: Tylermcginnis 
+  url: https://tylermcginnis.com/
+  main_url: https://tylermcginnis.com/
+  source_url: https://tylermcginnis.com/
+  description: >
+    The linear, course based approach to learning web technologies. 
+  categories:
+    - Education
+    - Technology
+    - Podcast
+    - Webdevelopment
+  featured: false
