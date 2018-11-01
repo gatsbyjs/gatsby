@@ -114,6 +114,12 @@ module.exports = (config = {}) => {
         plugin.options.plugins = subplugins
       }
 
+      // Make sure key is unique to plugin options. E.g there could
+      // be multiple source-filesystem plugins, with different names
+      // (docs, blogs).
+      // Get the ID here so this call is included in the unit test.
+      const id = createNodeId(plugin.name + JSON.stringify(plugin.options), `Plugin`)
+
       // Add some default values for tests as we don't actually
       // want to try to load anything during tests.
       if (plugin.resolve === `___TEST___`) {
@@ -129,10 +135,7 @@ module.exports = (config = {}) => {
 
       return {
         ...info,
-        // Make sure key is unique to plugin options. E.g there could
-        // be multiple source-filesystem plugins, with different names
-        // (docs, blogs).
-        id: createNodeId(plugin.name + JSON.stringify(plugin.options), `Plugin`),
+        id,
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
