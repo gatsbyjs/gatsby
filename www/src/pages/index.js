@@ -20,9 +20,70 @@ import Button from "../components/button"
 import TechWithIcon from "../components/tech-with-icon"
 import EmailCaptureForm from "../components/email-capture-form"
 
+import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
+import HomepageBlog from "../components/homepage/homepage-blog"
+
+import { EcosystemIcon } from "../assets/mobile-nav-icons"
+
 class IndexRoute extends React.Component {
+  combineEcosystemFeaturedItems = ({ starters, plugins }) => {
+    const combinedItems = []
+
+    let i = 0
+    while (i < 3) {
+      combinedItems.push(starters[i])
+      combinedItems.push(plugins[i])
+
+      i++
+    }
+
+    return combinedItems
+  }
+
   render() {
-    const blogPosts = this.props.data.allMarkdownRemark
+    const {
+      data: {
+        allMarkdownRemark: blogPosts,
+        allStartersYaml: { edges: startersData },
+        allNpmPackage: { edges: pluginsData },
+      },
+    } = this.props
+
+    const starters = startersData.map(item => {
+      const {
+        node: {
+          fields: {
+            starterShowcase: { slug, name, description, stars },
+          },
+          childScreenshot: {
+            screenshotFile: {
+              childImageSharp: { fixed: thumbnail },
+            },
+          },
+        },
+      } = item
+
+      return {
+        slug: `/starters${slug}`,
+        name,
+        description,
+        stars,
+        thumbnail,
+        type: "Starter",
+      }
+    })
+
+    const plugins = pluginsData.map(item => {
+      item.node.type = "Plugin"
+
+      return item.node
+    })
+
+    const ecosystemFeaturedItems = this.combineEcosystemFeaturedItems({
+      plugins,
+      starters,
+    })
+
     return (
       <Layout location={this.props.location}>
         <Helmet>
@@ -48,10 +109,7 @@ class IndexRoute extends React.Component {
                 padding: rhythm(presets.gutters.default / 2),
                 flex: `0 0 100%`,
                 maxWidth: `100%`,
-                [presets.Hd]: {
-                  padding: vP,
-                  paddingTop: 0,
-                },
+                [presets.Hd]: { padding: vP, paddingTop: 0 },
               }}
             >
               <main
@@ -136,15 +194,13 @@ class IndexRoute extends React.Component {
                       delivered instantly to your users wherever they are.
                     </FuturaParagraph>
                   </Card>
-
                   <Diagram />
-
                   <div css={{ flex: `1 1 100%` }}>
                     <Container hasSideBar={false}>
                       <div
                         css={{
                           textAlign: `center`,
-                          padding: `${rhythm(1)} 0 ${rhythm(2)}`,
+                          padding: `${rhythm(1)} 0 ${rhythm(1.5)}`,
                         }}
                       >
                         <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
@@ -161,14 +217,18 @@ class IndexRoute extends React.Component {
                       </div>
                     </Container>
                   </div>
+                </Cards>
 
+                <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
+
+                <HomepageBlog />
+
+                <Cards>
                   <div
                     css={{
                       borderTop: `1px solid ${colors.ui.light}`,
                       flex: `1 1 100%`,
-                      [presets.Tablet]: {
-                        paddingTop: rhythm(1),
-                      },
+                      [presets.Tablet]: { paddingTop: rhythm(1) },
                     }}
                   >
                     <Container
@@ -191,9 +251,7 @@ class IndexRoute extends React.Component {
                           textAlign: `left`,
                           marginTop: 0,
                           color: colors.gatsby,
-                          [presets.Tablet]: {
-                            paddingBottom: rhythm(1),
-                          },
+                          [presets.Tablet]: { paddingBottom: rhythm(1) },
                         }}
                       >
                         Latest from the Gatsby blog
@@ -229,7 +287,10 @@ class IndexRoute extends React.Component {
 export default IndexRoute
 
 export const pageQuery = graphql`
-  query {
+  query IndexRouteQuery(
+    $featuredStarters: [String]!
+    $featuredPlugins: [String]!
+  ) {
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
         fluid(maxWidth: 870) {
@@ -251,6 +312,43 @@ export const pageQuery = graphql`
       edges {
         node {
           ...BlogPostPreview_item
+        }
+      }
+    }
+    allStartersYaml(
+      filter: {
+        fields: { starterShowcase: { slug: { in: $featuredStarters } } }
+      }
+    ) {
+      edges {
+        node {
+          fields {
+            starterShowcase {
+              slug
+              description
+              stars
+              name
+            }
+          }
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                fixed(width: 64, height: 64) {
+                  ...GatsbyImageSharpFixed_noBase64
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    allNpmPackage(filter: { name: { in: $featuredPlugins } }) {
+      edges {
+        node {
+          slug
+          name
+          description
+          humanDownloadsLast30Days
         }
       }
     }

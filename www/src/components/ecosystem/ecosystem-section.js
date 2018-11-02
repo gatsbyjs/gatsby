@@ -4,6 +4,7 @@ import styled from "react-emotion"
 
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
+import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
@@ -36,6 +37,7 @@ const EcosystemSectionRoot = styled(`section`)`
 
     :last-child {
       align-self: flex-start;
+      padding-bottom: ${rhythm(options.blockMarginBottom)};
     }
   }
 
@@ -43,7 +45,7 @@ const EcosystemSectionRoot = styled(`section`)`
     text-decoration: none;
   }
 `
-const Header = styled(`header`)`
+export const Header = styled("header")`
   align-items: flex-start;
 
   ${presets.Tablet}: {
@@ -53,28 +55,34 @@ const Header = styled(`header`)`
   };
 `
 
-const Title = styled(`h1`)`
+const Title = styled("h1")`
+  align-items: center;
   color: ${colors.gatsby};
   display: flex;
   font-size: 1.25rem;
+  line-height: 1;
   margin: 0;
-  padding-bottom: ${rhythm(0.5)};
+  margin-bottom: ${rhythm(0.25)};
+  min-height: 32px;
 
   span {
     margin: 0 0.3rem 0 -0.1rem;
   }
 `
-const Icon = styled(`span`)`
+
+const Icon = styled("span")`
   display: block;
   width: 32px;
   height: 32px;
 `
-const SubTitle = styled(`h2`)`
+
+const SubTitle = styled("h2")`
   color: ${colors.lilac};
   font-size: 0.875rem;
   font-weight: 300;
   letter-spacing: 0.05em;
   margin: 0;
+  margin-top: ${rhythm(1)};
   text-transform: uppercase;
 `
 
@@ -87,7 +95,7 @@ const Description = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: -4px 0 ${rhythm(1)};
+  margin-top: -${rhythm(1 / 4)};
 
   > a {
     margin: 4px 8px 4px 0;
@@ -101,33 +109,35 @@ const EcosysteSection = ({
   icon,
   links,
   featuredItems,
+  className,
 }) => (
-  <EcosystemSectionRoot>
+  <EcosystemSectionRoot className={className}>
     <Header>
-      <React.Fragment>
-        <Title>
-          {icon && <Icon dangerouslySetInnerHTML={{ __html: icon }} />}
-          <span>{title}</span>
-        </Title>
-        <Description>{description}</Description>
-        <Actions>
-          {links.map((item, idx) => {
-            const { to, label, secondary } = item
+      <Title>
+        {icon && <Icon dangerouslySetInnerHTML={{ __html: icon }} />}
+        <span>{title}</span>
+      </Title>
+      <Description>{description}</Description>
+      <Actions>
+        {links.map((item, idx) => {
+          const { to, label, secondary } = item
 
-            return (
-              <Button key={to} to={to} secondary={secondary} tiny>
-                {label}
-              </Button>
-            )
-          })}
-        </Actions>
-      </React.Fragment>
+          return (
+            <Button key={to} to={to} secondary={secondary} tiny>
+              {label}
+            </Button>
+          )
+        })}
+      </Actions>
       {subTitle && <SubTitle>{subTitle}</SubTitle>}
     </Header>
 
     {featuredItems &&
       featuredItems.length > 0 && (
-        <EcosystemFeaturedItems items={featuredItems} />
+        <EcosystemFeaturedItems
+          items={featuredItems}
+          itemComponent={EcosystemFeaturedItem}
+        />
       )}
   </EcosystemSectionRoot>
 )
@@ -135,6 +145,7 @@ const EcosysteSection = ({
 EcosysteSection.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  className: PropTypes.string,
   subTitle: PropTypes.string,
   icon: PropTypes.string,
   links: PropTypes.array,

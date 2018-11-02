@@ -14,7 +14,6 @@ const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(`li`)`
   flex-basis: ${props => `calc(100% / ${props.numberOfItems})`};
-  float: left;
   margin: 0 2px 0 0;
   padding: 5px;
 
@@ -24,9 +23,10 @@ const EcosystemFeaturedItemRoot = styled(`li`)`
   }
 `
 
-const BlockLink = styled(Link)`
+export const BlockLink = styled(Link)`
+  background: #fff;
   border-radius: ${presets.radiusLg}px;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -95,7 +95,7 @@ const Description = styled(`p`)`
   margin: 0;
 `
 
-const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
+const EcosystemFeaturedItem = ({ item, numberOfItems, className }) => {
   const {
     slug,
     name,
@@ -103,6 +103,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
     stars,
     humanDownloadsLast30Days,
     thumbnail,
+    type,
   } = item
 
   const cutTooLongDescription = str => {
@@ -114,7 +115,10 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
   }
 
   return (
-    <EcosystemFeaturedItemRoot numberOfItems={numberOfItems}>
+    <EcosystemFeaturedItemRoot
+      numberOfItems={numberOfItems}
+      className={className}
+    >
       <BlockLink to={slug}>
         <Header>
           <h3>{name}</h3>
@@ -146,6 +150,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
 EcosystemFeaturedItem.propTypes = {
   item: PropTypes.object.isRequired,
   numberOfItems: PropTypes.number.isRequired,
+  className: PropTypes.string,
 }
 
 export default EcosystemFeaturedItem
