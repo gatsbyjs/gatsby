@@ -1,9 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled, { css } from "react-emotion"
+import styled from "react-emotion"
 
 import presets, { colors } from "../../utils/presets"
-import { rhythm, options, scale } from "../../utils/typography"
+import { rhythm, options } from "../../utils/typography"
 
 const PageHeadingContainer = styled("header")`
   padding: ${rhythm(options.blockMarginBottom)};

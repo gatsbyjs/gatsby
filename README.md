@@ -136,15 +136,11 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 
 Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
 
-Check out our [contributor onboarding docs](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
-
-[**Read the Contributing Guide**](https://gatsbyjs.org/docs/how-to-contribute/)
+Check out our [**Contributing Guide**](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
 ### Code of Conduct
 
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [Code of Conduct](https://gatsbyjs.org/docs/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
-
-[**Read the Code of Conduct**](https://gatsbyjs.org/docs/code-of-conduct/)
+Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://gatsbyjs.org/docs/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
 
 ### A note on how this repository is organized
 

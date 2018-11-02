@@ -191,7 +191,7 @@ module.exports = async ({ parentSpan }) => {
         type: gqlType,
         args: filterFields,
         async resolve(a, queryArgs, context) {
-          let path = context.path ? context.path : ``
+          const path = context.path ? context.path : ``
           if (!_.isObject(queryArgs)) {
             queryArgs = {}
           }

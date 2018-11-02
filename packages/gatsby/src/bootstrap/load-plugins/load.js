@@ -45,11 +45,11 @@ function resolvePlugin(pluginName) {
         const packageJSON = JSON.parse(
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
-
+        const name = packageJSON.name || pluginName
         return {
           resolve: resolvedPath,
-          name: packageJSON.name || pluginName,
-          id: createNodeId(packageJSON.name, `Plugin`),
+          name,
+          id: createNodeId(name, `Plugin`),
           version:
             packageJSON.version || createFileContentHash(resolvedPath, `**`),
         }
