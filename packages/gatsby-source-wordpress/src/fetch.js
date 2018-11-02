@@ -80,13 +80,7 @@ Mama Route URL: ${url}
       }
     }
 
-    if (_useJWT && _accessToken) {
-      options.headers = {
-        Authorization: `Bearer ${_accessToken}`,
-      }
-    }
-
-    if (_hostingWPCOM && _accessToken) {
+    if (_accessToken) {
       options.headers = {
         Authorization: `Bearer ${_accessToken}`,
       }
@@ -245,19 +239,14 @@ async function fetchData({
     console.time(`Fetching the ${type} took`)
   }
 
-  let routeResponse = await getPages(
-    {
-      url,
-      _perPage,
-      _hostingWPCOM,
-      _useJWT,
-      _auth,
-      _accessToken,
-      _verbose,
-      _concurrentRequests,
-    },
-    1
-  )
+  let routeResponse = await getPages({
+    url,
+    _perPage,
+    _auth,
+    _accessToken,
+    _verbose,
+    _concurrentRequests,
+  })
 
   let entities = []
   if (routeResponse) {
@@ -326,16 +315,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  {
-    url,
-    _perPage,
-    _hostingWPCOM,
-    _useJWT,
-    _auth,
-    _accessToken,
-    _concurrentRequests,
-    _verbose,
-  },
+  { url, _perPage, _auth, _accessToken, _concurrentRequests, _verbose },
   page = 1
 ) {
   try {
@@ -349,11 +329,7 @@ async function getPages(
           page: page,
         })}`,
       }
-      if (_hostingWPCOM) {
-        o.headers = {
-          Authorization: `Bearer ${_accessToken}`,
-        }
-      } else if (_useJWT) {
+      if (_accessToken) {
         o.headers = {
           Authorization: `Bearer ${_accessToken}`,
         }
