@@ -1,7 +1,7 @@
 let offsetY = 0
 
 const getTargetOffset = hash => {
-  const id = window.decodeURI(window.location.hash.replace(`#`, ``))
+  const id = window.decodeURI(hash.replace(`#`, ``))
   if (id !== ``) {
     const element = document.getElementById(id)
     if (element) {
