@@ -77,7 +77,7 @@
       items:
         - title: Using unstructured data
           link: /docs/using-unstructured-data/
-        - title: Sourcing from the filesystem*
+        - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases*
           link: /docs/sourcing-from-databases/
