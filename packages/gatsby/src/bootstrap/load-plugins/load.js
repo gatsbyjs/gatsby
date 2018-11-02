@@ -20,6 +20,19 @@ function createFileContentHash(root, globPattern) {
 }
 
 /**
+ * Make sure key is unique to plugin options. E.g there could
+ * be multiple source-filesystem plugins, with different names
+ * (docs, blogs).
+ * @param {*} name Name of the plugin
+ * @param {*} pluginObject
+ */
+const createPluginId = (name, pluginObject = null) =>
+  createNodeId(
+    name + (pluginObject ? JSON.stringify(pluginObject.options) : ``),
+    `Plugin`
+  )
+
+/**
  * @typedef {Object} PluginInfo
  * @property {string} resolve The absolute path to the plugin
  * @property {string} name The plugin name
@@ -49,7 +62,7 @@ function resolvePlugin(pluginName) {
         return {
           resolve: resolvedPath,
           name,
-          id: createNodeId(name, `Plugin`),
+          id: createPluginId(name),
           version:
             packageJSON.version || createFileContentHash(resolvedPath, `**`),
         }
@@ -73,7 +86,7 @@ function resolvePlugin(pluginName) {
 
     return {
       resolve: resolvedPath,
-      id: createNodeId(packageJSON.name, `Plugin`),
+      id: createPluginId(packageJSON.name),
       name: packageJSON.name,
       version: packageJSON.version,
     }
@@ -114,17 +127,14 @@ module.exports = (config = {}) => {
         plugin.options.plugins = subplugins
       }
 
-      // Make sure key is unique to plugin options. E.g there could
-      // be multiple source-filesystem plugins, with different names
-      // (docs, blogs).
-      // Get the ID here so this call is included in the unit test.
-      const id = createNodeId(plugin.name + JSON.stringify(plugin.options), `Plugin`)
-
       // Add some default values for tests as we don't actually
       // want to try to load anything during tests.
       if (plugin.resolve === `___TEST___`) {
+        const name = `TEST`
+
         return {
-          name: `TEST`,
+          id: createPluginId(name, plugin),
+          name,
           pluginOptions: {
             plugins: [],
           },
@@ -135,7 +145,7 @@ module.exports = (config = {}) => {
 
       return {
         ...info,
-        id,
+        id: createPluginId(info.name, plugin),
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
@@ -164,7 +174,7 @@ module.exports = (config = {}) => {
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
     resolve: slash(process.cwd()),
-    id: createNodeId(`default-site-plugin`, `Plugin`),
+    id: createPluginId(`default-site-plugin`),
     name: `default-site-plugin`,
     version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
