@@ -445,8 +445,16 @@ module.exports = async ({
       exclude: /\.min\.js/,
       sourceMap: true,
       terserOptions: {
-        ecma: 8,
         ie8: false,
+        parse: {
+          ecma: 8,
+        },
+        compress: {
+          ecma: 5,
+        },
+        output: {
+          ecma: 5,
+        },
         ...terserOptions,
       },
       ...options,

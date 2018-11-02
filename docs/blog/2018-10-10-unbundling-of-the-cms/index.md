@@ -7,7 +7,7 @@ tags: ["content-mesh"]
 
 _This is Part 2 of a series. You may want to read Part 1:_ [Delivering Modern Website Experiences: The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh).
 
-Web users’ expectations follow a simple law: they always increase over time.  
+Web users’ expectations follow a simple law: they always increase over time.
 
 Creating compelling web content experiences has become _crucial_ in the battlefield for customer loyalty. But you can’t get _fresh_, _novel_, and _engaging_, without up-to-date content and development architectures.
 
@@ -25,7 +25,7 @@ But creating compelling experiences is challenging:
 
 When compared with purpose-built CMSs like Shopify for e-commerce or Wordpress for blogging, enterprise CMS applications like Sitecore, Evoq or Adobe Experience Manager (AEM) provide generic content modules.
 
-The enterprise CMS core development experience experiences are based in C#, ASP.NET, and J2EE -- languages and frameworks a decade out of date for frontend development. Add-ons are expensive and are difficult-to-use compared to pure-play alternatives.
+The enterprise CMS core development experiences are based in C#, ASP.NET, and J2EE -- languages and frameworks a decade out of date for frontend development. Add-ons are expensive and are difficult-to-use compared to pure-play alternatives.
 
 Best-of-breed products have emerged to provide top-notch alternatives in each of these areas, but have been difficult to integrate.
 
@@ -48,11 +48,19 @@ With these solutions available, customers can pick vendors _à la carte_. The co
 
 Enterprises who have purchased these CMS solutions are left asking themselves one of the oldest questions in corporate IT: should they stick with their single-vendor application suite, with inferior but integrated modules? Or, unlock a way to integrate the best-of-breed solutions?
 
-Over the next three posts, we’ll discuss the rise of a content mesh that makes integration _feasible_ for most digital agencies and enterprise customers.
-
 <figure>
   <img alt="The modularization of the CMS" height="400" src="./headless-cms-landscape.png" />
   <figcaption>
    The headless CMS landscape
   </figcaption>
 </figure>
+
+## Making integration feasible via a content mesh
+
+Over the next three posts, we’ll discuss the rise of a content mesh that makes integration _feasible_ for most digital agencies and enterprise customers.
+
+The next post, [The Rise of Modern Web Development](/blog/2018-10-11-rise-of-modern-web-development), discusses the development side -- how frameworks that increase development speed and reduce bugs have become ubiquitous.
+
+After that, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial) discusses the rise of e-commerce on smartphones, why the average site haven't been getting any faster on mobile, and existing technology that can make sites fast _by default_.
+
+Finally, in our conclusion, Creating Compelling Experiences, we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing an "content mesh" that makes all the other choices easy.

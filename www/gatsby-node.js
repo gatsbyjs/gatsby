@@ -10,11 +10,16 @@ const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 
+let ecosystemFeaturedItems
+
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-if (process.env.NODE_ENV === `production` && !process.env.GITHUB_API_TOKEN) {
+if (
+  process.env.gatsby_executing_command === `build` &&
+  !process.env.GITHUB_API_TOKEN
+) {
   throw new Error(
     `A GitHub token is required to build the site. Check the README.`
   )
@@ -99,6 +104,24 @@ exports.createPages = ({ graphql, actions }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/blog/2019-10-03-gatsby-perf`,
+    toPath: `/blog/2018-10-03-gatsby-perf`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/add-a-service-worker`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/add-offline-support`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -121,91 +144,97 @@ exports.createPages = ({ graphql, actions }) => {
     )
 
     // Query for markdown nodes to use in creating pages.
-    graphql(
-      `
-        query {
-          allMarkdownRemark(
-            sort: { order: DESC, fields: [frontmatter___date] }
-            limit: 10000
-            filter: { fileAbsolutePath: { ne: null } }
-          ) {
-            edges {
-              node {
-                fields {
-                  slug
-                  package
-                }
-                frontmatter {
-                  title
-                  draft
-                  canonicalLink
-                  publishedAt
-                  tags
-                }
-              }
-            }
-          }
-          allAuthorYaml {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-          allCreatorsYaml {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-          allSitesYaml(filter: { main_url: { ne: null } }) {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-          allStartersYaml {
-            edges {
-              node {
-                id
-                fields {
-                  starterShowcase {
-                    slug
-                    stub
-                  }
-                }
-                url
-                repo
-              }
-            }
-          }
-          allNpmPackage {
-            edges {
-              node {
-                id
-                title
+    graphql(`
+      query {
+        allMarkdownRemark(
+          sort: { order: DESC, fields: [frontmatter___date] }
+          limit: 10000
+          filter: { fileAbsolutePath: { ne: null } }
+        ) {
+          edges {
+            node {
+              fields {
                 slug
-                readme {
+                package
+              }
+              frontmatter {
+                title
+                draft
+                canonicalLink
+                publishedAt
+                tags
+              }
+            }
+          }
+        }
+        allAuthorYaml {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allCreatorsYaml {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allSitesYaml(filter: { main_url: { ne: null } }) {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allStartersYaml {
+          edges {
+            node {
+              id
+              fields {
+                starterShowcase {
+                  slug
+                  stub
+                }
+              }
+              url
+              repo
+            }
+          }
+        }
+        allNpmPackage {
+          edges {
+            node {
+              id
+              title
+              slug
+              readme {
+                id
+                childMarkdownRemark {
                   id
-                  childMarkdownRemark {
-                    id
-                    html
-                  }
+                  html
                 }
               }
             }
           }
         }
-      `
-    ).then(result => {
+        allEcosystemYaml {
+          edges {
+            node {
+              starters
+              plugins
+            }
+          }
+        }
+      }
+    `).then(result => {
       if (result.errors) {
         return reject(result.errors)
       }
@@ -372,13 +401,16 @@ exports.createPages = ({ graphql, actions }) => {
         }
       })
 
+      // Read featured starters and plugins for Ecosystem
+      ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
+
       return resolve()
     })
   })
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
+exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
@@ -467,7 +499,7 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
         },
       })
     } else {
-      Promise.all([
+      return Promise.all([
         getpkgjson(node.repo),
         githubApiClient.request(`
             query {
@@ -540,16 +572,10 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
           })
         })
         .catch(err => {
-          console.log(
-            `\nError getting repo data. Your GitHub token may be invalid`
+          reporter.panicOnBuild(
+            `Error getting repo data for starter "${repoStub}":\n
+            ${err.message}`
           )
-          return createNodeField({
-            node,
-            name: `starterShowcase`,
-            value: {
-              ...defaultFields,
-            },
-          })
         })
     }
   }
@@ -575,6 +601,20 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     createNodeField({ node, name: `slug`, value: slug })
   }
   // end Community/Creators Pages
+}
+
+exports.onCreatePage = ({ page, actions }) => {
+  // add lists of featured items to Ecosystem page
+  if (page.path === "/ecosystem/") {
+    const { createPage, deletePage } = actions
+    const oldPage = Object.assign({}, page)
+
+    page.context.featuredStarters = ecosystemFeaturedItems.starters
+    page.context.featuredPlugins = ecosystemFeaturedItems.plugins
+
+    deletePage(oldPage)
+    createPage(page)
+  }
 }
 
 exports.onPostBuild = () => {

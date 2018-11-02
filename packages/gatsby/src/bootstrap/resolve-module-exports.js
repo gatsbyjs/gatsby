@@ -75,6 +75,9 @@ module.exports = (modulePath, resolver = require.resolve) => {
 
       if (nodeLeft.type !== `MemberExpression`) return
 
+      // ignore marker property `__esModule`
+      if (get(nodeLeft, `property.name`) === `__esModule`) return
+
       // get foo from `exports.foo = bar`
       if (get(nodeLeft, `object.name`) === `exports`) {
         isCommonJS = true

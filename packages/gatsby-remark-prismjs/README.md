@@ -129,9 +129,6 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
   float: left; /* 1 */
   min-width: 100%; /* 2 */
 }
-.gatsby-highlight pre[class*="language-"].line-numbers {
-  padding-left: 2.8em; /* 3 */
-}
 ```
 
 #### Optional: Add line numbering
@@ -143,6 +140,37 @@ colorscheme in `layout/index.js`:
 ```javascript
 // layouts/index.js
 require("prismjs/plugins/line-numbers/prism-line-numbers.css")
+```
+
+Then add in the corresponding CSS:
+
+```css
+/**
+ * If you already use line highlighting
+ */
+
+/* Adjust the position of the line numbers */
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding-left: 2.8em;
+}
+
+/**
+ * If you only want to use line numbering
+ */
+
+.gatsby-highlight {
+  background-color: #fdf6e3;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 1em;
+  overflow: auto;
+}
+
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding: 0;
+  padding-left: 2.8em;
+  overflow: initial;
+}
 ```
 
 ### Usage in Markdown

@@ -12,7 +12,8 @@ const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { oneLine } = require(`common-tags`)
 
-const { store, getNode, getNodes } = require(`../redux`)
+const { store } = require(`../redux`)
+const { getNode, getNodes, getNodesByType } = require(`../db/nodes`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
@@ -24,6 +25,7 @@ const {
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
+const unionTypes = new Map()
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -153,9 +155,8 @@ function inferFromMapping(
 
   const findNode = (fieldValue, path) => {
     const linkedNode = _.find(
-      getNodes(),
-      n =>
-        n.internal.type === linkedType && _.get(n, linkedField) === fieldValue
+      getNodesByType(linkedType),
+      n => _.get(n, linkedField) === fieldValue
     )
     if (linkedNode) {
       createPageDependency({ path, nodeId: linkedNode.id })
@@ -256,21 +257,28 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     let type
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
-      type = new GraphQLUnionType({
-        name: createTypeName(
-          `Union_${key}_${fields
+      const typeName = `Union_${key}_${fields
+        .map(f => f.name)
+        .sort()
+        .join(`__`)}`
+
+      if (unionTypes.has(typeName)) {
+        type = unionTypes.get(typeName)
+      }
+
+      if (!type) {
+        type = new GraphQLUnionType({
+          name: createTypeName(`Union_${key}`),
+          description: `Union interface for the field "${key}" for types [${fields
             .map(f => f.name)
             .sort()
-            .join(`__`)}`
-        ),
-        description: `Union interface for the field "${key}" for types [${fields
-          .map(f => f.name)
-          .sort()
-          .join(`, `)}]`,
-        types: fields.map(f => f.nodeObjectType),
-        resolveType: data =>
-          fields.find(f => f.name == data.internal.type).nodeObjectType,
-      })
+            .join(`, `)}]`,
+          types: fields.map(f => f.nodeObjectType),
+          resolveType: data =>
+            fields.find(f => f.name == data.internal.type).nodeObjectType,
+        })
+        unionTypes.set(typeName, type)
+      }
     } else {
       type = fields[0].nodeObjectType
     }
@@ -420,4 +428,8 @@ function _inferObjectStructureFromNodes(
 
 export function inferObjectStructureFromNodes(options: inferTypeOptions) {
   return _inferObjectStructureFromNodes(options, null)
+}
+
+export function clearUnionTypes() {
+  unionTypes.clear()
 }

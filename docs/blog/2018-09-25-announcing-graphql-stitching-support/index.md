@@ -15,7 +15,7 @@ Gatsby v1 shipped last year with a plugin-powered data layer that let you easily
 
 But in the last year, a lot has changed. More and more services are shipping with native GraphQL APIs. CMSs like [GraphCMS](https://graphcms.com/), [AppSync](https://aws.amazon.com/appsync/), and [TakeShape](https://www.takeshape.io/) all have launched GraphQL APIs. [Contentful](https://www.contentful.com/) is launching a [native GraphQL API as well soon](https://www.contentful.com/blog/2018/07/04/graphql-abstract-syntax-tree-new-schema/).
 
-Watching the spread of GraphQL has all been incredibly exciting to watch and a fullfillment of our vision for the future of the web where sites easily stitch together data from many sources.
+Watching the spread of GraphQL has all been incredibly exciting to watch and a fulfillment of our vision for the future of the web where sites easily stitch together data from many sources.
 
 But unfortunately, these new GraphQL APIs have been awkward to use inside Gatsby as you first had to wrap the API inside a Gatsby source plugin before you could query the data from your components.
 

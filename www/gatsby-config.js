@@ -1,8 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby`,
+    title: `GatsbyJS`,
     siteUrl: `https://www.gatsbyjs.org`,
     description: `Blazing fast modern site generator for React`,
+    twitter: `@gatsbyjs`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -26,6 +27,13 @@ module.exports = {
       options: {
         name: `packages`,
         path: `${__dirname}/../packages/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `ecosystem`,
+        path: `${__dirname}/src/data/ecosystem/`,
       },
     },
     {
@@ -69,7 +77,7 @@ module.exports = {
         showSpinner: false,
       },
     },
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
