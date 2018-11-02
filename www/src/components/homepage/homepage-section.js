@@ -60,6 +60,7 @@ const Icon = styled(`span`)`
   }
 
   svg {
+    fill: transparent;
     height: ${ICON_SIZE};
     stroke: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
     width: ${ICON_SIZE};
@@ -70,14 +71,14 @@ const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
   font-size: 1.75rem;
   margin: 0;
-  margin-bottom: 0.5em;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   font-size: 1.125rem;
   font-family: ${options.headerFontFamily.join(`,`)};
-  margin-bottom: 0;
+  margin: 0;
+  margin-top: ${rhythm(4 / 5)};
 `
 
 const Actions = styled(`div`)`
@@ -86,7 +87,7 @@ const Actions = styled(`div`)`
   margin-top: -${rhythm(1 / 4)};
 
   > a {
-    margin: ${rhythm(1.2)} 0 ${rhythm(1.5)};
+    margin: ${rhythm(1.2)} ${rhythm(0.2)} ${rhythm(1.5)} 0;
   }
 `
 
@@ -118,10 +119,16 @@ const HomepageSection = ({
       )}
       <Actions>
         {links.map((item, idx) => {
-          const { to, label, icon: Icon } = item
+          const { to, label, icon: Icon, secondary } = item
 
           return (
-            <Button key={label} to={to} ondark small>
+            <Button
+              key={label}
+              to={to}
+              small
+              ondark={inverseStyle ? true : false}
+              secondary={secondary}
+            >
               {label} {Icon && <Icon />}
             </Button>
           )
