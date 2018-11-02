@@ -46,6 +46,7 @@ class StarterLibraryPage extends Component {
           {...this.props}
           location={location}
           component={FilteredStarters}
+          defaultSearchState={{ v: [`2`] }}
         />
       </Layout>
     )

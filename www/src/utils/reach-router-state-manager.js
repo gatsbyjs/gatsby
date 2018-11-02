@@ -9,6 +9,10 @@ const emptySearchState = { s: ``, c: [], d: [], v: [], sort: `recent` }
 class RRSM extends React.Component {
   state = emptySearchState
 
+  static defaultProps = {
+    defaultSearchState: {},
+  }
+
   setUrlState = newState => {
     const finalState = { ...this.state, ...newState }
     // sync RSSM state
@@ -34,7 +38,7 @@ class RRSM extends React.Component {
 
     // if urlState is empty, default to v2
     if (Object.keys(urlState).length === 0) {
-      return this.setUrlState({ v: [`2`] })
+      return this.setUrlState(this.props.defaultSearchState)
     }
 
     // otherwise, set to urlState
