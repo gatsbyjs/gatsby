@@ -11,6 +11,7 @@ const Image = styled(Img)`
   margin-bottom: ${rhythm(options.blockMarginBottom * 2)};
   margin-left: ${rhythm(options.blockMarginBottom * 2)};
   margin-right: -20px;
+
   ${presets.Phablet} {
     display: none;
   }
@@ -18,6 +19,7 @@ const Image = styled(Img)`
 
 const ImageDesktop = styled(Image)`
   display: none;
+
   ${presets.Phablet} {
     display: block;
   }

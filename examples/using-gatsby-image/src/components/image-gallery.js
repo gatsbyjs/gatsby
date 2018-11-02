@@ -52,34 +52,37 @@ const GridItem = styled(`div`)`
   };
 `
 
-const GridItemImage = styled(Img)({
-  "&:hover": {
-    "& div + img": {
-      opacity: `1 !important`,
-      transition: `none !important`,
-    },
-    "& img + picture > img": {
-      opacity: `0 !important`,
-    },
-    "& span": {
-      opacity: `1 !important`,
-    },
-  },
-})
+const GridItemImage = styled(Img)`
+  &:hover {
+    div + img {
+      opacity: 1 !important;
+      transition: none !important;
+    }
 
-const Badge = styled(`span`)({
-  ...scale(-1),
-  background: `#fff`,
-  bottom: 10,
-  borderRadius: 2,
-  color: options.bodyColor,
-  fontFamily: options.monospaceFontFamily.join(`,`),
-  lineHeight: 1,
-  padding: `.25rem`,
-  position: `absolute`,
-  opacity: 0.5,
-  right: 10,
-})
+    img + picture > img {
+      opacity: 0 !important;
+    }
+
+    span: {
+      opacity: 1 !important;
+    }
+  }
+`
+
+const Badge = styled(`span`)`
+  background: #fff;
+  bottom: 10px;
+  border-radius: 2px;
+  color: ${options.bodyColor};
+  font-family: ${options.monospaceFontFamily.join(`,`)};
+  font-size: ${scale(-1).fontSize};
+  line-height: 1;
+  padding: 0.25rem;
+  pointer-events: none;
+  position: absolute;
+  opacity: 0.5;
+  right: 10px;
+`
 
 const UnsplashMasonry = edges => (
   <OuterContainer>

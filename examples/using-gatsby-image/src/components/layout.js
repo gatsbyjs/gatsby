@@ -9,67 +9,72 @@ import presets from "../utils/presets"
 
 const { gutter } = presets
 
-const Container = styled(`div`)({
-  position: `relative`,
-  left: `0%`,
-  padding: gutter.default,
-  marginTop: `calc(67vh - ${gutter.default}px)`,
-  background: `#fff`,
-  [presets.Tablet]: {
-    maxWidth: 600,
-    marginLeft: `${presets.offset}%`,
-    background: `#fff`,
-    position: `relative`,
-    marginTop: 0,
-    padding: gutter.tablet,
-  },
-  [presets.Desktop]: {
-    padding: presets.gutter.desktop,
-  },
-})
+const Container = styled(`div`)`
+  position: relative;
+  left: 0%;
+  padding: ${gutter.default}px;
+  margin-top: calc(67vh - ${gutter.default}px);
+  background: #fff;
 
-const Image = styled(Img)({
-  top: 20,
-  left: 20,
-  right: 20,
-  bottom: `33vh`,
-  [presets.Tablet]: {
-    bottom: 0,
-    left: 0,
-    top: 0,
-    right: `55vw`,
-  },
-})
+  ${presets.Tablet} {
+    max-width: 600px;
+    margin-left: ${presets.offset}%;
+    background: #fff;
+    position: relative;
+    margin-top: 0;
+    padding: ${gutter.tablet}px;
+  }
 
-const Main = styled(`main`)({
-  background: `#fff`,
-  position: `relative`,
-  zIndex: presets.zIndex.overlay,
-  paddingTop: gutter.default,
-})
+  ${presets.Desktop} {
+    padding: ${presets.gutter.desktop}px;
+  }
+`
 
-const LogoLink = styled(`a`)({
-  position: `fixed`,
-  top: gutter.tablet,
-  right: gutter.tablet,
-  "&&": {
-    background: `transparent`,
-  },
-  [presets.Tablet]: {
-    top: `auto`,
-    bottom: gutter.tablet,
-    left: gutter.tablet,
-    zIndex: presets.zIndex.overlay + 1,
-  },
-})
+const Image = styled(Img)`
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 33vh;
 
-const Logo = styled(`img`)({
-  display: `inline-block`,
-  height: rhythm(0.875),
-  width: rhythm(0.875),
-  margin: 0,
-  verticalAlign: `middle`,
-})
+  ${presets.Tablet} {
+    bottom: 0;
+    left: 0;
+    top: 0;
+    right: 55vw;
+  },
+`
+
+const Main = styled(`main`)`
+  background: #fff;
+  position: relative;
+  z-index: ${presets.zIndex.overlay};
+  padding-top: ${gutter.default}px;
+`
+
+const LogoLink = styled(`a`)`
+  position: fixed;
+  top: ${gutter.tablet}px;
+  right: ${gutter.tablet}px;
+
+  && {
+    background: transparent;
+  }
+
+  ${presets.Tablet} {
+    top: auto;
+    bottom: ${gutter.tablet}px;
+    left: ${gutter.tablet}px;
+    z-index: ${presets.zIndex.overlay + 1};
+  },
+`
+
+const Logo = styled(`img`)`
+  display: inline-block;
+  height: ${rhythm(0.875)};
+  width: ${rhythm(0.875)};
+  margin: 0;
+  vertical-align: middle;
+`
 
 const MainLayout = ({ children, image, imageBackgroundColor }) => (
   <Container>
