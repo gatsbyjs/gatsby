@@ -3205,3 +3205,16 @@
     - Technology
     - Podcast
   featured: false
+- title: a11y with Lindsey
+  url: https://www.a11ywithlindsey.com/
+  main_url: https://www.a11ywithlindsey.com/
+  source_url: https://github.com/lkopacz/a11y-with-lindsey
+  description: >
+    To help developers navigate accessibility jargon, write better code, and to empower them to make their Internet, Everyone's Internet.
+  categories:
+    - Education
+    - Blog
+    - Technology
+  built_by: Lindsey Kopacz
+  built_by_url: https://twitter.com/littlekope0903
+  featured: false
