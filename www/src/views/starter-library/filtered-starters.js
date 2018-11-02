@@ -27,8 +27,11 @@ export default class FilteredStarterLibrary extends Component {
   state = {
     sitesToShow: 9,
   }
-  setFiltersCategory = filtersCategory =>
+  setFiltersCategory = filtersCategory => {
+    console.log(`   setFiltersCategory`)
+    console.log(`   ~~ filtersCategory`, filtersCategory)
     this.props.setURLState({ c: Array.from(filtersCategory) })
+  }
   setFiltersDependency = filtersDependency =>
     this.props.setURLState({ d: Array.from(filtersDependency) })
   setFiltersVersion = filtersVersion =>

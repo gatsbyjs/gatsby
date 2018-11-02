@@ -12,17 +12,17 @@ class StarterLibraryPage extends Component {
   }
   render() {
     const { location, urlState } = this.props
-    const filtersApplied =
-      urlState.s !== ``
-        ? urlState.s // if theres a search term
-        : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `Showcase` // if no search term or single dependency
+    // const filtersApplied =
+    //   urlState.s !== ``
+    //     ? urlState.s // if theres a search term
+    //     : urlState.d && !Array.isArray(urlState.d)
+    //       ? urlState.d // if theres a single dependency
+    //       : `Showcase` // if no search term or single dependency
     return (
       <Layout location={location}>
         <Helmet>
           <title>Starter Library</title>
-          <meta
+          {/* <meta
             name="description"
             content={`Gatsby Starters: ${filtersApplied}`}
           />
@@ -37,14 +37,16 @@ class StarterLibraryPage extends Component {
           <meta name="og:title" content={filtersApplied} />
           <meta name="og:type" content="article" />
           <meta name="twitter.label1" content="Reading time" />
-          <meta name="twitter:data1" content={`1 min read`} />
+          <meta name="twitter:data1" content={`1 min read`} /> */}
         </Helmet>
-        <FilteredStarters {...this.props} />
+        <RRSM
+          {...this.props}
+          location={location}
+          component={FilteredStarters}
+        />
       </Layout>
     )
   }
 }
 
-export default RRSM({ s: ``, c: [], d: [], v: [`2`], sort: `recent` })(
-  StarterLibraryPage
-)
+export default StarterLibraryPage

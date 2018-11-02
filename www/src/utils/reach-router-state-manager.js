@@ -1,33 +1,56 @@
-import React from "react"
+import React, { Component } from "react"
 import queryString from "query-string"
 import { navigate } from "@reach/router"
 
 // manage your state entirely within the router, so that it's copiable
 // https://gist.github.com/sw-yx/efd9ee71669413bca6a895d87e30742f
 
-export default defaultURLState => Component => props => {
-  const { location } = props
-  const urlState = { ...defaultURLState, ...queryString.parse(location.search) }
-  const setURLState = newState => {
-    const finalState = { ...urlState, ...newState } // merge with existing urlstate
+const emptySearchState = { s: ``, c: [], d: [], v: [], sort: `recent` }
+class RRSM extends React.Component {
+  state = emptySearchState
+
+  setUrlState = newState => {
+    const finalState = { ...this.state, ...newState }
+    // sync RSSM state
+    this.setState({ ...finalState })
+
+    // sync URL
     Object.keys(finalState).forEach(function(k) {
       if (
         // Don't save some state values if it meets the conditions below.
         !finalState[k] || // falsy
         finalState[k] === `` || // string
         (Array.isArray(finalState[k]) && !finalState[k].length) || // array
-        finalState[k] === defaultURLState[k] // same as default state, unnecessary
+        finalState[k] === emptySearchState[k] // same as default state, unnecessary
       ) {
         delete finalState[k] // Drop query params with new values = falsy
       }
     })
     return navigate(`${location.pathname}?${queryString.stringify(finalState)}`)
   }
-  return (
-    <Component
-      setURLState={setURLState} // use this instead of `setState`
-      urlState={urlState} // easier to read state from this instead of `location`
-      {...props}
-    />
-  )
+
+  componentDidMount() {
+    const urlState = queryString.parse(location.search)
+
+    // if urlState is empty, default to v2
+    if (Object.keys(urlState).length === 0) {
+      return this.setUrlState({ v: [`2`] })
+    }
+
+    // otherwise, set to urlState
+    this.setUrlState(urlState)
+  }
+
+  render() {
+    const { component: Component, ...otherProps } = this.props
+    return (
+      <Component
+        {...otherProps}
+        setURLState={this.setUrlState}
+        urlState={this.state}
+      />
+    )
+  }
 }
+
+export default RRSM
