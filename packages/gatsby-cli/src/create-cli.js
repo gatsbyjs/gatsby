@@ -5,6 +5,8 @@ const report = require(`./reporter`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 
+const getBrowsersList = require(`./browserslist`)
+
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
@@ -20,14 +22,14 @@ function buildLocalCommands(cli, isLocalSite) {
   const DEFAULT_BROWSERS =
     installedGatsbyVersion() === 1
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
-      : [`>0.25%`, `not dead`]
+      : [`> 0.25%`, `not dead`]
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
-    siteInfo.browserslist = json.browserslist || siteInfo.browserslist
+    siteInfo.browserslist = getBrowsersList(directory, DEFAULT_BROWSERS)
   }
 
   function installedGatsbyVersion() {
@@ -233,7 +235,10 @@ function buildLocalCommands(cli, isLocalSite) {
           {
             console: true,
             // Clipboard is not accessible when on a linux tty
-            clipboard: (process.platform === `linux` && !process.env.DISPLAY) ? false : args.clipboard,
+            clipboard:
+              process.platform === `linux` && !process.env.DISPLAY
+                ? false
+                : args.clipboard,
           }
         )
       } catch (err) {
