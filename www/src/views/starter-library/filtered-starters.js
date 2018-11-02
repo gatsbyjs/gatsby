@@ -40,8 +40,7 @@ export default class FilteredStarterLibrary extends Component {
     this.props.setURLState({
       sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
     })
-  resetFilters = () =>
-    this.props.setURLState({ c: null, d: null, v: null, s: `` })
+  resetFilters = () => this.props.setURLState({ c: [], d: [], v: [], s: `` })
 
   onChangeUrlWithText = e => this.props.setURLState({ s: e.target.value })
 

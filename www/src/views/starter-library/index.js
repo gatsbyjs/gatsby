@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import Helmet from "react-helmet"
 import Layout from "../../components/layout"
 import RRSM from "../../utils/reach-router-state-manager"
+import queryString from "query-string"
 
 import FilteredStarters from "./filtered-starters"
 
@@ -11,18 +12,20 @@ class StarterLibraryPage extends Component {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps)
   }
   render() {
-    const { location, urlState } = this.props
-    // const filtersApplied =
-    //   urlState.s !== ``
-    //     ? urlState.s // if theres a search term
-    //     : urlState.d && !Array.isArray(urlState.d)
-    //       ? urlState.d // if theres a single dependency
-    //       : `Showcase` // if no search term or single dependency
+    const { location } = this.props
+    const urlState = queryString.parse(location.search)
+
+    const filtersApplied =
+      urlState.s !== ``
+        ? urlState.s // if theres a search term
+        : urlState.d && !Array.isArray(urlState.d)
+          ? urlState.d // if theres a single dependency
+          : `Showcase` // if no search term or single dependency
     return (
       <Layout location={location}>
         <Helmet>
           <title>Starter Library</title>
-          {/* <meta
+          <meta
             name="description"
             content={`Gatsby Starters: ${filtersApplied}`}
           />
@@ -37,7 +40,7 @@ class StarterLibraryPage extends Component {
           <meta name="og:title" content={filtersApplied} />
           <meta name="og:type" content="article" />
           <meta name="twitter.label1" content="Reading time" />
-          <meta name="twitter:data1" content={`1 min read`} /> */}
+          <meta name="twitter:data1" content={`1 min read`} />
         </Helmet>
         <RRSM
           {...this.props}
