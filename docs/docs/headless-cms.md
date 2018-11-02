@@ -17,6 +17,7 @@ The guides in this section will walk through the process of setting up content s
 
 Other CMS systems you can connect to include:
 
+* [Kentico Cloud](https://www.gatsbyjs.org/packages/gatsby-source-kentico-cloud/?=gatsby-source-)
 * [Shopify](https://www.gatsbyjs.org/packages/gatsby-source-shopify/?=gatsby-source-)
 * [Contentstack](https://www.gatsbyjs.org/packages/gatsby-source-contentstack/?=gatsby-source-)
 * [Ghost](https://www.gatsbyjs.org/packages/gatsby-source-ghost/?=gatsby-source-)
