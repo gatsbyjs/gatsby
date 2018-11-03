@@ -40,6 +40,26 @@ describe(`highlighting a line range`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
+  describe(`highlight-range`, () => {
+    it(`strips directives`, () => {
+      const highlights = highlightLineRange(fixtures.highlightRange)
+      expect(output(highlights)).not.toContain(`highlight-range`)
+    })
+    it(`highlights correct lines`, () => {
+      const highlights = highlightLineRange(fixtures.highlightRange)
+      expect(output(getHighlighted(highlights))).toMatchSnapshot()
+    })
+    it(`does not highlight if range is invalid`, () => {
+      const highlights = highlightLineRange(fixtures.highlightRangeInvalid)
+      expect(output(getHighlighted(highlights))).toMatchSnapshot()
+    })
+    it(`highlights until end of code block if ranges goes farther`, () => {
+      const highlights = highlightLineRange(
+        fixtures.highlightRangeLongerThanCode
+      )
+      expect(output(getHighlighted(highlights))).toMatchSnapshot()
+    })
+  })
   describe(`jsx comment`, () => {
     it(`removes directive`, () => {
       const highlights = highlightLineRange(fixtures.highlightJsxComment)

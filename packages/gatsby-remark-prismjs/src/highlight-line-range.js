@@ -102,8 +102,6 @@ const getHighlights = (line, code, index) => {
 }
 
 module.exports = function highlightLineRange(code, highlights = []) {
-  let highlighted = []
-  const split = code.split(`\n`)
   if (highlights.length > 0 || DIRECTIVE.test(code)) {
     // HACK split plain-text spans with line separators inside into multiple plain-text spans
     // separatered by line separator - this fixes line highlighting behaviour for jsx
@@ -111,6 +109,10 @@ module.exports = function highlightLineRange(code, highlights = []) {
       match.replace(/\n/g, `</span>\n<span class="token plain-text">`)
     )
   }
+
+  let highlighted = []
+  const split = code.split(`\n`)
+
   if (highlights.length > 0) {
     return split.map((line, i) => {
       if (highlights.includes(i + 1)) {

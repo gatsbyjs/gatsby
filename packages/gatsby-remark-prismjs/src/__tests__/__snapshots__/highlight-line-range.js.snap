@@ -10,6 +10,30 @@ exports[`highlighting a line range highlight-next-line highlights correct line 1
 </span>"
 `;
 
+exports[`highlighting a line range highlight-range does not highlight if range is invalid 1`] = `""`;
+
+exports[`highlighting a line range highlight-range highlights correct lines 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">  a = 1 + 1
+</span>
+<span class=\\"gatsby-highlight-code-line\\">  b = 2 + 2
+</span>
+<span class=\\"gatsby-highlight-code-line\\">  return \\"hello world\\"
+</span>"
+`;
+
+exports[`highlighting a line range highlight-range highlights until end of code block if ranges goes farther 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">  a = 1 + 1
+</span>
+<span class=\\"gatsby-highlight-code-line\\">  b = 2 + 2
+</span>
+<span class=\\"gatsby-highlight-code-line\\">  return \\"hello world\\"
+</span>
+<span class=\\"gatsby-highlight-code-line\\">}
+</span>
+<span class=\\"gatsby-highlight-code-line\\">
+</span>"
+`;
+
 exports[`highlighting a line range highlight-start / highlight-end highlights correct lines 1`] = `
 "<span class=\\"gatsby-highlight-code-line\\">  var a = \\"b\\"
 </span>
