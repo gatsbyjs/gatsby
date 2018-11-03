@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`highlighting a line range highlight-line highlights line 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">  return \\"hello world\\"
+</span>"
+`;
+
+exports[`highlighting a line range highlight-next-line highlights correct line 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">  return \\"hello world\\"
+</span>"
+`;
+
+exports[`highlighting a line range highlight-start / highlight-end highlights correct lines 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">  var a = \\"b\\"
+</span>
+<span class=\\"gatsby-highlight-code-line\\">  return a + \\"hello world\\"
+</span>"
+`;
+
+exports[`highlighting a line range highlight-start / highlight-end highlights without end directive 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">var a = \\"b\\"
+</span>
+<span class=\\"gatsby-highlight-code-line\\">return a + \\"hello world\\"
+</span>
+<span class=\\"gatsby-highlight-code-line\\">
+</span>"
+`;
+
+exports[`highlighting a line range jsx comment highlights comment line 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">      <button>sup</button>
+</span>"
+`;
+
+exports[`highlighting a line range yaml highlights yaml 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">- title: catorce
+</span>"
+`;
