@@ -41,64 +41,69 @@ export default class MarkdownPageFooter extends React.Component {
         {this.state.feedbackSubmitted ? (
           <span css={{ lineHeight: rhythm(2) }}>Thank you!</span>
         ) : (
-          <span css={{ lineHeight: rhythm(2) }}>
-            Was this helpful?
-            {` `}
-            <CheckIcon
-              onClick={() => {
-                sendReview(true, this.props.page.parent.relativePath)
-                this.setState({ feedbackSubmitted: true })
-              }}
-              css={{
-                color: colors.success,
-                fontSize: rhythm(1.3),
-                padding: rhythm(0.2),
-                position: `relative`,
-                top: -3,
-                marginLeft: rhythm(1 / 4),
-                cursor: `pointer`,
-              }}
-            />
-            {` `}
-            <CrossIcon
-              onClick={() => {
-                sendReview(false, this.props.page.parent.relativePath)
-                this.setState({ feedbackSubmitted: true })
-              }}
-              css={{
-                color: colors.warning,
-                fontSize: rhythm(1.3),
-                padding: rhythm(0.2),
-                cursor: `pointer`,
-              }}
-            />
-          </span>
+          this.props.page && (
+            <span css={{ lineHeight: rhythm(2) }}>
+              Was this helpful?
+              {` `}
+              <CheckIcon
+                onClick={() => {
+                  sendReview(true, this.props.page.parent.relativePath)
+                  this.setState({ feedbackSubmitted: true })
+                }}
+                css={{
+                  color: colors.success,
+                  fontSize: rhythm(1.3),
+                  padding: rhythm(0.2),
+                  position: `relative`,
+                  top: -3,
+                  marginLeft: rhythm(1 / 4),
+                  cursor: `pointer`,
+                }}
+              />
+              {` `}
+              <CrossIcon
+                onClick={() => {
+                  sendReview(false, this.props.page.parent.relativePath)
+                  this.setState({ feedbackSubmitted: true })
+                }}
+                css={{
+                  color: colors.warning,
+                  fontSize: rhythm(1.3),
+                  padding: rhythm(0.2),
+                  cursor: `pointer`,
+                }}
+              />
+            </span>
+          )
         )}
-        <a
-          css={{
-            "&&": {
-              float: `right`,
-              display: `block`,
-              color: colors.gray.calm,
-              fontSize: scale(-1 / 5).fontSize,
-              fontWeight: `normal`,
-              border: `none`,
-              boxShadow: `none`,
-              padding: rhythm(1 / 2),
-              "&:hover": {
-                background: `transparent`,
-                color: colors.gatsby,
+
+        {this.props.page && (
+          <a
+            css={{
+              "&&": {
+                float: `right`,
+                display: `block`,
+                color: colors.gray.calm,
+                fontSize: scale(-1 / 5).fontSize,
+                fontWeight: `normal`,
+                border: `none`,
+                boxShadow: `none`,
+                padding: rhythm(1 / 2),
+                "&:hover": {
+                  background: `transparent`,
+                  color: colors.gatsby,
+                },
               },
-            },
-          }}
-          href={`https://github.com/gatsbyjs/gatsby/blob/master/${
-            this.props.packagePage ? `packages` : `docs`
-          }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
-        >
-          <EditIcon css={{ fontSize: 20, position: `relative`, top: -2 }} />
-          {` `}
-          edit this page on GitHub
-        </a>
+            }}
+            href={`https://github.com/gatsbyjs/gatsby/blob/master/${
+              this.props.packagePage ? `packages` : `docs`
+            }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
+          >
+            <EditIcon css={{ fontSize: 20, position: `relative`, top: -2 }} />
+            {` `}
+            edit this page on GitHub
+          </a>
+        )}
       </div>,
     ]
   }
