@@ -12,10 +12,6 @@ const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
 const existsSync = require(`fs-exists-cached`).sync
-const createContentDigest = require(`gatsby/dist/utils/create-content-digest`)
-
-const base64CacheKey = (contentDigest, options) =>
-  `plugin-sharp-base64-${contentDigest}-${createContentDigest(options)}`
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -445,7 +441,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-async function base64({ file, args = {}, reporter, cache }) {
+async function generateBase64({ file, args, reporter }) {
   const options = healOptions(args, { width: 20 })
   let pipeline
   try {
@@ -453,15 +449,6 @@ async function base64({ file, args = {}, reporter, cache }) {
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
-  }
-
-  const cacheKey = base64CacheKey(file.internal.contentDigest, options)
-  // Not all tranformer plugins are going to provide this parameter hence the fallback
-  if (cache) {
-    const cachedBase64 = await cache.get(cacheKey)
-    if (cachedBase64) {
-      return cachedBase64
-    }
   }
 
   pipeline
@@ -505,10 +492,37 @@ async function base64({ file, args = {}, reporter, cache }) {
     aspectRatio: info.width / info.height,
     originalName: file.base,
   }
+  return base64output
+}
+
+const base64CacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+
+const memoizedBase64 = _.memoize(generateBase64, base64CacheKey)
+
+const cachifiedBase64 = async ({ cache, ...arg }) => {
+  const cacheKey = base64CacheKey(arg)
+  if (cache) {
+    const cachedBase64 = await cache.get(cacheKey)
+    if (cachedBase64) {
+      return cachedBase64
+    }
+  }
+
+  const base64output = await generateBase64(arg)
+
   if (cache) {
     await cache.set(cacheKey, base64output)
   }
   return base64output
+}
+
+function base64(arg) {
+  // Not all tranformer plugins are going to provide this parameter hence the fallback
+  if (arg.cache) {
+    return cachifiedBase64(arg)
+  } else {
+    return memoizedBase64(arg)
+  }
 }
 
 async function fluid({ file, args = {}, reporter, cache }) {
