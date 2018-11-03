@@ -314,19 +314,19 @@ module.exports = ({
     pathPrefix,
     getNodeAndSavePathDependency,
     reporter,
+    cache,
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
-  const fixedNode = fixedNodeType({ cache, name: `ImageSharpFixed`, ...nodeOptions })
+  const fixedNode = fixedNodeType({ name: `ImageSharpFixed`, ...nodeOptions })
   const resolutionsNode = fixedNodeType({
-    cache,
     name: `ImageSharpResolutions`,
     ...nodeOptions,
   })
   resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
-  const fluidNode = fluidNodeType({ cache, name: `ImageSharpFluid`, ...nodeOptions })
-  const sizesNode = fluidNodeType({ cache, name: `ImageSharpSizes`, ...nodeOptions })
+  const fluidNode = fluidNodeType({ name: `ImageSharpFluid`, ...nodeOptions })
+  const sizesNode = fluidNodeType({ name: `ImageSharpSizes`, ...nodeOptions })
   sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   return {
