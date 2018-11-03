@@ -9,15 +9,15 @@ import Ipsum from "../components/ipsum"
 import Lorem from "../components/lorem"
 
 const PreferWebp = ({ data, location }) => (
-  <Layout location={location} image={data.file.childImageSharp.fluid}>
+  <Layout location={location} image={data.pug.localFile.childImageSharp.fluid}>
     <PageTitle>Prefer WebP</PageTitle>
     <FloatingImage
-      imageMobile={data.floatingImageMobile.childImageSharp.fixed}
-      imageDesktop={data.floatingImage.childImageSharp.fixed}
+      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
+      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
     />
     <Lorem />
     <Img
-      fluid={data.fullWidthImage.childImageSharp.fluid}
+      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <Ipsum />
@@ -28,33 +28,39 @@ export default PreferWebp
 
 export const query = graphql`
   query {
-    file(relativePath: { regex: "/charles-deluvio-716555/" }) {
-      childImageSharp {
-        fluid(maxWidth: 800) {
-          ...GatsbyImageSharpFluid
+    pug: unsplashImagesYaml(title: { eq: "Pug with yellow raincoat" }) {
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
     }
-    floatingImageMobile: file(
-      relativePath: { regex: "/charles-deluvio-695760/" }
-    ) {
-      childImageSharp {
-        fixed(width: 120) {
-          ...GatsbyImageSharpFixed_withWebp
+    floatingImageMobile: unsplashImagesYaml(title: { eq: "Cacti" }) {
+      localFile {
+        childImageSharp {
+          fixed(width: 120) {
+            ...GatsbyImageSharpFixed_withWebp
+          }
         }
       }
     }
-    floatingImage: file(relativePath: { regex: "/charles-deluvio-695760/" }) {
-      childImageSharp {
-        fixed(width: 200) {
-          ...GatsbyImageSharpFixed_withWebp
+    floatingImage: unsplashImagesYaml(title: { eq: "Cacti" }) {
+      localFile {
+        childImageSharp {
+          fixed(width: 200) {
+            ...GatsbyImageSharpFixed_withWebp
+          }
         }
       }
     }
-    fullWidthImage: file(relativePath: { regex: "/michele-feola-166138/" }) {
-      childImageSharp {
-        fluid(maxWidth: 600) {
-          ...GatsbyImageSharpFluid_withWebp
+    fullWidthImage: unsplashImagesYaml(title: { eq: "Tennis court" }) {
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 600) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
         }
       }
     }

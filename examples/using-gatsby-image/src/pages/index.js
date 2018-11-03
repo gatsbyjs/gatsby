@@ -27,7 +27,7 @@ class IndexComponent extends React.Component {
     return (
       <Layout
         location={this.props.location}
-        image={this.props.data.file.childImageSharp.fluid}
+        image={this.props.data.camera.childImageSharp.fluid}
       >
         <p
           css={{
@@ -110,7 +110,9 @@ export default IndexComponent
 
 export const query = graphql`
   query {
-    file(relativePath: { regex: "/alexander-andrews-260988/" }) {
+    camera: file(
+      relativePath: { regex: "/alexander-andrews-260988-unsplash-edited/" }
+    ) {
       childImageSharp {
         fluid(
           maxWidth: 800

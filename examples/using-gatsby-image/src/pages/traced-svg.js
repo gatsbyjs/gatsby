@@ -16,20 +16,20 @@ class TracedSVG extends React.Component {
     return (
       <Layout
         location={this.props.location}
-        image={this.props.data.file.childImageSharp.fluid}
+        image={this.props.data.polaroid.localFile.childImageSharp.fluid}
       >
         <PageTitle>Traced SVG Placeholders</PageTitle>
         <FloatingImage
-          imageMobile={data.floatingImageMobile.childImageSharp.fixed}
-          imageDesktop={data.floatingImage.childImageSharp.fixed}
+          imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
+          imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
         />
         <Lorem />
         <h2>Unsplash</h2>
         <UnsplashMasonry images={data.galleryImages.edges} />
         <Ipsum />
         <Img
-          fluid={data.fullWidthImage.childImageSharp.fluid}
-          title={`Photo by Ken Treloar on Unsplash`}
+          fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
+          title={`Photo by ${data.fullWidthImage.credit} on Unsplash`}
         />
       </Layout>
     )
@@ -40,51 +40,61 @@ export default TracedSVG
 
 export const query = graphql`
   query {
-    file(relativePath: { regex: "/yoann-siloine-532511/" }) {
-      childImageSharp {
-        fluid(
-          maxWidth: 800
-          traceSVG: { background: "#fff", color: "#663399" }
-        ) {
-          ...GatsbyImageSharpFluid_tracedSVG
+    polaroid: unsplashImagesYaml(title: { eq: "Polaroid Pronto 600" }) {
+      localFile {
+        childImageSharp {
+          fluid(
+            maxWidth: 800
+            traceSVG: { background: "#fff", color: "#663399" }
+          ) {
+            ...GatsbyImageSharpFluid_tracedSVG
+          }
         }
       }
     }
-    floatingImageMobile: file(
-      relativePath: { regex: "/charles-deluvio-716558/" }
+
+    floatingImageMobile: unsplashImagesYaml(
+      title: { eq: "Pug without hoodie" }
     ) {
-      childImageSharp {
-        fixed(width: 120) {
-          ...GatsbyImageSharpFixed_tracedSVG
+      localFile {
+        childImageSharp {
+          fixed(width: 120) {
+            ...GatsbyImageSharpFixed_tracedSVG
+          }
         }
       }
     }
-    floatingImage: file(relativePath: { regex: "/charles-deluvio-716558/" }) {
-      childImageSharp {
-        fixed(width: 200) {
-          ...GatsbyImageSharpFixed_tracedSVG
+    floatingImage: unsplashImagesYaml(title: { eq: "Pug without hoodie" }) {
+      localFile {
+        childImageSharp {
+          fixed(width: 200) {
+            ...GatsbyImageSharpFixed_tracedSVG
+          }
         }
       }
     }
-    fullWidthImage: file(relativePath: { regex: "/chuttersnap-1103171/" }) {
-      childImageSharp {
-        fluid(maxWidth: 600) {
-          ...GatsbyImageSharpFluid_tracedSVG
+    fullWidthImage: unsplashImagesYaml(title: { eq: "City from above" }) {
+      credit
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 600) {
+            ...GatsbyImageSharpFluid_tracedSVG
+          }
         }
       }
     }
-    galleryImages: allFile(
-      filter: { relativeDirectory: { regex: "/gallery/" } }
-    ) {
+    galleryImages: allUnsplashImagesYaml(filter: { gallery: { eq: true } }) {
       edges {
         node {
-          childImageSharp {
-            fluid(
-              maxWidth: 420
-              quality: 70
-              traceSVG: { background: "#fbfafc", color: "#dbd4e2" }
-            ) {
-              ...GatsbyImageSharpFluid_tracedSVG
+          localFile {
+            childImageSharp {
+              fluid(
+                maxWidth: 420
+                quality: 70
+                traceSVG: { background: "#fbfafc", color: "#dbd4e2" }
+              ) {
+                ...GatsbyImageSharpFluid_tracedSVG
+              }
             }
           }
         }
