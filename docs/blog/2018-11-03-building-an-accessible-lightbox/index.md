@@ -8,10 +8,6 @@ canonicalLink: "https://416serg.me/building-a-custom-accessible-image-lightbox-i
 
 In this tutorial we're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example is on [Github](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
 
-## First
-
-GatsbyJS is a blazingly fast static site generator that uses React. It has an amazing team behind it and is constantly evolving to be the go-to tool for your blog, e-commerce site, front-end of your application or anything you can think of. Not convinced? Check out their [showcase](/showcase/) to see how companies like Nike are using GatsbyJS to build awesome websites.
-
 ## Getting started
 
 If you don't have Gatsby installed, open up your terminal and type in:
@@ -348,8 +344,5 @@ Now, if you click on one of the images, it should look something like this:
 ![Final Lightbox](/screen-1.png)
 
 Now you can go ahead and implement this in your e-commerce store, picture gallery, or anywhere else you might see fit 😃
-
-Thank you for your time,
-Serg
 
 Feel free to [tweet me](https://twitter.com/416serg) if you have any questions, comments, requests or just want to show some ❤️.
