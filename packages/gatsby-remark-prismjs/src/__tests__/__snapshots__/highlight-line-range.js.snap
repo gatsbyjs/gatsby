@@ -10,7 +10,7 @@ exports[`highlighting a line range highlight-next-line highlights correct line 1
 </span>"
 `;
 
-exports[`highlighting a line range highlight-range does not highlight if range is invalid 1`] = `""`;
+exports[`highlighting a line range highlight-range does not highlight and warns if range is invalid 1`] = `""`;
 
 exports[`highlighting a line range highlight-range highlights correct lines 1`] = `
 "<span class=\\"gatsby-highlight-code-line\\">  a = 1 + 1

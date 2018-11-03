@@ -49,9 +49,14 @@ describe(`highlighting a line range`, () => {
       const highlights = highlightLineRange(fixtures.highlightRange)
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
-    it(`does not highlight if range is invalid`, () => {
+    it(`does not highlight and warns if range is invalid`, () => {
+      spyOn(console, `warn`)
+
       const highlights = highlightLineRange(fixtures.highlightRangeInvalid)
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
+      expect(console.warn).toHaveBeenCalledWith(
+        `Invalid match specified: "// highlight-range"`
+      )
     })
     it(`highlights until end of code block if ranges goes farther`, () => {
       const highlights = highlightLineRange(

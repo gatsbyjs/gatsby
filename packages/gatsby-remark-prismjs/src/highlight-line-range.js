@@ -54,6 +54,7 @@ const getHighlights = (line, code, index) => {
     case `range`:
       // if range is not provided we ignore the directive
       if (!directiveRange) {
+        console.warn(`Invalid match specified: "${line.trim()}"`)
         return [
           {
             code: code[index + 1],
@@ -82,6 +83,7 @@ const getHighlights = (line, code, index) => {
           return [highlighted, lastLineIndexInRange]
         }
         // if range is incorrect we ignore the directive
+        console.warn(`Invalid match specified: "${line.trim()}"`)
         return [
           {
             code: code[index + 1],
