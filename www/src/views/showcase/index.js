@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import Helmet from "react-helmet"
-import { scroller } from "react-scroll"
 
 import FeaturedSites from "./featured-sites"
 import FilteredShowcase from "./filtered-showcase"
@@ -9,30 +8,29 @@ import Layout from "../../components/layout"
 class ShowcaseView extends Component {
   showcase = React.createRef()
 
-  scrollTo = target => {
-    scroller.scrollTo(target, {
-      duration: 1,
-      delay: 0,
-      smooth: true,
-      offset: -100,
-    })
+  scrollToElement = (element, offset = 100) => {
+    setTimeout(() => {
+      const elementTop = document.querySelector(element).getClientRects()[0].top
+      window.scroll({
+        top: elementTop - offset,
+        left: 0,
+      })
+    }, 50)
   }
 
   componentDidMount() {
     const { location } = this.props
-    if (location.search && location.search.includes("?filters")) {
-      this.scrollTo("showcase")
+    if (location.search && location.search.includes(`?filters`)) {
+      this.scrollToElement(`#showcase`)
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      setTimeout(() => {
-        const { location } = this.props
-        if (location.search && location.search.includes("?filters")) {
-          this.scrollTo("showcase")
-        }
-      }, 1)
+    if (prevProps.location.search !== this.props.location.search) {
+      const { location } = this.props
+      if (location.search && location.search.includes(`?filters`)) {
+        this.scrollToElement(`#showcase`)
+      }
     }
   }
 
