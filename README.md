@@ -49,7 +49,7 @@ Some changes do not require an RFC:
 ## What the process is
 
 In short, to get a major feature added to Gatsby, one usually first gets the
-RFC merged into the RFC repo as a markdown file. At that point the RFC is
+RFC merged into the RFC repo as a markdown file. At that point, the RFC is
 'active' and may be implemented with the goal of eventual inclusion into
 Gatsby.
 
@@ -57,7 +57,7 @@ Gatsby.
 * Copy `0000-template.md` to `text/0000-my-feature.md` (where
 'my-feature' is descriptive. Don't assign an RFC number yet).
 * Fill in the RFC. Put care into the details: **RFCs that do not
-present convincing motivation, demonstrate understanding of the impact of the
+present convincing motivation, demonstrate an understanding of the impact of the
 design, or are disingenuous about the drawbacks or alternatives tend to be
 poorly-received**.
 * Submit a pull request. As a pull request the RFC will receive design
@@ -73,7 +73,7 @@ period" lasting 3 calendar days. The beginning of this period will be signaled
 with a comment and tag on the RFCs pull request.
 * An RFC can be modified based upon feedback from the team and community.
 Significant modifications may trigger a new final comment period.
-* An RFC may be rejected by the team after public discussion has settled
+* An RFC may be rejected by the team after the public discussion has settled
 and comments have been made summarizing the rationale for rejection. A member
 of the team should then close the RFCs associated pull request.
 * An RFC may be accepted at the close of its final comment period. A team
