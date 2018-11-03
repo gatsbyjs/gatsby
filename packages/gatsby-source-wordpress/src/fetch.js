@@ -7,6 +7,35 @@ const httpExceptionHandler = require(`./http-exception-handler`)
 const requestInQueue = require(`./request-in-queue`)
 
 /**
+ * Check auth object to see if we should fetch JWT access token
+ */
+const shouldUseJwt = auth => auth && (auth.jwt_user || auth.jwt_pass)
+
+/**
+ * Check auth object to see if we should use HTTP Basic Auth
+ */
+const shouldUseHtaccess = auth =>
+  auth && (auth.htaccess_user || auth.htaccess_pass)
+
+/**
+ * Format Auth settings for verbose output
+ */
+const formatAuthSettings = auth => {
+  let authOutputLines = []
+  if (shouldUseJwt(auth)) {
+    authOutputLines.push(`  JWT Auth: ${auth.jwt_user}:${auth.jwt_pass}`)
+  }
+
+  if (shouldUseHtaccess(auth)) {
+    authOutputLines.push(
+      `  HTTP Basic Auth: ${auth.htaccess_user}:${auth.htaccess_pass}`
+    )
+  }
+
+  return authOutputLines.join(`\n`)
+}
+
+/**
  * High-level function to coordinate fetching data from a WordPress
  * site.
  */
@@ -17,7 +46,6 @@ async function fetch({
   _useACF,
   _acfOptionPageIds,
   _hostingWPCOM,
-  _useJWT,
   _auth,
   _perPage,
   _concurrentRequests,
@@ -34,15 +62,17 @@ async function fetch({
   if (_hostingWPCOM) {
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
     _accessToken = await getWPCOMAccessToken(_auth)
-  } else if (_useJWT) {
-    url = `${_siteURL}/wp-json`
-    _accessToken = await getJWToken(_auth, url)
   } else {
     url = `${_siteURL}/wp-json`
+    if (shouldUseJwt(_auth)) {
+      _accessToken = await getJWToken(_auth, url)
+    }
   }
 
   if (_verbose) {
     console.time(`=END PLUGIN=====================================`)
+
+    const authOutput = formatAuthSettings(_auth)
 
     console.log(
       colorized.out(
@@ -52,11 +82,7 @@ async function fetch({
 Site URL: ${_siteURL}
 Site hosted on Wordpress.com: ${_hostingWPCOM}
 Using ACF: ${_useACF}
-Using Auth: ${
-          _useJWT
-            ? _auth.jwt_user + ` ` + _auth.jwt_pass
-            : _auth.htaccess_user + ` ` + _auth.htaccess_pass
-        }
+Auth: ${authOutput ? `\n${authOutput}` : `false`}
 Verbose output: ${_verbose}
 
 Mama Route URL: ${url}
@@ -73,7 +99,7 @@ Mama Route URL: ${url}
       method: `get`,
       url: url,
     }
-    if (_auth && (_auth.htaccess_user || _auth.htaccess_pass)) {
+    if (shouldUseHtaccess(_auth)) {
       options.auth = {
         username: _auth.htaccess_user,
         password: _auth.htaccess_pass,
@@ -108,8 +134,6 @@ Mama Route URL: ${url}
       _verbose,
       _useACF,
       _acfOptionPageIds,
-      _hostingWPCOM,
-      _useJWT,
       _includedRoutes,
       _excludedRoutes,
       typePrefix,
@@ -133,8 +157,6 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           route,
           _verbose,
           _perPage,
-          _hostingWPCOM,
-          _useJWT,
           _auth,
           _accessToken,
           _concurrentRequests,
@@ -219,8 +241,6 @@ async function fetchData({
   route,
   _verbose,
   _perPage,
-  _hostingWPCOM,
-  _useJWT,
   _auth,
   _accessToken,
   _concurrentRequests,
@@ -277,7 +297,6 @@ async function fetchData({
               route: { url: menu.meta.links.self, type: `${type}_items` },
               _verbose,
               _perPage,
-              _hostingWPCOM,
               _auth,
               _accessToken,
             })
@@ -329,15 +348,20 @@ async function getPages(
           page: page,
         })}`,
       }
+
       if (_accessToken) {
         o.headers = {
           Authorization: `Bearer ${_accessToken}`,
         }
-      } else {
-        o.auth = _auth
-          ? { username: _auth.htaccess_user, password: _auth.htaccess_pass }
-          : null
       }
+
+      if (shouldUseHtaccess(_auth)) {
+        o.auth = {
+          username: _auth.htaccess_user,
+          password: _auth.htaccess_pass,
+        }
+      }
+
       return o
     }
 
