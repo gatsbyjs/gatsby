@@ -192,7 +192,7 @@ Now the page should look something like this:
 
 ### Creating the Lightbox
 
-For the sake of accessibility, we'll be using [Dialog](https://ui.reach.tech/dialog) from Reach UI - shout out to [Ryan Florence](https://github.com/ryanflorence) for making awesome, accessible tools for React. PS, Gatsby's router is using `@reach/router` under the hood, so we're keeping it in the family 😉
+For the sake of accessibility, we'll be using [Dialog](https://ui.reach.tech/dialog) from Reach UI - shout out to [Ryan Florence](https://github.com/ryanflorence) for making awesome, accessible tools for React. As a side note, Gatsby's router is using [`@reach/router`](https://reach.tech/router) under the hood, so we're keeping it in the family 😉
 
 Let's go ahead and install all the dependencies:
 
