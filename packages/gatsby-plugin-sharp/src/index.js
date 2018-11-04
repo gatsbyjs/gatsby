@@ -516,13 +516,13 @@ const cachifiedBase64 = async ({ cache, ...arg }) => {
   return base64output
 }
 
-function base64(arg) {
-  // Not all tranformer plugins are going to provide this parameter hence the fallback
+async function base64(arg) {
   if (arg.cache) {
-    return cachifiedBase64(arg)
-  } else {
-    return memoizedBase64(arg)
+    // Not all tranformer plugins are going to provide cache
+    return await cachifiedBase64(arg)
   }
+
+  return await memoizedBase64(arg)
 }
 
 async function fluid({ file, args = {}, reporter, cache }) {
