@@ -54,7 +54,7 @@ const Image = styled(Img)`
 
 const Main = styled(`main`)`
   background: #fff;
-  padding-top: ${gutter.default}px;
+  padding-top: ${gutter.default};
   position: relative;
   z-index: ${presets.zIndex.overlay};
 `
