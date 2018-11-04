@@ -86,9 +86,22 @@ describe(`highlighting a line range`, () => {
     })
   })
   describe(`kitchen sink`, () => {
-    it.skip(`strips directives`, () => {
+    it(`strips directives`, () => {
       const highlights = highlightLineRange(fixtures.highlightKitchenSink)
-      console.log(output(highlights))
+      const code = output(highlights)
+      ;[
+        `highlight-line`,
+        `highlight-next-line`,
+        `highlight-range`,
+        `highlight-start`,
+        `highlight-end`,
+      ].forEach(directive => {
+        expect(code).not.toContain(directive)
+      })
+    })
+    it(`highlights multiple directives`, () => {
+      const highlights = highlightLineRange(fixtures.highlightKitchenSink)
+      expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
 })

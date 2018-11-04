@@ -4,16 +4,18 @@ export default class Counter extends Component {
   state = {
     count: 0,
   }
-  // highlight-end
+  /* highlight-end */
   updateCount = () => {
     this.setState(state => ({
       // highlight-next-line
       count: state.count + 1,
     }))
   }
+  // highlight-range{1-2}
   render() {
-    const { count } = this.state // highlight-line
+    const { count } = this.state
     return (
+      // highlight-line
       <div>
         <span>clicked {count}</span>
         {/* highlight-start */}

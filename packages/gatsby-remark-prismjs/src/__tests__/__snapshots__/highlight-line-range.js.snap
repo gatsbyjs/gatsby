@@ -55,6 +55,27 @@ exports[`highlighting a line range jsx comment highlights comment line 1`] = `
 </span>"
 `;
 
+exports[`highlighting a line range kitchen sink highlights multiple directives 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">import React, { Component } from \\"react\\"
+</span>
+<span class=\\"gatsby-highlight-code-line\\">  state = {
+</span>
+<span class=\\"gatsby-highlight-code-line\\">    count: 0,
+</span>
+<span class=\\"gatsby-highlight-code-line\\">  }
+</span>
+<span class=\\"gatsby-highlight-code-line\\">      count: state.count + 1,
+</span>
+<span class=\\"gatsby-highlight-code-line\\">  render() {
+</span>
+<span class=\\"gatsby-highlight-code-line\\">    const { count } = this.state
+</span>
+<span class=\\"gatsby-highlight-code-line\\">
+</span>
+<span class=\\"gatsby-highlight-code-line\\">        <button onClick={this.updateCount}>Click me</button>
+</span>"
+`;
+
 exports[`highlighting a line range yaml highlights yaml 1`] = `
 "<span class=\\"gatsby-highlight-code-line\\">- title: catorce
 </span>"
