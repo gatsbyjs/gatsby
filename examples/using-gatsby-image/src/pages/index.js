@@ -27,7 +27,7 @@ class IndexComponent extends React.Component {
     return (
       <Layout
         location={this.props.location}
-        image={this.props.data.camera.childImageSharp.fluid}
+        image={this.props.data.coverImage.childImageSharp.fluid}
         imageTitle={`“Black and silver vintage camera” by Alexander Andrews (via unsplash.com)`}
         imageBackgroundColor={colors.ui.whisper}
       >
@@ -112,7 +112,7 @@ export default IndexComponent
 
 export const query = graphql`
   query {
-    camera: file(
+    coverImage: file(
       relativePath: { regex: "/alexander-andrews-260988-unsplash-edited/" }
     ) {
       childImageSharp {

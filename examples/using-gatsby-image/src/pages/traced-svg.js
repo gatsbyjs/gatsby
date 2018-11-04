@@ -13,9 +13,9 @@ import Layout from "../components/layout"
 const TracedSVG = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.polaroid.localFile.childImageSharp.fluid}
-    imageTitle={`“${data.polaroid.title}” by ${
-      data.polaroid.credit
+    image={data.coverImage.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.coverImage.title}” by ${
+      data.coverImage.credit
     } (via unsplash.com)`}
   >
     <PageTitle>Traced SVG Placeholders</PageTitle>
@@ -43,7 +43,7 @@ export default TracedSVG
 
 export const query = graphql`
   query {
-    polaroid: unsplashImagesYaml(title: { eq: "Polaroid Pronto 600" }) {
+    coverImage: unsplashImagesYaml(title: { eq: "Polaroid Pronto 600" }) {
       credit
       title
       localFile {

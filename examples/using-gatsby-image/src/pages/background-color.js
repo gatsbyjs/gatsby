@@ -10,9 +10,9 @@ import Layout from "../components/layout"
 const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.cactus.localFile.childImageSharp.fluid}
-    imageTitle={`“${data.cactus.title}” by ${
-      data.cactus.credit
+    image={data.coverImage.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.coverImage.title}” by ${
+      data.coverImage.credit
     } (via unsplash.com)`}
     imageBackgroundColor="#F0C450"
   >
@@ -41,7 +41,7 @@ export default BlurUp
 
 export const query = graphql`
   query {
-    cactus: unsplashImagesYaml(title: { eq: "Cactus" }) {
+    coverImage: unsplashImagesYaml(title: { eq: "Cactus" }) {
       credit
       title
       localFile {

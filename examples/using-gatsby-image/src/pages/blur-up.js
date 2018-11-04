@@ -11,9 +11,9 @@ import Layout from "../components/layout"
 const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.plant.localFile.childImageSharp.fluid}
-    imageTitle={`“${data.plant.title}” by ${
-      data.plant.credit
+    image={data.coverImage.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.coverImage.title}” by ${
+      data.coverImage.credit
     } (via unsplash.com)`}
   >
     <PageTitle>Blur Up</PageTitle>
@@ -40,7 +40,7 @@ export default BlurUp
 
 export const query = graphql`
   query {
-    plant: unsplashImagesYaml(title: { eq: "Plant with leaves" }) {
+    coverImage: unsplashImagesYaml(title: { eq: "Plant with leaves" }) {
       credit
       title
       localFile {

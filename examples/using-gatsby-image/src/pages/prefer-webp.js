@@ -11,8 +11,10 @@ import Lorem from "../components/lorem"
 const PreferWebp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.pug.localFile.childImageSharp.fluid}
-    imageTitle={`“${data.pug.title}” by ${data.pug.credit} (via unsplash.com)`}
+    image={data.coverImage.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.coverImage.title}” by ${
+      data.coverImage.credit
+    } (via unsplash.com)`}
   >
     <PageTitle>Prefer WebP</PageTitle>
     <FloatingImage
@@ -37,7 +39,7 @@ export default PreferWebp
 
 export const query = graphql`
   query {
-    pug: unsplashImagesYaml(title: { eq: "Pug with yellow raincoat" }) {
+    coverImage: unsplashImagesYaml(title: { eq: "Pug with yellow raincoat" }) {
       credit
       title
       localFile {
