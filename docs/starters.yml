@@ -1111,3 +1111,16 @@
     - Ready to deploy to Github pages
     - Automatic RSS generation
     - Automatic Sitemap generation
+- url: https://gatsby-starter-kentico-cloud.netlify.com/
+  repo: https://github.com/Kentico/gatsby-starter-kentico-cloud
+  description: Gatsby starter site with Kentico Cloud
+  tags:
+    - Kentico Cloud
+    - Headless CMS
+  features:
+    - Gatsby v2 support
+    - Content item <-> content type relationships
+    - Language variants relationships
+    - Modular content elements relationships
+    - Modular content relationships in rich text
+    - Reverse link relationships
