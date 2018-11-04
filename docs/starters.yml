@@ -1124,3 +1124,15 @@
     - Modular content elements relationships
     - Modular content relationships in rich text
     - Reverse link relationships
+- url: https://gatsby-starter-storybook.netlify.com/
+  repo: https://github.com/markoradak/gatsby-starter-storybook
+  description: Gatsby starter site with Storybook
+  tags:
+    - Storybook
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Gatsby v2 support
+    - Storybook v4 support
+    - Styled Components v4 support
+    - Styled Reset, ESLint, Netlify Conf
