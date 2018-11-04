@@ -84,12 +84,17 @@ const Badge = styled(`span`)`
   right: 10px;
 `
 
-const UnsplashMasonry = edges => (
+const ImageGallery = edges => (
   <OuterContainer>
     <Grid>
       {edges.images.map((image, index) => (
         <GridItem key={index}>
-          <GridItemImage fluid={image.node.localFile.childImageSharp.fluid} />
+          <GridItemImage
+            fluid={image.node.localFile.childImageSharp.fluid}
+            title={`“${image.node.title}” by ${
+              image.node.credit
+            } (via unsplash.com)`}
+          />
           <Badge>
             SVG
             {` `}
@@ -107,4 +112,4 @@ const UnsplashMasonry = edges => (
   </OuterContainer>
 )
 
-export default UnsplashMasonry
+export default ImageGallery

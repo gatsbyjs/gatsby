@@ -9,16 +9,25 @@ import Ipsum from "../components/ipsum"
 import Lorem from "../components/lorem"
 
 const PreferWebp = ({ data, location }) => (
-  <Layout location={location} image={data.pug.localFile.childImageSharp.fluid}>
+  <Layout
+    location={location}
+    image={data.pug.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.pug.title}” by ${data.pug.credit} (via unsplash.com)`}
+  >
     <PageTitle>Prefer WebP</PageTitle>
     <FloatingImage
       imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
       imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
+      title={`“${data.floatingImage.title}” by ${
+        data.floatingImage.credit
+      } (via unsplash.com)`}
     />
     <Lorem />
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
-      title={`Photo by Ken Treloar on Unsplash`}
+      title={`“${data.fullWidthImage.title}” by ${
+        data.fullWidthImage.credit
+      } (via unsplash.com)`}
     />
     <Ipsum />
   </Layout>
@@ -29,6 +38,8 @@ export default PreferWebp
 export const query = graphql`
   query {
     pug: unsplashImagesYaml(title: { eq: "Pug with yellow raincoat" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fluid(maxWidth: 800) {
@@ -47,6 +58,8 @@ export const query = graphql`
       }
     }
     floatingImage: unsplashImagesYaml(title: { eq: "Cacti" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fixed(width: 200) {
@@ -56,6 +69,8 @@ export const query = graphql`
       }
     }
     fullWidthImage: unsplashImagesYaml(title: { eq: "Tennis court" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fluid(maxWidth: 600) {

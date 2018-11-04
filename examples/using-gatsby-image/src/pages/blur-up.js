@@ -12,16 +12,25 @@ const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
     image={data.plant.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.plant.title}” by ${
+      data.plant.credit
+    } (via unsplash.com)`}
   >
     <PageTitle>Blur Up</PageTitle>
     <FloatingImage
       imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
       imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
+      title={`“${data.floatingImage.title}” by ${
+        data.floatingImage.credit
+      } (via unsplash.com)`}
     />
+
     <Lorem />
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
-      title={`Photo by Ken Treloar on Unsplash`}
+      title={`“${data.fullWidthImage.title}” by ${
+        data.fullWidthImage.credit
+      } (via unsplash.com)`}
     />
     <Ipsum />
   </Layout>
@@ -32,6 +41,8 @@ export default BlurUp
 export const query = graphql`
   query {
     plant: unsplashImagesYaml(title: { eq: "Plant with leaves" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fluid(maxWidth: 800) {
@@ -49,8 +60,9 @@ export const query = graphql`
         }
       }
     }
-
     floatingImage: unsplashImagesYaml(title: { eq: "Pug with hoodie" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fixed(width: 200) {
@@ -59,8 +71,9 @@ export const query = graphql`
         }
       }
     }
-
     fullWidthImage: unsplashImagesYaml(title: { eq: "Alien in the forest" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fluid(maxWidth: 600) {

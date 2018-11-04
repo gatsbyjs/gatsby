@@ -10,19 +10,18 @@ import presets from "../utils/presets"
 const { gutter } = presets
 
 const Container = styled(`div`)`
-  position: relative;
-  left: 0%;
-  padding: ${gutter.default}px;
-  margin-top: calc(67vh - ${gutter.default}px);
   background: #fff;
+  margin-top: calc(67vh - ${gutter.default}px);
+  padding: ${gutter.default}px;
+  position: relative;
 
   ${presets.Tablet} {
-    max-width: 600px;
-    margin-left: ${presets.offset}%;
     background: #fff;
-    position: relative;
+    margin-left: ${presets.offset}%;
     margin-top: 0;
+    max-width: 600px;
     padding: ${gutter.tablet}px;
+    position: relative;
   }
 
   ${presets.Desktop} {
@@ -31,58 +30,62 @@ const Container = styled(`div`)`
 `
 
 const Image = styled(Img)`
-  top: 20px;
+  bottom: 33vh;
   left: 20px;
   right: 20px;
-  bottom: 33vh;
+  top: 20px;
 
   ${presets.Tablet} {
     bottom: 0;
     left: 0;
-    top: 0;
     right: 55vw;
+    top: 0;
   },
 `
 
 const Main = styled(`main`)`
   background: #fff;
+  padding-top: ${gutter.default}px;
   position: relative;
   z-index: ${presets.zIndex.overlay};
-  padding-top: ${gutter.default}px;
 `
 
 const LogoLink = styled(`a`)`
+  height: ${rhythm(0.875)};
+  line-height: 1;
   position: fixed;
   top: ${gutter.tablet}px;
   right: ${gutter.tablet}px;
+  width: ${rhythm(0.875)};
 
   && {
     background: transparent;
   }
 
   ${presets.Tablet} {
-    top: auto;
     bottom: ${gutter.tablet}px;
     left: ${gutter.tablet}px;
+    top: auto;
     z-index: ${presets.zIndex.overlay + 1};
   },
 `
 
 const Logo = styled(`img`)`
   display: inline-block;
-  height: ${rhythm(0.875)};
-  width: ${rhythm(0.875)};
+  height: 100%;
   margin: 0;
   vertical-align: middle;
+  width: 100%;
 `
 
-const MainLayout = ({ children, image, imageBackgroundColor }) => (
+const Layout = ({ children, image, imageTitle, imageBackgroundColor }) => (
   <Container>
     {image && (
       <Image
         fluid={image}
         style={{ position: `fixed` }}
         backgroundColor={imageBackgroundColor ? imageBackgroundColor : false}
+        title={imageTitle}
       />
     )}
     <Navigation />
@@ -114,4 +117,4 @@ const MainLayout = ({ children, image, imageBackgroundColor }) => (
   </Container>
 )
 
-export default MainLayout
+export default Layout

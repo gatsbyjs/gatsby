@@ -11,20 +11,27 @@ const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
     image={data.cactus.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.cactus.title}” by ${
+      data.cactus.credit
+    } (via unsplash.com)`}
     imageBackgroundColor="#F0C450"
   >
     <PageTitle>Background Color</PageTitle>
     <FloatingImage
       imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
       imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
-      title={`Photo by Charles Deluvio on Unsplash`}
+      title={`“${data.floatingImage.title}” by ${
+        data.floatingImage.credit
+      } (via unsplash.com)`}
       backgroundColor="#DB3225"
     />
     <Lorem />
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
       backgroundColor="#F9D6CE"
-      title={`Photo by Charles Deluvio on Unsplash`}
+      title={`“${data.fullWidthImage.title}” by ${
+        data.fullWidthImage.credit
+      } (via unsplash.com)`}
     />
     <Ipsum />
   </Layout>
@@ -35,6 +42,8 @@ export default BlurUp
 export const query = graphql`
   query {
     cactus: unsplashImagesYaml(title: { eq: "Cactus" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fluid(maxWidth: 800) {
@@ -43,7 +52,6 @@ export const query = graphql`
         }
       }
     }
-
     floatingImageMobile: unsplashImagesYaml(title: { eq: "Pug with red hat" }) {
       localFile {
         childImageSharp {
@@ -54,6 +62,8 @@ export const query = graphql`
       }
     }
     floatingImage: unsplashImagesYaml(title: { eq: "Pug with red hat" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fixed(width: 200) {
@@ -63,6 +73,8 @@ export const query = graphql`
       }
     }
     fullWidthImage: unsplashImagesYaml(title: { eq: "Cacti" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fluid(maxWidth: 600) {

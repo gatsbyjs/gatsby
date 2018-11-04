@@ -6,41 +6,46 @@ import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
-import UnsplashMasonry from "../components/image-gallery"
+import ImageGallery from "../components/image-gallery"
 
 import Layout from "../components/layout"
 
-class TracedSVG extends React.Component {
-  render() {
-    const data = this.props.data
-    return (
-      <Layout
-        location={this.props.location}
-        image={this.props.data.polaroid.localFile.childImageSharp.fluid}
-      >
-        <PageTitle>Traced SVG Placeholders</PageTitle>
-        <FloatingImage
-          imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
-          imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
-        />
-        <Lorem />
-        <h2>Unsplash</h2>
-        <UnsplashMasonry images={data.galleryImages.edges} />
-        <Ipsum />
-        <Img
-          fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
-          title={`Photo by ${data.fullWidthImage.credit} on Unsplash`}
-        />
-      </Layout>
-    )
-  }
-}
+const TracedSVG = ({ data, location }) => (
+  <Layout
+    location={location}
+    image={data.polaroid.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.polaroid.title}” by ${
+      data.polaroid.credit
+    } (via unsplash.com)`}
+  >
+    <PageTitle>Traced SVG Placeholders</PageTitle>
+    <FloatingImage
+      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
+      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
+      title={`“${data.floatingImage.title}” by ${
+        data.floatingImage.credit
+      } (via unsplash.com)`}
+    />
+    <Lorem />
+    <h2>Unsplash</h2>
+    <ImageGallery images={data.galleryImages.edges} />
+    <Ipsum />
+    <Img
+      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
+      title={`“${data.fullWidthImage.title}” by ${
+        data.fullWidthImage.credit
+      } (via unsplash.com)`}
+    />
+  </Layout>
+)
 
 export default TracedSVG
 
 export const query = graphql`
   query {
     polaroid: unsplashImagesYaml(title: { eq: "Polaroid Pronto 600" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fluid(
@@ -52,7 +57,6 @@ export const query = graphql`
         }
       }
     }
-
     floatingImageMobile: unsplashImagesYaml(
       title: { eq: "Pug without hoodie" }
     ) {
@@ -65,6 +69,8 @@ export const query = graphql`
       }
     }
     floatingImage: unsplashImagesYaml(title: { eq: "Pug without hoodie" }) {
+      credit
+      title
       localFile {
         childImageSharp {
           fixed(width: 200) {
@@ -75,6 +81,7 @@ export const query = graphql`
     }
     fullWidthImage: unsplashImagesYaml(title: { eq: "City from above" }) {
       credit
+      title
       localFile {
         childImageSharp {
           fluid(maxWidth: 600) {
@@ -86,6 +93,8 @@ export const query = graphql`
     galleryImages: allUnsplashImagesYaml(filter: { gallery: { eq: true } }) {
       edges {
         node {
+          credit
+          title
           localFile {
             childImageSharp {
               fluid(
