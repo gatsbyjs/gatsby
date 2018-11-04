@@ -196,6 +196,22 @@ In this section we've shown you a few Gatsby-specific tools to improve your site
 
 Lighthouse is a great tool for site improvements and learning -- Continue looking through the detailed feedback it provides and keep making your site better!
 
+## Next Steps
+
+### Official Documentation
+
+*  [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for *[Quick Start](https://www.gatsbyjs.org/docs/)*, *[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)*, *[API References](https://www.gatsbyjs.org/docs/gatsby-link/)* and much more.
+
+### Official Plugins
+
+*  [Official Plugins](https://github.com/gatsbyjs/gatsby/tree/master/packages): The complete list of all the Official Plugins maintained by Gatsby.
+
+### Official Starters
+
+1.  [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. *[working example](http://gatsbyjs.github.io/gatsby-starter-default/)*
+2.  [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. *[working example](http://gatsbyjs.github.io/gatsby-starter-blog/)*
+3.  [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby Starter with the bare essentials needed for a Gatsby site. *[working example](https://gatsby-starter-hello-world-demo.netlify.com/)*
+
 ## That's all, folks
 
 Well, not quite. Just for this tutorial. This is just the beginning. Keep going!

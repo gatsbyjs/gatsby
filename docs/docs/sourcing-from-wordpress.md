@@ -2,11 +2,11 @@
 title: Sourcing from WordPress
 ---
 
-This guide will walk you through the process of using [Gatsby](https://www.gatsbyjs.org/) with [Wordpress Rest Api](https://developer.wordpress.org/rest-api/reference/).
+This guide will walk you through the process of using [Gatsby](https://www.gatsbyjs.org/) with [WordPress Rest Api](https://developer.wordpress.org/rest-api/reference/).
 
-WordPress is a free and open-source content management system (CMS). Let's say you have a site built with Wordpress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress). Let's begin!
+WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress). Let's begin!
 
-_Note: this guide uses the `gatsby-starter-default` to provide you with a knowledge necessary to start working with Wordpress but if you get stuck at some point of the guide feel free to use
+_Note: this guide uses the `gatsby-starter-default` to provide you with a knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use
 [this example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) to gain extra insights._
 
 ## Setup
@@ -31,7 +31,7 @@ module.exports = {
 
 ### Plugin: gatsby-source-wordpress
 
-Now that you have some understanding of project structure lets add fetching Wordpress data functionality. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WordPress JSON REST API. You can install it by running the following command:
+Now that you have some understanding of project structure lets add fetching WordPress data functionality. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WordPress JSON REST API. You can install it by running the following command:
 
 ```shell
 npm install gatsby-source-wordpress
@@ -95,7 +95,7 @@ The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site pa
 
 ## Wrapping Up
 
-This was a very basic example meant to help you understand how you can fetch data from Wordpress and use it with Gatsby. As
+This was a very basic example meant to help you understand how you can fetch data from WordPress and use it with Gatsby. As
 the guide mentioned already, if you got stuck, you can have a look at
 [example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress), which is a working example
 created to support this guide.
@@ -104,4 +104,4 @@ created to support this guide.
 
 - [Blog post on which this guide is based on](https://www.gatsbyjs.org/blog/2018-01-22-getting-started-gatsby-and-wordpress/)
 - [Video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
-- [Another blog post on using Gatsby with Wordpress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)
+- [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)

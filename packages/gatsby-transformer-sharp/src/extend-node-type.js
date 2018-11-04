@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
+  GraphQLList,
   GraphQLBoolean,
   GraphQLString,
   GraphQLInt,
@@ -269,6 +270,11 @@ const fluidNodeType = ({
       sizes: {
         type: GraphQLString,
         defaultValue: ``,
+      },
+      srcSetBreakpoints: {
+        type: GraphQLList(GraphQLInt),
+        defaultValue: [],
+        description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
       },
     },
     resolve: (image, fieldArgs, context) => {

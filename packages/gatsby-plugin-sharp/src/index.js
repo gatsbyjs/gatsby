@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminMozjpeg = require(`imagemin-mozjpeg`)
@@ -147,8 +147,9 @@ const processFile = (file, jobs, cb, reporter) => {
     }
 
     clonedPipeline
-      .resize(roundedWidth, roundedHeight)
-      .crop(args.cropFocus)
+      .resize(roundedWidth, roundedHeight, {
+        position: args.cropFocus,
+      })
       .png({
         compressionLevel: args.pngCompressionLevel,
         adaptiveFiltering: false,
@@ -372,10 +373,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.name}-${
-    file.internal.contentDigest
-  }-${argsDigestShort}.${fileExtension}`
-  const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
+  const imgSrc = `/${file.name}.${fileExtension}`
+  const dirPath = path.join(
+    process.cwd(),
+    `public`,
+    `static`,
+    file.internal.contentDigest,
+    argsDigestShort
+  )
+  const filePath = path.join(dirPath, imgSrc)
+  fs.ensureDirSync(dirPath)
 
   // Create function to call when the image is finished.
   let outsideResolve, outsideReject
@@ -424,7 +431,8 @@ function queueImageResizing({ file, args = {}, reporter }) {
   queueJob(job, reporter)
 
   // Prefix the image src.
-  const prefixedSrc = options.pathPrefix + `/static` + imgSrc
+  const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
+  const prefixedSrc = options.pathPrefix + `/static/${digestDirPrefix}` + imgSrc
 
   return {
     src: prefixedSrc,
@@ -457,18 +465,19 @@ async function base64({ file, args = {}, reporter, cache }) {
   }
 
   pipeline
-  .resize(options.width, options.height)
-  .crop(options.cropFocus)
-  .png({
-    compressionLevel: options.pngCompressionLevel,
-    adaptiveFiltering: false,
-    force: args.toFormat === `png`,
-  })
-  .jpeg({
-    quality: options.quality,
-    progressive: options.jpegProgressive,
-    force: args.toFormat === `jpg`,
-  })
+    .resize(options.width, options.height, {
+      position: options.cropFocus,
+    })
+    .png({
+      compressionLevel: options.pngCompressionLevel,
+      adaptiveFiltering: false,
+      force: args.toFormat === `png`,
+    })
+    .jpeg({
+      quality: options.quality,
+      progressive: options.jpegProgressive,
+      force: args.toFormat === `jpg`,
+    })
 
   // grayscale
   if (options.grayscale) {
@@ -525,6 +534,14 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
 
+  if (options[fixedDimension] < 1) {
+    throw new Error(
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${
+        options[fixedDimension]
+      }`
+    )
+  }
+
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
     presentationWidth = Math.min(
@@ -545,21 +562,38 @@ async function fluid({ file, args = {}, reporter, cache }) {
     options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
-  // Create sizes (in width) for the image. If the max width of the container
-  // for the rendered markdown file is 800px, the sizes would then be: 200,
-  // 400, 800, 1200, 1600, 2400.
+  // Create sizes (in width) for the image if no custom breakpoints are
+  // provided. If the max width of the container for the rendered markdown file
+  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const fluidSizes = []
-  fluidSizes.push(options[fixedDimension] / 4)
-  fluidSizes.push(options[fixedDimension] / 2)
-  fluidSizes.push(options[fixedDimension])
-  fluidSizes.push(options[fixedDimension] * 1.5)
-  fluidSizes.push(options[fixedDimension] * 2)
-  fluidSizes.push(options[fixedDimension] * 3)
+  const fluidSizes = [
+    options[fixedDimension], // ensure maxWidth (or maxHeight) is added
+  ]
+  // use standard breakpoints if no custom breakpoints are specified
+  if (!options.srcSetBreakpoints || !options.srcSetBreakpoints.length) {
+    fluidSizes.push(options[fixedDimension] / 4)
+    fluidSizes.push(options[fixedDimension] / 2)
+    fluidSizes.push(options[fixedDimension] * 1.5)
+    fluidSizes.push(options[fixedDimension] * 2)
+    fluidSizes.push(options[fixedDimension] * 3)
+  } else {
+    options.srcSetBreakpoints.forEach(breakpoint => {
+      if (breakpoint < 1) {
+        throw new Error(
+          `All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`
+        )
+      }
+      // ensure no duplicates are added
+      if (fluidSizes.includes(breakpoint)) {
+        return
+      }
+      fluidSizes.push(breakpoint)
+    })
+  }
   const filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
@@ -774,8 +808,9 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   }
 
   pipeline
-    .resize(options.width, options.height)
-    .crop(options.cropFocus)
+    .resize(options.width, options.height, {
+      position: options.cropFocus,
+    })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,

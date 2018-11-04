@@ -23,7 +23,7 @@ playing with the code!
 
 ## What is Gatsby
 
-Gatsby is a JavaScript web framework that let's you build fast, dynamic,
+Gatsby is a JavaScript web framework that lets you build fast, dynamic,
 mobile-ready websites _without_ an advanced degree in JavaScript wizardry.
 
 It combines the fast performance of static websites with the powerful

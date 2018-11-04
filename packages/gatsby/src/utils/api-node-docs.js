@@ -173,8 +173,8 @@ exports.onCreatePage = true
  *         args: {
  *           myArgument: {
  *             type: GraphQLString,
- *          }
- *         }
+ *           }
+ *         },
  *         resolve: (source, fieldArgs) => {
  *           return `Id of this node is ${source.id}.
  *                   Field was called with argument: ${fieldArgs.myArgument}`

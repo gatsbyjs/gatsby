@@ -149,7 +149,7 @@
 - name: Michael McQuade
   type: individual
   description: >-
-    I'm a developer for hire. I can help you make the transition from Wordpress to Gatsby, providing you with the level of customization that makes you feel comfortable.
+    I'm a developer for hire. I can help you make the transition from WordPress to Gatsby, providing you with the level of customization that makes you feel comfortable.
     I'm a full stack software engineer. I can also handle your iOS development, web application development, and cross-platform desktop applications.
     I am here to help you launch your product or idea.
   website: https://giraffesyo.io
@@ -196,6 +196,17 @@
   image: images/steven-natera.jpg
   for_hire: true
   portfolio: true
+- name: Ramón Chancay
+  type: individual
+  description: >-
+    Frontend web developer in Guayaquil Ecuador. Currently at EveryMundo, Before in El Universo, I enjoy building things with code. Organizer and Speaker in Meetups for pizza and beer. 🍕🍻
+  location: "Guayaquil, Ecuador"
+  website: "https://ramonchancay.me"
+  github: "https://github.com/devrchancay"
+  image: images/ramon-chancay.png
+  for_hire: true
+  hiring: false
+  portfolio: false
 - name: Kevin Legrand
   type: individual
   description: >-
