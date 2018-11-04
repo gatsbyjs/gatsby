@@ -3205,3 +3205,15 @@
   built_by: Lindsey Kopacz
   built_by_url: https://twitter.com/littlekope0903
   featured: false
+- title: DEKEMA
+  url: https://www.dekema.com/
+  main_url: https://www.dekema.com/
+  description: >
+    Worldclass crafting: Furnace, fervor, fullfilment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
+  categories:
+    - Healthcare
+    - Science
+    - Technology
+  built_by: Crisp Studio
+  built_by_url: https://crisp.studio
+  featured: false
