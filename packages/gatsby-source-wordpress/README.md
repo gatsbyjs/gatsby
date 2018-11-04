@@ -78,6 +78,7 @@ module.exports = {
           htaccess_user: "your-htaccess-username",
           htaccess_pass: "your-htaccess-password",
           htaccess_sendImmediately: false,
+
           // If hostingWPCOM is true then you will need to communicate with wordpress.com API
           // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
           // then add your clientId, clientSecret, username, and password here
