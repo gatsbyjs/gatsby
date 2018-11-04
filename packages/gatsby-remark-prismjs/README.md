@@ -228,6 +228,29 @@ You can also add line highlighting. It adds a span around lines of code with a
 special class `.gatsby-highlight-code-line` that you can target with styles. See
 this README for more info.
 
+To highlight lines, you can use one of the following directives as comments in your
+code:
+
+- `highlight-line` highlights the current line;
+- `highlight-next-line` highlights the next line;
+- `highlight-start` highlights the lines until the matching `hightlight-end`;
+- `highlight-range{1, 4-6}` will highlight the next line, and the fourth, fifth and sixth lines.
+
+  ```javascript
+  // In your gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`, //highlight-line
+      options: {
+        // highlight-start
+        plugins: [`gatsby-remark-prismjs`],
+        // highlight-end
+      },
+    },
+  ]
+  ```
+
+You can also specify the highlighted lines outside of the code block.
 In the following code snippet, lines 1 and 4 through 6 will get the line
 highlighting. The line range parsing is done with
 <https://www.npmjs.com/package/parse-numeric-range>.
