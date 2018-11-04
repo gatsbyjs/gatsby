@@ -1129,9 +1129,8 @@
   description: Gatsby starter site with Storybook
   tags:
     - Storybook
-    - Styled Components
-    - Netlify
-    - ESLint
+    - Styling:CSS-in-JS
+    - Linting
   features:
     - Gatsby v2 support
     - Storybook v4 support
