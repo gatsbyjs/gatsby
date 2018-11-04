@@ -7,7 +7,7 @@ import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
 
-const BlurUp = ({ data, location }) => (
+const BackgroundColor = ({ data, location }) => (
   <Layout
     location={location}
     image={data.coverImage.localFile.childImageSharp.fluid}
@@ -37,7 +37,7 @@ const BlurUp = ({ data, location }) => (
   </Layout>
 )
 
-export default BlurUp
+export default BackgroundColor
 
 export const query = graphql`
   query {
