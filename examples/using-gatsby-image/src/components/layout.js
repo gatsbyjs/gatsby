@@ -11,36 +11,45 @@ const { gutter } = presets
 
 const Container = styled(`div`)`
   background: #fff;
-  margin-top: calc(67vh - ${gutter.default}px);
-  padding: ${gutter.default}px;
+  margin-top: calc(67vh - ${gutter.default});
+  padding: ${gutter.default};
   position: relative;
 
   ${presets.Tablet} {
     background: #fff;
-    margin-left: ${presets.offset}%;
+    margin-left: ${presets.offset};
     margin-top: 0;
     max-width: 600px;
-    padding: ${gutter.tablet}px;
+    padding: ${gutter.tablet};
     position: relative;
   }
 
   ${presets.Desktop} {
-    padding: ${presets.gutter.desktop}px;
+    padding: ${presets.gutter.desktop};
+  }
+
+  ${presets.Xxl} {
+    margin-left: ${presets.offsetXxl};
   }
 `
 
 const Image = styled(Img)`
   bottom: 33vh;
-  left: 20px;
-  right: 20px;
-  top: 20px;
+  left: ${presets.gutter.default};
+  right: ${presets.gutter.default};
+  top: ${presets.gutter.default};
 
   ${presets.Tablet} {
     bottom: 0;
     left: 0;
-    right: 55vw;
+    right: auto;
     top: 0;
-  },
+    width: ${presets.offset};
+  }
+
+  ${presets.Xxl} {
+    width: ${presets.offsetXxl};
+  }
 `
 
 const Main = styled(`main`)`

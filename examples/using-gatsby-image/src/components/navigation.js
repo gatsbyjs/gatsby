@@ -53,7 +53,6 @@ const assignActiveStyles = ({ isPartiallyCurrent }) =>
               },
             },
           },
-
           "&:hover": {
             backgroundPosition: `100% 0 !important`,
             color: `initial !important`,
@@ -80,7 +79,9 @@ const Nav = styled(`nav`)({
   background: `#fff`,
   marginLeft: -20,
   marginRight: -20,
-  maskImage: `linear-gradient(to right, transparent, #fff 20px, #fff 96%, transparent)`,
+  maskImage: `linear-gradient(to right, transparent, #fff ${
+    presets.gutter.default
+  }, #fff 96%, transparent)`,
   overflowX: `auto`,
   paddingBottom: 20,
   paddingLeft: 20,

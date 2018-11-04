@@ -10,7 +10,7 @@ const Image = styled(Img)`
   float: right;
   margin-bottom: ${rhythm(options.blockMarginBottom * 2)};
   margin-left: ${rhythm(options.blockMarginBottom * 2)};
-  margin-right: -20px;
+  margin-right: -${presets.gutter.default};
 
   ${presets.Phablet} {
     display: none;

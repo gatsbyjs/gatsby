@@ -49,7 +49,7 @@ export const query = graphql`
       localFile {
         childImageSharp {
           fluid(
-            maxWidth: 800
+            maxWidth: 720
             traceSVG: { background: "#fff", color: "#663399" }
           ) {
             ...GatsbyImageSharpFluid_tracedSVG
@@ -84,7 +84,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 600) {
+          fluid(maxWidth: 480) {
             ...GatsbyImageSharpFluid_tracedSVG
           }
         }
@@ -98,7 +98,7 @@ export const query = graphql`
           localFile {
             childImageSharp {
               fluid(
-                maxWidth: 420
+                maxWidth: 380
                 quality: 70
                 traceSVG: { background: "#fbfafc", color: "#dbd4e2" }
               ) {

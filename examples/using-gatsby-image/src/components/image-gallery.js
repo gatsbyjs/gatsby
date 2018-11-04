@@ -11,23 +11,27 @@ const OuterContainer = styled(`div`)`
 
   ${presets.Tablet} {
     margin: 0;
-    margin-left: calc(-${presets.offset}vw - ${presets.gutter.tablet}px);
+    margin-left: calc(-${presets.offset} - ${presets.gutter.tablet});
     padding: 100px;
     padding-right: 0;
   }
 
   ${presets.Desktop} {
-    margin-left: calc(-${presets.offset}vw - ${presets.gutter.desktop}px);
+    margin-left: calc(-${presets.offset} - ${presets.gutter.desktop});
   }
 
-  ${presets.Hd} {
-    margin-right: calc(-${presets.gutter.desktop}px);
+  ${presets.Xl} {
+    margin-right: -${presets.gutter.desktop};
+  }
+
+  ${presets.Xxl} {
+    margin-left: calc(-${presets.offsetXxl} - ${presets.gutter.desktop});
   }
 `
 
 const Grid = styled(`div`)`
   column-count: 1;
-  column-gap: ${presets.gutter.default}px;
+  column-gap: ${presets.gutter.default};
 
   ${presets.Mobile} {
     column-count: 2;
@@ -37,19 +41,19 @@ const Grid = styled(`div`)`
     column-count: 3;
   }
 
-  ${presets.Hd} {
-    column-gap: ${presets.gutter.tablet}px;
+  ${presets.Xl} {
+    column-gap: ${presets.gutter.tablet};
   }
 `
 
 const GridItem = styled(`div`)`
   break-inside: avoid;
   position: relative;
-  margin-bottom: ${presets.gutter.default}px;
+  margin-bottom: ${presets.gutter.default};
 
-  ${presets.Hd}: {
-    margin-bottom: ${presets.gutter.tablet}px;
-  };
+  ${presets.Xl} {
+    margin-bottom: ${presets.gutter.tablet};
+  }
 `
 
 const GridItemImage = styled(Img)`
