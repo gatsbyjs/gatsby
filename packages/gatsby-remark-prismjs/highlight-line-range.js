@@ -37,7 +37,10 @@ const getHighlights = (line, code, index) => {
       ]
 
     case `start`: {
-      const endIndex = code.findIndex(line => END_DIRECTIVE.test(line))
+      // find the next `highlight-end` directive, starting from next line
+      const endIndex = code.findIndex(
+        (line, idx) => idx > index && END_DIRECTIVE.test(line)
+      )
       const end = endIndex === -1 ? code.length : endIndex
       const highlighted = code.slice(index + 1, end).map(line => {
         return {
