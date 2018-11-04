@@ -61,8 +61,6 @@ module.exports = {
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
-        // Indicates wether you use JWT Authentication. This assumes the use of the plugin "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
-        useJWT: false,
         // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
         // This feature is untested for sites hosted on Wordpress.com.
         // Defaults to true.
@@ -88,9 +86,11 @@ module.exports = {
           wpcom_app_clientId: "54793",
           wpcom_user: "gatsbyjswpexample@gmail.com",
           wpcom_pass: process.env.WORDPRESS_PASSWORD,
-          // If useJWT is true you will need to set a jwt_user and a jwt_pass in order to obtain a token.
-          jwt_user: "your-jwt-user",
-          jwt_pass: "your-jwt-password",
+
+          // If you use "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
+          // plugin, you can specify user and password to obtain access token and use authenticated requests against wordpress REST API.
+          jwt_user: process.env.JWT_USER,
+          jwt_pass: process.env.JWT_PASSWORD,
         },
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems.
