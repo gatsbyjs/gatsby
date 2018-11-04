@@ -8,29 +8,36 @@ import Layout from "../../components/layout"
 class ShowcaseView extends Component {
   showcase = React.createRef()
 
-  scrollToElement = (element, offset = 100) => {
-    setTimeout(() => {
-      const elementTop = document.querySelector(element).getClientRects()[0].top
-      window.scroll({
-        top: elementTop - offset,
-        left: 0,
-      })
-    }, 50)
+  handleScroll = ({ element, offsetTop = 0 }) => {
+    if (
+      this.props.location.search &&
+      this.props.location.search.includes(`?filters`)
+    ) {
+      if (element.offsetTop !== 0) {
+        setTimeout(() => {
+          window.scroll({
+            top: element.offsetTop - offsetTop,
+            left: 0,
+            behavior: `smooth`,
+          })
+        }, 50)
+      }
+    }
   }
 
   componentDidMount() {
-    const { location } = this.props
-    if (location.search && location.search.includes(`?filters`)) {
-      this.scrollToElement(`#showcase`)
-    }
+    this.handleScroll({
+      element: this.showcase.current,
+      offsetTop: 100,
+    })
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.location.search !== this.props.location.search) {
-      const { location } = this.props
-      if (location.search && location.search.includes(`?filters`)) {
-        this.scrollToElement(`#showcase`)
-      }
+      this.handleScroll({
+        element: this.showcase.current,
+        offsetTop: 100,
+      })
     }
   }
 
