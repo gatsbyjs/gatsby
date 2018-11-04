@@ -1288,6 +1288,9 @@
   categories:
     - Portfolio
     - Blog
+    - Design
+    - Web Development
+    - Freelance
 - title: 杨二小的博客
   main_url: "https://blog.yangerxiao.com/"
   url: "https://blog.yangerxiao.com/"
@@ -2731,6 +2734,7 @@
   description: >
     The Carbon Design System is integrating the new IBM Design Ethos and Language. It represents a completely fresh approach to the design of all things at IBM.
   categories:
+    - Design System
     - Documentation
   built_by: IBM
   built_by_url: https://www.ibm.com/
@@ -2754,7 +2758,7 @@
     McDonald's Design System
   categories:
     - Design
-    - DesignSystems
+    - Design System
   built_by: McDonald's
   built_by_url: https://www.mcdonalds.com/us/en-us.html
   featured: false
@@ -2775,7 +2779,7 @@
   description: >
     A single design system to ensure every interface feels like Hudl. From the colors we use to the size of our buttons and what those buttons say, Uniform has you covered. Check the guidelines, copy the code and get to building.
   categories:
-    - DesignSystems
+    - Design System
     - Open Source
     - Design
   built_by: Hudl
