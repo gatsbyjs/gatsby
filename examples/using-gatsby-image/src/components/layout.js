@@ -63,8 +63,8 @@ const LogoLink = styled(`a`)`
   height: ${rhythm(0.875)};
   line-height: 1;
   position: fixed;
-  top: ${gutter.tablet}px;
-  right: ${gutter.tablet}px;
+  top: ${gutter.tablet};
+  right: ${gutter.tablet};
   width: ${rhythm(0.875)};
 
   && {
@@ -72,8 +72,8 @@ const LogoLink = styled(`a`)`
   }
 
   ${presets.Tablet} {
-    bottom: ${gutter.tablet}px;
-    left: ${gutter.tablet}px;
+    bottom: ${gutter.tablet};
+    left: ${gutter.tablet};
     top: auto;
     z-index: ${presets.zIndex.overlay + 1};
   },
