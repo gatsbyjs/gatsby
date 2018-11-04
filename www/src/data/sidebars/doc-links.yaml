@@ -77,7 +77,7 @@
       items:
         - title: Using unstructured data
           link: /docs/using-unstructured-data/
-        - title: Sourcing from the filesystem*
+        - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases*
           link: /docs/sourcing-from-databases/
@@ -96,6 +96,8 @@
               link: /docs/sourcing-from-drupal/
             - title: Sourcing from Contentful
               link: /docs/sourcing-from-contentful/
+            - title: Sourcing from Prismic
+              link: /docs/sourcing-from-prismic/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:

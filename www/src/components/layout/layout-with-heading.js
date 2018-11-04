@@ -55,14 +55,13 @@ const StyledSkipNavLink = styled(SkipNavLink)`
   }
 `
 
-class LayoutWithHeading extends React.Component {
-  render() {
+const LayoutWithHeading = (props) => {
     const {
       children,
       location: { pathname },
       pageTitle = "",
       pageIcon,
-    } = this.props
+    } = props
 
     const isHomepage = pathname === `/`
 
@@ -81,7 +80,7 @@ class LayoutWithHeading extends React.Component {
 
         <Banner />
 
-        <Navigation pathname={this.props.location.pathname} />
+        <Navigation pathname={props.location.pathname} />
 
         <Content>
           {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
@@ -91,7 +90,6 @@ class LayoutWithHeading extends React.Component {
         <MobileNavigation />
       </div>
     )
-  }
 }
 
 LayoutWithHeading.propTypes = {
