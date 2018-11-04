@@ -1114,7 +1114,7 @@
 - url: https://gatsby-starter-kentico-cloud.netlify.com/
   repo: https://github.com/Kentico/gatsby-starter-kentico-cloud
   description: Gatsby starter site with Kentico Cloud
-  tags: 
+  tags:
     - Kentico Cloud
     - Headless CMS
   features:
