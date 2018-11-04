@@ -467,12 +467,6 @@
   featured: false
   categories:
     - Portfolio
-- title: Sourcegraph
-  main_url: "https://about.sourcegraph.com/"
-  url: "https://about.sourcegraph.com/"
-  featured: false
-  categories:
-    - Web Development
 - title: API Platform
   main_url: "https://api-platform.com/"
   url: "https://api-platform.com/"
@@ -1244,13 +1238,6 @@
     - Community
   built_by: Sankarsan Kampa
   built_by_url: "https://sankarsankampa.com"
-- title: upGizmo
-  main_url: "https://www.upgizmo.com/"
-  url: "https://www.upgizmo.com/"
-  featured: false
-  categories:
-    - News
-    - Technology
 - title: Smakosh
   main_url: "https://smakosh.com/"
   url: "https://smakosh.com/"
