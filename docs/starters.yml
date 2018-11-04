@@ -167,7 +167,7 @@
     - Netlify CMS
   features:
     - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
-- url: https://jaxx2104.github.io/gatsby-starter-bootstrap/
+- url: https://gatstrap.netlify.com/
   repo: https://github.com/jaxx2104/gatsby-starter-bootstrap
   description: n/a
   tags:
@@ -457,7 +457,7 @@
     - Offline Support, WebApp Manifest, SEO
     - Automatic Favicons
     - Typography.js
-- url: https://gatsby-starter-modern-url.netlify.com/
+- url: https://gatsby-starter-modern-demo.netlify.com/
   repo: https://github.com/kripod/gatsby-starter-modern
   description: no description yet
   tags:

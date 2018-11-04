@@ -5,17 +5,10 @@ const {
   GraphQLID,
   GraphQLString,
 } = require(`graphql`)
-const { connectionFromArray } = require(`graphql-skip-limit`)
 
 jest.mock(`../node-tracking`, () => {
   return {
     trackInlineObjectsInRootNode: () => jest.fn(),
-  }
-})
-
-jest.mock(`../../redux/actions/add-page-dependency`, () => {
-  return {
-    createPageDependency: jest.fn(),
   }
 })
 
@@ -66,20 +59,19 @@ describe(`run-sift`, () => {
         nodes,
         typeName,
         args,
-        connection: false,
+        firstOnly: true,
       })
 
-      const resultConnection = await runSift({
+      const resultMany = await runSift({
         type,
         nodes,
         typeName,
         args,
-        connection: true,
+        firstOnly: false,
       })
-      delete resultConnection.totalCount
 
-      expect(resultSingular).toEqual(nodes[1])
-      expect(resultConnection).toEqual(connectionFromArray([nodes[1]], args))
+      expect(resultSingular).toEqual([nodes[1]])
+      expect(resultMany).toEqual([nodes[1]])
     })
 
     it(`non-eq operator`, async () => {
@@ -94,22 +86,19 @@ describe(`run-sift`, () => {
         nodes,
         typeName,
         args,
-        connection: false,
+        firstOnly: true,
       })
 
-      const resultConnection = await runSift({
+      const resultMany = await runSift({
         type,
         nodes,
         typeName,
         args,
-        connection: true,
+        firstOnly: false,
       })
-      delete resultConnection.totalCount
 
-      expect(resultSingular).toEqual(nodes[0])
-      expect(resultConnection).toEqual(
-        connectionFromArray([nodes[0], nodes[2]], args)
-      )
+      expect(resultSingular).toEqual([nodes[0]])
+      expect(resultMany).toEqual([nodes[0], nodes[2]])
     })
   })
 })
