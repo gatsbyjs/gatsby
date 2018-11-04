@@ -22,93 +22,87 @@ const FeatureListItem = styled(`li`)({
   paddingLeft: `1.5em !important`,
 })
 
-class IndexComponent extends React.Component {
-  render() {
-    return (
-      <Layout
-        location={this.props.location}
-        image={this.props.data.coverImage.childImageSharp.fluid}
-        imageTitle={`“Black and silver vintage camera” by Alexander Andrews (via unsplash.com)`}
-        imageBackgroundColor={colors.ui.whisper}
-      >
-        <p
+const Index = ({ data, location }) => (
+  <Layout
+    location={location}
+    image={data.coverImage.childImageSharp.fluid}
+    imageTitle={`“Black and silver vintage camera” by Alexander Andrews (via unsplash.com)`}
+    imageBackgroundColor={colors.ui.whisper}
+  >
+    <p
+      css={{
+        ...scale(0.75),
+        marginBottom: rhythm(options.blockMarginBottom * 2),
+      }}
+    >
+      <a href="https://www.gatsbyjs.org/packages/gatsby-image/">gatsby-image</a>
+      {` `}
+      is the official Image component for use in building Gatsby websites. It
+      provides the fastest, most optimized image loading performance possible
+      for Gatsby (and other React) websites.
+    </p>
+    <p>
+      The component requires
+      {` `}
+      <em css={{ fontWeight: `bold`, fontStyle: `normal` }}>
+        no configuration
+      </em>
+      {` `}
+      when used within Gatsby. All image processing is done within Gatsby and
+      official plugins.
+    </p>
+    <p>
+      See the
+      {` `}
+      <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+        component’s documentation
+      </a>
+      {` `}
+      as well as
+      {` `}
+      <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
+        <FaGithub
           css={{
-            ...scale(0.75),
-            marginBottom: rhythm(options.blockMarginBottom * 2),
+            position: `relative`,
+            bottom: `-0.125em`,
+            backgroundImage: `none`,
           }}
-        >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
-            gatsby-image
-          </a>
-          {` `}
-          is the official Image component for use in building Gatsby websites.
-          It provides the fastest, most optimized image loading performance
-          possible for Gatsby (and other React) websites.
-        </p>
-        <p>
-          The component requires
-          {` `}
-          <em css={{ fontWeight: `bold`, fontStyle: `normal` }}>
-            no configuration
-          </em>
-          {` `}
-          when used within Gatsby. All image processing is done within Gatsby
-          and official plugins.
-        </p>
-        <p>
-          See the
-          {` `}
-          <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
-            component’s documentation
-          </a>
-          {` `}
-          as well as
-          {` `}
-          <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
-            <FaGithub
-              css={{
-                position: `relative`,
-                bottom: `-0.125em`,
-                backgroundImage: `none`,
-              }}
-            />
-            {` `}
-            view this site’s source
-          </a>
-          {` `}
-          to learn how to start using gatsby-image on your Gatsby sites.
-        </p>
-        <h2>Out of the box it:</h2>
-        <FeatureList>
-          <FeatureListItem>
-            Loads the optimal size of image for each device size and screen
-            resolution
-          </FeatureListItem>
-          <FeatureListItem>
-            Holds the image position while loading so your page doesn’t jump
-            around as images load
-          </FeatureListItem>
-          <FeatureListItem>
-            Uses the “blur-up” effect i.e. it loads a tiny version of the image
-            to show while the full image is loading
-          </FeatureListItem>
-          <FeatureListItem>
-            Alternatively provides a “traced placeholder” SVG of the image.
-          </FeatureListItem>
-          <FeatureListItem>
-            Lazy loads images which reduces bandwidth and speeds the initial
-            load time
-          </FeatureListItem>
-          <FeatureListItem>
-            Uses WebP images if browser supports the format
-          </FeatureListItem>
-        </FeatureList>
-      </Layout>
-    )
-  }
-}
+        />
+        {` `}
+        view this site’s source
+      </a>
+      {` `}
+      to learn how to start using gatsby-image on your Gatsby sites.
+    </p>
+    <h2>Out of the box it:</h2>
+    <FeatureList>
+      <FeatureListItem>
+        Loads the optimal size of image for each device size and screen
+        resolution
+      </FeatureListItem>
+      <FeatureListItem>
+        Holds the image position while loading so your page doesn’t jump around
+        as images load
+      </FeatureListItem>
+      <FeatureListItem>
+        Uses the “blur-up” effect i.e. it loads a tiny version of the image to
+        show while the full image is loading
+      </FeatureListItem>
+      <FeatureListItem>
+        Alternatively provides a “traced placeholder” SVG of the image.
+      </FeatureListItem>
+      <FeatureListItem>
+        Lazy loads images which reduces bandwidth and speeds the initial load
+        time
+      </FeatureListItem>
+      <FeatureListItem>
+        Uses WebP images if browser supports the format
+      </FeatureListItem>
+    </FeatureList>
+  </Layout>
+)
 
-export default IndexComponent
+export default Index
 
 export const query = graphql`
   query {
