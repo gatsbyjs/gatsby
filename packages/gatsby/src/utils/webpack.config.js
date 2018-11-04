@@ -144,7 +144,6 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
-            require.resolve(`react-hot-loader/patch`),
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
