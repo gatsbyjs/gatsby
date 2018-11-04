@@ -501,18 +501,16 @@ const memoizedBase64 = _.memoize(generateBase64, base64CacheKey)
 
 const cachifiedBase64 = async ({ cache, ...arg }) => {
   const cacheKey = base64CacheKey(arg)
-  if (cache) {
-    const cachedBase64 = await cache.get(cacheKey)
-    if (cachedBase64) {
-      return cachedBase64
-    }
+
+  const cachedBase64 = await cache.get(cacheKey)
+  if (cachedBase64) {
+    return cachedBase64
   }
 
   const base64output = await generateBase64(arg)
 
-  if (cache) {
-    await cache.set(cacheKey, base64output)
-  }
+  await cache.set(cacheKey, base64output)
+
   return base64output
 }
 
