@@ -12,4 +12,9 @@ module.exports = {
   sourceMaps: true,
   presets: [presetAbsPath],
   ignore,
+  env: {
+    es: {
+      presets: [[presetAbsPath, {modules: false}]]
+    }
+  }
 }
