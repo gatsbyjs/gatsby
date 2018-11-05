@@ -254,21 +254,26 @@ We can use a small workaround to avoid an error.
 First, remove the `Link` mock from `gatsby`:
 
 ```js:title=__mocks__/gatsby.js
+const React = require("react")
 const gatsby = jest.requireActual("gatsby")
-module.exports = { ...gatsby, graphql: jest.fn() }
+
+module.exports = {
+  ...gatsby,
+  graphql: jest.fn(),
+  Link: jest.fn().mockImplementation(({ to, ...rest }) =>
+    React.createElement("a", {
+      ...rest,
+      href: to,
+    })
+  ),
+  StaticQuery: jest.fn(),
+}
 ```
 
 While the `Link` component is exported by the main `gatsby` package, it is
 actually defined in `gatsby-link`. That in turn uses `parsePath()` from
 `gatsby`, which causes module resolution issues. Fortunately it's an easy fix.
-You need to create a mock for `gatsby-link`, even though it will actually be the
-real module. You do this so that you can tell it to not try and use the mock
-`gatsby`:
-
-```js:title=__mocks__/gatsby-link.js
-jest.unmock("gatsby")
-module.exports = jest.requireActual("gatsby-link")
-```
+You need to create a mock for `Link`, so that we can mimic the functionality of `gatsby-link` while maintaining the benefits of making it easily unit testable.
 
 One more issue that you may encounter is that some components expect to be able
 to use the `location` prop that is passed in by `Router`. You can fix this by
