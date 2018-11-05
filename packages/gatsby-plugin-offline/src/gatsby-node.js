@@ -80,16 +80,14 @@ exports.onPostBuild = (args, pluginOptions) => {
       "/": `${pathPrefix}/`,
     },
     navigateFallback: `${pathPrefix}/offline-plugin-app-shell-fallback/index.html`,
-    // Only match URLs without extensions or the query `no-cache=1`.
+    // Only match URLs without extensions.
     // So example.com/about/ will pass but
-    // example.com/about/?no-cache=1 and
     // example.com/cheeseburger.jpg will not.
     // We only want the service worker to handle our "clean"
     // URLs and not any files hosted on the site.
     //
     // Regex based on http://stackoverflow.com/a/18017805
     navigateFallbackWhitelist: [/^([^.?]*|[^?]*\.([^.?]{5,}|html))(\?.*)?$/],
-    navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory
     dontCacheBustUrlsMatching: /(.*\.js$|.*\.css$|\/static\/)/,
