@@ -105,7 +105,7 @@ describe(`JavaScript page creator`, () => {
         { path: `src/pages/bar.test.tsx` },
       ])
       .map(file => {
-        file.path = path.join(...file.path.split("/"))
+        file.path = path.join(...file.path.split(`/`))
         return file
       })
 
