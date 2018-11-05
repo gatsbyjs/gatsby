@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import loader from "./loader"
 import shallowCompare from "shallow-compare"
-import { getRedirectUrl } from "./load-directly-or-404"
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -94,16 +93,11 @@ class EnsureResources extends React.Component {
   }
 
   render() {
+    // This should only occur if there's no custom 404 page
     if (
       process.env.NODE_ENV === `production` &&
       !(this.state.pageResources && this.state.pageResources.json)
     ) {
-      // This should only occur if there's no custom 404 page
-      const url = getRedirectUrl(this.state.location.href)
-      if (url) {
-        window.location.replace(url)
-      }
-
       return null
     }
 

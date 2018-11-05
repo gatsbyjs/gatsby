@@ -1,12 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { navigate as reachNavigate } from "@reach/router"
 import parsePath from "./parse-path"
-import loadDirectlyOr404 from "./load-directly-or-404"
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
@@ -82,14 +81,11 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
-    if (
-      (!pageResources || pageResources.page.path === `/404.html`) &&
-      process.env.NODE_ENV === `production`
-    ) {
-      clearTimeout(timeoutId)
-      loadDirectlyOr404(pageResources, to).then(() =>
+    if (!pageResources && process.env.NODE_ENV === `production`) {
+      loader.getResourcesForPathname(`/404.html`).then(() => {
+        clearTimeout(timeoutId)
         reachNavigate(to, options)
-      )
+      })
     } else {
       reachNavigate(to, options)
       clearTimeout(timeoutId)
