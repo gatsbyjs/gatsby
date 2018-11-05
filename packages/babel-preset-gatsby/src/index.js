@@ -20,7 +20,7 @@ function preset(context, options = {}) {
   const stage = process.env.GATSBY_BUILD_STAGE || `test`
 
   if (!targets) {
-    if (stage === `build-html`) {
+    if (stage === `build-html` || stage === `test`) {
       targets = {
         node: `current`,
       }
@@ -37,7 +37,7 @@ function preset(context, options = {}) {
         r(`@babel/preset-env`),
         {
           loose: true,
-          modules: false,
+          modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
           targets,
         },
