@@ -92,13 +92,14 @@ describe(`JavaScript page creator`, () => {
     const validFiles = [{ path: `page.js` }, { path: `page.jsx` }]
 
     const testFiles = validFiles.concat([
-      { path: `__tests__/something.test.js` },
-      { path: `__tests__/something.test.tsx` },
-      { path: `__tests__/something.js` },
-      { path: `foo.spec.js` },
-      { path: `foo.spec.tsx` },
-      { path: `bar.test.js` },
-      { path: `bar.test.tsx` },
+      { path: `src/pages/__tests__/something.test.js` },
+      { path: `src/pages/__tests__/something.test.tsx` },
+      { path: `src/pages/__tests__/something.js` },
+      { path: `src/pages/__tests__/nested-directory/something.js` },
+      { path: `src/pages/foo.spec.js` },
+      { path: `src/pages/foo.spec.tsx` },
+      { path: `src/pages/bar.test.js` },
+      { path: `src/pages/bar.test.tsx` },
     ])
 
     expect(testFiles.filter(file => validatePath(file.path))).toEqual(
