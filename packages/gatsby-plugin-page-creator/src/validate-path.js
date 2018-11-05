@@ -3,9 +3,12 @@ const systemPath = require(`path`)
 const tsDeclarationExtTest = /\.d\.tsx?$/
 const jsonYamlExtTest = /\.(json|ya?ml)$/
 
-function isTestFile(path) {
-  const testFileTest = new RegExp(`(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$`)
-  return path.match(testFileTest)
+function isTestFile({ base, dir }) {
+  const testFileExpr = new RegExp(
+    `(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)x?$`,
+    "i"
+  )
+  return testFileExpr.test(base) || dir === `__tests__`
 }
 
 module.exports = path => {
@@ -19,6 +22,6 @@ module.exports = path => {
     parsedPath.name.slice(0, 9) !== `template-` &&
     !tsDeclarationExtTest.test(parsedPath.base) &&
     !jsonYamlExtTest.test(parsedPath.base) &&
-    !isTestFile(parsedPath.base)
+    !isTestFile(parsedPath)
   )
 }
