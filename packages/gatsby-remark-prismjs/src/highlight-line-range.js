@@ -123,7 +123,7 @@ module.exports = function highlightLineRange(code, highlights = []) {
       if (highlights.includes(i + 1)) {
         return {
           highlighted: true,
-          code: line,
+          code: wrap(line),
         }
       }
       return {
