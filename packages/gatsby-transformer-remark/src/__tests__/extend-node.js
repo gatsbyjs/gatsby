@@ -183,7 +183,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toMatch(`<p>Where oh where is my little pony?</p>`)
     },
     { excerpt_separator: `<!-- end -->` }
   )

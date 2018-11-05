@@ -380,9 +380,18 @@ module.exports = (
             defaultValue: false,
           },
         },
-        resolve(markdownNode, { pruneLength, truncate }) {
+        resolve: async (markdownNode, { pruneLength, truncate }) => {
           if (markdownNode.excerpt) {
-            return Promise.resolve(markdownNode.excerpt)
+            const excerpt = await getMarkdownAST(
+              markdownNode,
+              markdownNode.excerpt
+            )
+            const htmlAST = toHAST(excerpt, { allowDangerousHTML: true })
+            const html = hastToHTML(htmlAST, {
+              allowDangerousHTML: true,
+            })
+
+            return html
           }
           return getAST(markdownNode).then(ast => {
             const excerptNodes = []
