@@ -117,7 +117,10 @@ module.exports = (
         // We are already generating AST, so let's wait for it
         return await ASTPromiseMap.get(cacheKey)
       } else {
-        const ASTGenerationPromise = getMarkdownAST(markdownNode)
+        const ASTGenerationPromise = getMarkdownAST(
+          markdownNode,
+          markdownNode.internal.content
+        )
         ASTGenerationPromise.then(markdownAST => {
           cache.set(cacheKey, markdownAST)
           ASTPromiseMap.delete(cacheKey)
@@ -132,7 +135,7 @@ module.exports = (
       }
     }
 
-    function getMarkdownAST(markdownNode) {
+    function getMarkdownAST(markdownNode, remarkTarget) {
       return new Promise(async (resolve, reject) => {
         if (process.env.NODE_ENV !== `production` || !fileNodes) {
           fileNodes = getNodesByType(`File`)
@@ -155,7 +158,7 @@ module.exports = (
             return Promise.resolve()
           }
         })
-        const markdownAST = remark.parse(markdownNode.internal.content)
+        const markdownAST = remark.parse(remarkTarget)
 
         if (pathPrefix) {
           // Ensure relative links include `pathPrefix`
