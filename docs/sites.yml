@@ -3232,3 +3232,20 @@
   built_by: Kframe Interactive SA
   built_by_url: http://kframeinteractive.com
   featured: false
+- title: Ramón Chancay
+  description: >-
+    Front-end / Back-end Developer in Guayaquil Ecuador.
+    Currently at Everymundo, previously at El Universo.
+    I enjoy teaching and sharing what I know.
+    I give professional advice to developers and companies.
+    My wife and my children are everything in my life.
+  main_url: "https://ramonchancay.me/"
+  url: "https://ramonchancay.me/"
+  source_url: "https://github.com/devrchancay/personal-site"
+  featured: false
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Codedebug
+  built_by_url: "https://codedebug.co/"
