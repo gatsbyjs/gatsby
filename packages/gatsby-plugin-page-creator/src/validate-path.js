@@ -6,7 +6,7 @@ const jsonYamlExtTest = /\.(json|ya?ml)$/
 function isTestFile({ base, dir }) {
   const testFileExpr = new RegExp(
     `(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)x?$`,
-    "i"
+    `i`
   )
   return testFileExpr.test(base) || dir === `__tests__`
 }
