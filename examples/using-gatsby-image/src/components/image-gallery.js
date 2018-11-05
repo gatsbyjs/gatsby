@@ -3,56 +3,56 @@ import Img from "gatsby-image"
 import styled from "react-emotion"
 import numeral from "numeral"
 
-import presets from "../utils/presets"
+import { mq, gutter, offset, offsetXxl } from "../utils/presets"
 import { options, scale } from "../utils/typography"
 
 const OuterContainer = styled(`div`)`
   background: #fff;
 
-  ${presets.Tablet} {
+  ${mq.tablet} {
     margin: 0;
-    margin-left: calc(-${presets.offset} - ${presets.gutter.tablet});
-    padding: 100px;
+    margin-left: calc(-${offset} - ${gutter.tablet});
+    padding: 6.25rem;
     padding-right: 0;
   }
 
-  ${presets.Desktop} {
-    margin-left: calc(-${presets.offset} - ${presets.gutter.desktop});
+  ${mq.desktop} {
+    margin-left: calc(-${offset} - ${gutter.desktop});
   }
 
-  ${presets.Xl} {
-    margin-right: -${presets.gutter.desktop};
+  ${mq.xl} {
+    margin-right: -${gutter.desktop};
   }
 
-  ${presets.Xxl} {
-    margin-left: calc(-${presets.offsetXxl} - ${presets.gutter.desktop});
+  ${mq.xxl} {
+    margin-left: calc(-${offsetXxl} - ${gutter.desktop});
   }
 `
 
 const Grid = styled(`div`)`
   column-count: 1;
-  column-gap: ${presets.gutter.default};
+  column-gap: ${gutter.default};
 
-  ${presets.Mobile} {
+  ${mq.mobile} {
     column-count: 2;
   }
 
-  ${presets.Tablet} {
+  ${mq.tablet} {
     column-count: 3;
   }
 
-  ${presets.Xl} {
-    column-gap: ${presets.gutter.tablet};
+  ${mq.xl} {
+    column-gap: ${gutter.tablet};
   }
 `
 
 const GridItem = styled(`div`)`
   break-inside: avoid;
   position: relative;
-  margin-bottom: ${presets.gutter.default};
+  margin-bottom: ${gutter.default};
 
-  ${presets.Xl} {
-    margin-bottom: ${presets.gutter.tablet};
+  ${mq.xl} {
+    margin-bottom: ${gutter.tablet};
   }
 `
 
@@ -75,17 +75,17 @@ const GridItemImage = styled(Img)`
 
 const Badge = styled(`span`)`
   background: #fff;
-  bottom: 10px;
-  border-radius: 2px;
+  bottom: 0.625rem;
+  border-radius: 0.125rem;
   color: ${options.bodyColor};
   font-family: ${options.monospaceFontFamily.join(`,`)};
-  font-size: ${scale(-1).fontSize};
+  font-size: ${scale(-2).fontSize};
   line-height: 1;
   padding: 0.25rem;
   pointer-events: none;
   position: absolute;
   opacity: 0.5;
-  right: 10px;
+  right: 0.625rem;
 `
 
 const ImageGallery = edges => (

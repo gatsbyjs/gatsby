@@ -1,4 +1,4 @@
-const { createRemoteFileNode } = require("gatsby-source-filesystem")
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = async (
   { actions: { createNode }, node, createContentDigest, store, cache },

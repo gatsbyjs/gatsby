@@ -3,16 +3,16 @@ import Img from "gatsby-image"
 import styled from "react-emotion"
 
 import { rhythm, options } from "../utils/typography"
-import presets from "../utils/presets"
+import { mq, gutter } from "../utils/presets"
 
 const Image = styled(Img)`
   display: block;
   float: right;
   margin-bottom: ${rhythm(options.blockMarginBottom * 2)};
   margin-left: ${rhythm(options.blockMarginBottom * 2)};
-  margin-right: -${presets.gutter.default};
+  margin-right: -${gutter.default};
 
-  ${presets.Phablet} {
+  ${mq.phablet} {
     display: none;
   }
 `
@@ -20,8 +20,16 @@ const Image = styled(Img)`
 const ImageDesktop = styled(Image)`
   display: none;
 
-  ${presets.Phablet} {
+  ${mq.phablet} {
     display: block;
+  }
+
+  ${mq.tablet} {
+    margin-right: -${gutter.tablet};
+  }
+
+  ${mq.desktop} {
+    margin-right: -${gutter.desktop};
   }
 `
 

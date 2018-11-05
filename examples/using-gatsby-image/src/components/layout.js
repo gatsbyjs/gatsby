@@ -5,9 +5,7 @@ import styled from "react-emotion"
 import Navigation from "./navigation"
 import { rhythm } from "../utils/typography"
 import logo from "../images/monogram.svg"
-import presets from "../utils/presets"
-
-const { gutter } = presets
+import { mq, elevation, offset, offsetXxl, gutter } from "../utils/presets"
 
 const Container = styled(`div`)`
   background: #fff;
@@ -15,40 +13,41 @@ const Container = styled(`div`)`
   padding: ${gutter.default};
   position: relative;
 
-  ${presets.Tablet} {
+  ${mq.tablet} {
     background: #fff;
-    margin-left: ${presets.offset};
+    margin-left: ${offset};
     margin-top: 0;
-    max-width: 600px;
+    max-width: 37.5rem;
     padding: ${gutter.tablet};
     position: relative;
   }
 
-  ${presets.Desktop} {
-    padding: ${presets.gutter.desktop};
+  ${mq.desktop} {
+    padding: ${gutter.desktop};
+    padding-top: ${gutter.tablet};
   }
 
-  ${presets.Xxl} {
-    margin-left: ${presets.offsetXxl};
+  ${mq.xxl} {
+    margin-left: ${offsetXxl};
   }
 `
 
 const Image = styled(Img)`
   bottom: 33vh;
-  left: ${presets.gutter.default};
-  right: ${presets.gutter.default};
-  top: ${presets.gutter.default};
+  left: ${gutter.default};
+  right: ${gutter.default};
+  top: ${gutter.default};
 
-  ${presets.Tablet} {
+  ${mq.tablet} {
     bottom: 0;
     left: 0;
     right: auto;
     top: 0;
-    width: ${presets.offset};
+    width: ${offset};
   }
 
-  ${presets.Xxl} {
-    width: ${presets.offsetXxl};
+  ${mq.xxl} {
+    width: ${offsetXxl};
   }
 `
 
@@ -56,7 +55,7 @@ const Main = styled(`main`)`
   background: #fff;
   padding-top: ${gutter.default};
   position: relative;
-  z-index: ${presets.zIndex.overlay};
+  z-index: ${elevation.overlay};
 `
 
 const LogoLink = styled(`a`)`
@@ -71,11 +70,11 @@ const LogoLink = styled(`a`)`
     background: transparent;
   }
 
-  ${presets.Tablet} {
+  ${mq.tablet} {
     bottom: ${gutter.tablet};
     left: ${gutter.tablet};
     top: auto;
-    z-index: ${presets.zIndex.overlay + 1};
+    z-index: ${elevation.overlay + 1};
   },
 `
 
@@ -100,22 +99,29 @@ const Layout = ({ children, image, imageTitle, imageBackgroundColor }) => (
     <Navigation />
     <Main>
       {children}
-      <h2>Documentation</h2>
+      <h2>Documentation & related links</h2>
       <ul>
         <li>
           See the
           {` `}
           <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
-            project README for documentation
+            <code>gatsby-image</code> project README
           </a>
-          {` `}
-          on using the plugin.
+          {` `} for documentation on using the plugin
         </li>
         <li>
           Read the docs on
-          {` `}
+          {` `}“
           <a href="https://www.gatsbyjs.org/docs/using-gatsby-image/">
-            using gatsby-image to prevent image bloat
+            Using gatsby-image to prevent image bloat
+          </a>
+          ”
+        </li>
+        <li>
+          View the <code>gatsby-transformer-sharp</code> example at
+          {` `}
+          <a href="https://image-processing.gatsbyjs.org/">
+            <code>image-processing.gatsbyjs.org</code>
           </a>
         </li>
       </ul>

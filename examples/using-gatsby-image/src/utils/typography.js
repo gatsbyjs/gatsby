@@ -25,7 +25,7 @@ const _options = {
   headerWeight: 700,
   boldWeight: 700,
   bodyColor: `#26222a`,
-  scaleRatio: 1.5,
+  scaleRatio: 1.25,
   accentColor: colors.gatsby,
   monospaceFontFamily: [
     `SFMono-Regular`,
@@ -37,21 +37,27 @@ const _options = {
     `monospace`,
   ],
   headerFontFamily: bodyFontFamily,
-  overrideStyles: ({ rhythm, scale }, options) => {
+  overrideStyles: ({ rhythm }, options) => {
     return {
       "h1, h2, h3, h4, h5, h6": {
         letterSpacing: `-.0125em`,
         marginTop: rhythm(2),
       },
       a: {
-        backgroundImage: `linear-gradient(to top, #e6d9f2, #e6d9f2 1px, rgba(0, 0, 0, 0) 2px)`,
+        backgroundImage: `linear-gradient(to top, ${colors.ui.bright}, ${
+          colors.ui.bright
+        } 1px, rgba(0, 0, 0, 0) 2px)`,
         color: colors.gatsby,
         fontWeight: `bold`,
         textDecoration: `none`,
         transition: `${animation.speedDefault} ${animation.curveDefault}`,
       },
       "a:hover": {
-        backgroundColor: `#e6d9f2`,
+        backgroundColor: colors.ui.light,
+      },
+      code: {
+        fontSize: `100%`,
+        fontFamily: options.monospaceFontFamily.join(`,`),
       },
     }
   },
