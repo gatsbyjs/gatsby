@@ -18,10 +18,10 @@ beforeEach(() => {
 
 describe('404', () => {
   it('contains NOT FOUND text', () => {
-    const { getByTestId } = render(<FourOhFour />)
+    const { getByText } = render(<FourOhFour />)
 
-    const el = getByTestId('not-found')
+    const el = getByText('NOT FOUND')
 
-    expect(el).toHaveTextContent('NOT FOUND')
+    expect(el).toBeInTheDocument()
   })
 })

@@ -39,10 +39,10 @@ describe('Index', () => {
   })
 
   it('contains a greeting', () => {
-    const { getByTestId } = render(<Index />)
+    const { getByText } = render(<Index />)
 
-    const greeting = getByTestId('greeting')
+    const greeting = getByText('Hi people')
 
-    expect(greeting).toHaveTextContent('Hi people')
+    expect(greeting).toBeInTheDocument()
   })
 })

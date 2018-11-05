@@ -18,10 +18,10 @@ beforeEach(() => {
 
 describe('Page Two', () => {
   it('contains NOT FOUND text', () => {
-    const { getByTestId } = render(<PageTwo />)
+    const { getByText } = render(<PageTwo />)
 
-    const el = getByTestId('page-2-welcome')
+    const el = getByText('Welcome to page 2')
 
-    expect(el).toHaveTextContent('Welcome to page 2')
+    expect(el).toBeInTheDocument()
   })
 })

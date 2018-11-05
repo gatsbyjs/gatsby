@@ -6,9 +6,9 @@ import Header from '../header'
 describe('Header', () => {
   it('renders siteTitle', () => {
     const siteTitle = 'Hello World'
-    const { getByTestId } = render(<Header siteTitle={siteTitle} />)
+    const { getByText } = render(<Header siteTitle={siteTitle} />)
 
-    const title = getByTestId('title')
+    const title = getByText(siteTitle)
 
     expect(title).toHaveTextContent(siteTitle)
   })

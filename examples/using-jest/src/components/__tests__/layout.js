@@ -20,7 +20,9 @@ describe('Layout', () => {
   it('renders a header', () => {
     const { container } = render(
       <Layout>
-        <h1>Hello</h1>
+        <main>
+          <h1>hello</h1>
+        </main>
       </Layout>
     )
 
@@ -28,14 +30,16 @@ describe('Layout', () => {
   })
 
   it('renders children', () => {
-    const text = `Hello world`
-    const { getByTestId } = render(
+    const text = `__Hello world__`
+    const { getByText } = render(
       <Layout>
-        <h1 data-testid="custom-child">{text}</h1>
+        <main>
+          <h1>{text}</h1>
+        </main>
       </Layout>
     )
 
-    const child = getByTestId('custom-child')
+    const child = getByText(text)
 
     expect(child).toHaveTextContent(text)
   })
