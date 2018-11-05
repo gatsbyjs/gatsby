@@ -286,5 +286,5 @@ For more information on Jest testing, visit
 
 For an example encapsulating all of these techniques--and a full unit test suite with [react-testing-library][react-testing-library], check out the [using-jest][using-jest] example.
 
-[using-jest]: examples/using-jest
+[using-jest]: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest
 [react-testing-library]: https://github.com/kentcdodds/react-testing-library
