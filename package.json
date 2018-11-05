@@ -54,7 +54,7 @@
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error --parallel lint:js lint:yaml",
-    "lint:js": "eslint --ext .js,.jsx packages/**/src integration-tests/**/src",
+    "lint:js": "eslint \"packages/*/src/**/*.js\" \"integration-tests/*/src/**/*.js\"",
     "lint:flow": "babel-node scripts/flow-check.js",
     "lint:yaml": "prettier --list-different \"**/*.y?(a)ml\"",
     "plop": "plop",
