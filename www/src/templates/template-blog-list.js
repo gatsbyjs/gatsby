@@ -116,6 +116,7 @@ export const pageQuery = graphql`
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/docs.blog/" }
+        fields: { released: { eq: true } }
       }
       limit: $limit
       skip: $skip
