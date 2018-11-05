@@ -2,9 +2,6 @@ import React, { Component } from "react"
 import queryString from "query-string"
 import { navigate } from "@reach/router"
 
-// manage your state entirely within the router, so that it's copiable
-// https://gist.github.com/sw-yx/efd9ee71669413bca6a895d87e30742f
-
 const emptySearchState = { s: ``, c: [], d: [], v: [], sort: `recent` }
 class RRSM extends React.Component {
   state = emptySearchState
@@ -46,7 +43,7 @@ class RRSM extends React.Component {
   }
 
   render() {
-    const { component: Component, ...otherProps } = this.props
+    const { wrappedComponent: Component, ...otherProps } = this.props
     return (
       <Component
         {...otherProps}

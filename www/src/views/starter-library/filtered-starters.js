@@ -28,8 +28,6 @@ export default class FilteredStarterLibrary extends Component {
     sitesToShow: 9,
   }
   setFiltersCategory = filtersCategory => {
-    console.log(`   setFiltersCategory`)
-    console.log(`   ~~ filtersCategory`, filtersCategory)
     this.props.setURLState({ c: Array.from(filtersCategory) })
   }
   setFiltersDependency = filtersDependency =>
@@ -45,7 +43,7 @@ export default class FilteredStarterLibrary extends Component {
   onChangeUrlWithText = e => this.props.setURLState({ s: e.target.value })
 
   render() {
-    const { data, urlState, setURLState } = this.props
+    const { data, urlState } = this.props
     const {
       setFiltersCategory,
       setFiltersDependency,

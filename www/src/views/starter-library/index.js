@@ -45,7 +45,7 @@ class StarterLibraryPage extends Component {
         <RRSM
           {...this.props}
           location={location}
-          component={FilteredStarters}
+          wrappedComponent={FilteredStarters}
           defaultSearchState={{ v: [`2`] }}
         />
       </Layout>
