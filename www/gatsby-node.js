@@ -9,6 +9,9 @@ const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
+const moment = require(`moment`)
+
+let ecosystemFeaturedItems
 
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -108,6 +111,18 @@ exports.createPages = ({ graphql, actions }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/add-a-service-worker`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/add-offline-support`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -130,91 +145,98 @@ exports.createPages = ({ graphql, actions }) => {
     )
 
     // Query for markdown nodes to use in creating pages.
-    graphql(
-      `
-        query {
-          allMarkdownRemark(
-            sort: { order: DESC, fields: [frontmatter___date] }
-            limit: 10000
-            filter: { fileAbsolutePath: { ne: null } }
-          ) {
-            edges {
-              node {
-                fields {
-                  slug
-                  package
-                }
-                frontmatter {
-                  title
-                  draft
-                  canonicalLink
-                  publishedAt
-                  tags
-                }
-              }
-            }
-          }
-          allAuthorYaml {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-          allCreatorsYaml {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-          allSitesYaml(filter: { main_url: { ne: null } }) {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-          allStartersYaml {
-            edges {
-              node {
-                id
-                fields {
-                  starterShowcase {
-                    slug
-                    stub
-                  }
-                }
-                url
-                repo
-              }
-            }
-          }
-          allNpmPackage {
-            edges {
-              node {
-                id
-                title
+    graphql(`
+      query {
+        allMarkdownRemark(
+          sort: { order: DESC, fields: [frontmatter___date] }
+          limit: 10000
+          filter: { fileAbsolutePath: { ne: null } }
+        ) {
+          edges {
+            node {
+              fields {
                 slug
-                readme {
+                package
+                released
+              }
+              frontmatter {
+                title
+                draft
+                canonicalLink
+                publishedAt
+                tags
+              }
+            }
+          }
+        }
+        allAuthorYaml {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allCreatorsYaml {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allSitesYaml(filter: { main_url: { ne: null } }) {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allStartersYaml {
+          edges {
+            node {
+              id
+              fields {
+                starterShowcase {
+                  slug
+                  stub
+                }
+              }
+              url
+              repo
+            }
+          }
+        }
+        allNpmPackage {
+          edges {
+            node {
+              id
+              title
+              slug
+              readme {
+                id
+                childMarkdownRemark {
                   id
-                  childMarkdownRemark {
-                    id
-                    html
-                  }
+                  html
                 }
               }
             }
           }
         }
-      `
-    ).then(result => {
+        allEcosystemYaml {
+          edges {
+            node {
+              starters
+              plugins
+            }
+          }
+        }
+      }
+    `).then(result => {
       if (result.errors) {
         return reject(result.errors)
       }
@@ -231,9 +253,13 @@ exports.createPages = ({ graphql, actions }) => {
         return undefined
       })
 
+      const releasedBlogPosts = blogPosts.filter(post =>
+        _.get(post, `node.fields.released`)
+      )
+
       // Create blog-list pages.
       const postsPerPage = 8
-      const numPages = Math.ceil(blogPosts.length / postsPerPage)
+      const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
 
       Array.from({ length: numPages }).forEach((_, i) => {
         createPage({
@@ -250,7 +276,9 @@ exports.createPages = ({ graphql, actions }) => {
 
       // Create blog-post pages.
       blogPosts.forEach((edge, index) => {
-        const next = index === 0 ? null : blogPosts[index - 1].node
+        let next = index === 0 ? null : blogPosts[index - 1].node
+        if (next && !_.get(next, `fields.released`)) next = null
+
         const prev =
           index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
 
@@ -265,7 +293,7 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
-      const tagLists = blogPosts
+      const tagLists = releasedBlogPosts
         .filter(post => _.get(post, `node.frontmatter.tags`))
         .map(post => _.get(post, `node.frontmatter.tags`))
 
@@ -381,12 +409,15 @@ exports.createPages = ({ graphql, actions }) => {
         }
       })
 
+      // Read featured starters and plugins for Ecosystem
+      ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
+
       return resolve()
     })
   })
 }
 
-// Create slugs for files.
+// Create slugs for files, set released status for blog posts.
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
@@ -418,6 +449,16 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         slug = `/${parsedFilePath.name}/`
       } else {
         slug = `/${parsedFilePath.dir}/`
+      }
+
+      // Set released status for blog posts.
+      if (_.includes(parsedFilePath.dir, `blog`)) {
+        let released = false
+        const date = _.get(node, `frontmatter.date`)
+        if (date) {
+          released = moment().isSameOrAfter(moment.utc(date))
+        }
+        createNodeField({ node, name: `released`, value: released })
       }
     }
     // Add slugs for package READMEs.
@@ -578,6 +619,20 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     createNodeField({ node, name: `slug`, value: slug })
   }
   // end Community/Creators Pages
+}
+
+exports.onCreatePage = ({ page, actions }) => {
+  // add lists of featured items to Ecosystem page
+  if (page.path === `/ecosystem/`) {
+    const { createPage, deletePage } = actions
+    const oldPage = Object.assign({}, page)
+
+    page.context.featuredStarters = ecosystemFeaturedItems.starters
+    page.context.featuredPlugins = ecosystemFeaturedItems.plugins
+
+    deletePage(oldPage)
+    createPage(page)
+  }
 }
 
 exports.onPostBuild = () => {

@@ -40,7 +40,7 @@ describe(`Track root nodes`, () => {
   `
   require(`fs`).__setMockFiles(MOCK_FILE_INFO)
 
-  const { getNode, getNodes } = require(`../../redux`)
+  const { getNode, getNodes } = require(`../../db/nodes`)
   const { findRootNodeAncestor } = require(`../node-tracking`)
   const runSift = require(`../run-sift`)
   const buildNodeTypes = require(`../build-node-types`)
@@ -116,16 +116,12 @@ describe(`Track root nodes`, () => {
         args: {},
         nodes,
         type,
-        connection: true,
+        firstOnly: false,
       })
 
-      expect(result.edges.length).toEqual(2)
-      expect(findRootNodeAncestor(result.edges[0].node.inlineObject)).toEqual(
-        result.edges[0].node
-      )
-      expect(findRootNodeAncestor(result.edges[1].node.inlineObject)).toEqual(
-        result.edges[1].node
-      )
+      expect(result.length).toEqual(2)
+      expect(findRootNodeAncestor(result[0].inlineObject)).toEqual(result[0])
+      expect(findRootNodeAncestor(result[1].inlineObject)).toEqual(result[1])
     })
 
     it(`Tracks objects when running query with filter`, async () => {
@@ -141,13 +137,11 @@ describe(`Track root nodes`, () => {
         },
         nodes,
         type,
-        connection: true,
+        firstOnly: false,
       })
 
-      expect(result.edges.length).toEqual(1)
-      expect(findRootNodeAncestor(result.edges[0].node.inlineObject)).toEqual(
-        result.edges[0].node
-      )
+      expect(result.length).toEqual(1)
+      expect(findRootNodeAncestor(result[0].inlineObject)).toEqual(result[0])
     })
   })
 })

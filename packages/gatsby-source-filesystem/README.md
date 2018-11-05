@@ -175,6 +175,10 @@ createRemoteFileNode({
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
   auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
+
+  // OPTIONAL
+  // Sets the file extension
+  ext: '.jpg',
 })
 ```
 
@@ -222,3 +226,20 @@ exports.downloadMediaFiles = ({
 ```
 
 The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
+
+#### Retrieving the remote file extension
+
+The helper tries first to retrieve the file extension by parsing the url and the path provided (e.g. if the url is https://example.com/image.jpg, the extension will be inferred as `.jpg`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the extension _can_ be explicitly passed, like so:
+
+```javascript
+createRemoteFileNode({
+  // The source url of the remote file
+  url: `https://example.com/a-file-without-an-extension`,
+  store,
+  cache,
+  createNode,
+  createNodeId,
+  // if necessary!
+  ext: '.jpg',
+})
+```

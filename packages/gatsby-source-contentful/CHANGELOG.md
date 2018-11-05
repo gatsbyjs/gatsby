@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.11"></a>
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.10...gatsby-source-contentful@2.0.11) (2018-11-05)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.9...gatsby-source-contentful@2.0.10) (2018-11-01)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.8...gatsby-source-contentful@2.0.9) (2018-10-29)
+
+### Features
+
+- **gatsby:** Add nodes db module ([#9416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/9416)) ([7d31fe7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/7d31fe7)), closes [#9338](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/9338)
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.7...gatsby-source-contentful@2.0.8) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.6...gatsby-source-contentful@2.0.7) (2018-10-29)
+
+### Features
+
+- **gatsby-source-contentful:** adds CENTER option to ImageCropFocusType ([#9473](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/9473)) ([cc8c60d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/cc8c60d))
+
 <a name="2.0.6"></a>
 
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.5...gatsby-source-contentful@2.0.6) (2018-10-24)

@@ -9,13 +9,19 @@ self.addEventListener(`message`, event => {
     event.waitUntil(
       caches.open(cacheName).then(cache =>
         Promise.all(
-          resources.map(resource =>
-            cache.add(resource).catch(e => {
-              // ignore TypeErrors - these are usually due to
-              // external resources which don't allow CORS
-              if (!(e instanceof TypeError)) throw e
-            })
-          )
+          resources.map(resource => {
+            let request
+
+            // Some external resources don't allow
+            // CORS so get an opaque response
+            if (resource.match(/^https?:/)) {
+              request = fetch(resource, { mode: `no-cors` })
+            } else {
+              request = fetch(resource)
+            }
+
+            return request.then(response => cache.put(resource, response))
+          })
         )
       )
     )
