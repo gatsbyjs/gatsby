@@ -1,5 +1,3 @@
-const path = require(`path`)
-
 const validatePath = require(`../validate-path`)
 const createPath = require(`../create-path`)
 
@@ -93,21 +91,18 @@ describe(`JavaScript page creator`, () => {
   it(`filters out test files`, () => {
     const validFiles = [{ path: `page.js` }, { path: `page.jsx` }]
 
-    const testFiles = validFiles
-      .concat([
-        { path: `src/pages/__tests__/something.test.js` },
-        { path: `src/pages/__tests__/something.test.tsx` },
-        { path: `src/pages/__tests__/something.js` },
-        { path: `src/pages/__tests__/nested-directory/something.js` },
-        { path: `src/pages/foo.spec.js` },
-        { path: `src/pages/foo.spec.tsx` },
-        { path: `src/pages/bar.test.js` },
-        { path: `src/pages/bar.test.tsx` },
-      ])
-      .map(file => {
-        file.path = path.join(...file.path.split(`/`))
-        return file
-      })
+    const testFiles = validFiles.concat([
+      { path: `src/pages/__tests__/something.test.js` },
+      { path: `src/pages/__tests__/something.test.tsx` },
+      { path: `src/pages/__tests__/something.js` },
+      { path: `src/pages/__tests__/nested-directory/something.js` },
+      { path: `src/pages/foo.spec.js` },
+      { path: `src/pages/foo.spec.tsx` },
+      { path: `src/pages/bar.test.js` },
+      { path: `src/pages/bar.test.tsx` },
+      { path: `src\\pages\\bar.test.js` },
+      { path: `src\\pages\\__tests__\\nested-directory\\something.js` },
+    ])
 
     expect(testFiles.filter(file => validatePath(file.path))).toEqual(
       validFiles
