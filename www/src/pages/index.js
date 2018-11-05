@@ -74,7 +74,7 @@ class IndexRoute extends React.Component {
                       {` `}
                       <TechWithIcon icon={WebpackIcon}>Webpack</TechWithIcon>,
                       {` `}
-                      modern JavaScript and CSS and more — all setup and waiting
+                      modern JavaScript and CSS and more — all set up and waiting
                       for you to start building.
                     </FuturaParagraph>
                   </Card>
@@ -245,6 +245,7 @@ export const pageQuery = graphql`
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/docs.blog/" }
+        fields: { released: { eq: true } }
       }
     ) {
       edges {

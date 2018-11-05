@@ -139,7 +139,7 @@ const fetch = require("node-fetch")
 const queryString = require("query-string")
 ```
 
-Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`actions`, `createNodeId` and `createContentDigest`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. Gatsby expects sourceNodes to return either a promise or a callback (3rd parameter). This is important as it tells Gatsby to wait to move on to next stages until your nodes are sourced, ensuring your nodes are created before the schema is generated.
 
 ```js
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {

@@ -89,10 +89,7 @@ But at a high-level, these are the jobs of a source plugin:
 - "Link" nodes types you create as appropriate (see
   [_Node Link_](/docs/api-specification/) in the API specification concepts
   section.
-- Return either a promise or use the callback (3rd parameter) to report back to
-  Gatsby when you're done sourcing nodes. Otherwise either Gatsby will continue
-  on before you're done sourcing or hang while waiting for you to indicate
-  you're finished.
+- Return either a promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Your nodes might not end up in the generated schema at compilation, or the process will hang while waiting for an indication that it's finished.
 
 [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers),
 a community-made NPM package, can help when writing source plugins. This

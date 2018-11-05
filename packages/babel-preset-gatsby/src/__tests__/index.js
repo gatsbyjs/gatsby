@@ -9,10 +9,10 @@ it(`Specifies proper presets and plugins for test stage`, () => {
       expect.stringContaining(path.join(`@babel`, `preset-env`)),
       {
         loose: true,
-        modules: false,
+        modules: `commonjs`,
         useBuiltIns: `usage`,
         targets: {
-          browsers: undefined,
+          node: `current`,
         },
       },
     ],
