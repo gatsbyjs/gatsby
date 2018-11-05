@@ -26,8 +26,7 @@ npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy 'b
 ```
 
 Because Gatsby handles its own Babel configuration, you will need to manually
-tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.config.js`. You can set up some useful defaults at the same
-time:
+tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.config.js`. You can set up some useful defaults at the same time:
 
 ```json:title=jest.config.js
 module.exports = {
@@ -122,11 +121,47 @@ needed at first, but will make things a lot easier if you want to test
 components that use `Link` or GraphQL.
 
 ```js:title=__mocks__/gatsby.js
+const React = require("react")
 const gatsby = jest.requireActual("gatsby")
-module.exports = { ...gatsby, graphql: jest.fn(), Link: "Link" }
+
+module.exports = {
+  ...gatsby,
+  graphql: jest.fn(),
+  Link: jest.fn().mockImplementation(({ to, ...rest }) =>
+    React.createElement("a", {
+      ...rest,
+      href: to,
+    })
+  ),
+  StaticQuery: jest.fn(),
+}
 ```
 
-This mocks the `graphql()` function and `Link` component.
+This mocks the `graphql()` function, `Link` component, and `StaticQuery` component.
+
+One more issue that you may encounter is that some components expect to be able
+to use the `location` prop that is passed in by `Router`. You can fix this by
+manually passing in the prop:
+
+```js:title=src/__tests__/index.js
+import React from "react"
+import renderer from "react-test-renderer"
+import BlogIndex from "../pages/index"
+
+describe("BlogIndex", () => {
+  it("renders correctly", () => {
+    const location = {
+      pathname: "/",
+    }
+
+    const tree = renderer.create(<BlogIndex location={location} />).toJSON()
+    expect(tree).toMatchSnapshot()
+  }))
+})
+```
+
+For more information on testing page components, be sure to read the docs on
+[testing components with GraphQL](/docs/testing-components-with-graphql/)
 
 ## Writing tests
 
@@ -239,66 +274,6 @@ module.exports = {
 }
 ```
 
-## Testing components with Router
-
-When you test components they are not in a `Router`, meaning they don't have
-access to some context and props that they may be expecting. The most common of
-these is the `Link` component. In the example above we mock the `Link` component
-as a string, which is the simplest solution and works for most uses. However
-sometimes you might want to test with the real `Link` component. As of v2,
-Gatsby uses `@reach/router` for navigation, which is good at handling test
-environments, and unlike React Router is happy to render `Link`s outside of a
-`Router` context. However there is a small issue related to the `gatsby` mock.
-We can use a small workaround to avoid an error.
-
-First, remove the `Link` mock from `gatsby`:
-
-```js:title=__mocks__/gatsby.js
-const React = require("react")
-const gatsby = jest.requireActual("gatsby")
-
-module.exports = {
-  ...gatsby,
-  graphql: jest.fn(),
-  Link: jest.fn().mockImplementation(({ to, ...rest }) =>
-    React.createElement("a", {
-      ...rest,
-      href: to,
-    })
-  ),
-  StaticQuery: jest.fn(),
-}
-```
-
-While the `Link` component is exported by the main `gatsby` package, it is
-actually defined in `gatsby-link`. That in turn uses `parsePath()` from
-`gatsby`, which causes module resolution issues. Fortunately it's an easy fix.
-You need to create a mock for `Link`, so that we can mimic the functionality of `gatsby-link` while maintaining the benefits of making it easily unit testable.
-
-One more issue that you may encounter is that some components expect to be able
-to use the `location` prop that is passed in by `Router`. You can fix this by
-manually passing in the prop:
-
-```js:title=src/__tests__/index.js
-import React from "react"
-import renderer from "react-test-renderer"
-import BlogIndex from "../pages/index"
-
-describe("BlogIndex", () => {
-  it("renders correctly", () => {
-    const location = {
-      pathname: "/",
-    }
-
-    const tree = renderer.create(<BlogIndex location={location} />).toJSON()
-    expect(tree).toMatchSnapshot()
-  }))
-})
-```
-
-For more information on testing page components, be sure to read the docs on
-[testing components with GraphQL](/docs/testing-components-with-graphql/)
-
 ## Other resources
 
 If you need to make changes to your Babel config, you can edit the config in
@@ -308,3 +283,8 @@ though remember you may need to install the Babel 7 versions. See
 
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).
+
+For an example encapsulating all of these techniques--and a full unit test suite with [react-testing-library][react-testing-library], check out the [using-jest][using-jest] example.
+
+[using-jest]: examples/using-jest
+[react-testing-library]: https://github.com/kentcdodds/react-testing-library
