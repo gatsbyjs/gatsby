@@ -74,7 +74,7 @@ class IndexRoute extends React.Component {
                       {` `}
                       <TechWithIcon icon={WebpackIcon}>Webpack</TechWithIcon>,
                       {` `}
-                      modern JavaScript and CSS and more — all setup and waiting
+                      modern JavaScript and CSS and more — all set up and waiting
                       for you to start building.
                     </FuturaParagraph>
                   </Card>
@@ -84,7 +84,7 @@ class IndexRoute extends React.Component {
                       Gatsby’s rich data plugin ecosystem lets you build sites
                       with the data you want — from one or many sources: Pull
                       data from headless CMSs, SaaS services, APIs, databases,
-                      your file system & more directly into your pages using
+                      your file system, and more directly into your pages using
                       {` `}
                       <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>.
                     </FuturaParagraph>

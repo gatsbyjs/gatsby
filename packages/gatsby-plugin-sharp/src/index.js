@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminMozjpeg = require(`imagemin-mozjpeg`)
@@ -369,10 +369,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.name}-${
-    file.internal.contentDigest
-  }-${argsDigestShort}.${fileExtension}`
-  const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
+  const imgSrc = `/${file.name}.${fileExtension}`
+  const dirPath = path.join(
+    process.cwd(),
+    `public`,
+    `static`,
+    file.internal.contentDigest,
+    argsDigestShort
+  )
+  const filePath = path.join(dirPath, imgSrc)
+  fs.ensureDirSync(dirPath)
 
   // Create function to call when the image is finished.
   let outsideResolve, outsideReject
@@ -421,7 +427,8 @@ function queueImageResizing({ file, args = {}, reporter }) {
   queueJob(job, reporter)
 
   // Prefix the image src.
-  const prefixedSrc = options.pathPrefix + `/static` + imgSrc
+  const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
+  const prefixedSrc = options.pathPrefix + `/static/${digestDirPrefix}` + imgSrc
 
   return {
     src: prefixedSrc,

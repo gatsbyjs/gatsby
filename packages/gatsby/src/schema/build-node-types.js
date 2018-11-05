@@ -17,7 +17,12 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
-const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
+const {
+  getNodes,
+  getNodesByType,
+  getNode,
+  getNodeAndSavePathDependency,
+} = require(`../db/nodes`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
@@ -187,7 +192,8 @@ module.exports = async ({ parentSpan }) => {
         name: typeName,
         type: gqlType,
         args: filterFields,
-        resolve(a, args, context) {
+        async resolve(a, args, context) {
+          const path = context.path ? context.path : ``
           const runSift = require(`./run-sift`)
           let latestNodes
           if (
@@ -196,26 +202,33 @@ module.exports = async ({ parentSpan }) => {
           ) {
             latestNodes = nodesCache.get(typeName)
           } else {
-            latestNodes = _.filter(
-              getNodes(),
-              n => n.internal.type === typeName
-            )
+            latestNodes = getNodesByType(typeName)
             nodesCache.set(typeName, latestNodes)
           }
           if (!_.isObject(args)) {
             args = {}
           }
-          return runSift({
+
+          const results = await runSift({
             args: {
               filter: {
                 ...args,
               },
             },
             nodes: latestNodes,
-            path: context.path ? context.path : ``,
+            firstOnly: true,
             typeName: typeName,
             type: gqlType,
           })
+
+          if (results.length > 0) {
+            const result = results[0]
+            const nodeId = result.id
+            createPageDependency({ path, nodeId })
+            return result
+          } else {
+            return null
+          }
         },
       },
     }
