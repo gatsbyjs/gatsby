@@ -10,6 +10,6 @@ describe('Header', () => {
 
     const title = getByText(siteTitle)
 
-    expect(title).toHaveTextContent(siteTitle)
+    expect(title).toBeInTheDocument()
   })
 })

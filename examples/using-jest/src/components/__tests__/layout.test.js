@@ -41,6 +41,6 @@ describe('Layout', () => {
 
     const child = getByText(text)
 
-    expect(child).toHaveTextContent(text)
+    expect(child).toBeInTheDocument()
   })
 })
