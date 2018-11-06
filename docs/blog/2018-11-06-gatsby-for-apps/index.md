@@ -206,6 +206,7 @@ I hope you check out the [Github repo][gatsby-mail-repo] to learn more about how
 [react-context]: https://reactjs.org/docs/context.html
 [gatsby-plugin-offline]: /packages/gatsby-plugin-offline/
 [gatsby-plugin-sharp]: /packages/gatsby-plugin-sharp/
+[gatsby-transformer-yaml]: /packages/gatsby-transformer-yaml/
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 [gatsby-mail-app]: https://gatsby-mail.netlify.com
 [gatsby-mail-repo]: https://github.com/dschau/gatsby-mail
