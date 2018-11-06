@@ -146,13 +146,3 @@ exports.onCreateWebpackConfig = (
     webpack(config).run()
   }
 }
-
-exports.onPostBuild = ({ actions }, { publicPath = `admin` }) => {
-  const { createRedirect } = actions
-
-  createRedirect({
-    fromPath: `/${publicPath}`,
-    toPath: `/${publicPath}/`,
-    isPermanent: true,
-  })
-}

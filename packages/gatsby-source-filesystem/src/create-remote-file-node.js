@@ -4,6 +4,8 @@ const crypto = require(`crypto`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
+const readChunk = require(`read-chunk`)
+const fileType = require(`file-type`)
 
 const { createFileNode } = require(`./create-file-node`)
 const { getRemoteFileExtension } = require(`./utils`)
@@ -128,10 +130,9 @@ async function pushToQueue(task, cb) {
  * @param  {String}   url
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
- * @param  {String}   filename
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename, filename) =>
+const requestRemoteNode = (url, headers, tmpFilename) =>
   new Promise((resolve, reject) => {
     const responseStream = got.stream(url, {
       ...headers,
@@ -174,6 +175,7 @@ async function processRemoteNode({
   createNode,
   auth = {},
   createNodeId,
+  ext,
 }) {
   // Ensure our cache directory exists.
   const programDir = store.getState().program.directory
@@ -196,22 +198,27 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
-  const ext = getRemoteFileExtension(url)
+  if (!ext) {
+    ext = getRemoteFileExtension(url)
+  }
 
   const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
-  const filename = createFilePath(programDir, digest, ext)
 
   // Fetch the file.
   try {
-    const response = await requestRemoteNode(
-      url,
-      headers,
-      tmpFilename,
-      filename
-    )
+    const response = await requestRemoteNode(url, headers, tmpFilename)
     // Save the response headers for future requests.
-    cache.set(cacheId(url), response.headers)
+    await cache.set(cacheId(url), response.headers)
 
+    // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
+    if (ext === ``) {
+      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
+      const filetype = fileType(buffer)
+      if (filetype) {
+        ext = `.${filetype.ext}`
+      }
+    }
+    const filename = createFilePath(programDir, digest, ext)
     // If the status code is 200, move the piped temp file to the real name.
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
@@ -283,6 +290,7 @@ module.exports = ({
   createNode,
   auth = {},
   createNodeId,
+  ext = null,
 }) => {
   // Check if we already requested node for this remote file
   // and return stored promise if we did.
@@ -303,5 +311,6 @@ module.exports = ({
     createNode,
     createNodeId,
     auth,
+    ext,
   }))
 }

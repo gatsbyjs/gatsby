@@ -167,7 +167,7 @@
     - Netlify CMS
   features:
     - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
-- url: https://jaxx2104.github.io/gatsby-starter-bootstrap/
+- url: https://gatstrap.netlify.com/
   repo: https://github.com/jaxx2104/gatsby-starter-bootstrap
   description: n/a
   tags:
@@ -457,7 +457,7 @@
     - Offline Support, WebApp Manifest, SEO
     - Automatic Favicons
     - Typography.js
-- url: https://gatsby-starter-modern-url.netlify.com/
+- url: https://gatsby-starter-modern-demo.netlify.com/
   repo: https://github.com/kripod/gatsby-starter-modern
   description: no description yet
   tags:
@@ -1111,3 +1111,28 @@
     - Ready to deploy to Github pages
     - Automatic RSS generation
     - Automatic Sitemap generation
+- url: https://gatsby-starter-kentico-cloud.netlify.com/
+  repo: https://github.com/Kentico/gatsby-starter-kentico-cloud
+  description: Gatsby starter site with Kentico Cloud
+  tags:
+    - Kentico Cloud
+    - Headless CMS
+  features:
+    - Gatsby v2 support
+    - Content item <-> content type relationships
+    - Language variants relationships
+    - Modular content elements relationships
+    - Modular content relationships in rich text
+    - Reverse link relationships
+- url: https://gatsby-starter-storybook.netlify.com/
+  repo: https://github.com/markoradak/gatsby-starter-storybook
+  description: Gatsby starter site with Storybook
+  tags:
+    - Storybook
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Gatsby v2 support
+    - Storybook v4 support
+    - Styled Components v4 support
+    - Styled Reset, ESLint, Netlify Conf

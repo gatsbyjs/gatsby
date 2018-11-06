@@ -14,9 +14,9 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 This documentation page covers the _how_ of migrating from v1 to v2. The _why_ is covered in various blog posts:
 
-* [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
-* [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
-* [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
+- [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
+- [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
+- [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
 
 ## What we'll cover
 
@@ -672,6 +672,79 @@ export default ({ children }) => (
     {children}
   </div>
 )
+```
+
+The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader#options).
+
+For vanilla CSS without a preprocessor:
+
+```javascript:title=gatsby-node.js
+const cssLoaderRe = /\/css-loader\//
+const targetFile = `.module.css`
+
+const processRule = rule => {
+  if (rule.oneOf) {
+    return {
+      ...rule,
+      oneOf: rule.oneOf.map(processRule),
+    }
+  }
+
+  if (!rule.test.test(targetFile)) {
+    return rule
+  }
+
+  if (Array.isArray(rule.use)) {
+    return {
+      ...rule,
+      use: rule.use.map(use => {
+        if (!cssLoaderRe.test(use.loader)) {
+          return use
+        }
+
+        // adjust css-loader options
+        return {
+          ...use,
+          options: {
+            ...use.options,
+            camelCase: false,
+          },
+        }
+      }),
+    }
+  }
+
+  return rule
+}
+
+exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
+  const config = getConfig()
+
+  const newConfig = {
+    ...config,
+    module: {
+      ...config.module,
+      rules: config.module.rules.map(processRule),
+    },
+  }
+  actions.replaceWebpackConfig(newConfig)
+}
+```
+
+If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/packages/gatsby-plugin-sass/README.md#how-to-use) or [`gatsby-plugin-less`](/packages/gatsby-plugin-less/README.md#how-to-use):
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      cssLoaderOptions: {
+        camelCase: false,
+      },
+    },
+  },
+]
 ```
 
 ### Update Jest configuration

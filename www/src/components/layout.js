@@ -1,6 +1,5 @@
 import React from "react"
 import Modal from "react-modal"
-import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
@@ -9,6 +8,7 @@ import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
+import SiteMetadata from "../components/site-metadata"
 
 import mousetrap from "mousetrap"
 
@@ -147,21 +147,7 @@ class DefaultLayout extends React.Component {
 
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
-        <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
-          />
-          <meta name="twitter:site" content="@gatsbyjs" />
-          <meta property="og:type" content="website" />
-          <meta property="og:site_name" content="GatsbyJS" />
-          <meta name="docsearch:version" content="2.0" />
-          <link
-            rel="canonical"
-            href={`https://gatsbyjs.org${this.props.location.pathname}`}
-          />
-          <html lang="en" />
-        </Helmet>
+        <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner background={isHomepage ? `#402060` : false}>
           These are the docs for v2.

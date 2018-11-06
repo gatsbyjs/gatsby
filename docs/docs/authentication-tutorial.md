@@ -183,7 +183,7 @@ At the beginning of this tutorial, you created a "default" Gatsby site, which in
 
 First, edit `gatsby-node.js`. You will define that any route that starts with `/app/` is part of your restricted content and the page will be created on demand:
 
-```javascript:title=gatsby-config.js
+```javascript:title=gatsby-node.js
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = async ({ page, actions }) => {

@@ -36,6 +36,8 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
+const nodesCache = new Map()
+
 /**
  * Filters a list of nodes using mongodb-like syntax.
  *
@@ -54,7 +56,14 @@ module.exports = ({ queryArgs, gqlType, firstOnly = false }: Object) => {
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
 
-  const nodes = getNodesByType(gqlType.name)
+  // this caching can be removed if we move to loki
+  let nodes
+  if (process.env.NODE_ENV === `production` && nodesCache.has(gqlType.name)) {
+    nodes = nodesCache.get(gqlType.name)
+  } else {
+    nodes = getNodesByType(gqlType.name)
+    nodesCache.set(gqlType.name, nodes)
+  }
 
   const siftifyArgs = object => {
     const newObject = {}

@@ -169,6 +169,10 @@
   avatar: avatars/nader-dabit.jpg
   twitter: "@dabit3"
   bio: Developer Advocate at AWS
+- id: Doug McDonald
+  avatar: avatars/doug-mcdonald.png
+  twitter: "@dougajmcdonald"
+  bio: Full stack web dev at bmt.org, I love creating ideas and finding solutions, find me @ dougmcdonald.co.uk
 - id: Michael Holtzman
   avatar: avatars/michael-holtzman.jpg
   twitter: "@mikelax"
