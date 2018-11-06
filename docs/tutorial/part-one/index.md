@@ -81,7 +81,7 @@ export default () => (
 
 4.  Add an image. (In this case, the Gatsby astronaut).
 
-```jsx{7}:title=src/pages/index.js
+```jsx{7-9}:title=src/pages/index.js
 import React from "react"
 
 export default () => (
