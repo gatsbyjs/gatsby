@@ -81,7 +81,7 @@ exports.createPagesStatefully = true
  * Extension point to tell plugins to source nodes. This API is called during
  * the Gatsby bootstrap sequence. Source plugins use this hook to create nodes.
  * This API is called exactly once per plugin (and once for your site's
- * `gatsby-config.js` file). If you define this hook in `gatsby-config.js` it
+ * `gatsby-config.js` file). If you define this hook in `gatsby-node.js` it
  * will be called exactly once after all of your source plugins have finished
  * creating nodes.
  *
