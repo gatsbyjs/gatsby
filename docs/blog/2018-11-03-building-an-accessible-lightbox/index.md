@@ -6,7 +6,7 @@ tags: ["lightbox", "gatsby-image", "accessibility"]
 canonicalLink: "https://416serg.me/building-a-custom-accessible-image-lightbox-in-gatsbyjs"
 ---
 
-In this tutorial we're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example is on [Github](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
+In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example is on [Github](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
 
 ## Getting started
 
@@ -37,15 +37,15 @@ Open up your favorite code editor and let's start setting stuff up.
 
 ## Gatsby Image
 
-Dealing with images on the web has always been an issue. You have to have the right sizes, you have to have the right formats, if something is too big, it will load slowly, etc. Luckily, Gatsby built a plugin to handle images elegantly called [`gatsby-image`](https://www.npmjs.com/package/gatsby-image). Using Gatsby's GraphQL queries, you can request different sizes, formats and have a few options as to how you want to handle the image load. For this tutorial we'll be using a blur up approach, similar to how Medium handles their images.
+Dealing with images on the web has always been an issue. You have to have the right sizes, you have to have the right formats, if something is too big, it will load slowly, etc. Luckily, Gatsby built a plugin to handle images elegantly called [`gatsby-image`](https://www.npmjs.com/package/gatsby-image). Using Gatsby's GraphQL queries, you can request different sizes, formats and have a few options as to how you want to handle the image load. For this tutorial you'll be using a blur up approach, similar to how Medium handles their images.
 
 If you open up the `index.js` file in the pages folder, you'll see there is an `<Image/>` component that does exactly that.
 
-We'll take a similar approach.
+You'll take a similar approach.
 
 ### Configure `gatsby-config.js`
 
-We'll put all of the images in a folder inside `src/cars` (You can get them from the [Github repo](https://github.com/416serg/GatsbyLightbox/tree/master/src/cars) or use your own, just make sure to follow a similar format). Then, we'll edit the `gatsby-config.js` file to expose that folder to a GraphQL query.
+You'll put all of the images in a folder inside `src/cars` (You can get them from the [Github repo](https://github.com/416serg/GatsbyLightbox/tree/master/src/cars) or use your own, just make sure to follow a similar format). Then, you'll edit the `gatsby-config.js` file to expose that folder to a GraphQL query.
 
 ```js
 {
@@ -61,9 +61,9 @@ Add that under the existing filesystem config and then restart your Gatsby serve
 
 ### Creating a `Cars` component
 
-Now that we have configured the filesystem, we can go ahead and create a component that will request all the images with a GraphQL query.
+Now that you have configured the filesystem, go ahead and create a component that will request all the images with a GraphQL query.
 
-Go ahead and create a new file inside `src/components` called `cars.js`.
+Create a new file inside `src/components` called `cars.js`.
 
 ```js
 import React from "react"
@@ -93,7 +93,7 @@ const Cars = () => (
 export default Cars
 ```
 
-Notice how the `StaticQuery` component is using a render prop where we're returning our `Lightbox` component. For now it's a simple component inside `components/lightbox.js` that looks like this:
+Notice how the `StaticQuery` component is using a render prop where it's returning our `Lightbox` component. For now, it's a simple component inside `components/lightbox.js` that looks like this:
 
 ```js
 import React, { Component } from "react"
@@ -121,11 +121,11 @@ export default class Lightbox extends Component {
 }
 ```
 
-By now, we should have all the images displaying on the home page and doing a fade-up load.
+By now, you should have all the images displaying on the home page and doing a fade-up load.
 
 ### Styled Components
 
-For styling, we're going to be using [styled-components](https://www.styled-components.com/). To get it configured with Gatsby, run the following inside your terminal in our application:
+For styling, you're going to be using [styled-components](https://www.styled-components.com/). To get it configured with Gatsby, run the following inside your terminal in your application:
 
 ```terminal
 $ yarn add gatsby-plugin-styled-components styled-components babel-plugin-styled-components
@@ -143,7 +143,7 @@ module.exports = {
 }
 ```
 
-Now, for the sake of consistency, lets restart the application. Now, we'll create a simple `LightboxContainer` styled component to wrap our images in. Your `lightbox.js` component should look like this now:
+Lets restart the application to make sure the config has taken its effect. Now, you're going to create a simple `LightboxContainer` styled component to wrap your images in. Your `lightbox.js` component should look like this now:
 
 ```js
 import React, { Component } from "react"
@@ -188,9 +188,9 @@ Now the page should look something like this:
 
 ### Creating the Lightbox
 
-For the sake of accessibility, we'll be using [Dialog](https://ui.reach.tech/dialog) from Reach UI - shout out to [Ryan Florence](https://github.com/ryanflorence) for making awesome, accessible tools for React. As a side note, Gatsby's router is using [`@reach/router`](https://reach.tech/router) under the hood, so we're keeping it in the family 😉
+For the sake of accessibility, you'll be using [Dialog](https://ui.reach.tech/dialog) from Reach UI - shout out to [Ryan Florence](https://github.com/ryanflorence) for making awesome, accessible tools for React. As a side note, Gatsby's router is using [`@reach/router`](https://reach.tech/router) under the hood, so you're keeping it in the family 😉
 
-Let's go ahead and install all the dependencies:
+Go ahead and install all the dependencies:
 
 ```terminal
 $ yarn add @reach/dialog
@@ -267,7 +267,7 @@ Now, when you click the `Show Dialog` button, you should see something like this
 
 ### Connecting the image click to the Lightbox
 
-Now, we're going to convert each `Img` component into a button that you can click that will trigger the lightbox to open up and the right image will be selected. Here's how we do that:
+Now, you're going to convert each `Img` component into a button that you can click that will trigger the lightbox to open up and the right image will be selected. Here's how you do that:
 
 ```js
 import React, { Component, Fragment } from "react"
