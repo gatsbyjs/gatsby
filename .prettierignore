@@ -9,6 +9,9 @@ examples/**/public
 integration-tests/**/public
 www/public
 
+# cache-dirs
+**/.cache
+
 # ignore built packages
 packages/*/*.js
 packages/gatsby/cache-dir/commonjs
