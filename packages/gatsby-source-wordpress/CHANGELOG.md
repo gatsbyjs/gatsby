@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.12"></a>
+
+## [3.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.11...gatsby-source-wordpress@3.0.12) (2018-11-05)
+
+### Features
+
+- **gatsby-source-wordpress:** allow users to obtain JWT Token to make authenticated requests ([#9509](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9509)) ([9177fc6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/9177fc6)), closes [#6879](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/6879)
+
+<a name="3.0.11"></a>
+
+## [3.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.10...gatsby-source-wordpress@3.0.11) (2018-11-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 <a name="3.0.10"></a>
 
 ## [3.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.9...gatsby-source-wordpress@3.0.10) (2018-10-29)

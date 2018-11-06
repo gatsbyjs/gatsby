@@ -19,21 +19,19 @@ const {
 const { nodeInterface } = require(`./node-interface`)
 const {
   getNodes,
-  getNodesByType,
   getNode,
   getNodeAndSavePathDependency,
 } = require(`../db/nodes`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
+const { runQuery } = require(`../db/nodes`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
 type TypeMap = {
   [typeName: string]: ProcessedNodeType,
 }
-
-const nodesCache = new Map()
 
 module.exports = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -192,32 +190,30 @@ module.exports = async ({ parentSpan }) => {
         name: typeName,
         type: gqlType,
         args: filterFields,
-        resolve(a, args, context) {
-          const runSift = require(`./run-sift`)
-          let latestNodes
-          if (
-            process.env.NODE_ENV === `production` &&
-            nodesCache.has(typeName)
-          ) {
-            latestNodes = nodesCache.get(typeName)
-          } else {
-            latestNodes = getNodesByType(typeName)
-            nodesCache.set(typeName, latestNodes)
+        async resolve(a, queryArgs, context) {
+          const path = context.path ? context.path : ``
+          if (!_.isObject(queryArgs)) {
+            queryArgs = {}
           }
-          if (!_.isObject(args)) {
-            args = {}
-          }
-          return runSift({
-            args: {
+
+          const results = await runQuery({
+            queryArgs: {
               filter: {
-                ...args,
+                ...queryArgs,
               },
             },
-            nodes: latestNodes,
-            path: context.path ? context.path : ``,
-            typeName: typeName,
-            type: gqlType,
+            firstOnly: true,
+            gqlType,
           })
+
+          if (results.length > 0) {
+            const result = results[0]
+            const nodeId = result.id
+            createPageDependency({ path, nodeId })
+            return result
+          } else {
+            return null
+          }
         },
       },
     }

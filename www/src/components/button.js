@@ -16,6 +16,7 @@ const Button = ({
   tag,
   large,
   small,
+  tiny,
   secondary,
   ...rest
 }) => {
@@ -31,9 +32,10 @@ const Button = ({
     "&&": {
       ...buttonStyles.default,
       ...overrideCSS,
-      ...(secondary && { ...buttonStyles.secondary }),
-      ...(large && { ...buttonStyles.large }),
-      ...(small && { ...buttonStyles.small }),
+      ...(secondary && buttonStyles.secondary),
+      ...(large && buttonStyles.large),
+      ...(small && buttonStyles.small),
+      ...(tiny && buttonStyles.tiny),
     },
   }
 

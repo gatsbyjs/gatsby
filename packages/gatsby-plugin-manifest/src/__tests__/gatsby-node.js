@@ -23,7 +23,7 @@ describe(`Test plugin manifest options`, () => {
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
     expect(contents).toMatchSnapshot()
   })
-  it(`fails on non existing icon`, (done) => {
+  it(`fails on non existing icon`, done => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
     onPostBootstrap([], {
       name: `GatsbyJS`,
@@ -33,13 +33,14 @@ describe(`Test plugin manifest options`, () => {
       theme_color: `#a2466c`,
       display: `minimal-ui`,
       icon: `non/existing/path`,
-      icons: [{
-        src: `icons/icon-48x48.png`,
-        sizes: `48x48`,
-        type: `image/png`,
-      }],
-    })
-    .catch((err) => {
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `48x48`,
+          type: `image/png`,
+        },
+      ],
+    }).catch(err => {
       expect(err).toMatchSnapshot()
       done()
     })

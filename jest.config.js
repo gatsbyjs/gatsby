@@ -1,6 +1,6 @@
 const path = require(`path`)
 const glob = require(`glob`)
-const fs = require("fs")
+const fs = require(`fs`)
 
 const pkgs = glob.sync(`./packages/*`).map(p => p.replace(/^\./, `<rootDir>`))
 

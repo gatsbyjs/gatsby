@@ -1,11 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled, { css } from "react-emotion"
+import styled from "react-emotion"
 
 import presets, { colors } from "../../utils/presets"
-import { rhythm, options, scale } from "../../utils/typography"
+import { rhythm, options } from "../../utils/typography"
 
-const PageHeadingContainer = styled("header")`
+const PageHeadingContainer = styled(`header`)`
   padding: ${rhythm(options.blockMarginBottom)};
 
   ${presets.Tablet} {
@@ -16,7 +16,7 @@ const PageHeadingContainer = styled("header")`
   }
 `
 
-const H1 = styled("h1")`
+const H1 = styled(`h1`)`
   align-items: center;
   color: ${colors.lilac};
   display: flex;
@@ -46,7 +46,7 @@ const H1 = styled("h1")`
   }
 `
 
-const Icon = styled("span")`
+const Icon = styled(`span`)`
   display: block;
   width: 36px;
   height: 32px;

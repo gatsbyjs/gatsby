@@ -8,7 +8,7 @@ const {
 } = require(`graphql`)
 const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 
-const runSift = require(`../run-sift`)
+const { runQuery } = require(`../../db/nodes`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 const buildConnectionFields = require(`../build-connection-fields`)
 const {
@@ -19,8 +19,15 @@ const {
   getExampleValues,
   clearTypeExampleValues,
 } = require(`../data-tree-utils`)
+const { connectionFromArray } = require(`graphql-skip-limit`)
+
+let mockNodes
+jest.unmock(`../../db/nodes`)
+const nodesDb = require(`../../db/nodes`)
+nodesDb.getNodesByType = () => mockNodes
 
 function queryResult(nodes, query, { types = [] } = {}) {
+  mockNodes = nodes
   const nodeType = new GraphQLObjectType({
     name: `Test`,
     fields: inferObjectStructureFromNodes({
@@ -62,13 +69,19 @@ function queryResult(nodes, query, { types = [] } = {}) {
                 }),
               },
             },
-            resolve(nvi, args) {
-              return runSift({
-                args,
-                nodes,
-                connection: true,
-                type: nodeType,
+            async resolve(nvi, queryArgs) {
+              const results = await runQuery({
+                queryArgs,
+                firstOnly: false,
+                gqlType: nodeType,
               })
+              if (results.length > 0) {
+                const connection = connectionFromArray(results, queryArgs)
+                connection.totalCount = results.length
+                return connection
+              } else {
+                return null
+              }
             },
           },
         }
@@ -984,5 +997,16 @@ describe(`filtering on linked nodes`, () => {
     )
 
     expect(getExampleValues({ typeName: `Linked_A` })).toEqual(originalNode)
+  })
+
+  it(`skips fields with missing nodes`, async () => {
+    const fields = inferInputObjectStructureFromNodes({
+      nodes: [],
+      exampleValue: {
+        movie___NODE: `foobar`,
+      },
+    }).inferredFields
+
+    expect(Object.keys(fields)).toHaveLength(0)
   })
 })
