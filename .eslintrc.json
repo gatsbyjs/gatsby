@@ -37,12 +37,9 @@
     "no-inner-declarations": "off",
     "prettier/prettier": "error",
     "quotes": ["error", "backtick"],
-    "react/prop-types": [
-      "error",
-      {
-        "ignore": ["children"]
-      }
-    ],
+    "react/display-name": "off",
+    "react/jsx-key": "warn",
+    "react/prop-types": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off"
   },
