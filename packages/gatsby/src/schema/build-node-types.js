@@ -161,7 +161,7 @@ module.exports = async ({ parentSpan }) => {
         name: typeName,
         type: gqlType,
         args: filterFields,
-        resolve: pageDependencyResolver(async (a, queryArgs, context) => {
+        resolve: pageDependencyResolver(async (a, queryArgs) => {
           if (!_.isObject(queryArgs)) {
             queryArgs = {}
           }

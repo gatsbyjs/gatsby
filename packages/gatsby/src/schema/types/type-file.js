@@ -160,7 +160,7 @@ function createType(fileNodeRootType, isArray) {
 
       // Find the linked File node(s)
       if (isArray) {
-        return fieldValue.map(relativePath => findLinkedFileNode(relativePath))
+        return fieldValue.map(findLinkedFileNode)
       } else {
         return findLinkedFileNode(fieldValue)
       }

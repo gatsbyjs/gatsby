@@ -38,10 +38,8 @@ function createPageDependency({ path, nodeId, connection }) {
 }
 
 /**
- * A Graphql resolver middleware that takes a resolver and wraps it in
- * a new one that calls the original. It then calls
- * `createPageDependency` using the returned returned node and the
- * context.path
+ * A Graphql resolver middleware that runs `resolver` and creates a
+ * page dependency with the returned node.
  *
  * @param resolver A graphql resolver. A function that take arguments
  * (node, args, context, info) and return a node
