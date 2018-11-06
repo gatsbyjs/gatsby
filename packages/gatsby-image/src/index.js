@@ -91,11 +91,13 @@ const noscriptImg = props => {
   const objectFit = props.objectFit
   const objectPosition = props.objectPosition
 
+  let styleStr = `position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:${objectFit};object-position:${objectPosition};`
+
   if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
-    return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:${objectFit};object-position:${objectPosition};font-family:'object-fit:${objectFit};object-position:${objectPosition};'"/></picture>`
-  } else {
-    return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:${objectFit};object-position:${objectPosition};"/></picture>`
+    styleStr += `font-family:'object-fit:${objectFit};object-position:${objectPosition};';`
   }
+
+  return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="${styleStr}"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
