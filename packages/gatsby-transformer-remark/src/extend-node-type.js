@@ -393,21 +393,25 @@ module.exports = (
 
             return html
           }
-          return getAST(markdownNode).then(ast => {
-            const excerptNodes = []
-            visit(ast, node => {
-              if (node.type === `text` || node.type === `inlineCode`) {
-                excerptNodes.push(node.value)
-              }
+
+          const markdownAST = await getAST(markdownNode)
+          const excerptNodes = []
+          const getExcerptString = () =>
+            excerptNodes.map(node => node.value).join(` `)
+          visit(markdownAST, node => {
+            if (getExcerptString().length > pruneLength) {
               return
-            })
-            if (!truncate) {
-              return prune(excerptNodes.join(` `), pruneLength, `…`)
             }
-            return _.truncate(excerptNodes.join(` `), {
-              length: pruneLength,
-              omission: `…`,
-            })
+            if (node.type === `text` || node.type === `inlineCode`) {
+              excerptNodes.push(node)
+            }
+          })
+          if (!truncate) {
+            return prune(getExcerptString(), pruneLength, `…`)
+          }
+          return _.truncate(getExcerptString(), {
+            length: pruneLength,
+            omission: `…`,
           })
         },
       },
