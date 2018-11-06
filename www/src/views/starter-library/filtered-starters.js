@@ -49,7 +49,7 @@ export default class FilteredStarterLibrary extends Component {
   onChangeUrlWithText = value => this.props.setURLState({ s: value })
 
   render() {
-    const { data, urlState, setURLState } = this.props
+    const { data, urlState } = this.props
     const {
       setFiltersCategory,
       setFiltersDependency,

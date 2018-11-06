@@ -4,7 +4,7 @@ import styled from "react-emotion"
 
 import EcosystemSection from "./ecosystem-section"
 
-import presets, { colors } from "../../utils/presets"
+import presets from "../../utils/presets"
 
 const EcosystemBoardRoot = styled(`div`)`
   display: flex;

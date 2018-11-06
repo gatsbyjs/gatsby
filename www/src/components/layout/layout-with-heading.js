@@ -2,14 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
-import styled, { css } from "react-emotion"
+import styled from "react-emotion"
 
 import Banner from "../banner"
 import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import presets, { colors } from "../../utils/presets"
+import presets from "../../utils/presets"
 
 // Import Futura PT typeface
 import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"

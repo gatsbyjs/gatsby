@@ -8,7 +8,8 @@ module.exports = function(url, dest, cb) {
   // verify response code
   sendReq.on(`response`, function(response) {
     if (response.statusCode !== 200) {
-      return cb(`Response status was ` + response.statusCode)
+      cb(`Response status was ` + response.statusCode)
+      return
     }
   })
 
@@ -17,7 +18,8 @@ module.exports = function(url, dest, cb) {
     fs.unlink(dest)
 
     if (cb) {
-      return cb(err.message)
+      cb(err.message)
+      return
     }
   })
 
@@ -33,7 +35,8 @@ module.exports = function(url, dest, cb) {
 
     // Delete the file async. (But we don't check the result)
     if (cb) {
-      return cb(err.message)
+      cb(err.message)
+      return
     }
   })
 }
