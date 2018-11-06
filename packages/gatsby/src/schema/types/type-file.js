@@ -7,7 +7,7 @@ const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 
 const { getNodesByType } = require(`../../db/nodes`)
-const { findRootNodeAncestor } = require(`../node-tracking`)
+const { findRootNodeAncestor } = require(`../../db/node-tracking`)
 const {
   createPageDependency,
 } = require(`../../redux/actions/add-page-dependency`)
