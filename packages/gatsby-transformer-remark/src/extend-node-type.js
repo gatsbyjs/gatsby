@@ -16,7 +16,7 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const Promise = require(`bluebird`)
-const prune = require(`underscore.string/prune`)
+// const prune = require(`underscore.string/prune`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -24,6 +24,11 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
+const {
+  preOrderTraversal,
+  getConcatenatedValue,
+  duplicateNode,
+} = require(`./hast-processing`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -322,6 +327,13 @@ module.exports = (
       }
     }
 
+    async function mdastToHTML(markdownAST) {
+      const htmlAST = toHAST(markdownAST, { allowDangerousHTML: true })
+      return hastToHTML(htmlAST, {
+        allowDangerousHTML: true,
+      })
+    }
+
     const HeadingType = new GraphQLObjectType({
       name: `MarkdownHeading`,
       fields: {
@@ -382,37 +394,36 @@ module.exports = (
         },
         resolve: async (markdownNode, { pruneLength, truncate }) => {
           if (markdownNode.excerpt) {
-            const excerpt = await getMarkdownAST(
+            const excerptAST = await getMarkdownAST(
               markdownNode,
               markdownNode.excerpt
             )
-            const htmlAST = toHAST(excerpt, { allowDangerousHTML: true })
-            const html = hastToHTML(htmlAST, {
-              allowDangerousHTML: true,
-            })
-
-            return html
+            return mdastToHTML(excerptAST)
           }
 
-          const markdownAST = await getAST(markdownNode)
-          const excerptNodes = []
-          const getExcerptString = () =>
-            excerptNodes.map(node => node.value).join(` `)
-          visit(markdownAST, node => {
-            if (getExcerptString().length > pruneLength) {
-              return
-            }
-            if (node.type === `text` || node.type === `inlineCode`) {
-              excerptNodes.push(node)
+          const fullAST = await getHTMLAst(markdownNode)
+          let excerptAST
+          preOrderTraversal(fullAST, null, (node, parent) => {
+            console.log(`concating again`, node, parent)
+            // console.log(`concated value`, getConcatenatedValue(excerptAST))
+
+            // const totalExcerptSoFar = getConcatenatedValue(excerptAST)
+            // if (totalExcerptSoFar && totalExcerptSoFar.length > pruneLength) {
+            //   return
+            // }
+
+            // The first node has no parent.
+            // But we do need to retain a reference to tree
+            if (parent) {
+              parent.children.push(duplicateNode(node))
+            } else {
+              excerptAST = node
             }
           })
-          if (!truncate) {
-            return prune(getExcerptString(), pruneLength, `…`)
-          }
-          return _.truncate(getExcerptString(), {
-            length: pruneLength,
-            omission: `…`,
-          })
+          console.log(`ended it`)
+          console.log(`final`, excerptAST)
+
+          return hastToHTML(excerptAST)
         },
       },
       headings: {

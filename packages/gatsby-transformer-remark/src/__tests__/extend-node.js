@@ -130,12 +130,12 @@ const bootstrapTest = (
 
 describe(`Excerpt is generated correctly from schema`, () => {
   bootstrapTest(
-    `correctly loads an excerpt`,
+    `correctly loads a complicated excerpt`,
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
-Where oh where is my little pony?`,
+Where oh [*where*](nick.com) **_is_** that pony?`,
     `excerpt
     frontmatter {
         title
@@ -143,7 +143,7 @@ Where oh where is my little pony?`,
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toMatch(`Where oh where is that pony?`)
     }
   )
 
