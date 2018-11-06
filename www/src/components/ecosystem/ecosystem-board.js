@@ -23,7 +23,7 @@ const EcosystemBoardRoot = styled("div")`
 const EcosystemBoard = ({
   icons: { plugins: PluginsIcon, starters: StartersIcon },
   starters,
-  plugins
+  plugins,
 }) => (
   <EcosystemBoardRoot>
     <EcosystemSection

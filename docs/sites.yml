@@ -467,12 +467,6 @@
   featured: false
   categories:
     - Portfolio
-- title: Sourcegraph
-  main_url: "https://about.sourcegraph.com/"
-  url: "https://about.sourcegraph.com/"
-  featured: false
-  categories:
-    - Web Development
 - title: API Platform
   main_url: "https://api-platform.com/"
   url: "https://api-platform.com/"
@@ -1244,13 +1238,6 @@
     - Community
   built_by: Sankarsan Kampa
   built_by_url: "https://sankarsankampa.com"
-- title: upGizmo
-  main_url: "https://www.upgizmo.com/"
-  url: "https://www.upgizmo.com/"
-  featured: false
-  categories:
-    - News
-    - Technology
 - title: Smakosh
   main_url: "https://smakosh.com/"
   url: "https://smakosh.com/"
@@ -1301,6 +1288,9 @@
   categories:
     - Portfolio
     - Blog
+    - Design
+    - Web Development
+    - Freelance
 - title: 杨二小的博客
   main_url: "https://blog.yangerxiao.com/"
   url: "https://blog.yangerxiao.com/"
@@ -1949,7 +1939,7 @@
   built_by_url: "https://github.com/Novatics"
   featured: false
 - title: I migliori by Vivigratis
-  description: |
+  description: >
     Product review website
   main_url: "https://imigliori.vivigratis.com/"
   url: "https://imigliori.vivigratis.com/"
@@ -1960,6 +1950,7 @@
     - Health & Wellness
     - Fashion
   built_by: Kframe Interactive SA
+  built_by_url: http://kframeinteractive.com
   featured: false
 - title: Max McKinney
   description: >
@@ -2743,6 +2734,7 @@
   description: >
     The Carbon Design System is integrating the new IBM Design Ethos and Language. It represents a completely fresh approach to the design of all things at IBM.
   categories:
+    - Design System
     - Documentation
   built_by: IBM
   built_by_url: https://www.ibm.com/
@@ -2766,7 +2758,7 @@
     McDonald's Design System
   categories:
     - Design
-    - DesignSystems
+    - Design System
   built_by: McDonald's
   built_by_url: https://www.mcdonalds.com/us/en-us.html
   featured: false
@@ -2787,7 +2779,7 @@
   description: >
     A single design system to ensure every interface feels like Hudl. From the colors we use to the size of our buttons and what those buttons say, Uniform has you covered. Check the guidelines, copy the code and get to building.
   categories:
-    - DesignSystems
+    - Design System
     - Open Source
     - Design
   built_by: Hudl
@@ -3205,3 +3197,66 @@
     - Technology
     - Podcast
   featured: false
+- title: Tyler McGinnis
+  url: https://tylermcginnis.com/
+  main_url: https://tylermcginnis.com/
+  description: >
+    The linear, course based approach to learning web technologies.
+  categories:
+    - Education
+    - Technology
+    - Podcast
+    - Web Development
+  featured: false
+- title: a11y with Lindsey
+  url: https://www.a11ywithlindsey.com/
+  main_url: https://www.a11ywithlindsey.com/
+  source_url: https://github.com/lkopacz/a11y-with-lindsey
+  description: >
+    To help developers navigate accessibility jargon, write better code, and to empower them to make their Internet, Everyone's Internet.
+  categories:
+    - Education
+    - Blog
+    - Technology
+  built_by: Lindsey Kopacz
+  built_by_url: https://twitter.com/littlekope0903
+  featured: false
+- title: DEKEMA
+  url: https://www.dekema.com/
+  main_url: https://www.dekema.com/
+  description: >
+    Worldclass crafting: Furnace, fervor, fullfilment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
+  categories:
+    - Healthcare
+    - Science
+    - Technology
+  built_by: Crisp Studio
+  built_by_url: https://crisp.studio
+  featured: false
+- title: FOX Circus
+  main_url: "https://www.foxcircus.it/"
+  url: "https://www.foxcircus.it/"
+  categories:
+    - Event
+    - Conference
+    - Entertainment
+  built_by: Kframe Interactive SA
+  built_by_url: http://kframeinteractive.com
+  featured: false
+- title: Ramón Chancay
+  description: >-
+    Front-end / Back-end Developer in Guayaquil Ecuador.
+    Currently at Everymundo, previously at El Universo.
+    I enjoy teaching and sharing what I know.
+    I give professional advice to developers and companies.
+    My wife and my children are everything in my life.
+  main_url: "https://ramonchancay.me/"
+  url: "https://ramonchancay.me/"
+  source_url: "https://github.com/devrchancay/personal-site"
+  featured: false
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Codedebug
+  built_by_url: "https://codedebug.co/"

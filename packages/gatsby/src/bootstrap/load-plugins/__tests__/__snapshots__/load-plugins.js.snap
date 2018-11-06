@@ -87,7 +87,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "d5fb39bc-5b13-5925-86de-f0e18549d272",
+    "id": "cc2293db-7635-5675-bb5e-05c41ff28688",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -179,6 +179,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
+    "id": "c731052f-1e62-5905-9fb3-edc9057be8f1",
     "name": "TEST",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
@@ -202,7 +203,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "d5fb39bc-5b13-5925-86de-f0e18549d272",
+    "id": "cc2293db-7635-5675-bb5e-05c41ff28688",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",

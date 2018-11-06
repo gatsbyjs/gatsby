@@ -77,7 +77,7 @@
       items:
         - title: Using unstructured data
           link: /docs/using-unstructured-data/
-        - title: Sourcing from the filesystem*
+        - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases*
           link: /docs/sourcing-from-databases/
@@ -352,7 +352,7 @@
       link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
   items:
-    - title: Making a site with user authentication*
+    - title: Making a site with user authentication
       link: /docs/authentication-tutorial/
     - title: Making an e-commerce Gatsby site
       link: /docs/ecommerce-tutorial/
