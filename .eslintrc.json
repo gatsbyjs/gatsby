@@ -56,6 +56,13 @@
         "___loader": false,
         "___emitter": false
       }
+    },
+    {
+      "files": ["**/cypress/integration/**/*"],
+      "globals": {
+        "cy": false,
+        "Cypress": false
+      }
     }
   ],
   "settings": {
