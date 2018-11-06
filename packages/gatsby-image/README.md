@@ -299,8 +299,6 @@ prop. e.g. `<Img fluid={fluid} />`
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
 | `style`                | `object`            | Spread into the default styles of the wrapper element                                                                       |
 | `imgStyle`             | `object`            | Spread into the default styles of the actual `img` element                                                                  |
-| `objectFit`            | `string`            | Spread into the default styles of the actual `img` element in a way that polyfills this property as needed. Defaults to `cover`. |
-| `objectPosition`       | `string`            | Spread into the default styles of the actual `img` element in a way that polyfills this property as needed. Defaults to `50% 50%`. |
 | `placeholderStyle`     | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
 | `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                     |
 | `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
