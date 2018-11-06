@@ -1136,3 +1136,21 @@
     - Storybook v4 support
     - Styled Components v4 support
     - Styled Reset, ESLint, Netlify Conf
+- url: https://avivero.github.io/gatsby-redux-starter/
+  repo: https://github.com/AVivero/gatsby-redux-starter
+  description: Gatsby starter site with Redux, Sass, Bootstrap, Css Modules and Material Icons
+  tags:
+    - Redux
+    - Sass
+    - Bootstrap
+    - Css Modules
+    - Material Icons
+    - Linting
+    - Prettier
+  features:
+    - Gatsby v2 support
+    - Redux support
+    - Sass support
+    - Bootstrap v4 support
+    - Css Modules support
+    - ESLint, Prettier
