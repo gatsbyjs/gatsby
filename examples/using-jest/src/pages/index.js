@@ -11,7 +11,7 @@ const IndexPage = () => (
     <p>Now go build something great.</p>
     <div
       data-testid="gatsby-logo"
-      style={{ maxWidth: '300px', marginBottom: '1.45rem' }}
+      style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}
     >
       <Image />
     </div>

@@ -12,7 +12,7 @@ import presets, { colors } from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
-const EcosystemFeaturedItemRoot = styled("li")`
+const EcosystemFeaturedItemRoot = styled(`li`)`
   flex-basis: ${props => `calc(100% / ${props.numberOfItems})`};
   float: left;
   margin: 0 2px 0 0;
@@ -44,7 +44,7 @@ const BlockLink = styled(Link)`
   }
 `
 
-const Header = styled("header")`
+const Header = styled(`header`)`
   display: flex;
   justify-content: space-between;
   h3 {
@@ -69,7 +69,7 @@ const Header = styled("header")`
   }
 `
 
-const Digest = styled("div")`
+const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
   justify-content: space-between;
@@ -78,7 +78,7 @@ const Digest = styled("div")`
   padding: ${rhythm(0.5)} 0 0;
 `
 
-const Thumbnail = styled("div")`
+const Thumbnail = styled(`div`)`
   padding-right: ${rhythm(2 / 3)};
   margin-top: ${rhythm(1 / 12)};
   height: 64px;
@@ -88,7 +88,7 @@ const Thumbnail = styled("div")`
   }
 `
 
-const Description = styled("p")`
+const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
   flex-grow: 1;
   font-size: 0.85rem;

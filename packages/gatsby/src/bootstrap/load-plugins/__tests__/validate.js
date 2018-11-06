@@ -102,7 +102,7 @@ describe(`handleBadExports`, () => {
     })
   })
 
-  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {	
+  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {
     handleBadExports({
       apis: {
         node: [``],

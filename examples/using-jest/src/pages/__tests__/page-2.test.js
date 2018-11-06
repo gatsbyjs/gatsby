@@ -9,18 +9,18 @@ beforeEach(() => {
     render({
       site: {
         siteMetadata: {
-          title: 'GatsbyJS',
+          title: `GatsbyJS`,
         },
       },
     })
   )
 })
 
-describe('Page Two', () => {
-  it('contains NOT FOUND text', () => {
+describe(`Page Two`, () => {
+  it(`contains NOT FOUND text`, () => {
     const { getByText } = render(<PageTwo />)
 
-    const el = getByText('Welcome to page 2')
+    const el = getByText(`Welcome to page 2`)
 
     expect(el).toBeInTheDocument()
   })

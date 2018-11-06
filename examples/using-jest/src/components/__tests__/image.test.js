@@ -11,9 +11,9 @@ beforeEach(() => {
         childImageSharp: {
           fluid: {
             aspectRatio: 1,
-            sizes: '100 200 300',
-            src: 'pretend-i-am-a-base64-encoded-image',
-            srcSet: 'asdfasdf',
+            sizes: `100 200 300`,
+            src: `pretend-i-am-a-base64-encoded-image`,
+            srcSet: `asdfasdf`,
           },
         },
       },
@@ -21,10 +21,10 @@ beforeEach(() => {
   )
 })
 
-describe('Image', () => {
-  it('renders an image', () => {
+describe(`Image`, () => {
+  it(`renders an image`, () => {
     const { container } = render(<Image />)
 
-    expect(container.querySelector('picture')).toBeInTheDocument()
+    expect(container.querySelector(`picture`)).toBeInTheDocument()
   })
 })
