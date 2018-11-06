@@ -1,9 +1,9 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import queryString from "query-string"
 import { navigate } from "@reach/router"
 
 const emptySearchState = { s: ``, c: [], d: [], v: [], sort: `recent` }
-class RRSM extends React.Component {
+class RRSM extends Component {
   state = emptySearchState
 
   static defaultProps = {
@@ -43,13 +43,14 @@ class RRSM extends React.Component {
   }
 
   render() {
-    const { wrappedComponent: Component, ...otherProps } = this.props
+    const { render } = this.props
     return (
-      <Component
-        {...otherProps}
-        setURLState={this.setUrlState}
-        urlState={this.state}
-      />
+      <Fragment>
+        {render({
+          setURLState: this.setUrlState,
+          urlState: this.state,
+        })}
+      </Fragment>
     )
   }
 }

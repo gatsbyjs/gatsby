@@ -45,7 +45,13 @@ class StarterLibraryPage extends Component {
         <RRSM
           {...this.props}
           location={location}
-          wrappedComponent={FilteredStarters}
+          render={({ setURLState, urlState }) => (
+            <FilteredStarters
+              {...this.props}
+              setURLState={setURLState}
+              urlState={urlState}
+            />
+          )}
           defaultSearchState={{ v: [`2`] }}
         />
       </Layout>
