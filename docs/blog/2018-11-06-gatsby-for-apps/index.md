@@ -9,10 +9,10 @@ Gatsby is great for static sites. You probably know this! It’s equally great f
 
 In this post, I will target several key areas concerning the benefits of this hybrid approach, specifically:
 
-What is a web application?
-Gatsby’s runtime enables dynamic functionality, which is used for dynamic, web application functionality
-Gatsby not only _can_ be used for web applications, it’s an excellent choice for web applications
-Why Gatsby for web applications?
+- What is a web application?
+- Gatsby’s runtime enables dynamic functionality, which is used for dynamic, web application functionality
+- Gatsby not only _can_ be used for web applications, it’s an excellent choice for web applications
+- Why Gatsby for web applications?
 
 Finally, I’ll demo a web application built with Gatsby that ties each of these key areas together and succinctly illustrate one, central point… Gatsby not only can build web applications, Gatsby is an excellent choice for your next application.
 
@@ -39,7 +39,7 @@ Gmail served as an early proof of concept that proved out two, key functional wi
 1. Client-side JavaScript can power an app-like experience, and
 2. a JavaScript application (running in your browser) can compare favorably to traditional, native applications for desktop and mobile
 
-The impact of these wins can’t be understated. It _proved_ that a native, app-like experience is not only possible for end users, but that it can even be preferable and more convenient than the native experience. 
+The impact of these wins can’t be understated. It _proved_ that a native, app-like experience is not only possible for end users, but that it can even be preferable and more convenient than the native experience.
 
 Next up, is Twitter, for slightly different reasons.
 
@@ -135,7 +135,7 @@ If we revisit some of the benefits that Gatsby provides, minimally we could crea
 - Optimizing data, images, etc. for blazing-fast performance
 - Internalizing performance patterns and best practices like [PRPL][prpl], route-based code splitting, etc.
 
-Each of these are worthy of their own blog post, but suffice to say these are _great_ functionalities that you want not only in your static site, but also in your application. 
+Each of these are worthy of their own blog post, but suffice to say these are _great_ functionalities that you want not only in your static site, but also in your application.
 
 These performance optimizations aren't opt-in; they're enabled, by default. As new performance techniques and optimizations gain popularity, we can internalize these just as we have for these others optimizations currently available in Gatsby. These optimizations can then be made available to your end users merely by upgrading your version of Gatsby.
 
@@ -196,6 +196,8 @@ and some other niceties like a light/dark theme, client-only routes, and more! Y
 ![App Shell with Gatsby Mail](./images/gatsby-mail-app-shell.gif)
 
 Check out the [Github repo][gatsby-mail-repo] to learn more about how it was built and adopt some of the techniques as you build your next, great Gatsby web **application**. We can't wait to see what you build.
+
+<!-- TODO: add examples of Gatsby _apps_ beyond just gatsby-mail -->
 
 [whats-an-app]: /blog/2018-10-15-beyond-static-intro/#what-is-an-app
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
