@@ -3197,6 +3197,17 @@
     - Technology
     - Podcast
   featured: false
+- title: Tyler McGinnis
+  url: https://tylermcginnis.com/
+  main_url: https://tylermcginnis.com/
+  description: >
+    The linear, course based approach to learning web technologies.
+  categories:
+    - Education
+    - Technology
+    - Podcast
+    - Web Development
+  featured: false
 - title: a11y with Lindsey
   url: https://www.a11ywithlindsey.com/
   main_url: https://www.a11ywithlindsey.com/
