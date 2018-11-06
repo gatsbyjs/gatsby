@@ -39,6 +39,7 @@ Then you'll be able to query the textual content of your pdfs files like:
   }
 }
 ```
+
 Which would return:
 
 ```javascript

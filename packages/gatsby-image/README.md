@@ -262,7 +262,7 @@ prop. e.g. `<Img fluid={fluid} />`
 ## `gatsby-image` props
 
 | Name                   | Type                | Description                                                                                                                 |
-| -----------------------| ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| ---------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `fixed`                | `object`            | Data returned from the `fixed` query                                                                                        |
 | `fluid`                | `object`            | Data returned from the `fluid` query                                                                                        |
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
