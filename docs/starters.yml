@@ -1138,3 +1138,14 @@
     - Storybook v4 support
     - Styled Components v4 support
     - Styled Reset, ESLint, Netlify Conf
+- url: https://jamstack-hackathon-starter.netlify.com/
+  repo: https://github.com/sw-yx/jamstack-hackathon-starter
+  description: Make JAMstack apps, not sites with Gatsby + Netlify Identity + Netlify Functions
+  tags:
+    - Netlify Identity
+    - Netlify Functions
+    - Clientside App
+  features:
+    - Netlify Identity
+    - Netlify Functions
+    - Static Marketing pages and Dynamic Clientside Authenticated App pages
