@@ -3255,7 +3255,6 @@
   description: >-
     Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
   categories:
-    - Docs
     - Publishing
     - Documentation
   built_by: Ghost Foundation
@@ -3267,7 +3266,7 @@
   description: >-
     Whether you’re moving someplace new or just want to complete a few projects around your current home, BellHops can arrange the moving services you need—at simple, straightforward rates.
   categories:
-    - Movers
+    - Business
   built_by: Bellhops, Inc.
   built_by_url: https://www.getbellhops.com/
   featured: false
