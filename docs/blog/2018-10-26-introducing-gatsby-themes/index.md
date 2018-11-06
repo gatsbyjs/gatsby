@@ -23,9 +23,9 @@ into documentation, and even processing images.
 
 Creating a single Gatsby site works super well. The power of
 `gatsby-config.js`, plugins, and more coalesce to make the experience a
-breeze. However, what if we want to re-use this configuration on our
-next site? Sure, we could clone a boilerplate each time, but that gets
-old, quickly. Wouldn't it be great if we could re-use our
+breeze. However, what if you want to re-use this configuration on our
+next site? Sure, you could clone a boilerplate each time, but that gets
+old, quickly. Wouldn't it be great if you could re-use our
 gatsby-config.js across projects? That's where starters come in.
 
 ### Improving Reusability with Starters
@@ -44,17 +44,17 @@ and have no easy way of updating when changes are made
 upstream. There's another approach to boilerplate that has become
 popular in recent years that fixes some problems with the boilerplate
 approach such as updating with upstream. One such project is
-[`create-react-app`](https://facebook.github.io/create-react-app/). In the Gatsby world, we can improve on starters
-similarly with themes.
+[`create-react-app`](https://facebook.github.io/create-react-app/). In
+the Gatsby world, you can improve on starters similarly with themes.
 
 ### Truly Reusable Themes in Gatsby
 
 If a single `gatsby-config.js` encodes the functionality of a whole Gatsby
-site, then if we can
+site, then if you can
 [compose](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-function-composition-20dfb109a1a0)
-the `gatsby-config.js` data structure together we have the base for
-themes. We can encode portions of our gatsby-config as themes and
-re-use them across sites. This is a big deal because we can have a
+the `gatsby-config.js` data structure together you have the base for
+themes. You can encode portions of our gatsby-config as themes and
+re-use them across sites. This is a big deal because you can have a
 theme config (or multiple configs) that composes together with the
 custom config (for the current site). Upgrading the underlying theme
 does not undo the customizations, meaning you get upstream
@@ -75,7 +75,7 @@ the customization of various branding elements through our
 
 At a base level, theming combines the `gatsby-config.js` of the
 theme with the `gatsby-config.js` of your site. Since it's an experimental
-feature, we use an experimental namespace to declare themes in
+feature, you use an experimental namespace to declare themes in
 the config.
 
 ```js
@@ -91,7 +91,7 @@ module.exports = {
 
 Themes often need to be parameterized for various reasons, such as
 changing the base url for subsections of a site or applying branding
-variables. We can do this through the theme options if we define our
+variables. You can do this through the theme options if you define our
 theme's gatsby-config as a function that returns an object.
 
 ```js
@@ -123,7 +123,7 @@ core. Sub-theming, for example, is a critical part of a theming
 ecosystem that is currently missing from Gatsby. Overriding theme
 elements is possible on a coarse level right now in userland. If, for
 example, a theme defines a set of pages using
-[`createPage`](/docs/actions/#createPage) we can define a helper
+[`createPage`](/docs/actions/#createPage) you can define a helper
 function that will look for the page component first in the user's
 site and then fall back to the theme's default implementation.
 
@@ -144,7 +144,7 @@ const withThemePath = relativePath => {
 }
 ```
 
-Then in our theme's `createPage` call, we simply use the helper to let
+Then in our theme's `createPage` call, you simply use the helper to let
 the user optionally override the default component.
 
 ```title:gatsby-node.js
