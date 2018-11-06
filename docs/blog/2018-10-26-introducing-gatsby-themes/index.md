@@ -21,13 +21,12 @@ into documentation, and even processing images.
 
 ## Scaling Gatsby
 
-Creating one Gatsby site is great but we had to start from scratch and
-make all the decisions ourselves. Those decisions are encoded into our
-`gatsby-config`. The next time we have to create a similar site for a
-new product we have to start from scratch and remake all of the
-decisions we made for our first site. Wouldn't it be great if we could
-re-use our config across projects? That's where starters come
-in.
+Creating a single Gatsby site works super well. The power of
+`gatsby-config.js`, plugins, and more coalesce to make the experience a
+breeze. However, what if we want to re-use this configuration on our
+next site? Sure, we could clone a boilerplate each time, but that gets
+old, quickly. Wouldn't it be great if we could re-use our
+gatsby-config.js across projects? That's where starters come in.
 
 ### Improving Reusability with Starters
 
@@ -51,9 +50,15 @@ similarly with themes.
 ### Truly Reusable Themes in Gatsby
 
 If a single `gatsby-config.js` encodes the functionality of a whole Gatsby
-site, then if we can [compose](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-function-composition-20dfb109a1a0) the `gatsby-config.js` data structure together
-we have the base for themes. We can encode portions of our
-gatsby-config as themes and re-use them across sites.
+site, then if we can
+[compose](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-function-composition-20dfb109a1a0)
+the `gatsby-config.js` data structure together we have the base for
+themes. We can encode portions of our gatsby-config as themes and
+re-use them across sites. This is a big deal because we can have a
+theme config (or multiple configs) that composes together with the
+custom config (for the current site). Upgrading the underlying theme
+does not undo the customizations, meaning you get upstream
+improvements to the theme without a difficult manual upgrade process.
 
 ## Why Themes?
 
@@ -75,7 +80,12 @@ the config.
 
 ```js
 module.exports = {
-  __experimentalThemes: [["gatsby-theme-blog", {}]],
+  __experimentalThemes: [
+    {
+      resolve: "gatsby-theme-blog",
+      options: {},
+    },
+  ],
 }
 ```
 
@@ -87,12 +97,12 @@ theme's gatsby-config as a function that returns an object.
 ```js
 module.exports = {
   __experimentalThemes: [
-    [
-      "gatsby-theme-blog",
-      {
+    {
+      resolve: "gatsby-theme-blog",
+      options: {
         some: "value",
       },
-    ],
+    },
   ],
 }
 ```
@@ -112,9 +122,10 @@ further improvements in userland before merging them into
 core. Sub-theming, for example, is a critical part of a theming
 ecosystem that is currently missing from Gatsby. Overriding theme
 elements is possible on a coarse level right now in userland. If, for
-example, a theme defines a set of pages using [`createPage`](/docs/actions/#createPage) we can define
-a helper function that will look for the page component first in the
-user's site and then fall back to the theme's default implementation.
+example, a theme defines a set of pages using
+[`createPage`](/docs/actions/#createPage) we can define a helper
+function that will look for the page component first in the user's
+site and then fall back to the theme's default implementation.
 
 ```js
 const withThemePath = relativePath => {
