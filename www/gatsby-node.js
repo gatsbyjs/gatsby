@@ -9,6 +9,7 @@ const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
+const moment = require(`moment`)
 
 let ecosystemFeaturedItems
 
@@ -156,6 +157,7 @@ exports.createPages = ({ graphql, actions }) => {
               fields {
                 slug
                 package
+                released
               }
               frontmatter {
                 title
@@ -251,9 +253,13 @@ exports.createPages = ({ graphql, actions }) => {
         return undefined
       })
 
+      const releasedBlogPosts = blogPosts.filter(post =>
+        _.get(post, `node.fields.released`)
+      )
+
       // Create blog-list pages.
       const postsPerPage = 8
-      const numPages = Math.ceil(blogPosts.length / postsPerPage)
+      const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
 
       Array.from({ length: numPages }).forEach((_, i) => {
         createPage({
@@ -270,7 +276,9 @@ exports.createPages = ({ graphql, actions }) => {
 
       // Create blog-post pages.
       blogPosts.forEach((edge, index) => {
-        const next = index === 0 ? null : blogPosts[index - 1].node
+        let next = index === 0 ? null : blogPosts[index - 1].node
+        if (next && !_.get(next, `fields.released`)) next = null
+
         const prev =
           index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
 
@@ -285,7 +293,7 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
-      const tagLists = blogPosts
+      const tagLists = releasedBlogPosts
         .filter(post => _.get(post, `node.frontmatter.tags`))
         .map(post => _.get(post, `node.frontmatter.tags`))
 
@@ -409,7 +417,7 @@ exports.createPages = ({ graphql, actions }) => {
   })
 }
 
-// Create slugs for files.
+// Create slugs for files, set released status for blog posts.
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
@@ -441,6 +449,16 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         slug = `/${parsedFilePath.name}/`
       } else {
         slug = `/${parsedFilePath.dir}/`
+      }
+
+      // Set released status for blog posts.
+      if (_.includes(parsedFilePath.dir, `blog`)) {
+        let released = false
+        const date = _.get(node, `frontmatter.date`)
+        if (date) {
+          released = moment().isSameOrAfter(moment.utc(date))
+        }
+        createNodeField({ node, name: `released`, value: released })
       }
     }
     // Add slugs for package READMEs.
@@ -605,7 +623,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
 exports.onCreatePage = ({ page, actions }) => {
   // add lists of featured items to Ecosystem page
-  if (page.path === "/ecosystem/") {
+  if (page.path === `/ecosystem/`) {
     const { createPage, deletePage } = actions
     const oldPage = Object.assign({}, page)
 

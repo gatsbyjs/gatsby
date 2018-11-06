@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.2...gatsby-plugin-sass@2.0.3) (2018-11-01)
+
+### Features
+
+- **gatsby-plugin-sass:** Accept css-loader options ([#9462](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/issues/9462)) ([a55bc13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/commit/a55bc13))
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.1...gatsby-plugin-sass@2.0.2) (2018-10-29)
