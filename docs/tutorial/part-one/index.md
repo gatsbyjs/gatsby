@@ -81,15 +81,17 @@ export default () => (
 
 4.  Add an image. (In this case, the Gatsby astronaut).
 
-```jsx{2,8}:title=src/pages/index.js
+```jsx{7}:title=src/pages/index.js
 import React from "react"
-import gatsbyAstronaut from "../images/gatsby-astronaut.png"
 
 export default () => (
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
-    <img src={gatsbyAstronaut} alt="Gatsby astronaut" />
+    <img
+      src="./images/gatsby-astronaut.png"
+      alt="Gatsby astronaut illustration"
+    />
   </div>
 )
 ```
