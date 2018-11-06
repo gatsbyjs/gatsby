@@ -24,6 +24,7 @@
     "fs-exists-cached": "^1.0.0",
     "glob": "^7.1.1",
     "lodash": "^4.17.10",
+    "micromatch": "^3.1.10",
     "parse-filepath": "^1.0.1",
     "slash": "^1.0.0"
   },
@@ -35,6 +36,5 @@
   },
   "peerDependencies": {
     "gatsby": ">2.0.0-alpha"
-  },
-  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
+  }
 }
