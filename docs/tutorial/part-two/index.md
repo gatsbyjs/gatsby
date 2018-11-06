@@ -7,7 +7,7 @@ Welcome to part two of the Gatsby tutorial!
 
 ## What's in this tutorial?
 
-In this part you're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
+In this part, you're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
 
 ## Creating global styles
 
@@ -68,7 +68,7 @@ Gatsby plugins work the same way.
 Community members (like you!) can contribute plugins (small amounts of
 JavaScript code) that others can then use when building Gatsby sites.
 
-There's already dozens of plugins! Check them out at the
+There are already dozens of plugins! Check them out at the
 [plugins section of the site](/plugins/).
 
 Our goal with Gatsby plugins is to make them straightforward to install and use. In almost every Gatsby site you
@@ -78,7 +78,7 @@ plugins.
 
 ## Installing your first Gatsby plugin
 
-Start by creating a new site. At this point it probably makes sense to close the terminal windows you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
+Start by creating a new site. At this point, it probably makes sense to close the terminal windows you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
 
 Just like in part one, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-two`. Then, change to this new directory:
 

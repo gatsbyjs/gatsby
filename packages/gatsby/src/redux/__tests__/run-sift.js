@@ -6,7 +6,7 @@ const {
   GraphQLString,
 } = require(`graphql`)
 
-jest.mock(`../node-tracking`, () => {
+jest.mock(`../../db/node-tracking`, () => {
   return {
     trackInlineObjectsInRootNode: () => jest.fn(),
   }
@@ -30,12 +30,13 @@ const mockNodes = [
 jest.mock(`../../db/nodes`, () => {
   return {
     getNode: id => mockNodes.find(node => node.id === id),
+    getNodesByType: () => mockNodes,
   }
 })
 
 describe(`run-sift`, () => {
   const typeName = `test`
-  const type = new GraphQLObjectType({
+  const gqlType = new GraphQLObjectType({
     name: typeName,
     fields: () => {
       return {
@@ -48,25 +49,21 @@ describe(`run-sift`, () => {
 
   describe(`filters by just id correctly`, () => {
     it(`eq operator`, async () => {
-      const args = {
+      const queryArgs = {
         filter: {
           id: { eq: `id_2` },
         },
       }
 
       const resultSingular = await runSift({
-        type,
-        nodes,
-        typeName,
-        args,
+        gqlType,
+        queryArgs,
         firstOnly: true,
       })
 
       const resultMany = await runSift({
-        type,
-        nodes,
-        typeName,
-        args,
+        gqlType,
+        queryArgs,
         firstOnly: false,
       })
 
@@ -75,25 +72,21 @@ describe(`run-sift`, () => {
     })
 
     it(`non-eq operator`, async () => {
-      const args = {
+      const queryArgs = {
         filter: {
           id: { ne: `id_2` },
         },
       }
 
       const resultSingular = await runSift({
-        type,
-        nodes,
-        typeName,
-        args,
+        gqlType,
+        queryArgs,
         firstOnly: true,
       })
 
       const resultMany = await runSift({
-        type,
-        nodes,
-        typeName,
-        args,
+        gqlType,
+        queryArgs,
         firstOnly: false,
       })
 

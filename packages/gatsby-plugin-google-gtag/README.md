@@ -75,12 +75,12 @@ import React from "react"
 import { OutboundLink } from "gatsby-plugin-google-gtag"
 
 export default () => {
-  ;<div>
+  <div>
     <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-gtag/">
       Visit the Google Global Site Tag plugin page!
     </OutboundLink>
   </div>
-}
+)
 ```
 
 ## The "gtagConfig.anonymize_ip" option

@@ -19,21 +19,19 @@ const {
 const { nodeInterface } = require(`./node-interface`)
 const {
   getNodes,
-  getNodesByType,
   getNode,
   getNodeAndSavePathDependency,
 } = require(`../db/nodes`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
+const { runQuery } = require(`../db/nodes`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
 type TypeMap = {
   [typeName: string]: ProcessedNodeType,
 }
-
-const nodesCache = new Map()
 
 module.exports = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -192,33 +190,20 @@ module.exports = async ({ parentSpan }) => {
         name: typeName,
         type: gqlType,
         args: filterFields,
-        async resolve(a, args, context) {
+        async resolve(a, queryArgs, context) {
           const path = context.path ? context.path : ``
-          const runSift = require(`./run-sift`)
-          let latestNodes
-          if (
-            process.env.NODE_ENV === `production` &&
-            nodesCache.has(typeName)
-          ) {
-            latestNodes = nodesCache.get(typeName)
-          } else {
-            latestNodes = getNodesByType(typeName)
-            nodesCache.set(typeName, latestNodes)
-          }
-          if (!_.isObject(args)) {
-            args = {}
+          if (!_.isObject(queryArgs)) {
+            queryArgs = {}
           }
 
-          const results = await runSift({
-            args: {
+          const results = await runQuery({
+            queryArgs: {
               filter: {
-                ...args,
+                ...queryArgs,
               },
             },
-            nodes: latestNodes,
             firstOnly: true,
-            typeName: typeName,
-            type: gqlType,
+            gqlType,
           })
 
           if (results.length > 0) {

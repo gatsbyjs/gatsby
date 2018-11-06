@@ -10,11 +10,11 @@ const {
 } = require(`./infer-graphql-input-fields-from-fields`)
 const createSortField = require(`./create-sort-field`)
 const buildConnectionFields = require(`./build-connection-fields`)
-const { getNodesByType } = require(`../db/nodes`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
+const { runQuery } = require(`../db/nodes`)
 
-function handleQueryResult({ results, resolveArgs: queryArgs, path }) {
+function handleQueryResult({ results, queryArgs, path }) {
   if (results && results.length) {
     const connection = connectionFromArray(results, queryArgs)
     connection.totalCount = results.length
@@ -82,21 +82,17 @@ module.exports = (types: any) => {
           }),
         },
       },
-      async resolve(object, resolveArgs, b, { rootValue }) {
+      async resolve(object, queryArgs, b, { rootValue }) {
         let path
         if (typeof rootValue !== `undefined`) {
           path = rootValue.path
         }
-        const runSift = require(`./run-sift`)
-        const latestNodes = getNodesByType(type.name)
-        const results = await runSift({
-          args: resolveArgs,
-          nodes: latestNodes,
+        const results = await runQuery({
+          queryArgs,
           firstOnly: false,
-          typeName: typeName,
-          type: type.node.type,
+          gqlType: type.node.type,
         })
-        return handleQueryResult({ results, resolveArgs, path })
+        return handleQueryResult({ results, queryArgs, path })
       },
     }
   })

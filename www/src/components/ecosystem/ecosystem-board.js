@@ -6,7 +6,7 @@ import EcosystemSection from "./ecosystem-section"
 
 import presets, { colors } from "../../utils/presets"
 
-const EcosystemBoardRoot = styled("div")`
+const EcosystemBoardRoot = styled(`div`)`
   display: flex;
   flex-direction: column;
 
@@ -32,13 +32,13 @@ const EcosystemBoard = ({
       subTitle="Featured Plugins"
       icon={PluginsIcon}
       links={[
-        { label: "Browse Plugins", to: "/plugins/" },
+        { label: `Browse Plugins`, to: `/plugins/` },
         {
-          label: "Plugin Authoring",
-          to: "/docs/plugin-authoring/",
+          label: `Plugin Authoring`,
+          to: `/docs/plugin-authoring/`,
           secondary: true,
         },
-        { label: "Plugin Docs", to: "/docs/plugins/", secondary: true },
+        { label: `Plugin Docs`, to: `/docs/plugins/`, secondary: true },
       ]}
       featuredItems={plugins}
     />
@@ -48,15 +48,15 @@ const EcosystemBoard = ({
       subTitle="Featured Starters"
       icon={StartersIcon}
       links={[
-        { label: "Browse Starters", to: "/starters/" },
-        { label: "Starter Docs", to: "/docs/starters/", secondary: true },
+        { label: `Browse Starters`, to: `/starters/` },
+        { label: `Starter Docs`, to: `/docs/starters/`, secondary: true },
       ]}
       featuredItems={starters}
     />
     <EcosystemSection
       title="External Resources"
       description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
-      links={[{ label: "Browse Resources", to: "/docs/awesome-gatsby/" }]}
+      links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
     />
   </EcosystemBoardRoot>
 )
