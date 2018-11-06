@@ -2,15 +2,15 @@
 title: Making a site with user authentication
 ---
 
-Sometimes, you need to create a site with gated content, available only to authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/#client-only-routes), to define which pages a user can view only after logging in.
+Sometimes, you need to create a site with gated content, available only to authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](/docs/building-apps-with-gatsby/#client-only-routes), to define which pages a user can view only after logging in.
 
 ## Prerequisites
 
-You should have already configured your environment to be able to use the `gatsby-cli`. A good starting point is the [main tutorial](https://www.gatsbyjs.org/tutorial/).
+You should have already configured your environment to be able to use the `gatsby-cli`. A good starting point is the [main tutorial](/tutorial).
 
 ## Security notice
 
-In production, you should use a tested and robust solution to handle the authentication. [Auth0](https://www.auth0.com), [Firebase](https://firebase.google.com), and [Passport.js](passportjs.org) are good examples. This tutorial will only cover the authentication workflow, but you should take the security of your app as seriously as possible.
+In production, you should use a tested and robust solution to handle the authentication. [Auth0](https://www.auth0.com), [Firebase](https://firebase.google.com), and [Passport.js](http://passportjs.org) are good examples. This tutorial will only cover the authentication workflow, but you should take the security of your app as seriously as possible.
 
 ## Building your Gatsby app
 
@@ -200,7 +200,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 }
 ```
 
-> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](https://www.gatsbyjs.org/packages/gatsby-plugin-create-client-paths/)
+> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths)
 
 Now, you must create a generic page that will have the task to generate the restricted content:
 
