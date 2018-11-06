@@ -16,11 +16,12 @@ class StarterLibraryPage extends Component {
     const urlState = queryString.parse(location.search)
 
     const filtersApplied =
-      urlState.s !== ``
+      urlState.s !== undefined
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
           ? urlState.d // if theres a single dependency
-          : `Showcase` // if no search term or single dependency
+          : `Library` // if no search term or single dependency
+
     return (
       <Layout location={location}>
         <Helmet>

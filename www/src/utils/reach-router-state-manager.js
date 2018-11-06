@@ -12,10 +12,10 @@ class RRSM extends Component {
 
   setUrlState = newState => {
     const finalState = { ...this.state, ...newState }
-    // sync RSSM state
+    // update RSSM state
     this.setState({ ...finalState })
 
-    // sync URL
+    // sync url to RSSM
     Object.keys(finalState).forEach(function(k) {
       if (
         // Don't save some state values if it meets the conditions below.
