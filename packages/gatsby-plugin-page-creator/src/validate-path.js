@@ -11,7 +11,7 @@ function isTestFile(filePath) {
     `**/?(*.)+(spec|test).(js|ts)?(x)`,
   ]
 
-  return testPatterns.some(pattern => mm.isMatch(filePath, pattern))
+  return mm.isMatch(filePath, testPatterns)
 }
 
 module.exports = path => {
