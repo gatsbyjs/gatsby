@@ -888,8 +888,10 @@
   tags:
     - TypeScript
     - Styling:SCSS
+    - Linting
   features:
-    - Barebones for getting up and running with TypeScript and Sass
+    - TypeScript and Sass support
+    - TS linter with basic react rules
 - url: https://gatsby-simple-contentful-starter.netlify.com/
   repo: https://github.com/cwlsn/gatsby-simple-contentful-starter
   description: A simple starter to display Contentful data in Gatsby, ready to deploy on Netlify. Comes with a detailed article detailing the process.
