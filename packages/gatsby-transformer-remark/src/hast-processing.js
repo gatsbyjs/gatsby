@@ -22,17 +22,7 @@ function getConcatenatedValue(node) {
   return ``
 }
 
-function preOrderTraversal(node, parent, processingFunction) {
-  processingFunction(node, parent)
-  if (node.children) {
-    node.children.forEach(child => {
-      preOrderTraversal(child, node, processingFunction)
-    })
-  }
-}
-
 module.exports = {
   duplicateNode,
   getConcatenatedValue,
-  preOrderTraversal,
 }

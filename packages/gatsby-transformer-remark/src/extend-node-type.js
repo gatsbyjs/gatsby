@@ -24,11 +24,7 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
-const {
-  preOrderTraversal,
-  getConcatenatedValue,
-  duplicateNode,
-} = require(`./hast-processing`)
+const { duplicateNode } = require(`./hast-processing`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -403,23 +399,31 @@ module.exports = (
 
           const fullAST = await getHTMLAst(markdownNode)
           let excerptAST
-          preOrderTraversal(fullAST, null, (node, parent) => {
-            console.log(`concating again`, node, parent)
-            // console.log(`concated value`, getConcatenatedValue(excerptAST))
+          let parent
 
+          function preOrderTraversal(node) {
             // const totalExcerptSoFar = getConcatenatedValue(excerptAST)
             // if (totalExcerptSoFar && totalExcerptSoFar.length > pruneLength) {
             //   return
             // }
 
-            // The first node has no parent.
-            // But we do need to retain a reference to tree
+            const newNode = duplicateNode(node)
             if (parent) {
-              parent.children.push(duplicateNode(node))
+              parent.children.push(newNode)
             } else {
-              excerptAST = node
+              excerptAST = newNode
             }
-          })
+
+            if (node.children) {
+              node.children.forEach(child => {
+                parent = newNode
+                preOrderTraversal(child)
+              })
+            }
+          }
+
+          preOrderTraversal(fullAST)
+
           console.log(`ended it`)
           console.log(`final`, excerptAST)
 
