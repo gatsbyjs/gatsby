@@ -1,11 +1,13 @@
 ---
 title: Deploying to Heroku
 ---
+
 You can use the [heroku buildpack static](https://github.com/heroku/heroku-buildpack-static) to handle the static files of your site.
 
 Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
 
 app.json:
+
 ```
 {
   "buildpacks": [
@@ -24,6 +26,7 @@ Sometimes specifying buildpacks via the `app.json` file doesn’t work. If this 
 Add a `heroku-postbuild` script in your `package.json`:
 
 package.json:
+
 ```
 {
   // ...
@@ -35,7 +38,9 @@ package.json:
   // ...
 }
 ```
+
 Finally, add a `static.json` file in the root of your project to define the directory where your static assets will be. You can check all the options for this file in the [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static#configuration) configuration.
+
 ```
 {
   "root": "public/",
