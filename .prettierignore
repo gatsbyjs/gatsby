@@ -17,3 +17,5 @@ packages/gatsby/dist
 # fixtures
 **/__testfixtures__/**
 **/__tests__/fixtures/**
+
+infrastructure
