@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.12"></a>
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.11...gatsby-plugin-sharp@2.0.12) (2018-11-06)
+
+### Features
+
+- **gatsby-plugin-sharp:** cache base64 if possible ([#9059](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/9059)) ([5dc9346](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/5dc9346)), closes [#6999](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/6999)
+
 <a name="2.0.11"></a>
 
 ## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.10...gatsby-plugin-sharp@2.0.11) (2018-11-01)
