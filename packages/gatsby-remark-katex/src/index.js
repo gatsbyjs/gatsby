@@ -7,6 +7,9 @@ module.exports = ({ markdownAST }) => {
     node.type = `html`
     node.value = katex.renderToString(node.value, {
       displayMode: false,
+      throwOnError: false,
+      errorColor: "#cc0000",
+      strict: "warn",
     })
   })
 
@@ -14,6 +17,9 @@ module.exports = ({ markdownAST }) => {
     node.type = `html`
     node.value = katex.renderToString(node.value, {
       displayMode: true,
+      throwOnError: false,
+      errorColor: "#cc0000",
+      strict: "warn",
     })
   })
 }
