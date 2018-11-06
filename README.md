@@ -18,11 +18,11 @@
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby is released under the MIT license." />
   </a>
-  <a href="https://travis-ci.org/gatsbyjs/gatsby">
-    <img src="https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master" alt="Current TravisCI build status." />
+  <a href="https://circleci.com/gh/gatsbyjs/gatsby">
+    <img src="https://circleci.com/gh/gatsbyjs/gatsby.svg?style=shield" alt="Current CircleCI build status." />
   </a>
   <a href="https://www.npmjs.org/package/gatsby">
-    <img src="https://img.shields.io/npm/v/gatsby.svg?style=flat-square" alt="Current npm package version." />
+    <img src="https://img.shields.io/npm/v/gatsby.svg" alt="Current npm package version." />
   </a>
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
@@ -136,15 +136,11 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 
 Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
 
-Check out our [contributor onboarding docs](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repos up and running on your local machine.
-
-[**Read the Contributing Guide**](https://gatsbyjs.org/docs/how-to-contribute/)
+Check out our [**Contributing Guide**](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
 ### Code of Conduct
 
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [Code of Conduct](https://gatsbyjs.org/docs/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
-
-[**Read the Code of Conduct**](https://gatsbyjs.org/docs/code-of-conduct/)
+Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://gatsbyjs.org/docs/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
 
 ### A note on how this repository is organized
 

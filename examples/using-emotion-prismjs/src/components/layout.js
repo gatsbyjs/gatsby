@@ -19,7 +19,7 @@ const link = css`
   color: inherit;
 `
 
-class Layout extends React.Component {
+class PureLayout extends React.Component {
   render() {
     const HeadingTag = this.props.isIndex ? `h1` : `h3`
     const { siteTitle, pageTitle } = this.props
@@ -35,7 +35,6 @@ class Layout extends React.Component {
           />
           <meta name="referrer" content="origin" />
         </Helmet>
-        ` `
         <div className={indexContainer}>
           <HeadingTag>
             <Link className={link} to={`/`}>
@@ -49,7 +48,7 @@ class Layout extends React.Component {
   }
 }
 
-Layout.propTypes = {
+PureLayout.propTypes = {
   siteTitle: PropTypes.string.isRequired,
   pageTitle: PropTypes.string,
   isIndex: PropTypes.bool,
@@ -66,11 +65,13 @@ const query = graphql`
   }
 `
 
-export default props => (
+const Layout = props => (
   <StaticQuery
     query={query}
     render={data => (
-      <Layout siteTitle={data.site.siteMetadata.title} {...props} />
+      <PureLayout siteTitle={data.site.siteMetadata.title} {...props} />
     )}
   />
 )
+
+export default Layout

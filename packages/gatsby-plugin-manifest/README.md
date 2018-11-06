@@ -11,7 +11,7 @@ manifest—https://developers.google.com/web/fundamentals/engage-and-retain/web-
 
 For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozilla Docs https://developer.mozilla.org/en-US/docs/Web/Manifest.
 
-If you're using this plugin together with `gatsby-plugin-offline` (recommended),
+If you're using this plugin together with [`gatsby-plugin-offline`](https://www.gatsbyjs.org/packages/gatsby-plugin-offline) (recommended),
 this plugin should be listed _before_ the offline plugin so that it can cache
 the created manifest.webmanifest.
 

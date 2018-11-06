@@ -1,5 +1,14 @@
 # gatsby-plugin-layout
 
+This plugin enables adding components which live above the page components and persist across page changes.
+
+This can be helpful for:
+
+- Persisting layout between page changes for e.g. animating navigation
+- Storing state when navigating pages
+- Custom error handling using componentDidCatch
+- Inject additional data into pages using React Context.
+
 This plugin reimplements the behavior of layout components in `gatsby@1`, which [was removed in version 2](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
 ## Install
@@ -169,4 +178,32 @@ const ComponentThatChangeState = () => (
     )}
   </ContextConsumer>
 )
+```
+
+### Handling multiple layouts
+
+If you want to use different layouts for different pages, you can pass this information in the context of the pages you create, and then conditionally render in your layout file.
+
+In `gatsby-node.js`:
+
+```js
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage } = actions
+
+  if(page.path.match(/special-page/) {
+    page.context.layout = 'special'
+    createPage(page)
+  }
+}
+```
+
+And then in `src/layouts/index.js`:
+
+```js
+export default ({ children, pageContext }) => {
+  if (pageContext.layout === "special") {
+    return <AlternativeLayout>{children}</AlternativeLayout>
+  }
+  return <RegularLayout>{children}</RegularLayout>
+}
 ```

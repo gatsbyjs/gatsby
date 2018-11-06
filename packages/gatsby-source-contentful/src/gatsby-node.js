@@ -216,7 +216,7 @@ exports.sourceNodes = async (
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
-exports.onPreExtractQueries = async ({ store, getNodes }) => {
+exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
   const program = store.getState().program
 
   const CACHE_DIR = path.resolve(
@@ -224,9 +224,7 @@ exports.onPreExtractQueries = async ({ store, getNodes }) => {
   )
   await fs.ensureDir(CACHE_DIR)
 
-  const nodes = getNodes()
-
-  if (!nodes.some(n => n.internal.type === `ContentfulAsset`)) {
+  if (getNodesByType(`ContentfulAsset`).length == 0) {
     return
   }
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.6"></a>
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.5...gatsby-plugin-netlify-cms@3.0.6) (2018-11-06)
+
+### Bug Fixes
+
+- revert admin redirect ([#9728](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/9728)) ([88a671a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/88a671a))
+
+<a name="3.0.5"></a>
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.4...gatsby-plugin-netlify-cms@3.0.5) (2018-10-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** automatic redirect ([#9269](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/9269)) ([c6dce1c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/c6dce1c))
+
 <a name="3.0.4"></a>
 
 ## [3.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.3...gatsby-plugin-netlify-cms@3.0.4) (2018-10-18)

@@ -98,6 +98,8 @@ const Navigation = ({ pathname }) => {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.ui.whisper : false,
         },
+        paddingLeft: `env(safe-area-inset-left)`,
+        paddingRight: `env(safe-area-inset-right)`,
       }}
     >
       <div

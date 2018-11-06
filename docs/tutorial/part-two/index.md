@@ -484,7 +484,8 @@ yet for your favorite CSS option,
 - [Emotion](/packages/gatsby-plugin-emotion/)
 - [JSS](/packages/gatsby-plugin-jss/)
 - [Stylus](/packages/gatsby-plugin-stylus/)
-- and more!
+
+and more!
 
 ## What's coming next?
 

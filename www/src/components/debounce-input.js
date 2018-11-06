@@ -5,36 +5,53 @@ import PropTypes from "prop-types"
 class DebounceInput extends Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
-    initialValue: PropTypes.string,
+    value: PropTypes.string,
     delay: PropTypes.number,
   }
 
   static defaultProps = {
-    initialValue: "",
+    value: ``,
     delay: 500,
   }
 
   state = {
-    value: this.props.initialValue,
+    inputValue: ``,
   }
 
-  onChangeText = e => {
-    this.setState({ value: e.target.value })
+  componentDidMount() {
+    this.setInputValue(this.props.value)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.value != this.props.value)
+      this.setInputValue(this.props.value)
+  }
+
+  setInputValue = (value = ``) => {
+    this.setState({ inputValue: value })
+  }
+
+  onChangeInputText = e => {
+    this.setInputValue(e.target.value)
     e.persist()
-    this.debounceOnChange(e)
+    this.debounceOnChange()
   }
 
-  debounceOnChange = debounce(this.props.onChange, this.props.delay)
+  onChangeValue = () => {
+    this.props.onChange(this.state.inputValue)
+  }
+
+  debounceOnChange = debounce(this.onChangeValue, this.props.delay)
 
   render() {
-    const { value } = this.state
+    const { inputValue } = this.state
     const { initialValue, ...inputAttrs } = this.props
     return (
       <input
         {...inputAttrs}
         type="text"
-        value={value}
-        onChange={this.onChangeText}
+        value={inputValue}
+        onChange={this.onChangeInputText}
       />
     )
   }
