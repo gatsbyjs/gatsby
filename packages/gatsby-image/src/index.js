@@ -101,11 +101,11 @@ const noscriptImg = props => {
 }
 
 const Img = React.forwardRef((props, ref) => {
-  const { style, objectFit, objectPosition, onLoad, onError, ...otherProps } = props
+  const { style, onLoad, onError, ...otherProps } = props
 
-  // Override objectFit/objectPosition props with any values passed to imgStyle
-  style.objectFit = style.objectFit || objectFit
-  style.objectPosition = style.objectPosition || objectPosition
+  // Set default object-fit/position values if not set via imgStyle prop
+  style.objectFit = style.objectFit || `cover`
+  style.objectPosition = style.objectPosition || `50% 50%`
 
   const imgStyle = {
     position: `absolute`,
@@ -116,6 +116,7 @@ const Img = React.forwardRef((props, ref) => {
     ...style,
   }
 
+  // Optionally add font-family declaration to activate object-fit-images polyfill
   if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
     imgStyle.fontFamily = `"object-fit: ${style.objectFit}; object-position: ${style.objectPosition}"`
   }
@@ -133,8 +134,6 @@ const Img = React.forwardRef((props, ref) => {
 
 Img.propTypes = {
   style: PropTypes.object,
-  objectFit: PropTypes.string,
-  objectPosition: PropTypes.string,
   onError: PropTypes.func,
   onLoad: PropTypes.func,
 }
@@ -224,8 +223,6 @@ class Image extends React.Component {
       className,
       style = {},
       imgStyle = {},
-      objectFit,
-      objectPosition,
       placeholderStyle = {},
       placeholderClassName,
       fluid,
@@ -237,10 +234,11 @@ class Image extends React.Component {
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    // Override objectFit/objectPosition props with any values passed to imgStyle
-    imgStyle.objectFit = imgStyle.objectFit || objectFit
-    imgStyle.objectPosition = imgStyle.objectPosition || objectPosition
+    // Set default object-fit/position values if not set via imgStyle prop
+    imgStyle.objectFit = imgStyle.objectFit || `cover`
+    imgStyle.objectPosition = imgStyle.objectPosition || `50% 50%`
 
+    // Optionally add font-family declaration to activate object-fit-images polyfill
     if (process.env.GATSBY_IMAGE_LOAD_POLYFILLS) {
       imgStyle.fontFamily = `"object-fit: ${imgStyle.objectFit}; object-position: ${imgStyle.objectPosition}"`
     }
@@ -344,7 +342,7 @@ class Image extends React.Component {
           {this.state.hasNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
-                __html: noscriptImg({ alt, title, ...image }),
+                __html: noscriptImg({ alt, title, ...image, ...imageStyle }),
               }}
             />
           )}
@@ -451,8 +449,6 @@ Image.defaultProps = {
   critical: false,
   fadeIn: true,
   alt: ``,
-  objectFit: `cover`,
-  objectPosition: `50% 50%`,
   Tag: `div`,
 }
 
@@ -490,8 +486,6 @@ Image.propTypes = {
   critical: PropTypes.bool,
   style: PropTypes.object,
   imgStyle: PropTypes.object,
-  objectFit: PropTypes.string, // separate from imgStyle for polyfill's fontFamily declaration
-  objectPosition: PropTypes.string, // separate from imgStyle for polyfill's fontFamily declaration
   placeholderStyle: PropTypes.object,
   placeholderClassName: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
