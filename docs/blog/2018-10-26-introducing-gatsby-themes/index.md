@@ -113,6 +113,9 @@ files as plugin options. This allows themes to override any settings
 inherited from the theme's own plugin declarations or apply gatsby
 lifecycle hooks such as [`onCreatePage`](/docs/node-apis/#onCreatePage).
 
+Check out the theme examples in this multi-package repo for more
+examples of using and building themes: https://github.com/ChristopherBiscardi/gatsby-theme-examples.
+
 ## Next Steps
 
 ### Sub Themes and Overriding
@@ -156,10 +159,9 @@ createPage({
 
 This doesn't allow us to make more granular overrides of different
 components, but it does allow us to replace the rendering of pages and
-other whole elements.
+other whole elements. Component Shadowing, a more granular method of
+overriding, is already in the works.
 
----
-
-:conclusion with links to file issues and help out:
-
-https://github.com/ChristopherBiscardi/gatsby-theme-examples
+If you want to be involved in the development of theming for Gatsby,
+join the Spectrum community for [Gatsby
+themes](https://spectrum.chat/gatsby-themes/general?thread=1e02db45-9f2e-4c0a-b42e-a4d4e4d519a8).
