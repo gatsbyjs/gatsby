@@ -112,7 +112,7 @@ further improvements in userland before merging them into
 core. Sub-theming, for example, is a critical part of a theming
 ecosystem that is currently missing from Gatsby. Overriding theme
 elements is possible on a coarse level right now in userland. If, for
-example, a theme defines a set of pages using createPage we can define
+example, a theme defines a set of pages using [`createPage`](/docs/actions/#createPage) we can define
 a helper function that will look for the page component first in the
 user's site and then fall back to the theme's default implementation.
 
