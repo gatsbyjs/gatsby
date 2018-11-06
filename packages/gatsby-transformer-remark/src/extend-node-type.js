@@ -24,7 +24,7 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
-const { duplicateNode } = require(`./hast-processing`)
+const { getConcatenatedValue, duplicateNode } = require(`./hast-processing`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -402,10 +402,10 @@ module.exports = (
           let parent
 
           function preOrderTraversal(node) {
-            // const totalExcerptSoFar = getConcatenatedValue(excerptAST)
-            // if (totalExcerptSoFar && totalExcerptSoFar.length > pruneLength) {
-            //   return
-            // }
+            const totalExcerptSoFar = getConcatenatedValue(excerptAST)
+            if (totalExcerptSoFar && totalExcerptSoFar.length > pruneLength) {
+              return
+            }
 
             const newNode = duplicateNode(node)
             if (parent) {
