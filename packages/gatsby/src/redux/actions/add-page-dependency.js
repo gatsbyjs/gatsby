@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const { store } = require(`../`)
 const { actions } = require(`../actions.js`)
 
-exports.createPageDependency = ({ path, nodeId, connection }) => {
+function createPageDependency({ path, nodeId, connection }) {
   const state = store.getState()
 
   // Check that the dependencies aren't already recorded so we
@@ -35,4 +35,41 @@ exports.createPageDependency = ({ path, nodeId, connection }) => {
   // It's new, let's dispatch it
   const action = actions.createPageDependency({ path, nodeId, connection })
   store.dispatch(action)
+}
+
+/**
+ * A Graphql resolver middleware that takes a resolver and wraps it in
+ * a new one that calls the original. It then calls
+ * `createPageDependency` using the returned returned node and the
+ * context.path
+ *
+ * @param resolver A graphql resolver. A function that take arguments
+ * (node, args, context, info) and return a node
+ * @returns A new graphql resolver
+ */
+function pageDependencyResolver(resolver) {
+  return async (node, args, context = {}, info = {}) => {
+    const { path } = context
+    const result = await resolver(node, args, context, info)
+
+    // Call createPageDependency on each result
+    if (path) {
+      const asArray = _.isArray(result) ? result : [result]
+      for (const node of asArray) {
+        // using module.exports here so it can be mocked
+        module.exports.createPageDependency({
+          path,
+          nodeId: node.id,
+        })
+      }
+    }
+
+    // Finally return the found node
+    return result
+  }
+}
+
+module.exports = {
+  createPageDependency,
+  pageDependencyResolver,
 }

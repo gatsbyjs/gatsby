@@ -9,7 +9,7 @@ const systemPath = require(`path`)
 const { getNodesByType } = require(`../../db/nodes`)
 const { findRootNodeAncestor } = require(`../../db/node-tracking`)
 const {
-  createPageDependency,
+  pageDependencyResolver,
 } = require(`../../redux/actions/add-page-dependency`)
 const { joinPath } = require(`../../utils/path`)
 
@@ -132,7 +132,7 @@ function createType(fileNodeRootType, isArray) {
 
   return Object.freeze({
     type: isArray ? new GraphQLList(fileNodeRootType) : fileNodeRootType,
-    resolve: (node, args, { path }, { fieldName }) => {
+    resolve: pageDependencyResolver((node, args, context, { fieldName }) => {
       let fieldValue = node[fieldName]
 
       if (!fieldValue) {
@@ -151,15 +151,7 @@ function createType(fileNodeRootType, isArray) {
           getNodesByType(`File`),
           n => n.absolutePath === fileLinkPath
         )
-        if (linkedFileNode) {
-          createPageDependency({
-            path,
-            nodeId: linkedFileNode.id,
-          })
-          return linkedFileNode
-        } else {
-          return null
-        }
+        return linkedFileNode
       }
 
       // Find the File node for this node (we assume the node is something
@@ -172,7 +164,7 @@ function createType(fileNodeRootType, isArray) {
       } else {
         return findLinkedFileNode(fieldValue)
       }
-    },
+    }),
   })
 }
 
