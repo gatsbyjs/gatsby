@@ -2,6 +2,9 @@
 **/node_modules/**
 flow-typed
 
+# webfont demo styles
+**/specimen_files
+
 # built sites
 benchmarks/**/public
 e2e-tests/**/public
