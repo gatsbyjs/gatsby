@@ -45,7 +45,7 @@
       "eslint --ignore-path .gitignore --ignore-path .prettierignore --fix",
       "git add"
     ],
-    "*.{json,md,scss,yaml,yml}": [
+    "*.{md,css,scss,yaml,yml}": [
       "prettier --write",
       "git add"
     ]
