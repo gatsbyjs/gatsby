@@ -165,3 +165,7 @@ overriding, is already in the works.
 If you want to be involved in the development of theming for Gatsby,
 join the Spectrum community for [Gatsby
 themes](https://spectrum.chat/gatsby-themes/general?thread=1e02db45-9f2e-4c0a-b42e-a4d4e4d519a8).
+
+I'll also be talking about theming Gatsby at [Gatsby
+Days](https://www.eventbrite.com/e/gatsby-days-tickets-51837151315) on
+Dec 7th covering how we got here and where we're going next.
