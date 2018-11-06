@@ -8,7 +8,7 @@ import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
-const EcosystemSectionRoot = styled("section")`
+const EcosystemSectionRoot = styled(`section`)`
   background: #fff;
   padding: 0 ${rhythm(options.blockMarginBottom)};
   margin-bottom: ${rhythm(1 / 2)};
@@ -43,7 +43,7 @@ const EcosystemSectionRoot = styled("section")`
     text-decoration: none;
   }
 `
-const Header = styled("header")`
+const Header = styled(`header`)`
   align-items: flex-start;
 
   ${presets.Tablet}: {
@@ -53,7 +53,7 @@ const Header = styled("header")`
   };
 `
 
-const Title = styled("h1")`
+const Title = styled(`h1`)`
   color: ${colors.gatsby};
   display: flex;
   font-size: 1.25rem;
@@ -64,12 +64,12 @@ const Title = styled("h1")`
     margin: 0 0.3rem 0 -0.1rem;
   }
 `
-const Icon = styled("span")`
+const Icon = styled(`span`)`
   display: block;
   width: 32px;
   height: 32px;
 `
-const SubTitle = styled("h2")`
+const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
   font-size: 0.875rem;
   font-weight: 300;
@@ -78,13 +78,13 @@ const SubTitle = styled("h2")`
   text-transform: uppercase;
 `
 
-const Description = styled("p")`
+const Description = styled(`p`)`
   font-family: ${options.systemFontFamily.join(`,`)};
   font-size: 0.8125rem;
   color: ${colors.gray.lightCopy};
 `
 
-const Actions = styled("div")`
+const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
   margin: -4px 0 ${rhythm(1)};

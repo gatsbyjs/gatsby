@@ -9,18 +9,18 @@ beforeEach(() => {
     render({
       site: {
         siteMetadata: {
-          title: 'GatsbyJS',
+          title: `GatsbyJS`,
         },
       },
     })
   )
 })
 
-describe('404', () => {
-  it('contains NOT FOUND text', () => {
+describe(`404`, () => {
+  it(`contains NOT FOUND text`, () => {
     const { getByText } = render(<FourOhFour />)
 
-    const el = getByText('NOT FOUND')
+    const el = getByText(`NOT FOUND`)
 
     expect(el).toBeInTheDocument()
   })

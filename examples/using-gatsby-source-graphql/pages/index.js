@@ -8,7 +8,7 @@ export default ({ data }) => (
     {data.cms.blogPosts.map((blog, i) => (
       <a key={i} href={makeBlogPath(blog)}>
         <h2>
-          {dateformat(blog.createdAt, "fullDate")} - {blog.title}
+          {dateformat(blog.createdAt, `fullDate`)} - {blog.title}
         </h2>
       </a>
     ))}
