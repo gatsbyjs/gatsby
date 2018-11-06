@@ -71,10 +71,9 @@ module.exports = async (
   }
 
   function getHmrPath() {
-    let hmrBasePath = `${program.ssl ? `https` : `http`}://${
-      program.host
-    }:${webpackPort}/`
-
+    // ref: https://github.com/gatsbyjs/gatsby/issues/8348
+    // construct the webpack url relative to where the request is coming from (if public path is not set)
+    let hmrBasePath = process.env.GATSBY_WEBPACK_PUBLICPATH || `/`
     const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
 
     if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
