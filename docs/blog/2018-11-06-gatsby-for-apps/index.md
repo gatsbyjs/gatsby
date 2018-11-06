@@ -5,17 +5,22 @@ author: Dustin Schau
 tags: ["app", "web app", "application", "authentication"]
 ---
 
-Gatsby is truly incredible for static sites. In fact, our branding for Gatsby used to be the following:
+Gatsby is great for static sites. You probably know this! It’s equally great for web applications. You may not know this. Gatsby is great for building web experiences that leverage the benefits of both static sites and web applications -- at the same time. You don't have to sacrifice the advantages of one approach to reap the benefits of the other.
 
-> a blazing-fast static site generator for React
+In this post, I will target several key areas concerning the benefits of this hybrid approach, specifically:
 
-This is _still_ true, but I'd like to clarify one, simple concept. Gatsby is _still_ great for static sites, but it's also an equally great choice for applications. In this post, I'd like to clarify this central concept, and set the record straight that Gatsby is great for static sites and applications, alike.
+What is a web application?
+Gatsby’s runtime enables dynamic functionality, which is used for dynamic, web application functionality
+Gatsby not only _can_ be used for web applications, it’s an excellent choice for web applications
+Why Gatsby for web applications?
 
-To begin... what even is an app, anyways?
+Finally, I’ll demo a web application built with Gatsby that ties each of these key areas together and succinctly illustrate one, central point… Gatsby not only can build web applications, Gatsby is an excellent choice for your next application.
 
-## What is an app?
+To start... what even _is_ an application, anyways?
 
-I've gone into the [ins and outs of describing the difficulty][whats-an-app] of defining a traditional web application. In an effort to not re-hash all the work there, I think there are a few simple features that, when present, indicate a more app-like experience. Specifically:
+## What is an application?
+
+I've previously gone into the [ins and outs of describing the difficulty][whats-an-app] of defining a traditional web application. In an effort to not re-hash all the work there, I think there are several, key features that indicate a more app-like experience:
 
 - dynamic data fetching
 - user authentication and authenticated client-only routes
@@ -34,11 +39,11 @@ Gmail served as an early proof of concept that proved out two, key functional wi
 1. Client-side JavaScript can power an app-like experience, and
 2. a JavaScript application (running in your browser) can compare favorably to traditional, native applications for desktop and mobile
 
-The impact of these wins can’t be understated. It _proved_ that a native, app-like experience is not only possible for end users, but that it can be
+The impact of these wins can’t be understated. It _proved_ that a native, app-like experience is not only possible for end users, but that it can even be preferable and more convenient than the native experience. 
 
 Next up, is Twitter, for slightly different reasons.
 
-### Twitter (Lite / PWA)
+### Twitter (Lite / Progressive Web Application)
 
 ![Twitter interface](./images/twitter.png)
 
@@ -63,7 +68,7 @@ These two, great applications will serve as key foundational pieces to keep in m
 
 What if I told you... that using a Gatsby application enables all of these traditional web-app like experiences because a Gatsby _site_ is an application?
 
-Every Gatsby application that's deployed isn't merely static. It's _as much_ static HTML rendered up-front, as possible. Then client-side JavaScript (via React!) is enabled to serve as the engine for your next, great web app experience. A quick overview of Gatsby's general build process is effective to illustrate the concept. Consider:
+Every Gatsby application that's deployed isn't merely static. It's _as much_ static HTML rendered up-front, as possible. Then client-side JavaScript (via React!) takes over as the engine for your next, great web app experience. A quick overview of Gatsby's general build process is effective to illustrate the concept.
 
 1. Inject pages with data (from [GraphQL][gatsby-graphql] or even [unstructured data outside of GraphQL][gatsby-unstructured])
 1. Use the [ReactDOMServer.renderToString][react-dom-render-to-string] to server-side render React pages to _HTML_ files
@@ -124,19 +129,19 @@ It's clear that Gatsby _can_ be used for web applications. However, what hasn't 
 
 ## _Why_ Gatsby for Apps?
 
-If we re-visit some of the benefits that Gatsby provides, minimally we could create a list, like so:
+If we revisit some of the benefits that Gatsby provides, minimally we could create a list, like so:
 
 - Static rendering of React components and co-located data to static HTML
 - Optimizing data, images, etc. for blazing-fast performance
 - Internalizing performance patterns and best practices like [PRPL][prpl], route-based code splitting, etc.
 
-Each of these are worthy of their own blog post, but suffice to say these are _great_ functionalities that you want not only in your static site, but also in your application.
+Each of these are worthy of their own blog post, but suffice to say these are _great_ functionalities that you want not only in your static site, but also in your application. 
 
 These performance optimizations aren't opt-in; they're enabled, by default. As new performance techniques and optimizations gain popularity, we can internalize these just as we have for these others optimizations currently available in Gatsby. These optimizations can then be made available to your end users merely by upgrading your version of Gatsby.
 
 ### Plugins and the Gatsby Ecosystem
 
-One of the key, often undersold benefits of Gatsby is its highly pluggable architecture. Need a plugin for [sourcing data from Wordpress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy--and yeah, of course! Want to load optimized, responsive, blur-in images? Yep.
+One of the key, often undersold benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from Wordpress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy!! Want to load optimized, responsive, blur-in images? Yep.
 
 #### `gatsby-image`
 
@@ -152,22 +157,22 @@ The power of these components and plugins is immense. In a similar way that reus
 
 ### The App Shell
 
-By adding the [`gatsby-plugin-offline`][gatsby-plugin-offline] plugin, we enable a fully-featured, progressive web application that works offline and creates an app shell by registering a service worker. An app shell is essentially disparate pieces of your application (e.g. header, footer, sidebar, etc.) that can be made instantly available from a service worker while dynamic content is fetched in the background. This creates a great end-user experience, as the application is able to visually populate instantly, and then data loads into place as its requested.
+By adding the [`gatsby-plugin-offline`][gatsby-plugin-offline] plugin, we enable a fully-featured, progressive web application that works offline and creates an app shell by registering a service worker. An app shell is essentially disparate pieces of your application (e.g. header, footer, sidebar, etc.) that are instantly available from a service worker while dynamic content is fetched in the background. This creates a great end-user experience, as the application is able to visually populate instantly, and then data loads into place on demand.
 
 If we consider this approach, the technique looks like the following:
 
 1. Render as much content, as possible, up front (e.g. the app shell)
 1. In the background, make async data requests to load disparate pieces, e.g. load page content from an API, particularly an API with authentication
 
-This approach can be effectively contrasted with the server-rendered approach. With this approach, if we consider an authenticated API call used to populate page data before it's sent (as HTML) to the end user, we're forced to defer loading for the whole page and the constraints of the API response, rather than just the pieces of dynamic data from the API call.
+Let’s compare this approach with the server-rendered approach. Let’s consider an authenticated API call. This API call is used to populate page data before it's sent (as HTML) to the end user. We're forced to defer loading for the entire page and the bottleneck of the API response, rather than just the pieces of dynamic data from the API call.
 
-Consider the following animation to illustrate this point. On the left, an application using a service worker and an App Shell, e.g. a Gatsby application. On the right, a server-rendered application that waits until data fetching has resolved to serve the _entire_ page all at once.
+Consider the following animation to illustrate this point. On the left, an application using a service worker and an App Shell, e.g. a Gatsby application. On the right, a server-rendered application that waits until the API call has resolved to serve the _entire_ page all at once.
 
 ![App shell vs. server side rendered](./images/app-shell-web-apps.gif)
 
-The benefits of this approach are clear. Loading an application shell gives end users the impression that the page is loading more quickly, even if in comparing the two approaches, both effectively load _all_ the data after the same amount of time. This gives your users the best of both worlds... the appearance of being blazing fast and _actually_ being blazing fast with all of the performance optimizations you get with Gatsby.
+The benefits of this approach are clear. Loading an application shell gives end users the impression that the page is loading more quickly, even if in comparing the two approaches, both effectively load _all_ the data after the same amount of time. This gives your users the best of both worlds... the appearance of being blazing fast and _actually_ being blazing fast with the optimizations you get, for free, with Gatsby.
 
-To unify all these concepts, I've put together a demo application that illustrates that rich web applications are not only _possible_ in Gatsby, but that the end-user and developer experience is an incredible one.
+To unify all these concepts, I've assembled a demo application that illustrates that rich web applications are not only _possible_ in Gatsby, but that Gatsby is a great choice to build these types of applications.
 
 ## Introducing... Gatsby Mail! (For demo purposes only!)
 
@@ -176,7 +181,7 @@ To unify all these concepts, I've put together a demo application that illustrat
 This demo application encapsulates some of the concepts and themes I've been hitting upon, particularly:
 
 1. Gmail, Twitter, et al, are key exemplars that form a mental model of a rich, web app experience
-1. Gatsby provides components, plugins, etc. for delivering great experiences (use them!)
+1. Gatsby provides components, plugins, etc. for delivering great experiences, including progressive web app functionality (use them!)
 1. Gatsby not only _can_ build web applications, it's an excellent choice for building web applications
 
 Additionally, the demo application shows some specific web application functionality, such as:
@@ -186,11 +191,11 @@ Additionally, the demo application shows some specific web application functiona
 - GraphQL at build time and _run time_ utilizing a remote GraphQL API and [apollo-boost][apollo-boost], and
 - loading an app shell with `gatsby-plugin-offline` (check out the "Fast 3G" example below!)
 
-and some other niceties like a light/dark theme, client-only routes, and more! You can see all of these concepts unify to form this great end-user experience with the below example with a simulated fast 3G connection. The app shell (header, footer, etc.) loads into place _instantly_ as the dynamic content is fetched (from the GraphQL API!) in the background.
+and some other niceties like a light/dark theme, client-only routes, and more! You can see all of these concepts unify to form this great end-user experience in the below example with a simulated fast 3G connection. The app shell (header, footer, etc.) loads into place _instantly_ as the dynamic content is fetched (from the GraphQL API!) in the background.
 
 ![App Shell with Gatsby Mail](./images/gatsby-mail-app-shell.gif)
 
-I hope you check out the [Github repo][gatsby-mail-repo] to learn more about how it was built and adopt some of the techniques as you build your next, great Gatsby web **application**. We can't wait to see what you build.
+Check out the [Github repo][gatsby-mail-repo] to learn more about how it was built and adopt some of the techniques as you build your next, great Gatsby web **application**. We can't wait to see what you build.
 
 [whats-an-app]: /blog/2018-10-15-beyond-static-intro/#what-is-an-app
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
