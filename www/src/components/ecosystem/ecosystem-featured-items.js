@@ -8,7 +8,7 @@ import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import { scrollbarStyles } from "../../utils/styles"
 
-const EcosystemFeaturedItemsRoot = styled("div")`
+const EcosystemFeaturedItemsRoot = styled(`div`)`
   overflow-x: scroll;
   margin: ${rhythm(0.1)} -${rhythm(options.blockMarginBottom)};
 
@@ -22,7 +22,7 @@ const EcosystemFeaturedItemsRoot = styled("div")`
   }
 `
 
-const List = styled("ul")`
+const List = styled(`ul`)`
   display: flex;
   list-style: none;
   margin: 0;

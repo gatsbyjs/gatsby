@@ -8,7 +8,10 @@ const path = require(`path`)
 const normalizePath = require(`normalize-path`)
 const { clearTypeExampleValues } = require(`../data-tree-utils`)
 const { typeConflictReporter } = require(`../type-conflict-reporter`)
-const { inferObjectStructureFromNodes, clearUnionTypes } = require(`../infer-graphql-type`)
+const {
+  inferObjectStructureFromNodes,
+  clearUnionTypes,
+} = require(`../infer-graphql-type`)
 const { clearTypeNames } = require(`../create-type-name`)
 
 function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
@@ -734,7 +737,7 @@ describe(`GraphQL type inferance`, () => {
 
       it(`Uses same union type for same child node types and key`, () => {
         const fields = inferObjectStructureFromNodes({
-          nodes: [{ test___NODE: [`pet_1`, `child_1`] } ],
+          nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
           types,
         })
         const fields2 = inferObjectStructureFromNodes({
@@ -743,7 +746,6 @@ describe(`GraphQL type inferance`, () => {
         })
         expect(fields.test.type).toEqual(fields2.test.type)
       })
-
 
       it(`Uses a different type for the same child node types with a different key`, () => {
         const fields = inferObjectStructureFromNodes({
@@ -763,7 +765,7 @@ describe(`GraphQL type inferance`, () => {
           payload: { id: `toy_1`, internal: { type: `Toy` } },
         })
         const fields = inferObjectStructureFromNodes({
-          nodes: [{ test___NODE: [`pet_1`, `child_1`] } ],
+          nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
           types,
         })
         const fields2 = inferObjectStructureFromNodes({
@@ -774,7 +776,7 @@ describe(`GraphQL type inferance`, () => {
       })
 
       it(`Creates a new type after schema updates clear union types`, () => {
-        const nodes = [{ test___NODE: [`pet_1`, `child_1`] } ]
+        const nodes = [{ test___NODE: [`pet_1`, `child_1`] }]
         const fields = inferObjectStructureFromNodes({ nodes, types })
         clearUnionTypes()
         const updatedFields = inferObjectStructureFromNodes({ nodes, types })
@@ -782,7 +784,7 @@ describe(`GraphQL type inferance`, () => {
       })
 
       it(`Uses a reliable naming convention`, () => {
-        const nodes = [{ test___NODE: [`pet_1`, `child_1`] } ]
+        const nodes = [{ test___NODE: [`pet_1`, `child_1`] }]
         inferObjectStructureFromNodes({ nodes, types })
         clearUnionTypes()
         const updatedFields = inferObjectStructureFromNodes({ nodes, types })

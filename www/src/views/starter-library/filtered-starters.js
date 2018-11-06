@@ -76,9 +76,9 @@ export default class FilteredStarterLibrary extends Component {
     )
 
     // stopgap for missing gh data (#8763)
-    let starters = data.allStartersYaml.edges.filter(({ node: starter }) => {
-      return starter.fields && starter.fields.starterShowcase
-    })
+    let starters = data.allStartersYaml.edges.filter(
+      ({ node: starter }) => starter.fields && starter.fields.starterShowcase
+    )
 
     if (urlState.s.length > 0) {
       starters = starters.filter(starter =>
@@ -101,7 +101,7 @@ export default class FilteredStarterLibrary extends Component {
 
     return (
       <section className="showcase" css={{ display: `flex` }}>
-        <SidebarContainer css={{ overflowY: "auto" }}>
+        <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
             <div css={{ height: `3.5rem` }}>
