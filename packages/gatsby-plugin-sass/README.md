@@ -33,7 +33,7 @@ plugins: [
 
 If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader):
 
- ```javascript
+```javascript
 // in gatsby-config.js
 plugins: [
   {

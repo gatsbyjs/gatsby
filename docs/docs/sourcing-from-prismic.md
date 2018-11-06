@@ -131,7 +131,7 @@ const Post = ({ data: { prismicPost } }) => {
       <h1>{data.title.text}</h1>
       <div dangerouslySetInnerHTML={{ __html: data.content.html }} />
     </React.Fragment>
-  );
+  )
 }
 
 export default Post
@@ -188,7 +188,9 @@ import { graphql, Link } from "gatsby"
 const Index = ({ data: { prismicHomepage } }) => (
   <React.Fragment>
     <h1>{prismicHomepage.data.title.text}</h1>
-    <div dangerouslySetInnerHTML={{ __html: prismicHomepage.data.content.html }} />
+    <div
+      dangerouslySetInnerHTML={{ __html: prismicHomepage.data.content.html }}
+    />
   </React.Fragment>
 )
 
