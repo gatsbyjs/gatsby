@@ -170,7 +170,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       </div>
     )
   }
-  return <React.Fragment />
+  return null
 }
 
 export default StartersList
