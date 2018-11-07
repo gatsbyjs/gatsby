@@ -21,9 +21,6 @@ import TechWithIcon from "../components/tech-with-icon"
 import EmailCaptureForm from "../components/email-capture-form"
 
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
-import HomepageBlog from "../components/homepage/homepage-blog"
-
-import { EcosystemIcon } from "../assets/mobile-nav-icons"
 
 class IndexRoute extends React.Component {
   combineEcosystemFeaturedItems = ({ starters, plugins }) => {
@@ -220,8 +217,6 @@ class IndexRoute extends React.Component {
                 </Cards>
 
                 <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
-
-                <HomepageBlog />
 
                 <Cards>
                   <div

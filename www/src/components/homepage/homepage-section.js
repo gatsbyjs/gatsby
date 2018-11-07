@@ -4,7 +4,7 @@ import styled from "react-emotion"
 
 import Button from "../button"
 
-import { rhythm, options, scale } from "../../utils/typography"
+import { rhythm, options } from "../../utils/typography"
 import { vP } from "../gutters"
 import presets, { colors } from "../../utils/presets"
 

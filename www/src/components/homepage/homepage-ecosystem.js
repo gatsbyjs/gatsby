@@ -149,7 +149,6 @@ const HomepageEcosystem = ({ featuredItems }) => (
     sectionIcon={EcosystemIcon}
     title="Plugins & Starters"
     introduction="Gatsby’s Ecosystem bacon ipsum sunt—over 750 plugins to pull in data from meatballs, spacecraft, rocket science."
-    inverseStyle={true}
     links={[
       {
         label: `Explore the Gatsby Ecosystem`,
