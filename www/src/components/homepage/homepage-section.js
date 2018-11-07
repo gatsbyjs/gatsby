@@ -29,7 +29,7 @@ const HomepageSectionRoot = styled(`section`)`
 const Header = styled(`header`)`
   ${presets.Tablet} {
     margin-left: 3rem;
-    max-width: 28rem;
+    max-width: 30rem;
   }
 
   ${presets.Desktop} {

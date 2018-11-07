@@ -157,7 +157,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
     sectionName="Ecosystem"
     sectionIcon={EcosystemIcon}
     title="Plugins & Starters"
-    introduction="Gatsby’s Ecosystem bacon ipsum sunt—over 750 plugins to pull in data from meatballs, spacecraft, rocket science."
+    introduction="With over 527 plugins, 86 starters, and dozens of tutorials, the Gatsby ecosystem has tools to help you build your Gatsby projects."
     links={[
       {
         label: `Explore the Gatsby Ecosystem`,
@@ -175,11 +175,11 @@ const HomepageEcosystem = ({ featuredItems }) => (
         links={[
           { label: `Browse Plugins`, to: `/plugins/` },
           {
-            label: `Plugin Authoring`,
+            label: `Creating Plugins`,
             to: `/docs/plugin-authoring/`,
             secondary: true,
           },
-          { label: `Plugin Docs`, to: `/docs/plugins/`, secondary: true },
+          { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },
         ]}
         onHomepage={true}
       />
@@ -190,7 +190,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
         icon={StartersIcon}
         links={[
           { label: `Browse Starters`, to: `/starters/` },
-          { label: `Starter Docs`, to: `/docs/starters/`, secondary: true },
+          { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
         ]}
       />
       <Section
