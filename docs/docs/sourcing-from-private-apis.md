@@ -4,13 +4,13 @@ title: Sourcing from Private APIs
 
 Gatsby allows you to pull data from headless CMSs, databases, SaaS services, public API, and your private APIs.
 
-From Gatsby perspective, there is no difference between sourcing from a public or private API. The only difference is the availability of the API to Gatsby to query the data.
+From the Gatsby perspective, there is no difference between sourcing from a public or private API. The only difference is the availability of the API to Gatsby to query the data.
 
-There are 3 approches that you can use to source data from your private API:
+There are 3 approaches that you can use to source data from your private API:
 
 1. If your private API is a GraphQL API, you can use [`gatsby-source-graphql`](https://www.gatsbyjs.org/packages/gatsby-source-graphql/).
 2. If your private API is not a GraphQL API and you want something straightforward and simple, treat the data as unstructured data and fetch it during build time, as described by the guide "[Using unstructured data](/docs/using-unstructured-data/)". However, as highlighted in the guide, this approach comes with some tradeoffs.
-3. Create your source plugin, as described in the tutorial "[Source plugin tutorial](/docs/source-plugin-tutorial/)".
+3. Create a source plugin, as described in the tutorial "[Source plugin tutorial](/docs/source-plugin-tutorial/)".
 
 ### Other considerations
 
