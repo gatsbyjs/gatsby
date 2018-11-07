@@ -33,7 +33,7 @@ Now open up your browser to `localhost:8000` and you should see the starter appl
 
 ![Gatsby Starter Screenshot](/screen-4.png)
 
-Open up your favorite code editor and let's start setting stuff up.
+Open up your favorite code editor to start setting stuff up.
 
 ## Gatsby Image
 
@@ -93,7 +93,7 @@ const Cars = () => (
 export default Cars
 ```
 
-Notice how the `StaticQuery` component is using a render prop where it's returning our `Lightbox` component. For now, it's a simple component inside `components/lightbox.js` that looks like this:
+Notice how the `StaticQuery` component is using a render prop where it's returning your `Lightbox` component. For now, it's a simple component inside `components/lightbox.js` that looks like this:
 
 ```js
 import React, { Component } from "react"
