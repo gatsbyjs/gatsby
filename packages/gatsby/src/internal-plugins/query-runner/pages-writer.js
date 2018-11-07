@@ -41,7 +41,12 @@ const writePages = async () => {
     // where more specific patterns come before less specific patterns.
     // This ensures explicit routes will match before general.
     // Specificity is inferred from number of path segments.
-    .sortBy(p => `${p.matchPath ? 9999 - p.matchPath.split(`/`).length : `0000`}${p.path}`)
+    .sortBy(
+      p =>
+        `${p.matchPath ? 9999 - p.matchPath.split(`/`).length : `0000`}${
+          p.path
+        }`
+    )
     .value()
   const newHash = crypto
     .createHash(`md5`)

@@ -9,15 +9,15 @@ beforeEach(() => {
     render({
       site: {
         siteMetadata: {
-          title: 'GatsbyJS',
+          title: `GatsbyJS`,
         },
       },
     })
   )
 })
 
-describe('Layout', () => {
-  it('renders a header', () => {
+describe(`Layout`, () => {
+  it(`renders a header`, () => {
     const { container } = render(
       <Layout>
         <main>
@@ -26,10 +26,10 @@ describe('Layout', () => {
       </Layout>
     )
 
-    expect(container.querySelector('header')).toBeInTheDocument()
+    expect(container.querySelector(`header`)).toBeInTheDocument()
   })
 
-  it('renders children', () => {
+  it(`renders children`, () => {
     const text = `__Hello world__`
     const { getByText } = render(
       <Layout>

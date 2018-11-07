@@ -2,14 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
-import styled, { css } from "react-emotion"
+import styled from "react-emotion"
 
 import Banner from "../banner"
 import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import presets, { colors } from "../../utils/presets"
+import presets from "../../utils/presets"
 
 // Import Futura PT typeface
 import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -19,7 +19,7 @@ import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 // Other fonts
 import "typeface-spectral"
 
-const Content = styled("div")`
+const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
   padding-bottom: 3.5rem;
 
@@ -59,7 +59,7 @@ const LayoutWithHeading = props => {
   const {
     children,
     location: { pathname },
-    pageTitle = "",
+    pageTitle = ``,
     pageIcon,
   } = props
 
@@ -68,7 +68,7 @@ const LayoutWithHeading = props => {
   return (
     <div className={` ${isHomepage ? `isHomepage` : ``}`}>
       <Helmet>
-        <title>{pageTitle ? `${pageTitle} | GatsbyJS` : "GatsbyJS"}</title>
+        <title>{pageTitle ? `${pageTitle} | GatsbyJS` : `GatsbyJS`}</title>
         <meta name="twitter:site" content="@gatsbyjs" />
         <meta name="og:type" content="website" />
         <meta name="og:site_name" content="GatsbyJS" />
