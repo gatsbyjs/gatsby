@@ -81,7 +81,7 @@ module.exports = async (args: BootstrapArgs) => {
     const themesConfig = await Promise.mapSeries(
       config.__experimentalThemes,
       async plugin => {
-        const resolve = plugin.resolve || plugin
+        const themeName = plugin.resolve || plugin
         const themeConfig = plugin.options || {}
         const theme = await preferDefault(
           getConfigFile(themeName, `gatsby-config`)
