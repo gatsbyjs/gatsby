@@ -34,10 +34,6 @@ const List = styled(`ul`)`
     flex-direction: column;
     padding: 0;
     width: 100%;
-
-    .leadAnimation & {
-      animation: none;
-    }
   }
 `
 
