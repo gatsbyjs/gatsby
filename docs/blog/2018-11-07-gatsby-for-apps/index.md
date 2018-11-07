@@ -26,15 +26,15 @@ To begin, what even _is_ an application, anyways?
 
 ## What is an application?
 
-I've previously attempted the [surprisingly difficulty task][whats-an-app] of defining what consititutes a traditional web application. In an effort to not re-hash all the work there, I think there are several, key features that indicate a more app-like experience:
+I've previously attempted the [surprisingly difficult task][whats-an-app] of defining what consititutes a traditional web application. In an effort to not re-hash all the work there, I think there are several, key features that indicate a more app-like experience:
 
 - dynamic data fetching
 - user authentication and authenticated client-only routes
 - client-side JS interactions
 
-Of course, a web app isn't some checklist wherein _each_ of these functionalities are required to indicate an app-like experience. Rather, I think it's easier to _see_ an example of a web application -- that encapsulates several of these functionalities -- to form a mental model of the type of web app that Gatsby can build.
+Of course, a web app isn't some checklist wherein _each_ of these functionalities are required to indicate an app-like experience. Rather, I think it's easier to _see_ an example of a web application -- one that encapsulates several of these functionalities -- to form a mental model of the type of web app that Gatsby can build.
 
-For me, there are two, key examples that are at the forefront of my mental model of what constitutes a modern web application... Gmail and Twitter.
+For me there are two key examples that are at the forefront of my mental model of what constitutes a modern web application... Gmail and Twitter.
 
 ### Gmail
 
@@ -163,7 +163,7 @@ Let's take a look at that image functionality provided by one of our components,
 
 #### `gatsby-image`
 
-Certainly one of my favorite components that Gatsby provides is `gatsby-image`. This component that we provide and maintain gives excellent image rendering capabilities, along with image optimizations enabled by plugins like [`gatsby-plugin-sharp`][gatsby-plugin-sharp]. These two techniques, along with the GraphQL API made available to any Gatsby application, vastly simplifies the developer experience of serving optimized images, providing a number of features, including:
+Certainly one of my favorite components that Gatsby provides and maintains is `gatsby-image`. This component gives excellent image rendering capabilities, along with image optimizations enabled by plugins like [`gatsby-plugin-sharp`][gatsby-plugin-sharp]. These two techniques, along with the GraphQL API made available to any Gatsby application, vastly simplifies the developer experience of serving optimized images, providing a number of features, including:
 
 - Resizing large images to an optimized size for your design
   - aka banish the practice of 5Mb above-the-fold hero images to the shadow realm
@@ -240,9 +240,12 @@ We can't wait to see what you build.
 [react-lifecycle-methods]: https://reactjs.org/docs/state-and-lifecycle.html
 [gatsby-unstructured]: /blog/2018-10-25-unstructured-data/
 [authentication-tutorial]: /docs/authentication-tutorial/
+[using-gatsby-image]: https://using-gatsby-image.gatsbyjs.org/
 [traced-svg]: https://using-gatsby-image.gatsbyjs.org/traced-svg/
 [gatsby-plugin-offline]: /packages/gatsby-plugin-offline/
 [gatsby-plugin-sharp]: /packages/gatsby-plugin-sharp/
+[gatsby-source-graphql]: /packages/gatsby-source-graphql/
+[gatsby-source-wordpress]: /packages/gatsby-source-wordpress/
 [gatsby-transformer-yaml]: /packages/gatsby-transformer-yaml/
 [gatsby-plugins]: /plugins
 [gatsby-mail-app]: https://gatsby-mail.netlify.com
