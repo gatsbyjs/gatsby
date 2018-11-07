@@ -86,7 +86,7 @@ To illustrate the concept, let's start with a classic example... we need to fetc
 ```jsx:title=src/pages/messages.js
 import React from "react"
 
-import Layout from "../compoents/layout"
+import Layout from "../components/layout"
 
 class Messages extends React.Component {
   constructor(props) {
