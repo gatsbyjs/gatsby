@@ -161,7 +161,7 @@ class DefaultLayout extends React.Component {
           >
             Register now
           </a>
-          {` for 'Rise of the Content Mesh: Webcast with Contentful and Gatsby'.`}
+          {` for “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div

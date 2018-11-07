@@ -67,7 +67,7 @@ const Banner = ({ children, background }) => (
           >
             Register now
           </a>
-          {` for 'Rise of the Content Mesh: Webcast with Contentful and Gatsby'.`}
+          {` for “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
         </Content>
       )}
     </InnerContainer>
