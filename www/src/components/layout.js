@@ -150,28 +150,18 @@ class DefaultLayout extends React.Component {
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2.
-          {` `}
           <a
-            href="https://v1.gatsbyjs.org/"
+            href="https://www.gatsbyjs.com/content-mesh-contentful"
             css={{
               color: `#fff`,
+              "&:hover": {
+                color: `#fff`,
+              },
             }}
           >
-            View the v1 docs
-            <span
-              css={{
-                display: `none`,
-                [presets.Mobile]: {
-                  display: `inline`,
-                },
-              }}
-            >
-              {` `}
-              instead
-            </span>
+            Register now
           </a>
-          .
+          {` for “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div
