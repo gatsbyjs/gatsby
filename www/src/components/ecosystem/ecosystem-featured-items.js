@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled, { keyframes } from "react-emotion"
+import styled from "react-emotion"
 
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 

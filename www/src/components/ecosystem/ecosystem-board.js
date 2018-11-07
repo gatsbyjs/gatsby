@@ -88,7 +88,6 @@ class EcosystemBoard extends Component {
       icons: { plugins: PluginsIcon, starters: StartersIcon },
       starters,
       plugins,
-      background,
     } = this.props
 
     return (
