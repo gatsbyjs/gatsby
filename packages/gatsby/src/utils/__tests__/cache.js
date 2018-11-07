@@ -1,13 +1,19 @@
-jest.mock(`cache-manager`, () => {return {
-  caching: jest.fn(),
-  multiCaching: jest.fn().mockImplementation(() => {return {
-    get: jest.fn(),
-    set: jest.fn(),
-  }}),
-}})
-jest.mock(`fs-extra`, () => {return {
-  ensureDirSync: jest.fn(),
-}})
+jest.mock(`cache-manager`, () => {
+  return {
+    caching: jest.fn(),
+    multiCaching: jest.fn().mockImplementation(() => {
+      return {
+        get: jest.fn(),
+        set: jest.fn(),
+      }
+    }),
+  }
+})
+jest.mock(`fs-extra`, () => {
+  return {
+    ensureDirSync: jest.fn(),
+  }
+})
 const Cache = require(`../cache`)
 const fs = require(`fs-extra`)
 const manager = require(`cache-manager`)
@@ -28,14 +34,16 @@ describe(`cache`, () => {
     const store = {
       custom: true,
     }
-    
+
     new Cache({
       store,
     }).init()
 
-    expect(manager.caching).toHaveBeenLastCalledWith(expect.objectContaining({
-      store,
-    }))
+    expect(manager.caching).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        store,
+      })
+    )
   })
 
   it(`it does not set up cache on instantiation`, () => {
@@ -45,11 +53,13 @@ describe(`cache`, () => {
   it(`uses MAX_SAFE_INTEGER as TTL`, () => {
     getCache()
 
-    expect(manager.caching).toHaveBeenCalledWith(expect.objectContaining({
-      options: expect.objectContaining({
-        ttl: Number.MAX_SAFE_INTEGER,
-      }),
-    }))
+    expect(manager.caching).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          ttl: Number.MAX_SAFE_INTEGER,
+        }),
+      })
+    )
   })
 
   describe(`init`, () => {
@@ -62,7 +72,9 @@ describe(`cache`, () => {
       const name = `__TEST_CACHE_NAME__`
       getCache({ name })
 
-      expect(fs.ensureDirSync).toHaveBeenCalledWith(expect.stringContaining(name))
+      expect(fs.ensureDirSync).toHaveBeenCalledWith(
+        expect.stringContaining(name)
+      )
     })
 
     it(`it returns cache instance with get/set methods`, () => {
@@ -77,7 +89,10 @@ describe(`cache`, () => {
     it(`both are promises`, () => {
       const cache = getCache()
 
-      const containsThenMethod = result => expect(result).toEqual(expect.objectContaining({ then: expect.any(Function) }))
+      const containsThenMethod = result =>
+        expect(result).toEqual(
+          expect.objectContaining({ then: expect.any(Function) })
+        )
 
       containsThenMethod(cache.get(`a`))
       containsThenMethod(cache.set(`a`, `b`))

@@ -13,35 +13,43 @@ https://using-contentful.gatsbyjs.org/
 
 ## How to use
 
+First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about dotenv and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
+
 ### Using Delivery API
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-source-contentful`,
-    options: {
-      spaceId: `your_space_id`,
-      accessToken: `your_access_token`,
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        // Learn about environment variables: https://gatsby.app/env-vars
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
     },
-  },
-]
+  ],
+}
 ```
 
 ### Using Preview API
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-source-contentful`,
-    options: {
-      spaceId: `your_space_id`,
-      accessToken: `your_access_token`,
-      host: `preview.contentful.com`,
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        // Learn about environment variables: https://gatsby.app/env-vars
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        host: `preview.contentful.com`,
+      },
     },
-  },
-]
+  ],
+}
 ```
 
 ### Offline
@@ -132,3 +140,6 @@ If you want to use the new Rich Text feature you can opt-in by setting the follo
 ```sh
 export GATSBY_CONTENTFUL_RICH_TEXT='enabled'
 ```
+
+[dotenv]: https://github.com/motdotla/dotenv
+[envvars]: https://gatsby.app/env-vars

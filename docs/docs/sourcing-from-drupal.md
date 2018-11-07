@@ -13,9 +13,11 @@ It only takes a few steps to use Gatsby with Drupal as a headless CMS (also know
 ## How to implement Drupal + Gatsby
 
 ### Quick start
+
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back.
 
 ### gatsby-config.js
+
 Hooking up Gatsby to a new or existing Drupal site takes only a few steps.
 
 - Follow the `gatsby-source-drupal` [installation instructions](/packages/gatsby-source-drupal/?=drupal) to add the plugin to your Gatsby site
@@ -23,7 +25,6 @@ Hooking up Gatsby to a new or existing Drupal site takes only a few steps.
 An example of how to include the `gatsby-source-drupal` plugin in your `gatsby-config.js` file:
 
 ```javascript:title=gatsby-config.js
-
 module.exports = {
   siteMetadata: {
     title: `Gatsby with Drupal`,
@@ -83,5 +84,3 @@ Using Gatsby together with Drupal offers a powerful, full-featured, open-source,
 - Watch [Kyle Mathews’ presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
 - Get started with Robert Ngo’s [Decoupling Drupal with Gatsby tutorial](https://evolvingweb.ca/blog/decoupling-drupal-gatsby) and watch his [Evolving Web 2018 Drupal conference presentation](https://www.youtube.com/watch?v=s5kUJRGDz6I)
 - Example site that demonstrates [how to build Gatsby sites that pull data from the Drupal CMS](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal).
-
-

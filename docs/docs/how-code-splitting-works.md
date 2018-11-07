@@ -24,7 +24,7 @@ The entry point to webpack (`production-app.js`) [references ./async-requires.js
 
 ## Chunk bundle naming
 
-Great! We've told webpack where we want to code split. But how will these be named on disk? Webpack gives you the ability to custimize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L131) as:
+Great! We've told webpack where we want to code split. But how will these be named on disk? Webpack gives you the ability to customize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L131) as:
 
 ```
 [name]-[contenthash].js
@@ -134,10 +134,12 @@ As mentioned above, `static-entry.js` generates HTML, but also loads the Gatsby 
 The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L164)). We [lookup assetsByChunkName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L195) by `app` to get its chunk asset files. Then we do the same for the component by looking up the same collection by `componentChunkName` (e.g. `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, we create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259).
 
 ```html
-<link as="script"
-      rel="preload"
-      key="app-2e49587d85e03a033f58.js"
-      href="/app-2e49587d85e03a033f58.js" />
+<link
+  as="script"
+  rel="preload"
+  key="app-2e49587d85e03a033f58.js"
+  href="/app-2e49587d85e03a033f58.js"
+/>
 ```
 
 `rel="preload"` tells the browser to start downloading this resource with a high priority as it will likely be referenced further down in the document. So hopefully by the time we get there, the resource will be returned from the server already.

@@ -1,7 +1,10 @@
 /* global __PATH_PREFIX__ */
 import netlifyIdentityWidget from "netlify-identity-widget"
 
-exports.onInitialClientRender = (_, { enableIdentityWidget = true, publicPath = `admin` }) => {
+exports.onInitialClientRender = (
+  _,
+  { enableIdentityWidget = true, publicPath = `admin` }
+) => {
   if (enableIdentityWidget) {
     netlifyIdentityWidget.on(`init`, user => {
       if (!user) {

@@ -198,7 +198,7 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
-  if (!ext){
+  if (!ext) {
     ext = getRemoteFileExtension(url)
   }
 
@@ -206,11 +206,7 @@ async function processRemoteNode({
 
   // Fetch the file.
   try {
-    const response = await requestRemoteNode(
-      url,
-      headers,
-      tmpFilename,
-    )
+    const response = await requestRemoteNode(url, headers, tmpFilename)
     // Save the response headers for future requests.
     await cache.set(cacheId(url), response.headers)
 

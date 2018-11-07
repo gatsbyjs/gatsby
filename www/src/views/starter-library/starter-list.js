@@ -19,8 +19,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       urlState.s !== ``
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `matching` // if no search term or single dependency
+        ? urlState.d // if theres a single dependency
+        : `matching` // if no search term or single dependency
     return (
       <div
         css={{
@@ -57,7 +57,6 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
           const {
             description,
             gatsbyMajorVersion,
-            gatsbyDependencies,
             name,
             githubFullName,
             lastUpdated,
@@ -171,6 +170,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       </div>
     )
   }
+  return null
 }
 
 export default StartersList
