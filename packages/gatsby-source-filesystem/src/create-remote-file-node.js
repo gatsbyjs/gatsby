@@ -8,7 +8,7 @@ const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension } = require(`./utils`)
+const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 /********************
@@ -198,6 +198,7 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
+  const name = getRemoteFileName(url)
   if (!ext) {
     ext = getRemoteFileExtension(url)
   }
@@ -218,7 +219,7 @@ async function processRemoteNode({
         ext = `.${filetype.ext}`
       }
     }
-    const filename = createFilePath(programDir, digest, ext)
+    const filename = createFilePath(programDir, `${digest}_${name}`, ext)
     // If the status code is 200, move the piped temp file to the real name.
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
