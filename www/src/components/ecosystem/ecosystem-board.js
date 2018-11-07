@@ -25,22 +25,22 @@ class EcosystemBoard extends Component {
   observerTargets = []
 
   componentDidMount() {
-    if (typeof window.IntersectionObserver !== "undefined") {
+    if (typeof window.IntersectionObserver !== `undefined`) {
       this.setupObserver()
     }
   }
 
   componentWillUnmount() {
-    if (typeof window.IntersectionObserver !== "undefined") {
+    if (typeof window.IntersectionObserver !== `undefined`) {
       this.observerTargets.forEach(target => this.observer.unobserve(target))
     }
   }
 
   setupObserver = () => {
-    const options = { rootMargin: "0px", threshold: [1] }
+    const options = { rootMargin: `0px`, threshold: [1] }
     this.observer = new IntersectionObserver(this.handleIntersect, options)
     this.observerTargets = Array.from(
-      document.querySelectorAll(".featuredItems")
+      document.querySelectorAll(`.featuredItems`)
     )
 
     this.observerTargets.forEach(target => this.observer.observe(target))
@@ -99,13 +99,13 @@ class EcosystemBoard extends Component {
           subTitle="Featured Plugins"
           icon={PluginsIcon}
           links={[
-            { label: "Browse Plugins", to: "/plugins/" },
+            { label: `Browse Plugins`, to: `/plugins/` },
             {
-              label: "Plugin Authoring",
-              to: "/docs/plugin-authoring/",
+              label: `Plugin Authoring`,
+              to: `/docs/plugin-authoring/`,
               secondary: true,
             },
-            { label: "Plugin Docs", to: "/docs/plugins/", secondary: true },
+            { label: `Plugin Docs`, to: `/docs/plugins/`, secondary: true },
           ]}
           featuredItems={plugins}
         />
@@ -115,15 +115,15 @@ class EcosystemBoard extends Component {
           subTitle="Featured Starters"
           icon={StartersIcon}
           links={[
-            { label: "Browse Starters", to: "/starters/" },
-            { label: "Starter Docs", to: "/docs/starters/", secondary: true },
+            { label: `Browse Starters`, to: `/starters/` },
+            { label: `Starter Docs`, to: `/docs/starters/`, secondary: true },
           ]}
           featuredItems={starters}
         />
         <EcosystemSection
           title="External Resources"
           description="More awesome Gatsby content, created by the community."
-          links={[{ label: "Browse Resources", to: "/docs/awesome-gatsby/" }]}
+          links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
         />
       </EcosystemBoardRoot>
     )

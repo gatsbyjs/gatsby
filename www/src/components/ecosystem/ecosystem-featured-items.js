@@ -41,24 +41,22 @@ const List = styled(`ul`)`
   }
 `
 
-const EcosystemFeaturedItems = ({ items }) => {
-  return (
-    <EcosystemFeaturedItemsRoot className="featuredItems">
-      <List numberOfItems={items.length}>
-        {items.map(item => {
-          const { slug } = item
-          return (
-            <EcosystemFeaturedItem
-              key={slug}
-              item={item}
-              numberOfItems={items.length}
-            />
-          )
-        })}
-      </List>
-    </EcosystemFeaturedItemsRoot>
-  )
-}
+const EcosystemFeaturedItems = ({ items }) => (
+  <EcosystemFeaturedItemsRoot className="featuredItems">
+    <List numberOfItems={items.length}>
+      {items.map(item => {
+        const { slug } = item
+        return (
+          <EcosystemFeaturedItem
+            key={slug}
+            item={item}
+            numberOfItems={items.length}
+          />
+        )
+      })}
+    </List>
+  </EcosystemFeaturedItemsRoot>
+)
 
 EcosystemFeaturedItems.propTypes = {
   items: PropTypes.array,
