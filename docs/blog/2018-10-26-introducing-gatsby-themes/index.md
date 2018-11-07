@@ -7,8 +7,8 @@ tags: ["themes", "architecture"]
 ---
 
 Gatsby is a powerful platform for building marketing sites, blogs,
-ecommerce frontends, and more. We can source data from static files
-and any number of content management systems. We can process images,
+ecommerce frontends, and more. You can source data from static files
+and any number of content management systems. You can process images,
 add support for our favorite styling technique, transform markdown,
 and just about anything else you can imagine.
 
@@ -168,4 +168,4 @@ themes](https://spectrum.chat/gatsby-themes/general?thread=1e02db45-9f2e-4c0a-b4
 
 I'll also be talking about theming Gatsby at [Gatsby
 Days](https://www.eventbrite.com/e/gatsby-days-tickets-51837151315) on
-Dec 7th covering how we got here and where we're going next.
+Dec 7th covering how Gatsby got here and where theming is going next.
