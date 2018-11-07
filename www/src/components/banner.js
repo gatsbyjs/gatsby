@@ -56,16 +56,18 @@ const Banner = ({ children, background }) => (
         <Content>{children}</Content>
       ) : (
         <Content>
-          These are the docs for v2.
-          {` `}
-          <Link href="https://v1.gatsbyjs.org/">
-            View the v1 docs
-            <span>
-              {` `}
-              instead
-            </span>
-          </Link>
-          .
+          <a
+            href="https://www.gatsbyjs.com/content-mesh-contentful"
+            css={{
+              color: `#fff`,
+              "&:hover": {
+                color: `#fff`,
+              },
+            }}
+          >
+            Register now
+          </a>
+          {` for 'Rise of the Content Mesh: Webcast with Contentful and Gatsby'.`}
         </Content>
       )}
     </InnerContainer>
