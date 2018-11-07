@@ -17,9 +17,6 @@ const HomepageSectionRoot = styled(`section`)`
   width: calc(100% + ${rhythm(presets.gutters.default)});
   padding: ${rhythm(2)} ${rhythm(presets.gutters.default / 2)};
 
-  ${presets.Desktop} {
-  }
-
   ${presets.Hd} {
     margin: 0 -${vP};
     width: calc(100% + (${vP} * 2));
@@ -27,16 +24,6 @@ const HomepageSectionRoot = styled(`section`)`
 
   ${presets.VHd} {
     padding: ${rhythm(2)} 5%;
-  }
-
-  a {
-    box-shadow: none;
-    font-weight: normal;
-    border: none;
-
-    :hover {
-      background: #fff;
-    }
   }
 `
 const Header = styled(`header`)`

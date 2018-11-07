@@ -105,7 +105,6 @@ const EcosystemFeaturedItem = ({ item, numberOfItems, className }) => {
     stars,
     humanDownloadsLast30Days,
     thumbnail,
-    type,
   } = item
 
   const cutTooLongDescription = str => {

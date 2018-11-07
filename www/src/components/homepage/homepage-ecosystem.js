@@ -106,12 +106,16 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     }
   }
 
-
   ${FeaturedItemBlockLink} {
     padding-left: calc(${rhythm(3 / 4)} + 1.1rem);
     position: relative;
 
+    /* this ovveride the .main-body a style*/
     font-weight: normal;
+    box-shadow: none;
+    :hover {
+      background: none;
+    }
 
     ${presets.Tablet} {
       border-radius: ${presets.radiusLg}px;
