@@ -145,6 +145,8 @@ However, what hasn't been made clear is _why_ you'd reach for Gatsby as opposed 
 
 ## _Why_ Gatsby for Apps?
 
+### Built-in Performance Optimizations
+
 If we revisit some of the benefits that Gatsby provides, minimally:
 
 - Static rendering of React components and co-located data to static HTML
