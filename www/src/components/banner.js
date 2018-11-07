@@ -51,31 +51,12 @@ const Link = styled(`a`)`
 
 const Banner = ({ children, background }) => (
   <BannerContainer background={background} className="banner">
-    <InnerContainer>
-      {children ? (
-        <Content>{children}</Content>
-      ) : (
-        <Content>
-          <a
-            href="https://www.gatsbyjs.com/content-mesh-contentful"
-            css={{
-              color: `#fff`,
-              "&:hover": {
-                color: `#fff`,
-              },
-            }}
-          >
-            Register now
-          </a>
-          {` for “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
-        </Content>
-      )}
-    </InnerContainer>
+    <InnerContainer>{children && <Content>{children}</Content>}</InnerContainer>
   </BannerContainer>
 )
 
 Banner.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   background: PropTypes.any,
 }
 
