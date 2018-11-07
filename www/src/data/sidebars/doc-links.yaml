@@ -15,6 +15,8 @@
           link: /docs/browser-support/
         - title: Gatsby on Windows
           link: /docs/gatsby-on-windows/
+        - title: Gatsby on Linux
+          link: /docs/gatsby-on-linux/
     - title: Deploying & hosting
       link: /docs/deploying-and-hosting/
       items:

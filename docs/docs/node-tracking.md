@@ -10,15 +10,15 @@ You may see calls to `trackInlineObjectsInRootNode()` and `findRootNodeAncestor(
 let nodeA = {
   id: `id2`,
   internal: {
-    type: `footype`
+    type: `footype`,
   },
   foo: {
     myfile: "blog/my-blog.md",
-    b: 2
+    b: 2,
   },
   bar: 7,
   parent: `id1`,
-  baz: [ { x: 8 }, 9 ]
+  baz: [{ x: 8 }, 9],
 }
 ```
 
@@ -59,4 +59,3 @@ Now, where do we use this information? In 2 places.
 
 1. In the `File` type resolver. It is used to lookup the node's root, which should be of type `File`. We can then use that root node's base directory attribute to create the full path of the resolved field's value, and therefore find the actual `File` node that the string value is describing. See [File GqlType inference](/docs/schema-gql-type/#file-types) for more info.
 1. To recursively look up node descriptions in [type-conflict-reporter.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/type-conflict-reporter.js)
-

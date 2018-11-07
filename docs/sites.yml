@@ -3260,3 +3260,24 @@
     - Web Development
   built_by: Codedebug
   built_by_url: "https://codedebug.co/"
+- title: Ghost Documentation
+  main_url: https://docs.ghost.org/
+  url: https://docs.ghost.org/
+  description: >-
+    Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
+  categories:
+    - Publishing
+    - Documentation
+  built_by: Ghost Foundation
+  built_by_url: https://ghost.org/
+  featured: false
+- title: BELLHOPS
+  main_url: https://www.getbellhops.com/
+  url: https://www.getbellhops.com/
+  description: >-
+    Whether you’re moving someplace new or just want to complete a few projects around your current home, BellHops can arrange the moving services you need—at simple, straightforward rates.
+  categories:
+    - Business
+  built_by: Bellhops, Inc.
+  built_by_url: https://www.getbellhops.com/
+  featured: false

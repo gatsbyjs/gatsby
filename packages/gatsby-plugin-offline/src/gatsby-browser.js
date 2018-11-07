@@ -11,7 +11,10 @@ exports.onPostPrefetchPathname = ({ pathname }) => {
   }
 }
 
-exports.onServiceWorkerActive = ({ getResourceURLsForPathname, serviceWorker }) => {
+exports.onServiceWorkerActive = ({
+  getResourceURLsForPathname,
+  serviceWorker,
+}) => {
   // stop recording prefetch events
   swNotInstalled = false
 

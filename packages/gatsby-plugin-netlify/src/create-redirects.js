@@ -30,11 +30,7 @@ export default async function writeRedirectsFile(
 
     // The order of the first 3 parameters is significant.
     // The order for rest params (key-value pairs) is arbitrary.
-    const pieces = [
-      fromPath,
-      toPath,
-      status,
-    ]
+    const pieces = [fromPath, toPath, status]
 
     for (let key in rest) {
       const value = rest[key]

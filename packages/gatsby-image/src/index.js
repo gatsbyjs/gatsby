@@ -74,8 +74,12 @@ const noscriptImg = props => {
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
   const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
-  const srcSetWebp = props.srcSetWebp ? `<source type='image/webp' srcSet="${props.srcSetWebp}" ${sizes}/>` : ``
-  const srcSet = props.srcSet ? `<source srcSet="${props.srcSet}" ${sizes}/>` : ``
+  const srcSetWebp = props.srcSetWebp
+    ? `<source type='image/webp' srcSet="${props.srcSetWebp}" ${sizes}/>`
+    : ``
+  const srcSet = props.srcSet
+    ? `<source srcSet="${props.srcSet}" ${sizes}/>`
+    : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
@@ -83,13 +87,14 @@ const noscriptImg = props => {
   const opacity = props.opacity ? props.opacity : `1`
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
   const crossOrigin = props.crossOrigin ? `crossorigin="${props.crossOrigin}" ` : ``
-  return (`<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`)
+  return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
   const { style, onLoad, onError, ...otherProps } = props
 
-  return <img
+  return (
+    <img
       {...otherProps}
       onLoad={onLoad}
       onError={onError}
@@ -105,6 +110,7 @@ const Img = React.forwardRef((props, ref) => {
         ...style,
       }}
     />
+  )
 })
 
 Img.propTypes = {
@@ -150,7 +156,7 @@ class Image extends React.Component {
       IOSupported = false
     }
 
-    const hasNoScript =  !(this.props.critical && !this.props.fadeIn)
+    const hasNoScript = !(this.props.critical && !this.props.fadeIn)
 
     this.state = {
       isVisible,
@@ -206,7 +212,8 @@ class Image extends React.Component {
       Tag,
     } = convertProps(this.props)
 
-    const bgColor = typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
+    const bgColor =
+      typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
@@ -223,11 +230,11 @@ class Image extends React.Component {
     }
 
     const placeholderImageProps = {
-      title, 
+      title,
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
       className: placeholderClassName,
-    } 
+    }
 
     if (fluid) {
       const image = fluid
@@ -251,68 +258,67 @@ class Image extends React.Component {
             }}
           />
 
-            {/* Show the blurry base64 image. */}
-            {image.base64 && (
-              <Img src={image.base64} {...placeholderImageProps} />
-              )}
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Img src={image.base64} {...placeholderImageProps} />
+          )}
 
-            {/* Show the traced SVG image. */}
-            {image.tracedSVG && (
-              <Img src={image.tracedSVG} {...placeholderImageProps} />
-            )}
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
+          )}
 
-            {/* Show a solid background color. */}
-            {bgColor && (
-              <Tag
-                title={title}
-                style={{
-                  backgroundColor: bgColor,
-                  position: `absolute`,
-                  top: 0,
-                  bottom: 0,
-                  opacity: !this.state.imgLoaded ? 1 : 0,
-                  transitionDelay: `0.35s`,
-                  right: 0,
-                  left: 0,
-                }}
-              />
-            )}
+          {/* Show a solid background color. */}
+          {bgColor && (
+            <Tag
+              title={title}
+              style={{
+                backgroundColor: bgColor,
+                position: `absolute`,
+                top: 0,
+                bottom: 0,
+                opacity: !this.state.imgLoaded ? 1 : 0,
+                transitionDelay: `0.35s`,
+                right: 0,
+                left: 0,
+              }}
+            />
+          )}
 
-            {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
-            {this.state.isVisible && (
-              <picture>
-                {image.srcSetWebp && (<source
+          {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
+          {this.state.isVisible && (
+            <picture>
+              {image.srcSetWebp && (
+                <source
                   type={`image/webp`}
                   srcSet={image.srcSetWebp}
                   sizes={image.sizes}
-                />)}
-
-                <source
-                  srcSet={image.srcSet}
-                  sizes={image.sizes}
                 />
+              )}
 
-                <Img
-                  alt={alt}
-                  title={title}
-                  src={image.src}
-                  crossOrigin={this.props.crossOrigin}
-                  style={imageStyle}
-                  ref={this.imageRef}
-                  onLoad={this.handleImageLoaded}
-                  onError={this.props.onError}
-                />
-              </picture>
-            )}
+              <source srcSet={image.srcSet} sizes={image.sizes} />
 
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            {this.state.hasNoScript && (
-              <noscript
-                dangerouslySetInnerHTML={{
-                  __html: noscriptImg({ alt, title, ...image }),
-                }}
+              <Img
+                alt={alt}
+                title={title}
+                src={image.src}
+                crossOrigin={this.props.crossOrigin}
+                style={imageStyle}
+                ref={this.imageRef}
+                onLoad={this.handleImageLoaded}
+                onError={this.props.onError}
               />
-            )}
+            </picture>
+          )}
+
+          {/* Show the original image during server-side rendering if JavaScript is disabled */}
+          {this.state.hasNoScript && (
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({ alt, title, ...image }),
+              }}
+            />
+          )}
         </Tag>
       )
     }
@@ -366,16 +372,15 @@ class Image extends React.Component {
           {/* Once the image is visible, start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {image.srcSetWebp && (<source
-                type={`image/webp`}
-                srcSet={image.srcSetWebp}
-                sizes={image.sizes}
-              />)}
+              {image.srcSetWebp && (
+                <source
+                  type={`image/webp`}
+                  srcSet={image.srcSetWebp}
+                  sizes={image.sizes}
+                />
+              )}
 
-              <source
-                srcSet={image.srcSet}
-                sizes={image.sizes}
-              />
+              <source srcSet={image.srcSet} sizes={image.sizes} />
 
               <Img
                 alt={alt}
