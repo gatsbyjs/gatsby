@@ -8,10 +8,10 @@ import { rhythm, options, scale } from "../../utils/typography"
 import { vP } from "../gutters"
 import presets, { colors } from "../../utils/presets"
 
-const ICON_SIZE = "32px"
+const ICON_SIZE = `32px`
 
-const HomepageSectionRoot = styled("section")`
-  background: ${props => (props.inverse ? colors.gatsby : "#fff")};
+const HomepageSectionRoot = styled(`section`)`
+  background: ${props => (props.inverse ? colors.gatsby : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   margin: 0 -${rhythm(presets.gutters.default / 2)};
   width: calc(100% + ${rhythm(presets.gutters.default)});
@@ -39,7 +39,7 @@ const HomepageSectionRoot = styled("section")`
     }
   }
 `
-const Header = styled("header")`
+const Header = styled(`header`)`
   ${presets.Tablet} {
     margin-left: 3rem;
     max-width: 28rem;
@@ -50,7 +50,7 @@ const Header = styled("header")`
   }
 `
 
-const Name = styled("h3")`
+const Name = styled(`h3`)`
   align-items: center;
   display: flex;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
@@ -65,7 +65,7 @@ const Name = styled("h3")`
   }
 `
 
-const Icon = styled("span")`
+const Icon = styled(`span`)`
   display: block;
 
   ${presets.Tablet} {
@@ -79,21 +79,21 @@ const Icon = styled("span")`
   }
 `
 
-const Title = styled("h1")`
+const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
   font-size: 1.75rem;
   margin: 0;
   margin-bottom: 0.5em;
 `
 
-const Introduction = styled("p")`
+const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   font-size: 1.125rem;
   font-family: ${options.headerFontFamily.join(`,`)};
   margin-bottom: 0;
 `
 
-const Actions = styled("div")`
+const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
   margin-top: -${rhythm(1 / 4)};

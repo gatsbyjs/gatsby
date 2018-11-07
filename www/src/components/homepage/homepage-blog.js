@@ -15,12 +15,12 @@ const HomepageBlog = () => (
     title="The Gatsby Gasette"
     links={[
       {
-        label: "View All",
-        to: "/blog/",
+        label: `View All`,
+        to: `/blog/`,
       },
       {
-        label: "Submit an Article",
-        to: "/blog/",
+        label: `Submit an Article`,
+        to: `/blog/`,
       },
     ]}
   >

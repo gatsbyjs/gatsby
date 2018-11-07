@@ -45,7 +45,7 @@ const EcosystemSectionRoot = styled(`section`)`
     text-decoration: none;
   }
 `
-export const Header = styled("header")`
+export const Header = styled(`header`)`
   align-items: flex-start;
 
   ${presets.Tablet}: {
@@ -55,7 +55,7 @@ export const Header = styled("header")`
   };
 `
 
-const Title = styled("h1")`
+const Title = styled(`h1`)`
   align-items: center;
   color: ${colors.gatsby};
   display: flex;
@@ -70,13 +70,13 @@ const Title = styled("h1")`
   }
 `
 
-const Icon = styled("span")`
+const Icon = styled(`span`)`
   display: block;
   width: 32px;
   height: 32px;
 `
 
-const SubTitle = styled("h2")`
+const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
   font-size: 0.875rem;
   font-weight: 300;

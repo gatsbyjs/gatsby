@@ -16,8 +16,8 @@ const HomepageExpo = () => (
     introduction="We believe that apart from trying Gatsby yourself, taking a look at the awesome things that people build with it is a great way to convice you to give Gatsby a chance. Browse away:"
     links={[
       {
-        label: "Explore the Gatsby Ecosystem",
-        to: "/ecosystem/",
+        label: `Explore the Gatsby Ecosystem`,
+        to: `/ecosystem/`,
       },
     ]}
   >

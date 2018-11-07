@@ -69,12 +69,12 @@ class IndexRoute extends React.Component {
         description,
         stars,
         thumbnail,
-        type: "Starter",
+        type: `Starter`,
       }
     })
 
     const plugins = pluginsData.map(item => {
-      item.node.type = "Plugin"
+      item.node.type = `Plugin`
 
       return item.node
     })
