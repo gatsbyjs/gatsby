@@ -79,8 +79,7 @@ class EcosystemBoard extends Component {
     }
 
     function ease(t, b, c, d) {
-      t /= d
-      return -c * t * (t - 2) + b
+      return -c * (t /= d) * (t - 2) + b
     }
 
     requestAnimationFrame(animation)
