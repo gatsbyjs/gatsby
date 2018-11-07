@@ -2,8 +2,6 @@
 title: Gatsby for Apps
 date: 2018-11-07
 author: Dustin Schau
-image: TODO
-showImageInArticle: false
 tags:
   - apps
   - web apps
