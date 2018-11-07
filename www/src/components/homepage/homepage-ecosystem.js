@@ -111,8 +111,16 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     padding-left: calc(${rhythm(3 / 4)} + 1.1rem);
     position: relative;
 
+    font-weight: normal;
+
     ${presets.Tablet} {
       border-radius: ${presets.radiusLg}px;
+    }
+
+    ${presets.Desktop} {
+      :hover {
+        background: ${colors.ui.whisper};
+      }
     }
 
     :before {

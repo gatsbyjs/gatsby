@@ -37,7 +37,9 @@ export const BlockLink = styled(Link)`
     box-shadow: none;
     transition: all ${presets.animation.speedDefault}
       ${presets.animation.curveDefault};
+  }
 
+  ${presets.Desktop} {
     :hover {
       background: ${colors.ui.whisper};
     }
