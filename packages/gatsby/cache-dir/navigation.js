@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"

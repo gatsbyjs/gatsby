@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.8"></a>
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.7...gatsby-transformer-sharp@2.1.8) (2018-11-06)
+
+### Features
+
+- **gatsby-plugin-sharp:** cache base64 if possible ([#9059](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/9059)) ([5dc9346](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/5dc9346)), closes [#6999](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/6999)
+
 <a name="2.1.7"></a>
 
 ## [2.1.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.6...gatsby-transformer-sharp@2.1.7) (2018-10-29)

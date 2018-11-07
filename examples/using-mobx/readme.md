@@ -1,6 +1,6 @@
 # MOBX
-[Using mobx with gatsby](https://dazzling-meninsky-6f4ac3.netlify.com/)
 
+[Using mobx with gatsby](https://dazzling-meninsky-6f4ac3.netlify.com/)
 
 Gatsby example site that shows use of mobx.
 
@@ -16,4 +16,3 @@ Check out [./gatsby-ssr.js](./gatsby-ssr.js) and [./gatsby-browser.js](./gatsby-
 [Docs](https://mobx.js.org/)
 
 [Examples](https://github.com/mobxjs/mobx-examples)
-

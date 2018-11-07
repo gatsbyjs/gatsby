@@ -178,7 +178,7 @@ createRemoteFileNode({
 
   // OPTIONAL
   // Sets the file extension
-  ext: '.jpg',
+  ext: ".jpg",
 })
 ```
 
@@ -240,6 +240,6 @@ createRemoteFileNode({
   createNode,
   createNodeId,
   // if necessary!
-  ext: '.jpg',
+  ext: ".jpg",
 })
 ```

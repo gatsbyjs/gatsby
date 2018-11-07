@@ -2,7 +2,13 @@ const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const path = require(`path`)
 
-async function onCreateNode({ node, actions, loadNodeContent, createNodeId, createContentDigest }) {
+async function onCreateNode({
+  node,
+  actions,
+  loadNodeContent,
+  createNodeId,
+  createContentDigest,
+}) {
   function transformObject(obj, id, type) {
     const yamlNode = {
       ...obj,

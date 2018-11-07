@@ -8,7 +8,7 @@ const {
 } = require(`graphql`)
 const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 
-const runSift = require(`../run-sift`)
+const { runQuery } = require(`../../db/nodes`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 const buildConnectionFields = require(`../build-connection-fields`)
 const {
@@ -21,7 +21,13 @@ const {
 } = require(`../data-tree-utils`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
 
+let mockNodes
+jest.unmock(`../../db/nodes`)
+const nodesDb = require(`../../db/nodes`)
+nodesDb.getNodesByType = () => mockNodes
+
 function queryResult(nodes, query, { types = [] } = {}) {
+  mockNodes = nodes
   const nodeType = new GraphQLObjectType({
     name: `Test`,
     fields: inferObjectStructureFromNodes({
@@ -63,15 +69,14 @@ function queryResult(nodes, query, { types = [] } = {}) {
                 }),
               },
             },
-            async resolve(nvi, args) {
-              const results = await runSift({
-                args,
-                nodes,
+            async resolve(nvi, queryArgs) {
+              const results = await runQuery({
+                queryArgs,
                 firstOnly: false,
-                type: nodeType,
+                gqlType: nodeType,
               })
               if (results.length > 0) {
-                const connection = connectionFromArray(results, args)
+                const connection = connectionFromArray(results, queryArgs)
                 connection.totalCount = results.length
                 return connection
               } else {

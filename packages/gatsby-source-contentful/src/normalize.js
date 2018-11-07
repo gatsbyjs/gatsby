@@ -377,8 +377,6 @@ exports.createContentTypeNodes = ({
         if (entryItemFieldKey.split(`___`).length > 1) {
           return
         }
-
-        entryItemFields[entryItemFieldKey] = entryItemFields[entryItemFieldKey]
       })
 
       // Replace text fields with text nodes so we can process their markdown
