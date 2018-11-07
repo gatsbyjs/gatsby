@@ -39,16 +39,6 @@ const Content = styled(`div`)`
   white-space: nowrap;
 `
 
-const Link = styled(`a`)`
-  color: #fff;
-  span {
-    display: none;
-    ${presets.Mobile} {
-      display: inline;
-    }
-  }
-`
-
 const Banner = ({ children, background }) => (
   <BannerContainer background={background} className="banner">
     <InnerContainer>{children && <Content>{children}</Content>}</InnerContainer>
