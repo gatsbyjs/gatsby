@@ -78,7 +78,20 @@ const LayoutWithHeading = props => {
 
       <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
 
-      <Banner />
+      <Banner>
+        <a
+          href="https://www.gatsbyjs.com/content-mesh-contentful"
+          css={{
+            color: `#fff`,
+            "&:hover": {
+              color: `#fff`,
+            },
+          }}
+        >
+          Register now
+        </a>
+        {` for “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
+      </Banner>
 
       <Navigation pathname={props.location.pathname} />
 
