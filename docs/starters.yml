@@ -1140,7 +1140,7 @@
     - Styled Reset, ESLint, Netlify Conf
 - url: https://jamstack-hackathon-starter.netlify.com/
   repo: https://github.com/sw-yx/jamstack-hackathon-starter
-  description: Make JAMstack apps, not sites with Gatsby + Netlify Identity + Netlify Functions
+  description: A JAMstack app with authenticated routes, static marketing pages, etc. with Gatsby, Netlify Identity, and Netlify Functions
   tags:
     - Netlify Identity
     - Netlify Functions
