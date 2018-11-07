@@ -113,9 +113,8 @@ exports.normalizeEntities = entities =>
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>
   entities.map(e =>
-    deepMapKeys(
-      e,
-      key => (key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }))
+    deepMapKeys(e, key =>
+      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key })
     )
   )
 
