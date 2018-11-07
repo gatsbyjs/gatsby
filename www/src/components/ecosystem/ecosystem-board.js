@@ -53,7 +53,7 @@ class EcosystemBoard extends Component {
       if (entry.intersectionRatio > 0) {
         setTimeout(
           () => this.turnOnLeadScroll({ target, duration: 1000, distance: 20 }),
-          500
+          250
         )
         this.observer.unobserve(target)
       }
