@@ -183,5 +183,4 @@ You can similarly check for file downloads:
       </GatsbyLink>
     )
   }
-
 ```

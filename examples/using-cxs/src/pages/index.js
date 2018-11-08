@@ -37,7 +37,9 @@ class IndexPage extends React.Component {
           }}
         >
           <div className={wrapperClassName}>
-            <div className={titleClassName}>Hello World, this is my first styled component!</div>
+            <div className={titleClassName}>
+              Hello World, this is my first styled component!
+            </div>
             <p>
               <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
                 gatsby-plugin-styled-component docs

@@ -64,15 +64,21 @@ describe(`<Img />`, () => {
   it(`should have correct placeholder src, title, style and class attributes`, () => {
     const placeholderImageTag = setup().querySelector(`img`)
     expect(placeholderImageTag.getAttribute(`src`)).toEqual(`string_of_base64`)
-    expect(placeholderImageTag.getAttribute(`title`)).toEqual(`Title for the image`)
-    expect(placeholderImageTag.getAttribute(`style`)).toEqual(`position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 0; color: red;`)
+    expect(placeholderImageTag.getAttribute(`title`)).toEqual(
+      `Title for the image`
+    )
+    expect(placeholderImageTag.getAttribute(`style`)).toEqual(
+      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 0; color: red;`
+    )
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
   })
 
   it(`should call onLoad and onError image events`, () => {
     const onLoadMock = jest.fn()
     const onErrorMock = jest.fn()
-    const imageTag = setup(true, onLoadMock, onErrorMock).querySelector(`picture img`)
+    const imageTag = setup(true, onLoadMock, onErrorMock).querySelector(
+      `picture img`
+    )
     fireEvent.load(imageTag)
     fireEvent.error(imageTag)
 

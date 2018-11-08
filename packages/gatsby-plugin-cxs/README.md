@@ -13,9 +13,7 @@ Add the plugin to `gatsby-config.js`
 
 ```javascript
 module.exports = {
-  plugins: [
-    `gatsby-plugin-cxs`
-  ],
+  plugins: [`gatsby-plugin-cxs`],
 }
 ```
 
