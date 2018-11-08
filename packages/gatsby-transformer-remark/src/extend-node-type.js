@@ -75,16 +75,24 @@ module.exports = (
   return new Promise((resolve, reject) => {
     // Setup Remark.
     const {
+      blocks,
       commonmark = true,
       footnotes = true,
-      pedantic = true,
       gfm = true,
-      blocks,
+      pedantic = true,
+      heading = null,
+      maxDepth = 6,
+      tight = null,
     } = pluginOptions
+    const tocOptions = {
+      heading,
+      maxDepth,
+      tight,
+    }
     const remarkOptions = {
-      gfm,
       commonmark,
       footnotes,
+      gfm,
       pedantic,
     }
     if (_.isArray(blocks)) {
@@ -242,13 +250,29 @@ module.exports = (
       }
     }
 
-    async function getTableOfContents(markdownNode, pathToSlugField) {
+    async function getTableOfContents(
+      markdownNode,
+      pathToSlugField,
+      maxDepth,
+      heading,
+      tight
+    ) {
       const cachedToc = await cache.get(tableOfContentsCacheKey(markdownNode))
+      const appliedTocOptions = tocOptions
+      if (maxDepth && _.isNumber(maxDepth) && _.inRange(maxDepth, 0, 7)) {
+        appliedTocOptions.maxDepth = maxDepth
+      }
+      if (heading && _.isString(heading)) {
+        appliedTocOptions.heading = heading
+      }
+      if (tight && _.isBoolean(tight)) {
+        appliedTocOptions.tight = tight
+      }
       if (cachedToc) {
         return cachedToc
       } else {
         const ast = await getAST(markdownNode)
-        const tocAst = mdastToToc(ast)
+        const tocAst = mdastToToc(ast, appliedTocOptions)
 
         let toc
         if (tocAst.map) {
@@ -435,9 +459,27 @@ module.exports = (
             type: GraphQLString,
             defaultValue: `fields.slug`,
           },
+          maxDepth: {
+            type: GraphQLInt,
+            defaultValue: 6,
+          },
+          heading: {
+            type: GraphQLString,
+            defaultValue: null,
+          },
+          tight: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
         },
-        resolve(markdownNode, { pathToSlugField }) {
-          return getTableOfContents(markdownNode, pathToSlugField)
+        resolve(markdownNode, { pathToSlugField, maxDepth, heading, tight }) {
+          return getTableOfContents(
+            markdownNode,
+            pathToSlugField,
+            maxDepth,
+            heading,
+            tight
+          )
         },
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071

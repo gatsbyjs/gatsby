@@ -68,7 +68,12 @@ Using the following GraphQL query you'll be able to get the table of contents
     edges {
       node {
         html
-        tableOfContents(pathToSlugField: "frontmatter.path")
+        tableOfContents(
+          pathToSlugField: "frontmatter.path"
+          heading: null
+          maxDepth: 2
+          tight: true
+        )
         frontmatter {
           # Assumes you're using path in your frontmatter.
           path
@@ -80,6 +85,22 @@ Using the following GraphQL query you'll be able to get the table of contents
 ```
 
 By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null.
+
+To configure tableOfContents by graphQL query, adjust query as shown above. To pass default options to the plugin generating the tableOfContents, configure it as shown below. The options shown below are the defaults used by the plugin.
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      heading: null,
+      maxDepth: 6,
+      tight: null,
+    },
+  },
+]
+```
 
 ### Excerpt length
 

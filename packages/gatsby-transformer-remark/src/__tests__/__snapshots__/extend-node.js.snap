@@ -88,6 +88,22 @@ Object {
 }
 `;
 
+exports[`Table of contents is generated correctly from schema table of contents is generated with correct depth 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "tableOfContents": "<ul>
+<li>
+<p><a href=\\"/my%20little%20pony/#first-title\\">first title</a></p>
+<ul>
+<li><a href=\\"/my%20little%20pony/#second-title\\">second title</a></li>
+</ul>
+</li>
+</ul>",
+}
+`;
+
 exports[`Wordcount and timeToRead are generated correctly from schema correctly uses a default value for timeToRead 1`] = `
 Object {
   "frontmatter": Object {

@@ -364,6 +364,30 @@ final text
       expect(node).toMatchSnapshot()
     }
   )
+
+  bootstrapTest(
+    `table of contents is generated with correct depth`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1)
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#first-title">first title</a></li>
+</ul>`)
+    }
+  )
 })
 
 describe(`Links are correctly prefixed`, () => {
