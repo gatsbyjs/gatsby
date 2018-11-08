@@ -10,7 +10,7 @@ const {
 } = require(`./infer-graphql-input-fields-from-fields`)
 const createSortField = require(`./create-sort-field`)
 const buildConnectionFields = require(`./build-connection-fields`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
+const createPageDependency = require(`../redux/actions/add-page-dependency`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
 const { runQuery } = require(`../db/nodes`)
 
