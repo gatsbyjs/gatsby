@@ -1,16 +1,8 @@
 const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
 const _ = require(`lodash`)
+const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+jest.mock(`../../redux/actions/add-page-dependency`)
 const buildNodeTypes = require(`../build-node-types`)
-
-jest.mock(`../../redux/actions/add-page-dependency`, () => {
-  return {
-    createPageDependency: jest.fn(),
-  }
-})
-
-const {
-  createPageDependency,
-} = require(`../../redux/actions/add-page-dependency`)
 
 describe(`build-node-types`, () => {
   let schema, store, types
@@ -154,6 +146,10 @@ describe(`build-node-types`, () => {
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
       nodeId: `p1`,
+    })
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `r1`,
     })
   })
 })
