@@ -39,7 +39,11 @@ const List = styled(ListBase)`
   }
 `
 
-const EcosystemFeaturedItems = ({ items, itemComponent: Item, className }) => (
+const EcosystemFeaturedItems = ({
+  items,
+  itemComponent: Item,
+  className = ``,
+}) => (
   <EcosystemFeaturedItemsRoot className={`featuredItems ${className}`}>
     <List numberOfItems={items.length}>
       {items.map(item => {

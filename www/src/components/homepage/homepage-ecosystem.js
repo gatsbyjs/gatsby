@@ -20,6 +20,8 @@ import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
+import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
+
 const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
@@ -200,7 +202,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
       />
     </Sections>
     <SubTitle>Some of our recent favorites</SubTitle>
-    <FeaturedItems>
+    <FeaturedItems className={SCROLLER_CLASSNAME}>
       <FeaturedItemsList numberOfItems={featuredItems.length}>
         {featuredItems.map(item => {
           const { slug } = item

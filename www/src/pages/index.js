@@ -19,10 +19,21 @@ import FuturaParagraph from "../components/futura-paragraph"
 import Button from "../components/button"
 import TechWithIcon from "../components/tech-with-icon"
 import EmailCaptureForm from "../components/email-capture-form"
-
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
+import {
+  setupScrollersObserver,
+  unobserveScrollers,
+} from "../utils/scrollers-observer"
 
 class IndexRoute extends React.Component {
+  componentDidMount() {
+    setupScrollersObserver()
+  }
+
+  componentWillUnmount() {
+    unobserveScrollers()
+  }
+
   combineEcosystemFeaturedItems = ({ starters, plugins }) => {
     const combinedItems = []
 
