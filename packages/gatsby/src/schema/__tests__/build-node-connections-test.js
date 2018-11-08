@@ -4,9 +4,9 @@ const addPageDependency = require(`../../redux/actions/add-page-dependency`)
 addPageDependency.createPageDependency = jest.fn()
 const { createPageDependency } = addPageDependency
 const buildNodeTypes = require(`../build-node-types`)
-const nodeConnections = require(`../node-connections`)
+const nodeConnections = require(`../build-node-connections`)
 
-describe(`node-connections`, () => {
+describe(`build-node-connections`, () => {
   let schema, store, types, connections
 
   async function runQuery(query) {
