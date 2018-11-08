@@ -125,10 +125,9 @@ const EcosysteSection = ({
       {subTitle && <SubTitle>{subTitle}</SubTitle>}
     </Header>
 
-    {featuredItems &&
-      featuredItems.length > 0 && (
-        <EcosystemFeaturedItems items={featuredItems} />
-      )}
+    {featuredItems && featuredItems.length > 0 && (
+      <EcosystemFeaturedItems items={featuredItems} />
+    )}
   </EcosystemSectionRoot>
 )
 

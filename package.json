@@ -27,7 +27,7 @@
     "lint-staged": "^8.0.4",
     "npm-run-all": "4.1.2",
     "plop": "^1.8.1",
-    "prettier": "^1.14.3",
+    "prettier": "^1.15.1",
     "rimraf": "^2.6.1",
     "yargs": "^10.0.3"
   },

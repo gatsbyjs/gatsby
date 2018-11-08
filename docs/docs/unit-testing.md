@@ -29,7 +29,7 @@ Because Gatsby handles its own Babel configuration, you will need to manually
 tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.config.js`. You can set up some useful defaults at the same time:
 
 ```json:title=jest.config.js
-module.exports = {
+(module.exports = {
   "transform": {
     "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
   },
@@ -44,7 +44,7 @@ module.exports = {
   },
   "testURL": "http://localhost",
   "setupFiles": ["<rootDir>/loadershim.js"]
-}
+})
 ```
 
 The `transform` section tells Jest that all `js` or `jsx` files need to be
@@ -249,7 +249,7 @@ npm install --save-dev ts-jest
 Then update the configuration in `jest.config.js`, like so:
 
 ```json:title=jest.config.js
-module.exports = {
+(module.exports = {
   "transform": {
     "^.+\\.tsx?$": "ts-jest",
     "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
@@ -267,7 +267,7 @@ module.exports = {
   },
   "testURL": "http://localhost",
   "setupFiles": ["<rootDir>/loadershim.js"]
-}
+})
 ```
 
 You may notice that two other options, `testRegex` and `moduleFileExtensions`,
