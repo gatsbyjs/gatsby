@@ -50,11 +50,11 @@ class EcosystemBoard extends Component {
           links={[
             { label: `Browse Plugins`, to: `/plugins/` },
             {
-              label: `Plugin Authoring`,
+              label: `Creating Plugins`,
               to: `/docs/plugin-authoring/`,
               secondary: true,
             },
-            { label: `Plugin Docs`, to: `/docs/plugins/`, secondary: true },
+            { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },
           ]}
           featuredItems={plugins}
         />
@@ -65,7 +65,7 @@ class EcosystemBoard extends Component {
           icon={StartersIcon}
           links={[
             { label: `Browse Starters`, to: `/starters/` },
-            { label: `Starter Docs`, to: `/docs/starters/`, secondary: true },
+            { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
           ]}
           featuredItems={starters}
         />
