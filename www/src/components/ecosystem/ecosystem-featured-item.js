@@ -20,6 +20,7 @@ const EcosystemFeaturedItemRoot = styled(`li`)`
   ${presets.Tablet} {
     padding: 0;
     border-bottom: 1px solid ${colors.gray.superLight};
+    margin: 0;
   }
 `
 
@@ -47,8 +48,10 @@ export const BlockLink = styled(Link)`
 `
 
 const Header = styled(`header`)`
+  align-items: flex-start;
   display: flex;
   justify-content: space-between;
+
   h3 {
     color: ${colors.gatsbyDark};
     font-size: 1rem;
@@ -61,6 +64,7 @@ const Header = styled(`header`)`
     align-items: center;
     font-size: 0.8125rem;
     font-family: ${options.systemFontFamily.join(`,`)};
+    padding-left: 5px;
 
     svg {
       fill: ${colors.gray.light};
@@ -75,7 +79,6 @@ const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
   justify-content: space-between;
-  height: 100%;
   font-family: ${options.systemFontFamily.join(`,`)};
   padding: ${rhythm(0.5)} 0 0;
 `
