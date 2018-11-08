@@ -8,9 +8,7 @@ const systemPath = require(`path`)
 
 const { getNodesByType } = require(`../../db/nodes`)
 const { findRootNodeAncestor } = require(`../../db/node-tracking`)
-const {
-  pageDependencyResolver,
-} = require(`../../redux/actions/add-page-dependency`)
+const pageDependencyResolver = require(`../page-dependency-resolver`)
 const { joinPath } = require(`../../utils/path`)
 
 let type, listType

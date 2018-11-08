@@ -18,9 +18,7 @@ const {
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
 const { getNodes, getNode } = require(`../db/nodes`)
-const {
-  pageDependencyResolver,
-} = require(`../redux/actions/add-page-dependency`)
+const pageDependencyResolver = require(`./page-dependency-resolver`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
 const { runQuery } = require(`../db/nodes`)

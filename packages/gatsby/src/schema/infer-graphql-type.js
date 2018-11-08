@@ -14,9 +14,7 @@ const { oneLine } = require(`common-tags`)
 
 const { store } = require(`../redux`)
 const { getNode, getNodes, getNodesByType } = require(`../db/nodes`)
-const {
-  pageDependencyResolver,
-} = require(`../redux/actions/add-page-dependency`)
+const pageDependencyResolver = require(`./page-dependency-resolver`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
