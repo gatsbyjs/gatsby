@@ -119,7 +119,10 @@ Create a new file called `gatsby-node.js` in your `gatsby-source-pixabay` direct
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -210,7 +213,10 @@ Update `gatsby-node.js` in your `plugins/gatsby-source-pixabay/` directory:
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -269,7 +275,10 @@ You're adding a helper function on lines 11 to 27 and processing the data into a
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it

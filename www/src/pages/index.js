@@ -74,8 +74,8 @@ class IndexRoute extends React.Component {
                       {` `}
                       <TechWithIcon icon={WebpackIcon}>Webpack</TechWithIcon>,
                       {` `}
-                      modern JavaScript and CSS and more — all set up and waiting
-                      for you to start building.
+                      modern JavaScript and CSS and more — all set up and
+                      waiting for you to start building.
                     </FuturaParagraph>
                   </Card>
                   <Card>
