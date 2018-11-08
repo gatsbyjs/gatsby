@@ -19,7 +19,7 @@ function buildNodesSchema(fields) {
 }
 module.exports.buildNodesSchema = buildNodesSchema
 
-module.exports.buildSchema = async ({ parentSpan }) => {
+module.exports.build = async ({ parentSpan }) => {
   clearUnionTypes()
   const typesGQL = await buildNodeTypes({ parentSpan })
   const connections = nodeConnections.buildAll(_.values(typesGQL))
