@@ -180,6 +180,8 @@ export default (pagePath, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   // If no one stepped up, we'll handle it.
@@ -368,6 +370,8 @@ export default (pagePath, callback) => {
     replacePreBodyComponents,
     getPostBodyComponents,
     replacePostBodyComponents,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
