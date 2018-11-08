@@ -24,7 +24,7 @@ const handleIntersect = (entries, observer) => {
   entries.forEach(entry => {
     const target = entry.target
 
-    if (entry.intersectionRatio > 0) {
+    if (entry.intersectionRatio > 0.5) {
       setTimeout(
         () => turnOnLeadScroll({ target, duration: 1000, distance: 20 }),
         250

@@ -5,6 +5,7 @@ import styled from "react-emotion"
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import { scrollbarStyles } from "../../utils/styles"
+import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 export const EcosystemFeaturedItemsRootBase = styled(`div`)`
   overflow-x: scroll;
@@ -44,7 +45,7 @@ const EcosystemFeaturedItems = ({
   itemComponent: Item,
   className = ``,
 }) => (
-  <EcosystemFeaturedItemsRoot className={`featuredItems ${className}`}>
+  <EcosystemFeaturedItemsRoot className={`${SCROLLER_CLASSNAME} ${className}`}>
     <List numberOfItems={items.length}>
       {items.map(item => {
         const { slug } = item
