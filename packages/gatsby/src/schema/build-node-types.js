@@ -146,63 +146,105 @@ function inferChildFields(nodes, processedTypes) {
   return _.assign.apply(null, [{}, ...configMaps])
 }
 
-function createNodeFields(type: ProcessedNodeType, { processedTypes }) {
+function inferFields({ nodes, pluginFields, processedTypes }) {
   // Create children fields for each type of children e.g.
   // "childrenMarkdownRemark".
-  const childFieldsMap = inferChildFields(type.nodes, processedTypes)
+  const childFields = inferChildFields(nodes, processedTypes)
 
   const inferredFields = inferObjectStructureFromNodes({
-    nodes: type.nodes,
+    nodes,
     types: _.values(processedTypes),
-    ignoreFields: Object.keys(type.fieldsFromPlugins),
+    ignoreFields: Object.keys(pluginFields),
   })
 
   return {
     ...defaultNodeFields,
-    ...childFieldsMap,
+    ...childFields,
     ...inferredFields,
-    ...type.fieldsFromPlugins,
+    ...pluginFields,
   }
 }
 
-async function createType(nodes, typeName, processedTypes, span) {
+function buildResolver(gqlType) {
+  return async (a, queryArgs, context) => {
+    const path = context.path ? context.path : ``
+    if (!_.isObject(queryArgs)) {
+      queryArgs = {}
+    }
+
+    const results = await runQuery({
+      queryArgs: {
+        filter: {
+          ...queryArgs,
+        },
+      },
+      firstOnly: true,
+      gqlType,
+    })
+
+    if (results.length > 0) {
+      const result = results[0]
+      const nodeId = result.id
+      createPageDependency({ path, nodeId })
+      return result
+    } else {
+      return null
+    }
+  }
+}
+
+function buildNodeObjectType({
+  typeName,
+  nodes,
+  pluginFields,
+  processedTypes,
+}) {
+  return new GraphQLObjectType({
+    name: typeName,
+    description: `Node of type ${typeName}`,
+    interfaces: [nodeInterface],
+    fields: () => inferFields({ nodes, pluginFields, processedTypes }),
+    isTypeOf: value => value.internal.type === typeName,
+  })
+}
+
+async function buildProcessedType(nodes, typeName, processedTypes, span) {
   const intermediateType = {}
 
   intermediateType.name = typeName
   intermediateType.nodes = nodes
 
-  const fieldsFromPlugins = await apiRunner(`setFieldsOnGraphQLNodeType`, {
+  const pluginFields = await apiRunner(`setFieldsOnGraphQLNodeType`, {
     type: intermediateType,
     traceId: `initial-setFieldsOnGraphQLNodeType`,
     parentSpan: span,
   })
 
-  const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)
+  const mergedFieldsFromPlugins = _.merge(...pluginFields)
 
-  const inferredInputFieldsFromPlugins = inferInputObjectStructureFromFields({
+  const pluginInputFields = inferInputObjectStructureFromFields({
     fields: mergedFieldsFromPlugins,
   })
 
-  const gqlType = new GraphQLObjectType({
-    name: typeName,
-    description: `Node of type ${typeName}`,
-    interfaces: [nodeInterface],
-    fields: () => createNodeFields(processedType, { processedTypes }),
-    isTypeOf: value => value.internal.type === typeName,
+  const gqlType = buildNodeObjectType({
+    typeName,
+    nodes,
+    pluginFields,
+    processedTypes,
   })
 
-  const inferedInputFields = inferInputObjectStructureFromNodes({
+  const nodeInputFields = inferInputObjectStructureFromNodes({
     nodes,
     typeName,
   })
 
   const filterFields = _.merge(
     {},
-    inferedInputFields.inferredFields,
-    inferredInputFieldsFromPlugins.inferredFields
+    nodeInputFields.inferredFields,
+    pluginInputFields.inferredFields
   )
 
-  const processedType: ProcessedNodeType = {
+  return {
     ...intermediateType,
     fieldsFromPlugins: mergedFieldsFromPlugins,
     nodeObjectType: gqlType,
@@ -210,39 +252,8 @@ async function createType(nodes, typeName, processedTypes, span) {
       name: typeName,
       type: gqlType,
       args: filterFields,
-      async resolve(a, queryArgs, context) {
-        const path = context.path ? context.path : ``
-        if (!_.isObject(queryArgs)) {
-          queryArgs = {}
-        }
-
-        const results = await runQuery({
-          queryArgs: {
-            filter: {
-              ...queryArgs,
-            },
-          },
-          firstOnly: true,
-          gqlType,
-        })
-
-        if (results.length > 0) {
-          const result = results[0]
-          const nodeId = result.id
-          createPageDependency({ path, nodeId })
-          return result
-        } else {
-          return null
-        }
-      },
+      resolve: buildResolver(gqlType),
     },
-  }
-
-  processedTypes[_.camelCase(typeName)] = processedType
-
-  // Special case to construct linked file type used by type inferring
-  if (typeName === `File`) {
-    setFileNodeRootType(gqlType)
   }
 }
 
@@ -267,9 +278,21 @@ module.exports = async ({ parentSpan }) => {
 
   // Create node types and node fields for nodes that have a resolve function.
   await Promise.all(
-    _.map(types, (nodes, typeName) =>
-      createType(nodes, typeName, processedTypes, span)
-    )
+    _.map(types, async (nodes, typeName) => {
+      const fieldName = _.camelCase(typeName)
+      const processedType = await buildProcessedType(
+        nodes,
+        typeName,
+        processedTypes,
+        span
+      )
+      processedTypes[fieldName] = processedType
+      // Special case to construct linked file type used by type inferring
+      if (typeName === `File`) {
+        setFileNodeRootType(processedType.nodeObjectType)
+      }
+      return
+    })
   )
 
   span.finish()
