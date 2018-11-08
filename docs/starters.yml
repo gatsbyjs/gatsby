@@ -1132,8 +1132,8 @@
     - Gatsby v2 support
     - Content item <-> content type relationships
     - Language variants relationships
-    - Modular content elements relationships
-    - Modular content relationships in rich text
+    - Linked items elements relationships
+    - Content items in Rich text elements relationships
     - Reverse link relationships
 - url: https://gatsby-starter-storybook.netlify.com/
   repo: https://github.com/markoradak/gatsby-starter-storybook
