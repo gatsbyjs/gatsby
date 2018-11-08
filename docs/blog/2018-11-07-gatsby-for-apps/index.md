@@ -45,7 +45,7 @@ Gmail served as an early proof of concept that proved out two, key functional wi
 1. Client-side JavaScript can power an app-like experience, and
 1. a JavaScript application (running in your browser) can compare favorably to traditional, native applications for desktop and mobile
 
-The impact of these wins can’t be understated. Gmail _proved_ that a native, app-like experience is not only possible for end users, but that it can even be preferable and more convenient than the native experience. We'll revisit to this trusty Gmail web application example in due time.
+The impact of these wins can’t be understated. Gmail _proved_ that a native, app-like experience is not only possible for end users, but that it can even be preferable and more convenient than the native experience. We'll revisit this trusty Gmail web application example in due time.
 
 Next up, is Twitter, for slightly different reasons.
 
@@ -252,3 +252,4 @@ We can't wait to see what you build.
 [gatsby-plugins]: /plugins
 [gatsby-mail-app]: https://gatsby-mail.netlify.com
 [gatsby-mail-repo]: https://github.com/dschau/gatsby-mail
+[apollo-boost]: https://github.com/apollographql/apollo-client/tree/master/packages/apollo-boost
