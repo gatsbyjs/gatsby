@@ -351,7 +351,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).buildSchema({ parentSpan: activity.span })
   activity.end()
 
   // Collect resolvable extensions and attach to program.

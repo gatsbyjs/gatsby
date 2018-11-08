@@ -9,7 +9,17 @@ const { store } = require(`../redux`)
 const invariant = require(`invariant`)
 const { clearUnionTypes } = require(`./infer-graphql-type`)
 
-module.exports = async ({ parentSpan }) => {
+function buildNodesSchema(fields) {
+  return new GraphQLSchema({
+    query: new GraphQLObjectType({
+      name: `RootQueryType`,
+      fields,
+    }),
+  })
+}
+module.exports.buildNodesSchema = buildNodesSchema
+
+module.exports.buildSchema = async ({ parentSpan }) => {
   clearUnionTypes()
   const typesGQL = await buildNodeTypes({ parentSpan })
   const connections = nodeConnections.buildAll(_.values(typesGQL))
@@ -22,12 +32,7 @@ module.exports = async ({ parentSpan }) => {
 
   const thirdPartySchemas = store.getState().thirdPartySchemas || []
 
-  const gatsbySchema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields: { ...connections, ...nodes },
-    }),
-  })
+  const gatsbySchema = buildNodesSchema({ ...connections, ...nodes })
 
   const schema = mergeSchemas({
     schemas: [gatsbySchema, ...thirdPartySchemas],
