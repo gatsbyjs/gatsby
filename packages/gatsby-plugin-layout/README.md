@@ -201,11 +201,9 @@ And then in `src/layouts/index.js`:
 
 ```js
 export default ({ children, pageContext }) => {
-  if (pageContext.layout === 'special') {
+  if (pageContext.layout === "special") {
     return <AlternativeLayout>{children}</AlternativeLayout>
   }
-  return (
-    <RegularLayout>{children}</RegularLayout>
-  ) 
+  return <RegularLayout>{children}</RegularLayout>
 }
 ```

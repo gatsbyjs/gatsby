@@ -74,13 +74,13 @@ To use it, simply import it and use it like you would the `<a>` element e.g.
 import React from "react"
 import { OutboundLink } from "gatsby-plugin-google-gtag"
 
-export default () => {
+export default () => (
   <div>
     <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-gtag/">
       Visit the Google Global Site Tag plugin page!
     </OutboundLink>
   </div>
-}
+)
 ```
 
 ## The "gtagConfig.anonymize_ip" option
@@ -105,7 +105,7 @@ document.cookie.indexOf(disableStr + "=true") > -1 && (window[disableStr] = !0)
 If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
 you can set a link e.g. in your imprint as follows:
 
-`<a href="javascript:gtagOptout();">Deactive Google Tracking</a>`
+`<a href="javascript:gaOptout();">Deactive Google Tracking</a>`
 
 ## The "pluginConfig.respectDNT" option
 

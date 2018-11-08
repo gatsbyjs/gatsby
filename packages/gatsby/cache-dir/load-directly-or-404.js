@@ -36,7 +36,10 @@ export function getRedirectUrl(path) {
 export default function(resources, path, replaceOnSuccess = false) {
   return new Promise((resolve, reject) => {
     const url = getRedirectUrl(path)
-    if (!url) return reject(url)
+    if (!url) {
+      reject(url)
+      return
+    }
 
     // Always navigate directly if a custom 404 page doesn't exist.
     if (!resources) {
