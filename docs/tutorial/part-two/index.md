@@ -317,7 +317,7 @@ React in general).
 
 Gatsby works out of the box with CSS Modules.
 
-Build a page using CSS Modules.
+### Build a page using CSS Modules.
 
 First, create a new `Container` component. Create a new directory at
 `src/components` and then, in this new directory, create a file named
