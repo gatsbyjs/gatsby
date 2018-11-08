@@ -72,6 +72,12 @@ rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
 1600, 2400 – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
+If you want more control over which sizes are output you can use the `srcSetBreakpoints`
+parameter. For example, if you want images that are 200, 340, 520, and 890 wide you
+can add `srcSetBreakpoints: [ 200, 340, 520, 890 ]` as a parameter. You will also get
+`maxWidth` as a breakpoint (which is 800 by default), so you will actually get
+`[ 200, 340, 520, 800, 890 ]` as breakpoints.
+
 On top of that, `fluid` returns everything else (namely aspectRatio and
 a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
@@ -83,6 +89,7 @@ plugin for Markdown content as gatsby-remark-images).
 - `maxHeight` (int)
 - `quality` (int, default: 50)
 - `sizeByPixelDensity` (bool, default: false)
+- `srcSetBreakpoints` (array of int, default: [])
 
 #### Returns
 

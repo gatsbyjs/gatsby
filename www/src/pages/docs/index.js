@@ -43,7 +43,6 @@ class IndexRoute extends React.Component {
                   <pre className="language-bash">
                     <code className="language-bash">
                       gatsby new gatsby-site
-                      https://github.com/gatsbyjs/gatsby-starter-default
                     </code>
                   </pre>
                 </div>
@@ -58,7 +57,7 @@ class IndexRoute extends React.Component {
                 <code>localhost:8000</code>
               </li>
               <li>
-                Try editing the javascript pages in <code>src/pages</code>.
+                Try editing the JavaScript pages in <code>src/pages</code>.
                 Saved changes will live reload in the browser.
               </li>
               <li>

@@ -83,7 +83,7 @@ By default the tableOfContents is using the field `slug` to generate URLs. You c
 
 ### Excerpt length
 
-By default, excerpts have a maximum length of 140 characters. You can change the default using the ```pruneLength``` argument. For example, if you need 500 characters, you can specify:
+By default, excerpts have a maximum length of 140 characters. You can change the default using the `pruneLength` argument. For example, if you need 500 characters, you can specify:
 
 ```graphql
 {

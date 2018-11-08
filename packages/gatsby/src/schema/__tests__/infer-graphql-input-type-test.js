@@ -8,7 +8,7 @@ const {
 } = require(`graphql`)
 const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 
-const runSift = require(`../run-sift`)
+const { runQuery } = require(`../../db/nodes`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 const buildConnectionFields = require(`../build-connection-fields`)
 const {
@@ -19,8 +19,15 @@ const {
   getExampleValues,
   clearTypeExampleValues,
 } = require(`../data-tree-utils`)
+const { connectionFromArray } = require(`graphql-skip-limit`)
+
+let mockNodes
+jest.unmock(`../../db/nodes`)
+const nodesDb = require(`../../db/nodes`)
+nodesDb.getNodesByType = () => mockNodes
 
 function queryResult(nodes, query, { types = [] } = {}) {
+  mockNodes = nodes
   const nodeType = new GraphQLObjectType({
     name: `Test`,
     fields: inferObjectStructureFromNodes({
@@ -62,13 +69,19 @@ function queryResult(nodes, query, { types = [] } = {}) {
                 }),
               },
             },
-            resolve(nvi, args) {
-              return runSift({
-                args,
-                nodes,
-                connection: true,
-                type: nodeType,
+            async resolve(nvi, queryArgs) {
+              const results = await runQuery({
+                queryArgs,
+                firstOnly: false,
+                gqlType: nodeType,
               })
+              if (results.length > 0) {
+                const connection = connectionFromArray(results, queryArgs)
+                connection.totalCount = results.length
+                return connection
+              } else {
+                return null
+              }
             },
           },
         }
@@ -904,6 +917,61 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.allNode.edges[1].node.foo).toEqual(`baz`)
   })
 
+  it(`handles elemMatch operator`, async () => {
+    let result = await queryResult(
+      [
+        { linked___NODE: [`child_1`, `child_2`], foo: `bar` },
+        { linked___NODE: [`child_1`], foo: `baz` },
+        { linked___NODE: [`child_2`], foo: `foo` },
+        { array: [{ linked___NODE: [`child_1`, `child_2`] }], foo: `lorem` },
+        {
+          array: [
+            { linked___NODE: [`child_1`] },
+            { linked___NODE: [`child_2`] },
+          ],
+          foo: `ipsum`,
+        },
+        { array: [{ linked___NODE: [`child_1`] }], foo: `sit` },
+        { array: [{ linked___NODE: [`child_2`] }], foo: `dolor` },
+        { foo: `ipsum` },
+      ],
+      `
+        {
+          eq:allNode(filter: { linked: { elemMatch: { hair: { eq: "brown" } } } }) {
+            edges { node { foo } }
+          }
+          in:allNode(filter: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } }) {
+            edges { node { foo } }
+          }
+          insideInlineArrayEq:allNode(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { eq: "brown" } } } } } }) {
+            edges { node { foo } }
+          }
+          insideInlineArrayIn:allNode(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } } } }) {
+            edges { node { foo } }
+          }
+        }
+      `,
+      { types }
+    )
+
+    const itemToEdge = item => {
+      return {
+        node: {
+          foo: item,
+        },
+      }
+    }
+
+    expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
+    expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
+    expect(result.data.insideInlineArrayEq.edges).toEqual(
+      [`lorem`, `ipsum`, `sit`].map(itemToEdge)
+    )
+    expect(result.data.insideInlineArrayIn.edges).toEqual(
+      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
+    )
+  })
+
   it(`doesn't mutate node object`, async () => {
     await queryResult(
       [
@@ -929,5 +997,16 @@ describe(`filtering on linked nodes`, () => {
     )
 
     expect(getExampleValues({ typeName: `Linked_A` })).toEqual(originalNode)
+  })
+
+  it(`skips fields with missing nodes`, async () => {
+    const fields = inferInputObjectStructureFromNodes({
+      nodes: [],
+      exampleValue: {
+        movie___NODE: `foobar`,
+      },
+    }).inferredFields
+
+    expect(Object.keys(fields)).toHaveLength(0)
   })
 })

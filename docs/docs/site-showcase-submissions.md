@@ -1,5 +1,5 @@
 ---
-title: Site Showcase Submissions
+title: Submit to Site Showcase
 ---
 
 Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructions.
@@ -41,6 +41,22 @@ There are only three major steps :)
   built_by_url: https://example.org
 
   # leave as false, the Gatsby site review board will choose featured sites quarterly
+  featured: false
+```
+
+Use the following template to ensure required fields are filled:
+
+```yaml:title=docs/sites.yml
+- title: (required)
+  url: (required)
+  main_url: (required)
+  source_url: (optional - https://github.com/{username}/{titleofthesite})
+  description: >
+    (optional)
+  categories:
+    - (required)
+  built_by: (optional)
+  built_by_url: (optional)
   featured: false
 ```
 
