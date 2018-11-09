@@ -190,7 +190,7 @@ exports.sourceNodes = async (
           let fileUrl = node.url
           if (typeof node.uri === `object`) {
             // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
-            fileUrl = node.url.uri
+            fileUrl = node.uri.url
           }
           // Resolve w/ baseUrl if node.uri isn't absolute.
           const url = new URL(fileUrl, baseUrl)
