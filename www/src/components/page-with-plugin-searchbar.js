@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react"
+import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"

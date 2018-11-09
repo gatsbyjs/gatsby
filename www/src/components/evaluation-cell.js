@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { rhythm } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 

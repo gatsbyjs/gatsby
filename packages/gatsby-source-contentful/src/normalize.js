@@ -193,13 +193,7 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
   return textNode
 }
 
-function prepareStructuredTextNode(
-  node,
-  key,
-  content,
-  createNode,
-  createNodeId
-) {
+function prepareStructuredTextNode(node, key, content, createNodeId) {
   const str = JSON.stringify(content)
   const structuredTextNode = {
     ...content,
@@ -377,8 +371,6 @@ exports.createContentTypeNodes = ({
         if (entryItemFieldKey.split(`___`).length > 1) {
           return
         }
-
-        entryItemFields[entryItemFieldKey] = entryItemFields[entryItemFieldKey]
       })
 
       // Replace text fields with text nodes so we can process their markdown
