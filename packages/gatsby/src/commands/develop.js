@@ -158,7 +158,11 @@ async function startServer(program) {
       req
         .pipe(
           request(proxiedUrl).on(`error`, err => {
-            report.error(err)
+            const message = `Error when trying to proxy request "${
+              req.originalUrl
+            }" to "${proxiedUrl}"`
+
+            report.error(message, err)
             res.status(500).end()
           })
         )
