@@ -57,6 +57,7 @@
     "file-loader": "^1.1.11",
     "flat": "^4.0.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "fs-exists-cached": "^1.0.0",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^2.4.5",
     "gatsby-link": "^2.0.6",
