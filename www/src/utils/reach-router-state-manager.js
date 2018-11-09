@@ -16,18 +16,15 @@ class RRSM extends Component {
     this.setState({ ...finalState })
 
     // sync url to RSSM
-    Object.keys(finalState).forEach(function(k) {
-      if (
-        // Don't save some state values if it meets the conditions below.
-        !finalState[k] || // falsy
-        finalState[k] === `` || // string
-        (Array.isArray(finalState[k]) && !finalState[k].length) || // array
-        finalState[k] === emptySearchState[k] // same as default state, unnecessary
-      ) {
-        delete finalState[k] // Drop query params with new values = falsy
+    const params = Object.keys(finalState).reduce((merged, key) => {
+      // right now the sort behavior is default, it doesn't show in the url
+      if (finalState[key] && key !== `sort`) {
+        merged[key] = finalState[key]
       }
-    })
-    return navigate(`${location.pathname}?${queryString.stringify(finalState)}`)
+      return merged
+    }, {})
+
+    return navigate(`${location.pathname}?${queryString.stringify(params)}`)
   }
 
   componentDidMount() {
