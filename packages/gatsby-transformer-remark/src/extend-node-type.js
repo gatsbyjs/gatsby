@@ -24,7 +24,7 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
-const { getConcatenatedValue, duplicateNode } = require(`./hast-processing`)
+const { getConcatenatedValue, cloneTreeUntil } = require(`./hast-processing`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -398,31 +398,16 @@ module.exports = (
           }
 
           const fullAST = await getHTMLAst(markdownNode)
-          let excerptAST
-          let parent
+          if (!fullAST.children.length) {
+            return ``
+          }
 
-          function preOrderTraversal(node) {
+          const excerptAST = cloneTreeUntil(fullAST, excerptAST => {
             const totalExcerptSoFar = getConcatenatedValue(excerptAST)
             if (totalExcerptSoFar && totalExcerptSoFar.length > pruneLength) {
               return
             }
-
-            const newNode = duplicateNode(node)
-            if (parent) {
-              parent.children.push(newNode)
-            } else {
-              excerptAST = newNode
-            }
-
-            if (node.children) {
-              node.children.forEach(child => {
-                parent = newNode
-                preOrderTraversal(child)
-              })
-            }
-          }
-
-          preOrderTraversal(fullAST)
+          })
 
           return hastToHTML(excerptAST)
         },
