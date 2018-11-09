@@ -424,9 +424,6 @@ module.exports = (
 
           preOrderTraversal(fullAST)
 
-          console.log(`ended it`)
-          console.log(`final`, excerptAST)
-
           return hastToHTML(excerptAST)
         },
       },
