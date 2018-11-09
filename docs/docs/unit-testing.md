@@ -60,32 +60,28 @@ const babelOptions = {
 module.exports = require("babel-jest").createTransformer(babelOptions)
 ```
 
-Back to the Jest config, you can see the next option is `testRegex`. This is the
-pattern telling Jest which files contain tests. The pattern above matches any
-`.js` file inside a `__tests__` directory, or any file elsewhere with the
-extension `.test.js` or `.spec.js`. You are telling Jest to ignore any tests in
-the `node_modules` or `.cache` directories.
-
-The `moduleNameMapper` section works a bit like webpack rules, and tells Jest
-how to handle imports. You are mainly concerned here with mocking static file
-imports, which Jest can't handle. A mock is a dummy module that is used instead
-of the real module inside tests. It is good when you have something that you
-can't or don't want to test. You can mock anything, and here you are mocking
-assets rather than code. For stylesheets you need to use the package
-`identity-obj-proxy`. For all other assets you need to use a manual mock called
-`fileMock.js`. You need to create this yourself. The convention is to create a
-directory called `__mocks__` in the root directory for this. Note the pair of
-double underscores in the name.
+Back to the Jest config, you can see the next option is `moduleNameMapper`. This
+section works a bit like webpack rules, and tells Jest how to handle imports.
+You are mainly concerned here with mocking static file imports, which Jest can't
+handle. A mock is a dummy module that is used instead of the real module inside
+tests. It is good when you have something that you can't or don't want to test.
+You can mock anything, and here you are mocking assets rather than code. For
+stylesheets you need to use the package `identity-obj-proxy`. For all other assets
+you need to use a manual mock called `fileMock.js`. You need to create this yourself.
+The convention is to create a directory called `__mocks__` in the root directory
+for this. Note the pair of double underscores in the name.
 
 ```js:title=__mocks__/fileMock.js
 module.exports = "test-file-stub"
 ```
 
-The next config setting is `transformIgnorePatterns`. This is very important,
-and is different from what you'll find in other Jest guides. The reason that you
-need this is because Gastby includes un-transpiled ES6 code. By default Jest
-doesn't try to transform code inside `node_modules`, so you will get an error
-like this:
+The next config setting is `testPathIgnorePatterns`. You are telling Jest to ignore
+any tests in the `node_modules` or `.cache` directories.
+
+The next option is very important, and is different from what you'll find in other
+Jest guides. The reason that you need `transformIgnorePatterns` is because Gastby
+includes un-transpiled ES6 code. By default Jest doesn't try to transform code
+inside `node_modules`, so you will get an error like this:
 
 ```
 /my-blog/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
@@ -273,6 +269,19 @@ module.exports = {
   "setupFiles": ["<rootDir>/loadershim.js"]
 }
 ```
+
+You may notice that two other options, `testRegex` and `moduleFileExtensions`,
+have been added. Option `testRegex` is the pattern telling Jest which files
+contain tests. The pattern above matches any `.js`, `.jsx`, `.ts` or `.tsx`
+file inside a `__tests__` directory, or any file elsewhere with the extension
+`.test.js`, `.test.jsx`, `.test.ts`, `.test.tsx`, or `.spec.js`, `.spec.jsx`,
+`.spec.ts`, `.spec.tsx`.
+
+Option `moduleFileExtensions` is needed when working with TypeScript.
+The only thing it is doing is telling Jest which file extensions you can
+import in your files without making precise the file extension. By default,
+it works with `js`, `json`, `jsx`, `node` file extensions so we just need
+to add `ts` and `tsx`. You can read more about it in [Jest's documentation](https://jestjs.io/docs/en/configuration.html#modulefileextensions-array-string).
 
 ## Other resources
 

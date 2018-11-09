@@ -105,7 +105,7 @@ document.cookie.indexOf(disableStr + "=true") > -1 && (window[disableStr] = !0)
 If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
 you can set a link e.g. in your imprint as follows:
 
-`<a href="javascript:gtagOptout();">Deactive Google Tracking</a>`
+`<a href="javascript:gaOptout();">Deactive Google Tracking</a>`
 
 ## The "pluginConfig.respectDNT" option
 
