@@ -155,7 +155,7 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
-      req.pipe(request(proxiedUrl)).pipe(res)
+      req.pipe(request(proxiedUrl).on(`error`, err => report(err))).pipe(res)
     })
   }
 
