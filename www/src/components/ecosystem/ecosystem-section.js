@@ -18,13 +18,13 @@ const EcosystemSectionRoot = styled(`section`)`
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
     border-radius: ${presets.radiusLg}px;
     display: flex;
+    flex-basis: calc(50% - 20px);
     flex-direction: column;
     flex-grow: 0;
     margin: 0 10px 20px;
+    max-height: 60vh;
     padding: ${rhythm(options.blockMarginBottom)};
     padding-bottom: 0;
-    flex-basis: calc(50% - 20px);
-    max-height: 60vh;
 
     :last-child {
       flex-grow: 1;
@@ -45,14 +45,9 @@ const EcosystemSectionRoot = styled(`section`)`
     text-decoration: none;
   }
 `
+
 export const Header = styled(`header`)`
   align-items: flex-start;
-
-  ${presets.Tablet}: {
-    padding: ${rhythm(1)};
-    padding: 10px;
-    background: yellow;
-  };
 `
 
 const Title = styled(`h1`)`
@@ -72,8 +67,8 @@ const Title = styled(`h1`)`
 
 const Icon = styled(`span`)`
   display: block;
-  width: 32px;
   height: 32px;
+  width: 32px;
 `
 
 const SubTitle = styled(`h2`)`
@@ -87,9 +82,9 @@ const SubTitle = styled(`h2`)`
 `
 
 const Description = styled(`p`)`
+  color: ${colors.gray.lightCopy};
   font-family: ${options.systemFontFamily.join(`,`)};
   font-size: 0.8125rem;
-  color: ${colors.gray.lightCopy};
 `
 
 const Actions = styled(`div`)`

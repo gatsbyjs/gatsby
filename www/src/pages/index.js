@@ -34,19 +34,13 @@ class IndexRoute extends React.Component {
     unobserveScrollers()
   }
 
-  combineEcosystemFeaturedItems = ({ starters, plugins }) => {
-    const combinedItems = []
-
-    let i = 0
-    while (i < 3) {
-      combinedItems.push(starters[i])
-      combinedItems.push(plugins[i])
-
-      i++
-    }
-
-    return combinedItems
-  }
+  combineEcosystemFeaturedItems = ({ starters, plugins, numFeatured = 3 }) =>
+    new Array(numFeatured)
+      .fill(undefined)
+      .reduce(
+        (merged, _, index) => merged.concat([starters[index], plugins[index]]),
+        []
+      )
 
   render() {
     const {

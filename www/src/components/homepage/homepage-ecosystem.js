@@ -43,8 +43,8 @@ const Section = styled(EcosystemSection)`
   padding: ${rhythm(options.blockMarginBottom)};
 
   ${presets.Tablet} {
-    padding: ${rhythm(options.blockMarginBottom)};
     margin: 0 8px 0px;
+    padding: ${rhythm(options.blockMarginBottom)};
 
     :last-child {
       align-self: stretch;
@@ -82,13 +82,16 @@ const FeaturedItems = styled(EcosystemFeaturedItemsRootBase)`
 `
 
 const FeaturedItemsList = styled(EcosystemFeaturedItemsListBase)`
-  width: ${props => `calc(320px * ${props.numberOfItems})`};
   padding: 0 calc(${rhythm(options.blockMarginBottom)} - 7px) 0;
 
+  ${presets.Tablet} {
+    width: ${props => `calc(320px * ${props.numberOfItems})`};
+  }
+
   ${presets.Desktop} {
-    width: 100%;
-    margin: 0;
     flex-wrap: wrap;
+    margin: 0;
+    width: 100%;
   }
 `
 
@@ -97,6 +100,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 
   ${presets.Tablet} {
     border-bottom: none;
+    margin: 0 6px 6px 0;
     padding: 5px;
   }
 
@@ -113,8 +117,8 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     position: relative;
 
     /* this ovveride the .main-body a style*/
-    font-weight: normal;
     box-shadow: none;
+    font-weight: normal;
 
     ${presets.Tablet} {
       border-radius: ${presets.radiusLg}px;

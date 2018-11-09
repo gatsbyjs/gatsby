@@ -14,8 +14,8 @@ const HomepageSectionRoot = styled(`section`)`
   background: ${props => (props.inverse ? colors.gatsby : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   margin: 0 -${rhythm(presets.gutters.default / 2)};
-  width: calc(100% + ${rhythm(presets.gutters.default)});
   padding: ${rhythm(2)} ${rhythm(presets.gutters.default / 2)};
+  width: calc(100% + ${rhythm(presets.gutters.default)});
 
   ${presets.Hd} {
     margin: 0 -${vP};
@@ -39,8 +39,8 @@ const Header = styled(`header`)`
 
 const Name = styled(`h3`)`
   align-items: center;
-  display: flex;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
+  display: flex;
   font-size: 1rem;
   font-weight: normal;
   margin: 0;
