@@ -1,5 +1,7 @@
 const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
 const _ = require(`lodash`)
+const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+jest.mock(`../../redux/actions/add-page-dependency`)
 const buildNodeTypes = require(`../build-node-types`)
 
 describe(`build-node-types`, () => {
@@ -126,5 +128,28 @@ describe(`build-node-types`, () => {
 
     expect(parent.childRelative).toBeDefined()
     expect(parent.childRelative.id).toEqual(`r1`)
+  })
+
+  it(`should create page dependency`, async () => {
+    await runQuery(
+      `
+      {
+        parent(id: { eq: "p1" }) {
+          childRelative { # lol
+            id
+          }
+        }
+      }
+    `
+    )
+
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `p1`,
+    })
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `r1`,
+    })
   })
 })

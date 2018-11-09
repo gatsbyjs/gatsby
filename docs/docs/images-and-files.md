@@ -1,8 +1,8 @@
 ---
 title: Images and Files
+overview: true
 ---
 
-This is a stub. Help our community expand it.
+Gatsby provides multiple solutions for adding images and files into your projects. This section will walk you through several common patterns for handling images and files in Gatsby projects.
 
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+[[guidelist]]

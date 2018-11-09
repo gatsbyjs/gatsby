@@ -2,7 +2,7 @@
 const {
   Link,
   graphql
-} = require(`gatsby`)
+} = require(`gatsby`);
 
 export const query = graphql`
   query {
@@ -10,4 +10,4 @@ export const query = graphql`
       prefix
     }
   }
-`
+`;

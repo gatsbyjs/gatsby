@@ -1,6 +1,13 @@
 import { apiRunner } from "./api-runner-browser"
 
-if (`serviceWorker` in navigator) {
+if (
+  window.location.protocol !== `https:` &&
+  window.location.hostname !== `localhost`
+) {
+  console.error(
+    `Service workers can only be used over HTTPS, or on localhost for development`
+  )
+} else if (`serviceWorker` in navigator) {
   navigator.serviceWorker
     .register(`${__PATH_PREFIX__}/sw.js`)
     .then(function(reg) {
@@ -23,7 +30,9 @@ if (`serviceWorker` in navigator) {
                 // It's the perfect time to display a "Content is cached for offline use." message.
                 console.log(`Content is now available offline!`)
 
-                // post to service worker that install is complete
+                // Post to service worker that install is complete.
+                // Delay to allow time for the event listener to be added --
+                // otherwise fetch is called too soon and resources aren't cached.
                 apiRunner(`onServiceWorkerInstalled`, { serviceWorker: reg })
               }
               break
@@ -33,7 +42,7 @@ if (`serviceWorker` in navigator) {
               apiRunner(`onServiceWorkerRedundant`, { serviceWorker: reg })
               break
 
-            case `active`:
+            case `activated`:
               apiRunner(`onServiceWorkerActive`, { serviceWorker: reg })
               break
           }

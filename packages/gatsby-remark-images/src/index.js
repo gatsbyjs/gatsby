@@ -15,7 +15,7 @@ const slash = require(`slash`)
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter },
+  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
   pluginOptions
 ) => {
   const defaults = {
@@ -83,6 +83,7 @@ module.exports = (
       file: imageNode,
       args: options,
       reporter,
+      cache,
     })
 
     if (!fluidResult) {
@@ -168,12 +169,13 @@ module.exports = (
     }
 
     // Construct new image node w/ aspect ratio placeholder
+    const showCaptions = options.showCaptions && node.title
     let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
     style="position: relative; display: block; ${
-      options.wrapperStyle
-    }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+      showCaptions ? `` : options.wrapperStyle
+    } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
       class="gatsby-resp-image-background-image"
@@ -200,10 +202,9 @@ module.exports = (
     }
 
     // Wrap in figure and use title as caption
-
-    if (options.showCaptions && node.title) {
+    if (showCaptions) {
       rawHTML = `
-  <figure class="gatsby-resp-image-figure">
+  <figure class="gatsby-resp-image-figure" style="${options.wrapperStyle}">
   ${rawHTML}
   <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
   </figure>

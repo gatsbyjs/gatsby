@@ -3,8 +3,8 @@
 This library provides helper functions for building Relay-style connections but
 with skip/limit style pagination instead of Relay's cursor-based pagination.
 
-It is built and maintained for the
-[React.js static site generator Gatsby](https://github.com/gatsbyjs/gatsby) to
+It is built and maintained for
+[React modern site generator Gatsby](https://github.com/gatsbyjs/gatsby) to
 drive its GraphQL-based data layer.
 
 It is a port from [graphql-relay](https://github.com/graphql/graphql-relay-js)

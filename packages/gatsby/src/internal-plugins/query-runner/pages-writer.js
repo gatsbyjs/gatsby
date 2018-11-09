@@ -35,13 +35,19 @@ const writePages = async () => {
     })
   })
 
-  pagesData = _.sortBy(
-    pagesData,
-    // Sort pages with matchPath to end so explicit routes
-    // will match before general.
-    p => (p.matchPath ? 1 : 0)
-  )
-
+  pagesData = _(pagesData)
+    // Ensure pages keep the same sorting through builds.
+    // Pages without matchPath come first, then pages with matchPath,
+    // where more specific patterns come before less specific patterns.
+    // This ensures explicit routes will match before general.
+    // Specificity is inferred from number of path segments.
+    .sortBy(
+      p =>
+        `${p.matchPath ? 9999 - p.matchPath.split(`/`).length : `0000`}${
+          p.path
+        }`
+    )
+    .value()
   const newHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pagesComponentDependencies))
@@ -56,17 +62,11 @@ const writePages = async () => {
 
   // Get list of components, and json files.
   let components = []
-  let json = []
-
   pages.forEach(p => {
     components.push({
       componentChunkName: p.componentChunkName,
       component: p.component,
     })
-
-    if (p.jsonName && jsonDataPaths[p.jsonName]) {
-      json.push({ jsonName: p.jsonName, dataPath: jsonDataPaths[p.jsonName] })
-    }
   })
 
   components = _.uniqBy(components, c => c.componentChunkName)
@@ -121,7 +121,13 @@ const preferDefault = m => m && m.default || m
       `data.json`,
       JSON.stringify({
         pages: pagesData,
-        dataPaths: jsonDataPaths,
+        // Sort dataPaths by keys to ensure keeping the same
+        // sorting through builds
+        dataPaths: _(jsonDataPaths)
+          .toPairs()
+          .sortBy(0)
+          .fromPairs()
+          .value(),
       })
     ),
   ])
@@ -131,14 +137,18 @@ const preferDefault = m => m && m.default || m
 
 exports.writePages = writePages
 
+const resetLastHash = () => {
+  lastHash = null
+}
+
+exports.resetLastHash = resetLastHash
+
 let bootstrapFinished = false
-let oldPages
 const debouncedWritePages = _.debounce(
   () => {
     // Don't write pages again until bootstrap has finished.
-    if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
+    if (bootstrapFinished) {
       writePages()
-      oldPages = store.getState().pages
     }
   },
   500,

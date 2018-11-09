@@ -3,6 +3,8 @@ const _ = require(`lodash`)
 
 const loadPrismLanguage = require(`./load-prism-language`)
 
+const plainTextWithLFTest = /<span class="token plain-text">[^<]*\n[^<]*<\/span>/g
+
 module.exports = (language, code, lineNumbersHighlight = []) => {
   // (Try to) load languages on demand.
   if (!Prism.languages[language]) {
@@ -18,10 +20,16 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
     }
   }
 
-  const lang = Prism.languages[language]
+  const grammar = Prism.languages[language]
 
-  let highlightedCode = Prism.highlight(code, lang)
+  let highlightedCode = Prism.highlight(code, grammar, language)
   if (lineNumbersHighlight.length > 0) {
+    // HACK split plain-text spans with line separators inside into multiple plain-text spans
+    // separatered by line separator - this fixes line highlighting behaviour for jsx
+    highlightedCode = highlightedCode.replace(plainTextWithLFTest, match =>
+      match.replace(/\n/g, `</span>\n<span class="token plain-text">`)
+    )
+
     const codeSplits = highlightedCode.split(`\n`).map((split, i) => {
       if (_.includes(lineNumbersHighlight, i + 1)) {
         return {
