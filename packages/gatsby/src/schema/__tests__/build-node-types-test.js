@@ -1,5 +1,14 @@
-const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
+const {
+  graphql,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} = require(`graphql`)
 const _ = require(`lodash`)
+
+jest.mock(`../../utils/api-runner-node`)
+const apiRunnerNode = require(`../../utils/api-runner-node`)
+
 const createPageDependency = require(`../../redux/actions/add-page-dependency`)
 jest.mock(`../../redux/actions/add-page-dependency`)
 const buildNodeTypes = require(`../build-node-types`)
@@ -15,6 +24,19 @@ describe(`build-node-types`, () => {
   }
 
   beforeEach(async () => {
+    const apiRunnerResponse = [
+      {
+        pluginField: {
+          type: GraphQLString,
+          description: `test description`,
+          resolve: parent => {
+            console.log(`in resolver: ${parent}`)
+            return `pluginFieldValue`
+          },
+        },
+      },
+    ]
+    apiRunnerNode.mockImplementation(() => apiRunnerResponse)
     ;({ store } = require(`../../redux`))
     store.dispatch({ type: `DELETE_CACHE` })
     ;[
@@ -128,6 +150,19 @@ describe(`build-node-types`, () => {
 
     expect(parent.childRelative).toBeDefined()
     expect(parent.childRelative.id).toEqual(`r1`)
+  })
+
+  it(`should handle plugin fields`, async () => {
+    const result = await runQuery(
+      `
+      {
+        parent(id: { eq: "p1" }) {
+          pluginField
+        }
+      }
+    `
+    )
+    expect(result.parent.pluginField).toEqual(`pluginFieldValue`)
   })
 
   it(`should create page dependency`, async () => {
