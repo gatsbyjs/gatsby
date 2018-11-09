@@ -136,12 +136,6 @@ class WebsocketManager {
           payload: result,
         })
       })
-      this.pageResults.forEach(result => {
-        this.websocket.send({
-          type: `pageQueryResult`,
-          payload: result,
-        })
-      })
       this.errors.forEach((message, errorID) => {
         this.websocket.send({
           type: `overlayError`,
@@ -205,7 +199,7 @@ class WebsocketManager {
   }
 
   emitStaticQueryData(data: QueryResult) {
-    this.staticQueryResults.set(data.id, data.result)
+    this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
     }
