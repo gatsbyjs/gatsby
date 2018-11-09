@@ -192,7 +192,7 @@ class Application extends React.Component {
 
 If you got confused by our last example reference to `class Application extends React.Component`, dont be!
 
-To make it work Helmet in your blog, add the `Helmet` component in your `src/pages/index.js` file like:
+To make Helmet work in your blog, add the `Helmet` component in your `src/pages/index.js` file like:
 ```jsx{5-9}
 ...
 export default ({ data }) => {
