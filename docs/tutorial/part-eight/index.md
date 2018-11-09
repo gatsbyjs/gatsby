@@ -190,6 +190,28 @@ class Application extends React.Component {
 
 > 💡 The above example is from the [React Helmet docs](https://github.com/nfl/react-helmet#example). Check those out for more!
 
+If you got confused by our last example reference to `class Application extends React.Component`, dont be!
+
+To make it work Helmet in your blog, add the `Helmet` component in your `src/pages/index.js` file like:
+```jsx{5-9}
+...
+export default ({ data }) => {
+    return (
+        <Layout>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>My Title</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
+            <div>
+              ....
+            </div>
+            ....
+        </Layout>
+    )
+}
+```
+
 ## Keep making it better
 
 In this section we've shown you a few Gatsby-specific tools to improve your site's performance and prepare to go live.
