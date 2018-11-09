@@ -192,7 +192,7 @@ async function buildProcessedType(nodes, typeName, processedTypes, span) {
   const gqlType = buildNodeObjectType({
     typeName,
     nodes,
-    pluginFields,
+    pluginFields: mergedFieldsFromPlugins,
     processedTypes,
   })
 
