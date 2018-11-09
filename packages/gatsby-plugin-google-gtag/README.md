@@ -74,7 +74,7 @@ To use it, simply import it and use it like you would the `<a>` element e.g.
 import React from "react"
 import { OutboundLink } from "gatsby-plugin-google-gtag"
 
-export default () => (
+export default () => {
   <div>
     <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-gtag/">
       Visit the Google Global Site Tag plugin page!
