@@ -1,8 +1,7 @@
 const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
 const _ = require(`lodash`)
-const addPageDependency = require(`../../redux/actions/add-page-dependency`)
-addPageDependency.createPageDependency = jest.fn()
-const { createPageDependency } = addPageDependency
+const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+jest.mock(`../../redux/actions/add-page-dependency`)
 const buildNodeTypes = require(`../build-node-types`)
 const nodeConnections = require(`../build-node-connections`)
 

@@ -17,12 +17,8 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
-const {
-  getNodes,
-  getNode,
-  getNodeAndSavePathDependency,
-} = require(`../db/nodes`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { getNodes, getNode } = require(`../db/nodes`)
+const pageDependencyResolver = require(`./page-dependency-resolver`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
 const { runQuery } = require(`../db/nodes`)
@@ -41,24 +37,20 @@ const defaultNodeFields = {
   parent: {
     type: nodeInterface,
     description: `The parent of this node.`,
-    resolve(node, a, context) {
-      return getNodeAndSavePathDependency(node.parent, context.path)
-    },
+    resolve: pageDependencyResolver(node => getNode(node.parent)),
   },
   children: {
     type: new GraphQLList(nodeInterface),
     description: `The children of this node.`,
-    resolve(node, a, { path }) {
-      return node.children.map(id => getNodeAndSavePathDependency(id, path))
-    },
+    resolve: pageDependencyResolver(node => node.children.map(getNode)),
   },
 }
 
 function groupChildNodesByType(nodes) {
   return _(nodes)
     .flatMap(node => node.children.map(getNode))
-    .groupBy(node =>
-      node.internal ? _.camelCase(node.internal.type) : undefined
+    .groupBy(
+      node => (node.internal ? _.camelCase(node.internal.type) : undefined)
     )
     .value()
 }
@@ -68,19 +60,7 @@ function nodeIsOfType(typeName) {
 }
 
 function makeChildrenResolver(typeName) {
-  return (node, a, { path }) => {
-    const childNodes = node.children.map(getNode)
-    const filteredNodes = childNodes.filter(nodeIsOfType(typeName))
-
-    // Add dependencies for the path
-    filteredNodes.forEach(n =>
-      createPageDependency({
-        path,
-        nodeId: n.id,
-      })
-    )
-    return filteredNodes
-  }
+  return node => node.children.map(getNode).filter(nodeIsOfType(typeName))
 }
 
 function buildChildrenFieldConfigMap(typeName, nodeObjectType) {
@@ -88,26 +68,13 @@ function buildChildrenFieldConfigMap(typeName, nodeObjectType) {
   const fieldConfig = {
     type: new GraphQLList(nodeObjectType),
     description: `The children of this node of type ${typeName}`,
-    resolve: makeChildrenResolver(typeName),
+    resolve: pageDependencyResolver(makeChildrenResolver(typeName)),
   }
   return { [fieldName]: fieldConfig }
 }
 
 function makeChildResolver(typeName) {
-  return (node, a, { path }) => {
-    const childNodes = node.children.map(getNode)
-    const childNode = childNodes.find(nodeIsOfType(typeName))
-
-    if (childNode) {
-      // Add dependencies for the path
-      createPageDependency({
-        path,
-        nodeId: childNode.id,
-      })
-      return childNode
-    }
-    return null
-  }
+  return node => node.children.map(getNode).find(nodeIsOfType(typeName))
 }
 
 function buildChildFieldConfigMap(typeName, nodeObjectType) {
@@ -166,8 +133,7 @@ function inferFields({ nodes, pluginFields, processedTypes }) {
 }
 
 function buildResolver(gqlType) {
-  return async (a, queryArgs, context) => {
-    const path = context.path ? context.path : ``
+  return async (a, queryArgs) => {
     if (!_.isObject(queryArgs)) {
       queryArgs = {}
     }
@@ -183,10 +149,7 @@ function buildResolver(gqlType) {
     })
 
     if (results.length > 0) {
-      const result = results[0]
-      const nodeId = result.id
-      createPageDependency({ path, nodeId })
-      return result
+      return results[0]
     } else {
       return null
     }
@@ -252,7 +215,7 @@ async function buildProcessedType(nodes, typeName, processedTypes, span) {
       name: typeName,
       type: gqlType,
       args: filterFields,
-      resolve: buildResolver(gqlType),
+      resolve: pageDependencyResolver(buildResolver(gqlType)),
     },
   }
 }
