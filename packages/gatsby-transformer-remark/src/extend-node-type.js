@@ -26,6 +26,7 @@ const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 
 let fileNodes
+let tocOptionsCacheStr = ``
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
 const astCacheKey = node =>
@@ -47,7 +48,7 @@ const headingsCacheKey = node =>
 const tableOfContentsCacheKey = node =>
   `transformer-remark-markdown-toc-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  }-${pluginsCacheStr}-${tocOptionsCacheStr}-${pathPrefixCacheStr}`
 
 // ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
@@ -82,7 +83,7 @@ module.exports = (
       pedantic = true,
       heading = null,
       maxDepth = 6,
-      tight = null,
+      tight = false,
     } = pluginOptions
     const tocOptions = {
       heading,
@@ -250,24 +251,29 @@ module.exports = (
       }
     }
 
-    async function getTableOfContents(
-      markdownNode,
-      pathToSlugField,
-      maxDepth,
-      heading,
-      tight
-    ) {
+    async function getTableOfContents(markdownNode, gqlTocOptions) {
+      // fetch defaults
+      let appliedTocOptions = tocOptions
+      // override defaults
+      if (gqlTocOptions.heading) {
+        appliedTocOptions.heading = gqlTocOptions.heading
+      }
+      if (gqlTocOptions.maxDepth) {
+        appliedTocOptions.maxDepth = gqlTocOptions.maxDepth
+      }
+      if (gqlTocOptions.tight) {
+        appliedTocOptions.tight = gqlTocOptions.tight
+      }
+      if (gqlTocOptions.pathToSlugField) {
+        appliedTocOptions.pathToSlugField = gqlTocOptions.pathToSlugField
+      }
+      // reset cache string
+      tocOptionsCacheStr = ``
+      // define cache string
+      Object.keys(appliedTocOptions).map(function(key, index) {
+        tocOptionsCacheStr += key + index
+      })
       const cachedToc = await cache.get(tableOfContentsCacheKey(markdownNode))
-      const appliedTocOptions = tocOptions
-      if (maxDepth && _.isNumber(maxDepth) && _.inRange(maxDepth, 0, 7)) {
-        appliedTocOptions.maxDepth = maxDepth
-      }
-      if (heading && _.isString(heading)) {
-        appliedTocOptions.heading = heading
-      }
-      if (tight && _.isBoolean(tight)) {
-        appliedTocOptions.tight = tight
-      }
       if (cachedToc) {
         return cachedToc
       } else {
@@ -278,15 +284,20 @@ module.exports = (
         if (tocAst.map) {
           const addSlugToUrl = function(node) {
             if (node.url) {
-              if (_.get(markdownNode, pathToSlugField) === undefined) {
+              if (
+                _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
+                undefined
+              ) {
                 console.warn(
-                  `Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`
+                  `Skipping TableOfContents. Field '${
+                    appliedTocOptions.pathToSlugField
+                  }' missing from markdown node`
                 )
                 return null
               }
               node.url = [
                 pathPrefix,
-                _.get(markdownNode, pathToSlugField),
+                _.get(markdownNode, appliedTocOptions.pathToSlugField),
                 node.url,
               ]
                 .join(`/`)
@@ -461,25 +472,21 @@ module.exports = (
           },
           maxDepth: {
             type: GraphQLInt,
-            defaultValue: 6,
           },
           heading: {
             type: GraphQLString,
-            defaultValue: null,
           },
           tight: {
             type: GraphQLBoolean,
-            defaultValue: false,
           },
         },
         resolve(markdownNode, { pathToSlugField, maxDepth, heading, tight }) {
-          return getTableOfContents(
-            markdownNode,
-            pathToSlugField,
-            maxDepth,
-            heading,
-            tight
-          )
+          return getTableOfContents(markdownNode, {
+            pathToSlugField: pathToSlugField,
+            maxDepth: maxDepth,
+            heading: heading,
+            tight: tight,
+          })
         },
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
