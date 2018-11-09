@@ -139,7 +139,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: "Gatsby Default Starter",
-    apiUrl: process.env.GA_TRACKING_ID,
+    apiUrl: process.env.API_URL,
   },
   plugins: [
     {
