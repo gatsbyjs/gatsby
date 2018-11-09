@@ -301,7 +301,7 @@ module.exports = (argv, handlers) => {
         _.option(`use-pnp`, {
           default: false,
           type: `boolean`,
-          describe: `Use Yarn Plug n' Play to install dependencies`,
+          describe: `Use Yarn Plug'n'Play to install dependencies`,
         }),
       desc: `Create new Gatsby project.`,
       handler: handlerP(
