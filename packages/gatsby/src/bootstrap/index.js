@@ -414,7 +414,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   require(`../schema/type-conflict-reporter`).printConflicts()
