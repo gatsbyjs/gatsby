@@ -16,7 +16,7 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const Promise = require(`bluebird`)
-// const prune = require(`underscore.string/prune`)
+const prune = require(`underscore.string/prune`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -24,7 +24,11 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
-const { getConcatenatedValue, cloneTreeUntil } = require(`./hast-processing`)
+const {
+  getConcatenatedValue,
+  cloneTreeUntil,
+  findLastTextNode,
+} = require(`./hast-processing`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -408,6 +412,20 @@ module.exports = (
               return
             }
           })
+          const unprunedExcerpt = getConcatenatedValue(excerptAST)
+          if (!unprunedExcerpt) {
+            return ``
+          }
+
+          if (pruneLength && unprunedExcerpt.length < pruneLength) {
+            return hastToHTML(excerptAST)
+          }
+
+          const lastTextNode = findLastTextNode(excerptAST)
+          const amountToPruneLastNode =
+            pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
+          lastTextNode.value = prune(lastTextNode.value, amountToPruneLastNode)
+          console.log(`lastTextNode new value`, lastTextNode.value)
 
           return hastToHTML(excerptAST)
         },

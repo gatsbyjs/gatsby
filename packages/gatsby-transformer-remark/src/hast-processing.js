@@ -48,8 +48,24 @@ function cloneTreeUntil(root, endCondition) {
   return clonedRoot
 }
 
+function findLastTextNode(node, textNode) {
+  if (node.type === `text`) {
+    textNode = node
+  }
+  if (node.children) {
+    node.children.forEach(child => {
+      const laterTextNode = findLastTextNode(child)
+      if (laterTextNode !== textNode) {
+        textNode = laterTextNode
+      }
+    })
+  }
+  return textNode
+}
+
 module.exports = {
   duplicateNode,
   getConcatenatedValue,
   cloneTreeUntil,
+  findLastTextNode,
 }
