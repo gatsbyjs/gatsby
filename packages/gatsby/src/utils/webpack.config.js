@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -359,6 +360,11 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modules: [directoryPath(path.join(`node_modules`)), `node_modules`],
+      // Yarn Plug'n'Play support
+      plugins: [PnpWebpackPlugin],
+      resolveLoader: {
+        plugins: [PnpWebpackPlugin.moduleLoader(module)],
+      },
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
         // Using directories for module resolution is mandatory because
