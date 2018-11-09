@@ -30,8 +30,21 @@ const shouldUseYarn = () => {
 
 const shouldUseYarnPnp = (yarnPnpVersion = `1.12.0`) => {
   try {
-    const version = execSync(`yarnpkg --version`).toString()
-    return semver.gte(version, yarnPnpVersion)
+    const version = execSync(`yarnpkg --version`)
+      .toString()
+      .trim()
+    const validVersion = semver.gte(version, yarnPnpVersion)
+
+    if (!validVersion) {
+      report.warn(
+        report.stripIndent`
+          You are using yarn ${version} which does not contain pnp support.
+          Please upgrade yarn to at least ${yarnPnpVersion}
+        `
+      )
+    }
+
+    return validVersion
   } catch (e) {
     return false
   }
