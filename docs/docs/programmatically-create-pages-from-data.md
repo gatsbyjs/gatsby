@@ -23,7 +23,7 @@ which is at the core of programmatically creating a page.
 
 ```javascript{17-25}:title=gatsby-node.js
 exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
   return new Promise((resolve, reject) => {
     graphql(`
       {
@@ -45,12 +45,12 @@ exports.createPages = ({ graphql, actions }) => {
           context: {
             slug: node.fields.slug,
           },
-        });
-      });
-      resolve();
-    });
-  });
-};
+        })
+      })
+      resolve()
+    })
+  })
+}
 ```
 
 For each page we want to create we must specify the `path` for visiting that
@@ -66,23 +66,21 @@ that will be used to render the page. Here is an example of what the
 referenced template could look like:
 
 ```javascript:title=gatsby-node.js
-import React from 'react';
-import { graphql } from 'gatsby';
-import Layout from '../components/layout';
+import React from "react"
+import { graphql } from "gatsby"
+import Layout from "../components/layout"
 
 export default ({ data }) => {
-  const post = data.markdownRemark;
+  const post = data.markdownRemark
   return (
     <Layout>
       <div>
-        <h1>
-          {post.frontmatter.title}
-        </h1>
+        <h1>{post.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
     </Layout>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query($slug: String!) {
@@ -93,7 +91,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Notice that the `slug` value we specified in the `createPage` context is
