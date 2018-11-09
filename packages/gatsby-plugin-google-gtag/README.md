@@ -35,6 +35,8 @@ module.exports = {
           respectDNT: true,
           // Avoids sending pageview hits from custom paths
           exclude: ["/preview/**", "/do-not-track/me/too/"],
+          // Set a custom enviroment variable resolver
+          resolveEnv: () => process.env.GATSBY_ENV
         },
       },
     },
@@ -114,6 +116,10 @@ If you enable this optional option, Google Global Site Tag will not be loaded at
 ## The "pluginConfig.exclude" option
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+## The "pluginConfig.resolveEnv" option
+
+You can resolve the enviroment variable to check the `production` environment using the `resolveEnv` function.
 
 ## The "gtagConfig.optimize_id" option
 
