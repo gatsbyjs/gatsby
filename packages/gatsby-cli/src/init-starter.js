@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
 const url = require(`url`)
+const semver = require(`semver`)
 const existsSync = require(`fs-exists-cached`).sync
 
 const spawn = (cmd: string) => {
@@ -27,15 +28,29 @@ const shouldUseYarn = () => {
   }
 }
 
+const shouldUseYarnPnp = (yarnPnpVersion = `1.12.0`) => {
+  try {
+    const version = execSync(`yarnpkg --version`).toString()
+    return semver.gte(version, yarnPnpVersion)
+  } catch (e) {
+    return false
+  }
+}
+
 // Executes `npm install` or `yarn install` in rootPath.
-const install = async rootPath => {
+const install = async (rootPath, { usePnp }: InitOptions) => {
   const prevDir = process.cwd()
 
   report.info(`Installing packages...`)
   process.chdir(rootPath)
 
   try {
-    let cmd = shouldUseYarn() ? spawn(`yarnpkg`) : spawn(`npm install`)
+    let cmd = shouldUseYarn()
+      ? spawn(
+          `yarnpkg`,
+          ...[].concat(usePnp && shouldUseYarnPnp() ? `--enable-pnp` : [])
+        )
+      : spawn(`npm install`)
     await cmd
   } finally {
     process.chdir(prevDir)
@@ -45,7 +60,11 @@ const install = async rootPath => {
 const ignored = path => !/^\.(git|hg)$/.test(sysPath.basename(path))
 
 // Copy starter from file system.
-const copy = async (starterPath: string, rootPath: string) => {
+const copy = async (
+  starterPath: string,
+  rootPath: string,
+  options: InitOptions
+) => {
   // Chmod with 755.
   // 493 = parseInt('755', 8)
   await fs.mkdirp(rootPath, { mode: 493 })
@@ -71,13 +90,13 @@ const copy = async (starterPath: string, rootPath: string) => {
 
   report.success(`Created starter directory layout`)
 
-  await install(rootPath)
+  await install(rootPath, options)
 
   return true
 }
 
 // Clones starter from URI.
-const clone = async (hostInfo: any, rootPath: string) => {
+const clone = async (hostInfo: any, rootPath: string, options: InitOptions) => {
   let url
   // Let people use private repos accessed over SSH.
   if (hostInfo.getDefaultRepresentation() === `sshurl`) {
@@ -97,11 +116,12 @@ const clone = async (hostInfo: any, rootPath: string) => {
 
   await fs.remove(sysPath.join(rootPath, `.git`))
 
-  await install(rootPath)
+  await install(rootPath, options)
 }
 
 type InitOptions = {
   rootPath?: string,
+  usePnp?: boolean,
 }
 
 /**
@@ -124,6 +144,6 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   }
 
   const hostedInfo = hostedGitInfo.fromUrl(starter)
-  if (hostedInfo) await clone(hostedInfo, rootPath)
-  else await copy(starter, rootPath)
+  if (hostedInfo) await clone(hostedInfo, rootPath, options)
+  else await copy(starter, rootPath, options)
 }

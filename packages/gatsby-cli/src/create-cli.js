@@ -297,11 +297,17 @@ module.exports = (argv, handlers) => {
   return cli
     .command({
       command: `new [rootPath] [starter]`,
+      builder: _ =>
+        _.option(`use-pnp`, {
+          default: false,
+          type: `boolean`,
+          describe: `Use Yarn Plug n' Play to install dependencies`,
+        }),
       desc: `Create new Gatsby project.`,
       handler: handlerP(
-        ({ rootPath, starter = `gatsbyjs/gatsby-starter-default` }) => {
+        ({ starter = `gatsbyjs/gatsby-starter-default`, ...options }) => {
           const initStarter = require(`./init-starter`)
-          return initStarter(starter, { rootPath })
+          return initStarter(starter, options)
         }
       ),
     })
