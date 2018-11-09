@@ -138,11 +138,9 @@ Whether you're helping us fix bugs, improve the docs, or spread the word, we'd l
 
 Check out our [**Contributing Guide**](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
-
 ### Code of Conduct
 
 Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://gatsbyjs.org/docs/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
-
 
 ### A note on how this repository is organized
 

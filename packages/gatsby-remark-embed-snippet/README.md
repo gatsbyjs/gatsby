@@ -116,7 +116,7 @@ quz: "highlighted"
 
 ## How to use
 
-Important: This module must appear before `gatsby-remark-prismjs` in your plugins array, or the markup will have already been transformed into a code block and this plugin will fail to detect it and inline the file.
+**Important**: This module must appear before `gatsby-remark-prismjs` in your plugins array, or the markup will have already been transformed into a code block and this plugin will fail to detect it and inline the file.
 
 ```javascript
 // In your gatsby-config.js
@@ -126,19 +126,6 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              // Class prefix for <pre> tags containing syntax highlighting;
-              // defaults to 'language-' (eg <pre class="language-js">).
-              // If your site loads Prism into the browser at runtime,
-              // (eg for use with libraries like react-live),
-              // you may use this to prevent Prism from re-processing syntax.
-              // This is an uncommon use-case though;
-              // If you're unsure, it's best to use the default value.
-              classPrefix: "language-",
-            },
-          },
           {
             resolve: "gatsby-remark-embed-snippet",
             options: {
@@ -154,6 +141,19 @@ module.exports = {
               // Example code links are relative to this dir.
               // eg examples/path/to/file.js
               directory: `${__dirname}/examples/`,
+            },
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              // Class prefix for <pre> tags containing syntax highlighting;
+              // defaults to 'language-' (eg <pre class="language-js">).
+              // If your site loads Prism into the browser at runtime,
+              // (eg for use with libraries like react-live),
+              // you may use this to prevent Prism from re-processing syntax.
+              // This is an uncommon use-case though;
+              // If you're unsure, it's best to use the default value.
+              classPrefix: "language-",
             },
           },
         ],

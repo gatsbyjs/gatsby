@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.3"></a>
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.0.2...gatsby-remark-embed-snippet@3.0.3) (2018-11-05)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
 <a name="3.0.2"></a>
 
 ## [3.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.0.1...gatsby-remark-embed-snippet@3.0.2) (2018-10-29)

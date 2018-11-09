@@ -2,14 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
-import styled, { css } from "react-emotion"
+import styled from "react-emotion"
 
 import Banner from "../banner"
 import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import presets, { colors } from "../../utils/presets"
+import presets from "../../utils/presets"
 
 // Import Futura PT typeface
 import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -19,7 +19,7 @@ import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 // Other fonts
 import "typeface-spectral"
 
-const Content = styled("div")`
+const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
   padding-bottom: 3.5rem;
 
@@ -55,43 +55,54 @@ const StyledSkipNavLink = styled(SkipNavLink)`
   }
 `
 
-class LayoutWithHeading extends React.Component {
-  render() {
-    const {
-      children,
-      location: { pathname },
-      pageTitle = "",
-      pageIcon,
-    } = this.props
+const LayoutWithHeading = props => {
+  const {
+    children,
+    location: { pathname },
+    pageTitle = ``,
+    pageIcon,
+  } = props
 
-    const isHomepage = pathname === `/`
+  const isHomepage = pathname === `/`
 
-    return (
-      <div className={` ${isHomepage ? `isHomepage` : ``}`}>
-        <Helmet>
-          <title>{pageTitle ? `${pageTitle} | GatsbyJS` : "GatsbyJS"}</title>
-          <meta name="twitter:site" content="@gatsbyjs" />
-          <meta name="og:type" content="website" />
-          <meta name="og:site_name" content="GatsbyJS" />
-          <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
-          <html lang="en" />
-        </Helmet>
+  return (
+    <div className={` ${isHomepage ? `isHomepage` : ``}`}>
+      <Helmet>
+        <title>{pageTitle ? `${pageTitle} | GatsbyJS` : `GatsbyJS`}</title>
+        <meta name="twitter:site" content="@gatsbyjs" />
+        <meta name="og:type" content="website" />
+        <meta name="og:site_name" content="GatsbyJS" />
+        <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
+        <html lang="en" />
+      </Helmet>
 
-        <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
+      <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
 
-        <Banner />
+      <Banner>
+        <a
+          href="https://www.gatsbyjs.com/content-mesh-contentful"
+          css={{
+            color: `#fff`,
+            "&:hover": {
+              color: `#fff`,
+            },
+          }}
+        >
+          Register now
+        </a>
+        {` for “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
+      </Banner>
 
-        <Navigation pathname={this.props.location.pathname} />
+      <Navigation pathname={props.location.pathname} />
 
-        <Content>
-          {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
-          {children}
-        </Content>
+      <Content>
+        {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
+        {children}
+      </Content>
 
-        <MobileNavigation />
-      </div>
-    )
-  }
+      <MobileNavigation />
+    </div>
+  )
 }
 
 LayoutWithHeading.propTypes = {

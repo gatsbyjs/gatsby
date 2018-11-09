@@ -88,7 +88,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     // URLs and not any files hosted on the site.
     //
     // Regex based on http://stackoverflow.com/a/18017805
-    navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
+    navigateFallbackWhitelist: [/^([^.?]*|[^?]*\.([^.?]{5,}|html))(\?.*)?$/],
     navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory
@@ -101,7 +101,7 @@ exports.onPostBuild = (args, pluginOptions) => {
       },
       {
         // Use the Network First handler for external resources
-        urlPattern: /^https:/,
+        urlPattern: /^https?:/,
         handler: `networkFirst`,
       },
     ],
