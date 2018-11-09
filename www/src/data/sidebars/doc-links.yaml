@@ -121,7 +121,7 @@
           link: /docs/using-fragments/
         - title: Creating slugs for pages
           link: /docs/creating-slugs-for-pages/
-        - title: Programmatically create pages from data*
+        - title: Programmatically create pages from data
           link: /docs/programmatically-create-pages-from-data/
     - title: Plugins
       link: /docs/plugins/
