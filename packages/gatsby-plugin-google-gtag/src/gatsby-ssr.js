@@ -6,6 +6,8 @@ exports.onRenderBody = (
   pluginOptions
 ) => {
   if (process.env.NODE_ENV !== `production`) return null
+  
+  pluginOptions.gtagConfig["send_page_view"] = false
 
   const firstTrackingId =
     pluginOptions.trackingIds && pluginOptions.trackingIds.length
@@ -49,9 +51,7 @@ exports.onRenderBody = (
         ${pluginOptions.trackingIds
           .map(
             trackingId =>
-              `gtag('config', '${trackingId}', ${JSON.stringify(
-                pluginOptions.gtagConfig || {}
-              )});`
+              `gtag('config', '${trackingId}', ${JSON.stringify(pluginOptions.gtagConfig)});`
           )
           .join(``)}
       }
