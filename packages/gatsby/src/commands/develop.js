@@ -156,7 +156,12 @@ async function startServer(program) {
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
       req
-        .pipe(request(proxiedUrl).on(`error`, err => report.error(err)))
+        .pipe(
+          request(proxiedUrl).on(`error`, err => {
+            report.error(err)
+            res.status(500).end()
+          })
+        )
         .pipe(res)
     })
   }
