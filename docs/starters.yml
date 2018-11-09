@@ -1158,3 +1158,17 @@
     - Netlify Identity
     - Netlify Functions
     - Static Marketing pages and Dynamic Client-side Authenticated App pages
+- url: https://collective.github.io/gatsby-starter-plone/
+  repo: https://github.com/collective/gatsby-starter-plone
+  description: A Gatsby starter template to build static sites using Plone as the content source
+  tags:
+    - Plone
+    - Headless CMS
+    - SEO
+    - Progressive Web App
+  features:
+    - Creates 1-1 copy of source Plone site
+    - Auto generated navigation and breadcrumbs
+    - Progressive Web App features
+    - Optimized for performance
+    - Minimal UI and Styling
