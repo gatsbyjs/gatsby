@@ -36,7 +36,7 @@ class RRSM extends Component {
     }
 
     // otherwise, set to urlState
-    this.setUrlState(urlState)
+    return this.setUrlState(urlState)
   }
 
   render() {

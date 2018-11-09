@@ -45,10 +45,9 @@ class DebounceInput extends Component {
 
   render() {
     const { inputValue } = this.state
-    const { initialValue, ...inputAttrs } = this.props
     return (
       <input
-        {...inputAttrs}
+        {...this.props}
         type="text"
         value={inputValue}
         onChange={this.onChangeInputText}
