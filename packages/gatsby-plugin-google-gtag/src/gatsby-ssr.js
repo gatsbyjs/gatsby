@@ -5,7 +5,9 @@ exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV !== `production`) return null
+  const { pluginConfig: { resolveEnv = () => process.env.NODE_ENV }} = pluginOptions
+
+  if (resolveEnv() !== `production`) return null
 
   const firstTrackingId =
     pluginOptions.trackingIds && pluginOptions.trackingIds.length
