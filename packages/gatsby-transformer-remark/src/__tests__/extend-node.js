@@ -130,7 +130,7 @@ const bootstrapTest = (
 
 describe(`Excerpt is generated correctly from schema`, () => {
   bootstrapTest(
-    `correctly loads a complicated excerpt`,
+    `correctly maps nested markdown to html`,
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
