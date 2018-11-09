@@ -81,6 +81,7 @@
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
     "test:integration": "jest --config=integration-tests/jest.config.js",
+    "version": "prettier --write \"**/CHANGELOG.md\"",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": [
