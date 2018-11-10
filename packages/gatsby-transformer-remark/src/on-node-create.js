@@ -17,7 +17,6 @@ module.exports = async function onCreateNode(
   }
 
   const content = await loadNodeContent(node)
-
   try {
     let data = grayMatter(content, pluginOptions)
     // Convert date objects to string. Otherwise there's type mismatches
@@ -48,7 +47,8 @@ module.exports = async function onCreateNode(
       _PARENT: node.id,
     }
 
-    markdownNode.excerpt = data.excerpt
+    markdownNode.excerpt_separator =
+      data.pluginOptions && data.pluginOptions.excerpt_separator
     markdownNode.rawMarkdownBody = data.content
 
     // Add path to the markdown file path

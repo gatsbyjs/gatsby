@@ -122,10 +122,7 @@ module.exports = (
         // We are already generating AST, so let's wait for it
         return await ASTPromiseMap.get(cacheKey)
       } else {
-        const ASTGenerationPromise = getMarkdownAST(
-          markdownNode,
-          markdownNode.internal.content
-        )
+        const ASTGenerationPromise = getMarkdownAST(markdownNode)
         ASTGenerationPromise.then(markdownAST => {
           cache.set(cacheKey, markdownAST)
           ASTPromiseMap.delete(cacheKey)
@@ -140,7 +137,7 @@ module.exports = (
       }
     }
 
-    function getMarkdownAST(markdownNode, remarkTarget) {
+    function getMarkdownAST(markdownNode) {
       return new Promise(async (resolve, reject) => {
         if (process.env.NODE_ENV !== `production` || !fileNodes) {
           fileNodes = getNodesByType(`File`)
@@ -163,7 +160,7 @@ module.exports = (
             return Promise.resolve()
           }
         })
-        const markdownAST = remark.parse(remarkTarget)
+        const markdownAST = remark.parse(markdownNode.internal.content)
 
         if (pathPrefix) {
           // Ensure relative links include `pathPrefix`
@@ -394,9 +391,12 @@ module.exports = (
         },
         resolve: async (markdownNode, { pruneLength, truncate }) => {
           if (markdownNode.excerpt) {
-            const excerptAST = await getMarkdownAST(
-              markdownNode,
-              markdownNode.excerpt
+            const fullAST = await getAST(markdownNode)
+            const excerptAST = cloneTreeUntil(
+              fullAST,
+              node =>
+                node.type === `html` &&
+                node.value === markdownNode.excerpt_separator
             )
             return mdastToHTML(excerptAST)
           }
@@ -408,9 +408,7 @@ module.exports = (
 
           const excerptAST = cloneTreeUntil(fullAST, excerptAST => {
             const totalExcerptSoFar = getConcatenatedValue(excerptAST)
-            if (totalExcerptSoFar && totalExcerptSoFar.length > pruneLength) {
-              return
-            }
+            return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
           })
           const unprunedExcerpt = getConcatenatedValue(excerptAST)
           if (!unprunedExcerpt) {
