@@ -17,6 +17,7 @@ module.exports = async function onCreateNode(
   }
 
   const content = await loadNodeContent(node)
+
   try {
     let data = grayMatter(content, pluginOptions)
     // Convert date objects to string. Otherwise there's type mismatches

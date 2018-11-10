@@ -45,6 +45,15 @@ Object {
 }
 `;
 
+exports[`Excerpt is generated correctly from schema correctly prunes when there are many text nodes and the final text node needs to be shortend 1`] = `
+Object {
+  "excerpt": "<p>Where oh <em>where</em> is my little pony? <em>Lorem</em> ipsum <em>dolor sit amet</em>, consectetur adipiscing elit. Morbi <em>auctor sit amet velit id facilisis</em>. <em>Nulla…</em></p>",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
 exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
 Object {
   "excerpt": "<p>Where oh where is my little pony?</p>",
