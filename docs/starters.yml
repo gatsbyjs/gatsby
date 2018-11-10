@@ -1165,7 +1165,7 @@
     - Plone
     - Headless CMS
     - SEO
-    - Progressive Web App
+    - PWA
   features:
     - Creates 1-1 copy of source Plone site
     - Auto generated navigation and breadcrumbs
