@@ -24,7 +24,7 @@ exports.onPostBootstrap = (args, pluginOptions) =>
 
     // Delete options we won't pass to the manifest.webmanifest.
     delete manifest.plugins
-    delete manifest.legacyAppleTouchLinks
+    delete manifest.legacy
 
     // If icons are not manually defined, use the default icon set.
     if (!manifest.icons) {

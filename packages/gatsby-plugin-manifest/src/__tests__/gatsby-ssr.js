@@ -24,7 +24,7 @@ describe(`gatsby-plugin-manifest`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
-        legacyAppleTouchLinks: true,
+        legacy: true,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -33,7 +33,7 @@ describe(`gatsby-plugin-manifest`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
-        legacyAppleTouchLinks: true,
+        legacy: true,
         icons: [
           {
             src: `/favicons/android-chrome-48x48.png`,
@@ -57,7 +57,7 @@ describe(`gatsby-plugin-manifest`, () => {
     onRenderBody(ssrArgs, {
       icon: true,
       theme_color: `#000000`,
-      legacyAppleTouchLinks: true,
+      legacy: true,
     })
 
     headComponents

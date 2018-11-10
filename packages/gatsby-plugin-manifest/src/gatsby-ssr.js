@@ -33,7 +33,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     />,
   ])
 
-  if (pluginOptions.legacyAppleTouchLinks) {
+  if (pluginOptions.legacy) {
     setHeadComponents(
       icons.map(icon => (
         <link
