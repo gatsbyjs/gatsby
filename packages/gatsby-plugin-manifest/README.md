@@ -15,7 +15,7 @@ If you're using this plugin together with [`gatsby-plugin-offline`](https://www.
 this plugin should be listed _before_ the offline plugin so that it can cache
 the created manifest.webmanifest.
 
-If you use the "automatic mode" (described below), this plugin will also add a favicon link to your html pages.
+If you use the "automatic mode" or "hybrid mode" (described below), this plugin will also add a favicon link.
 
 ## Install
 
@@ -33,70 +33,71 @@ There are three modes in which icon generation can function: automatic, hybrid, 
 
 ### Automatic mode
 
-In the automatic mode, you are responsible for defining the entire web app manifest except for the icons portion. You only provide a high resolution source icon. The icons themselves and the needed config will be generated at build time. See the example below:
+In the automatic mode, you are responsible for defining the entire web app manifest except for the icons portion. You only provide a high resolution source icon. The icons themselves and the needed config will be generated at build time. See the example `gatsby-config.js` below:
 
-```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-manifest`,
-    options: {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `minimal-ui`,
-      icon: `src/images/icon.png`, // This path is relative to the root of the site.
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `minimal-ui`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+      },
     },
-  },
-]
+  ],
+}
 ```
 
 When in automatic mode the following json array is injected into the manifest configuration you provide and the icons are generated from it. The source icon you provide should be at least as big as the largest icon being generated.
 
-```javascript
-;[
+```json
+[
   {
-    src: `icons/icon-48x48.png`,
-    sizes: `48x48`,
-    type: `image/png`,
+    "src": "icons/icon-48x48.png",
+    "sizes": "48x48",
+    "type": "image/png"
   },
   {
-    src: `icons/icon-72x72.png`,
-    sizes: `72x72`,
-    type: `image/png`,
+    "src": "icons/icon-72x72.png",
+    "sizes": "72x72",
+    "type": "image/png"
   },
   {
-    src: `icons/icon-96x96.png`,
-    sizes: `96x96`,
-    type: `image/png`,
+    "src": "icons/icon-96x96.png",
+    "sizes": "96x96",
+    "type": "image/png"
   },
   {
-    src: `icons/icon-144x144.png`,
-    sizes: `144x144`,
-    type: `image/png`,
+    "src": "icons/icon-144x144.png",
+    "sizes": "144x144",
+    "type": "image/png"
   },
   {
-    src: `icons/icon-192x192.png`,
-    sizes: `192x192`,
-    type: `image/png`,
+    "src": "icons/icon-192x192.png",
+    "sizes": "192x192",
+    "type": "image/png"
   },
   {
-    src: `icons/icon-256x256.png`,
-    sizes: `256x256`,
-    type: `image/png`,
+    "src": "icons/icon-256x256.png",
+    "sizes": "256x256",
+    "type": "image/png"
   },
   {
-    src: `icons/icon-384x384.png`,
-    sizes: `384x384`,
-    type: `image/png`,
+    "src": "icons/icon-384x384.png",
+    "sizes": "384x384",
+    "type": "image/png"
   },
   {
-    src: `icons/icon-512x512.png`,
-    sizes: `512x512`,
-    type: `image/png`,
-  },
+    "src": "icons/icon-512x512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }
 ]
 ```
 
@@ -104,73 +105,99 @@ The automatic mode is the easiest option for most people.
 
 ### Hybrid mode
 
-However, if you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you should include a high resolution icon to generate smaller icons from. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example:
+However, if you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you should include a high resolution icon to generate smaller icons from. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example `gatsby-config.js`:
 
-```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-manifest`,
-    options: {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `minimal-ui`,
-      icon: `src/images/icon.png`, // This path is relative to the root of the site.
-      icons: [
-        {
-          src: `/favicons/android-chrome-192x192.png`,
-          sizes: `192x192`,
-          type: `image/png`,
-        },
-        {
-          src: `/favicons/android-chrome-512x512.png`,
-          sizes: `512x512`,
-          type: `image/png`,
-        },
-      ],
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `minimal-ui`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        icons: [
+          {
+            src: `/favicons/android-chrome-192x192.png`,
+            sizes: `192x192`,
+            type: `image/png`,
+          },
+          {
+            src: `/favicons/android-chrome-512x512.png`,
+            sizes: `512x512`,
+            type: `image/png`,
+          },
+        ],
+      },
     },
-  },
-]
+  ],
+}
 ```
 
 The hybrid option allows the most flexibility while still not requiring you to create most icons sizes manually.
 
 ### Manual mode
 
-In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. Only icons you provide will be available. There is no automatic resizing done for you. See the example below:
+In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. Only icons you provide will be available. There is no automatic resizing done for you. See the example `gatsby-config.js` below:
 
-```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-manifest`,
-    options: {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `minimal-ui`,
-      icons: [
-        {
-          // Everything in /static will be copied to an equivalent
-          // directory in /public during development and build, so
-          // assuming your favicons are in /favicons,
-          // you can reference them here
-          src: `/favicons/android-chrome-192x192.png`,
-          sizes: `192x192`,
-          type: `image/png`,
-        },
-        {
-          src: `/favicons/android-chrome-512x512.png`,
-          sizes: `512x512`,
-          type: `image/png`,
-        },
-      ],
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `minimal-ui`,
+        icons: [
+          {
+            // Everything in /static will be copied to an equivalent
+            // directory in /public during development and build, so
+            // assuming your favicons are in /favicons,
+            // you can reference them here
+            src: `/favicons/android-chrome-192x192.png`,
+            sizes: `192x192`,
+            type: `image/png`,
+          },
+          {
+            src: `/favicons/android-chrome-512x512.png`,
+            sizes: `512x512`,
+            type: `image/png`,
+          },
+        ],
+      },
     },
-  },
-]
+  ],
+}
+```
+
+## Legacy `apple-touch-icon` links
+
+iOS 11.3 added support for webmanifest spec, so this plugin doesn't add `apple-touch-icon` links to `<head>` by default. If you need or want to support older version of iOS you can set `legacy` option to `true` in plugin configuration:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `minimal-ui`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        legacy: true, // this will add apple-touch-icon links to <head>
+      },
+    },
+  ],
+}
 ```
