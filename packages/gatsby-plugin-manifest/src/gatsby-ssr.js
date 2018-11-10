@@ -1,7 +1,48 @@
 import React from "react"
 import { withPrefix } from "gatsby"
-import { generateHeadComponents } from "./components.js"
+import { defaultIcons } from "./common.js"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  setHeadComponents(generateHeadComponents(withPrefix, pluginOptions))
+  const icons = pluginOptions.icons || defaultIcons
+
+  // If icons were generated, also add a favicon link.
+  if (pluginOptions.icon) {
+    let favicon = icons && icons.length ? `/icons/icon-48x48.png` : null
+
+    if (favicon) {
+      setHeadComponents([
+        <link
+          key={`gatsby-plugin-manifest-icon-link`}
+          rel="shortcut icon"
+          href={withPrefix(favicon)}
+        />,
+      ])
+    }
+  }
+
+  setHeadComponents([
+    <link
+      key={`gatsby-plugin-manifest-link`}
+      rel="manifest"
+      href={withPrefix(`/manifest.webmanifest`)}
+    />,
+    <meta
+      key={`gatsby-plugin-manifest-meta`}
+      name="theme-color"
+      content={pluginOptions.theme_color}
+    />,
+  ])
+
+  if (pluginOptions.legacyAppleTouchLinks) {
+    setHeadComponents(
+      icons.map(icon => (
+        <link
+          key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
+          rel="apple-touch-icon"
+          sizes={icon.sizes}
+          href={withPrefix(`${icon.src}`)}
+        />
+      ))
+    )
+  }
 }
