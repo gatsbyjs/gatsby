@@ -7,7 +7,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 
   // If icons were generated, also add a favicon link.
   if (pluginOptions.icon) {
-    let favicon = icons && icons.length ? `/icons/icon-48x48.png` : null
+    let favicon = icons && icons.length ? icons[0] : null
 
     if (favicon) {
       setHeadComponents([
