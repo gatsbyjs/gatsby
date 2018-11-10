@@ -77,7 +77,7 @@ Array [
 exports[`gatsby-plugin-manifest Creates legacy apple touch links if opted in Using user specified list of icons 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/favicons/android-chrome-48x48.png"
     rel="shortcut icon"
   />,
   <link
