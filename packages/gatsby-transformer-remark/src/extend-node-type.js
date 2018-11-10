@@ -424,9 +424,18 @@ module.exports = (
           const lastTextNode = findLastTextNode(excerptAST)
           const amountToPruneLastNode =
             pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
-          lastTextNode.value = prune(lastTextNode.value, amountToPruneLastNode)
-          console.log(`lastTextNode new value`, lastTextNode.value)
-
+          if (!truncate) {
+            lastTextNode.value = prune(
+              lastTextNode.value,
+              amountToPruneLastNode,
+              `…`
+            )
+          } else {
+            lastTextNode.value = _.truncate(lastTextNode.value, {
+              length: pruneLength,
+              omission: `…`,
+            })
+          }
           return hastToHTML(excerptAST)
         },
       },

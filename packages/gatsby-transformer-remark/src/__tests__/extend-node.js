@@ -209,7 +209,9 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt.length).toBe(139)
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…</p>`
+      )
     }
   )
 
@@ -223,7 +225,9 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt.length).toBe(46)
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is my little pony? Lorem ipsum…</p>`
+      )
     }
   )
 
@@ -237,7 +241,9 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt.length).toBe(50)
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is my little pony? Lorem ipsum dol…</p>`
+      )
     }
   )
 })

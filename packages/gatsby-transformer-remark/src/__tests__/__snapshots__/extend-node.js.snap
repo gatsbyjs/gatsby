@@ -9,9 +9,9 @@ Object {
 }
 `;
 
-exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
+exports[`Excerpt is generated correctly from schema correctly maps nested markdown to html 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony?",
+  "excerpt": "<p>Where oh <a><em>where</em></a> <strong><em>is</em></strong> that pony?</p>",
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -20,7 +20,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly prunes length to default value 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "excerpt": "<p>Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…</p>",
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -29,7 +29,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony? Lorem ipsum…",
+  "excerpt": "<p>Where oh where is my little pony? Lorem ipsum…</p>",
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -38,7 +38,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter with truncate 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
+  "excerpt": "<p>Where oh where is my little pony? Lorem ipsum dol…</p>",
   "frontmatter": Object {
     "title": "my little pony",
   },
