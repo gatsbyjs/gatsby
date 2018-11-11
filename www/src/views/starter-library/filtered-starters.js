@@ -27,8 +27,9 @@ export default class FilteredStarterLibrary extends Component {
   state = {
     sitesToShow: 12,
   }
-  setFiltersCategory = filtersCategory =>
+  setFiltersCategory = filtersCategory => {
     this.props.setURLState({ c: Array.from(filtersCategory) })
+  }
   setFiltersDependency = filtersDependency =>
     this.props.setURLState({ d: Array.from(filtersDependency) })
   setFiltersVersion = filtersVersion =>
@@ -37,8 +38,7 @@ export default class FilteredStarterLibrary extends Component {
     this.props.setURLState({
       sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
     })
-  resetFilters = () =>
-    this.props.setURLState({ c: null, d: null, v: null, s: `` })
+  resetFilters = () => this.props.setURLState({ c: [], d: [], v: [], s: `` })
   showMoreSites = starters => {
     let showAll =
       this.state.sitesToShow + 15 > starters.length ? starters.length : false

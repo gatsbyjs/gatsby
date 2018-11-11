@@ -17,12 +17,8 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
-const {
-  getNodes,
-  getNode,
-  getNodeAndSavePathDependency,
-} = require(`../db/nodes`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { getNodes, getNode } = require(`../db/nodes`)
+const pageDependencyResolver = require(`./page-dependency-resolver`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
 const { runQuery } = require(`../db/nodes`)
@@ -57,16 +53,12 @@ module.exports = async ({ parentSpan }) => {
       parent: {
         type: nodeInterface,
         description: `The parent of this node.`,
-        resolve(node, a, context) {
-          return getNodeAndSavePathDependency(node.parent, context.path)
-        },
+        resolve: pageDependencyResolver(node => getNode(node.parent)),
       },
       children: {
         type: new GraphQLList(nodeInterface),
         description: `The children of this node.`,
-        resolve(node, a, { path }) {
-          return node.children.map(id => getNodeAndSavePathDependency(id, path))
-        },
+        resolve: pageDependencyResolver(node => node.children.map(getNode)),
       },
     }
 
@@ -90,44 +82,21 @@ module.exports = async ({ parentSpan }) => {
         defaultNodeFields[_.camelCase(`children ${childNodeType}`)] = {
           type: new GraphQLList(processedTypes[childNodeType].nodeObjectType),
           description: `The children of this node of type ${childNodeType}`,
-          resolve(node, a, { path }) {
-            const filteredNodes = node.children
-              .map(id => getNode(id))
-              .filter(
-                ({ internal }) => _.camelCase(internal.type) === childNodeType
-              )
-
-            // Add dependencies for the path
-            filteredNodes.forEach(n =>
-              createPageDependency({
-                path,
-                nodeId: n.id,
-              })
-            )
-            return filteredNodes
-          },
+          resolve: pageDependencyResolver(node =>
+            node.children
+              .map(getNode)
+              .filter(node => _.camelCase(node.internal.type) === childNodeType)
+          ),
         }
       } else {
         defaultNodeFields[_.camelCase(`child ${childNodeType}`)] = {
           type: processedTypes[childNodeType].nodeObjectType,
           description: `The child of this node of type ${childNodeType}`,
-          resolve(node, a, { path }) {
-            const childNode = node.children
-              .map(id => getNode(id))
-              .find(
-                ({ internal }) => _.camelCase(internal.type) === childNodeType
-              )
-
-            if (childNode) {
-              // Add dependencies for the path
-              createPageDependency({
-                path,
-                nodeId: childNode.id,
-              })
-              return childNode
-            }
-            return null
-          },
+          resolve: pageDependencyResolver(node =>
+            node.children
+              .map(getNode)
+              .find(node => _.camelCase(node.internal.type) === childNodeType)
+          ),
         }
       }
     })
@@ -190,8 +159,7 @@ module.exports = async ({ parentSpan }) => {
         name: typeName,
         type: gqlType,
         args: filterFields,
-        async resolve(a, queryArgs, context) {
-          const path = context.path ? context.path : ``
+        resolve: pageDependencyResolver(async (a, queryArgs) => {
           if (!_.isObject(queryArgs)) {
             queryArgs = {}
           }
@@ -207,14 +175,11 @@ module.exports = async ({ parentSpan }) => {
           })
 
           if (results.length > 0) {
-            const result = results[0]
-            const nodeId = result.id
-            createPageDependency({ path, nodeId })
-            return result
+            return results[0]
           } else {
             return null
           }
-        },
+        }),
       },
     }
 

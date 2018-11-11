@@ -7,6 +7,8 @@ it(`Builds cache-dir with minimal config`, done => {
     path.join(__dirname, `..`),
     `--config-file`,
     path.join(__dirname, `.babelrc`),
+    `--ignore`,
+    `**/__tests__`,
   ]
 
   const spawn = child.spawn(process.execPath, args)

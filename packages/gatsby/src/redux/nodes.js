@@ -84,7 +84,7 @@ exports.loadNodeContent = node => {
  * @returns {Object} node
  */
 exports.getNodeAndSavePathDependency = (id, path) => {
-  const { createPageDependency } = require(`./actions/add-page-dependency`)
+  const createPageDependency = require(`./actions/add-page-dependency`)
   const node = getNode(id)
   createPageDependency({ path, nodeId: id })
   return node
