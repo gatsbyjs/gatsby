@@ -1,6 +1,6 @@
 ---
 title: Introducing Gatsby Themes
-date: 2018-10-26
+date: 2018-11-11
 author: Chris Biscardi
 excerpt: "Scaling the production of Gatsby sites"
 tags: ["themes", "architecture"]
