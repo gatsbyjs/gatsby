@@ -1299,13 +1299,17 @@
   categories:
     - Blog
     - Portfolio
-- title: mottox2 blog
+- title: MOTTO x MOTTO
   main_url: "https://mottox2.com"
   url: "https://mottox2.com"
+  source_url: "https://github.com/mottox2/website"
+  description: Web developer / UI Desinger in Tokyo Japan.
   featured: false
   categories:
     - Blog
     - Portfolio
+  built_by: mottox2
+  built_by_url: "https://mottox2.com"
 - title: Pride of the Meadows
   main_url: "https://www.prideofthemeadows.com/"
   url: "https://www.prideofthemeadows.com/"
