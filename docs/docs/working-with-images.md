@@ -49,7 +49,7 @@ export const query = graphql`
 
 Here is an image component that uses the query from the previous example:
 
-```
+```jsx
 <Img fluid={data.fileName.childImageSharp.fluid}  />
 ```
 
@@ -59,7 +59,7 @@ What if you have a bunch of images and you want them all to use the same formatt
 
 A custom fragment is an easy way to standardize formatting and re-use it on multiple images:
 
-```
+```jsx
 export const squareImage = graphql`
 fragment squareImage on File {
       childImageSharp {
@@ -73,7 +73,7 @@ fragment squareImage on File {
 
 The fragment can then be referenced in the image query:
 
-```
+```jsx
 export const query = graphql`
   query {
     image1:file(relativePath: { eq: "images/image1.jpg" }) {
