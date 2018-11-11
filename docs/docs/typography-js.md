@@ -10,7 +10,7 @@ Typography.js is a JavaScript library that enables you to define and explore the
 
 Gatsby has the plugin `gatsby-plugin-typography` to assist with introducting Typography.js library into your project.
 
-You can install the plugin into your project by running the command `npm install gatsby-plugin-typography --save`
+You can install the plugin and its peer dependencies into your project by running the command `npm install gatsby-plugin-typography react-typography typography --save`
 
 After the installation of the plugin has completed, navigate to your `gatsby-config.js` file located in the root of your project's directory and add the plugin to the configuration:
 
