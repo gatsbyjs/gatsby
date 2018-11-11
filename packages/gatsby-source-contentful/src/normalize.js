@@ -173,7 +173,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text, createNode, createNodeId) {
+function prepareTextNode(node, key, text, createNodeId) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
@@ -393,7 +393,6 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNode,
             createNodeId
           )
 
