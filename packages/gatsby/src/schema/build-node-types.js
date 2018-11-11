@@ -82,7 +82,7 @@ function buildChildFieldConfigMap(typeName, nodeObjectType) {
   const fieldConfig = {
     type: nodeObjectType,
     description: `The child of this node of type ${typeName}`,
-    resolve: makeChildResolver(typeName),
+    resolve: pageDependencyResolver(makeChildResolver(typeName)),
   }
   return { [fieldName]: fieldConfig }
 }
