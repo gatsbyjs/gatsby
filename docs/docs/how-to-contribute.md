@@ -65,26 +65,25 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 
 ### Contributing to the documentation.
 
-Gatsby, unsurprisingly, uses Gatsby for its documentation website.
+Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! It's people like you that make this community great!
 
-If you want to add/modify any Gatsby documentation, go to the
+#### Modifying markdown files in Gatsby documentation
+
+1. If you want to add/modify any Gatsby documentation, go to the
 [docs folder on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
-use the file editor to edit and then preview your changes. GitHub then allows
+use the file editor to edit and then preview your changes. 
+2. Befor commiting the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria: make sure your contribution meets the standards outlined in the [Gatsby Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/). Also, if your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the the [Docs Decision Tree](https://www.gatsbyjs.org/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
+> Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened when and if you are ready to make the updates required.
+3. GitHub then allows
 you to commit the change and raise a PR right in the UI. This is the _easiest_
 way you can contribute to the project!
 
-However, if you want to make more changes to the website, that is, change
-layout components or templates, add sections/pages, follow the steps below. You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
+#### Making changes to the website
+If you want to make more changes to the website functionality in documentation, that is, change
+layout components or templates, add sections/pages, follow the steps for [contributing to the repo](#contributing-to-the-repo). You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
 a pull request.
 
-- Clone the repo and navigate to `/www`
-- Run `yarn` to install all of the website's dependencies.
-- Run `gatsby develop` to preview the website in `http://localhost:8000` or [try these settings](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot#placeholder-image) if it gets stuck processing.
-- Make any necessary documentation modifications or additions to the
-  markdown files in `/docs`
-- Make sure to double check your grammar and capitalise correctly.
-- Commit and push to your fork.
-- Create a pull request from your branch.
+### Contributing to the starter showcase
 
 To develop on the starter showcase, you'll need to supply a GitHub personal access token.
 
