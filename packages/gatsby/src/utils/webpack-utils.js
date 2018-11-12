@@ -460,7 +460,18 @@ module.exports = async ({
       ...options,
     })
 
-  plugins.minifyCss = (options = {}) => new OptimizeCssAssetsPlugin(options)
+  plugins.minifyCss = (options = {}) =>
+    new OptimizeCssAssetsPlugin({
+      cssProcessorOptions: {
+        preset: [
+          `default`,
+          {
+            calc: false,
+          },
+        ],
+      },
+      ...options,
+    })
 
   /**
    * Extracts css requires into a single file;
