@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.14"></a>
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.13...gatsby-source-contentful@2.0.14) (2018-11-12)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Remove unused argument ([#9866](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/9866)) ([88fffb5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/88fffb5))
+
 <a name="2.0.13"></a>
 
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.12...gatsby-source-contentful@2.0.13) (2018-11-08)
