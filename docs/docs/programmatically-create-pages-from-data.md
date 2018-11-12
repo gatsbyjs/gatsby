@@ -65,7 +65,7 @@ The `createPage` action required that we specify the `component` template
 that will be used to render the page. Here is an example of what the
 referenced template could look like:
 
-```javascript:title=gatsby-node.js
+```javascript:title=blog-post.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
