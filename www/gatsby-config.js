@@ -1,8 +1,13 @@
+require(`dotenv`).config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby`,
+    title: `GatsbyJS`,
     siteUrl: `https://www.gatsbyjs.org`,
     description: `Blazing fast modern site generator for React`,
+    twitter: `@gatsbyjs`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -26,6 +31,13 @@ module.exports = {
       options: {
         name: `packages`,
         path: `${__dirname}/../packages/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `ecosystem`,
+        path: `${__dirname}/src/data/ecosystem/`,
       },
     },
     {

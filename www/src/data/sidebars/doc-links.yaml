@@ -15,6 +15,8 @@
           link: /docs/browser-support/
         - title: Gatsby on Windows
           link: /docs/gatsby-on-windows/
+        - title: Gatsby on Linux
+          link: /docs/gatsby-on-linux/
     - title: Deploying & hosting
       link: /docs/deploying-and-hosting/
       items:
@@ -58,7 +60,7 @@
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
-        - title: Static folder*
+        - title: Static folder
           link: /docs/static-folder/
         - title: Dropping images into static folders*
           link: /docs/dropping-images-into-static-folders/
@@ -77,7 +79,7 @@
       items:
         - title: Using unstructured data
           link: /docs/using-unstructured-data/
-        - title: Sourcing from the filesystem*
+        - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases*
           link: /docs/sourcing-from-databases/
@@ -94,10 +96,10 @@
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
               link: /docs/sourcing-from-drupal/
-            - title: Sourcing from Contentful*
+            - title: Sourcing from Contentful
               link: /docs/sourcing-from-contentful/
-            - title: Sourcing from Prose*
-              link: /docs/sourcing-from-prose/
+            - title: Sourcing from Prismic
+              link: /docs/sourcing-from-prismic/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
@@ -119,7 +121,7 @@
           link: /docs/using-fragments/
         - title: Creating slugs for pages
           link: /docs/creating-slugs-for-pages/
-        - title: Programmatically create pages from data*
+        - title: Programmatically create pages from data
           link: /docs/programmatically-create-pages-from-data/
     - title: Plugins
       link: /docs/plugins/
@@ -187,7 +189,7 @@
       items:
         - title: Client data fetching*
           link: /docs/client-data-fetching/
-        - title: Building a site with authentication*
+        - title: Building a site with authentication
           link: /docs/building-a-site-with-authentication/
         - title: Building an e-commerce site*
           link: /docs/building-an-e-commerce-site/
@@ -352,7 +354,7 @@
       link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
   items:
-    - title: Making a site with user authentication*
+    - title: Making a site with user authentication
       link: /docs/authentication-tutorial/
     - title: Making an e-commerce Gatsby site
       link: /docs/ecommerce-tutorial/

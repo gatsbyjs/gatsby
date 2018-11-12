@@ -9,15 +9,17 @@ const horizontalPadding = rhythm(1 / 2)
 const backgroundColor = props =>
   props.background ? props.background : colors.gatsby
 
-const BannerContainer = styled("div")`
+const BannerContainer = styled(`div`)`
   background-color: ${props => backgroundColor(props)};
   height: ${presets.bannerHeight};
   position: fixed;
   width: 100%;
   z-index: 3;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 `
 
-const InnerContainer = styled("div")`
+const InnerContainer = styled(`div`)`
   align-items: center;
   display: flex;
   height: ${presets.bannerHeight};
@@ -27,7 +29,7 @@ const InnerContainer = styled("div")`
     backgroundColor(props)} 96%, transparent)`};
 `
 
-const Content = styled("div")`
+const Content = styled(`div`)`
   color: ${colors.ui.bright};
   font-family: ${options.headerFontFamily.join(`,`)};
   font-size: ${scale(-1 / 5).fontSize};
@@ -37,43 +39,14 @@ const Content = styled("div")`
   white-space: nowrap;
 `
 
-const Link = styled("a")`
-  color: #fff;
-  span {
-    display: none;
-    ${presets.Mobile} {
-      display: inline;
-    }
-  }
-`
-
-const Banner = ({ children, background }) => {
-  return (
-    <BannerContainer background={background} className="banner">
-      <InnerContainer>
-        {children ? (
-          <Content>{children}</Content>
-        ) : (
-          <Content>
-            These are the docs for v2.
-            {` `}
-            <Link href="https://v1.gatsbyjs.org/">
-              View the v1 docs
-              <span>
-                {` `}
-                instead
-              </span>
-            </Link>
-            .
-          </Content>
-        )}
-      </InnerContainer>
-    </BannerContainer>
-  )
-}
+const Banner = ({ children, background }) => (
+  <BannerContainer background={background} className="banner">
+    <InnerContainer>{children && <Content>{children}</Content>}</InnerContainer>
+  </BannerContainer>
+)
 
 Banner.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   background: PropTypes.any,
 }
 

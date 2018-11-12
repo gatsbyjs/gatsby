@@ -14,11 +14,12 @@ Links:
 
 And yeah — those three things are exactly what we're thinking. A first step would be to just go through the tutorial and pull out all the basic things we teach there in a condensed form e.g. creating a site, creating a page, linking between pages, etc. -->
 
-Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](<(/tutorial/)>)? Here's a quick guiding reference for how to build things, Gatsby style.
+Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](/docs/)? Here's a quick guiding reference for how to build things, Gatsby style.
 
 ## Table of Contents
 
 - [Using Unstructured Data](#using-unstructured-data)
+- [Gatsby project structure](#gatsby-project-structure)
 - [Using a starter](#using-a-starter)
 - [Creating pages](#creating-pages)
 - [Linking between pages](#linking-between-pages)
@@ -28,7 +29,6 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 - [Querying data](#querying-data)
 - [Sourcing data](#sourcing-data)
 - [Transforming data](#transforming-data)
-- [Gatsby project structure](#gatsby-project-structure)
 
 ## Using Unstructured Data
 

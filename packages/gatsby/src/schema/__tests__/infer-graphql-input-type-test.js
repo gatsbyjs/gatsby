@@ -1,81 +1,39 @@
 const _ = require(`lodash`)
-const {
-  graphql,
-  GraphQLString,
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLInputObjectType,
-} = require(`graphql`)
-const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
+const { graphql, GraphQLString, GraphQLObjectType } = require(`graphql`)
 
-const runSift = require(`../run-sift`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
-const buildConnectionFields = require(`../build-connection-fields`)
+const nodeConnections = require(`../build-node-connections`)
+const { buildNodesSchema } = require(`../index`)
 const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
-const createSortField = require(`../create-sort-field`)
 const {
   getExampleValues,
   clearTypeExampleValues,
 } = require(`../data-tree-utils`)
 
+let mockNodes
+jest.unmock(`../../db/nodes`)
+const nodesDb = require(`../../db/nodes`)
+nodesDb.getNodesByType = () => mockNodes
+
 function queryResult(nodes, query, { types = [] } = {}) {
-  const nodeType = new GraphQLObjectType({
-    name: `Test`,
+  mockNodes = nodes
+  const nodeObjectType = new GraphQLObjectType({
+    name: `Node`,
     fields: inferObjectStructureFromNodes({
       nodes,
-      types: [{ name: `Test` }, ...types],
+      types: [{ name: `Node` }, ...types],
     }),
   })
-
-  const { connectionType: nodeConnection } = connectionDefinitions({
-    nodeType,
-    connectionFields: () =>
-      buildConnectionFields({
-        name,
-        nodes,
-        nodeObjectType: nodeType,
-      }),
-  })
-
-  const { sort, inferredFields } = inferInputObjectStructureFromNodes({
+  const processedType = {
     nodes,
-    typeName: `test`,
-  })
-  const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields: () => {
-        return {
-          allNode: {
-            name: `nodeConnection`,
-            type: nodeConnection,
-            args: {
-              ...connectionArgs,
-              sort: createSortField(`RootQueryType`, sort),
-              filter: {
-                type: new GraphQLInputObjectType({
-                  name: _.camelCase(`filter test`),
-                  description: `Filter connection on its fields`,
-                  fields: () => inferredFields,
-                }),
-              },
-            },
-            resolve(nvi, args) {
-              return runSift({
-                args,
-                nodes,
-                connection: true,
-                type: nodeType,
-              })
-            },
-          },
-        }
-      },
-    }),
-  })
-
+    name: `Node`,
+    nodeObjectType,
+    fieldsFromPlugins: [],
+  }
+  const fields = nodeConnections.buildFieldConfigMap(processedType)
+  const schema = buildNodesSchema(fields)
   return graphql(schema, query)
 }
 
@@ -984,5 +942,16 @@ describe(`filtering on linked nodes`, () => {
     )
 
     expect(getExampleValues({ typeName: `Linked_A` })).toEqual(originalNode)
+  })
+
+  it(`skips fields with missing nodes`, async () => {
+    const fields = inferInputObjectStructureFromNodes({
+      nodes: [],
+      exampleValue: {
+        movie___NODE: `foobar`,
+      },
+    }).inferredFields
+
+    expect(Object.keys(fields)).toHaveLength(0)
   })
 })

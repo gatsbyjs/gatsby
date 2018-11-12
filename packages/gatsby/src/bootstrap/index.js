@@ -52,6 +52,10 @@ module.exports = async (args: BootstrapArgs) => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
+  // Start plugin runner which listens to the store
+  // and invokes Gatsby API based on actions.
+  require(`../redux/plugin-runner`)
+
   const program = {
     ...args,
     // Fix program directory path for windows env.
@@ -76,7 +80,9 @@ module.exports = async (args: BootstrapArgs) => {
   if (config && config.__experimentalThemes) {
     const themesConfig = await Promise.mapSeries(
       config.__experimentalThemes,
-      async ([themeName, themeConfig]) => {
+      async plugin => {
+        const themeName = plugin.resolve || plugin
+        const themeConfig = plugin.options || {}
         const theme = await preferDefault(
           getConfigFile(themeName, `gatsby-config`)
         )
@@ -345,7 +351,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   // Collect resolvable extensions and attach to program.
@@ -408,7 +414,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   require(`../schema/type-conflict-reporter`).printConflicts()
