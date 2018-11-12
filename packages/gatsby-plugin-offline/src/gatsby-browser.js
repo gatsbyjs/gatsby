@@ -2,7 +2,10 @@ exports.registerServiceWorker = () => true
 
 let swNotInstalled = true
 const prefetchedPathnames = []
+const whitelistedPathnames = []
 
+// TODO - check if swNotInstalled is true when the SW is actually installed
+// (causing duplicate cache storage)
 exports.onPostPrefetchPathname = ({ pathname }) => {
   // if SW is not installed, we need to record any prefetches
   // that happen so we can then add them to SW cache once installed
@@ -41,7 +44,27 @@ exports.onServiceWorkerActive = ({
   )
 
   serviceWorker.active.postMessage({
-    api: `gatsby-runtime-cache`,
+    gatsbyApi: `runtimeCache`,
     resources: [...resources, ...prefetchedResources],
   })
+  serviceWorker.active.postMessage({
+    gatsbyApi: `whitelistPathnames`,
+    pathnames: whitelistedPathnames,
+  })
+}
+
+exports.onRouteUpdate = ({ location }) => {
+  if (`serviceWorker` in navigator) {
+    const { serviceWorker } = navigator
+    const pathname = location.pathname + location.search
+
+    if (serviceWorker.controller !== null) {
+      serviceWorker.controller.postMessage({
+        gatsbyApi: `whitelistPathnames`,
+        pathnames: [pathname],
+      })
+    } else {
+      whitelistedPathnames.push(pathname)
+    }
+  }
 }

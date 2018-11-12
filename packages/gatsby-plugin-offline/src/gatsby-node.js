@@ -79,15 +79,6 @@ exports.onPostBuild = (args, pluginOptions) => {
       // the default prefix with `pathPrefix`.
       "/": `${pathPrefix}/`,
     },
-    navigateFallback: `${pathPrefix}/offline-plugin-app-shell-fallback/index.html`,
-    // Only match URLs without extensions.
-    // So example.com/about/ will pass but
-    // example.com/cheeseburger.jpg will not.
-    // We only want the service worker to handle our "clean"
-    // URLs and not any files hosted on the site.
-    //
-    // Regex based on http://stackoverflow.com/a/18017805
-    navigateFallbackWhitelist: [/^([^.?]*|[^?]*\.([^.?]{5,}|html))(\?.*)?$/],
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory
     dontCacheBustUrlsMatching: /(.*\.js$|.*\.css$|\/static\/)/,
@@ -96,11 +87,6 @@ exports.onPostBuild = (args, pluginOptions) => {
         // Add runtime caching of various page resources.
         urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `staleWhileRevalidate`,
-      },
-      {
-        // Use the Network First handler for external resources
-        urlPattern: /^https?:/,
-        handler: `networkFirst`,
       },
     ],
     skipWaiting: true,
@@ -119,9 +105,11 @@ exports.onPostBuild = (args, pluginOptions) => {
     .then(({ count, size, warnings }) => {
       if (warnings) warnings.forEach(warning => console.warn(warning))
 
-      const swAppend = fs.readFileSync(`${__dirname}/sw-append.js`)
-      fs.appendFileSync(`public/sw.js`, swAppend)
+      const swAppend = fs
+        .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
+        .replace(/%pathPrefix%/g, pathPrefix)
 
+      fs.appendFileSync(`public/sw.js`, swAppend)
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )
