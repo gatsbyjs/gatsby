@@ -20,7 +20,7 @@
     "escape-string-regexp": "^1.0.5",
     "fs-extra": "^7.0.0",
     "gray-matter": "^4.0.1",
-    "htmltojsx": "^0.3.0",
+    "@danielberndt/htmltojsx": "0.3.4",
     "lodash": "^4.17.10",
     "mdast-util-to-string": "^1.0.4",
     "mdast-util-toc": "^2.0.1",
