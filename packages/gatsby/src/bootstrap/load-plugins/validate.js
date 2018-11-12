@@ -92,7 +92,9 @@ const handleBadExports = ({ apis, badExports }) => {
   _.toPairs(badExports).forEach(badItem => {
     const [exportType, entries] = badItem
     if (entries.length > 0) {
-      reporter.panicOnBuild(getBadExportsMessage(entries, exportType, apis[exportType]))
+      reporter.panicOnBuild(
+        getBadExportsMessage(entries, exportType, apis[exportType])
+      )
     }
   })
 }

@@ -9,14 +9,7 @@ import MarkdownPageFooter from "../components/markdown-page-footer"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const PackageReadMe = props => {
-  const {
-    page,
-    packageName,
-    excerpt,
-    html,
-    githubUrl,
-    timeToRead,
-  } = props
+  const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
 
   return (
     <Container>

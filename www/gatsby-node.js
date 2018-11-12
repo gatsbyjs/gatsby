@@ -13,10 +13,6 @@ const moment = require(`moment`)
 
 let ecosystemFeaturedItems
 
-require(`dotenv`).config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
-
 if (
   process.env.gatsby_executing_command === `build` &&
   !process.env.GITHUB_API_TOKEN
@@ -619,6 +615,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     createNodeField({ node, name: `slug`, value: slug })
   }
   // end Community/Creators Pages
+  return null
 }
 
 exports.onCreatePage = ({ page, actions }) => {
@@ -640,12 +637,4 @@ exports.onPostBuild = () => {
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
     `./public/gatsbygram.mp4`
   )
-}
-
-// limited logging for debug purposes
-let limitlogcount = 0
-function log(max) {
-  return function(...args) {
-    if (limitlogcount++ < max) console.log(...args)
-  }
 }

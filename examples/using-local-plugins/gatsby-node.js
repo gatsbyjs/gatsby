@@ -25,7 +25,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   // Create a page that lists all Pokémon.
   createPage({
     path: `/`,
-    component: require.resolve("./src/templates/all-pokemon.js"),
+    component: require.resolve(`./src/templates/all-pokemon.js`),
     context: {
       slug: `/`,
     },
@@ -35,7 +35,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   allPokemon.forEach(pokemon => {
     createPage({
       path: `/pokemon/${pokemon.node.name}/`,
-      component: require.resolve("./src/templates/pokemon.js"),
+      component: require.resolve(`./src/templates/pokemon.js`),
       context: {
         name: pokemon.node.name,
       },
@@ -45,7 +45,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     pokemon.node.abilities.forEach(ability => {
       createPage({
         path: `/pokemon/${pokemon.node.name}/ability/${ability.name}/`,
-        component: require.resolve("./src/templates/ability.js"),
+        component: require.resolve(`./src/templates/ability.js`),
         context: {
           pokemonId: pokemon.node.id,
           abilityId: ability.id,

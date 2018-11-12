@@ -1299,13 +1299,17 @@
   categories:
     - Blog
     - Portfolio
-- title: mottox2 blog
+- title: MOTTO x MOTTO
   main_url: "https://mottox2.com"
   url: "https://mottox2.com"
+  source_url: "https://github.com/mottox2/website"
+  description: Web developer / UI Desinger in Tokyo Japan.
   featured: false
   categories:
     - Blog
     - Portfolio
+  built_by: mottox2
+  built_by_url: "https://mottox2.com"
 - title: Pride of the Meadows
   main_url: "https://www.prideofthemeadows.com/"
   url: "https://www.prideofthemeadows.com/"
@@ -3197,6 +3201,17 @@
     - Technology
     - Podcast
   featured: false
+- title: Tyler McGinnis
+  url: https://tylermcginnis.com/
+  main_url: https://tylermcginnis.com/
+  description: >
+    The linear, course based approach to learning web technologies.
+  categories:
+    - Education
+    - Technology
+    - Podcast
+    - Web Development
+  featured: false
 - title: a11y with Lindsey
   url: https://www.a11ywithlindsey.com/
   main_url: https://www.a11ywithlindsey.com/
@@ -3249,3 +3264,47 @@
     - Web Development
   built_by: Codedebug
   built_by_url: "https://codedebug.co/"
+- title: Ghost Documentation
+  main_url: https://docs.ghost.org/
+  url: https://docs.ghost.org/
+  description: >-
+    Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
+  categories:
+    - Publishing
+    - Documentation
+  built_by: Ghost Foundation
+  built_by_url: https://ghost.org/
+  featured: false
+- title: BELLHOPS
+  main_url: https://www.getbellhops.com/
+  url: https://www.getbellhops.com/
+  description: >-
+    Whether you’re moving someplace new or just want to complete a few projects around your current home, BellHops can arrange the moving services you need—at simple, straightforward rates.
+  categories:
+    - Business
+  built_by: Bellhops, Inc.
+  built_by_url: https://www.getbellhops.com/
+  featured: false
+- title: Acclimate Consulting
+  main_url: https://www.acclimate.io/
+  url: https://www.acclimate.io/
+  description: >-
+    Acclimate is a consulting firm that puts organizations back in control with data-driven strategies and full-stack applications.
+  categories:
+    - AI
+    - Technology
+    - Consulting
+  built_by: Andrew Wilson
+  built_by_url: https://github.com/andwilson
+  featured: false
+- title: Flyright
+  url: https://flyright.co/
+  main_url: https://flyright.co/
+  description: >-
+    Flyright curates everything you need for international travel in one tidy place 💜
+  categories:
+    - Technology
+    - App
+  built_by: Ty Hopp
+  built_by_url: https://github.com/tyhopp
+  featured: false
