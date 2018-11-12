@@ -65,8 +65,12 @@ const navigate = (to, options = {}) => {
     pathname = parsePath(to).pathname
   }
 
-  // If we had a service worker update, no matter the path, reload window
+  // If we had a service worker update, no matter the path, reload window and
+  // reset the pathname whitelist
   if (window.GATSBY_SW_UPDATED) {
+    const { controller } = navigator.serviceWorker
+    controller.postMessage({ gatsbyApi: `resetWhitelist` })
+
     window.location = pathname
     return
   }

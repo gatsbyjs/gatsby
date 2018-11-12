@@ -5,24 +5,12 @@ importScripts(
 )
 
 const WHITELIST_KEY = `custom-navigation-whitelist`
-let customWhitelist = null
-
-function initWhitelist() {
-  return new Promise(resolve => {
-    if (customWhitelist !== null) resolve()
-
-    idbKeyval.get(WHITELIST_KEY).then(initialData => {
-      customWhitelist = initialData || []
-      resolve()
-    })
-  })
-}
 
 const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
   const { pathname } = new URL(event.request.url)
   console.log(`handling ${pathname}`)
 
-  return initWhitelist.then(() => {
+  return idbKeyval.get(WHITELIST_KEY).then((customWhitelist = []) => {
     // Respond with the offline shell if we match the custom whitelist
     if (customWhitelist.includes(pathname)) {
       const offlineShell = `%pathPrefix%/offline-plugin-app-shell-fallback/index.html`
@@ -39,12 +27,50 @@ const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
 
 workbox.routing.registerRoute(navigationRoute)
 
-// Handle any other requests with Network First, e.g. 3rd party resources
+// Handle any other requests with Network First, e.g. 3rd party resources.
+// This needs to be done last, otherwise it will prevent the custom navigation
+// route from working (and any other rules).
 workbox.routing.registerRoute(
   /^https?:/,
   workbox.strategies.networkFirst(),
   `GET`
 )
+
+let updatingWhitelist = null
+
+function rawWhitelistPathnames(pathnames) {
+  if (updatingWhitelist !== null) {
+    // Prevent the whitelist from being updated twice at the same time
+    return updatingWhitelist.then(() => rawWhitelistPathnames(pathnames))
+  }
+
+  updatingWhitelist = idbKeyval
+    .get(WHITELIST_KEY)
+    .then((customWhitelist = []) => {
+      pathnames.forEach(pathname => {
+        if (!customWhitelist.includes(pathname)) customWhitelist.push(pathname)
+      })
+
+      return idbKeyval.set(WHITELIST_KEY, customWhitelist)
+    })
+    .then(() => {
+      updatingWhitelist = null
+    })
+
+  return updatingWhitelist
+}
+
+function rawResetWhitelist() {
+  if (updatingWhitelist !== null) {
+    return updatingWhitelist.then(() => rawResetWhitelist())
+  }
+
+  updatingWhitelist = idbKeyval.set(WHITELIST_KEY, []).then(() => {
+    updatingWhitelist = null
+  })
+
+  return updatingWhitelist
+}
 
 const messageApi = {
   runtimeCache(event) {
@@ -73,24 +99,22 @@ const messageApi = {
   },
 
   whitelistPathnames(event) {
-    const { pathnames } = event.data
+    let { pathnames } = event.data
 
-    event.waitUntil(
-      initWhitelist().then(() => {
-        pathnames.forEach(({ pathname, includesPrefix }) => {
-          if (!includesPrefix) {
-            pathname = `%pathPrefix%${pathname}`
-          }
+    pathnames = pathnames.map(({ pathname, includesPrefix }) => {
+      if (!includesPrefix) {
+        return `%pathPrefix%${pathname}`
+      } else {
+        return pathname
+      }
+    })
 
-          if (!customWhitelist.includes(pathname)) {
-            console.log(`whitelisting ${pathname}`)
-            customWhitelist.push(pathname)
-          }
-        })
+    console.log(`setting whitelist`)
+    event.waitUntil(rawWhitelistPathnames(pathnames))
+  },
 
-        return idbKeyval.set(WHITELIST_KEY, customWhitelist)
-      })
-    )
+  resetWhitelist(event) {
+    event.waitUntil(rawResetWhitelist())
   },
 }
 
