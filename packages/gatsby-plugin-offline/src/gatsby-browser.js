@@ -54,10 +54,8 @@ function whitelistPathname(pathname, includesPrefix) {
   }
 }
 
-exports.onRouteUpdate = ({ location }) =>
-  whitelistPathname(location.pathname, true)
-
 exports.onPostPrefetchPathname = ({ pathname }) => {
+  console.log(`onPostPrefetchPathname ${pathname}`)
   whitelistPathname(pathname, false)
 
   // if SW is not installed, we need to record any prefetches
