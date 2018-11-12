@@ -171,7 +171,7 @@ function buildNodeObjectType({
   })
 }
 
-async function buildProcessedType(nodes, typeName, processedTypes, span) {
+async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
   const intermediateType = {}
 
   intermediateType.name = typeName
@@ -243,12 +243,12 @@ async function buildAll({ parentSpan }) {
   await Promise.all(
     _.map(types, async (nodes, typeName) => {
       const fieldName = _.camelCase(typeName)
-      const processedType = await buildProcessedType(
+      const processedType = await buildProcessedType({
         nodes,
         typeName,
         processedTypes,
-        span
-      )
+        span,
+      })
       processedTypes[fieldName] = processedType
       // Special case to construct linked file type used by type inferring
       if (typeName === `File`) {
