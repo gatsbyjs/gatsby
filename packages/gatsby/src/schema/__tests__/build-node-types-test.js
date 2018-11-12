@@ -11,7 +11,7 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 const createPageDependency = require(`../../redux/actions/add-page-dependency`)
 jest.mock(`../../redux/actions/add-page-dependency`)
-const buildNodeTypes = require(`../build-node-types`)
+const nodeTypes = require(`../build-node-types`)
 
 describe(`build-node-types`, () => {
   let schema, store, types
@@ -70,7 +70,7 @@ describe(`build-node-types`, () => {
       },
     ].forEach(n => store.dispatch({ type: `CREATE_NODE`, payload: n }))
 
-    types = await buildNodeTypes({})
+    types = await nodeTypes.buildAll({})
     schema = new GraphQLSchema({
       query: new GraphQLObjectType({
         name: `RootQueryType`,

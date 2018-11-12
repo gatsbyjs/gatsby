@@ -227,7 +227,7 @@ function groupNodesByType(nodes) {
   )
 }
 
-module.exports = async ({ parentSpan }) => {
+async function buildAll({ parentSpan }) {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
@@ -261,4 +261,9 @@ module.exports = async ({ parentSpan }) => {
   span.finish()
 
   return processedTypes
+}
+
+module.exports = {
+  buildProcessedType,
+  buildAll,
 }
