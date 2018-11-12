@@ -3,7 +3,6 @@ const crypto = require("crypto");
 const path = require("path");
 const babel = require("@babel/core");
 const syntaxObjRestSpread = require("@babel/plugin-syntax-object-rest-spread");
-const typescriptPlugin = require("@babel/plugin-transform-typescript");
 const debug = require("debug")("gatsby-mdx:component-with-mdx-scope");
 const slash = require("slash");
 
@@ -19,14 +18,15 @@ module.exports = function componentWithMDXScope(
   if (typeof codeScopeAbsPaths === "string") {
     codeScopeAbsPaths = [codeScopeAbsPaths];
   }
-  const isTS = absWrapperPath.endsWith('.ts');
-  const isTSX = absWrapperPath.endsWith('.tsx');
+  const isTS = absWrapperPath.endsWith(".ts");
+  const isTSX = absWrapperPath.endsWith(".tsx");
 
   // hoist pageQuery and any other named exports
   const OGWrapper = fs.readFileSync(absWrapperPath, "utf-8");
   const instance = new BabelPluginPluckExports();
   const plugins = [instance.plugin, syntaxObjRestSpread];
   if (isTS || isTSX) {
+    const typescriptPlugin = require("@babel/plugin-transform-typescript");
     plugins.push([typescriptPlugin, { isTSX }]);
   }
   babel.transform(OGWrapper, {
