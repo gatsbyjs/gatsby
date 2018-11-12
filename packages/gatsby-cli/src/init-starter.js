@@ -58,11 +58,6 @@ const install = async (rootPath, { usePnp }: InitOptions) => {
   process.chdir(rootPath)
 
   try {
-    console.log(
-      [`yarnpkg`]
-        .concat(usePnp && shouldUseYarnPnp() ? `--enable-pnp` : [])
-        .join(` `)
-    )
     let cmd = shouldUseYarn()
       ? spawn(
           [`yarnpkg`]
