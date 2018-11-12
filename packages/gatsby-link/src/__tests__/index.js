@@ -147,3 +147,21 @@ describe(`navigate`, () => {
     )
   })
 })
+
+describe(`ref forwarding`, () => {
+  it(`forwards ref`, () => {
+    const ref = jest.fn()
+    setup({ linkProps: { ref } })
+
+    expect(ref).toHaveBeenCalledTimes(1)
+    expect(ref).toHaveBeenCalledWith(expect.any(HTMLElement))
+  })
+
+  it(`remains backwards compatible with innerRef`, () => {
+    const innerRef = jest.fn()
+    setup({ linkProps: { innerRef } })
+
+    expect(innerRef).toHaveBeenCalledTimes(1)
+    expect(innerRef).toHaveBeenCalledWith(expect.any(HTMLElement))
+  })
+})
