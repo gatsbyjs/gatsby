@@ -3308,3 +3308,12 @@
   built_by: Ty Hopp
   built_by_url: https://github.com/tyhopp
   featured: false
+- title: Vets Who Code
+  url: https://vetswhocode.io/
+  main_url: https://vetswhocode.io/
+  description: >-
+    VetsWhoCode is a non-profit organization dedicated to training military veterans & giving them the skills they need transition into tech careers.
+  categories:
+    - Technology
+    - Nonprofit
+  featured: false
