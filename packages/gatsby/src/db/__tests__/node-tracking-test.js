@@ -43,7 +43,7 @@ describe(`Track root nodes`, () => {
   const { getNode } = require(`../../db/nodes`)
   const { findRootNodeAncestor } = require(`../node-tracking`)
   const { runQuery } = require(`../../db/nodes`)
-  const buildNodeTypes = require(`../../schema/build-node-types`)
+  const nodeTypes = require(`../../schema/build-node-types`)
   const {
     boundActionCreators: { createNode },
   } = require(`../../redux/actions`)
@@ -107,7 +107,7 @@ describe(`Track root nodes`, () => {
     let type
 
     beforeAll(async () => {
-      type = (await buildNodeTypes({})).testNode.nodeObjectType
+      type = (await nodeTypes.buildAll({})).testNode.nodeObjectType
     })
 
     it(`Tracks objects when running query without filter`, async () => {
