@@ -143,6 +143,36 @@ exports.onCreateNode = true
 exports.onCreatePage = true
 
 /**
+ * Adds type definitions to the GraphQLSchema.
+ *
+ * Should be called by source and transformer plugins to register GraphQL types.
+ *
+ * @param {object} $0
+ * @param {function} $0.addTypeDefs Register GraphQL types in Schema Definition Language.
+ * @param {object} $1
+ * @param {string} typeDefs Type definitions from plugin options in `gatsby-config.js`.
+ * @example
+ * ```js
+ * exports.addTypeDefs = ({ addTypeDefs }) => {
+ *   const typeDefs = `
+ *     type Frontmatter {
+ *       title: String!
+ *       date: Date
+ *       published: Boolean
+ *       image: File @link(by: "relativePath")
+ *     }
+ *     type MarkdownRemark implements Node {
+ *       ast: JSON!
+ *       frontmatter: Frontmatter
+ *     }
+ *   `
+ *   addTypeDefs(typeDefs)
+ * }
+ * ```
+ */
+exports.addTypeDefs = true
+
+/**
  * Called during the creation of the GraphQL schema. Allows plugins
  * to add new fields to the types created from data nodes. It will be called
  * separately for each type.

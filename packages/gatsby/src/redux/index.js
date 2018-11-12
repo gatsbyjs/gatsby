@@ -46,6 +46,9 @@ try {
   }
   if (initialState.nodes) {
     initialState.nodes = objectToMap(initialState.nodes)
+    // FIXME: Why not persist node-tracking cache?
+    const { trackObjects } = require(`../schema/utils/node-tracking`)
+    initialState.nodes.forEach(trackObjects)
   }
 } catch (e) {
   // ignore errors.
