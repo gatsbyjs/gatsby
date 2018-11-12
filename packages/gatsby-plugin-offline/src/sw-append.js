@@ -5,12 +5,24 @@ importScripts(
 )
 
 const WHITELIST_KEY = `custom-navigation-whitelist`
+let customWhitelist = null
+
+function initWhitelist() {
+  return new Promise(resolve => {
+    if (customWhitelist !== null) resolve()
+
+    idbKeyval.get(WHITELIST_KEY).then(initialData => {
+      customWhitelist = initialData || []
+      resolve()
+    })
+  })
+}
 
 const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
   const { pathname } = new URL(event.request.url)
   console.log(`handling ${pathname}`)
 
-  return idbKeyval.get(WHITELIST_KEY).then((customWhitelist = []) => {
+  return initWhitelist.then(() => {
     // Respond with the offline shell if we match the custom whitelist
     if (customWhitelist.includes(pathname)) {
       const offlineShell = `%pathPrefix%/offline-plugin-app-shell-fallback/index.html`
@@ -64,7 +76,7 @@ const messageApi = {
     const { pathnames } = event.data
 
     event.waitUntil(
-      idbKeyval.get(WHITELIST_KEY).then((customWhitelist = []) => {
+      initWhitelist().then(() => {
         pathnames.forEach(({ pathname, includesPrefix }) => {
           if (!includesPrefix) {
             pathname = `%pathPrefix%${pathname}`
