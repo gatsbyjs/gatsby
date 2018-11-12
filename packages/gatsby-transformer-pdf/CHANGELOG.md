@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.14"></a>
+
+## [1.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-pdf/compare/gatsby-transformer-pdf@1.0.13...gatsby-transformer-pdf@1.0.14) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-transformer-pdf
+
 <a name="1.0.13"></a>
 
 ## [1.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-pdf/compare/gatsby-transformer-pdf@1.0.12...gatsby-transformer-pdf@1.0.13) (2018-10-29)

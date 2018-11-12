@@ -180,6 +180,8 @@ export default (pagePath, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   // If no one stepped up, we'll handle it.
@@ -349,13 +351,15 @@ export default (pagePath, callback) => {
 
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
-  const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-      1,
-      -1
-    )}`
-    return <script key={scriptPath} src={scriptPath} async />
-  })
+  const bodyScripts = scripts
+    .filter(s => s.rel !== `prefetch`)
+    .map(s => {
+      const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+        1,
+        -1
+      )}`
+      return <script key={scriptPath} src={scriptPath} async />
+    })
 
   postBodyComponents.push(...bodyScripts)
 
@@ -366,6 +370,8 @@ export default (pagePath, callback) => {
     replacePreBodyComponents,
     getPostBodyComponents,
     replacePostBodyComponents,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(

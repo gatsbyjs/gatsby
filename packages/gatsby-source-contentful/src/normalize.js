@@ -173,7 +173,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text, createNode, createNodeId) {
+function prepareTextNode(node, key, text, createNodeId) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
@@ -193,13 +193,7 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
   return textNode
 }
 
-function prepareStructuredTextNode(
-  node,
-  key,
-  content,
-  createNode,
-  createNodeId
-) {
+function prepareStructuredTextNode(node, key, content, createNodeId) {
   const str = JSON.stringify(content)
   const structuredTextNode = {
     ...content,
@@ -399,7 +393,6 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNode,
             createNodeId
           )
 
