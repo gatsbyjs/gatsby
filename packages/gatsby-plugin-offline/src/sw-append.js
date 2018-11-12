@@ -7,8 +7,7 @@ importScripts(
 const WHITELIST_KEY = `custom-navigation-whitelist`
 
 const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
-  const url = new URL(event.request.url)
-  const pathname = url.pathname + url.search
+  const { pathname } = new URL(event.request.url)
   console.log(`handling ${pathname}`)
 
   return idbKeyval.get(WHITELIST_KEY).then((customWhitelist = []) => {
@@ -66,11 +65,14 @@ const messageApi = {
 
     event.waitUntil(
       idbKeyval.get(WHITELIST_KEY).then((customWhitelist = []) => {
-        pathnames.forEach(pathname => {
-          const prefixedPathname = `%pathPrefix%${pathname}`
-          if (!customWhitelist.includes(prefixedPathname)) {
-            console.log(`whitelisting ${prefixedPathname}`)
-            customWhitelist.push(prefixedPathname)
+        pathnames.forEach(({ pathname, includesPrefix }) => {
+          if (!includesPrefix) {
+            pathname = `%pathPrefix%${pathname}`
+          }
+
+          if (!customWhitelist.includes(pathname)) {
+            console.log(`whitelisting ${pathname}`)
+            customWhitelist.push(pathname)
           }
         })
 

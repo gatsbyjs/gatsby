@@ -53,18 +53,23 @@ exports.onServiceWorkerActive = ({
   })
 }
 
-exports.onRouteUpdate = ({ location }) => {
+function whitelistPathname(pathname, includesPrefix) {
   if (`serviceWorker` in navigator) {
     const { serviceWorker } = navigator
-    const pathname = location.pathname + location.search
 
     if (serviceWorker.controller !== null) {
       serviceWorker.controller.postMessage({
         gatsbyApi: `whitelistPathnames`,
-        pathnames: [pathname],
+        pathnames: [{ pathname, includesPrefix }],
       })
     } else {
-      whitelistedPathnames.push(pathname)
+      whitelistedPathnames.push({ pathname, includesPrefix })
     }
   }
 }
+
+exports.onRouteUpdate = ({ location }) =>
+  whitelistPathname(location.pathname, true)
+
+exports.onPostPrefetchPathname = ({ pathname }) =>
+  whitelistPathname(pathname, false)
