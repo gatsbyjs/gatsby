@@ -7,7 +7,6 @@ import loader from "./loader"
 const ProdPageRenderer = ({ location }) => {
   const pageResources = loader.getResourcesForPathnameSync(location.pathname)
   return React.createElement(InternalPageRenderer, {
-    key: location.pathname,
     location,
     pageResources,
     ...pageResources.json,

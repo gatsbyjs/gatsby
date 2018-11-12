@@ -5,12 +5,16 @@ import { Router, navigate } from "@reach/router"
 import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
-import { shouldUpdateScroll, init as navigationInit } from "./navigation"
+import {
+  shouldUpdateScroll,
+  init as navigationInit,
+  RouteUpdates,
+} from "./navigation"
 import emitter from "./emitter"
 window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import loader from "./loader"
+import loader, { setApiRunnerForLoader } from "./loader"
 import loadDirectlyOr404 from "./load-directly-or-404"
 import EnsureResources from "./ensure-resources"
 
@@ -21,6 +25,7 @@ window.___loader = loader
 loader.addPagesArray([window.page])
 loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
 loader.addProdRequires(asyncRequires)
+setApiRunnerForLoader(apiRunner)
 
 navigationInit()
 
@@ -35,44 +40,44 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   class RouteHandler extends React.Component {
     render() {
       let { location } = this.props
-      // TODO
-      // check if hash + if element and if so scroll
-      // remove hash handling from gatsby-link
-      // check if scrollbehavior handles back button for
-      // restoring old position
-      // if not, add that.
 
       return (
-        <ScrollContext
-          location={location}
-          shouldUpdateScroll={shouldUpdateScroll}
-        >
-          <EnsureResources location={location}>
-            {({ pageResources, location }) => (
-              <PageRenderer
-                key={location.pathname}
-                {...this.props}
+        <EnsureResources location={location}>
+          {({ pageResources, location }) => (
+            <RouteUpdates location={location}>
+              <ScrollContext
                 location={location}
-                pageResources={pageResources}
-                {...pageResources.json}
-                isMain
-              />
-            )}
-          </EnsureResources>
-        </ScrollContext>
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <PageRenderer
+                  {...this.props}
+                  location={location}
+                  pageResources={pageResources}
+                  {...pageResources.json}
+                />
+              </ScrollContext>
+            </RouteUpdates>
+          )}
+        </EnsureResources>
       )
     }
   }
 
   const { page, location: browserLoc } = window
-  // TODO: comment what this check does
   if (
+    // Make sure the window.page object is defined
     page &&
-    page.path !== `/404.html` &&
+    // The canonical path doesn't match the actual path (i.e. the address bar)
     __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
-    !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/) &&
+    // ...and if matchPage is specified, it also doesn't match the actual path
     (!page.matchPath ||
-      !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname))
+      !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname)) &&
+    // Ignore 404 pages, since we want to keep the same URL
+    page.path !== `/404.html` &&
+    !page.path.match(/^\/404\/?$/) &&
+    // Also ignore the offline shell (since when using the offline plugin, all
+    // pages have this canonical path)
+    !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
   ) {
     navigate(
       __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
@@ -82,18 +87,15 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   loader
     .getResourcesForPathname(browserLoc.pathname)
-    .then(() => {
-      if (!loader.getPage(browserLoc.pathname)) {
-        return loader
-          .getResourcesForPathname(`/404.html`)
-          .then(resources =>
-            loadDirectlyOr404(
-              resources,
-              browserLoc.pathname + browserLoc.search + browserLoc.hash,
-              true
-            )
-          )
+    .then(resources => {
+      if (!resources || resources.page.path === `/404.html`) {
+        return loadDirectlyOr404(
+          resources,
+          browserLoc.pathname + browserLoc.search + browserLoc.hash,
+          true
+        )
       }
+
       return null
     })
     .then(() => {

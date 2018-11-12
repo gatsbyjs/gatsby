@@ -58,7 +58,7 @@ examples:
 - [plugin READme](/packages/gatsby-source-filesystem/)
 - [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](docs/templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 
@@ -78,7 +78,7 @@ Once you answer those questions, create an outline of the topic and think about 
 
 Many times, the information that needs to go in your document already exists somewhere.
 
-Avoid copying and pasting huge chunks of other people's work and to rather use their work to learn so you can write your own document. If you do quote someone's work verbatim, reference where you got the information.
+Avoid copying and pasting huge chunks of other people's work. Instead, use their work to learn so you can write your own document. If you do quote someone's work verbatim, reference where you got the information.
 
 If the content is already somewhere else on the .org site, feel free to copy and paste without quoting or referencing.
 
@@ -175,7 +175,7 @@ Folder:
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
-Article titles should be as short and reflect the main theme of the article to help readers quickly find the information they're looking for. Many people use Google to search for things like "gatsby graphql", so the article title should ideally reflect what people might search for on Google.
+Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use Google to search for things like "gatsby graphql", so the article title should ideally reflect what people might search for on Google.
 
 Here are some title examples:
 
@@ -218,6 +218,24 @@ Article header or subhead:
 - [Adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
   If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself. A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. Then you can right click the image and copy its image source.
 - [Header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
+
+#### Code titles
+
+It's also possible to add code titles to your code blocks. As switching between multiple files in the course of the document can confuse some readers it's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, you need to add `:title=your-path-name` to it. Use it like so:
+
+````
+```javascript:title=src/util/alert.js
+const s = "I solemnly swear that I'm up to no good.";
+alert(s);
+```
+````
+
+Which will then look like:
+
+```javascript:title=src/util/alert.js
+const s = "I solemnly swear that I'm up to no good."
+alert(s)
+```
 
 ### Capitalize proper nouns
 

@@ -4,7 +4,7 @@ title: "Adding Images to a WordPress Site"
 
 ### What this tutorial covers:
 
-In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + Wordpress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
+In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
 
 ### Why go through this tutorial?
 
@@ -31,22 +31,22 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```javascript{32-58}
+```javascript{32-58}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby Wordpress Tutorial",
+    title: "Gatsby WordPress Tutorial",
   },
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
      * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
+     * plugins. Here the site sources its data from WordPress.
      */
     {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+        * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
         */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
@@ -57,8 +57,8 @@ module.exports = {
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
-        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
-        // This feature is untested for sites hosted on Wordpress.com
+        // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
+        // This feature is untested for sites hosted on WordPress.com
         useACF: true,
       },
     },
@@ -77,22 +77,22 @@ npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
 
 Place these plugins in your `gatsby-config.js` like this:
 
-```javascript{112-121}
+```javascript{112-121}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby Wordpress Tutorial",
+    title: "Gatsby WordPress Tutorial",
   },
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
     * Gatsby's data processing layer begins with “source”
-    * plugins. Here the site sources its data from Wordpress.
+    * plugins. Here the site sources its data from WordPress.
     */
     {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-       * The base URL of the Wordpress site without the trailing slash and the protocol. This is required.
+       * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
        * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
        */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
@@ -103,8 +103,8 @@ module.exports = {
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
-        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
-        // This feature is untested for sites hosted on Wordpress.com
+        // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
+        // This feature is untested for sites hosted on WordPress.com
         useACF: true,
       },
     },
@@ -197,7 +197,7 @@ In either case, you can add traced SVG support by adding `_tracedSVG` to the end
 
 Here is what your `index.js` should look like with the query added:
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"

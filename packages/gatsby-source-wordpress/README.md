@@ -11,21 +11,19 @@ An example site for this plugin is available.
 
 ## Features
 
-- Pulls data from self-hosted WordPress sites, hosted on wordpress.com or
-  wordpress.org
-- Should work with any number of article and post (tested on a site with 900
-  posts)
+- Pulls data from self-hosted WordPress sites, or sites hosted on [https://wordpress.com](wordpress.com)
+- Should work with any number of posts (tested on a site with 900 posts)
 - Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
 - Easily create responsive images in Gatsby from WordPress images. See [image
   processing](#image-processing) section.
 
 ## WordPress and custom entities
 
-This module currently pulls from WordPress the following entities:
+This module currently pulls the following entities from WordPress:
 
 - [x] All entities are supported (posts, pages, tags, categories, media, types,
-      users, statuses, taxonomies, ...)
-- [x] Any new entity should be pulled as long the IDs are correct.
+      users, statuses, taxonomies, site metadata, ...)
+- [x] Any new entity should be pulled as long as the IDs are correct.
 - [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
 - [x] Custom post types (any type you could have declared using WordPress'
       `functions.php`)
@@ -38,79 +36,103 @@ We welcome PRs adding support for data from other plugins.
 
 ## How to use
 
+First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about dotenv and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
+
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  /*
-   * Gatsby's data processing layer begins with “source”
-   * plugins. Here the site sources its data from Wordpress.
-   */
-  {
-    resolve: "gatsby-source-wordpress",
-    options: {
-      /*
-       * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-       * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
-       */
-      baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
-      // The protocol. This can be http or https.
-      protocol: "http",
-      // Indicates whether the site is hosted on wordpress.com.
-      // If false, then the assumption is made that the site is self hosted.
-      // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
-      // If your site is hosted on wordpress.org, then set this to false.
-      hostingWPCOM: false,
-      // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
-      // This feature is untested for sites hosted on Wordpress.com.
-      // Defaults to true.
-      useACF: true,
-      // Include specific ACF Option Pages that have a set post ID
-      // Regardless if an ID is set, the default options route will still be retrieved
-      // Must be using V3 of ACF to REST to include these routes
-      // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
-      // routes with the ID option_page_1 and option_page_2
-      // Dashes in IDs will be converted to underscores for use in GraphQL
-      acfOptionPageIds: [],
-      auth: {
-        // If auth.user and auth.pass are filled, then the source plugin will be allowed
-        // to access endpoints that are protected with .htaccess.
-        htaccess_user: "your-htaccess-username",
-        htaccess_pass: "your-htaccess-password",
-        htaccess_sendImmediately: false,
+module.exports = {
+  plugins: [
+    /*
+    * Gatsby's data processing layer begins with “source”
+    * plugins. Here the site sources its data from Wordpress.
+    */
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        /*
+        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+        */
+        baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
+        // The protocol. This can be http or https.
+        protocol: "http",
+        // Indicates whether the site is hosted on wordpress.com.
+        // If false, then the assumption is made that the site is self hosted.
+        // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
+        // If your site is hosted on wordpress.org, then set this to false.
+        hostingWPCOM: false,
+        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
+        // This feature is untested for sites hosted on Wordpress.com.
+        // Defaults to true.
+        useACF: true,
+        // Include specific ACF Option Pages that have a set post ID
+        // Regardless if an ID is set, the default options route will still be retrieved
+        // Must be using V3 of ACF to REST to include these routes
+        // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
+        // routes with the ID option_page_1 and option_page_2
+        // Dashes in IDs will be converted to underscores for use in GraphQL
+        acfOptionPageIds: [],
+        auth: {
+          // If auth.user and auth.pass are filled, then the source plugin will be allowed
+          // to access endpoints that are protected with .htaccess.
+          htaccess_user: "your-htaccess-username",
+          htaccess_pass: "your-htaccess-password",
+          htaccess_sendImmediately: false,
 
-        // If hostingWPCOM is true then you will need to communicate with wordpress.com API
-        // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
-        // then add your clientId, clientSecret, username, and password here
-        wpcom_app_clientSecret:
-          "NMPnXYFtj2gKas7V1kZyMxr7oLry9V5ZxIyBQGu2txjVHg0GhFz6RYcKopkHICYg",
-        wpcom_app_clientId: "54793",
-        wpcom_user: "gatsbyjswpexample@gmail.com",
-        wpcom_pass: "very-secured-password",
-      },
-      // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
-      // It can help you debug specific API Endpoints problems.
-      verboseOutput: false,
-      // Set how many pages are retrieved per API request.
-      perPage: 100,
-      // Search and Replace Urls across WordPress content.
-      searchAndReplaceContentUrls: {
-        sourceUrl: "https://source-url.com",
-        replacementUrl: "https://replacement-url.com",
-      },
-      // Set how many simultaneous requests are sent at once.
-      concurrentRequests: 10,
-      // Exclude specific routes using glob parameters
-      // See: https://github.com/isaacs/minimatch
-      // Example:  `["/*/*/comments", "/yoast/**"]` will exclude routes ending in `comments` and
-      // all routes that begin with `yoast` from fetch.
-      excludedRoutes: ["/*/*/comments", "/yoast/**"],
-      // use a custom normalizer which is applied after the built-in ones.
-      normalizer: function({ entities }) {
-        return entities
+          // If hostingWPCOM is true then you will need to communicate with wordpress.com API
+          // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
+          // then add your clientId, clientSecret, username, and password here
+          // Learn about environment variables: https://gatsby.app/env-vars
+          wpcom_app_clientSecret: process.env.WORDPRESS_CLIENT_SECRET,
+          wpcom_app_clientId: "54793",
+          wpcom_user: "gatsbyjswpexample@gmail.com",
+          wpcom_pass: process.env.WORDPRESS_PASSWORD,
+
+          // If you use "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
+          // plugin, you can specify user and password to obtain access token and use authenticated requests against wordpress REST API.
+          jwt_user: process.env.JWT_USER,
+          jwt_pass: process.env.JWT_PASSWORD,
+        },
+        // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
+        // It can help you debug specific API Endpoints problems.
+        verboseOutput: false,
+        // Set how many pages are retrieved per API request.
+        perPage: 100,
+        // Search and Replace Urls across WordPress content.
+        searchAndReplaceContentUrls: {
+          sourceUrl: "https://source-url.com",
+          replacementUrl: "https://replacement-url.com",
+        },
+        // Set how many simultaneous requests are sent at once.
+        concurrentRequests: 10,
+        // Set WP REST API routes whitelists
+        // and blacklists using glob patterns.
+        // Defaults to whitelist the routes shown
+        // in the example below.
+        // See: https://github.com/isaacs/minimatch
+        // Example:  `["/*/*/comments", "/yoast/**"]`
+        // ` will either include or exclude routes ending in `comments` and
+        // all routes that begin with `yoast` from fetch.
+        // Whitelisted routes using glob patterns
+        includedRoutes: [
+          "/*/*/categories",
+          "/*/*/posts",
+          "/*/*/pages",
+          "/*/*/media",
+          "/*/*/tags",
+          "/*/*/taxonomies",
+          "/*/*/users",
+        ],
+        // Blacklisted routes using glob patterns
+        excludedRoutes: ["/*/*/posts/1456"],
+        // use a custom normalizer which is applied after the built-in ones.
+        normalizer: function({ entities }) {
+          return entities
+        },
       },
     },
-  },
-]
+  ],
+}
 ```
 
 ## WordPress Plugins
@@ -152,8 +174,7 @@ plugins.
 
 Set `hostingWPCOM: true`.
 
-You will need to provide an [API
-Key](https://en.support.wordpress.com/api-keys/).
+You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/).
 
 Note : you don't need this for Wordpress.org hosting in which your WordPress
 will behave like a self-hosted instance.
@@ -163,6 +184,38 @@ will behave like a self-hosted instance.
 Before you run your first query, ensure the WordPress JSON API is working correctly by visiting /wp-json at your WordPress install. The result should be similar to the [WordPress demo API](https://demo.wp-api.org/wp-json/).
 
 If you see a page on your site, rather than the JSON output, check if your permalink settings are set to “Plain”. After changing this to any of the other settings, the JSON API should be accessible.
+
+## Fetching Data: WordPress REST API Route Selection
+
+By default `gatsby-source-wordpress` plugin will fetch data from all endpoints provided by introspection `/wp-json` response. To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/). You can inspect discovered routes by using `verboseOutput: true` configuration option.
+
+If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
+
+### Example:
+
+```javascript
+includedRoutes: [
+  "/*/*/posts",
+  "/*/*/pages",
+  "/*/*/media",
+  "/*/*/categories",
+  "/*/*/tags",
+  "/*/*/taxonomies",
+  "/*/*/users",
+],
+```
+
+Which would include most commonly used endpoints:
+
+- Posts
+- Pages
+- Media
+- Categories
+- Tags
+- Taxonomies
+- Users
+
+and would skip pulling Comments.
 
 ## How to query
 
@@ -863,3 +916,6 @@ To solve this, you can disable Node.js' rejection of unauthorized certificates b
 ```javascript
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 ```
+
+[dotenv]: https://github.com/motdotla/dotenv
+[envvars]: https://gatsby.app/env-vars

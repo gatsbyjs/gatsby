@@ -548,7 +548,7 @@ By default, Gatsby will create a static HTML page for everything under
 `src/pages/`. At this point we've discussed `src/pages/index.js` extensively. It
 will be the `index.html` page of your site, and thus your landing page.
 
-For any stand-alone pages, simply create a corresponding js file in the `pages/`
+For any stand-alone pages, simply create a corresponding JavaScript file in the `pages/`
 directory and you are good to go. For example, `src/pages/about.js` would
 generate an `about.html` page. Simple.
 

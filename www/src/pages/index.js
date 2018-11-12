@@ -16,8 +16,9 @@ import CardHeadline from "../components/card-headline"
 import Diagram from "../components/diagram"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
-import CtaButton from "../components/cta-button"
+import Button from "../components/button"
 import TechWithIcon from "../components/tech-with-icon"
+import EmailCaptureForm from "../components/email-capture-form"
 
 class IndexRoute extends React.Component {
   render() {
@@ -25,7 +26,10 @@ class IndexRoute extends React.Component {
     return (
       <Layout location={this.props.location}>
         <Helmet>
-          <meta name="Description" content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby." />
+          <meta
+            name="Description"
+            content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
+          />
         </Helmet>
         <div css={{ position: `relative` }}>
           <MastheadBg />
@@ -50,7 +54,8 @@ class IndexRoute extends React.Component {
                 },
               }}
             >
-              <div
+              <main
+                id={`reach-skip-nav`}
                 css={{
                   display: `flex`,
                   flexDirection: `row`,
@@ -69,8 +74,8 @@ class IndexRoute extends React.Component {
                       {` `}
                       <TechWithIcon icon={WebpackIcon}>Webpack</TechWithIcon>,
                       {` `}
-                      modern JavaScript and CSS and more — all setup and waiting
-                      for you to start building.
+                      modern JavaScript and CSS and more — all set up and
+                      waiting for you to start building.
                     </FuturaParagraph>
                   </Card>
                   <Card>
@@ -79,7 +84,7 @@ class IndexRoute extends React.Component {
                       Gatsby’s rich data plugin ecosystem lets you build sites
                       with the data you want — from one or many sources: Pull
                       data from headless CMSs, SaaS services, APIs, databases,
-                      your file system & more directly into your pages using
+                      your file system, and more directly into your pages using
                       {` `}
                       <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>.
                     </FuturaParagraph>
@@ -97,7 +102,7 @@ class IndexRoute extends React.Component {
                   <Card>
                     <CardHeadline>Future-proof your website</CardHeadline>
                     <FuturaParagraph>
-                      Don't build a website with last decade's tech. The future
+                      Do not build a website with last decade’s tech. The future
                       of the web is mobile, JavaScript and APIs—the {` `}
                       <a href="https://jamstack.org/">JAMstack</a>. Every
                       website is a web app and every web app is a website.
@@ -146,12 +151,13 @@ class IndexRoute extends React.Component {
                         <FuturaParagraph>
                           It only takes a few minutes to get up and running!
                         </FuturaParagraph>
-                        <CtaButton
+                        <Button
+                          secondary
                           to="/docs/"
                           overrideCSS={{ marginTop: `1rem` }}
                         >
                           Get Started
-                        </CtaButton>
+                        </Button>
                       </div>
                     </Container>
                   </div>
@@ -172,6 +178,14 @@ class IndexRoute extends React.Component {
                         paddingBottom: `0 !important`,
                       }}
                     >
+                      <EmailCaptureForm
+                        signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
+                        overrideCSS={{
+                          marginTop: 0,
+                          marginBottom: rhythm(2),
+                          border: `none`,
+                        }}
+                      />
                       <h2
                         css={{
                           textAlign: `left`,
@@ -191,18 +205,19 @@ class IndexRoute extends React.Component {
                           css={{ marginBottom: rhythm(2) }}
                         />
                       ))}
-                      <CtaButton
+                      <Button
+                        secondary
                         to="/blog/"
                         overrideCSS={{
                           marginBottom: rhythm(options.blockMarginBottom * 2),
                         }}
                       >
                         Read More
-                      </CtaButton>
+                      </Button>
                     </Container>
                   </div>
                 </Cards>
-              </div>
+              </main>
             </div>
           </div>
         </div>
@@ -230,6 +245,7 @@ export const pageQuery = graphql`
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/docs.blog/" }
+        fields: { released: { eq: true } }
       }
     ) {
       edges {

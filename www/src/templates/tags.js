@@ -65,6 +65,7 @@ export const pageQuery = graphql`
       filter: {
         frontmatter: { tags: { in: [$tag] } }
         fileAbsolutePath: { regex: "/docs.blog/" }
+        fields: { released: { eq: true } }
       }
     ) {
       totalCount

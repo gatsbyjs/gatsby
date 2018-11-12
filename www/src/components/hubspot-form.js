@@ -1,15 +1,10 @@
 import React, { Component } from "react"
 import HubspotForm from "react-hubspot-form"
-import { css } from "glamor"
-import { colors } from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/form-styles"
-
-let stripeAnimation = css.keyframes({
-  "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `30px 60px` },
-})
+import { buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
   render() {
@@ -23,9 +18,13 @@ export default class GatsbyHubspotForm extends Component {
       <div
         css={{
           backgroundColor: colors.ui.light,
+          borderRadius: presets.radius,
           color: colors.gatsby,
           fontFamily: options.headerFontFamily.join(`,`),
           padding: `15px`,
+          "& form": {
+            margin: 0,
+          },
           "& .hs-form fieldset": {
             maxWidth: `none`,
             width: `100%`,
@@ -42,7 +41,9 @@ export default class GatsbyHubspotForm extends Component {
           "& .hs-form-required": {
             color: colors.warning,
           },
-          "& .hs-form input": formInput,
+          "& .hs-form input": {
+            ...formInput,
+          },
           '& .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="number"]': {
             width: `100% !important`,
             ":focus": {
@@ -52,21 +53,7 @@ export default class GatsbyHubspotForm extends Component {
             },
           },
           "& .hs-button.primary": {
-            borderColor: colors.gatsby,
-            color: colors.gatsby,
-            cursor: `pointer`,
-            fontWeight: `bold`,
-            ":hover, &:focus": {
-              backgroundSize: `30px 30px`,
-              backgroundColor: colors.gatsby,
-              backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-              color: `#fff`,
-              animation: `${stripeAnimation} 2.8s linear infinite`,
-            },
-            ":focus": {
-              outline: 0,
-              boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
-            },
+            ...buttonStyles.default,
           },
         }}
       >
@@ -75,7 +62,7 @@ export default class GatsbyHubspotForm extends Component {
           formId={formId}
           sfdcCampaignId={sfdcCampaignId}
           loading="Loading..."
-          css=""
+          {...{ css: `` }}
         />
       </div>
     )

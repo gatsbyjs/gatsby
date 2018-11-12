@@ -17,7 +17,7 @@ any unnecessary latency when changing pages should be avoided. So to avoid that,
 Gatsby preloads code chunks and page data.
 
 Preloading is triggered by a link entering the viewport; Gatsby uses
-`Link`'s `innerRef` property to create a new InteractionObserver (on
+`Link`'s `innerRef` property to create a new IntersectionObserver (on
 supported browsers) to monitor visible links. This way, Gatsby only prefetches
 code/data chunks for pages the user is likely to navigate to. You can also get
 access to the link element by passing in a `innerRef` prop.
@@ -68,7 +68,7 @@ render () {
     <Link
       to="/another-page/"
       replace
-    />
+    >
       Go and prevent back to bring you back here
     </Link>
   )
@@ -99,7 +99,7 @@ Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecat
 
 ## Prefixed paths helper
 
-It is common to host sites in a sub-directory of a site. Gatsby let's you [set
+It is common to host sites in a sub-directory of a site. Gatsby lets you [set
 the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
 
 For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need prefixed).
@@ -158,4 +158,29 @@ const Link = ({ children, to, ...other }) => {
 }
 
 export default Link
+```
+
+### File Downloads
+
+You can similarly check for file downloads:
+
+```
+  const file = /\.[0-9a-z]+$/i.test(to)
+
+  ...
+
+  if (internal) {
+    if (file) {
+        return (
+          <a href={to} {...other}>
+            {children}
+          </a>
+      )
+    }
+    return (
+      <GatsbyLink to={to} {...other}>
+        {children}
+      </GatsbyLink>
+    )
+  }
 ```

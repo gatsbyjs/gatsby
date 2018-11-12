@@ -22,35 +22,6 @@ class Layout extends React.Component {
     isModal: PropTypes.bool,
   }
 
-  componentDidMount() {
-    // Create references to html/body elements
-    // this.htmlElement = document.querySelector(`html`)
-    // this.bodyElement = document.querySelector(`body`)
-    // // Cache the window width.
-    // windowWidth = window.innerWidth
-  }
-  componentWillReceiveProps(nextProps) {
-    // if we're changing to a non-homepage page, put things in
-    // a modal (unless we're on mobile).
-    // if (windowWidth > 750) {
-    // // Freeze the background from scrolling.
-    // this.htmlElement.style.overflow = `hidden`
-    // this.bodyElement.style.overflow = `hidden`
-    // // Always set overflow-y to scroll so the scrollbar stays visible avoiding
-    // // weird jumping.
-    // this.htmlElement.style.overflowY = `scroll`
-    // } else {
-    // // Otherwise we're navigating back home so delete old home so the
-    // // modal can be destroyed.
-    // delete this.modalBackgroundChildren
-    // this.htmlElement.style.overflow = `visible`
-    // this.bodyElement.style.overflow = `visible`
-    // // Always set overflow-y to scroll so the scrollbar stays visible avoiding
-    // // weird jumping.
-    // this.htmlElement.style.overflowY = `scroll`
-    // }
-  }
-
   render() {
     const { location } = this.props
     let isModal = false
