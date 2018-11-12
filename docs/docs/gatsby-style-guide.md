@@ -33,6 +33,9 @@ The community plans, writes, and maintains these Docs on GitHub.
   - [Use active voice](#use-active-voice)
   - [Make lists clear with the Oxford Comma](#make-lists-clear-with-the-oxford-comma)
   - [Use apps that help you edit](#use-apps-that-help-you-edit)
+- [Best practices](#best-practices)
+  - [Support software versions](#software-versions)
+  - [Share best practices whenever possible](#share-best-practices-whenever-possible)
 
 ## Welcome!
 
@@ -278,3 +281,21 @@ The Hemingway App will assign a “grade level” for your writing. You should a
 for a grade level of 6. Another tool available is the De-Jargonizer, originally
 designed for scientific communication but might help avoid overspecialized
 wording.
+
+## Best practices
+### Support software versions
+
+When Gatsby commits to support a specific version of software (e.g. Node 6 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced commands and practices as side notes.
+
+For example, npm 5.2.0 (which includes Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, documentation should only introduce `npx` as an optional command in a note like so:
+
+> npm 5.2.0 (which includes Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, we introduce `npx` here as an optional command for users of npm 5.2.0.
+
+### Share best practices whenever possible
+
+There is an infinite number of tasks that the documentation and tutorials could include, so they should not attempt to teach every way of doing a task. Usually, they should teach the following:
+- the most fundamental way possible to do a task with Gatsby
+- the most common way of doing a task
+- the best practice way of doing a task
+
+For example, `gatsby-image` is a component that includes Gatsby best practices for handling images, yet there are more common and fundamental ways of handling them. Documentation ought to make the best practice clear in addition to the most common and fundamental ways.
