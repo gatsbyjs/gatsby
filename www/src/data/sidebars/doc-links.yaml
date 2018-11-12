@@ -117,7 +117,7 @@
           link: /docs/using-fragments/
         - title: Creating slugs for pages
           link: /docs/creating-slugs-for-pages/
-        - title: Programmatically create pages from data
+        - title: Creating pages from data programmatically
           link: /docs/programmatically-create-pages-from-data/
         - title: Using third-party GraphQL APIs
           link: /docs/third-party-graphql/
