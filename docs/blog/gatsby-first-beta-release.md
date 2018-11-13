@@ -110,7 +110,7 @@ these infrastructure providers.
 
 ### Fixed
 
-- Fix graphql compiler on typescript
+- Fix GraphQL compiler on TypeScript
   [#949](https://github.com/gatsbyjs/gatsby/pull/949) @fabien0102
 - Replace react.createClass with ES6 classes in examples html.js, add PropTypes
   [#1169](https://github.com/gatsbyjs/gatsby/pull/1169) @abachuk

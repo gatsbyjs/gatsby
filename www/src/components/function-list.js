@@ -96,10 +96,10 @@ export default ({ functions }) => (
                   <h5 css={{ margin: 0 }}>
                     <span css={{ color: `#73725f` }}>
                       {`{${
-                        ret.type.type === "UnionType"
+                        ret.type.type === `UnionType`
                           ? ret.type.elements
                               .map(el => String(el.name))
-                              .join("|")
+                              .join(`|`)
                           : ret.type.name
                       }}`}
                     </span>

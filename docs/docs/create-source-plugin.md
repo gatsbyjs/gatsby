@@ -53,7 +53,7 @@ What does the code look like?
 A source plugin is a normal NPM package. It has a package.json with optional
 dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
 APIs. Gatsby supports node versions back to Node 4 and as it's common to want to
-use more modern node.js and JavaScript syntax, many plugins write code in a
+use more modern Node.js and JavaScript syntax, many plugins write code in a
 `src` directory and compile the code. All plugins maintained in the Gatsby repo
 follow this pattern.
 
@@ -89,10 +89,7 @@ But at a high-level, these are the jobs of a source plugin:
 - "Link" nodes types you create as appropriate (see
   [_Node Link_](/docs/api-specification/) in the API specification concepts
   section.
-- Return either a promise or use the callback (3rd parameter) to report back to
-  Gatsby when you're done sourcing nodes. Otherwise either Gatsby will continue
-  on before you're done sourcing or hang while waiting for you to indicate
-  you're finished.
+- Return either a promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Your nodes might not end up in the generated schema at compilation, or the process will hang while waiting for an indication that it's finished.
 
 [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers),
 a community-made NPM package, can help when writing source plugins. This
@@ -145,7 +142,7 @@ It's often convenient for querying to add to the schema backwards references. Fo
 
 If you want to call this field on `Author` `posts`, you would create a field called `posts___NODE` to hold the relationship to Posts. The value of this field should be an array of Post IDs.
 
-Here's an example from the [Wordpress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
+Here's an example from the [WordPress source plugin](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-source-wordpress/src/normalize.js#L178-L189).
 
 #### Union types
 

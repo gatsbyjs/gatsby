@@ -34,7 +34,7 @@ When you build your Gatsby website you will end up with static files. They are e
 
 Gatsby provides code and data splitting out-of-the-box. It loads your critical HTML and CSS first. Once that's loaded it prefetches resources for other pages. That's why clicking around feels so fast.
 
-Gatsby uses React components as a view layer so you can share and reuse them across pages/projects. Once it loads the page's javascript code, your website becomes a full React app.
+Gatsby uses React components as a view layer so you can share and reuse them across pages/projects. Once it loads the page's JavaScript code, your website becomes a full React app.
 
 Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. You only get the data you need in the page. At build time Gatsby will resolve the query and embed it in your page.
 

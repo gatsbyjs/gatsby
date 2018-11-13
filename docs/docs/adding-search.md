@@ -44,7 +44,7 @@ After building the search index and including it in Gatsby's data layer, you wil
 
 ### Use an API-based search engine
 
-Another option is to use an external search engine. This solution is much more scalable as visitors to your site don't have to download your entire search index (which becomes very large as your site grows) in order to search your site. The tradeoff is you'll need to pay for hosting the search engine or pay for a commercial search service.
+Another option is to use an external search engine. This solution is much more scalable as visitors to your site don't have to download your entire search index (which becomes very large as your site grows) in order to search your site. The trade-off is you'll need to pay for hosting the search engine or pay for a commercial search service.
 
 There are many available both open source that you can host yourself and commercial hosted options.
 

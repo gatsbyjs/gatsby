@@ -72,8 +72,7 @@ export const urlsAreOnSameOrigin = (origin, destination) =>
   /* a.host includes both hostname and port in the expected format host:port */
   origin.host === destination.host
 
-export const pathIsNotHandledByApp = destination => {
-  const pathStartRegEx = new RegExp(`^${escapeStringRegexp(withPrefix(`/`))}`)
+export const pathIsNotHandledByApp = (destination, pathStartRegEx) => {
   const pathFileExtensionRegEx = /^.*\.((?!htm)[a-z0-9]{1,5})$/i
 
   return (
@@ -120,6 +119,9 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   // in React. Creating a new anchor element to ensure host value is present
   const destination = document.createElement(`a`)
   destination.href = clickedAnchor.href
+  if (clickedAnchor.href instanceof SVGAnimatedString) {
+    destination.href = clickedAnchor.href.animVal
+  }
 
   // In IE, the default port is included in the anchor host but excluded from
   // the location host.  This affects the ability to directly compare
@@ -132,17 +134,23 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   if (urlsAreOnSameOrigin(origin, destination) === false) return true
 
-  if (pathIsNotHandledByApp(destination)) return true
+  // Regex to test pathname against pathPrefix
+  const pathStartRegEx = new RegExp(`^${escapeStringRegexp(withPrefix(`/`))}`)
+
+  if (pathIsNotHandledByApp(destination, pathStartRegEx)) return true
 
   if (hashShouldBeFollowed(origin, destination)) return true
 
   event.preventDefault()
 
-  hrefHandler(
-    `${slashedPathname(destination.pathname)}${destination.search}${
-      destination.hash
-    }`
+  // See issue #8907: destination.pathname already includes pathPrefix added
+  // by gatsby-transformer-remark but gatsby-link.navigate needs href without
+  const destinationPathname = slashedPathname(destination.pathname).replace(
+    pathStartRegEx,
+    `/`
   )
+
+  hrefHandler(`${destinationPathname}${destination.search}${destination.hash}`)
 
   return false
 }

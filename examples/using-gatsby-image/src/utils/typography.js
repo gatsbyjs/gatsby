@@ -1,48 +1,75 @@
 import Typography from "typography"
-import elkGlenTheme from "typography-theme-elk-glen"
-delete elkGlenTheme.googleFonts
-elkGlenTheme.baseFontSize = `16px`
-elkGlenTheme.baseLineHeight = 1.45
-elkGlenTheme.blockMarginBottom = 0.75
-elkGlenTheme.headerColor = `#253c28`
-elkGlenTheme.bodyColor = `#304f35`
-elkGlenTheme.accentColor = `#4c9e59`
-elkGlenTheme.monospaceFontFamily = [
-  `Space Mono`,
-  `SFMono-Regular`,
-  `Menlo`,
-  `Monaco`,
-  `Consolas`,
-  `Liberation Mono`,
-  `Courier New`,
-  `monospace`,
+
+import { colors, animation } from "./presets"
+
+const bodyFontFamily = [
+  `-apple-system`,
+  `BlinkMacSystemFont`,
+  `Segoe UI`,
+  `Roboto`,
+  `Oxygen`,
+  `Ubuntu`,
+  `Cantarell`,
+  `Fira Sans`,
+  `Droid Sans`,
+  `Helvetica Neue`,
+  `Arial`,
+  `sans-serif`,
 ]
 
-elkGlenTheme.overrideThemeStyles = ({ rhythm, scale }, options) => {
-  return {
-    "h1, h2, h3, h4, h5, h6": {
-      textTransform: `uppercase`,
-      letterSpacing: `-.025em`,
-    },
-    h1: {
-      ...scale(1),
-      color: options.accentColor,
-      marginTop: `0 !important`,
-      lineHeight: 1,
-    },
-    "@media (min-width: 640px)": {
-      html: {
-        fontSize: `${(21 / 17) * 100}%`,
+const _options = {
+  bodyFontFamily,
+  baseLineHeight: 1.5,
+  blockMarginBottom: 0.75,
+  headerColor: `#000`,
+  headerWeight: 700,
+  boldWeight: 700,
+  bodyColor: `#26222a`,
+  scaleRatio: 1.25,
+  accentColor: colors.gatsby,
+  monospaceFontFamily: [
+    `SFMono-Regular`,
+    `Menlo`,
+    `Monaco`,
+    `Consolas`,
+    `Liberation Mono`,
+    `Courier New`,
+    `monospace`,
+  ],
+  headerFontFamily: bodyFontFamily,
+  overrideStyles: ({ rhythm }, options) => {
+    return {
+      "h1, h2, h3, h4, h5, h6": {
+        letterSpacing: `-.0125em`,
+        marginTop: rhythm(2),
       },
-    },
-  }
+      a: {
+        backgroundImage: `linear-gradient(to top, ${colors.ui.bright}, ${
+          colors.ui.bright
+        } 1px, rgba(0, 0, 0, 0) 2px)`,
+        color: colors.gatsby,
+        fontWeight: `bold`,
+        textDecoration: `none`,
+        transition: `${animation.speedDefault} ${animation.curveDefault}`,
+      },
+      "a:hover": {
+        backgroundColor: colors.ui.light,
+      },
+      code: {
+        fontSize: `100%`,
+        fontFamily: options.monospaceFontFamily.join(`,`),
+      },
+    }
+  },
 }
 
-const typography = new Typography(elkGlenTheme)
+const typography = new Typography(_options)
+
+// Hot reload typography in development.
+if (process.env.NODE_ENV !== `production`) {
+  typography.injectStyles()
+}
 
 // Back out the below once Typography is upgraded for es6
+export const { scale, rhythm, options } = typography
 export default typography
-
-export const options = typography.options
-export const scale = typography.scale
-export const rhythm = typography.rhythm

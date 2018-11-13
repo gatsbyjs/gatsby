@@ -60,16 +60,19 @@ the site for testing.
 
 #### Options
 
-|      Option      | Description                                                                              |   Default   |
-| :--------------: | ---------------------------------------------------------------------------------------- | :---------: |
-|  `-H`, `--host`  | Set host.                                                                                | `localhost` |
-|  `-p`, `--port`  | Set port.                                                                                |   `8000`    |
-|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |             |
-| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |   `false`   |
+|      Option      | Description                                                                              |
+| :--------------: | ---------------------------------------------------------------------------------------- |
+|  `-H`, `--host`  | Set host. Defaults to localhost                                                          |
+|  `-p`, `--port`  | Set port. Defaults to 8000                                                               |
+|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
+| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
 
 ### `clean`
 
-At the root of a Gatsby site run `gatsby clean` to wipe out `node_modules`, cache, and the `public` directory. This is useful as a last resort when your local project seems to have many issues.
+At the root of a Gatsby site run `gatsby clean` to wipe out `node_modules`, cache, and the `public` directory. This is useful as a last resort when your local project seems to have many issues. Issues this may fix commonly include:
+
+- Stale data, e.g. this file/resource/etc. isn't appearing
+- Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 
 #### Options
 
