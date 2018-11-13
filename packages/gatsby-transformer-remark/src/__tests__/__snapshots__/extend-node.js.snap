@@ -9,9 +9,9 @@ Object {
 }
 `;
 
-exports[`Excerpt is generated correctly from schema correctly maps nested markdown to html 1`] = `
+exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
 Object {
-  "excerpt": "<p>Where oh <a><em>where</em></a> <strong><em>is</em></strong> that pony?</p>",
+  "excerpt": "Where oh where is my little pony?",
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -20,7 +20,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly prunes length to default value 1`] = `
 Object {
-  "excerpt": "<p>Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…</p>",
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -29,7 +29,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter 1`] = `
 Object {
-  "excerpt": "<p>Where oh where is my little pony? Lorem ipsum…</p>",
+  "excerpt": "Where oh where is my little pony? Lorem ipsum…",
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -38,16 +38,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter with truncate 1`] = `
 Object {
-  "excerpt": "<p>Where oh where is my little pony? Lorem ipsum dol…</p>",
-  "frontmatter": Object {
-    "title": "my little pony",
-  },
-}
-`;
-
-exports[`Excerpt is generated correctly from schema correctly prunes when there are many text nodes and the final text node needs to be shortend 1`] = `
-Object {
-  "excerpt": "<p>Where oh <em>where</em> is my little pony? <em>Lorem</em> ipsum <em>dolor sit amet</em>, consectetur adipiscing elit. Morbi <em>auctor sit amet velit id facilisis</em>. <em>Nulla…</em></p>",
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -56,7 +47,8 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
 Object {
-  "excerpt": "<p>Where oh where is my little pony?</p>",
+  "excerpt": "Where oh where is my little pony?
+",
   "frontmatter": Object {
     "title": "my little pony",
   },

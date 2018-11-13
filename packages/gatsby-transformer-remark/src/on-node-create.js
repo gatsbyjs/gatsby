@@ -48,8 +48,7 @@ module.exports = async function onCreateNode(
       _PARENT: node.id,
     }
 
-    markdownNode.excerpt_separator =
-      data.pluginOptions && data.pluginOptions.excerpt_separator
+    markdownNode.excerpt = data.excerpt
     markdownNode.rawMarkdownBody = data.content
 
     // Add path to the markdown file path

@@ -389,6 +389,40 @@ module.exports = (
             defaultValue: false,
           },
         },
+        resolve(markdownNode, { pruneLength, truncate }) {
+          if (markdownNode.excerpt) {
+            return Promise.resolve(markdownNode.excerpt)
+          }
+          return getAST(markdownNode).then(ast => {
+            const excerptNodes = []
+            visit(ast, node => {
+              if (node.type === `text` || node.type === `inlineCode`) {
+                excerptNodes.push(node.value)
+              }
+              return
+            })
+            if (!truncate) {
+              return prune(excerptNodes.join(` `), pruneLength, `…`)
+            }
+            return _.truncate(excerptNodes.join(` `), {
+              length: pruneLength,
+              omission: `…`,
+            })
+          })
+        },
+      },
+      excerptHTML: {
+        type: GraphQLString,
+        args: {
+          pruneLength: {
+            type: GraphQLInt,
+            defaultValue: 140,
+          },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
+        },
         resolve: async (markdownNode, { pruneLength, truncate }) => {
           if (markdownNode.excerpt) {
             const fullAST = await getAST(markdownNode)

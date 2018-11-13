@@ -130,13 +130,12 @@ const bootstrapTest = (
 
 describe(`Excerpt is generated correctly from schema`, () => {
   bootstrapTest(
-    `correctly maps nested markdown to html`,
+    `correctly loads an excerpt`,
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
-
-Where oh [*where*](nick.com) **_is_** that pony?`,
+Where oh where is my little pony?`,
     `excerpt
     frontmatter {
         title
@@ -144,9 +143,7 @@ Where oh [*where*](nick.com) **_is_** that pony?`,
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh <a><em>where</em></a> <strong><em>is</em></strong> that pony?</p>`
-      )
+      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     }
   )
 
@@ -186,7 +183,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`<p>Where oh where is my little pony?</p>`)
+      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     },
     { excerpt_separator: `<!-- end -->` }
   )
@@ -209,9 +206,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…</p>`
-      )
+      expect(node.excerpt.length).toBe(139)
     }
   )
 
@@ -225,9 +220,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where is my little pony? Lorem ipsum…</p>`
-      )
+      expect(node.excerpt.length).toBe(46)
     }
   )
 
@@ -241,30 +234,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where is my little pony? Lorem ipsum dol…</p>`
-      )
-    }
-  )
-
-  bootstrapTest(
-    `correctly prunes when there are many text nodes and the final text node needs to be shortend`,
-    `---
-title: "my little pony"
-date: "2017-09-18T23:19:51.246Z"
----
-Where oh *where* is my little pony? _Lorem_ ipsum *dolor sit amet*, consectetur adipiscing elit. Morbi _auctor sit amet velit id facilisis_. *Nulla viverra, eros at efficitur pulvinar*, lectus orci accumsan nisi, eu blandit elit nulla nec lectus.
-    `,
-    `excerpt(pruneLength: 140)
-    frontmatter {
-        title
-    }
-    `,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh <em>where</em> is my little pony? <em>Lorem</em> ipsum <em>dolor sit amet</em>, consectetur adipiscing elit. Morbi <em>auctor sit amet velit id facilisis</em>. <em>Nulla…</em></p>`
-      )
+      expect(node.excerpt.length).toBe(50)
     }
   )
 })
