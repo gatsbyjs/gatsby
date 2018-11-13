@@ -51,37 +51,25 @@ const createComponentUrls = componentChunkName =>
   )
 
 const fetchResource = resourceName => {
-  console.log(`fetchResource ${resourceName}`)
   // Find resource
   let resourceFunction
   if (resourceName.slice(0, 12) === `component---`) {
-    console.log(
-      `resourceFunction: resolving ${resourceName} with asyncRequires.components:`
-    )
-    console.log(asyncRequires.components)
     resourceFunction = asyncRequires.components[resourceName]
   } else {
     if (resourceName in jsonPromiseStore) {
-      console.log(
-        `resourceFunction: found ${resourceName} in jsonPromiseStore:`
-      )
-      console.log(jsonPromiseStore)
       resourceFunction = () => jsonPromiseStore[resourceName]
     } else {
       resourceFunction = () => {
         const fetchPromise = new Promise((resolve, reject) => {
           const url = createJsonURL(jsonDataPaths[resourceName])
-          console.log(`resourceFunction: fetching ${url} from network`)
           const req = new XMLHttpRequest()
           req.open(`GET`, url, true)
           req.withCredentials = true
           req.onreadystatechange = () => {
             if (req.readyState == 4) {
               if (req.status === 200) {
-                console.log(`resolving ${url}`)
                 resolve(JSON.parse(req.responseText))
               } else {
-                console.log(`rejecting ${url} - didn't return 200`)
                 delete jsonPromiseStore[resourceName]
                 reject()
               }
@@ -102,7 +90,6 @@ const fetchResource = resourceName => {
     let failed = false
     return fetchPromise
       .catch(e => {
-        console.log(`fetchPromise for ${resourceName} failed:`)
         console.error(e)
         failed = true
       })
@@ -114,15 +101,12 @@ const fetchResource = resourceName => {
 
         fetchHistory = fetchHistory.slice(-MAX_HISTORY)
 
-        console.log(`finally resolving fetchResource for ${resourceName} with:`)
-        console.log(component)
         resolve(component)
       })
   })
 }
 
 const prefetchResource = resourceName => {
-  console.log(`prefetchResource ${resourceName}`)
   if (resourceName.slice(0, 12) === `component---`) {
     createComponentUrls(resourceName).forEach(url => prefetchHelper(url))
   } else {
@@ -146,7 +130,6 @@ const appearsOnLine = () => {
 }
 
 const handleResourceLoadError = (path, message) => {
-  console.log(`handleResourceLoadError for path ${path}`)
   if (!failedPaths[path]) {
     failedPaths[path] = message
   }
@@ -282,7 +265,6 @@ const queue = {
   // and getting resources for page changes.
   getResourcesForPathname: path =>
     new Promise((resolve, reject) => {
-      console.log(`getResourcesForPathname ${path}`)
       const doingInitialRender = inInitialRender
       inInitialRender = false
 

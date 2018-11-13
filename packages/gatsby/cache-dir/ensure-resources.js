@@ -99,8 +99,6 @@ class EnsureResources extends React.Component {
       process.env.NODE_ENV === `production` &&
       !(this.state.pageResources && this.state.pageResources.json)
     ) {
-      console.error(`Failed to get resources for ${location.pathname}`)
-
       // Do this, rather than simply `window.location.reload()`, so that
       // pressing the back/forward buttons work - otherwise Reach Router will
       // try to handle back/forward navigation, causing the URL to change but

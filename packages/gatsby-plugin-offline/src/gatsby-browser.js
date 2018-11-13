@@ -55,7 +55,6 @@ function whitelistPathname(pathname, includesPrefix) {
 }
 
 exports.onPostPrefetchPathname = ({ pathname }) => {
-  console.log(`onPostPrefetchPathname ${pathname}`)
   whitelistPathname(pathname, false)
 
   // if SW is not installed, we need to record any prefetches
@@ -67,7 +66,6 @@ exports.onPostPrefetchPathname = ({ pathname }) => {
       navigator.serviceWorker.controller.state === `activated`
     )
   ) {
-    console.log(`SERVICE WORKER NOT INSTALLED`)
     prefetchedPathnames.push(pathname)
   }
 }

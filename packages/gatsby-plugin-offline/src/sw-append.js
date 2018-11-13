@@ -8,7 +8,6 @@ const WHITELIST_KEY = `custom-navigation-whitelist`
 
 const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
   const { pathname } = new URL(event.request.url)
-  console.log(`handling ${pathname}`)
 
   return idbKeyval.get(WHITELIST_KEY).then((customWhitelist = []) => {
     // Respond with the offline shell if we match the custom whitelist
@@ -16,11 +15,9 @@ const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
       const offlineShell = `%pathPrefix%/offline-plugin-app-shell-fallback/index.html`
       const cacheName = workbox.core.cacheNames.precache
 
-      console.log(`serving ${offlineShell} for ${pathname}`)
       return caches.match(offlineShell, { cacheName })
     }
 
-    console.log(`fetching ${pathname} from network`)
     return fetch(event.request)
   })
 })
@@ -109,7 +106,6 @@ const messageApi = {
       }
     })
 
-    console.log(`setting whitelist`)
     event.waitUntil(rawWhitelistPathnames(pathnames))
   },
 
