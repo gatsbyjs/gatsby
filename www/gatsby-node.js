@@ -13,10 +13,6 @@ const moment = require(`moment`)
 
 let ecosystemFeaturedItems
 
-require(`dotenv`).config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
-
 if (
   process.env.gatsby_executing_command === `build` &&
   !process.env.GITHUB_API_TOKEN

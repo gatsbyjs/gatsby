@@ -176,6 +176,8 @@ exports.onPostPrefetchPathname = true
 /**
  * Plugins can take over prefetching logic. If they do, they should call this
  * to disable the now duplicate core prefetching logic.
+ * @example
+ * exports.disableCorePrefetching = () => true
  */
 exports.disableCorePrefetching = true
 

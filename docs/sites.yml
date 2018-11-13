@@ -1299,13 +1299,17 @@
   categories:
     - Blog
     - Portfolio
-- title: mottox2 blog
+- title: MOTTO x MOTTO
   main_url: "https://mottox2.com"
   url: "https://mottox2.com"
+  source_url: "https://github.com/mottox2/website"
+  description: Web developer / UI Desinger in Tokyo Japan.
   featured: false
   categories:
     - Blog
     - Portfolio
+  built_by: mottox2
+  built_by_url: "https://mottox2.com"
 - title: Pride of the Meadows
   main_url: "https://www.prideofthemeadows.com/"
   url: "https://www.prideofthemeadows.com/"
@@ -3280,4 +3284,36 @@
     - Business
   built_by: Bellhops, Inc.
   built_by_url: https://www.getbellhops.com/
+  featured: false
+- title: Acclimate Consulting
+  main_url: https://www.acclimate.io/
+  url: https://www.acclimate.io/
+  description: >-
+    Acclimate is a consulting firm that puts organizations back in control with data-driven strategies and full-stack applications.
+  categories:
+    - AI
+    - Technology
+    - Consulting
+  built_by: Andrew Wilson
+  built_by_url: https://github.com/andwilson
+  featured: false
+- title: Flyright
+  url: https://flyright.co/
+  main_url: https://flyright.co/
+  description: >-
+    Flyright curates everything you need for international travel in one tidy place 💜
+  categories:
+    - Technology
+    - App
+  built_by: Ty Hopp
+  built_by_url: https://github.com/tyhopp
+  featured: false
+- title: Vets Who Code
+  url: https://vetswhocode.io/
+  main_url: https://vetswhocode.io/
+  description: >-
+    VetsWhoCode is a non-profit organization dedicated to training military veterans & giving them the skills they need transition into tech careers.
+  categories:
+    - Technology
+    - Nonprofit
   featured: false

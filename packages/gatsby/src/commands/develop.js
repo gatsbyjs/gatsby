@@ -155,7 +155,18 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
-      req.pipe(request(proxiedUrl)).pipe(res)
+      req
+        .pipe(
+          request(proxiedUrl).on(`error`, err => {
+            const message = `Error when trying to proxy request "${
+              req.originalUrl
+            }" to "${proxiedUrl}"`
+
+            report.error(message, err)
+            res.status(500).end()
+          })
+        )
+        .pipe(res)
     })
   }
 
