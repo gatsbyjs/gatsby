@@ -1,9 +1,8 @@
-- title: Quick Start
+- title: Documentation
+  link: /docs/
   items:
-    - title: Getting Started
-      link: /docs/
-    - title: Starter Library
-      link: /starters/
+    - title: Quick Start
+      link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
 - title: Guides
