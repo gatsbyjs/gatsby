@@ -1,6 +1,5 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
-import stripPrefix from "./strip-prefix"
 import prefetchHelper from "./prefetch"
 
 const preferDefault = m => (m && m.default) || m
@@ -16,7 +15,6 @@ let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
 let apiRunner
 const failedPaths = {}
-const failedResources = {}
 const MAX_HISTORY = 5
 
 const jsonPromiseStore = {}
@@ -53,25 +51,38 @@ const createComponentUrls = componentChunkName =>
   )
 
 const fetchResource = resourceName => {
+  console.log(`fetchResource ${resourceName}`)
   // Find resource
   let resourceFunction
   if (resourceName.slice(0, 12) === `component---`) {
+    console.log(
+      `resourceFunction: resolving ${resourceName} with asyncRequires.components:`
+    )
+    console.log(asyncRequires.components)
     resourceFunction = asyncRequires.components[resourceName]
   } else {
     if (resourceName in jsonPromiseStore) {
+      console.log(
+        `resourceFunction: found ${resourceName} in jsonPromiseStore:`
+      )
+      console.log(jsonPromiseStore)
       resourceFunction = () => jsonPromiseStore[resourceName]
     } else {
       resourceFunction = () => {
         const fetchPromise = new Promise((resolve, reject) => {
           const url = createJsonURL(jsonDataPaths[resourceName])
+          console.log(`resourceFunction: fetching ${url} from network`)
           const req = new XMLHttpRequest()
           req.open(`GET`, url, true)
           req.withCredentials = true
           req.onreadystatechange = () => {
             if (req.readyState == 4) {
               if (req.status === 200) {
+                console.log(`resolving ${url}`)
                 resolve(JSON.parse(req.responseText))
               } else {
+                console.log(`rejecting ${url} - didn't return 200`)
+                delete jsonPromiseStore[resourceName]
                 reject()
               }
             }
@@ -90,7 +101,9 @@ const fetchResource = resourceName => {
     const fetchPromise = resourceFunction()
     let failed = false
     return fetchPromise
-      .catch(() => {
+      .catch(e => {
+        console.log(`fetchPromise for ${resourceName} failed:`)
+        console.error(e)
         failed = true
       })
       .then(component => {
@@ -99,18 +112,17 @@ const fetchResource = resourceName => {
           succeeded: !failed,
         })
 
-        if (!failedResources[resourceName]) {
-          failedResources[resourceName] = failed
-        }
-
         fetchHistory = fetchHistory.slice(-MAX_HISTORY)
 
+        console.log(`finally resolving fetchResource for ${resourceName} with:`)
+        console.log(component)
         resolve(component)
       })
   })
 }
 
 const prefetchResource = resourceName => {
+  console.log(`prefetchResource ${resourceName}`)
   if (resourceName.slice(0, 12) === `component---`) {
     createComponentUrls(resourceName).forEach(url => prefetchHelper(url))
   } else {
@@ -134,6 +146,7 @@ const appearsOnLine = () => {
 }
 
 const handleResourceLoadError = (path, message) => {
+  console.log(`handleResourceLoadError for path ${path}`)
   if (!failedPaths[path]) {
     failedPaths[path] = message
   }
@@ -148,14 +161,14 @@ const handleResourceLoadError = (path, message) => {
 
 const onPrefetchPathname = pathname => {
   if (!prefetchTriggered[pathname]) {
-    apiRunner(`onPrefetchPathname`, { pathname: pathname })
+    apiRunner(`onPrefetchPathname`, { pathname })
     prefetchTriggered[pathname] = true
   }
 }
 
 const onPostPrefetchPathname = pathname => {
   if (!prefetchCompleted[pathname]) {
-    apiRunner(`onPostPrefetchPathname`, { pathname: pathname })
+    apiRunner(`onPostPrefetchPathname`, { pathname })
     prefetchCompleted[pathname] = true
   }
 }
@@ -188,12 +201,10 @@ const queue = {
   // Hovering on a link is a very strong indication the user is going to
   // click on it soon so let's start prefetching resources for this
   // pathname.
-  hovering: rawPath => {
-    const path = stripPrefix(rawPath, __PATH_PREFIX__)
+  hovering: path => {
     queue.getResourcesForPathname(path)
   },
-  enqueue: rawPath => {
-    const path = stripPrefix(rawPath, __PATH_PREFIX__)
+  enqueue: path => {
     if (!apiRunner)
       console.error(`Run setApiRunnerForLoader() before enqueing paths`)
 
@@ -218,7 +229,7 @@ const queue = {
     ) {
       // If page wasn't found check and we didn't fetch resources map for
       // all pages, wait for fetch to complete and try find page again
-      return fetchPageResourceMap().then(() => queue.enqueue(rawPath))
+      return fetchPageResourceMap().then(() => queue.enqueue(path))
     }
 
     if (!page) {
@@ -237,9 +248,6 @@ const queue = {
       prefetchResource(page.jsonName)
       prefetchResource(page.componentChunkName)
     }
-
-    // Tell plugins the path has been successfully prefetched
-    onPostPrefetchPathname(path)
 
     return true
   },
@@ -274,6 +282,7 @@ const queue = {
   // and getting resources for page changes.
   getResourcesForPathname: path =>
     new Promise((resolve, reject) => {
+      console.log(`getResourcesForPathname ${path}`)
       const doingInitialRender = inInitialRender
       inInitialRender = false
 
@@ -350,6 +359,9 @@ const queue = {
             page,
             pageResources,
           })
+          // Tell plugins the path has been successfully prefetched
+          onPostPrefetchPathname(path)
+
           resolve(pageResources)
         })
       } else {
@@ -378,6 +390,9 @@ const queue = {
             pageResources,
           })
 
+          // Tell plugins the path has been successfully prefetched
+          onPostPrefetchPathname(path)
+
           if (doingInitialRender) {
             // We got all resources needed for first mount,
             // we can fetch resoures for all pages.
@@ -385,9 +400,6 @@ const queue = {
           }
         })
       }
-
-      // Tell plugins the path has been successfully prefetched
-      onPostPrefetchPathname(path)
     }),
 }
 

@@ -85,15 +85,8 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
-    if (!pageResources && process.env.NODE_ENV === `production`) {
-      loader.getResourcesForPathname(`/404.html`).then(() => {
-        clearTimeout(timeoutId)
-        reachNavigate(to, options)
-      })
-    } else {
-      reachNavigate(to, options)
-      clearTimeout(timeoutId)
-    }
+    reachNavigate(to, options)
+    clearTimeout(timeoutId)
   })
 }
 

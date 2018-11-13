@@ -39,9 +39,11 @@ const preFetched = {}
 
 const prefetch = function(url) {
   if (preFetched[url]) {
+    console.log(`prefetch ${url}: already prefetched`)
     return
   }
   preFetched[url] = true
+  console.log(`prefetch ${url}: actually doing it now`)
   supportedPrefetchStrategy(url)
 }
 

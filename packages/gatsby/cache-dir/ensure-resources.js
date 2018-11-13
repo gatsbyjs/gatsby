@@ -93,11 +93,14 @@ class EnsureResources extends React.Component {
   }
 
   render() {
-    // This should only occur if there's no custom 404 page
+    // This should only occur if the network is offline, or if the
+    // path is nonexistent and there's no custom 404 page.
     if (
       process.env.NODE_ENV === `production` &&
       !(this.state.pageResources && this.state.pageResources.json)
     ) {
+      console.error(`Failed to get resources for ${location.pathname}`)
+      window.location.reload()
       return null
     }
 
