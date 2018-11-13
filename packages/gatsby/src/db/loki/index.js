@@ -4,9 +4,22 @@ const path = require(`path`)
 const loki = require(`lokijs`)
 const uuidv4 = require(`uuid/v4`)
 
+// Loki is a document store with the same semantics as mongo. This
+// means there are no tables or relationships. Just a bunch of
+// collections, each with objects.
+//
+// Gatsby stores nodes in collections by splitting them up by their
+// `node.internal.type`. All nodes of a particular type go in 1
+// collection. The below `colls` object contains the metadata for
+// these collections, and the "meta collections" used to track them.
+//
+// You won't use these directly. They are used by the collection
+// functions in `./nodes.js`. E.g `getTypeCollName()` and
+// `getNodeTypeCollection`
 const colls = {
   // Each object has keys `id` and `typeCollName`. It's a way of
   // quickly looking up the collection that a node is contained in.
+  // E.g { id: `someNodeId`, typeCollName: `gatsby:nodeType:myType` }
   nodeMeta: {
     name: `gatsby:nodeMeta`,
     options: {
@@ -16,7 +29,8 @@ const colls = {
   },
   // The list of all node type collections. Each object has keys
   // `type` and `collName` so you can quickly look up the collection
-  // name for a node type
+  // name for a node type.
+  // e.g { type: `myType`, collName: `gatsby:nodeType:myType` }
   nodeTypes: {
     name: `gatsby:nodeTypes`,
     options: {
@@ -26,23 +40,12 @@ const colls = {
   },
 }
 
-/////////////////////////////////////////////////////////////////////
-// DB Initialization
-/////////////////////////////////////////////////////////////////////
-
 // Must be set using `start()`
 let db
 
 /**
  * Ensures that the collections that support nodes have been
- * created. These are:
- *
- * `nodeIdToType` - A collection whose elements are mappings of node
- * ID to the Type. E.g { id: `id1`, type: `SomeType` }. This allows
- * lookup of the type of a node by
- * db.getCollection(`nodeIdToType`).by(`id`, `id1`) => `SomeType`.
- *
- * `nodeTypes` - A collection of names of types.
+ * created. See `colls` var in this file
  */
 function ensureNodeCollections(db) {
   _.forEach(colls, collInfo => {
@@ -70,18 +73,21 @@ function startFileDb(saveFile) {
 }
 
 async function startInMemory() {
+  // Use uuid purely for a random name
   db = new loki(uuidv4())
 }
 
 /**
  * Starts a loki database. If the file already exists, it will be
  * loaded as the database state. If not, a new database will be
- * created.
+ * created. If `saveFile` is omitted, an in-memory DB will be created.
  *
  * @param {string} saveFile on disk file that the database will be
- * saved and loaded from.
+ * saved and loaded from. If this is omitted, an in-memory database
+ * will be created instead
  * @returns {Promise} promise that is resolved once the database and
- * (optionally) the existing state has been loaded
+ * the existing state has been loaded (if there was an existing
+ * saveFile)
  */
 async function start({ saveFile } = {}) {
   if (saveFile && !_.isString(saveFile)) {

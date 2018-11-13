@@ -6,12 +6,13 @@ const { getNode } = require(`../../db/nodes`)
 const { findRootNodeAncestor, trackDbNodes } = require(`../node-tracking`)
 const nodeTypes = require(`../../schema/build-node-types`)
 const { run: runQuery } = require(`../nodes-query`)
-const { backend } = require(`../../db/nodes`)
-const lokiDb = require(`../../db/loki`)
+require(`./fixtures/ensure-loki`)()
+// const { backend } = require(`../../db/nodes`)
+// const lokiDb = require(`../../db/loki`)
 
-if (backend === `loki`) {
-  beforeAll(lokiDb.start)
-}
+// if (backend === `loki`) {
+//   beforeAll(lokiDb.start)
+// }
 
 function makeNode() {
   return {

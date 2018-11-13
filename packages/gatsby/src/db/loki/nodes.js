@@ -10,22 +10,27 @@ function makeTypeCollName(type) {
   return `gatsby:nodeType:${type}`
 }
 
+/**
+ * Creates a collection that will contain nodes of a certain type. The
+ * name of the collection for type `MyType` will be something like
+ * `gatsby:nodeType:MyType` (see `makeTypeCollName`)
+ */
 function createNodeTypeCollection(type) {
   const collName = makeTypeCollName(type)
   const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
   invariant(nodeTypesColl, `Collection ${colls.nodeTypes.name} should exist`)
   nodeTypesColl.insert({ type, collName })
-  const coll = getDb().addCollection(collName, {
-    unique: [`id`],
-    indices: [`id`],
-  })
-  // TODO make into transaction
+  // TODO what if `addCollection` fails? We will have inserted into
+  // nodeTypesColl but no collection will exist. Need to make this
+  // into a transaction
+  const options = { unique: [`id`], indices: [`id`] }
+  const coll = getDb().addCollection(collName, options)
   return coll
 }
 
 /**
  * Returns the name of the collection that contains nodes of the
- * specified type, where type is the node's node.internal.type
+ * specified type, where type is the node's `node.internal.type`
  */
 function getTypeCollName(type) {
   const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
@@ -35,8 +40,8 @@ function getTypeCollName(type) {
 }
 
 /**
- * Returns the collection that contains nodes of the specified type,
- * where type is the node's node.internal.type
+ * Returns a reference to the collection that contains nodes of the
+ * specified type, where type is the node's `node.internal.type`
  */
 function getNodeTypeCollection(type) {
   const typeCollName = getTypeCollName(type)
@@ -53,10 +58,16 @@ function getNodeTypeCollection(type) {
   }
 }
 
+/**
+ * Deletes all empty node type collections, unless `force` is true, in
+ * which case it deletes the collections even if they have nodes in
+ * them
+ */
 function deleteNodeTypeCollections(force = false) {
   const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
+  // find() returns all objects in collection
   const nodeTypes = nodeTypesColl.find()
-  for (let nodeType of nodeTypes) {
+  for (const nodeType of nodeTypes) {
     let coll = getDb().getCollection(nodeType.collName)
     if (coll.count() === 0 || force) {
       getDb().removeCollection(coll.name)
@@ -65,6 +76,11 @@ function deleteNodeTypeCollections(force = false) {
   }
 }
 
+/**
+ * Deletes all nodes from all the node type collections, including the
+ * id -> type metadata. There will be no nodes related data in loki
+ * after this is called
+ */
 function deleteAll() {
   const db = getDb()
   if (db) {
@@ -84,10 +100,13 @@ function getNode(id) {
   if (!id) {
     return null
   }
+  // First, find out which collection the node is in
   const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
   invariant(nodeMetaColl, `nodeMeta collection should exist`)
   const nodeMeta = nodeMetaColl.by(`id`, id)
   if (nodeMeta) {
+    // Now get the collection and query it by the `id` field, which
+    // has an index on it
     const { typeCollName } = nodeMeta
     const typeColl = getDb().getCollection(typeCollName)
     invariant(
@@ -101,7 +120,9 @@ function getNode(id) {
 }
 
 /**
- * Returns all nodes of a type (where typeName == node.internal.type)
+ * Returns all nodes of a type (where `typeName ==
+ * node.internal.type`). This is an O(1) operation since nodes are
+ * already stored in seperate collections by type
  */
 function getNodesByType(typeName) {
   invariant(typeName, `typeName is null`)
@@ -112,7 +133,8 @@ function getNodesByType(typeName) {
 }
 
 /**
- * Returns the collection of all nodes. This should be deprecated
+ * Returns the collection of all nodes. This should be deprecated and
+ * `getNodesByType` should be used instead. Or at least where possible
  */
 function getNodes() {
   const nodeTypes = getDb().getCollection(colls.nodeTypes.name).data
@@ -121,7 +143,7 @@ function getNodes() {
 
 /**
  * Looks up the node by id, records a dependency between the node and
- * the path, and then returns the path
+ * the path, and then returns the node
  *
  * @param {string} id node id to lookup
  * @param {string} path the page path to record a node dependency
@@ -162,7 +184,7 @@ function hasNodeChanged(id, digest) {
  * Creates a node in the DB. Will create a collection for the node
  * type if one hasn't been created yet
  *
- * @param {Object} node The ndoe to add. Must have an `id` and
+ * @param {Object} node The node to add. Must have an `id` and
  * `internal.type`
  */
 function createNode(node) {
@@ -177,21 +199,27 @@ function createNode(node) {
     nodeTypeColl = createNodeTypeCollection(type)
   }
 
-  // TODO make into transaction
   const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
   invariant(nodeMetaColl, `Collection ${colls.nodeMeta.name} should exist`)
   nodeMetaColl.insert({ id: node.id, typeCollName: nodeTypeColl.name })
+  // TODO what if this insert fails? We will have inserted the id ->
+  // collName mapping, but there won't be any nodes in the type
+  // collection. Need to create a transaction around this
   return nodeTypeColl.insert(node)
 }
 
 /**
- * Updates a node in the DB
+ * Updates a node in the DB. This works by removing all fields db
+ * fields ($loki, meta, and id) and then using `Object.assign` to copy
+ * all fields in `node` over `oldNode`. Therefore node should contain
+ * ALL fields and not just changes.
  *
- * @param {Object} node The new node information. Will be merged over
- * the old one (shallow merge)
- * @param {Object} oldNode The old node to merge the new node
- * over. Optional. If not supplied, the old node is found by querying
- * by node.id
+ * If `oldNode` is not provided, it is assumed that `node` is already
+ * a loki node and we will simply call update on it
+ *
+ * @param {Object} node The new node information. This should be all
+ * the node information. Not just changes
+ * @param {Object} oldNode The old node to write over. Optional.
  */
 function updateNode(node, oldNode) {
   invariant(node.internal, `node has no "internal" field`)
@@ -220,9 +248,12 @@ function updateNode(node, oldNode) {
 }
 
 /**
- * Deletes a node from its type collection.
+ * Deletes a node from its type collection and removes its id ->
+ * collName mapping. Function is idempotent. If the node has already
+ * been deleted, this is a noop.
  *
- * @param {Object} the node to delete. Must have an `id`
+ * @param {Object} the node to delete. Must have an `id` and
+ * `internal.type`
  */
 function deleteNode(node) {
   invariant(node.internal, `node has no "internal" field`)
@@ -242,13 +273,18 @@ function deleteNode(node) {
   if (nodeTypeColl.by(`id`, node.id)) {
     const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
     invariant(nodeMetaColl, `Collection ${colls.nodeMeta.name} should exist`)
-    // TODO make into transaction
     nodeMetaColl.findAndRemove({ id: node.id })
+    // TODO What if this `remove()` fails? We will have removed the id
+    // -> collName mapping, but not the actual node in the
+    // collection. Need to make this into a transaction
     nodeTypeColl.remove(node)
   }
   // idempotent. Do nothing if node wasn't already in DB
 }
 
+/**
+ * deprecated
+ */
 function deleteNodes(nodes) {
   for (const node of nodes) {
     deleteNode(node)
@@ -293,6 +329,10 @@ function reducer(state = new Map(), action) {
       return new Map()
   }
 }
+
+/////////////////////////////////////////////////////////////////////
+// Exports
+/////////////////////////////////////////////////////////////////////
 
 module.exports = {
   getNodeTypeCollection,

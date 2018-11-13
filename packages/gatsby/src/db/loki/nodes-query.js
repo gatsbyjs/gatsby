@@ -3,7 +3,10 @@ const prepareRegex = require(`../../utils/prepare-regex`)
 const { getNodeTypeCollection } = require(`./nodes`)
 const sift = require(`sift`)
 
-const siftifyArgs = object => {
+// Takes a raw graphql filter and converts it into a mongo-like args
+// object that can be understood by the `sift` library. E.g `eq`
+// becomes `$eq`
+function siftifyArgs(object) {
   const newObject = {}
   _.each(object, (v, k) => {
     if (_.isPlainObject(v)) {
@@ -27,6 +30,11 @@ const siftifyArgs = object => {
   return newObject
 }
 
+// filter nodes using the `sift` library. But isn't this a loki query
+// file? Yes, but we need to support all functionality provided by
+// `run-sift`, and there are some operators that loki can't
+// support. Like `elemMatch`, so for those fields, we fall back to
+// sift
 function runSift(nodes, query) {
   if (nodes) {
     const siftQuery = {
@@ -39,8 +47,9 @@ function runSift(nodes, query) {
 }
 
 // Takes a raw graphql filter and converts it into a mongo-like args
-// object. E.g `eq` becomes `$eq`. gqlFilter should be the raw graphql
-// filter returned from graphql-js. e.g:
+// object that can be understood by loki. E.g `eq` becomes
+// `$eq`. gqlFilter should be the raw graphql filter returned from
+// graphql-js. e.g gqlFilter:
 //
 // {
 //   internal: {
@@ -77,6 +86,8 @@ function toMongoArgs(gqlFilter, gqlFields, lastField) {
     if (_.isPlainObject(v)) {
       const gqlField = gqlFields[k]
       if (k === `elemMatch`) {
+        // loki doesn't support elemMatch, so use sift (see runSift
+        // comment above)
         mongoArgs[`$where`] = obj => {
           const result = runSift(obj, v)
           return result && result.length > 0
@@ -157,12 +168,12 @@ function dotNestedFields(acc, o, path = ``) {
   }
 }
 
-// Converts graphQL args to a loki query
+// Converts graphQL args to a loki filter
 function convertArgs(gqlArgs, gqlType) {
   const dottedFields = {}
   dotNestedFields(
     dottedFields,
-    toMongoArgs(gqlArgs.filter, gqlType[`_typeConfig`].fields)
+    toMongoArgs(gqlArgs.filter, gqlType.getFields())
   )
   return dottedFields
 }
@@ -180,20 +191,16 @@ function convertArgs(gqlArgs, gqlType) {
 // would return
 //
 // [ [ `frontmatter.date`, true ], [ `id`, true ] ]
+//
+// Note that the GraphQL Sort API provided by Gatsby doesn't allow the
+// order to be specified per field. So we must apply the order to all
+// fields.
 function toSortFields(sortArgs) {
   const { fields, order } = sortArgs
   return _.map(fields, field => [
     field.replace(/___/g, `.`),
     _.lowerCase(order) === `desc`,
   ])
-}
-
-// Ensure there is an index for each query field. If the index already
-// exists, this is a noop (handled by lokijs).
-function ensureIndexes(coll, findArgs) {
-  _.forEach(findArgs, (v, fieldName) => {
-    coll.ensureIndex(fieldName)
-  })
 }
 
 /**
@@ -209,7 +216,7 @@ function ensureIndexes(coll, findArgs) {
  * {Object} context: The context from the QueryJob
  *
  * {boolean} firstOnly: Whether to return the first found match, or
- * all matching result.
+ * all matching results
  *
  * @returns {promise} A promise that will eventually be resolved with
  * a collection of matching objects (even if `firstOnly` is true)
@@ -218,25 +225,13 @@ async function runQuery({ gqlType, queryArgs, context = {}, firstOnly }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
-
   const lokiArgs = convertArgs(gqlArgs, gqlType)
-
   const coll = getNodeTypeCollection(gqlType.name)
-
-  // Allow page creators to specify that they want indexes
-  // automatically created for their pages.
-  // if (context.useQueryIndex) {
-  //   ensureIndexes(coll, lokiArgs)
-  // }
-
   let chain = coll.chain().find(lokiArgs, firstOnly)
 
   const { sort } = gqlArgs
   if (sort) {
     const sortFields = toSortFields(sort)
-    _.forEach(sortFields, ([fieldName]) => {
-      coll.ensureIndex(fieldName)
-    })
     chain = chain.compoundsort(sortFields)
   }
 

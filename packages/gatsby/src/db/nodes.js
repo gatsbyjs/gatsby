@@ -2,7 +2,6 @@ const _ = require(`lodash`)
 const { store } = require(`../redux`)
 
 const backend = process.env.GATSBY_DB_NODES || `redux`
-console.log(`backend: ${backend}`)
 let nodesDb
 switch (backend) {
   case `redux`:
