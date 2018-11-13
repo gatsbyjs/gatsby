@@ -80,11 +80,10 @@ function runSift(nodes, query) {
 //     $regex: // as above
 //   }
 // }
-function toMongoArgs(gqlFilter, gqlFields, lastField) {
+function toMongoArgs(gqlFilter, lastFieldType) {
   const mongoArgs = {}
   _.each(gqlFilter, (v, k) => {
     if (_.isPlainObject(v)) {
-      const gqlField = gqlFields[k]
       if (k === `elemMatch`) {
         // loki doesn't support elemMatch, so use sift (see runSift
         // comment above)
@@ -93,7 +92,8 @@ function toMongoArgs(gqlFilter, gqlFields, lastField) {
           return result && result.length > 0
         }
       } else {
-        mongoArgs[k] = toMongoArgs(v, gqlFields, gqlField)
+        const gqlFieldType = lastFieldType.getFields()[k].type
+        mongoArgs[k] = toMongoArgs(v, gqlFieldType)
       }
     } else {
       // Compile regex first.
@@ -105,14 +105,13 @@ function toMongoArgs(gqlFilter, gqlFields, lastField) {
         mongoArgs[`$regex`] = mm.makeRe()
       } else if (
         k === `in` &&
-        lastField &&
-        lastField.type &&
-        lastField.type.constructor.name === `GraphQLList`
+        lastFieldType &&
+        lastFieldType.constructor.name === `GraphQLList`
       ) {
         mongoArgs[`$containsAny`] = v
       } else if (
         k === `nin` &&
-        lastField.type.constructor.name === `GraphQLList`
+        lastFieldType.constructor.name === `GraphQLList`
       ) {
         mongoArgs[`$containsNone`] = v
       } else if (k === `ne` && v === null) {
@@ -171,10 +170,7 @@ function dotNestedFields(acc, o, path = ``) {
 // Converts graphQL args to a loki filter
 function convertArgs(gqlArgs, gqlType) {
   const dottedFields = {}
-  dotNestedFields(
-    dottedFields,
-    toMongoArgs(gqlArgs.filter, gqlType.getFields())
-  )
+  dotNestedFields(dottedFields, toMongoArgs(gqlArgs.filter, gqlType))
   return dottedFields
 }
 

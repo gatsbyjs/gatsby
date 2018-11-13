@@ -33,6 +33,7 @@ const makeNodes = () => [
     frontmatter: {
       date: `2006-07-22T22:39:53.000Z`,
       title: `The world of dash and adventure`,
+      tags: [`moo`, `foo`],
       blue: 100,
     },
     anObjectArray: [
@@ -262,6 +263,12 @@ describe(`Filter fields`, () => {
     let result = await runFilter({ anArray: { in: [5] } })
     expect(result.length).toEqual(1)
     expect(result[0].name).toEqual(`The Mad Wax`)
+  })
+
+  it(`handles the nested in operator for array of strings`, async () => {
+    let result = await runFilter({ frontmatter: { tags: { in: [`moo`] } } })
+    expect(result).toHaveLength(1)
+    expect(result[0].name).toEqual(`The Mad Max`)
   })
 
   it(`handles the elemMatch operator for array of objects`, async () => {
