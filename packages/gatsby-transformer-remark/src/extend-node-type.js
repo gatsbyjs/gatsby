@@ -253,7 +253,7 @@ module.exports = (
 
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
-      let appliedTocOptions = tocOptions
+      let appliedTocOptions = { ...tocOptions, ... gqlTocOptions }
       // override defaults
       if (gqlTocOptions.heading) {
         appliedTocOptions.heading = gqlTocOptions.heading
