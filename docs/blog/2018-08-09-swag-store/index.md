@@ -78,3 +78,4 @@ Thanks for being part of the open source community! 💪💜
 [auth0]: https://auth0.com/
 [invite]: https://github.com/gatsbyjs/peril-gatsbyjs/blob/master/org/invite-collaborator.ts
 [peril]: https://github.com/danger/peril
+[contribute]: /docs/how-to-contribute/

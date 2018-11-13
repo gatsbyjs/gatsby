@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.14"></a>
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.13...gatsby-plugin-offline@2.0.14) (2018-11-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Sync docs with actual defaults being used ([#9903](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/9903)) ([8cd7432](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/8cd7432))
+
 <a name="2.0.13"></a>
 
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.12...gatsby-plugin-offline@2.0.13) (2018-11-08)

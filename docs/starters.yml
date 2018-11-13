@@ -1172,3 +1172,34 @@
     - Progressive Web App features
     - Optimized for performance
     - Minimal UI and Styling
+- url: https://gatsby-tutorial-starter.netlify.com/
+  repo: https://github.com/justinformentin/gatsby-v2-tutorial-starter
+  description: Simple, modern desgined blog with post lists, tags, and easily customizable code.
+  tags:
+    - Blog
+    - Linting
+    - PWA
+    - SEO
+    - Styling:CSS-in-JS
+    - Markdown
+  features:
+    - Blog post listing with image, summary, date, and tags.
+    - Post Tags
+    - Post List Filtering
+    - Typography.js
+    - Emotion styling
+    - Syntax Highlighting in Code Blocks
+    - Gatsby Image
+    - Fully Responsive
+    - Offline Support
+    - Web App Manifest
+    - SEO
+    - PWA
+    - Sitemap generation
+    - Schema.org JSON-LD
+    - CircleCI Integration
+    - Codeclimate Integration
+    - Google Analytics
+    - Twitter and OpenGraph Tags
+    - ESLint
+    - Prettier Code Styling
