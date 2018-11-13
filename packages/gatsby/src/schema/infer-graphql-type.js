@@ -321,6 +321,8 @@ const EXCLUDE_KEYS = {
   id: 1,
   parent: 1,
   children: 1,
+  $loki: 1,
+  meta: 1,
 }
 
 // Call this for the top level node + recursively for each sub-object.
