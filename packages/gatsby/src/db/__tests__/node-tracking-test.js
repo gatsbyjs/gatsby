@@ -1,72 +1,62 @@
-const { readFile, writeFile } = require(`fs-extra`)
+const { store } = require(`../../redux`)
+const {
+  boundActionCreators: { createNode },
+} = require(`../../redux/actions`)
+const { getNode } = require(`../../db/nodes`)
+const { findRootNodeAncestor, trackDbNodes } = require(`../node-tracking`)
+const nodeTypes = require(`../../schema/build-node-types`)
+const { run: runQuery } = require(`../nodes-query`)
+const { backend } = require(`../../db/nodes`)
+const lokiDb = require(`../../db/loki`)
 
-jest.mock(`fs`)
-jest.mock(`fs-extra`, () => {
+if (backend === `loki`) {
+  beforeAll(lokiDb.start)
+}
+
+function makeNode() {
   return {
-    readFile: jest.fn(() => `contents`),
-    writeFile: jest.fn(),
-  }
-})
-
-afterEach(() => {
-  readFile.mockClear()
-  writeFile.mockClear()
-})
-
-describe(`Track root nodes`, () => {
-  const reduxStatePath = `${process.cwd()}/.cache/redux-state.json`
-  const MOCK_FILE_INFO = {}
-  MOCK_FILE_INFO[reduxStatePath] = `
-  {
-      "nodes": {
-          "id1": {
-            "id": "id1",
-            "parent": null,
-            "children": [],
-            "inlineObject": {
-              "field": "fieldOfFirstNode"
-            },
-            "inlineArray": [
-              1, 2, 3
-            ],
-            "internal": {
-              "type": "TestNode",
-              "contentDigest": "digest1",
-              "owner": "test"
-            }
-          }
-      }
-  }
-  `
-  require(`fs`).__setMockFiles(MOCK_FILE_INFO)
-
-  const { getNode } = require(`../../db/nodes`)
-  const { findRootNodeAncestor } = require(`../node-tracking`)
-  const { runQuery } = require(`../../db/nodes`)
-  const nodeTypes = require(`../../schema/build-node-types`)
-  const {
-    boundActionCreators: { createNode },
-  } = require(`../../redux/actions`)
-
-  createNode(
-    {
-      id: `id2`,
-      parent: null,
-      children: [],
-      inlineObject: {
-        field: `fieldOfSecondNode`,
-      },
-      inlineArray: [1, 2, 3],
-      internal: {
-        type: `TestNode`,
-        contentDigest: `digest2`,
-      },
+    id: `id1`,
+    parent: null,
+    children: [],
+    inlineObject: {
+      field: `fieldOfFirstNode`,
     },
-    {
-      name: `test`,
-    }
-  )
+    inlineArray: [1, 2, 3],
+    internal: {
+      type: `TestNode`,
+      contentDigest: `digest1`,
+      owner: `test`,
+    },
+  }
+}
 
+describe(`track root nodes`, () => {
+  beforeEach(() => {
+    const nodes = [makeNode()]
+    store.dispatch({ type: `DELETE_CACHE` })
+    for (const node of nodes) {
+      store.dispatch({ type: `CREATE_NODE`, payload: node })
+    }
+    trackDbNodes()
+    createNode(
+      {
+        id: `id2`,
+        parent: null,
+        children: [],
+        inlineObject: {
+          field: `fieldOfSecondNode`,
+        },
+        inlineArray: [1, 2, 3],
+        internal: {
+          type: `TestNode`,
+          contentDigest: `digest2`,
+        },
+      },
+      {
+        name: `test`,
+      }
+    )
+  })
   describe(`Tracks nodes read from redux state cache`, () => {
     it(`Tracks inline objects`, () => {
       const node = getNode(`id1`)
@@ -75,7 +65,6 @@ describe(`Track root nodes`, () => {
 
       expect(trackedRootNode).toEqual(node)
     })
-
     it(`Tracks inline arrays`, () => {
       const node = getNode(`id1`)
       const inlineObject = node.inlineArray
@@ -83,7 +72,6 @@ describe(`Track root nodes`, () => {
 
       expect(trackedRootNode).toEqual(node)
     })
-
     it(`Doesn't track copied objects`, () => {
       const node = getNode(`id1`)
       const copiedInlineObject = { ...node.inlineObject }
@@ -92,7 +80,6 @@ describe(`Track root nodes`, () => {
       expect(trackedRootNode).not.toEqual(node)
     })
   })
-
   describe(`Tracks nodes created using createNode action`, () => {
     it(`Tracks inline objects`, () => {
       const node = getNode(`id2`)
@@ -103,7 +90,7 @@ describe(`Track root nodes`, () => {
     })
   })
 
-  describe(`Tracks nodes returned by running sift`, () => {
+  describe(`Tracks nodes returned by queries`, () => {
     let type
 
     beforeAll(async () => {

@@ -92,7 +92,7 @@ async function start({ saveFile } = {}) {
     await fs.ensureDir(saveDir)
     await startFileDb(saveFile)
   } else {
-    startInMemory()
+    await startInMemory()
   }
   ensureNodeCollections(db)
 }

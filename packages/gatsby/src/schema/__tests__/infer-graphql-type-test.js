@@ -13,6 +13,12 @@ const {
   clearUnionTypes,
 } = require(`../infer-graphql-type`)
 const { clearTypeNames } = require(`../create-type-name`)
+const { backend } = require(`../../db/nodes`)
+const lokiDb = require(`../../db/loki`)
+
+if (backend === `loki`) {
+  beforeAll(lokiDb.start)
+}
 
 function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
   const schema = new GraphQLSchema({
@@ -515,6 +521,8 @@ describe(`GraphQL type inferance`, () => {
     beforeEach(() => {
       ;({ store } = require(`../../redux`))
 
+      store.dispatch({ type: `DELETE_CACHE` })
+
       const { setFileNodeRootType } = require(`../types/type-file`)
       const fileType = {
         name: `File`,
@@ -605,6 +613,7 @@ describe(`GraphQL type inferance`, () => {
 
     beforeEach(() => {
       ;({ store } = require(`../../redux`))
+      store.dispatch({ type: `DELETE_CACHE` })
       types = [
         {
           name: `Child`,

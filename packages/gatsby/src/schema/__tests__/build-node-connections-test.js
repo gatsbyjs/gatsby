@@ -5,6 +5,13 @@ jest.mock(`../../redux/actions/add-page-dependency`)
 const nodeTypes = require(`../build-node-types`)
 const nodeConnections = require(`../build-node-connections`)
 
+const { backend } = require(`../../db/nodes`)
+const lokiDb = require(`../../db/loki`)
+
+if (backend === `loki`) {
+  beforeAll(lokiDb.start)
+}
+
 describe(`build-node-connections`, () => {
   let schema, store, types, connections
 

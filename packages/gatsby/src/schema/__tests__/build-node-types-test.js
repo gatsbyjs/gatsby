@@ -5,6 +5,12 @@ const {
   GraphQLString,
 } = require(`graphql`)
 const _ = require(`lodash`)
+const { backend } = require(`../../db/nodes`)
+const lokiDb = require(`../../db/loki`)
+
+if (backend === `loki`) {
+  beforeAll(lokiDb.start)
+}
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
@@ -30,10 +36,7 @@ describe(`build-node-types`, () => {
         pluginField: {
           type: GraphQLString,
           description: `test description`,
-          resolve: parent => {
-            console.log(`in resolver: ${parent}`)
-            return `pluginFieldValue`
-          },
+          resolve: parent => `pluginFieldValue`,
         },
       },
     ]
@@ -158,6 +161,19 @@ describe(`build-node-types`, () => {
       `
       {
         parent(id: { eq: "p1" }) {
+          pluginField
+        }
+      }
+    `
+    )
+    expect(result.parent.pluginField).toEqual(`pluginFieldValue`)
+  })
+
+  it(`should allow filtering on plugin fields`, async () => {
+    const result = await runQuery(
+      `
+      {
+        parent(pluginField: { eq: "pluginFieldValue"}) {
           pluginField
         }
       }

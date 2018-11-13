@@ -21,7 +21,8 @@ const { getNodes, getNode } = require(`../db/nodes`)
 const pageDependencyResolver = require(`./page-dependency-resolver`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
-const { runQuery } = require(`../db/nodes`)
+const { run: runQuery } = require(`../db/nodes-query`)
+const lazyFields = require(`./lazy-fields`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
@@ -187,6 +188,9 @@ async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
 
   const pluginInputFields = inferInputObjectStructureFromFields({
     fields: mergedFieldsFromPlugins,
+  })
+  _.each(pluginInputFields.inferredFields, (fieldConfig, fieldName) => {
+    lazyFields.add(typeName, fieldName)
   })
 
   const gqlType = buildNodeObjectType({

@@ -26,6 +26,7 @@ const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
 const unionTypes = new Map()
+const lazyFields = require(`./lazy-fields`)
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -200,7 +201,7 @@ export function findLinkedNode(value, linkedField, path) {
   return linkedNode
 }
 
-function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
+function inferFromFieldName(typeName, fieldName, value, selector, types): GraphQLFieldConfig<*, *> {
   let isArray = false
   if (_.isArray(value)) {
     isArray = true
@@ -270,6 +271,8 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
       }
     } else {
       type = fields[0].nodeObjectType
+      lazyFields.add(type.name, fieldName)
+      lazyFields.add(typeName, fieldName)
     }
 
     return {
@@ -291,6 +294,8 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   validateLinkedNode(linkedNode)
   const field = findNodeType(linkedNode)
   validateField(linkedNode, field)
+  lazyFields.add(field.name, fieldName)
+  lazyFields.add(typeName, fieldName)
   return {
     type: field.nodeObjectType,
     resolve: pageDependencyResolver(node =>
@@ -355,7 +360,7 @@ function _inferObjectStructureFromNodes(
       // (a node id) to find the node and use that node's type as the field
     } else if (key.includes(`___NODE`)) {
       ;[fieldName] = key.split(`___`)
-      inferredField = inferFromFieldName(value, nextSelector, types)
+      inferredField = inferFromFieldName(typeName, fieldName, value, nextSelector, types)
     }
 
     // Replace unsupported values

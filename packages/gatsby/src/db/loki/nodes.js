@@ -1,277 +1,9 @@
 const _ = require(`lodash`)
 const invariant = require(`invariant`)
-const Promise = require(`bluebird`)
 const { getDb, colls } = require(`./index`)
-const prepareRegex = require(`../../utils/prepare-regex`)
 
 /////////////////////////////////////////////////////////////////////
-// Queries
-/////////////////////////////////////////////////////////////////////
-
-/**
- * Returns the node with `id` == id, or null if not found
- */
-function getNode(id) {
-  invariant(id, `id is null`)
-
-  const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
-  const typeCollName = nodeMetaColl.by(`id`, id)
-  if (typeCollName) {
-    const typeColl = getDb().getCollection(typeCollName)
-    invariant(typeColl)
-    return typeColl.by(`id`, id)
-  } else {
-    return undefined
-  }
-}
-
-/**
- * Returns all nodes of a type (where typeName == node.internal.type)
- */
-function getNodesByType(typeName) {
-  invariant(typeName, `typeName is null`)
-  const coll = getDb().getCollection(typeName)
-  if (!coll) return null
-  return coll.data
-}
-
-/**
- * Returns the collection of all nodes. This should be deprecated
- */
-function getNodes() {
-  return _.flatMap(getDb().listCollections(), collInfo =>
-    getNodesByType(collInfo.name)
-  )
-}
-
-/**
- * Looks up the node by id, records a dependency between the node and
- * the path, and then returns the path
- *
- * @param {string} id node id to lookup
- * @param {string} path the page path to record a node dependency
- * against
- * @returns {Object} node or undefined if not found
- */
-function getNodeAndSavePathDependency(id, path) {
-  invariant(id, `id is null`)
-  invariant(id, `path is null`)
-  const {
-    createPageDependency,
-  } = require(`../redux/actions/add-page-dependency`)
-  const node = getNode(id)
-  createPageDependency({ path, nodeId: id })
-  return node
-}
-
-/**
- * Determine if node has changed (by comparing its
- * `internal.contentDigest`
- *
- * @param {string} id
- * @param {string} digest
- * @returns {boolean}
- */
-function hasNodeChanged(id, digest) {
-  const node = getNode(id)
-  if (!node) {
-    return true
-  } else {
-    return node.internal.contentDigest !== digest
-  }
-}
-
-/////////////////////////////////////////////////////////////////////
-// Query Filter
-/////////////////////////////////////////////////////////////////////
-
-// Takes a raw graphql filter and converts it into a mongo-like args
-// object. E.g `eq` becomes `$eq`. gqlFilter should be the raw graphql
-// filter returned from graphql-js. e.g:
-//
-// {
-//   internal: {
-//     type: {
-//       eq: "TestNode"
-//     },
-//     content: {
-//       glob: "et"
-//     }
-//   },
-//   id: {
-//     glob: "12*"
-//   }
-// }
-//
-// would return
-//
-// {
-//   internal: {
-//     type: {
-//       $eq: "TestNode"  // append $ to eq
-//     },
-//     content: {
-//       $regex: new MiniMatch(v) // convert glob to regex
-//     }
-//   },
-//   id: {
-//     $regex: // as above
-//   }
-// }
-function toMongoArgs(gqlFilter) {
-  const mongoArgs = {}
-  _.each(gqlFilter, (v, k) => {
-    if (_.isPlainObject(v)) {
-      if (k === `elemMatch`) {
-        k = `$elemMatch`
-      }
-      mongoArgs[k] = toMongoArgs(v)
-    } else {
-      // Compile regex first.
-      if (k === `regex`) {
-        mongoArgs[`$regex`] = prepareRegex(v)
-      } else if (k === `glob`) {
-        const Minimatch = require(`minimatch`).Minimatch
-        const mm = new Minimatch(v)
-        mongoArgs[`$regex`] = mm.makeRe()
-      } else if (k === `in`) {
-        mongoArgs[`$contains`] = v
-      } else {
-        mongoArgs[`$${k}`] = v
-      }
-    }
-  })
-  return mongoArgs
-}
-
-// Converts a nested mongo args object into a dotted notation. acc
-// (accumulator) must be a reference to an empty object. The converted
-// fields will be added to it. E.g
-//
-// {
-//   internal: {
-//     type: {
-//       $eq: "TestNode"
-//     },
-//     content: {
-//       $regex: new MiniMatch(v)
-//     }
-//   },
-//   id: {
-//     $regex: newMiniMatch(v)
-//   }
-// }
-//
-// After execution, acc would be:
-//
-// {
-//   "internal.type": {
-//     $eq: "TestNode"
-//   },
-//   "internal.content": {
-//     $regex: new MiniMatch(v)
-//   },
-//   "id": {
-//     $regex: // as above
-//   }
-// }
-function dotNestedFields(acc, o, path = ``) {
-  if (_.isPlainObject(o)) {
-    if (_.isPlainObject(_.sample(o))) {
-      _.forEach(o, (v, k) => {
-        dotNestedFields(acc, v, path + `.` + k)
-      })
-    } else {
-      acc[_.trimStart(path, `.`)] = o
-    }
-  }
-}
-
-// Converts graphQL args to a loki query
-function convertArgs(gqlArgs) {
-  const dottedFields = {}
-  dotNestedFields(dottedFields, toMongoArgs(gqlArgs.filter))
-  return dottedFields
-}
-
-// Converts graphql Sort args into the form expected by loki, which is
-// a vector where the first value is a field name, and the second is a
-// boolean `isDesc`. Nested fields delimited by `___` are replaced by
-// periods. E.g
-//
-// {
-//   fields: [ `frontmatter___date`, `id` ],
-//   order: `desc`
-// }
-//
-// would return
-//
-// [ [ `frontmatter.date`, true ], [ `id`, true ] ]
-function toSortFields(sortArgs) {
-  const { fields, order } = sortArgs
-  return _.map(fields, field => [
-    field.replace(/___/g, `.`),
-    _.lowerCase(order) === `desc`,
-  ])
-}
-
-// Ensure there is an index for each query field. If the index already
-// exists, this is a noop (handled by lokijs).
-function ensureIndexes(coll, findArgs) {
-  _.forEach(findArgs, (v, fieldName) => {
-    coll.ensureIndex(fieldName)
-  })
-}
-
-/**
- * Runs the graphql query over the loki nodes db.
- *
- * @param {Object} args. Object with:
- *
- * {Object} gqlType: built during `./build-node-types.js`
- *
- * {Object} queryArgs: The raw graphql query as a js object. E.g `{
- * filter: { fields { slug: { eq: "/somepath" } } } }`
- *
- * {Object} context: The context from the QueryJob
- *
- * {boolean} firstOnly: Whether to return the first found match, or
- * all matching result.
- *
- * @returns {promise} A promise that will eventually be resolved with
- * a collection of matching objects (even if `firstOnly` is true)
- */
-function runQuery({ gqlType, queryArgs, context = {}, firstOnly }) {
-  // Clone args as for some reason graphql-js removes the constructor
-  // from nested objects which breaks a check in sift.js.
-  const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
-
-  const lokiArgs = convertArgs(gqlArgs)
-
-  const coll = getDb().getCollection(gqlType.name)
-
-  // Allow page creators to specify that they want indexes
-  // automatically created for their pages.
-  if (context.useQueryIndex) {
-    ensureIndexes(coll, lokiArgs)
-  }
-
-  let chain = coll.chain().find(lokiArgs, firstOnly)
-
-  const { sort } = gqlArgs
-  if (sort) {
-    const sortFields = toSortFields(sort)
-    _.forEach(sortFields, ([fieldName]) => {
-      coll.ensureIndex(fieldName)
-    })
-    chain = chain.compoundsort(sortFields)
-  }
-
-  return Promise.resolve(chain.data())
-}
-
-/////////////////////////////////////////////////////////////////////
-// Insertions/Updates/Deletions
+// Node collection metadata
 /////////////////////////////////////////////////////////////////////
 
 function makeTypeCollName(type) {
@@ -291,6 +23,10 @@ function createNodeTypeCollection(type) {
   return coll
 }
 
+/**
+ * Returns the name of the collection that contains nodes of the
+ * specified type, where type is the node's node.internal.type
+ */
 function getTypeCollName(type) {
   const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
   invariant(nodeTypesColl, `Collection ${colls.nodeTypes.name} should exist`)
@@ -298,6 +34,10 @@ function getTypeCollName(type) {
   return nodeTypeInfo ? nodeTypeInfo.collName : undefined
 }
 
+/**
+ * Returns the collection that contains nodes of the specified type,
+ * where type is the node's node.internal.type
+ */
 function getNodeTypeCollection(type) {
   const typeCollName = getTypeCollName(type)
   let coll
@@ -331,6 +71,91 @@ function deleteAll() {
     .getCollection(colls.nodeMeta.name)
     .clear()
 }
+
+/////////////////////////////////////////////////////////////////////
+// Queries
+/////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns the node with `id` == id, or null if not found
+ */
+function getNode(id) {
+  invariant(id, `id is null`)
+  const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
+  invariant(nodeMetaColl, `nodeMeta collection should exist`)
+  const nodeMeta = nodeMetaColl.by(`id`, id)
+  if (nodeMeta) {
+    const { typeCollName } = nodeMeta
+    const typeColl = getDb().getCollection(typeCollName)
+    invariant(
+      typeColl,
+      `type collection ${typeCollName} referenced by nodeMeta but doesn't exist`
+    )
+    return typeColl.by(`id`, id)
+  } else {
+    return undefined
+  }
+}
+
+/**
+ * Returns all nodes of a type (where typeName == node.internal.type)
+ */
+function getNodesByType(typeName) {
+  invariant(typeName, `typeName is null`)
+  const collName = getTypeCollName(typeName)
+  const coll = getDb().getCollection(collName)
+  if (!coll) return null
+  return coll.data
+}
+
+/**
+ * Returns the collection of all nodes. This should be deprecated
+ */
+function getNodes() {
+  const nodeTypes = getDb().getCollection(colls.nodeTypes.name).data
+  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType.type))
+}
+
+/**
+ * Looks up the node by id, records a dependency between the node and
+ * the path, and then returns the path
+ *
+ * @param {string} id node id to lookup
+ * @param {string} path the page path to record a node dependency
+ * against
+ * @returns {Object} node or undefined if not found
+ */
+function getNodeAndSavePathDependency(id, path) {
+  invariant(id, `id is null`)
+  invariant(id, `path is null`)
+  const {
+    createPageDependency,
+  } = require(`../../redux/actions/add-page-dependency`)
+  const node = getNode(id)
+  createPageDependency({ path, nodeId: id })
+  return node
+}
+
+/**
+ * Determine if node has changed (by comparing its
+ * `internal.contentDigest`
+ *
+ * @param {string} id
+ * @param {string} digest
+ * @returns {boolean}
+ */
+function hasNodeChanged(id, digest) {
+  const node = getNode(id)
+  if (!node) {
+    return true
+  } else {
+    return node.internal.contentDigest !== digest
+  }
+}
+
+/////////////////////////////////////////////////////////////////////
+// Create/Update/Delete
+/////////////////////////////////////////////////////////////////////
 
 /**
  * Creates a node in the DB. Will create a collection for the node
@@ -367,7 +192,7 @@ function createNode(node) {
  * over. Optional. If not supplied, the old node is found by querying
  * by node.id
  */
-function updateNode(node) {
+function updateNode(node, oldNode) {
   invariant(node.internal, `node has no "internal" field`)
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
@@ -379,15 +204,18 @@ function updateNode(node) {
     invariant(coll, `${type} collection doesn't exist. When trying to update`)
   }
 
-  let existingNode = getNode(node.id)
-  invariant(existingNode, `Updating node that doesn't exist`)
-  for (const [k] of existingNode) {
-    if (k !== `$loki` && k !== `meta`) {
-      delete existingNode[k]
-    }
+  if (oldNode) {
+    const lokiKeys = new Set([`$loki`, `meta`, `id`])
+    _.forEach(oldNode, (v, k) => {
+      if (!lokiKeys.has(k)) {
+        delete oldNode[k]
+      }
+    })
+    Object.assign(oldNode, node)
+    coll.update(oldNode)
+  } else {
+    coll.update(node)
   }
-  Object.assign(existingNode, node)
-  coll.update(existingNode)
 }
 
 /**
@@ -416,11 +244,8 @@ function deleteNode(node) {
     // TODO make into transaction
     nodeMetaColl.findAndRemove({ id: node.id })
     nodeTypeColl.remove(node)
-  } else {
-    console.log(
-      `WARN: deletion of node failed because it wasn't in coll. Node = [${node}]`
-    )
   }
+  // idempotent. Do nothing if node wasn't already in DB
 }
 
 function deleteNodes(nodes) {
@@ -440,7 +265,11 @@ function reducer(state = new Map(), action) {
       return new Map()
 
     case `CREATE_NODE`: {
-      createNode(action.payload)
+      if (action.oldNode) {
+        updateNode(action.payload, action.oldNode)
+      } else {
+        createNode(action.payload)
+      }
       return new Map()
     }
 
@@ -465,13 +294,13 @@ function reducer(state = new Map(), action) {
 }
 
 module.exports = {
+  getNodeTypeCollection,
+  
   getNodes,
   getNode,
   getNodesByType,
   hasNodeChanged,
   getNodeAndSavePathDependency,
-  convertArgs,
-  runQuery,
 
   createNode,
   updateNode,
