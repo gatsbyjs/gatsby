@@ -36,4 +36,4 @@ After a little over a month of tinkering on the design during nights and weekend
 
 If you are currently on the fence about static site generators or the JAMstack in general there has never been a better time to jump in. In my humble opinion with these tools it has finally reached the level of maturity to not just be feasible for client work but actually pretty darn amazing.
 
-For those interested the source code for the website I built is available on GitHub: https://github.com/ryanwiemer/knw
+For those interested the source code for the website I built is available on GitHub: https://github.com/ryanwiemer/knw-legacy

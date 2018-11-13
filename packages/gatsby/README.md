@@ -27,7 +27,7 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
   </a>
-  <a href="https://gatsbyjs.org/docs/how-to-submit-a-pr/">
+  <a href="https://gatsbyjs.org/docs/how-to-contribute">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
 </p>
