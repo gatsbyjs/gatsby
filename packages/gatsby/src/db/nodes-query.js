@@ -15,15 +15,16 @@ function chooseQueryEngine(args) {
 
 /**
  * Runs the query over all nodes of type. It must first select the
- * appropriate query engine. Sift, or Loki. Sift is used if the query
- * includes plugin fields, i.e those declared by plugins during the
- * `setFieldsOnGraphQLNodeType` API. If it does, then we must iterate
- * through all nodes calling the plugin field to make sure it's
- * realized, then we can perform the query. See `query-sift.js` for
- * more.
+ * appropriate query engine. Sift, or Loki. Sift is used by default,
+ * or if the query includes "lazy fields", those that need to be
+ * resolved before being queried. These could be either plugin fields,
+ * i.e those declared by plugins during the
+ * `setFieldsOnGraphQLNodeType` API, or they could be linked
+ * fields. See `../redux/run-sift.js` for more.
  *
- * If the query does *not* include plugin fields, then we can perform
- * a much faster pure data query using loki. See `query-loki.js` for
+ * If the query does *not* include lazy fields, and environment
+ * variable `GATSBY_DB_NODES` = `loki` then we can perform a much
+ * faster pure data query using loki. See `loki/nodes-query.js` for
  * more.
  *
  * @param {Object} args. Object with:
@@ -39,7 +40,8 @@ function chooseQueryEngine(args) {
  * all matching result.
  *
  * @returns {promise} A promise that will eventually be resolved with
- * a collection of matching objects (even if `firstOnly` is true)
+ * a collection of matching objects (even if `firstOnly` is true, in
+ * which case it will be a collection of length 1 or zero)
  */
 function run(args) {
   const queryFunction = chooseQueryEngine(args)
