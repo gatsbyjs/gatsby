@@ -1177,7 +1177,7 @@
   description: Simple, modern desgined blog with post lists, tags, and easily customizable code.
   tags:
     - Blog
-    - Prettier
+    - Linting
     - PWA
     - SEO
     - Styling:CSS-in-JS
