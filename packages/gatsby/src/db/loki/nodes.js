@@ -66,10 +66,11 @@ function deleteNodeTypeCollections(force = false) {
 }
 
 function deleteAll() {
-  deleteNodeTypeCollections(true)
-  getDb()
-    .getCollection(colls.nodeMeta.name)
-    .clear()
+  const db = getDb()
+  if (db) {
+    deleteNodeTypeCollections(true)
+    db.getCollection(colls.nodeMeta.name).clear()
+  }
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -80,7 +81,9 @@ function deleteAll() {
  * Returns the node with `id` == id, or null if not found
  */
 function getNode(id) {
-  invariant(id, `id is null`)
+  if (!id) {
+    return null
+  }
   const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
   invariant(nodeMetaColl, `nodeMeta collection should exist`)
   const nodeMeta = nodeMetaColl.by(`id`, id)
@@ -104,7 +107,7 @@ function getNodesByType(typeName) {
   invariant(typeName, `typeName is null`)
   const collName = getTypeCollName(typeName)
   const coll = getDb().getCollection(collName)
-  if (!coll) return null
+  if (!coll) return []
   return coll.data
 }
 
@@ -128,9 +131,7 @@ function getNodes() {
 function getNodeAndSavePathDependency(id, path) {
   invariant(id, `id is null`)
   invariant(id, `path is null`)
-  const {
-    createPageDependency,
-  } = require(`../../redux/actions/add-page-dependency`)
+  const createPageDependency = require(`../../redux/actions/add-page-dependency`)
   const node = getNode(id)
   createPageDependency({ path, nodeId: id })
   return node

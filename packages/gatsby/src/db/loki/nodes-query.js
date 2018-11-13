@@ -94,6 +94,8 @@ function toMongoArgs(gqlFilter, gqlFields, lastField) {
         mongoArgs[`$regex`] = mm.makeRe()
       } else if (
         k === `in` &&
+        lastField &&
+        lastField.type &&
         lastField.type.constructor.name === `GraphQLList`
       ) {
         mongoArgs[`$containsAny`] = v
