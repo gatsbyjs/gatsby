@@ -1,9 +1,6 @@
 /* global importScripts, workbox, idbKeyval */
 
-importScripts(
-  `https://cdn.jsdelivr.net/npm/idb-keyval@3/dist/idb-keyval-iife.min.js`
-)
-
+importScripts(`idb-keyval-iife.min.js`)
 const WHITELIST_KEY = `custom-navigation-whitelist`
 
 const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {

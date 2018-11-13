@@ -99,6 +99,11 @@ exports.onPostBuild = (args, pluginOptions) => {
   delete pluginOptions.plugins
   const combinedOptions = _.defaults(pluginOptions, options)
 
+  const idbKeyvalFile = `idb-keyval-iife.min.js`
+  const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
+  const idbKeyvalDest = `public/${idbKeyvalFile}`
+  fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
+
   const swDest = `public/sw.js`
   return workboxBuild
     .generateSW({ swDest, ...combinedOptions })
