@@ -480,7 +480,7 @@ module.exports = (
             type: GraphQLBoolean,
           },
         },
-        resolve(markdownNode, { pathToSlugField, maxDepth, heading, tight }) {
+        resolve(markdownNode, args) {
           return getTableOfContents(markdownNode, {
             pathToSlugField: pathToSlugField,
             maxDepth: maxDepth,
