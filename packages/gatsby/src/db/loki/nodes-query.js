@@ -77,7 +77,7 @@ function toMongoArgs(gqlFilter, gqlFields, lastField) {
     if (_.isPlainObject(v)) {
       const gqlField = gqlFields[k]
       if (k === `elemMatch`) {
-        mongoArgs[`$where`] = (obj) => {
+        mongoArgs[`$where`] = obj => {
           const result = runSift(obj, v)
           return result && result.length > 0
         }

@@ -201,7 +201,13 @@ export function findLinkedNode(value, linkedField, path) {
   return linkedNode
 }
 
-function inferFromFieldName(typeName, fieldName, value, selector, types): GraphQLFieldConfig<*, *> {
+function inferFromFieldName(
+  typeName,
+  fieldName,
+  value,
+  selector,
+  types
+): GraphQLFieldConfig<*, *> {
   let isArray = false
   if (_.isArray(value)) {
     isArray = true
@@ -360,7 +366,13 @@ function _inferObjectStructureFromNodes(
       // (a node id) to find the node and use that node's type as the field
     } else if (key.includes(`___NODE`)) {
       ;[fieldName] = key.split(`___`)
-      inferredField = inferFromFieldName(typeName, fieldName, value, nextSelector, types)
+      inferredField = inferFromFieldName(
+        typeName,
+        fieldName,
+        value,
+        nextSelector,
+        types
+      )
     }
 
     // Replace unsupported values

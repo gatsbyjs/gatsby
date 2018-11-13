@@ -17,7 +17,7 @@ if (backend === `loki`) {
 function makeNodes() {
   return [
     {
-      id: "0",
+      id: `0`,
       internal: { type: `Test` },
       children: [],
       index: 0,
@@ -49,7 +49,7 @@ function makeNodes() {
       boolean: true,
     },
     {
-      id: "1",
+      id: `1`,
       internal: { type: `Test` },
       children: [],
       index: 1,
@@ -88,7 +88,7 @@ function makeNodes() {
       },
     },
     {
-      id: "2",
+      id: `2`,
       internal: { type: `Test` },
       children: [],
       index: 2,

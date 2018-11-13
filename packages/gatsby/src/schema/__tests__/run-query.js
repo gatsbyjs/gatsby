@@ -265,42 +265,15 @@ describe(`Filter fields`, () => {
   })
 
   it(`handles the elemMatch operator for array of objects`, async () => {
-    let result = await runFilter(
-      {
-        data: {
-          tags: {
-            elemMatch: {
-              tag: {
-                document: {
-                  elemMatch: {
-                    data: {
-                      tag: { eq: `Gatsby` },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      }
-    )
-
-    expect(result.length).toEqual(1)
-    expect(result[0].index).toEqual(2)
-  })
-
-  it(`handles the elemMatch operator for array of objects (2)`, async () => {
-    let result = await runFilter(
-      {
-        data: {
-          tags: {
-            elemMatch: {
-              tag: {
-                document: {
-                  elemMatch: {
-                    data: {
-                      tag: { eq: `Design System` },
-                    },
+    let result = await runFilter({
+      data: {
+        tags: {
+          elemMatch: {
+            tag: {
+              document: {
+                elemMatch: {
+                  data: {
+                    tag: { eq: `Gatsby` },
                   },
                 },
               },
@@ -308,7 +281,30 @@ describe(`Filter fields`, () => {
           },
         },
       },
-    )
+    })
+
+    expect(result.length).toEqual(1)
+    expect(result[0].index).toEqual(2)
+  })
+
+  it(`handles the elemMatch operator for array of objects (2)`, async () => {
+    let result = await runFilter({
+      data: {
+        tags: {
+          elemMatch: {
+            tag: {
+              document: {
+                elemMatch: {
+                  data: {
+                    tag: { eq: `Design System` },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
 
     expect(result.length).toEqual(2)
     expect(result[0].index).toEqual(1)
@@ -316,23 +312,21 @@ describe(`Filter fields`, () => {
   })
 
   it(`handles the elemMatch operator for array of objects (number)`, async () => {
-    let result = await runFilter(
-      {
-        data: {
-          tags: {
-            elemMatch: {
-              tag: {
-                document: {
-                  elemMatch: {
-                    number: { lt: 4 },
-                  },
+    let result = await runFilter({
+      data: {
+        tags: {
+          elemMatch: {
+            tag: {
+              document: {
+                elemMatch: {
+                  number: { lt: 4 },
                 },
               },
             },
           },
         },
       },
-    )
+    })
 
     expect(result.length).toEqual(1)
     expect(result[0].index).toEqual(1)
@@ -367,7 +361,7 @@ describe(`Filter fields`, () => {
       expect(edge.index).not.toEqual(2)
     })
   })
-  
+
   it(`handles the nin operator for floats`, async () => {
     let result = await runFilter({ float: { nin: [1.5] } })
 
@@ -389,23 +383,21 @@ describe(`Filter fields`, () => {
 
   it(`handles the glob operator`, async () => {
     let result = await runFilter({ name: { glob: `*Wax` } })
-    
+
     expect(result.length).toEqual(2)
     expect(result[0].name).toEqual(`The Mad Wax`)
   })
 
   it(`filters date fields`, async () => {
     let result = await runFilter({ date: { ne: null } })
-    
+
     expect(result.length).toEqual(2)
     expect(result[0].index).toEqual(0)
     expect(result[1].index).toEqual(2)
   })
-
-})  
+})
 
 describe(`collection fields`, () => {
-
   it(`sorts results`, async () => {
     let result = await runQuery({
       limit: 10,
@@ -427,9 +419,8 @@ describe(`collection fields`, () => {
         order: `desc`,
       },
     })
-    
+
     expect(result.length).toEqual(3)
     expect(result[0].name).toEqual(`The Mad Wax`)
   })
-
 })

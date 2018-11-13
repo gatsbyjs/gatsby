@@ -295,7 +295,7 @@ function reducer(state = new Map(), action) {
 
 module.exports = {
   getNodeTypeCollection,
-  
+
   getNodes,
   getNode,
   getNodesByType,
