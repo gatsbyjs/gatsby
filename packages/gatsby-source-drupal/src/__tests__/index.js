@@ -32,6 +32,7 @@ describe(`gatsby-source-drupal`, () => {
   it(`Generates nodes`, () => {
     expect(Object.keys(nodes).length).not.toEqual(0)
     expect(nodes[createNodeId(`file-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`file-2`)]).toBeDefined()
     expect(nodes[createNodeId(`tag-1`)]).toBeDefined()
     expect(nodes[createNodeId(`tag-2`)]).toBeDefined()
     expect(nodes[createNodeId(`article-1`)]).toBeDefined()
@@ -41,6 +42,12 @@ describe(`gatsby-source-drupal`, () => {
 
   it(`Nodes contain attributes data`, () => {
     expect(nodes[createNodeId(`file-1`)].filename).toEqual(`main-image.png`)
+    expect(nodes[createNodeId(`file-1`)].url).toEqual(
+      `/sites/default/files/main-image.png`
+    )
+    expect(nodes[createNodeId(`file-2`)].url).toEqual(
+      `/sites/default/files/secondary-image.png`
+    )
     expect(nodes[createNodeId(`article-2`)].title).toEqual(`Article #2`)
     expect(nodes[createNodeId(`tag-1`)].langcode).toEqual(`en`)
   })
