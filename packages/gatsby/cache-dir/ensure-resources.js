@@ -100,7 +100,15 @@ class EnsureResources extends React.Component {
       !(this.state.pageResources && this.state.pageResources.json)
     ) {
       console.error(`Failed to get resources for ${location.pathname}`)
-      window.location.reload()
+
+      // Do this, rather than simply `window.location.reload()`, so that
+      // pressing the back/forward buttons work - otherwise Reach Router will
+      // try to handle back/forward navigation, causing the URL to change but
+      // the page displayed to stay the same.
+      const originalUrl = new URL(location.href)
+      window.history.replaceState({}, `404`, `${location.pathname}?gatsby-404`)
+      window.location.replace(originalUrl)
+
       return null
     }
 
