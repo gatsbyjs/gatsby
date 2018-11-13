@@ -114,6 +114,7 @@ To add a new blog post to the gatsbyjs.org blog:
 - Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
 - If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
 - Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
+- Follow the [Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/#word-choice) to make sure you're using the appropriate wording.
 - Double check your grammar and capitalise correctly
 - Commit and push to your fork
 - Create a pull request from your branch

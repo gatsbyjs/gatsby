@@ -43,7 +43,6 @@ class IndexRoute extends React.Component {
                   <pre className="language-bash">
                     <code className="language-bash">
                       gatsby new gatsby-site
-                      https://github.com/gatsbyjs/gatsby-starter-default
                     </code>
                   </pre>
                 </div>

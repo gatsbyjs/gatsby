@@ -43,7 +43,7 @@ class EvaluationTable extends Component {
         </span>,
       ]
     }
-    const headers = [`Feature`, `Gatsby`, `Jekyll`, `Wordpress`, `Squarespace`]
+    const headers = [`Feature`, `Gatsby`, `Jekyll`, `WordPress`, `Squarespace`]
     const renderCell = (text, column) => {
       switch (column) {
         case 0: {
