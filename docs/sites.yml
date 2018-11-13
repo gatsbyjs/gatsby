@@ -17,6 +17,16 @@
     - Fashion
     - Featured
   featured: true
+- title: Flamingo
+  main_url: https://www.shopflamingo.com/
+  url: https://www.shopflamingo.com/
+  description: >
+    Online shop for women's body care and hair removal products.
+  categories:
+    - eCommerce
+    - Beauty
+    - Featured
+  featured: true
 - title: Airbnb Engineering & Data Science
   description: >
     Creative engineers and data scientists building a world where you can belong
@@ -78,16 +88,6 @@
     - Technology
     - App
     - Featured
-- title: Cajun Bowfishing
-  main_url: "https://cajunbowfishing.com/"
-  url: "https://cajunbowfishing.com/"
-  featured: true
-  categories:
-    - eCommerce
-    - Sports
-    - Featured
-  built_by: Escalade Sports
-  built_by_url: "https://www.escaladesports.com/"
 - title: GM Capital One
   description: |
     Introducing the new online experience for your GM Rewards Credit Card
@@ -213,6 +213,15 @@
     - Featured
   built_by: Ryan Wiemer
   built_by_url: "https://www.ryanwiemer.com/"
+- title: Cajun Bowfishing
+  main_url: "https://cajunbowfishing.com/"
+  url: "https://cajunbowfishing.com/"
+  featured: false
+  categories:
+    - eCommerce
+    - Sports
+  built_by: Escalade Sports
+  built_by_url: "https://www.escaladesports.com/"
 - title: NEON
   main_url: "http://neonrated.com/"
   url: "http://neonrated.com/"
@@ -458,12 +467,6 @@
   featured: false
   categories:
     - Portfolio
-- title: Sourcegraph
-  main_url: "https://about.sourcegraph.com/"
-  url: "https://about.sourcegraph.com/"
-  featured: false
-  categories:
-    - Web Development
 - title: API Platform
   main_url: "https://api-platform.com/"
   url: "https://api-platform.com/"
@@ -524,16 +527,19 @@
     - Web Development
     - Technology
 - title: Caddy Smells Like Trees
-  main_url: "https://caddysmellsliketrees.ru/"
-  url: "https://caddysmellsliketrees.ru/"
+  main_url: "https://caddysmellsliketrees.ru"
+  url: "https://caddysmellsliketrees.ru/en"
   source_url: "https://github.com/podabed/caddysmellsliketrees.github.io"
-  featured: false
   description: >-
     We play soul-searching songs for every day. They are merging in our forests
     in such a way that it is difficult to separate them from each other, and
     between them bellow bold deer poems.
   categories:
     - Music
+    - Gallery
+  built_by: Dmitrij Podabed, Alexander Nikitin
+  built_by_url: https://podabed.org
+  featured: false
 - title: Calpa's Blog
   main_url: "https://calpa.me/"
   url: "https://calpa.me/"
@@ -1232,13 +1238,6 @@
     - Community
   built_by: Sankarsan Kampa
   built_by_url: "https://sankarsankampa.com"
-- title: upGizmo
-  main_url: "https://www.upgizmo.com/"
-  url: "https://www.upgizmo.com/"
-  featured: false
-  categories:
-    - News
-    - Technology
 - title: Smakosh
   main_url: "https://smakosh.com/"
   url: "https://smakosh.com/"
@@ -1289,6 +1288,9 @@
   categories:
     - Portfolio
     - Blog
+    - Design
+    - Web Development
+    - Freelance
 - title: 杨二小的博客
   main_url: "https://blog.yangerxiao.com/"
   url: "https://blog.yangerxiao.com/"
@@ -1297,13 +1299,17 @@
   categories:
     - Blog
     - Portfolio
-- title: mottox2 blog
+- title: MOTTO x MOTTO
   main_url: "https://mottox2.com"
   url: "https://mottox2.com"
+  source_url: "https://github.com/mottox2/website"
+  description: Web developer / UI Desinger in Tokyo Japan.
   featured: false
   categories:
     - Blog
     - Portfolio
+  built_by: mottox2
+  built_by_url: "https://mottox2.com"
 - title: Pride of the Meadows
   main_url: "https://www.prideofthemeadows.com/"
   url: "https://www.prideofthemeadows.com/"
@@ -1937,7 +1943,7 @@
   built_by_url: "https://github.com/Novatics"
   featured: false
 - title: I migliori by Vivigratis
-  description: |
+  description: >
     Product review website
   main_url: "https://imigliori.vivigratis.com/"
   url: "https://imigliori.vivigratis.com/"
@@ -1948,6 +1954,7 @@
     - Health & Wellness
     - Fashion
   built_by: Kframe Interactive SA
+  built_by_url: http://kframeinteractive.com
   featured: false
 - title: Max McKinney
   description: >
@@ -2731,6 +2738,7 @@
   description: >
     The Carbon Design System is integrating the new IBM Design Ethos and Language. It represents a completely fresh approach to the design of all things at IBM.
   categories:
+    - Design System
     - Documentation
   built_by: IBM
   built_by_url: https://www.ibm.com/
@@ -2754,7 +2762,7 @@
     McDonald's Design System
   categories:
     - Design
-    - DesignSystems
+    - Design System
   built_by: McDonald's
   built_by_url: https://www.mcdonalds.com/us/en-us.html
   featured: false
@@ -2775,7 +2783,7 @@
   description: >
     A single design system to ensure every interface feels like Hudl. From the colors we use to the size of our buttons and what those buttons say, Uniform has you covered. Check the guidelines, copy the code and get to building.
   categories:
-    - DesignSystems
+    - Design System
     - Open Source
     - Design
   built_by: Hudl
@@ -2914,6 +2922,12 @@
   built_by: Kiko Beats
   built_by_url: https://kikobeats.com/
   featured: false
+- title: Markets.com
+  main_url: "https://www.markets.com/"
+  url: "https://www.markets.com/"
+  featured: false
+  categories:
+    - Finance
 - title: Kevin Legrand
   url: "https://k-legrand.com"
   main_url: "https://k-legrand.com"
@@ -2961,3 +2975,345 @@
     - Web Development
   built_by: Maxence Poutord
   built_by_url: https://www.maxpou.fr
+- title: "Dante Calderón"
+  description: >
+    Personal Website and Blog of Dante Calderón
+  main_url: https://dantecalderon.com/
+  url: https://dantecalderon.com/
+  source_url: https://github.com/dantehemerson/dantecalderon.com
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+    - Open Source
+    - Technology
+    - Education
+  built_by: Dante Calderón
+  built_by_url: https://github.com/dantehemerson
+- title: "The Noted Project"
+  url: https://thenotedproject.org
+  main_url: https://thenotedproject.org
+  source_url: https://github.com/ianbusko/the-noted-project
+  description: >
+    Website to showcase the ethnomusicology research for The Noted Project.
+  categories:
+    - Portfolio
+    - Education
+    - Gallery
+  built_by: Ian Busko
+  built_by_url: https://github.com/ianbusko
+  featured: false
+- title: "LANDR"
+  url: https://www.landr.com/
+  main_url: https://www.landr.com/
+  description: >
+    LANDR is the place to create, master and sell your music.
+  categories:
+    - AI
+    - Business
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Media
+    - Music
+  built_by: LANDR
+  built_by_url: https://twitter.com/landr_music
+  featured: false
+- title: Got Milk
+  main_url: "https://www.gotmilk.com/"
+  url: "https://www.gotmilk.com/"
+  featured: false
+  categories:
+    - Food
+    - Miscellaneous
+- title: People For Bikes
+  url: "https://2017.peopleforbikes.org/"
+  main_url: "https://2017.peopleforbikes.org/"
+  categories:
+    - Community
+    - Sport
+    - Gallery
+    - Nonprofit
+  built_by: PeopleForBikes
+  built_by_url: "https://peopleforbikes.org/about-us/who-we-are/staff/"
+  featured: false
+- title: Wide Eye
+  description: >
+    Creative agency specializing in interactive design, web development, and digital communications.
+  url: https://wideeye.co/
+  main_url: https://wideeye.co/
+  categories:
+    - Design
+    - Web Development
+  built_by: Wide Eye
+  built_by_url: https://wideeye.co/about-us/
+  featured: false
+- title: Guster
+  description: >
+    American alternative rock band from Boston, Massachusetts.
+  url: http://guster.com/
+  main_url: http://guster.com/
+  categories:
+    - Music
+  featured: false
+- title: CodeSandbox
+  description: >
+    CodeSandbox is an online editor that helps you create web applications, from prototype to deployment.
+  url: https://codesandbox.io/
+  main_url: https://codesandbox.io/
+  categories:
+    - Web Development
+  featured: false
+- title: Marvel
+  description: >
+    The all-in-one platform powering design.
+  url: https://marvelapp.com/
+  main_url: https://marvelapp.com/
+  categories:
+    - Design
+  featured: false
+- title: Designcode.io
+  description: >
+    Learn to design and code React apps.
+  url: https://designcode.io
+  main_url: https://designcode.io
+  categories:
+    - Learning
+  featured: false
+- title: Happy Design
+  description: >
+    The Brand and Product Team Behind Happy Money
+  url: https://design.happymoney.com/
+  main_url: https://design.happymoney.com/
+  categories:
+    - Design
+    - Finance
+- title: Weihnachtsmarkt.ms
+  description: >
+    Explore the christmas market in Münster (Westf).
+  url: https://weihnachtsmarkt.ms/
+  main_url: https://weihnachtsmarkt.ms/
+  source_url: https://github.com/codeformuenster/weihnachtsmarkt
+  categories:
+    - Gallery
+    - Food
+  built_by: "Code for Münster during #MSHACK18"
+  featured: false
+- title: Code Championship
+  description: >
+    Competitive coding competitions for students from 3rd to 8th grade. Code is Sport.
+  url: https://www.codechampionship.com
+  main_url: https://www.codechampionship.com
+  categories:
+    - Learning
+    - Education
+    - Sport
+  built_by: Abamath LLC
+  built_by_url: https://www.abamath.com
+  featured: false
+- title: Wieden+Kennedy
+  description: >
+    Wieden+Kennedy is an independent, global creative company.
+  categories:
+    - Technology
+    - Web Development
+    - Agency
+    - Marketing
+  url: https://www.wk.com
+  main_url: https://www.wk.com
+  built_by: Wieden Kennedy
+  built_by_url: https://www.wk.com/about/
+  featured: false
+- title: Testing JavaScript
+  description: >
+    This course will teach you the fundamentals of testing your JavaScript applications using eslint, Flow, Jest, and Cypress.
+  url: https://testingjavascript.com/
+  main_url: https://testingjavascript.com/
+  categories:
+    - Learning
+    - Education
+    - Testing
+    - JavaScript
+  built_by: Kent C. Dodds
+  built_by_url: https://kentcdodds.com/
+  featured: false
+- title: Use Hooks
+  description: >
+    One new React Hook recipe every day.
+  url: https://usehooks.com/
+  main_url: https://usehooks.com/
+  categories:
+    - Learning
+    - Tips
+    - React
+  built_by: Gabe Ragland
+  built_by_url: https://twitter.com/gabe_ragland
+  featured: false
+- title: Ambassador
+  url: https://www.getambassador.io
+  main_url: https://www.getambassador.io
+  description: >
+    Open source, Kubernetes-native API Gateway for microservices built on Envoy.
+  categories:
+    - Open Source
+    - Documentation
+    - Technology
+  built_by: Datawire
+  built_by_url: https://www.datawire.io
+  featured: false
+- title: Clubhouse
+  main_url: https://clubhouse.io
+  url: https://clubhouse.io
+  description: >
+    The intuitive and powerful project management platform loved by software teams of all sizes. Built with Gatsby v2 and Prismic
+  categories:
+    - Technology
+    - Project Management
+    - Blog
+    - Productivity
+    - B2B Services
+    - Community
+    - Design
+    - Open Source
+  built_by: Ueno.
+  built_by_url: https://ueno.co
+  featured: false
+- title: Asian Art Collection
+  url: http://artmuseum.princeton.edu/asian-art/
+  main_url: http://artmuseum.princeton.edu/asian-art/
+  description: >
+    Princeton University has a branch dealing with state of art.They have showcased ore than 6,000 works of Asian art are presented alongside ongoing curatorial and scholarly research
+  categories:
+    - Art
+    - History
+    - Models
+  featured: false
+- title: QHacks
+  url: https://qhacks.io
+  main_url: https://qhacks.io
+  source_url: https://github.com/qhacks/qhacks-website
+  description: >
+    QHacks is Queen’s University’s annual hackathon! QHacks was founded in 2016 with a mission to advocate and incubate the tech community at Queen’s University and throughout Canada.
+  categories:
+    - Hackathon
+    - Education
+    - Technology
+    - Podcast
+  featured: false
+- title: Tyler McGinnis
+  url: https://tylermcginnis.com/
+  main_url: https://tylermcginnis.com/
+  description: >
+    The linear, course based approach to learning web technologies.
+  categories:
+    - Education
+    - Technology
+    - Podcast
+    - Web Development
+  featured: false
+- title: a11y with Lindsey
+  url: https://www.a11ywithlindsey.com/
+  main_url: https://www.a11ywithlindsey.com/
+  source_url: https://github.com/lkopacz/a11y-with-lindsey
+  description: >
+    To help developers navigate accessibility jargon, write better code, and to empower them to make their Internet, Everyone's Internet.
+  categories:
+    - Education
+    - Blog
+    - Technology
+  built_by: Lindsey Kopacz
+  built_by_url: https://twitter.com/littlekope0903
+  featured: false
+- title: DEKEMA
+  url: https://www.dekema.com/
+  main_url: https://www.dekema.com/
+  description: >
+    Worldclass crafting: Furnace, fervor, fullfilment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
+  categories:
+    - Healthcare
+    - Science
+    - Technology
+  built_by: Crisp Studio
+  built_by_url: https://crisp.studio
+  featured: false
+- title: FOX Circus
+  main_url: "https://www.foxcircus.it/"
+  url: "https://www.foxcircus.it/"
+  categories:
+    - Event
+    - Conference
+    - Entertainment
+  built_by: Kframe Interactive SA
+  built_by_url: http://kframeinteractive.com
+  featured: false
+- title: Ramón Chancay
+  description: >-
+    Front-end / Back-end Developer in Guayaquil Ecuador.
+    Currently at Everymundo, previously at El Universo.
+    I enjoy teaching and sharing what I know.
+    I give professional advice to developers and companies.
+    My wife and my children are everything in my life.
+  main_url: "https://ramonchancay.me/"
+  url: "https://ramonchancay.me/"
+  source_url: "https://github.com/devrchancay/personal-site"
+  featured: false
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Codedebug
+  built_by_url: "https://codedebug.co/"
+- title: Ghost Documentation
+  main_url: https://docs.ghost.org/
+  url: https://docs.ghost.org/
+  description: >-
+    Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
+  categories:
+    - Publishing
+    - Documentation
+  built_by: Ghost Foundation
+  built_by_url: https://ghost.org/
+  featured: false
+- title: BELLHOPS
+  main_url: https://www.getbellhops.com/
+  url: https://www.getbellhops.com/
+  description: >-
+    Whether you’re moving someplace new or just want to complete a few projects around your current home, BellHops can arrange the moving services you need—at simple, straightforward rates.
+  categories:
+    - Business
+  built_by: Bellhops, Inc.
+  built_by_url: https://www.getbellhops.com/
+  featured: false
+- title: Acclimate Consulting
+  main_url: https://www.acclimate.io/
+  url: https://www.acclimate.io/
+  description: >-
+    Acclimate is a consulting firm that puts organizations back in control with data-driven strategies and full-stack applications.
+  categories:
+    - AI
+    - Technology
+    - Consulting
+  built_by: Andrew Wilson
+  built_by_url: https://github.com/andwilson
+  featured: false
+- title: Flyright
+  url: https://flyright.co/
+  main_url: https://flyright.co/
+  description: >-
+    Flyright curates everything you need for international travel in one tidy place 💜
+  categories:
+    - Technology
+    - App
+  built_by: Ty Hopp
+  built_by_url: https://github.com/tyhopp
+  featured: false
+- title: Vets Who Code
+  url: https://vetswhocode.io/
+  main_url: https://vetswhocode.io/
+  description: >-
+    VetsWhoCode is a non-profit organization dedicated to training military veterans & giving them the skills they need transition into tech careers.
+  categories:
+    - Technology
+    - Nonprofit
+  featured: false

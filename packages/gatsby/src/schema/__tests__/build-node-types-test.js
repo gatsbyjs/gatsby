@@ -1,5 +1,16 @@
-const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
+const {
+  graphql,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} = require(`graphql`)
 const _ = require(`lodash`)
+
+jest.mock(`../../utils/api-runner-node`)
+const apiRunnerNode = require(`../../utils/api-runner-node`)
+
+const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+jest.mock(`../../redux/actions/add-page-dependency`)
 const buildNodeTypes = require(`../build-node-types`)
 
 describe(`build-node-types`, () => {
@@ -13,6 +24,20 @@ describe(`build-node-types`, () => {
   }
 
   beforeEach(async () => {
+    createPageDependency.mockClear()
+    const apiRunnerResponse = [
+      {
+        pluginField: {
+          type: GraphQLString,
+          description: `test description`,
+          resolve: parent => {
+            console.log(`in resolver: ${parent}`)
+            return `pluginFieldValue`
+          },
+        },
+      },
+    ]
+    apiRunnerNode.mockImplementation(() => apiRunnerResponse)
     ;({ store } = require(`../../redux`))
     store.dispatch({ type: `DELETE_CACHE` })
     ;[
@@ -126,5 +151,109 @@ describe(`build-node-types`, () => {
 
     expect(parent.childRelative).toBeDefined()
     expect(parent.childRelative.id).toEqual(`r1`)
+  })
+
+  it(`should handle plugin fields`, async () => {
+    const result = await runQuery(
+      `
+      {
+        parent(id: { eq: "p1" }) {
+          pluginField
+        }
+      }
+    `
+    )
+    expect(result.parent.pluginField).toEqual(`pluginFieldValue`)
+  })
+
+  it(`should create root query type page dependency`, async () => {
+    await runQuery(` { parent(id: { eq: "p1" }) { id } } `)
+
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `p1`,
+    })
+  })
+
+  it(`should create children page dependency`, async () => {
+    await runQuery(
+      `
+        {
+          parent {
+            children { id }
+          }
+        }
+      `
+    )
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `c1`,
+    })
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `c2`,
+    })
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `r1`,
+    })
+  })
+
+  it(`should create parent page dependency`, async () => {
+    await runQuery(
+      `
+        {
+          child(id: { eq: "c1" }) {
+            parent { id }
+          }
+        }
+      `
+    )
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `p1`,
+    })
+  })
+
+  it(`should create childX page dependency`, async () => {
+    await runQuery(
+      `
+      {
+        parent(id: { eq: "p1" }) {
+          childRelative { # lol
+            id
+          }
+        }
+      }
+    `
+    )
+
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `r1`,
+    })
+  })
+
+  it(`should create childrenX page dependency`, async () => {
+    await runQuery(
+      `
+      {
+        parent(id: { eq: "p1" }) {
+          childrenChild { # lol
+            id
+          }
+        }
+      }
+    `
+    )
+
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `c1`,
+    })
+    expect(createPageDependency).toHaveBeenCalledWith({
+      path: `foo`,
+      nodeId: `c2`,
+    })
   })
 })

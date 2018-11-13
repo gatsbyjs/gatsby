@@ -268,7 +268,7 @@ It worked! 🎉
 
 ![Page title pulling from siteMetadata](site-metadata-title.png)
 
-The basic GraphQL query that retrieves the `title` in our `layout.js` changes above is:
+The basic GraphQL query that retrieves the `title` in our `about.js` changes above is:
 
 ```
 {
@@ -346,6 +346,12 @@ export default ({ children }) => (
 Another success! 🎉
 
 ![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
+
+Why use two different queries here? These examples were quick introductions to
+the query types, how they are formatted, and where they can be used. For now,
+keep in mind that only pages can make page queries. Non-page components, such as
+Layout, can use StaticQuery. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater
+depth.
 
 But let's restore the real title.
 

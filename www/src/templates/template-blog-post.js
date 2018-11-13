@@ -90,12 +90,12 @@ class BlogPostTemplate extends React.Component {
                 }
               />
 
-              <meta name="og:description" content={post.excerpt} />
+              <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
-              <meta name="og:title" content={post.frontmatter.title} />
+              <meta property="og:title" content={post.frontmatter.title} />
               {post.frontmatter.image && (
                 <meta
-                  name="og:image"
+                  property="og:image"
                   content={`https://gatsbyjs.org${
                     post.frontmatter.image.childImageSharp.resize.src
                   }`}
@@ -109,7 +109,7 @@ class BlogPostTemplate extends React.Component {
                   }`}
                 />
               )}
-              <meta name="og:type" content="article" />
+              <meta property="og:type" content="article" />
               <meta
                 name="article:author"
                 content={post.frontmatter.author.id}
@@ -146,7 +146,18 @@ class BlogPostTemplate extends React.Component {
                   flex: `0 0 auto`,
                 }}
               >
-                <Link to={post.frontmatter.author.fields.slug}>
+                <Link
+                  to={post.frontmatter.author.fields.slug}
+                  css={{
+                    "&&": {
+                      borderBottom: 0,
+                      boxShadow: `none`,
+                      "&:hover": {
+                        background: `none`,
+                      },
+                    },
+                  }}
+                >
                   <Img
                     fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
                     css={{

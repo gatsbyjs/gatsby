@@ -226,7 +226,7 @@ exports.createPages = ({ actions, graphql }) => {
 
 Some notes:
 
-- Our graphql query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
+- Our GraphQL query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
 - While making the tag pages, note that we pass `tag` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags

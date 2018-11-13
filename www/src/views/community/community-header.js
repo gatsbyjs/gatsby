@@ -6,33 +6,33 @@ import Checkmark from "./check.svg"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-const CommunityHeaderLink = ({ linkTo, children }) => (
-  <li
-    css={{
-      display: `flex`,
-      alignItems: `center`,
-      margin: 0,
-    }}
-  >
-    <Link
-      to={linkTo}
-      state={{ filter: `` }}
-      activeStyle={{
-        backgroundColor: colors.gatsby,
-        color: `white`,
-      }}
-      css={{
-        ...styles.communityHeaderLink,
-      }}
-    >
-      {children}
-    </Link>
-  </li>
-)
+// const CommunityHeaderLink = ({ linkTo, children }) => (
+//   <li
+//     css={{
+//       display: `flex`,
+//       alignItems: `center`,
+//       margin: 0,
+//     }}
+//   >
+//     <Link
+//       to={linkTo}
+//       state={{ filter: `` }}
+//       activeStyle={{
+//         backgroundColor: colors.gatsby,
+//         color: `white`,
+//       }}
+//       css={{
+//         ...styles.communityHeaderLink,
+//       }}
+//     >
+//       {children}
+//     </Link>
+//   </li>
+// )
 
 class CommunityHeader extends Component {
   render() {
-    const { forHire, hiring, submissionText } = this.props
+    const { /*forHire, hiring,*/ submissionText } = this.props
     return (
       <div
         css={{

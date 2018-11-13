@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.20"></a>
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.19...gatsby-image@2.0.20) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-image
+
+<a name="2.0.19"></a>
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.18...gatsby-image@2.0.19) (2018-10-30)
+
+**Note:** Version bump only for package gatsby-image
+
+<a name="2.0.18"></a>
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.17...gatsby-image@2.0.18) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-image
+
+<a name="2.0.17"></a>
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.16...gatsby-image@2.0.17) (2018-10-24)
+
+**Note:** Version bump only for package gatsby-image
+
+<a name="2.0.16"></a>
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.15...gatsby-image@2.0.16) (2018-10-23)
+
+**Note:** Version bump only for package gatsby-image
+
 <a name="2.0.15"></a>
 
 ## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.14...gatsby-image@2.0.15) (2018-10-15)

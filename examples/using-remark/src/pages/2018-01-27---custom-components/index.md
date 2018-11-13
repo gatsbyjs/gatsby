@@ -214,4 +214,4 @@ Custom components embedded in Markdown enables many features that weren't possib
 - Write a component that displays as a link with an informative hovercard. For example, you might want to write `<hover-card subject="ostrich"> ostriches </hover-card>` to show a link that lets you hover to get information on ostriches.
 - If your Gatsby site is for vacation photos, you might write a component that allows you to show a carousel of pictures, and perhaps a map that shows where each photo was taken.
 - Write a component that lets you add live code demos in your Markdown, using [component-playground](https://formidable.com/open-source/component-playground/) or something similar.
-- Write a component that wraps a [GFM table](./hello-world-kitchen-sink/#tables) and displays the data from the table in an interactive graph.
+- Write a component that wraps a [GFM table](/hello-world-kitchen-sink/#tables) and displays the data from the table in an interactive graph.
