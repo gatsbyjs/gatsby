@@ -127,4 +127,4 @@ For a full list of what's new, check out our [V2 migration guide](/docs/migratin
 
 - You can also [see the V2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2), help us squash any V2 bugs by opening [issues](https://github.com/gatsbyjs/gatsby/issues) or sending [pull requests](https://github.com/gatsbyjs/gatsby/pulls), or [follow along with our progress on Twitter](https://twitter.com/gatsbyjs).
 
-We can't wait to see what you build with this new and improved version of Gatsby!
+We can't wait to see what you will build with this new and improved version of Gatsby!
