@@ -162,7 +162,7 @@ Are we acting like the company we want to be? Like the _people_ we want to be?
   </figcaption>
 </figure>
 
-It’s too early for any definitive results, but so far we’ve heard these values come up in meetings and discussions to keep things headed in the right direction. And — speaking personally — it feels _really dang good_ to be on a team that saw the importance of doing the upfront work to write these values down. I’m very proud to be part of the Gatsby Inkteam, and extremely grateful to be part of such an incredible open source community.
+It’s too early for any definitive results, but so far we’ve heard these values come up in meetings and discussions to keep things headed in the right direction. And — speaking personally — it feels _really dang good_ to be in a team that saw the importance of doing the upfront work to write these values down. I’m very proud to be part of the Gatsby Inkteam, and extremely grateful to be part of such an incredible open source community.
 
 Come [say hi on Twitter](https://twitter.com/jlengstorf) and [dive into our open issues](https://github.com/gatsbyjs/gatsby/issues#boards?filterLogic=any).
 
