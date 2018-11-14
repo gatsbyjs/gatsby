@@ -23,18 +23,18 @@ title: "Gatsby E-Commerce Tutorial"
 
 In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with Stripe as the backend for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
 
-- Security inherent in static sites
-- Blazing fast performance when your pages are converted from React into static files
-- Easy to host
+- Security inherent in static sites.
+- Blazing fast performance when your pages are converted from React into static files.
+- Easy to host.
 
 You can see the working demo hosted here: https://gatsby-ecommerce.netlify.com/
 
 # Prerequisites
 
-- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/))
+- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/)).
 - Stripe account: [register for an account here](https://dashboard.stripe.com/register)
 - AWS account (free tier that covers anywhere from several thousand to a million requests per month): [register for an account here](https://aws.amazon.com/free/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=cloud_computing_b&sc_content=aws_account_e_control_q32016&sc_detail=create%20an%20aws%20account&sc_category=cloud_computing&sc_segment=102882721242&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!102882721242!e!!g!!create%20an%20aws%20account&ef_id=Wd_k7wAAAVgVBk9m:20180604172833:s)
-- Willingness to navigate around janky AWS UIs
+- Willingness to navigate around janky AWS UIs.
 
 ## How does Gatsby work with Stripe and AWS?
 
@@ -46,8 +46,8 @@ Stripe requires a server to process the information to make a charge, so you’l
 
 That function can be set up a number of different ways. To set up that function from scratch, you could:
 
-- Write your own simple server and deploy it somewhere, making it accessible via an endpoint
-- Write and deploy a hosted serverless function through a service like AWS Lambda or Google Cloud
+- Write your own simple server and deploy it somewhere, making it accessible via an endpoint.
+- Write and deploy a hosted serverless function through a service like AWS Lambda or Google Cloud.
 
 # Setting up a Gatsby site
 
@@ -336,7 +336,7 @@ By running `npm install`, you’ve created a node_modules folder that you’ll u
 Open gatsby-stripe-serverless-backend in your code editor.
 
 - Rename the `secrets.example.json` file to `secrets.json`.
-- Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret test key from your Stripe account, and keep the quotation marks around it (using the test keys allows orders to go through without needing real credit card details, which is useful for testing)
+- Replace the string that says "sk_test_STRIPE_SECRET_KEY" in `secrets.json` with your secret test key from your Stripe account, and keep the quotation marks around it (using the test keys allows orders to go through without needing real credit card details, which is useful for testing).
 
 Your secret key can be included here if you don’t upload this file to a version control system. The .gitignore file in the project includes a line that will tell any Git commands you run in this folder not to keep track of your secrets file as long as it is named `secrets.json`.
 
@@ -436,7 +436,7 @@ You can read more about the configurations you’ll use in the `serverless.yml` 
 
 Configure serverless with your AWS credentials, so you can make updates on AWS through the serverless tools with this command:
 
-> **NOTE**: It’s helpful to edit this command somewhere other than the terminal as you replace the dummy keys with your real keys, or else it might run halfway through your editing process
+> **NOTE**: It’s helpful to edit this command somewhere other than the terminal as you replace the dummy keys with your real keys, or else it might run halfway through your editing process.
 
 ```shell
 serverless config credentials --provider aws --key AAAAAAAEXAMPLE --secret aaaaaaaa/BBBBBBB/CCCdddEXAMPLEKEY
