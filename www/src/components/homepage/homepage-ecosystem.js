@@ -129,7 +129,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 
     :before {
       background: ${props =>
-        props.item.type === `Starter` ? `#dcfffd` : `#ffeccd`};
+        props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
       border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
       bottom: 0;
       content: "";
@@ -143,7 +143,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       bottom: 0;
       content: "${props => props.item.type}";
       color: ${props =>
-        props.item.type === `Starter` ? ` #0a75c2` : `#9e6100`};
+        props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
       font-family: ${options.headerFontFamily.join(`,`)};
       font-size: 0.8rem;
       left: 0;
