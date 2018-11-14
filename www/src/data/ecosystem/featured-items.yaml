@@ -2,9 +2,9 @@
 starters:
   - "/gatsby-starter-blog/"
   - "/gatsby-starter-netlify-cms/"
-  - "/gatsby-advanced-blog/"
   - "/gatsby-advanced-starter/"
-  - "/gatsby-starter-lumen/"
+  - "/gatsby-starter-default/"
+  - "/gatsby-material-starter/"
 # use name to pick a plugin
 plugins:
   - gatsby-plugin-react-helmet
