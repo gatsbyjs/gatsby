@@ -3317,3 +3317,19 @@
     - Technology
     - Nonprofit
   featured: false
+- title: Patreon Blog
+  url: https://blog.patreon.com/
+  main_url: https://blog.patreon.com/
+  description: >-
+    Official blog of Patreon.com
+  categories:
+    - Blog
+  featured: false
+- title: Full Beaker
+  url: https://fullbeaker.com/
+  main_url: https://fullbeaker.com/
+  description: >-
+    Full Beaker provides independent advice online about careers and home ownership, and connect anyone who asks with companies that can help them.
+  categories:
+    - Consulting
+  featured: false
