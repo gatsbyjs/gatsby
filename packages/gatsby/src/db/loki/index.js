@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const loki = require(`lokijs`)
+const loki = require(`@moocar/lokijs`)
 const uuidv4 = require(`uuid/v4`)
 
 // Loki is a document store with the same semantics as mongo. This
