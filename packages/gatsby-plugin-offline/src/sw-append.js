@@ -21,15 +21,6 @@ const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
 
 workbox.routing.registerRoute(navigationRoute)
 
-// Handle any other requests with Network First, e.g. 3rd party resources.
-// This needs to be done last, otherwise it will prevent the custom navigation
-// route from working (and any other rules).
-workbox.routing.registerRoute(
-  /^https?:/,
-  workbox.strategies.networkFirst(),
-  `GET`
-)
-
 let updatingWhitelist = null
 
 function rawWhitelistPathnames(pathnames) {
@@ -67,31 +58,6 @@ function rawResetWhitelist() {
 }
 
 const messageApi = {
-  runtimeCache(event) {
-    const { resources } = event.data
-    const cacheName = workbox.core.cacheNames.runtime
-
-    event.waitUntil(
-      caches.open(cacheName).then(cache =>
-        Promise.all(
-          resources.map(resource => {
-            let request
-
-            // Some external resources don't allow
-            // CORS so get an opaque response
-            if (resource.match(/^https?:/)) {
-              request = fetch(resource, { mode: `no-cors` })
-            } else {
-              request = fetch(resource)
-            }
-
-            return request.then(response => cache.put(resource, response))
-          })
-        )
-      )
-    )
-  },
-
   whitelistPathnames(event) {
     let { pathnames } = event.data
 

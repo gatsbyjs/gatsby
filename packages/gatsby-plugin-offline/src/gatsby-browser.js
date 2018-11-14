@@ -10,13 +10,12 @@ exports.onServiceWorkerActive = ({
   // grab nodes from head of document
   const nodes = document.querySelectorAll(`
     head > script[src],
-    head > link[as=script],
-    head > link[rel=stylesheet],
+    head > link[href],
     head > style[data-href]
   `)
 
   // get all resource URLs
-  const resources = [].slice
+  const headerResources = [].slice
     .call(nodes)
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
@@ -29,10 +28,17 @@ exports.onServiceWorkerActive = ({
     )
   )
 
-  serviceWorker.active.postMessage({
-    gatsbyApi: `runtimeCache`,
-    resources: [...resources, ...prefetchedResources],
+  const resources = [...headerResources, ...prefetchedResources]
+  resources.forEach(resource => {
+    // Create a prefetch link for each resource, so Workbox runtime-caches them
+    const link = document.createElement(`link`)
+    link.rel = `prefetch`
+    link.href = resource
+
+    document.head.appendChild(link)
+    link.onload = link.remove
   })
+
   serviceWorker.active.postMessage({
     gatsbyApi: `whitelistPathnames`,
     pathnames: whitelistedPathnames,
