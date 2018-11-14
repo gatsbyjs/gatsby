@@ -25,6 +25,9 @@
     <img src="https://img.shields.io/npm/v/gatsby.svg" alt="Current npm package version." />
   </a>
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
+    <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
+  </a>
+  <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dt/gatsby.svg" alt="Total downloads on npm." />
   </a>
   <a href="https://gatsbyjs.org/docs/how-to-submit-a-pr/">
