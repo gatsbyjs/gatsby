@@ -35,8 +35,10 @@ exports.onServiceWorkerActive = ({
     link.rel = `prefetch`
     link.href = resource
 
-    document.head.appendChild(link)
     link.onload = link.remove
+    link.onerror = link.remove
+
+    document.head.appendChild(link)
   })
 
   serviceWorker.active.postMessage({

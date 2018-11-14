@@ -80,12 +80,19 @@ exports.onPostBuild = (args, pluginOptions) => {
       "/": `${pathPrefix}/`,
     },
     cacheId: `gatsby-plugin-offline`,
-    // Don't cache-bust JS or CSS files, and anything in the static directory
-    dontCacheBustUrlsMatching: /(.*\.js$|.*\.css$|\/static\/)/,
+    // Don't cache-bust JS or CSS files, and anything in the static directory,
+    // since these files have unique URLs and their contents will never change
+    dontCacheBustUrlsMatching: /(\.js$|\.css$|\/static\/)/,
     runtimeCaching: [
       {
-        // Add runtime caching of various page resources.
-        urlPattern: /^https?:.*\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        // Use cacheFirst since these don't need to be revalidated (same RegExp
+        // and same reason as above)
+        urlPattern: /(\.js$|\.css$|\/static\/)/,
+        handler: `cacheFirst`,
+      },
+      {
+        // Add runtime caching of various other page resources
+        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `staleWhileRevalidate`,
       },
       {

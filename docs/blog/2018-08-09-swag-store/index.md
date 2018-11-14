@@ -76,6 +76,6 @@ Thanks for being part of the open source community! 💪💜
 [shopify]: https://www.shopify.com/
 [js-buy-sdk]: https://shopify.github.io/js-buy-sdk/
 [auth0]: https://auth0.com/
-[invite]: https://github.com/gatsbyjs/peril-gatsbyjs/blob/master/org/invite-collaborator.ts
+[invite]: https://github.com/gatsbyjs/peril-gatsbyjs/blob/master/rules/invite-collaborator.ts
 [peril]: https://github.com/danger/peril
 [contribute]: /docs/how-to-contribute/

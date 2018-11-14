@@ -265,7 +265,7 @@ I will not go in depth with how to manage state with React since there are a lot
 
 ![server-2160321 1280](https://images.ctfassets.net/4x6byznv2pet/2xjoMXpIKoAwAM4sqeOCcA/721945e76b4b5861476a9ce8781a326c/server-2160321_1280.jpg)
 
-Since Gatsby builds "static" files you can host them on tons of services. One of my favourites is [Netlify](https://www.netlify.com/). There is also [AWS S3](https://aws.amazon.com/s3/) and more, see the [deploying Gatsby documentation](/docs/deploy-gatsby/) for examples.
+Since Gatsby builds "static" files you can host them on tons of services. One of my favourites is [Netlify](https://www.netlify.com/). There is also [AWS S3](https://aws.amazon.com/s3/) and more, see the [deploying Gatsby documentation](/docs/deploying-and-hosting/) for examples.
 
 ## Resources
 

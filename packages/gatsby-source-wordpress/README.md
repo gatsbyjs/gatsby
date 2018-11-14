@@ -11,7 +11,7 @@ An example site for this plugin is available.
 
 ## Features
 
-- Pulls data from self-hosted WordPress sites, or sites hosted on [https://wordpress.com](wordpress.com)
+- Pulls data from self-hosted WordPress sites, or sites hosted on [WordPress.com](https://wordpress.com)
 - Should work with any number of posts (tested on a site with 900 posts)
 - Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
 - Easily create responsive images in Gatsby from WordPress images. See [image
@@ -62,7 +62,7 @@ module.exports = {
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
         // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
-        // This feature is untested for sites hosted on Wordpress.com.
+        // This feature is untested for sites hosted on wordpress.com.
         // Defaults to true.
         useACF: true,
         // Include specific ACF Option Pages that have a set post ID
@@ -82,7 +82,7 @@ module.exports = {
           // If hostingWPCOM is true then you will need to communicate with wordpress.com API
           // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
           // then add your clientId, clientSecret, username, and password here
-          // Learn about environment variables: https://gatsby.app/env-vars
+          // Learn about environment variables: https://www.gatsbyjs.org/docs/environment-variables
           wpcom_app_clientSecret: process.env.WORDPRESS_CLIENT_SECRET,
           wpcom_app_clientId: "54793",
           wpcom_user: "gatsbyjswpexample@gmail.com",
@@ -918,4 +918,4 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 ```
 
 [dotenv]: https://github.com/motdotla/dotenv
-[envvars]: https://gatsby.app/env-vars
+[envvars]: https://www.gatsbyjs.org/docs/environment-variables

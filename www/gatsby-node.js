@@ -620,7 +620,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
 exports.onCreatePage = ({ page, actions }) => {
   // add lists of featured items to Ecosystem page
-  if (page.path === `/ecosystem/`) {
+  if (page.path === `/ecosystem/` || page.path === `/`) {
     const { createPage, deletePage } = actions
     const oldPage = Object.assign({}, page)
 
