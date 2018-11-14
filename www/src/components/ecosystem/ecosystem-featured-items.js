@@ -45,10 +45,10 @@ const EcosystemFeaturedItems = ({
   className = ``,
 }) => (
   <EcosystemFeaturedItemsRoot className={`${SCROLLER_CLASSNAME} ${className}`}>
-    <List numberOfItems={items.length}>
+    <List>
       {items.map(item => {
         const { slug } = item
-        return <Item key={slug} item={item} numberOfItems={items.length} />
+        return <Item key={slug} item={item} />
       })}
     </List>
   </EcosystemFeaturedItemsRoot>

@@ -204,16 +204,10 @@ const HomepageEcosystem = ({ featuredItems }) => (
     </Sections>
     <SubTitle>Some of our recent favorites</SubTitle>
     <FeaturedItems className={SCROLLER_CLASSNAME}>
-      <FeaturedItemsList numberOfItems={featuredItems.length}>
+      <FeaturedItemsList>
         {featuredItems.map(item => {
           const { slug } = item
-          return (
-            <FeaturedItem
-              key={slug}
-              item={item}
-              numberOfItems={featuredItems.length}
-            />
-          )
+          return <FeaturedItem key={slug} item={item} />
         })}
       </FeaturedItemsList>
     </FeaturedItems>

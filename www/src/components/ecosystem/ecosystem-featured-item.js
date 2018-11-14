@@ -105,7 +105,7 @@ const Description = styled(`p`)`
   margin: 0;
 `
 
-const EcosystemFeaturedItem = ({ item, numberOfItems, className }) => {
+const EcosystemFeaturedItem = ({ item, className }) => {
   const {
     slug,
     name,
@@ -124,10 +124,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems, className }) => {
   }
 
   return (
-    <EcosystemFeaturedItemRoot
-      numberOfItems={numberOfItems}
-      className={className}
-    >
+    <EcosystemFeaturedItemRoot className={className}>
       <BlockLink to={slug}>
         <Header>
           <h3>{name}</h3>
@@ -158,7 +155,6 @@ const EcosystemFeaturedItem = ({ item, numberOfItems, className }) => {
 
 EcosystemFeaturedItem.propTypes = {
   item: PropTypes.object.isRequired,
-  numberOfItems: PropTypes.number.isRequired,
   className: PropTypes.string,
 }
 
