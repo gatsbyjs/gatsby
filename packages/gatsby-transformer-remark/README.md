@@ -109,9 +109,11 @@ plugins: [
   {
     resolve: `gatsby-transformer-remark`,
     options: {
-      heading: null,
-      maxDepth: 6,
-      tight: null,
+      tableOfContents: {
+        heading: null,
+        maxDepth: 6,
+        tight: null,
+      },
     },
   },
 ]

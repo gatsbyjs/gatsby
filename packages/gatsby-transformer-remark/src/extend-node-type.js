@@ -26,7 +26,6 @@ const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 
 let fileNodes
-let tocOptionsCacheStr = ``
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
 const astCacheKey = node =>
@@ -45,10 +44,18 @@ const headingsCacheKey = node =>
   `transformer-remark-markdown-headings-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const tableOfContentsCacheKey = node =>
-  `transformer-remark-markdown-toc-${
+const tableOfContentsCacheKey = function(node, appliedTocOptions) {
+  // define toc options cache string as empty
+  let tocOptionsCacheStr = ``
+  // put applied toc options into toc options cache string
+  Object.keys(appliedTocOptions).map(function(key, index) {
+    tocOptionsCacheStr += key + index
+  })
+
+  return `transformer-remark-markdown-toc-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${tocOptionsCacheStr}-${pathPrefixCacheStr}`
+}
 
 // ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
@@ -81,15 +88,13 @@ module.exports = (
       footnotes = true,
       gfm = true,
       pedantic = true,
-      heading = null,
-      maxDepth = 6,
-      tight = false,
+      tableOfContents = {
+        heading: null,
+        maxDepth: 6,
+        tight: false,
+      },
     } = pluginOptions
-    const tocOptions = {
-      heading,
-      maxDepth,
-      tight,
-    }
+    const tocOptions = tableOfContents
     const remarkOptions = {
       commonmark,
       footnotes,
@@ -253,8 +258,8 @@ module.exports = (
 
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
-      let appliedTocOptions = { ...tocOptions, ... gqlTocOptions }
-      // override defaults
+      let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
+      /*// override defaults
       if (gqlTocOptions.heading) {
         appliedTocOptions.heading = gqlTocOptions.heading
       }
@@ -266,14 +271,11 @@ module.exports = (
       }
       if (gqlTocOptions.pathToSlugField) {
         appliedTocOptions.pathToSlugField = gqlTocOptions.pathToSlugField
-      }
-      // reset cache string
-      tocOptionsCacheStr = ``
-      // define cache string
-      Object.keys(appliedTocOptions).map(function(key, index) {
-        tocOptionsCacheStr += key + index
-      })
-      const cachedToc = await cache.get(tableOfContentsCacheKey(markdownNode))
+      }*/
+      // get cached toc
+      const cachedToc = await cache.get(
+        tableOfContentsCacheKey(markdownNode, appliedTocOptions)
+      )
       if (cachedToc) {
         return cachedToc
       } else {
@@ -315,7 +317,7 @@ module.exports = (
         } else {
           toc = ``
         }
-        cache.set(tableOfContentsCacheKey(markdownNode), toc)
+        cache.set(tableOfContentsCacheKey(markdownNode, appliedTocOptions), toc)
         return toc
       }
     }
@@ -481,12 +483,7 @@ module.exports = (
           },
         },
         resolve(markdownNode, args) {
-          return getTableOfContents(markdownNode, {
-            pathToSlugField: pathToSlugField,
-            maxDepth: maxDepth,
-            heading: heading,
-            tight: tight,
-          })
+          return getTableOfContents(markdownNode, args)
         },
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
