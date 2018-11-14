@@ -259,19 +259,6 @@ module.exports = (
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
       let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
-      /*// override defaults
-      if (gqlTocOptions.heading) {
-        appliedTocOptions.heading = gqlTocOptions.heading
-      }
-      if (gqlTocOptions.maxDepth) {
-        appliedTocOptions.maxDepth = gqlTocOptions.maxDepth
-      }
-      if (gqlTocOptions.tight) {
-        appliedTocOptions.tight = gqlTocOptions.tight
-      }
-      if (gqlTocOptions.pathToSlugField) {
-        appliedTocOptions.pathToSlugField = gqlTocOptions.pathToSlugField
-      }*/
       // get cached toc
       const cachedToc = await cache.get(
         tableOfContentsCacheKey(markdownNode, appliedTocOptions)
