@@ -102,6 +102,7 @@ exports.onPostBuild = (args, pluginOptions) => {
       {
         // Google Fonts CSS (doesn't end in .css so we need to specify it)
         urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+        handler: `staleWhileRevalidate`,
       },
     ],
     skipWaiting: true,

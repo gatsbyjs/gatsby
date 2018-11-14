@@ -45,6 +45,7 @@ exports.onServiceWorkerActive = ({
     const link = document.createElement(`link`)
     link.rel = `prefetch`
     link.href = resource
+
     document.head.appendChild(link)
     link.onload = link.remove
   })
