@@ -32,8 +32,10 @@ plugins: [
 ]
 ```
 
-You can use auth option if your site is protected by basicauth
-as in example below
+You can use basicAuth option if your site is protected by basicauth. 
+After exporting your basicauth username as 
+BASIC_AUTH_USERNAME and basicauth password as BASIC_AUTH_PASSWORD
+you can use those values to set basicAuth option as in example below.
 
 ```javascript
 // In your gatsby-config.js
@@ -43,9 +45,9 @@ plugins: [
     options: {
       baseUrl: `https://live-contentacms.pantheonsite.io/`,
       apiBase: `api`, // optional, defaults to `jsonapi`
-      auth: {
-        username: 'thisismyvery',
-        password: 'simplepassword'
+      basicAuth: {
+        username: process.env.BASIC_AUTH_USERNAME,
+        password: process.env.BASIC_AUTH_PASSWORD
       },
     },
   },
