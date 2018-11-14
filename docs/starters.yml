@@ -1203,3 +1203,19 @@
     - Twitter and OpenGraph Tags
     - ESLint
     - Prettier Code Styling
+- url: https://avivero.github.io/gatsby-redux-starter/
+  repo: https://github.com/AVivero/gatsby-redux-starter
+  description: Gatsby starter site with Redux, Sass, Bootstrap, Css Modules and Material Icons
+  tags:
+    - Redux
+    - Styling:SCSS
+    - Styling:Bootstrap
+    - Styling:Material
+    - Linting
+  features:
+    - Gatsby v2 support
+    - Redux support
+    - Sass support
+    - Bootstrap v4 support
+    - Css Modules support
+    - ESLint, Prettier
