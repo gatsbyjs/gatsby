@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const { GraphQLBoolean } = require(`graphql`)
 const prepareRegex = require(`../../utils/prepare-regex`)
 const { getNodeTypeCollection } = require(`./nodes`)
 const sift = require(`sift`)
@@ -116,6 +117,8 @@ function toMongoArgs(gqlFilter, lastFieldType) {
         mongoArgs[`$containsNone`] = v
       } else if (k === `ne` && v === null) {
         mongoArgs[`$ne`] = undefined
+      } else if (k === `nin` && lastFieldType.name === `Boolean`) {
+        mongoArgs[`$nin`] = v.concat([false])
       } else {
         mongoArgs[`$${k}`] = v
       }
@@ -167,11 +170,34 @@ function dotNestedFields(acc, o, path = ``) {
   }
 }
 
+function fixNeTrue(flattenedFields) {
+  return _.transform(flattenedFields, (result, v, k) => {
+    if (v[`$ne`] === true) {
+      const s = k.split(`.`)
+      if (s.length > 1) {
+        result[s[0]] = {
+          $or: [
+            {
+              $exists: false,
+            },
+            {
+              $where: obj => obj === null || obj[s[1]] !== true,
+            },
+          ],
+        }
+        return result
+      }
+    }
+    result[k] = v
+    return result
+  })
+}
+
 // Converts graphQL args to a loki filter
 function convertArgs(gqlArgs, gqlType) {
   const dottedFields = {}
   dotNestedFields(dottedFields, toMongoArgs(gqlArgs.filter, gqlType))
-  return dottedFields
+  return fixNeTrue(dottedFields)
 }
 
 // Converts graphql Sort args into the form expected by loki, which is

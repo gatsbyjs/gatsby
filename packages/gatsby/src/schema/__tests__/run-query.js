@@ -51,6 +51,9 @@ const makeNodes = () => [
     float: 2.5,
     hair: 2,
     anArray: [1, 2, 5, 4],
+    waxOnly: {
+      foo: true,
+    },
     anotherKey: {
       withANested: {
         nestedKey: `foo`,
@@ -89,6 +92,7 @@ const makeNodes = () => [
     float: 3.5,
     hair: 0,
     date: `2006-07-29T22:39:53.000Z`,
+    waxOnly: null,
     anotherKey: {
       withANested: {
         nestedKey: `bar`,
@@ -192,6 +196,12 @@ describe(`Filter fields`, () => {
 
     expect(result.length).toEqual(2)
     expect(result[0].hair).toEqual(1)
+  })
+
+  it(`handles nested ne: true operator`, async () => {
+    let result = await runFilter({ waxOnly: { foo: { ne: true } } })
+
+    expect(result.length).toEqual(2)
   })
 
   it(`handles lt operator`, async () => {
@@ -378,15 +388,15 @@ describe(`Filter fields`, () => {
     })
   })
 
-  // it(`handles the nin operator for booleans`, async () => {
-  //   let result = await runFilter({ boolean: { nin: [true, null] } })
+  it(`handles the nin operator for booleans`, async () => {
+    let result = await runFilter({ boolean: { nin: [true, null] } })
 
-  //   expect(result.length).toEqual(1)
-  //   result.forEach(edge => {
-  //     expect(edge.boolean).not.toEqual(null)
-  //     expect(edge.boolean).not.toEqual(true)
-  //   })
-  // })
+    expect(result.length).toEqual(1)
+    result.forEach(edge => {
+      expect(edge.boolean).not.toEqual(null)
+      expect(edge.boolean).not.toEqual(true)
+    })
+  })
 
   it(`handles the glob operator`, async () => {
     let result = await runFilter({ name: { glob: `*Wax` } })
