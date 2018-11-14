@@ -3333,3 +3333,16 @@
   categories:
     - Consulting
   featured: false
+- title: Citywide Holdup
+  url: https://citywideholdup.org/
+  main_url: https://citywideholdup.org/
+  source_url: https://github.com/killakam3084/citywide-site
+  description: >-
+    Citywide Holdup is an annual fundraising event held around early November in the city of Austin, TX hosted by the Texas Wranglers benefitting Easter Seals of Central Texas, a non-profit organization that provides exceptional services, education, outreach and advocacy so that people with disabilities can live, learn, work and play in our communities.
+  categories:
+    - Fundraising
+    - Nonprofit
+    - Event
+  built_by: Cameron Rison
+  built_by_url: https://github.com/killakam3084
+  featured: false
