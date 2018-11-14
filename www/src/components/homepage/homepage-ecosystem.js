@@ -84,10 +84,6 @@ const FeaturedItems = styled(EcosystemFeaturedItemsRootBase)`
 const FeaturedItemsList = styled(EcosystemFeaturedItemsListBase)`
   padding: 0 calc(${rhythm(options.blockMarginBottom)} - 7px) 0;
 
-  ${presets.Tablet} {
-    width: ${props => `calc(320px * ${props.numberOfItems})`};
-  }
-
   ${presets.Desktop} {
     flex-wrap: wrap;
     margin: 0;
@@ -102,6 +98,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     border-bottom: none;
     margin: 0 6px 6px 0;
     padding: 5px;
+    width: 320px;
   }
 
   ${presets.Desktop} {

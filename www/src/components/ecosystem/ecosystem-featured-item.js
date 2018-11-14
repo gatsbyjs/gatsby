@@ -13,14 +13,19 @@ import presets, { colors } from "../../utils/presets"
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(`li`)`
-  flex-basis: ${props => `calc(100% / ${props.numberOfItems})`};
+  width: 85vw;
   margin: 0 2px 0 0;
   padding: 5px;
+
+  :last-child {
+    margin-right: 0;
+  }
 
   ${presets.Tablet} {
     border-bottom: 1px solid ${colors.gray.superLight};
     margin: 0;
     padding: 0;
+    width: auto;
   }
 `
 

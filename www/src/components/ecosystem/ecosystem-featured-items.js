@@ -25,11 +25,10 @@ const EcosystemFeaturedItemsRoot = styled(EcosystemFeaturedItemsRootBase)`
 `
 
 export const ListBase = styled(`ul`)`
-  display: flex;
+  display: inline-flex;
   list-style: none;
   margin: 0;
   padding: 0 calc(${rhythm(options.blockMarginBottom)} - 5px) 4px;
-  width: ${props => `calc(85vw * ${props.numberOfItems})`};
 `
 
 const List = styled(ListBase)`
