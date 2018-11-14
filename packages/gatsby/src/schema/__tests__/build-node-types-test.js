@@ -5,12 +5,7 @@ const {
   GraphQLString,
 } = require(`graphql`)
 const _ = require(`lodash`)
-const { backend } = require(`../../db/nodes`)
-const lokiDb = require(`../../db/loki`)
-
-if (backend === `loki`) {
-  beforeAll(lokiDb.start)
-}
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)

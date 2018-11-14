@@ -13,12 +13,7 @@ const {
   clearUnionTypes,
 } = require(`../infer-graphql-type`)
 const { clearTypeNames } = require(`../create-type-name`)
-const { backend } = require(`../../db/nodes`)
-const lokiDb = require(`../../db/loki`)
-
-if (backend === `loki`) {
-  beforeAll(lokiDb.start)
-}
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
   const schema = new GraphQLSchema({

@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const { GraphQLBoolean } = require(`graphql`)
 const prepareRegex = require(`../../utils/prepare-regex`)
 const { getNodeTypeCollection } = require(`./nodes`)
 const sift = require(`sift`)
@@ -170,6 +169,13 @@ function dotNestedFields(acc, o, path = ``) {
   }
 }
 
+// The query language that Gatsby has used since day 1 is `sift`. Both
+// sift and loki are mongo-like query languages, but they have some
+// subtle differences. One is that in sift, a nested filter such as
+// `{foo: {bar: {ne: true} } }` will return true if the foo field
+// doesn't exist, is null, or bar is null. Whereas loki will return
+// false if the foo field doesn't exist or is null. This ensures that
+// loki queries behave like sift
 function fixNeTrue(flattenedFields) {
   return _.transform(flattenedFields, (result, v, k) => {
     if (v[`$ne`] === true) {

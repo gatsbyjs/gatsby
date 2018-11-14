@@ -2,12 +2,7 @@ const { GraphQLObjectType } = require(`graphql`)
 const nodesQuery = require(`../../db/nodes-query`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 const { store } = require(`../../redux`)
-const { backend } = require(`../../db/nodes`)
-const lokiDb = require(`../../db/loki`)
-
-if (backend === `loki`) {
-  beforeAll(lokiDb.start)
-}
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const makeNodes = () => [
   {

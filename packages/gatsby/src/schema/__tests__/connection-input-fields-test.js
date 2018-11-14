@@ -4,15 +4,8 @@ const nodeTypes = require(`../build-node-types`)
 const nodeConnections = require(`../build-node-connections`)
 const { buildNodesSchema } = require(`../index`)
 const { clearUnionTypes } = require(`../infer-graphql-type`)
-
 const { store } = require(`../../redux`)
-
-const { backend } = require(`../../db/nodes`)
-const lokiDb = require(`../../db/loki`)
-
-if (backend === `loki`) {
-  beforeAll(lokiDb.start)
-}
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function makeNodes() {
   return [

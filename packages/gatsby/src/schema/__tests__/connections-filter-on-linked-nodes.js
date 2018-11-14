@@ -9,12 +9,7 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
 const { store } = require(`../../redux`)
-const { backend } = require(`../../db/nodes`)
-const lokiDb = require(`../../db/loki`)
-
-if (backend === `loki`) {
-  beforeAll(lokiDb.start)
-}
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function makeNodes() {
   return [
