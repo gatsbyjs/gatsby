@@ -96,13 +96,12 @@ exports.onPostBuild = (args, pluginOptions) => {
     runtimeCaching: [
       {
         // Add runtime caching of various page resources.
-        urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        urlPattern: /^https?:.*\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `staleWhileRevalidate`,
       },
       {
-        // Use the Network First handler for external resources
-        urlPattern: /^https?:/,
-        handler: `networkFirst`,
+        // Google Fonts CSS (doesn't end in .css so we need to specify it)
+        urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
       },
     ],
     skipWaiting: true,
