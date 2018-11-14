@@ -1,6 +1,5 @@
 # use slug to pick a starter
 starters:
-starters:
   - "/gatsby-starter-blog/"
   - "/gatsby-starter-netlify-cms/"
   - "/gatsby-advanced-starter/"
