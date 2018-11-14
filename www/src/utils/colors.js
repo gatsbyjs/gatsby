@@ -14,7 +14,7 @@ const colors = {
   accent: `#ffb238`, // "Mustard",
   success: `#37b635`,
   warning: `#ec1818`,
-  accentLight: `ffeccd`,
+  accentLight: `#ffeccd`,
   accentDark: `#9e6100`,
   skyLight: `#dcfffd`,
   skyDark: `#0a75c2`,
