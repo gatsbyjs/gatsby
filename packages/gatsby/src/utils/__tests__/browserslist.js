@@ -22,11 +22,10 @@ describe(`browserslist`, () => {
   })
 
   it(`falls back to defaults`, () => {
-    const fallback = [`> 0.25%`]
     mockedFindConfig.mockReturnValueOnce(undefined)
 
-    const list = getBrowsersList(BASE, fallback)
+    const list = getBrowsersList(BASE)
 
-    expect(list).toEqual(fallback)
+    expect(list).toEqual([`>0.25%`, `not dead`])
   })
 })

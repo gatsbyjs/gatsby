@@ -5,8 +5,6 @@ const report = require(`./reporter`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 
-const getBrowsersList = require(`./browserslist`)
-
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
@@ -22,14 +20,14 @@ function buildLocalCommands(cli, isLocalSite) {
   const DEFAULT_BROWSERS =
     installedGatsbyVersion() === 1
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
-      : [`> 0.25%`, `not dead`]
+      : [`>0.25%`, `not dead`]
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
-    siteInfo.browserslist = getBrowsersList(directory, DEFAULT_BROWSERS)
+    siteInfo.browserslist = json.browserslist || siteInfo.browserslist
   }
 
   function installedGatsbyVersion() {
