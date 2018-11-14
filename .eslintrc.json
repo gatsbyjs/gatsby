@@ -27,6 +27,7 @@
     "spyOn": true
   },
   "rules": {
+    "comma-dangle": "off",
     "arrow-body-style": [
       "error",
       "as-needed",
