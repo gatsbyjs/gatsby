@@ -32,7 +32,6 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
 
   // Run query
   let result
-
   // Nothing to do if the query doesn't exist.
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
@@ -97,9 +96,7 @@ ${formatErrorDetails(errorDetails)}`)
     dataPath = queryJob.hash
   }
 
-  const programType = program._[0]
-
-  if (programType === `develop`) {
+  if (process.env.gatsby_executing_command === `develop`) {
     if (queryJob.isPage) {
       websocketManager.emitPageData({
         result,

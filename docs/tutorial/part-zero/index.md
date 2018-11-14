@@ -3,7 +3,7 @@ title: Set Up Your Development Environment
 typora-copy-images-to: ./
 ---
 
-Before you start to code, you’ll need to familiarize with some core web technologies, and make sure that you have installed all required software tools.
+Before you start building your first Gatsby site, you’ll need to familiarize yourself with some core web technologies and make sure that you have installed all required software tools.
 
 ## Overview of core technologies
 
@@ -17,7 +17,7 @@ It’s not necessary to be an expert with these already — if you’re not, don
 
 > 💡 (Optional!) For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
 
-## Familiarize with command line
+## Familiarize yourself with the command line
 
 The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
@@ -27,13 +27,13 @@ Take a moment to locate and open up the command line interface (CLI) for your co
 
 ## Install Node.js
 
-Node.js is an environment that can run JavaScript code. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
+Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
 ### ⌚ Download Node.js
 
 Visit the [**Node.js site**](https://nodejs.org/) and follow the instructions to download and install the recommended version for your operating system. Once you have followed the installation steps, make sure everything was installed properly:
 
-### ✋ Check your Node.js installation
+### Check your Node.js installation
 
 1.  Open up your terminal.
 2.  Run `node --version`. (If you’re new to the command line, “run `command`” means “type `node --version` in the command prompt, and hit the Enter key”. From here on, this is what we mean by “run `command`”).
@@ -43,7 +43,7 @@ The output of each of those commands should be a version number. Your versions m
 
 ![Check node and npm versions in terminal](01-node-npm-versions.png)
 
-## Familiarize with npm
+## Familiarize yourself with npm
 
 npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it!
 
@@ -57,15 +57,19 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 ## Install Git
 
-Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter.
+Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need to have Git installed to set up your first Gatsby site.
 
-If your system does not have Git installed, install it from the [**Git downloads page**](https://git-scm.com/downloads).
+The steps to download and install Git depend on your operating system. Follow the guide for your system:
 
-## Install the Gatsby CLI
+- [Install Git on macOS](https://www.atlassian.com/git/tutorials/install-git#mac-os-x)
+- [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
+- [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
 
-The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites. It is a published npm package. You can install the Gatsby CLI from the npm registry, using the npm CLI.
+> 💡 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and Github, check out Github's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
 
-### ✋ Install the Gatsby CLI tool
+## Install Gatsby CLI
+
+The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites. It is a published npm package. You can install Gatsby CLI from the npm registry, using the npm CLI.
 
 1.  Navigate to the terminal.
 2.  Run `npm install --global gatsby-cli`.
@@ -78,11 +82,11 @@ A couple of different things are happening here.
 npm install --global gatsby-cli
 ```
 
-- We’re using the npm CLI to install the Gatsby CLI. `npm install` is the command used to install packages.
-- When installing npm packages, you can install them globally or in a specific project. (We’ll learn about the latter, later). The `--global` flag signals that we want the first option, to install globally. This means our package will be available to us on our computer, outside of the context of a specific project.
+- You're using the npm CLI to install Gatsby CLI. `npm install` is the command used to install packages.
+- When installing npm packages, you can install them globally or in a specific project. (You’ll learn about the latter, later). The `--global` flag signals that we want the first option to install globally. This means your package will be available to you on your computer, outside of the context of a specific project.
 - `gatsby-cli` is the exact name our desired package is registered with on the [**npm registry**](https://www.npmjs.com/package/gatsby-cli).
 
-### ✋ Check your Gatsby CLI installation
+### Check your Gatsby CLI installation
 
 1.  Open up your terminal.
 2.  Run `gatsby --version`.
@@ -92,11 +96,9 @@ npm install --global gatsby-cli
 
 If successfully installed, running `gatsby --version` should return a version number and running `gatsby --help` will show different commands available to you using the `gatsby-cli` tool.
 
-## Create a site
+## Create a Gatsby site
 
-Now you can use the gatsby-cli tool to create your first Gatsby site. Using the tool, you can use “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a [Gatsby](/) site.
-
-### ✋ Create a Gatsby site
+Now you are ready to use Gatsby CLI tool to create your first Gatsby site. Using the tool, you can download “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
 
 1.  Open up your terminal.
 2.  Run `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`. (_Note: Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install_).
@@ -117,7 +119,7 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 - Starting with `gatsby` says, ‘hey, we want to use the gatsby-cli tool!’.
 - `new` is a gatsby command to create a new Gatsby project.
 - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
-- Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use. If you aren't familiar yet with Git and GitHub, you can [learn more here](https://try.github.io/).
+- Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
 
 ```bash
 cd hello-world
@@ -131,7 +133,7 @@ gatsby develop
 
 - This command starts a development server. You will be able to see and interact with your new site in a development environment — local (on your computer, not published to the internet).
 
-### ✋ View your site locally
+### View your site locally
 
 Open up a new tab in your browser and navigate to [**http://localhost:8000**](http://localhost:8000/).
 
@@ -147,11 +149,11 @@ You’ll be able to visit the site locally at [**_http://localhost:8000_**](http
 
 A code editor is a program designed specifically for editing computer code. There are many great ones out there. If you haven't worked with a code editor before, we recommend the editor used throughout this tutorial -- [**VS Code**](https://code.visualstudio.com/).
 
-### ✋ Download VS Code
+### Download VS Code
 
-Visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
+Gatsby documentation sometimes includes screenshots of code editors; these screenshots show the VS Code editor, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
 
-### ✋ Install Prettier plugin
+### Install the Prettier plugin
 
 We also recommend using [Prettier](https://github.com/prettier/prettier) -- Prettier is a tool that helps format your code, keeping it consistent and helping to avoid errors.
 
@@ -167,9 +169,11 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 To summarize, in this section you:
 
-- Installed and learned about Node.js and the npm CLI tool
-- Installed and learned about the Gatsby CLI tool
+- Learned about web technologies used with Gatsby (HTML, CSS, JavaScript, React, and GraphQL)
+- Learned about the command line and how to use it
+- Installed and learned about Node.js and the npm CLI tool, the version control system Git, and the Gatsby CLI tool
 - Generated a new Gatsby site using the Gatsby CLI tool
+- Ran the Gatsby development server and visited your site locally
 - Downloaded a code editor
 - Installed a code formatter called Prettier
 

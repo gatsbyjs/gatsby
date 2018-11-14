@@ -2,7 +2,7 @@
 title: Submit to Creator Showcase
 ---
 
-Want to be a part of the [Creator Showcase](link TBA)? Follow these instructions.
+Want to be a part of the [Creator Showcase](/showcase)? Follow these instructions.
 
 ## Steps
 
