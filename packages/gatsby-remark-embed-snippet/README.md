@@ -91,7 +91,8 @@ html {
 ```html
 <html>
   <body>
-    <h1>highlight me</h1> <!-- highlight-line -->
+    <h1>highlight me</h1>
+    <!-- highlight-line -->
     <p>
       <!-- highlight-next-line -->
       And me
