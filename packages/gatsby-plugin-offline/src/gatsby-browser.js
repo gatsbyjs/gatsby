@@ -21,13 +21,12 @@ exports.onServiceWorkerActive = ({
   // grab nodes from head of document
   const nodes = document.querySelectorAll(`
     head > script[src],
-    head > link[as=script],
-    head > link[rel=stylesheet],
+    head > link[href],
     head > style[data-href]
   `)
 
   // get all resource URLs
-  const resources = [].slice
+  const headerResources = [].slice
     .call(nodes)
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
@@ -40,8 +39,16 @@ exports.onServiceWorkerActive = ({
     )
   )
 
-  serviceWorker.active.postMessage({
-    api: `gatsby-runtime-cache`,
-    resources: [...resources, ...prefetchedResources],
+  const resources = [...headerResources, ...prefetchedResources]
+  resources.forEach(resource => {
+    // Create a prefetch link for each resource, so Workbox runtime-caches them
+    const link = document.createElement(`link`)
+    link.rel = `prefetch`
+    link.href = resource
+
+    link.onload = link.remove
+    link.onerror = link.remove
+
+    document.head.appendChild(link)
   })
 }
