@@ -1,6 +1,5 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
-import prefetchHelper from "./prefetch"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -104,15 +103,6 @@ const fetchResource = resourceName => {
         resolve(component)
       })
   })
-}
-
-const prefetchResource = resourceName => {
-  if (resourceName.slice(0, 12) === `component---`) {
-    createComponentUrls(resourceName).forEach(url => prefetchHelper(url))
-  } else {
-    const url = createJsonURL(jsonDataPaths[resourceName])
-    prefetchHelper(url)
-  }
 }
 
 const getResourceModule = resourceName =>
@@ -227,10 +217,15 @@ const queue = {
     }
 
     // Prefetch resources.
-    if (process.env.NODE_ENV === `production`) {
-      prefetchResource(page.jsonName)
-      prefetchResource(page.componentChunkName)
-    }
+    Promise.all([
+      getResourceModule(page.componentChunkName),
+      getResourceModule(page.jsonName),
+    ]).then(([component, json]) => {
+      if (component && json) {
+        // Tell plugins the path has been successfully prefetched
+        onPostPrefetchPathname(path)
+      }
+    })
 
     return true
   },
