@@ -161,7 +161,7 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <h1>My Site's Files</h1>
+        <h1>Site Files</h1>
         <table>
           <thead>
             <tr>
@@ -200,7 +200,6 @@ export const query = graphql`
       }
     }
   }
-`
 ```
 
 And… 😲
