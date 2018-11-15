@@ -3,7 +3,8 @@ const { actions } = require(`../actions`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 
-jest.mock(`../../db/nodes`, () => require(`../nodes`))
+jest.mock(`../../db/nodes`)
+jest.mock(`../nodes`)
 
 const store = Redux.createStore(
   Redux.combineReducers({ nodeReducer, nodeTouchedReducer }),

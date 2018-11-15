@@ -299,7 +299,7 @@ function reducer(state = new Map(), action) {
   switch (action.type) {
     case `DELETE_CACHE`:
       deleteAll()
-      return new Map()
+      return null
 
     case `CREATE_NODE`: {
       if (action.oldNode) {
@@ -307,26 +307,26 @@ function reducer(state = new Map(), action) {
       } else {
         createNode(action.payload)
       }
-      return new Map()
+      return null
     }
 
     case `ADD_FIELD_TO_NODE`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
       updateNode(action.payload)
-      return new Map()
+      return null
 
     case `DELETE_NODE`: {
       deleteNode(action.payload)
-      return new Map()
+      return null
     }
 
     case `DELETE_NODES`: {
       deleteNodes(action.payload)
-      return new Map()
+      return null
     }
 
     default:
-      return new Map()
+      return null
   }
 }
 
