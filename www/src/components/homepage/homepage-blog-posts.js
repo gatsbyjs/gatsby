@@ -92,7 +92,7 @@ const ViewAllStyle = styled(ScrollerItem)`
     }
 
     svg {
-      height: 18x;
+      height: 18px;
       margin-left: 0.2rem;
       width: 18px;
     }
