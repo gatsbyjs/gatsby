@@ -98,7 +98,7 @@ const getHighlights = (line, code, index) => {
                 highlighted: range.includes(idx + 1),
               }
             })
-          return [highlighted, lastLineIndexInRange]
+          return [highlighted, lastLineIndexInRange - 1]
         }
         // if range is incorrect we ignore the directive
         console.warn(`Invalid match specified: "${line.trim()}"`)
