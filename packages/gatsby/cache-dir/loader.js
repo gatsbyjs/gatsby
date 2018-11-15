@@ -108,10 +108,12 @@ const fetchResource = resourceName => {
 
 const prefetchResource = resourceName => {
   if (resourceName.slice(0, 12) === `component---`) {
-    createComponentUrls(resourceName).forEach(url => prefetchHelper(url))
+    return Promise.all(
+      createComponentUrls(resourceName).map(url => prefetchHelper(url))
+    )
   } else {
     const url = createJsonURL(jsonDataPaths[resourceName])
-    prefetchHelper(url)
+    return prefetchHelper(url)
   }
 }
 
@@ -228,8 +230,13 @@ const queue = {
 
     // Prefetch resources.
     if (process.env.NODE_ENV === `production`) {
-      prefetchResource(page.jsonName)
-      prefetchResource(page.componentChunkName)
+      Promise.all([
+        prefetchResource(page.jsonName),
+        prefetchResource(page.componentChunkName),
+      ]).then(() => {
+        // Tell plugins the path has been successfully prefetched
+        onPostPrefetchPathname(path)
+      })
     }
 
     return true
