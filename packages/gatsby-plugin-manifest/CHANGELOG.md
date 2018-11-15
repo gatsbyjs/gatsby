@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.8...gatsby-plugin-manifest@2.0.9) (2018-11-12)
+
+### Features
+
+- **gatsby-plugin-manifest:** add option to generate apple-touch-icons links ([#7256](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/7256)) ([0b9d656](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/0b9d656)), closes [#5887](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/5887)
+
 <a name="2.0.8"></a>
 
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.7...gatsby-plugin-manifest@2.0.8) (2018-11-08)

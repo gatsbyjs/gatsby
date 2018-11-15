@@ -187,8 +187,13 @@ exports.sourceNodes = async (
         node.internal.type === `file__file`
       ) {
         try {
+          let fileUrl = node.url
+          if (typeof node.uri === `object`) {
+            // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
+            fileUrl = node.uri.url
+          }
           // Resolve w/ baseUrl if node.uri isn't absolute.
-          const url = new URL(node.url, baseUrl)
+          const url = new URL(fileUrl, baseUrl)
           fileNode = await createRemoteFileNode({
             url: url.href,
             store,

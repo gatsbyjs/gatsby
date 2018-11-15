@@ -62,6 +62,7 @@ See the [list of official and community plugins](/docs/plugins/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
 - [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
 - [JAMstack Basics: How to Create a Gatsby Starter with Contentful and Deploy to Netlify](https://itnext.io/jamstack-basics-how-to-create-a-gatsby-starter-with-contentful-and-deploy-to-netlify-846354cc74bc)
+- [How to deploy a static Gatsby app to Heroku](https://medium.freecodecamp.org/how-to-deploy-a-static-gatsby-app-to-heroku-3362e3ecda0f)
 
 ## Other resources
 
