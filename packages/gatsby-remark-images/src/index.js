@@ -1,4 +1,4 @@
-const { imageClass, imageBackgroundClass, imageWrapperClass } = require(`./classes`)
+const { imageClass, imageBackgroundClass, imageWrapperClass } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
@@ -108,11 +108,9 @@ module.exports = (
       position: absolute;
       top: 0;
       left: 0;
-      transition: opacity 0.5s;
-      transition-delay: 0.5s;
       box-shadow: inset 0px 0px 0px 400px ${
       options.backgroundColor
-    };`
+    };`.replace(/\s*(\S+:)\s*/g, "$1")
 
     // Create our base image tag
     let imageTag = `
@@ -179,9 +177,9 @@ module.exports = (
   >
     <img
       class="${imageBackgroundClass}"
-      style="width: 100%; height: 100%; position: relative; bottom: 0; left: 0; transition-delay: 0.5s; tranistion: opacity 0.5s; opacity: 1; background-size: cover; display: block;"
+      style="width: 100%; height: 100%; bottom: 0; left: 0; transition-delay: 0.5s; transition: opacity 0.5s; opacity: 1; background-size: cover; display: block;"
       src="${fluidResult.base64}"
-    / >
+    />
     ${imageTag}
   </span>
   `
@@ -196,7 +194,7 @@ module.exports = (
     target="_blank"
     rel="noopener"
   >
-  ${rawHTML}
+    ${rawHTML}
   </a>
     `
     }
@@ -205,8 +203,8 @@ module.exports = (
     if (showCaptions) {
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${options.wrapperStyle}">
-  ${rawHTML}
-  <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+    ${rawHTML}
+    <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
   </figure>
       `
     }
