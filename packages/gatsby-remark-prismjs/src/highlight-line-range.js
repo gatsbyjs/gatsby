@@ -1,7 +1,22 @@
 const rangeParser = require(`parse-numeric-range`)
 
-const COMMENT_START = /(#|\/\/|\{\/\*|\/\*+|<!--)/
-const COMMENT_END = /(-->|\*\/\}|\*\/)?/
+/**
+ * As code has already been prism-highlighted at this point,
+ * a JSX opening comment:
+ *     {/*
+ * would look like this:
+ *     <span class="token punctuation">{</span><span class="token comment">/*
+ */
+const highlightedJSXCommentStart = `<span class="token punctuation">\\{<\\/span><span class="token comment">\\/\\*`
+const highlightedJSXCommentEnd = `\\*\\/<\\/span><span class="token punctuation">\\}</span>`
+
+const COMMENT_START = new RegExp(
+  `(#|\\/\\/|\\{\\/\\*|${highlightedJSXCommentStart}|\\/\\*+|<!--)`
+)
+
+const COMMENT_END = new RegExp(
+  `(-->|\\*\\/\\}|${highlightedJSXCommentEnd}|\\*\\/)?`
+)
 const DIRECTIVE = /highlight-(next-line|line|start|end|range)({([^}]+)})?/
 const END_DIRECTIVE = /highlight-end/
 const plainTextWithLFTest = /<span class="token plain-text">[^<]*\n[^<]*<\/span>/g

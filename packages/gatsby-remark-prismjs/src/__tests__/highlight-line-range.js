@@ -74,6 +74,10 @@ describe(`highlighting a line range`, () => {
       const highlights = highlightLineRange(fixtures.highlightJsxComment)
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
+    it(`highlights comment line after Prism highlighting`, () => {
+      const highlights = highlightLineRange(fixtures.highlightJsxCommentAfterPrismHighlighting)
+      expect(output(getHighlighted(highlights))).toMatchSnapshot()
+    })
   })
   describe(`yaml`, () => {
     it(`strips directive`, () => {
