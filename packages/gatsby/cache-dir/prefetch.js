@@ -65,12 +65,10 @@ const prefetch = function(url) {
       return
     }
 
-    supportedPrefetchStrategy(url)
-      .then(() => {
-        resolve()
-        preFetched[url] = true
-      })
-      .catch(() => {}) // 404s are logged to the console anyway
+    supportedPrefetchStrategy(url).then(() => {
+      resolve()
+      preFetched[url] = true
+    })
   })
 }
 

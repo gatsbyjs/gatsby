@@ -233,10 +233,15 @@ const queue = {
       Promise.all([
         prefetchResource(page.jsonName),
         prefetchResource(page.componentChunkName),
-      ]).then(() => {
-        // Tell plugins the path has been successfully prefetched
-        onPostPrefetchPathname(path)
-      })
+      ])
+        .then(() => {
+          // Tell plugins the path has been successfully prefetched
+          onPostPrefetchPathname(path)
+        })
+        .catch(() => {
+          // Suppress additional console errors
+          // (404 errors are displayed anyway)
+        })
     }
 
     return true
