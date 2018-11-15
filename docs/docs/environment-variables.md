@@ -60,9 +60,9 @@ In Linux terminals this can be done with:
 MY_ENV_VAR=foo gatsby develop
 ```
 
-In Windows it's a little more complex. [Check out this Stack Overflow article for some options](https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only documents some options.)
+In Windows it's a little more complex. [Check out this Stack Overflow article for some options](https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only)
 
-However, the Project Env Vars that you defined in the `.env.*` files will _NOT_ be immediately available
+Project environment variables that you defined in the `.env.*` files will _NOT_ be immediately available
 in your Node.js scripts. To use those variables, use NPM package [dotenv](https://www.npmjs.com/package/dotenv) to
 examine the active `.env.*` file and attached those values,
 It's already a dependency of Gatsby, so you can require it in your `gatsby-config.js` or `gatsby-node.js` like this:
