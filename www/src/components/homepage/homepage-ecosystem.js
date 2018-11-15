@@ -160,7 +160,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
     sectionName="Ecosystem"
     sectionIcon={EcosystemIcon}
     title="Plugins & Starters"
-    introduction="With over 527 plugins, 86 starters, and dozens of tutorials, the Gatsby ecosystem has tools to help you build your Gatsby projects."
+    introduction="We have the tools to help you build for the web."
     links={[
       {
         label: `Explore the Gatsby Ecosystem`,
