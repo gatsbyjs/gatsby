@@ -2,7 +2,7 @@ const Redux = require(`redux`)
 const _ = require(`lodash`)
 const fs = require(`fs`)
 const mitt = require(`mitt`)
-const stringify = require(`json-stream-stringify`)
+const stringify = require(`json-stringify-safe`)
 
 // Create event emitter for actions
 const emitter = mitt()
@@ -78,21 +78,12 @@ const saveState = state => {
   )
   pickedState.components = mapToObject(pickedState.components)
   pickedState.nodes = mapToObject(pickedState.nodes)
-
-  const writeStream = fs.createWriteStream(
-    `${process.cwd()}/.cache/redux-state.json`
+  const stringified = stringify(pickedState, null, 2)
+  fs.writeFile(
+    `${process.cwd()}/.cache/redux-state.json`,
+    stringified,
+    () => {}
   )
-
-  new stringify(pickedState, null, 2, true)
-    .pipe(writeStream)
-    .on(`finish`, () => {
-      writeStream.destroy()
-      writeStream.end()
-    })
-    .on(`error`, () => {
-      writeStream.destroy()
-      writeStream.end()
-    })
 }
 const saveStateDebounced = _.debounce(saveState, 1000)
 

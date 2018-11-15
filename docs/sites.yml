@@ -1299,13 +1299,17 @@
   categories:
     - Blog
     - Portfolio
-- title: mottox2 blog
+- title: MOTTO x MOTTO
   main_url: "https://mottox2.com"
   url: "https://mottox2.com"
+  source_url: "https://github.com/mottox2/website"
+  description: Web developer / UI Desinger in Tokyo Japan.
   featured: false
   categories:
     - Blog
     - Portfolio
+  built_by: mottox2
+  built_by_url: "https://mottox2.com"
 - title: Pride of the Meadows
   main_url: "https://www.prideofthemeadows.com/"
   url: "https://www.prideofthemeadows.com/"
@@ -3292,4 +3296,63 @@
     - Consulting
   built_by: Andrew Wilson
   built_by_url: https://github.com/andwilson
+  featured: false
+- title: Flyright
+  url: https://flyright.co/
+  main_url: https://flyright.co/
+  description: >-
+    Flyright curates everything you need for international travel in one tidy place 💜
+  categories:
+    - Technology
+    - App
+  built_by: Ty Hopp
+  built_by_url: https://github.com/tyhopp
+  featured: false
+- title: Vets Who Code
+  url: https://vetswhocode.io/
+  main_url: https://vetswhocode.io/
+  description: >-
+    VetsWhoCode is a non-profit organization dedicated to training military veterans & giving them the skills they need transition into tech careers.
+  categories:
+    - Technology
+    - Nonprofit
+  featured: false
+- title: Patreon Blog
+  url: https://blog.patreon.com/
+  main_url: https://blog.patreon.com/
+  description: >-
+    Official blog of Patreon.com
+  categories:
+    - Blog
+  featured: false
+- title: Full Beaker
+  url: https://fullbeaker.com/
+  main_url: https://fullbeaker.com/
+  description: >-
+    Full Beaker provides independent advice online about careers and home ownership, and connect anyone who asks with companies that can help them.
+  categories:
+    - Consulting
+  featured: false
+- title: Citywide Holdup
+  url: https://citywideholdup.org/
+  main_url: https://citywideholdup.org/
+  source_url: https://github.com/killakam3084/citywide-site
+  description: >-
+    Citywide Holdup is an annual fundraising event held around early November in the city of Austin, TX hosted by the Texas Wranglers benefitting Easter Seals of Central Texas, a non-profit organization that provides exceptional services, education, outreach and advocacy so that people with disabilities can live, learn, work and play in our communities.
+  categories:
+    - Fundraising
+    - Nonprofit
+    - Event
+  built_by: Cameron Rison
+  built_by_url: https://github.com/killakam3084
+  featured: false
+- title: Dawn Labs
+  url: https://dawnlabs.io
+  main_url: https://dawnlabs.io
+  description: >-
+    Thoughtful products for inspired teams. With a holistic approach to engineering and design, we partner with startups and enterprises to build for the digital era.
+  categories:
+    - Technology
+    - Agency
+    - Web Development
   featured: false
