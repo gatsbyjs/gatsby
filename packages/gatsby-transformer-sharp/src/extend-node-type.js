@@ -45,14 +45,10 @@ const getTracedSVG = async ({ file, image, fieldArgs }) =>
     fileArgs: fieldArgs,
   })
 
-const fixedNodeType = ({
-  type,
-  pathPrefix,
-  getNodeAndSavePathDependency,
-  reporter,
-  name,
-  cache,
-}) => {
+const fixedNodeType = (
+  { type, pathPrefix, getNodeAndSavePathDependency, reporter, name, cache },
+  { defaultQuality = 50 }
+) => {
   return {
     type: new GraphQLObjectType({
       name: name,
@@ -131,7 +127,7 @@ const fixedNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
+        defaultValue: defaultQuality,
       },
       toFormat: {
         type: ImageFormatType,
@@ -167,14 +163,10 @@ const fixedNodeType = ({
   }
 }
 
-const fluidNodeType = ({
-  type,
-  pathPrefix,
-  getNodeAndSavePathDependency,
-  reporter,
-  name,
-  cache,
-}) => {
+const fluidNodeType = (
+  { type, pathPrefix, getNodeAndSavePathDependency, reporter, name, cache },
+  { defaultQuality = 50 }
+) => {
   return {
     type: new GraphQLObjectType({
       name: name,
@@ -253,7 +245,7 @@ const fluidNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
+        defaultValue: defaultQuality,
       },
       toFormat: {
         type: ImageFormatType,
@@ -298,13 +290,10 @@ const fluidNodeType = ({
   }
 }
 
-module.exports = ({
-  type,
-  pathPrefix,
-  getNodeAndSavePathDependency,
-  reporter,
-  cache,
-}) => {
+module.exports = (
+  { type, pathPrefix, getNodeAndSavePathDependency, reporter, cache },
+  pluginOptions
+) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }
@@ -318,15 +307,27 @@ module.exports = ({
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
-  const fixedNode = fixedNodeType({ name: `ImageSharpFixed`, ...nodeOptions })
-  const resolutionsNode = fixedNodeType({
-    name: `ImageSharpResolutions`,
-    ...nodeOptions,
-  })
+  const fixedNode = fixedNodeType(
+    { name: `ImageSharpFixed`, ...nodeOptions },
+    pluginOptions
+  )
+  const resolutionsNode = fixedNodeType(
+    {
+      name: `ImageSharpResolutions`,
+      ...nodeOptions,
+    },
+    pluginOptions
+  )
   resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
-  const fluidNode = fluidNodeType({ name: `ImageSharpFluid`, ...nodeOptions })
-  const sizesNode = fluidNodeType({ name: `ImageSharpSizes`, ...nodeOptions })
+  const fluidNode = fluidNodeType(
+    { name: `ImageSharpFluid`, ...nodeOptions },
+    pluginOptions
+  )
+  const sizesNode = fluidNodeType(
+    { name: `ImageSharpSizes`, ...nodeOptions },
+    pluginOptions
+  )
   sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   return {
@@ -403,7 +404,7 @@ module.exports = ({
         },
         quality: {
           type: GraphQLInt,
-          defaultValue: 50,
+          defaultValue: pluginOptions.defaultQuality || 50,
         },
         jpegProgressive: {
           type: GraphQLBoolean,
