@@ -11,14 +11,21 @@ As your project grows over time having this information available will be invalu
 
 ## Setting up your environment
 
-To set up Storybook you need to run `sb init`, which is Storybook's CLI tool. It's recommended to run it using `npx` so that you're always using the latest version:
+To set up Storybook you need to install dependencies and do some custom configuration. First, install the Storybook CLI.
+ ```sh
+npm install -g @storybook/cli
+```
+
+Once the CLI is installed, the next step is to run the `sb init` command that is now available from the root directory of your Gatsby project.
 
 ```sh
 cd my-awesome-gatsby-project
-npx -p @storybook/cli sb init
+sb init
 ```
 
-The `sb init` command will then bootstrap the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
+> Note that if you're running a recent version of `npm` (5.2.0+) you can run the following single command instead: `npx -p @storybook/cli sb init`, which is the recommended method by Storybook. This doesn't install the CLI on your machine, thereby ensuring you're always running the latest version of the CLI.
+
+The `sb init` command boostraps the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
 
 To update your Storybook config open `.storybook/config.js` and add the following before the `configure` method at the bottom of the file.
 
