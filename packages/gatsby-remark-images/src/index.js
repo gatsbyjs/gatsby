@@ -110,7 +110,7 @@ module.exports = (
       left: 0;
       box-shadow: inset 0px 0px 0px 400px ${
       options.backgroundColor
-    };`.replace(/\s*(\S+:)\s*/g, "$1")
+    };`.replace(/\s*(\S+:)\s*/g, `$1`)
 
     // Create our base image tag
     let imageTag = `
