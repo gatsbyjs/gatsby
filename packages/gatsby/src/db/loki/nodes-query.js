@@ -2,6 +2,17 @@ const _ = require(`lodash`)
 const prepareRegex = require(`../../utils/prepare-regex`)
 const { getNodeTypeCollection } = require(`./nodes`)
 const sift = require(`sift`)
+const { emitter } = require(`../../redux`)
+
+// Cleared on DELETE_CACHE
+const fieldUsages = {}
+const FIELD_INDEX_THRESHOLD = 5
+
+emitter.on(`DELETE_CACHE`, () => {
+  for (var field in fieldUsages) {
+    delete fieldUsages[field]
+  }
+})
 
 // Takes a raw graphql filter and converts it into a mongo-like args
 // object that can be understood by the `sift` library. E.g `eq`
@@ -231,6 +242,24 @@ function toSortFields(sortArgs) {
   ])
 }
 
+// Every time we run a query, we increment a counter for each of its
+// fields, so that we can determine which fields are used the
+// most. Any time a field is seen more than `FIELD_INDEX_THRESHOLD`
+// times, we create a loki index so that future queries with that
+// field will execute faster.
+function ensureFieldIndexes(coll, lokiArgs) {
+  _.forEach(lokiArgs, (v, fieldName) => {
+    // Increment the usages of the field
+    _.update(fieldUsages, fieldName, n => (n ? n + 1 : 1))
+    // If we have crossed the threshold, then create the index
+    if (_.get(fieldUsages, fieldName) === FIELD_INDEX_THRESHOLD) {
+      // Loki ensures that this is a noop if index already exists. E.g
+      // if it was previously added via a sort field
+      coll.ensureIndex(fieldName)
+    }
+  })
+}
+
 /**
  * Runs the graphql query over the loki nodes db.
  *
@@ -255,11 +284,18 @@ async function runQuery({ gqlType, queryArgs, context = {}, firstOnly }) {
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
   const lokiArgs = convertArgs(gqlArgs, gqlType)
   const coll = getNodeTypeCollection(gqlType.name)
+  ensureFieldIndexes(coll, lokiArgs)
   let chain = coll.chain().find(lokiArgs, firstOnly)
 
-  const { sort } = gqlArgs
-  if (sort) {
-    const sortFields = toSortFields(sort)
+  if (gqlArgs.sort) {
+    const sortFields = toSortFields(gqlArgs.sort)
+
+    // Create an index for each sort field. Indexing requires sorting
+    // so we lose nothing by ensuring an index is added for each sort
+    // field. Loki ensures this is a noop if the index already exists
+    for (const sortField of sortFields) {
+      coll.ensureIndex(sortField[0])
+    }
     chain = chain.compoundsort(sortFields)
   }
 

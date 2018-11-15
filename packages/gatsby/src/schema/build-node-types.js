@@ -269,5 +269,6 @@ async function buildAll({ parentSpan }) {
 
 module.exports = {
   buildProcessedType,
+  buildNodeObjectType,
   buildAll,
 }
