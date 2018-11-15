@@ -12,6 +12,7 @@ As your project grows over time having this information available will be invalu
 ## Setting up your environment
 
 To set up Storybook you need to install dependencies and do some custom configuration. First, install the Storybook CLI.
+
 ```sh
 npm install -g @storybook/cli
 ```
