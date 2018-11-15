@@ -1,6 +1,6 @@
 import { parsePath } from "../parse-path"
 
-it(`defaults to root if undefined`, () => {
+test(`it defaults to root if undefined`, () => {
   expect(parsePath()).toEqual({
     pathname: `/`,
     search: ``,
@@ -8,7 +8,7 @@ it(`defaults to root if undefined`, () => {
   })
 })
 
-it(`uses passed path, if defined`, () => {
+test(`it uses passed path, if defined`, () => {
   const path = `/admin`
   expect(parsePath(path)).toEqual({
     pathname: path,
@@ -17,7 +17,7 @@ it(`uses passed path, if defined`, () => {
   })
 })
 
-it(`returns query string`, () => {
+test(`it returns query string`, () => {
   const search = `?some-thing=true&other-thing=false`
   const pathname = `/admin`
   const path = `${pathname}${search}`
@@ -29,7 +29,7 @@ it(`returns query string`, () => {
   })
 })
 
-it(`returns hash`, () => {
+test(`it returns hash`, () => {
   const hash = `#some-id`
   const pathname = `/admin`
   const path = `${pathname}${hash}`
@@ -41,7 +41,7 @@ it(`returns hash`, () => {
   })
 })
 
-it(`returns hash, search, and pathname if all defined`, () => {
+test(`it returns hash, search, and pathname if all defined`, () => {
   const hash = `#some-id`
   const pathname = `/admin`
   const search = `?this-thing=true&other-thing=false`
