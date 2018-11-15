@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "katex": "^0.9.0",
+    "katex": "^0.10.0",
     "remark-math": "^1.0.3",
     "unist-util-visit": "^1.3.0"
   },
