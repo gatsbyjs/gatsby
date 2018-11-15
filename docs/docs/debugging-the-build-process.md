@@ -39,6 +39,46 @@ TypeError: Cannot read property 'internal' of undefined
     D:/dev/blog-v2/gatsby-node.js:6:12
 ```
 
+## VS Code debugger
+
+Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
+
+We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
+
+```json:title=launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Gatsby develop",
+      "type": "node",
+      "request": "launch",
+      "protocol": "inspector",
+      "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
+      "args": ["develop"],
+      "stopOnEntry": false,
+      "runtimeArgs": ["--nolazy"],
+      "sourceMaps": false
+    },
+    {
+      "name": "Gatsby build",
+      "type": "node",
+      "request": "launch",
+      "protocol": "inspector",
+      "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
+      "args": ["build"],
+      "stopOnEntry": false,
+      "runtimeArgs": ["--nolazy"],
+      "sourceMaps": false
+    }
+  ]
+}
+```
+
+After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` command from VS Code you can see the final result:
+
+![VSCode breakpoint hit](./images/vscode-debug.png)
+
 ## Chrome DevTools for Node
 
 ### Running Gatsby with the `inspect` flag
@@ -97,46 +137,6 @@ You can successfully debug your code using Chrome DevTools but using it isn't re
 - This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
 - You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
 - Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
-
-## VS Code debugger
-
-Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
-
-We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
-
-```json:title=launch.json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Gatsby develop",
-      "type": "node",
-      "request": "launch",
-      "protocol": "inspector",
-      "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
-      "args": ["develop"],
-      "stopOnEntry": false,
-      "runtimeArgs": ["--nolazy"],
-      "sourceMaps": false
-    },
-    {
-      "name": "Gatsby build",
-      "type": "node",
-      "request": "launch",
-      "protocol": "inspector",
-      "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
-      "args": ["build"],
-      "stopOnEntry": false,
-      "runtimeArgs": ["--nolazy"],
-      "sourceMaps": false
-    }
-  ]
-}
-```
-
-After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` command from VS Code you can see the final result:
-
-![VSCode breakpoint hit](./images/vscode-debug.png)
 
 ## Additional resources
 
