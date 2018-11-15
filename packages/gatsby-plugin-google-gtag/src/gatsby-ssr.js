@@ -6,9 +6,9 @@ exports.onRenderBody = (
   pluginOptions
 ) => {
   if (process.env.NODE_ENV !== `production`) return null
-  
+
   const gtagConfig = pluginOptions.gtagConfig || {}
-  
+
   // Prevent duplicate or excluded pageview events being emitted on initial load of page by the `config` command
   // https://developers.google.com/analytics/devguides/collection/gtagjs/#disable_pageview_tracking
 
