@@ -2,6 +2,8 @@
 
 Easily add Google Global Site Tag to your Gatsby site.
 
+NOTE: This plugin only works in production mode! To test your Global Site Tag is installed and firing events correctly run: gatsby build && gatsby serve.
+
 ## Install
 
 `npm install --save gatsby-plugin-google-gtag`
@@ -41,11 +43,6 @@ module.exports = {
   ],
 }
 ```
-
-### No Analytics in Dev by default
-
-This plugin automatically disables google analytics when run in development, and enables sending data in a production build. Thus, you won't see any traffic in google analytics while developing. 
-If you do want to *make sure* everything works, build your site and serve it locally. 
 
 ## Custom Events
 
