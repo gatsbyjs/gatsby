@@ -44,18 +44,12 @@ const headingsCacheKey = node =>
   `transformer-remark-markdown-headings-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const tableOfContentsCacheKey = function(node, appliedTocOptions) {
-  // define toc options cache string as empty
-  let tocOptionsCacheStr = ``
-  // put applied toc options into toc options cache string
-  Object.keys(appliedTocOptions).map(function(key, index) {
-    tocOptionsCacheStr += key + index
-  })
-
-  return `transformer-remark-markdown-toc-${
+const tableOfContentsCacheKey = (node, appliedTocOptions) =>
+  `transformer-remark-markdown-toc-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}-${tocOptionsCacheStr}-${pathPrefixCacheStr}`
-}
+  }-${pluginsCacheStr}-${JSON.stringify(
+    appliedTocOptions
+  )}-${pathPrefixCacheStr}`
 
 // ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
