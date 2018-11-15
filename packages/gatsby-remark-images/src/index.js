@@ -1,4 +1,8 @@
-const { imageClass, imageBackgroundClass, imageWrapperClass } = require(`./constants`)
+const {
+  imageClass,
+  imageBackgroundClass,
+  imageWrapperClass,
+} = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
@@ -108,9 +112,10 @@ module.exports = (
       position: absolute;
       top: 0;
       left: 0;
-      box-shadow: inset 0px 0px 0px 400px ${
-      options.backgroundColor
-    };`.replace(/\s*(\S+:)\s*/g, `$1`)
+      box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};`.replace(
+      /\s*(\S+:)\s*/g,
+      `$1`
+    )
 
     // Create our base image tag
     let imageTag = `
@@ -308,6 +313,8 @@ module.exports = (
             return resolve(node)
           })
       )
-    ).then(htmlImageNodes =>  markdownImageNodes.concat(htmlImageNodes).filter(node => !!node))
+    ).then(htmlImageNodes =>
+      markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
+    )
   )
 }
