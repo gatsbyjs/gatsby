@@ -39,7 +39,18 @@ TypeError: Cannot read property 'internal' of undefined
     D:/dev/blog-v2/gatsby-node.js:6:12
 ```
 
-## VS Code debugger
+## VS Code Debugger (Auto-Config)
+
+If you use VS Code and its integrated terminal, you can configure it to automatically create the debug config for you.
+
+1.  Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
+    ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
+
+2.  Using VS Code's integrated terminal run `node --inspect node_modules/.bin/gatsby develop` instead of `gatsby develop`
+
+3.  Set breakpoints and debug!
+
+## VS Code Debugger (Manual)
 
 Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
 
