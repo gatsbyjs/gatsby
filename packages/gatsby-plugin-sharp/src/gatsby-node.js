@@ -1,4 +1,4 @@
-const { setBoundActionCreators } = require('./index')
+const { setBoundActionCreators } = require(`./index`)
 
 exports.onPreInit = ({ actions }) => {
   setBoundActionCreators(actions)
