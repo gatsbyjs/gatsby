@@ -84,10 +84,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: -${rhythm(1 / 4)};
+  margin: 1rem 0 1.5rem;
 
   > a {
-    margin: ${rhythm(1.2)} ${rhythm(0.2)} ${rhythm(1.5)} 0;
+    margin-right: ${rhythm(0.2)};
+  }
+
+  ${presets.Desktop} {
+    margin: 1rem 0 2.5rem;
   }
 `
 

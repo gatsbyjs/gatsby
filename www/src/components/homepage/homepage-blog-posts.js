@@ -17,18 +17,7 @@ import { rhythm, options } from "../../utils/typography"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: 0 -${rhythm(presets.gutters.default / 2)};
-
-  ${presets.Desktop} {
-    margin: 0;
-    margin-left: calc(3rem - (${rhythm(options.blockMarginBottom)}));
-    margin-right: 1rem;
-    overflow-x: auto;
-  }
-
-  ${presets.Hd} {
-    margin-right: 3rem;
-  }
+  margin: -6px -${rhythm(presets.gutters.default / 2)};
 `
 
 const HomepageBlogPostsRootDesktop = styled(`div`)`
@@ -36,6 +25,10 @@ const HomepageBlogPostsRootDesktop = styled(`div`)`
   margin: 0;
   margin-left: calc(3rem - (${rhythm(options.blockMarginBottom)}));
   margin-right: 1rem;
+
+  ${presets.Hd} {
+    margin-right: 3rem;
+  }
 `
 
 const PostsColumn = styled(`div`)`
