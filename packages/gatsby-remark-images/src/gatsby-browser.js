@@ -7,7 +7,9 @@ const {
 exports.onRouteUpdate = () => {
   const imageWrappers = document.querySelectorAll(`.${imageWrapperClass}`)
 
-  Array.prototype.forEach.call(imageWrappers, imageWrapper => {
+  for (let i = 0; i < imageWrappers; i++) {
+    const imageWrapper = imageWrappers[i]
+
     const backgroundElement = imageWrapper.querySelector(
       `.${imageBackgroundClass}`
     )
@@ -26,5 +28,5 @@ exports.onRouteUpdate = () => {
       imageElement.style.transition = `opacity 0.5s`
       imageElement.addEventListener(`load`, onImageLoad)
     }
-  })
+  }
 }

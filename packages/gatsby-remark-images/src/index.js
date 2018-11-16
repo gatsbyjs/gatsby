@@ -171,6 +171,8 @@ module.exports = (
       `
     }
 
+    const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
+
     // Construct new image node w/ aspect ratio placeholder
     const showCaptions = options.showCaptions && node.title
     let rawHTML = `
@@ -180,11 +182,12 @@ module.exports = (
       showCaptions ? `` : options.wrapperStyle
     } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
-    <img
+    <span
       class="${imageBackgroundClass}"
-      style="width: 100%; height: 100%; bottom: 0; left: 0; transition-delay: 0.5s; transition: opacity 0.5s; opacity: 1; background-size: cover; display: block;"
-      src="${fluidResult.base64}"
-    />
+      style="background-image: url('${
+        fluidResult.base64
+      }'); padding-bottom: ${ratio}; width: 100%; height: 100%; bottom: 0; left: 0; transition-delay: 0.5s; transition: opacity 0.5s; opacity: 1; background-size: cover; display: block;"
+    ></span>
     ${imageTag}
   </span>
   `
