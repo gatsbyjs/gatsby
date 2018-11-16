@@ -1,3 +1,9 @@
+const { setBoundActionCreators } = require('./index')
+
+exports.preInit = ({ actions }) => {
+  setBoundActionCreators(actions)
+}
+
 // TODO
 // exports.formatJobMessage = jobs => {
 // return {
