@@ -8,7 +8,7 @@ Global site tag (gtag.js) is meant to combine multiple Google tagging systems an
 
 For more general information on gtag you can read Google's official documentation on the subject: https://developers.google.com/gtagjs/.
 
-If you're migrating from analytics.js (gatsby-plugin-google-analytics) you can read about the subtle API differences in more depth at: https://developers.google.com/analytics/devguides/collection/gtagjs/migration. 
+If you're migrating from analytics.js (gatsby-plugin-google-analytics) you can read about the subtle API differences in more depth at: https://developers.google.com/analytics/devguides/collection/gtagjs/migration.
 
 ## Install
 
