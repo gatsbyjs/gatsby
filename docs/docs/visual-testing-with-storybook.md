@@ -4,33 +4,35 @@ title: Visual Testing with Storybook
 
 Knowing your components look as intended in every permutation is not only a great way to test them visually, but also provides "living documentation" for them. This makes it easier for teams to:
 
-1) know what components are available to them in a given project and 
-2) what props those components accept and what all of the states of that component are. 
+1. know what components are available to them in a given project and
+2. what props those components accept and what all of the states of that component are.
 
 As your project grows over time having this information available will be invaluable. This is the function of the Storybook library. Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
 
 ## Setting up your environment
 
-In order to set up Storybook you will need to install a few dependencies and then do some custom configuration to make Storybook work with your Gatsby environment. The first thing is to get the Storybook CLI installed if you don't have it already.
+To set up Storybook you need to install dependencies and do some custom configuration. First, install the Storybook CLI.
 
 ```sh
 npm install -g @storybook/cli
 ```
 
-Once the CLI is installed, the next step is to run the `getstorybook` command that is now available from the root directory of your Gatsby project.
+Once the CLI is installed, the next step is to run the `sb init` command that is now available from the root directory of your Gatsby project.
 
 ```sh
 cd my-awesome-gatsby-project
-getstorybook
+sb init
 ```
 
-The `getstorybook` command will then bootstrap the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, we need to update the default Storybook configuration a bit so that we don't get errors when trying to use Gatsby specific components inside of the stories.
+> Note that if you're running a recent version of `npm` (5.2.0+) you can run the following single command instead: `npx -p @storybook/cli sb init`, which is the recommended method by Storybook. This doesn't install the CLI on your machine, thereby ensuring you're always running the latest version of the CLI.
+
+The `sb init` command bootstraps the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
 
 To update your Storybook config open `.storybook/config.js` and add the following before the `configure` method at the bottom of the file.
 
 ```js
 // Gatsby's Link overrides:
-// Gatsby defines a global called ___loader to prevent its method calls from creating console errors we override it here
+// Gatsby defines a global called ___loader to prevent its method calls from creating console errors you override it here
 global.___loader = {
   enqueue: () => {},
   hovering: () => {},
@@ -45,7 +47,7 @@ window.___navigate = pathname => {
 }
 ```
 
-Next we need up make some adjustments to Storybook's default `webpack` configuration so that we can tranpile Gatsby source files, as well as ensure we have all the necessary `babel` plugins we need to transpile Gatsby components.
+Next make some adjustments to Storybook's default `webpack` configuration so you can transpile Gatsby source files, and to ensure you have the necessary `babel` plugins to transpile Gatsby components.
 
 Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following in that file.
 
@@ -84,7 +86,7 @@ Storybook CLI adds this command to your `package.json` for you so you shouldn't 
 
 A full guide to writing stories is beyond the scope of this guide, but we'll take a look at creating a story.
 
-First, create the story file. Storybook looks for all files with a `.story.js` extension and loads them into Storybook for you. Generally you will want your stories near where the component is defined, however since this Gatsby, if you want stories for your pages, you will have to create those files outside of the `pages` directory.
+First, create the story file. Storybook looks for all files with a `.story.js` extension and loads them into Storybook for you. Generally you will want your stories near where the component is defined, however since this is Gatsby, if you want stories for your pages, you will have to create those files outside of the `pages` directory.
 
 > A good solution is to create a `__stories__` directory next to your `pages` directory and put any page stories in there.
 

@@ -1,5 +1,6 @@
 const { actions } = require(`../actions`)
-const { store, getNode } = require(`../index`)
+const { store } = require(`../index`)
+const { getNode } = require(`../nodes`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 

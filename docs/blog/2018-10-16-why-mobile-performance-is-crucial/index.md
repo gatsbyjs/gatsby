@@ -15,7 +15,7 @@ Unfortunately, in practice, great performance is surprisingly hard to achieve --
 
 Why is that? Increased site complexity often distributes bottlenecks across multiple code points and teams of stakeholders. While performance checklists exist, they’ve ballooned to 40+ items -- making them costly and time-consuming for teams to implement.
 
-As Gatsby's co-founder Kyle Mathews likes to say (paraphrasing Tolstoy): 
+As Gatsby's co-founder Kyle Mathews likes to say (paraphrasing Tolstoy):
 
 > "All fast websites are alike, but all slow websites are slow in different ways."
 
@@ -112,7 +112,7 @@ For example, if you use a CDN to serve 3MB Javascript bundles, your site is stil
 <figure>
   <img alt="" src="./network-requests-adobe-com.png" />
   <figcaption>
-    Part of a network request waterfall chart for a typical enterprise website (<a href="www.adobe.com">adobe.com</a>). The full waterfall chart is three times longer.
+    Part of a network request waterfall chart for a typical enterprise website (<a href="https://www.adobe.com">adobe.com</a>). The full waterfall chart is three times longer.
   </figcaption>
 </figure>
 
@@ -154,7 +154,7 @@ To overcome these obstacles, high-performing website teams should look to a cont
 
 One example is Gatsby, which includes [both delivery optimization and payload optimization out of the box](/features/#legend).
 
-In the next and final post in this series, [Creating Compelling Experiences](/blog/2018-10-18-creating-compelling-experiences), we’ll explain how to implement a content mesh and get all the benefits of best-of-breed content systems, modern development frameworks, and high-performing websites.
+In the next and final post in this series, [Creating Compelling Experiences](/blog/2018-10-18-creating-compelling-content-experiences), we’ll explain how to implement a content mesh and get all the benefits of best-of-breed content systems, modern development frameworks, and high-performing websites.
 
 <figure>
   <img alt="" src="./modern-website-performance.png" />

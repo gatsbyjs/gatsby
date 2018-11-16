@@ -94,7 +94,7 @@ You can use placeholder image by setting `GATSBY_SCREENSHOT_PLACEHOLDER` environ
 GATSBY_SCREENSHOT_PLACEHOLDER=true gatsby develop
 ```
 
-or by adding it to `.env.development` file in root of your project:
+or by using [`dotenv`](https://www.gatsbyjs.org/docs/environment-variables/#server-side-nodejs) in your `gatsby-config.js` and adding `GATSBY_SCREENSHOT_PLACEHOLDER` to `.env.development` file in root of your project:
 
 ```shell:title=.env.development
 GATSBY_SCREENSHOT_PLACEHOLDER=true

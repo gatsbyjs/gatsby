@@ -91,3 +91,4 @@ StaticQuery can do most of the things that page query can, including fragments. 
 
 - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
 - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
+- StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`

@@ -53,7 +53,6 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const criticalFilePaths = _.uniq(
     _.concat(
-      getResourcesFromHTML(`${process.cwd()}/${rootDir}/index.html`),
       getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
       getResourcesFromHTML(
         `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
@@ -62,7 +61,6 @@ exports.onPostBuild = (args, pluginOptions) => {
   ).map(omitPrefix)
 
   const globPatterns = files.concat([
-    `index.html`,
     `offline-plugin-app-shell-fallback/index.html`,
     ...criticalFilePaths,
   ])
@@ -90,21 +88,28 @@ exports.onPostBuild = (args, pluginOptions) => {
     // URLs and not any files hosted on the site.
     //
     // Regex based on http://stackoverflow.com/a/18017805
-    navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
+    navigateFallbackWhitelist: [/^([^.?]*|[^?]*\.([^.?]{5,}|html))(\?.*)?$/],
     navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
     cacheId: `gatsby-plugin-offline`,
-    // Don't cache-bust JS or CSS files, and anything in the static directory
-    dontCacheBustUrlsMatching: /(.*\.js$|.*\.css$|\/static\/)/,
+    // Don't cache-bust JS or CSS files, and anything in the static directory,
+    // since these files have unique URLs and their contents will never change
+    dontCacheBustUrlsMatching: /(\.js$|\.css$|\/static\/)/,
     runtimeCaching: [
       {
-        // Add runtime caching of various page resources.
-        urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        // Use cacheFirst since these don't need to be revalidated (same RegExp
+        // and same reason as above)
+        urlPattern: /(\.js$|\.css$|\/static\/)/,
+        handler: `cacheFirst`,
+      },
+      {
+        // Add runtime caching of various other page resources
+        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `staleWhileRevalidate`,
       },
       {
-        // Use the Network First handler for external resources
-        urlPattern: /^https:/,
-        handler: `networkFirst`,
+        // Google Fonts CSS (doesn't end in .css so we need to specify it)
+        urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+        handler: `staleWhileRevalidate`,
       },
     ],
     skipWaiting: true,

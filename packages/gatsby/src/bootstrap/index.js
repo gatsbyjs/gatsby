@@ -12,6 +12,7 @@ const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const mergeGatsbyConfig = require(`../utils/merge-gatsby-config`)
+const getBrowserslist = require(`../utils/browserslist`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
@@ -52,10 +53,17 @@ module.exports = async (args: BootstrapArgs) => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
+  // Start plugin runner which listens to the store
+  // and invokes Gatsby API based on actions.
+  require(`../redux/plugin-runner`)
+
+  const directory = slash(args.directory)
+
   const program = {
     ...args,
+    browserslist: getBrowserslist(directory),
     // Fix program directory path for windows env.
-    directory: slash(args.directory),
+    directory,
   }
 
   store.dispatch({
@@ -76,7 +84,9 @@ module.exports = async (args: BootstrapArgs) => {
   if (config && config.__experimentalThemes) {
     const themesConfig = await Promise.mapSeries(
       config.__experimentalThemes,
-      async ([themeName, themeConfig]) => {
+      async plugin => {
+        const themeName = plugin.resolve || plugin
+        const themeConfig = plugin.options || {}
         const theme = await preferDefault(
           getConfigFile(themeName, `gatsby-config`)
         )
@@ -345,7 +355,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   // Collect resolvable extensions and attach to program.
@@ -408,7 +418,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   require(`../schema/type-conflict-reporter`).printConflicts()
