@@ -3356,3 +3356,24 @@
     - Agency
     - Web Development
   featured: false
+- title: COOP by Ryder
+  url: https://coop.com/
+  main_url: https://coop.com/
+  description: >
+    COOP is a platform that connects fleet managers that have idle vehicles to businesses that are looking to rent vehicles. COOP simplifies the process and paperwork required to safely share vehicles between business owners.
+  categories:
+    - Marketing
+    - Asset Sharing
+  built_by: Crispin Porter Bogusky
+  built_by_url: http://www.cpbgroup.com/
+  featured: false
+- title: Domino's Paving for Pizza
+  url: https://www.pavingforpizza.com/
+  main_url: https://www.pavingforpizza.com/
+  description: >
+    Nominate your town for a chance to have your rough drive home from Domino's fixed to pizza perfection.
+  categories:
+    - Marketing
+  built_by: Crispin Porter Bogusky
+  built_by_url: http://www.cpbgroup.com/
+  featured: false
