@@ -5,24 +5,18 @@ import { Link } from "gatsby"
 
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import HomepageBlogPost, { ScrollerItem } from "./homepage-blog-post"
+import HomepageBlogPost from "./homepage-blog-post"
+import {
+  HorizontalScroller,
+  HorizontalScrollerContent,
+  HorizontalScrollerItem,
+} from "../shared/horizontal-scroller"
 
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
-const ScrollerOuter = styled(`div`)`
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
-`
-
-const ScrollerInner = styled(`div`)`
-  display: inline-flex;
-  margin: 0;
-  padding: 6px ${rhythm(presets.gutters.default / 2)} 12px;
-`
-
-const HomepageBlogPostsRoot = styled(ScrollerOuter)`
+const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
   margin: 0 -${rhythm(presets.gutters.default / 2)};
 
   ${presets.Desktop} {
@@ -37,26 +31,14 @@ const HomepageBlogPostsRoot = styled(ScrollerOuter)`
   }
 `
 
-const MobilePosts = styled(ScrollerInner)``
-
-const DesktopPosts = styled(`div`)`
+const HomepageBlogPostsRootDesktop = styled(`div`)`
   display: flex;
   margin: 0;
   margin-left: calc(3rem - (${rhythm(options.blockMarginBottom)}));
   margin-right: 1rem;
-
-  a {
-    border: none;
-    box-shadow: none;
-    font-family: inherit;
-
-    :hover {
-      background: transparent;
-    }
-  }
 `
 
-const DesktopPostsColumn = styled(`div`)`
+const PostsColumn = styled(`div`)`
   align-items: flex-end;
   display: flex;
   flex-direction: column;
@@ -71,19 +53,21 @@ const DesktopPostsColumn = styled(`div`)`
   }
 `
 
-const ViewAllStyle = styled(ScrollerItem)`
+const ViewAllStyle = styled(HorizontalScrollerItem)`
   display: flex;
-  overflow: hidden;
   font-family: ${options.headerFontFamily.join(`,`)};
-  margin-left: ${rhythm(presets.gutters.default)};
+  overflow: hidden;
+  width: auto;
 
-  & > a {
+  a {
+    box-shadow: none;
     display: flex;
     flex-direction: column;
     font-weight: bold;
     font-size: 1.25rem;
+    justify-content: center;
     line-height: 1.2;
-    padding: ${rhythm(0.75)};
+    padding: ${rhythm(1.5)};
     width: 100%;
 
     span {
@@ -103,6 +87,7 @@ const ViewAllStyle = styled(ScrollerItem)`
     color: white;
     flex-shrink: 0;
     height: 160px;
+    margin-left: ${rhythm(presets.gutters.default)};
     width: 160px;
 
     &:hover {
@@ -112,7 +97,7 @@ const ViewAllStyle = styled(ScrollerItem)`
   }
 `
 
-const AddViewAll = styled(`div`)`
+const LastPost = styled(`div`)`
   display: flex;
 `
 
@@ -132,13 +117,13 @@ class HomepageBlogPosts extends Component {
   desktopMediaQuery
 
   state = {
-    inDesktopViewPort: false,
+    desktopViewport: false,
   }
 
   componentDidMount = () => {
     this.desktopMediaQuery = window.matchMedia(presets.desktop)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
-    this.setState({ inDesktopViewPort: this.desktopMediaQuery.matches })
+    this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
 
   componentWillUnmount = () => {
@@ -146,7 +131,7 @@ class HomepageBlogPosts extends Component {
   }
 
   updateViewPortState = e => {
-    this.setState({ inDesktopViewPort: this.desktopMediaQuery.matches })
+    this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
 
   splitPostsToColumns = posts =>
@@ -166,28 +151,31 @@ class HomepageBlogPosts extends Component {
   render() {
     const { posts } = this.props
     const postsInColumns = this.splitPostsToColumns(posts)
-    const { inDesktopViewPort } = this.state
+    const { desktopViewport } = this.state
 
     return (
       <React.Fragment>
-        {inDesktopViewPort ? (
-          <DesktopPosts>
+        {desktopViewport ? (
+          <HomepageBlogPostsRootDesktop>
             {postsInColumns.map((column, colIdx) => (
-              <DesktopPostsColumn key={`col${colIdx}`}>
+              <PostsColumn key={`col${colIdx}`}>
                 {column.map((post, postIdx) => {
                   const {
                     fields: { slug },
                   } = post
 
                   if (colIdx & postIdx) {
+                    {
+                      /* add 'View all posts' link as a sibling of the last post card */
+                    }
                     return (
-                      <AddViewAll key={slug}>
+                      <LastPost key={slug}>
                         <HomepageBlogPost
                           first={!colIdx && !postIdx}
                           post={post}
                         />
                         <ViewAll />
-                      </AddViewAll>
+                      </LastPost>
                     )
                   }
 
@@ -197,15 +185,16 @@ class HomepageBlogPosts extends Component {
                       first={!colIdx && !postIdx}
                       key={slug}
                       post={post}
+                      desktopViewport={desktopViewport}
                     />
                   )
                 })}
-              </DesktopPostsColumn>
+              </PostsColumn>
             ))}
-          </DesktopPosts>
+          </HomepageBlogPostsRootDesktop>
         ) : (
-          <HomepageBlogPostsRoot className={SCROLLER_CLASSNAME}>
-            <MobilePosts numberOfItems={posts.length}>
+          <HomepageBlogPostsRootMobile className={SCROLLER_CLASSNAME}>
+            <HorizontalScrollerContent>
               {posts.map((post, idx) => {
                 const {
                   fields: { slug },
@@ -213,8 +202,8 @@ class HomepageBlogPosts extends Component {
                 return <HomepageBlogPost index={idx} key={slug} post={post} />
               })}
               <ViewAll />
-            </MobilePosts>
-          </HomepageBlogPostsRoot>
+            </HorizontalScrollerContent>
+          </HomepageBlogPostsRootMobile>
         )}
       </React.Fragment>
     )

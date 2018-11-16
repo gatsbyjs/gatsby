@@ -6,24 +6,27 @@ import Img from "gatsby-image"
 
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
+import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
+
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 
-export const ScrollerItem = styled(`div`)`
-  background: #fff;
-  border-radius: ${presets.radiusLg}px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-`
-
-const HomepageBlogPostRoot = styled(ScrollerItem)`
+const HomepageBlogPostRoot = styled(HorizontalScrollerItem)`
   display: flex;
   flex-direction: column;
   font-family: ${options.systemFontFamily.join(`,`)};
-  margin-right: ${rhythm(presets.gutters.default)};
-  margin-bottom: ${rhythm(presets.gutters.default)};
-  padding-bottom: ${rhythm(3)};
+  padding-bottom: ${rhythm(2.5)};
   position: relative;
-  width: 77vw;
+
+  a {
+    border: none;
+    box-shadow: none;
+    font-family: inherit;
+
+    :hover {
+      background: transparent;
+    }
+  }
 
   ${presets.Tablet} {
     width: 320px;
@@ -32,6 +35,8 @@ const HomepageBlogPostRoot = styled(ScrollerItem)`
   ${presets.Desktop} {
     flex-shrink: 0;
     margin-right: 0;
+    margin-bottom: ${rhythm(presets.gutters.default)};
+    padding-bottom: ${rhythm(3.5)};
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
 
     :hover {
@@ -41,19 +46,15 @@ const HomepageBlogPostRoot = styled(ScrollerItem)`
 `
 
 const Cover = styled(Img)`
-  display: none;
-
-  ${presets.Desktop} {
-    display: block;
-    margin-bottom: -${rhythm(0.5)};
-  }
+  display: block;
+  margin-bottom: -${rhythm(0.5)};
 `
 
 const Header = styled(`h1`)`
-  color: ${colors.gatsbyDark};
+  color: ${colors.gatsbyDarker};
   font-size: 1.25rem;
   font-weight: bold;
-  line-height: 1.25;
+  line-height: 1.2;
   margin: 0;
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
@@ -71,14 +72,16 @@ const Meta = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
   font-size: 0.875rem;
-  padding: ${rhythm(1 / 4)} ${rhythm(4 / 5)};
+  margin-top: 1rem;
+  padding: 0 ${rhythm(4 / 5)};
 
   & > * {
     flex-shrink: 0;
   }
 
   ${presets.Desktop} {
-    padding: ${rhythm(0.75)} ${rhythm(1.5)};
+    margin-top: 1.5rem;
+    padding: 0 ${rhythm(1.5)};
   }
 `
 
@@ -116,11 +119,12 @@ const Author = styled(Link)`
 const Excerpt = styled(`p`)`
   color: ${colors.gray.copy};
   font-size: 0.875rem;
-  line-height: 1.4;
+  line-height: 1.5;
   padding: 0 ${rhythm(4 / 5)};
 
   ${presets.Desktop} {
-    margin-top: 0.2rem;
+    margin: 0;
+    margin-top: 1.5rem;
     padding: 0 ${rhythm(1.5)};
   }
 `
@@ -168,7 +172,12 @@ const ReadMore = styled(Link)`
   }
 `
 
-const HomepageBlogPost = ({ post, first = false, fullWidth = false }) => {
+const HomepageBlogPost = ({
+  post,
+  first = false,
+  fullWidth = false,
+  desktopViewport = false,
+}) => {
   const {
     fields: { slug },
     frontmatter: {
@@ -188,7 +197,8 @@ const HomepageBlogPost = ({ post, first = false, fullWidth = false }) => {
 
   return (
     <HomepageBlogPostRoot fullWidth={fullWidth}>
-      {cover && <Cover fluid={cover.childImageSharp.fluid} />}
+      {desktopViewport &&
+        cover && <Cover fluid={cover.childImageSharp.fluid} />}
 
       <Link to={slug}>
         <Header first={first} withCover={cover}>
@@ -217,6 +227,7 @@ HomepageBlogPost.propTypes = {
   post: PropTypes.object.isRequired,
   first: PropTypes.bool,
   fullWidth: PropTypes.bool,
+  desktopViewport: PropTypes.bool,
 }
 
 export const homepageBlogPostFragment = graphql`
