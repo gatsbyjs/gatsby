@@ -37,6 +37,17 @@
     - Eslint Airbnb without semicolon and without .jsx extension
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-redux-firebase.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-starter-redux-firebase
+  description: A Gatsby + Redux + Firebase Starter. With Authentication
+  tags:
+    - Styling:None
+    - Firebase
+    - Client-side App
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Firebase
+    - Web App Manifest
 - url: https://dschau.github.io/gatsby-blog-starter-kit/
   repo: https://github.com/dschau/gatsby-blog-starter-kit
   description: n/a
@@ -1045,6 +1056,7 @@
   tags:
     - Styling:None
     - Firebase
+    - Client-side App
   features:
     - Eslint Airbnb without semicolon and without .jsx extension
     - Firebase
