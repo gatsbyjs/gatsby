@@ -1,6 +1,6 @@
 const { setBoundActionCreators } = require('./index')
 
-exports.preInit = ({ actions }) => {
+exports.onPreInit = ({ actions }) => {
   setBoundActionCreators(actions)
 }
 
