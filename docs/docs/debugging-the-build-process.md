@@ -6,8 +6,9 @@ Gatsby's `build` and `develop` steps run as a Node.js application which you can 
 
 In this guide you will learn how to debug some code using:
 
+- [VS Code debugger](<#vs-code-debugger-(auto-config)>) (Auto-Config)
+- [VS Code debugger](<#vs-code-debugger-(manual-config)>) (Manual-Config)
 - [Chrome DevTools for Node](#chrome-devtools-for-node)
-- [VS Code debugger](#vs-code-debugger)
 
 As an example let's use the following code snippet in a `gatsby-node.js` file:
 
@@ -50,7 +51,7 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 
 3.  Set breakpoints and debug!
 
-## VS Code Debugger (Manual)
+## VS Code Debugger (Manual Config)
 
 Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
 
