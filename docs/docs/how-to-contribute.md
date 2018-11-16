@@ -80,11 +80,11 @@ a pull request.
 - Clone the repo and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
 - Run `gatsby develop` to preview the website in `http://localhost:8000` or [try these settings](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot#placeholder-image) if it gets stuck processing.
-- Make any necessary documentation modifications or additions to the
-  markdown files in `/docs`
+- Make any necessary documentation modifications or additions to the markdown files in `/docs`
 - Make sure to double check your grammar and capitalise correctly.
 - Commit and push to your fork.
 - Create a pull request from your branch.
+  - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change`
 
 To develop on the starter showcase, you'll need to supply a GitHub personal access token.
 
@@ -118,6 +118,7 @@ To add a new blog post to the gatsbyjs.org blog:
 - Double check your grammar and capitalise correctly
 - Commit and push to your fork
 - Create a pull request from your branch
+  - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change`
 
 ## Development tools
 
