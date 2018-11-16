@@ -1,55 +1,66 @@
 import React from "react"
+import styled from "react-emotion"
+
+import SendIcon from "react-icons/lib/md/send"
+
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/form-styles"
 import { buttonStyles } from "../utils/styles"
 
-const Label = props => (
-  <label htmlFor={props.for}>
-    {props.children}
-    {props.isRequired && (
-      <span
-        css={{
-          color: `red`,
-          "&:before": {
-            content: `'*'`,
-            color: colors.warning,
-          },
-        }}
-      />
-    )}
-  </label>
-)
+const Label = styled(`label`)`
+  :after {
+    content: ${props => (props.isRequired ? `'*'` : "")};
+    color: ${colors.warning};
+  }
+`
 
-const SingleLineInput = React.forwardRef((props, ref) => (
-  <input
-    ref={ref}
-    css={{
-      ...formInput,
-      width: `100% !important`,
-      ":focus": {
-        borderColor: colors.gatsby,
-        outline: 0,
-        boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
-      },
-    }}
-    {...props}
-  />
-))
+const SingleLineInput = styled(`input`)`
+  ${formInput};
+  width: 100%;
 
-const ErrorMessage = ({ children }) => (
-  <div
-    css={{
-      // dunno where this is comming from - just straight copied li style from dev tools
-      marginBottom: `calc(1.05rem / 2)`,
-      color: colors.warning,
-      fontSize: rhythm(1 / 2),
-    }}
-  >
-    {children}
-  </div>
-)
+  ${props => {
+    if (props.newStyle) {
+      return `
+        font-family: ${options.systemFontFamily.join(`,`)};
+        font-size: 1rem;
+        padding: .6rem;
+      `
+    }
+  }};
+
+  :focus {
+    border-color: ${colors.gatsby};
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)};
+  }
+`
+
+const ErrorMessage = styled(`div`)`
+  margin-bottom: calc(1.05rem / 2);
+  color: ${colors.warning};
+  fontsize: ${rhythm(1 / 2)};
+`
+
+const Submit = styled(`button`)`
+  ${buttonStyles.default};
+
+  ${props => {
+    if (props.newStyle) {
+      return `
+        font-size: 1.25rem;
+        width: 100%;
+
+        span {
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+        }
+      `
+    }
+  }};
+`
 
 class Form extends React.Component {
   constructor(props) {
@@ -58,7 +69,7 @@ class Form extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
 
     // let's use uncontrolled components https://reactjs.org/docs/uncontrolled-components.html
-    this.email = React.createRef()
+    this.email = null
   }
 
   state = {
@@ -78,7 +89,7 @@ class Form extends React.Component {
       fields: [
         {
           name: `email`,
-          value: this.email.current.value,
+          value: this.email.value,
         },
       ],
       context: {
@@ -133,32 +144,42 @@ class Form extends React.Component {
   }
 
   render() {
+    const { newStyle = false } = this.props
+
     return (
       <form onSubmit={this.onSubmit}>
-        <div
-          css={{
-            paddingBottom: `20px`,
-          }}
-        >
-          <Label isRequired for="email">
-            Email
-          </Label>
+        <div css={{ paddingBottom: this.props.newStyle ? `10px` : `20px` }}>
+          {!this.props.newStyle && (
+            <Label isRequired htmlFor="email">
+              Email
+            </Label>
+          )}
           <SingleLineInput
             id="email"
             name="email"
             type="email"
             required
             autoComplete="email"
-            ref={this.email}
+            innerRef={input => {
+              this.email = input
+            }}
+            placeholder={newStyle ? "your.email@example.com" : ""}
+            newStyle={newStyle}
           />
           {this.state.fieldErrors.email && (
             <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
           )}
         </div>
+
         {this.state.errorMessage && (
           <ErrorMessage>{this.state.errorMessage}</ErrorMessage>
         )}
-        <input type="submit" value="Subscribe" css={buttonStyles.default} />
+        <Submit type="1submit" newStyle={newStyle}>
+          <span>
+            Subscribe
+            <SendIcon />
+          </span>
+        </Submit>
       </form>
     )
   }
@@ -179,32 +200,17 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS } = this.props
+    const { signupMessage, overrideCSS, newStyle } = this.props
 
     return (
-      <div
-        css={{
-          borderTop: `2px solid ${colors.lilac}`,
-          fontFamily: options.headerFontFamily.join(`,`),
-          marginTop: rhythm(3),
-          paddingTop: `${rhythm(1)}`,
-          ...overrideCSS,
-        }}
-      >
-        <div>
-          <p>{signupMessage}</p>
-          <div
-            css={{
-              backgroundColor: colors.ui.light,
-              borderRadius: presets.radius,
-              color: colors.gatsby,
-              fontFamily: options.headerFontFamily.join(`,`),
-              padding: `15px`,
-            }}
-          >
+      <React.Fragment>
+        {newStyle ? (
+          <div>
             {this.state.successMessage ? (
               <div
-                dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
+                dangerouslySetInnerHTML={{
+                  __html: this.state.successMessage,
+                }}
               />
             ) : (
               <Form
@@ -212,11 +218,50 @@ class EmailCaptureForm extends React.Component {
                 portalId="4731712"
                 formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
                 sfdcCampaignId="701f4000000Us7pAAC"
+                newStyle={true}
               />
             )}
           </div>
-        </div>
-      </div>
+        ) : (
+          <div
+            css={{
+              borderTop: `2px solid ${colors.lilac}`,
+              fontFamily: options.headerFontFamily.join(`,`),
+              marginTop: rhythm(3),
+              paddingTop: `${rhythm(1)}`,
+              ...overrideCSS,
+            }}
+          >
+            <div>
+              <p>{signupMessage}</p>
+              <div
+                css={{
+                  backgroundColor: colors.ui.light,
+                  borderRadius: presets.radius,
+                  color: colors.gatsby,
+                  fontFamily: options.headerFontFamily.join(`,`),
+                  padding: `15px`,
+                }}
+              >
+                {this.state.successMessage ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: this.state.successMessage,
+                    }}
+                  />
+                ) : (
+                  <Form
+                    onSuccess={this.onSuccess}
+                    portalId="4731712"
+                    formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
+                    sfdcCampaignId="701f4000000Us7pAAC"
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </React.Fragment>
     )
   }
 }
@@ -225,6 +270,7 @@ EmailCaptureForm.defaultProps = {
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
   overrideCSS: {},
+  newStyle: false,
 }
 
 export default EmailCaptureForm

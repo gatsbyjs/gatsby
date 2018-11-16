@@ -19,6 +19,7 @@ import Button from "../components/button"
 import TechWithIcon from "../components/tech-with-icon"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
+import HomepageNewsletter from "../components/homepage/homepage-newsletter"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -226,6 +227,8 @@ class IndexRoute extends React.Component {
                 <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
 
                 <HomepageBlog posts={posts} />
+
+                <HomepageNewsletter />
               </main>
             </div>
           </div>
