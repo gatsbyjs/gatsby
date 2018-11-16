@@ -2,6 +2,14 @@
 
 Easily add Google Global Site Tag to your Gatsby site.
 
+> The global site tag (gtag.js) is a JavaScript tagging framework and API that allows you to send event data to Google Analytics, Google Ads, Campaign Manager, Display & Video 360, and Search Ads 360.
+
+Global site tag (gtag.js) is meant to combine multiple Google tagging systems and can replace older ones such as [analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs/) ([gatsby-plugin-google-analytics](https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/)).
+
+For more general information on gtag you can read Google's official documentation on the subject: https://developers.google.com/gtagjs/.
+
+If you're migrating from analytics.js (gatsby-plugin-google-analytics) you can read about the subtle API differences in more depth at: https://developers.google.com/analytics/devguides/collection/gtagjs/migration. 
+
 ## Install
 
 `npm install --save gatsby-plugin-google-gtag`
