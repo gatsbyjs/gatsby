@@ -22,9 +22,7 @@ const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
 
 const HomepageBlogPostsRootDesktop = styled(`div`)`
   display: flex;
-  margin: 0;
-  margin-left: calc(3rem - (${rhythm(options.blockMarginBottom)}));
-  margin-right: 1rem;
+  margin: 0 1.5rem 0 2.5rem;
 
   ${presets.Hd} {
     margin-right: 3rem;
@@ -35,7 +33,7 @@ const PostsColumn = styled(`div`)`
   align-items: flex-end;
   display: flex;
   flex-direction: column;
-  flex-basis: 43%;
+  flex-basis: 45%;
   margin-right: 30px;
   position: relative;
 
@@ -46,7 +44,7 @@ const PostsColumn = styled(`div`)`
   }
 `
 
-const ViewAllStyle = styled(HorizontalScrollerItem)`
+const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
   font-family: ${options.headerFontFamily.join(`,`)};
   overflow: hidden;
@@ -54,6 +52,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem)`
 
   a {
     box-shadow: none;
+    border: 0;
     display: flex;
     flex-direction: column;
     font-weight: bold;
@@ -80,13 +79,23 @@ const ViewAllStyle = styled(HorizontalScrollerItem)`
     color: white;
     flex-shrink: 0;
     height: 160px;
-    margin-left: ${rhythm(presets.gutters.default)};
-    width: 160px;
 
-    &:hover {
-      color: ${colors.gatsby};
-      background: ${colors.ui.whisper};
+    margin-left: ${rhythm(presets.gutters.default)};
+    width: 120px;
+
+    a {
+      padding: ${rhythm(1)};
+      justify-content: flex-start;
+
+      &:hover {
+        color: ${colors.gatsby};
+        background: ${colors.ui.whisper};
+      }
     }
+  }
+
+  ${presets.Hd} {
+    width: 160px;
   }
 `
 
@@ -97,7 +106,7 @@ const LastPost = styled(`div`)`
 const ViewAll = () => (
   <ViewAllStyle>
     <Link to="/">
-      View&nbsp;all
+      View all
       <span>
         posts
         <ArrowForwardIcon />
