@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.10"></a>
+
+## [3.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.9...gatsby-source-drupal@3.0.10) (2018-11-16)
+
+### Features
+
+- **gatsby-source-drupal:** add basicauth support ([#9848](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/9848)) ([e208134](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/e208134))
+
 <a name="3.0.9"></a>
 
 ## [3.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.8...gatsby-source-drupal@3.0.9) (2018-11-14)
