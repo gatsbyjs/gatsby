@@ -3,7 +3,7 @@ import styled from "react-emotion"
 
 import EmailCaptureForm from "../../components/email-capture-form"
 
-import presets, { colors } from "../../utils/presets"
+import presets from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const HomepageNewsletterRoot = styled(`section`)`
@@ -15,7 +15,10 @@ const HomepageNewsletterRoot = styled(`section`)`
 
 const HomepageNewsletter = ({ posts }) => (
   <HomepageNewsletterRoot>
-    <EmailCaptureForm newStyle={true} confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"  />
+    <EmailCaptureForm
+      newStyle={true}
+      confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
+    />
   </HomepageNewsletterRoot>
 )
 

@@ -11,7 +11,7 @@ import { buttonStyles } from "../utils/styles"
 
 const Label = styled(`label`)`
   :after {
-    content: ${props => (props.isRequired ? `'*'` : "")};
+    content: ${props => (props.isRequired ? `'*'` : ``)};
     color: ${colors.warning};
   }
 `
@@ -20,15 +20,14 @@ const SingleLineInput = styled(`input`)`
   ${formInput};
   width: 100%;
 
-  ${props => {
-    if (props.newStyle) {
-      return `
+  ${props =>
+    props.newStyle
+      ? `
         font-family: ${options.systemFontFamily.join(`,`)};
         font-size: 1rem;
         padding: .6rem;
       `
-    }
-  }};
+      : ``};
 
   :focus {
     border-color: ${colors.gatsby};
@@ -46,9 +45,9 @@ const ErrorMessage = styled(`div`)`
 const Submit = styled(`button`)`
   ${buttonStyles.default};
 
-  ${props => {
-    if (props.newStyle) {
-      return `
+  ${props =>
+    props.newStyle
+      ? `
         font-size: 1.25rem;
         width: 100%;
 
@@ -58,8 +57,7 @@ const Submit = styled(`button`)`
           justify-content: space-between;
         }
       `
-    }
-  }};
+      : ``};
 `
 
 class Form extends React.Component {
@@ -163,7 +161,7 @@ class Form extends React.Component {
             innerRef={input => {
               this.email = input
             }}
-            placeholder={newStyle ? "your.email@example.com" : ""}
+            placeholder={newStyle ? `your.email@example.com` : ``}
             newStyle={newStyle}
           />
           {this.state.fieldErrors.email && (
