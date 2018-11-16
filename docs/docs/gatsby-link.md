@@ -5,8 +5,8 @@ title: Gatsby Link
 A `<Link>` component for Gatsby.
 
 It's a wrapper around
-[@reach/router's Link component](https://reach.tech/router/api/Link)
-that adds enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
+[@react/router's Link component](https://react.tech/router/api/Link)
+that adds enhancements specific to Gatsby. All props are passed through to @react/router's `Link` component.
 
 You can set the `activeStyle` or `activeClassName` prop to add styling
 attributes to the rendered element when it matches the current URL.
