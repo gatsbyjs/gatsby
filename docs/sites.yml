@@ -3377,3 +3377,17 @@
   built_by: Crispin Porter Bogusky
   built_by_url: http://www.cpbgroup.com/
   featured: false
+- title: Propapanda
+  url: https://propapanda.eu/
+  main_url: https://propapanda.eu/
+  description: >
+    Is a creative production house based in Tallinn, Estonia. We produce music videos, commercials, films and campaigns – from scratch to finish.
+  categories:
+    - Cinema
+    - Video
+    - Portfolio
+    - Agency
+    - Media
+  built_by: Henry Kehlmann
+  built_by_url: https://github.com/madhenry/
+  featured: false
