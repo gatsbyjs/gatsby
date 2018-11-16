@@ -44,8 +44,8 @@ aliases:
     filters:
       branches:
         ignore:
-          - /docs(\/)?.*/
-          - /blog(\/)?.*/
+          - /docs.+/
+          - /blog.+/
 
   test_template: &test_template
     steps:
