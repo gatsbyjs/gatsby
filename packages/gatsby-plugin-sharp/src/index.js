@@ -31,11 +31,12 @@ const getImageSize = file => {
 
 const duotone = require(`./duotone`)
 
-// Bound action creators are set when passed to onPreInit in gatsby-node.
-// ** Do NOT just directly require the gatsby module **.
+// Bound action creators should be set when passed to onPreInit in gatsby-node.
+// ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
-let boundActionCreators
+// The direct require has been left only to avoid breaking changes.
+let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
