@@ -142,9 +142,7 @@ We can now see the problem - `args` doesn't contain `Node` - it contains `node`.
 
 ### Finishing thoughts on DevTools
 
-You can successfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use debugger, so in the next section you'll learn how to use the built-in debugging capabilities of VS Code.
-
-"Why did we go through all those steps only to find out that there are better options?" you might ask. That's a great question and here are couple of reasons:
+You can successfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use debugger, thankfully there are other methods that make it simpler to start such as the ones outlined above.
 
 - This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
 - You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
