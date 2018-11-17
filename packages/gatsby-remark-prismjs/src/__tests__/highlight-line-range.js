@@ -75,7 +75,9 @@ describe(`highlighting a line range`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
     it(`highlights comment line after Prism highlighting`, () => {
-      const highlights = highlightLineRange(fixtures.highlightJsxCommentAfterPrismHighlighting)
+      const highlights = highlightLineRange(
+        fixtures.highlightJsxCommentAfterPrismHighlighting
+      )
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
