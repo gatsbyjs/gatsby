@@ -3402,3 +3402,17 @@
   built_by: Matthieu Auger & Nicolas Goutay
   built_by_url: https://github.com/JAMstack-paris
   featured: false
+- title: DexWallet - The only Wallet you need by Dexlab
+  main_url: "https://www.dexwallet.io/"
+  url: "https://www.dexwallet.io/"
+  source_url: "https://github.com/dexlab-io/DexWallet-website"
+  featured: false
+  description: >-
+    DexWallet is a secure, multi-chain, mobile wallet with an upcoming one-click exchange for mobile.
+  categories:
+    - Blockchain
+    - App
+    - Open Source
+    - React Native
+  built_by: DexLab
+  built_by_url: "https://github.com/dexlab-io"
