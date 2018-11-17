@@ -96,7 +96,7 @@ fin
 
 Once the initial bootstrap is finished, we start `webpack-dev-server` and an express server for serving files for the development server, and for a production build, we start building the CSS then JavaScript then HTML with webpack.
 
-During these processes there are various extension points where plugins can
+During these processes, there are various extension points where plugins can
 intervene. All major processes have a `onPre` and `onPost` e.g. `onPreBootstrap`
 and `onPostBootstrap` or `onPreBuild` or `onPostBuild`. During bootstrap,
 plugins can respond at various stages to APIs like `onCreatePages`,
