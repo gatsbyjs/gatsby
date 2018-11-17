@@ -87,6 +87,9 @@ describe(`GraphQL type inferance`, () => {
       "with-hyphen": 2,
       "with resolver": `1012-11-01`,
       123: 42,
+      456: {
+        testingTypeNameCreation: true,
+      },
       aBoolean: true,
       externalUrl: `https://example.com/awesome.jpg`,
       domain: `pizza.com`,
@@ -242,6 +245,9 @@ describe(`GraphQL type inferance`, () => {
         with_hyphen
         with_resolver(formatString:"DD.MM.YYYY")
         _123
+        _456 {
+          testingTypeNameCreation
+        }
       `
     )
 
@@ -254,6 +260,7 @@ describe(`GraphQL type inferance`, () => {
     expect(result.data.listNode[0].with_resolver).toEqual(`01.11.1012`)
     expect(result.data.listNode[0]._123).toEqual(42)
     expect(result.data.listNode[1]._123).toEqual(24)
+    expect(result.data.listNode[0]._456).toEqual(nodes[0][`456`])
   })
 
   describe(`Handles dates`, () => {
