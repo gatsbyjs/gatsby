@@ -222,6 +222,8 @@
           link: /docs/creating-a-sitemap/
         - title: Linking between pages
           link: /docs/linking-between-pages/
+        - title: Making your site accessible
+          link: /docs/making-your-site-accessible
         - title: Routing
           link: /docs/routing/
           items:
