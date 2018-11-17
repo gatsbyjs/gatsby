@@ -3391,3 +3391,19 @@
   built_by: Henry Kehlmann
   built_by_url: https://github.com/madhenry/
   featured: false
+- title: Boldare Tech Blog
+  url: https://tech.boldare.com/
+  main_url: https://tech.boldare.com/
+  source_url: https://github.com/xsolve-pl/boldare-tech
+  description: >
+    Development tips && tricks. From devs. For devs. Any helpful contributions are welcome. 3 lines, 3 paragraphs? Doesn’t matter.
+  categories:
+    - Blog
+    - Tips
+    - Technology
+    - Web Development
+    - Community
+    - Open Source
+  built_by: Boldare
+  built_by_url: https://www.boldare.com/
+  featured: false  
