@@ -3391,3 +3391,14 @@
   built_by: Henry Kehlmann
   built_by_url: https://github.com/madhenry/
   featured: false
+- title: JAMstack.paris
+  url: https://jamstack.paris/
+  main_url: https://jamstack.paris/
+  source_url: https://github.com/JAMstack-paris/jamstack.paris
+  description: >
+    JAMstack-focused, bi-monthly meetup in Paris
+  categories:
+    - Web Development
+  built_by: Matthieu Auger & Nicolas Goutay
+  built_by_url: https://github.com/JAMstack-paris
+  featured: false
