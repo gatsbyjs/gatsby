@@ -4,7 +4,6 @@ const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
 
-// HACK: It would be nice to find a better way to share this utility code.
 const highlightCode = require(`gatsby-remark-prismjs/highlight-code`)
 
 // Language defaults to extension.toLowerCase();

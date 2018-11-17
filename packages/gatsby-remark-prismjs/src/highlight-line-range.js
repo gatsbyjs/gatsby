@@ -133,6 +133,9 @@ module.exports = function highlightLineRange(code, highlights = []) {
   let highlighted = []
   const split = code.split(`\n`)
 
+  // If a highlight range is passed with the language declaration, e.g.
+  //     ```jsx{1, 3-4}
+  // we only use that and do not try to parse highlight directives
   if (highlights.length > 0) {
     return split.map((line, i) => {
       if (highlights.includes(i + 1)) {
