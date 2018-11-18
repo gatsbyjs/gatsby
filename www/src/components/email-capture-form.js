@@ -1,5 +1,5 @@
 import React from "react"
-import styled, { css } from "react-emotion"
+import styled from "react-emotion"
 
 import SendIcon from "react-icons/lib/md/send"
 
@@ -206,7 +206,7 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS, isHomepage, className } = this.props
+    const { signupMessage, overrideCSS, isHomepage } = this.props
 
     return (
       <React.Fragment>
@@ -277,7 +277,7 @@ EmailCaptureForm.defaultProps = {
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
   overrideCSS: {},
   isHomepage: false,
-  className: "",
+  className: ``,
 }
 
 export default EmailCaptureForm
