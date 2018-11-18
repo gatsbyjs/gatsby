@@ -16,7 +16,7 @@
 // use sift for querying instead of loki
 
 const _ = require(`lodash`)
-const { GraphQLList } = require(`graphql`)
+const { GraphQLList, GraphQLObjectType } = require(`graphql`)
 
 // Note: fields are never deleted from here. So a long running
 // `develop` session, where nodes are being deleted might mean that
@@ -35,10 +35,13 @@ function contains(filters, queryType, fieldType = queryType) {
     } else {
       // Otherwise, the filter field might be an array of linked
       // nodes, in which case we might filter via an elemMatch
-      // field. Therefore we need to recurse and test again
+      // field. Or, it might be a nested linked object. In either
+      // case, we recurse
       const gqlFieldType = fieldType.getFields()[fieldName].type
       if (gqlFieldType instanceof GraphQLList && fieldFilter.elemMatch) {
         return contains(fieldFilter.elemMatch, queryType, gqlFieldType)
+      } else if (gqlFieldType instanceof GraphQLObjectType) {
+        return contains(fieldFilter, queryType, gqlFieldType)
       }
     }
     return false

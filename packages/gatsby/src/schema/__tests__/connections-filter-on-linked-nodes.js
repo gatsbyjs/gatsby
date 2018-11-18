@@ -84,6 +84,42 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.allTest.edges[0].node.foo).toEqual(`bar`)
   })
 
+  it(`returns nested linked fields`, async () => {
+    let result = await queryResult(
+      [
+        {
+          id: `child_2`,
+          internal: { type: `Child` },
+          children: [],
+          hair: `blonde`,
+          height: 101,
+        },
+        {
+          id: `child_1_link`,
+          internal: { type: `Test` },
+          children: [],
+          nested: {
+            linked___NODE: `child_2`,
+          },
+          foo: `bar`,
+        },
+      ],
+      `
+        {
+          allTest(filter: { nested: { linked: { hair: { eq: "blonde" } } } }) {
+            edges { node { nested { linked { hair, height } }, foo } }
+          }
+        }
+      `
+    )
+    console.log(result)
+    expect(result.data.allTest.edges[0].node.nested.linked.hair).toEqual(
+      `blonde`
+    )
+    expect(result.data.allTest.edges[0].node.nested.linked.height).toEqual(101)
+    expect(result.data.allTest.edges[0].node.foo).toEqual(`bar`)
+  })
+
   it(`returns all matching linked nodes`, async () => {
     let result = await queryResult(
       makeNodes().concat([
