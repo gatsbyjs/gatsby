@@ -1,3 +1,20 @@
+// A normal Graphql field resolver will accept a node as an argument
+// and return a field from that node. Whereas a lazy field will need
+// to perform some side effects or non-deterministic behavior to
+// return its value. Therefore, when a query filter includes a lazy
+// field, we need to evaluate the field resolvers on all nodes before
+// running the query. Examples of lazy fields include:
+//
+// - a markdown `wordcount` field (lazily calculates word count on its
+//   content)
+// - image sharp processing field (lazily generates optimized images)
+//
+// Lazy fields are declared using the exported `add` function. This
+// should be done during schema generation when fields are being
+// created. Then at query time, we can use the exported `contains`
+// function to figure out if a type/field pair is lazy, and therefore
+// use sift for querying instead of loki
+
 const _ = require(`lodash`)
 const { GraphQLList } = require(`graphql`)
 
@@ -8,23 +25,23 @@ const { GraphQLList } = require(`graphql`)
 // sift, rather than loki, so not a big deal
 const typeFields = new Map()
 
-function contains(filters, gqlType) {
-  return _.some(filters, (value, fieldName) => {
-    const storedFields = typeFields.get(gqlType.name)
+function contains(filters, queryType, fieldType = queryType) {
+  return _.some(filters, (fieldFilter, fieldName) => {
+    // If a field has been previously flagged as a lazy field, then
+    // return true
+    const storedFields = typeFields.get(queryType.name)
     if (storedFields && storedFields.has(fieldName)) {
       return true
     } else {
-      const field = gqlType.getFields()[fieldName]
-      const { elemMatch } = value
-      if (field.type instanceof GraphQLList && elemMatch) {
-        return _.some(elemMatch, (value, fieldName) => {
-          // This is disgusting, but works
-          const innerType = field.type.ofType.getFields()[fieldName].type.ofType
-          return contains({ [fieldName]: value }, innerType)
-        })
+      // Otherwise, the filter field might be an array of linked
+      // nodes, in which case we might filter via an elemMatch
+      // field. Therefore we need to recurse and test again
+      const gqlFieldType = fieldType.getFields()[fieldName].type
+      if (gqlFieldType instanceof GraphQLList && fieldFilter.elemMatch) {
+        return contains(fieldFilter.elemMatch, queryType, gqlFieldType)
       }
-      return false
     }
+    return false
   })
 }
 

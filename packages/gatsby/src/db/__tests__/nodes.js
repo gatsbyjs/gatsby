@@ -3,7 +3,7 @@ const { getNode, getNodes } = require(`../nodes`)
 const { store } = require(`../../redux`)
 require(`./fixtures/ensure-loki`)()
 
-describe(`stuff`, () => {
+describe(`nodes db tests`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
