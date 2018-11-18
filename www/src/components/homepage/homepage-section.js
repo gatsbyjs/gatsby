@@ -14,7 +14,7 @@ const HomepageSectionRoot = styled(`section`)`
   background: ${props => (props.inverse ? colors.gatsby : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   margin: 0 -${rhythm(presets.gutters.default / 2)};
-  padding: ${rhythm(2)} ${rhythm(presets.gutters.default / 2)};
+  padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
   width: calc(100% + ${rhythm(presets.gutters.default)});
 
   ${presets.Hd} {
@@ -37,7 +37,7 @@ const Header = styled(`header`)`
   }
 `
 
-const Name = styled(`h3`)`
+export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
@@ -67,7 +67,7 @@ const Icon = styled(`span`)`
   }
 `
 
-const Title = styled(`h1`)`
+export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
   font-size: 1.75rem;
   margin: 0;
@@ -103,10 +103,11 @@ const HomepageSection = ({
   introduction,
   inverseStyle,
   links,
+  className,
 }) => (
-  <HomepageSectionRoot inverse={inverseStyle}>
-    <Header>
-      {sectionName && (
+  <HomepageSectionRoot inverse={inverseStyle} className={className}>
+    {sectionName && (
+      <Header>
         <Name inverse={inverseStyle}>
           {sectionIcon && (
             <Icon
@@ -116,29 +117,31 @@ const HomepageSection = ({
           )}
           {sectionName}
         </Name>
-      )}
-      {title && <Title inverse={inverseStyle}>{title}</Title>}
-      {introduction && (
-        <Introduction inverse={inverseStyle}>{introduction}</Introduction>
-      )}
-      <Actions>
-        {links.map((item, idx) => {
-          const { to, label, icon: Icon, secondary } = item
+        {title && <Title inverse={inverseStyle}>{title}</Title>}
+        {introduction && (
+          <Introduction inverse={inverseStyle}>{introduction}</Introduction>
+        )}
+        {links && (
+          <Actions>
+            {links.map((item, idx) => {
+              const { to, label, icon: Icon, secondary } = item
 
-          return (
-            <Button
-              key={label}
-              to={to}
-              small
-              ondark={inverseStyle ? true : false}
-              secondary={secondary}
-            >
-              {label} {Icon && <Icon />}
-            </Button>
-          )
-        })}
-      </Actions>
-    </Header>
+              return (
+                <Button
+                  key={label}
+                  to={to}
+                  small
+                  ondark={inverseStyle ? true : false}
+                  secondary={secondary}
+                >
+                  {label} {Icon && <Icon />}
+                </Button>
+              )
+            })}
+          </Actions>
+        )}
+      </Header>
+    )}
     {children}
   </HomepageSectionRoot>
 )
