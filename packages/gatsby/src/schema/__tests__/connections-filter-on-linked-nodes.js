@@ -112,7 +112,6 @@ describe(`filtering on linked nodes`, () => {
         }
       `
     )
-    console.log(result)
     expect(result.data.allTest.edges[0].node.nested.linked.hair).toEqual(
       `blonde`
     )

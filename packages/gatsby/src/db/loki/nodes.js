@@ -221,7 +221,7 @@ function createNode(node) {
  * the node information. Not just changes
  * @param {Object} oldNode The old node to write over. Optional.
  */
-function updateNode(node, oldNode) {
+function updateNode(node) {
   invariant(node.internal, `node has no "internal" field`)
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
@@ -232,19 +232,7 @@ function updateNode(node, oldNode) {
   if (!coll) {
     invariant(coll, `${type} collection doesn't exist. When trying to update`)
   }
-
-  if (oldNode) {
-    const lokiKeys = new Set([`$loki`, `meta`, `id`])
-    _.forEach(oldNode, (v, k) => {
-      if (!lokiKeys.has(k)) {
-        delete oldNode[k]
-      }
-    })
-    Object.assign(oldNode, node)
-    coll.update(oldNode)
-  } else {
-    coll.update(node)
-  }
+  coll.update(node)
 }
 
 /**
@@ -302,11 +290,7 @@ function reducer(state = new Map(), action) {
       return null
 
     case `CREATE_NODE`: {
-      if (action.oldNode) {
-        updateNode(action.payload, action.oldNode)
-      } else {
-        createNode(action.payload)
-      }
+      createNode(action.payload)
       return null
     }
 

@@ -38,10 +38,12 @@ function contains(filters, queryType, fieldType = queryType) {
       // field. Or, it might be a nested linked object. In either
       // case, we recurse
       const gqlFieldType = fieldType.getFields()[fieldName].type
-      if (gqlFieldType instanceof GraphQLList && fieldFilter.elemMatch) {
-        return contains(fieldFilter.elemMatch, queryType, gqlFieldType)
-      } else if (gqlFieldType instanceof GraphQLObjectType) {
-        return contains(fieldFilter, queryType, gqlFieldType)
+      if (gqlFieldType) {
+        if (gqlFieldType instanceof GraphQLList && fieldFilter.elemMatch) {
+          return contains(fieldFilter.elemMatch, queryType, gqlFieldType.ofType)
+        } else if (gqlFieldType instanceof GraphQLObjectType) {
+          return contains(fieldFilter, queryType, gqlFieldType)
+        }
       }
     }
     return false
