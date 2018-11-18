@@ -3416,3 +3416,23 @@
     - React Native
   built_by: DexLab
   built_by_url: "https://github.com/dexlab-io"
+- title: Kings Valley Paving
+  url: https://kingsvalleypaving.com
+  main_url: https://kingsvalleypaving.com
+  description: >
+    Kings Valley Paving is an asphalt, paving and concrete company serving the commercial, residential and industrial sectors in the Greater Toronto Area.
+  categories:
+    - Marketing, Construction, Paving
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
+- title: Peter Barrett
+  url: https://www.peterbarrett.ca
+  main_url: https://www.peterbarrett.ca
+  description: >
+    Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world.
+  categories:
+    - Portfolio, Music
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
