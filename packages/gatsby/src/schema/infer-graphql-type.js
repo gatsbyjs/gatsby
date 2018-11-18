@@ -278,7 +278,6 @@ function inferFromFieldName(
     } else {
       type = fields[0].nodeObjectType
       lazyFields.add(type.name, fieldName)
-      lazyFields.add(typeName, fieldName)
     }
 
     return {
@@ -300,7 +299,6 @@ function inferFromFieldName(
   validateLinkedNode(linkedNode)
   const field = findNodeType(linkedNode)
   validateField(linkedNode, field)
-  lazyFields.add(field.name, fieldName)
   lazyFields.add(typeName, fieldName)
   return {
     type: field.nodeObjectType,
