@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "react-emotion"
+import styled, { css } from "react-emotion"
 
 import SendIcon from "react-icons/lib/md/send"
 
@@ -8,6 +8,10 @@ import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/form-styles"
 import { buttonStyles } from "../utils/styles"
+
+const StyledForm = styled(`form`)`
+  margin: 0;
+`
 
 const Label = styled(`label`)`
   :after {
@@ -20,15 +24,6 @@ const SingleLineInput = styled(`input`)`
   ${formInput};
   width: 100%;
 
-  ${props =>
-    props.newStyle
-      ? `
-        font-family: ${options.systemFontFamily.join(`,`)};
-        font-size: 1rem;
-        padding: .6rem;
-      `
-      : ``};
-
   :focus {
     border-color: ${colors.gatsby};
     outline: 0;
@@ -36,28 +31,35 @@ const SingleLineInput = styled(`input`)`
   }
 `
 
-const ErrorMessage = styled(`div`)`
-  margin-bottom: calc(1.05rem / 2);
-  color: ${colors.warning};
-  fontsize: ${rhythm(1 / 2)};
+const SingleLineInputOnHomepage = styled(SingleLineInput)`
+  font-family: ${options.systemFontFamily.join(`,`)};
+  font-size: 1rem;
+  padding: 0.6rem;
 `
 
-const Submit = styled(`button`)`
+const ErrorMessage = styled(`div`)`
+  color: ${colors.warning};
+  font-family: ${options.systemFontFamily.join(`,`)};
+  font-size: 0.875rem;
+  margin: calc(1.05rem / 2) 0;
+`
+
+const Submit = styled(`input`)`
   ${buttonStyles.default};
+  margin-top: 20px;
+`
 
-  ${props =>
-    props.newStyle
-      ? `
-        font-size: 1.25rem;
-        width: 100%;
+const SubmitOnHomepage = styled(`button`)`
+  ${buttonStyles.default};
+  font-size: 1.125rem;
+  width: 100%;
+  margin-top: 10px;
 
-        span {
-          display: flex;
-          width: 100%;
-          justify-content: space-between;
-        }
-      `
-      : ``};
+  span {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
 `
 
 class Form extends React.Component {
@@ -142,43 +144,49 @@ class Form extends React.Component {
   }
 
   render() {
-    const { newStyle = false } = this.props
+    const { isHomepage } = this.props
+
+    const SingleLineInputComponent = isHomepage
+      ? SingleLineInputOnHomepage
+      : SingleLineInput
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <div css={{ paddingBottom: this.props.newStyle ? `10px` : `20px` }}>
-          {!this.props.newStyle && (
-            <Label isRequired htmlFor="email">
-              Email
-            </Label>
-          )}
-          <SingleLineInput
-            id="email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            innerRef={input => {
-              this.email = input
-            }}
-            placeholder={newStyle ? `your.email@example.com` : ``}
-            newStyle={newStyle}
-          />
-          {this.state.fieldErrors.email && (
-            <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
-          )}
-        </div>
-
+      <StyledForm onSubmit={this.onSubmit}>
+        {!isHomepage && (
+          <Label isRequired htmlFor="email">
+            Email
+          </Label>
+        )}
+        <SingleLineInputComponent
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          innerRef={input => {
+            this.email = input
+          }}
+          aria-label={isHomepage ? `Email` : ``}
+          placeholder={isHomepage ? `your.email@example.com` : ``}
+        />
+        {this.state.fieldErrors.email && (
+          <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
+        )}
         {this.state.errorMessage && (
           <ErrorMessage>{this.state.errorMessage}</ErrorMessage>
         )}
-        <Submit type="1submit" newStyle={newStyle}>
-          <span>
-            Subscribe
-            <SendIcon />
-          </span>
-        </Submit>
-      </form>
+
+        {isHomepage ? (
+          <SubmitOnHomepage type="submit">
+            <span>
+              Subscribe
+              <SendIcon />
+            </span>
+          </SubmitOnHomepage>
+        ) : (
+          <Submit type="submit" value="Subscribe" />
+        )}
+      </StyledForm>
     )
   }
 }
@@ -198,12 +206,12 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS, newStyle } = this.props
+    const { signupMessage, overrideCSS, isHomepage, className } = this.props
 
     return (
       <React.Fragment>
-        {newStyle ? (
-          <div>
+        {isHomepage ? (
+          <React.Fragment>
             {this.state.successMessage ? (
               <div
                 dangerouslySetInnerHTML={{
@@ -216,10 +224,10 @@ class EmailCaptureForm extends React.Component {
                 portalId="4731712"
                 formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
                 sfdcCampaignId="701f4000000Us7pAAC"
-                newStyle={true}
+                isHomepage={true}
               />
             )}
-          </div>
+          </React.Fragment>
         ) : (
           <div
             css={{
@@ -268,7 +276,8 @@ EmailCaptureForm.defaultProps = {
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
   overrideCSS: {},
-  newStyle: false,
+  isHomepage: false,
+  className: "",
 }
 
 export default EmailCaptureForm
