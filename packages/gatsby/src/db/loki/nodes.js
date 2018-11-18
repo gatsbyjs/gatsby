@@ -209,17 +209,12 @@ function createNode(node) {
 }
 
 /**
- * Updates a node in the DB. This works by removing all fields db
- * fields ($loki, meta, and id) and then using `Object.assign` to copy
- * all fields in `node` over `oldNode`. Therefore node should contain
- * ALL fields and not just changes.
- *
- * If `oldNode` is not provided, it is assumed that `node` is already
- * a loki node and we will simply call update on it
+ * Updates a node in the DB. The contents of `node` will completely
+ * overwrite value in the DB. Note, `node` must be a loki node. i.e it
+ * has `$loki` and `meta` fields.
  *
  * @param {Object} node The new node information. This should be all
  * the node information. Not just changes
- * @param {Object} oldNode The old node to write over. Optional.
  */
 function updateNode(node) {
   invariant(node.internal, `node has no "internal" field`)
@@ -229,9 +224,7 @@ function updateNode(node) {
   const type = node.internal.type
 
   let coll = getNodeTypeCollection(type)
-  if (!coll) {
-    invariant(coll, `${type} collection doesn't exist. When trying to update`)
-  }
+  invariant(coll, `${type} collection doesn't exist. When trying to update`)
   coll.update(node)
 }
 
