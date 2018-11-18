@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 import styled from "react-emotion"
 
 import Banner from "../banner"
@@ -79,7 +80,7 @@ const LayoutWithHeading = props => {
       <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
 
       <Banner>
-        <a
+        <OutboundLink
           href="https://www.gatsbyjs.com/content-mesh-contentful"
           css={{
             color: `#fff`,
@@ -88,9 +89,9 @@ const LayoutWithHeading = props => {
             },
           }}
         >
-          Register now
-        </a>
-        {` for “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
+          Watch
+        </OutboundLink>
+        {`: “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
       </Banner>
 
       <Navigation pathname={props.location.pathname} />

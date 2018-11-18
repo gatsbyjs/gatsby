@@ -1,6 +1,6 @@
 {
-  "name": "gatsby-starter-hello-world",
-  "description": "Gatsby hello world starter",
+  "name": "using-gatsby-source-graphql",
+  "description": "Gatsby example site using gatsby-source-graphql",
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
@@ -18,7 +18,7 @@
     "react-markdown": "^3.3.4"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.1",
+    "babel-eslint": "^8.2.2",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "eslint-config-prettier": "^2.9.0",

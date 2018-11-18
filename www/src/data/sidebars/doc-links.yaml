@@ -43,7 +43,7 @@
       items:
         - title: Babel.js
           link: /docs/babel/
-        - title: Babel plugin macros*
+        - title: Babel plugin macros
           link: /docs/babel-plugin-macros/
         - title: Custom webpack config
           link: /docs/add-custom-webpack-config/

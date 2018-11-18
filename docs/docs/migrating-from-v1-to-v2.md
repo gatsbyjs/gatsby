@@ -733,7 +733,7 @@ exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
 }
 ```
 
-If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/packages/gatsby-plugin-sass/README.md#how-to-use) or [`gatsby-plugin-less`](/packages/gatsby-plugin-less/README.md#how-to-use):
+If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/packages/gatsby-plugin-sass/#how-to-use) or [`gatsby-plugin-less`](/packages/gatsby-plugin-less/#how-to-use):
 
 ```javascript
 // in gatsby-config.js

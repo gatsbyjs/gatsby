@@ -3317,3 +3317,122 @@
     - Technology
     - Nonprofit
   featured: false
+- title: Patreon Blog
+  url: https://blog.patreon.com/
+  main_url: https://blog.patreon.com/
+  description: >-
+    Official blog of Patreon.com
+  categories:
+    - Blog
+  featured: false
+- title: Full Beaker
+  url: https://fullbeaker.com/
+  main_url: https://fullbeaker.com/
+  description: >-
+    Full Beaker provides independent advice online about careers and home ownership, and connect anyone who asks with companies that can help them.
+  categories:
+    - Consulting
+  featured: false
+- title: Citywide Holdup
+  url: https://citywideholdup.org/
+  main_url: https://citywideholdup.org/
+  source_url: https://github.com/killakam3084/citywide-site
+  description: >-
+    Citywide Holdup is an annual fundraising event held around early November in the city of Austin, TX hosted by the Texas Wranglers benefitting Easter Seals of Central Texas, a non-profit organization that provides exceptional services, education, outreach and advocacy so that people with disabilities can live, learn, work and play in our communities.
+  categories:
+    - Fundraising
+    - Nonprofit
+    - Event
+  built_by: Cameron Rison
+  built_by_url: https://github.com/killakam3084
+  featured: false
+- title: Dawn Labs
+  url: https://dawnlabs.io
+  main_url: https://dawnlabs.io
+  description: >-
+    Thoughtful products for inspired teams. With a holistic approach to engineering and design, we partner with startups and enterprises to build for the digital era.
+  categories:
+    - Technology
+    - Agency
+    - Web Development
+  featured: false
+- title: COOP by Ryder
+  url: https://coop.com/
+  main_url: https://coop.com/
+  description: >
+    COOP is a platform that connects fleet managers that have idle vehicles to businesses that are looking to rent vehicles. COOP simplifies the process and paperwork required to safely share vehicles between business owners.
+  categories:
+    - Marketing
+    - Asset Sharing
+  built_by: Crispin Porter Bogusky
+  built_by_url: http://www.cpbgroup.com/
+  featured: false
+- title: Domino's Paving for Pizza
+  url: https://www.pavingforpizza.com/
+  main_url: https://www.pavingforpizza.com/
+  description: >
+    Nominate your town for a chance to have your rough drive home from Domino's fixed to pizza perfection.
+  categories:
+    - Marketing
+  built_by: Crispin Porter Bogusky
+  built_by_url: http://www.cpbgroup.com/
+  featured: false
+- title: Propapanda
+  url: https://propapanda.eu/
+  main_url: https://propapanda.eu/
+  description: >
+    Is a creative production house based in Tallinn, Estonia. We produce music videos, commercials, films and campaigns – from scratch to finish.
+  categories:
+    - Cinema
+    - Video
+    - Portfolio
+    - Agency
+    - Media
+  built_by: Henry Kehlmann
+  built_by_url: https://github.com/madhenry/
+  featured: false
+- title: JAMstack.paris
+  url: https://jamstack.paris/
+  main_url: https://jamstack.paris/
+  source_url: https://github.com/JAMstack-paris/jamstack.paris
+  description: >
+    JAMstack-focused, bi-monthly meetup in Paris
+  categories:
+    - Web Development
+  built_by: Matthieu Auger & Nicolas Goutay
+  built_by_url: https://github.com/JAMstack-paris
+  featured: false
+- title: DexWallet - The only Wallet you need by Dexlab
+  main_url: "https://www.dexwallet.io/"
+  url: "https://www.dexwallet.io/"
+  source_url: "https://github.com/dexlab-io/DexWallet-website"
+  featured: false
+  description: >-
+    DexWallet is a secure, multi-chain, mobile wallet with an upcoming one-click exchange for mobile.
+  categories:
+    - Blockchain
+    - App
+    - Open Source
+    - React Native
+  built_by: DexLab
+  built_by_url: "https://github.com/dexlab-io"
+- title: Kings Valley Paving
+  url: https://kingsvalleypaving.com
+  main_url: https://kingsvalleypaving.com
+  description: >
+    Kings Valley Paving is an asphalt, paving and concrete company serving the commercial, residential and industrial sectors in the Greater Toronto Area.
+  categories:
+    - Marketing, Construction, Paving
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
+- title: Peter Barrett
+  url: https://www.peterbarrett.ca
+  main_url: https://www.peterbarrett.ca
+  description: >
+    Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world.
+  categories:
+    - Portfolio, Music
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
