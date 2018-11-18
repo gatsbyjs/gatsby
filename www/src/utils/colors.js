@@ -7,6 +7,7 @@ const colors = {
   gatsbyDark: `#442266`,
   gatsbyDarker: `#221133`,
   lemon: `#ffdf37`,
+  mint: `#73fff7`,
   lilac: `#8c65b3`,
   lavender: `#b190d5`,
   wisteria: `#ccb2e5`,
