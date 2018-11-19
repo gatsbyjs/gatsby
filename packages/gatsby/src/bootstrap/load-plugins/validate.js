@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
-
+const semver = require(`semver`)
+const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
 
@@ -214,8 +215,25 @@ const handleMultipleReplaceRenderers = ({ apiToPlugins, flattenedPlugins }) => {
   return flattenedPlugins
 }
 
+function warnOnIncompatiblePeerDependency(name, packageJSON) {
+  // Note: In the future the peer dependency should be enforced for all plugins.
+  const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)
+  if (
+    gatsbyPeerDependency &&
+    !semver.satisfies(gatsbyVersion, gatsbyPeerDependency)
+  ) {
+    reporter.warn(
+      `Plugin ${name} is incompatible with your current gatsby version.`
+    )
+    reporter.warn(
+      `${gatsbyVersion} does not satisfy peer dependency ${gatsbyPeerDependency}`
+    )
+  }
+}
+
 module.exports = {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
+  warnOnIncompatiblePeerDependency,
 }
