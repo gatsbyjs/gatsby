@@ -299,9 +299,13 @@ module.exports = (argv, handlers) => {
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
       handler: handlerP(
-        ({ rootPath, starter = `gatsbyjs/gatsby-starter-default` }) => {
+        ({
+          rootPath,
+          starter = `gatsbyjs/gatsby-starter-default`,
+          "use-pnp": usePnp,
+        }) => {
           const initStarter = require(`./init-starter`)
-          return initStarter(starter, { rootPath })
+          return initStarter(starter, { rootPath, usePnp })
         }
       ),
     })
