@@ -18,7 +18,7 @@ const HomepageSectionRoot = styled(`section`)`
   width: calc(100% + ${rhythm(presets.gutters.default)});
 
   ${presets.Hd} {
-    margin: 0 -${vP};
+    margin: -1px -${vP};
     padding: ${rhythm(1)} 5%;
     width: calc(100% + (${vP} * 2));
   }
@@ -154,6 +154,7 @@ HomepageSection.propTypes = {
   introduction: PropTypes.string,
   links: PropTypes.array,
   inverseStyle: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 export default HomepageSection

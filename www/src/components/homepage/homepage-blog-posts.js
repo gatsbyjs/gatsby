@@ -20,6 +20,10 @@ const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
   margin: -6px -${rhythm(presets.gutters.default / 2)};
 `
 
+const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
+  `div`
+)
+
 const HomepageBlogPostsRootDesktop = styled(`div`)`
   display: flex;
 `
@@ -192,7 +196,7 @@ class HomepageBlogPosts extends Component {
           </HomepageBlogPostsRootDesktop>
         ) : (
           <HomepageBlogPostsRootMobile className={SCROLLER_CLASSNAME}>
-            <HorizontalScrollerContent>
+            <HorizontalScrollerContentAsDiv>
               {posts.map((post, idx) => {
                 const {
                   fields: { slug },
@@ -200,7 +204,7 @@ class HomepageBlogPosts extends Component {
                 return <HomepageBlogPost index={idx} key={slug} post={post} />
               })}
               <ViewAll />
-            </HorizontalScrollerContent>
+            </HorizontalScrollerContentAsDiv>
           </HomepageBlogPostsRootMobile>
         )}
       </React.Fragment>

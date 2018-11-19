@@ -11,7 +11,9 @@ import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 
-const HomepageBlogPostRoot = styled(HorizontalScrollerItem)`
+const HomepageBlogPostRoot = styled(
+  HorizontalScrollerItem.withComponent(`article`)
+)`
   display: flex;
   flex-direction: column;
   font-family: ${options.systemFontFamily.join(`,`)};

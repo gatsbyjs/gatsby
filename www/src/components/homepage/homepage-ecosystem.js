@@ -6,13 +6,14 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import HomepageSection from "./homepage-section"
 import EcosystemSection from "../ecosystem/ecosystem-section"
-import {
-  EcosystemFeaturedItemsRootBase,
-  ListBase as EcosystemFeaturedItemsListBase,
-} from "../ecosystem/ecosystem-featured-items"
 import EcosystemFeaturedItem, {
   BlockLink as FeaturedItemBlockLink,
 } from "../ecosystem/ecosystem-featured-item"
+
+import {
+  HorizontalScroller,
+  HorizontalScrollerContent,
+} from "../shared/horizontal-scroller"
 
 import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
@@ -51,48 +52,46 @@ const Section = styled(EcosystemSection)`
 const SubTitle = styled(`h3`)`
   color: ${colors.lemon};
   font-size: 1.2rem;
+  margin-bottom: 0.25rem;
   margin-top: 2rem;
 
-  ${presets.Tablet} {
-    margin-left: 3rem;
-  }
-
   ${presets.Desktop} {
-    margin-left: 6rem;
+    margin-left: 3rem;
+    margin-bottom: 1rem;
   }
 `
 
-const FeaturedItems = styled(EcosystemFeaturedItemsRootBase)`
+const FeaturedItems = styled(HorizontalScroller)`
   margin: 0 -${rhythm(presets.gutters.default / 2)};
 
   ${presets.Desktop} {
     margin: 0;
-    overflow-x: auto;
+    overflow-x: visible;
   }
 `
 
-const FeaturedItemsList = styled(EcosystemFeaturedItemsListBase)`
-  padding: 0 calc(${rhythm(options.blockMarginBottom)} - 7px) 0;
-
+const FeaturedItemsList = styled(HorizontalScrollerContent)`
   ${presets.Desktop} {
     flex-wrap: wrap;
     margin: 0;
+    padding: 0;
     width: 100%;
   }
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin: 0 6px 6px 0;
+  margin-right: ${rhythm(presets.gutters.default / 2)};
 
   ${presets.Tablet} {
     border-bottom: none;
-    margin: 0 6px 6px 0;
-    padding: 5px;
+    margin: ${rhythm(presets.gutters.default / 2)};
+    margin-top: 0;
+    margin-left: 0;
     width: 320px;
   }
 
   ${presets.Desktop} {
-    flex-basis: 30%;
+    flex-basis: 28%;
 
     :nth-child(4) {
       margin-left: 8%;
