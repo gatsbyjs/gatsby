@@ -187,12 +187,18 @@ function hasNodeChanged(id, digest) {
  * @param {Object} node The node to add. Must have an `id` and
  * `internal.type`
  */
-function createNode(node) {
+function createNode(node, oldNode) {
   invariant(node.internal, `node has no "internal" field`)
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
 
   const type = node.internal.type
+
+  // Loki doesn't provide "upsert", so if the node already exists, we
+  // delete and then create it
+  if (oldNode) {
+    deleteNode(oldNode)
+  }
 
   let nodeTypeColl = getNodeTypeCollection(type)
   if (!nodeTypeColl) {
@@ -283,7 +289,7 @@ function reducer(state = new Map(), action) {
       return null
 
     case `CREATE_NODE`: {
-      createNode(action.payload)
+      createNode(action.payload, action.oldNode)
       return null
     }
 

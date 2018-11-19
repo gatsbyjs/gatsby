@@ -24,6 +24,7 @@ Map {
 
 exports[`Create and update nodes allows creating nodes 1`] = `
 Object {
+  "oldNode": undefined,
   "payload": Object {
     "children": Array [],
     "id": "hi",

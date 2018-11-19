@@ -596,14 +596,12 @@ actions.createNode = (
           actions.deleteNode({ node: getNode(n) })
         )
       }
-      if (deleteAction) {
-        deleteAction.push(actions.deleteNode({ node: oldNode }))
-      }
     }
 
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
+      oldNode,
       ...actionOptions,
       payload: node,
     }
