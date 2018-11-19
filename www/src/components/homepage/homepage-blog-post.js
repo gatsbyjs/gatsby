@@ -175,6 +175,18 @@ const ReadMore = styled(Link)`
   }
 `
 
+const formatDate = (dateString, desktopViewport = false) => {
+  const date = new Date(dateString)
+
+  var options = {
+    month: `long`,
+    day: `numeric`,
+    year: `numeric`,
+  }
+
+  return date.toLocaleDateString(`en-EN`, desktopViewport ? options : {})
+}
+
 const HomepageBlogPost = ({
   post,
   first = false,
@@ -218,7 +230,7 @@ const HomepageBlogPost = ({
           <span>{authorName}</span>
         </Author>
         &nbsp;on&nbsp;
-        {date}
+        {formatDate(date, desktopViewport)}
       </Meta>
       {first && <Excerpt>{excerpt}</Excerpt>}
       <ReadMore to={slug}>
@@ -245,7 +257,7 @@ export const homepageBlogPostFragment = graphql`
     frontmatter {
       excerpt
       title
-      date(formatString: "MM/DD/YY")
+      date
       author {
         id
         fields {

@@ -166,15 +166,18 @@ class HomepageBlogPosts extends Component {
                     fields: { slug },
                   } = post
 
-                  if (colIdx & postIdx) {
+                  const firstPost = !colIdx && !postIdx
+                  const lastPost = colIdx & postIdx
+
+                  if (lastPost) {
                     {
                       /* add 'View all posts' link as a sibling of the last post card */
                     }
                     return (
                       <LastPost key={slug}>
                         <HomepageBlogPost
-                          first={!colIdx && !postIdx}
                           post={post}
+                          desktopViewport={desktopViewport}
                         />
                         <ViewAll />
                       </LastPost>
@@ -184,7 +187,7 @@ class HomepageBlogPosts extends Component {
                   return (
                     <HomepageBlogPost
                       fullWidth={postIdx === 0}
-                      first={!colIdx && !postIdx}
+                      first={firstPost}
                       key={slug}
                       post={post}
                       desktopViewport={desktopViewport}
