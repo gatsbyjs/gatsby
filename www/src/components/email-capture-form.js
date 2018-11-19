@@ -11,6 +11,10 @@ import { buttonStyles } from "../utils/styles"
 
 const StyledForm = styled(`form`)`
   margin: 0;
+
+  ${presets.Desktop} {
+    display: flex;
+  }
 `
 
 const Label = styled(`label`)`
@@ -56,9 +60,16 @@ const SubmitOnHomepage = styled(`button`)`
   margin-top: 10px;
 
   span {
+    align-items: center;
     display: flex;
     width: 100%;
     justify-content: space-between;
+  }
+
+  ${presets.Desktop} {
+    width: auto;
+    margin-top: 0;
+    margin-left: 0.5rem;
   }
 `
 
@@ -206,17 +217,15 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS, isHomepage } = this.props
+    const { signupMessage, overrideCSS, isHomepage, className } = this.props
 
     return (
       <React.Fragment>
         {isHomepage ? (
-          <React.Fragment>
+          <div className={className}>
             {this.state.successMessage ? (
               <div
-                dangerouslySetInnerHTML={{
-                  __html: this.state.successMessage,
-                }}
+                dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
               />
             ) : (
               <Form
@@ -227,7 +236,7 @@ class EmailCaptureForm extends React.Component {
                 isHomepage={true}
               />
             )}
-          </React.Fragment>
+          </div>
         ) : (
           <div
             css={{

@@ -22,11 +22,6 @@ const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
 
 const HomepageBlogPostsRootDesktop = styled(`div`)`
   display: flex;
-  margin: 0 1.5rem 0 2.5rem;
-
-  ${presets.Hd} {
-    margin-right: 3rem;
-  }
 `
 
 const PostsColumn = styled(`div`)`
@@ -34,7 +29,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: 30px;
+  margin-right: ${rhythm(presets.gutters.default)};
   position: relative;
 
   :last-child {
@@ -81,7 +76,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     height: 160px;
 
     margin-left: ${rhythm(presets.gutters.default)};
-    width: 120px;
+    width: 125px;
 
     a {
       padding: ${rhythm(1)};
@@ -101,6 +96,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
 const LastPost = styled(`div`)`
   display: flex;
+  width: 100%;
 `
 
 const ViewAll = () => (

@@ -30,10 +30,6 @@ const Sections = styled(`div`)`
     flex-direction: row;
     margin: 0 -8px;
   }
-
-  ${presets.Desktop} {
-    margin: 0 1.5rem 0 2.5rem;
-  }
 `
 
 const Section = styled(EcosystemSection)`
@@ -71,13 +67,7 @@ const FeaturedItems = styled(EcosystemFeaturedItemsRootBase)`
 
   ${presets.Desktop} {
     margin: 0;
-    margin-left: calc(3rem - (${rhythm(options.blockMarginBottom)}));
-    margin-right: 1rem;
     overflow-x: auto;
-  }
-
-  ${presets.Hd} {
-    margin-right: 3rem;
   }
 `
 

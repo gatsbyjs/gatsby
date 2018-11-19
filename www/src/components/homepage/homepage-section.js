@@ -19,21 +19,21 @@ const HomepageSectionRoot = styled(`section`)`
 
   ${presets.Hd} {
     margin: 0 -${vP};
+    padding: ${rhythm(1)} ${rhythm(presets.gutters.default)};
     width: calc(100% + (${vP} * 2));
   }
 
   ${presets.VHd} {
-    padding: ${rhythm(2)} 5%;
+    padding: ${rhythm(1.5)} 5%;
   }
 `
-const Header = styled(`header`)`
+export const Header = styled(`header`)`
   ${presets.Tablet} {
-    margin-left: 3rem;
     max-width: 30rem;
   }
 
   ${presets.Desktop} {
-    margin-left: 6rem;
+    margin-left: 3rem;
   }
 `
 
