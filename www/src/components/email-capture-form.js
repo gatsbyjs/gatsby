@@ -48,6 +48,10 @@ const ErrorMessage = styled(`div`)`
   margin: calc(1.05rem / 2) 0;
 `
 
+const SuccesMessage = styled(`div`)`
+  font-family: ${options.systemFontFamily.join(`,`)};
+`
+
 const Submit = styled(`input`)`
   ${buttonStyles.default};
   margin-top: 20px;
@@ -219,22 +223,26 @@ class EmailCaptureForm extends React.Component {
   render() {
     const { signupMessage, overrideCSS, isHomepage, className } = this.props
 
+    const FormComponent = props => (
+      <Form
+        onSuccess={this.onSuccess}
+        portalId="4731712"
+        formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
+        sfdcCampaignId="701f4000000Us7pAAC"
+        {...props}
+      />
+    )
+
     return (
       <React.Fragment>
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
-              <div
+              <SuccesMessage
                 dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
               />
             ) : (
-              <Form
-                onSuccess={this.onSuccess}
-                portalId="4731712"
-                formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
-                sfdcCampaignId="701f4000000Us7pAAC"
-                isHomepage={true}
-              />
+              <FormComponent isHomepage={true} />
             )}
           </div>
         ) : (
@@ -265,12 +273,7 @@ class EmailCaptureForm extends React.Component {
                     }}
                   />
                 ) : (
-                  <Form
-                    onSuccess={this.onSuccess}
-                    portalId="4731712"
-                    formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
-                    sfdcCampaignId="701f4000000Us7pAAC"
-                  />
+                  <FormComponent />
                 )}
               </div>
             </div>

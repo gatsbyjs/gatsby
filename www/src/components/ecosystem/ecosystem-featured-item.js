@@ -19,6 +19,7 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 
   ${presets.Tablet} {
     border-bottom: 1px solid ${colors.gray.superLight};
+    box-shadow: none;
     margin: 0;
     padding: 0;
     width: auto;
