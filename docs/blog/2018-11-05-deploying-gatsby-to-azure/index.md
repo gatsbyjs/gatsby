@@ -5,7 +5,6 @@ date: 2018-11-05
 image: images/rocket.jpg
 showImageInArticle: false
 tags: ["deployment", "azure"]
-cover: successfullysignedin.png
 ---
 
 In this post we will walk through the process of deploying a Gatsby blog to Microsoft Azure Storage using VS Code.
