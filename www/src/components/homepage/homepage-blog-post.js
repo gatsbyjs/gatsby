@@ -20,7 +20,7 @@ const HomepageBlogPostRoot = styled(
   padding-bottom: ${rhythm(2.5)};
   position: relative;
 
-  a {
+  .main-body & a {
     border: none;
     box-shadow: none;
     font-family: inherit;
