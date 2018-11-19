@@ -67,7 +67,17 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
 
-    return Object.assign(envObject, gatsbyVarObject)
+    const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
+
+    return Object.keys(mergedEnvVars).reduce(
+      (acc, key) => {
+        acc[`process.env.${key}`] = mergedEnvVars[key]
+        return acc
+      },
+      {
+        "process.env": JSON.stringify({}),
+      }
+    )
   }
 
   function getHmrPath() {
@@ -172,7 +182,7 @@ module.exports = async (
       // Add a few global variables. Set NODE_ENV to production (enables
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
-        "process.env": processEnv(stage, `development`),
+        ...processEnv(stage, `development`),
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
