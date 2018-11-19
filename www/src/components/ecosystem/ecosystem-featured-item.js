@@ -13,20 +13,26 @@ import presets, { colors } from "../../utils/presets"
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(`li`)`
-  flex-basis: ${props => `calc(100% / ${props.numberOfItems})`};
-  float: left;
+  width: 85vw;
   margin: 0 2px 0 0;
   padding: 5px;
 
+  :last-child {
+    margin-right: 0;
+  }
+
   ${presets.Tablet} {
-    padding: 0;
     border-bottom: 1px solid ${colors.gray.superLight};
+    margin: 0;
+    padding: 0;
+    width: auto;
   }
 `
 
-const BlockLink = styled(Link)`
+export const BlockLink = styled(Link)`
+  background: #fff;
   border-radius: ${presets.radiusLg}px;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -37,7 +43,9 @@ const BlockLink = styled(Link)`
     box-shadow: none;
     transition: all ${presets.animation.speedDefault}
       ${presets.animation.curveDefault};
+  }
 
+  ${presets.Desktop} {
     :hover {
       background: ${colors.ui.whisper};
     }
@@ -45,8 +53,10 @@ const BlockLink = styled(Link)`
 `
 
 const Header = styled(`header`)`
+  align-items: flex-start;
   display: flex;
   justify-content: space-between;
+
   h3 {
     color: ${colors.gatsbyDark};
     font-size: 1rem;
@@ -54,11 +64,12 @@ const Header = styled(`header`)`
   }
 
   span {
+    align-items: center;
     color: ${colors.lilac};
     display: flex;
-    align-items: center;
     font-size: 0.8125rem;
     font-family: ${options.systemFontFamily.join(`,`)};
+    padding-left: 5px;
 
     svg {
       fill: ${colors.gray.light};
@@ -72,16 +83,15 @@ const Header = styled(`header`)`
 const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
-  justify-content: space-between;
-  height: 100%;
   font-family: ${options.systemFontFamily.join(`,`)};
+  justify-content: space-between;
   padding: ${rhythm(0.5)} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
+  height: 64px;
   padding-right: ${rhythm(2 / 3)};
   margin-top: ${rhythm(1 / 12)};
-  height: 64px;
 
   img {
     border: 1px solid ${colors.gray.superLight};
@@ -95,7 +105,7 @@ const Description = styled(`p`)`
   margin: 0;
 `
 
-const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
+const EcosystemFeaturedItem = ({ item, className }) => {
   const {
     slug,
     name,
@@ -114,7 +124,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
   }
 
   return (
-    <EcosystemFeaturedItemRoot numberOfItems={numberOfItems}>
+    <EcosystemFeaturedItemRoot className={className}>
       <BlockLink to={slug}>
         <Header>
           <h3>{name}</h3>
@@ -145,7 +155,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
 
 EcosystemFeaturedItem.propTypes = {
   item: PropTypes.object.isRequired,
-  numberOfItems: PropTypes.number.isRequired,
+  className: PropTypes.string,
 }
 
 export default EcosystemFeaturedItem

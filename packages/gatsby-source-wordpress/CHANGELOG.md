@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.14"></a>
+
+## [3.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.13...gatsby-source-wordpress@3.0.14) (2018-11-14)
+
+### Bug Fixes
+
+- **docs:** update broken links with working links ([#9912](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9912)) ([e9f2a6f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/e9f2a6f))
+
 <a name="3.0.13"></a>
 
 ## [3.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.12...gatsby-source-wordpress@3.0.13) (2018-11-08)

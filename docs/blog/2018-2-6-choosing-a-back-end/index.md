@@ -33,7 +33,7 @@ You build your site. You’ve got your Sass, you’ve got your Markdown files (o
 
 Now we need a system to manage and deliver our content in a nice API (instructed by our GraphQL of course). And there’s a whole bunch of them about. To help us out, Gatsby has plugins that cater to some Headless CMS like the WordPress API, Contentful, Cockpit, Prismic and NetlifyCMS - which Gatsby actually has a guide for. I’ll be going through a few of these to see which one might be more useful for this small project, and going forward.
 
-> After posting this, I heard some really good thing about [GraphCMS](https://graphcms.com/) - It’s designed to work with GraphQL inherently and they have a [Gatsby Starter Project](https://github.com/GraphCMS/graphcms-examples/tree/master/gatsby-source-plugin-blog) example to check out.
+> After posting this, I heard some really good thing about [GraphCMS](https://graphcms.com/) - It’s designed to work with GraphQL inherently and they have a [Gatsby Starter Project](https://github.com/GraphCMS/graphcms-examples/tree/master/current/gatsby-source-plugin-blog) example to check out.
 
 Firstly, though, why do we want a Headless CMS and a JAMstack for the project? There are a few reasons most people use them, and some that are down to personal preference:
 
