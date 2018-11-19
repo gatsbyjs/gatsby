@@ -7,6 +7,7 @@ const sysPath = require(`path`)
 const report = require(`./reporter`)
 const url = require(`url`)
 const existsSync = require(`fs-exists-cached`).sync
+const path = require(`path`)
 
 const spawn = (cmd: string) => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -28,11 +29,24 @@ const shouldUseYarn = () => {
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
-const install = async rootPath => {
+const install = async (rootPath, usePnp) => {
   const prevDir = process.cwd()
 
   report.info(`Installing packages...`)
   process.chdir(rootPath)
+
+  try {
+    if (usePnp) {
+      const pkgPath = path.join(`package.json`)
+      const packageJson = JSON.parse(fs.readFileSync(pkgPath, `utf8`))
+      packageJson.installConfig = { pnp: true }
+      fs.writeFileSync(pkgPath, JSON.stringify(packageJson, null, 4), `utf8`)
+    }
+  } catch (e) {
+    throw new Error(
+      `The package.json of the current starter is not formated correctly ${e}`
+    )
+  }
 
   try {
     let cmd = shouldUseYarn() ? spawn(`yarnpkg`) : spawn(`npm install`)
@@ -45,7 +59,7 @@ const install = async rootPath => {
 const ignored = path => !/^\.(git|hg)$/.test(sysPath.basename(path))
 
 // Copy starter from file system.
-const copy = async (starterPath: string, rootPath: string) => {
+const copy = async (starterPath: string, rootPath: string, usePnp: boolean) => {
   // Chmod with 755.
   // 493 = parseInt('755', 8)
   await fs.mkdirp(rootPath, { mode: 493 })
@@ -71,13 +85,13 @@ const copy = async (starterPath: string, rootPath: string) => {
 
   report.success(`Created starter directory layout`)
 
-  await install(rootPath)
+  await install(rootPath, usePnp)
 
   return true
 }
 
 // Clones starter from URI.
-const clone = async (hostInfo: any, rootPath: string) => {
+const clone = async (hostInfo: any, rootPath: string, usePnp: boolean) => {
   let url
   // Let people use private repos accessed over SSH.
   if (hostInfo.getDefaultRepresentation() === `sshurl`) {
@@ -97,11 +111,12 @@ const clone = async (hostInfo: any, rootPath: string) => {
 
   await fs.remove(sysPath.join(rootPath, `.git`))
 
-  await install(rootPath)
+  await install(rootPath, usePnp)
 }
 
 type InitOptions = {
   rootPath?: string,
+  usePnp?: boolean,
 }
 
 /**
@@ -109,6 +124,7 @@ type InitOptions = {
  */
 module.exports = async (starter: string, options: InitOptions = {}) => {
   const rootPath = options.rootPath || process.cwd()
+  const usePnp = options.usePnp || false
 
   const urlObject = url.parse(rootPath)
   if (urlObject.protocol && urlObject.host) {
@@ -124,6 +140,6 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   }
 
   const hostedInfo = hostedGitInfo.fromUrl(starter)
-  if (hostedInfo) await clone(hostedInfo, rootPath)
-  else await copy(starter, rootPath)
+  if (hostedInfo) await clone(hostedInfo, rootPath, usePnp)
+  else await copy(starter, rootPath, usePnp)
 }
