@@ -19,12 +19,12 @@ const HomepageSectionRoot = styled(`section`)`
 
   ${presets.Hd} {
     margin: 0 -${vP};
-    padding: ${rhythm(1)} ${rhythm(presets.gutters.default)};
+    padding: ${rhythm(1)} 5%;
     width: calc(100% + (${vP} * 2));
   }
 
   ${presets.VHd} {
-    padding: ${rhythm(1.5)} 5%;
+    padding: ${rhythm(1.5)} 8%;
   }
 `
 export const Header = styled(`header`)`
