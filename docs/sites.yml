@@ -3436,3 +3436,16 @@
   built_by: Michael Uloth
   built_by_url: https://www.michaeluloth.com
   featured: false
+- title: VS Code Rocks
+  main_url: "https://vscode.rocks"
+  url: "https://vscode.rocks"
+  source_url: "https://github.com/lannonbr/vscode-rocks"
+  featured: false
+  description: >
+    VS Code Rocks is a place for weekly news on the newest features and updates to Visual Studio Code as well as trending extensions and neat tricks to continually improve your VS Code skills.
+  categories:
+    - Open Source
+    - Blog
+    - Web Development
+  built_by: Benjamin Lannon
+  built_by_url: "https://github.com/lannonbr"
