@@ -3446,7 +3446,7 @@
   built_by: NARCAN
   built_by_url: https://www.narcan.com
   featured: false
-  - title: Ritual
+- title: Ritual
   main_url: https://ritual.com
   url: https://ritual.com
   description: >
@@ -3456,17 +3456,17 @@
   built_by: Ritual
   built_by_url: https://ritual.com
   featured: false
-  - title: Truebill
+- title: Truebill
   main_url: https://www.truebill.com
   url: https://www.truebill.com
   description: >
-    {titleofthesite} empowers you to take control of your money.  
+    {titleofthesite} empowers you to take control of your money.
   categories:
     - Finance
   built_by: Truebill
   built_by_url: https://www.truebill.com
   featured: false
-  - title: Smartling
+- title: Smartling
   main_url: https://www.smartling.com
   url: https://www.smartling.com
   description: >
@@ -3476,7 +3476,7 @@
   built_by: Smartling
   built_by_url: https://www.smartling.com
   featured: false
-  - title: Clear
+- title: Clear
   main_url: https://www.clearme.com
   url: https://www.clearme.com
   description: >
@@ -3486,4 +3486,3 @@
   built_by: Clear
   built_by_url: https://www.clearme.com
   featured: false
-  
