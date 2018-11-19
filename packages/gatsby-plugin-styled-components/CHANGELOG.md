@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.2"></a>
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/compare/gatsby-plugin-styled-components@3.0.1...gatsby-plugin-styled-components@3.0.2) (2018-11-15)
+
+### Bug Fixes
+
+- **gatsby-plugin-styled-components:** fix global styles pollution ([#9943](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/issues/9943)) ([a75c641](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/commit/a75c641)), closes [#9922](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/issues/9922)
+
 <a name="3.0.1"></a>
 
 ## [3.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/compare/gatsby-plugin-styled-components@3.0.0...gatsby-plugin-styled-components@3.0.1) (2018-10-29)
