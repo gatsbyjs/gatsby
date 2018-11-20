@@ -94,11 +94,11 @@ module.exports = {
 }
 ```
 
-### Dynamically including polyfills
+### Dynamically polyfilling object-fit/object-position
 
-You can use `gatsby-image` without adding it to `gatsby-config.js` (it Just Works™). However, lazy loading (e.g. blur-up) may not work in browsers lacking support for `IntersectionObserver` (e.g. Safari and IE) and `object-fit`/`object-position` may not work in browsers lacking support for these CSS properties (e.g. IE). 
+You can use `gatsby-image` without adding it to `gatsby-config.js` (it Just Works™). 
 
-To support these features in all browsers, add `gatsby-image` to `gatsby-config.js` and set the `loadPolyfills` option to true. This tells `gatsby-image` to dynamically import the [intersection-observer](https://github.com/w3c/IntersectionObserver#readme) and [object-fit-images](https://github.com/bfred-it/object-fit-images) polyfills in browsers that need them. (These polyfills will not be loaded in browsers that already support these features.)
+However, if you'd like to add support for the `object-fit`/`object-position` CSS properties in older browsers (e.g. IE), you'll need to add `gatsby-image` to `gatsby-config.js` and set the `loadPolyfills` option to true. This tells `gatsby-image` to dynamically import the [object-fit-images](https://github.com/bfred-it/object-fit-images) polyfill in browsers that need it.
 
 With dynamic polyfilling enabled, your `gatsby-config.js` will look like this:
 
