@@ -1239,7 +1239,7 @@
     - Katex
     - Tensorflow
     - CSV
-    - Graph mermaid
+    - Graph
     - Linting
     - Chart.js
   features:
