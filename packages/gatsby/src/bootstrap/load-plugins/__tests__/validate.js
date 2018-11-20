@@ -208,7 +208,7 @@ describe(`warnOnIncompatiblePeerDependency`, () => {
   it(`Does not warn when no peer dependency`, () => {
     warnOnIncompatiblePeerDependency(`dummy-package`, { peerDependencies: {} })
 
-    expect(reporter.warn.mock.calls.length).toBe(0)
+    expect(reporter.warn).not.toHaveBeenCalled()
   })
 
   it(`Warns on incompatible gatsby peer dependency`, async () => {
@@ -218,6 +218,8 @@ describe(`warnOnIncompatiblePeerDependency`, () => {
       },
     })
 
-    expect(reporter.warn.mock.calls.length).toBe(2)
+    expect(reporter.warn).toHaveBeenCalledWith(
+      expect.stringContaining(`Plugin dummy-package is incompatible`)
+    )
   })
 })
