@@ -1235,7 +1235,6 @@
   repo: https://github.com/DanShai/gatsbyv2-scientific-blog-machine-learning
   description: Machine learning ready and scientific blog starter
   tags:
-    - GatsbyV2
     - Blog
     - Katex
     - Tensorflow
