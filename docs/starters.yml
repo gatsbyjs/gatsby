@@ -1231,3 +1231,20 @@
     - Bootstrap v4 support
     - Css Modules support
     - ESLint, Prettier
+- url: https://danshai.github.io/gatsbyv2-scientific-blog-machine-learning/
+  repo: https://github.com/DanShai/gatsbyv2-scientific-blog-machine-learning
+  description: Machine learning ready and scientific blog starter
+  tags:
+    - Blog
+    - Katex
+    - Tensorflow
+    - CSV
+    - Graph
+    - Linting
+    - Chart.js
+  features:
+    - Write easly your scientific blog with katex and publish your research
+    - Machine learning ready with tensorflowjs
+    - Manipulate csv data
+    - draw with graph mermaid
+    - display charts with chartjs
