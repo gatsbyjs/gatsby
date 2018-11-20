@@ -1250,7 +1250,7 @@
     - Format on commit with Lint-Staged(Husky)
     - Favicon generation
     - Sitemap generation
-    - Autoprefixer with browser list.
+    - Autoprefixer with browser list
     - CSS nano
     - CSS MQ Packer
     - Lazy load image(s) with plugin sharp
