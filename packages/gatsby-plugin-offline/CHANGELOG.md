@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.16"></a>
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.15...gatsby-plugin-offline@2.0.16) (2018-11-20)
+
+### Features
+
+- **gatsby-plugin-offline:** replace no-cache detection with dynamic path whitelist ([#9907](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/9907)) ([8d3af3f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/8d3af3f))
+
 <a name="2.0.15"></a>
 
 ## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.14...gatsby-plugin-offline@2.0.15) (2018-11-14)
