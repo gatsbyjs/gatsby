@@ -1241,7 +1241,7 @@
     - CSV
     - Graph mermaid
     - Linting
-    - Chartjs
+    - Chart.js
   features:
     - Write easly your scientific blog with katex and publish your research
     - Machine learning ready with tensorflowjs
