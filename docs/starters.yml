@@ -1242,7 +1242,6 @@
     - Postcss plugins
     - Mainfest
   features:
-    - Gatsby v2
     - TSLint with airbnb & prettier configurations
     - Prettier
     - Stylelint
