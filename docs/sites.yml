@@ -3436,6 +3436,56 @@
   built_by: Michael Uloth
   built_by_url: https://www.michaeluloth.com
   featured: false
+- title: NARCAN
+  main_url: https://www.narcan.com
+  url: https://www.narcan.com
+  description: >
+    NARCAN Nasal Spray is the first and only FDA-approved nasal form of naloxone for the emergency treatment of a known or suspected opioid overdose.
+  categories:
+    - Healthcare
+  built_by: NARCAN
+  built_by_url: https://www.narcan.com
+  featured: false
+- title: Ritual
+  main_url: https://ritual.com
+  url: https://ritual.com
+  description: >
+    Ritual started with a simple question, what exactly is in women's multivitamins? This is the story of what happened when our founder Kat started searching for answers — the story of Ritual.
+  categories:
+    - Healthcare
+  built_by: Ritual
+  built_by_url: https://ritual.com
+  featured: false
+- title: Truebill
+  main_url: https://www.truebill.com
+  url: https://www.truebill.com
+  description: >
+    Truebill empowers you to take control of your money.
+  categories:
+    - Finance
+  built_by: Truebill
+  built_by_url: https://www.truebill.com
+  featured: false
+- title: Smartling
+  main_url: https://www.smartling.com
+  url: https://www.smartling.com
+  description: >
+    Smartling enables you to automate, manage, and professionally translate content so that you can do more with less.
+  categories:
+    - Marketing
+  built_by: Smartling
+  built_by_url: https://www.smartling.com
+  featured: false
+- title: Clear
+  main_url: https://www.clearme.com
+  url: https://www.clearme.com
+  description: >
+    At clear, we’re working toward a future where you are your ID, enabling you to lead an unstoppable life.
+  categories:
+    - Security
+  built_by: Clear
+  built_by_url: https://www.clearme.com
+  featured: false
 - title: VS Code Rocks
   main_url: "https://vscode.rocks"
   url: "https://vscode.rocks"
