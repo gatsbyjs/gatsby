@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.3"></a>
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/compare/gatsby-plugin-styled-components@3.0.2...gatsby-plugin-styled-components@3.0.3) (2018-11-20)
+
+### Bug Fixes
+
+- update peerDependency, plugins rely on extra arg being passed in API hooks ([#10045](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/issues/10045)) ([83b7a18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/commit/83b7a18)), closes [/github.com/gatsbyjs/gatsby/pull/9943#issuecomment-440152666](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/issues/issuecomment-440152666)
+
 <a name="3.0.2"></a>
 
 ## [3.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/compare/gatsby-plugin-styled-components@3.0.1...gatsby-plugin-styled-components@3.0.2) (2018-11-15)
