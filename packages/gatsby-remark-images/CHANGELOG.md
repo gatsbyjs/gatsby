@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.5...gatsby-remark-images@2.0.6) (2018-11-06)
+
+### Features
+
+- **gatsby-plugin-sharp:** cache base64 if possible ([#9059](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/9059)) ([5dc9346](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/5dc9346)), closes [#6999](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/6999)
+
 <a name="2.0.5"></a>
 
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.4...gatsby-remark-images@2.0.5) (2018-10-29)

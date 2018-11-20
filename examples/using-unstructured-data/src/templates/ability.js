@@ -2,10 +2,10 @@ import React from "react"
 import { Link } from "gatsby"
 
 const getName = ability =>
-  ability.names.find(({ language }) => language.name === "en").name
+  ability.names.find(({ language }) => language.name === `en`).name
 
 export default ({ pageContext: { pokemon, ability } }) => (
-  <div style={{ width: 960, margin: "4rem auto" }}>
+  <div style={{ width: 960, margin: `4rem auto` }}>
     <h1>
       {pokemon.name}
       ’s {getName(ability)} ability
