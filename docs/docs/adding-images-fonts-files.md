@@ -128,7 +128,7 @@ add a file named `sun.jpg` to the static folder, it'll be copied to
 `public/sun.jpg`. To reference assets in the `static` folder, you'll need to
 [import a helper function from `gatsby` named `withPrefix`](/docs/gatsby-link/#prefixed-paths-helper).
 You will need to make sure
-[you set `pathPrefix` in your gatsby-config.js for this to work](/docs/path-prefix/).
+[you set `pathPrefix` in your gatsby-config.js for this to work](/docs/docs/path-prefix.md).
 
 ```js
 import { withPrefix } from 'gatsby'

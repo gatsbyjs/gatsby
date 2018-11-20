@@ -2,7 +2,7 @@
 title: Add offline support
 ---
 
-If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may have noticed a lackluster score in the "Progressive Web App" category. Let's address how you can improve that score.
+If you've run an [audit with Lighthouse](/docs/docs/audit-with-lighthouse.md), you may have noticed a lackluster score in the "Progressive Web App" category. Let's address how you can improve that score.
 
 1.  You can [add a manifest file](/docs/add-a-manifest-file/).
 2.  You can also add offline support, since another requirement for a website to qualify as a PWA is the use of a [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API). A service worker runs in the background, deciding to serve network or cached content based on connectivity, allowing for a seamless, managed offline experience.

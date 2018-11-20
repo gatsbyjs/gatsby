@@ -68,7 +68,7 @@ module.exports = {
 }
 ```
 
-See more about [Adding a Path Prefix](/docs/path-prefix/).
+See more about [Adding a Path Prefix](/docs/docs/path-prefix.md).
 
 ## Polyfill
 
@@ -82,7 +82,7 @@ module.exports = {
 }
 ```
 
-See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
+See more about [Browser Support](/docs/docs/browser-support.md/#polyfills) in Gatsby.
 
 ## Mapping node types
 
@@ -259,7 +259,7 @@ module.exports = {
 }
 ```
 
-See more about [Proxying API Requests in Develop](/docs/api-proxy/).
+See more about [Proxying API Requests in Develop](/docs/docs/api-proxy.md).
 
 ## Advanced proxying with `developMiddleware`
 

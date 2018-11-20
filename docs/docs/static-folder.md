@@ -39,7 +39,7 @@ render() {
 ```
 
 And make sure you
-[set `pathPrefix` in your gatsby-config.js](/docs/path-prefix/):
+[set `pathPrefix` in your gatsby-config.js](/docs/docs/path-prefix.md):
 
 ```javascript:title=gatsby-config.js
 module.exports = {

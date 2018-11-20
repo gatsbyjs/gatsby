@@ -2,7 +2,7 @@
 title: Add a manifest file
 ---
 
-If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may have noticed a lackluster score in the "Progressive Web App" category. Let's address how you can improve that score.
+If you've run an [audit with Lighthouse](/docs/docs/audit-with-lighthouse.md), you may have noticed a lackluster score in the "Progressive Web App" category. Let's address how you can improve that score.
 
 But first, what exactly _are_ PWAs?
 
