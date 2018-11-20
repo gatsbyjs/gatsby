@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.3...gatsby-plugin-jss@2.0.4) (2018-11-20)
+
+### Bug Fixes
+
+- update peerDependency, plugins rely on extra arg being passed in API hooks ([#10045](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/issues/10045)) ([83b7a18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/commit/83b7a18)), closes [/github.com/gatsbyjs/gatsby/pull/9943#issuecomment-440152666](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/issues/issuecomment-440152666)
+
 <a name="2.0.3"></a>
 
 ## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.2...gatsby-plugin-jss@2.0.3) (2018-10-29)
