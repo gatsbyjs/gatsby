@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "cheerio": "^1.0.0-rc.2",
+    "idb-keyval": "^3.1.0",
     "lodash": "^4.17.10",
     "workbox-build": "^3.6.3"
   },

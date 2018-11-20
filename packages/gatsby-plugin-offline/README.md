@@ -24,8 +24,8 @@ plugins: [`gatsby-plugin-offline`]
 When adding this plugin to your `gatsby-config.js`, you can pass in options to
 override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
 
-The default config is as follows. Warning, you can break the offline support
-and AppCache setup by changing these options so tread carefully.
+The default config is as follows. Warning: you can break the offline support by
+changing these options, so tread carefully.
 
 ```javascript
 const options = {
@@ -37,17 +37,6 @@ const options = {
     // the default prefix with `pathPrefix`.
     "/": `${pathPrefix}/`,
   },
-  navigateFallback: `${pathPrefix}/offline-plugin-app-shell-fallback/index.html`,
-  // Only match URLs without extensions or the query `no-cache=1`.
-  // So example.com/about/ will pass but
-  // example.com/about/?no-cache=1 and
-  // example.com/cheeseburger.jpg will not.
-  // We only want the service worker to handle our "clean"
-  // URLs and not any files hosted on the site.
-  //
-  // Regex based on http://stackoverflow.com/a/18017805
-  navigateFallbackWhitelist: [/^([^.?]*|[^?]*\.([^.?]{5,}|html))(\?.*)?$/],
-  navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
   cacheId: `gatsby-plugin-offline`,
   // Don't cache-bust JS or CSS files, and anything in the static directory,
   // since these files have unique URLs and their contents will never change
