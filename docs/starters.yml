@@ -1237,10 +1237,8 @@
   tags:
     - TypeScript
     - PWA
-    - No UI framework
-    - SCSS
-    - Postcss plugins
-    - Mainfest
+    - Styling:SCSS
+    - Styling:PostCSS
   features:
     - TSLint with airbnb & prettier configurations
     - Prettier
