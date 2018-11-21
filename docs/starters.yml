@@ -37,6 +37,17 @@
     - Eslint Airbnb without semicolon and without .jsx extension
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-redux-firebase.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-starter-redux-firebase
+  description: A Gatsby + Redux + Firebase Starter. With Authentication
+  tags:
+    - Styling:None
+    - Firebase
+    - Client-side App
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Firebase
+    - Web App Manifest
 - url: https://dschau.github.io/gatsby-blog-starter-kit/
   repo: https://github.com/dschau/gatsby-blog-starter-kit
   description: n/a
@@ -1045,6 +1056,7 @@
   tags:
     - Styling:None
     - Firebase
+    - Client-side App
   features:
     - Eslint Airbnb without semicolon and without .jsx extension
     - Firebase
@@ -1172,3 +1184,67 @@
     - Progressive Web App features
     - Optimized for performance
     - Minimal UI and Styling
+- url: https://gatsby-tutorial-starter.netlify.com/
+  repo: https://github.com/justinformentin/gatsby-v2-tutorial-starter
+  description: Simple, modern desgined blog with post lists, tags, and easily customizable code.
+  tags:
+    - Blog
+    - Linting
+    - PWA
+    - SEO
+    - Styling:CSS-in-JS
+    - Markdown
+  features:
+    - Blog post listing with image, summary, date, and tags.
+    - Post Tags
+    - Post List Filtering
+    - Typography.js
+    - Emotion styling
+    - Syntax Highlighting in Code Blocks
+    - Gatsby Image
+    - Fully Responsive
+    - Offline Support
+    - Web App Manifest
+    - SEO
+    - PWA
+    - Sitemap generation
+    - Schema.org JSON-LD
+    - CircleCI Integration
+    - Codeclimate Integration
+    - Google Analytics
+    - Twitter and OpenGraph Tags
+    - ESLint
+    - Prettier Code Styling
+- url: https://avivero.github.io/gatsby-redux-starter/
+  repo: https://github.com/AVivero/gatsby-redux-starter
+  description: Gatsby starter site with Redux, Sass, Bootstrap, Css Modules and Material Icons
+  tags:
+    - Redux
+    - Styling:SCSS
+    - Styling:Bootstrap
+    - Styling:Material
+    - Linting
+  features:
+    - Gatsby v2 support
+    - Redux support
+    - Sass support
+    - Bootstrap v4 support
+    - Css Modules support
+    - ESLint, Prettier
+- url: https://danshai.github.io/gatsbyv2-scientific-blog-machine-learning/
+  repo: https://github.com/DanShai/gatsbyv2-scientific-blog-machine-learning
+  description: Machine learning ready and scientific blog starter
+  tags:
+    - Blog
+    - Katex
+    - Tensorflow
+    - CSV
+    - Graph
+    - Linting
+    - Chart.js
+  features:
+    - Write easly your scientific blog with katex and publish your research
+    - Machine learning ready with tensorflowjs
+    - Manipulate csv data
+    - draw with graph mermaid
+    - display charts with chartjs

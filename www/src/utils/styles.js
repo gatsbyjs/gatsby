@@ -107,6 +107,7 @@ export const buttonStyles = {
       padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
     },
   },
+  ondark: { border: `1px solid ${colors.ui.light}` },
 }
 
 export const svgStyles = {

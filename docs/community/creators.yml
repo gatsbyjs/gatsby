@@ -199,14 +199,17 @@
 - name: Ramón Chancay
   type: individual
   description: >-
-    Frontend web developer in Guayaquil Ecuador. Currently at EveryMundo, Before in El Universo, I enjoy building things with code. Organizer and Speaker in Meetups for pizza and beer. 🍕🍻
+    Husband and father. 
+    Front-end engineer. 
+    Currently at EveryMundo previously at El Universo.
+    Nodejs, React and Web performance.
   location: "Guayaquil, Ecuador"
   website: "https://ramonchancay.me"
   github: "https://github.com/devrchancay"
   image: images/ramon-chancay.png
   for_hire: true
   hiring: false
-  portfolio: false
+  portfolio: true
 - name: Kevin Legrand
   type: individual
   description: >-

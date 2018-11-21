@@ -12,6 +12,7 @@ const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const mergeGatsbyConfig = require(`../utils/merge-gatsby-config`)
+const getBrowserslist = require(`../utils/browserslist`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
@@ -56,10 +57,13 @@ module.exports = async (args: BootstrapArgs) => {
   // and invokes Gatsby API based on actions.
   require(`../redux/plugin-runner`)
 
+  const directory = slash(args.directory)
+
   const program = {
     ...args,
+    browserslist: getBrowserslist(directory),
     // Fix program directory path for windows env.
-    directory: slash(args.directory),
+    directory,
   }
 
   store.dispatch({

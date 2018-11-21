@@ -15,7 +15,6 @@ window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader, { setApiRunnerForLoader } from "./loader"
-import loadDirectlyOr404 from "./load-directly-or-404"
 import EnsureResources from "./ensure-resources"
 
 window.asyncRequires = asyncRequires
@@ -85,56 +84,43 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     )
   }
 
-  loader
-    .getResourcesForPathname(browserLoc.pathname)
-    .then(resources => {
-      if (!resources || resources.page.path === `/404.html`) {
-        return loadDirectlyOr404(
-          resources,
-          browserLoc.pathname + browserLoc.search + browserLoc.hash,
-          true
-        )
+  loader.getResourcesForPathname(browserLoc.pathname).then(() => {
+    const Root = () =>
+      createElement(
+        Router,
+        {
+          basepath: __PATH_PREFIX__,
+        },
+        createElement(RouteHandler, { path: `/*` })
+      )
+
+    const WrappedRoot = apiRunner(
+      `wrapRootElement`,
+      { element: <Root /> },
+      <Root />,
+      ({ result }) => {
+        return { element: result }
       }
+    ).pop()
 
-      return null
-    })
-    .then(() => {
-      const Root = () =>
-        createElement(
-          Router,
-          {
-            basepath: __PATH_PREFIX__,
-          },
-          createElement(RouteHandler, { path: `/*` })
-        )
+    let NewRoot = () => WrappedRoot
 
-      const WrappedRoot = apiRunner(
-        `wrapRootElement`,
-        { element: <Root /> },
-        <Root />,
-        ({ result }) => {
-          return { element: result }
+    const renderer = apiRunner(
+      `replaceHydrateFunction`,
+      undefined,
+      ReactDOM.hydrate
+    )[0]
+
+    domReady(() => {
+      renderer(
+        <NewRoot />,
+        typeof window !== `undefined`
+          ? document.getElementById(`___gatsby`)
+          : void 0,
+        () => {
+          apiRunner(`onInitialClientRender`)
         }
-      ).pop()
-
-      let NewRoot = () => WrappedRoot
-
-      const renderer = apiRunner(
-        `replaceHydrateFunction`,
-        undefined,
-        ReactDOM.hydrate
-      )[0]
-
-      domReady(() => {
-        renderer(
-          <NewRoot />,
-          typeof window !== `undefined`
-            ? document.getElementById(`___gatsby`)
-            : void 0,
-          () => {
-            apiRunner(`onInitialClientRender`)
-          }
-        )
-      })
+      )
     })
+  })
 })

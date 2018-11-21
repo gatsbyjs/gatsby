@@ -50,7 +50,7 @@ module.exports = {
 
 There are a few scenarios where it makes sense to reimplement the V1 layout handling:
 
-1.  You have a large or complex V1 site and [refactoring to the new layout component](https://v2--gatsbyjs.netlify.com/docs/migrating-from-v1-to-v2/#update-layout-component) is not feasible
+1.  You have a large or complex V1 site and [refactoring to the new layout component](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components) is not feasible
 2.  Your site uses page transitions or other transitions that break if the layout component is unmounted and remounted when routes change
 3.  Your site attaches global state in the layout that doesn't persist if the component is unmounted and remounted
 

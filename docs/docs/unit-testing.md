@@ -165,7 +165,7 @@ describe("BlogIndex", () => {
 
     const tree = renderer.create(<BlogIndex location={location} />).toJSON()
     expect(tree).toMatchSnapshot()
-  }))
+  })
 })
 ```
 
