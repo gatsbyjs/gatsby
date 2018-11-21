@@ -219,7 +219,7 @@ describe(`warnOnIncompatiblePeerDependency`, () => {
     })
 
     expect(reporter.warn).toHaveBeenCalledWith(
-      expect.stringContaining(`Plugin dummy-package is incompatible`)
+      expect.stringContaining(`Plugin dummy-package is not compatible`)
     )
   })
 })
