@@ -185,8 +185,8 @@ module.exports = (
     <span
       class="${imageBackgroundClass}"
       style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-        fluidResult.base64
-      }'); background-size: cover; display: block;"
+      fluidResult.base64
+    }'); background-size: cover; display: block;"
     ></span>
     ${imageTag}
   </span>
