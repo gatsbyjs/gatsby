@@ -388,6 +388,34 @@ some other text`,
 </ul>`)
     }
   )
+
+  bootstrapTest(
+    `table of contents is generated from given heading onwards`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+
+# third title
+
+final text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title")
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#third-title">third title</a></li>
+</ul>`)
+    }
+  )
 })
 
 describe(`Links are correctly prefixed`, () => {

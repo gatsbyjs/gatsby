@@ -85,7 +85,6 @@ module.exports = (
       tableOfContents = {
         heading: null,
         maxDepth: 6,
-        tight: false,
       },
     } = pluginOptions
     const tocOptions = tableOfContents
@@ -458,9 +457,6 @@ module.exports = (
           },
           heading: {
             type: GraphQLString,
-          },
-          tight: {
-            type: GraphQLBoolean,
           },
         },
         resolve(markdownNode, args) {

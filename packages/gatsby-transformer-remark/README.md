@@ -77,7 +77,7 @@ Using the following GraphQL query you'll be able to get the table of contents
 
 ### Configuring the tableOfContents
 
-By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null. To alter the default values for tableOfContents generation, include values for heading (string), maxDepth (number 1 to 6) and/or tight (boolean) in graphQL query.
+By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null. To alter the default values for tableOfContents generation, include values for `heading` (string) and/or `maxDepth` (number 1 to 6) in graphQL query. If a value for heading is given, the first heading that matches will be ommitted and the toc is generated from the next heading of the same depth onwards. Value fot maxDepth sets the maximum depth of the toc (i.e. if a maxDepth of 3 is set, only h1 to h3 heading will appear in the toc).
 
 ```graphql
 {
@@ -89,7 +89,6 @@ By default the tableOfContents is using the field `slug` to generate URLs. You c
           pathToSlugField: "frontmatter.path"
           heading: "only show toc from this heading onwards"
           maxDepth: 2
-          tight: true
         )
         frontmatter {
           # Assumes you're using path in your frontmatter.
@@ -112,7 +111,6 @@ plugins: [
       tableOfContents: {
         heading: null,
         maxDepth: 6,
-        tight: null,
       },
     },
   },
