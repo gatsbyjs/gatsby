@@ -128,7 +128,6 @@
     "babel-preset-gatsby-package": "^0.1.2",
     "cross-env": "^5.1.4",
     "lerna": "^2.9.0",
-    "nyc": "^7.0.0",
     "rimraf": "^2.6.1"
   },
   "engines": {
@@ -173,7 +172,6 @@
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "types": "index.d.ts",
