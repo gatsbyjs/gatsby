@@ -100,3 +100,16 @@ Array [
   />,
 ]
 `;
+
+exports[`gatsby-plugin-manifest Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string 1`] = `
+Array [
+  <link
+    href="/icons/icon-48x48.png"
+    rel="shortcut icon"
+  />,
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+]
+`;
