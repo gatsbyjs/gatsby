@@ -63,3 +63,19 @@ const options = {
   clientsClaim: true,
 }
 ```
+
+## Remove
+
+If you want to remove `gatsby-plugin-offline` from your site at a later point,
+substitute it with [`gatsby-plugin-remove-serviceworker`](https://www.npmjs.com/package/gatsby-plugin-remove-serviceworker)
+to safely remove the service worker:
+
+```diff:title=gatsby-config.js
+ plugins: [
+-  `gatsby-plugin-offline`,
++  `gatsby-plugin-remove-serviceworker`,
+ ]
+```
+
+This will ensure that the worker is properly unregistered, instead of leaving an
+outdated version registered in users' browsers.
