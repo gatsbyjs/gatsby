@@ -76,7 +76,7 @@ describe(`remark prism plugin`, () => {
     it(`adds line-number markup when configured globally`, () => {
       const code = `\`\`\`js\n//.foo { \ncolor: red;\n }\``
       const markdownAST = remark.parse(code)
-      plugin({ markdownAST }, { showLineNumbers: true })
+      plugin({ markdownAST }, { showLineNumbersGlobal: true })
       expect(markdownAST).toMatchSnapshot()
     })
 

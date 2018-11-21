@@ -46,7 +46,7 @@ plugins: [
             // Defaults to false.
             // If you with to only show line numbers on certain code blocks,
             // leave false and use the {numberLines: true} syntax below
-            showLineNumbers: false,
+            showLineNumbersGlobal: false,
             // If setting this to true, the parser won't handle and highlight inline
             // code used in markdown i.e. single backtick code like `this`.
             noInlineHighlight: false,
