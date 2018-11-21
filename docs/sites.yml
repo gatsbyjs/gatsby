@@ -3515,3 +3515,14 @@
   categories:
     - Web Development
     - Learning
+- title: Tandem
+  main_url: "https://tandem.co.uk"
+  url: "https://tandem.co.uk/the-app"
+  description: >
+    We're on a mission to free you of money misery. Our app, card and savings account are designed to help you spend less time worrying about money and more time enjoying life.
+  categories:
+    - Finance
+    - App
+  built_by: Tandem
+  built_by_url: https://github.com/tandembank
+  featured: false
