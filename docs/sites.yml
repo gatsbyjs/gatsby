@@ -3526,3 +3526,15 @@
   built_by: Tandem
   built_by_url: https://github.com/tandembank
   featured: false
+- title: Monbanquet.fr
+  main_url: "https://monbanquet.fr"
+  url: "https://monbanquet.fr"
+  description: >
+    Give your corporate events the food and quality it deserves, thanks to the know-how of the best local artisans.
+  categories:
+    - eCommerce
+    - Food
+    - Event
+  built_by: Monbanquet.fr
+  built_by_url: https://github.com/monbanquet
+  featured: false
