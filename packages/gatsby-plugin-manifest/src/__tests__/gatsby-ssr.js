@@ -19,6 +19,11 @@ describe(`gatsby-plugin-manifest`, () => {
     expect(headComponents).toMatchSnapshot()
   })
 
+  it(`Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string`, () => {
+    onRenderBody(ssrArgs, { icon: true })
+    expect(headComponents).toMatchSnapshot()
+  })
+
   describe(`Creates legacy apple touch links if opted in`, () => {
     it(`Using default set of icons`, () => {
       onRenderBody(ssrArgs, {
