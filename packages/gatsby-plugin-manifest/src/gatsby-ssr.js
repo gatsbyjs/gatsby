@@ -33,9 +33,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   )
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
-  const themeColor = pluginOptions.theme_color || false
-
-  if (themeColor) {
+  if (pluginOptions.theme_color) {
     headComponents.push(
       <meta
         key={`gatsby-plugin-manifest-meta`}
