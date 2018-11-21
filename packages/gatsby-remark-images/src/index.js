@@ -128,7 +128,7 @@ module.exports = (
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
       />
-    `
+    `.trim()
 
     // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
     if (options.withWebp) {
@@ -168,7 +168,7 @@ module.exports = (
           title="${node.title ? node.title : ``}"
         />
       </picture>
-      `
+      `.trim()
     }
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
@@ -190,7 +190,7 @@ module.exports = (
     ></span>
     ${imageTag}
   </span>
-  `
+  `.trim()
 
     // Make linking to original image optional.
     if (!inLink && options.linkImagesToOriginal) {
@@ -204,7 +204,7 @@ module.exports = (
   >
     ${rawHTML}
   </a>
-    `
+    `.trim()
     }
 
     // Wrap in figure and use title as caption
@@ -214,7 +214,7 @@ module.exports = (
     ${rawHTML}
     <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
   </figure>
-      `
+      `.trim()
     }
 
     return rawHTML
