@@ -18,7 +18,9 @@ exports.onRouteUpdate = () => {
     const imageElement = imageWrapper.querySelector(`.${imageClass}`)
 
     const onImageLoad = () => {
+      backgroundElement.style.transition = `opacity 0.5s 0.5s`
       backgroundElement.style.opacity = 0
+      imageElement.style.transition = `opacity 0.5s`
       imageElement.style.opacity = 1
       imageElement.removeEventListener(`load`, onImageLoad)
     }
@@ -27,7 +29,6 @@ exports.onRouteUpdate = () => {
       backgroundElement.style.opacity = 0
     } else {
       imageElement.style.opacity = 0
-      imageElement.style.transition = `opacity 0.5s`
       imageElement.addEventListener(`load`, onImageLoad)
     }
   }
