@@ -4,6 +4,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 const glob = require(`glob`)
+const { warnOnIncompatiblePeerDependency } = require(`./validate`)
 const { store } = require(`../../redux`)
 const existsSync = require(`fs-exists-cached`).sync
 const createNodeId = require(`../../utils/create-node-id`)
@@ -59,6 +60,8 @@ function resolvePlugin(pluginName) {
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
         const name = packageJSON.name || pluginName
+        warnOnIncompatiblePeerDependency(name, packageJSON)
+
         return {
           resolve: resolvedPath,
           name,
@@ -83,6 +86,7 @@ function resolvePlugin(pluginName) {
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
     )
+    warnOnIncompatiblePeerDependency(packageJSON.name, packageJSON)
 
     return {
       resolve: resolvedPath,
