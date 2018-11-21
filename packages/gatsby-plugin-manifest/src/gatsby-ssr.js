@@ -20,18 +20,30 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     }
   }
 
-  setHeadComponents([
-    <link
-      key={`gatsby-plugin-manifest-link`}
-      rel="manifest"
-      href={withPrefix(`/manifest.webmanifest`)}
-    />,
-    <meta
-      key={`gatsby-plugin-manifest-meta`}
-      name="theme-color"
-      content={pluginOptions.theme_color}
-    />,
-  ])
+  /**
+   * The user has an option to opt out of the theme_color meta tag being inserted into the head.
+   */
+  const themeColor = pluginOptions.theme_color || false
+
+  setHeadComponents(
+    [
+      <link
+        key={`gatsby-plugin-manifest-link`}
+        rel="manifest"
+        href={withPrefix(`/manifest.webmanifest`)}
+      />,
+    ].concat(
+      themeColor
+        ? [
+            <meta
+              key={`gatsby-plugin-manifest-meta`}
+              name="theme-color"
+              content={pluginOptions.theme_color}
+            />,
+          ]
+        : []
+    )
+  )
 
   if (pluginOptions.legacy) {
     setHeadComponents(
