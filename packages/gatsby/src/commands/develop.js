@@ -287,7 +287,7 @@ module.exports = async (program: any) => {
     })
   })
 
-  function prepareUrls(protocol, host, port) {
+  const prepareUrls = (protocol, host, port) => {
     const formatUrl = hostname =>
       url.format({
         protocol,
@@ -341,7 +341,7 @@ module.exports = async (program: any) => {
     }
   }
 
-  function printInstructions(appName, urls, useYarn) {
+  const printInstructions = (appName, urls, useYarn) => {
     console.log()
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
@@ -372,7 +372,7 @@ module.exports = async (program: any) => {
     console.log()
   }
 
-  function printDeprecationWarnings() {
+  const printDeprecationWarnings = () => {
     const deprecatedApis = [`boundActionCreators`, `pathContext`]
     const fixMap = {
       boundActionCreators: {
