@@ -11,6 +11,7 @@ module.exports = (
     inlineCodeMarker = null,
     aliases = {},
     noInlineHighlight = false,
+    showLineNumbers = false,
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -27,6 +28,7 @@ module.exports = (
       numberLinesStartAt,
     } = parseLineNumberRange(language)
     language = splitLanguage
+    numberLines = numberLines || showLineNumbers
 
     // PrismJS's theme styles are targeting pre[class*="language-"]
     // to apply its styles. We do the same here so that users
