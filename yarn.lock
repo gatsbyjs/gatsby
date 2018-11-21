@@ -1620,10 +1620,10 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@moocar/lokijs@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@moocar/lokijs/-/lokijs-1.0.0.tgz#68c7ade342daf2b32dcbc712b683d8a5fd49a206"
-  integrity sha512-KePBn1Pzv8kZC5lVIeMLd+RP80PXrHgPmWzDE6jQwPNIC2EyGT+hLIPt23I5Prrsu8hLSBrZSb794bpphQyyAA==
+"@moocar/lokijs@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@moocar/lokijs/-/lokijs-1.0.1.tgz#545227c173030dd0e6b1e6bdcef528012a6c325c"
+  integrity sha512-7kqLSxGjYTJ+a+DkJ71bJSF3LLuOShSFCXfv5Eg2qVpCQp/E1JTlAp+rHgVy2HAu8QLuePKx57xURwt6o1EuFA==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
