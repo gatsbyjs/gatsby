@@ -3513,4 +3513,5 @@
   featured: false
   description: Learn to code with free online courses, programming projects, and interview preparation for developer jobs.
   categories:
-    - Web development
+    - Web Development
+    - Learning
