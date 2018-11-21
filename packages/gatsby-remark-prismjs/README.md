@@ -44,7 +44,7 @@ plugins: [
             // right after importing the prism color scheme:
             //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
             // Defaults to false.
-            // If you with to only show line numbers on certain code blocks,
+            // If you wish to only show line numbers on certain code blocks,
             // leave false and use the {numberLines: true} syntax below
             showLineNumbersGlobal: false,
             // If setting this to true, the parser won't handle and highlight inline
