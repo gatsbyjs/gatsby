@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.9...gatsby-plugin-manifest@2.0.10) (2018-11-21)
+
+### Features
+
+- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defiened ([#10069](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/7802470))
+
 <a name="2.0.9"></a>
 
 ## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.8...gatsby-plugin-manifest@2.0.9) (2018-11-12)
