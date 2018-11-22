@@ -37,6 +37,15 @@
     - Eslint Airbnb without semicolon and without .jsx extension
     - Offline support
     - Web App Manifest
+- url: https://gatsby-tailwind-styled-components.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-tailwind-styled-components-starter
+  description: A Gatsby Starter with Tailwind CSS + Styled Components
+  tags:
+    - Styling:Tailwind
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Offline support
+    - Web App Manifest
 - url: https://gatsby-starter-redux-firebase.netlify.com/
   repo: https://github.com/muhajirframe/gatsby-starter-redux-firebase
   description: A Gatsby + Redux + Firebase Starter. With Authentication
