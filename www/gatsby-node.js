@@ -144,7 +144,7 @@ exports.createPages = ({ graphql, actions }) => {
     graphql(`
       query {
         allMarkdownRemark(
-          sort: { order: DESC, fields: [frontmatter___date] }
+          sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
           limit: 10000
           filter: { fileAbsolutePath: { ne: null } }
         ) {
