@@ -23,7 +23,11 @@ function createNodeTypeCollection(type) {
   // TODO what if `addCollection` fails? We will have inserted into
   // nodeTypesColl but no collection will exist. Need to make this
   // into a transaction
-  const options = { unique: [`id`], indices: [`id`] }
+  const options = {
+    unique: [`id`],
+    indices: [`id`],
+    disableMeta: true,
+  }
   const coll = getDb().addCollection(collName, options)
   return coll
 }
