@@ -301,7 +301,7 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
+      sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       limit: 3
       filter: {
         frontmatter: { draft: { ne: true } }
@@ -319,6 +319,7 @@ export const pageQuery = graphql`
       filter: {
         fields: { starterShowcase: { slug: { in: $featuredStarters } } }
       }
+      sort: { fields: [fields___starterShowcase___slug] }
     ) {
       edges {
         node {
