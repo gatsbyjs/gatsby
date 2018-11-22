@@ -25,11 +25,11 @@ const { GraphQLList, GraphQLObjectType } = require(`graphql`)
 // sift, rather than loki, so not a big deal
 const typeFields = new Map()
 
-function contains(filters, queryType, fieldType = queryType) {
+function contains(filters, fieldType) {
   return _.some(filters, (fieldFilter, fieldName) => {
     // If a field has been previously flagged as a lazy field, then
     // return true
-    const storedFields = typeFields.get(queryType.name)
+    const storedFields = typeFields.get(fieldType.name)
     if (storedFields && storedFields.has(fieldName)) {
       return true
     } else {
@@ -37,12 +37,12 @@ function contains(filters, queryType, fieldType = queryType) {
       // nodes, in which case we might filter via an elemMatch
       // field. Or, it might be a nested linked object. In either
       // case, we recurse
-      const gqlFieldType = fieldType.getFields()[fieldName].type
+      const gqlFieldType = fieldType.getFields()[fieldName]?.type
       if (gqlFieldType) {
         if (gqlFieldType instanceof GraphQLList && fieldFilter.elemMatch) {
-          return contains(fieldFilter.elemMatch, queryType, gqlFieldType.ofType)
+          return contains(fieldFilter.elemMatch, gqlFieldType.ofType)
         } else if (gqlFieldType instanceof GraphQLObjectType) {
-          return contains(fieldFilter, queryType, gqlFieldType)
+          return contains(fieldFilter, gqlFieldType)
         }
       }
     }
