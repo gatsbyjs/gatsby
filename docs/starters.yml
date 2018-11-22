@@ -1231,6 +1231,29 @@
     - Bootstrap v4 support
     - Css Modules support
     - ESLint, Prettier
+- url: https://gatsby-typescript-boilerplate.netlify.com/
+  repo: https://github.com/leachjustin18/gatsby-typescript-boilerplate
+  description: Opinionated Gatsby v2 starter with TypeScript.
+  tags:
+    - TypeScript
+    - PWA
+    - Styling:SCSS
+    - Styling:PostCSS
+  features:
+    - TSLint with airbnb & prettier configurations
+    - Prettier
+    - Stylelint
+    - Offline support
+    - Type Safe by TypeScript
+    - Format on commit with Lint-Staged(Husky)
+    - Favicon generation
+    - Sitemap generation
+    - Autoprefixer with browser list
+    - CSS nano
+    - CSS MQ Packer
+    - Lazy load image(s) with plugin sharp
+    - Gatsby Image
+    - Netlify optimizations
 - url: https://danshai.github.io/gatsbyv2-scientific-blog-machine-learning/
   repo: https://github.com/DanShai/gatsbyv2-scientific-blog-machine-learning
   description: Machine learning ready and scientific blog starter
