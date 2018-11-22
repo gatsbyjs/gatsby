@@ -263,7 +263,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `eval`
+        return `cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
