@@ -319,7 +319,7 @@ export const pageQuery = graphql`
       filter: {
         fields: { starterShowcase: { slug: { in: $featuredStarters } } }
       }
-      sort: { fields: [fields___starterShowcase___slug] }
+      sort: { order: DESC, fields: [fields___starterShowcase___stars] }
     ) {
       edges {
         node {
