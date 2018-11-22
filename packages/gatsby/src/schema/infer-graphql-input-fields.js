@@ -211,7 +211,6 @@ const EXCLUDE_KEYS = {
   parent: 1,
   children: 1,
   $loki: 1,
-  meta: 1,
 }
 
 type InferInputOptions = {
