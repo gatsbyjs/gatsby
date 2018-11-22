@@ -3,6 +3,12 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const loki = require(`@moocar/lokijs`)
 const uuidv4 = require(`uuid/v4`)
+const customComparators = require(`./custom-comparators`)
+
+// Ensure sorting behavior matches old lodash `orderBy`
+// implementation. See `custom-comparators.js` for why.
+loki.Comparators.lt = customComparators.ltHelper
+loki.Comparators.gt = customComparators.gtHelper
 
 // Loki is a document store with the same semantics as mongo. This
 // means there are no tables or relationships. Just a bunch of

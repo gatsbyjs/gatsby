@@ -423,16 +423,33 @@ describe(`collection fields`, () => {
     expect(result[0].name).toEqual(`The Mad Wax`)
   })
 
-  it(`sorts results`, async () => {
+  it(`sorts results with desc has null fields first`, async () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`],
+        fields: [`waxOnly`],
         order: `desc`,
       },
     })
 
     expect(result.length).toEqual(3)
-    expect(result[0].name).toEqual(`The Mad Wax`)
+    expect(result[0].id).toEqual(`0`)
+    expect(result[1].id).toEqual(`2`)
+    expect(result[2].id).toEqual(`1`)
+  })
+
+  it(`sorts results with asc has null fields last`, async () => {
+    let result = await runQuery({
+      limit: 10,
+      sort: {
+        fields: [`waxOnly`],
+        order: `asc`,
+      },
+    })
+
+    expect(result.length).toEqual(3)
+    expect(result[0].id).toEqual(`1`)
+    expect(result[1].id).toEqual(`2`)
+    expect(result[2].id).toEqual(`0`)
   })
 })
