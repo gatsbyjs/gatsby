@@ -229,17 +229,21 @@ function convertArgs(gqlArgs, gqlType) {
 //
 // would return
 //
-// [ [ `frontmatter.date`, true ], [ `id`, true ] ]
+// [ [ `frontmatter.date`, true ], [ `id`, false ] ]
 //
 // Note that the GraphQL Sort API provided by Gatsby doesn't allow the
-// order to be specified per field. So we must apply the order to all
-// fields.
+// order to be specified per field. The sift implementation uses
+// lodash `orderBy`, but only applies the sort order to the first
+// field. So we do the same here
 function toSortFields(sortArgs) {
   const { fields, order } = sortArgs
-  return _.map(fields, field => [
-    field.replace(/___/g, `.`),
-    _.lowerCase(order) === `desc`,
-  ])
+  const lokiSortFields = []
+  for (let i = 0; i < fields.length; i++) {
+    const dottedField = fields[i].replace(/___/g, `.`)
+    const isDesc = i === 0 ? _.lowerCase(order) === `desc` : false
+    lokiSortFields.push([dottedField, isDesc])
+  }
+  return lokiSortFields
 }
 
 // Every time we run a query, we increment a counter for each of its
