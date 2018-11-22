@@ -275,7 +275,14 @@ function handleMany(siftArgs, nodes, sort) {
       .map(field => field.replace(/___/g, `.`))
       .map(field => v => _.get(v, field))
 
-    result = _.orderBy(result, convertedFields, sort.order)
+    // Gatsby's sort interface only allows one sort order (e.g `desc`)
+    // to be specified. However, multiple sort fields can be
+    // provided. This is inconsistent. The API should allow the
+    // setting of an order per field. Until the API can be changed
+    // (probably v3), we apply the sort order to all fields
+    const orderArray = _.fill(Array(convertedFields.length), sort.order)
+
+    result = _.orderBy(result, convertedFields, orderArray)
   }
   return result
 }
