@@ -15,7 +15,7 @@ To generate an XML sitemap, you will use the [`gatsby-plugin-sitemap`](/packages
 
 ### How to use [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap/)
 ````javascript
-// In your gatsby-config.js
+```javascript:title=gatsby-config.js
 siteMetadata: {
   siteUrl: `https://www.example.com`,
 },
