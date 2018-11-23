@@ -14,7 +14,7 @@ const { oneLine } = require(`common-tags`)
 
 const { store } = require(`../redux`)
 const { getNode, getNodes, getNodesByType } = require(`../db/nodes`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
+const pageDependencyResolver = require(`./page-dependency-resolver`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
@@ -153,30 +153,20 @@ function inferFromMapping(
     return null
   }
 
-  const findNode = (fieldValue, path) => {
-    const linkedNode = _.find(
-      getNodesByType(linkedType),
-      n => _.get(n, linkedField) === fieldValue
-    )
-    if (linkedNode) {
-      createPageDependency({ path, nodeId: linkedNode.id })
-      return linkedNode
-    }
-    return null
-  }
+  const findNode = fieldValue =>
+    getNodesByType(linkedType).find(n => _.get(n, linkedField) === fieldValue)
 
   if (_.isArray(value)) {
     return {
       type: new GraphQLList(matchedTypes[0].nodeObjectType),
-      resolve: (node, a, b, { fieldName }) => {
+      resolve: pageDependencyResolver((node, a, b, { fieldName }) => {
         const fieldValue = node[fieldName]
-
         if (fieldValue) {
-          return fieldValue.map(value => findNode(value, b.path))
+          return fieldValue.map(findNode)
         } else {
           return null
         }
-      },
+      }),
     }
   }
 
@@ -194,21 +184,20 @@ function inferFromMapping(
   }
 }
 
+function findLinkedNodeByField(linkedField, value) {
+  getNodes().find(n => n[linkedField] === value)
+}
+
 export function findLinkedNode(value, linkedField, path) {
   let linkedNode
   // If the field doesn't link to the id, use that for searching.
   if (linkedField) {
-    linkedNode = getNodes().find(n => n[linkedField] === value)
+    linkedNode = findLinkedNodeByField(linkedField, value)
     // Else the field is linking to the node's id, the default.
   } else {
     linkedNode = getNode(value)
   }
-
-  if (linkedNode) {
-    if (path) createPageDependency({ path, nodeId: linkedNode.id })
-    return linkedNode
-  }
-  return null
+  return linkedNode
 }
 
 function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
@@ -249,7 +238,7 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     types.find(type => type.name === node.internal.type)
 
   if (isArray) {
-    const linkedNodes = value.map(v => findLinkedNode(v))
+    const linkedNodes = value.map(getNode)
     linkedNodes.forEach(node => validateLinkedNode(node))
     const fields = linkedNodes.map(node => findNodeType(node))
     fields.forEach((field, i) => validateField(linkedNodes[i], field))
@@ -304,15 +293,9 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   validateField(linkedNode, field)
   return {
     type: field.nodeObjectType,
-    resolve: (node, a, b = {}) => {
-      let fieldValue = node[key]
-      if (fieldValue) {
-        const result = findLinkedNode(fieldValue, linkedField, b.path)
-        return result
-      } else {
-        return null
-      }
-    },
+    resolve: pageDependencyResolver(node =>
+      findLinkedNode(node[key], linkedField)
+    ),
   }
 }
 

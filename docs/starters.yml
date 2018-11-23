@@ -37,6 +37,17 @@
     - Eslint Airbnb without semicolon and without .jsx extension
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-redux-firebase.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-starter-redux-firebase
+  description: A Gatsby + Redux + Firebase Starter. With Authentication
+  tags:
+    - Styling:None
+    - Firebase
+    - Client-side App
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Firebase
+    - Web App Manifest
 - url: https://dschau.github.io/gatsby-blog-starter-kit/
   repo: https://github.com/dschau/gatsby-blog-starter-kit
   description: n/a
@@ -52,6 +63,7 @@
   tags:
     - Blog
     - Contentful
+    - Headless CMS
   features:
     - Based on the Gatsby Starter Blog
     - Includes Contentful Delivery API for production build
@@ -181,6 +193,7 @@
   description: n/a
   tags:
     - Styling:Bulma
+    - Storybook
   features:
     - Storybook for developing components in isolation
     - Bulma and Sass support for styling
@@ -234,6 +247,7 @@
   tags:
     - i18n
     - Contentful
+    - Headless CMS
   features:
     - Localization (Multilanguage)
     - Dynamic content from Contentful CMS
@@ -243,6 +257,7 @@
   description: n/a
   tags:
     - DatoCMS
+    - Headless CMS
   features:
     - Simple portfolio to quick start a site with DatoCMS
     - Contents and media from DatoCMS
@@ -354,6 +369,7 @@
   description: A starter template to build amazing static websites with Gatsby, Contentful and Netlify
   tags:
     - Contentful
+    - Headless CMS
     - Blog
     - Netlify Form
     - Styling:CSS-in-JS
@@ -532,6 +548,7 @@
   tags:
     - Portfolio
     - Prismic
+    - Headless CMS
     - Styling:CSS-in-JS
     - Onepage
     - PWA
@@ -597,6 +614,7 @@
   tags:
     - PWA
     - GraphCMS
+    - Headless CMS
     - Apollo Client
     - Styling:Material
     - Netlify Identity
@@ -795,6 +813,7 @@
   description: Contentful and TypeScript starter based on default starter.
   tags:
     - Contentful
+    - Headless CMS
     - TypeScript
     - Styling:CSS-in-JS
   features:
@@ -850,7 +869,6 @@
   description: Gatsby v2 Starter with i18n using react-intl and more cool features.
   tags:
     - Styling:CSS-in-JS
-    - Recompose
     - i18n
     - react-intl
     - Formik
@@ -868,6 +886,7 @@
   tags:
     - Styling:CSS-in-JS
     - Contentful
+    - Headless CMS
     - Portfolio
   features:
     - Gatsby v2
@@ -897,6 +916,7 @@
   description: A simple starter to display Contentful data in Gatsby, ready to deploy on Netlify. Comes with a detailed article detailing the process.
   tags:
     - Contentful
+    - Headless CMS
     - Markdown
     - Styling:CSS-in-JS
   features:
@@ -911,6 +931,7 @@
   description: Blog that utilizes the power of the Cosmic JS headless CMS for easy content management
   tags:
     - Cosmic JS
+    - Headless CMS
     - Blog
   features:
     - Uses the Cosmic JS Gatsby source plugin
@@ -919,6 +940,7 @@
   description: Simple Gatsby starter connected to the Cosmic JS headless CMS for easy content management
   tags:
     - Cosmic JS
+    - Headless CMS
   features:
     - Uses the Cosmic JS Gatsby source plugin
 - url: https://www.gatsby-typescript-template.com/
@@ -926,9 +948,7 @@
   description: This is a standard starter with Typescript, TSLint, Prettier, Lint-Staged(Husky) and Sass
   tags:
     - TypeScript
-    - TSLint
-    - Prettier
-    - Lint-Staged
+    - Linting
     - Styling:SCSS
   features:
     - Category and Tag for post
@@ -963,7 +983,6 @@
     - Styling:CSS-in-JS
     - Linting
     - Markdown
-    - Prettier
     - SEO
   features:
     - Page Transitions
@@ -984,6 +1003,7 @@
   description: A typography-heavy & light-themed Gatsby Starter which uses the Headless CMS Prismic.
   tags:
     - Prismic
+    - Headless CMS
     - Styling:CSS-in-JS
     - SEO
     - Blog
@@ -1036,6 +1056,7 @@
   tags:
     - Styling:None
     - Firebase
+    - Client-side App
   features:
     - Eslint Airbnb without semicolon and without .jsx extension
     - Firebase
@@ -1046,7 +1067,7 @@
   tags:
     - Portfolio
     - SEO
-    - Styling:Styled Components
+    - Styling:CSS-in-JS
   features:
     - Features a custom, accessible lightbox with gatsby-image
     - Styled with styled-components using CSS Grid
@@ -1077,7 +1098,7 @@
   description: Blog Template X Contentful, Twitter and Facebook style
   tags:
     - Blog
-    - Tags
+    - Styling:SCSS
   features:
     - GatsbyJS v2, faster than faster
     - Not just Contentful content source, you can use any database
@@ -1123,8 +1144,8 @@
     - Gatsby v2 support
     - Content item <-> content type relationships
     - Language variants relationships
-    - Modular content elements relationships
-    - Modular content relationships in rich text
+    - Linked items elements relationships
+    - Content items in Rich text elements relationships
     - Reverse link relationships
 - url: https://gatsby-starter-storybook.netlify.com/
   repo: https://github.com/markoradak/gatsby-starter-storybook
@@ -1138,3 +1159,124 @@
     - Storybook v4 support
     - Styled Components v4 support
     - Styled Reset, ESLint, Netlify Conf
+- url: https://jamstack-hackathon-starter.netlify.com/
+  repo: https://github.com/sw-yx/jamstack-hackathon-starter
+  description: A JAMstack app with authenticated routes, static marketing pages, etc. with Gatsby, Netlify Identity, and Netlify Functions
+  tags:
+    - Netlify Identity
+    - Netlify Functions
+    - Client-side App
+  features:
+    - Netlify Identity
+    - Netlify Functions
+    - Static Marketing pages and Dynamic Client-side Authenticated App pages
+- url: https://collective.github.io/gatsby-starter-plone/
+  repo: https://github.com/collective/gatsby-starter-plone
+  description: A Gatsby starter template to build static sites using Plone as the content source
+  tags:
+    - Plone
+    - Headless CMS
+    - SEO
+    - PWA
+  features:
+    - Creates 1-1 copy of source Plone site
+    - Auto generated navigation and breadcrumbs
+    - Progressive Web App features
+    - Optimized for performance
+    - Minimal UI and Styling
+- url: https://gatsby-tutorial-starter.netlify.com/
+  repo: https://github.com/justinformentin/gatsby-v2-tutorial-starter
+  description: Simple, modern desgined blog with post lists, tags, and easily customizable code.
+  tags:
+    - Blog
+    - Linting
+    - PWA
+    - SEO
+    - Styling:CSS-in-JS
+    - Markdown
+  features:
+    - Blog post listing with image, summary, date, and tags.
+    - Post Tags
+    - Post List Filtering
+    - Typography.js
+    - Emotion styling
+    - Syntax Highlighting in Code Blocks
+    - Gatsby Image
+    - Fully Responsive
+    - Offline Support
+    - Web App Manifest
+    - SEO
+    - PWA
+    - Sitemap generation
+    - Schema.org JSON-LD
+    - CircleCI Integration
+    - Codeclimate Integration
+    - Google Analytics
+    - Twitter and OpenGraph Tags
+    - ESLint
+    - Prettier Code Styling
+- url: https://avivero.github.io/gatsby-redux-starter/
+  repo: https://github.com/AVivero/gatsby-redux-starter
+  description: Gatsby starter site with Redux, Sass, Bootstrap, Css Modules and Material Icons
+  tags:
+    - Redux
+    - Styling:SCSS
+    - Styling:Bootstrap
+    - Styling:Material
+    - Linting
+  features:
+    - Gatsby v2 support
+    - Redux support
+    - Sass support
+    - Bootstrap v4 support
+    - Css Modules support
+    - ESLint, Prettier
+- url: https://gatsby-typescript-boilerplate.netlify.com/
+  repo: https://github.com/leachjustin18/gatsby-typescript-boilerplate
+  description: Opinionated Gatsby v2 starter with TypeScript.
+  tags:
+    - TypeScript
+    - PWA
+    - Styling:SCSS
+    - Styling:PostCSS
+  features:
+    - TSLint with airbnb & prettier configurations
+    - Prettier
+    - Stylelint
+    - Offline support
+    - Type Safe by TypeScript
+    - Format on commit with Lint-Staged(Husky)
+    - Favicon generation
+    - Sitemap generation
+    - Autoprefixer with browser list
+    - CSS nano
+    - CSS MQ Packer
+    - Lazy load image(s) with plugin sharp
+    - Gatsby Image
+    - Netlify optimizations
+- url: https://danshai.github.io/gatsbyv2-scientific-blog-machine-learning/
+  repo: https://github.com/DanShai/gatsbyv2-scientific-blog-machine-learning
+  description: Machine learning ready and scientific blog starter
+  tags:
+    - Blog
+    - Katex
+    - Tensorflow
+    - CSV
+    - Graph
+    - Linting
+    - Chart.js
+  features:
+    - Write easly your scientific blog with katex and publish your research
+    - Machine learning ready with tensorflowjs
+    - Manipulate csv data
+    - draw with graph mermaid
+    - display charts with chartjs
+- url: https://gatsby-tailwind-styled-components.netlify.com/
+  repo: https://github.com/muhajirframe/gatsby-tailwind-styled-components-starter
+  description: A Gatsby Starter with Tailwind CSS + Styled Components
+  tags:
+    - Styling:Tailwind
+  features:
+    - Eslint Airbnb without semicolon and without .jsx extension
+    - Offline support
+    - Web App Manifest
