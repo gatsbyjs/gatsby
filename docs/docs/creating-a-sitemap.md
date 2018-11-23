@@ -11,7 +11,7 @@ Think of it as a map for your website. It shows what all of the pages are on you
 ### Install
 
 To generate an XML sitemap, you will use the [`gatsby-plugin-sitemap`](/packages/gatsby-plugin-sitemap/) package. To install this package, run the following line on your command line:
-```npm install --save gatsby-plugin-sitemap``
+`npm install --save gatsby-plugin-sitemap`
 
 ### How to use [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap/)
 
