@@ -60,6 +60,12 @@ export default async (pagePath, callback) => {
   let preBodyComponents = []
   let postBodyComponents = []
   let bodyProps = {}
+  let renderData = {}
+
+  const getRenderData = () => renderData
+  const setRenderData = _data => {
+    renderData = _data
+  }
 
   const replaceBodyHTMLString = body => {
     bodyHtml = body
@@ -369,6 +375,8 @@ export default async (pagePath, callback) => {
     replacePreBodyComponents,
     getPostBodyComponents,
     replacePostBodyComponents,
+    setRenderData,
+    getRenderData,
     pathname: pagePath,
     pathPrefix: __PATH_PREFIX__,
   })
@@ -386,5 +394,5 @@ export default async (pagePath, callback) => {
     />
   )}`
 
-  callback(null, html)
+  return { html, renderData }
 }

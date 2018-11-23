@@ -501,7 +501,7 @@ module.exports = async (args: BootstrapArgs) => {
       parentSpan: bootstrapSpan,
     })
     activity.start()
-    await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
+    await apiRunnerNode(`onPostBootstrap`, { store, parentSpan: activity.span })
     activity.end()
 
     bootstrapSpan.finish()

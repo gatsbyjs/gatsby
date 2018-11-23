@@ -111,5 +111,5 @@ export default (pagePath, callback) => {
   htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>${htmlStr}`
 
-  callback(null, htmlStr)
+  return { html: htmlStr }
 }
