@@ -26,5 +26,5 @@ Above is the minimal configuration required to have it work. By default, the gen
 
 ### Additonal Modification
 
-Additonal Modification steps are available in the [gatsby-plugin-sitemap documentation](https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap)
+Additonal modification steps are available in the [`gatsby-plugin-sitemap` documentation](https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap)
 
