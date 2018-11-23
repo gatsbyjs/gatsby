@@ -6,6 +6,7 @@ const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
 const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
+const { apiRunnerAsync } = apiRunner
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
@@ -49,7 +50,7 @@ const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 
-export default (pagePath, callback) => {
+export default async (pagePath, callback) => {
   let bodyHtml = ``
   let headComponents = [
     <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />,
@@ -171,7 +172,7 @@ export default (pagePath, callback) => {
   ).pop()
 
   // Let the site or plugin render the page component.
-  apiRunner(`replaceRenderer`, {
+  await apiRunnerAsync(`replaceRenderer`, {
     bodyComponent,
     replaceBodyHTMLString,
     setHeadComponents,

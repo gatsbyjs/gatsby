@@ -40,3 +40,13 @@ module.exports = (api, args, defaultReturn, argTransform) => {
     return [defaultReturn]
   }
 }
+
+module.exports.apiRunnerAsync = (api, args, defaultReturn) =>
+  // eslint-disable-next-line no-undef
+  plugins.reduce(
+    (previous, next) =>
+      next.plugin[api]
+        ? previous.then(() => next.plugin[api](args, next.options))
+        : previous,
+    Promise.resolve()
+  )

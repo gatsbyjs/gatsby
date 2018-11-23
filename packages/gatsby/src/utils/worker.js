@@ -21,10 +21,10 @@ export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {
   return Promise.map(
     paths,
     path =>
-      new Promise((resolve, reject) => {
+      new Promise(async (resolve, reject) => {
         const htmlComponentRenderer = require(htmlComponentRendererPath)
         try {
-          htmlComponentRenderer.default(path, (throwAway, htmlString) => {
+          await htmlComponentRenderer.default(path, (throwAway, htmlString) => {
             resolve(fs.outputFile(generatePathToOutput(path), htmlString))
           })
         } catch (e) {
