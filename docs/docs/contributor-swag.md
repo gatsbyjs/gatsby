@@ -22,3 +22,11 @@ If you’ve contributed in other ways, such as giving talks about Gatsby, teachi
 - Shipping is free worldwide.
 
 > **NOTE:** Worldwide free shipping is a pilot program. If shipping costs get out of control, we may need to adjust this policy in the future.
+
+### Not sure how to start contributing?
+If you are worried or don’t know where to start, you can always reach out to Shannon Soper (@shannonb_ux) on Twitter or submit an issue and a maintainer can help give you guidance! 
+
+Why not check out our list of things you can do to contribute(/docs/how-to-contribute/)?
+
+Looking to speak about Gatsby? We’d love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com, and we can give pointers or tips!
+
