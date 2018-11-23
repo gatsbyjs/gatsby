@@ -219,7 +219,9 @@ async function processRemoteNode({
         ext = `.${filetype.ext}`
       }
     }
-    const filename = createFilePath(programDir, `${digest}_${name}`, ext)
+
+    const digestFolder = path.join(programDir, digest)
+    const filename = createFilePath(digestFolder, name, ext)
     // If the status code is 200, move the piped temp file to the real name.
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
