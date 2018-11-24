@@ -42,7 +42,7 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/plugins/">Plugins</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <a href="https://gatsbyjs.org/starters/">Starters</a>
   <span> · </span>
   <a href="https://gatsbyjs.org/showcase/">Showcase</a>
   <span> · </span>
