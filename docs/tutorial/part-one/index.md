@@ -129,7 +129,7 @@ One of the big mental shifts you make when starting to build with components (if
 
 While a seemingly simple change, this has profound implications for how you think about building websites.
 
-Take the example of creating a custom button. In the past you would
+Take the example of creating a custom button. In the past, you would
 create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
 
 ```html
@@ -364,7 +364,7 @@ Next, build your site by running the following command in the terminal at the ro
 gatsby build
 ```
 
-Building should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
+The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
 
 Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 

@@ -11,6 +11,7 @@ const {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
+  warnOnIncompatiblePeerDependency,
 } = require(`../validate`)
 
 describe(`collatePluginAPIs`, () => {
@@ -102,7 +103,7 @@ describe(`handleBadExports`, () => {
     })
   })
 
-  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {	
+  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {
     handleBadExports({
       apis: {
         node: [``],
@@ -196,5 +197,29 @@ describe(`handleMultipleReplaceRenderers`, () => {
     })
 
     expect(result).toMatchSnapshot()
+  })
+})
+
+describe(`warnOnIncompatiblePeerDependency`, () => {
+  beforeEach(() => {
+    reporter.warn.mockClear()
+  })
+
+  it(`Does not warn when no peer dependency`, () => {
+    warnOnIncompatiblePeerDependency(`dummy-package`, { peerDependencies: {} })
+
+    expect(reporter.warn).not.toHaveBeenCalled()
+  })
+
+  it(`Warns on incompatible gatsby peer dependency`, async () => {
+    warnOnIncompatiblePeerDependency(`dummy-package`, {
+      peerDependencies: {
+        gatsby: `<2.0.0`,
+      },
+    })
+
+    expect(reporter.warn).toHaveBeenCalledWith(
+      expect.stringContaining(`Plugin dummy-package is not compatible`)
+    )
   })
 })

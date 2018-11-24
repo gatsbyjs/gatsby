@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminMozjpeg = require(`imagemin-mozjpeg`)
@@ -30,7 +30,16 @@ const getImageSize = file => {
 }
 
 const duotone = require(`./duotone`)
-const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+
+// Bound action creators should be set when passed to onPreInit in gatsby-node.
+// ** It is NOT safe to just directly require the gatsby module **.
+// There is no guarantee that the module resolved is the module executing!
+// This can occur in mono repos depending on how dependencies have been hoisted.
+// The direct require has been left only to avoid breaking changes.
+let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+exports.setBoundActionCreators = actions => {
+  boundActionCreators = actions
+}
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -369,10 +378,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.name}-${
-    file.internal.contentDigest
-  }-${argsDigestShort}.${fileExtension}`
-  const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
+  const imgSrc = `/${file.name}.${fileExtension}`
+  const dirPath = path.join(
+    process.cwd(),
+    `public`,
+    `static`,
+    file.internal.contentDigest,
+    argsDigestShort
+  )
+  const filePath = path.join(dirPath, imgSrc)
+  fs.ensureDirSync(dirPath)
 
   // Create function to call when the image is finished.
   let outsideResolve, outsideReject
@@ -421,7 +436,8 @@ function queueImageResizing({ file, args = {}, reporter }) {
   queueJob(job, reporter)
 
   // Prefix the image src.
-  const prefixedSrc = options.pathPrefix + `/static` + imgSrc
+  const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
+  const prefixedSrc = options.pathPrefix + `/static/${digestDirPrefix}` + imgSrc
 
   return {
     src: prefixedSrc,
@@ -434,7 +450,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-async function notMemoizedbase64({ file, args = {}, reporter }) {
+async function generateBase64({ file, args, reporter }) {
   const options = healOptions(args, { width: 20 })
   let pipeline
   try {
@@ -477,29 +493,46 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
       pipeline
     )
   }
-
   const [buffer, info] = await pipeline.toBufferAsync()
-  const originalName = file.base
-
-  return {
+  const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
-    originalName: originalName,
+    originalName: file.base,
   }
+  return base64output
 }
 
-const memoizedBase64 = _.memoize(
-  notMemoizedbase64,
-  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
-)
+const base64CacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
 
-async function base64(args) {
-  return await memoizedBase64(args)
+const memoizedBase64 = _.memoize(generateBase64, base64CacheKey)
+
+const cachifiedBase64 = async ({ cache, ...arg }) => {
+  const cacheKey = base64CacheKey(arg)
+
+  const cachedBase64 = await cache.get(cacheKey)
+  if (cachedBase64) {
+    return cachedBase64
+  }
+
+  const base64output = await generateBase64(arg)
+
+  await cache.set(cacheKey, base64output)
+
+  return base64output
 }
 
-async function fluid({ file, args = {}, reporter }) {
+async function base64(arg) {
+  if (arg.cache) {
+    // Not all tranformer plugins are going to provide cache
+    return await cachifiedBase64(arg)
+  }
+
+  return await memoizedBase64(arg)
+}
+
+async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
 
   // Account for images with a high pixel density. We assume that these types of
@@ -627,7 +660,7 @@ async function fluid({ file, args = {}, reporter }) {
   }
 
   // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter })
+  const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -675,7 +708,7 @@ async function fluid({ file, args = {}, reporter }) {
   }
 }
 
-async function fixed({ file, args = {}, reporter }) {
+async function fixed({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
 
   // if no width is passed, we need to resize the image based on the passed height
@@ -737,7 +770,7 @@ async function fixed({ file, args = {}, reporter }) {
   }
 
   // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter })
+  const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
   const fallbackSrc = images[0].src
   const srcSet = images

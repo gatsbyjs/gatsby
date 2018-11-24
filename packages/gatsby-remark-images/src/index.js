@@ -1,4 +1,8 @@
-// const select = require(`unist-util-select`)
+const {
+  imageClass,
+  imageBackgroundClass,
+  imageWrapperClass,
+} = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
@@ -15,7 +19,7 @@ const slash = require(`slash`)
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter },
+  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
   pluginOptions
 ) => {
   const defaults = {
@@ -84,14 +88,12 @@ module.exports = (
       file: imageNode,
       args: options,
       reporter,
+      cache,
     })
 
     if (!fluidResult) {
       return resolve()
     }
-
-    // Calculate the paddingBottom %
-    const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
     const originalImg = fluidResult.originalImg
     const fallbackSrc = fluidResult.src
@@ -104,14 +106,18 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    // TODO
-    // Fade in images on load.
-    // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
-
-    const imageClass = `gatsby-resp-image-image`
-    const imageStyle = `width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
-      options.backgroundColor
-    };`
+    const imageStyle = `
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      vertical-align: middle;
+      position: absolute;
+      top: 0;
+      left: 0;
+      box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};`.replace(
+      /\s*(\S+:)\s*/g,
+      `$1`
+    )
 
     // Create our base image tag
     let imageTag = `
@@ -124,7 +130,7 @@ module.exports = (
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
       />
-    `
+    `.trim()
 
     // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
     if (options.withWebp) {
@@ -162,10 +168,9 @@ module.exports = (
           src="${fallbackSrc}"
           alt="${node.alt ? node.alt : defaultAlt}"
           title="${node.title ? node.title : ``}"
-          src="${fallbackSrc}"
         />
       </picture>
-      `
+      `.trim()
     }
 
     let placeholderImageData = fluidResult.base64
@@ -191,23 +196,26 @@ module.exports = (
       })
     }
 
+    const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
+
     // Construct new image node w/ aspect ratio placeholder
     // Note that the placeholder data must be surrounded by &quot; due to the way tracedSVGs are encoded
     // See https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
     const showCaptions = options.showCaptions && node.title
     let rawHTML = `
   <span
-    class="gatsby-resp-image-wrapper"
+    class="${imageWrapperClass}"
     style="position: relative; display: block; ${
       showCaptions ? `` : options.wrapperStyle
     } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-size: cover; display: block; background-image: url(&quot;${placeholderImageData}&quot;);"
-    >${imageTag}</span>
+      class="${imageBackgroundClass}"
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url(&quot;${placeholderImageData}&quot;); background-size: cover; display: block;"
+    ></span>
+    ${imageTag}
   </span>
-  `
+  `.trim()
 
     // Make linking to original image optional.
     if (!inLink && options.linkImagesToOriginal) {
@@ -219,19 +227,19 @@ module.exports = (
     target="_blank"
     rel="noopener"
   >
-  ${rawHTML}
+    ${rawHTML}
   </a>
-    `
+    `.trim()
     }
 
     // Wrap in figure and use title as caption
     if (showCaptions) {
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${options.wrapperStyle}">
-  ${rawHTML}
-  <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+    ${rawHTML}
+    <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
   </figure>
-      `
+      `.trim()
     }
 
     return rawHTML

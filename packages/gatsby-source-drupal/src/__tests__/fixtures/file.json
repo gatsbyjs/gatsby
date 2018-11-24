@@ -9,6 +9,18 @@
         "filename": "main-image.png",
         "url": "/sites/default/files/main-image.png"
       }
+    },
+    {
+      "type": "file--file",
+      "id": "file-2",
+      "attributes": {
+        "id": 2,
+        "uuid": "file-2",
+        "filename": "secondary-image.png",
+        "uri": {
+          "url" : "/sites/default/files/secondary-image.png"
+        }
+      }
     }
   ],
   "links": {}
