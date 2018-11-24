@@ -6,12 +6,17 @@ const rangeParser = require(`parse-numeric-range`)
  *     {/*
  * would look like this:
  *     <span class="token punctuation">{</span><span class="token comment">/*
+ * And a HTML opening comment:
+ *     <!--
+ * would look like this:
+ *     &lt;!--
  */
 const highlightedJSXCommentStart = `<span class="token punctuation">\\{<\\/span><span class="token comment">\\/\\*`
 const highlightedJSXCommentEnd = `\\*\\/<\\/span><span class="token punctuation">\\}</span>`
+const highlightedHTMLCommentStart = `&lt;!--`
 
 const COMMENT_START = new RegExp(
-  `(#|\\/\\/|\\{\\/\\*|${highlightedJSXCommentStart}|\\/\\*+|<!--)`
+  `(#|\\/\\/|\\{\\/\\*|${highlightedJSXCommentStart}|\\/\\*+|${highlightedHTMLCommentStart})`
 )
 
 const COMMENT_END = new RegExp(
