@@ -11,28 +11,35 @@ const rangeParser = require(`parse-numeric-range`)
  * would look like this:
  *     &lt;!--
  */
-const highlightedJSXCommentStart = `<span class="token punctuation">\\{<\\/span><span class="token comment">\\/\\*`
-const highlightedJSXCommentEnd = `\\*\\/<\\/span><span class="token punctuation">\\}</span>`
-const highlightedHTMLCommentStart = `&lt;!--`
+const HIGHLIGHTED_JSX_COMMENT_START = `<span class="token punctuation">\\{<\\/span><span class="token comment">\\/\\*`
+const HIGHLIGHTED_JSX_COMMENT_END = `\\*\\/<\\/span><span class="token punctuation">\\}</span>`
+const HIGHLIGHTED_HTML_COMMENT_START = `&lt;!--`
 
 const PRISMJS_COMMENT_OPENING_SPAN_TAG = `(<span\\sclass="token\\scomment">)?`
 const PRISMJS_COMMENT_CLOSING_SPAN_TAG = `(<\\/span>)?`
 
 const COMMENT_START = new RegExp(
-  `(#|\\/\\/|\\{\\/\\*|\\/\\*+|${highlightedHTMLCommentStart})`
+  `(#|\\/\\/|\\{\\/\\*|\\/\\*+|${HIGHLIGHTED_HTML_COMMENT_START})`
 )
 
 const COMMENT_END = new RegExp(`(-->|\\*\\/\\}|\\*\\/)?`)
 const DIRECTIVE = /highlight-(next-line|line|start|end|range)({([^}]+)})?/
 const END_DIRECTIVE = /highlight-end/
-const plainTextWithLFTest = /<span class="token plain-text">[^<]*\n[^<]*<\/span>/g
+
+const PLAIN_TEXT_WITH_LF_TEST = /<span class="token plain-text">[^<]*\n[^<]*<\/span>/g
 
 const stripComment = line =>
+  /**
+   * This regexp does the following:
+   * 1. Match a comment start, along with the accompanying PrismJS opening comment span tag;
+   * 2. Match one of the directives;
+   * 3. Match a comment end, along with the accompanying PrismJS closing span tag.
+   */
   line.replace(
     new RegExp(
-      `\\s*(${highlightedJSXCommentStart}|${PRISMJS_COMMENT_OPENING_SPAN_TAG}${
+      `\\s*(${HIGHLIGHTED_JSX_COMMENT_START}|${PRISMJS_COMMENT_OPENING_SPAN_TAG}${
         COMMENT_START.source
-      })\\s*${DIRECTIVE.source}\\s*(${highlightedJSXCommentEnd}|${
+      })\\s*${DIRECTIVE.source}\\s*(${HIGHLIGHTED_JSX_COMMENT_END}|${
         COMMENT_END.source
       }${PRISMJS_COMMENT_CLOSING_SPAN_TAG})`
     ),
@@ -133,7 +140,7 @@ module.exports = function highlightLineRange(code, highlights = []) {
   if (highlights.length > 0 || DIRECTIVE.test(code)) {
     // HACK split plain-text spans with line separators inside into multiple plain-text spans
     // separatered by line separator - this fixes line highlighting behaviour for jsx
-    code = code.replace(plainTextWithLFTest, match =>
+    code = code.replace(PLAIN_TEXT_WITH_LF_TEST, match =>
       match.replace(/\n/g, `</span>\n<span class="token plain-text">`)
     )
   }
