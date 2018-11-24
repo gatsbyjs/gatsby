@@ -15,13 +15,14 @@ const highlightedJSXCommentStart = `<span class="token punctuation">\\{<\\/span>
 const highlightedJSXCommentEnd = `\\*\\/<\\/span><span class="token punctuation">\\}</span>`
 const highlightedHTMLCommentStart = `&lt;!--`
 
+const PRISMJS_COMMENT_OPENING_SPAN_TAG = `(<span\\sclass="token\\scomment">)?`
+const PRISMJS_COMMENT_CLOSING_SPAN_TAG = `(<\\/span>)?`
+
 const COMMENT_START = new RegExp(
-  `(#|\\/\\/|\\{\\/\\*|${highlightedJSXCommentStart}|\\/\\*+|${highlightedHTMLCommentStart})`
+  `(#|\\/\\/|\\{\\/\\*|\\/\\*+|${highlightedHTMLCommentStart})`
 )
 
-const COMMENT_END = new RegExp(
-  `(-->|\\*\\/\\}|${highlightedJSXCommentEnd}|\\*\\/)?`
-)
+const COMMENT_END = new RegExp(`(-->|\\*\\/\\}|\\*\\/)?`)
 const DIRECTIVE = /highlight-(next-line|line|start|end|range)({([^}]+)})?/
 const END_DIRECTIVE = /highlight-end/
 const plainTextWithLFTest = /<span class="token plain-text">[^<]*\n[^<]*<\/span>/g
@@ -29,9 +30,11 @@ const plainTextWithLFTest = /<span class="token plain-text">[^<]*\n[^<]*<\/span>
 const stripComment = line =>
   line.replace(
     new RegExp(
-      `\\s*${COMMENT_START.source}\\s*${DIRECTIVE.source}\\s*${
+      `\\s*(${highlightedJSXCommentStart}|${PRISMJS_COMMENT_OPENING_SPAN_TAG}${
+        COMMENT_START.source
+      })\\s*${DIRECTIVE.source}\\s*(${highlightedJSXCommentEnd}|${
         COMMENT_END.source
-      }`
+      }${PRISMJS_COMMENT_CLOSING_SPAN_TAG})`
     ),
     ``
   )
