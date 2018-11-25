@@ -1,84 +1,206 @@
 import React from "react"
 import { Link } from "gatsby"
+import styled, { css } from "react-emotion"
+import { MdLaunch } from "react-icons/md"
 
-import { rhythm, scale, options } from "../utils/typography"
+import { scale, rhythm, options } from "../utils/typography"
+import { mq, elevation, gutter, colors, animation } from "../utils/presets"
+
+const linkStyle = css`
+  font-family: ${options.headerFontFamily.join(`,`)};
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  position: relative;
+  transition: ${animation.speedDefault} ${animation.curveExpo};
+  white-space: nowrap;
+
+  @media (-webkit-min-device-pixel-ratio: 0) {
+    background-image: linear-gradient(
+      45deg,
+      #eb4d9c,
+      #d33024,
+      #e48233,
+      #f4e24d,
+      #b4dc48,
+      #54b2ea,
+      ${colors.gatsby} 50%
+    );
+    background-size: 200% 200%;
+    color: rgba(102, 51, 153, 1);
+    -webkit-background-clip: text;
+
+    &:hover {
+      background-position: 0 0;
+      color: rgba(102, 51, 153, 0);
+    }
+  }
+`
+
+const assignActiveStyles = ({ isPartiallyCurrent }) =>
+  isPartiallyCurrent
+    ? {
+        className: css`
+          ${linkStyle};
+
+          && {
+            color: rgba(0, 0, 0, 1);
+
+            &:before {
+              background-color: #000;
+              bottom: -0.0625em;
+              content: "";
+              height: 0.125em;
+              left: 0;
+              position: absolute;
+              right: 0;
+              width: 0.65em;
+            }
+
+            &:hover {
+              background-position: 100% 0;
+              color: initial;
+            }
+          }
+        `,
+      }
+    : {
+        className: css`
+          ${linkStyle};
+        `,
+      }
+
+const SiteTitle = styled(`h1`)`
+  margin: 0;
+  position: fixed;
+  left: -2.75rem;
+  top: 8rem;
+  font-size: ${scale(1).fontSize};
+  line-height: 1;
+  transform: rotate(90deg);
+
+  ${mq.tablet} {
+    z-index: ${elevation.overlay + 1};
+  }
+`
+
+const Nav = styled(`nav`)`
+  background: #fff;
+  margin-left: -${gutter.default};
+  margin-right: -${gutter.default};
+  overflow-x: auto;
+  padding-bottom: ${gutter.default};
+  padding-left: ${gutter.default};
+  padding-top: ${gutter.default};
+  position: relative;
+  z-index: ${elevation.raised};
+
+  ${mq.tablet} {
+    margin-left: 0;
+    margin-right: 0;
+    overflow-x: initial;
+    padding-left: 0;
+    padding-top: 0;
+  }
+`
+
+const NavList = styled(`ul`)`
+  margin: 0;
+  list-style: none;
+  white-space: nowrap;
+
+  ${mq.tablet} {
+    max-width: 30rem;
+    margin-left: -7.5rem;
+    white-space: initial;
+  }
+`
+
+const NavListItem = styled(`li`)`
+  display: inline;
+
+  ${mq.phablet} {
+    font-size: ${scale(1).fontSize};
+  }
+  ${mq.tablet} {
+    font-size: ${scale(2).fontSize};
+  }
+  ${mq.xl} {
+    font-size: ${scale(3).fontSize};
+  }
+`
 
 const NavItem = ({ title, to }) => (
-  <li
-    css={{
-      display: `inline`,
-      fontFamily: options.headerFontFamily.join(`,`),
-      fontWeight: `300`,
-      "&:after": {
-        color: options.bodyColor,
-        content: ` / `,
-        opacity: 0.2,
-        padding: `0 ${rhythm(options.blockMarginBottom / 4)}`,
-      },
-      "&:last-child:after": {
-        display: `none`,
-      },
-      // These are not directly applied to <Link> to avoid React Router's
-      // <NavLink> from complaining about className not being a string
-      // but an object
-      // https://github.com/ReactTraining/react-router/issues/5593
-      "& .nav-link": {
-        backgroundImage: `none`,
-        color: options.bodyColor,
-        letterSpacing: `.005em`,
-        opacity: 0.57,
-        textTransform: `uppercase`,
-        transition: `all 200ms ease-out`,
-        whiteSpace: `nowrap`,
-      },
-      "& .nav-link-active, & .nav-link:hover": {
-        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, ${
-          options.accentColor
-        } 1px, ${options.accentColor} 2px, rgba(0, 0, 0, 0) 2px)`,
-        color: options.accentColor,
-        opacity: 1,
-      },
-      "& .nav-link-active": {
-        // fontWeight: `700`,
-      },
-    }}
+  <NavListItem
+    css={`
+      &:after {
+        color: colors.gatsby;
+        content: " ╱ ";
+        font-weight: 300;
+        opacity: 0.5;
+        font-size: 50%;
+        position: relative;
+        bottom: 0.25rem;
+        padding: 0 ${rhythm(options.blockMarginBottom / 4)};
+      }
+
+      &:last-child:after {
+        display: none;
+      }
+    `}
   >
-    <Link to={to} className="nav-link" activeClassName="nav-link-active">
+    <Link to={to} getProps={assignActiveStyles}>
       {title}
     </Link>
-  </li>
+  </NavListItem>
 )
 
+const ExternalLinkIcon = styled(MdLaunch)`
+  background-image: none;
+  bottom: -0.2em;
+  color: ${colors.gatsby};
+  font-size: 75%;
+  position: relative;
+  vertical-align: baseline;
+
+  ${mq.tablet} {
+    bottom: -0.15em;
+    font-size: 60%;
+  }
+`
+
 const Navigation = () => (
-  <div>
-    <h1
-      css={{
-        marginBottom: 0,
-      }}
-    >
+  <header>
+    <SiteTitle>
       <Link
         to="/"
-        css={{
-          ...scale(3 / 4),
-          backgroundImage: `none`,
-          color: options.accentColor,
-        }}
+        css={`
+          ${linkStyle};
+        `}
       >
-        Gatsby Image
+        Using Gatsby Image
       </Link>
-    </h1>
-    <ul
-      css={{
-        margin: 0,
-        listStyle: `none`,
-      }}
-    >
-      <NavItem to="/blur-up/" title="Blur Up" />
-      <NavItem to="/background-color/" title="Background Color" />
-      <NavItem to="/traced-svg/" title="Traced SVG" />
-      <NavItem to="/prefer-webp/" title="Prefer WebP" />
-    </ul>
-  </div>
+    </SiteTitle>
+    <Nav aria-label="Primary Navigation">
+      <NavList>
+        <NavItem to="/blur-up/" title="Blur Up" />
+        <NavItem to="/background-color/" title="Background Color" />
+        <NavItem to="/traced-svg/" title="Traced SVG" />
+        <NavItem to="/prefer-webp/" title="WebP" />
+        <NavListItem>
+          <a
+            href="https://www.gatsbyjs.org/packages/gatsby-image/"
+            css={`
+              ${linkStyle};
+            `}
+          >
+            Docs
+            {` `}
+            <ExternalLinkIcon />
+          </a>
+        </NavListItem>
+      </NavList>
+    </Nav>
+  </header>
 )
 
 export default Navigation
