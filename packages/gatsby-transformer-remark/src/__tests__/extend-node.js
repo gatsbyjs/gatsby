@@ -105,6 +105,9 @@ const bootstrapTest = (
         additionalParameters
       ).then(result => {
         try {
+          if (result.errors) {
+            done(result.errors)
+          }
           test(result.data.listNode[0])
           done()
         } catch (err) {
@@ -235,6 +238,27 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(50)
+    }
+  )
+
+  bootstrapTest(
+    `given an html format, it correctly maps nested markdown to html`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh [*where*](nick.com) **_is_** that pony?`,
+    `excerpt(format: 50)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh <a><em>where</em></a> <strong><em>is</em></strong> that pony?</p>`
+      )
     }
   )
 })
