@@ -24,7 +24,7 @@ First you need to install Jest and some more required packages. You need to
 install Babel 7 as it's required by Jest.
 
 ```sh
-npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy 'babel-core@^7.0.0-0' @babel/core babel-preset-gatsby
+npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy babel-core@^7.0.0-bridge.0 @babel/core babel-preset-gatsby
 ```
 
 ### 2. Creating a configuration file for Jest
