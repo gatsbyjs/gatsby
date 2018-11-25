@@ -16,7 +16,6 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const Promise = require(`bluebird`)
-const prune = require(`underscore.string/prune`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -24,6 +23,8 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
+const prune = require(`underscore.string/prune`)
+
 const {
   getConcatenatedValue,
   cloneTreeUntil,
@@ -388,8 +389,59 @@ module.exports = (
             type: GraphQLBoolean,
             defaultValue: false,
           },
+          format: {
+            type: GraphQLString,
+            defaultValue: `plain`,
+          },
         },
-        resolve(markdownNode, { pruneLength, truncate }) {
+        async resolve(markdownNode, { format, pruneLength, truncate }) {
+          if (format === `html`) {
+            if (markdownNode.excerpt) {
+              const fullAST = await getAST(markdownNode)
+              const excerptAST = cloneTreeUntil(
+                fullAST,
+                node =>
+                  node.type === `html` &&
+                  node.value === markdownNode.excerpt_separator
+              )
+              return mdastToHTML(excerptAST)
+            }
+
+            const fullAST = await getHTMLAst(markdownNode)
+            if (!fullAST.children.length) {
+              return ``
+            }
+
+            const excerptAST = cloneTreeUntil(fullAST, excerptAST => {
+              const totalExcerptSoFar = getConcatenatedValue(excerptAST)
+              return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
+            })
+            const unprunedExcerpt = getConcatenatedValue(excerptAST)
+            if (!unprunedExcerpt) {
+              return ``
+            }
+
+            if (pruneLength && unprunedExcerpt.length < pruneLength) {
+              return hastToHTML(excerptAST)
+            }
+
+            const lastTextNode = findLastTextNode(excerptAST)
+            const amountToPruneLastNode =
+              pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
+            if (!truncate) {
+              lastTextNode.value = prune(
+                lastTextNode.value,
+                amountToPruneLastNode,
+                `…`
+              )
+            } else {
+              lastTextNode.value = _.truncate(lastTextNode.value, {
+                length: pruneLength,
+                omission: `…`,
+              })
+            }
+            return hastToHTML(excerptAST)
+          }
           if (markdownNode.excerpt) {
             return Promise.resolve(markdownNode.excerpt)
           }

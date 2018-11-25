@@ -105,9 +105,6 @@ const bootstrapTest = (
         additionalParameters
       ).then(result => {
         try {
-          if (result.errors) {
-            done(result.errors)
-          }
           test(result.data.listNode[0])
           done()
         } catch (err) {
@@ -249,7 +246,7 @@ date: "2017-09-18T23:19:51.246Z"
 ---
 
 Where oh [*where*](nick.com) **_is_** that pony?`,
-    `excerpt(format: 50)
+    `excerpt(format: "html")
     frontmatter {
         title
     }
@@ -260,6 +257,52 @@ Where oh [*where*](nick.com) **_is_** that pony?`,
         `<p>Where oh <a><em>where</em></a> <strong><em>is</em></strong> that pony?</p>`
       )
     }
+  )
+
+  bootstrapTest(
+    `given an html format, it prunes large excerpts`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh where is that pony? Is he in the stable or down by the stream?`,
+    `excerpt(format: "html", pruneLength: 50)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      // expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is that pony? Is he in the stable…</p>`
+      )
+    }
+  )
+
+  bootstrapTest(
+    `given an html format, it respects the excerpt_separator`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh where is my little pony?
+<!-- end -->
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+`,
+    `excerpt(format: "html", pruneLength: 50)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      // expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is that pony? Is he in the stable…</p>`
+      )
+    },
+    { excerpt_separator: `<!-- end -->` }
   )
 })
 
