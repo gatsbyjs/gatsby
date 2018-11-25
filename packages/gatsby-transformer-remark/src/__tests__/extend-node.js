@@ -297,7 +297,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
     }
     `,
     node => {
-      // expect(node).toMatchSnapshot()
+      expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(
         `<p>Where oh where is that pony? Is he in the stable…</p>`
       )

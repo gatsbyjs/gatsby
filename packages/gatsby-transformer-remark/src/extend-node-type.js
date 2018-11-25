@@ -463,66 +463,6 @@ module.exports = (
           })
         },
       },
-      excerptHTML: {
-        type: GraphQLString,
-        args: {
-          pruneLength: {
-            type: GraphQLInt,
-            defaultValue: 140,
-          },
-          truncate: {
-            type: GraphQLBoolean,
-            defaultValue: false,
-          },
-        },
-        resolve: async (markdownNode, { pruneLength, truncate }) => {
-          if (markdownNode.excerpt) {
-            const fullAST = await getAST(markdownNode)
-            const excerptAST = cloneTreeUntil(
-              fullAST,
-              node =>
-                node.type === `html` &&
-                node.value === markdownNode.excerpt_separator
-            )
-            return mdastToHTML(excerptAST)
-          }
-
-          const fullAST = await getHTMLAst(markdownNode)
-          if (!fullAST.children.length) {
-            return ``
-          }
-
-          const excerptAST = cloneTreeUntil(fullAST, excerptAST => {
-            const totalExcerptSoFar = getConcatenatedValue(excerptAST)
-            return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
-          })
-          const unprunedExcerpt = getConcatenatedValue(excerptAST)
-          if (!unprunedExcerpt) {
-            return ``
-          }
-
-          if (pruneLength && unprunedExcerpt.length < pruneLength) {
-            return hastToHTML(excerptAST)
-          }
-
-          const lastTextNode = findLastTextNode(excerptAST)
-          const amountToPruneLastNode =
-            pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
-          if (!truncate) {
-            lastTextNode.value = prune(
-              lastTextNode.value,
-              amountToPruneLastNode,
-              `…`
-            )
-          } else {
-            lastTextNode.value = _.truncate(lastTextNode.value, {
-              length: pruneLength,
-              omission: `…`,
-            })
-          }
-          return hastToHTML(excerptAST)
-        },
-      },
       headings: {
         type: new GraphQLList(HeadingType),
         args: {
