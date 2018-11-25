@@ -41,9 +41,7 @@ Compare this with the minimum code necessary for the original headroom.js.
 #### HTML
 
 ```html
-<header class="headroom">
-  <h1>header content</h1>
-</header>
+<header class="headroom"><h1>header content</h1></header>
 ```
 
 #### JavaScript
