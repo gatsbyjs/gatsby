@@ -16,11 +16,6 @@ const HomepageBlog = ({ posts }) => (
         label: `View all posts`,
         to: `/blog/`,
       },
-      {
-        label: `Submit an article`,
-        to: `/blog/`,
-        secondary: true,
-      },
     ]}
   >
     <HomepageBlogPosts posts={posts} />
