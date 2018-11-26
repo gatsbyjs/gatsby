@@ -13,6 +13,7 @@
     "lodash": "^4.17.10",
     "mini-css-extract-plugin": "^0.4.1",
     "netlify-identity-widget": "^1.4.11",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.16.0"
   },
   "devDependencies": {
