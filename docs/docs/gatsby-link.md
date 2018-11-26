@@ -122,7 +122,7 @@ You can also pass state to pages when you use `Link`:
 
 This is accessible from the `location` object on the new page:
 
-`
+```javascript
 componentDidMount() {
   const pleasant = this.props.location.state.pleasant
   this.setState({
