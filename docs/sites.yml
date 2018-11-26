@@ -1,3 +1,16 @@
+- title: Gatsby Bulma Quickstart
+  main_url: "https://tender-raman-99e09b.netlify.com/"
+  url: "https://github.com/amandeepmittal/gatsby-bulma-quickstart"
+  source_url: "https://github.com/amandeepmittal/gatsby-bulma-quickstart"
+  featured: true
+  categories:
+    - Web Development
+    - Featured
+    - Freelance
+    - Desgin
+    - Open Source
+    - Hackathon
+    - Landing Page
 - title: ReactJS
   main_url: "https://reactjs.org/"
   url: "https://reactjs.org/"
