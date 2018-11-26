@@ -25,6 +25,6 @@ plugins: [`gatsby-plugin-sitemap`]
 
 This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap will include all of your site’s pages, but of course the plugin exposes options to configure this default functionality.
 
-### Additonal Modification
+### Additional Modification
 
 Additional modification steps are available in the [`gatsby-plugin-sitemap` documentation](/packages/gatsby-plugin-sitemap)
