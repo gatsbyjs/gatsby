@@ -3,10 +3,7 @@
   description: A Bulma CSS + GatsbyJS Starter Kit
   tags:
     - Styling:Bulma
-    - Design
-    - Hackathon
-    - Landing Page
-    - Open Source
+    - Styling:SCSS
   features:
     - uses Bulma CSS 
     - Sass based Styling
