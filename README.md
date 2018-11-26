@@ -153,6 +153,10 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
 
+## :memo: License
+
+Licensed under the [MIT License](./LICENSE).
+
 ## 💜 Thanks to Our Contributors and Sponsors
 
 Thanks to our many contributors and sponsors as well as the companies sponsoring
