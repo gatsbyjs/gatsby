@@ -105,7 +105,6 @@ You can pass state to pages when you navigate, such as:
 navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
 ```
 
-or  
 
 You can also pass state to pages when you use `Link`:
 
