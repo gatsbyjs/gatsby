@@ -23,7 +23,7 @@ siteMetadata: {
 plugins: [`gatsby-plugin-sitemap`]
 ````
 
-Above is the minimal configuration required to have it work. By default, the generated sitemap will include all of your site’s pages.
+This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap will include all of your site’s pages, but of course the plugin exposes options to configure this default functionality.
 
 ### Additonal Modification
 
