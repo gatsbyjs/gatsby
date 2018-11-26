@@ -120,7 +120,7 @@ You can also pass state to pages when you use `Link`:
 >
 ```
 
-This is accessible from the location object on the new page. e.g.
+This is accessible from the `location` object on the new page:
 
 `
 componentDidMount() {
