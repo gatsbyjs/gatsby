@@ -3422,7 +3422,8 @@
   description: >
     Kings Valley Paving is an asphalt, paving and concrete company serving the commercial, residential and industrial sectors in the Greater Toronto Area.
   categories:
-    - Marketing, Construction, Paving
+    - Marketing
+    - Construction
   built_by: Michael Uloth
   built_by_url: https://www.michaeluloth.com
   featured: false
@@ -3432,7 +3433,8 @@
   description: >
     Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world.
   categories:
-    - Portfolio, Music
+    - Portfolio
+    - Music
   built_by: Michael Uloth
   built_by_url: https://www.michaeluloth.com
   featured: false
