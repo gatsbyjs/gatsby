@@ -4,6 +4,7 @@ date: "2017-09-26"
 image: "toa-heftiba-274947.jpg"
 author: "Tim Arney"
 excerpt: "Moving to Gatsby 1.x and embracing the new GraphQL setup can be daunting but the effort is going to payoff"
+tags: ["v1", "graphql", "getting-started"]
 ---
 
 Before I built [React FAQ](https://reactfaq.site/), I went looking for a static
@@ -11,10 +12,10 @@ site generator.
 
 I had a few criteria in mind.
 
-* Fast (hopefully a given for a static site)
-* Easy to use
-* React-based
-* Easy to update
+- Fast (hopefully a given for a static site)
+- Easy to use
+- React-based
+- Easy to update
 
 Gatsby at the time was still pre-1.0 but its workflow met my needs. I loved that
 I could drop my existing Markdown files into a `pages` directory and Gatsby

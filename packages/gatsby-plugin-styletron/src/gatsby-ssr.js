@@ -1,32 +1,28 @@
 const React = require(`react`)
-const Styletron = require(`styletron-engine-atomic`).Server
-const StyletronProvider = require(`styletron-react`).Provider
-const { renderToString } = require(`react-dom/server`)
+const styletron = require(`./index`)
+const { Provider } = require(`styletron-react`)
 
-exports.replaceRenderer = ({
-  bodyComponent,
-  setHeadComponents,
-  replaceBodyHTMLString,
-}) => {
-  const styletron = new Styletron()
+// eslint-disable-next-line react/prop-types
+exports.wrapRootElement = ({ element }, options) => (
+  <Provider value={styletron(options).instance}>{element}</Provider>
+)
 
-  const app = (
-    <StyletronProvider value={styletron}>{bodyComponent}</StyletronProvider>
-  )
+exports.onRenderBody = ({ bodyComponent, setHeadComponents }, options) => {
+  const instance = styletron(options).instance
 
-  replaceBodyHTMLString(renderToString(app))
-
-  const stylesheets = styletron.getStylesheets()
-  const headComponents = stylesheets.map((sheet, index) => (
-    <style
-      media={sheet.media}
-      className="_styletron_hydrate_"
-      key={index}
-      dangerouslySetInnerHTML={{
-        __html: sheet.css,
-      }}
-    />
-  ))
+  const stylesheets = instance.getStylesheets()
+  const headComponents = stylesheets[0].css
+    ? stylesheets.map((sheet, index) => (
+        <style
+          className="_styletron_hydrate_"
+          dangerouslySetInnerHTML={{
+            __html: sheet.css,
+          }}
+          key={index}
+          media={sheet.attrs.media}
+        />
+      ))
+    : null
 
   setHeadComponents(headComponents)
 }

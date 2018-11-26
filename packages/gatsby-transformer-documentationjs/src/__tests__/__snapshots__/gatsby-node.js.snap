@@ -4,7 +4,7 @@ exports[`transformer-react-doc-gen: onCreateNode should extract out a descriptio
 Array [
   Object {
     "children": Array [],
-    "id": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--comment.description",
+    "id": "uuid-from-gatsby",
     "internal": Object {
       "content": "A pretty cool jsdoc example
 ",
@@ -16,7 +16,7 @@ Array [
   },
   Object {
     "children": Array [],
-    "id": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--apple",
+    "id": "uuid-from-gatsby",
     "internal": Object {
       "content": "A nice crispy apple
 ",
@@ -29,7 +29,7 @@ Array [
   Object {
     "children": Array [],
     "commentNumber": 0,
-    "description___NODE": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--comment.description",
+    "description___NODE": "uuid-from-gatsby",
     "examples": Array [
       Object {
         "highlighted": "<span class=\\"token keyword\\">const</span> apple <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'apple'</span><span class=\\"token punctuation\\">)</span>
@@ -38,16 +38,16 @@ Array [
 apple()",
       },
     ],
-    "id": "documentationJS node_1 comment #0",
+    "id": "uuid-from-gatsby",
     "internal": Object {
-      "contentDigest": "b635e85506044a6cdcebbcd7fda00b7d",
+      "contentDigest": "eb588cf103987de4bb07a2d28a5cf7c5",
       "type": "DocumentationJs",
     },
     "kind": "constant",
     "name": "apple",
     "params": Array [
       Object {
-        "description___NODE": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--apple",
+        "description___NODE": "uuid-from-gatsby",
         "name": "apple",
         "title": "param",
         "type": Object {

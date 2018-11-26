@@ -4,7 +4,9 @@ const requestInQueue = require(`../request-in-queue`)
 const axios = require(`axios`)
 
 axios.mockImplementation(opts => {
-  if (opts.throw) { throw new Error(opts.throw) }
+  if (opts.throw) {
+    throw new Error(opts.throw)
+  }
 
   return opts.url.slice(opts.url.lastIndexOf(`/`) + 1)
 })
@@ -28,7 +30,7 @@ describe(`requestInQueue`, () => {
   it(`runs all requests in queue`, async () => {
     await requestInQueue(requests)
 
-    requests.forEach((req) => {
+    requests.forEach(req => {
       expect(axios).toHaveBeenCalledWith(req)
     })
   })

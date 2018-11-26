@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["../../.babelrc.js", { "browser": true }]
+    ["babel-preset-gatsby-package", { "browser": true }]
   ]
 }
 

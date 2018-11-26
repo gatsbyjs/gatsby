@@ -6,10 +6,15 @@ const {
 } = require(`graphql`)
 const path = require(`path`)
 const normalizePath = require(`normalize-path`)
+const { clearTypeExampleValues } = require(`../data-tree-utils`)
+const { typeConflictReporter } = require(`../type-conflict-reporter`)
+const {
+  inferObjectStructureFromNodes,
+  clearUnionTypes,
+} = require(`../infer-graphql-type`)
+const { clearTypeNames } = require(`../create-type-name`)
 
-const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
-
-function queryResult(nodes, fragment, { types = [] } = {}) {
+function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
@@ -22,6 +27,7 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
                 name: `Test`,
                 fields: inferObjectStructureFromNodes({
                   nodes,
+                  ignoreFields,
                   types: [{ name: `Test` }, ...types],
                 }),
               })
@@ -48,6 +54,10 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
   )
 }
 
+beforeEach(() => {
+  clearTypeExampleValues()
+})
+
 describe(`GraphQL type inferance`, () => {
   const nodes = [
     {
@@ -73,6 +83,13 @@ describe(`GraphQL type inferance`, () => {
           },
         },
       },
+      "with space": 1,
+      "with-hyphen": 2,
+      "with resolver": `1012-11-01`,
+      123: 42,
+      456: {
+        testingTypeNameCreation: true,
+      },
       aBoolean: true,
       externalUrl: `https://example.com/awesome.jpg`,
       domain: `pizza.com`,
@@ -91,6 +108,9 @@ describe(`GraphQL type inferance`, () => {
       anArray: [1, 2, 5, 4],
       aNestedArray: [[1, 2, 3, 4]],
       anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
+      "with space": 3,
+      "with-hyphen": 4,
+      123: 24,
       frontmatter: {
         date: `1984-10-12`,
         title: `The world of slash and adventure`,
@@ -111,6 +131,20 @@ describe(`GraphQL type inferance`, () => {
     expect(result.errors[0].message).toMatch(
       `Cannot query field "foo" on type "Test".`
     )
+  })
+
+  it(`doesn't throw errors at ints longer than 32-bit`, async () => {
+    const result = await queryResult(
+      [
+        {
+          longint: 3000000000,
+        },
+      ],
+      `
+        longint
+      `
+    )
+    expect(result.errors).toBeUndefined()
   })
 
   it(`prefers float when multiple number types`, async () => {
@@ -188,6 +222,47 @@ describe(`GraphQL type inferance`, () => {
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
   })
 
+  it(`infers number types`, () => {
+    const fields = inferObjectStructureFromNodes({
+      nodes: [
+        {
+          int32: 42,
+          float: 2.5,
+          longint: 3000000000,
+        },
+      ],
+    })
+    expect(fields.int32.type.name).toEqual(`Int`)
+    expect(fields.float.type.name).toEqual(`Float`)
+    expect(fields.longint.type.name).toEqual(`Float`)
+  })
+
+  it(`Handle invalid graphql field names`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        with_space
+        with_hyphen
+        with_resolver(formatString:"DD.MM.YYYY")
+        _123
+        _456 {
+          testingTypeNameCreation
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.listNode.length).toEqual(2)
+    expect(result.data.listNode[0].with_space).toEqual(1)
+    expect(result.data.listNode[0].with_hyphen).toEqual(2)
+    expect(result.data.listNode[1].with_space).toEqual(3)
+    expect(result.data.listNode[1].with_hyphen).toEqual(4)
+    expect(result.data.listNode[0].with_resolver).toEqual(`01.11.1012`)
+    expect(result.data.listNode[0]._123).toEqual(42)
+    expect(result.data.listNode[1]._123).toEqual(24)
+    expect(result.data.listNode[0]._456).toEqual(nodes[0][`456`])
+  })
+
   describe(`Handles dates`, () => {
     it(`Handles integer with valid date format`, async () => {
       let result = await queryResult(
@@ -262,6 +337,8 @@ describe(`GraphQL type inferance`, () => {
 
     beforeAll(() => {
       ;({ store } = require(`../../redux`))
+
+      store.dispatch({ type: `DELETE_CACHE` })
 
       store.dispatch({
         type: `CREATE_NODE`,
@@ -632,30 +709,93 @@ describe(`GraphQL type inferance`, () => {
       )
     })
 
-    it(`Creates union types when an array field is linking to multiple node types`, async () => {
-      let result = await queryResult(
-        [{ linked___NODE: [`child_1`, `pet_1`] }],
-        `
-          linked {
-            __typename
-            ... on Child {
-              hair
+    describe(`Creation of union types when array field is linking to multiple types`, () => {
+      beforeEach(() => {
+        clearTypeNames()
+        clearUnionTypes()
+      })
+
+      it(`Creates union types`, async () => {
+        let result = await queryResult(
+          [{ linked___NODE: [`child_1`, `pet_1`] }],
+          `
+            linked {
+              __typename
+              ... on Child {
+                hair
+              }
+              ... on Pet {
+                species
+              }
             }
-            ... on Pet {
-              species
-            }
-          }
-        `,
-        { types }
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
-      expect(result.data.listNode[0].linked[0].__typename).toEqual(`Child`)
-      expect(result.data.listNode[0].linked[1].species).toEqual(`dog`)
-      expect(result.data.listNode[0].linked[1].__typename).toEqual(`Pet`)
-      store.dispatch({
-        type: `CREATE_NODE`,
-        payload: { id: `baz`, internal: { type: `Bar` } },
+          `,
+          { types }
+        )
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
+        expect(result.data.listNode[0].linked[0].__typename).toEqual(`Child`)
+        expect(result.data.listNode[0].linked[1].species).toEqual(`dog`)
+        expect(result.data.listNode[0].linked[1].__typename).toEqual(`Pet`)
+        store.dispatch({
+          type: `CREATE_NODE`,
+          payload: { id: `baz`, internal: { type: `Bar` } },
+        })
+      })
+
+      it(`Uses same union type for same child node types and key`, () => {
+        const fields = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
+          types,
+        })
+        const fields2 = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_2`] }],
+          types,
+        })
+        expect(fields.test.type).toEqual(fields2.test.type)
+      })
+
+      it(`Uses a different type for the same child node types with a different key`, () => {
+        const fields = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
+          types,
+        })
+        const fields2 = inferObjectStructureFromNodes({
+          nodes: [{ differentKey___NODE: [`pet_1`, `child_2`] }],
+          types,
+        })
+        expect(fields.test.type).not.toEqual(fields2.differentKey.type)
+      })
+
+      it(`Uses a different type for different child node types with the same key`, () => {
+        store.dispatch({
+          type: `CREATE_NODE`,
+          payload: { id: `toy_1`, internal: { type: `Toy` } },
+        })
+        const fields = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
+          types,
+        })
+        const fields2 = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_1`, `toy_1`] }],
+          types: types.concat([{ name: `Toy` }]),
+        })
+        expect(fields.test.type).not.toEqual(fields2.test.type)
+      })
+
+      it(`Creates a new type after schema updates clear union types`, () => {
+        const nodes = [{ test___NODE: [`pet_1`, `child_1`] }]
+        const fields = inferObjectStructureFromNodes({ nodes, types })
+        clearUnionTypes()
+        const updatedFields = inferObjectStructureFromNodes({ nodes, types })
+        expect(fields.test.type).not.toEqual(updatedFields.test.type)
+      })
+
+      it(`Uses a reliable naming convention`, () => {
+        const nodes = [{ test___NODE: [`pet_1`, `child_1`] }]
+        inferObjectStructureFromNodes({ nodes, types })
+        clearUnionTypes()
+        const updatedFields = inferObjectStructureFromNodes({ nodes, types })
+        expect(updatedFields.test.type.ofType.name).toEqual(`unionTestNode_2`)
       })
     })
   })
@@ -695,4 +835,45 @@ describe(`GraphQL type inferance`, () => {
         }
     `
     ).then(result => expect(result).toMatchSnapshot()))
+
+  describe(`type conflicts`, () => {
+    let addConflictSpy = jest.spyOn(typeConflictReporter, `addConflict`)
+
+    beforeEach(() => {
+      addConflictSpy.mockReset()
+    })
+
+    it(`catches conflicts and removes field`, async () => {
+      let result = await queryResult(
+        [{ foo: `foo`, number: 1.1 }, { foo: `bar`, number: `1` }],
+        `
+          foo
+          number
+        `
+      )
+      expect(addConflictSpy).toHaveBeenCalledTimes(1)
+
+      expect(result.errors.length).toEqual(1)
+      expect(result.errors[0].message).toMatch(
+        `Cannot query field "number" on type "Test".`
+      )
+    })
+
+    it(`does not warn about provided types`, async () => {
+      let result = await queryResult(
+        [{ foo: `foo`, number: 1.1 }, { foo: `bar`, number: `1` }],
+        `
+          foo
+          number
+        `,
+        { ignoreFields: [`number`] }
+      )
+      expect(addConflictSpy).not.toHaveBeenCalled()
+
+      expect(result.errors.length).toEqual(1)
+      expect(result.errors[0].message).toMatch(
+        `Cannot query field "number" on type "Test".`
+      )
+    })
+  })
 })

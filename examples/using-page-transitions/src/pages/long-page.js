@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
-export default ({ transition }) => (
-  <div style={transition && transition.style}>
+export default () => (
+  <div>
     <h1>Links at bottom of page</h1>
     <p>
       <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
@@ -10,7 +11,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -22,7 +24,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -34,7 +37,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -46,7 +50,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -58,7 +63,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -70,7 +76,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -82,7 +89,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -94,7 +102,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -106,7 +115,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.
@@ -118,7 +128,8 @@ export default ({ transition }) => (
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
       placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
-      pharetra. Vestibulum erat wisi, condimentum sed,{` `}
+      pharetra. Vestibulum erat wisi, condimentum sed,
+      {` `}
       <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit
       eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
       enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis.

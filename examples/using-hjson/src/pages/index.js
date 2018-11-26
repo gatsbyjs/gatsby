@@ -1,3 +1,4 @@
+import { graphql } from "gatsby"
 import React from "react"
 
 class IndexComponent extends React.Component {
@@ -35,7 +36,9 @@ class IndexComponent extends React.Component {
         </table>
         <h2>Access by type: letters</h2>
         <ul>
-          {letters.edges.map(({ node }, id) => <li key={id}>{node.value}</li>)}
+          {letters.edges.map(({ node }, id) => (
+            <li key={id}>{node.value}</li>
+          ))}
         </ul>
       </div>
     )
@@ -45,7 +48,7 @@ class IndexComponent extends React.Component {
 export default IndexComponent
 
 export const IndexQuery = graphql`
-  query IndexQuery {
+  query {
     example: file(name: { eq: "example" }, extension: { eq: "hjson" }) {
       data: childFilesHJson {
         key

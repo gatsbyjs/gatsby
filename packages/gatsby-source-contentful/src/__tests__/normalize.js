@@ -52,6 +52,8 @@ describe(`Process contentful data`, () => {
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createContentTypeNodes({
         contentTypeItem,
@@ -59,6 +61,7 @@ describe(`Process contentful data`, () => {
         conflictFieldPrefix,
         entries: entryList[i].map(normalize.fixIds),
         createNode,
+        createNodeId,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
@@ -70,11 +73,14 @@ describe(`Process contentful data`, () => {
 
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
       normalize.createAssetNodes({
         assetItem,
         createNode,
+        createNodeId,
         defaultLocale,
         locales,
       })
@@ -97,11 +103,17 @@ describe(`Gets field value based on current locale`, () => {
     de: `Playsam Streamliner Klassisches Auto, Espresso`,
     "en-US": `Playsam Streamliner Classic Car, Espresso`,
   }
+  const locales = [
+    { code: `en-US` },
+    { code: `de`, fallbackCode: `en-US` },
+    { code: `gsw_CH`, fallbackCode: `de` },
+  ]
+  const localesFallback = normalize.buildFallbackChain(locales)
   it(`Gets the specified locale`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `en-US`,
         },
@@ -110,7 +122,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `de`,
         },
@@ -125,7 +137,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field: falseyField,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `en-US`,
         },
@@ -135,7 +147,7 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field: falseyField,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `de`,
         },
@@ -146,22 +158,31 @@ describe(`Gets field value based on current locale`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `gsw_CH`,
-          fallbackCode: `de`,
         },
       })
     ).toBe(field[`de`])
+  })
+  it(`returns null if passed a locale that doesn't have a field on a localized field`, () => {
+    expect(
+      normalize.getLocalizedField({
+        field,
+        localesFallback: { "es-ES": null, de: null },
+        locale: {
+          code: `es-US`,
+        },
+      })
+    ).toEqual(null)
   })
   it(`returns null if passed a locale that doesn't have a field nor a fallbackCode`, () => {
     expect(
       normalize.getLocalizedField({
         field,
-        defaultLocale: `en-US`,
+        localesFallback,
         locale: {
           code: `es-US`,
-          fallbackCode: `null`,
         },
       })
     ).toEqual(null)

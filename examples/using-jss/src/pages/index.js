@@ -1,6 +1,6 @@
 // @flow
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import injectSheet from "react-jss"
 
 const styles = {

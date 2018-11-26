@@ -1,9 +1,12 @@
 ---
 title: Gatsby on Linux
 ---
+
 # Linux
 
-TODO
+> This is a TODO. Help our community expand it.
+
+> Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your pull request gets accepted.
 
 ## Windows Subsystem Linux (WSL)
 
@@ -23,7 +26,7 @@ sudo apt update
 sudo apt -y upgrade
 ```
 
->Only use `-y` if you're happy to upgrade to the latest versions of the software.
+> Only use `-y` if you're happy to upgrade to the latest versions of the software.
 
 **Build tools**
 
@@ -55,13 +58,14 @@ sudo apt install git
 sudo apt install libpng-dev
 ```
 
-Or to install all at the same time and approve (y) all installs:
+Or to install all at the same time and approve `(y)` all installs:
 
 ```sh
 sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && sudo apt install git && sudo apt install libpng-dev
 ```
 
 <!-- links -->
+
 [windows store]: https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6
 [n]: https://github.com/tj/n
 [n-install]: https://github.com/mklement0/n-install

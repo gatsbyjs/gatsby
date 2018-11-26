@@ -2,7 +2,7 @@
 title: "Announcing Gatsby 1.0.0 🎉🎉🎉"
 date: "2017-07-06"
 author: "Kyle Mathews"
-image: 'images/container-ship-leaving.jpg'
+image: "images/container-ship-leaving.jpg"
 showImageInArticle: false
 excerpt: Gatsby is your friendly, blazing fast static site generator for React. And after nearly a year of research, prototyping, and testing, Gatsby v1 is ready for action.
 ---
@@ -32,20 +32,20 @@ Gatsby means no more compromising between developers, designers, and authors.
 
 In the last year, Gatsby community and usage have exploded. Milestones reached:
 
-* 196 code contributors on GitHub (with many more helping in
+- 196 code contributors on GitHub (with many more helping in
   [our chat room on Discord](https://discord.gg/0ZcbPKXt5bVoxkfV)).
-* 10,000 stars on GitHub
-* 1000 followers on Twitter
-* 500,000 NPM downloads (100,000 in the last month!!)
+- 10,000 stars on GitHub
+- 1000 followers on Twitter
+- 500,000 NPM downloads (100,000 in the last month!!)
 
 ![Gatsby npm downloads year over year](./images/gatsby-npm-downloads.png)
 
 ## Cool sites built with Gatsby
 
-* Segment [relaunched their blog on Gatsby](https://segment.com/blog/)
-* The life insurance startup Fabric built their
+- Segment [relaunched their blog on Gatsby](https://segment.com/blog/)
+- The life insurance startup Fabric built their
   [marketing site _and_ web app using Gatsby](https://meetfabric.com/)
-* JavaScript consultancy
+- JavaScript consultancy
   [Formidable built their website on Gatsby](https://formidable.com/)
 
 ![screenshots of above sites](images/site-screenshots.png)
@@ -71,11 +71,11 @@ static React sites are useful.
 But in many conversations among community members building Gatsby sites, two
 more questions kept coming up.
 
-1. How could we _query_ data from _anywhere_ and have that data show up in our
-   pages **without** any custom scripting?
-2. How should a website framework work for an _internet dominated by smartphones
-   on unreliable networks_ — an internet vastly different and larger than the
-   one frameworks were designed for a decade ago?
+1.  How could we _query_ data from _anywhere_ and have that data show up in our
+    pages **without** any custom scripting?
+2.  How should a website framework work for an _internet dominated by smartphones
+    on unreliable networks_ — an internet vastly different and larger than the
+    one frameworks were designed for a decade ago?
 
 ## Plugin system
 
@@ -102,12 +102,12 @@ projects and for contributing back to Gatsby.
 
 Plugins can:
 
-* add support for webpack loaders such as Sass, Less
-* add drop-in support for lightweight React-compatible frameworks
+- add support for webpack loaders such as Sass, Less
+- add drop-in support for lightweight React-compatible frameworks
   [Preact](https://preactjs.com/) and [Inferno](https://infernojs.org/)
-* add a sitemap or RSS feed
-* add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
-* ...and much more!
+- add a sitemap or RSS feed
+- add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
+- ...and much more!
 
 ## GraphQL-based data processing layer
 
@@ -162,7 +162,7 @@ the blog posts. Included with the component is an exported `pageQuery`.
 
 ```jsx
 // A basic React component for rendering a blog page.
-import React from "react";
+import React from "react"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -176,11 +176,11 @@ class BlogPostTemplate extends React.Component {
           }}
         />
       </div>
-    );
+    )
   }
 }
 
-export default BlogPostTemplate;
+export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPost($slug: String!) {
@@ -194,7 +194,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 All data sourcing and transforming is plugin-driven. So in time, any imaginable
@@ -248,9 +248,9 @@ the first time are developing their websites using these techniques.
 
 Read Google's case studies on:
 
-* [Flipkart (India)](https://developers.google.com/web/showcase/2016/flipkart)
-* [Konga (Nigeria)](https://developers.google.com/web/showcase/2016/konga)
-* [Housing.com (India)](https://developers.google.com/web/showcase/2016/housing)
+- [Flipkart (India)](https://developers.google.com/web/showcase/2016/flipkart)
+- [Konga (Nigeria)](https://developers.google.com/web/showcase/2016/konga)
+- [Housing.com (India)](https://developers.google.com/web/showcase/2016/housing)
 
 ## Service worker and offline support
 
@@ -276,8 +276,8 @@ you navigate around, Gatsby loads in the code needed for each route.
 This means that one page with heavy imports:
 
 ```javascript
-import d3 from "d3";
-import threejs from "react-threejs";
+import d3 from "d3"
+import threejs from "react-threejs"
 ```
 
 ...won't affect the performance of the rest of the site.

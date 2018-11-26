@@ -1,11 +1,10 @@
 import React from "react"
+import { graphql } from "gatsby"
 import SiteSidebar from "../SiteSidebar"
 import MasterLayout from "./master"
 
 class InsetPageLayout extends React.Component {
   render() {
-    const siteMetadata = this.props.data.site
-
     return (
       <div className="PageTemplate">
         <MasterLayout {...this.props}>

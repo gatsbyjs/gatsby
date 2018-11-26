@@ -1,7 +1,7 @@
 import * as PropTypes from "prop-types"
 import React from "react"
 import HeartIcon from "react-icons/lib/fa/heart"
-import Link from "gatsby-link"
+import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 import { rhythm, scale } from "../utils/typography"
@@ -29,6 +29,7 @@ class Post extends React.Component {
     const { small } = smallImage.childImageSharp
     return (
       <Link
+        data-testid="post"
         to={`/${id}/`}
         onTouchStart={() => (touched = true)}
         onMouseEnter={() => {
@@ -65,7 +66,7 @@ class Post extends React.Component {
           }}
         >
           <Img
-            sizes={{ ...small }}
+            fluid={{ ...small }}
             css={{
               margin: 0,
               height: `100%`,
@@ -93,6 +94,7 @@ class Post extends React.Component {
         {/* overlay */}
         {this.state.hovering && (
           <div
+            data-testid="likes"
             css={{
               position: `absolute`,
               top: 0,
@@ -130,7 +132,7 @@ export const postFragment = graphql`
     likes
     smallImage: image {
       childImageSharp {
-        small: sizes(maxWidth: 292, maxHeight: 292) {
+        small: fluid(maxWidth: 292, maxHeight: 292) {
           src
           srcSet
           aspectRatio

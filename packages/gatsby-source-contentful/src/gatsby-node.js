@@ -1,3 +1,5 @@
+const path = require(`path`)
+const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
@@ -30,27 +32,48 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNodes, hasNodeChanged, store },
-  { spaceId, accessToken, host }
+  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store },
+  options
 ) => {
-  const {
-    createNode,
-    deleteNode,
-    getNode,
-    touchNode,
-    setPluginStatus,
-  } = boundActionCreators
+  const { createNode, deleteNode, touchNode, setPluginStatus } = actions
 
-  host = host || `cdn.contentful.com`
+  const online = await isOnline()
+
+  // If the user knows they are offline, serve them cached result
+  // For prod builds though always fail if we can't get the latest data
+  if (
+    !online &&
+    process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
+    process.env.NODE_ENV !== `production`
+  ) {
+    getNodes()
+      .filter(n => n.internal.owner === `gatsby-source-contentful`)
+      .forEach(n => touchNode({ nodeId: n.id }))
+
+    console.log(`Using Contentful Offline cache ⚠️`)
+    console.log(
+      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+    )
+
+    return
+  }
+
+  const createSyncToken = () =>
+    `${options.spaceId}-${options.environment}-${options.host}`
+
+  options.host = options.host || `cdn.contentful.com`
+  options.environment = options.environment || `master` // default is always master
   // Get sync token if it exists.
   let syncToken
   if (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
-    store.getState().status.plugins[`gatsby-source-contentful`][spaceId]
+    store.getState().status.plugins[`gatsby-source-contentful`][
+      createSyncToken()
+    ]
   ) {
     syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
-      spaceId
+      createSyncToken()
     ]
   }
 
@@ -61,9 +84,7 @@ exports.sourceNodes = async (
     locales,
   } = await fetchData({
     syncToken,
-    spaceId,
-    accessToken,
-    host,
+    ...options,
   })
 
   const entryList = normalize.buildEntryList({
@@ -74,17 +95,31 @@ exports.sourceNodes = async (
   // Remove deleted entries & assets.
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get the now deleted reference removed.
-  currentSyncData.deletedEntries
-    .map(e => e.sys.id)
-    .forEach(id => deleteNode(id, getNode(id)))
-  currentSyncData.deletedAssets
-    .map(e => e.sys.id)
-    .forEach(id => deleteNode(id, getNode(id)))
+
+  function deleteContentfulNode(node) {
+    const localizedNodes = locales
+      .map(locale => {
+        const nodeId = createNodeId(
+          normalize.makeId({
+            id: node.sys.id,
+            currentLocale: locale.code,
+            defaultLocale,
+          })
+        )
+        return getNode(nodeId)
+      })
+      .filter(node => node)
+
+    localizedNodes.forEach(node => deleteNode({ node }))
+  }
+
+  currentSyncData.deletedEntries.forEach(deleteContentfulNode)
+  currentSyncData.deletedAssets.forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
   )
-  existingNodes.forEach(n => touchNode(n.id))
+  existingNodes.forEach(n => touchNode({ nodeId: n.id }))
 
   const assets = currentSyncData.assets
 
@@ -98,13 +133,9 @@ exports.sourceNodes = async (
   const nextSyncToken = currentSyncData.nextSyncToken
 
   // Store our sync state for the next sync.
-  // TODO: we do not store the token if we are using preview, since only initial sync is possible there
-  // This might change though
-  if (host !== `preview.contentful.com`) {
-    const newState = {}
-    newState[spaceId] = nextSyncToken
-    setPluginStatus(newState)
-  }
+  const newState = {}
+  newState[createSyncToken()] = nextSyncToken
+  setPluginStatus(newState)
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
@@ -161,6 +192,7 @@ exports.sourceNodes = async (
       conflictFieldPrefix,
       entries: entryList[i],
       createNode,
+      createNodeId,
       resolvable,
       foreignReferenceMap,
       defaultLocale,
@@ -172,6 +204,7 @@ exports.sourceNodes = async (
     normalize.createAssetNodes({
       assetItem,
       createNode,
+      createNodeId,
       defaultLocale,
       locales,
     })
@@ -183,16 +216,15 @@ exports.sourceNodes = async (
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
-exports.onPreExtractQueries = async ({
-  store,
-  getNodes,
-  boundActionCreators,
-}) => {
+exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
   const program = store.getState().program
 
-  const nodes = getNodes()
+  const CACHE_DIR = path.resolve(
+    `${program.directory}/.cache/contentful/assets/`
+  )
+  await fs.ensureDir(CACHE_DIR)
 
-  if (!nodes.some(n => n.internal.type === `ContentfulAsset`)) {
+  if (getNodesByType(`ContentfulAsset`).length == 0) {
     return
   }
 

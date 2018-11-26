@@ -12,16 +12,20 @@ const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { oneLine } = require(`common-tags`)
 
-const { store, getNode, getNodes } = require(`../redux`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { store } = require(`../redux`)
+const { getNode, getNodes, getNodesByType } = require(`../db/nodes`)
+const pageDependencyResolver = require(`./page-dependency-resolver`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
-  extractFieldExamples,
+  getExampleValues,
   isEmptyObjectOrArray,
+  INVALID_VALUE,
 } = require(`./data-tree-utils`)
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
+const is32BitInteger = require(`../utils/is-32-bit-integer`)
+const unionTypes = new Map()
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -95,7 +99,12 @@ function inferGraphQLType({
     return listType
   }
 
-  if (DateType.shouldInfer(exampleValue)) {
+  if (
+    // momentjs crashes when it encounters a Symbol,
+    // so check against that
+    typeof exampleValue !== `symbol` &&
+    DateType.shouldInfer(exampleValue)
+  ) {
     return DateType.getType()
   }
 
@@ -108,17 +117,19 @@ function inferGraphQLType({
       return {
         type: new GraphQLObjectType({
           name: createTypeName(fieldName),
-          fields: inferObjectStructureFromNodes({
-            ...otherArgs,
-            exampleValue,
-            selector,
-            nodes,
-            types,
-          }),
+          fields: _inferObjectStructureFromNodes(
+            {
+              ...otherArgs,
+              selector,
+              nodes,
+              types,
+            },
+            exampleValue
+          ),
         }),
       }
     case `number`:
-      return _.isInteger(exampleValue)
+      return is32BitInteger(exampleValue)
         ? { type: GraphQLInt }
         : { type: GraphQLFloat }
     default:
@@ -142,31 +153,20 @@ function inferFromMapping(
     return null
   }
 
-  const findNode = (fieldValue, path) => {
-    const linkedNode = _.find(
-      getNodes(),
-      n =>
-        n.internal.type === linkedType && _.get(n, linkedField) === fieldValue
-    )
-    if (linkedNode) {
-      createPageDependency({ path, nodeId: linkedNode.id })
-      return linkedNode
-    }
-    return null
-  }
+  const findNode = fieldValue =>
+    getNodesByType(linkedType).find(n => _.get(n, linkedField) === fieldValue)
 
   if (_.isArray(value)) {
     return {
       type: new GraphQLList(matchedTypes[0].nodeObjectType),
-      resolve: (node, a, b, { fieldName }) => {
+      resolve: pageDependencyResolver((node, a, b, { fieldName }) => {
         const fieldValue = node[fieldName]
-
         if (fieldValue) {
-          return fieldValue.map(value => findNode(value, b.path))
+          return fieldValue.map(findNode)
         } else {
           return null
         }
-      },
+      }),
     }
   }
 
@@ -184,21 +184,20 @@ function inferFromMapping(
   }
 }
 
+function findLinkedNodeByField(linkedField, value) {
+  getNodes().find(n => n[linkedField] === value)
+}
+
 export function findLinkedNode(value, linkedField, path) {
   let linkedNode
   // If the field doesn't link to the id, use that for searching.
   if (linkedField) {
-    linkedNode = getNodes().find(n => n[linkedField] === value)
+    linkedNode = findLinkedNodeByField(linkedField, value)
     // Else the field is linking to the node's id, the default.
   } else {
     linkedNode = getNode(value)
   }
-
-  if (linkedNode) {
-    if (path) createPageDependency({ path, nodeId: linkedNode.id })
-    return linkedNode
-  }
-  return null
+  return linkedNode
 }
 
 function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
@@ -239,7 +238,7 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     types.find(type => type.name === node.internal.type)
 
   if (isArray) {
-    const linkedNodes = value.map(v => findLinkedNode(v))
+    const linkedNodes = value.map(getNode)
     linkedNodes.forEach(node => validateLinkedNode(node))
     const fields = linkedNodes.map(node => findNodeType(node))
     fields.forEach((field, i) => validateField(linkedNodes[i], field))
@@ -247,19 +246,28 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     let type
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
-      type = new GraphQLUnionType({
-        name: `Union_${key}_${fields
-          .map(f => f.name)
-          .sort()
-          .join(`__`)}`,
-        description: `Union interface for the field "${key}" for types [${fields
-          .map(f => f.name)
-          .sort()
-          .join(`, `)}]`,
-        types: fields.map(f => f.nodeObjectType),
-        resolveType: data =>
-          fields.find(f => f.name == data.internal.type).nodeObjectType,
-      })
+      const typeName = `Union_${key}_${fields
+        .map(f => f.name)
+        .sort()
+        .join(`__`)}`
+
+      if (unionTypes.has(typeName)) {
+        type = unionTypes.get(typeName)
+      }
+
+      if (!type) {
+        type = new GraphQLUnionType({
+          name: createTypeName(`Union_${key}`),
+          description: `Union interface for the field "${key}" for types [${fields
+            .map(f => f.name)
+            .sort()
+            .join(`, `)}]`,
+          types: fields.map(f => f.nodeObjectType),
+          resolveType: data =>
+            fields.find(f => f.name == data.internal.type).nodeObjectType,
+        })
+        unionTypes.set(typeName, type)
+      }
     } else {
       type = fields[0].nodeObjectType
     }
@@ -285,23 +293,17 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   validateField(linkedNode, field)
   return {
     type: field.nodeObjectType,
-    resolve: (node, a, b = {}) => {
-      let fieldValue = node[key]
-      if (fieldValue) {
-        const result = findLinkedNode(fieldValue, linkedField, b.path)
-        return result
-      } else {
-        return null
-      }
-    },
+    resolve: pageDependencyResolver(node =>
+      findLinkedNode(node[key], linkedField)
+    ),
   }
 }
 
 type inferTypeOptions = {
   nodes: Object[],
   types: ProcessedNodeType[],
+  ignoreFields?: string[],
   selector?: string,
-  exampleValue?: Object,
 }
 
 const EXCLUDE_KEYS = {
@@ -312,12 +314,10 @@ const EXCLUDE_KEYS = {
 
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
-export function inferObjectStructureFromNodes({
-  nodes,
-  types,
-  selector,
-  exampleValue = extractFieldExamples(nodes),
-}: inferTypeOptions): GraphQLFieldConfigMap<*, *> {
+function _inferObjectStructureFromNodes(
+  { nodes, types, selector, ignoreFields }: inferTypeOptions,
+  exampleValue: ?Object
+): GraphQLFieldConfigMap<*, *> {
   const config = store.getState().config
   const isRoot = !selector
   const mapping = config && config.mapping
@@ -325,16 +325,23 @@ export function inferObjectStructureFromNodes({
   // Ensure nodes have internal key with object.
   nodes = nodes.map(n => (n.internal ? n : { ...n, internal: {} }))
 
+  const typeName: string = nodes[0].internal.type
+
+  let resolvedExample: Object =
+    exampleValue != null
+      ? exampleValue
+      : getExampleValues({ nodes, typeName, ignoreFields })
+
   const inferredFields = {}
-  _.each(exampleValue, (value, key) => {
+  _.each(resolvedExample, (value, key) => {
     // Remove fields common to the top-level of all nodes.  We add these
     // elsewhere so don't need to infer their type.
-    if (isRoot && EXCLUDE_KEYS[key]) return
+    if (value === INVALID_VALUE || (isRoot && EXCLUDE_KEYS[key])) return
 
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
     const nextSelector = selector ? `${selector}.${key}` : key
-    const fieldSelector = `${nodes[0].internal.type}.${nextSelector}`
+    const fieldSelector = `${typeName}.${nextSelector}`
 
     let fieldName = key
     let inferredField
@@ -346,9 +353,17 @@ export function inferObjectStructureFromNodes({
 
       // Second if the field has a suffix of ___node. We use then the value
       // (a node id) to find the node and use that node's type as the field
-    } else if (_.includes(key, `___NODE`)) {
+    } else if (key.includes(`___NODE`)) {
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, nextSelector, types)
+    }
+
+    // Replace unsupported values
+    const sanitizedFieldName = createKey(fieldName)
+
+    // If a pluging has already provided a type for this, don't infer it.
+    if (ignoreFields && ignoreFields.includes(sanitizedFieldName)) {
+      return
     }
 
     // Finally our automatic inference of field value type.
@@ -363,9 +378,41 @@ export function inferObjectStructureFromNodes({
 
     if (!inferredField) return
 
-    // Replace unsupported values
-    inferredFields[createKey(fieldName)] = inferredField
+    // If sanitized field name is different from original field name
+    // add resolve passthrough to reach value using original field name
+    if (sanitizedFieldName !== fieldName) {
+      const {
+        resolve: fieldResolve,
+        ...inferredFieldWithoutResolve
+      } = inferredField
+
+      // Using copy if field as we sometimes have predefined frozen
+      // field definitions and we can't mutate them.
+      inferredField = inferredFieldWithoutResolve
+
+      if (fieldResolve) {
+        // If field has resolver, call it with adjusted resolveInfo
+        // that points to original field name
+        inferredField.resolve = (source, args, context, resolveInfo) =>
+          fieldResolve(source, args, context, {
+            ...resolveInfo,
+            fieldName: fieldName,
+          })
+      } else {
+        inferredField.resolve = source => source[fieldName]
+      }
+    }
+
+    inferredFields[sanitizedFieldName] = inferredField
   })
 
   return inferredFields
+}
+
+export function inferObjectStructureFromNodes(options: inferTypeOptions) {
+  return _inferObjectStructureFromNodes(options, null)
+}
+
+export function clearUnionTypes() {
+  unionTypes.clear()
 }

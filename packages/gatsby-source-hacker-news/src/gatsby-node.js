@@ -9,11 +9,12 @@ const get = query =>
   )
 
 exports.sourceNodes = async ({
-  boundActionCreators,
+  actions,
   getNode,
+  createNodeId,
   hasNodeChanged,
 }) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   // Do the initial fetch
   console.time(`fetch HN data`)
@@ -97,11 +98,13 @@ fragment commentsFragment on HackerNewsItem {
       kids.kids = []
     }
     const kidLessStory = _.omit(story, `kids`)
+    const childIds = kids.kids.map(k => createNodeId(k.id))
 
     const storyNode = {
       ...kidLessStory,
-      children: kids.kids.map(k => k.id),
-      parent: `__SOURCE__`,
+      id: createNodeId(kidLessStory.id),
+      children: childIds,
+      parent: null,
       content: storyStr,
       internal: {
         type: `HNStory`,
@@ -120,7 +123,6 @@ fragment commentsFragment on HackerNewsItem {
       .digest(`hex`)
 
     storyNode.internal.contentDigest = contentDigest
-
     createNode(storyNode)
 
     // Recursively create comment nodes.
@@ -129,9 +131,11 @@ fragment commentsFragment on HackerNewsItem {
         if (!comment.kids) {
           comment.kids = []
         }
+        let commentChildIds = comment.kids.map(k => createNodeId(k.id))
         let commentNode = {
           ..._.omit(comment, `kids`),
-          children: comment.kids.map(k => k.id),
+          id: createNodeId(comment.id),
+          children: commentChildIds,
           parent,
           internal: {
             type: `HNComment`,
@@ -154,12 +158,12 @@ fragment commentsFragment on HackerNewsItem {
         createNode(commentNode)
 
         if (comment.kids.length > 0) {
-          createCommentNodes(comment.kids, comment.id, depth + 1)
+          createCommentNodes(comment.kids, commentNode.id, depth + 1)
         }
       })
     }
 
-    createCommentNodes(kids.kids, story.id)
+    createCommentNodes(kids.kids, storyNode.id)
   })
 
   return

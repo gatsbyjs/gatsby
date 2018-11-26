@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link, graphql } from "gatsby"
 import styles from "../styles"
 import presets from "../utils/presets"
 import { rhythm, scale } from "../utils/typography"
@@ -59,7 +59,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query ExcerptExampleQuery {
+  query {
     allMarkdownRemark(filter: { frontmatter: { example: { eq: true } } }) {
       edges {
         node {

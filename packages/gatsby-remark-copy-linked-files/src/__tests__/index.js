@@ -82,6 +82,16 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
   })
 
+  it(`can copy reference-style images`, async () => {
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remark.parse(`![sample][1]\n\n[1]: ${path}`)
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy file links`, async () => {
     const path = `files/sample-file.txt`
 
@@ -130,11 +140,42 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
   })
 
+  it(`can copy HTML multiple images when some are in ignore extensions`, async () => {
+    const path1 = `images/sample-image.jpg`
+    const path2 = `images/another-sample-image.gif`
+
+    const markdownAST = remark.parse(
+      `<div><img src="${path1}"><img src="${path2}"></div>`
+    )
+
+    await plugin({
+      files: [...getFiles(path1), ...getFiles(path2)],
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).toHaveBeenCalledTimes(1)
+  })
+
   it(`can copy HTML videos`, async () => {
     const path = `videos/sample-video.mp4`
 
     const markdownAST = remark.parse(
       `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
+  it(`can copy HTML videos when some siblings are in ignore extensions`, async () => {
+    const path = `videos/sample-video.mp4`
+    const path1 = `images/sample-image.jpg`
+
+    const markdownAST = remark.parse(
+      `<div><img src="${path1}"><video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video></div>`
     )
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
@@ -207,6 +248,37 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
         expect(imageURL(markdownAST)).toEqual(
           `/path/to/dir/undefined-undefined.gif`
+        )
+      })
+    })
+
+    it(`copies file to destinationDir when supplied (with pathPrefix)`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const pathPrefix = `/blog`
+      const validDestinationDir = `path/to/dir`
+      const expectedNewPath = path.posix.join(
+        process.cwd(),
+        `public`,
+        validDestinationDir,
+        `/undefined-undefined.gif`
+      )
+      expect.assertions(3)
+      await plugin(
+        {
+          files: getFiles(imagePath),
+          markdownAST,
+          markdownNode,
+          pathPrefix,
+          getNode,
+        },
+        {
+          destinationDir: validDestinationDir,
+        }
+      ).then(v => {
+        expect(v).toBeDefined()
+        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+        expect(imageURL(markdownAST)).toEqual(
+          `${pathPrefix}/path/to/dir/undefined-undefined.gif`
         )
       })
     })

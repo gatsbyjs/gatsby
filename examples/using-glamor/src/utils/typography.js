@@ -17,13 +17,13 @@ const options = {
       [TABLET_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 17px.
         html: {
-          fontSize: `${17 / 16 * 100}%`,
+          fontSize: `${(17 / 16) * 100}%`,
         },
       },
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
         html: {
-          fontSize: `${16 / 16 * 100}%`,
+          fontSize: `${(16 / 16) * 100}%`,
         },
       },
     }
@@ -32,9 +32,5 @@ const options = {
 
 const typography = new Typography(options)
 
-// Hot reload typography in development.
-if (process.env.NODE_ENV !== `production`) {
-  typography.injectStyles()
-}
-
+export const { rhythm, scale } = typography
 export default typography

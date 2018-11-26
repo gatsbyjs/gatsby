@@ -6,11 +6,26 @@ Parses CSV files into JSON arrays.
 
 `npm install --save gatsby-transformer-csv`
 
+Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin _transforms_ the files into data you can query.
+
 ## How to use
+
+If you put your `.csv` files in `./src/data`:
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-csv`];
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
+    },
+    `gatsby-transformer-csv`,
+  ],
+}
 ```
 
 Above is the minimal configuration required to begin working. Additional
@@ -19,15 +34,26 @@ customization of the parsing process is possible using the parameters listed in
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-transformer-csv`,
-    options: {
-      noheader: true,
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
     },
-  },
-];
+    {
+      resolve: `gatsby-transformer-csv`,
+      options: {
+        noheader: true,
+      },
+    },
+  ];
+}
 ```
+
+You can see an example project at https://github.com/gatsbyjs/gatsby/tree/master/examples/using-csv.
 
 ## Parsing algorithm
 
@@ -44,12 +70,12 @@ c,67
 
 the following three nodes would be created.
 
-```javascript
+```json
 [
-  { letter: "a", value: 65, type: "LettersCsv" },
-  { letter: "b", value: 66, type: "LettersCsv" },
-  { letter: "c", value: 67, type: "LettersCsv" },
-];
+  { "letter": "a", "value": 65, "type": "LettersCsv" },
+  { "letter": "b", "value": 66, "type": "LettersCsv" },
+  { "letter": "c", "value": 67, "type": "LettersCsv" }
+]
 ```
 
 ## How to query
@@ -77,22 +103,22 @@ Which would return:
     edges: [
       {
         node: {
-          letter: 'a'
-          value: 65
-        }
+          letter: "a",
+          value: 65,
+        },
       },
       {
         node: {
-          letter: 'b'
-          value: 66
-        }
+          letter: "b",
+          value: 66,
+        },
       },
       {
         node: {
-          letter: 'c'
-          value: 67
-        }
-      }
+          letter: "c",
+          value: 67,
+        },
+      },
     ]
   }
 }

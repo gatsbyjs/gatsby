@@ -1,7 +1,52 @@
 const path = require(`path`)
+const slash = require(`slash`)
 
-exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  return new Promise((resolve, reject) => {
+    const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+    graphql(
+      `
+        {
+          allMarkdownRemark(
+            limit: 1000
+            filter: { frontmatter: { draft: { ne: true } } }
+          ) {
+            edges {
+              node {
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+        }
+      `
+    ).then(result => {
+      if (result.errors) {
+        console.log(result.errors)
+        reject(result.errors)
+      }
+
+      // Create blog posts pages.
+      result.data.allMarkdownRemark.edges.forEach(edge => {
+        createPage({
+          path: edge.node.fields.slug, // required
+          component: slash(blogPostTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
+      })
+
+      resolve()
+    })
+  })
+}
+
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)

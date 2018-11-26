@@ -6,11 +6,9 @@ const isRelativeUrl = require(`is-relative-url`)
 const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 
-const { getNodes } = require(`../../redux`)
-const { findRootNode } = require(`../node-tracking`)
-const {
-  createPageDependency,
-} = require(`../../redux/actions/add-page-dependency`)
+const { getNodesByType } = require(`../../db/nodes`)
+const { findRootNodeAncestor } = require(`../../db/node-tracking`)
+const pageDependencyResolver = require(`../page-dependency-resolver`)
 const { joinPath } = require(`../../utils/path`)
 
 let type, listType
@@ -28,9 +26,9 @@ export function setFileNodeRootType(fileNodeRootType) {
 function pointsToFile(nodes, key, value) {
   const looksLikeFile =
     _.isString(value) &&
-    mime.lookup(value) !== `application/octet-stream` &&
+    mime.getType(value) !== null &&
     // domains ending with .com
-    mime.lookup(value) !== `application/x-msdownload` &&
+    mime.getType(value) !== `application/x-msdownload` &&
     isRelative(value) &&
     isRelativeUrl(value)
 
@@ -99,7 +97,7 @@ function pointsToFile(nodes, key, value) {
     }
   }
 
-  const rootNode = findRootNode(node)
+  const rootNode = findRootNodeAncestor(node)
 
   // Only nodes transformed (ultimately) from a File
   // can link to another File.
@@ -108,7 +106,7 @@ function pointsToFile(nodes, key, value) {
   }
 
   const pathToOtherNode = normalize(joinPath(rootNode.dir, value))
-  const otherFileExists = getNodes().some(
+  const otherFileExists = getNodesByType(`File`).some(
     n => n.absolutePath === pathToOtherNode
   )
   return otherFileExists
@@ -130,9 +128,9 @@ export function shouldInfer(nodes, selector, value) {
 function createType(fileNodeRootType, isArray) {
   if (!fileNodeRootType) return null
 
-  return {
+  return Object.freeze({
     type: isArray ? new GraphQLList(fileNodeRootType) : fileNodeRootType,
-    resolve: (node, args, { path }, { fieldName }) => {
+    resolve: pageDependencyResolver((node, args, context, { fieldName }) => {
       let fieldValue = node[fieldName]
 
       if (!fieldValue) {
@@ -148,32 +146,24 @@ function createType(fileNodeRootType, isArray) {
 
         // Use that path to find the linked File node.
         const linkedFileNode = _.find(
-          getNodes(),
-          n => n.internal.type === `File` && n.absolutePath === fileLinkPath
+          getNodesByType(`File`),
+          n => n.absolutePath === fileLinkPath
         )
-        if (linkedFileNode) {
-          createPageDependency({
-            path,
-            nodeId: linkedFileNode.id,
-          })
-          return linkedFileNode
-        } else {
-          return null
-        }
+        return linkedFileNode
       }
 
       // Find the File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
-      const parentFileNode = findRootNode(node)
+      const parentFileNode = findRootNodeAncestor(node)
 
       // Find the linked File node(s)
       if (isArray) {
-        return fieldValue.map(relativePath => findLinkedFileNode(relativePath))
+        return fieldValue.map(findLinkedFileNode)
       } else {
         return findLinkedFileNode(fieldValue)
       }
-    },
-  }
+    }),
+  })
 }
 
 export function getType() {

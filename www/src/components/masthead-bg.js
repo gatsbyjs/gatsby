@@ -1,6 +1,6 @@
+import React from "react"
 import presets, { colors } from "../utils/presets"
-import { rhythm, scale, options } from "../utils/typography"
-import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
+import { rhythm } from "../utils/typography"
 
 const vPOff = rhythm(presets.gutters.default - presets.logoOffset)
 const vPHdOff = rhythm(presets.gutters.HdR - presets.logoOffset)

@@ -4,6 +4,15 @@ date: "2017-10-05"
 image: "gatsby-article-cover-image.jpg"
 author: "David James"
 excerpt: "Recreating my WordPress portfolio site using GatsbyJS, React and the WordPress REST API"
+tags:
+  [
+    "portfolio-site",
+    "wordpress",
+    "graphql",
+    "plugins",
+    "performance",
+    "getting-started",
+  ]
 ---
 
 _This article was originally published on
@@ -81,7 +90,7 @@ export const projectsPageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 Pulling blog posts was even easier! If you’d like to sort them by date, ID,
@@ -103,7 +112,7 @@ export const postQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## Wrap up and future
@@ -113,11 +122,11 @@ wanted. I'd highly recommend [Gatsby](/tutorial/) for
 anyone who has started getting acquainted with React. Before I started this
 project I didn't know a lot about:
 
-* Static site generation/JAMstack
-* Creating a Progressive Web App (PWA) and what qualifies as one
-* React Router
-* GraphQL
-* WordPress REST API
+- Static site generation/JAMstack
+- Creating a Progressive Web App (PWA) and what qualifies as one
+- React Router
+- GraphQL
+- WordPress REST API
 
 Moving forward with Gatsby, I'd like to extend my site to include pagination
 within the blog, use [Styled Components](https://www.styled-components.com/) and

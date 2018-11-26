@@ -1,8 +1,8 @@
 const faker = require(`faker`)
 const crypto = require(`crypto`)
 
-exports.sourceNodes = ({ boundActionCreators }, pluginOptions) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = ({ actions, createNodeId }, pluginOptions) => {
+  const { createNode } = actions
   const { schema, count, type } = pluginOptions
   for (let i = 0; i < count; i++) {
     let item = {}
@@ -20,7 +20,7 @@ exports.sourceNodes = ({ boundActionCreators }, pluginOptions) => {
       .digest(`hex`)
 
     const nodeBase = {
-      id: JSON.stringify(faker.random.number()),
+      id: createNodeId(JSON.stringify(faker.random.number())),
       parent: null,
       children: [],
       internal: {

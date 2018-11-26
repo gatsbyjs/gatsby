@@ -1,0 +1,11 @@
+{
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "graphql": false
+  },
+  "rules": {
+    "react/prop-types": [0]
+  }
+}

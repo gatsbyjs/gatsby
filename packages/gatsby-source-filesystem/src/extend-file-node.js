@@ -1,4 +1,4 @@
-const { GraphQLString } = require(`graphql`)
+const { GraphQLString } = require(`gatsby/graphql`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 

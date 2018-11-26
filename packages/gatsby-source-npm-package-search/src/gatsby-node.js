@@ -1,7 +1,7 @@
 const algoliasearch = require(`algoliasearch`)
 const crypto = require(`crypto`)
 
-const client = algoliasearch(`OFCNCOG2CU`, `f54e21fa3a2a0160595bb058179bfb1e`)
+const client = algoliasearch(`OFCNCOG2CU`, `6fbcaeafced8913bf0e4d39f0b541957`)
 var index = client.initIndex(`npm-search`)
 
 const createContentDigest = obj =>
@@ -10,33 +10,32 @@ const createContentDigest = obj =>
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
+function browse({ index, ...params }) {
+  let hits = []
+  const browser = index.browseAll(params)
+
+  return new Promise((resolve, reject) => {
+    browser.on(`result`, content => (hits = hits.concat(content.hits)))
+    browser.on(`end`, () => resolve(hits))
+    browser.on(`error`, err => reject(err))
+  })
+}
+
 exports.sourceNodes = async (
   { boundActionCreators, createNodeId },
   { keywords }
 ) => {
   const { createNode } = boundActionCreators
 
-  console.log(`Grabbing local NPM packages...`)
+  const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
 
-  let buildFilter = []
-
-  keywords.forEach(keyword => {
-    buildFilter.push(`keywords:${keyword}`)
-  })
-
-  const data = await index.search({
-    query: ``,
+  const hits = await browse({
+    index,
     filters: `(${buildFilter.join(` OR `)})`,
     hitsPerPage: 1000,
   })
 
-  data.hits.forEach(hit => {
-    // commented changed remove all badges and images from readme content to keep the creation of the node from failing below
-    // if (hit.readme.includes(`![`)) {
-    //   hit.readme = hit.readme.replace(/[[]?!\[.*\b/gi, ``)
-    //   console.log(hit.name)
-    // }
-
+  hits.forEach(hit => {
     const parentId = createNodeId(`plugin ${hit.objectID}`)
     const readmeNode = {
       id: createNodeId(`readme ${hit.objectID}`),
@@ -52,7 +51,6 @@ exports.sourceNodes = async (
     readmeNode.internal.contentDigest = createContentDigest(readmeNode)
     // Remove unneeded data
     delete hit.readme
-    delete hit._highlightResult
     delete hit.versions
 
     const node = {

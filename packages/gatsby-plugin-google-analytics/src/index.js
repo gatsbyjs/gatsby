@@ -6,6 +6,9 @@ function OutboundLink(props) {
     <a
       {...props}
       onClick={e => {
+        if (typeof props.onClick === `function`) {
+          props.onClick()
+        }
         let redirect = true
         if (
           e.button !== 0 ||
@@ -47,6 +50,7 @@ function OutboundLink(props) {
 OutboundLink.propTypes = {
   href: PropTypes.string,
   target: PropTypes.string,
+  onClick: PropTypes.func,
 }
 
 export { OutboundLink }

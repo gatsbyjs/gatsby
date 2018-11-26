@@ -13,10 +13,10 @@ const createContentDigest = obj =>
     .digest(`hex`)
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, hasNodeChanged, store, cache },
-  { baseUrl, apiBase }
+  { actions, getNode, hasNodeChanged, store, cache, createNodeId },
+  { baseUrl, apiBase, basicAuth }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
@@ -24,7 +24,7 @@ exports.sourceNodes = async (
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
   // .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
-  // .forEach(n => touchNode(n.id))
+  // .forEach(n => touchNode({ nodeId: n.id }))
 
   // Fetch articles.
   // console.time(`fetch Drupal data`)
@@ -40,14 +40,31 @@ exports.sourceNodes = async (
   // .lastFetched
   // }
 
-  const data = await axios.get(`${baseUrl}/${apiBase}`)
+  const data = await axios.get(`${baseUrl}/${apiBase}`, { auth: basicAuth })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
       if (!url) return
       if (!type) return
       const getNext = async (url, data = []) => {
-        const d = await axios.get(url)
+        if (typeof url === `object`) {
+          // url can be string or object containing href field
+          url = url.href
+        }
+
+        let d
+        try {
+          d = await axios.get(url, { auth: basicAuth })
+        } catch (error) {
+          if (error.response && error.response.status == 405) {
+            // The endpoint doesn't support the GET method, so just skip it.
+            return []
+          } else {
+            console.error(`Failed to fetch ${url}`, error.message)
+            console.log(error.data)
+            throw error
+          }
+        }
         data = data.concat(d.data.data)
         if (d.data.links.next) {
           data = await getNext(d.data.links.next, data)
@@ -80,17 +97,34 @@ exports.sourceNodes = async (
 
   // Create back references
   const backRefs = {}
+
+  /**
+   * Adds back reference to linked entity, so we can later
+   * add node link.
+   */
+  const addBackRef = (linkedId, sourceDatum) => {
+    if (ids[linkedId]) {
+      if (!backRefs[linkedId]) {
+        backRefs[linkedId] = []
+      }
+      backRefs[linkedId].push({
+        id: sourceDatum.id,
+        type: sourceDatum.type,
+      })
+    }
+  }
+
   _.each(allData, contentType => {
     if (!contentType) return
     _.each(contentType.data, datum => {
       if (datum.relationships) {
         _.each(datum.relationships, (v, k) => {
           if (!v.data) return
-          if (ids[v.data.id]) {
-            if (!backRefs[v.data.id]) {
-              backRefs[v.data.id] = []
-            }
-            backRefs[v.data.id].push({ id: datum.id, type: datum.type })
+
+          if (_.isArray(v.data)) {
+            v.data.forEach(data => addBackRef(data.id, datum))
+          } else {
+            addBackRef(v.data.id, datum)
           }
         })
       }
@@ -103,24 +137,42 @@ exports.sourceNodes = async (
     if (!contentType) return
 
     _.each(contentType.data, datum => {
-      const node = nodeFromData(datum)
+      const node = nodeFromData(datum, createNodeId)
+
+      node.relationships = {}
 
       // Add relationships
       if (datum.relationships) {
-        node.relationships = {}
         _.each(datum.relationships, (v, k) => {
           if (!v.data) return
-          if (ids[v.data.id]) {
-            node.relationships[`${k}___NODE`] = v.data.id
-          }
-          // Add back reference relationships.
-          if (backRefs[datum.id]) {
-            backRefs[datum.id].forEach(
-              ref => (node.relationships[`${ref.type}___NODE`] = ref.id)
+          if (_.isArray(v.data) && v.data.length > 0) {
+            // Create array of all ids that are in our index
+            node.relationships[`${k}___NODE`] = _.compact(
+              v.data.map(data => (ids[data.id] ? createNodeId(data.id) : null))
             )
+          } else if (ids[v.data.id]) {
+            node.relationships[`${k}___NODE`] = createNodeId(v.data.id)
           }
         })
       }
+
+      // Add back reference relationships.
+      // Back reference relationships will need to be arrays,
+      // as we can't control how if node is referenced only once.
+      if (backRefs[datum.id]) {
+        backRefs[datum.id].forEach(ref => {
+          if (!node.relationships[`${ref.type}___NODE`]) {
+            node.relationships[`${ref.type}___NODE`] = []
+          }
+
+          node.relationships[`${ref.type}___NODE`].push(createNodeId(ref.id))
+        })
+      }
+
+      if (_.isEmpty(node.relationships)) {
+        delete node.relationships
+      }
+
       node.internal.contentDigest = createContentDigest(node)
       nodes.push(node)
     })
@@ -135,13 +187,19 @@ exports.sourceNodes = async (
         node.internal.type === `file__file`
       ) {
         try {
+          let fileUrl = node.url
+          if (typeof node.uri === `object`) {
+            // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
+            fileUrl = node.uri.url
+          }
           // Resolve w/ baseUrl if node.uri isn't absolute.
-          const url = new URL(node.url, baseUrl)
+          const url = new URL(fileUrl, baseUrl)
           fileNode = await createRemoteFileNode({
             url: url.href,
             store,
             cache,
             createNode,
+            createNodeId,
           })
         } catch (e) {
           // Ignore

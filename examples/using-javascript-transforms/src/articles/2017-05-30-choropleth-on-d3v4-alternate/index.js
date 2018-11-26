@@ -1,6 +1,6 @@
 import React from "react"
+import { graphql } from "gatsby"
 import BlogPostChrome from "../../components/BlogPostChrome"
-import { findDOMNode } from "react-dom"
 var d3 = require(`d3`)
 
 // this is an additional method to export data and make it usable elsewhere
@@ -14,10 +14,6 @@ export const frontmatter = {
 }
 
 class choroplethAltBase extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     this.d3Node = d3.select(`div#states`)
     let measurements = {
@@ -30,8 +26,7 @@ class choroplethAltBase extends React.Component {
        we begin drawing here, grab the data and use it to draw
       */
 
-    d3
-      .queue()
+    d3.queue()
       .defer(d3.json, stateDataURL)
       .defer(d3.csv, statisticsDataURL)
       .awaitAll(function(error, results) {
@@ -127,7 +122,7 @@ average: tooltip, path fill
 
   let states = svg.selectAll(`path.states`).data(data)
 
-  let drawStates = states
+  states
     .enter()
     .append(`path`)
     .attr(`class`, `state`)
@@ -167,13 +162,13 @@ let mouseOver = d => {
 }
 
 let mouseOut = () => {
-  d3
-    .select(`#tooltip`)
+  d3.select(`#tooltip`)
     .transition()
     .duration(500)
     .style(`opacity`, 0)
 }
 
+// eslint-disable-next-line no-unused-vars
 function scale(scaleFactor, width, height) {
   return d3.geoTransform({
     point: function(x, y) {

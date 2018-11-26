@@ -1,7 +1,6 @@
 {
   "presets": [
-    ["../../.babelrc.js", { "browser": true }],
-    "stage-1",
+    ["babel-preset-gatsby-package", { "browser": true }]
   ],
   "plugins": ["dev-expression"]
 }

@@ -1,20 +1,21 @@
 import * as React from "react";
 
 interface GatsbyImageProps {
-  responsiveResolution?: object;
-  responsiveSizes?: object;
   resolutions?: object;
   sizes?: object;
+  fixed?: object;
+  fluid?: object;
   fadeIn?: boolean;
   title?: string;
   alt?: string;
   className?: string | object;
-  outerWrapperClassName?: string | object;
+  critical?: boolean;
   style?: object;
   imgStyle?: object;
-  position?: string;
+  placeholderStyle?: object;
   backgroundColor?: string | boolean;
   onLoad?: (event: any) => void;
+  onError?: (event: any) => void;
   Tag?: string;
 }
 

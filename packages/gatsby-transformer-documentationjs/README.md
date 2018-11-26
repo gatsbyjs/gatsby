@@ -5,7 +5,7 @@ Uses [Documentation.js](http://documentation.js.org/) to extract code metadata
 and can be added to this plugin as well).
 
 It's used on gatsbyjs.org and can be seen in use on several pages there e.g.
-https://www.gatsbyjs.org/docs/node-apis/
+[https://www.gatsbyjs.org/docs/node-apis/](https://www.gatsbyjs.org/docs/node-apis/)
 
 ## Install
 
@@ -16,7 +16,7 @@ https://www.gatsbyjs.org/docs/node-apis/
 Add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [`gatsby-transformer-documentationjs`];
+plugins: [`gatsby-transformer-documentationjs`]
 ```
 
 Ensure that there's an instance of `gatsby-source-filesystem` that's pointed at
@@ -32,7 +32,7 @@ plugins: [
       path: `${__dirname}/../src/`,
     },
   },
-];
+]
 ```
 
 Then you can write GraphQL queries pulling out JSDoc comments like:

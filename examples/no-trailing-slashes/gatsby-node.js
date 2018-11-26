@@ -1,7 +1,7 @@
 const Promise = require(`bluebird`)
 
-exports.onCreatePage = ({ page, boundActionCreators }) => {
-  const { createPage, deletePage } = boundActionCreators
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions
 
   return new Promise((resolve, reject) => {
     // Remove trailing slash

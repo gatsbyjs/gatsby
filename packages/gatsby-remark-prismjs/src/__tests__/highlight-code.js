@@ -48,9 +48,11 @@ class Counter extends React.Component {
 
 export default Counter
 `
-    expect(
-      highlightCode(language, code, lineNumbersHighlight)
-    ).toMatchSnapshot()
+    const processed = highlightCode(language, code, lineNumbersHighlight)
+
+    expect(processed).toMatchSnapshot()
+    // expect spans to not contain \n as it would break line highlighting
+    expect(/<span[^>]*>[^<]*\n[^<]*<\/span>/g.exec(processed)).not.toBeTruthy()
   })
 
   describe(`with language-text`, () => {
@@ -68,6 +70,42 @@ export default Counter
       const language = `none`
       const code = `<guineapig />`
       expect(highlightCode(language, code)).toMatch(code)
+    })
+  })
+
+  describe(`with non-highlight-lines`, () => {
+    it(`does not add trailing newlines`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const code = `const a = 1\nconst b = 2`
+      expect(highlightCode(language, code)).not.toMatch(/\n$/)
+    })
+
+    it(`a trailing newline is preserved`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const code = `const a = 1\nconst b = 2\n`
+      expect(highlightCode(language, code)).toMatch(/[^\n]\n$/)
+    })
+  })
+
+  describe(`with non-highlight-lines`, () => {
+    it(`does not add trailing newlines`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const linesToHighlight = [1]
+      const code = `const a = 1\nconst b = 2`
+      expect(highlightCode(language, code, linesToHighlight)).not.toMatch(/\n$/)
+    })
+
+    it(`a trailing newline is preserved`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `javascript`
+      const linesToHighlight = [1]
+      const code = `const a = 1\nconst b = 2\n`
+      expect(highlightCode(language, code, linesToHighlight)).toMatch(
+        /[^\n]\n$/
+      )
     })
   })
 })

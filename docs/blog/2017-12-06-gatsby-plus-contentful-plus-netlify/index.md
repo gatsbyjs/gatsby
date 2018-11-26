@@ -4,6 +4,16 @@ date: "2017-12-06"
 author: "Josh Weaver"
 image: "gatsby-contentful-netlify-algolia.jpg"
 excerpt: "Gatsby has been getting a lot of recognition and adoption lately, and for good reason. It’s so flexible and it works well with nearly everything."
+tags:
+  [
+    "contentful",
+    "netlify",
+    "algolia",
+    "getting-started",
+    "hosting",
+    "ci",
+    "performance",
+  ]
 ---
 
 Gatsby has been getting a lot of recognition and
@@ -20,11 +30,11 @@ software product. The site contains a lot of content with hundreds of articles.
 
 Here’s a list of my requirements for this site:
 
-* Speed - both in development and site performance
-* Ease of use - both in developer experience and content upkeep
-* Searchable content - it is a doc site after all
-* Inexpensive Hosting - maximize value (who doesn’t want this?)
-* Automated continuous deployment
+- Speed - both in development and site performance
+- Ease of use - both in developer experience and content upkeep
+- Searchable content - it is a doc site after all
+- Inexpensive Hosting - maximize value (who doesn’t want this?)
+- Automated continuous deployment
 
 The following is a report on my high-level experience of using Gatsby with
 Contentful, Netlify and Algolia and the problems they solve — without getting
@@ -74,7 +84,7 @@ Our site has a lot of content (~300 articles) that needs to be maintained by
 non-developers, my co-workers. This meant we needed an approachable interface
 for copy and content editing. I wanted to make it as convenient as logging into
 Wordpress and publishing from there, without the Wordpress. So the publishing
-experience couldn’t rely on creating a file and committing changes to a git
+experience couldn’t rely on creating a file and committing changes to a Git
 repo.
 
 > Sidebar: There is
@@ -88,9 +98,9 @@ Contentful is a hosted headless CMS with a fantastic user experience. It’s
 similar to having a backend like Wordpress, but you are fully responsible for
 the front-end layer. The beauty of Contentful is threefold.
 
-* Intuitive and attractive UI
-* Simple content modeling
-* [Free tier](https://www.contentful.com/pricing/)
+- Intuitive and attractive UI
+- Simple content modeling
+- [Free tier](https://www.contentful.com/pricing/)
 
 Dealing with the back-end of Contentful is refreshing and the content modeling
 really leads the pack when compared to other headless content management
@@ -156,7 +166,7 @@ features. I haven’t heard any complaints from my co-workers.
 Another “problem” with static sites is the lack of out-of-the-box site search.
 Most search implementations occur between the server and the database. As a doc
 site, users typically expect solid search functionality. There are a few
-frontend only javascript search libraries (like [lunr.js](https://lunrjs.com/))
+frontend only JavaScript search libraries (like [lunr.js](https://lunrjs.com/))
 that take a search query and parse a pre-built JSON index of your content.
 
 I could have created this index by tying into the `onPostBuild` Gatsby API. This
@@ -193,7 +203,7 @@ event API that took the built HTML from each article. The library did the magic
 of converting the HTML to JSON, then I iterated through the JSON. While keeping
 track of the last linked heading (h tag), I set the index record’s page link
 accordingly for each article section. The index was then uploaded to Algolia via
-their node.js client.
+their Node.js client.
 
 It wasn’t pretty, but it worked.
 
@@ -261,14 +271,14 @@ Netlify recently changed [their pricing](https://www.netlify.com/pricing/) to
 improve what was already an awesome hosting per dollar value. I can’t get
 through this section without a bullet list of why Netlify is so fantastic.
 
-* Free to use for personal/commercial project (seriously great free tier)
-* Push button HTTPS via Let’s Encrypt built in
-* Fast Global CDN
-* Support for custom domains
-* Atomic deploys
-* A crazy-cool, integrated build engine
-* [And a lot more....](https://www.netlify.com/features/)
-* Did I mention you get all this for FREE?
+- Free to use for personal/commercial project (seriously great free tier)
+- Push button HTTPS via Let’s Encrypt built in
+- Fast Global CDN
+- Support for custom domains
+- Atomic deploys
+- A crazy-cool, integrated build engine
+- [And a lot more....](https://www.netlify.com/features/)
+- Did I mention you get all this for FREE?
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/vMnuZGHJfFSTe" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/vMnuZGHJfFSTe">via GIPHY</a></p>
 

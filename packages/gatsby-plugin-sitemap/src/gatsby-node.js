@@ -4,7 +4,7 @@ import { defaultOptions, runQuery, writeFile } from "./internals"
 
 const publicPath = `./public`
 
-exports.onPostBuild = async ({ graphql }, pluginOptions) => {
+exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
   const options = { ...pluginOptions }
   delete options.plugins
   delete options.createLinkInHead
@@ -20,7 +20,12 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   // Paths we're excluding...
   const excludeOptions = exclude.concat(defaultOptions.exclude)
 
-  const queryRecords = await runQuery(graphql, query, excludeOptions)
+  const queryRecords = await runQuery(
+    graphql,
+    query,
+    excludeOptions,
+    pathPrefix
+  )
   serialize(queryRecords).forEach(u => map.add(u))
 
   return await writeFile(saved, map.toString())

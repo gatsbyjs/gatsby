@@ -1,4 +1,4 @@
-const { GraphQLEnumType } = require(`graphql`)
+const { GraphQLEnumType } = require(`gatsby/graphql`)
 
 const ImageFormatType = new GraphQLEnumType({
   name: `ContentfulImageFormat`,
@@ -52,6 +52,7 @@ const ImageCropFocusType = new GraphQLEnumType({
     RIGHT: { value: `right` },
     LEFT: { value: `left` },
     FACES: { value: `faces` },
+    CENTER: { value: `center` },
   },
 })
 

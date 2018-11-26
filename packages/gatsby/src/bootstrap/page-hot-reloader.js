@@ -14,13 +14,14 @@ emitter.on(`CREATE_NODE`, action => {
   }
 })
 emitter.on(`DELETE_NODE`, action => {
-  pagesDirty = true
-  debouncedCreatePages()
+  if (action.payload.internal.type !== `SitePage`) {
+    pagesDirty = true
+  }
 })
 
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
   if (pagesDirty) {
-    debouncedCreatePages()
+    runCreatePages()
   }
 })
 
@@ -53,19 +54,18 @@ const runCreatePages = async () => {
   })
 
   // Delete pages that weren't updated when running createPages.
-  store
-    .getState()
-    .pages.filter(p => !_.includes(statefulPlugins, p.pluginCreatorId))
-    .filter(p => p.updatedAt < timestamp)
-    .forEach(page => {
+  Array.from(store.getState().pages.values()).forEach(page => {
+    if (
+      !_.includes(statefulPlugins, page.pluginCreatorId) &&
+      page.updatedAt < timestamp
+    ) {
       deleteComponentsDependencies([page.path])
       deletePage(page)
-    })
+    }
+  })
 
   emitter.emit(`CREATE_PAGE_END`)
 }
-
-const debouncedCreatePages = _.debounce(runCreatePages, 100)
 
 module.exports = graphqlRunner => {
   graphql = graphqlRunner

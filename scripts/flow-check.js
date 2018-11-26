@@ -1,5 +1,5 @@
-import { execFileSync } from "child_process"
-import flowBin from "flow-bin"
+const { execFileSync } = require(`child_process`)
+const flowBin = require(`flow-bin`)
 
 try {
   if (process.platform !== `win32`) {

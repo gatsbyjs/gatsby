@@ -4,11 +4,10 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: `gatsby-plugin-typography`,
       options: {
-        trackingId: `UA-93349937-2`,
+        pathToConfigModule: `src/utils/typography`,
       },
     },
-    `gatsby-plugin-offline`,
   ],
 }
