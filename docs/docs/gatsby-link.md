@@ -105,7 +105,8 @@ or
 
 You can also pass state to pages when you use Link e.g. 
 
-`<Link
+```javascript
+<Link
            to="/another-page/"
            activeStyle={{
              color: "red",
