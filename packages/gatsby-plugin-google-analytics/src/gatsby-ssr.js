@@ -18,7 +18,21 @@ exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV === `production`) {
+  let { enabled } = pluginOptions
+  let isEnabled
+  if (typeof enabled === `boolean`) {
+    isEnabled = enabled
+  } else if (enabled && enabled !== `auto`) {
+    // If user specifies any value that is truthy but NOT the string `auto` it's invalid
+    throw new Error(
+      `[gatsby-plugin-google-analytics] Valid options for 'enabled' flag: true, false, or 'auto'`
+    )
+  } else {
+    // Default value, if `enabled` option is not specified
+    isEnabled = process.env.NODE_ENV === `production`
+  }
+
+  if (isEnabled) {
     let excludeGAPaths = []
     if (typeof pluginOptions.exclude !== `undefined`) {
       const Minimatch = require(`minimatch`).Minimatch

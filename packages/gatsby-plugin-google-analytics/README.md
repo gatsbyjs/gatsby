@@ -24,6 +24,8 @@ module.exports = {
         respectDNT: true,
         // Avoids sending pageview hits from custom paths
         exclude: ["/preview/**", "/do-not-track/me/too/"],
+        // Enable tracking
+        enabled: "auto",
         // Enables Google Optimize using your container Id
         optimizeId: "YOUR_GOOGLE_OPTIMIZE_TRACKING_ID",
         // Any additional create only fields (optional)
@@ -87,6 +89,10 @@ If you enable this optional option, Google Analytics will not be loaded at all f
 ## The "exclude" option
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+## The "enabled" option
+
+By default, tracking is disabled in development mode and enabled in production. If you want to fully disable/enable tracking in both environments, set this to `true` or `false`. To track in production but not development, omit the option or set to `'auto'`.
 
 ## The "optimizeId" option
 
