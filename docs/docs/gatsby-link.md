@@ -99,7 +99,11 @@ Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecat
 
 ## Passing state through Link and Navigate
 
-You can also pass state to pages when you navigate e.g. `navigate("/a-path/", { state: { pleasant: "reasonably" }}`
+You can pass state to pages when you navigate, such as:
+
+```javascript
+navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
+```
 
 or  
 
