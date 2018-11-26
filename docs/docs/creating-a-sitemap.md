@@ -17,11 +17,13 @@ To generate an XML sitemap, you will use the [`gatsby-plugin-sitemap`](/packages
 
 Once installation is complete, we can now add this plugin to our `gatsby-config.js`, like so:
 
-```
-siteMetadata: {
-  siteUrl: `https://www.example.com`,
-},
-plugins: [`gatsby-plugin-sitemap`]
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    siteUrl: `https://www.example.com`,
+  },
+  plugins: [`gatsby-plugin-sitemap`],
+}
 ```
 
 This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap will include all of your site’s pages, but of course the plugin exposes options to configure this default functionality.
