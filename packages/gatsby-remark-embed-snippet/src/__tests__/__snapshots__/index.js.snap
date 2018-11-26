@@ -443,7 +443,7 @@ Object {
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
         <pre class=\\"language-jsx\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>div</span><span class=\\"token punctuation\\">></span></span><span class=\\"token plain-text\\"></span>
-<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token plain-text\\"></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>button</span><span class=\\"token punctuation\\">></span></span><span class=\\"token plain-text\\">Add Item</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>button</span><span class=\\"token punctuation\\">></span></span><span class=\\"token plain-text\\"></span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token plain-text\\"></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>button</span><span class=\\"token punctuation\\">></span></span><span class=\\"token plain-text\\">Add Item</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>button</span><span class=\\"token punctuation\\">></span></span><span class=\\"token plain-text\\"> </span><span class=\\"token plain-text\\"></span>
 </span><span class=\\"token plain-text\\"></span>
 <span class=\\"token plain-text\\"></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>ReactCSSTransitionGroup</span>
 <span class=\\"token attr-name\\">transitionName</span><span class=\\"token attr-value\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">\\"</span>example<span class=\\"token punctuation\\">\\"</span></span>
@@ -875,7 +875,7 @@ Object {
           },
           "type": "html",
           "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-yaml\\"><code><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">foo</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"highlighted\\"</span>
+        <pre class=\\"language-yaml\\"><code><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">foo</span><span class=\\"token punctuation\\">:</span> \\"highlighted\\"
 </span><span class=\\"token key atrule\\">bar</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"not highlighted\\"</span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">baz</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"highlighted\\"</span>
 </span><span class=\\"token key atrule\\">qux</span><span class=\\"token punctuation\\">:</span> <span class=\\"token string\\">\\"not highlighted\\"</span></code></pre>
