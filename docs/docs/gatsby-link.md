@@ -107,7 +107,7 @@ navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
 
 or  
 
-You can also pass state to pages when you use Link e.g. 
+You can also pass state to pages when you use `Link`:
 
 ```javascript
 <Link
