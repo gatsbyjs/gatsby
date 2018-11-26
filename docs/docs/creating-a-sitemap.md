@@ -2,7 +2,7 @@
 title: Creating a sitemap
 ---
 
-### What is a Site Map?
+### What is a Sitemap?
 
 An [XML sitemap](https://support.google.com/webmasters/answer/156184?hl=en) lists a website’s important pages, making sure search engines (such as Google) can find and crawl them all, and helping it understand your website structure.
 
