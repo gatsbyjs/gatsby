@@ -155,7 +155,7 @@ We are currently only accepting bug fixes for Gatsby v1. No new features will be
 
 ## :memo: License
 
- Licensed under the [MIT License](https://github.com/gatsbyjs/gatsby/blob/master/LICENSE)
+Licensed under the [MIT License](https://github.com/gatsbyjs/gatsby/blob/master/LICENSE)
 
 ## 💜 Thanks to Our Contributors and Sponsors
 
