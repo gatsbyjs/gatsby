@@ -117,7 +117,8 @@ You can also pass state to pages when you use `Link`:
            state={{
              pleasant: "reasonably",
            }}
-         >`
+>
+```
 
 This is accessible from the location object on the new page. e.g.
 
