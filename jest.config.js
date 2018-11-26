@@ -42,4 +42,5 @@ module.exports = {
     },
   },
   collectCoverageFrom: coverageDirs,
+  reporters: [`default`, `jest-junit`],
 }
