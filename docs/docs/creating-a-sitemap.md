@@ -27,4 +27,4 @@ This is all that's required to get a working sitemap with Gatsby! By default, th
 
 ### Additonal Modification
 
-Additonal modification steps are available in the [`gatsby-plugin-sitemap` documentation](https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap)
+Additional modification steps are available in the [`gatsby-plugin-sitemap` documentation](/packages/gatsby-plugin-sitemap)
