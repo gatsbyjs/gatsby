@@ -129,7 +129,7 @@ componentDidMount() {
     pleasant: pleasant
   })
 }
-`
+```
 
 
 ## Prefixed paths helper
