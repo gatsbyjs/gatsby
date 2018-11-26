@@ -53,7 +53,7 @@ Create a new file called `webpack.config.js` in the `.storybook` folder created 
 
 ```js
 module.exports = (baseConfig, env, defaultConfig) => {
-  // Transpile Gatsby module because Gastby includes un-transpiled ES6 code.
+  // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
   defaultConfig.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
 
   // use installed babel-loader which is v8.0-beta (which is meant to work with @babel/core@7)
@@ -101,7 +101,7 @@ storiesOf(`Dashboard/Header`, module).add(`default`, () => (
 ))
 ```
 
-This is a very simple story without much going on, but honestly, nothing else really changes as related to Gastby. If you want to learn more about how Storybook works and what you can do with it, check out some of the resources listed below.
+This is a very simple story without much going on, but honestly, nothing else really changes as related to Gatsby. If you want to learn more about how Storybook works and what you can do with it, check out some of the resources listed below.
 
 ## Other resources
 

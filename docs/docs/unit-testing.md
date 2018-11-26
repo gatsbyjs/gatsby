@@ -85,7 +85,7 @@ module.exports = "test-file-stub"
   any tests in the `node_modules` or `.cache` directories.
 
 - The next option is very important, and is different from what you'll find in other
-  Jest guides. The reason that you need `transformIgnorePatterns` is because Gastby
+  Jest guides. The reason that you need `transformIgnorePatterns` is because Gatsby
   includes un-transpiled ES6 code. By default Jest doesn't try to transform code
   inside `node_modules`, so you will get an error like this:
 
@@ -120,7 +120,7 @@ global.___loader = {
 
 ### 3. Useful mocks to complete your testing environment
 
-#### Mocking `gastby`
+#### Mocking `gatsby`
 
 Finally it's a good idea to mock the `gatsby` module itself. This may not be
 needed at first, but will make things a lot easier if you want to test
