@@ -16,6 +16,7 @@ class EnsureResources extends React.Component {
     this.state = {
       location: { ...location },
       pageResources: loader.getResourcesForPathnameSync(location.pathname),
+      staticHTML: document.getElementById(`___gatsby`).innerHTML,
     }
   }
 
@@ -92,8 +93,8 @@ class EnsureResources extends React.Component {
     return shallowCompare(this, nextProps, nextState)
   }
 
-  render() {
-    const { localStorage, document } = window
+  shouldRenderStaticHTML() {
+    const { localStorage } = window
     const { href, pathname } = window.location
 
     // This should only occur if the network is offline, or if the
@@ -125,14 +126,19 @@ class EnsureResources extends React.Component {
         window.location.replace(originalUrl)
       }
 
-      // Render static HTML instead of a blank page
-      return (
-        <div dangerouslySetInnerHTML={{ __html: document.body.innerHTML }} />
-      )
+      return true
+    } else {
+      localStorage.removeItem(`___failedResources`)
+      return false
     }
+  }
 
-    localStorage.removeItem(`___failedResources`)
-    return this.props.children(this.state)
+  render() {
+    if (this.shouldRenderStaticHTML()) {
+      return <div dangerouslySetInnerHTML={{ __html: this.state.staticHTML }} />
+    } else {
+      return this.props.children(this.state)
+    }
   }
 }
 
