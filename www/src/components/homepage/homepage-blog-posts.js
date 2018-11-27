@@ -105,7 +105,7 @@ const LastPost = styled(`div`)`
 
 const ViewAll = () => (
   <ViewAllStyle>
-    <Link to="/">
+    <Link to="/blog/">
       View all
       <span>
         posts
