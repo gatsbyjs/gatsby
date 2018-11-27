@@ -39,6 +39,9 @@ describe(`remark katex plugin`, () => {
   it(`doesn't crash when there's an error in development mode`, () => {
     const equation = `$a^2 + b^2 = c^$`
     let remark = new Remark()
+    const realProcess = process
+    const exitMock = jest.fn()
+    global.process = { ...realProcess, exit: exitMock }
 
     expect(() => {
       for (let parserPlugins of plugin.setParserPlugins()) {
@@ -48,11 +51,15 @@ describe(`remark katex plugin`, () => {
       const markdownAST = remark.parse(equation)
       plugin({ markdownAST, reporter })
     }).not.toThrow()
+    global.process = realProcess
   })
 
   it(`crashes when there's an error in build mode`, () => {
     const equation = `$a^2 + b^2 = c^$`
     let remark = new Remark()
+    const realProcess = process
+    const exitMock = jest.fn()
+    global.process = { ...realProcess, exit: exitMock }
 
     expect(() => {
       for (let parserPlugins of plugin.setParserPlugins()) {
@@ -62,5 +69,6 @@ describe(`remark katex plugin`, () => {
       const markdownAST = remark.parse(equation)
       plugin({ markdownAST, reporter })
     }).toThrow()
+    global.process = realProcess
   })
 })
