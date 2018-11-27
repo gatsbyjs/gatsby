@@ -1,5 +1,6 @@
 const Remark = require(`remark`)
 const plugin = require(`../index`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 
 describe(`remark katex plugin`, () => {
   it(`renders inlineMath node properly`, () => {
@@ -45,7 +46,7 @@ describe(`remark katex plugin`, () => {
       }
       process.env.gatsby_executing_command = `develop`
       const markdownAST = remark.parse(equation)
-      plugin({ markdownAST })
+      plugin({ markdownAST, reporter })
     }).not.toThrow()
   })
 
@@ -59,7 +60,7 @@ describe(`remark katex plugin`, () => {
       }
       process.env.gatsby_executing_command = `build`
       const markdownAST = remark.parse(equation)
-      plugin({ markdownAST })
+      plugin({ markdownAST, reporter })
     }).toThrow()
   })
 })
