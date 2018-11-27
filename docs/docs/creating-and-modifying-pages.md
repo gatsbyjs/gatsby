@@ -139,14 +139,14 @@ The automatically created pages can receive context and use that as variables in
 ```javascript:title=gatsby-node.js
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
-  
+
   deletePage(page)
   // You can access the variable "house" in your page queries now
   createPage({
     ...page,
     context: {
-      house: Gryffindor
-    }
+      house: Gryffindor,
+    },
   })
 }
 ```
