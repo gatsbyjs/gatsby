@@ -1,7 +1,6 @@
 const path = require(`path`)
 const glob = require(`glob`)
 const fs = require(`fs`)
-const isCI = require(`is-ci`)
 
 const pkgs = glob.sync(`./packages/*`).map(p => p.replace(/^\./, `<rootDir>`))
 
@@ -32,7 +31,7 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
-  collectCoverage: isCI,
+  collectCoverage: !!process.env.GENERATE_JEST_REPORT,
   coverageReporters: [`json-summary`, `text`, `html`, `cobertura`],
   coverageThreshold: {
     global: {
@@ -43,5 +42,7 @@ module.exports = {
     },
   },
   collectCoverageFrom: coverageDirs,
-  reporters: [`default`].concat(isCI ? `jest-junit` : []),
+  reporters: [`default`].concat(
+    process.env.GENERATE_JEST_REPORT ? `jest-junit` : []
+  ),
 }
