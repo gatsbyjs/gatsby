@@ -43,7 +43,6 @@ class IndexRoute extends React.Component {
                   <pre className="language-bash">
                     <code className="language-bash">
                       gatsby new gatsby-site
-                      https://github.com/gatsbyjs/gatsby-starter-default
                     </code>
                   </pre>
                 </div>
@@ -84,7 +83,7 @@ class IndexRoute extends React.Component {
               Running <code>gatsby new</code> installs the default Gatsby
               starter. There are
               {` `}
-              <Link to="/docs/gatsby-starters/">
+              <Link to="/starters/">
                 many other official and community starters
               </Link>
               {` `}

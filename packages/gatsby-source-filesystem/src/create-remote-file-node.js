@@ -198,7 +198,7 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
-  if (!ext){
+  if (!ext) {
     ext = getRemoteFileExtension(url)
   }
 
@@ -206,11 +206,7 @@ async function processRemoteNode({
 
   // Fetch the file.
   try {
-    const response = await requestRemoteNode(
-      url,
-      headers,
-      tmpFilename,
-    )
+    const response = await requestRemoteNode(url, headers, tmpFilename)
     // Save the response headers for future requests.
     await cache.set(cacheId(url), response.headers)
 
@@ -296,6 +292,24 @@ module.exports = ({
   createNodeId,
   ext = null,
 }) => {
+  // validation of the input
+  // without this it's notoriously easy to pass in the wrong `createNodeId`
+  // see gatsbyjs/gatsby#6643
+  if (typeof createNodeId !== `function`) {
+    throw new Error(
+      `createNodeId must be a function, was ${typeof createNodeId}`
+    )
+  }
+  if (typeof createNode !== `function`) {
+    throw new Error(`createNode must be a function, was ${typeof createNode}`)
+  }
+  if (typeof store !== `object`) {
+    throw new Error(`store must be the redux store, was ${typeof store}`)
+  }
+  if (typeof cache !== `object`) {
+    throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
+  }
+
   // Check if we already requested node for this remote file
   // and return stored promise if we did.
   if (processingCache[url]) {

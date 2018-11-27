@@ -40,10 +40,10 @@ describe(`Track root nodes`, () => {
   `
   require(`fs`).__setMockFiles(MOCK_FILE_INFO)
 
-  const { getNode, getNodes } = require(`../../db/nodes`)
+  const { getNode } = require(`../../db/nodes`)
   const { findRootNodeAncestor } = require(`../node-tracking`)
-  const runSift = require(`../run-sift`)
-  const buildNodeTypes = require(`../build-node-types`)
+  const { runQuery } = require(`../../db/nodes`)
+  const buildNodeTypes = require(`../../schema/build-node-types`)
   const {
     boundActionCreators: { createNode },
   } = require(`../../redux/actions`)
@@ -104,18 +104,16 @@ describe(`Track root nodes`, () => {
   })
 
   describe(`Tracks nodes returned by running sift`, () => {
-    let type, nodes
+    let type
 
     beforeAll(async () => {
       type = (await buildNodeTypes({})).testNode.nodeObjectType
-      nodes = getNodes()
     })
 
     it(`Tracks objects when running query without filter`, async () => {
-      const result = await runSift({
-        args: {},
-        nodes,
-        type,
+      const result = await runQuery({
+        queryArgs: {},
+        gqlType: type,
         firstOnly: false,
       })
 
@@ -125,8 +123,8 @@ describe(`Track root nodes`, () => {
     })
 
     it(`Tracks objects when running query with filter`, async () => {
-      const result = await runSift({
-        args: {
+      const result = await runQuery({
+        queryArgs: {
           filter: {
             inlineObject: {
               field: {
@@ -135,8 +133,7 @@ describe(`Track root nodes`, () => {
             },
           },
         },
-        nodes,
-        type,
+        gqlType: type,
         firstOnly: false,
       })
 

@@ -14,7 +14,7 @@ The `pages` redux namespace is a map of page `path` to page object. The [pages r
 
 ## Update Components redux namespace
 
-The `components` redux namespace is a map of [componentPath](/docs/behind-the-scenes-terminology/#component) (file with React component) to the Component object. A Component object is simply the Page object but with an empty query string (that will be set during [Query Extraction](/docs/query-extraction/#store-queries-in-redux)). 
+The `components` redux namespace is a map of [componentPath](/docs/behind-the-scenes-terminology/#component) (file with React component) to the Component object. A Component object is simply the Page object but with an empty query string (that will be set during [Query Extraction](/docs/query-extraction/#store-queries-in-redux)).
 
 ## onCreatePage API
 

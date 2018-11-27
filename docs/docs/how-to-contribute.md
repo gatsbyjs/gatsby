@@ -86,6 +86,16 @@ a pull request.
 - Commit and push to your fork.
 - Create a pull request from your branch.
 
+If you wrote a new document that was previously a stub, update `www/src/data/sidebars/doc-links.yaml` accordingly by removing the asterisk behind the document's title:
+
+```diff
+  ...
+- - title: Example Document*
++ - title: Example Document
+    link: /docs/example-document/
+  ...
+```
+
 To develop on the starter showcase, you'll need to supply a GitHub personal access token.
 
 1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
@@ -114,6 +124,7 @@ To add a new blog post to the gatsbyjs.org blog:
 - Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
 - If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
 - Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
+- Follow the [Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/#word-choice) to make sure you're using the appropriate wording.
 - Double check your grammar and capitalise correctly
 - Commit and push to your fork
 - Create a pull request from your branch

@@ -131,3 +131,22 @@ exports.onCreatePage = ({ page, actions }) => {
   })
 }
 ```
+
+### Pass context to pages
+
+The automatically created pages can receive context and use that as variables in their GraphQL queries. To override the default and pass your own context, open your site's `gatsby-node.js` and add similar to the following:
+
+```javascript:title=gatsby-node.js
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions
+
+  deletePage(page)
+  // You can access the variable "house" in your page queries now
+  createPage({
+    ...page,
+    context: {
+      house: Gryffindor,
+    },
+  })
+}
+```

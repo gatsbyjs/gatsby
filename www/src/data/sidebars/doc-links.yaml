@@ -15,6 +15,8 @@
           link: /docs/browser-support/
         - title: Gatsby on Windows
           link: /docs/gatsby-on-windows/
+        - title: Gatsby on Linux
+          link: /docs/gatsby-on-linux/
     - title: Deploying & hosting
       link: /docs/deploying-and-hosting/
       items:
@@ -41,7 +43,7 @@
       items:
         - title: Babel.js
           link: /docs/babel/
-        - title: Babel plugin macros*
+        - title: Babel plugin macros
           link: /docs/babel-plugin-macros/
         - title: Custom webpack config
           link: /docs/add-custom-webpack-config/
@@ -119,7 +121,7 @@
           link: /docs/using-fragments/
         - title: Creating slugs for pages
           link: /docs/creating-slugs-for-pages/
-        - title: Programmatically create pages from data*
+        - title: Programmatically create pages from data
           link: /docs/programmatically-create-pages-from-data/
     - title: Plugins
       link: /docs/plugins/
@@ -216,7 +218,7 @@
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Adding pagination
           link: /docs/adding-pagination/
-        - title: Creating a sitemap*
+        - title: Creating a sitemap
           link: /docs/creating-a-sitemap/
         - title: Linking between pages
           link: /docs/linking-between-pages/
@@ -352,7 +354,7 @@
       link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
   items:
-    - title: Making a site with user authentication*
+    - title: Making a site with user authentication
       link: /docs/authentication-tutorial/
     - title: Making an e-commerce Gatsby site
       link: /docs/ecommerce-tutorial/
