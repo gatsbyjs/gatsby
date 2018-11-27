@@ -4,7 +4,6 @@ import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import UglifyJsPlugin from "uglifyjs-webpack-plugin"
 import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
 
 /**
@@ -83,7 +82,7 @@ exports.onCreateWebpackConfig = (
          */
         ...gatsbyConfig.plugins.filter(
           plugin =>
-            ![UglifyJsPlugin, MiniCssExtractPlugin, FriendlyErrorsPlugin].find(
+            ![MiniCssExtractPlugin, FriendlyErrorsPlugin].find(
               Plugin => plugin instanceof Plugin
             )
         ),
