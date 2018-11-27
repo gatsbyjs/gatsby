@@ -24,9 +24,11 @@ function getConcatenatedValue(node) {
 
 function cloneTreeUntil(root, endCondition) {
   let clonedRoot
+  let endConditionMet = false
 
   function preOrderTraversal(node) {
-    if (endCondition(clonedRoot)) {
+    if (endConditionMet || endCondition({ root: clonedRoot, nextNode: node })) {
+      endConditionMet = true
       return
     }
 
@@ -64,7 +66,6 @@ function findLastTextNode(node, textNode) {
 }
 
 module.exports = {
-  duplicateNode,
   getConcatenatedValue,
   cloneTreeUntil,
   findLastTextNode,

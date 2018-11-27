@@ -1,6 +1,6 @@
 const path = require(`path`)
 const glob = require(`glob`)
-const fs = require("fs")
+const fs = require(`fs`)
 
 const pkgs = glob.sync(`./packages/*`).map(p => p.replace(/^\./, `<rootDir>`))
 
@@ -16,7 +16,7 @@ const coverageDirs = pkgs.map(p => path.join(p, `src/**/*.js`))
 
 module.exports = {
   notify: true,
-  verbose: true,
+  verbose: false,
   roots: pkgs,
   modulePathIgnorePatterns: ignoreDirs,
   coveragePathIgnorePatterns: ignoreDirs,

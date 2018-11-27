@@ -74,7 +74,6 @@ module.exports = (
   if (type.name !== `MarkdownRemark`) {
     return {}
   }
-
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = pathPrefix || ``
 
@@ -325,13 +324,6 @@ module.exports = (
       }
     }
 
-    async function mdastToHTML(markdownAST) {
-      const htmlAST = toHAST(markdownAST, { allowDangerousHTML: true })
-      return hastToHTML(htmlAST, {
-        allowDangerousHTML: true,
-      })
-    }
-
     const HeadingType = new GraphQLObjectType({
       name: `MarkdownHeading`,
       fields: {
@@ -396,24 +388,23 @@ module.exports = (
         },
         async resolve(markdownNode, { format, pruneLength, truncate }) {
           if (format === `html`) {
-            if (markdownNode.excerpt) {
-              const fullAST = await getAST(markdownNode)
+            if (pluginOptions.excerpt_separator) {
+              const fullAST = await getHTMLAst(markdownNode)
               const excerptAST = cloneTreeUntil(
                 fullAST,
-                node =>
-                  node.type === `html` &&
-                  node.value === markdownNode.excerpt_separator
+                ({ nextNode }) =>
+                  nextNode.type === `raw` &&
+                  nextNode.value === pluginOptions.excerpt_separator
               )
-              return mdastToHTML(excerptAST)
+              return hastToHTML(excerptAST)
             }
-
             const fullAST = await getHTMLAst(markdownNode)
             if (!fullAST.children.length) {
               return ``
             }
 
-            const excerptAST = cloneTreeUntil(fullAST, excerptAST => {
-              const totalExcerptSoFar = getConcatenatedValue(excerptAST)
+            const excerptAST = cloneTreeUntil(fullAST, ({ root }) => {
+              const totalExcerptSoFar = getConcatenatedValue(root)
               return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
             })
             const unprunedExcerpt = getConcatenatedValue(excerptAST)
