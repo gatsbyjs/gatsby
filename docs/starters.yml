@@ -1280,6 +1280,20 @@
     - Eslint Airbnb without semicolon and without .jsx extension
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-mobx.netlify.com
+  repo: https://github.com/borekb/gatsby-starter-mobx
+  description: MobX + TypeScript + TSLint + Prettier
+  tags:
+    - MobX
+    - TypeScript
+    - Linting
+  features:
+    - Gatsby v2 + TypeScript
+    - MobX with decorators
+    - Two examples from @mweststrate's Egghead course
+    - .editorconfig & Prettier
+    - TSLint
+    - Jest
 - url: https://tender-raman-99e09b.netlify.com/
   repo: https://github.com/amandeepmittal/gatsby-bulma-quickstart
   description: A Bulma CSS + GatsbyJS Starter Kit
