@@ -34,4 +34,32 @@ describe(`remark katex plugin`, () => {
     plugin({ markdownAST })
     expect(markdownAST).toMatchSnapshot()
   })
+
+  it(`doesn't crash when there's an error in development mode`, () => {
+    const equation = `$a^2 + b^2 = c^$`
+    let remark = new Remark()
+
+    expect(() => {
+      for (let parserPlugins of plugin.setParserPlugins()) {
+        remark = remark.use(parserPlugins)
+      }
+      process.env.gatsby_executing_command = `develop`
+      const markdownAST = remark.parse(equation)
+      plugin({ markdownAST })
+    }).not.toThrow()
+  })
+
+  it(`crashes when there's an error in build mode`, () => {
+    const equation = `$a^2 + b^2 = c^$`
+    let remark = new Remark()
+
+    expect(() => {
+      for (let parserPlugins of plugin.setParserPlugins()) {
+        remark = remark.use(parserPlugins)
+      }
+      process.env.gatsby_executing_command = `build`
+      const markdownAST = remark.parse(equation)
+      plugin({ markdownAST })
+    }).toThrow()
+  })
 })
