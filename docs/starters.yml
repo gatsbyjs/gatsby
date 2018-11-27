@@ -1287,7 +1287,7 @@
     - Styling:Bulma
     - Styling:SCSS
   features:
-    - uses Bulma CSS 
+    - Uses Bulma CSS
     - Sass based Styling
     - Responsive Design
     - Google Analytics Integration
