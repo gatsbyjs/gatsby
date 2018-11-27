@@ -102,7 +102,7 @@ By default, excerpts have a maximum length of 140 characters. You can change the
 
 #### Format
 
-By default, Gatsby will return excerpts as plaintext. This might be useful for populating [opengraph](https://en.wikipedia.org/wiki/Facebook_Platform#Open_Graph_protocol) html tags for SEO reasons. You can also explicitly specify a PLAIN format.
+By default, Gatsby will return excerpts as plain text. This might be useful for populating [opengraph](https://en.wikipedia.org/wiki/Facebook_Platform#Open_Graph_protocol) HTML tags for SEO reasons. You can also explicitly specify a `PLAIN` format like so:
 
 ```graphql
 {
@@ -116,7 +116,7 @@ By default, Gatsby will return excerpts as plaintext. This might be useful for p
 }
 ```
 
-It's also possible to ask Gatsby to return excerpts formatted as HTML. You might use this if you have a blog post whose excerpt contains markdown links, and you want these links to render as anchor tags.
+It's also possible to ask Gatsby to return excerpts formatted as HTML. You might use this if you have a blog post whose an excerpt contains markdown content--e.g. header, link, etc.--and you want these links to render as HTML.
 
 ```graphql
 {
