@@ -354,6 +354,14 @@ module.exports = (
       },
     })
 
+    const ExcerptFormats = new GraphQLEnumType({
+      name: `ExcerptFormats`,
+      values: {
+        PLAIN: { value: `plain` },
+        HTML: { value: `html` },
+      },
+    })
+
     return resolve({
       html: {
         type: GraphQLString,
@@ -382,7 +390,7 @@ module.exports = (
             defaultValue: false,
           },
           format: {
-            type: GraphQLString,
+            type: ExcerptFormats,
             defaultValue: `plain`,
           },
         },
