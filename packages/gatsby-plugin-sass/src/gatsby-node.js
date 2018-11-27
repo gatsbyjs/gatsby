@@ -2,11 +2,15 @@ import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
-  { cssLoaderOptions = {}, postCssPlugins, ...sassOptions }
+  { cssLoaderOptions = {}, postCssPlugins, implementation, ...sassOptions }
 ) => {
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`
   const isSSR = stage.includes(`html`)
+
+  if (implementation && implementation === `dart-sass`) {
+    sassOptions.implementation = require(`sass`)
+  }
 
   const sassLoader = {
     loader: resolve(`sass-loader`),
