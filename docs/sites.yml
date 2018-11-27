@@ -3540,6 +3540,17 @@
   built_by: Monbanquet.fr
   built_by_url: https://github.com/monbanquet
   featured: false
+- title: The Leaky Cauldron Blog
+  url: https://theleakycauldronblog.com
+  main_url: https://theleakycauldronblog.com
+  source_url: https://github.com/v4iv/theleakycauldronblog
+  description: >
+    A Brew of Awesomeness with a Pinch of Magic...
+  categories:
+    - Blog
+  built_by: Vaibhav Sharma
+  built_by_url: https://github.com/v4iv
+  featured: false
 - title: Wild Drop Surf Camp
   main_url: "https://wilddropsurfcamp.com"
   url: "https://wilddropsurfcamp.com"
@@ -3552,3 +3563,4 @@
   built_by: Samuel Fialho
   built_by_url: https://samuelfialho.com
   featured: false
+ 
