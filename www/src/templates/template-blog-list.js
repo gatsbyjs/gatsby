@@ -112,7 +112,7 @@ export default BlogPostsIndex
 export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
+      sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/docs.blog/" }

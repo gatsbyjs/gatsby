@@ -79,17 +79,6 @@ exports.onPostBuild = (args, pluginOptions) => {
       // the default prefix with `pathPrefix`.
       "/": `${pathPrefix}/`,
     },
-    navigateFallback: `${pathPrefix}/offline-plugin-app-shell-fallback/index.html`,
-    // Only match URLs without extensions or the query `no-cache=1`.
-    // So example.com/about/ will pass but
-    // example.com/about/?no-cache=1 and
-    // example.com/cheeseburger.jpg will not.
-    // We only want the service worker to handle our "clean"
-    // URLs and not any files hosted on the site.
-    //
-    // Regex based on http://stackoverflow.com/a/18017805
-    navigateFallbackWhitelist: [/^([^.?]*|[^?]*\.([^.?]{5,}|html))(\?.*)?$/],
-    navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory,
     // since these files have unique URLs and their contents will never change
@@ -122,15 +111,22 @@ exports.onPostBuild = (args, pluginOptions) => {
   delete pluginOptions.plugins
   const combinedOptions = _.defaults(pluginOptions, options)
 
+  const idbKeyvalFile = `idb-keyval-iife.min.js`
+  const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
+  const idbKeyvalDest = `public/${idbKeyvalFile}`
+  fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
+
   const swDest = `public/sw.js`
   return workboxBuild
     .generateSW({ swDest, ...combinedOptions })
     .then(({ count, size, warnings }) => {
       if (warnings) warnings.forEach(warning => console.warn(warning))
 
-      const swAppend = fs.readFileSync(`${__dirname}/sw-append.js`)
-      fs.appendFileSync(`public/sw.js`, swAppend)
+      const swAppend = fs
+        .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
+        .replace(/%pathPrefix%/g, pathPrefix)
 
+      fs.appendFileSync(`public/sw.js`, swAppend)
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )

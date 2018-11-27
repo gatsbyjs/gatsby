@@ -3422,7 +3422,8 @@
   description: >
     Kings Valley Paving is an asphalt, paving and concrete company serving the commercial, residential and industrial sectors in the Greater Toronto Area.
   categories:
-    - Marketing, Construction, Paving
+    - Marketing
+    - Construction
   built_by: Michael Uloth
   built_by_url: https://www.michaeluloth.com
   featured: false
@@ -3432,7 +3433,8 @@
   description: >
     Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world.
   categories:
-    - Portfolio, Music
+    - Portfolio
+    - Music
   built_by: Michael Uloth
   built_by_url: https://www.michaeluloth.com
   featured: false
@@ -3507,3 +3509,57 @@
   categories:
     - Marketing
     - IOT
+- title: freeCodeCamp curriculum
+  main_url: "https://learn.freecodecamp.org"
+  url: "https://learn.freecodecamp.org"
+  featured: false
+  description: Learn to code with free online courses, programming projects, and interview preparation for developer jobs.
+  categories:
+    - Web Development
+    - Learning
+- title: Tandem
+  main_url: "https://tandem.co.uk"
+  url: "https://tandem.co.uk/the-app"
+  description: >
+    We're on a mission to free you of money misery. Our app, card and savings account are designed to help you spend less time worrying about money and more time enjoying life.
+  categories:
+    - Finance
+    - App
+  built_by: Tandem
+  built_by_url: https://github.com/tandembank
+  featured: false
+- title: Monbanquet.fr
+  main_url: "https://monbanquet.fr"
+  url: "https://monbanquet.fr"
+  description: >
+    Give your corporate events the food and quality it deserves, thanks to the know-how of the best local artisans.
+  categories:
+    - eCommerce
+    - Food
+    - Event
+  built_by: Monbanquet.fr
+  built_by_url: https://github.com/monbanquet
+  featured: false
+- title: The Leaky Cauldron Blog
+  url: https://theleakycauldronblog.com
+  main_url: https://theleakycauldronblog.com
+  source_url: https://github.com/v4iv/theleakycauldronblog
+  description: >
+    A Brew of Awesomeness with a Pinch of Magic...
+  categories:
+    - Blog
+  built_by: Vaibhav Sharma
+  built_by_url: https://github.com/v4iv
+  featured: false
+- title: Wild Drop Surf Camp
+  main_url: "https://wilddropsurfcamp.com"
+  url: "https://wilddropsurfcamp.com"
+  description: >
+    Welcome to Portugal's best kept secret and be amazed with our nature. Here you can explore, surf, taste the world's best gastronomy and wine, feel the North Canyon's power with the biggest waves in the world and so many other amazing things. Find us, discover yourself!
+  categories:
+    - Surf
+    - Tourism
+    - Travel
+  built_by: Samuel Fialho
+  built_by_url: https://samuelfialho.com
+  featured: false
