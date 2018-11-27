@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.8"></a>
+
+## [3.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.7...gatsby-plugin-netlify-cms@3.0.8) (2018-11-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** fix uglify webpack plugin check ([#10150](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/10150)) ([b1101f5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/b1101f5)), closes [#10067](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/10067) [#10149](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/10149)
+
 <a name="3.0.7"></a>
 
 ## [3.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.6...gatsby-plugin-netlify-cms@3.0.7) (2018-11-08)

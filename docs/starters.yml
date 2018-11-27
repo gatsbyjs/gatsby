@@ -1294,3 +1294,16 @@
     - .editorconfig & Prettier
     - TSLint
     - Jest
+- url: https://tender-raman-99e09b.netlify.com/
+  repo: https://github.com/amandeepmittal/gatsby-bulma-quickstart
+  description: A Bulma CSS + GatsbyJS Starter Kit
+  tags:
+    - Styling:Bulma
+    - Styling:SCSS
+  features:
+    - Uses Bulma CSS
+    - Sass based Styling
+    - Responsive Design
+    - Google Analytics Integration
+    - Uses Gatsby v2
+    - SEO

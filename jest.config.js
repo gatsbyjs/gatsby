@@ -31,8 +31,8 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
-  collectCoverage: false,
-  coverageReporters: [`json-summary`, `text`, `html`],
+  collectCoverage: true,
+  coverageReporters: [`json-summary`, `text`, `html`, `cobertura`],
   coverageThreshold: {
     global: {
       lines: 45,
@@ -42,4 +42,5 @@ module.exports = {
     },
   },
   collectCoverageFrom: coverageDirs,
+  reporters: [`default`, `jest-junit`],
 }
