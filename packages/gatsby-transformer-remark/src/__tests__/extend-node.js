@@ -237,6 +237,74 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node.excerpt.length).toBe(50)
     }
   )
+
+  bootstrapTest(
+    `given an html format, it correctly maps nested markdown to html`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh [*where*](nick.com) **_is_** that pony?`,
+    `excerpt(format: HTML)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh <a><em>where</em></a> <strong><em>is</em></strong> that pony?</p>`
+      )
+    }
+  )
+
+  bootstrapTest(
+    `given an html format, it prunes large excerpts`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh where is that pony? Is he in the stable or down by the stream?`,
+    `excerpt(format: HTML, pruneLength: 50)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      // expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is that pony? Is he in the stable…</p>`
+      )
+    }
+  )
+
+  bootstrapTest(
+    `given an html format, it respects the excerpt_separator`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh where is that pony? Is he in the stable or by the stream?
+
+<!-- end -->
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+`,
+    `excerpt(format: HTML, pruneLength: 50)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is that pony? Is he in the stable…</p>`
+      )
+    },
+    { excerpt_separator: `<!-- end -->` }
+  )
 })
 
 describe(`Wordcount and timeToRead are generated correctly from schema`, () => {
