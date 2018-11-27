@@ -3551,3 +3551,15 @@
   built_by: Vaibhav Sharma
   built_by_url: https://github.com/v4iv
   featured: false
+- title: Wild Drop Surf Camp
+  main_url: "https://wilddropsurfcamp.com"
+  url: "https://wilddropsurfcamp.com"
+  description: >
+    Welcome to Portugal's best kept secret and be amazed with our nature. Here you can explore, surf, taste the world's best gastronomy and wine, feel the North Canyon's power with the biggest waves in the world and so many other amazing things. Find us, discover yourself!
+  categories:
+    - Surf
+    - Tourism
+    - Travel
+  built_by: Samuel Fialho
+  built_by_url: https://samuelfialho.com
+  featured: false
