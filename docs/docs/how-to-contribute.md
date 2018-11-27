@@ -86,6 +86,16 @@ a pull request.
 - Commit and push to your fork.
 - Create a pull request from your branch.
 
+If you wrote a new document that was previously a stub, update `www/src/data/sidebars/doc-links.yaml` accordingly by removing the asterisk behind the document's title:
+
+```diff
+  ...
+- - title: Example Document*
++ - title: Example Document
+    link: /docs/example-document/
+  ...
+```
+
 To develop on the starter showcase, you'll need to supply a GitHub personal access token.
 
 1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
