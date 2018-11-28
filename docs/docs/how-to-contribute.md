@@ -74,13 +74,21 @@ Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in 
 use the file editor to edit and then preview your changes. 
 2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria: make sure your contribution meets the standards outlined in the [Gatsby Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/). Also, if your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the the [Docs Decision Tree](https://www.gatsbyjs.org/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
 > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
-3. GitHub then allows
-you to commit the change and raise a PR right in the UI. This is the _easiest_
-way you can contribute to the project!
+3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
+
+If you wrote a new document that was previously a stub, update `www/src/data/sidebars/doc-links.yaml` accordingly by removing the asterisk behind the document's title:
+
+```diff
+  ...
+- - title: Example Document*
++ - title: Example Document
+    link: /docs/example-document/
+  ...
+```
 
 #### Making changes to the website
-If you want to make more changes to the website functionality in documentation, that is, change
-layout components or templates, add sections/pages, follow the steps for [contributing to the repo](#contributing-to-the-repo). You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
+
+If you want to make more changes to the website functionality in documentation, that is, change layout components or templates, add sections/pages, follow the steps for [contributing to the repo](#contributing-to-the-repo). You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
 a pull request.
 
 ### Making changes to the starter library

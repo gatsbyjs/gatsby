@@ -16,7 +16,7 @@ There are 3 approaches that you can use to source data from your private API:
 
 1. If the data of your private API is updated very frequently or the expectation of the site is to be updated in real-time, it may make more sense to query the data directly during runtime.
 
-2. If you can source the data through a plugin, consider that as an alternative to sourcing via the API. For instance, if you have access to the MongoDB database that stores the data, [`gatsby-source-mongodb`](/https://www.gatsbyjs.org/packages/gatsby-source-mongodb/) will be handy. Browse the [Gatsby Plugin Library](https://www.gatsbyjs.org/plugins/) to see what plugins that you could utilize.
+2. If you can source the data through a plugin, consider that as an alternative to sourcing via the API. For instance, if you have access to the MongoDB database that stores the data, [`gatsby-source-mongodb`](https://www.gatsbyjs.org/packages/gatsby-source-mongodb/) will be handy. Browse the [Gatsby Plugin Library](https://www.gatsbyjs.org/plugins/) to see what plugins that you could utilize.
 
 3. Depending on your build process and the availability of your private API, you may need to make other adjustments accordingly.
 

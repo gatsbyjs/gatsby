@@ -144,7 +144,7 @@ exports.createPages = ({ graphql, actions }) => {
     graphql(`
       query {
         allMarkdownRemark(
-          sort: { order: DESC, fields: [frontmatter___date] }
+          sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
           limit: 10000
           filter: { fileAbsolutePath: { ne: null } }
         ) {
@@ -620,7 +620,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
 exports.onCreatePage = ({ page, actions }) => {
   // add lists of featured items to Ecosystem page
-  if (page.path === `/ecosystem/`) {
+  if (page.path === `/ecosystem/` || page.path === `/`) {
     const { createPage, deletePage } = actions
     const oldPage = Object.assign({}, page)
 

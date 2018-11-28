@@ -16,7 +16,6 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const Promise = require(`bluebird`)
-const prune = require(`underscore.string/prune`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -24,6 +23,13 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
+const prune = require(`underscore.string/prune`)
+
+const {
+  getConcatenatedValue,
+  cloneTreeUntil,
+  findLastTextNode,
+} = require(`./hast-processing`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -68,7 +74,6 @@ module.exports = (
   if (type.name !== `MarkdownRemark`) {
     return {}
   }
-
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = pathPrefix || ``
 
@@ -117,111 +122,114 @@ module.exports = (
         // We are already generating AST, so let's wait for it
         return await ASTPromiseMap.get(cacheKey)
       } else {
-        const ASTGenerationPromise = new Promise(async resolve => {
-          if (process.env.NODE_ENV !== `production` || !fileNodes) {
-            fileNodes = getNodesByType(`File`)
-          }
-          const ast = await new Promise((resolve, reject) => {
-            // Use Bluebird's Promise function "each" to run remark plugins serially.
-            Promise.each(pluginOptions.plugins, plugin => {
-              const requiredPlugin = require(plugin.resolve)
-              if (_.isFunction(requiredPlugin.mutateSource)) {
-                return requiredPlugin.mutateSource(
-                  {
-                    markdownNode,
-                    files: fileNodes,
-                    getNode,
-                    reporter,
-                    cache,
-                  },
-                  plugin.pluginOptions
-                )
-              } else {
-                return Promise.resolve()
-              }
-            }).then(() => {
-              const markdownAST = remark.parse(markdownNode.internal.content)
-
-              if (pathPrefix) {
-                // Ensure relative links include `pathPrefix`
-                visit(markdownAST, [`link`, `definition`], node => {
-                  if (
-                    node.url &&
-                    node.url.startsWith(`/`) &&
-                    !node.url.startsWith(`//`)
-                  ) {
-                    node.url = withPathPrefix(node.url, pathPrefix)
-                  }
-                })
-              }
-
-              // source => parse (can order parsing for dependencies) => typegen
-              //
-              // source plugins identify nodes, provide id, initial parse, know
-              // when nodes are created/removed/deleted
-              // get passed cached DataTree and return list of clean and dirty nodes.
-              // Also get passed `dirtyNodes` function which they can call with an array
-              // of node ids which will then get re-parsed and the inferred schema
-              // recreated (if inferring schema gets too expensive, can also
-              // cache the schema until a query fails at which point recreate the
-              // schema).
-              //
-              // parse plugins take data from source nodes and extend it, never mutate
-              // it. Freeze all nodes once done so typegen plugins can't change it
-              // this lets us save off the DataTree at that point as well as create
-              // indexes.
-              //
-              // typegen plugins identify further types of data that should be lazily
-              // computed due to their expense, or are hard to infer graphql type
-              // (markdown ast), or are need user input in order to derive e.g.
-              // markdown headers or date fields.
-              //
-              // wrap all resolve functions to (a) auto-memoize and (b) cache to disk any
-              // resolve function that takes longer than ~10ms (do research on this
-              // e.g. how long reading/writing to cache takes), and (c) track which
-              // queries are based on which source nodes. Also if connection of what
-              // which are always rerun if their underlying nodes change..
-              //
-              // every node type in DataTree gets a schema type automatically.
-              // typegen plugins just modify the auto-generated types to add derived fields
-              // as well as computationally expensive fields.
-              if (process.env.NODE_ENV !== `production` || !fileNodes) {
-                fileNodes = getNodesByType(`File`)
-              }
-              // Use Bluebird's Promise function "each" to run remark plugins serially.
-              Promise.each(pluginOptions.plugins, plugin => {
-                const requiredPlugin = require(plugin.resolve)
-                if (_.isFunction(requiredPlugin)) {
-                  return requiredPlugin(
-                    {
-                      markdownAST,
-                      markdownNode,
-                      getNode,
-                      files: fileNodes,
-                      pathPrefix,
-                      reporter,
-                      cache,
-                    },
-                    plugin.pluginOptions
-                  )
-                } else {
-                  return Promise.resolve()
-                }
-              }).then(() => {
-                resolve(markdownAST)
-              })
-            })
-          })
-
-          // Save new AST to cache and return
-          cache.set(cacheKey, ast)
-          // We can now release promise, as we cached result
+        const ASTGenerationPromise = getMarkdownAST(markdownNode)
+        ASTGenerationPromise.then(markdownAST => {
+          cache.set(cacheKey, markdownAST)
           ASTPromiseMap.delete(cacheKey)
-          return resolve(ast)
+        }).catch(err => {
+          ASTPromiseMap.delete(cacheKey)
+          throw err
         })
+        // Save new AST to cache and return
+        // We can now release promise, as we cached result
         ASTPromiseMap.set(cacheKey, ASTGenerationPromise)
-        return await ASTGenerationPromise
+        return ASTGenerationPromise
       }
+    }
+
+    function getMarkdownAST(markdownNode) {
+      return new Promise(async (resolve, reject) => {
+        if (process.env.NODE_ENV !== `production` || !fileNodes) {
+          fileNodes = getNodesByType(`File`)
+        }
+        // Use Bluebird's Promise function "each" to run remark plugins serially.
+        await Promise.each(pluginOptions.plugins, plugin => {
+          const requiredPlugin = require(plugin.resolve)
+          if (_.isFunction(requiredPlugin.mutateSource)) {
+            return requiredPlugin.mutateSource(
+              {
+                markdownNode,
+                files: fileNodes,
+                getNode,
+                reporter,
+                cache,
+              },
+              plugin.pluginOptions
+            )
+          } else {
+            return Promise.resolve()
+          }
+        })
+        const markdownAST = remark.parse(markdownNode.internal.content)
+
+        if (pathPrefix) {
+          // Ensure relative links include `pathPrefix`
+          visit(markdownAST, [`link`, `definition`], node => {
+            if (
+              node.url &&
+              node.url.startsWith(`/`) &&
+              !node.url.startsWith(`//`)
+            ) {
+              node.url = withPathPrefix(node.url, pathPrefix)
+            }
+          })
+        }
+
+        // source => parse (can order parsing for dependencies) => typegen
+        //
+        // source plugins identify nodes, provide id, initial parse, know
+        // when nodes are created/removed/deleted
+        // get passed cached DataTree and return list of clean and dirty nodes.
+        // Also get passed `dirtyNodes` function which they can call with an array
+        // of node ids which will then get re-parsed and the inferred schema
+        // recreated (if inferring schema gets too expensive, can also
+        // cache the schema until a query fails at which point recreate the
+        // schema).
+        //
+        // parse plugins take data from source nodes and extend it, never mutate
+        // it. Freeze all nodes once done so typegen plugins can't change it
+        // this lets us save off the DataTree at that point as well as create
+        // indexes.
+        //
+        // typegen plugins identify further types of data that should be lazily
+        // computed due to their expense, or are hard to infer graphql type
+        // (markdown ast), or are need user input in order to derive e.g.
+        // markdown headers or date fields.
+        //
+        // wrap all resolve functions to (a) auto-memoize and (b) cache to disk any
+        // resolve function that takes longer than ~10ms (do research on this
+        // e.g. how long reading/writing to cache takes), and (c) track which
+        // queries are based on which source nodes. Also if connection of what
+        // which are always rerun if their underlying nodes change..
+        //
+        // every node type in DataTree gets a schema type automatically.
+        // typegen plugins just modify the auto-generated types to add derived fields
+        // as well as computationally expensive fields.
+        if (process.env.NODE_ENV !== `production` || !fileNodes) {
+          fileNodes = getNodesByType(`File`)
+        }
+        // Use Bluebird's Promise function "each" to run remark plugins serially.
+        await Promise.each(pluginOptions.plugins, plugin => {
+          const requiredPlugin = require(plugin.resolve)
+          if (_.isFunction(requiredPlugin)) {
+            return requiredPlugin(
+              {
+                markdownAST,
+                markdownNode,
+                getNode,
+                files: fileNodes,
+                pathPrefix,
+                reporter,
+                cache,
+              },
+              plugin.pluginOptions
+            )
+          } else {
+            return Promise.resolve()
+          }
+        })
+        resolve(markdownAST)
+      })
     }
 
     async function getHeadings(markdownNode) {
@@ -346,6 +354,14 @@ module.exports = (
       },
     })
 
+    const ExcerptFormats = new GraphQLEnumType({
+      name: `ExcerptFormats`,
+      values: {
+        PLAIN: { value: `plain` },
+        HTML: { value: `html` },
+      },
+    })
+
     return resolve({
       html: {
         type: GraphQLString,
@@ -373,8 +389,58 @@ module.exports = (
             type: GraphQLBoolean,
             defaultValue: false,
           },
+          format: {
+            type: ExcerptFormats,
+            defaultValue: `plain`,
+          },
         },
-        resolve(markdownNode, { pruneLength, truncate }) {
+        async resolve(markdownNode, { format, pruneLength, truncate }) {
+          if (format === `html`) {
+            if (pluginOptions.excerpt_separator) {
+              const fullAST = await getHTMLAst(markdownNode)
+              const excerptAST = cloneTreeUntil(
+                fullAST,
+                ({ nextNode }) =>
+                  nextNode.type === `raw` &&
+                  nextNode.value === pluginOptions.excerpt_separator
+              )
+              return hastToHTML(excerptAST)
+            }
+            const fullAST = await getHTMLAst(markdownNode)
+            if (!fullAST.children.length) {
+              return ``
+            }
+
+            const excerptAST = cloneTreeUntil(fullAST, ({ root }) => {
+              const totalExcerptSoFar = getConcatenatedValue(root)
+              return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
+            })
+            const unprunedExcerpt = getConcatenatedValue(excerptAST)
+            if (!unprunedExcerpt) {
+              return ``
+            }
+
+            if (pruneLength && unprunedExcerpt.length < pruneLength) {
+              return hastToHTML(excerptAST)
+            }
+
+            const lastTextNode = findLastTextNode(excerptAST)
+            const amountToPruneLastNode =
+              pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
+            if (!truncate) {
+              lastTextNode.value = prune(
+                lastTextNode.value,
+                amountToPruneLastNode,
+                `…`
+              )
+            } else {
+              lastTextNode.value = _.truncate(lastTextNode.value, {
+                length: pruneLength,
+                omission: `…`,
+              })
+            }
+            return hastToHTML(excerptAST)
+          }
           if (markdownNode.excerpt) {
             return Promise.resolve(markdownNode.excerpt)
           }

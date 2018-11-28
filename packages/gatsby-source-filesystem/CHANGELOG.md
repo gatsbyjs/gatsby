@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.8...gatsby-source-filesystem@2.0.9) (2018-11-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-filesystem:** throw meaningful errors on bad inputs ([#10123](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/10123)) ([21ebf2c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/21ebf2c)), closes [#6643](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/6643)
+
 <a name="2.0.8"></a>
 
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.7...gatsby-source-filesystem@2.0.8) (2018-11-08)

@@ -3317,3 +3317,273 @@
     - Technology
     - Nonprofit
   featured: false
+- title: Patreon Blog
+  url: https://blog.patreon.com/
+  main_url: https://blog.patreon.com/
+  description: >-
+    Official blog of Patreon.com
+  categories:
+    - Blog
+  featured: false
+- title: Full Beaker
+  url: https://fullbeaker.com/
+  main_url: https://fullbeaker.com/
+  description: >-
+    Full Beaker provides independent advice online about careers and home ownership, and connect anyone who asks with companies that can help them.
+  categories:
+    - Consulting
+  featured: false
+- title: Citywide Holdup
+  url: https://citywideholdup.org/
+  main_url: https://citywideholdup.org/
+  source_url: https://github.com/killakam3084/citywide-site
+  description: >-
+    Citywide Holdup is an annual fundraising event held around early November in the city of Austin, TX hosted by the Texas Wranglers benefitting Easter Seals of Central Texas, a non-profit organization that provides exceptional services, education, outreach and advocacy so that people with disabilities can live, learn, work and play in our communities.
+  categories:
+    - Fundraising
+    - Nonprofit
+    - Event
+  built_by: Cameron Rison
+  built_by_url: https://github.com/killakam3084
+  featured: false
+- title: Dawn Labs
+  url: https://dawnlabs.io
+  main_url: https://dawnlabs.io
+  description: >-
+    Thoughtful products for inspired teams. With a holistic approach to engineering and design, we partner with startups and enterprises to build for the digital era.
+  categories:
+    - Technology
+    - Agency
+    - Web Development
+  featured: false
+- title: COOP by Ryder
+  url: https://coop.com/
+  main_url: https://coop.com/
+  description: >
+    COOP is a platform that connects fleet managers that have idle vehicles to businesses that are looking to rent vehicles. COOP simplifies the process and paperwork required to safely share vehicles between business owners.
+  categories:
+    - Marketing
+    - Asset Sharing
+  built_by: Crispin Porter Bogusky
+  built_by_url: http://www.cpbgroup.com/
+  featured: false
+- title: Domino's Paving for Pizza
+  url: https://www.pavingforpizza.com/
+  main_url: https://www.pavingforpizza.com/
+  description: >
+    Nominate your town for a chance to have your rough drive home from Domino's fixed to pizza perfection.
+  categories:
+    - Marketing
+  built_by: Crispin Porter Bogusky
+  built_by_url: http://www.cpbgroup.com/
+  featured: false
+- title: Propapanda
+  url: https://propapanda.eu/
+  main_url: https://propapanda.eu/
+  description: >
+    Is a creative production house based in Tallinn, Estonia. We produce music videos, commercials, films and campaigns – from scratch to finish.
+  categories:
+    - Cinema
+    - Video
+    - Portfolio
+    - Agency
+    - Media
+  built_by: Henry Kehlmann
+  built_by_url: https://github.com/madhenry/
+  featured: false
+- title: JAMstack.paris
+  url: https://jamstack.paris/
+  main_url: https://jamstack.paris/
+  source_url: https://github.com/JAMstack-paris/jamstack.paris
+  description: >
+    JAMstack-focused, bi-monthly meetup in Paris
+  categories:
+    - Web Development
+  built_by: Matthieu Auger & Nicolas Goutay
+  built_by_url: https://github.com/JAMstack-paris
+  featured: false
+- title: DexWallet - The only Wallet you need by Dexlab
+  main_url: "https://www.dexwallet.io/"
+  url: "https://www.dexwallet.io/"
+  source_url: "https://github.com/dexlab-io/DexWallet-website"
+  featured: false
+  description: >-
+    DexWallet is a secure, multi-chain, mobile wallet with an upcoming one-click exchange for mobile.
+  categories:
+    - Blockchain
+    - App
+    - Open Source
+    - React Native
+  built_by: DexLab
+  built_by_url: "https://github.com/dexlab-io"
+- title: Kings Valley Paving
+  url: https://kingsvalleypaving.com
+  main_url: https://kingsvalleypaving.com
+  description: >
+    Kings Valley Paving is an asphalt, paving and concrete company serving the commercial, residential and industrial sectors in the Greater Toronto Area.
+  categories:
+    - Marketing
+    - Construction
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
+- title: Peter Barrett
+  url: https://www.peterbarrett.ca
+  main_url: https://www.peterbarrett.ca
+  description: >
+    Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
+- title: NARCAN
+  main_url: https://www.narcan.com
+  url: https://www.narcan.com
+  description: >
+    NARCAN Nasal Spray is the first and only FDA-approved nasal form of naloxone for the emergency treatment of a known or suspected opioid overdose.
+  categories:
+    - Healthcare
+  built_by: NARCAN
+  built_by_url: https://www.narcan.com
+  featured: false
+- title: Ritual
+  main_url: https://ritual.com
+  url: https://ritual.com
+  description: >
+    Ritual started with a simple question, what exactly is in women's multivitamins? This is the story of what happened when our founder Kat started searching for answers — the story of Ritual.
+  categories:
+    - Healthcare
+  built_by: Ritual
+  built_by_url: https://ritual.com
+  featured: false
+- title: Truebill
+  main_url: https://www.truebill.com
+  url: https://www.truebill.com
+  description: >
+    Truebill empowers you to take control of your money.
+  categories:
+    - Finance
+  built_by: Truebill
+  built_by_url: https://www.truebill.com
+  featured: false
+- title: Smartling
+  main_url: https://www.smartling.com
+  url: https://www.smartling.com
+  description: >
+    Smartling enables you to automate, manage, and professionally translate content so that you can do more with less.
+  categories:
+    - Marketing
+  built_by: Smartling
+  built_by_url: https://www.smartling.com
+  featured: false
+- title: Clear
+  main_url: https://www.clearme.com
+  url: https://www.clearme.com
+  description: >
+    At clear, we’re working toward a future where you are your ID, enabling you to lead an unstoppable life.
+  categories:
+    - Security
+  built_by: Clear
+  built_by_url: https://www.clearme.com
+  featured: false
+- title: VS Code Rocks
+  main_url: "https://vscode.rocks"
+  url: "https://vscode.rocks"
+  source_url: "https://github.com/lannonbr/vscode-rocks"
+  featured: false
+  description: >
+    VS Code Rocks is a place for weekly news on the newest features and updates to Visual Studio Code as well as trending extensions and neat tricks to continually improve your VS Code skills.
+  categories:
+    - Open Source
+    - Blog
+    - Web Development
+  built_by: Benjamin Lannon
+  built_by_url: "https://github.com/lannonbr"
+- title: Particle
+  main_url: "https://www.particle.io"
+  url: "https://www.particle.io"
+  featured: false
+  description: Particle is a fully-integrated IoT platform that offers everything you need to deploy an IoT product.
+  categories:
+    - Marketing
+    - IOT
+- title: freeCodeCamp curriculum
+  main_url: "https://learn.freecodecamp.org"
+  url: "https://learn.freecodecamp.org"
+  featured: false
+  description: Learn to code with free online courses, programming projects, and interview preparation for developer jobs.
+  categories:
+    - Web Development
+    - Learning
+- title: Tandem
+  main_url: "https://tandem.co.uk"
+  url: "https://tandem.co.uk/the-app"
+  description: >
+    We're on a mission to free you of money misery. Our app, card and savings account are designed to help you spend less time worrying about money and more time enjoying life.
+  categories:
+    - Finance
+    - App
+  built_by: Tandem
+  built_by_url: https://github.com/tandembank
+  featured: false
+- title: Monbanquet.fr
+  main_url: "https://monbanquet.fr"
+  url: "https://monbanquet.fr"
+  description: >
+    Give your corporate events the food and quality it deserves, thanks to the know-how of the best local artisans.
+  categories:
+    - eCommerce
+    - Food
+    - Event
+  built_by: Monbanquet.fr
+  built_by_url: https://github.com/monbanquet
+  featured: false
+- title: The Leaky Cauldron Blog
+  url: https://theleakycauldronblog.com
+  main_url: https://theleakycauldronblog.com
+  source_url: https://github.com/v4iv/theleakycauldronblog
+  description: >
+    A Brew of Awesomeness with a Pinch of Magic...
+  categories:
+    - Blog
+  built_by: Vaibhav Sharma
+  built_by_url: https://github.com/v4iv
+  featured: false
+- title: Wild Drop Surf Camp
+  main_url: "https://wilddropsurfcamp.com"
+  url: "https://wilddropsurfcamp.com"
+  description: >
+    Welcome to Portugal's best kept secret and be amazed with our nature. Here you can explore, surf, taste the world's best gastronomy and wine, feel the North Canyon's power with the biggest waves in the world and so many other amazing things. Find us, discover yourself!
+  categories:
+    - Surf
+    - Tourism
+    - Travel
+  built_by: Samuel Fialho
+  built_by_url: https://samuelfialho.com
+  featured: false
+- title: JoinUp HR chatbot
+  url: https://www.joinup.io
+  main_url: https://www.joinup.io
+  description: Custom HR chatbot for better candidate experience
+  categories:
+    - App
+    - Chatbot
+    - HR
+    - Technology
+  featured: false
+- title: JDCastro Web Design & Development
+  main_url: https://jacobdcastro.com
+  url: https://jacobdcastro.com
+  source_url: https://github.com/jacobdcastro/personal-site
+  featured: false
+  description: >
+    A small business site for freelance web designer and developer Jacob D. Castro. Includes professional blog, contact forms, and soon-to-come portfolio of sites for clients. Need a new website or an extra developer to share the workload? Feel free to check out the website!
+  categories:
+    - Blog
+    - Portfolio
+    - Business
+    - Freelance
+  built_by: Jacob D. Castro
+  built_by_url: https://twitter.com/jacobdcastro
