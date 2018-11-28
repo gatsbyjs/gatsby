@@ -83,9 +83,11 @@ If you want to make more changes to the website functionality in documentation, 
 layout components or templates, add sections/pages, follow the steps for [contributing to the repo](#contributing-to-the-repo). You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
 a pull request.
 
-### Contributing to the starter showcase
+### Making changes to the starter library
 
-To develop on the starter showcase, you'll need to supply a GitHub personal access token.
+Note: You don't need to follow these steps to submit to the starter library. This is only necessary if you'd like to contribute to the functionality of the starter library. To submit a starter, [follow these steps instead](/docs/submit-to-starter-library/).
+
+To develop on the starter library, you'll need to supply a GitHub personal access token.
 
 1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
 2. In the new token's settings, grant that token the "public_repo" scope.
