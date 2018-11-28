@@ -1,6 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+
 import HomepageSection from "./homepage-section"
 import HomepageBlogPosts from "./homepage-blog-posts"
 
@@ -15,6 +17,7 @@ const HomepageBlog = ({ posts }) => (
       {
         label: `View all posts`,
         to: `/blog/`,
+        icon: ArrowForwardIcon,
       },
     ]}
   >
