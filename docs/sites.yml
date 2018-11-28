@@ -3573,3 +3573,17 @@
     - HR
     - Technology
   featured: false
+- title: JDCastro Web Design & Development
+  main_url: https://jacobdcastro.com
+  url: https://jacobdcastro.com
+  source_url: https://github.com/jacobdcastro/personal-site
+  featured: false
+  description: >
+    A small business site for freelance web designer and developer Jacob D. Castro. Includes professional blog, contact forms, and soon-to-come portfolio of sites for clients. Need a new website or an extra developer to share the workload? Feel free to check out the website!
+  categories:
+    - Blog
+    - Portfolio
+    - Business
+    - Freelance
+  built_by: Jacob D. Castro
+  built_by_url: https://twitter.com/jacobdcastro
