@@ -42,7 +42,7 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/plugins/">Plugins</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <a href="https://gatsbyjs.org/starters/">Starters</a>
   <span> · </span>
   <a href="https://gatsbyjs.org/showcase/">Showcase</a>
   <span> · </span>
@@ -83,6 +83,7 @@ Gatsby is a modern framework for blazing fast websites.
 - [Learning Gatsby](#-learning-gatsby)
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
+- [License](#memo-license)
 - [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
 
 ## 🚀 Get Up and Running in 5 Minutes
