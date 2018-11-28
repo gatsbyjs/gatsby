@@ -1,5 +1,6 @@
 /* globals window */
 import { hydrate } from "emotion"
+import { wrapElement } from "./wrap-element"
 
 exports.onClientEntry = () => {
   if (
@@ -9,3 +10,5 @@ exports.onClientEntry = () => {
     hydrate(window.__EMOTION_CRITICAL_CSS_IDS__)
   }
 }
+
+exports.wrapRootElement = ({ element }) => wrapElement(element)

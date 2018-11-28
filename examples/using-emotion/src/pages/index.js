@@ -1,7 +1,8 @@
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
-import styled, { css, injectGlobal } from "react-emotion"
-// You can import everything from "react-emotion"
+import styled from "@emotion/styled"
+import { injectGlobal } from "emotion"
+import { css } from "@emotion/core"
 
 // Emotion supports different styling options, all of which are supported by gatsby-plugin-emotion out of the box
 
@@ -52,11 +53,6 @@ const title = css`
   }
 `
 
-// Using css with object
-const subtitle = css({
-  color: `#bd93f9`,
-})
-
 const IndexPage = () => (
   <Fragment>
     <Helmet>
@@ -65,12 +61,16 @@ const IndexPage = () => (
       <meta name="referrer" content="origin" />
     </Helmet>
     <Wrapper>
-      <h1 className={title}>
+      <h1 css={title}>
         Hello World, this is my first component styled with
         {` `}
         <a href="https://emotion.sh/">emotion</a>!
       </h1>
-      <p className={subtitle}>
+      <p
+        css={css({
+          color: `#bd93f9`,
+        })}
+      >
         <a
           href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/"
           // Styling “inline” with css prop
