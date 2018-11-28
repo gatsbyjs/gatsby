@@ -3563,3 +3563,13 @@
   built_by: Samuel Fialho
   built_by_url: https://samuelfialho.com
   featured: false
+- title: JoinUp HR chatbot
+  url: https://www.joinup.io
+  main_url: https://www.joinup.io
+  description: Custom HR chatbot for better candidate experience
+  categories:
+    - App
+    - Chatbot
+    - HR
+    - Technology
+  featured: false
