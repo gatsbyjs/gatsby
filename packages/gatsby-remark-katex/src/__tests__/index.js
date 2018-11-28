@@ -43,14 +43,14 @@ describe(`remark katex plugin`, () => {
     const exitMock = jest.fn()
     global.process = { ...realProcess, exit: exitMock }
 
-    for (let parserPlugins of plugin.setParserPlugins()) {
-      remark = remark.use(parserPlugins)
-    }
-    process.env.gatsby_executing_command = `develop`
-    const markdownAST = remark.parse(equation)
-    plugin({ markdownAST, reporter })
-
-    expect(exitMock).not.toHaveBeenCalledWith(1)
+    expect(() => {
+      for (let parserPlugins of plugin.setParserPlugins()) {
+        remark = remark.use(parserPlugins)
+      }
+      process.env.gatsby_executing_command = `develop`
+      const markdownAST = remark.parse(equation)
+      plugin({ markdownAST, reporter })
+    }).not.toThrow()
     global.process = realProcess
   })
 
@@ -61,14 +61,14 @@ describe(`remark katex plugin`, () => {
     const exitMock = jest.fn()
     global.process = { ...realProcess, exit: exitMock }
 
-    for (let parserPlugins of plugin.setParserPlugins()) {
-      remark = remark.use(parserPlugins)
-    }
-    process.env.gatsby_executing_command = `build`
-    const markdownAST = remark.parse(equation)
-    plugin({ markdownAST, reporter })
-
-    expect(exitMock).toHaveBeenCalledWith(1)
+    expect(() => {
+      for (let parserPlugins of plugin.setParserPlugins()) {
+        remark = remark.use(parserPlugins)
+      }
+      process.env.gatsby_executing_command = `build`
+      const markdownAST = remark.parse(equation)
+      plugin({ markdownAST, reporter })
+    }).toThrow()
     global.process = realProcess
   })
 })
