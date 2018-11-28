@@ -29,7 +29,7 @@ const isEmptyObjectOrArray = (obj: any): boolean => {
       if (!isDefined(value)) {
         return true
       } else if (_.isObject(value)) {
-        return isEmptyObjectOrArray(value)
+        return isEmptyObjectOrArray(_.flatten(value))
       } else {
         return false
       }
