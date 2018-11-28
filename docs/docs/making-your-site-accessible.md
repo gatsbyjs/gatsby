@@ -2,22 +2,24 @@
 title: "Making your site accessible"
 ---
 
-## What is accessibility ?
+## What is accessibility?
 
-Back in the early days of the Web, Tim Berners-Lee, inventor of the World Wide Web, said:
+Back in the early days of the Web, Tim Berners-Lee, inventor of the World Wide Web, [said](https://www.w3.org/Press/IPO-announce):
 
 > "The power of the Web is in its universality.
 > Access by everyone regardless of disability is an essential aspect."
 
-The web of today is an important resource in many aspects of life such as health care, education, or commerce. Accessibility is a topic you definitely want to address when building your site.
+The web of today is an important resource in many aspects of life such as health care, education, or commerce. Accessibility is an important consideration when building for the web.
 
-Web Accessibility means that sites are designed and developed so that people with disabilities can use them. But not only people with permanent disabilities benefit from it. Accessibility also benefits people with temporary disabilities. For example imagine being in a environment where you cannot listen to audio or if you had a broken arm.
+[Web accessibility](https://www.w3.org/WAI/fundamentals/accessibility-intro/#what) means that websites, tools, and technologies are designed and developed so that people with disabilities can use them. But not only people with permanent disabilities benefit from it. Accessibility also benefits people with temporary disabilities. For example imagine being in a environment where you cannot listen to audio or if you had a broken arm.
 
-From a human point of view, you want to be inclusive with every kind of people. Your conditions should not be a barrier.
+Accessibility [supports](https://www.w3.org/standards/webdesign/accessibility#case) social inclusion for everyone, and has a strong business case.
 
-From a business point of view, you want the highest amount of people using your products and services.
+## Gatsby helps build in accessibility
 
-## Gatsby supports accessibility
+While ultimately it's up to you to develop your site with accessibility in mind, Gatsby aims to provide as much out-of-the-box support as possible.
+
+### Accessible routing
 
 One of the most common features of every site is navigation. People should be able to navigate across your pages and content in an intuitive and accessible way.
 
@@ -27,8 +29,10 @@ It is possible thanks to [@reach/router](https://reach.tech/router), a routing l
 
 Since the [second major release](https://www.gatsbyjs.org/blog/2018-09-17-gatsby-v2/), your Gatsby sites use `@reach/router` under the hood. The [Gatsby Link Component](https://www.gatsbyjs.org/docs/gatsby-link/) wraps [@reach/router's Link component](https://reach.tech/router/api/Link), so you don't need to think about it.
 
-Accessibility by default is a win for everyone. Gatsby wants to help you making accessible sites.
-
 ## How to improve accessibility?
 
-Work in progress, please check this page in the future.
+Accessibility by default is a win for everyone. Learn more about web accessibility in general:
+
+- [Free course](https://www.udacity.com/course/web-accessibility--ud891) by Google and Udacity.
+- [WebAIM introduction](https://webaim.org/intro/) to web accessibility.
+
