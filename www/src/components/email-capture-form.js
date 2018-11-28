@@ -13,7 +13,7 @@ const StyledForm = styled(`form`)`
   margin: 0;
 
   ${presets.Desktop} {
-    display: flex;
+    display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
 
@@ -166,7 +166,7 @@ class Form extends React.Component {
       : SingleLineInput
 
     return (
-      <StyledForm onSubmit={this.onSubmit}>
+      <StyledForm onSubmit={this.onSubmit} isHomepage={isHomepage}>
         {!isHomepage && (
           <Label isRequired htmlFor="email">
             Email
