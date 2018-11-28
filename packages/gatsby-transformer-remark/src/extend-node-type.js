@@ -117,11 +117,11 @@ module.exports = (
         // We are already generating AST, so let's wait for it
         return await ASTPromiseMap.get(cacheKey)
       } else {
-        const ASTGenerationPromise = new Promise(async resolve => {
+        const ASTGenerationPromise = new Promise(async (resolve, reject) => {
           if (process.env.NODE_ENV !== `production` || !fileNodes) {
             fileNodes = getNodesByType(`File`)
           }
-          const ast = await new Promise((resolve, reject) => {
+          const ast = await new Promise(resolve => {
             // Use Bluebird's Promise function "each" to run remark plugins serially.
             Promise.each(pluginOptions.plugins, plugin => {
               const requiredPlugin = require(plugin.resolve)
@@ -207,12 +207,15 @@ module.exports = (
                 } else {
                   return Promise.resolve()
                 }
-              }).then(() => {
-                resolve(markdownAST)
               })
+                .then(() => {
+                  resolve(markdownAST)
+                })
+                .catch(e => {
+                  reject(e)
+                })
             })
           })
-
           // Save new AST to cache and return
           cache.set(cacheKey, ast)
           // We can now release promise, as we cached result
