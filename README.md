@@ -101,6 +101,16 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     # create a new Gatsby site using the default starter
     gatsby new my-blazing-fast-site
     ```
+    or
+
+    ```sh
+    # install the Gatsby CLI globally
+    yarn global add gatsby-cli
+
+    # create a new Gatsby site using the default starter
+    gatsby new my-blazing-fast-site
+    ```
+    **Note :** if you are on a mac or a linux system, `sudo` might be required to install `gatsby-cli`.
 
 2.  **Start the site in `develop` mode.**
 
