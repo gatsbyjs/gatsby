@@ -3587,3 +3587,27 @@
     - Freelance
   built_by: Jacob D. Castro
   built_by_url: https://twitter.com/jacobdcastro
+- title: Gatsby Tutorials
+  main_url: https://www.gatsbytutorials.com
+  url: https://www.gatsbytutorials.com
+  source_url: https://github.com/ooloth/gatsby-tutorials
+  featured: false
+  description: >
+    Gatsby Tutorials is a community-updated list of video, audio and written tutorials to help you learn GatsbyJS.
+  categories:
+    - Web Development
+    - Education
+    - Open Source
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+- title: Up & Running Tutorials
+  main_url: https://www.upandrunningtutorials.com
+  url: https://www.upandrunningtutorials.com
+  featured: false
+  description: >
+    Free coding tutorials for web developers. Get your web development career up and running by learning to build better, faster websites.
+  categories:
+    - Web Development
+    - Education
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
