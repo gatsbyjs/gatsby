@@ -93,9 +93,40 @@ render () {
 }
 ```
 
-You can also pass state to pages when you navigate e.g. `navigate("/a-path/", { state: { pleasant: "reasonably" }}`
-
 Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2.
+
+## Passing state through Link and Navigate
+
+You can pass state to pages when you navigate, such as:
+
+```javascript
+navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
+```
+
+You can also pass state to pages when you use `Link`:
+
+```jsx
+<Link
+  to="/another-page/"
+  activeStyle={{
+    color: "red",
+  }}
+  state={{
+    pleasant: "reasonably",
+  }}
+>
+```
+
+This is accessible from the `location` object on the new page:
+
+```javascript
+componentDidMount() {
+  const pleasant = this.props.location.state.pleasant
+  this.setState({
+    pleasant: pleasant
+  })
+}
+```
 
 ## Prefixed paths helper
 
