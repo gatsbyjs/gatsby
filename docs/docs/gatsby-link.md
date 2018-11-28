@@ -105,15 +105,15 @@ navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
 
 You can also pass state to pages when you use `Link`:
 
-```javascript
+```jsx
 <Link
-           to="/another-page/"
-           activeStyle={{
-             color: "red",
-           }}
-           state={{
-             pleasant: "reasonably",
-           }}
+  to="/another-page/"
+  activeStyle={{
+    color: "red",
+  }}
+  state={{
+    pleasant: "reasonably",
+  }}
 >
 ```
 
