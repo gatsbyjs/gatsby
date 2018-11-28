@@ -1,9 +1,3 @@
-jest.mock(`gatsby-cli/lib/reporter`, () => {
-  return {
-    panicOnBuild: jest.fn(),
-  }
-})
-
 const Remark = require(`remark`)
 const plugin = require(`../index`)
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -42,14 +36,39 @@ describe(`remark katex plugin`, () => {
     expect(markdownAST).toMatchSnapshot()
   })
 
-  it(`panics on build if there's an error when parsing maths`, () => {
+  it(`doesn't crash when there's an error in development mode`, () => {
     const equation = `$a^2 + b^2 = c^$`
     let remark = new Remark()
+    const realProcess = process
+    const exitMock = jest.fn()
+    global.process = { ...realProcess, exit: exitMock }
+
     for (let parserPlugins of plugin.setParserPlugins()) {
       remark = remark.use(parserPlugins)
     }
+    process.env.gatsby_executing_command = `develop`
     const markdownAST = remark.parse(equation)
     plugin({ markdownAST, reporter })
-    expect(reporter.panicOnBuild.mock.calls.length).toBe(1)
+
+    expect(exitMock).not.toHaveBeenCalledWith(1)
+    global.process = realProcess
+  })
+
+  it(`crashes when there's an error in build mode`, () => {
+    const equation = `$a^2 + b^2 = c^$`
+    let remark = new Remark()
+    const realProcess = process
+    const exitMock = jest.fn()
+    global.process = { ...realProcess, exit: exitMock }
+
+    for (let parserPlugins of plugin.setParserPlugins()) {
+      remark = remark.use(parserPlugins)
+    }
+    process.env.gatsby_executing_command = `build`
+    const markdownAST = remark.parse(equation)
+    plugin({ markdownAST, reporter })
+
+    expect(exitMock).toHaveBeenCalledWith(1)
+    global.process = realProcess
   })
 })
