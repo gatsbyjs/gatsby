@@ -17,7 +17,7 @@ const reportConflict = (selector, examples) => {
     const { value, type, parent } = example
     const node = getParentNode(parent)
     const ancestor = findAncestorNode(node, node => node.internal.description)
-    const { description } = ancestor.internal
+    const { description } = ancestor ? ancestor.internal : {}
     conflict.set(type, { value, description })
   })
 }
