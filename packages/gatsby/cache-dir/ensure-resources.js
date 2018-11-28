@@ -16,7 +16,6 @@ class EnsureResources extends React.Component {
     this.state = {
       location: { ...location },
       pageResources: loader.getResourcesForPathnameSync(location.pathname),
-      staticHTML: document.getElementById(`___gatsby`).innerHTML,
     }
   }
 
@@ -134,8 +133,10 @@ class EnsureResources extends React.Component {
   }
 
   render() {
+    // TODO: find a nicer way to do this (e.g. React Suspense)
     if (this.shouldRenderStaticHTML()) {
-      return <div dangerouslySetInnerHTML={{ __html: this.state.staticHTML }} />
+      const __html = document.getElementById(`___gatsby`).innerHTML
+      return <div dangerouslySetInnerHTML={{ __html }} />
     } else {
       return this.props.children(this.state)
     }
