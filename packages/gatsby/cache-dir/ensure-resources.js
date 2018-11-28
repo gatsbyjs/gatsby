@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import loader from "./loader"
 import shallowCompare from "shallow-compare"
-import { getRedirectUrl } from "./load-directly-or-404"
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -94,15 +93,19 @@ class EnsureResources extends React.Component {
   }
 
   render() {
+    // This should only occur if the network is offline, or if the
+    // path is nonexistent and there's no custom 404 page.
     if (
       process.env.NODE_ENV === `production` &&
       !(this.state.pageResources && this.state.pageResources.json)
     ) {
-      // This should only occur if there's no custom 404 page
-      const url = getRedirectUrl(this.state.location.href)
-      if (url) {
-        window.location.replace(url)
-      }
+      // Do this, rather than simply `window.location.reload()`, so that
+      // pressing the back/forward buttons work - otherwise Reach Router will
+      // try to handle back/forward navigation, causing the URL to change but
+      // the page displayed to stay the same.
+      const originalUrl = new URL(location.href)
+      window.history.replaceState({}, `404`, `${location.pathname}?gatsby-404`)
+      window.location.replace(originalUrl)
 
       return null
     }

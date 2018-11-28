@@ -1,23 +1,12 @@
 exports.registerServiceWorker = () => true
 
-let swNotInstalled = true
 const prefetchedPathnames = []
-
-exports.onPostPrefetchPathname = ({ pathname }) => {
-  // if SW is not installed, we need to record any prefetches
-  // that happen so we can then add them to SW cache once installed
-  if (swNotInstalled && `serviceWorker` in navigator) {
-    prefetchedPathnames.push(pathname)
-  }
-}
+const whitelistedPathnames = []
 
 exports.onServiceWorkerActive = ({
   getResourceURLsForPathname,
   serviceWorker,
 }) => {
-  // stop recording prefetch events
-  swNotInstalled = false
-
   // grab nodes from head of document
   const nodes = document.querySelectorAll(`
     head > script[src],
@@ -51,4 +40,40 @@ exports.onServiceWorkerActive = ({
 
     document.head.appendChild(link)
   })
+
+  serviceWorker.active.postMessage({
+    gatsbyApi: `whitelistPathnames`,
+    pathnames: whitelistedPathnames,
+  })
+}
+
+function whitelistPathname(pathname, includesPrefix) {
+  if (`serviceWorker` in navigator) {
+    const { serviceWorker } = navigator
+
+    if (serviceWorker.controller !== null) {
+      serviceWorker.controller.postMessage({
+        gatsbyApi: `whitelistPathnames`,
+        pathnames: [{ pathname, includesPrefix }],
+      })
+    } else {
+      whitelistedPathnames.push({ pathname, includesPrefix })
+    }
+  }
+}
+
+exports.onPostPrefetchPathname = ({ pathname }) => {
+  whitelistPathname(pathname, false)
+
+  // if SW is not installed, we need to record any prefetches
+  // that happen so we can then add them to SW cache once installed
+  if (
+    `serviceWorker` in navigator &&
+    !(
+      navigator.serviceWorker.controller !== null &&
+      navigator.serviceWorker.controller.state === `activated`
+    )
+  ) {
+    prefetchedPathnames.push(pathname)
+  }
 }

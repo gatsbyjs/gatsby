@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.1.0"></a>
+
+# [3.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.0.3...gatsby-remark-prismjs@3.1.0) (2018-11-26)
+
+### Features
+
+- **gatsby-remark-prismjs:** add in ability to use comments to specify line highlighting ([#9696](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/9696)) ([11e1834](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/11e1834))
+
 <a name="3.0.3"></a>
 
 ## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.0.2...gatsby-remark-prismjs@3.0.3) (2018-10-29)

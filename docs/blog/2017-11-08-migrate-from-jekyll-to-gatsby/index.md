@@ -84,7 +84,7 @@ filename: 2017-05-09-introducing-tomeito.md
 /app/macos/vuejs/electron/2017/05/09/introducing-tomeito/
 ```
 
-How did I create it? Inside my `gastby-node.js` I used the `onCreateNode`
+How did I create it? Inside my `gatsby-node.js` I used the `onCreateNode`
 extension API to tweak the slug:
 
 ```js

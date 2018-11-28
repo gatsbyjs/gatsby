@@ -68,7 +68,7 @@ This is a separate bundle for each page. The mechanics for how these are split o
 
 ## production-app.js
 
-This is the entrypoint to webpack that outputs `app-[contenthash].js` bundle. It is responsible for nagivation and page loading once the initial HTML has been loaded.
+This is the entrypoint to webpack that outputs `app-[contenthash].js` bundle. It is responsible for navigation and page loading once the initial HTML has been loaded.
 
 ### First load
 

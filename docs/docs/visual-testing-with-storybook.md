@@ -26,7 +26,7 @@ sb init
 
 > Note that if you're running a recent version of `npm` (5.2.0+) you can run the following single command instead: `npx -p @storybook/cli sb init`, which is the recommended method by Storybook. This doesn't install the CLI on your machine, thereby ensuring you're always running the latest version of the CLI.
 
-The `sb init` command boostraps the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
+The `sb init` command bootstraps the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
 
 To update your Storybook config open `.storybook/config.js` and add the following before the `configure` method at the bottom of the file.
 
@@ -53,7 +53,7 @@ Create a new file called `webpack.config.js` in the `.storybook` folder created 
 
 ```js
 module.exports = (baseConfig, env, defaultConfig) => {
-  // Transpile Gatsby module because Gastby includes un-transpiled ES6 code.
+  // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
   defaultConfig.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
 
   // use installed babel-loader which is v8.0-beta (which is meant to work with @babel/core@7)
@@ -101,7 +101,7 @@ storiesOf(`Dashboard/Header`, module).add(`default`, () => (
 ))
 ```
 
-This is a very simple story without much going on, but honestly, nothing else really changes as related to Gastby. If you want to learn more about how Storybook works and what you can do with it, check out some of the resources listed below.
+This is a very simple story without much going on, but honestly, nothing else really changes as related to Gatsby. If you want to learn more about how Storybook works and what you can do with it, check out some of the resources listed below.
 
 ## Other resources
 
