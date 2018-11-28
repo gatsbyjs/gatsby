@@ -7,7 +7,6 @@ module.exports = ({ markdownAST }) => {
     node.type = `html`
     node.value = katex.renderToString(node.value, {
       displayMode: false,
-      throwOnError: false,
     })
   })
 
@@ -15,7 +14,6 @@ module.exports = ({ markdownAST }) => {
     node.type = `html`
     node.value = katex.renderToString(node.value, {
       displayMode: true,
-      throwOnError: false,
     })
   })
 }
