@@ -93,8 +93,6 @@ render () {
 }
 ```
 
-
-
 Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2.
 
 ## Passing state through Link and Navigate
@@ -104,7 +102,6 @@ You can pass state to pages when you navigate, such as:
 ```javascript
 navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
 ```
-
 
 You can also pass state to pages when you use `Link`:
 
@@ -130,7 +127,6 @@ componentDidMount() {
   })
 }
 ```
-
 
 ## Prefixed paths helper
 
