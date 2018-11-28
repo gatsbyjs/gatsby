@@ -5,9 +5,9 @@ import styled from "react-emotion"
 const PullquoteRoot = styled(`blockquote`)`
   background: gray;
   border: 0;
-  margin: 2rem 0 3rem;
   padding: 1em;
 
+  /* override typography.js style "p *:last-child {"" */
   p > & {
     margin: 2rem 0;
   }
