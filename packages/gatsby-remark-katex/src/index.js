@@ -2,29 +2,21 @@ const visit = require(`unist-util-visit`)
 const katex = require(`katex`)
 const remarkMath = require(`remark-math`)
 
-module.exports = ({ markdownAST, reporter }) => {
+module.exports = ({ markdownAST }) => {
   visit(markdownAST, `inlineMath`, node => {
     node.type = `html`
-
-    try {
-      node.value = katex.renderToString(node.value, {
-        displayMode: false,
-      })
-    } catch (err) {
-      reporter.panicOnBuild(`KaTeX rendering error: ${err.message}`)
-    }
+    node.value = katex.renderToString(node.value, {
+      displayMode: false,
+      throwOnError: false,
+    })
   })
 
   visit(markdownAST, `math`, node => {
     node.type = `html`
-
-    try {
-      node.value = katex.renderToString(node.value, {
-        displayMode: true,
-      })
-    } catch (err) {
-      reporter.panicOnBuild(`KaTeX rendering error: ${err.message}`)
-    }
+    node.value = katex.renderToString(node.value, {
+      displayMode: true,
+      throwOnError: false,
+    })
   })
 }
 
