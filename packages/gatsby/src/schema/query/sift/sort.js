@@ -36,32 +36,3 @@ const sort = ({ fields = [`id`], order } = {}) => {
 }
 
 module.exports = sort
-
-// TODO:
-// const compare = (a, b) => {
-//   let result
-//   let i = -1
-//   let length = fields.length
-//   while (++i < length) {
-//     const sortField = fields[i]
-//     const firstValue = getValueAtSelector(a, sortField)
-//     const secondValue = getValueAtSelector(b, sortField)
-//     result = compareValues(firstValue, secondValue)
-//     if (result) break
-//   }
-//   return result * reverse
-// }
-// return compare
-
-// const compare = (a, b) => {
-//   let result = 0
-//   fields.some(
-//     field =>
-//       (result = compareValues(
-//         getValueAtSelector(a, field),
-//         getValueAtSelector(b, field)
-//       ))
-//   )
-//   return result * reverse
-// }
-// return compare

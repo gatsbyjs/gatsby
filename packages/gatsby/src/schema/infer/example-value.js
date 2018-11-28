@@ -1,11 +1,3 @@
-// TODO:
-// clearTypeExampleValues/clearConflicts ???
-// ___NODE fields
-// caching
-// ignoreFields
-// FIXME: Currently, mix of `date` and `string` is not handled:
-// should this be handled explicitly with typeDef?
-
 const { reportConflict } = require(`./type-conflict-reporter`)
 const {
   createSelector,
@@ -49,7 +41,7 @@ const getExampleObject = (nodes, prefix) => {
       .map(node => {
         const value = node[key]
         const type = getType(value)
-        return type && { value, type, parent: node } // FIXME: && value != null?
+        return type && { value, type, parent: node }
       })
       .filter(Boolean)
 
@@ -79,18 +71,13 @@ const getExampleObject = (nodes, prefix) => {
           let arrays = arrayWrappers - 1
           while (arrays--) value = value[0]
         }
-        // TODO: return Object.keys(value).length ? acc.concat(value) : acc
-        // and then below only check objects.length
         return acc.concat(value)
       }, [])
-      // if (!objects.length) return acc
-      // exampleFieldValue = getExampleObject(objects);
       const exampleObject = getExampleObject(objects, selector)
       if (!Object.keys(exampleObject).length) return acc
       exampleFieldValue = exampleObject
     } else {
       // TODO: prefer float! or do it in inferType?
-      // TODO: Can value be null?
       exampleFieldValue = value
     }
     while (arrayWrappers--) {
@@ -104,7 +91,6 @@ const getExampleObject = (nodes, prefix) => {
   return exampleValue
 }
 
-// TODO: cache hit when?
 // const cache = new Map()
 
 const getExampleValue = ({ nodes, typeName }) => {

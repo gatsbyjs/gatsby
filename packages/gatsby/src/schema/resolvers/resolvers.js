@@ -5,14 +5,7 @@ const getNodesForQuery = require(`./get-nodes-for-query`)
 const withPageDependencies = require(`./page-dependencies`)
 const withSpecialCases = require(`./special-cases`)
 
-// FIXME: findById(), findByIds() and link() all need to take care of not resolving
-// a linked field twice. Should this be abstracted? I.e. with the stuff that's now in getById
-
 // FIXME: Handle array of arrays
-// Maybe TODO: should we check fieldValue *and* info.returnType?
-// Also rethink if this covers all scenarios we want to support?
-// TODO: Currently, `link` is called with `(findOne||findMany)(type)`
-// as resolver. Should this be figured out here (i.e. with `info.returnType`)?
 const link = ({ by }) => resolve => (source, args, context, info) => {
   const fieldValue = source[info.fieldName]
 
@@ -41,12 +34,7 @@ const findByIds = () => ({ args }) =>
   Array.isArray(args.ids) ? args.ids.map(getById).filter(Boolean) : []
 
 // TODO: Should we merge this with `findByIds`?
-// Or: how much slower is using
-// `findMany(type)({ args: { id: oneOf(source.children) } })`
-// in the child/children resolvers?
 // Or: Split in `findChildOfType` and `findChildrenOfType`,
-// to avoid `firstResultOnly` (also in withPageDependencies)?
-// FIXME: Avoid `type` closure
 const findByIdsAndType = type => ({ args }, firstResultOnly) =>
   Array.isArray(args.ids)
     ? args.ids

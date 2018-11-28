@@ -59,7 +59,6 @@ const buildSchema = async () => {
 const updateSchema = async () => {
   // Schema is updated during bootstrap for SitePage.
   // @see https://github.com/gatsbyjs/gatsby/issues/2685#issuecomment-340645874
-  // Avoid regenerating everything.
   // FIXME: What else must be updated?
   addInferredType(`SitePage`)
   return getSchema()

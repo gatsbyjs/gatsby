@@ -1,15 +1,3 @@
-// TODO:
-// Nodes in the store don't have fields which are
-// - added in `setFieldsOnGraphQLNodeType`
-// - added in `@link` directive.
-// Therefore we need to resolve those fields so they are
-// available for querying.
-// FIXME: Can't we do this just *once* during bootstrap,
-// i.e. resolve all fields and save them to the store?
-// And with LokiJS, can we do proper foreign keys and views?
-
-// FIXME: rename gqField, gqFields, gqType
-
 const { schemaComposer } = require(`graphql-compose`)
 
 // const { store } = require(`../../redux`)
@@ -41,19 +29,8 @@ const dropTypeModifiers = type => {
 }
 
 const prepareForQuery = (node, filter, gqFields) => {
-  // FIXME: Make this a .map() and resolve with Promise.all.
-  // .reduce() works sequentially: must resolve `acc` before the next iteration
-  // Promise.all(
-  //   Object.entries(filter)
-  //     .map(async ([filterName, filterValue]) => {
-  //       // ...
-  //       return result && [filterName, result]
-  //     })
-  //     .filter(Boolean)
-  // ).then(fields =>
-  //   fields.reduce((acc, [key, value]) => (acc[key] = value) && acc, node)
-  // )
-
+  // FIXME: Make this a .map() and resolve with Promise.all,
+  // since .reduce() must sequentially resolve `acc` before the next iteration
   const queryNode = Object.entries(filter).reduce(
     async (acc, [filterName, filterValue]) => {
       const node = await acc
@@ -68,13 +45,11 @@ const prepareForQuery = (node, filter, gqFields) => {
           {
             fieldName: gqField.name, // filterName,
             parentType: ``, // TODO: Not important, but maybe return correct type
-            // returnType, // TODO:
+            // returnType,
           }
         )
       }
 
-      // TODO: Is array of array handled correctly?
-      // TODO: isObject(filterValue)
       if (typeof filterValue === `object` && node[filterName] != null) {
         const gqFields = gqType.getFields()
         if (Array.isArray(node[filterName])) {
@@ -83,7 +58,7 @@ const prepareForQuery = (node, filter, gqFields) => {
               prepareForQuery(item, filterValue, gqFields)
             )
           )
-          // .filter(n => n != null) // TODO:
+          // .filter(n => n != null)
         } else {
           node[filterName] = await prepareForQuery(
             node[filterName],
@@ -118,7 +93,6 @@ const getNodesForQuery = async (type, filter) => {
     .getType()
     .getFields()
 
-  // Should we do it the other way around, i.e. queryNodes = filter.reduce?
   const queryNodes = Promise.all(
     nodes.map(async node => {
       const cacheKey = JSON.stringify({
@@ -130,14 +104,7 @@ const getNodesForQuery = async (type, filter) => {
         return nodeCache.get(cacheKey)
       }
 
-      const queryNode = prepareForQuery(
-        // FIXME: Shallow copy the node, to avoid mutating the nodes in the store.
-        // Possible alternative: start reducing not from node, but from {}, and copy fields
-        // when no resolver.
-        { ...node },
-        filterFields,
-        gqFields
-      )
+      const queryNode = prepareForQuery({ ...node }, filterFields, gqFields)
 
       nodeCache.set(cacheKey, queryNode)
       trackObjects(await queryNode)
