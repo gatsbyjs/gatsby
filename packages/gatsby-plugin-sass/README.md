@@ -28,7 +28,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      implementation: "dart-sass",
+      implementation: require("sass"),
     },
   },
 ]
