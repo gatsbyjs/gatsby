@@ -37,9 +37,11 @@ exports.sourceNodes = ({ actions: { createNode } }) => {
         id,
         parent: null,
         children: [],
+        custom: {
+          nestedId: id,
+        },
         internal: {
           type: typeName,
-          nestedId: id,
           content: faker.lorem.word(),
           contentDigest: step.toString(),
         },
@@ -68,7 +70,7 @@ export default ({ data }) => {
 
 export const query = graphql\`
   query($id: String!) {
-    ${lowerTypeName}(internal: { nestedId: { eq: $id } }) {
+    ${lowerTypeName}(filter: { custom: { nestedId: { eq: $id } } }) {
       id
     }
   }
@@ -79,12 +81,8 @@ export const query = graphql\`
 function allTypeQuery(typeName) {
   return `
 {
-  all${typeName}(sort: { fields: [id] }) {
-    edges {
-      node {
-        id
-      }
-    }
+  all${typeName}(sort: { fields: [ID] }) {
+    id
   }
 }
 `
@@ -97,8 +95,7 @@ async function createTypePages({ graphql, actions }, typeName) {
   const templateFilename = `./.cache/${typeName}Template.js`
   fs.writeFileSync(templateFilename, templateSrc)
   let result = await graphql(allTypeQuery(typeName))
-  _.forEach(result.data[`all${typeName}`].edges, edge => {
-    const { node } = edge
+  _.forEach(result.data[`all${typeName}`], node => {
     actions.createPage({
       path: `/${typeName}/${node.id}/`,
       component: require.resolve(templateFilename),
