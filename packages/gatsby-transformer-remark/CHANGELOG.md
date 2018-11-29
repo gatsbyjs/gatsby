@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.14"></a>
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.13...gatsby-transformer-remark@2.1.14) (2018-11-29)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** properly bubble up errors thrown in subplugins ([#9972](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/9972)) ([b7d4656](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/b7d4656))
+
 <a name="2.1.13"></a>
 
 ## [2.1.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.12...gatsby-transformer-remark@2.1.13) (2018-11-27)

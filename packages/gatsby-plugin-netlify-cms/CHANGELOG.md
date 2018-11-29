@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.9"></a>
+
+## [3.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.8...gatsby-plugin-netlify-cms@3.0.9) (2018-11-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** dynamically import netlify-identity-widget ([#9565](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/9565)) ([49100e9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/49100e9))
+
 <a name="3.0.8"></a>
 
 ## [3.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.7...gatsby-plugin-netlify-cms@3.0.8) (2018-11-27)
