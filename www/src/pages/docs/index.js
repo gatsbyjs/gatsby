@@ -83,7 +83,7 @@ class IndexRoute extends React.Component {
               Running <code>gatsby new</code> installs the default Gatsby
               starter. There are
               {` `}
-              <Link to="/docs/gatsby-starters/">
+              <Link to="/starters/">
                 many other official and community starters
               </Link>
               {` `}

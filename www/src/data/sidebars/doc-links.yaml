@@ -43,7 +43,7 @@
       items:
         - title: Babel.js
           link: /docs/babel/
-        - title: Babel plugin macros*
+        - title: Babel plugin macros
           link: /docs/babel-plugin-macros/
         - title: Custom webpack config
           link: /docs/add-custom-webpack-config/
@@ -218,10 +218,12 @@
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Adding pagination
           link: /docs/adding-pagination/
-        - title: Creating a sitemap*
+        - title: Creating a sitemap
           link: /docs/creating-a-sitemap/
         - title: Linking between pages
           link: /docs/linking-between-pages/
+        - title: Making your site accessible
+          link: /docs/making-your-site-accessible
         - title: Routing
           link: /docs/routing/
           items:

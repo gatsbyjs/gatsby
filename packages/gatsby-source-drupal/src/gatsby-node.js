@@ -14,7 +14,7 @@ const createContentDigest = obj =>
 
 exports.sourceNodes = async (
   { actions, getNode, hasNodeChanged, store, cache, createNodeId },
-  { baseUrl, apiBase }
+  { baseUrl, apiBase, basicAuth }
 ) => {
   const { createNode } = actions
 
@@ -40,7 +40,7 @@ exports.sourceNodes = async (
   // .lastFetched
   // }
 
-  const data = await axios.get(`${baseUrl}/${apiBase}`)
+  const data = await axios.get(`${baseUrl}/${apiBase}`, { auth: basicAuth })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
@@ -54,7 +54,7 @@ exports.sourceNodes = async (
 
         let d
         try {
-          d = await axios.get(url)
+          d = await axios.get(url, { auth: basicAuth })
         } catch (error) {
           if (error.response && error.response.status == 405) {
             // The endpoint doesn't support the GET method, so just skip it.

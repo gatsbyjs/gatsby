@@ -1,6 +1,7 @@
 import React from "react"
 import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
@@ -151,7 +152,7 @@ class DefaultLayout extends React.Component {
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner background={isHomepage ? `#402060` : false}>
           {/* !!! If you change the children of Banner remember to do the same in layout/layout-with-heading.js */}
-          <a
+          <OutboundLink
             href="https://www.gatsbyjs.com/content-mesh-contentful"
             css={{
               color: `#fff`,
@@ -160,9 +161,9 @@ class DefaultLayout extends React.Component {
               },
             }}
           >
-            Register now
-          </a>
-          {` for “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
+            Watch
+          </OutboundLink>
+          {`: “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div
