@@ -211,7 +211,6 @@
     - Search
     - Pagination
   features:
-    - Gatsby v2 support
     - Complete Business Website Suite - Home Page, About Page, Pricing Page, Contact Page and Blog
     - Netlify CMS for Content Management
     - SEO Friendly (Sitemap, Schemas, Meta Tags, GTM etc)
