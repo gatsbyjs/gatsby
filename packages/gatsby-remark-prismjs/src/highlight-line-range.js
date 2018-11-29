@@ -47,7 +47,7 @@ const stripComment = line =>
   )
 
 const wrap = line =>
-  [`<span class="gatsby-highlight-code-line">`, `${line}`, `</span>`].join(``)
+  [`<span class="gatsby-highlight-code-line">`, line, `</span>`].join(``)
 
 const wrapAndStripComment = line => wrap(stripComment(line))
 
