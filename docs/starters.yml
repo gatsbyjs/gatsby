@@ -208,6 +208,8 @@
     - PWA
     - Netlify CMS
     - Disqus
+    - Search
+    - Pagination
   features:
     - Complete Business Website Suite - Home Page, About Page, Pricing Page, Contact Page and Blog
     - Netlify CMS for Content Management
@@ -216,6 +218,9 @@
     - Progressive Web App & Offline Support
     - Tags and RSS Feed for Blog
     - Disqus and Share Support
+    - Elastic-Lunr Search
+    - Pagination
+    - Easy Configuration using `config.js` file
 - url: https://haysclark.github.io/gatsby-starter-casper/
   repo: https://github.com/haysclark/gatsby-starter-casper
   description: n/a
