@@ -35,4 +35,3 @@ Accessibility by default is a win for everyone. Learn more about web accessibili
 
 - [Free course](https://www.udacity.com/course/web-accessibility--ud891) by Google and Udacity.
 - [WebAIM introduction](https://webaim.org/intro/) to web accessibility.
-
