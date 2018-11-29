@@ -47,7 +47,7 @@ const stripComment = line =>
   )
 
 const wrap = line =>
-  [`<span class="gatsby-highlight-code-line">`, `${line}\n`, `</span>`].join(``)
+  [`<span class="gatsby-highlight-code-line">`, line, `</span>`].join(``)
 
 const wrapAndStripComment = line => wrap(stripComment(line))
 
@@ -149,7 +149,7 @@ module.exports = function highlightLineRange(code, highlights = []) {
   const split = code.split(`\n`)
 
   // If a highlight range is passed with the language declaration, e.g.
-  //     ```jsx{1, 3-4}
+  // ``jsx{1, 3-4}
   // we only use that and do not try to parse highlight directives
   if (highlights.length > 0) {
     return split.map((line, i) => {
