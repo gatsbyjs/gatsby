@@ -22,7 +22,15 @@ images. By default it uses a quality setting of [50-75].
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-sharp`]
+plugins: [
+  {
+    resolve: `gatsby-plugin-sharp`,
+    options: {
+      useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
+      stripMetadata: true,
+    },
+  },
+]
 ```
 
 ## Methods
@@ -242,11 +250,20 @@ You can opt-in to use [MozJPEG][16] for jpeg-encoding. MozJPEG provides even
 better image compression than the default encoder used in `gatsby-plugin-sharp`.
 However, when using MozJPEG the build time of your Gatsby project will increase
 significantly.
-To enable MozJPEG set the [environment variable](/docs/environment-variables/#environment-variables):
+To enable MozJPEG, you can set the `useMozJpeg` plugin option to `true` in
+`gatsby-config.js` or set
+the [environment variable](/docs/environment-variables/#environment-variables):
 
 ```shell
 GATSBY_JPEG_ENCODER=MOZJPEG
 ```
+
+### EXIF and ICC metadata
+
+By default, `gatsby-plugin-sharp` strips all EXIF, ICC and other metadata
+present in your source file. If you wish to preserve this metadata, you can
+set the `stripMetadata` plugin option to `false` in
+`gatsby-config.js`.
 
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
