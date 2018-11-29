@@ -115,7 +115,7 @@ _Note: There's also a plugin that will remove all trailing slashes from pages au
 
 ```javascript:title=gatsby-node.js
 // Replacing '/' would result in empty string which is invalid
-const replacePath = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``))
+const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {
