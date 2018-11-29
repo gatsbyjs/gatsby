@@ -204,7 +204,7 @@
 
 - Adds Material Blog starter to the list of starters. #1344 @Vagr9K committed
   with KyleAMathews 4 days ago
-- Continuation: WIP update home page with new design #1355 @fk
+- Continuation: WIP update homepage with new design #1355 @fk
 - Wordpress source plugin and example site #1321 @sebastienfi
 - [v1.0] Documentation improvements. #1370 @Vagr9K
 - 1.0.0 announcement blog post #1379 @KyleAMathews
@@ -363,7 +363,7 @@ Our first beta!!! 🎉
 ### Added
 
 - Allow for gatsby-remark-smartypants options #1166 @mitchejj
-- New design (for gatsbyjs.org) + new home page #1170 @kyleamathews
+- New design (for gatsbyjs.org) + new homepage #1170 @kyleamathews
 - Add ability to locally define plugins #1126 @0x80
 - Add rough draft for docs for creating source plugins #1159 @kyleamathews
 - Optimizations around prefetching page resources #1133 @kyleamathews
