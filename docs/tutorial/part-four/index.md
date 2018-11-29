@@ -215,11 +215,13 @@ But what if you want to change the site title in the future? You'd have to searc
 
 The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Add your site title to the `gatsby-config.js` file:
 
-```javascript{2-4}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
+  // highlight-start
   siteMetadata: {
     title: `Title from siteMetadata`,
   },
+  // highlight-end
   plugins: [
     `gatsby-plugin-emotion`,
     {
@@ -238,13 +240,16 @@ Restart the development server.
 
 Now the site title is available to be queried; Add it to the `about.js` file using a [page query](/docs/page-query):
 
-```jsx{2,5,7,14-23}:title=src/pages/about.js
+```jsx:title=src/pages/about.js
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default ({ data }) => (
+export default (
+  { data } // highlight-line
+) => (
   <Layout>
+    // highlight-next-line
     <h1>About {data.site.siteMetadata.title}</h1>
     <p>
       We're the only site running on your computer dedicated to showing the best
@@ -253,6 +258,7 @@ export default ({ data }) => (
   </Layout>
 )
 
+// highlight-start
 export const query = graphql`
   query {
     site {
@@ -262,6 +268,7 @@ export const query = graphql`
     }
   }
 `
+// highlight-end
 ```
 
 It worked! 🎉
@@ -290,14 +297,15 @@ Page queries live outside of the component definition -- by convention at the en
 
 Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
-```jsx{3,8-18,35,48-49}:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import { css } from "react-emotion"
-import { StaticQuery, Link, graphql } from "gatsby"
+import { StaticQuery, Link, graphql } from "gatsby" // highlight-line
 
 import { rhythm } from "../utils/typography"
 
 export default ({ children }) => (
+  // highlight-start
   <StaticQuery
     query={graphql`
       query {
@@ -309,6 +317,7 @@ export default ({ children }) => (
       }
     `}
     render={data => (
+      // highlight-end
       <div
         className={css`
           margin: 0 auto;
@@ -325,6 +334,7 @@ export default ({ children }) => (
               font-style: normal;
             `}
           >
+            // highlight-next-line
             {data.site.siteMetadata.title}
           </h3>
         </Link>
@@ -338,8 +348,10 @@ export default ({ children }) => (
         </Link>
         {children}
       </div>
+      // highlight-start
     )}
   />
+  // highlight-end
 )
 ```
 

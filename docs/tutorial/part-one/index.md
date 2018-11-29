@@ -66,13 +66,15 @@ export default () => (
 
 3.  Remove the font size styling. Change the “Hello Gatsby!” text to a level-one header. Add a paragraph beneath the header.
 
-```jsx{4-6}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
+  // highlight-start
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
+    // highlight-end
   </div>
 )
 ```
@@ -81,13 +83,14 @@ export default () => (
 
 4.  Add an image. (In this case, a random image from Unsplash).
 
-```jsx{7}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
+    // highlight-next-line
     <img src="https://source.unsplash.com/random/400x200" alt="" />
   </div>
 )
@@ -190,12 +193,13 @@ export default () => <h1>This is a header.</h1>
 
 3.  Modify the `about.js` file to import the `Header` component. Replace the `h1` markup with `<Header />`:
 
-```jsx{2,6}:title=src/pages/about.js
+```jsx:title=src/pages/about.js
 import React from "react"
-import Header from "../components/header"
+import Header from "../components/header" // highlight-line
 
 export default () => (
   <div style={{ color: `teal` }}>
+    // highlight-next-line
     <Header />
     <p>Such wow. Very React.</p>
   </div>
@@ -208,20 +212,21 @@ In the browser, the “About Gatsby” header text should now be replaced with �
 
 4.  Head back to `src/components/header.js`, and make the following change:
 
-```jsx{3}:title=src/components/header.js
+```jsx:title=src/components/header.js
 import React from "react"
 
-export default props => <h1>{props.headerText}</h1>
+export default props => <h1>{props.headerText}</h1> // highlight-line
 ```
 
 5.  Head back to `src/pages/about.js` and make the following change:
 
-```jsx{6}:title=src/pages/about.js
+```jsx:title=src/pages/about.js
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
+    // highlight-next-line
     <Header headerText="About Gatsby" />
     <p>Such wow. Very React.</p>
   </div>
@@ -260,13 +265,14 @@ If you had passed another prop to our `<Header />` component, like so...
 
 6.  To emphasize how this makes your components reusable, add an extra `<Header />` component to the about page. Add the following code to the `src/pages/about.js` file, and save.
 
-```jsx{7}:title=src/pages/about.js
+```jsx:title=src/pages/about.js
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
     <Header headerText="About Gatsby" />
+    // highlight-next-line
     <Header headerText="It's pretty cool" />
     <p>Such wow. Very React.</p>
   </div>
@@ -291,13 +297,14 @@ You'll often want to link between pages -- Let's look at routing in a Gatsby sit
 
 1.  Open the index page component (`src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
 
-```jsx{2,7}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
-import { Link } from "gatsby"
+import { Link } from "gatsby" // highlight-line
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `purple` }}>
+    // highlight-next-line
     <Link to="/contact/">Contact</Link>
     <Header headerText="Hello Gatsby!" />
     <p>What a world.</p>
