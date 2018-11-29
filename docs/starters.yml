@@ -208,7 +208,7 @@
     - PWA
     - Netlify CMS
     - Disqus
-    - Elastic/Lunr Search
+    - Search
     - Pagination
   features:
     - Gatsby v2 support
