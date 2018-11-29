@@ -4,7 +4,7 @@ import styled from "react-emotion"
 
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
-import { rhythm, options } from "../../utils/typography"
+import { options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
