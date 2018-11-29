@@ -7,6 +7,8 @@ import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 import { options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
+export const PULLQUOTE_CLASSNAME = `pullquote`
+
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
   border-radius: ${presets.radiusLg}px;
@@ -37,17 +39,17 @@ const PullquoteRoot = styled(`blockquote`)`
 
 const QuotationMark = styled(`span`)`
   display: flex;
+  left: 2.5rem;
   position: absolute;
   top: 2rem;
-  left: 2.5rem;
 
   svg {
     fill: ${colors.gatsbyDark};
   }
 
   ${presets.Desktop} {
-    top: 2.8rem;
     left: 3rem;
+    top: 2.8rem;
 
     svg {
       fill: ${colors.gatsbyDark};
@@ -57,17 +59,17 @@ const QuotationMark = styled(`span`)`
 `
 
 const Star = styled(`span`)`
-  position: absolute;
   display: flex;
+  position: absolute;
 
   svg {
-    width: 100%;
     height: 100%;
+    width: 100%;
   }
 
   :nth-child(1) {
-    left: 0;
     height: 20px;
+    left: 0;
     top: 1.8rem;
     transform: translateX(-50%);
     width: 20px;
@@ -80,6 +82,20 @@ const Star = styled(`span`)`
       height: 27px;
       width: 27px;
     }
+
+    .variantB & {
+      left: auto;
+      right: 0;
+      top: 2rem;
+      transform: translate(50%, 0);
+    }
+
+    .variantC & {
+      bottom: 0;
+      left: 4rem;
+      top: auto;
+      transform: translate(0, 50%);
+    }
   }
 
   :nth-child(2) {
@@ -90,25 +106,53 @@ const Star = styled(`span`)`
     width: 14px;
 
     svg {
-      fill: #73fff7;
+      fill: ${colors.mint};
+    }
+    .variantB & {
+      bottom: 0;
+      left: auto;
+      right: 3rem;
+      top: auto;
+      transform: translate(0, 50%);
+    }
+
+    .variantC & {
+      left: auto;
+      right: 9rem;
+      top: 0;
+      transform: translate(0, -50%);
     }
   }
 
   :nth-child(3) {
     bottom: 0;
     height: 12px;
-    transform: translateY(50%);
     right: 4rem;
+    transform: translateY(50%);
     width: 12px;
 
     svg {
-      fill: #ec1818;
+      fill: ${colors.warning};
+    }
+
+    .variantB & {
+      bottom: auto;
+      left: auto;
+      right: 7rem;
+      top: 0;
+      transform: translate(0%, -50%);
+    }
+
+    .variantC & {
+      bottom: 2rem;
+      left: 0;
+      transform: translate(-50%, 0);
     }
   }
 `
 
 const Pullquote = ({ children }) => (
-  <PullquoteRoot>
+  <PullquoteRoot className={PULLQUOTE_CLASSNAME}>
     {children}
     <QuotationMark
       dangerouslySetInnerHTML={{ __html: QuotationMarkOrnament }}
