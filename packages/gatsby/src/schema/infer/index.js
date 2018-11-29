@@ -10,11 +10,12 @@ const addInferredType = typeName => {
   const exampleValue = getExampleValue({
     nodes: getNodesByType(typeName),
     typeName,
+    ignoreFields: getNodeInterfaceFields(),
   })
   const tc = schemaComposer.getOrCreateTC(typeName, tc => {
     addNodeInterface(tc)
   })
-  getNodeInterfaceFields().forEach(fieldName => delete exampleValue[fieldName])
+  // getNodeInterfaceFields().forEach(fieldName => delete exampleValue[fieldName])
   addInferredFields(tc, exampleValue, typeName)
 }
 

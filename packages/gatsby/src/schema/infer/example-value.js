@@ -29,10 +29,12 @@ const getType = value => {
   }
 }
 
-const getExampleObject = (nodes, prefix) => {
+const getExampleObject = (nodes, prefix, ignoreFields = []) => {
   const allKeys = nodes.reduce(
     (acc, node) =>
-      Object.keys(node).forEach(key => !acc.has(key) && acc.add(key)) || acc,
+      Object.keys(node).forEach(
+        key => !acc.has(key) && !ignoreFields.includes(key) && acc.add(key)
+      ) || acc,
     new Set()
   )
 
@@ -93,11 +95,11 @@ const getExampleObject = (nodes, prefix) => {
 
 // const cache = new Map()
 
-const getExampleValue = ({ nodes, typeName }) => {
+const getExampleValue = ({ nodes, typeName, ignoreFields }) => {
   // if (cache.has(typeName)) {
   //   return cache.get(typeName)
   // }
-  const exampleValue = getExampleObject(nodes, typeName)
+  const exampleValue = getExampleObject(nodes, typeName, ignoreFields)
   // cache.set(typeName, exampleValue)
   return exampleValue
 }
