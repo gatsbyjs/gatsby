@@ -29,7 +29,7 @@ import "react-testing-library/cleanup-after-each"
 
 This file gets run automatically by Jest before every test and therefore you don't need to add the imports to every single test file.
 
-Lastly you need to tell Jest where to find this file. Assuming you followed the [Unit testing](/docs/unit-testing), open your `jest.config.js` and add this entry to the bottom after 'setupFiles':
+Lastly you need to tell Jest where to find this file. Open your `jest.config.js` and add this entry to the bottom after 'setupFiles':
 
 ```js:title=jest.config.js
 module.exports = {
