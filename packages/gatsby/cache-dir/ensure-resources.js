@@ -19,6 +19,17 @@ class EnsureResources extends React.Component {
     }
   }
 
+  reloadPage(prevHref) {
+    // Do this, rather than simply `window.location.reload()`, so that
+    // pressing the back/forward buttons work - otherwise when pressing
+    // back, the browser will just change the URL and expect JS to handle
+    // the change, which won't always work since it might not be a Gatsby
+    // page.
+    const { href } = window.location
+    window.history.replaceState({}, ``, prevHref)
+    window.location.replace(href)
+  }
+
   static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location !== location) {
       const pageResources = loader.getResourcesForPathnameSync(
@@ -38,7 +49,8 @@ class EnsureResources extends React.Component {
     const { pathname } = nextProps.location
 
     if (!loader.getResourcesForPathnameSync(pathname)) {
-      // Store the next location before resolving resources to check for updates
+      // Store the previous and next location before resolving resources
+      const prevLocation = this.props.location
       this.nextLocation = nextProps.location
 
       // Page resources won't be set in cases where the browser back button
@@ -52,7 +64,7 @@ class EnsureResources extends React.Component {
 
         if (pageResources && pageResources.json) {
           this.setState({
-            location: { ...location },
+            location: { ...window.location },
             pageResources,
           })
           return
@@ -61,7 +73,7 @@ class EnsureResources extends React.Component {
         // If we still don't have resources, reload the page.
         // (This won't happen on initial render, since shouldComponentUpdate
         // isn't called for initial renders.)
-        window.location.reload()
+        this.reloadPage(prevLocation.href)
       })
     }
   }
