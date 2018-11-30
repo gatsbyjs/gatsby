@@ -92,7 +92,8 @@ const Star = styled(`span`)`
 
     .variantC & {
       bottom: 0;
-      left: 4rem;
+      left: auto;
+      right: 12rem;
       top: auto;
       transform: translate(0, 50%);
     }
@@ -144,26 +145,34 @@ const Star = styled(`span`)`
     }
 
     .variantC & {
-      bottom: 2rem;
+      top: 3rem;
       left: 0;
       transform: translate(-50%, 0);
     }
   }
 `
 
-const Pullquote = ({ children }) => (
-  <PullquoteRoot className={PULLQUOTE_CLASSNAME}>
-    {children}
-    <QuotationMark
-      dangerouslySetInnerHTML={{ __html: QuotationMarkOrnament }}
-    />
-    <div>
-      <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
-      <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
-      <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
-    </div>
-  </PullquoteRoot>
-)
+const variants = [`A`, `B`, `C`]
+let instancesCounter = -1
+
+const Pullquote = ({ children }) => {
+  instancesCounter += 1
+  const className = `variant${variants[instancesCounter % variants.length]}`
+
+  return (
+    <PullquoteRoot className={className}>
+      {children}
+      <QuotationMark
+        dangerouslySetInnerHTML={{ __html: QuotationMarkOrnament }}
+      />
+      <div>
+        <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
+        <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
+        <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
+      </div>
+    </PullquoteRoot>
+  )
+}
 
 Pullquote.propTypes = {
   children: PropTypes.node.isRequired,
