@@ -42,19 +42,13 @@ exports.setBoundActionCreators = actions => {
 }
 
 /// Plugin options are loaded onPreInit in gatsby-node
-let pluginOptions = {
+const pluginDefaults = {
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
 }
-exports.setPluginOptions = options => {
-  // Typechecks
-  if (typeof options.useMozJpeg === `boolean`) {
-    pluginOptions.useMozJpeg = options.useMozJpeg
-  }
-
-  if (typeof options.stripMetadata === `boolean`) {
-    pluginOptions.stripMetadata = options.stripMetadata
-  }
+let pluginOptions = Object.assign({}, pluginDefaults)
+exports.setPluginOptions = opts => {
+  pluginOptions = Object.assign({}, pluginOptions, opts)
 }
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
