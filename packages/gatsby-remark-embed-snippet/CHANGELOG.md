@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.1.2"></a>
+
+## [3.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.1.1...gatsby-remark-embed-snippet@3.1.2) (2018-11-30)
+
+### Bug Fixes
+
+- **gatsby-remark-prismjs:** prevent additional blank line from appearing ([#10209](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/issues/10209)) ([71d7f23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/commit/71d7f23))
+
 <a name="3.1.1"></a>
 
 ## [3.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.1.0...gatsby-remark-embed-snippet@3.1.1) (2018-11-29)
