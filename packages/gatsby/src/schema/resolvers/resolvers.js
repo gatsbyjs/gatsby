@@ -17,6 +17,12 @@ const link = ({ by }) => resolve => (source, args, context, info) => {
     return fieldValue
   }
 
+  if (by === `id`) {
+    return Array.isArray(fieldValue)
+      ? findByIds({ args: { ids: fieldValue } })
+      : findById({ args: { id: fieldValue } })
+  }
+
   const operator = Array.isArray(fieldValue) ? oneOf : equals
   args.filter = by.split(`.`).reduceRight(
     /* eslint-disable-next-line arrow-body-style */
