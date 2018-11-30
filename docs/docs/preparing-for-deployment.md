@@ -4,13 +4,11 @@ title: Preparing a Site for Deployment
 
 To Prepare your site for Deployment, you can do following:
 
+1. Run `gatsby build` in your site root.
 
-1. Run your tests using `yarn test` (Optional)
+2. Run your tests using `yarn test` (Optional)
 
    If you’d like to learn more about tests, see [Unit Testing](/docs/unit-testing).
-   
-
-2. Run `gatsby build` in your site root.
 
 Your site is ready for Deployment!
 
