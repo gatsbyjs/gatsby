@@ -1,10 +1,10 @@
-import React from "react"
-import { renderToString } from "react-dom/server"
-import { extractCritical } from "emotion-server"
+const React = require(`react`)
+const { renderToString } = require(`react-dom/server`)
+const { extractCritical } = require(`emotion-server`)
 
-import { wrapElement } from "./wrap-element"
+const { wrapElement } = require(`./wrap-element`)
 
-export const replaceRenderer = ({
+exports.replaceRenderer = ({
   bodyComponent,
   replaceBodyHTMLString,
   setHeadComponents,
