@@ -7,8 +7,6 @@ import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 import { options } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
-export const PULLQUOTE_CLASSNAME = `pullquote`
-
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
   border-radius: ${presets.radiusLg}px;
