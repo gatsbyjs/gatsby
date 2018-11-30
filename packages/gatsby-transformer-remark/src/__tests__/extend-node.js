@@ -245,7 +245,7 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 
-Where oh [*where*](nick.com) **_is_** ![pony.png](that pony)?`,
+Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
     `excerpt(format: HTML)
     frontmatter {
         title
@@ -254,7 +254,7 @@ Where oh [*where*](nick.com) **_is_** ![pony.png](that pony)?`,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(
-        `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="that%20pony" alt="pony.png">?</p>`
+        `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
       )
     }
   )
