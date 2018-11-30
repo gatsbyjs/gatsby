@@ -141,7 +141,7 @@ const processFile = (file, jobs, cb, reporter) => {
     pipeline = sharp(file)
 
     // Keep Metadata
-    if (pluginOptions.stripMetadata === false) {
+    if (!pluginOptions.stripMetadata) {
       pipeline = pipeline.withMetadata()
     }
 
