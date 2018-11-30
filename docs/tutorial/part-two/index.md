@@ -174,8 +174,9 @@ in the middle of the page. To create this, add the following styles to the
 import React from "react"
 
 export default () => (
-  // highlight-next-line
   <div style={{ margin: `3rem auto`, maxWidth: 600 }}>
+    {" "}
+    {/* highlight-line */}
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
@@ -463,7 +464,7 @@ export default () => (
   <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
-    // highlight-start
+    {/* highlight-start */}
     <User
       username="Jane Doe"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
@@ -474,7 +475,7 @@ export default () => (
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
-    // highlight-end
+    {/* highlight-end */}
   </Container>
 )
 ```

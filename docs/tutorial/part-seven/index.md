@@ -306,17 +306,18 @@ import React from "react"
 import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
+// highlight-start
 export default ({ data }) => {
-  // highlight-line
-  const post = data.markdownRemark // highlight-line
+  const post = data.markdownRemark
+  // highlight-end
   return (
     <Layout>
-      // highlight-start
+      {/* highlight-start */}
       <div>
         <h1>{post.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
-      // highlight-end
+      {/* highlight-end */}
     </Layout>
   )
 }
@@ -368,7 +369,7 @@ export default ({ data }) => {
         <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
         {data.allMarkdownRemark.edges.map(({ node }) => (
           <div key={node.id}>
-            // highlight-start
+            {/* highlight-start */}
             <Link
               to={node.fields.slug}
               className={css`
@@ -376,7 +377,7 @@ export default ({ data }) => {
                 color: inherit;
               `}
             >
-              // highlight-end
+              {/* highlight-end */}
               <h3
                 className={css`
                   margin-bottom: ${rhythm(1 / 4)};
@@ -392,8 +393,7 @@ export default ({ data }) => {
                 </span>
               </h3>
               <p>{node.excerpt}</p>
-              // highlight-next-line
-            </Link>
+            </Link> {/* highlight-line */}
           </div>
         ))}
       </div>

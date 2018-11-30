@@ -103,8 +103,7 @@ const Layout = ({ children }) => (
             paddingTop: 0,
           }}
         >
-          // highlight-next-line
-          <NavBar />
+          <NavBar /> {/* highlight-line */}
           {children}
         </div>
       </>
@@ -130,11 +129,11 @@ import Layout from "../components/layout"
 const IndexPage = () => (
   <Layout>
     <h1>Hi people</h1>
-    // highlight-start
+    {/* highlight-start */}
     <p>
       You should <Link to="/">log in</Link> to see restricted content
     </p>
-    // highlight-end
+    {/* highlight-end */}
   </Layout>
 )
 
@@ -342,8 +341,8 @@ import Login from "../components/login"
 const App = () => (
   <Layout>
     <Router>
-      // highlight-next-line
-      <PrivateRoute path="/app/profile" component={Profile} />
+      <PrivateRoute path="/app/profile" component={Profile} />{" "}
+      {/* highlight-line */}
       <Login path="/app/login" />
     </Router>
   </Layout>
@@ -372,7 +371,7 @@ export default () => {
     content.message = "You are not logged in"
   }
   return (
-    // highlight-end
+    {/* highlight-end */}
     <div
       style={{
         display: "flex",
@@ -381,15 +380,14 @@ export default () => {
         borderBottom: "1px solid #d1c1e0",
       }}
     >
-      // highlight-next-line
-      <span>{content.message}</span>
+      <span>{content.message}</span> {/* highlight-line */}
+
       <nav>
         <Link to="/">Home</Link>
         {` `}
-        // highlight-next-line
-        <Link to="/app/profile">Profile</Link>
+        <Link to="/app/profile">Profile</Link> {/* highlight-line */}
         {` `}
-        // highlight-start
+        {/* highlight-start */}
         {isLoggedIn() ? (
           <a
             href="/"
@@ -401,7 +399,7 @@ export default () => {
             Logout
           </a>
         ) : null}
-        // highlight-end
+        {/* highlight-end */}
       </nav>
     </div>
   )
@@ -422,7 +420,7 @@ const IndexPage = () => {
   return (
     // highlight-end
     <Layout>
-      // highlight-start
+      {/* highlight-start */}
       <h1>Hi {isLoggedIn() ? getUser().name : "people"}</h1>
       <p>
         {isLoggedIn() ? (
@@ -437,7 +435,7 @@ const IndexPage = () => {
           </>
         )}
       </p>
-      // highlight-end
+      {/* highlight-end */}
     </Layout>
   )
 } // highlight-line
@@ -455,10 +453,10 @@ const Profile = () => (
   <>
     <h1>Your profile</h1>
     <ul>
-      // highlight-start
+      {/* highlight-start */}
       <li>Name: {getUser().name}</li>
       <li>E-mail: {getUser().email}</li>
-      // highlight-end
+      {/* highlight-end */}
     </ul>
   </>
 )

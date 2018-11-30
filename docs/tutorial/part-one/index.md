@@ -70,11 +70,11 @@ export default () => (
 import React from "react"
 
 export default () => (
-  // highlight-start
+  {/* highlight-start */}
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
-    // highlight-end
+  {/* highlight-end */}
   </div>
 )
 ```
@@ -90,8 +90,8 @@ export default () => (
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
-    // highlight-next-line
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
+    <img src="https://source.unsplash.com/random/400x200" alt="" />{" "}
+    {/* highlight-next-line */}
   </div>
 )
 ```
@@ -199,8 +199,7 @@ import Header from "../components/header" // highlight-line
 
 export default () => (
   <div style={{ color: `teal` }}>
-    // highlight-next-line
-    <Header />
+    <Header /> {/* highlight-line */}
     <p>Such wow. Very React.</p>
   </div>
 )
@@ -215,7 +214,7 @@ In the browser, the “About Gatsby” header text should now be replaced with �
 ```jsx:title=src/components/header.js
 import React from "react"
 
-export default props => <h1>{props.headerText}</h1> // highlight-line
+export default props => <h1>{props.headerText}</h1> {/* highlight-line */}
 ```
 
 5.  Head back to `src/pages/about.js` and make the following change:
@@ -226,8 +225,7 @@ import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
-    // highlight-next-line
-    <Header headerText="About Gatsby" />
+    <Header headerText="About Gatsby" /> {/* highlight-line */}
     <p>Such wow. Very React.</p>
   </div>
 )
@@ -272,8 +270,7 @@ import Header from "../components/header"
 export default () => (
   <div style={{ color: `teal` }}>
     <Header headerText="About Gatsby" />
-    // highlight-next-line
-    <Header headerText="It's pretty cool" />
+    <Header headerText="It's pretty cool" /> {/* highlight-line */}
     <p>Such wow. Very React.</p>
   </div>
 )
@@ -304,8 +301,7 @@ import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `purple` }}>
-    // highlight-next-line
-    <Link to="/contact/">Contact</Link>
+    <Link to="/contact/">Contact</Link> {/* highlight-line */}
     <Header headerText="Hello Gatsby!" />
     <p>What a world.</p>
     <img src="https://source.unsplash.com/random/400x200" alt="" />

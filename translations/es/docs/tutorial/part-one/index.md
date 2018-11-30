@@ -74,7 +74,7 @@ export default () => (
   <div style={{ color: `purple` }}>
     <h1>¡Hola Gatsby!</h1>
     <p>Increíble.</p>
-    // highlight-end
+    {/* highlight-end */}
   </div>
 )
 ```
@@ -90,8 +90,8 @@ export default () => (
   <div style={{ color: `purple` }}>
     <h1>¡Hola Gatsby!</h1>
     <p>Increíble.</p>
-    // highlight-next-line
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
+    <img src="https://source.unsplash.com/random/400x200" alt="" />{" "}
+    {/* highlight-line */}
   </div>
 )
 ```
@@ -198,8 +198,7 @@ import Header from "../components/header" // highlight-line
 
 export default () => (
   <div style={{ color: `teal` }}>
-    // highlight-next-line
-    <Header />
+    <Header /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -226,8 +225,7 @@ import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
-    // highlight-next-line
-    <Header headerText="A cerca de Gatsby" />
+    <Header headerText="A cerca de Gatsby" /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -272,8 +270,7 @@ import Header from "../components/header"
 export default () => (
   <div style={{ color: `teal` }}>
     <Header headerText="A cerca de Gatsby" />
-    // highlight-next-line
-    <Header headerText="Es asombroso" />
+    <Header headerText="Es asombroso" /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -304,8 +301,7 @@ import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `purple` }}>
-    // highlight-next-line
-    <Link to="/contact/">Contacto</Link>
+    <Link to="/contact/">Contacto</Link> {/* highlight-line */}
     <Header headerText="!Hola Gatsby!" />
     <p>Increible</p>
     <img src="https://source.unsplash.com/random/400x200" alt="" />

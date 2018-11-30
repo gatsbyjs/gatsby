@@ -109,23 +109,23 @@ The [`createPage` action](/docs/actions/#createPage) is passed an object contain
 
 In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4). This allows us to completely circumvent Gatsby’s data layer; it’s just props.
 
-```jsx:title=src/template/all-pokemon.js
-export default ({ pageContext: { allPokemon } }) => ( // highlight-line
+```jsx:title=src/templates/all-pokemon.js
+export default ({ pageContext: { allPokemon } }) => (// highlight-line
     {...}
         {allPokemon.map(pokemon => ( // highlight-line
             <li
-                key={pokemon.id} // highlight-line
+                key={pokemon.id}  {/* highlight-line */}
                 style={{
                     textAlign: 'center',
                     listStyle: 'none',
                     display: 'inline-block'
                 }}
             >
-            // highlight-start
+             {/* highlight-start */}
                 <Link to={`/pokemon/${pokemon.name}`}>
                     <img src={pokemon.sprites.front_default} alt={pokemon.name} />
                     <p>{pokemon.name}</p>
-            // highlight-end
+              {/* highlight-end */}
                 </Link>
             </li>
         ))}

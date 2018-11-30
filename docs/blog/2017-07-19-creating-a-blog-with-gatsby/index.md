@@ -99,8 +99,10 @@ module.exports = {
     title: `Your Name - Blog`,
     author: `Your Name`,
   },
-  plugins: ["gatsby-plugin-catch-links", "gatsby-plugin-react-helmet"], //highlight-line
+  // highlight-start
+  plugins: ["gatsby-plugin-catch-links", "gatsby-plugin-react-helmet"],
 }
+// highlight-end
 ```
 
 Without any additional work besides a `yarn install` and editing a config file,
@@ -320,6 +322,7 @@ export default function Template({ data }) {
     </div>
   )
 }
+
 // highlight-start
 export const pageQuery = graphql`
   query BlogPostByPath($path: String!) {
@@ -410,6 +413,7 @@ exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+
   // highlight-start
   return graphql(`
     {

@@ -45,18 +45,18 @@ export default (
   { pageContext: { pokemon } } // highlight-line
 ) => (
   <div style={{ width: 960, margin: "4rem auto" }}>
-    // highlight-start
+    {/* highlight-start */}
     <h1>{pokemon.name}</h1>
     <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-    // highlight-end
+    {/* highlight-end */}
     <h2>Abilities</h2>
     <ul>
-      // highlight-start
+      {/* highlight-start */}
       {pokemon.abilities.map(ability => (
         <li key={ability.name}>
           <Link to={`./pokemon/${pokemon.name}/ability/${ability.name}`}>
             {ability.name}
-            // highlight-end
+            {/* highlight-end */}
           </Link>
         </li>
       ))}

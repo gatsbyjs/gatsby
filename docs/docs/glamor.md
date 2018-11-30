@@ -54,8 +54,7 @@ Let's add css styles to `Container` and add a inline `User` component using Glam
 import React from "react"
 
 const Container = ({ children }) => (
-  // highlight-next-line
-  <div css={{ margin: `3rem auto`, maxWidth: 600 }}>{children}</div>
+  <div css={{ margin: `3rem auto`, maxWidth: 600 }}>{children}</div> {/* highlight-line */}
 )
 
 // highlight-start
@@ -82,23 +81,23 @@ const User = props => (
 
 export default () => (
   <Container>
-    // highlight-end
+    {/* highlight-end */}
     <h1>About Glamor</h1>
     <p>Glamor is cool</p>
     <User
       username="Jane Doe"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-      // highlight-start
-      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    // highlight-end // highlight-start
+      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit." {/* highlight-line */}
+    /> {/* highlight-line */}
+
+    {/* highlight-start */}
     <User
       username="Bob Smith"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
   </Container>
-  // highlight-end
+  {/* highlight-end */}
 )
 ```
 

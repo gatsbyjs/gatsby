@@ -36,13 +36,13 @@ class Application extends React.Component {
   render() {
     return (
       <div className="application">
-        //highlight-start
+        {/* highlight-start */}
         <Helmet>
           <meta charSet="utf-8" />
           <title>My Title</title>
           <link rel="canonical" href="http://mysite.com/example" />
         </Helmet>
-        //highlight-end ...
+        {/* highlight-end */}
       </div>
     )
   }

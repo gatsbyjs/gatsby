@@ -135,15 +135,13 @@ import React from "react"
 import Layout from "../components/layout" // highlight-line
 
 export default () => (
-  // highlight-next-line
-  <Layout>
+  <Layout> {/* highlight-line */}
     <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
     <p>
       What do I like to do? Lots of course but definitely enjoy building
       websites.
     </p>
-    // highlight-next-line
-  </Layout>
+  </Layout> {/* highlight-line */}
 )
 ```
 
@@ -163,8 +161,7 @@ import React from "react"
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
-    // highlight-next-line
-    <h3>MySweetSite</h3>
+    <h3>MySweetSite</h3> {/* highlight-line */}
     {children}
   </div>
 )
@@ -191,7 +188,7 @@ const ListLink = props => (
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
-    // highlight-start
+    {/* highlight-start */}
     <header style={{ marginBottom: `1.5rem` }}>
       <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
         <h3 style={{ display: `inline` }}>MySweetSite</h3>
@@ -202,7 +199,7 @@ export default ({ children }) => (
         <ListLink to="/contact/">Contact</ListLink>
       </ul>
     </header>
-    // highlight-end
+    {/* highlight-end */}
     {children}
   </div>
 )

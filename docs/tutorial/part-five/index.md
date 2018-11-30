@@ -162,7 +162,7 @@ export default ({ data }) => {
   console.log(data)
   return (
     <Layout>
-      // highlight-start
+      {/* highlight-start */}
       <div>
         <h1>My Site's Files</h1>
         <table>
@@ -186,7 +186,7 @@ export default ({ data }) => {
           </tbody>
         </table>
       </div>
-      // highlight-end
+      {/* highlight-end */}
     </Layout>
   )
 }

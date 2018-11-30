@@ -269,8 +269,7 @@ import Checkout from "../components/checkout" // highlight-line
 
 const IndexPage = () => (
   <div>
-    // highlight-next-line
-    <Checkout />
+    <Checkout /> {/* highlight-line */}
   </div>
 )
 

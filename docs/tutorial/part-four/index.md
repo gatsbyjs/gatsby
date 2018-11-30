@@ -249,8 +249,7 @@ export default (
   { data } // highlight-line
 ) => (
   <Layout>
-    // highlight-next-line
-    <h1>About {data.site.siteMetadata.title}</h1>
+    <h1>About {data.site.siteMetadata.title}</h1> {/* highlight-line */}
     <p>
       We're the only site running on your computer dedicated to showing the best
       photos and videos of pandas eating lots of food.
@@ -305,7 +304,7 @@ import { StaticQuery, Link, graphql } from "gatsby" // highlight-line
 import { rhythm } from "../utils/typography"
 
 export default ({ children }) => (
-  // highlight-start
+  {/* highlight-start */}
   <StaticQuery
     query={graphql`
       query {
@@ -317,7 +316,7 @@ export default ({ children }) => (
       }
     `}
     render={data => (
-      // highlight-end
+      {/* highlight-end */}
       <div
         className={css`
           margin: 0 auto;
@@ -334,8 +333,7 @@ export default ({ children }) => (
               font-style: normal;
             `}
           >
-            // highlight-next-line
-            {data.site.siteMetadata.title}
+            {data.site.siteMetadata.title}{/* highlight-line */}
           </h3>
         </Link>
         <Link
@@ -348,10 +346,10 @@ export default ({ children }) => (
         </Link>
         {children}
       </div>
-      // highlight-start
+      {/* highlight-start */}
     )}
   />
-  // highlight-end
+  {/* highlight-end */}
 )
 ```
 

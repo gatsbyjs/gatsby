@@ -37,11 +37,9 @@ import React from "react"
 import Layout from "../components/layout" // highlight-line
 
 export default () => (
-  // highlight-next-line
-  <Layout>
+  <Layout> {/* highlight-line */}
     <h1>I’m in a layout!</h1>
-    // highlight-next-line
-  </Layout>
+  </Layout> {/* highlight-line */}
 )
 ```
 
