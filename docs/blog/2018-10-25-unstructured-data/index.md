@@ -57,8 +57,8 @@ That's it!
 By [exporting `createPages`](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) from our example Gatsby site's `gatsby-node.js` file, we're saying, "at this point in the bootstrapping sequence, run this code".
 
 ```javascript:title=gatsby-node.js
+// highlight-next-line
 exports.createPages = () => {
-  // highlight-line
   // Run this code
 } // highlight-line
 ```
@@ -78,8 +78,8 @@ _Note: [`getPokemonData`](https://github.com/jlengstorf/gatsby-with-unstructured
 When you hook into a Gatsby API (like `createPages` from step one), you are passed a collection of actions. In this example, we're extracting the [`createPage` action](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) using ES6 object destructuring:
 
 ```javascript:title=gatsby-node.js
+// highlight-next-line
 exports.createPages = async ({ actions: { createPage } }) => {
-  //highlight-line
   const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
 }
 ```

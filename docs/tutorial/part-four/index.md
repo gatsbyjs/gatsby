@@ -245,9 +245,8 @@ import React from "react"
 import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default (
-  { data } // highlight-line
-) => (
+// highlight-next-line
+export default ({ data }) => (
   <Layout>
     <h1>About {data.site.siteMetadata.title}</h1> {/* highlight-line */}
     <p>
