@@ -265,14 +265,14 @@ GATSBY_JPEG_ENCODER=MOZJPEG
 ### EXIF and ICC metadata
 
 By default, `gatsby-plugin-sharp` strips all EXIF, ICC and other metadata
-present in your source file. This is the recommended default for most
-situations as it leads to smaller file sizes.
+present in your source file. This is the recommended default as it leads to
+smaller file sizes.
 
 However, in situations where you wish to preserve EXIF metadata or ICC profiles
-(for example if you are building a photography portfolio and which to conserve
-the color profile of the photos you've exported from Adobe Lightroom or Phase
-One's Capture One), you can set the `stripMetadata` plugin option to `false` in
-`gatsby-config.js`.
+(example: you are building a photography portfolio and wish to conserve
+the color profile or the copyright information of the photos you've exported
+from Adobe Lightroom or Phase One's Capture One), you can set the `stripMetadata`
+plugin option to `false` in `gatsby-config.js`.
 
 It is important to note that if `stripMetadata` is set to `false`, **all**
 metadata information will be preserved from the source image, including but not
