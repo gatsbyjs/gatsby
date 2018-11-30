@@ -41,9 +41,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
 On the highlighted lines, the data is being supplied to the page template, where it can be accessed as props:
 
 ```javascript:title=/src/templates/pokemon.js
-export default (
-  { pageContext: { pokemon } } // highlight-line
-) => (
+// highlight-next-line
+export default ({ pageContext: { pokemon } }) => (
   <div style={{ width: 960, margin: "4rem auto" }}>
     {/* highlight-start */}
     <h1>{pokemon.name}</h1>
