@@ -341,8 +341,8 @@ import Login from "../components/login"
 const App = () => (
   <Layout>
     <Router>
+      {/* highlight-next-line */}
       <PrivateRoute path="/app/profile" component={Profile} />{" "}
-      {/* highlight-line */}
       <Login path="/app/login" />
     </Router>
   </Layout>
