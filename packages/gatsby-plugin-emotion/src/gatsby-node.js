@@ -1,6 +1,22 @@
-const webpack = require(`webpack`)
-
 exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
+  const pragmaName = `___EmotionJSX`
+
+  actions.setBabelPlugin({
+    name: `babel-plugin-jsx-pragmatic`,
+    options: {
+      export: `jsx`,
+      module: `@emotion/core`,
+      import: pragmaName,
+    },
+  })
+
+  actions.setBabelPlugin({
+    name: `@babel/plugin-transform-react-jsx`,
+    options: {
+      pragma: pragmaName,
+    },
+  })
+
   actions.setBabelPlugin({
     name: `babel-plugin-emotion`,
     options: {
@@ -9,22 +25,5 @@ exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
       autoLabel: process.env.NODE_ENV !== `production`,
       ...(pluginOptions ? pluginOptions : {}),
     },
-  })
-
-  actions.setBabelPlugin({
-    name: `@babel/plugin-transform-react-jsx`,
-    options: {
-      pragma: `Emotion.jsx`,
-    },
-  })
-}
-
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    plugins: [
-      new webpack.ProvidePlugin({
-        Emotion: `@emotion/core`,
-      }),
-    ],
   })
 }
