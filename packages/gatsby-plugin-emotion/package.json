@@ -7,9 +7,9 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.1.6",
     "@babel/runtime": "^7.0.0",
-    "babel-plugin-emotion": "^10.0.0",
-    "babel-plugin-jsx-pragmatic": "^1.0.2"
+    "babel-plugin-emotion": "^10.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
