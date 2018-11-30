@@ -80,7 +80,10 @@ class EnsureResources extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     // Always return false if we're missing resources.
-    if (!(nextState.pageResources && nextState.pageResources.json)) {
+    if (
+      process.env.NODE_ENV === `production` &&
+      !(nextState.pageResources && nextState.pageResources.json)
+    ) {
       this.retryResources(nextProps)
       return false
     }
@@ -114,7 +117,10 @@ class EnsureResources extends React.Component {
   }
 
   render() {
-    if (this.state.pageResources && this.state.pageResources.json) {
+    if (
+      process.env.NODE_ENV !== `production` ||
+      (this.state.pageResources && this.state.pageResources.json)
+    ) {
       return this.props.children(this.state)
     } else {
       const __html = document.getElementById(`___gatsby`).innerHTML
