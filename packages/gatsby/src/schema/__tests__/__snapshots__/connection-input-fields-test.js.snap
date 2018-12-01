@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GraphQL Input args can query object arrays 1`] = `
+exports[`connection input fields can query object arrays 1`] = `
 Object {
   "data": Object {
-    "allNode": Object {
+    "allTest": Object {
       "edges": Array [
         Object {
           "node": Object {

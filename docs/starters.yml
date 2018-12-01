@@ -208,6 +208,8 @@
     - PWA
     - Netlify CMS
     - Disqus
+    - Search
+    - Pagination
   features:
     - Complete Business Website Suite - Home Page, About Page, Pricing Page, Contact Page and Blog
     - Netlify CMS for Content Management
@@ -216,6 +218,9 @@
     - Progressive Web App & Offline Support
     - Tags and RSS Feed for Blog
     - Disqus and Share Support
+    - Elastic-Lunr Search
+    - Pagination
+    - Easy Configuration using `config.js` file
 - url: https://haysclark.github.io/gatsby-starter-casper/
   repo: https://github.com/haysclark/gatsby-starter-casper
   description: n/a
@@ -1280,6 +1285,20 @@
     - Eslint Airbnb without semicolon and without .jsx extension
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-mobx.netlify.com
+  repo: https://github.com/borekb/gatsby-starter-mobx
+  description: MobX + TypeScript + TSLint + Prettier
+  tags:
+    - MobX
+    - TypeScript
+    - Linting
+  features:
+    - Gatsby v2 + TypeScript
+    - MobX with decorators
+    - Two examples from @mweststrate's Egghead course
+    - .editorconfig & Prettier
+    - TSLint
+    - Jest
 - url: https://tender-raman-99e09b.netlify.com/
   repo: https://github.com/amandeepmittal/gatsby-bulma-quickstart
   description: A Bulma CSS + GatsbyJS Starter Kit
