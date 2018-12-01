@@ -63,7 +63,7 @@ const Ornament = styled(`span`)`
 
 const Name = styled(`h3`)`
   color: ${colors.lilac};
-  font-fa1mily: ${options.headerFontFamily.join(`,`)};
+  font-family: ${options.headerFontFamily.join(`,`)};
   font-size: 0.875rem;
   font-weight: normal;
   margin: 0;
