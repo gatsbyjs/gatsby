@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.17"></a>
+
+## [3.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.16...gatsby-source-wordpress@3.0.17) (2018-12-01)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** add undefined check to avoid taxonomy mapping error ([#10216](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/10216)) ([24c7dfc](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/24c7dfc))
+
 <a name="3.0.16"></a>
 
 ## [3.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.15...gatsby-source-wordpress@3.0.16) (2018-11-29)
