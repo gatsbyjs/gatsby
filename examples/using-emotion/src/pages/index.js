@@ -59,9 +59,9 @@ const IndexPage = () => (
       </h1>
       <p
         // Styling "inline" via css prop and object styles
-        css={css({
+        css={{
           color: `#bd93f9`,
-        })}
+        }}
       >
         <a
           href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/"
