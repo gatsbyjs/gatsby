@@ -15,7 +15,9 @@ function createNodeId(id, namespace) {
   if (typeof id === `number`) {
     id = id.toString()
   } else if (typeof id !== `string`) {
-    report.panic(`Parameter passed to createNodeId must be a String or Number (got ${typeof id})`)
+    report.panic(
+      `Parameter passed to createNodeId must be a String or Number (got ${typeof id})`
+    )
   }
 
   return uuidv5(id, uuidv5(namespace, seedConstant))
