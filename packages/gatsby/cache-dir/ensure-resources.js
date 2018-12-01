@@ -45,6 +45,18 @@ class EnsureResources extends React.Component {
     return null
   }
 
+  hasResources(pageResources) {
+    if (pageResources && pageResources.json) {
+      return true
+    }
+
+    if (pageResources && process.env.NODE_ENV !== `production`) {
+      return true
+    }
+
+    return false
+  }
+
   retryResources(nextProps) {
     const { pathname } = nextProps.location
 
@@ -62,7 +74,7 @@ class EnsureResources extends React.Component {
           return
         }
 
-        if (pageResources && pageResources.json) {
+        if (this.hasResources(pageResources)) {
           this.setState({
             location: { ...window.location },
             pageResources,
@@ -72,7 +84,7 @@ class EnsureResources extends React.Component {
 
         // If we still don't have resources, reload the page.
         // (This won't happen on initial render, since shouldComponentUpdate
-        // isn't called for initial renders.)
+        // is only called when the component updates.)
         this.reloadPage(prevLocation.href)
       })
     }
@@ -80,10 +92,7 @@ class EnsureResources extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     // Always return false if we're missing resources.
-    if (
-      process.env.NODE_ENV === `production` &&
-      !(nextState.pageResources && nextState.pageResources.json)
-    ) {
+    if (!this.hasResources(nextState.pageResources)) {
       this.retryResources(nextProps)
       return false
     }
@@ -117,10 +126,7 @@ class EnsureResources extends React.Component {
   }
 
   render() {
-    if (
-      process.env.NODE_ENV !== `production` ||
-      (this.state.pageResources && this.state.pageResources.json)
-    ) {
+    if (this.hasResources(this.state.pageResources)) {
       return this.props.children(this.state)
     } else {
       const __html = document.getElementById(`___gatsby`).innerHTML
