@@ -42,6 +42,14 @@ jest.mock(`contentful`, () => {
   }
 })
 
+jest.mock(`../utils`, () => {
+  return {
+    ...jest.requireActual(`../utils`),
+    exitProcess: jest.fn(),
+  }
+})
+const { exitProcess, CONTENTFUL_CONNECTION_FAILED } = require(`../utils`)
+
 // jest so test output is not filled with contentful plugin logs
 global.console = { log: jest.fn(), time: jest.fn(), timeEnd: jest.fn() }
 
@@ -55,6 +63,10 @@ const options = {
   environment: `env`,
 }
 
+beforeEach(() => {
+  exitProcess.mockClear()
+})
+
 it(`calls contentful.createClient with expected params`, async () => {
   await fetchData(options)
   expect(contentful.createClient.mock.calls[0]).toMatchSnapshot()
@@ -66,20 +78,17 @@ it(`Displays detailed plugin options on contentful client error`, async () => {
   })
 
   const reporter = {
-    panic: jest.fn(),
-    formatOptionsSummary: jest.fn(() => `formatted-summary`),
+    error: jest.fn(),
+    optionsSummary: jest.fn(),
   }
 
   await fetchData({ ...options, reporter })
 
-  // reporter will show message containing plugin options
-  expect(reporter.panic).toBeCalledWith(
-    expect.stringContaining(`formatted-summary`)
-  )
-
-  expect(reporter.formatOptionsSummary).toBeCalledWith(
+  expect(reporter.error).toBeCalled()
+  expect(reporter.optionsSummary).toBeCalledWith(
     expect.objectContaining({
       options,
     })
   )
+  expect(exitProcess).toBeCalledWith(CONTENTFUL_CONNECTION_FAILED)
 })

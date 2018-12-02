@@ -14,7 +14,13 @@ jest.mock(`../fetch`, () =>
     }
   })
 )
-
+jest.mock(`../utils`, () => {
+  return {
+    ...jest.requireActual(`../utils`),
+    exitProcess: jest.fn(),
+  }
+})
+const { exitProcess, OPTIONS_VALIDATION_FAILED } = require(`../utils`)
 const { sourceNodes } = require(`../gatsby-node`)
 
 const helperFns = {
@@ -74,13 +80,14 @@ describe(`Calls fetch data`, () => {
 
 describe(`Options validation`, () => {
   const reporter = {
-    panic: jest.fn(),
-    formatOptionsSummary: jest.fn(() => `formatted-summary`),
+    error: jest.fn(),
+    optionsSummary: jest.fn(),
   }
 
   beforeEach(() => {
-    reporter.panic.mockClear()
-    reporter.formatOptionsSummary.mockClear()
+    reporter.error.mockClear()
+    reporter.optionsSummary.mockClear()
+    exitProcess.mockClear()
   })
 
   it(`Passes with valid options`, async () => {
@@ -95,8 +102,8 @@ describe(`Options validation`, () => {
       }
     )
 
-    expect(reporter.panic).not.toBeCalled()
-    expect(reporter.formatOptionsSummary).not.toBeCalled()
+    expect(reporter.error).not.toBeCalled()
+    expect(exitProcess).not.toBeCalled()
   })
 
   it(`Fails with missing options`, async () => {
@@ -109,8 +116,9 @@ describe(`Options validation`, () => {
         {}
       )
     } finally {
-      expect(reporter.panic).toBeCalled()
-      expect(reporter.formatOptionsSummary).toMatchSnapshot()
+      expect(reporter.error).toBeCalled()
+      expect(reporter.optionsSummary).toMatchSnapshot()
+      expect(exitProcess).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
     }
   })
 
@@ -129,8 +137,9 @@ describe(`Options validation`, () => {
         }
       )
     } finally {
-      expect(reporter.panic).toBeCalled()
-      expect(reporter.formatOptionsSummary).toMatchSnapshot()
+      expect(reporter.error).toBeCalled()
+      expect(reporter.optionsSummary).toMatchSnapshot()
+      expect(exitProcess).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
     }
   })
 
@@ -149,8 +158,9 @@ describe(`Options validation`, () => {
         }
       )
     } finally {
-      expect(reporter.panic).toBeCalled()
-      expect(reporter.formatOptionsSummary).toMatchSnapshot()
+      expect(reporter.error).toBeCalled()
+      expect(reporter.optionsSummary).toMatchSnapshot()
+      expect(exitProcess).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
     }
   })
 })

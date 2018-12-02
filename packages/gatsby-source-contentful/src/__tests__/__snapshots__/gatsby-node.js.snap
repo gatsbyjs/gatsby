@@ -27,7 +27,7 @@ exports[`Options validation Fails with empty options 1`] = `
   "results": Array [
     Object {
       "isThrow": false,
-      "value": "formatted-summary",
+      "value": undefined,
     },
   ],
 }
@@ -56,7 +56,7 @@ exports[`Options validation Fails with missing options 1`] = `
   "results": Array [
     Object {
       "isThrow": false,
-      "value": "formatted-summary",
+      "value": undefined,
     },
   ],
 }
@@ -89,7 +89,7 @@ exports[`Options validation Fails with options of wrong types 1`] = `
   "results": Array [
     Object {
       "isThrow": false,
-      "value": "formatted-summary",
+      "value": undefined,
     },
   ],
 }
