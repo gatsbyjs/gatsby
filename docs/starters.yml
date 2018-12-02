@@ -843,15 +843,19 @@
     - Blog
     - Markdown
     - PWA
+    - Disqus
+    - SEO
+    - Styling:CSS-in-JS
   features:
     - Blog post listing with previews (image + summary) for each blog post
     - Fully configurable
     - Multilang support (blog post only)
     - Syntax highlighting
+    - css-in-js (with styled-components)
     - Fully Responsive
     - Tags
     - Google Analytics
-    - Disqus
+    - Disqus comments support
     - Offline support
     - Web App Manifest
     - ESLint
