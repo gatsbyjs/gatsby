@@ -3634,3 +3634,14 @@
   built_by: Corey Ward
   built_by_url: http://www.coreyward.me/
   featured: false
+- title: Kyle McDonald
+  url: https://kylemcd.com
+  main_url: https://kylemcd.com
+  source_url: https://github.com/kylemcd/personal-site-react
+  description: >
+    Personal site + blog for Kyle McDonald
+  categories:
+    - Blog
+  built_by: Kyle McDonald
+  built_by_url: https://kylemcd.com
+  featured: false
