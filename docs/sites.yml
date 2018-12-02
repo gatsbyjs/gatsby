@@ -3645,3 +3645,15 @@
   built_by: Kyle McDonald
   built_by_url: https://kylemcd.com
   featured: false
+- title: Overreacted
+  main_url: url: https://overreacted.io/
+  url: https://overreacted.io/
+  built_By: Dan Abramov
+  description: >
+    A personal blog by Dan Abramov for React-related things
+  built_by_url: https://twitter.com/dan_abramov
+  categories:
+    - Blog
+    - Education
+    - Technology
+  featured: false
