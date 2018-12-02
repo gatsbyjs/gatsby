@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { defaultOptions, validateOptions } = require(`./plugin-options`)
+const { exitProcess, OPTIONS_VALIDATION_FAILED } = require(`./utils`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -68,7 +69,7 @@ exports.sourceNodes = async (
       defaults: defaultOptions,
       errors: validationErrors,
     })
-    process.exit(1)
+    exitProcess(OPTIONS_VALIDATION_FAILED)
   }
 
   const createSyncToken = () =>
