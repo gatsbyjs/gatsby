@@ -25,10 +25,11 @@ import DebounceInput from "../../components/debounce-input"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
-    sitesToShow: 9,
+    sitesToShow: 12,
   }
-  setFiltersCategory = filtersCategory =>
+  setFiltersCategory = filtersCategory => {
     this.props.setURLState({ c: Array.from(filtersCategory) })
+  }
   setFiltersDependency = filtersDependency =>
     this.props.setURLState({ d: Array.from(filtersDependency) })
   setFiltersVersion = filtersVersion =>
@@ -37,13 +38,18 @@ export default class FilteredStarterLibrary extends Component {
     this.props.setURLState({
       sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
     })
-  resetFilters = () =>
-    this.props.setURLState({ c: null, d: null, v: null, s: `` })
-
-  onChangeUrlWithText = e => this.props.setURLState({ s: e.target.value })
+  resetFilters = () => this.props.setURLState({ c: [], d: [], v: [], s: `` })
+  showMoreSites = starters => {
+    let showAll =
+      this.state.sitesToShow + 15 > starters.length ? starters.length : false
+    this.setState({
+      sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
+    })
+  }
+  onChangeUrlWithText = value => this.props.setURLState({ s: value })
 
   render() {
-    const { data, urlState, setURLState } = this.props
+    const { data, urlState } = this.props
     const {
       setFiltersCategory,
       setFiltersDependency,
@@ -69,7 +75,10 @@ export default class FilteredStarterLibrary extends Component {
       )
     )
 
-    let starters = data.allStartersYaml.edges
+    // stopgap for missing gh data (#8763)
+    let starters = data.allStartersYaml.edges.filter(
+      ({ node: starter }) => starter.fields && starter.fields.starterShowcase
+    )
 
     if (urlState.s.length > 0) {
       starters = starters.filter(starter =>
@@ -92,7 +101,7 @@ export default class FilteredStarterLibrary extends Component {
 
     return (
       <section className="showcase" css={{ display: `flex` }}>
-        <SidebarContainer>
+        <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
             <div css={{ height: `3.5rem` }}>
@@ -198,7 +207,7 @@ export default class FilteredStarterLibrary extends Component {
                       }`,
                     },
                   }}
-                  initialValue={urlState.s}
+                  value={urlState.s}
                   onChange={this.onChangeUrlWithText}
                   placeholder="Search starters"
                   aria-label="Search starters"
@@ -241,9 +250,7 @@ export default class FilteredStarterLibrary extends Component {
             <Button
               tag="button"
               overrideCSS={styles.loadMoreButton}
-              onClick={() => {
-                this.setState({ sitesToShow: this.state.sitesToShow + 15 })
-              }}
+              onClick={() => this.showMoreSites(starters)}
               icon={<MdArrowDownward />}
             >
               Load More

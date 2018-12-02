@@ -196,6 +196,20 @@
   image: images/steven-natera.jpg
   for_hire: true
   portfolio: true
+- name: Ramón Chancay
+  type: individual
+  description: >-
+    Husband and father. 
+    Front-end engineer. 
+    Currently at EveryMundo previously at El Universo.
+    Nodejs, React and Web performance.
+  location: "Guayaquil, Ecuador"
+  website: "https://ramonchancay.me"
+  github: "https://github.com/devrchancay"
+  image: images/ramon-chancay.png
+  for_hire: true
+  hiring: false
+  portfolio: true
 - name: Kevin Legrand
   type: individual
   description: >-

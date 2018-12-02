@@ -39,12 +39,14 @@ plugins: [
             // the language "sh" which will highlight using the
             // bash highlighter.
             aliases: {},
-            // This toggles the display of line numbers alongside the code.
+            // This toggles the display of line numbers globally alongside the code.
             // To use it, add the following line in src/layouts/index.js
             // right after importing the prism color scheme:
             //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
             // Defaults to false.
-            showLineNumbers: false,
+            // If you wish to only show line numbers on certain code blocks,
+            // leave false and use the {numberLines: true} syntax below
+            showLineNumbersGlobal: false,
             // If setting this to true, the parser won't handle and highlight inline
             // code used in markdown i.e. single backtick code like `this`.
             noInlineHighlight: false,
@@ -129,9 +131,6 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
   float: left; /* 1 */
   min-width: 100%; /* 2 */
 }
-.gatsby-highlight pre[class*="language-"].line-numbers {
-  padding-left: 2.8em; /* 3 */
-}
 ```
 
 #### Optional: Add line numbering
@@ -143,6 +142,37 @@ colorscheme in `layout/index.js`:
 ```javascript
 // layouts/index.js
 require("prismjs/plugins/line-numbers/prism-line-numbers.css")
+```
+
+Then add in the corresponding CSS:
+
+```css
+/**
+ * If you already use line highlighting
+ */
+
+/* Adjust the position of the line numbers */
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding-left: 2.8em;
+}
+
+/**
+ * If you only want to use line numbering
+ */
+
+.gatsby-highlight {
+  background-color: #fdf6e3;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 1em;
+  overflow: auto;
+}
+
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding: 0;
+  padding-left: 2.8em;
+  overflow: initial;
+}
 ```
 
 ### Usage in Markdown
@@ -200,6 +230,57 @@ You can also add line highlighting. It adds a span around lines of code with a
 special class `.gatsby-highlight-code-line` that you can target with styles. See
 this README for more info.
 
+To highlight lines, you can use one of the following directives as comments in your
+code:
+
+- `highlight-line` highlights the current line;
+- `highlight-next-line` highlights the next line;
+- `highlight-start` highlights the lines until the matching `hightlight-end`;
+- `highlight-range{1, 4-6}` will highlight the next line, and the fourth, fifth and sixth lines.
+
+  ```jsx
+  class FlavorForm extends React.Component { // highlight-line
+    constructor(props) {
+      super(props);
+      this.state = {value: 'coconut'};
+
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+      // highlight-next-line
+      this.setState({value: event.target.value});
+    }
+
+    // highlight-start
+    handleSubmit(event) {
+      alert('Your favorite flavor is: ' + this.state.value);
+      event.preventDefault();
+    }
+    // highlight-end
+
+    render() {
+      return (
+        { /* highlight-range{1,4-9,12} */ }
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Pick your favorite flavor:
+            <select value={this.state.value} onChange={this.handleChange}>
+              <option value="grapefruit">Grapefruit</option>
+              <option value="lime">Lime</option>
+              <option value="coconut">Coconut</option>
+              <option value="mango">Mango</option>
+            </select>
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    }
+  }
+  ```
+
+You can also specify the highlighted lines outside of the code block.
 In the following code snippet, lines 1 and 4 through 6 will get the line
 highlighting. The line range parsing is done with
 <https://www.npmjs.com/package/parse-numeric-range>.

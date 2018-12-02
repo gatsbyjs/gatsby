@@ -67,14 +67,22 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
 
-    return Object.assign(envObject, gatsbyVarObject)
+    const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
+
+    return Object.keys(mergedEnvVars).reduce(
+      (acc, key) => {
+        acc[`process.env.${key}`] = mergedEnvVars[key]
+        return acc
+      },
+      {
+        "process.env": JSON.stringify({}),
+      }
+    )
   }
 
   function getHmrPath() {
-    let hmrBasePath = `${program.ssl ? `https` : `http`}://${
-      program.host
-    }:${webpackPort}/`
-
+    // ref: https://github.com/gatsbyjs/gatsby/issues/8348
+    let hmrBasePath = `/`
     const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
 
     if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
@@ -144,7 +152,6 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
-            require.resolve(`react-hot-loader/patch`),
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -175,7 +182,7 @@ module.exports = async (
       // Add a few global variables. Set NODE_ENV to production (enables
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
-        "process.env": processEnv(stage, `development`),
+        ...processEnv(stage, `development`),
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
@@ -256,7 +263,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `eval`
+        return `cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:

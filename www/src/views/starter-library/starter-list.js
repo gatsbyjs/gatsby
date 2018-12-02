@@ -57,7 +57,6 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
           const {
             description,
             gatsbyMajorVersion,
-            gatsbyDependencies,
             name,
             githubFullName,
             lastUpdated,
@@ -171,6 +170,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       </div>
     )
   }
+  return null
 }
 
 export default StartersList

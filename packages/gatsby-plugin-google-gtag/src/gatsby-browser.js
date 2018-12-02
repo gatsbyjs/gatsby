@@ -1,4 +1,4 @@
-export const onRouteUpdate = function({ location }) {
+exports.onRouteUpdate = ({ location }) => {
   if (process.env.NODE_ENV !== `production` || typeof gtag !== `function`) {
     return null
   }
