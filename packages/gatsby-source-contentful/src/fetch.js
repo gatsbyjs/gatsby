@@ -44,18 +44,17 @@ module.exports = async ({ syncToken, reporter, ...pluginOptions }) => {
       }
     }
 
-    const optionsSummary = reporter.formatOptionsSummary({
-      options: pluginOptions,
-      defaults: defaultOptions,
-    })
-
     const errorMessage = `Accessing your Contentful space failed.
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
-Used options:
-${optionsSummary}`
+Used options:`
 
-    reporter.panic(errorMessage)
+    reporter.error(errorMessage)
+    reporter.optionsSummary({
+      options: pluginOptions,
+      defaults: defaultOptions,
+    })
+    process.exit(1)
   }
 
   let currentSyncData

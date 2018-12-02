@@ -62,15 +62,13 @@ exports.sourceNodes = async (
   options = { ...defaultOptions, ...options }
   const validationErrors = validateOptions(options)
   if (validationErrors) {
-    const optionsSummary = reporter.formatOptionsSummary({
+    reporter.error(`Problems with plugin options in gatsby-config:`)
+    reporter.optionsSummary({
       options,
       defaults: defaultOptions,
       errors: validationErrors,
     })
-
-    reporter.panic(
-      `Problems with plugin options in gatsby-config:\n${optionsSummary}`
-    )
+    process.exit(1)
   }
 
   const createSyncToken = () =>
