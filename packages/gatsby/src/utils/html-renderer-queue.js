@@ -1,15 +1,42 @@
 const Promise = require(`bluebird`)
 const convertHrtime = require(`convert-hrtime`)
 const Worker = require(`jest-worker`).default
-const numWorkers = require(`physical-cpu-count`) || 1
 const { chunk } = require(`lodash`)
 
-const workerPool = new Worker(require.resolve(`./worker`), {
-  numWorkers,
-  forkOptions: {
-    silent: false,
-  },
-})
+const workerPool = () => {
+  // Default number of workers === physical CPU count,
+  // or default to 1 if we can't detect
+  let numOfWorkers = require(`physical-cpu-count`) || 1
+
+  if (process.env.GATSBY_CPU_COUNT) {
+    switch (typeof process.env.GATSBY_CPU_COUNT) {
+      case `string`:
+        // Leave at Default number of workers
+        // if process.env.GATSBY_CPU_COUNT === `physical_cores`)
+
+        // Number of workers === logical CPU count or default
+        if (process.env.GATSBY_CPU_COUNT === `logical_cores`) {
+          numOfWorkers = require(`os`).cpus().length || numOfWorkers
+        }
+        break
+
+      case `number`:
+        // Number of workers === passed in count,
+        numOfWorkers = parseInt(process.env.GATSBY_CPU_COUNT, 10)
+        break
+
+      default:
+        break
+    }
+  }
+
+  return new Worker(require.resolve(`./worker`), {
+    numOfWorkers,
+    forkOptions: {
+      silent: false,
+    },
+  })
+}
 
 module.exports = (htmlComponentRendererPath, pages, activity) =>
   new Promise((resolve, reject) => {
