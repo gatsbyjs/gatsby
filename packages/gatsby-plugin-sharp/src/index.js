@@ -246,6 +246,7 @@ const processFile = (file, jobs, cb, reporter) => {
                     args.quality + 25,
                     100
                   )}`, // e.g. 40-65
+                  strip: !!pluginOptions.stripMetadata, // Must be a bool
                 }),
               ],
             })
