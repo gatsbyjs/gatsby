@@ -1,6 +1,6 @@
 ---
 title: Gatsby by analogy
-date: 2018-11-28
+date: 2018-12-03
 author: Amberley Romo
 tags:
   - gatsby concepts
@@ -38,13 +38,17 @@ Take Neo in the Matrix. (If you haven’t seen The Matrix, I’ll give enough co
 
 Neo could have spent 10,000 hours mastering the martial art. But instead, thanks to sci-fi software magic, it was instantly uploaded into his brain.
 
-Similarly, you could spend 10,000 hours becoming a kung fu master in performance optimization (and you should, if you want to!). But with Gatsby, you can generate a project, and start off pre-optimized. (A Neo-like head start.)
+Similarly, you could spend 10,000 hours becoming a kung fu master in performance optimization (and you should, if you want to!). But with Gatsby, you can generate a project, and start off pre-optimized. (A Neo-esque head start.)
 
 **Neo instantly downloads “kung fu”; you instantly download a head start on web performance and optimization.**
 
 ## 3. Leverage static site delivery and web app experience
 
-> Gatsby is great for building web experiences that leverage the benefits of both so-called static sites and web applications — simultaneously. You don’t have to sacrifice the advantages of one approach to reap the benefits of the other. ([Source](https://www.gatsbyjs.org/blog/2018-11-07-gatsby-for-apps/))
+In [Gatsby for apps](/blog/2018-11-07-gatsby-for-apps/), we recently explained:
+
+<pullquote>
+  Gatsby is great for building web experiences that leverage the benefits of both so-called static sites and web applications — simultaneously. You don’t have to sacrifice the advantages of one approach to reap the benefits of the other.
+</pullquote>
 
 When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then it hydrates into a React app.
 
@@ -61,7 +65,7 @@ It’s not just important that Gatsby sites _are_ fast. It’s also important th
 
 When a Gatsby page finishes loading, Gatsby starts prefetching resources for internal pages the user may navigate to (internal links that are visible in the viewport). It does this at a very low priority -- it will prioritize almost anything else for the current page over these prefetching requests. 
 
-Additionally, when a link is actively hovered over (a strong indication the user will visit that link), Gatsby will fetch the resources for that page at a higher priority.  
+On top of that, when a link is actively hovered over (a strong indication the user will visit that link), Gatsby will fetch the resources for that page at a higher priority.
 
 This means that when the user navigates to another internal page, resources have already been quietly loaded in the background and routing feels instantaneous.
 
@@ -75,7 +79,9 @@ Say you order delivery for dinner. It arrives, you eat. Later, you look at the m
 
 With Gatsby, your data can be sourced from just about anywhere -- content management systems, markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)”:
 
-> [Gatsby is] the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
+<pullquote>
+  [Gatsby is] the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
+</pullquote>
 
 With Gatsby, you can source your data into a consolidated data layer, which you can query against directly. No matter where your data comes from, you can access it all from a single query.
 
@@ -87,6 +93,12 @@ You can make a single order to Amazon for a variety of items originating from a 
 
 ## Wrap up
 
-These are a bit silly, but I hope you enjoyed and found this helpful!
+A lot of the core features of Gatsby seem to happen automagically; In this post I've aimed to abstract some of these core features into more approachable comparisons. They may be a bit silly, but I hope you enjoyed and found them helpful! We talked about the following developer experience and performance optimization features:
 
-Want more to chew on? Check out the "[behind the scenes](/docs/behind-the-scenes/)" section of the docs for a deeper dive.
+1. Start off with a pre-configured development environment and build process (High-performance car)
+2. Benefit from built-in performance optimization (Neo’s matrix skills)
+3. Leverage static site delivery and web app experience (Compressed mattress)
+4. Prefetch resources for snappy routing (Psychic delivery person)
+5. Consolidate data sourcing (Amazon)
+
+> 💡 Looking for a deeper dive into Gatsby's internals? Check out the "[behind the scenes](/docs/behind-the-scenes/)" section of the docs.
