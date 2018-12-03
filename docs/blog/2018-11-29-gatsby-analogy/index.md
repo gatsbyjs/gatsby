@@ -54,7 +54,6 @@ When you visit a Gatsby site, a static, server-rendered HTML page is loaded firs
 
 I compare this to modern mattresses that are ordered online, and come compressed in a box, for easier delivery. Once it’s delivered and unboxed, it magically unfurls into a mattress.
 
-
 ![casper mattress inflating](./images/casper-unboxing.gif)
 
 **Both ship small and bloom into much more.**
@@ -63,7 +62,7 @@ I compare this to modern mattresses that are ordered online, and come compressed
 
 It’s not just important that Gatsby sites _are_ fast. It’s also important that they _seem_ even faster.
 
-When a Gatsby page finishes loading, Gatsby starts prefetching resources for internal pages the user may navigate to (internal links that are visible in the viewport). It does this at a very low priority -- it will prioritize almost anything else for the current page over these prefetching requests. 
+When a Gatsby page finishes loading, Gatsby starts prefetching resources for internal pages the user may navigate to (internal links that are visible in the viewport). It does this at a very low priority -- it will prioritize almost anything else for the current page over these prefetching requests.
 
 On top of that, when a link is actively hovered over (a strong indication the user will visit that link), Gatsby will fetch the resources for that page at a higher priority.
 
