@@ -4,8 +4,8 @@ title: Visual Testing with Storybook
 
 Knowing your components look as intended in every permutation is not only a great way to test them visually, but also provides "living documentation" for them. This makes it easier for teams to:
 
-1) know what components are available to them in a given project and 
-2) what props those components accept and what all of the states of that component are. 
+1. know what components are available to them in a given project and
+2. what props those components accept and what all of the states of that component are.
 
 As your project grows over time having this information available will be invaluable. This is the function of the Storybook library. Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
 
@@ -17,14 +17,16 @@ To set up Storybook you need to install dependencies and do some custom configur
 npm install -g @storybook/cli
 ```
 
-Once the CLI is installed, the next step is to run the `getstorybook` command that is now available from the root directory of your Gatsby project.
+Once the CLI is installed, the next step is to run the `sb init` command that is now available from the root directory of your Gatsby project.
 
 ```sh
 cd my-awesome-gatsby-project
-getstorybook
+sb init
 ```
 
-The `getstorybook` command will then bootstrap the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
+> Note that if you're running a recent version of `npm` (5.2.0+) you can run the following single command instead: `npx -p @storybook/cli sb init`, which is the recommended method by Storybook. This doesn't install the CLI on your machine, thereby ensuring you're always running the latest version of the CLI.
+
+The `sb init` command bootstraps the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
 
 To update your Storybook config open `.storybook/config.js` and add the following before the `configure` method at the bottom of the file.
 
@@ -51,7 +53,7 @@ Create a new file called `webpack.config.js` in the `.storybook` folder created 
 
 ```js
 module.exports = (baseConfig, env, defaultConfig) => {
-  // Transpile Gatsby module because Gastby includes un-transpiled ES6 code.
+  // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
   defaultConfig.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
 
   // use installed babel-loader which is v8.0-beta (which is meant to work with @babel/core@7)
@@ -99,7 +101,7 @@ storiesOf(`Dashboard/Header`, module).add(`default`, () => (
 ))
 ```
 
-This is a very simple story without much going on, but honestly, nothing else really changes as related to Gastby. If you want to learn more about how Storybook works and what you can do with it, check out some of the resources listed below.
+This is a very simple story without much going on, but honestly, nothing else really changes as related to Gatsby. If you want to learn more about how Storybook works and what you can do with it, check out some of the resources listed below.
 
 ## Other resources
 

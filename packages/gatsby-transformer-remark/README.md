@@ -81,9 +81,11 @@ Using the following GraphQL query you'll be able to get the table of contents
 
 By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null.
 
-### Excerpt length
+### Excerpts
 
-By default, excerpts have a maximum length of 140 characters. You can change the default using the ```pruneLength``` argument. For example, if you need 500 characters, you can specify:
+#### Length
+
+By default, excerpts have a maximum length of 140 characters. You can change the default using the `pruneLength` argument. For example, if you need 500 characters, you can specify:
 
 ```graphql
 {
@@ -92,6 +94,36 @@ By default, excerpts have a maximum length of 140 characters. You can change the
       node {
         html
         excerpt(pruneLength: 500)
+      }
+    }
+  }
+}
+```
+
+#### Format
+
+By default, Gatsby will return excerpts as plain text. This might be useful for populating [opengraph](https://en.wikipedia.org/wiki/Facebook_Platform#Open_Graph_protocol) HTML tags for SEO reasons. You can also explicitly specify a `PLAIN` format like so:
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: PLAIN)
+      }
+    }
+  }
+}
+```
+
+It's also possible to ask Gatsby to return excerpts formatted as HTML. You might use this if you have a blog post whose an excerpt contains markdown content--e.g. header, link, etc.--and you want these links to render as HTML.
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: HTML)
       }
     }
   }

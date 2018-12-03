@@ -2,7 +2,7 @@ import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
-  { postCssPlugins, ...sassOptions }
+  { cssLoaderOptions = {}, postCssPlugins, ...sassOptions }
 ) => {
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`
@@ -22,7 +22,7 @@ exports.onCreateWebpackConfig = (
       ? [loaders.null()]
       : [
           loaders.miniCssExtract(),
-          loaders.css({ importLoaders: 2 }),
+          loaders.css({ ...cssLoaderOptions, importLoaders: 2 }),
           loaders.postcss({ plugins: postCssPlugins }),
           sassLoader,
         ],
@@ -31,7 +31,7 @@ exports.onCreateWebpackConfig = (
     test: /\.module\.s(a|c)ss$/,
     use: [
       !isSSR && loaders.miniCssExtract(),
-      loaders.css({ modules: true, importLoaders: 2 }),
+      loaders.css({ ...cssLoaderOptions, modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       sassLoader,
     ].filter(Boolean),
