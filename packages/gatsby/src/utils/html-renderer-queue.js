@@ -2,10 +2,10 @@ const Promise = require(`bluebird`)
 const convertHrtime = require(`convert-hrtime`)
 const Worker = require(`jest-worker`).default
 const { chunk } = require(`lodash`)
-const cpuCount = require(`./cpu-count`)()
+const cpuCount = require(`./cpu-count`)
 
 const workerPool = new Worker(require.resolve(`./worker`), {
-  cpuCount,
+  numWorkers: cpuCount(),
   forkOptions: {
     silent: false,
   },

@@ -16,21 +16,23 @@ const cpuCount = (alwaysReturnADefault = true) => {
     cpuCount = physical_cores || 1
   }
 
-  if (process.env.GATSBY_CPU_COUNT) {
-    switch (typeof process.env.GATSBY_CPU_COUNT) {
+  if (typeof process.env.GATSBY_CPU_COUNT !== `undefined`) {
+    const cpuCountArg =
+      parseInt(process.env.GATSBY_CPU_COUNT, 10) || process.env.GATSBY_CPU_COUNT
+
+    switch (typeof cpuCountArg) {
       case `string`:
-        // Leave at Default CPU count
-        // if process.env.GATSBY_CPU_COUNT === `physical_cores`)
+        // Leave at Default CPU count if cpuCountArg === `physical_cores`
 
         // CPU count === logical CPU count or default
-        if (process.env.GATSBY_CPU_COUNT === `logical_cores`) {
+        if (cpuCountArg === `logical_cores`) {
           cpuCount = logical_cores || cpuCount
         }
         break
 
       case `number`:
         // CPU count === passed in count,
-        cpuCount = parseInt(process.env.GATSBY_CPU_COUNT, 10)
+        cpuCount = cpuCountArg
         break
 
       default:
