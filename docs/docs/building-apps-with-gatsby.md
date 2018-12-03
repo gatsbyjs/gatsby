@@ -58,7 +58,7 @@ Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/bl
 
 Some Gatsby plugins manipulate the DOM prior to mounting (e.g. [`gatsby-plugin-twitter`](/packages/gatsby-plugin-twitter/).  In order to support these plugins, Gatsby adds a top level `key` which causes the root to remount each page transition (even those to client only routes). For some hybrid apps, this behavior causes unecessary overfetching/request waterfalls. To avoid this, you can add the following to your site's `gatsby-browser.js`
 
-```js
+```js:title=gatsby-browser.js
 import React from "react"
 
 export const replaceComponentRenderer = ({ props }) => (
