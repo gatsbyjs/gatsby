@@ -133,15 +133,6 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 
-  starters_validate:
-    executor: node
-    steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
-      - run: ./node_modules/.bin/lerna run build --scope gatsby-starter-*
-
   starters_publish:
     executor: node
     steps:
@@ -150,6 +141,8 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: ./node_modules/.bin/lerna run build --scope gatsby-starter-*
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
       - run: sh ./scripts/clone-folder.sh starters
