@@ -53,3 +53,18 @@ exports.onCreatePage = async ({ page, actions }) => {
 > [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
 
 Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/README.md) for a demo implementing user authentication and restricted client-only routes.
+
+### Known Issues
+
+Some Gatsby plugins manipulate the DOM prior to mounting (e.g. [`gatsby-plugin-twitter`](/packages/gatsby-plugin-twitter/).  In order to support these plugins, Gatsby adds a top level `key` which causes the root to remount each page transition (even those to client only routes). For some hybrid apps, this behavior causes unecessary overfetching/request waterfalls. To avoid this, you can add the following to your site's `gatsby-browser.js`
+
+```js
+import React from "react"
+
+export const replaceComponentRenderer = ({ props }) => (
+  <props.pageResources.component key={props.pageResources.page.path} {...props} />
+)
+```
+
+By using the page path as the `key`, Gatsby will only remount when the `path` changes. This allows you to preserve state between routes inside the dynamic part of your application (e.g. `/app/*`) just like a single page application (SPA) does.
+
