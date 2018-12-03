@@ -168,7 +168,4 @@ workflows:
   version: 2
   build-test:
     jobs:
-      - starters_clone:
-          filters:
-            branches:
-              only: master
+      - starters_clone
