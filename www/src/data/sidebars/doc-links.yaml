@@ -38,6 +38,8 @@
           link: /docs/path-prefix/
         - title: How Gatsby works with GitHub pages
           link: /docs/how-gatsby-works-with-github-pages/
+        - title: Multi-core builds
+          link: /docs/multi-core-builds
     - title: Custom configuration
       link: /docs/customization/
       items:
