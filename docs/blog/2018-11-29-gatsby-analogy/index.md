@@ -1,6 +1,6 @@
 ---
-title: Gatsby by analogy
-date: 2018-12-03
+title: 5 analogies that explain what Gatsby can do for you
+date: 2018-12-04
 author: Amberley Romo
 tags:
   - gatsby concepts
@@ -11,10 +11,10 @@ Gatsby does an incredible amount of cool stuff for you, automatically. This make
 In this post, I'll aim for the latter -- an approachable explanation of what Gatsby does using a series of analogies that others have found helpful. I hope you do, too!
 
 1. Start off with a pre-configured development environment and build process (high-performance car)
-2. Benefit from built-in performance optimization (Neo’s matrix skills)
+2. Benefit from built-in performance optimization (Neo’s Matrix skills)
 3. Leverage static site delivery and web app experience (Compressed mattress)
 4. Prefetch resources for snappy routing (Psychic delivery person)
-5. Consolidate data sourcing (Amazon)
+5. Consolidate data sourcing and transformations (Amazon)
 
 ## 1. Start off with a pre-configured development environment and build process
 
@@ -32,7 +32,7 @@ Performance optimization is a first-class concern for Gatsby. When you create a 
 
 One question I hear sometimes is, “What does Gatsby do that I couldn’t do myself?” The basic answer, technically, is nothing. Here’s the caveat.
 
-Take Neo in the Matrix. (If you haven’t seen The Matrix, I’ll give enough context). In the movie, there’s a part where the character Neo has skills uploaded directly into his brain. When he wakes up, he utters, “I know Kung Fu”.
+Take Neo in the Matrix. (If you haven’t seen The Matrix, I’ll give enough context). In the movie, there’s a part where the character Neo has skills uploaded directly into his brain. When he wakes up, he utters, “I know kung fu”.
 
 ![Neo knows kung fu](./images/neo-kung-fu.gif)
 
@@ -40,7 +40,7 @@ Neo could have spent 10,000 hours mastering the martial art. But instead, thanks
 
 Similarly, you could spend 10,000 hours becoming a kung fu master in performance optimization (and you should, if you want to!). But with Gatsby, you can generate a project, and start off pre-optimized. (A Neo-esque head start.)
 
-**Neo instantly downloads “kung fu”; you instantly download a head start on web performance and optimization.**
+**Neo instantly downloads kung fu; you instantly download a head start on web performance and optimization.**
 
 ## 3. Leverage static site delivery and web app experience
 
@@ -74,15 +74,15 @@ Say you order delivery for dinner. It arrives, you eat. Later, you look at the m
 
 **Gatsby preloads resources for pages a user is likely to navigate to, like a psychic delivery person.**
 
-## 5. Consolidate data sourcing
+## 5. Consolidate data sourcing and transformations
 
-With Gatsby, your data can be sourced from just about anywhere -- content management systems, markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)”:
+With Gatsby, your data can be sourced from just about anywhere -- content management systems, Markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)”:
 
 <pullquote>
   [Gatsby is] the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
 </pullquote>
 
-With Gatsby, you can source your data into a consolidated data layer, which you can query against directly. No matter where your data comes from, you can access it all from a single query.
+With Gatsby, you can source your data into a consolidated data layer, which you can query against directly. No matter where your data comes from, you can access it all from a single query. Get data from wherever it lives to the right place in your website in the right form exactly when it's needed.
 
 This is like ordering from Amazon. Instead of heading to the grocery store, the hardware store, the electronics store, the pet store, etc., you can place a single order to Amazon to get items from them all. You don't have to worry about logistics, combining data, or managing multiple requests — it Just Works™.
 
@@ -92,12 +92,12 @@ You can make a single order to Amazon for a variety of items originating from a 
 
 ## Wrap up
 
-A lot of the core features of Gatsby seem to happen automagically; In this post I've aimed to abstract some of these core features into more approachable comparisons. They may be a bit silly, but I hope you enjoyed and found them helpful! We talked about the following developer experience and performance optimization features:
+A lot of the core features of Gatsby seem to happen automagically; In this post I've aimed to abstract some of these core features into more approachable comparisons. These analogies may seem a bit silly, but I hope you enjoyed and found them helpful! We talked about the following developer experience and performance optimization features:
 
 1. Start off with a pre-configured development environment and build process (High-performance car)
-2. Benefit from built-in performance optimization (Neo’s matrix skills)
+2. Benefit from built-in performance optimization (Neo’s Matrix skills)
 3. Leverage static site delivery and web app experience (Compressed mattress)
 4. Prefetch resources for snappy routing (Psychic delivery person)
-5. Consolidate data sourcing (Amazon)
+5. Consolidate data sourcing and transformations (Amazon)
 
 > 💡 Looking for a deeper dive into Gatsby's internals? Check out the "[behind the scenes](/docs/behind-the-scenes/)" section of the docs.
