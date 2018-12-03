@@ -194,7 +194,7 @@ function prepareTextNode(node, key, text, createNodeId) {
 }
 
 function prepareStructuredTextNode(node, key, content, createNodeId) {
-  const str = JSON.stringify(content)
+  const str = stringify(content)
   const structuredTextNode = {
     ...content,
     id: createNodeId(`${node.id}${key}RichTextNode`),
