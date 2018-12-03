@@ -24,7 +24,8 @@
     "jest": true
   },
   "globals": {
-    "spyOn": true
+    "spyOn": true,
+    "__PATH_PREFIX__": true
   },
   "rules": {
     "arrow-body-style": [
