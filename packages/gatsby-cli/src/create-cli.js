@@ -256,15 +256,7 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
-    command: `clean`,
-    desc: `Wipe the local gatsby environment including built assets and cache`,
-    handler: getCommandHandler(`clean`),
-  })
-
-  cli.command({
-    command: `plugin [action] [plugin-name]`,
-    desc: `Manage Gatsby plugin to package.json and gatsby-config.js.`,
-    command: `plugin <action> <plugin>`,
+    command: `plugin <action> <plugins..>`,
     desc: `Manage Gatsby plugins.`,
     builder: _ =>
       _.positional(`action`, {
@@ -276,6 +268,12 @@ function buildLocalCommands(cli, isLocalSite) {
         describe: `Package to add, remove, etc..`,
       }),
     handler: getCommandHandler(`plugin`),
+  })
+
+  cli.command({
+    command: `clean`,
+    desc: `Wipe the local gatsby environment including built assets and cache`,
+    handler: getCommandHandler(`clean`),
   })
 
   cli.command({
