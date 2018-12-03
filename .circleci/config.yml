@@ -133,17 +133,22 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 
+  starters_validate:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: yarn lerna run build --scope gatsby-starter-*
+
   starters_publish:
     executor: node
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "starters/*"
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
-      - <<: *attach_to_bootstrap
-      - run: ./node_modules/.bin/lerna run build --scope gatsby-starter-*
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
       - run: sh ./scripts/clone-folder.sh starters
@@ -176,4 +181,10 @@ workflows:
   version: 2
   build-test:
     jobs:
-      - starters_publish
+      - starters_validate:
+          <<: *ignore_master
+      - starters_publish:
+          filters:
+            branches:
+              only:
+                - master
