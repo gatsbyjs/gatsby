@@ -1,7 +1,7 @@
-const React = require(`react`)
-const { cache } = require(`emotion`)
-const { CacheProvider } = require(`@emotion/core`)
+import React from "react"
+import { cache } from "emotion"
+import { CacheProvider } from "@emotion/core"
 
-exports.wrapElement = element => (
+export const wrapElement = element => (
   <CacheProvider value={cache}>{element}</CacheProvider>
 )

@@ -1,4 +1,4 @@
-exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
+export const onCreateBabelConfig = ({ actions }, pluginOptions) => {
   const pragmaName = `___EmotionJSX`
 
   actions.setBabelPlugin({
