@@ -436,10 +436,13 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   css={{
                     position: `absolute`,
                     right: rhythm(3 / 4),
-                    top: rhythm(-15 / 8),
+                    top: `8px`,
                     left: `auto`,
                     zIndex: 1,
                     display: `flex`,
+                    [presets.Desktop]: {
+                      top: rhythm(-15 / 8)
+                    }
                   }}
                 >
                   <a
