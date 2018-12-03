@@ -9,7 +9,7 @@ for folder in $FOLDER/*; do
   NAME=$(cat $folder/package.json | jq -r '.name')
   CLONE_DIR="__${NAME}__clone__"
 
-  git clone https://$GH_TOKEN@github.com/dschau/$NAME.git $CLONE_DIR
+  git clone https://$GITHUB_TOKEN@github.com/dschau/$NAME.git $CLONE_DIR
   cp -r $folder/. $CLONE_DIR
   cd $CLONE_DIR
   git add .
