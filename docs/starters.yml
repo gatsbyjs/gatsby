@@ -208,6 +208,8 @@
     - PWA
     - Netlify CMS
     - Disqus
+    - Search
+    - Pagination
   features:
     - Complete Business Website Suite - Home Page, About Page, Pricing Page, Contact Page and Blog
     - Netlify CMS for Content Management
@@ -216,6 +218,9 @@
     - Progressive Web App & Offline Support
     - Tags and RSS Feed for Blog
     - Disqus and Share Support
+    - Elastic-Lunr Search
+    - Pagination
+    - Easy Configuration using `config.js` file
 - url: https://haysclark.github.io/gatsby-starter-casper/
   repo: https://github.com/haysclark/gatsby-starter-casper
   description: n/a
@@ -838,15 +843,19 @@
     - Blog
     - Markdown
     - PWA
+    - Disqus
+    - SEO
+    - Styling:CSS-in-JS
   features:
     - Blog post listing with previews (image + summary) for each blog post
     - Fully configurable
     - Multilang support (blog post only)
     - Syntax highlighting
+    - css-in-js (with styled-components)
     - Fully Responsive
     - Tags
     - Google Analytics
-    - Disqus
+    - Disqus comments support
     - Offline support
     - Web App Manifest
     - ESLint
@@ -1307,3 +1316,31 @@
     - Google Analytics Integration
     - Uses Gatsby v2
     - SEO
+- url: http://starter-ghost-blog.surge.sh/
+  repo: https://github.com/little-wolf-studio/gatsby-starter-ghost-blog
+  description: Ghost Blog Starter Kit
+  tags:
+    - Ghost
+    - Blog
+    - Linting
+    - Headless CMS
+    - Styling:CSS-in-JS
+  features:
+    - Uses the Ghost CMS source
+    - Renders pages for posts, tags and authors
+    - Responsive Design
+    - Google Analytics Integration
+    - Uses Gatsby v2
+    - ESLint and Prettier
+    - Offline support
+- url: https://gatsby-starter-notes.netlify.com/
+  repo: https://github.com/patricoferris/gatsby-starter-notes
+  description: Gatsby starter for creating notes organised by subject and topic
+  tags:
+    - Markdown
+    - Pagination
+  features:
+    - Create by topic per subject notes that are organised using pagination
+    - Support for code syntax highlighting
+    - Support for mathematical expressions
+    - Support for images

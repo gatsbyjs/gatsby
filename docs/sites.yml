@@ -3150,6 +3150,17 @@
   built_by: Gabe Ragland
   built_by_url: https://twitter.com/gabe_ragland
   featured: false
+- title: Disrupting Nate
+  description: >
+    Ketogenic Diet, Podcasts, and Blockchain.
+  url: https://www.disruptingnate.com/
+  main_url: https://disruptingnate.com/
+  categories:
+    - Technology
+    - Podcasts
+  built_by: Nathan Olmstead
+  built_by_url: https://twitter.com/disruptingnate
+  featured: false
 - title: Ambassador
   url: https://www.getambassador.io
   main_url: https://www.getambassador.io
@@ -3587,3 +3598,61 @@
     - Freelance
   built_by: Jacob D. Castro
   built_by_url: https://twitter.com/jacobdcastro
+- title: Gatsby Tutorials
+  main_url: https://www.gatsbytutorials.com
+  url: https://www.gatsbytutorials.com
+  source_url: https://github.com/ooloth/gatsby-tutorials
+  featured: false
+  description: >
+    Gatsby Tutorials is a community-updated list of video, audio and written tutorials to help you learn GatsbyJS.
+  categories:
+    - Web Development
+    - Education
+    - Open Source
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+- title: Up & Running Tutorials
+  main_url: https://www.upandrunningtutorials.com
+  url: https://www.upandrunningtutorials.com
+  featured: false
+  description: >
+    Free coding tutorials for web developers. Get your web development career up and running by learning to build better, faster websites.
+  categories:
+    - Web Development
+    - Education
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+- title: Grooovinger
+  url: https://www.grooovinger.com
+  main_url: https://www.grooovinger.com
+  description: >
+    Martin Grubinger, a web developer from Austria
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Martin Grubinger
+  built_by_url: https://www.grooovinger.com
+  featured: false
+- title: LXDX - the Crypto Derivatives Exchange
+  main_url: https://www.lxdx.co/
+  url: https://www.lxdx.co/
+  description: >
+    LXDX is the world's fastest crypto exchange. Our mission is to bring innovative financial products to retail crypto investors, providing access to the same speed and scalability that institutional investors already depend on us to deliver each and every day.
+  categories:
+    - Marketing
+    - Blockchain
+    - Finance
+  built_by: Corey Ward
+  built_by_url: http://www.coreyward.me/
+  featured: false
+- title: Kyle McDonald
+  url: https://kylemcd.com
+  main_url: https://kylemcd.com
+  source_url: https://github.com/kylemcd/personal-site-react
+  description: >
+    Personal site + blog for Kyle McDonald
+  categories:
+    - Blog
+  built_by: Kyle McDonald
+  built_by_url: https://kylemcd.com
+  featured: false

@@ -5,13 +5,14 @@ const {
   GraphQLString,
 } = require(`graphql`)
 const _ = require(`lodash`)
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 const createPageDependency = require(`../../redux/actions/add-page-dependency`)
 jest.mock(`../../redux/actions/add-page-dependency`)
-const buildNodeTypes = require(`../build-node-types`)
+const nodeTypes = require(`../build-node-types`)
 
 describe(`build-node-types`, () => {
   let schema, store, types
@@ -30,10 +31,7 @@ describe(`build-node-types`, () => {
         pluginField: {
           type: GraphQLString,
           description: `test description`,
-          resolve: parent => {
-            console.log(`in resolver: ${parent}`)
-            return `pluginFieldValue`
-          },
+          resolve: parent => `pluginFieldValue`,
         },
       },
     ]
@@ -70,7 +68,7 @@ describe(`build-node-types`, () => {
       },
     ].forEach(n => store.dispatch({ type: `CREATE_NODE`, payload: n }))
 
-    types = await buildNodeTypes({})
+    types = await nodeTypes.buildAll({})
     schema = new GraphQLSchema({
       query: new GraphQLObjectType({
         name: `RootQueryType`,
@@ -158,6 +156,19 @@ describe(`build-node-types`, () => {
       `
       {
         parent(id: { eq: "p1" }) {
+          pluginField
+        }
+      }
+    `
+    )
+    expect(result.parent.pluginField).toEqual(`pluginFieldValue`)
+  })
+
+  it(`should allow filtering on plugin fields`, async () => {
+    const result = await runQuery(
+      `
+      {
+        parent(pluginField: { eq: "pluginFieldValue"}) {
           pluginField
         }
       }
