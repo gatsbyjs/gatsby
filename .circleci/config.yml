@@ -133,6 +133,13 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 
+  starters_clone:
+    executor: node
+    steps:
+      - checkout
+      - run: apt-get update && apt-get install jq # jq is helpful for parsing json
+      - run: sh ./scripts/clone-folder.sh starters
+
   e2e_tests_gatsbygram:
     <<: *e2e-executor
     steps:
@@ -162,3 +169,6 @@ workflows:
   build-test:
     jobs:
       - lint
+      - starters_clone:
+          requires:
+            - lint
