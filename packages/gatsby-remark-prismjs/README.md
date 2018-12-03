@@ -138,7 +138,7 @@ import the corresponding CSS file from PrismJS, right after importing your
 colorscheme in `src/components/layout.js`:
 
 ```javascript
-// layouts/index.js
+// src/components/layout.js
 require("prismjs/plugins/line-numbers/prism-line-numbers.css")
 ```
 
