@@ -12,7 +12,10 @@
     }
   },
   "loglevel": "success",
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*",
+    "starters/*"
+  ],
   "version": "independent",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",

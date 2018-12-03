@@ -4,7 +4,7 @@ BASE=$(pwd)
 
 for folder in $FOLDER/*; do
   [ -d "$folder" ] || continue # only directories
-  cd $BASE\
+  cd $BASE
 
   NAME=$(cat $folder/package.json | jq -r '.name')
   CLONE_DIR="__${NAME}__clone__"
