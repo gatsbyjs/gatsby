@@ -441,7 +441,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     zIndex: 1,
                     display: `flex`,
                     [presets.Desktop]: {
-                      top: rhythm(-15 / 8)
+                      top: rhythm(-15 / 8),
                     },
                   }}
                 >
