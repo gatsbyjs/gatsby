@@ -137,6 +137,7 @@ jobs:
     executor: node
     steps:
       - checkout
+      - run: ./scripts/assert-changed-files.sh "starters/*"
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - <<: *restore_cache
       - <<: *install_node_modules
