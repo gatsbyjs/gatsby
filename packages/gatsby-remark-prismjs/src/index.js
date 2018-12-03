@@ -11,7 +11,7 @@ module.exports = (
     inlineCodeMarker = null,
     aliases = {},
     noInlineHighlight = false,
-    showLineNumbersGlobal = false,
+    showLineNumbers: showLineNumbersGlobal = false,
   } = {}
 ) => {
   const normalizeLanguage = lang => {
