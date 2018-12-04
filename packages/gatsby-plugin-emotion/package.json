@@ -26,7 +26,7 @@
   "peerDependencies": {
     "emotion": "7 || 8 || 9",
     "emotion-server": "7 || 8 || 9",
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": "^2.0.0-alpha"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion",
   "scripts": {
