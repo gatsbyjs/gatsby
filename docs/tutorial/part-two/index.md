@@ -489,4 +489,3 @@ yet for your favorite CSS option,
 ## What's coming next?
 
 Now continue on to [Creating nested layout components](/tutorial/part-three/), the third part of the tutorial.
-](/tutorial/part-three/), the third part of the tutorial.
