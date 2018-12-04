@@ -441,19 +441,19 @@
   categories:
     - Education
     - Entertainment
-- title: William Owen UK Portfolio / Blog
-  main_url: "http://william-owen.co.uk/"
-  url: "http://william-owen.co.uk/"
-  featured: false
-  description: >-
-    Over 20 years experience delivering customer-facing websites, internet-based
-    solutions and creative visual design for a wide range of companies and
-    organisations.
-  categories:
-    - Portfolio
-    - Blog
-  built_by: William Owen
-  built_by_url: "https://twitter.com/twilowen"
+# - title: William Owen UK Portfolio / Blog
+#   main_url: "http://william-owen.co.uk/"
+#   url: "http://william-owen.co.uk/"
+#   featured: false
+#   description: >-
+#     Over 20 years experience delivering customer-facing websites, internet-based
+#     solutions and creative visual design for a wide range of companies and
+#     organisations.
+#   categories:
+#     - Portfolio
+#     - Blog
+#   built_by: William Owen
+#   built_by_url: "https://twitter.com/twilowen"
 - title: A4 纸网
   main_url: "http://www.a4z.cn/"
   url: "http://www.a4z.cn/price"
