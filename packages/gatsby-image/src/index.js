@@ -18,7 +18,7 @@ const convertProps = props => {
 
 // Cache if we've seen an image before so we don't both with
 // lazy-loading & fading in on subsequent mounts.
-const imageCache = {}
+const imageCache = new Set()
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
@@ -26,16 +26,16 @@ const inImageCache = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  if (imageCache[src]) {
+  if (imageCache.has(src)) {
     return true
   } else {
-    imageCache[src] = true
+    imageCache.add(src)
     return false
   }
 }
 
 let io
-const listeners = []
+const listeners = new Map()
 
 function getIO() {
   if (
@@ -46,12 +46,13 @@ function getIO() {
     io = new window.IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          listeners.forEach(l => {
-            if (l[0] === entry.target) {
+          listeners.forEach((cb, element) => {
+            if (element === entry.target) {
               // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
               if (entry.isIntersecting || entry.intersectionRatio > 0) {
-                io.unobserve(l[0])
-                l[1]()
+                io.unobserve(element)
+                listeners.delete(element)
+                cb()
               }
             }
           })
@@ -65,8 +66,12 @@ function getIO() {
 }
 
 const listenToIntersections = (el, cb) => {
-  getIO().observe(el)
-  listeners.push([el, cb])
+  const observer = getIO()
+
+  if (observer) {
+    observer.observe(el)
+    listeners.set(el, cb)
+  }
 }
 
 const noscriptImg = props => {
@@ -118,7 +123,56 @@ Img.propTypes = {
   onLoad: PropTypes.func,
 }
 
+const fixedObject = PropTypes.shape({
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+})
+
+const fluidObject = PropTypes.shape({
+  aspectRatio: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  sizes: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+})
+
 class Image extends React.Component {
+  static propTypes = {
+    resolutions: fixedObject,
+    sizes: fluidObject,
+    fixed: fixedObject,
+    fluid: fluidObject,
+    fadeIn: PropTypes.bool,
+    title: PropTypes.string,
+    alt: PropTypes.string,
+    className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
+    critical: PropTypes.bool,
+    style: PropTypes.object,
+    imgStyle: PropTypes.object,
+    placeholderStyle: PropTypes.object,
+    placeholderClassName: PropTypes.string,
+    backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    onLoad: PropTypes.func,
+    onError: PropTypes.func,
+    Tag: PropTypes.string,
+  }
+
+  static defaultProps = {
+    critical: false,
+    fadeIn: true,
+    alt: ``,
+    Tag: `div`,
+  }
+
   constructor(props) {
     super(props)
 
@@ -165,30 +219,32 @@ class Image extends React.Component {
       hasNoScript,
       seenBefore,
     }
-
-    this.imageRef = React.createRef()
-    this.handleImageLoaded = this.handleImageLoaded.bind(this)
-    this.handleRef = this.handleRef.bind(this)
   }
 
+  imageRef = React.createRef()
+
+  wrapperRef = React.createRef()
+
   componentDidMount() {
-    if (this.props.critical) {
-      const img = this.imageRef.current
+    const { critical } = this.props
+    const { IOSupported } = this.state
+    const img = this.imageRef.current
+    const wrapper = this.wrapperRef.current
+
+    if (critical) {
       if (img && img.complete) {
         this.handleImageLoaded()
       }
     }
-  }
 
-  handleRef(ref) {
-    if (this.state.IOSupported && ref) {
-      listenToIntersections(ref, () => {
+    if (IOSupported && wrapper) {
+      listenToIntersections(wrapper, () => {
         this.setState({ isVisible: true })
       })
     }
   }
 
-  handleImageLoaded() {
+  handleImageLoaded = () => {
     this.setState({ imgLoaded: true })
     if (this.state.seenBefore) {
       this.setState({ fadeIn: false })
@@ -246,7 +302,7 @@ class Image extends React.Component {
             overflow: `hidden`,
             ...style,
           }}
-          ref={this.handleRef}
+          ref={this.wrapperRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
           {/* Preserve the aspect ratio. */}
@@ -414,55 +470,6 @@ class Image extends React.Component {
 
     return null
   }
-}
-
-Image.defaultProps = {
-  critical: false,
-  fadeIn: true,
-  alt: ``,
-  Tag: `div`,
-}
-
-const fixedObject = PropTypes.shape({
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  src: PropTypes.string.isRequired,
-  srcSet: PropTypes.string.isRequired,
-  base64: PropTypes.string,
-  tracedSVG: PropTypes.string,
-  srcWebp: PropTypes.string,
-  srcSetWebp: PropTypes.string,
-})
-
-const fluidObject = PropTypes.shape({
-  aspectRatio: PropTypes.number.isRequired,
-  src: PropTypes.string.isRequired,
-  srcSet: PropTypes.string.isRequired,
-  sizes: PropTypes.string.isRequired,
-  base64: PropTypes.string,
-  tracedSVG: PropTypes.string,
-  srcWebp: PropTypes.string,
-  srcSetWebp: PropTypes.string,
-})
-
-Image.propTypes = {
-  resolutions: fixedObject,
-  sizes: fluidObject,
-  fixed: fixedObject,
-  fluid: fluidObject,
-  fadeIn: PropTypes.bool,
-  title: PropTypes.string,
-  alt: PropTypes.string,
-  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
-  critical: PropTypes.bool,
-  style: PropTypes.object,
-  imgStyle: PropTypes.object,
-  placeholderStyle: PropTypes.object,
-  placeholderClassName: PropTypes.string,
-  backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  onLoad: PropTypes.func,
-  onError: PropTypes.func,
-  Tag: PropTypes.string,
 }
 
 export default Image
