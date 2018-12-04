@@ -458,7 +458,7 @@ Image.propTypes = {
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
   critical: PropTypes.bool,
-  crossOrigin: PropTypes.string,
+  crossOrigin: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   style: PropTypes.object,
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,
