@@ -58,8 +58,12 @@ aliases:
       - run: yarn jest -w 1
 
   e2e-test-workflow: &e2e-test-workflow
-    <<: *ignore_master
-    <<: *ignore_docs
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+          - /blog.+/
     requires:
       - bootstrap
 
