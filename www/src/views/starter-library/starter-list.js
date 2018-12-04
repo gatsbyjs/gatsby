@@ -99,7 +99,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                       <div css={{ display: `inline-block` }}>
                         <MdStar
                           style={{
-                            color: colors.accent,
+                            color: colors.gray.light,
                             verticalAlign: `text-top`,
                           }}
                         />
