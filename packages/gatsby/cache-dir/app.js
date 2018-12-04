@@ -14,7 +14,10 @@ window.___emitter = emitter
 setApiRunnerForLoader(apiRunner)
 
 // necessary for hot-reloading of react hooks
-setConfig({ pureSFC: true })
+setConfig({
+  ignoreSFC: true,
+  pureRender: true,
+})
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
