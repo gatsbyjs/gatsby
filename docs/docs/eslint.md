@@ -4,7 +4,7 @@ title: ESLint
 
 ## Why use ESLint
 
-Gatsby ships with Prettier, which is a simple, opinionated code *formatter*. [ESLint](https://eslint.org) can be both a *linter* and *formatter*, meaning you can use it to check for syntactical errors as well as formatting. Prettier will work for most sites, however if you'd like to add linting capabilities *and* highly-configurable formatting you should implement ESLint into your Gatsby project.
+Gatsby ships with Prettier, which is a simple, opinionated code _formatter_. [ESLint](https://eslint.org) can be both a _linter_ and _formatter_, meaning you can use it to check for syntactical errors as well as formatting. Prettier will work for most sites, however if you'd like to add linting capabilities _and_ highly-configurable formatting you should implement ESLint into your Gatsby project.
 
 ## How to use ESLint
 
@@ -16,12 +16,12 @@ npm rm prettier
 
 # Install ESLint and its packages
 npm install --save-dev eslint babel-eslint \
-  eslint-config-standard \
+  eslint-config-standard eslint-plugin-node \
   eslint-plugin-standard eslint-plugin-react \
   eslint-plugin-import eslint-plugin-promise \
 ```
 
-Now that we have our packages installed, remove `.prettierrc` from the root of your new Gatsby project and create a new file named `.eslintrc.js` using the commands below. 
+Now that we have our packages installed, remove `.prettierrc` from the root of your new Gatsby project and create a new file named `.eslintrc.js` using the commands below.
 
 ```bash
 # Remove the Prettier config file
@@ -37,47 +37,53 @@ We recommend copying our default .eslintrc.js content below to your newly create
 
 ```js:title=.eslintrc.js
 module.exports = {
-  extends: ['standard'],
-  plugins: ['standard', 'react'],
+  extends: ["standard"],
+  plugins: ["standard", "react"],
   rules: {
-    'no-var': 'error', // optional, recommended when using es6+
-    'no-unused-vars': 1, // recommended
-    'arrow-spacing': ['error', { 'before': true, 'after': true }], // recommended
-    'indent': ['error', 2],
-    'comma-dangle': ['error', {
-      'objects': 'only-multiline',
-      'arrays': 'only-multiline',
-      'imports': 'never',
-      'exports': 'never',
-      'functions': 'never'
-    }],
+    "no-var": "error", // optional, recommended when using es6+
+    "no-unused-vars": 1, // recommended
+    "arrow-spacing": ["error", { before: true, after: true }], // recommended
+    indent: ["error", 2],
+    "comma-dangle": [
+      "error",
+      {
+        objects: "only-multiline",
+        arrays: "only-multiline",
+        imports: "never",
+        exports: "never",
+        functions: "never",
+      },
+    ],
 
     // options to emulate prettier setup
-    'semi': ['error', 'never'],
-    'max-len': ['error', { 'code': 80 }],
-    'template-curly-spacing': ['error', 'always'],
-    'arrow-parens': ['error', 'as-needed'],
+    semi: ["error", "never"],
+    "max-len": ["error", { code: 80 }],
+    "template-curly-spacing": ["error", "always"],
+    "arrow-parens": ["error", "as-needed"],
 
     // standard.js
-    'space-before-function-paren': ['error', {
-      'named': 'always',
-      'anonymous': 'always',
-      'asyncArrow': 'always'
-    }],
+    "space-before-function-paren": [
+      "error",
+      {
+        named: "always",
+        anonymous: "always",
+        asyncArrow: "always",
+      },
+    ],
 
     // standard plugin - options
-    'standard/object-curly-even-spacing': ['error', 'either'],
-    'standard/array-bracket-even-spacing': ['error', 'either'],
-    'standard/computed-property-even-spacing': ['error', 'even'],
-    'standard/no-callback-literal': ['error', ['cb', 'callback']],
+    "standard/object-curly-even-spacing": ["error", "either"],
+    "standard/array-bracket-even-spacing": ["error", "either"],
+    "standard/computed-property-even-spacing": ["error", "even"],
+    "standard/no-callback-literal": ["error", ["cb", "callback"]],
 
     // react plugin - options
-    'react/jsx-uses-react': 'error',
-    'react/jsx-uses-vars': 'error'
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
   },
-  parser: 'babel-eslint',
+  parser: "babel-eslint",
   parserOptions: {
-    'ecmaVersion': 8, // optional, recommended 6+
-  }
+    ecmaVersion: 8, // optional, recommended 6+
+  },
 }
 ```

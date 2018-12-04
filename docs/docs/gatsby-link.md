@@ -93,9 +93,40 @@ render () {
 }
 ```
 
-You can also pass state to pages when you navigate e.g. `navigate("/a-path/", { state: { pleasant: "reasonably" }}`
-
 Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2.
+
+## Passing state through Link and Navigate
+
+You can pass state to pages when you navigate, such as:
+
+```javascript
+navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
+```
+
+You can also pass state to pages when you use `Link`:
+
+```jsx
+<Link
+  to="/another-page/"
+  activeStyle={{
+    color: "red",
+  }}
+  state={{
+    pleasant: "reasonably",
+  }}
+>
+```
+
+This is accessible from the `location` object on the new page:
+
+```javascript
+componentDidMount() {
+  const pleasant = this.props.location.state.pleasant
+  this.setState({
+    pleasant: pleasant
+  })
+}
+```
 
 ## Prefixed paths helper
 
@@ -136,7 +167,9 @@ following may be a good starting point:
 ```jsx
 import { Link as GatsbyLink } from "gatsby"
 
-const Link = ({ children, to, ...other }) => {
+// Since DOM elements <a> cannot receive activeClassName,
+// destructure the prop here and pass it only to GatsbyLink
+const Link = ({ children, to, activeClassName, ...other }) => {
   // Tailor the following test to your environment.
   // This example assumes that any internal link (intended for Gatsby)
   // will start with exactly one slash, and that anything else is external.
@@ -145,7 +178,7 @@ const Link = ({ children, to, ...other }) => {
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
-      <GatsbyLink to={to} {...other}>
+      <GatsbyLink to={to} activeClassName={activeClassName} {...other}>
         {children}
       </GatsbyLink>
     )
@@ -164,7 +197,7 @@ export default Link
 
 You can similarly check for file downloads:
 
-```
+```jsx
   const file = /\.[0-9a-z]+$/i.test(to)
 
   ...
@@ -183,5 +216,4 @@ You can similarly check for file downloads:
       </GatsbyLink>
     )
   }
-
 ```

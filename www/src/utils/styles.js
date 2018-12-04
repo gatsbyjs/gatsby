@@ -60,20 +60,13 @@ export const buttonStyles = {
       outline: 0,
       boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
     },
-    ":after": {
-      content: `''`,
-      display: `block`,
-    },
-    "& svg": {
-      marginLeft: `.2em`,
-    },
+    ":after": { content: `''`, display: `block` },
+    "& svg": { marginLeft: `.2em` },
     [presets.Tablet]: {
       ...scale(1 / 5),
       padding: `${rhythm(2 / 6)} ${rhythm(3 / 5)}`,
     },
-    [presets.VHd]: {
-      padding: `${rhythm(1 / 2)} ${rhythm(1)}`,
-    },
+    [presets.VHd]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
   },
   secondary: {
     backgroundColor: `transparent`,
@@ -88,9 +81,7 @@ export const buttonStyles = {
       fontSize: scale(2 / 5).fontSize,
       padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
     },
-    [presets.VHd]: {
-      padding: `${rhythm(1 / 2)} ${rhythm(1)}`,
-    },
+    [presets.VHd]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
   },
   small: {
     fontSize: scale(-1 / 3).fontSize,
@@ -104,6 +95,19 @@ export const buttonStyles = {
       padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
     },
   },
+  tiny: {
+    fontSize: scale(-1 / 3).fontSize,
+    padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
+    [presets.Tablet]: {
+      fontSize: scale(-1 / 4).fontSize,
+      padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
+    },
+    [presets.VHd]: {
+      fontSize: scale(-1 / 5).fontSize,
+      padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
+    },
+  },
+  ondark: { border: `1px solid ${colors.ui.light}` },
 }
 
 export const svgStyles = {

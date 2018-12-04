@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: ["gatsby-source-pokeapi"],
+  plugins: [`gatsby-source-pokeapi`],
 }

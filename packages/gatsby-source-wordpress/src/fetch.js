@@ -7,6 +7,35 @@ const httpExceptionHandler = require(`./http-exception-handler`)
 const requestInQueue = require(`./request-in-queue`)
 
 /**
+ * Check auth object to see if we should fetch JWT access token
+ */
+const shouldUseJwt = auth => auth && (auth.jwt_user || auth.jwt_pass)
+
+/**
+ * Check auth object to see if we should use HTTP Basic Auth
+ */
+const shouldUseHtaccess = auth =>
+  auth && (auth.htaccess_user || auth.htaccess_pass)
+
+/**
+ * Format Auth settings for verbose output
+ */
+const formatAuthSettings = auth => {
+  let authOutputLines = []
+  if (shouldUseJwt(auth)) {
+    authOutputLines.push(`  JWT Auth: ${auth.jwt_user}:${auth.jwt_pass}`)
+  }
+
+  if (shouldUseHtaccess(auth)) {
+    authOutputLines.push(
+      `  HTTP Basic Auth: ${auth.htaccess_user}:${auth.htaccess_pass}`
+    )
+  }
+
+  return authOutputLines.join(`\n`)
+}
+
+/**
  * High-level function to coordinate fetching data from a WordPress
  * site.
  */
@@ -35,10 +64,15 @@ async function fetch({
     _accessToken = await getWPCOMAccessToken(_auth)
   } else {
     url = `${_siteURL}/wp-json`
+    if (shouldUseJwt(_auth)) {
+      _accessToken = await getJWToken(_auth, url)
+    }
   }
 
   if (_verbose) {
     console.time(`=END PLUGIN=====================================`)
+
+    const authOutput = formatAuthSettings(_auth)
 
     console.log(
       colorized.out(
@@ -48,7 +82,7 @@ async function fetch({
 Site URL: ${_siteURL}
 Site hosted on Wordpress.com: ${_hostingWPCOM}
 Using ACF: ${_useACF}
-Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}
+Auth: ${authOutput ? `\n${authOutput}` : `false`}
 Verbose output: ${_verbose}
 
 Mama Route URL: ${url}
@@ -65,14 +99,14 @@ Mama Route URL: ${url}
       method: `get`,
       url: url,
     }
-    if (_auth && (_auth.htaccess_user || _auth.htaccess_pass)) {
+    if (shouldUseHtaccess(_auth)) {
       options.auth = {
         username: _auth.htaccess_user,
         password: _auth.htaccess_pass,
       }
     }
 
-    if (_hostingWPCOM && _accessToken) {
+    if (_accessToken) {
       options.headers = {
         Authorization: `Bearer ${_accessToken}`,
       }
@@ -100,7 +134,6 @@ Mama Route URL: ${url}
       _verbose,
       _useACF,
       _acfOptionPageIds,
-      _hostingWPCOM,
       _includedRoutes,
       _excludedRoutes,
       typePrefix,
@@ -124,7 +157,6 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           route,
           _verbose,
           _perPage,
-          _hostingWPCOM,
           _auth,
           _accessToken,
           _concurrentRequests,
@@ -174,6 +206,32 @@ async function getWPCOMAccessToken(_auth) {
 }
 
 /**
+ * Gets JSON Web Token so it can fetch private data
+ *
+ * @returns
+ */
+async function getJWToken(_auth, url) {
+  let result
+  let authUrl = `${url}/jwt-auth/v1/token`
+  try {
+    const options = {
+      url: authUrl,
+      method: `post`,
+      data: {
+        username: _auth.jwt_user,
+        password: _auth.jwt_pass,
+      },
+    }
+    result = await axios(options)
+    result = result.data.token
+  } catch (e) {
+    httpExceptionHandler(e)
+  }
+
+  return result
+}
+
+/**
  * Fetch the data from specified route url, using the auth provided.
  *
  * @param {any} route
@@ -183,7 +241,6 @@ async function fetchData({
   route,
   _verbose,
   _perPage,
-  _hostingWPCOM,
   _auth,
   _accessToken,
   _concurrentRequests,
@@ -202,18 +259,14 @@ async function fetchData({
     console.time(`Fetching the ${type} took`)
   }
 
-  let routeResponse = await getPages(
-    {
-      url,
-      _perPage,
-      _hostingWPCOM,
-      _auth,
-      _accessToken,
-      _verbose,
-      _concurrentRequests,
-    },
-    1
-  )
+  let routeResponse = await getPages({
+    url,
+    _perPage,
+    _auth,
+    _accessToken,
+    _verbose,
+    _concurrentRequests,
+  })
 
   let entities = []
   if (routeResponse) {
@@ -244,7 +297,6 @@ async function fetchData({
               route: { url: menu.meta.links.self, type: `${type}_items` },
               _verbose,
               _perPage,
-              _hostingWPCOM,
               _auth,
               _accessToken,
             })
@@ -282,15 +334,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  {
-    url,
-    _perPage,
-    _hostingWPCOM,
-    _auth,
-    _accessToken,
-    _concurrentRequests,
-    _verbose,
-  },
+  { url, _perPage, _auth, _accessToken, _concurrentRequests, _verbose },
   page = 1
 ) {
   try {
@@ -304,15 +348,20 @@ async function getPages(
           page: page,
         })}`,
       }
-      if (_hostingWPCOM) {
+
+      if (_accessToken) {
         o.headers = {
           Authorization: `Bearer ${_accessToken}`,
         }
-      } else {
-        o.auth = _auth
-          ? { username: _auth.htaccess_user, password: _auth.htaccess_pass }
-          : null
       }
+
+      if (shouldUseHtaccess(_auth)) {
+        o.auth = {
+          username: _auth.htaccess_user,
+          password: _auth.htaccess_pass,
+        }
+      }
+
       return o
     }
 
@@ -465,6 +514,7 @@ function getValidRoutes({
         `**/embed`,
         `**/proxy`,
         `/`,
+        `/jwt-auth/**`,
       ]
 
       const routePath = getRoutePath(url, route._links.self)

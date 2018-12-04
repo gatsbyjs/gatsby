@@ -210,6 +210,7 @@ function inferGraphQLInputFields({
 const EXCLUDE_KEYS = {
   parent: 1,
   children: 1,
+  $loki: 1,
 }
 
 type InferInputOptions = {
@@ -272,6 +273,13 @@ export function inferInputObjectStructureFromNodes({
       const isArray = _.isArray(value)
       const nodeToFind = isArray ? value[0] : value
       const linkedNode = findLinkedNode(nodeToFind)
+
+      // Fall back if the linked node can't be found. Prevents crashing, and is
+      // picked up in infer-graphql-type.js with an error that gives context to
+      // the user about which node is missing
+      if (!linkedNode) {
+        return
+      }
 
       // Get from cache if found, else store into it
       if (linkedNodeCache[linkedNode.internal.type]) {
