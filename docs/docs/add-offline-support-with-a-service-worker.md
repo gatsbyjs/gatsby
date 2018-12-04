@@ -41,6 +41,8 @@ Add this plugin to your `gatsby-config.js`
 
 That's all you need to add offline support to your Gatsby site.
 
+Note: You must create a production build using `gatsby build` for the service workers to register.
+
 ## References
 
 - [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
