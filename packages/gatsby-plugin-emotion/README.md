@@ -7,7 +7,7 @@ rendering.
 ## Install
 
 ```
-npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
+npm install --save gatsby-plugin-emotion emotion emotion-server @emotion/core @emotion/styled
 ```
 
 ## How to use

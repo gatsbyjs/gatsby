@@ -17,19 +17,19 @@ The guides in this section will walk through the process of setting up content s
 
 Other CMS systems you can connect to include:
 
-- [ButterCMS](https://www.gatsbyjs.org/packages/gatsby-source-buttercms/?=gatsby-source-)
-- [Shopify](https://www.gatsbyjs.org/packages/gatsby-source-shopify/?=gatsby-source-)
-- [Contentstack](https://www.gatsbyjs.org/packages/gatsby-source-contentstack/?=gatsby-source-)
-- [Ghost](https://www.gatsbyjs.org/packages/gatsby-source-ghost/?=gatsby-source-)
-- [Prismic](https://www.gatsbyjs.org/packages/gatsby-source-prismic/?=gatsby-source-)
-- [Strapi](https://www.gatsbyjs.org/packages/gatsby-source-strapi/?=gatsby-source-)
-- [Directus](https://www.gatsbyjs.org/packages/gatsby-source-directus/?=gatsby-source-)
-- [Cockpit](https://www.gatsbyjs.org/packages/gatsby-plugin-cockpit/?=gatsby-source-)
-- [GraphCMS](https://www.gatsbyjs.org/packages/gatsby-source-graphcms-beta-patch/?=gatsby-source-)
-- [CraftCMS](https://www.gatsbyjs.org/packages/gatsby-source-craftcms/?=gatsby-source-)
-- [DatoCMS](https://www.gatsbyjs.org/packages/gatsby-source-datocms/?=gatsby-source-)
-- [Storyblok](https://www.gatsbyjs.org/packages/gatsby-source-storyblok/?=gatsby-source-)
-- [Kentico Cloud](https://www.gatsbyjs.org/packages/gatsby-source-kentico-cloud/?=gatsby-source-)
+- [ButterCMS](https://www.gatsbyjs.org/packages/gatsby-source-buttercms)
+- [Shopify](https://www.gatsbyjs.org/packages/gatsby-source-shopify)
+- [Contentstack](https://www.gatsbyjs.org/packages/gatsby-source-contentstack)
+- [Ghost](https://www.gatsbyjs.org/packages/gatsby-source-ghost)
+- [Prismic](https://www.gatsbyjs.org/packages/gatsby-source-prismic)
+- [Strapi](https://www.gatsbyjs.org/packages/gatsby-source-strapi)
+- [Directus](https://www.gatsbyjs.org/packages/gatsby-source-directus)
+- [Cockpit](https://www.gatsbyjs.org/packages/gatsby-plugin-cockpit)
+- [GraphCMS](https://www.gatsbyjs.org/packages/gatsby-source-graphcms-beta-patch)
+- [CraftCMS](https://www.gatsbyjs.org/packages/gatsby-source-craftcms)
+- [DatoCMS](https://www.gatsbyjs.org/packages/gatsby-source-datocms)
+- [Storyblok](https://www.gatsbyjs.org/packages/gatsby-source-storyblok)
+- [Kentico Cloud](https://www.gatsbyjs.org/packages/gatsby-source-kentico-cloud)
 
 ## How to add new guides to this section
 

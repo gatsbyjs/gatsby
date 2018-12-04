@@ -26,6 +26,7 @@ const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
 const unionTypes = new Map()
+const lazyFields = require(`./lazy-fields`)
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -113,21 +114,24 @@ function inferGraphQLType({
       return { type: GraphQLBoolean }
     case `string`:
       return { type: GraphQLString }
-    case `object`:
+    case `object`: {
+      const typeName = createTypeName(fieldName)
       return {
         type: new GraphQLObjectType({
-          name: createTypeName(fieldName),
+          name: typeName,
           fields: _inferObjectStructureFromNodes(
             {
               ...otherArgs,
               selector,
               nodes,
               types,
+              typeName,
             },
             exampleValue
           ),
         }),
       }
+    }
     case `number`:
       return is32BitInteger(exampleValue)
         ? { type: GraphQLInt }
@@ -304,18 +308,20 @@ type inferTypeOptions = {
   types: ProcessedNodeType[],
   ignoreFields?: string[],
   selector?: string,
+  typeName?: string,
 }
 
 const EXCLUDE_KEYS = {
   id: 1,
   parent: 1,
   children: 1,
+  $loki: 1,
 }
 
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
 function _inferObjectStructureFromNodes(
-  { nodes, types, selector, ignoreFields }: inferTypeOptions,
+  { nodes, types, selector, ignoreFields, typeName }: inferTypeOptions,
   exampleValue: ?Object
 ): GraphQLFieldConfigMap<*, *> {
   const config = store.getState().config
@@ -325,12 +331,15 @@ function _inferObjectStructureFromNodes(
   // Ensure nodes have internal key with object.
   nodes = nodes.map(n => (n.internal ? n : { ...n, internal: {} }))
 
-  const typeName: string = nodes[0].internal.type
+  const rootTypeName: string = nodes[0].internal.type
+  if (!typeName) {
+    typeName = rootTypeName
+  }
 
   let resolvedExample: Object =
     exampleValue != null
       ? exampleValue
-      : getExampleValues({ nodes, typeName, ignoreFields })
+      : getExampleValues({ nodes, typeName: rootTypeName, ignoreFields })
 
   const inferredFields = {}
   _.each(resolvedExample, (value, key) => {
@@ -341,7 +350,7 @@ function _inferObjectStructureFromNodes(
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
     const nextSelector = selector ? `${selector}.${key}` : key
-    const fieldSelector = `${typeName}.${nextSelector}`
+    const fieldSelector = `${rootTypeName}.${nextSelector}`
 
     let fieldName = key
     let inferredField
@@ -356,6 +365,7 @@ function _inferObjectStructureFromNodes(
     } else if (key.includes(`___NODE`)) {
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, nextSelector, types)
+      lazyFields.add(typeName, fieldName)
     }
 
     // Replace unsupported values
