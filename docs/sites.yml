@@ -3656,3 +3656,19 @@
   built_by: Kyle McDonald
   built_by_url: https://kylemcd.com
   featured: false
+- title: VSCode Power User Course
+  main_url: https://VSCode.pro
+  url: https://VSCode.pro
+  description: >
+    After 10 years with Sublime, I switched to VSCode. Love it. Spent 1000+ hours building a premium video course to help you switch today. 200+ power user tips & tricks turn you into a VSCode.pro
+  categories:
+    - Education
+    - Learning
+    - eCommerce
+    - Marketing
+    - VSCode
+    - Technology
+    - Web Development
+  built_by: Ahmad Awais
+  built_by_url: https://twitter.com/MrAhmadAwais/
+  featured: false
