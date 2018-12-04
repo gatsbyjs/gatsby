@@ -244,6 +244,10 @@ class Image extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    listeners.delete(this.imageRef.current)
+  }
+
   handleImageLoaded = () => {
     this.setState({ imgLoaded: true })
     if (this.state.seenBefore) {
