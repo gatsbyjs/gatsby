@@ -7,7 +7,10 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0"
+    "@babel/plugin-transform-react-jsx": "^7.1.6",
+    "@babel/runtime": "^7.0.0",
+    "babel-plugin-emotion": "^10.0.0",
+    "babel-plugin-jsx-pragmatic": "^1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -24,15 +27,15 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "emotion": "7 || 8 || 9",
-    "emotion-server": "7 || 8 || 9",
-    "gatsby": ">2.0.0-alpha"
+    "@emotion/core": "^10.0.0",
+    "emotion": "^10.0.0",
+    "emotion-server": "^10.0.0",
+    "gatsby": ">2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
-  },
-  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
+  }
 }
