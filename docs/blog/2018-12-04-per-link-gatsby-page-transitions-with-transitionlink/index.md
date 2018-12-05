@@ -18,6 +18,7 @@ tags:
 When I started developing in React and Gatsby, one of the most exciting things to me was that it would be easier to code up page transitions than it had been before.
 
 There was one problem though. Once I finally got around to adding transitions to a Gatsby site I was working on, I quickly realized that there was no simple way to do page transitions and the types of transitions I was interested in were basically impossible. To me this was a nonstarter so after a few weeks of experimentation I came up with [`gatsby-plugin-transition-link`](https://transitionlink.tylerbarnes.ca).
+
 TransitionLink is a simple way of declaring a page transition via props on a Link component. For both entering and exiting pages you can specify a number of timing values, pass state, and add a trigger a function.
 
 TransitionLink is compatible with declarative react animation libraries like [react-pose](https://popmotion.io/pose/) and [react-spring](https://react-spring.surge.sh/). It's also compatible with imperative animation libraries like [gsap](https://greensock.com) and [anime.js](http://animejs.com/)
