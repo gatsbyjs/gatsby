@@ -200,6 +200,7 @@ exports.sourceNodes = async (
             cache,
             createNode,
             createNodeId,
+            auth: { htaccess_user: basicAuth.username, htaccess_pass: basicAuth.password }
           })
         } catch (e) {
           // Ignore
