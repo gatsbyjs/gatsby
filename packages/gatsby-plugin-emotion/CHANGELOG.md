@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.0"></a>
+
+# [3.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion/compare/gatsby-plugin-emotion@2.0.7...gatsby-plugin-emotion@3.0.0) (2018-12-04)
+
+### Features
+
+- **gatsby-plugin-emotion:** update plugin for emotion v10 ([#10226](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion/issues/10226)) ([5754c2c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion/commit/5754c2c))
+
 <a name="2.0.7"></a>
 
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion/compare/gatsby-plugin-emotion@2.0.6...gatsby-plugin-emotion@2.0.7) (2018-11-29)

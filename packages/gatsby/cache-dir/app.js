@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import domReady from "domready"
-import { hot } from "react-hot-loader"
+import { hot, setConfig } from "react-hot-loader"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
@@ -12,6 +12,12 @@ import pages from "./pages.json"
 
 window.___emitter = emitter
 setApiRunnerForLoader(apiRunner)
+
+// necessary for hot-reloading of react hooks
+setConfig({
+  ignoreSFC: true,
+  pureRender: true,
+})
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
