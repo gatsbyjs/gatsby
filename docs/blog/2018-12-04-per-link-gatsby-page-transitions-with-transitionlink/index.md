@@ -149,5 +149,3 @@ TransitionPortal is a React portal which allows you to position animation elemen
 ### Capping it off
 
 I'm excited to see what you and the rest of the Gatsby community will build with TransitionLink! Feel free to send any unanswered questions or issues you may have [my way](https://github.com/TylerBarnes/gatsby-plugin-transition-link/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc). I'll do my best to help you out asap.
-
-— Ty. B.
