@@ -292,6 +292,24 @@ module.exports = ({
   createNodeId,
   ext = null,
 }) => {
+  // validation of the input
+  // without this it's notoriously easy to pass in the wrong `createNodeId`
+  // see gatsbyjs/gatsby#6643
+  if (typeof createNodeId !== `function`) {
+    throw new Error(
+      `createNodeId must be a function, was ${typeof createNodeId}`
+    )
+  }
+  if (typeof createNode !== `function`) {
+    throw new Error(`createNode must be a function, was ${typeof createNode}`)
+  }
+  if (typeof store !== `object`) {
+    throw new Error(`store must be the redux store, was ${typeof store}`)
+  }
+  if (typeof cache !== `object`) {
+    throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
+  }
+
   // Check if we already requested node for this remote file
   // and return stored promise if we did.
   if (processingCache[url]) {
