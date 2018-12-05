@@ -13,6 +13,6 @@ for folder in $FOLDER/*; do
   cp -r $folder/. $CLONE_DIR
   cd $CLONE_DIR
   git add .
-  git commit --message "chore: syncing with gatsbyjs/starters monorepo"
+  git commit --message "$(git log -1 --pretty=%B)"
   git push origin master
 done
