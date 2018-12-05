@@ -53,7 +53,7 @@ We also wanted the process of buying swag to be a fun and personable experience 
 
 Now that we’d decided on *what* we were going to have, we came up against the inevitable, ever burning question, “How the hell can we make this work?”
 
-<iframe src="https://medium.com/media/055dd9c0649abcb7d56fc47a9a75617d" frameborder=0></iframe>
+![Rosie Perez "What?"](images/giphy-1.gif)
 
 And that question could only be answered by looking at what we had—and what we didn’t have. We had to identify our limitations and strengths.
 
