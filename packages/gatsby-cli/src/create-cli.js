@@ -271,6 +271,34 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
+    command: `plugin <action> <plugins..>`,
+    desc: `Manage Gatsby plugins.`,
+    builder: _ =>
+      _.option(`dry-run`, {
+        default: false,
+        type: `boolean`,
+        describe: `Don't actually write any changes to disk or run npm/yarn.`,
+      })
+        .option(`confirm`, {
+          alias: `Y`,
+          default: false,
+          type: `boolean`,
+          describe: `Do not prompt for install or config confirmation`,
+        })
+        .positional(`action`, {
+          type: `string`,
+          describe: `Action to be taken for provided plugin.`,
+          choices: [`add`, `remove`, `config`, `search`],
+        })
+        .positional(`plugin`, {
+          type: `string`,
+          describe: `Package(s) to add, remove, configure, or search.`,
+        }),
+
+    handler: getCommandHandler(`plugin`),
+  })
+
+  cli.command({
     command: `clean`,
     desc: `Wipe the local gatsby environment including built assets and cache`,
     handler: getCommandHandler(`clean`),
