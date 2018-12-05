@@ -4,9 +4,6 @@
   "description": "A blog starter for Gatsby powered by Markdown",
   "version": "0.1.0",
   "author": "Kyle Mathews <kyle@gatsbyjs.com>",
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/starters/issues"
-  },
   "dependencies": {
     "gatsby": "^2.0.19",
     "gatsby-plugin-feed": "^2.0.8",
@@ -47,6 +44,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "scripts": {
     "build": "gatsby build",

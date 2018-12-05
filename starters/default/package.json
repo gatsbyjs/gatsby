@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "@gatsbyjs/starter-default",
   "private": true,
   "description": "The default starter for Gatsby",
-  "version": "0.1.0",
+  "version": "0.0.13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "^2.0.19",
@@ -38,6 +38,6 @@
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/starters/issues"
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }

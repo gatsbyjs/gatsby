@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "@gatsbyjs/starter-hello-world",
   "private": true,
   "description": "A simplified hello world starter for Gatsby",
-  "version": "0.1.0",
+  "version": "0.0.12",
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
@@ -21,6 +21,6 @@
     "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/starters/issues"
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }
