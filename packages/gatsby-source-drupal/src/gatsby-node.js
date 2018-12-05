@@ -194,13 +194,21 @@ exports.sourceNodes = async (
           }
           // Resolve w/ baseUrl if node.uri isn't absolute.
           const url = new URL(fileUrl, baseUrl)
+          // If we have basicAuth credentials, add them to the request.
+          const auth =
+            typeof basicAuth === `object`
+              ? {
+                  htaccess_user: basicAuth.username,
+                  htaccess_pass: basicAuth.password,
+                }
+              : {}
           fileNode = await createRemoteFileNode({
             url: url.href,
             store,
             cache,
             createNode,
             createNodeId,
-            auth: { htaccess_user: basicAuth.username, htaccess_pass: basicAuth.password }
+            auth,
           })
         } catch (e) {
           // Ignore
