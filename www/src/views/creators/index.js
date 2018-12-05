@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import Helmet from "react-helmet"
 import typography, { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
-import CommunityHeader from "./community-header"
+import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
@@ -12,7 +12,7 @@ import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import sharedStyles from "../shared/styles"
 
-class CommunityView extends Component {
+class CreatorsView extends Component {
   state = {
     creators: this.props.data.allCreatorsYaml.edges,
     for_hire: false,
@@ -100,7 +100,7 @@ class CommunityView extends Component {
         <Helmet>
           <title>{title}</title>
         </Helmet>
-        <CommunityHeader
+        <CreatorsHeader
           applyFilter={filter => applyFilter(filter)}
           forHire={this.state.for_hire}
           hiring={this.state.hiring}
@@ -131,7 +131,7 @@ class CommunityView extends Component {
               <p css={{ color: colors.gatsby }}>No results</p>
             ) : (
               creators.map(item => (
-                <div key={item.node.name} css={styles.showcaseItem}>
+                <div key={item.node.name} css={styles.creatorCard}>
                   <ThumbnailLink
                     slug={item.node.fields.slug}
                     image={item.node.image}
@@ -176,7 +176,7 @@ class CommunityView extends Component {
                 </div>
               ))
             )}
-            {creators.length && <EmptyGridItems styles={styles.showcaseItem} />}
+            {creators.length && <EmptyGridItems styles={styles.creatorCard} />}
           </div>
         </main>
       </Layout>
@@ -184,10 +184,10 @@ class CommunityView extends Component {
   }
 }
 
-export default CommunityView
+export default CreatorsView
 
 const styles = {
-  showcaseItem: {
+  creatorCard: {
     display: `flex`,
     flexDirection: `column`,
     margin: rhythm(3 / 4),

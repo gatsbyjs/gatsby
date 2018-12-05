@@ -6,7 +6,7 @@ import Checkmark from "./check.svg"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-// const CommunityHeaderLink = ({ linkTo, children }) => (
+// const CreatorsHeaderLink = ({ linkTo, children }) => (
 //   <li
 //     css={{
 //       display: `flex`,
@@ -22,7 +22,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 //         color: `white`,
 //       }}
 //       css={{
-//         ...styles.communityHeaderLink,
+//         ...styles.CreatorsHeaderLink,
 //       }}
 //     >
 //       {children}
@@ -30,7 +30,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 //   </li>
 // )
 
-class CommunityHeader extends Component {
+class CreatorsHeader extends Component {
   render() {
     const { /*forHire, hiring,*/ submissionText } = this.props
     return (
@@ -40,7 +40,7 @@ class CommunityHeader extends Component {
         }}
       >
         <Link
-          to="/community/"
+          to="/creators/"
           state={{ filter: `` }}
           css={{
             ...styles.creatorsLink,
@@ -59,19 +59,19 @@ class CommunityHeader extends Component {
             },
           }}
         >
-          <CommunityHeaderLink linkTo="/community/">All</CommunityHeaderLink>
-          <CommunityHeaderLink linkTo="/community/people/">
+          <CreatorsHeaderLink linkTo="/creators/">All</CreatorsHeaderLink>
+          <CreatorsHeaderLink linkTo="/creators/people/">
             People
-          </CommunityHeaderLink>
-          <CommunityHeaderLink linkTo="/community/agencies/">
+          </CreatorsHeaderLink>
+          <CreatorsHeaderLink linkTo="/creators/agencies/">
             Agencies
-          </CommunityHeaderLink>
-          <CommunityHeaderLink linkTo="/community/companies/">
+          </CreatorsHeaderLink>
+          <CreatorsHeaderLink linkTo="/creators/companies/">
             Companies
-          </CommunityHeaderLink>
+          </CreatorsHeaderLink>
         </nav> */}
         <div
-          className="community--filters"
+          className="creators--filters"
           css={{
             display: `flex`,
             flex: `2`,
@@ -130,7 +130,7 @@ class CommunityHeader extends Component {
   }
 }
 
-export default CommunityHeader
+export default CreatorsHeader
 
 const styles = {
   header: {
@@ -162,7 +162,7 @@ const styles = {
       },
     },
   },
-  communityHeaderLink: {
+  CreatorsHeaderLink: {
     "&&": {
       ...scale(-1 / 3),
       lineHeight: 1,

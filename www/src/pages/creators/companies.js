@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
-import CommunityView from "../../views/community"
+import CreatorsView from "../../views/creators"
 
 class CompaniesPage extends Component {
   render() {
     const { location, data } = this.props
-    return <CommunityView data={data} location={location} title={`Companies`} />
+    return <CreatorsView data={data} location={location} title={`Companies`} />
   }
 }
 
