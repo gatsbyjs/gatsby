@@ -1,6 +1,6 @@
 "use strict"
 
 const graphql = require(`graphql`)
-const GraphQLJSON = require(`graphql-type-json`)
+const { GraphQLDate, GraphQLJSON } = require(`graphql-compose`)
 
-module.exports = Object.assign({}, graphql, { GraphQLJSON })
+module.exports = Object.assign({}, graphql, { GraphQLDate, GraphQLJSON })
