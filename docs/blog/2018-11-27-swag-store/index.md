@@ -41,13 +41,13 @@ We also saw that people were excited about:
 
 * Stickers
 
-<iframe src="https://medium.com/media/a20444344acb4091490d81234d6b53b5" frameborder=0></iframe>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">So... I ordered custom nail wraps for <a href="https://twitter.com/FormidableLabs?ref_src=twsrc%5Etfw">@FormidableLabs</a> swag. They came in the mail today and I love them so much. <a href="https://t.co/h0B8rOqEHs">pic.twitter.com/h0B8rOqEHs</a></p>&mdash; Becca Lee (@the_becca_lee) <a href="https://twitter.com/the_becca_lee/status/1009920104019083264?ref_src=twsrc%5Etfw">June 21, 2018</a></blockquote>
 
 Since we had so many things to choose from, we needed something lightweight as a trial run. We decided on shirts because we already had the design for those. We also got socks for people (like me) who always find off the rack shirts impossible to wear and look good. And of course we got some stickers so that we could wallpaper our laptops with Gatsby.
 
 We also wanted the process of buying swag to be a fun and personable experience from beginning to end. People so willingly show their appreciation for Gatsby, and we wanted to be able to show our excitement and appreciation, too.
 
-<iframe src="https://medium.com/media/1ae1c8be1f8e70c08936829381c1b726" frameborder=0></iframe>
+![Tina Fey in a money shower](images/money-shower.gif)
 
 ## Figuring Out Our Limitations and our Strengths
 
