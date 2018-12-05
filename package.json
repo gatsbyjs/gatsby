@@ -70,7 +70,7 @@
     "lint": "npm-run-all --continue-on-error -p lint:code lint:other",
     "lint:code": "eslint --ignore-path .gitignore --ignore-path .prettierignore --ext .js,.jsx .",
     "lint:flow": "babel-node scripts/flow-check.js",
-    "lint:other": "npm run prettier -- --list-different",
+    "lint:other": "prettier \"**/*.{css,scss,yaml,yml}\" --list-different",
     "plop": "plop",
     "prebootstrap": "yarn",
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
