@@ -45,25 +45,38 @@ const getVerbs = verb => {
     case `add`:
       return {
         present: `add`,
+        alt: `install`,
         past: `added`,
         participle: `adding`,
         preposition: `to`,
       }
+    case `config`:
+      return {
+        present: `config`,
+        past: `configured`,
+        participle: `configuring`,
+      }
     case `remove`:
       return {
         present: `remove`,
+        alt: `uninstall`,
         past: `removed`,
         participle: `removing`,
         preposition: `from`,
+      }
+    case `search`:
+      return {
+        present: `search`,
+        past: `searched`,
+        participle: `searching`,
+        preposition: `for`,
       }
     default:
       throw new Error(`Unknown Verb`)
   }
 }
 
-module.exports = async program => {
-  let action = getVerbs(program.action)
-  let plugins = program.plugins
+const addRemove = async (action, plugins) => {
   let questions = new Array()
 
   plugins.forEach((plugin, index, plugins) => {
@@ -75,12 +88,12 @@ module.exports = async program => {
     questions.push({
       type: `confirm`,
       name: plugin,
-      message: `You are about to ${action.present} ${plugin}. This will ${
+      message: `You are about to ${action.alt} ${plugin}. This will ${
         action.present
       } it ${
         action.preposition
       } 'gatsby-config.js' and 'package.json'.\n Are you sure you want to do this?`,
-      default: action === `add` ? true : false,
+      default: action.present === `add` ? true : false,
     })
   })
 
@@ -107,7 +120,7 @@ module.exports = async program => {
       report.success(`Successfully ${action.past}: ${pluginString}`)
       spinner.end()
 
-      if (action === `add`) {
+      if (action.present === `add`) {
         confirmedPlugins.forEach(plugin => {
           report.info(
             `For more info on using ${plugin} see: https://www.gatsbyjs.org/packages/${plugin}/`
@@ -123,5 +136,24 @@ module.exports = async program => {
     }
   } else {
     report.info(`No plugins to ${action.present}`)
+  }
+}
+
+module.exports = async program => {
+  let action = getVerbs(program.action)
+  let plugins = program.plugins
+
+  switch (action.present) {
+    case `add`:
+    case `remove`:
+      report.info(`add/remove cases`)
+      await addRemove(action, plugins)
+      break
+    case `config`:
+      report.info(`Code Config Command Here: ${plugins}`)
+      break
+    case `search`:
+      report.info(`Code Search Command Here: ${plugins}`)
+      break
   }
 }

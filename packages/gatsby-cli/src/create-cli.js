@@ -261,11 +261,11 @@ function buildLocalCommands(cli, isLocalSite) {
     builder: _ =>
       _.positional(`action`, {
         type: `string`,
-        describe: `Action to be taken for provided plugin`,
-        choices: [`add`, `remove`],
+        describe: `Action to be taken for provided plugin.`,
+        choices: [`add`, `remove`, `config`, `search`],
       }).positional(`plugin`, {
         type: `string`,
-        describe: `Package to add, remove, etc..`,
+        describe: `Package to add, remove, configure, or search.`,
       }),
     handler: getCommandHandler(`plugin`),
   })
