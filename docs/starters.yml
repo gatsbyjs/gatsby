@@ -69,7 +69,7 @@
     - Includes Contentful Delivery API for production build
     - Includes Contentful Preview API for development
 - url: https://react-firebase-authentication.wieruch.com/
-  repo: https://github.com/taming-the-state-in-react/gatsby-firebase-authentication
+  repo: https://github.com/the-road-to-react-with-firebase/react-gatsby-firebase-authentication
   description: n/a
   tags:
     - Firebase
