@@ -133,16 +133,6 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 
-  starters_validate:
-    executor: node
-    steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
-      - <<: *attach_to_bootstrap
-      - run: yarn lerna run build --scope gatsby-starter-*
-
   starters_publish:
     executor: node
     steps:
@@ -181,10 +171,4 @@ workflows:
   version: 2
   build-test:
     jobs:
-      - starters_validate:
-          <<: *ignore_master
-      - starters_publish:
-          filters:
-            branches:
-              only:
-                - master
+      - starters_publish
