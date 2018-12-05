@@ -400,7 +400,7 @@ class Image extends React.Component {
         <Tag
           className={`${className ? className : ``} gatsby-image-wrapper`}
           style={divStyle}
-          ref={this.handleRef}
+          ref={this.wrapperRef}
           key={`fixed-${JSON.stringify(image.srcSet)}`}
         >
           {/* Show the blurry base64 image. */}
