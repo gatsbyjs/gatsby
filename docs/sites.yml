@@ -3672,3 +3672,17 @@
   built_by: Ahmad Awais
   built_by_url: https://twitter.com/MrAhmadAwais/
   featured: false
+- title: Thijs Koerselman Portfolio
+  main_url: https://www.vauxlab.com
+  url: https://www.vauxlab.com
+  featured: false
+  description: >
+    Portfolio of Thijs Koerselman. A freelance software engineer, full-stack web developer and sound designer.
+  categories:
+    - Portfolio
+    - Business
+    - Freelance
+    - Technology
+    - Web Development
+    - React-Native
+    - Music
