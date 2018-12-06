@@ -3,7 +3,13 @@
 importScripts(`idb-keyval-iife.min.js`)
 const WHITELIST_KEY = `custom-navigation-whitelist`
 
+let failedToGrabAppShell = false
+
 const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
+  if (failedToGrabAppShell) {
+    return fetch(event.request)
+  }
+
   const { pathname } = new URL(event.request.url)
 
   return idbKeyval.get(WHITELIST_KEY).then((customWhitelist = []) => {
@@ -12,7 +18,14 @@ const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
       const offlineShell = `%pathPrefix%/offline-plugin-app-shell-fallback/index.html`
       const cacheName = workbox.core.cacheNames.precache
 
-      return caches.match(offlineShell, { cacheName })
+      return caches.match(offlineShell, { cacheName }).then(response => {
+        if (!response) {
+          failedToGrabAppShell = true
+          return fetch(event.request)
+        }
+
+        return response
+      })
     }
 
     return fetch(event.request)
