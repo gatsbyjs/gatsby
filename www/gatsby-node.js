@@ -594,7 +594,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     }
   }
 
-  // Community/Creators Pages
+  // Creator pages
   else if (node.internal.type === `CreatorsYaml`) {
     const validTypes = {
       individual: `people`,
@@ -609,12 +609,12 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         }” was provided for ${node.name}.`
       )
     }
-    slug = `/community/${validTypes[node.type]}/${slugify(node.name, {
+    slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
       lower: true,
     })}`
     createNodeField({ node, name: `slug`, value: slug })
   }
-  // end Community/Creators Pages
+  // end Creator pages
   return null
 }
 
