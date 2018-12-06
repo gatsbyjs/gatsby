@@ -21,9 +21,9 @@ With that in mind, we needed to find a way to get swag into the hands of contrib
 
 ## Identify our Goal
 
-Just because we knew that we wanted to send people swag didn’t mean that our goal was complete. We still had to narrow it down and decide what *type *of swag to have.
+Just because we knew that we wanted to send people swag didn’t mean that our goal was complete. We still had to narrow it down and decide what _type_ of swag to have.
 
-That meant we had to do a little bit of research. We asked people what type of swag they liked to receive and also what type of swag they *wanted to see, *even if they hadn’t found anyone who was doing it yet.
+That meant we had to do a little bit of research. We asked people what type of swag they liked to receive and also what type of swag they _wanted_ to see, even if they hadn’t found anyone who was doing it yet.
 
 Overall, a lot of people said they liked:
 
@@ -49,7 +49,7 @@ We also wanted the process of buying swag to be a fun and personable experience 
 
 ![Tina Fey in a money shower](images/money-shower.gif)
 
-## Figuring Out Our Limitations and our Strengths
+## Figuring Out Our Limitations and Our Strengths
 
 Now that we’d decided on *what* we were going to have, we came up against the inevitable, ever burning question, “How the hell can we make this work?”
 
@@ -57,7 +57,7 @@ Now that we’d decided on *what* we were going to have, we came up against the 
 
 And that question could only be answered by looking at what we had—and what we didn’t have. We had to identify our limitations and strengths.
 
-Here were the three biggest limitations we saw:
+_Here were the three biggest limitations we saw:_
 
 * lack of time to spend creating, managing, or shipping swag
 
@@ -65,7 +65,7 @@ Here were the three biggest limitations we saw:
 
 * no way for people to actually see our swag or place orders for it
 
-And the three biggest strengths that we could use to combat our limitations:
+_And the three biggest strengths that we could use to combat our limitations:_
 
 * we have an amazing designer in Florian Kissling, and the development knowledge to build custom solutions
 
@@ -79,7 +79,7 @@ So this led us to the idea of creating an automated system that would identify, 
 
 We settled on an “automation first” solution for a few reasons
 
-### **Time was limited**
+### Time was limited
 
 We needed to limit manual touchpoints as much as possible in the interest of making sure that people were able to focus on critical Gatsby needs.
 
@@ -119,7 +119,7 @@ Since we’re not able to automate everything, there were a few things that will
 
 But that was about it. The rest of the process didn’t require anybody’s help, and would run on its own!
 
-### **Scalability was key**
+### Scalability was key
 
 As our community grows we want to continue to use the swag store as a way of rewarding people, so any framework we set up would need to grow with the contributors, with Gatsby, and with swag items. It needed to be scalable.
 
@@ -171,7 +171,7 @@ But what did that process actually look like? We had our starting point — some
 
 Basically, our process looked like this:
 
-![South Park Underpants Gnomes](/1_93222BZZGSWF__LBsgVvPg.jpg)
+![South Park Underpants Gnomes](images/1_93222BZZGSWF__LBsgVvPg.jpg)
 _The Gatsby Swag Project off to a strong start!_ 
 
 
@@ -181,10 +181,15 @@ We had a meeting that was solely focused on laying out each step in the process 
 
 The conversation looked a little like this:
 > So the final step is that a person receives swag. What has to happen right before that step?
+
 > Well, the swag has to be shipped.
+
 > And what has to happen before that?
+
 > The swag has to be ordered.
+
 > And what happens before that?
+
 > The person has to be on a site that allows them to order swag.
 
 It’s a slow process, but worth it to put the work in upfront. Having this conversation helped us think through how everything would actually need to run, and identify gaps in our reasoning.
@@ -234,7 +239,7 @@ _So Gatsby contributors see this:_
 
 * They’ll also get to sign up on a Gatsby Maintainers email list if they want
 
-_And is what’s happening in the background:_
+_And this is what’s happening in the background:_
 
 * [Third party distribution](https://corp-couture.com/) so no one at Gatsby has to be responsible for packing and shipping
 
