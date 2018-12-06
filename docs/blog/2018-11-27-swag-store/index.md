@@ -153,7 +153,7 @@ But starting from a non-scalable solution is a great way to get started. While y
 
 More people leads to more complexity, and processes exist to improve communication, efficiency, and transparency for people in the company and the customers who use the product. If we’re creating a process that slows people down, then it’s simply got to go. All processes should be flexible enough to change and grow with the people they’re intended to help.
 
-### **The process had to be easily repeatable**
+### The process had to be easily repeatable
 
 We made things more repeatable by creating internal documentation, and sharing it with the rest of the team. Since tasks like ordering new swag and reordering previous items would require someone to actually make the call or send the email, we set up templates that anyone could use.
 
@@ -171,7 +171,9 @@ But what did that process actually look like? We had our starting point — some
 
 Basically, our process looked like this:
 
-![**The Gatsby Swag Project… off to a strong start! ***Alt: South Park Underpants Gnomes. Phase 1. Collect Underpants Phase 2. Question mark Phase 3. Profit*](https://cdn-images-1.medium.com/max/2560/1*93222BZZGSWF__LBsgVvPg.jpeg)***The Gatsby Swag Project… off to a strong start! ***Alt: South Park Underpants Gnomes. Phase 1. Collect Underpants Phase 2. Question mark Phase 3. Profit**
+![South Park Underpants Gnomes](/1_93222BZZGSWF__LBsgVvPg.jpg)
+_The Gatsby Swag Project off to a strong start!_ 
+
 
 So we worked with what we had — starting at the end and worked our way backwards.
 
@@ -189,9 +191,9 @@ It’s a slow process, but worth it to put the work in upfront. Having this conv
 
 ## But How Do You Set It Up?
 
-Since we knew now **what **we were setting up, we were left to figure out **how**.
+Since we knew now **what** we were setting up, we were left to figure out **how**.
 
-Each **how **is a step in the process that requires an integration, automation, tool, or touch point of some kind.
+Each **how** is a step in the process that requires an integration, automation, tool, or touch point of some kind.
 
 Since we were going with an “automation first” framework, we had a lot to consider at each touchpoint:
 
@@ -203,17 +205,18 @@ Since we were going with an “automation first” framework, we had a lot to co
 
 * How robust is the tool, is it easily breakable?
 
-Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](http://www.whimsica). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
+Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](http://www.whimsical). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
 
-![Flow chart with the step by step swag process](https://cdn-images-1.medium.com/max/3876/1*tzPNjNB2Lf0w_7mu21JDTQ.png)*Flow chart with the step by step swag process*
+![Flow chart with the step by step swag process](images/1_tzPNjNB2Lf0w_7mu21JDTQ.png)
+_Flow chart with the step by step swag process_
 
 The top section lists each tool that we’re using to manage and automated the swag process.
 
 * Each **circle** is a key action or endpoint in the flow.
 
-* Each **square with a dashed border **is an action handled by automation
+* Each **square with a dashed border** is an action handled by automation
 
-* Each** square with a solid border** is an action handled by a person
+* Each **square with a solid border** is an action handled by a person
 
 * Each **hexagon** is a question that the framework needs to ask to decide how to move forward
 
@@ -223,7 +226,7 @@ In this case, the front-end was the process that people went through to order an
 
 And the backend was the systems design, tools, and automation triggers that handled all the requests and process.
 
-*So Gatsby contributors see this:*
+_So Gatsby contributors see this:_
 
 * When they create a PR and it’s merged, they’ll automatically get a response asking them to become a Gatsby Maintainer
 
@@ -231,9 +234,9 @@ And the backend was the systems design, tools, and automation triggers that hand
 
 * They’ll also get to sign up on a Gatsby Maintainers email list if they want
 
-*And is what’s happening in the background:*
+_And is what’s happening in the background:_
 
-* [Third party distribution](https://www.threadbird.com/) so no one at Gatsby has to be responsible for packing and shipping
+* [Third party distribution](https://corp-couture.com/) so no one at Gatsby has to be responsible for packing and shipping
 
 * Third party email monitoring and customer service if people have problems or questions about their swag
 
@@ -243,19 +246,22 @@ And the backend was the systems design, tools, and automation triggers that hand
 
 ## Where We Ended Up
 
-Our goals when we set out were to create a way to give back to the community, keep contributors interested, and make everyone who took the time to contribute to feel really welcome.
+Our goals when we set out were to create a way to give back to the community, keep contributors interested, and make everyone who took the time to contribute feel really welcome.
 
 But we needed to make sure that setting this up was sustainable, scalable, and easy to keep doing so that we’re always able to reward the community.
 
 Setting up a mostly automated process for swag gave us the best of both worlds, so that we could keep working on Gatsby while still showing our contributors how much we appreciated them.
 
-It also meant that we get to see pictures like this:
+It also meant that we got to see pictures like this:
 
-<iframe src="https://medium.com/media/840d2fe63d47978a739e0d49a3a4025a" frameborder=0></iframe>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for the t-shirt! If there are any developers out there that haven’t tried out Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a></p>&mdash; Ryan Wiemer (@ryanwiemer) <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">July 25, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
 And this:
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/jlengstorf?ref_src=twsrc%5Etfw">@jlengstorf</a> You have seen pictures of the Gatsby socks with dogs, well, meet rayman! 🧦 🎉 <a href="https://t.co/kFhAA6SsfV">pic.twitter.com/kFhAA6SsfV</a></p>&mdash; Sara Vieira (@NikkitaFTW) <a href="https://twitter.com/NikkitaFTW/status/1024332058125107200?ref_src=twsrc%5Etfw">July 31, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<iframe src="https://medium.com/media/9ad293ef884797200e32e75519f2fce1" frameborder=0></iframe>
 
 Dogs and cats in Gatsby swag? Yes please. I’ll have another. Find out how you can [#buildwithgatsby](https://twitter.com/search?src=typd&q=%23buildwithgatsby) on [Twitter](https://twitter.com/gatsbyjs) or on our [site](https://www.gatsbyjs.com/)!
 
