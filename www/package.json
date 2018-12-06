@@ -11,7 +11,7 @@
     "emotion": "^9.2.12",
     "emotion-server": "^9.2.12",
     "fuse.js": "^3.2.0",
-    "gatsby": "^2.0.53",
+    "gatsby": "^2.0.57",
     "gatsby-image": "^2.0.5",
     "gatsby-plugin-canonical-urls": "^2.0.5",
     "gatsby-plugin-catch-links": "^2.0.2",

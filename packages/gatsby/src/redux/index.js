@@ -77,7 +77,7 @@ const saveState = state => {
     pickedState.staticQueryComponents
   )
   pickedState.components = mapToObject(pickedState.components)
-  pickedState.nodes = mapToObject(pickedState.nodes)
+  pickedState.nodes = pickedState.nodes ? mapToObject(pickedState.nodes) : []
   const stringified = stringify(pickedState, null, 2)
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,

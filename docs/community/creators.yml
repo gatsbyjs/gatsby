@@ -222,3 +222,15 @@
   image: images/kevin-legrand.jpg
   for_hire: false
   portfolio: true
+- name: Thijs Koerselman
+  type: individual
+  description: >-
+    Software engineer & full-stack web developer.
+    I design applications, interactive systems and websites. I focus mainly on the React and Node.js ecosystems.
+  location: Utrecht, Netherlands
+  website: "https://www.vauxlab.com"
+  github: https://github.com/0x80
+  image: images/thijs-koerselman.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true

@@ -331,7 +331,7 @@ links.
 
 ```jsx{3,22-28,44,63-65}:title=src/pages/index.js
 import React from "react"
-import { css } from "react-emotion"
+import { css } from "@emotion/core"
 import { Link, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
@@ -341,7 +341,7 @@ export default ({ data }) => {
     <Layout>
       <div>
         <h1
-          className={css`
+          css={css`
             display: inline-block;
             border-bottom: 1px solid;
           `}
@@ -353,19 +353,19 @@ export default ({ data }) => {
           <div key={node.id}>
             <Link
               to={node.fields.slug}
-              className={css`
+              css={css`
                 text-decoration: none;
                 color: inherit;
               `}
             >
               <h3
-                className={css`
+                css={css`
                   margin-bottom: ${rhythm(1 / 4)};
                 `}
               >
                 {node.frontmatter.title}{" "}
                 <span
-                  className={css`
+                  css={css`
                     color: #bbb;
                   `}
                 >
