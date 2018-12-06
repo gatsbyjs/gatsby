@@ -21,6 +21,7 @@ let _perPage
 let _concurrentRequests
 let _includedRoutes
 let _excludedRoutes
+let _excludedRoutes
 let _normalizer
 
 exports.sourceNodes = async (
@@ -38,6 +39,7 @@ exports.sourceNodes = async (
     concurrentRequests = 10,
     includedRoutes = [`**`],
     excludedRoutes = [],
+    queryParams = {},
     normalizer,
   }
 ) => {
@@ -54,6 +56,7 @@ exports.sourceNodes = async (
   _concurrentRequests = concurrentRequests
   _includedRoutes = includedRoutes
   _excludedRoutes = excludedRoutes
+  _queryParams = queryParams
   _normalizer = normalizer
 
   let entities = await fetch({
@@ -68,6 +71,7 @@ exports.sourceNodes = async (
     _concurrentRequests,
     _includedRoutes,
     _excludedRoutes,
+    _queryParams,
     typePrefix,
     refactoredEntityTypes,
   })
