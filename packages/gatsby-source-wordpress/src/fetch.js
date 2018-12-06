@@ -51,6 +51,7 @@ async function fetch({
   _concurrentRequests,
   _includedRoutes,
   _excludedRoutes,
+  _queryParams,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -160,6 +161,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _auth,
           _accessToken,
           _concurrentRequests,
+          _queryParams,
         })
       )
       if (_verbose) console.log(``)
@@ -244,6 +246,7 @@ async function fetchData({
   _auth,
   _accessToken,
   _concurrentRequests,
+  _queryParams,
 }) {
   const { type, url, optionPageId } = route
 
@@ -266,6 +269,7 @@ async function fetchData({
     _accessToken,
     _verbose,
     _concurrentRequests,
+    _queryParams,
   })
 
   let entities = []
@@ -299,6 +303,7 @@ async function fetchData({
               _perPage,
               _auth,
               _accessToken,
+              _queryParams,
             })
           )
         }
