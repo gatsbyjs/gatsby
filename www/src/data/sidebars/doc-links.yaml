@@ -1,9 +1,8 @@
-- title: Quick Start
+- title: Documentation
+  link: /docs/
   items:
-    - title: Getting Started
-      link: /docs/
-    - title: Starter Library
-      link: /starters/
+    - title: Quick Start
+      link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
     - title: Awesome Gatsby Resources
@@ -105,6 +104,8 @@
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
+        - title: Understanding GraphQL syntax
+          link: /docs/graphql-reference/
         - title: Introducing GraphiQL
           link: /docs/introducing-graphiql/
         - title: Creating and modifying pages
@@ -113,18 +114,18 @@
           link: /docs/page-query/
         - title: Querying data in components with StaticQuery
           link: /docs/static-query/
+        - title: Using GraphQL fragments
+          link: /docs/using-fragments/
+        - title: Creating slugs for pages
+          link: /docs/creating-slugs-for-pages/
+        - title: Creating pages from data programmatically
+          link: /docs/programmatically-create-pages-from-data/
         - title: Using third-party GraphQL APIs
           link: /docs/third-party-graphql/
         - title: Adding Markdown pages
           link: /docs/adding-markdown-pages/
         - title: Adding a list of Markdown blog posts
           link: /docs/adding-a-list-of-markdown-blog-posts/
-        - title: Using fragments
-          link: /docs/using-fragments/
-        - title: Creating slugs for pages
-          link: /docs/creating-slugs-for-pages/
-        - title: Programmatically create pages from data
-          link: /docs/programmatically-create-pages-from-data/
     - title: Plugins
       link: /docs/plugins/
       items:
@@ -262,18 +263,16 @@
   items:
     - title: Gatsby Link
       link: /docs/gatsby-link/
+    - title: Gatsby Config
+      link: /docs/gatsby-config/
     - title: Gatsby Node APIs
       link: /docs/node-apis/
     - title: Gatsby Browser APIs
       link: /docs/browser-apis/
     - title: Gatsby SSR APIs
       link: /docs/ssr-apis/
-    - title: Gatsby config
-      link: /docs/gatsby-config/
     - title: Actions
       link: /docs/actions/
-    - title: GraphQL reference
-      link: /docs/graphql-reference/
     - title: Node interface
       link: /docs/node-interface/
     - title: API philosophy
