@@ -81,7 +81,7 @@ We settled on an “automation first” solution for a few reasons
 
 ### Time was limited
 
-We needed to limit manual touchpoints as much as possible in the interest of making sure that people were able to focus on critical Gatsby needs.
+We needed to limit manual touchpoints so that people on the team could focus on critical Gatsby needs.
 
 **First, we had to identify the manual touchpoints**
 
