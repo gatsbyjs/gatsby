@@ -147,7 +147,7 @@ You’ll be able to visit the site locally at [**_http://localhost:8000_**](http
 
 ## Set up a code editor
 
-A code editor is a program designed specifically for editing computer code. There are many great ones out there. 
+A code editor is a program designed specifically for editing computer code. There are many great ones out there.
 
 > If you haven't worked with a code editor before, we recommend [**VS Code**](https://code.visualstudio.com/), simply because the screenshots used throughout the tutorial will match, and may be easier to follow.
 
