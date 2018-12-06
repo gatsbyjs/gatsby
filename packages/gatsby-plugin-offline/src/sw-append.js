@@ -3,13 +3,7 @@
 importScripts(`idb-keyval-iife.min.js`)
 const WHITELIST_KEY = `custom-navigation-whitelist`
 
-let failedToGrabAppShell = false
-
 const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
-  if (failedToGrabAppShell) {
-    return fetch(event.request)
-  }
-
   const { pathname } = new URL(event.request.url)
 
   return idbKeyval.get(WHITELIST_KEY).then((customWhitelist = []) => {
@@ -18,13 +12,21 @@ const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
       const offlineShell = `%pathPrefix%/offline-plugin-app-shell-fallback/index.html`
       const cacheName = workbox.core.cacheNames.precache
 
-      return caches.match(offlineShell, { cacheName }).then(response => {
-        if (!response) {
-          failedToGrabAppShell = true
-          return fetch(event.request)
+      return caches.match(offlineShell, { cacheName }).then(cachedResponse => {
+        if (!cachedResponse) {
+          return fetch(offlineShell).then(response => {
+            if (response.ok) {
+              return caches.open(cacheName).then(cache =>
+                // Clone is needed because put() consumes the response body.
+                cache.put(offlineShell, response.clone()).then(() => response)
+              )
+            } else {
+              return fetch(event.request)
+            }
+          })
         }
 
-        return response
+        return cachedResponse
       })
     }
 
