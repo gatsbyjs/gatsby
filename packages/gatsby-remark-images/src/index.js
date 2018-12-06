@@ -188,12 +188,15 @@ module.exports = (
         return result
       }, {})
 
-      placeholderImageData = await traceSVG({
+      const tracedSVG = await traceSVG({
         file: imageNode,
         args,
         fileArgs: args,
         reporter,
       })
+
+      // Escape single quotes so the SVG data can be used in inline style attribute with single quotes
+      placeholderImageData = tracedSVG.replace(/'/g, `\\'`)
     }
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
@@ -213,7 +216,7 @@ module.exports = (
   >
     <span
       class="${imageBackgroundClass}"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url(&quot;${placeholderImageData}&quot;); background-size: cover; display: block;"
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
     ></span>
     ${imageTag}
   </span>
