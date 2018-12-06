@@ -202,10 +202,6 @@ module.exports = (
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
     // Construct new image node w/ aspect ratio placeholder
-    // Note that placeholderImageData must be surrounded by &quot;
-    // double quote cannot be used due to breaking the inline style and single quote cannot be
-    // used with the way tracedSVG images are encoded
-    // See https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
     const showCaptions = options.showCaptions && node.title
     let rawHTML = `
   <span
