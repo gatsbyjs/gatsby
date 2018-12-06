@@ -96,21 +96,21 @@ Then install some other needed dependencies at the root of the project. You'll u
 "Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
 
 ```shell
-npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion emotion-server @emotion/core
+npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion emotion-server
 ```
 
 Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
-import { css } from "@emotion/core"
+import { css } from "emotion"
 import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
 export default ({ children }) => (
   <div
-    css={css`
+    className={css`
       margin: 0 auto;
       max-width: 700px;
       padding: ${rhythm(2)};
@@ -119,7 +119,7 @@ export default ({ children }) => (
   >
     <Link to={`/`}>
       <h3
-        css={css`
+        className={css`
           margin-bottom: ${rhythm(2)};
           display: inline-block;
           font-style: normal;
@@ -130,7 +130,7 @@ export default ({ children }) => (
     </Link>
     <Link
       to={`/about/`}
-      css={css`
+      className={css`
         float: right;
       `}
     >
@@ -292,7 +292,7 @@ Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file, an
 
 ```jsx{3,8-18,35,48-49}:title=src/components/layout.js
 import React from "react"
-import { css } from "@emotion/core"
+import { css } from "emotion"
 import { StaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
@@ -310,7 +310,7 @@ export default ({ children }) => (
     `}
     render={data => (
       <div
-        css={css`
+        className={css`
           margin: 0 auto;
           max-width: 700px;
           padding: ${rhythm(2)};
@@ -319,7 +319,7 @@ export default ({ children }) => (
       >
         <Link to={`/`}>
           <h3
-            css={css`
+            className={css`
               margin-bottom: ${rhythm(2)};
               display: inline-block;
               font-style: normal;
@@ -330,7 +330,7 @@ export default ({ children }) => (
         </Link>
         <Link
           to={`/about/`}
-          css={css`
+          className={css`
             float: right;
           `}
         >

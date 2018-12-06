@@ -107,7 +107,7 @@ the following to add a GraphQL query with some initial HTML and styling.
 ```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
-import { css } from "@emotion/core"
+import { css } from "emotion"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
@@ -117,7 +117,7 @@ export default ({ data }) => {
     <Layout>
       <div>
         <h1
-          css={css`
+          className={css`
             display: inline-block;
             border-bottom: 1px solid;
           `}
@@ -128,13 +128,13 @@ export default ({ data }) => {
         {data.allMarkdownRemark.edges.map(({ node }) => (
           <div key={node.id}>
             <h3
-              css={css`
+              className={css`
                 margin-bottom: ${rhythm(1 / 4)};
               `}
             >
               {node.frontmatter.title}{" "}
               <span
-                css={css`
+                className={css`
                   color: #bbb;
                 `}
               >
