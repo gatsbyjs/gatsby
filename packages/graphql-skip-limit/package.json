@@ -7,11 +7,10 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-
+    "@babel/runtime": "^7.0.0"
   },
   "peerDependencies" : {
-    "graphql": "^0.13.2",
+    "graphql": "^0.13.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
