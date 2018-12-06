@@ -1,5 +1,13 @@
-const { joinPath, withBasePath } = require(`../path`)
 const os = require(`os`)
+const path = require(`path`)
+
+const {
+  joinPath,
+  withBasePath,
+  withPathPrefix,
+  withAssetPrefix,
+} = require(`../path`)
+const { clear, getAssets } = require(`../asset-path-registry`)
 
 describe(`paths`, () => {
   describe(`joinPath`, () => {
@@ -51,5 +59,61 @@ describe(`paths`, () => {
         expect(actual).toBe(expected)
       })
     }
+  })
+})
+
+describe(`withPathPrefix`, () => {
+  const prefix = `/blog`
+  const boundWithPathPrefix = withPathPrefix(prefix)
+  it(`returns a function that binds to pathPrefix`, () => {
+    const route = [`page-one`]
+    const filePath = boundWithPathPrefix(...route)
+
+    expect(filePath).toBe(path.join(prefix, ...route))
+  })
+
+  it(`works with multiple part pieces`, () => {
+    const routes = [`page-one`, `sample`, `index.html`]
+    const filePath = boundWithPathPrefix(...routes)
+
+    expect(filePath).toBe(path.join(prefix, ...routes))
+  })
+})
+
+describe(`withAssetPrefix`, () => {
+  const prefix = `https://cdn.gatsbyjs.org`
+  const boundWithAssetPrefix = withAssetPrefix(prefix)
+
+  beforeEach(clear)
+
+  it(`returns a function that binds to asset prefix`, () => {
+    const route = [`page-one`]
+    const filePath = boundWithAssetPrefix(...route)
+
+    expect(filePath).toEqual(path.join(prefix, ...route))
+  })
+
+  it(`works with multiple part pieces`, () => {
+    const routes = [`page-one`, `sample`, `index.html`]
+    const filePath = boundWithAssetPrefix(...routes)
+
+    expect(filePath).toEqual(path.join(prefix, ...routes))
+  })
+
+  it(`registers with asset prefix API`, async () => {
+    const routes = [
+      `page-one`,
+      `page-two`,
+      `page-three`,
+      `sample.js`,
+      [`some`, `nested`, `route`],
+    ]
+
+    const assetPaths = routes.map(route =>
+      boundWithAssetPrefix(...[].concat(route))
+    )
+
+    const assets = await getAssets(__dirname)
+    expect(Array.from(assets)).toEqual(assetPaths)
   })
 })
