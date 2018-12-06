@@ -7,6 +7,7 @@ const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const copyStaticDirectory = require(`../utils/copy-static-directory`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
+const { getAssets } = require(`../utils/asset-path-registry`)
 const tracer = require(`opentracing`).globalTracer()
 
 function reportFailure(msg, err: Error) {
@@ -69,9 +70,12 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
+  const assets = await getAssets(program.directory)
+
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,
     parentSpan: buildSpan,
+    assets,
   })
 
   report.info(`Done building in ${process.uptime()} sec`)
