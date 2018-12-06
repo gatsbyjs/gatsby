@@ -17,7 +17,8 @@ function withBasePath(basePath) {
 }
 
 function withPrefix(prefix, callback) {
-  return function(...parts) {
+  prefix = typeof prefix === `undefined` || prefix === `` ? `/` : prefix
+  return function join(...parts) {
     const filePath = path.join(prefix, ...parts)
     if (typeof callback === `function`) {
       callback(filePath)

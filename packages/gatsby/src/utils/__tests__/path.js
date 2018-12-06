@@ -86,6 +86,14 @@ describe(`withAssetPrefix`, () => {
 
   beforeEach(clear)
 
+  it(`returns path without prefix if empty string`, () => {
+    const route = [`page-one`]
+
+    const filePath = withAssetPrefix(``)(...route)
+
+    expect(filePath).toEqual(path.join(`/`, ...route))
+  })
+
   it(`returns a function that binds to asset prefix`, () => {
     const route = [`page-one`]
     const filePath = boundWithAssetPrefix(...route)

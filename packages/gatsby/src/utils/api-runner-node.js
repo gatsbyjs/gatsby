@@ -8,6 +8,7 @@ const Cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
+const { withPrefixPath, withAssetPath } = require(`./path`)
 
 let caches = new Map()
 
@@ -67,7 +68,6 @@ const runAPI = (plugin, api, args) => {
     pluginSpan.setTag(`api`, api)
     pluginSpan.setTag(`plugin`, plugin.name)
 
-    let pathPrefix = ``
     const { store, emitter } = require(`../redux`)
     const {
       loadNodeContent,
@@ -86,8 +86,16 @@ const runAPI = (plugin, api, args) => {
       { ...args, parentSpan: pluginSpan }
     )
 
-    if (store.getState().program.prefixPaths) {
-      pathPrefix = store.getState().config.pathPrefix
+    let pathPrefix = ``
+    let assetPrefix = ``
+    const { config, program } = store.getState()
+
+    if (program.prefixPaths) {
+      pathPrefix = config.pathPrefix
+    }
+
+    if (program.prefixAssets) {
+      assetPrefix = config.assetPrefix
     }
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
@@ -104,6 +112,7 @@ const runAPI = (plugin, api, args) => {
       {
         ...args,
         pathPrefix,
+        assetPrefix,
         boundActionCreators: doubleBoundActionCreators,
         actions: doubleBoundActionCreators,
         loadNodeContent,
@@ -119,6 +128,8 @@ const runAPI = (plugin, api, args) => {
         createNodeId: namespacedCreateNodeId,
         createContentDigest,
         tracing,
+        withPrefixPath: withPrefixPath(pathPrefix),
+        withAssetPath: withAssetPath(assetPrefix),
       },
       plugin.pluginOptions,
     ]
