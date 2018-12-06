@@ -75,7 +75,7 @@ module.exports = async function build(program: BuildArgs) {
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,
     parentSpan: buildSpan,
-    assets,
+    assets: Array.from(assets),
   })
 
   report.info(`Done building in ${process.uptime()} sec`)
