@@ -69,7 +69,7 @@
     - Includes Contentful Delivery API for production build
     - Includes Contentful Preview API for development
 - url: https://react-firebase-authentication.wieruch.com/
-  repo: https://github.com/taming-the-state-in-react/gatsby-firebase-authentication
+  repo: https://github.com/the-road-to-react-with-firebase/react-gatsby-firebase-authentication
   description: n/a
   tags:
     - Firebase
@@ -1333,3 +1333,14 @@
     - Uses Gatsby v2
     - ESLint and Prettier
     - Offline support
+- url: https://gatsby-starter-notes.netlify.com/
+  repo: https://github.com/patricoferris/gatsby-starter-notes
+  description: Gatsby starter for creating notes organised by subject and topic
+  tags:
+    - Markdown
+    - Pagination
+  features:
+    - Create by topic per subject notes that are organised using pagination
+    - Support for code syntax highlighting
+    - Support for mathematical expressions
+    - Support for images
