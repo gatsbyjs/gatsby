@@ -127,6 +127,9 @@ module.exports = {
         ],
         // Blacklisted routes using glob patterns
         excludedRoutes: ["/*/*/posts/1456"],
+        // Query params to add to the request for resources from WP
+        // Example: { lang: 'en' } will return posts & pages for which lang = en
+        queryParams: {},
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
