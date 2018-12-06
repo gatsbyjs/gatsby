@@ -1,6 +1,6 @@
 ---
 title: Gatsby Swag Store Case Study
-date: 2018-11-27
+date: 2018-12-04
 author: Marisa Morby
 tags:
   - swag
@@ -260,12 +260,10 @@ Setting up a mostly automated process for swag gave us the best of both worlds, 
 It also meant that we got to see pictures like this:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for the t-shirt! If there are any developers out there that haven’t tried out Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a></p>&mdash; Ryan Wiemer (@ryanwiemer) <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">July 25, 2018</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 And this:
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/jlengstorf?ref_src=twsrc%5Etfw">@jlengstorf</a> You have seen pictures of the Gatsby socks with dogs, well, meet rayman! 🧦 🎉 <a href="https://t.co/kFhAA6SsfV">pic.twitter.com/kFhAA6SsfV</a></p>&mdash; Sara Vieira (@NikkitaFTW) <a href="https://twitter.com/NikkitaFTW/status/1024332058125107200?ref_src=twsrc%5Etfw">July 31, 2018</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 Dogs and cats in Gatsby swag? Yes please. I’ll have another. Find out how you can [#buildwithgatsby](https://twitter.com/search?src=typd&q=%23buildwithgatsby) on [Twitter](https://twitter.com/gatsbyjs) or on our [site](https://www.gatsbyjs.com/)!
