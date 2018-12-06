@@ -21,7 +21,7 @@ let _perPage
 let _concurrentRequests
 let _includedRoutes
 let _excludedRoutes
-let _excludedRoutes
+let _queryParams
 let _normalizer
 
 exports.sourceNodes = async (
@@ -160,6 +160,7 @@ exports.sourceNodes = async (
       searchAndReplaceContentUrls,
       concurrentRequests,
       excludedRoutes,
+      queryParams,
     })
   }
 
