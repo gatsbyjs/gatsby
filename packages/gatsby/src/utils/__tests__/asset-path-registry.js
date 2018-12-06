@@ -1,9 +1,7 @@
 import path from "path"
 import { register, clear, remove, getAssets } from "../asset-path-registry"
 
-beforeEach(() => {
-  clear()
-})
+beforeEach(clear)
 
 describe(`general registry behavior`, () => {
   it(`starts with empty registry`, () => {
@@ -21,6 +19,13 @@ describe(`general registry behavior`, () => {
     const registry = remove(file)
 
     expect(registry.size).toBe(0)
+  })
+
+  it(`does not add same file path twice`, () => {
+    const file = `a.js`
+    new Array(10).fill(undefined).forEach(() => register(file))
+
+    expect(register().size).toBe(1)
   })
 })
 
