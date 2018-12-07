@@ -50,6 +50,10 @@ class IndexRoute extends React.Component {
                   and more.
                 </li>
                 <li>
+                  <strong>Ecosystem</strong>: Check out libraries for Gatsby
+                  starters and plugins, as well as external community resources.
+                </li>
+                <li>
                   <strong>API Reference</strong>: Learn more about Gatsby APIs
                   and configuration.
                 </li>
