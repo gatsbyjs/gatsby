@@ -26,12 +26,17 @@ const inImageCache = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  if (imageCache[src]) {
-    return true
-  } else {
-    imageCache[src] = true
-    return false
-  }
+  return imageCache[src] || false
+}
+
+const activateCacheForImage = props => {
+  const convertedProps = convertProps(props)
+  // Find src
+  const src = convertedProps.fluid
+    ? convertedProps.fluid.src
+    : convertedProps.fixed.src
+
+  imageCache[src] = true
 }
 
 let io
@@ -172,6 +177,9 @@ class Image extends React.Component {
   }
 
   componentDidMount() {
+    if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
+      this.props.onStartLoad({ wasCached: inImageCache(this.props) })
+    }
     if (this.props.critical) {
       const img = this.imageRef.current
       if (img && img.complete) {
@@ -183,12 +191,21 @@ class Image extends React.Component {
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
-        this.setState({ isVisible: true })
+        if (
+          !this.state.isVisible &&
+          typeof this.props.onStartLoad === `function`
+        ) {
+          this.props.onStartLoad({ wasCached: inImageCache(this.props) })
+        }
+
+        this.setState({ isVisible: true, imgLoaded: false })
       })
     }
   }
 
   handleImageLoaded() {
+    activateCacheForImage(this.props)
+
     this.setState({ imgLoaded: true })
     if (this.state.seenBefore) {
       this.setState({ fadeIn: false })
@@ -462,6 +479,7 @@ Image.propTypes = {
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
+  onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
 }
 
