@@ -22,12 +22,13 @@ npm install --save gatsby-source-filesystem
 
 Then add it to your project's `gatsby-config.js` file:
 
-```javascript{6-12}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Your Site Name`,
   },
   plugins: [
+    // highlight-start
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -35,6 +36,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
+    // highlight-end
   ],
 }
 ```
