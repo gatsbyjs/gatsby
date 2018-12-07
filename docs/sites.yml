@@ -3689,14 +3689,14 @@
 - title: Birra Napoli
   main_url: http://www.birranapoli.it
   url: http://www.birranapoli.it
+  built_by: Ribrain
+  built_by_url: https://www.ribrainstudio.com
   featured: false
   description: >
     Birra Napoli official site
   categories:
     - Landing page
     - Business 
-    - Technology
-    - Web Development
     - Food
     - Beverage
    
