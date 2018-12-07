@@ -351,7 +351,7 @@ async function getPages(
       if (typeof _queryParams === 'function') {
         qs = _queryParams({ url })
       }
-      if (!qs || typeof qs !== object) qs = {}
+      if (!qs || typeof qs !== 'object') qs = {}
       
       let o = {
         method: `get`,
