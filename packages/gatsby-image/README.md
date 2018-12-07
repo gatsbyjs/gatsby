@@ -276,6 +276,7 @@ prop. e.g. `<Img fluid={fluid} />`
 | `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                     |
 | `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`               | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onStartLoad`          | `func`              | A callback that is called when the full-size image starts loading, it gets the parameter { wasCached: boolean } provided.   |
 | `onError`              | `func`              | A callback that is called when the image fails to load.                                                                     |
 | `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |

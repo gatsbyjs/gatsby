@@ -170,11 +170,13 @@ Let's make a quick improvement. Many sites have a single column of text centered
 in the middle of the page. To create this, add the following styles to the
 `<div>` in `src/pages/index.js`.
 
-```jsx{4}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
   <div style={{ margin: `3rem auto`, maxWidth: 600 }}>
+    {" "}
+    {/* highlight-line */}
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
@@ -222,8 +224,9 @@ export default typography
 Then set this module to be used by `gatsby-plugin-typography` as its config in
 your `gatsby-config.js` file.
 
-```javascript{2..9}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
+  // highlight-start
   plugins: [
     {
       resolve: `gatsby-plugin-typography`,
@@ -232,6 +235,7 @@ module.exports = {
       },
     },
   ],
+  // highlight-end
 }
 ```
 
@@ -254,11 +258,11 @@ npm install --save typography-theme-bootstrap typography-theme-lawton
 
 To use the Bootstrap theme, change your typography code to:
 
-```javascript{2,4}:title=src/utils/typography.js
+```javascript:title=src/utils/typography.js
 import Typography from "typography"
-import bootstrapTheme from "typography-theme-bootstrap"
+import bootstrapTheme from "typography-theme-bootstrap" // highlight-line
 
-const typography = new Typography(bootstrapTheme)
+const typography = new Typography(bootstrapTheme) // highlight-line
 
 export default typography
 ```
@@ -269,12 +273,14 @@ Themes can also add Google Fonts. The Lawton theme you installed along with the
 Bootstrap theme does this. Replace your typography module code with the
 following, then restart the dev server (necessary to load the new Google Fonts).
 
-```javascript{2-3,5}:title=src/utils/typography.js
+```javascript:title=src/utils/typography.js
 import Typography from "typography"
+// highlight-start
 // import bootstrapTheme from "typography-theme-bootstrap"
 import lawtonTheme from "typography-theme-lawton"
+// highlight-end
 
-const typography = new Typography(lawtonTheme)
+const typography = new Typography(lawtonTheme) // highlight-line
 
 export default typography
 ```
@@ -435,13 +441,14 @@ directory. But, if it's used only in one file, create it inline.
 
 Modify `about-css-modules.js` so it looks like the following:
 
-```jsx{7-15,21-30}:title=src/pages/about-css-modules.js
+```jsx:title=src/pages/about-css-modules.js
 import React from "react"
 import styles from "./about-css-modules.module.css"
 import Container from "../components/container"
 
 console.log(styles)
 
+// highlight-start
 const User = props => (
   <div className={styles.user}>
     <img src={props.avatar} className={styles.avatar} alt="" />
@@ -451,11 +458,13 @@ const User = props => (
     </div>
   </div>
 )
+// highlight-end
 
 export default () => (
   <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
+    {/* highlight-start */}
     <User
       username="Jane Doe"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
@@ -466,6 +475,7 @@ export default () => (
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
+    {/* highlight-end */}
   </Container>
 )
 ```
