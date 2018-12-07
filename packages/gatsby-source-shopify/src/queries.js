@@ -117,6 +117,7 @@ export const PRODUCTS_QUERY = `
         edges {
           cursor
           node {
+            availableForSale
             createdAt
             description
             descriptionHtml
