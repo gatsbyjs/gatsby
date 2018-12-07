@@ -10,7 +10,7 @@ Note that we need to distinguish in this discussion between variables which have
 special places in order to be used in different deployment environments, and true OS-level
 environment variables that could be used in, for example, command-line calls.
 We'll call the former "Project Env Vars" and the latter "OS Env Vars".
-In both cases we want to be able to access the relavant value of these variable for the environment
+In both cases we want to be able to access the relevant value of these variable for the environment
 we're in.
 
 By default gatsby supports only 2 environments:

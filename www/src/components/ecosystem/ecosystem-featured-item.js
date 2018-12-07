@@ -4,6 +4,8 @@ import styled from "react-emotion"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
 
+import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
+
 import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
@@ -12,17 +14,12 @@ import presets, { colors } from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
-const EcosystemFeaturedItemRoot = styled(`li`)`
-  width: 85vw;
-  margin: 0 2px 0 0;
-  padding: 5px;
-
-  :last-child {
-    margin-right: 0;
-  }
+const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
+  margin-right: ${rhythm(options.blockMarginBottom)};
 
   ${presets.Tablet} {
     border-bottom: 1px solid ${colors.gray.superLight};
+    box-shadow: none;
     margin: 0;
     padding: 0;
     width: auto;

@@ -31,7 +31,7 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```javascript{32-58}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby WordPress Tutorial",
@@ -42,6 +42,7 @@ module.exports = {
      * Gatsby's data processing layer begins with “source”
      * plugins. Here the site sources its data from WordPress.
      */
+    // highlight-start
     {
       resolve: `gatsby-source-wordpress`,
       options: {
@@ -62,6 +63,7 @@ module.exports = {
         useACF: true,
       },
     },
+    // highlight-end
   ],
 }
 ```
@@ -77,7 +79,7 @@ npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
 
 Place these plugins in your `gatsby-config.js` like this:
 
-```javascript{112-121}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby WordPress Tutorial",
@@ -108,9 +110,11 @@ module.exports = {
         useACF: true,
       },
     },
+    // highlight-start
     "gatsby-plugin-react-helmet",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
+    // highlight-end
   ],
 }
 ```
