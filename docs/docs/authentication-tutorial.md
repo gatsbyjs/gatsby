@@ -62,14 +62,14 @@ export default () => (
 
 And edit the layout component to include it:
 
-```jsx{7,41}:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
-import NavBar from "./navBar"
+import NavBar from "./navBar" // highlight-line
 import "./layout.css"
 
 const Layout = ({ children }) => (
@@ -103,7 +103,7 @@ const Layout = ({ children }) => (
             paddingTop: 0,
           }}
         >
-          <NavBar />
+          <NavBar /> {/* highlight-line */}
           {children}
         </div>
       </>
@@ -120,7 +120,7 @@ export default Layout
 
 Lastly, change the index page to include this new content:
 
-```jsx{9-11}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
 
@@ -129,9 +129,11 @@ import Layout from "../components/layout"
 const IndexPage = () => (
   <Layout>
     <h1>Hi people</h1>
+    {/* highlight-start */}
     <p>
       You should <Link to="/">log in</Link> to see restricted content
     </p>
+    {/* highlight-end */}
   </Layout>
 )
 
@@ -328,19 +330,19 @@ export default PrivateRoute
 
 And now you can edit your Router to use the PrivateRoute component:
 
-```jsx{4,11}:title=src/pages/app.js
+```jsx:title=src/pages/app.js
 import React from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/layout"
-import PrivateRoute from "../components/privateRoute"
+import PrivateRoute from "../components/privateRoute" // highlight-line
 import Profile from "../components/profile"
 import Login from "../components/login"
 
 const App = () => (
   <Layout>
     <Router>
-      <PrivateRoute path="/app/profile" component={Profile} />
-      <Login path="/app/login" />
+      {/* highlight-next-line */}
+      <PrivateRoute path="/app/profile" component={Profile} /> <Login path="/app/login" />
     </Router>
   </Layout>
 )
@@ -354,11 +356,12 @@ With the client-only routes in place, you must now refactor some files to accoun
 
 The navigation bar will show the user name and logout option to registered users:
 
-```jsx{2-3,5-12,21,26,28-38,42}:title=src/components/navBar.js
+```jsx:title=src/components/navBar.js
 import React from "react"
-import { Link, navigate } from "gatsby"
-import { getUser, isLoggedIn, logout } from "../services/auth"
+import { Link, navigate } from "gatsby" // highlight-line
+import { getUser, isLoggedIn, logout } from "../services/auth" // highlight-line
 
+// highlight-start
 export default () => {
   const content = { message: "", login: true }
   if (isLoggedIn()) {
@@ -367,6 +370,7 @@ export default () => {
     content.message = "You are not logged in"
   }
   return (
+    {/* highlight-end */}
     <div
       style={{
         display: "flex",
@@ -375,13 +379,14 @@ export default () => {
         borderBottom: "1px solid #d1c1e0",
       }}
     >
-      <span>{content.message}</span>
+      <span>{content.message}</span> {/* highlight-line */}
 
       <nav>
         <Link to="/">Home</Link>
         {` `}
-        <Link to="/app/profile">Profile</Link>
+        <Link to="/app/profile">Profile</Link> {/* highlight-line */}
         {` `}
+        {/* highlight-start */}
         {isLoggedIn() ? (
           <a
             href="/"
@@ -393,24 +398,28 @@ export default () => {
             Logout
           </a>
         ) : null}
+        {/* highlight-end */}
       </nav>
     </div>
   )
-}
+} // highlight-line
 ```
 
 The index page will suggest to login or check the profile accordingly:
 
-```jsx{3,7-8,10-23,26}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
-import { getUser, isLoggedIn } from "../services/auth"
+import { getUser, isLoggedIn } from "../services/auth" // highlight-line
 
 import Layout from "../components/layout"
 
+// highlight-start
 const IndexPage = () => {
   return (
+    // highlight-end
     <Layout>
+      {/* highlight-start */}
       <h1>Hi {isLoggedIn() ? getUser().name : "people"}</h1>
       <p>
         {isLoggedIn() ? (
@@ -425,25 +434,28 @@ const IndexPage = () => {
           </>
         )}
       </p>
+      {/* highlight-end */}
     </Layout>
   )
-}
+} // highlight-line
 
 export default IndexPage
 ```
 
 And the profile will show the user data:
 
-```jsx{2,8,9}:title=src/components/profile.js
+```jsx:title=src/components/profile.js
 import React from "react"
-import { getUser } from "../services/auth"
+import { getUser } from "../services/auth" // highlight-line
 
 const Profile = () => (
   <>
     <h1>Your profile</h1>
     <ul>
+      {/* highlight-start */}
       <li>Name: {getUser().name}</li>
       <li>E-mail: {getUser().email}</li>
+      {/* highlight-end */}
     </ul>
   </>
 )
