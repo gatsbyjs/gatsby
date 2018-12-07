@@ -2,7 +2,3 @@
 /yarn.lock
 /*.js
 !index.js
-/gatsby-node.js
-/lib.js
-/nodes.js
-/queries.js
