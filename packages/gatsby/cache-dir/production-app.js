@@ -1,28 +1,29 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import { Router, Route, withRouter, matchPath } from "react-router-dom"
+import { Router, navigate } from "@reach/router"
+import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
 import {
   shouldUpdateScroll,
-  attachToHistory,
   init as navigationInit,
+  RouteUpdates,
 } from "./navigation"
-import history from "./history"
-window.___history = history
 import emitter from "./emitter"
-window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import loader from "./loader"
+import loader, { setApiRunnerForLoader } from "./loader"
+import EnsureResources from "./ensure-resources"
 
 window.asyncRequires = asyncRequires
-window.matchPath = matchPath
+window.___emitter = emitter
+window.___loader = loader
 
 loader.addPagesArray([window.page])
 loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
 loader.addProdRequires(asyncRequires)
+setApiRunnerForLoader(apiRunner)
 
 navigationInit()
 
@@ -34,46 +35,74 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
-  // Call onRouteUpdate on the initial page load.
-  apiRunner(`onRouteUpdate`, {
-    location: history.location,
-    action: history.action,
-  })
+  class RouteHandler extends React.Component {
+    render() {
+      let { location } = this.props
 
-  const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+      return (
+        <EnsureResources location={location}>
+          {({ pageResources, location }) => (
+            <RouteUpdates location={location}>
+              <ScrollContext
+                location={location}
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <PageRenderer
+                  {...this.props}
+                  location={location}
+                  pageResources={pageResources}
+                  {...pageResources.json}
+                />
+              </ScrollContext>
+            </RouteUpdates>
+          )}
+        </EnsureResources>
+      )
+    }
+  }
 
-  loader.getResourcesForPathname(window.location.pathname, () => {
+  const { page, location: browserLoc } = window
+  if (
+    // Make sure the window.page object is defined
+    page &&
+    // The canonical path doesn't match the actual path (i.e. the address bar)
+    __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
+    // ...and if matchPage is specified, it also doesn't match the actual path
+    (!page.matchPath ||
+      !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname)) &&
+    // Ignore 404 pages, since we want to keep the same URL
+    page.path !== `/404.html` &&
+    !page.path.match(/^\/404\/?$/) &&
+    // Also ignore the offline shell (since when using the offline plugin, all
+    // pages have this canonical path)
+    !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
+  ) {
+    navigate(
+      __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
+      { replace: true }
+    )
+  }
+
+  loader.getResourcesForPathname(browserLoc.pathname).then(() => {
     const Root = () =>
       createElement(
-        AltRouter ? AltRouter : Router,
+        Router,
         {
-          basename: __PATH_PREFIX__,
-          history: !AltRouter ? history : undefined,
+          basepath: __PATH_PREFIX__,
         },
-        createElement(
-          ScrollContext,
-          { shouldUpdateScroll },
-          createElement(withRouter(Route), {
-            render: routeProps => {
-              attachToHistory(routeProps.history)
-
-              if (loader.getPage(routeProps.location.pathname)) {
-                return createElement(PageRenderer, {
-                  isPage: true,
-                  ...routeProps,
-                })
-              } else {
-                return createElement(PageRenderer, {
-                  isPage: true,
-                  location: { pathname: `/404.html` },
-                })
-              }
-            },
-          })
-        )
+        createElement(RouteHandler, { path: `/*` })
       )
 
-    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+    const WrappedRoot = apiRunner(
+      `wrapRootElement`,
+      { element: <Root /> },
+      <Root />,
+      ({ result }) => {
+        return { element: result }
+      }
+    ).pop()
+
+    let NewRoot = () => WrappedRoot
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,

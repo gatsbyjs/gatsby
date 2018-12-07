@@ -15,7 +15,7 @@ exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
   return new Promise(resolve => {
     // Don't set matchPath again if it's already been set.
     if (page.matchPath || page.path.match(/dev-404-page/)) {
-      resolve()
+      return resolve()
     }
 
     prefixes.some(prefix => {
@@ -29,7 +29,7 @@ exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
       const path = page.path.match(/\/$/) ? page.path : `${page.path}/`
 
       if (path.match(re[prefix])) {
-        page.matchPath = prefix.replace(/\*$/, `:path`)
+        page.matchPath = prefix.replace(/\*$/, `*`)
         createPage(page)
         return true
       }

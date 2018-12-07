@@ -67,11 +67,12 @@ class JSONStore extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     // We want to update this component when:
-    // - path changed
+    // - location changed
     // - page data for path changed
     // - static query results changed
 
     return (
+      this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
       this.state.pageQueryData[nextState.path] !==
         nextState.pageQueryData[nextState.path] ||

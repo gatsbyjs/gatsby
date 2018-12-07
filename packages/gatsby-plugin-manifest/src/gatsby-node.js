@@ -18,14 +18,13 @@ function generateIcons(icons, srcIcon) {
   })
 }
 
-exports.onPostBuild = (args, pluginOptions) =>
+exports.onPostBootstrap = (args, pluginOptions) =>
   new Promise((resolve, reject) => {
-    const { icon } = pluginOptions
-    const manifest = { ...pluginOptions }
+    const { icon, ...manifest } = pluginOptions
 
     // Delete options we won't pass to the manifest.webmanifest.
     delete manifest.plugins
-    delete manifest.icon
+    delete manifest.legacy
 
     // If icons are not manually defined, use the default icon set.
     if (!manifest.icons) {
@@ -33,10 +32,7 @@ exports.onPostBuild = (args, pluginOptions) =>
     }
 
     // Determine destination path for icons.
-    const iconPath = path.join(
-      `public`,
-      manifest.icons[0].src.substring(0, manifest.icons[0].src.lastIndexOf(`/`))
-    )
+    const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
 
     //create destination directory if it doesn't exist
     if (!fs.existsSync(iconPath)) {

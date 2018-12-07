@@ -7,7 +7,7 @@ rendering.
 ## Install
 
 ```
-npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
+npm install --save gatsby-plugin-emotion emotion emotion-server @emotion/core @emotion/styled
 ```
 
 ## How to use
@@ -16,13 +16,13 @@ Add the plugin to your `gatsby-config.js`.
 
 ```js
 module.exports = {
-    plugins: [
-        {
-            resolve: `gatsby-plugin-emotion`,
-            options: {
-                // Accepts all options defined by `babel-plugin-emotion` plugin.
-            }
-        }
-    ]
-];
+  plugins: [
+    {
+      resolve: `gatsby-plugin-emotion`,
+      options: {
+        // Accepts all options defined by `babel-plugin-emotion` plugin.
+      },
+    },
+  ],
+}
 ```

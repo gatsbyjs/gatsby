@@ -19,7 +19,7 @@ Let’s jump in. Here are some of the important features of Gatsby:
 
 GatsbyJS is based on React which means that you'll be writing almost everything in JavaScript / JSX. That doesn't mean though you need loads of React experience to start out with Gatsby The [tutorials](/tutorial/) are a great resource and will teach you some React along the way. If you already like React, you'll most definitely enjoy creating static sites with Gatsby. As your final JavaScript bundle includes the React library, you can include React components as if it was a regular React app.
 
-### Graphql
+### GraphQL
 
 Gatsby was my first introduction to [GraphQL](http://graphql.org/learn/) and I'm loving it already. GraphQL is a query language used by Gatsby to let you connect to all kinds of APIs. With it as an abstraction layer, you can pull in all the data you can think of and utilize it in your app. Gatsby comes with plugins to pull in data from several APIs, CMS systems and local files. With GraphQL, you're able to query data from all these sources in a clear and readable way. The data is instantly available in your components and that's just super cool. Also, it comes with a browser-based IDE called Graph*i*QL which starts along with your development environment. You can use it to see which queries are available, test them out, and see what data these queries return.
 
@@ -35,7 +35,7 @@ Can you say React without webpack? I can hardly say `hello world` without webpac
 
 ### Community
 
-Even though Gatsby is pretty new, the developers using it seem really involved. There are quite a few [articles on the Gatsby blog](/blog/). People seem to be happy to answer your Gatsby questions on Twitter and on Github you can ask anything without being shot down. Everyone is encouraged to contribute in form of plugins and pull requests, which gives me confidence that we'll see a lot of additions and improvements in the future.
+Even though Gatsby is pretty new, the developers using it seem really involved. There are quite a few [articles on the Gatsby blog](/blog/). People seem to be happy to answer your Gatsby questions on Twitter and on GitHub you can ask anything without being shot down. Everyone is encouraged to contribute in form of plugins and pull requests, which gives me confidence that we'll see a lot of additions and improvements in the future.
 
 ## Some thoughts on Gatsby
 
@@ -85,7 +85,7 @@ Incremental builds aren't yet possible, so every update means a complete rebuild
 
 ### Gatsby Image plugin is cool
 
-Did you see the SVG traced image before the image was loaded? If not, you're probably on Safari and I still haven't implemented the `intersection observer` polyfill. But in other browsers, images you add with the [gatsby image](https://using-gatsby-image.gatsbyjs.org/) component will include a blur or traced svg placeholder effect by default. It also has `srcset` and `webp`. It can use some work though it adds a few wrappers around your images that are hard to reconfigure without using `!important`. Oh and be warned, it uses `object-fit` by default, which is unsupported by IE11 and older browsers. Of course, you don't have to use this plugin and every addition / change is discussable on Github.
+Did you see the SVG traced image before the image was loaded? If not, you're probably on Safari and I still haven't implemented the `intersection observer` polyfill. But in other browsers, images you add with the [gatsby image](https://using-gatsby-image.gatsbyjs.org/) component will include a blur or traced svg placeholder effect by default. It also has `srcset` and `webp`. It can use some work though it adds a few wrappers around your images that are hard to reconfigure without using `!important`. Oh and be warned, it uses `object-fit` by default, which is unsupported by IE11 and older browsers. Of course, you don't have to use this plugin and every addition / change is discussable on GitHub.
 
 ### Keep an eye on the output
 

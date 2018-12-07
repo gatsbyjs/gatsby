@@ -4,7 +4,16 @@ date: "2017-12-06"
 author: "Josh Weaver"
 image: "gatsby-contentful-netlify-algolia.jpg"
 excerpt: "Gatsby has been getting a lot of recognition and adoption lately, and for good reason. It’s so flexible and it works well with nearly everything."
-tags: ["contentful", "netlify", "algolia", "getting-started", "hosting", "ci", "performance"]
+tags:
+  [
+    "contentful",
+    "netlify",
+    "algolia",
+    "getting-started",
+    "hosting",
+    "ci",
+    "performance",
+  ]
 ---
 
 Gatsby has been getting a lot of recognition and
@@ -75,7 +84,7 @@ Our site has a lot of content (~300 articles) that needs to be maintained by
 non-developers, my co-workers. This meant we needed an approachable interface
 for copy and content editing. I wanted to make it as convenient as logging into
 Wordpress and publishing from there, without the Wordpress. So the publishing
-experience couldn’t rely on creating a file and committing changes to a git
+experience couldn’t rely on creating a file and committing changes to a Git
 repo.
 
 > Sidebar: There is
@@ -194,7 +203,7 @@ event API that took the built HTML from each article. The library did the magic
 of converting the HTML to JSON, then I iterated through the JSON. While keeping
 track of the last linked heading (h tag), I set the index record’s page link
 accordingly for each article section. The index was then uploaded to Algolia via
-their node.js client.
+their Node.js client.
 
 It wasn’t pretty, but it worked.
 

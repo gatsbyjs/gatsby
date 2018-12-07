@@ -14,7 +14,7 @@ const isItemActive = (location, item, activeItemHash) => {
     }
   }
 
-  if (linkMatchesPathname && !location.hash && activeItemHashFalsy) {
+  if (linkMatchesPathname && activeItemHashFalsy) {
     return item
   }
 

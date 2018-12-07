@@ -1,6 +1,6 @@
 const { writeFileSync } = require(`fs`)
 const yargs = require(`yargs`)
-const collectPackages = require(`@lerna/collect-packages`)
+const { getPackages } = require(`@lerna/project`)
 const PackageGraph = require(`@lerna/package-graph`)
 const semver = require(`semver`)
 
@@ -15,7 +15,7 @@ let argv = yargs
     describe: `Allow using "next" versions. Use this only for alpha/beta releases`,
   }).argv
 
-collectPackages(process.cwd()).then(packages => {
+getPackages(process.cwd()).then(packages => {
   const graph = new PackageGraph(packages, `allDependencies`, true)
 
   graph.forEach((pkgNode, name) => {

@@ -12,7 +12,7 @@ class DocsRemotePackagesTemplate extends React.Component {
     } = this.props
     return (
       <Layout location={this.props.location}>
-        <PageWithPluginSearchBar history={this.props.history}>
+        <PageWithPluginSearchBar location={this.props.location}>
           <PackageReadme
             page={markdownRemark}
             packageName={npmPackage.name}

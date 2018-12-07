@@ -49,16 +49,45 @@ exports.onRouteUpdateDelayed = true
  * @example
  * exports.onRouteUpdate = ({ location }) => {
  *   console.log('new pathname', location.pathname)
+ *
+ *   // Track pageview with google analytics
+ *   window.ga(
+ *     `set`,
+ *     `page`,
+ *     location.pathname + location.search + location.hash,
+ *   )
+ *   window.ga(`send`, `pageview`)
  * }
  */
 exports.onRouteUpdate = true
 
 /**
- * Allow a plugin to decide if the "scroll" should update or
+ * Allow a plugin to decide if the scroll position should update or
  * not on a route change.
  * @param {object} $0
  * @param {object} $0.prevRouterProps The previous state of the router before the route change.
- * @param {object} $0.pathname The new pathname
+ * @param {object} $0.routerProps The current state of the router.
+ * @param {string} $0.pathname The new pathname (for backwards compatibility with v1).
+ * @param {function} $0.getSavedScrollPosition Takes a location and returns the
+ * coordinates of the last scroll position for that location, or `null`. Gatsby
+ * saves scroll positions for each route in `SessionStorage`, so they are
+ * available after page reload.
+ * @returns {(boolean|string|Array)} Should return either an [x, y] Array of
+ * coordinates to scroll to, a string of the `id` or `name` of an element to
+ * scroll to, `false` to not update the scroll position, or `true` for the
+ * default behavior.
+ * @example
+ * exports.shouldUpdateScroll = ({
+ *   routerProps: { location },
+ *   getSavedScrollPosition
+ * }) => {
+ *   const currentPosition = getSavedScrollPosition(location)
+ *   const queriedPosition = getSavedScrollPosition({ pathname: `/random` })
+ *
+ *   window.scrollTo(...(currentPosition || [0, 0]))
+ *
+ *   return false
+ * }
  */
 exports.shouldUpdateScroll = true
 
@@ -70,13 +99,6 @@ exports.shouldUpdateScroll = true
 exports.registerServiceWorker = true
 
 /**
- * Allow a plugin to replace the router component e.g. to use a custom history version.
- * @param {object} $0
- * @param {object} $0.history The history instance to use in the replacement router instance
- */
-exports.replaceRouterComponent = true
-
-/**
  * Allow a plugin to replace the page component renderer. This api runner can be used to
  * implement page transitions. See https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions for an example of this.
  * @param {object} $0
@@ -86,35 +108,80 @@ exports.replaceRouterComponent = true
 exports.replaceComponentRenderer = true
 
 /**
- * Allow a plugin to replace the history object.
+ * Allow a plugin to wrap the page element.
+ *
+ * This is useful for setting wrapper component around pages that won't get
+ * unmounted on page change. For setting Provider components use [wrapRootElement](#wrapRootElement).
+ *
+ * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapPageElement)
  * @param {object} $0
- * @param {object} $0.basename The base URL of the app.
+ * @param {object} $0.element The "Page" React Element built by Gatsby.
+ * @param {object} $0.props Props object used by page.
+ * @example
+ * import React from "react"
+ * import Layout from "./src/components/Layout"
+ *
+ * export const wrapPageElement = ({ element, props }) => {
+ *   // props provide same data to Layout as Page element will get
+ *   // including location, data, etc - you don't need to pass it
+ *   return <Layout {...props}>{element}</Layout>
+ * }
  */
-exports.replaceHistory = true
+exports.wrapPageElement = true
 
 /**
- * Allow a plugin to wrap the root component.
+ * Allow a plugin to wrap the root element.
+ *
+ * This is useful to setup any Providers component that will wrap your application.
+ * For setting persistent UI elements around pages use [wrapPageElement](#wrapPageElement).
+ *
+ * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapRootElement)
  * @param {object} $0
- * @param {object} $0.Root The "Root" component built by Gatsby.
+ * @param {object} $0.element The "Root" React Element built by Gatsby.
+ * @example
+ * import React from "react"
+ * import { Provider } from "react-redux"
+ *
+ * import createStore from "./src/state/createStore"
+ * const store = createStore()
+ *
+ * export const wrapRootElement = ({ element }) => {
+ *   return (
+ *     <Provider store={store}>
+ *       {element}
+ *     </Provider>
+ *   )
+ * }
  */
-exports.wrapRootComponent = true
+exports.wrapRootElement = true
 
 /**
  * Called when prefetching for a pathname is triggered. Allows
  * for plugins with custom prefetching logic.
  * @param {object} $0
- * @param {object} $0.pathname The pathname whose resources should now be prefetched
- * @param {object} $0.getResourcesForPathname Function for fetching resources related to pathname
+ * @param {string} $0.pathname The pathname whose resources should now be prefetched
+ * @param {function} $0.getResourcesForPathname Function for fetching resources related to pathname
  */
 exports.onPrefetchPathname = true
 
 /**
+ * Called when prefetching for a pathname is successful. Allows
+ * for plugins with custom prefetching logic.
+ * @param {object} $0
+ * @param {string} $0.pathname The pathname whose resources have now been prefetched
+ * @param {function} $0.getResourceURLsForPathname Function for fetching URLs for resources related to the pathname
+ */
+exports.onPostPrefetchPathname = true
+
+/**
  * Plugins can take over prefetching logic. If they do, they should call this
  * to disable the now duplicate core prefetching logic.
+ * @example
+ * exports.disableCorePrefetching = () => true
  */
 exports.disableCorePrefetching = true
 
-/*
+/**
  * Allow a plugin to replace the ReactDOM.render function call by a custom renderer.
  * This method takes no param and should return a function with same signature as ReactDOM.render()
  * Note it's very important to call the callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`

@@ -12,7 +12,7 @@ async function onCreateNode({
 }) {
   const { createNode, createParentChildLink } = actions
 
-  // This only processes javascript files.
+  // This only processes JavaScript files.
   if (node.internal.mediaType !== `application/javascript`) {
     return
   }
@@ -26,7 +26,12 @@ async function onCreateNode({
       `flow`,
       `doExpressions`,
       `objectRestSpread`,
-      `decorators`,
+      [
+        `decorators`,
+        {
+          decoratorsBeforeExport: true,
+        },
+      ],
       `classProperties`,
       `classPrivateProperties`,
       `classPrivateMethods`,

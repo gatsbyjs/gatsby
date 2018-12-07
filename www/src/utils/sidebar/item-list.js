@@ -24,15 +24,20 @@ const extendItem = (items, parentTitle) => {
 }
 
 const itemListDocs = extenditemList(docsSidebar).map(item => {
-  return { ...item }
+  return { ...item, key: `docs` }
 })
 
 const itemListFeatures = extenditemList(featuresSidebar).map(item => {
-  return { ...item, disableAccordions: true }
+  return {
+    ...item,
+    key: `features`,
+    disableAccordions: true,
+    disableExpandAll: true,
+  }
 })
 
 const itemListTutorial = extenditemList(tutorialSidebar).map(item => {
-  return { ...item }
+  return { ...item, key: `tutorial` }
 })
 
 export { itemListDocs, itemListFeatures, itemListTutorial }

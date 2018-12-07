@@ -1,5 +1,4 @@
-[
-    {
+[{
         "id": 28,
         "date": "2017-09-02T10:50:27",
         "date_gmt": "2017-09-02T10:50:27",
@@ -38,8 +37,7 @@
             5
         ],
         "acf": {
-            "page_builder": [
-                {
+            "page_builder": [{
                     "acf_fc_layout": "excerpt",
                     "content": "Sed efficitur finibus urna, in laoreet tellus sollicitudin sit amet. Phasellus elementum eros nec augue placerat, eget auctor enim mattis."
                 },
@@ -81,46 +79,36 @@
                 }
             ]
         },
+        "polylang_current_lang": "en_US",
+        "polylang_tranlations": [{
+            "locale": "fr_FR",
+            "id": 26
+        }],
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts/28"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/post"
-                }
-            ],
-            "author": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
-                }
-            ],
-            "replies": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=28"
-                }
-            ],
-            "version-history": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts/28/revisions"
-                }
-            ],
-            "wp:attachment": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=28"
-                }
-            ],
-            "wp:term": [
-                {
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts/28"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/post"
+            }],
+            "author": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
+            }],
+            "replies": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=28"
+            }],
+            "version-history": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts/28/revisions"
+            }],
+            "wp:attachment": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=28"
+            }],
+            "wp:term": [{
                     "taxonomy": "category",
                     "embeddable": true,
                     "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories?post=28"
@@ -131,13 +119,11 @@
                     "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags?post=28"
                 }
             ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__POST"
     },
@@ -180,15 +166,13 @@
             4
         ],
         "acf": {
-            "page_builder": [
-                {
+            "page_builder": [{
                     "acf_fc_layout": "excerpt",
                     "content": "Phasellus blandit sollicitudin metus, vitae ultricies tortor pretium sed. Donec et elit sed sapien mattis dapibus non at magna. Nulla et accumsan."
                 },
                 {
                     "acf_fc_layout": "image_gallery",
-                    "pictures": [
-                        {
+                    "pictures": [{
                             "title": "Venise",
                             "picture": {
                                 "ID": 12,
@@ -300,46 +284,36 @@
                 }
             ]
         },
+        "polylang_current_lang": "fr_FR",
+        "polylang_tranlations": [{
+            "locale": "en_US",
+            "id": 28
+        }],
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts/26"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/post"
-                }
-            ],
-            "author": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
-                }
-            ],
-            "replies": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=26"
-                }
-            ],
-            "version-history": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts/26/revisions"
-                }
-            ],
-            "wp:attachment": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=26"
-                }
-            ],
-            "wp:term": [
-                {
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts/26"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/post"
+            }],
+            "author": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
+            }],
+            "replies": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=26"
+            }],
+            "version-history": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts/26/revisions"
+            }],
+            "wp:attachment": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=26"
+            }],
+            "wp:term": [{
                     "taxonomy": "category",
                     "embeddable": true,
                     "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories?post=26"
@@ -350,13 +324,11 @@
                     "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags?post=26"
                 }
             ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__POST"
     },
@@ -396,50 +368,34 @@
             "linked_image": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351.jpeg"
         },
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/pages/5"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/pages"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/page"
-                }
-            ],
-            "author": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
-                }
-            ],
-            "replies": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=5"
-                }
-            ],
-            "version-history": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/pages/5/revisions"
-                }
-            ],
-            "wp:attachment": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=5"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/pages/5"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/pages"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/page"
+            }],
+            "author": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
+            }],
+            "replies": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=5"
+            }],
+            "version-history": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/pages/5/revisions"
+            }],
+            "wp:attachment": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=5"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__PAGE"
     },
@@ -533,33 +489,23 @@
         "post": 26,
         "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327.jpeg",
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media/12"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/attachment"
-                }
-            ],
-            "author": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
-                }
-            ],
-            "replies": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=12"
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media/12"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/attachment"
+            }],
+            "author": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
+            }],
+            "replies": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=12"
+            }]
         },
         "__type": "wordpress__wp_media"
     },
@@ -653,33 +599,23 @@
         "post": 5,
         "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351.jpeg",
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media/10"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/attachment"
-                }
-            ],
-            "author": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
-                }
-            ],
-            "replies": [
-                {
-                    "embeddable": true,
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=10"
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media/10"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/attachment"
+            }],
+            "author": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
+            }],
+            "replies": [{
+                "embeddable": true,
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/comments?post=10"
+            }]
         },
         "__type": "wordpress__wp_media"
     },
@@ -709,33 +645,23 @@
             "quote": "C'est ainsi que nous avançons, barques à contre-courant, sans cesse ramenés vers le passé."
         },
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/41"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
-                }
-            ],
-            "wp:attachment": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=41"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/41"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
+            }],
+            "wp:attachment": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=41"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__wp_gatsby"
     },
@@ -765,33 +691,23 @@
             "quote": "C'est ainsi que nous nous débattons, comme des barques contre le courant, sans cesse repoussés vers le passé."
         },
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/40"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
-                }
-            ],
-            "wp:attachment": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=40"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/40"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
+            }],
+            "wp:attachment": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=40"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__wp_gatsby"
     },
@@ -821,33 +737,23 @@
             "quote": "Et nous luttons ainsi, barques à contre-courant, refoulés sans fin vers notre passé."
         },
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/39"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
-                }
-            ],
-            "wp:attachment": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=39"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/39"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
+            }],
+            "wp:attachment": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=39"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__wp_gatsby"
     },
@@ -877,33 +783,23 @@
             "quote": "Car c'est ainsi que nous allons, barques luttant contre un courant qui nous ramène sans cesse vers le passé."
         },
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/38"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
-                }
-            ],
-            "wp:attachment": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=38"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/38"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
+            }],
+            "wp:attachment": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=38"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__wp_gatsby"
     },
@@ -933,33 +829,23 @@
             "quote": "C'est ainsi que nous avançons, barques luttant contre un courant qui nous rejette sans cesse vers le passé."
         },
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/37"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
-                }
-            ],
-            "wp:attachment": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=37"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby/37"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types/gatsby"
+            }],
+            "wp:attachment": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media?parent=37"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__wp_gatsby"
     },
@@ -975,23 +861,17 @@
             ],
             "rest_base": "posts",
             "_links": {
-                "collection": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types"
-                    }
-                ],
-                "wp:items": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts"
-                    }
-                ],
-                "curies": [
-                    {
-                        "name": "wp",
-                        "href": "https://api.w.org/{rel}",
-                        "templated": true
-                    }
-                ]
+                "collection": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types"
+                }],
+                "wp:items": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts"
+                }],
+                "curies": [{
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }]
             }
         },
         "page": {
@@ -1002,23 +882,17 @@
             "taxonomies": [],
             "rest_base": "pages",
             "_links": {
-                "collection": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types"
-                    }
-                ],
-                "wp:items": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/pages"
-                    }
-                ],
-                "curies": [
-                    {
-                        "name": "wp",
-                        "href": "https://api.w.org/{rel}",
-                        "templated": true
-                    }
-                ]
+                "collection": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types"
+                }],
+                "wp:items": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/pages"
+                }],
+                "curies": [{
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }]
             }
         },
         "attachment": {
@@ -1029,23 +903,17 @@
             "taxonomies": [],
             "rest_base": "media",
             "_links": {
-                "collection": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types"
-                    }
-                ],
-                "wp:items": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media"
-                    }
-                ],
-                "curies": [
-                    {
-                        "name": "wp",
-                        "href": "https://api.w.org/{rel}",
-                        "templated": true
-                    }
-                ]
+                "collection": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types"
+                }],
+                "wp:items": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/media"
+                }],
+                "curies": [{
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }]
             }
         },
         "gatsby": {
@@ -1056,23 +924,17 @@
             "taxonomies": [],
             "rest_base": "gatsby",
             "_links": {
-                "collection": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types"
-                    }
-                ],
-                "wp:items": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
-                    }
-                ],
-                "curies": [
-                    {
-                        "name": "wp",
-                        "href": "https://api.w.org/{rel}",
-                        "templated": true
-                    }
-                ]
+                "collection": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/types"
+                }],
+                "wp:items": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/gatsby"
+                }],
+                "curies": [{
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }]
             }
         },
         "__type": "wordpress__wp_types"
@@ -1084,11 +946,9 @@
             "queryable": true,
             "slug": "publish",
             "_links": {
-                "archives": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts"
-                    }
-                ]
+                "archives": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts"
+                }]
             }
         },
         "acf-disabled": {
@@ -1097,11 +957,9 @@
             "queryable": true,
             "slug": "acf-disabled",
             "_links": {
-                "archives": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?status=acf-disabled"
-                    }
-                ]
+                "archives": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?status=acf-disabled"
+                }]
             }
         },
         "__type": "wordpress__wp_statuses"
@@ -1117,23 +975,17 @@
             "hierarchical": true,
             "rest_base": "categories",
             "_links": {
-                "collection": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies"
-                    }
-                ],
-                "wp:items": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories"
-                    }
-                ],
-                "curies": [
-                    {
-                        "name": "wp",
-                        "href": "https://api.w.org/{rel}",
-                        "templated": true
-                    }
-                ]
+                "collection": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies"
+                }],
+                "wp:items": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories"
+                }],
+                "curies": [{
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }]
             }
         },
         "post_tag": {
@@ -1146,23 +998,17 @@
             "hierarchical": false,
             "rest_base": "tags",
             "_links": {
-                "collection": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies"
-                    }
-                ],
-                "wp:items": [
-                    {
-                        "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags"
-                    }
-                ],
-                "curies": [
-                    {
-                        "name": "wp",
-                        "href": "https://api.w.org/{rel}",
-                        "templated": true
-                    }
-                ]
+                "collection": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies"
+                }],
+                "wp:items": [{
+                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags"
+                }],
+                "curies": [{
+                    "name": "wp",
+                    "href": "https://api.w.org/{rel}",
+                    "templated": true
+                }]
             }
         },
         "__type": "wordpress__wp_taxonomies"
@@ -1178,33 +1024,23 @@
         "parent": 0,
         "meta": [],
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories/2"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/category"
-                }
-            ],
-            "wp:post_type": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?categories=2"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories/2"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/category"
+            }],
+            "wp:post_type": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?categories=2"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__CATEGORY"
     },
@@ -1219,33 +1055,23 @@
         "parent": 0,
         "meta": [],
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories/3"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/category"
-                }
-            ],
-            "wp:post_type": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?categories=3"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories/3"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/category"
+            }],
+            "wp:post_type": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?categories=3"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__CATEGORY"
     },
@@ -1260,33 +1086,23 @@
         "parent": 0,
         "meta": [],
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories/1"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/category"
-                }
-            ],
-            "wp:post_type": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?categories=1"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories/1"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/categories"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/category"
+            }],
+            "wp:post_type": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?categories=1"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__CATEGORY"
     },
@@ -1300,33 +1116,23 @@
         "taxonomy": "post_tag",
         "meta": [],
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags/4"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/post_tag"
-                }
-            ],
-            "wp:post_type": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?tags=4"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags/4"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/post_tag"
+            }],
+            "wp:post_type": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?tags=4"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__TAG"
     },
@@ -1340,33 +1146,23 @@
         "taxonomy": "post_tag",
         "meta": [],
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags/5"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags"
-                }
-            ],
-            "about": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/post_tag"
-                }
-            ],
-            "wp:post_type": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?tags=5"
-                }
-            ],
-            "curies": [
-                {
-                    "name": "wp",
-                    "href": "https://api.w.org/{rel}",
-                    "templated": true
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags/5"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/tags"
+            }],
+            "about": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/taxonomies/post_tag"
+            }],
+            "wp:post_type": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts?tags=5"
+            }],
+            "curies": [{
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }]
         },
         "__type": "wordpress__TAG"
     },
@@ -1385,16 +1181,12 @@
         "meta": [],
         "acf": false,
         "_links": {
-            "self": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users"
-                }
-            ]
+            "self": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users/1"
+            }],
+            "collection": [{
+                "href": "http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/users"
+            }]
         },
         "__type": "wordpress__wp_users"
     },

@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import GatsbyLink from "gatsby-link"
+import { Link } from "gatsby"
 
 import Example from "./components/Example"
 
@@ -35,7 +35,7 @@ class ComponentPage extends React.Component {
         </table>
         <Example html={html} />
         <p>
-          <GatsbyLink to="/components/">[index]</GatsbyLink>
+          <Link to="/components/">[index]</Link>
         </p>
       </div>
     )
