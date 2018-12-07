@@ -38,6 +38,14 @@ exports.sourceNodes = (
           createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
         )
       )
+        .then(() => {
+          db.close()
+        })
+        .catch(err => {
+          console.warn(err)
+          db.close()
+          return err
+        })
     })
     .catch(err => {
       console.warn(err)
@@ -58,13 +66,12 @@ function createNodes(
     let cursor = collection.find()
 
     // Execute the each command, triggers for each document
-    cursor.each(function(err, item) {
-      // If the item is null then the cursor is exhausted/empty and closed
-      if (item == null) {
-        // Let's close the db
-        db.close()
-        resolve()
-      } else {
+    cursor.toArray((err, documents) => {
+      if (err) {
+        reject(err)
+      }
+
+      documents.forEach(item => {
         var id = item._id.toString()
         delete item._id
 
@@ -76,7 +83,9 @@ function createNodes(
           parent: `__${collectionName}__`,
           children: [],
           internal: {
-            type: `mongodb${caps(dbName)}${caps(collectionName)}`,
+            type: `mongodb${sanitizeName(dbName)}${sanitizeName(
+              collectionName
+            )}`,
             content: JSON.stringify(item),
             contentDigest: crypto
               .createHash(`md5`)
@@ -116,13 +125,14 @@ function createNodes(
         childrenNodes.forEach(node => {
           createNode(node)
         })
-      }
+      })
+      resolve()
     })
   })
 }
 
-function caps(s) {
-  return s.replace(/\b\w/g, l => l.toUpperCase())
+function sanitizeName(s) {
+  return s.replace(/[^_a-zA-Z0-9]/, ``).replace(/\b\w/g, l => l.toUpperCase())
 }
 
 function getConnectionExtraParams(extraParams) {

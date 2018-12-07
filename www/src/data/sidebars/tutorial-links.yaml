@@ -1,5 +1,3 @@
-- title: Quick start
-  link: /docs/
 - title: Tutorial (step-by-step)
   items:
     - title: Introduction
@@ -10,14 +8,16 @@
       items:
         - title: Overview of core technologies
           link: /tutorial/part-zero/#overview-of-core-technologies
-        - title: Familiarize with command line
-          link: /tutorial/part-zero/#familiarize-with-command-line
+        - title: Familiarize with the command line
+          link: /tutorial/part-zero/#familiarize-with-the-command-line
         - title: Install Node.js
           link: /tutorial/part-zero/#install-nodejs
         - title: Familiarize with npm
           link: /tutorial/part-zero/#familiarize-with-npm
-        - title: Install the Gatsby CLI
-          link: /tutorial/part-zero/#install-the-gatsby-cli
+        - title: Install Git
+          link: /tutorial/part-zero/#install-git
+        - title: Install Gatsby CLI
+          link: /tutorial/part-zero/#install-gatsby-cli
         - title: Create a Gatsby site
           link: /tutorial/part-zero/#create-a-gatsby-site
         - title: Set up a code editor
@@ -32,6 +32,8 @@
           link: /tutorial/part-one/#familiarizing-with-gatsby-pages
         - title: Building with components
           link: /tutorial/part-one/#building-with-components
+        - title: Linking between pages
+          link: /tutorial/part-one/#linking-between-pages
         - title: Deploying a Gatsby site
           link: /tutorial/part-one/#deploying-a-gatsby-site
     - title: 2. Introduction to using CSS in Gatsby
@@ -54,7 +56,7 @@
       items:
         - title: Your first layout component
           link: /tutorial/part-three/#your-first-layout-component
-    - title: 4. Querying for data in a blog
+    - title: 4. Data in Gatsby
       link: /tutorial/part-four/
       ui: steps
       items:

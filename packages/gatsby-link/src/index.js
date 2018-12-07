@@ -1,7 +1,7 @@
 /*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, Location } from "@reach/router"
+import { Link } from "@reach/router"
 import { parsePath } from "gatsby"
 
 export function withPrefix(path) {
@@ -45,11 +45,8 @@ class GatsbyLink extends React.Component {
       IOSupported = true
     }
 
-    const { location } = props
-
     this.state = {
       IOSupported,
-      location,
     }
     this.handleRef = this.handleRef.bind(this)
   }
@@ -97,19 +94,23 @@ class GatsbyLink extends React.Component {
       getProps = this.defaultGetProps,
       onClick,
       onMouseEnter,
-      location,
       /* eslint-disable no-unused-vars */
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
       ref: $ref,
       innerRef: $innerRef,
+      state,
+      replace,
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
 
+    const prefixedTo = withPrefix(to)
+
     return (
       <Link
-        to={to}
+        to={prefixedTo}
+        state={state}
         getProps={getProps}
         innerRef={this.handleRef}
         onMouseEnter={e => {
@@ -131,25 +132,10 @@ class GatsbyLink extends React.Component {
             !e.shiftKey
           ) {
             e.preventDefault()
-            // Is this link pointing to a hash on the same page? If so,
-            // just scroll there.
-            const { pathname, hash } = parsePath(to)
-            if (pathname === location.pathname || !pathname) {
-              const element = hash
-                ? document.getElementById(hash.substr(1))
-                : null
-              if (element !== null) {
-                element.scrollIntoView()
-              } else {
-                // This is just a normal link to the current page so let's emulate default
-                // browser behavior by scrolling now to the top of the page.
-                window.scrollTo(0, 0)
-              }
-            }
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            push(to)
+            navigate(to, { state, replace })
           }
 
           return true
@@ -165,29 +151,33 @@ GatsbyLink.propTypes = {
   innerRef: PropTypes.func,
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
+  replace: PropTypes.bool,
 }
 
-// eslint-disable-next-line react/display-name
-const withLocation = Comp => props => (
-  <Location>
-    {({ location }) => <Comp location={location} {...props} />}
-  </Location>
-)
+export default GatsbyLink
 
-export default withLocation(GatsbyLink)
+export const navigate = (to, options) => {
+  window.___navigate(withPrefix(to), options)
+}
 
 export const push = to => {
-  window.___push(to)
+  console.warn(
+    `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
+  window.___push(withPrefix(to))
 }
 
 export const replace = to => {
-  window.___replace(to)
+  console.warn(
+    `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
+  window.___replace(withPrefix(to))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
 export const navigateTo = to => {
   console.warn(
-    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "push" instead.`
+    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
   )
   return push(to)
 }

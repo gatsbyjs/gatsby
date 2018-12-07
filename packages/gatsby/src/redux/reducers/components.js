@@ -14,10 +14,6 @@ module.exports = (state = new Map(), action) => {
         })
       )
       return state
-    case `DELETE_PAGE`:
-      action.payload.componentPath = normalize(action.payload.component)
-      state.delete(action.payload.componentPath)
-      return state
     case `REMOVE_TEMPLATE_COMPONENT`:
       state.delete(normalize(action.payload.componentPath))
       return state

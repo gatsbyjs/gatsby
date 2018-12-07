@@ -1,0 +1,33 @@
+{
+  "name": "gatsby-example-using-multiple-providers",
+  "private": true,
+  "description": "Gatsby example site using multiple plugins implementing wrapping APIs",
+  "version": "1.0.0",
+  "author": "Michal Piechowiak <misiek.piechowiak@gmail.com>",
+  "dependencies": {
+    "apollo-boost": "^0.1.13",
+    "babel-plugin-styled-components": "^1.5.1",
+    "gatsby": "^2.0.0",
+    "gatsby-plugin-jss": "^2.0.2",
+    "gatsby-plugin-styled-components": "^3.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "react": "^16.4.0",
+    "react-apollo": "^2.1.11",
+    "react-dom": "^16.4.0",
+    "react-jss": "^8.6.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "styled-components": "^3.4.2"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "npm run develop",
+    "serve": "gatsby serve"
+  }
+}

@@ -6,39 +6,40 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { push, replace, withPrefix } from "../"
+import Link, { navigate, push, replace, withPrefix } from "../"
 
-afterEach(cleanup)
+afterEach(() => {
+  global.__PATH_PREFIX__ = ``
+  cleanup()
+})
 
 const getInstance = (props, pathPrefix = ``) => {
   getWithPrefix()(pathPrefix)
-  return Link(props)
+  return <Link {...props} />
+}
+
+const getNavigate = () => {
+  global.___navigate = jest.fn()
+  return navigate
 }
 
 const getPush = () => {
-  Object.assign(global.window, {
-    ___push: jest.fn(),
-  })
-
+  global.___push = jest.fn()
   return push
 }
 
 const getReplace = () => {
-  Object.assign(global.window, {
-    ___replace: jest.fn(),
-  })
-
+  global.___replace = jest.fn()
   return replace
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
-  Object.assign(global.window, {
-    __PATH_PREFIX__: pathPrefix,
-  })
+  global.__PATH_PREFIX__ = pathPrefix
   return withPrefix
 }
 
-const setup = ({ sourcePath = `/active`, linkProps } = {}) => {
+const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
+  global.__PATH_PREFIX__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
 
@@ -80,7 +81,7 @@ describe(`<Link />`, () => {
   })
 
   describe(`the location to link to`, () => {
-    global.window.___loader = {
+    global.___loader = {
       enqueue: jest.fn(),
     }
 
@@ -90,18 +91,23 @@ describe(`<Link />`, () => {
 
       expect(link.getAttribute(`href`)).toEqual(location)
     })
+
+    it(`includes the pathPrefix`, () => {
+      const pathPrefix = `/prefixed`
+      const location = `/courses?sort=name`
+      const { link } = setup({ linkProps: { to: location }, pathPrefix })
+      expect(link.getAttribute(`href`)).toEqual(`${pathPrefix}${location}`)
+    })
   })
 
   it(`push is called with correct args`, () => {
     getPush()(`/some-path`)
-
-    expect(global.window.___push).toHaveBeenCalledWith(`/some-path`)
+    expect(global.___push).toHaveBeenCalledWith(`/some-path`)
   })
 
   it(`replace is called with correct args`, () => {
     getReplace()(`/some-path`)
-
-    expect(global.window.___replace).toHaveBeenCalledWith(`/some-path`)
+    expect(global.___replace).toHaveBeenCalledWith(`/some-path`)
   })
 })
 
@@ -119,5 +125,25 @@ describe(`withPrefix`, () => {
       const root = getWithPrefix(pathPrefix)(to)
       expect(root).toEqual(`${pathPrefix}${to}`)
     })
+  })
+})
+
+describe(`navigate`, () => {
+  it(`navigates to correct path`, () => {
+    const to = `/some-path`
+    getNavigate()(to)
+
+    expect(global.___navigate).toHaveBeenCalledWith(to, undefined)
+  })
+
+  it(`respects pathPrefix`, () => {
+    const to = `/some-path`
+    global.__PATH_PREFIX__ = `/blog`
+    getNavigate()(to)
+
+    expect(global.___navigate).toHaveBeenCalledWith(
+      `${global.__PATH_PREFIX__}${to}`,
+      undefined
+    )
   })
 })

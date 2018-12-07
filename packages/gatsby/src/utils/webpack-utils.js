@@ -1,13 +1,12 @@
 // @flow
-const os = require(`os`)
 
 const autoprefixer = require(`autoprefixer`)
 const flexbugs = require(`postcss-flexbugs-fixes`)
-const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
+const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
+const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
-const { createBabelConfig } = require(`./babel-config`)
 const eslintConfig = require(`./eslint-config`)
 
 type LoaderSpec = string | { loader: string, options?: Object }
@@ -55,8 +54,6 @@ export type LoaderUtils = {
   postcss: LoaderResolver<{
     browsers?: string[],
     plugins?: Array<any> | ((loader: any) => Array<any>),
-    minimze?: boolean,
-    cssnano?: any,
   }>,
 
   file: LoaderResolver<*>,
@@ -71,11 +68,11 @@ export type LoaderUtils = {
 }
 
 /**
- * Utils that prodcue webpack rule objects
+ * Utils that produce webpack rule objects
  */
 export type RuleUtils = {
   /**
-   * Handles Javascript compilation via babel
+   * Handles JavaScript compilation via babel
    */
   js: RuleFactory<*>,
   yaml: RuleFactory<*>,
@@ -119,11 +116,9 @@ module.exports = async ({
 }): Promise<WebpackUtilsOptions> => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
-  const supportedBrowsers = program.browserlist
+  const supportedBrowsers = program.browserslist
 
   const PRODUCTION = !stage.includes(`develop`)
-
-  const babelConfig = await createBabelConfig(program, stage)
 
   const isSSR = stage.includes(`html`)
 
@@ -207,13 +202,7 @@ module.exports = async ({
     },
 
     postcss: (options = {}) => {
-      let {
-        cssnano,
-        plugins,
-        browsers = supportedBrowsers,
-        minimze = PRODUCTION,
-        ...postcssOpts
-      } = options
+      let { plugins, browsers = supportedBrowsers, ...postcssOpts } = options
 
       return {
         loader: require.resolve(`postcss-loader`),
@@ -225,11 +214,10 @@ module.exports = async ({
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
             return [
-              minimze && require(`cssnano`)(cssnano),
               flexbugs,
               autoprefixer({ browsers, flexbox: `no-2009` }),
               ...plugins,
-            ].filter(Boolean)
+            ]
           },
           ...postcssOpts,
         },
@@ -257,10 +245,10 @@ module.exports = async ({
       }
     },
 
-    js: (options = babelConfig) => {
+    js: options => {
       return {
         options,
-        loader: require.resolve(`babel-loader`),
+        loader: require.resolve(`./babel-loader`),
       }
     },
 
@@ -294,10 +282,10 @@ module.exports = async ({
   const rules = {}
 
   /**
-   * Javascript loader via babel, excludes node_modules
+   * JavaScript loader via babel, excludes node_modules
    */
   {
-    let js = options => {
+    let js = (options = {}) => {
       return {
         test: /\.jsx?$/,
         exclude: vendorRegex,
@@ -306,6 +294,25 @@ module.exports = async ({
     }
 
     rules.js = js
+  }
+
+  /**
+   * mjs loader:
+   * webpack 4 has issues automatically dealing with
+   * the .mjs extension, thus we need to explicitly
+   * add this rule to use the default webpack js loader
+   */
+  {
+    let mjs = (options = {}) => {
+      return {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: `javascript/auto`,
+        ...options,
+      }
+    }
+
+    rules.mjs = mjs
   }
 
   {
@@ -428,25 +435,32 @@ module.exports = async ({
   const plugins = { ...builtinPlugins }
 
   /**
-   * Minify javascript code without regard for IE8. Attempts
+   * Minify JavaScript code without regard for IE8. Attempts
    * to parallelize the work to save time. Generally only add in Production
    */
-  plugins.uglify = ({ uglifyOptions, ...options } = {}) =>
-    new UglifyPlugin({
+  plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
+    new TerserPlugin({
       cache: true,
-      parallel: os.cpus().length - 1,
+      parallel: true,
       exclude: /\.min\.js/,
       sourceMap: true,
-      uglifyOptions: {
-        compress: {
-          drop_console: true,
-        },
-        ecma: 8,
+      terserOptions: {
         ie8: false,
-        ...uglifyOptions,
+        parse: {
+          ecma: 8,
+        },
+        compress: {
+          ecma: 5,
+        },
+        output: {
+          ecma: 5,
+        },
+        ...terserOptions,
       },
       ...options,
     })
+
+  plugins.minifyCss = (options = {}) => new OptimizeCssAssetsPlugin(options)
 
   /**
    * Extracts css requires into a single file;

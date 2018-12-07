@@ -92,8 +92,8 @@ exports.createPages = ({ graphql, actions }) => {
           }
         })
 
-        // Create pages from javascript
-        // Gatsby will, by default, createPages for javascript in the
+        // Create pages from JavaScript
+        // Gatsby will, by default, createPages for JavaScript in the
         //  /pages directory. We purposely don't have a folder with this name
         //  so that we can go full manual mode.
         result.data.allJavascriptFrontmatter.edges.forEach(edge => {
@@ -104,7 +104,7 @@ exports.createPages = ({ graphql, actions }) => {
               path: frontmatter.path, // required
               // Note, we can't have a template, but rather require the file directly.
               //  Templates are for converting non-react into react. jsFrontmatter
-              //  picks up all of the javascript files. We have only written these in react.
+              //  picks up all of the JavaScript files. We have only written these in react.
               component: path.resolve(edge.node.fileAbsolutePath),
               context: {
                 slug: edge.node.fields.slug,

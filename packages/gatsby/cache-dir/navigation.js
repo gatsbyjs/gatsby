@@ -1,8 +1,9 @@
-import loader, { setApiRunnerForLoader } from "./loader"
+import React from "react"
+import PropTypes from "prop-types"
+import loader from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
-import { globalHistory } from "@reach/router/lib/history"
 import { navigate as reachNavigate } from "@reach/router"
 import parsePath from "./parse-path"
 
@@ -17,7 +18,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.getResourcesForPathname(pathname)
+      const pageResources = loader.getResourcesForPathnameSync(pathname)
 
       if (pageResources != null) {
         console.error(
@@ -38,13 +39,22 @@ const onPreRouteUpdate = location => {
     apiRunner(`onPreRouteUpdate`, { location })
   }
 }
+
 const onRouteUpdate = location => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location })
+
+    // Temp hack while awaiting https://github.com/reach/router/issues/119
+    window.__navigatingToLink = false
   }
 }
 
-const navigate = (to, replace) => {
+const navigate = (to, options = {}) => {
+  // Temp hack while awaiting https://github.com/reach/router/issues/119
+  if (!options.replace) {
+    window.__navigatingToLink = true
+  }
+
   let { pathname } = parsePath(to)
   const redirect = redirectMap[pathname]
 
@@ -55,9 +65,14 @@ const navigate = (to, replace) => {
     pathname = parsePath(to).pathname
   }
 
-  // If we had a service worker update, no matter the path, reload window
+  // If we had a service worker update, no matter the path, reload window and
+  // reset the pathname whitelist
   if (window.GATSBY_SW_UPDATED) {
+    const { controller } = navigator.serviceWorker
+    controller.postMessage({ gatsbyApi: `resetWhitelist` })
+
     window.location = pathname
+    return
   }
 
   // Start a timer to wait for a second before transitioning and showing a
@@ -69,30 +84,20 @@ const navigate = (to, replace) => {
     })
   }, 1000)
 
-  const loaderCallback = pageResources => {
-    if (!pageResources) {
-      // We fetch resources for 404 page in page-renderer.js. Calling it
-      // here is to ensure that we have needed resouces to render page
-      // before navigating to it
-      if (process.env.NODE_ENV === `production`) {
-        loader.getResourcesForPathname(`/404.html`, loaderCallback)
-      } else {
-        clearTimeout(timeoutId)
-        reachNavigate(to, { replace })
-      }
-    } else {
-      clearTimeout(timeoutId)
-      reachNavigate(to, { replace })
-    }
-  }
-
-  loader.getResourcesForPathname(pathname, loaderCallback)
+  loader.getResourcesForPathname(pathname).then(pageResources => {
+    reachNavigate(to, options)
+    clearTimeout(timeoutId)
+  })
 }
 
-function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
+function shouldUpdateScroll(prevRouterProps, { location }) {
+  const { pathname, hash } = location
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
+    // `pathname` for backwards compatibility
     pathname,
+    routerProps: { location },
+    getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
     return results[0]
@@ -103,20 +108,60 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
       location: { pathname: oldPathname },
     } = prevRouterProps
     if (oldPathname === pathname) {
-      return false
+      // Scroll to element if it exists, if it doesn't, or no hash is provided,
+      // scroll to top.
+      return hash ? hash.slice(1) : [0, 0]
     }
   }
   return true
 }
 
 function init() {
-  setApiRunnerForLoader(apiRunner)
+  // Temp hack while awaiting https://github.com/reach/router/issues/119
+  window.__navigatingToLink = false
+
   window.___loader = loader
-  window.___push = to => navigate(to, false)
-  window.___replace = to => navigate(to, true)
+  window.___push = to => navigate(to, { replace: false })
+  window.___replace = to => navigate(to, { replace: true })
+  window.___navigate = (to, options) => navigate(to, options)
 
   // Check for initial page-load redirect
   maybeRedirect(window.location.pathname)
 }
 
-export { init, shouldUpdateScroll, onRouteUpdate, onPreRouteUpdate }
+// Fire on(Pre)RouteUpdate APIs
+class RouteUpdates extends React.Component {
+  constructor(props) {
+    super(props)
+    onPreRouteUpdate(props.location)
+  }
+
+  componentDidMount() {
+    onRouteUpdate(this.props.location)
+  }
+
+  componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
+    if (shouldFireRouteUpdate) {
+      onRouteUpdate(this.props.location)
+    }
+  }
+
+  getSnapshotBeforeUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      onPreRouteUpdate(this.props.location)
+      return true
+    }
+
+    return false
+  }
+
+  render() {
+    return this.props.children
+  }
+}
+
+RouteUpdates.propTypes = {
+  location: PropTypes.object.isRequired,
+}
+
+export { init, shouldUpdateScroll, RouteUpdates }

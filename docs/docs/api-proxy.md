@@ -8,7 +8,7 @@ backend implementation.
 To tell the development server to proxy any unknown requests to your API server
 in development, add a `proxy` field to your `gatsby-config.js`, for example:
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   proxy: {
     prefix: "/api",
@@ -27,10 +27,10 @@ the right place in production.
 ## Advanced proxying
 
 Sometimes you need more granular/flexible access to the develop server.
-Gatsby exposes the [Express.js](https://expressjs.com/) develop server to your site's gatsby-config.js where you
+Gatsby exposes the [Express.js](https://expressjs.com/) develop server to your site's `gatsby-config.js` where you
 can add Express middleware as needed.
 
-```javascript
+```javascript:title=gatsby-config.js
 var proxy = require("http-proxy-middleware")
 
 module.exports = {
@@ -48,4 +48,4 @@ module.exports = {
 }
 ```
 
-Keep in mind that middleware only has effect in development (with gatsby develop).
+Keep in mind that middleware only has effect in development (with `gatsby develop`).

@@ -3,10 +3,11 @@ import * as React from "react"
 export {
   default as Link,
   GatsbyLinkProps,
+  navigate,
   navigateTo,
   push,
   replace,
-  withPrefix
+  withPrefix,
 } from "gatsby-link"
 
 type RenderCallback = (data: any) => React.ReactNode

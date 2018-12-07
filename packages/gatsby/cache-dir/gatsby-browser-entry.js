@@ -1,6 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Link, { withPrefix, push, replace, navigateTo } from "gatsby-link"
+import Link, {
+  withPrefix,
+  navigate,
+  push,
+  replace,
+  navigateTo,
+} from "gatsby-link"
 import PageRenderer from "./public-page-renderer"
 import parsePath from "./parse-path"
 
@@ -44,8 +50,9 @@ export {
   withPrefix,
   graphql,
   parsePath,
-  push,
-  replace,
+  navigate,
+  push, // TODO replace for v3
+  replace, // TODO remove replace for v3
   navigateTo, // TODO: remove navigateTo for v3
   StaticQueryContext,
   StaticQuery,

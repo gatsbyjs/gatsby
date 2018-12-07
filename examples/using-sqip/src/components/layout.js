@@ -12,7 +12,8 @@ const Layout = ({ children, data }) => {
 
   const background = data.background.edges[0].node
   return (
-    <>`     `<div
+    <React.Fragment>
+      <div
         style={{
           position: `relative`,
           height: `66vw`,
@@ -28,8 +29,9 @@ const Layout = ({ children, data }) => {
           alt={background.name}
         />
         <div>{images}</div>
-      </div>`
-     `<div style={{ padding: `5vw` }}>{children}</div>`   `</>
+      </div>
+      <div style={{ padding: `5vw` }}>{children}</div>
+    </React.Fragment>
   )
 }
 
