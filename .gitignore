@@ -16,6 +16,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+junit.xml
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt

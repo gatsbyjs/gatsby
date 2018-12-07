@@ -1,7 +1,17 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
-
-// You can delete this file if you're not using it
+exports.onCreatePage = ({ page, actions }) => {
+  if (page.path === `/client-only-paths/`) {
+    // create client-only-paths
+    page.matchPath = `/client-only-paths/*`
+    actions.createPage(page)
+  } else if (page.path === `/`) {
+    // use index page as template
+    // (mimics)
+    actions.createPage({
+      ...page,
+      path: `/duplicated`,
+      context: {
+        DOMMarker: `duplicated`,
+      },
+    })
+  }
+}

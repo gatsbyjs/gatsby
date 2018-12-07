@@ -19,7 +19,7 @@ When creating a new Gatsby site, you can use the following command structure to 
 gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 ```
 
-> 💡 See a list of the existing [**official and community starters**](/docs/gatsby-starters/)!
+> 💡 See a list of the existing [**official and community starters**](/starters/)!
 
 If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, stick with the “Hello World” site you already created in tutorial part zero.
 
