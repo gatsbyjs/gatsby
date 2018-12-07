@@ -95,7 +95,6 @@
                 "eslint-plugin-flowtype": "^2.35.0",
                 "eslint-plugin-jsx-a11y": "^6.0.2",
                 "eslint-plugin-prettier": "^2.2.0",
-                "eslint-plugin-flow-vars": "^0.5.0",
                 "babel-plugin-transform-runtime": "^6.23.0",
                 "babel-plugin-add-module-exports": "^0.2.1",
                 "babel-plugin-transform-flow-strip-types": "^6.22.0",

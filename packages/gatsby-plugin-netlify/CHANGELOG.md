@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.5...gatsby-plugin-netlify@2.0.6) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.4...gatsby-plugin-netlify@2.0.5) (2018-11-15)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** do not cache service worker file on Netlify ([#9680](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/issues/9680)) ([9280fd7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/commit/9280fd7)), closes [/www.netlify.com/blog/2018/06/28/5-pro-tips-and-plugins-for-optimizing-your-gatsby---netlify-site/#4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/issues/4)
+
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.3...gatsby-plugin-netlify@2.0.4) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.2...gatsby-plugin-netlify@2.0.3) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.1...gatsby-plugin-netlify@2.0.2) (2018-10-23)

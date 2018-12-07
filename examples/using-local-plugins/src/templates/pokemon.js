@@ -2,7 +2,7 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 
 export default ({ data: { pokemon } }) => (
-  <div style={{ width: 960, margin: "4rem auto" }}>
+  <div style={{ width: 960, margin: `4rem auto` }}>
     <h1>{pokemon.name}</h1>
     <img src={pokemon.sprites.front_default} alt={pokemon.name} />
     <h2>Abilities</h2>
