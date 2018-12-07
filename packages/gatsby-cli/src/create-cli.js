@@ -2,8 +2,10 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
-const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
+
+const envInfo = require(`./env-info`)
+const issue = require(`./issue`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -222,28 +224,25 @@ function buildLocalCommands(cli, isLocalSite) {
       }),
     handler: args => {
       try {
-        envinfo.run(
-          {
-            System: [`OS`, `CPU`, `Shell`],
-            Binaries: [`Node`, `npm`, `Yarn`],
-            Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
-            npmPackages: `gatsby*`,
-            npmGlobalPackages: `gatsby*`,
-          },
-          {
-            console: true,
-            // Clipboard is not accessible when on a linux tty
-            clipboard:
-              process.platform === `linux` && !process.env.DISPLAY
-                ? false
-                : args.clipboard,
-          }
-        )
+        envInfo({
+          console: true,
+          // Clipboard is not accessible when on a linux tty
+          clipboard:
+            process.platform === `linux` && !process.env.DISPLAY
+              ? false
+              : args.clipboard,
+        })
       } catch (err) {
         console.log(`Error: unable to print environment info`)
         console.log(err)
       }
     },
+  })
+
+  cli.command({
+    command: `issue`,
+    desc: `Open an issue on Gatsby's GitHub repository`,
+    handler: issue,
   })
 
   cli.command({
