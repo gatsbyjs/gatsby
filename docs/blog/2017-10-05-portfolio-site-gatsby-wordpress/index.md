@@ -4,7 +4,15 @@ date: "2017-10-05"
 image: "gatsby-article-cover-image.jpg"
 author: "David James"
 excerpt: "Recreating my WordPress portfolio site using GatsbyJS, React and the WordPress REST API"
-tags: ["portfolio-site", "wordpress", "graphql", "plugins", "performance", "getting-started"]
+tags:
+  [
+    "portfolio-site",
+    "wordpress",
+    "graphql",
+    "plugins",
+    "performance",
+    "getting-started",
+  ]
 ---
 
 _This article was originally published on

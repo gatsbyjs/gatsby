@@ -80,7 +80,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     expect(transformed).toMatchSnapshot()
 
     expect(console.warn).toHaveBeenCalledWith(
-      `Invalid match specified: "// highlight-range 1"`
+      `Invalid match specified: "<span class="token comment">// highlight-range 1</span>"`
     )
   })
 

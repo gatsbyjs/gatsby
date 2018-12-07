@@ -2,22 +2,24 @@ import React from "react"
 import { renderToString } from "react-dom/server"
 import { extractCritical } from "emotion-server"
 
-exports.replaceRenderer = ({
+import { wrapElement } from "./wrap-element"
+
+export const replaceRenderer = ({
   bodyComponent,
   replaceBodyHTMLString,
   setHeadComponents,
 }) => {
-  const { html, ids, css } = extractCritical(renderToString(bodyComponent))
-
-  const criticalStyle = <style dangerouslySetInnerHTML={{ __html: css }} />
-  const criticalIds = (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `window.__EMOTION_CRITICAL_CSS_IDS__ = ${JSON.stringify(ids)};`,
-      }}
-    />
+  const { html, ids, css } = extractCritical(
+    renderToString(wrapElement(bodyComponent))
   )
 
-  setHeadComponents([criticalIds, criticalStyle])
+  setHeadComponents([
+    // eslint-disable-next-line react/jsx-key
+    <style
+      data-emotion-css={ids.join(` `)}
+      dangerouslySetInnerHTML={{ __html: css }}
+    />,
+  ])
+
   replaceBodyHTMLString(html)
 }

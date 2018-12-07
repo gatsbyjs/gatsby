@@ -51,7 +51,7 @@ Your plugin will have the following behavior:
 Create a new Gatsby project and change directories into the new project you just created.
 
 ```shell
-gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default#v2
+gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default
 cd source-tutorial-site
 ```
 
@@ -102,7 +102,7 @@ npm install node-fetch query-string --save
 
 Open your `package.json` file and you'll see `node-fetch` and `query-string` have been added to a `dependencies` section at the end:
 
-```js
+```js:title=package.json
   "dependencies": {
     "node-fetch": "^2.2.0",
     "query-string": "^6.1.0"
@@ -115,12 +115,14 @@ With the setup done, move on to adding the plugin's functionality.
 
 Create a new file called `gatsby-node.js` in your `gatsby-source-pixabay` directory, and add the following:
 
-```js
-const crypto = require("crypto")
+```js:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -136,15 +138,14 @@ exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
 What did you do by adding this code? You started by importing the dependencies that you added earlier (along with one built in dependency):
 
 ```js
-const crypto = require("crypto")
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 ```
 
-Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`actions` and `createNodeId`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. Gatsby expects sourceNodes to return either a promise or a callback (3rd parameter). This is important as it tells Gatsby to wait to move on to next stages until your nodes are sourced, ensuring your nodes are created before the schema is generated.
 
 ```js
-exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
 ```
 
 You do some initial setup:
@@ -169,7 +170,7 @@ The skeleton of your plugin is in place which means you can add it to your proje
 
 Open `gatsby-config.js` from the root directory of your tutorial site, and add the `gatsby-source-pixabay` plugin:
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby Default Starter",
@@ -208,14 +209,17 @@ Note that Gatsby is warning that your plugin doesn't do anything yet. Time to fi
 
 Update `gatsby-node.js` in your `plugins/gatsby-source-pixabay/` directory:
 
-```js{11-30}
-const fetch = require('node-fetch')
-const queryString = require('query-string')
-const crypto = require('crypto')
+```js:title=gatsby-node.js
+const fetch = require("node-fetch")
+const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
+  // highlight-start
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 
@@ -236,6 +240,7 @@ exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
         // For each query result (or 'hit')
         data.hits.forEach(photo => {
           console.log("Photo data is:", photo)
+          // highlight-end
         })
       })
   )
@@ -266,27 +271,26 @@ You're ready to add the final step of your plugin - converting this data into a 
 
 ### Use `createNode` function
 
-You're adding a helper function on lines 12 to 32 and processing the data into a node on lines 49 to 52:
+You're adding a helper function on lines 11 to 27 and processing the data into a node on lines 44 to 47:
 
-```js{12-32,49-52}
-const fetch = require('node-fetch')
-const queryString = require('query-string')
-const crypto = require('crypto')
+```js:title=gatsby-node.js
+const fetch = require("node-fetch")
+const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
+  // highlight-start
   delete configOptions.plugins
 
   // Helper function that processes a photo to match Gatsby's node structure
   const processPhoto = photo => {
     const nodeId = createNodeId(`pixabay-photo-${photo.id}`)
     const nodeContent = JSON.stringify(photo)
-    const nodeContentDigest = crypto
-      .createHash('md5')
-      .update(nodeContent)
-      .digest('hex')
 
     const nodeData = Object.assign({}, photo, {
       id: nodeId,
@@ -295,9 +299,10 @@ exports.sourceNodes = ({ actions, createNodeId }, configOptions) => {
       internal: {
         type: `PixabayPhoto`,
         content: nodeContent,
-        contentDigest: nodeContentDigest,
+        contentDigest: createContentDigest(photo),
       },
     })
+    // highlight-end
 
     return nodeData
   }
@@ -353,9 +358,9 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 ## Publishing a plugin
 
-You've built a local plugin for your project, but what if you want to share it with others? `npm` allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
+Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, `npm` allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Don't forget to edit your plugin's `package.json` file to include info about your plugin.
+> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/docs/submit-to-plugin-library/).
 
 ## Summary
 

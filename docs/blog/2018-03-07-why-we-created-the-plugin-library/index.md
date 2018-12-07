@@ -57,7 +57,7 @@ We liked when these libraries let users:
 
 We _didn't_ like these things in some of the above libraries:
 
-- poor contrast and poor information heirarchy
+- poor contrast and poor information hierarchy
 - limited filters
 - too many filters
 - low information density
@@ -77,7 +77,7 @@ The plugin ecosystem is a huge part of what makes Gatsby awesome because plugins
 
 Here are some ways you can help make the Gatsby plugin ecoystem great:
 
-- Share feedback on the plugin library on [Github Issue #4394](https://github.com/gatsbyjs/gatsby/issues/4394).
+- Share feedback on the plugin library on [GitHub Issue #4394](https://github.com/gatsbyjs/gatsby/issues/4394).
 - If you created a plugin and it's not showing up in the library, double check that the package has "gatsby-plugin" in its keywords.
 - Create plugins (or publish ones you've already built)! If you're interested, the [Plugin Authoring](/docs/plugin-authoring/) page can help.
 - [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions.
