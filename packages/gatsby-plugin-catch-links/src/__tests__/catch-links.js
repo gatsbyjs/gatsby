@@ -1,10 +1,11 @@
-const pathPrefix = `/pathPrefix`
+const pathPrefix = `/blog`
 
+import { navigate } from "gatsby"
 import * as catchLinks from "../catch-links"
 
 beforeAll(() => {
   global.__PATH_PREFIX__ = ``
-  // Set the base URL we will be testing against to http://localhost:8000/pathPrefix
+  // Set the base URL we will be testing against to http://localhost:8000/blog
   window.history.pushState({}, `APP Url`, `${pathPrefix}`)
 })
 
@@ -48,13 +49,14 @@ describe(`catchLinks`, () => {
 
 // https://github.com/facebook/jest/issues/936#issuecomment-214939935
 describe(`the click event`, () => {
-  it(`checks if the user might be forcing navigation`, () => {})
-  it(`checks if we clicked on an anchor`, () => {})
-  it(`checks if the document author might be forcing navigation`, () => {})
-  it(`checks if the destination/origin URLs have matching origins`, () => {})
-  it(`checks if the destination/origin URLs have matching top level paths`, () => {})
-  it(`checks if the destination URL wants to scroll the page with a hash anchor`, () => {})
-  it(`routes the destination href through gatsby`, () => {})
+  it.skip(`checks if the user might be forcing navigation`, () => {})
+  it.skip(`checks if we clicked on an anchor`, () => {})
+  it.skip(`checks if the document author might be forcing navigation`, () => {})
+  it.skip(`checks if the destination/origin URLs have matching origins`, () => {})
+  it.skip(`checks if the destination/origin URLs have matching top level paths`, () => {})
+  it.skip(`checks if the destination URL wants to scroll the page with a hash anchor`, () => {})
+  it.skip(`handles pathPrefix if necessary`, () => {})
+  it.skip(`routes the destination href through gatsby`, () => {})
 })
 
 describe(`a user may be forcing navigation if`, () => {
@@ -349,5 +351,95 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
     })
 
     withSearch.dispatchEvent(clickEvent)
+  })
+})
+
+describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
+  // We're going to manually set up the event listener here
+  let hrefHandler
+  let eventDestroyer
+
+  beforeAll(() => {
+    hrefHandler = jest.fn()
+    eventDestroyer = catchLinks.default(window, hrefHandler)
+  })
+
+  afterAll(() => {
+    global.__PATH_PREFIX__ = ``
+    eventDestroyer()
+  })
+
+  test(`on sites with pathPrefix '${pathPrefix}'`, done => {
+    // simulate case with --prefix-paths and prefix /blog
+    global.__PATH_PREFIX__ = pathPrefix
+
+    // create the element with href /blog/article
+    const clickElement = document.createElement(`a`)
+    clickElement.setAttribute(`href`, `${window.location.href}/article`)
+    document.body.appendChild(clickElement)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    // fake module handler
+    hrefHandler.mockImplementation(path => {
+      // place a mock where processing exits gatsby-link
+      const checkPoint = (global.___navigate = jest.fn())
+      // call gatsby-link.navigate as the default handler does
+      navigate(path)
+      // compare href past gatsby-link against our clickElement
+      expect(checkPoint).toHaveBeenCalledWith(
+        `${pathPrefix}/article`,
+        undefined
+      )
+
+      // cleanup
+      clickElement.remove()
+      done()
+    })
+
+    // and trigger click
+    clickElement.dispatchEvent(clickEvent)
+  })
+
+  test(`on sites without pathPrefix`, done => {
+    // simulate default case without --prefix-paths
+    global.__PATH_PREFIX__ = ``
+
+    // create the element with href /blog/article
+    const clickElement = document.createElement(`a`)
+    clickElement.setAttribute(`href`, `${window.location.href}/article`)
+    document.body.appendChild(clickElement)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    // fake module handler
+    hrefHandler.mockImplementation(path => {
+      // place a mock where processing exits gatsby-link
+      const checkPoint = (global.___navigate = jest.fn())
+      // call gatsby-link.navigate as the default handler does
+      navigate(path)
+      // compare href past gatsby-link against our clickElement
+      expect(checkPoint).toHaveBeenCalledWith(
+        `${pathPrefix}/article`,
+        undefined
+      )
+
+      // cleanup
+      clickElement.remove()
+      done()
+    })
+
+    // and trigger click
+    clickElement.dispatchEvent(clickEvent)
   })
 })

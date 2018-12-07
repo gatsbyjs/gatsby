@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.0.3...gatsby-remark-images-contentful@2.0.4) (2018-11-20)
+
+### Bug Fixes
+
+- **gatsby-remark-images-contentful:** add in missing colon for the fallback src ([#10041](https://github.com/gatsbyjs/gatsby/issues/10041)) ([313190b](https://github.com/gatsbyjs/gatsby/commit/313190b))
+
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.0.2...gatsby-remark-images-contentful@2.0.3) (2018-10-24)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.0.1...gatsby-remark-images-contentful@2.0.2) (2018-09-26)

@@ -2,10 +2,8 @@
 
 const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
-const rangeParser = require(`parse-numeric-range`)
 const visit = require(`unist-util-visit`)
 
-// HACK: It would be nice to find a better way to share this utility code.
 const highlightCode = require(`gatsby-remark-prismjs/highlight-code`)
 
 // Language defaults to extension.toLowerCase();
@@ -15,8 +13,6 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   md: `markup`,
   sh: `bash`,
 }
-
-const HIGHLIGHT_LINE_REGEX = /\s+(\{\/\*|\/\*|\/\/|<!--|#)\s(highlight-line)\s*(\*\/\}|\*\/|-->)*/
 
 const getLanguage = file => {
   if (!file.includes(`.`)) {
@@ -53,115 +49,7 @@ module.exports = (
         throw Error(`Invalid snippet specified; no such file "${path}"`)
       }
 
-      // This method removes lines that contain only highlight or hide line directives,
-      // eg 'highlight-next-line', 'highlight-range' or 'hideline-range' comments.
-      function filterDirectives(line, index) {
-        if (line.includes(`hideline-next-line`)) {
-          // Although we're hiding the next line,
-          // We can use the current index since we also filter this lines.
-          // (Highlight line numbers are 1-based).
-          hiddenLines.push(index + 1)
-
-          // Strip lines that contain hideline-next-line comments.
-          return false
-        } else if (line.includes(`hideline-range`)) {
-          const match = line.match(/hideline-range{([^}]+)}/)
-          if (!match) {
-            console.warn(`Invalid match specified: "${line.trim()}"`)
-            return false
-          }
-
-          const range = match[1] && match[1].replace(/\s/g, ``)
-          // Hide line numbers are 1-based but so are offsets.
-          // Remember that the current line (index) will be removed.
-          rangeParser.parse(range).forEach(offset => {
-            hiddenLines.push(index + offset)
-          })
-
-          // Strip lines that contain hideline-range comments.
-          return false
-        }
-
-        if (line.includes(`highlight-next-line`)) {
-          // Although we're highlighting the next line,
-          // We can use the current index since we also filter this lines.
-          // (Highlight line numbers are 1-based).
-          highlightLines.push(index + 1)
-
-          // Strip lines that contain highlight-next-line comments.
-          return false
-        } else if (line.includes(`highlight-range`)) {
-          const match = line.match(/highlight-range{([^}]+)}/)
-          if (!match) {
-            console.warn(`Invalid match specified: "${line.trim()}"`)
-            return false
-          }
-          const range = match[1]
-
-          // Highlight line numbers are 1-based but so are offsets.
-          // Remember that the current line (index) will be removed.
-          rangeParser.parse(range).forEach(offset => {
-            highlightLines.push(index + offset)
-          })
-
-          // Strip lines that contain highlight-range comments.
-          return false
-        }
-
-        return true
-      }
-
-      // Track the number of lines we've filtered,
-      // So we can adjust the highlighted index accordingly.
-      let filteredLineOffset = 0
-
-      // Parse file contents and extract highlight markers:
-      // highlight-line, highlight-next-line, highlight-range
-      // We support JS, JSX, HTML, CSS, and YAML style comments.
-      // Turn them into an Array<number> format as expected by highlightCode().
-      // The order if these operations is important!
-      // Filtering next-line comments impacts line-numbers for same-line comments.
-      const highlightLines = []
-      const hiddenLines = []
-      const code = fs
-        .readFileSync(path, `utf8`)
-        .split(`\n`)
-        .filter((line, index) => {
-          const returnValue = filterDirectives(line, index - filteredLineOffset)
-
-          if (!returnValue) {
-            filteredLineOffset++
-          }
-
-          return returnValue
-        })
-        .filter((line, index) => {
-          // (Hide and highlight line numbers are 1-based).
-          const isHiddenLine = hiddenLines.includes(index + 1)
-          const isHighlightedLine = highlightLines.includes(index + 1)
-          // check if hidden and highlighted lines overlap
-          const hasIntersection = isHiddenLine && isHighlightedLine
-
-          if (hasIntersection) {
-            throw Error(`Line ${index + 1} has been marked as both hidden an highlighted for file: ${path}.`)
-          }
-
-          return !isHiddenLine
-        }) 
-        .map((line, index) => {
-          if (line.includes(`highlight-line`)) {
-            // Mark this line for highlighting.
-            // (Highlight line numbers are 1-based).
-            highlightLines.push(index + 1)
-
-            // Strip the highlight comment itself.
-            return line.replace(HIGHLIGHT_LINE_REGEX, ``)
-          }
-
-          return line
-        })
-        .join(`\n`)
-        .trim()
+      const code = fs.readFileSync(path, `utf8`).trim()
 
       // PrismJS's theme styles are targeting pre[class*="language-"]
       // to apply its styles. We do the same here so that users
@@ -186,8 +74,7 @@ module.exports = (
       node.value = `<div class="gatsby-highlight">
         <pre class="${className}"><code>${highlightCode(
         language,
-        code,
-        highlightLines
+        code
       )}</code></pre>
         </div>`
     }

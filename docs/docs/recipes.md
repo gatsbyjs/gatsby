@@ -2,23 +2,19 @@
 title: Recipes
 ---
 
-<!-- Basic template:
-Task to accomplish.
+<!-- Basic template for a Gatsby recipe:
+
+## Task to accomplish.
+
 1-2 sentences about it.
-Relevant links out (tutorial, doc pages, plugin readmes, etc).
+Relevant links out (tutorial, doc pages, plugin readmes, etc). -->
 
-Links:
-* tutorial link
-* docs link
-* additional, if needed
-
-And yeah — those three things are exactly what we're thinking. A first step would be to just go through the tutorial and pull out all the basic things we teach there in a condensed form e.g. creating a site, creating a page, linking between pages, etc. -->
-
-Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](<(/tutorial/)>)? Here's a quick guiding reference for how to build things, Gatsby style.
+Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](/docs/)? Here's a quick guiding reference for how to build things, Gatsby style.
 
 ## Table of Contents
 
-- [Using Unstructured Data](#using-unstructured-data)
+- [Using unstructured data](#using-unstructured-data)
+- [Gatsby project structure](#gatsby-project-structure)
 - [Using a starter](#using-a-starter)
 - [Creating pages](#creating-pages)
 - [Linking between pages](#linking-between-pages)
@@ -28,9 +24,8 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 - [Querying data](#querying-data)
 - [Sourcing data](#sourcing-data)
 - [Transforming data](#transforming-data)
-- [Gatsby project structure](#gatsby-project-structure)
 
-## Using Unstructured Data
+## Using unstructured data
 
 You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 

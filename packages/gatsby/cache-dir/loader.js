@@ -1,6 +1,5 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
-import stripPrefix from "./strip-prefix"
 import prefetchHelper from "./prefetch"
 
 const preferDefault = m => (m && m.default) || m
@@ -16,7 +15,6 @@ let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
 let apiRunner
 const failedPaths = {}
-const failedResources = {}
 const MAX_HISTORY = 5
 
 const jsonPromiseStore = {}
@@ -72,6 +70,7 @@ const fetchResource = resourceName => {
               if (req.status === 200) {
                 resolve(JSON.parse(req.responseText))
               } else {
+                delete jsonPromiseStore[resourceName]
                 reject()
               }
             }
@@ -90,7 +89,8 @@ const fetchResource = resourceName => {
     const fetchPromise = resourceFunction()
     let failed = false
     return fetchPromise
-      .catch(() => {
+      .catch(e => {
+        console.error(e)
         failed = true
       })
       .then(component => {
@@ -98,10 +98,6 @@ const fetchResource = resourceName => {
           resource: resourceName,
           succeeded: !failed,
         })
-
-        if (!failedResources[resourceName]) {
-          failedResources[resourceName] = failed
-        }
 
         fetchHistory = fetchHistory.slice(-MAX_HISTORY)
 
@@ -112,10 +108,12 @@ const fetchResource = resourceName => {
 
 const prefetchResource = resourceName => {
   if (resourceName.slice(0, 12) === `component---`) {
-    createComponentUrls(resourceName).forEach(url => prefetchHelper(url))
+    return Promise.all(
+      createComponentUrls(resourceName).map(url => prefetchHelper(url))
+    )
   } else {
     const url = createJsonURL(jsonDataPaths[resourceName])
-    prefetchHelper(url)
+    return prefetchHelper(url)
   }
 }
 
@@ -148,14 +146,14 @@ const handleResourceLoadError = (path, message) => {
 
 const onPrefetchPathname = pathname => {
   if (!prefetchTriggered[pathname]) {
-    apiRunner(`onPrefetchPathname`, { pathname: pathname })
+    apiRunner(`onPrefetchPathname`, { pathname })
     prefetchTriggered[pathname] = true
   }
 }
 
 const onPostPrefetchPathname = pathname => {
   if (!prefetchCompleted[pathname]) {
-    apiRunner(`onPostPrefetchPathname`, { pathname: pathname })
+    apiRunner(`onPostPrefetchPathname`, { pathname })
     prefetchCompleted[pathname] = true
   }
 }
@@ -165,13 +163,6 @@ const onPostPrefetchPathname = pathname => {
 // we load all resources for likely-to-be-visited paths.
 // let pathArray = []
 // let pathCount = {}
-
-let resourcesCount = Object.create(null)
-const sortResourcesByCount = (a, b) => {
-  if (resourcesCount[a] > resourcesCount[b]) return 1
-  else if (resourcesCount[a] < resourcesCount[b]) return -1
-  else return 0
-}
 
 let findPage
 let pathScriptsCache = {}
@@ -195,12 +186,10 @@ const queue = {
   // Hovering on a link is a very strong indication the user is going to
   // click on it soon so let's start prefetching resources for this
   // pathname.
-  hovering: rawPath => {
-    const path = stripPrefix(rawPath, __PATH_PREFIX__)
+  hovering: path => {
     queue.getResourcesForPathname(path)
   },
-  enqueue: rawPath => {
-    const path = stripPrefix(rawPath, __PATH_PREFIX__)
+  enqueue: path => {
     if (!apiRunner)
       console.error(`Run setApiRunnerForLoader() before enqueing paths`)
 
@@ -225,7 +214,7 @@ const queue = {
     ) {
       // If page wasn't found check and we didn't fetch resources map for
       // all pages, wait for fetch to complete and try find page again
-      return fetchPageResourceMap().then(() => queue.enqueue(rawPath))
+      return fetchPageResourceMap().then(() => queue.enqueue(path))
     }
 
     if (!page) {
@@ -241,12 +230,14 @@ const queue = {
 
     // Prefetch resources.
     if (process.env.NODE_ENV === `production`) {
-      prefetchResource(page.jsonName)
-      prefetchResource(page.componentChunkName)
+      Promise.all([
+        prefetchResource(page.jsonName),
+        prefetchResource(page.componentChunkName),
+      ]).then(() => {
+        // Tell plugins the path has been successfully prefetched
+        onPostPrefetchPathname(path)
+      })
     }
-
-    // Tell plugins the path has been successfully prefetched
-    onPostPrefetchPathname(path)
 
     return true
   },
@@ -290,7 +281,8 @@ const queue = {
           path,
           `Previously detected load failure for "${path}"`
         )
-        return reject()
+        reject()
+        return
       }
       const page = findPage(path)
 
@@ -303,9 +295,10 @@ const queue = {
       ) {
         // If page wasn't found check and we didn't fetch resources map for
         // all pages, wait for fetch to complete and try to get resources again
-        return fetchPageResourceMap().then(() =>
+        fetchPageResourceMap().then(() =>
           resolve(queue.getResourcesForPathname(path))
         )
+        return
       }
 
       if (!page) {
@@ -313,10 +306,12 @@ const queue = {
 
         // Preload the custom 404 page
         if (path !== `/404.html`) {
-          return resolve(queue.getResourcesForPathname(`/404.html`))
+          resolve(queue.getResourcesForPathname(`/404.html`))
+          return
         }
 
-        return resolve()
+        resolve()
+        return
       }
 
       // Use the path from the page so the pathScriptsCache uses
@@ -329,7 +324,8 @@ const queue = {
           page,
           pageResources: pathScriptsCache[path],
         })
-        return resolve(pathScriptsCache[path])
+        resolve(pathScriptsCache[path])
+        return
       }
 
       // Nope, we need to load resource(s)
@@ -352,6 +348,9 @@ const queue = {
             page,
             pageResources,
           })
+          // Tell plugins the path has been successfully prefetched
+          onPostPrefetchPathname(path)
+
           resolve(pageResources)
         })
       } else {
@@ -380,6 +379,9 @@ const queue = {
             pageResources,
           })
 
+          // Tell plugins the path has been successfully prefetched
+          onPostPrefetchPathname(path)
+
           if (doingInitialRender) {
             // We got all resources needed for first mount,
             // we can fetch resoures for all pages.
@@ -387,9 +389,6 @@ const queue = {
           }
         })
       }
-
-      // Tell plugins the path has been successfully prefetched
-      onPostPrefetchPathname(path)
     }),
 }
 

@@ -25,5 +25,5 @@ plugins: [`gatsby-plugin-react-helmet`]
 
 ## Examples
 
-- [GatsbyJS.org](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/layout.js)
-- [Jason Lengstorf personal website](https://github.com/jlengstorf/lengstorf.com/blob/master/src/components/SEO.js)
+- [GatsbyJS.org](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/site-metadata.js)
+- [Jason Lengstorf personal website](https://github.com/jlengstorf/lengstorf.com/blob/master/src/components/SEO/SEO.js)

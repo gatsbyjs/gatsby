@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import loader from "./loader"
 import shallowCompare from "shallow-compare"
-import { getRedirectUrl } from "./load-directly-or-404"
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -93,21 +92,54 @@ class EnsureResources extends React.Component {
     return shallowCompare(this, nextProps, nextState)
   }
 
-  render() {
+  shouldRenderStaticHTML() {
+    const { localStorage } = window
+    const { href, pathname } = window.location
+
+    // This should only occur if the network is offline, or if the
+    // path is nonexistent and there's no custom 404 page.
     if (
       process.env.NODE_ENV === `production` &&
       !(this.state.pageResources && this.state.pageResources.json)
     ) {
-      // This should only occur if there's no custom 404 page
-      const url = getRedirectUrl(this.state.location.href)
-      if (url) {
-        window.location.replace(url)
+      if (localStorage.getItem(`___failedResources`) === pathname) {
+        // Maybe it will work again in the future, so remove the flag
+        localStorage.removeItem(`___failedResources`)
+        console.error(
+          `WARNING: Resources cannot be loaded for the pathname ${pathname} - ` +
+            `falling back to static HTML instead.\n` +
+            `This is likely due to a bug in Gatsby, or misconfiguration in your project.`
+        )
+      } else {
+        // Mark the pathname as failed
+        localStorage.setItem(`___failedResources`, pathname)
+
+        // Reload the page.
+        // Do this, rather than simply `window.location.reload()`, so that
+        // pressing the back/forward buttons work - otherwise when pressing
+        // back, the browser will just change the URL and expect JS to handle
+        // the change, which won't always work since it might not be a Gatsby
+        // page.
+        const originalUrl = new URL(href)
+        window.history.replaceState({}, `404`, `${pathname}?gatsby-404`)
+        window.location.replace(originalUrl)
       }
 
-      return null
+      return true
+    } else {
+      localStorage.removeItem(`___failedResources`)
+      return false
     }
+  }
 
-    return this.props.children(this.state)
+  render() {
+    // TODO: find a nicer way to do this (e.g. React Suspense)
+    if (this.shouldRenderStaticHTML()) {
+      const __html = document.getElementById(`___gatsby`).innerHTML
+      return <div dangerouslySetInnerHTML={{ __html }} />
+    } else {
+      return this.props.children(this.state)
+    }
   }
 }
 
