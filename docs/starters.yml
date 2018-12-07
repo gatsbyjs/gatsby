@@ -791,7 +791,7 @@
   repo: https://github.com/cpinnix/verious-boilerplate
   description: n/a
   tags:
-    - no tag
+    - Styling:Other
   features:
     - Components only. Bring your own data, plugins, etc.
     - Bootstrap inspired grid system with Container, Row, Column components.
@@ -879,7 +879,6 @@
   tags:
     - Styling:CSS-in-JS
     - i18n
-    - react-intl
     - Formik
     - Yup
     - Netlify Form
@@ -1271,9 +1270,8 @@
     - Katex
     - Tensorflow
     - CSV
-    - Graph
+    - Charts
     - Linting
-    - Chart.js
   features:
     - Write easly your scientific blog with katex and publish your research
     - Machine learning ready with tensorflowjs
