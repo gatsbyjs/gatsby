@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.11"></a>
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.10...gatsby-source-filesystem@2.0.11) (2018-12-06)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** allow empty password for basic auth in createRemoteFileNode ([#10280](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/10280)) ([1d4e057](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/1d4e057))
+
 <a name="2.0.10"></a>
 
 ## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.9...gatsby-source-filesystem@2.0.10) (2018-11-29)

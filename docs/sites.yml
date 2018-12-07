@@ -3686,6 +3686,18 @@
     - Web Development
     - React-Native
     - Music
+- title: Ad Hoc Homework
+  main_url: https://homework.adhoc.team
+  url: https://homework.adhoc.team
+  description: >
+    Ad Hoc builds government digital services that are fast, efficient, and usable by everyone. Ad Hoc Homework is a collection of coding and design challenges for candidates applying to our open positions.
+  categories:
+    - Web Development
+    - Government
+    - Healthcare
+    - Programming
+  built_by_url: https://adhoc.team
+  featured: false
 - title: Birra Napoli
   main_url: http://www.birranapoli.it
   url: http://www.birranapoli.it
@@ -3696,7 +3708,6 @@
     Birra Napoli official site
   categories:
     - Landing page
-    - Business 
+    - Business
     - Food
     - Beverage
-   

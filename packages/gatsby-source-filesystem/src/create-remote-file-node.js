@@ -188,7 +188,7 @@ async function processRemoteNode({
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
-  if (auth && auth.htaccess_pass && auth.htaccess_user) {
+  if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
     headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
   }
 
