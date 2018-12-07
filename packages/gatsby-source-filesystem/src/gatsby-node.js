@@ -27,10 +27,12 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     const createAndProcessNode = path =>
       createFileNode(path, createNodeId, pluginOptions).then(createNode)
 
+    // TODO: investigate batching this work instead of using Promise.all?
     return new Promise((resolve, reject) =>
       Promise.all(pathQueue.map(createAndProcessNode)).then(resolve, reject)
     )
   }
+
   return fileWatcher(gatsby, pluginOptions)
 }
 
