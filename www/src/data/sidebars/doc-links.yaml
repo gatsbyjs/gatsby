@@ -1,12 +1,11 @@
 - title: Documentation
-  link: /docs/
   items:
+    - title: Introduction
+      link: /docs/
     - title: Quick Start
       link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
-    - title: Awesome Gatsby Resources
-      link: /docs/awesome-gatsby/
 - title: Guides
   items:
     - title: Preparing your environment
@@ -259,6 +258,15 @@
           link: /docs/seo/
         - title: Optimize Prefetching with Guess.js*
           link: /docs/optimize-prefetching-with-guessjs/
+- title: Ecosystem
+  link: /ecosystem/
+  items:
+    - title: Plugin Library
+      link: /plugins
+    - title: Starter Library
+      link: /starters/
+    - title: Awesome Gatsby Resources
+      link: /docs/awesome-gatsby/
 - title: API Reference
   items:
     - title: Gatsby Link
