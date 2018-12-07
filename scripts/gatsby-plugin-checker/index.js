@@ -1,11 +1,11 @@
-'use strict'
+"use strict"
 
-const fs = require('fs')
-const got = require('got')
-const path = require('path')
+const fs = require(`fs`)
+const got = require(`got`)
+const path = require(`path`)
 
-const keywords = ['gatsby-plugin', 'gatsby-source', 'gatsby-transformer']
-const pluginsFile = path.join(__dirname, 'plugins.json')
+const keywords = [`gatsby-plugin`, `gatsby-source`, `gatsby-transformer`]
+const pluginsFile = path.join(__dirname, `plugins.json`)
 
 const loadPlugins = async () => {
   try {
@@ -15,24 +15,29 @@ const loadPlugins = async () => {
   }
 }
 
-const savePlugins = (plugins) => {
-  return new Promise((resolve, reject) => {
-    let output = '[\n\t'
+const savePlugins = plugins =>
+  new Promise((resolve, reject) => {
+    let output = `[\n\t`
     output += plugins
       .sort((a, b) => {
-        if (a.name < b.name) { return -1 }
-        if (a.name > b.name) { return 1 }
+        if (a.name < b.name) {
+          return -1
+        }
+        if (a.name > b.name) {
+          return 1
+        }
         return 0
       })
       .map(p => JSON.stringify(p))
-      .join(',\n\t')
-    output += '\n]\n'
-    fs.writeFile(pluginsFile, output, (err) => {
-      if (err) { return reject(err) }
+      .join(`,\n\t`)
+    output += `\n]\n`
+    fs.writeFile(pluginsFile, output, err => {
+      if (err) {
+        return reject(err)
+      }
       resolve()
     })
   })
-}
 
 const searchNPM = () => {
   const promises = keywords.map(keyword => {
@@ -42,7 +47,7 @@ const searchNPM = () => {
   return Promise.all(promises)
 }
 
-const transformResults = (results) => {
+const transformResults = results => {
   const merged = results.reduce((t, r) => t.concat(r.results), [])
   const deduped = merged.reduce((t, r) => {
     t[r.package.name] = t[r.package.name] || r.package
@@ -53,12 +58,12 @@ const transformResults = (results) => {
 
 const filterNotBlacklisted = (packages, plugins) => {
   const blacklisted = plugins.filter(p => p.blacklist).map(p => p.name)
-  return packages.filter(pkg => (blacklisted.indexOf(pkg.name) < 0))
+  return packages.filter(pkg => blacklisted.indexOf(pkg.name) < 0)
 }
 
 const filterNotNotified = (packages, plugins) => {
   const notified = plugins.filter(p => p.notified).map(p => p.name)
-  return packages.filter(pkg => (notified.indexOf(pkg.name) < 0))
+  return packages.filter(pkg => notified.indexOf(pkg.name) < 0)
 }
 
 const updatePlugins = (updates, plugins) => {
@@ -75,25 +80,26 @@ const updatePlugins = (updates, plugins) => {
 }
 
 const main = () => {
-  loadPlugins().then(plugins => {
-    return searchNPM()
-      .then(transformResults)
-      .then(packages => filterNotBlacklisted(packages, plugins))
-      .then(packages => filterNotNotified(packages, plugins))
-      .then(packages => {
-        return packages.map(p => {
-          // TODO: notify / comment on github
-          console.info(`Notify package "${p.name}"`)
-          // return update status
-          return { name: p.name, blacklist: false, notified: false  }
-        })
-      })
-      .then(updates => updatePlugins(updates, plugins))
-      .then(savePlugins)
-  })
-  .catch(err => {
-    console.error(err)
-  })
+  loadPlugins()
+    .then(plugins =>
+      searchNPM()
+        .then(transformResults)
+        .then(packages => filterNotBlacklisted(packages, plugins))
+        .then(packages => filterNotNotified(packages, plugins))
+        .then(packages =>
+          packages.map(p => {
+            // TODO: notify / comment on github
+            console.info(`Notify package "${p.name}"`)
+            // return update status
+            return { name: p.name, blacklist: false, notified: false }
+          })
+        )
+        .then(updates => updatePlugins(updates, plugins))
+        .then(savePlugins)
+    )
+    .catch(err => {
+      console.error(err)
+    })
 }
 
 main()
