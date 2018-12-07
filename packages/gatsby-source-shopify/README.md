@@ -25,12 +25,12 @@ plugins: [
    * plugins. Here the site sources its data from Shopify.
    */
   {
-    resolve: 'gatsby-source-shopify',
+    resolve: "gatsby-source-shopify",
     options: {
       // The domain name of your Shopify shop. This is required.
       // Example: 'gatsby-source-shopify-test-shop' if your Shopify address is
       // 'gatsby-source-shopify-test-shop.myshopify.com'.
-      shopName: 'gatsby-source-shopify-test-shop',
+      shopName: "gatsby-source-shopify-test-shop",
 
       // An API access token to your Shopify shop. This is required.
       // You can generate an access token in the "Manage private apps" section
@@ -38,7 +38,7 @@ plugins: [
       // to select "Allow this app to access your storefront data using the
       // Storefront API".
       // See: https://help.shopify.com/api/custom-storefronts/storefront-api/getting-started#authentication
-      accessToken: 'example-wou7evoh0eexuf6chooz2jai2qui9pae4tieph1sei4deiboj',
+      accessToken: "example-wou7evoh0eexuf6chooz2jai2qui9pae4tieph1sei4deiboj",
 
       // Set verbose to true to display a verbose output on `npm run develop`
       // or `npm run build`. This prints which nodes are being fetched and how
@@ -378,7 +378,7 @@ To learn more about image processing, check the documentation of
 ## Site's `gatsby-node.js` example
 
 ```js
-const path = require('path')
+const path = require("path")
 
 exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -399,7 +399,7 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
   pages.data.allShopifyProduct.edges.forEach(edge => {
     createPage({
       path: `/${edge.node.handle}`,
-      component: path.resolve('./src/templates/product.js'),
+      component: path.resolve("./src/templates/product.js"),
       context: {
         id: edge.node.id,
       },
