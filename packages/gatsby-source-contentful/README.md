@@ -135,10 +135,20 @@ like the following:
 
 ## **Beta** [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
 
-If you want to use the new Rich Text feature you can opt-in by setting the following environment variable:
+Rich text feature is supported in this source plugin, if you want to serialize the field content to html you can add the plugin `@contentful/gatsby-transformer-contentful-richtext`.
 
-```sh
-export GATSBY_CONTENTFUL_RICH_TEXT='enabled'
+After adding the transformer plugin you can use the following query to get the html output:
+
+```
+{
+  allContentfulBlogPost {
+    bodyRichText {
+      childContentfulRichText {
+        html
+      }
+    }
+  }
+}
 ```
 
 [dotenv]: https://github.com/motdotla/dotenv

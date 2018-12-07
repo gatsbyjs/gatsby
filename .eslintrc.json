@@ -59,7 +59,7 @@
       }
     },
     {
-      "files": ["**/cypress/integration/**/*"],
+      "files": ["**/cypress/integration/**/*", "**/cypress/support/**/*"],
       "globals": {
         "cy": false,
         "Cypress": false

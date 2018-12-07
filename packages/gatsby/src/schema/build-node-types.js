@@ -21,7 +21,8 @@ const { getNodes, getNode } = require(`../db/nodes`)
 const pageDependencyResolver = require(`./page-dependency-resolver`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const { clearTypeExampleValues } = require(`./data-tree-utils`)
-const { runQuery } = require(`../db/nodes`)
+const { run: runQuery } = require(`../db/nodes-query`)
+const lazyFields = require(`./lazy-fields`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
@@ -171,7 +172,7 @@ function buildNodeObjectType({
   })
 }
 
-async function buildProcessedType(nodes, typeName, processedTypes, span) {
+async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
   const intermediateType = {}
 
   intermediateType.name = typeName
@@ -187,6 +188,9 @@ async function buildProcessedType(nodes, typeName, processedTypes, span) {
 
   const pluginInputFields = inferInputObjectStructureFromFields({
     fields: mergedFieldsFromPlugins,
+  })
+  _.each(pluginInputFields.inferredFields, (fieldConfig, fieldName) => {
+    lazyFields.add(typeName, fieldName)
   })
 
   const gqlType = buildNodeObjectType({
@@ -227,7 +231,7 @@ function groupNodesByType(nodes) {
   )
 }
 
-module.exports = async ({ parentSpan }) => {
+async function buildAll({ parentSpan }) {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
@@ -243,12 +247,12 @@ module.exports = async ({ parentSpan }) => {
   await Promise.all(
     _.map(types, async (nodes, typeName) => {
       const fieldName = _.camelCase(typeName)
-      const processedType = await buildProcessedType(
+      const processedType = await buildProcessedType({
         nodes,
         typeName,
         processedTypes,
-        span
-      )
+        span,
+      })
       processedTypes[fieldName] = processedType
       // Special case to construct linked file type used by type inferring
       if (typeName === `File`) {
@@ -261,4 +265,10 @@ module.exports = async ({ parentSpan }) => {
   span.finish()
 
   return processedTypes
+}
+
+module.exports = {
+  buildProcessedType,
+  buildNodeObjectType,
+  buildAll,
 }
