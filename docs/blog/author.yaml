@@ -3,8 +3,8 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Software Engineer @ GatsbyJS. Likes all things front-end, and travel. And other things too. Blogs at blog.dustinschau.com.
-  avatar: avatars/dustin-schau.jpeg
+  bio: Software Engineer @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
+  avatar: avatars/dustin-schau.png
   twitter: "@schaudustin"
 - id: Kostas Bariotis
   bio: Senior full stack engineer, @devitconf & @skgnodejs co-organizer, http://devastation.tv  host, creator of http://janitr.net & others
@@ -169,3 +169,15 @@
   avatar: avatars/nader-dabit.jpg
   twitter: "@dabit3"
   bio: Developer Advocate at AWS
+- id: Doug McDonald
+  avatar: avatars/doug-mcdonald.png
+  twitter: "@dougajmcdonald"
+  bio: Full stack web dev at bmt.org, I love creating ideas and finding solutions, find me @ dougmcdonald.co.uk
+- id: Michael Holtzman
+  avatar: avatars/michael-holtzman.jpg
+  twitter: "@mikelax"
+  bio: nyc • tech • I build things 🚀 & learn things 📖
+- id: Chris Biscardi
+  bio: Early stage software product consultant. React*, Go, GraphQL, Containers, k8s.
+  avatar: avatars/chris-biscardi.png
+  twitter: "@chrisbiscardi"

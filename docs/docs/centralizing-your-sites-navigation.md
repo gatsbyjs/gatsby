@@ -13,15 +13,15 @@ What this section will cover:
 - Pulling the data into a component using StaticQuery
 - Dynamically rendering your navigation
 
-You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old javascript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages.
+You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old JavaScript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages.
 
-This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default#v2`.
+This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default`.
 
 ### Creating the link data
 
 First, locate the `gatsby-config.js` file in the root directory of your project. Inside the `siteMetadata` object, add an array of menu link objects. These objects should contain two properties: `name` and `link`. `name` is the name of your navigation item and `link` is the page which will be navigated to when a menu item is clicked.
 
-```diff
+```diff:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Default Starter',
@@ -92,11 +92,11 @@ Perfect! You now have a way of obtaining data from the `gatsby-config.js` file. 
 
 Inside your project, locate the `src/components` folder and navigate to the `layout.js` file. Within this layout component you should notice a component named `StaticQuery`.
 
-StaticQuery is a new component introduced in Gatsby V2, which allows you to run GraphQL queries within your components, not just pages. It allows developers to colocate data with their components.
+StaticQuery is a new component introduced in Gatsby V2, which allows you to run GraphQL queries within your components, not just pages. It allows developers to collocate data with their components.
 
 Let's extend the query within this component to include the menu links, so it looks like so:
 
-```diff
+```diff:title=src/components/layout.js
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -143,7 +143,7 @@ With the above changes to your `StaticQuery` component, the `render` property, w
 
 To do this, the header component that is already available in the project seems like it might be a good starting place to display the navigation. Lets pass the `menuLinks` object to this header component like so:
 
-```diff
+```diff:title=src/components/layout.js
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -191,7 +191,7 @@ const Layout = ({ children }) => (
 
 Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to us when generating our project):
 
-```diff
+```diff:title=src/components/header.js
 import React from 'react'
 import { Link } from 'gatsby'
 const Header = ({ siteTitle, menuLinks }) => (
@@ -235,7 +235,7 @@ The `siteTitle` and `menuLinks` arguments are de-structered es6 syntax for quick
 
 You can now access the header component's props and map the `menuLinks` array into elements that can be rendered in the document:
 
-```diff
+```diff:title=src/components/header.js
 import React from 'react'
 import { Link } from 'gatsby'
 
@@ -251,7 +251,7 @@ const Header = ({ siteTitle, menuLinks }) => (
 )
 ```
 
-Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically genrated menu links on your page.
+Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically generated menu links on your page.
 
 If you have made it this far, good job! You can now add new site links to your website dynamically by adding entries to the `gatsby-config.js` file.
 
@@ -259,5 +259,5 @@ If you have made it this far, good job! You can now add new site links to your w
 
 Be sure to check out more documentation for further in-depth examples and guides on achieving tasks using Gatsby.
 
-- [Authentication in Gatsby](/docs/authentication/)
-- [E-commerce in Gatsby](/docs/e-commerce/)
+- [Authentication in Gatsby](/docs/authentication-tutorial/)
+- [E-commerce in Gatsby](/docs/ecommerce-tutorial/)

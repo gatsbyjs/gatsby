@@ -1,9 +1,8 @@
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const path = require(`path`)
 
 async function onCreateNode(
-  { node, actions, loadNodeContent, createNodeId },
+  { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
 ) {
   function getType({ node, object, isArray }) {
@@ -21,18 +20,13 @@ async function onCreateNode(
   }
 
   function transformObject(obj, id, type) {
-    const objStr = JSON.stringify(obj)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(objStr)
-      .digest(`hex`)
     const jsonNode = {
       ...obj,
       id,
       children: [],
       parent: node.id,
       internal: {
-        contentDigest,
+        contentDigest: createContentDigest(obj),
         type,
       },
     }

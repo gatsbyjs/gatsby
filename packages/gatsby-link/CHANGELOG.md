@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.6...gatsby-link@2.0.7) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-link
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.5...gatsby-link@2.0.6) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-link
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.4...gatsby-link@2.0.5) (2018-10-24)
+
+**Note:** Version bump only for package gatsby-link
+
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.3...gatsby-link@2.0.4) (2018-10-03)
+
+### Bug Fixes
+
+- navigateTo deprecation message ([#8745](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/8745)) ([3c824f3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/3c824f3))
+
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.2...gatsby-link@2.0.3) (2018-10-01)
+
+**Note:** Version bump only for package gatsby-link
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.1...gatsby-link@2.0.2) (2018-09-26)

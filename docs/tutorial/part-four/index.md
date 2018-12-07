@@ -83,7 +83,7 @@ Gatsby uses GraphQL to enable components to declare the data they need.
 
 ## Create a new example site
 
-Let's create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
+Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
 
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`, and navigate to the new directory:
 
@@ -96,23 +96,21 @@ Then install some other needed dependencies at the root of the project. You'll u
 "Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
 
 ```shell
-npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion react-emotion emotion-server
+npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion emotion-server @emotion/core
 ```
 
-Let's set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
+Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
 
-`src/components/layout.js`
-
-```jsx
+```jsx:title=src/components/layout.js
 import React from "react"
-import { css } from "react-emotion"
+import { css } from "@emotion/core"
 import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
 export default ({ children }) => (
   <div
-    className={css`
+    css={css`
       margin: 0 auto;
       max-width: 700px;
       padding: ${rhythm(2)};
@@ -121,7 +119,7 @@ export default ({ children }) => (
   >
     <Link to={`/`}>
       <h3
-        className={css`
+        css={css`
           margin-bottom: ${rhythm(2)};
           display: inline-block;
           font-style: normal;
@@ -132,7 +130,7 @@ export default ({ children }) => (
     </Link>
     <Link
       to={`/about/`}
-      className={css`
+      css={css`
         float: right;
       `}
     >
@@ -143,9 +141,7 @@ export default ({ children }) => (
 )
 ```
 
-`src/pages/index.js`
-
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -162,9 +158,7 @@ export default () => (
 )
 ```
 
-`src/pages/about.js`
-
-```jsx
+```jsx:title=src/pages/about.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -179,9 +173,7 @@ export default () => (
 )
 ```
 
-`src/utils/typography.js`
-
-```javascript
+```javascript:title=src/utils/typography.js
 import Typography from "typography"
 import kirkhamTheme from "typography-theme-kirkham"
 
@@ -193,7 +185,7 @@ export const rhythm = typography.rhythm
 
 `gatsby-config.js` (must be in the root of your project, not under src)
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-emotion`,
@@ -213,7 +205,7 @@ Add the above files and then run `gatsby develop`, per usual, and you should see
 
 You have another small site with a layout and two pages.
 
-Now let's start querying 😋
+Now you can start querying 😋
 
 ## Your first GraphQL query
 
@@ -221,9 +213,9 @@ When building sites, you'll probably want to reuse common bits of data -- like t
 
 But what if you want to change the site title in the future? You'd have to search for the title across all your components and edit each instance. This is both cumbersome and error-prone, especially for larger, more complex sites. Instead, you can store the title in one location and reference that location from other files; Change the title in a single place, and Gatsby will _pull_ your updated title into files that reference it.
 
-The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Let's add your site title to the `gatsby-config.js` file:
+The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Add your site title to the `gatsby-config.js` file:
 
-```javascript{2-4}
+```javascript{2-4}:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Title from siteMetadata`,
@@ -244,9 +236,9 @@ Restart the development server.
 
 ### Use a page query
 
-Now the site title is available to be queried; Let's add it to the `about.js` file using a [page query](/docs/page-query):
+Now the site title is available to be queried; Add it to the `about.js` file using a [page query](/docs/page-query):
 
-```jsx{2,5,7,14-23}
+```jsx{2,5,7,14-23}:title=src/pages/about.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -274,9 +266,9 @@ export const query = graphql`
 
 It worked! 🎉
 
-![Page title pulling from siteMetadata](/site-metadata-title.png)
+![Page title pulling from siteMetadata](site-metadata-title.png)
 
-The basic GraphQL query that retrieves the `title` in our `layout.js` changes above is:
+The basic GraphQL query that retrieves the `title` in our `about.js` changes above is:
 
 ```
 {
@@ -288,7 +280,7 @@ The basic GraphQL query that retrieves the `title` in our `layout.js` changes ab
 }
 ```
 
-> 💡 In [part five](/tutorial/part-five/#introducing-graphiql), we'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
+> 💡 In [part five](/tutorial/part-five/#introducing-graphiql), you'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
 
 Page queries live outside of the component definition -- by convention at the end of a page component file -- and are only available on page components.
 
@@ -298,9 +290,9 @@ Page queries live outside of the component definition -- by convention at the en
 
 Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
-```jsx{3,8-18,35,48}
+```jsx{3,8-18,35,48-49}:title=src/components/layout.js
 import React from "react"
-import { css } from "react-emotion"
+import { css } from "@emotion/core"
 import { StaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
@@ -318,7 +310,7 @@ export default ({ children }) => (
     `}
     render={data => (
       <div
-        className={css`
+        css={css`
           margin: 0 auto;
           max-width: 700px;
           padding: ${rhythm(2)};
@@ -327,7 +319,7 @@ export default ({ children }) => (
       >
         <Link to={`/`}>
           <h3
-            className={css`
+            css={css`
               margin-bottom: ${rhythm(2)};
               display: inline-block;
               font-style: normal;
@@ -338,7 +330,7 @@ export default ({ children }) => (
         </Link>
         <Link
           to={`/about/`}
-          className={css`
+          css={css`
             float: right;
           `}
         >
@@ -353,7 +345,13 @@ export default ({ children }) => (
 
 Another success! 🎉
 
-![Page title and layout title both pulling from siteMetadata](/site-metadata-two-titles.png)
+![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
+
+Why use two different queries here? These examples were quick introductions to
+the query types, how they are formatted, and where they can be used. For now,
+keep in mind that only pages can make page queries. Non-page components, such as
+Layout, can use StaticQuery. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater
+depth.
 
 But let's restore the real title.
 
@@ -361,7 +359,7 @@ One of the core principles of Gatsby is that _creators need an immediate connect
 
 So almost everywhere, changes you make will immediately take effect. Edit the `gatsby-config.js` file again, this time changing the `title` back to "Pandas Eating Lots". The change should show up very quickly in your site pages.
 
-![Both titles say Pandas Eating Lots](/pandas-eating-lots-titles.png)
+![Both titles say Pandas Eating Lots](pandas-eating-lots-titles.png)
 
 ## What's coming next?
 
