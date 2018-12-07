@@ -1,7 +1,6 @@
 const path = require(`path`)
 const chokidar = require(`chokidar`)
 const { Machine } = require(`xstate`)
-
 const { createFileNode } = require(`./create-file-node`)
 
 /**
