@@ -1,7 +1,7 @@
-import { pipe } from 'lodash/fp'
-import chalk from 'chalk'
-import { forEach } from 'p-iteration'
-import { createClient, printGraphQLError, queryAll, queryOnce } from './lib'
+import { pipe } from "lodash/fp"
+import chalk from "chalk"
+import { forEach } from "p-iteration"
+import { createClient, printGraphQLError, queryAll, queryOnce } from "./lib"
 import {
   ArticleNode,
   BlogNode,
@@ -12,7 +12,7 @@ import {
   ProductVariantNode,
   ShopPolicyNode,
   ProductTypeNode,
-} from './nodes'
+} from "./nodes"
 import {
   ARTICLES_QUERY,
   BLOGS_QUERY,
@@ -20,7 +20,7 @@ import {
   PRODUCTS_QUERY,
   SHOP_POLICIES_QUERY,
   PRODUCT_TYPES_QUERY,
-} from './queries'
+} from "./queries"
 
 export const sourceNodes = async (
   {
@@ -28,7 +28,7 @@ export const sourceNodes = async (
     store,
     cache,
   },
-  { shopName, accessToken, verbose = true },
+  { shopName, accessToken, verbose = true }
 ) => {
   const client = createClient(shopName, accessToken)
 
@@ -60,7 +60,7 @@ export const sourceNodes = async (
       createNodes(`articles`, ARTICLES_QUERY, ArticleNode, args, async x => {
         if (x.comments)
           await forEach(x.comments.edges, async edge =>
-            createNode(await CommentNode(imageArgs)(edge.node)),
+            createNode(await CommentNode(imageArgs)(edge.node))
           )
       }),
       createNodes(`blogs`, BLOGS_QUERY, BlogNode, args),
@@ -69,12 +69,12 @@ export const sourceNodes = async (
       createNodes(`products`, PRODUCTS_QUERY, ProductNode, args, async x => {
         if (x.variants)
           await forEach(x.variants.edges, async edge =>
-            createNode(await ProductVariantNode(imageArgs)(edge.node)),
+            createNode(await ProductVariantNode(imageArgs)(edge.node))
           )
 
         if (x.options)
           await forEach(x.options, async option =>
-            createNode(await ProductOptionNode(imageArgs)(option)),
+            createNode(await ProductOptionNode(imageArgs)(option))
           )
       }),
       createShopPolicies(args),
@@ -98,7 +98,7 @@ const createNodes = async (
   query,
   nodeFactory,
   { client, createNode, formatMsg, verbose, imageArgs },
-  f = async () => {},
+  f = async () => {}
 ) => {
   // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${endpoint}`)
@@ -110,7 +110,7 @@ const createNodes = async (
       const node = await nodeFactory(imageArgs)(entity)
       createNode(node)
       await f(entity)
-    },
+    }
   )
   if (verbose) console.timeEnd(msg)
 }
@@ -134,8 +134,8 @@ const createShopPolicies = async ({
     .forEach(
       pipe(
         ([type, policy]) => ShopPolicyNode(policy, { type }),
-        createNode,
-      ),
+        createNode
+      )
     )
   if (verbose) console.timeEnd(msg)
 }

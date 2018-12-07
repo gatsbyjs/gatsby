@@ -1,7 +1,7 @@
-import createNodeHelpers from 'gatsby-node-helpers'
-import { camelCase } from 'lodash/fp'
-import { map } from 'p-iteration'
-import { createRemoteFileNode } from 'gatsby-source-filesystem'
+import createNodeHelpers from "gatsby-node-helpers"
+import { camelCase } from "lodash/fp"
+import { map } from "p-iteration"
+import { createRemoteFileNode } from "gatsby-source-filesystem"
 
 // Node prefix
 const TYPE_PREFIX = `Shopify`
@@ -22,7 +22,7 @@ const { createNodeFactory, generateNodeId } = createNodeHelpers({
 
 const downloadImageAndCreateFileNode = async (
   { id, url },
-  { createNode, createNodeId, touchNode, store, cache },
+  { createNode, createNodeId, touchNode, store, cache }
 ) => {
   let fileNodeID
 
@@ -58,13 +58,13 @@ export const ArticleNode = imageArgs =>
 
     if (node.comments)
       node.comments___NODE = node.comments.edges.map(edge =>
-        generateNodeId(COMMENT, edge.node.id),
+        generateNodeId(COMMENT, edge.node.id)
       )
 
     if (node.image)
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         { id: node.image.id, url: node.image.src },
-        imageArgs,
+        imageArgs
       )
 
     return node
@@ -76,7 +76,7 @@ export const CollectionNode = imageArgs =>
   createNodeFactory(COLLECTION, async node => {
     if (node.products)
       node.products___NODE = node.products.edges.map(edge =>
-        generateNodeId(PRODUCT, edge.node.id),
+        generateNodeId(PRODUCT, edge.node.id)
       )
 
     if (node.image)
@@ -85,7 +85,7 @@ export const CollectionNode = imageArgs =>
           id: node.image.id,
           url: node.image.src && node.image.src.split(`?`)[0],
         },
-        imageArgs,
+        imageArgs
       )
     return node
   })
@@ -101,13 +101,13 @@ export const ProductNode = imageArgs =>
       const variants = node.variants.edges.map(edge => edge.node)
 
       node.variants___NODE = variants.map(variant =>
-        generateNodeId(PRODUCT_VARIANT, variant.id),
+        generateNodeId(PRODUCT_VARIANT, variant.id)
       )
     }
 
     if (node.options)
       node.options___NODE = node.options.map(option =>
-        generateNodeId(PRODUCT_OPTION, option.id),
+        generateNodeId(PRODUCT_OPTION, option.id)
       )
 
     if (node.images && node.images.edges)
@@ -117,7 +117,7 @@ export const ProductNode = imageArgs =>
             id: edge.node.id,
             url: edge.node.originalSrc && edge.node.originalSrc.split(`?`)[0],
           },
-          imageArgs,
+          imageArgs
         )
         return edge.node
       })
@@ -135,7 +135,7 @@ export const ProductVariantNode = imageArgs =>
           id: node.image.id,
           url: node.image.originalSrc && node.image.originalSrc.split(`?`)[0],
         },
-        imageArgs,
+        imageArgs
       )
 
     return node

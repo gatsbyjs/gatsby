@@ -1,6 +1,6 @@
-import { GraphQLClient } from 'graphql-request'
-import prettyjson from 'prettyjson'
-import { get, last } from 'lodash/fp'
+import { GraphQLClient } from "graphql-request"
+import prettyjson from "prettyjson"
+import { get, last } from "lodash/fp"
 
 /**
  * Create a Shopify Storefront GraphQL client for the provided name and token.
@@ -8,7 +8,7 @@ import { get, last } from 'lodash/fp'
 export const createClient = (shopName, accessToken) =>
   new GraphQLClient(`https://${shopName}.myshopify.com/api/graphql`, {
     headers: {
-      'X-Shopify-Storefront-Access-Token': accessToken,
+      "X-Shopify-Storefront-Access-Token": accessToken,
     },
   })
 
@@ -40,7 +40,7 @@ export const queryAll = async (
   query,
   first = 250,
   after,
-  aggregatedResponse,
+  aggregatedResponse
 ) => {
   const data = await queryOnce(client, query, first, after)
 
@@ -58,7 +58,7 @@ export const queryAll = async (
       query,
       first,
       last(edges).cursor,
-      aggregatedResponse,
+      aggregatedResponse
     )
 
   return aggregatedResponse
