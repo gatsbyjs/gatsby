@@ -9,6 +9,9 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0"
   },
+  "peerDependencies" : {
+    "graphql": "^0.13.2"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
