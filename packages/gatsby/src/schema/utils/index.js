@@ -1,7 +1,7 @@
 const capitalize = require(`./capitalize`)
-const createKey = require(`./create-key`)
 const createSelector = require(`./create-selector`)
 const createSortKey = require(`./create-sort-key`)
+const createTypeName = require(`./create-type-name`)
 const findAncestorNode = require(`./find-ancestor-node`)
 const getAbsolutePath = require(`./get-absolute-path`)
 const getBaseDir = require(`./get-base-dir`)
@@ -14,14 +14,14 @@ const is32bitInteger = require(`./is-32bit-integer`)
 const isDate = require(`./is-date`)
 const isObject = require(`./is-object`)
 const isProductionBuild = require(`./is-production-build`)
+const toSnakeCase = require(`./to-snake-case`)
 const { getParentNodeId, trackObjects } = require(`./node-tracking`)
 
-// TODO: Clean up
 module.exports = {
   capitalize,
-  createKey,
   createSelector,
   createSortKey,
+  createTypeName,
   findAncestorNode,
   getAbsolutePath,
   getBaseDir,
@@ -35,5 +35,6 @@ module.exports = {
   isDate,
   isObject,
   isProductionBuild,
+  toSnakeCase,
   trackObjects,
 }

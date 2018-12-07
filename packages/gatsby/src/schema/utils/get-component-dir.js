@@ -3,6 +3,8 @@ const path = require(`path`)
 const { store } = require(`../../redux`)
 
 const getComponentDir = source => {
+  if (!source) return null
+
   const componentPath =
     source.componentPath ||
     // TODO: Easier way?
