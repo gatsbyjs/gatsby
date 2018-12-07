@@ -32,9 +32,7 @@ const savePlugins = plugins =>
       .join(`,\n\t`)
     output += `\n]\n`
     fs.writeFile(pluginsFile, output, err => {
-      if (err) {
-        return reject(err)
-      }
+      if (err) reject(err)
       resolve()
     })
   })
