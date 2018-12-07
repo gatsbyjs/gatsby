@@ -1344,3 +1344,10 @@
     - Support for code syntax highlighting
     - Support for mathematical expressions
     - Support for images
+- url: https://gatsby-starter-ttag.netlify.com/
+  repo: https://github.com/jaredh159/gatsby-starter-ttag
+  description: Gatsby starter with the minimum required to demonstrate using ttag for precompiled internationalization of strings.
+  tags:
+    - i18n
+  features:
+    - Support for precompiled string internationalization using ttag and it's babel plugin
