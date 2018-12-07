@@ -346,8 +346,13 @@ async function getPages(
     let result = []
 
     const getOptions = page => {
-      // Do not filter tags & categories
-      let qs = url.match(/(tags|categories)/ig) ? {} : _queryParams
+      
+      let qs = _queryParams
+      if (typeof _queryParams === 'function') {
+        qs = _queryParams({ url })
+      }
+      if (!qs || typeof qs !== object) qs = {}
+      
       let o = {
         method: `get`,
         url: `${url}?${querystring.stringify({
