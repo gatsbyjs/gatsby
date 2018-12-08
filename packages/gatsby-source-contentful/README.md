@@ -78,18 +78,21 @@ You can pass in any other options available in the [contentful.js SDK](https://g
 
 ## Notes on Contentful Content Models
 
-There are currently some things to keep in mind when building your content models at contentful.
+There are currently some things to keep in mind when building your content models at Contentful.
 
-1.  At the moment, Fields that do not have at least 1 populated instance will not be created in the graphql schema.
+1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
 2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
 
-## How to query
+## How to query for Asset nodes
 
-Two standard data types will be available from Contentful: `ContentType` and
-`Asset`.
+Two standard nodes are available from Contentful: `Asset` and `ContentType`.
 
-You can query Asset nodes created from Contentful like the following:
+`Asset` nodes will be created in your site's GraphQL schema under `contentfulAsset` and `allContentfulAsset`. `contentfulAsset` returns a single instance of the `Asset` and `allContentfulAsset` returns all instances of the `Asset`.
+
+#### Query for all Asset nodes
+
+Querying for **all** `Asset` nodes often takes place in `gatsby-node.js` using Gatsby's [`createPages`](https://next.gatsbyjs.org/docs/node-apis/#createPages) Node API:
 
 ```graphql
 {
@@ -106,21 +109,106 @@ You can query Asset nodes created from Contentful like the following:
 }
 ```
 
-Non-standard data types, i.e. entry types you define in Contentful, will also be
-available in Gatsby. They'll be created in your site's GraphQL schema under
-`contentful${entryTypeName}` and `allContentful${entryTypeName}`. For example,
-if you have `Product` as one of your content types, you will be able to query it
-like the following:
+### Query for one Asset node
+
+You might query for a **single** `Asset` node inside a component in your `src/components` folder, using [Gatsby's `StaticQuery` component](https://www.gatsbyjs.org/docs/static-query/).
+
+To query for a single `image` asset with the title 'foo' and a width of 1600px:
+
+```
+export const assetQuery = graphql`
+  {
+    contentfulAsset(filter: { title: { eq: 'foo' } }) {
+      image {
+        resolutions(width: 1600) {
+          width
+          height
+          src
+          srcSet
+        }
+      }
+    }
+  }
+`
+```
+
+> Note the use of [GraphQL arguments](https://graphql.org/learn/queries/#arguments) on the `contentfulAsset` and `resolutions` fields. See [Gatsby's GraphQL reference docs for more info](https://www.gatsbyjs.org/docs/graphql-reference/).
+
+## How to query for ContentType nodes
+
+Querying `ContentType` nodes depends on what you called them in your Contentful data models. The nodes will be created in your site's GraphQL schema under `contentful${entryTypeName}` and `allContentful${entryTypeName}`. Where `contentful${entryTypeName}` returns a single instance of the `ContentType` and `allContentful${entryTypeName}` returns all instances of that `ContentType`.
+
+### Query for all ContentType nodes
+
+If you have a `ContentType` named `Product`, which includes a text field `productName`:
 
 ```graphql
 {
   allContentfulProduct {
     edges {
       node {
-        id
         productName
-        image {
-          fixed(width: 100) {
+      }
+    }
+  }
+}
+```
+
+### Query for one ContentType node
+
+You might also query for a **single** `ContentType` node inside a component in your `src/components` folder, using [Gatsby's `StaticQuery` component](https://www.gatsbyjs.org/docs/static-query/).
+
+To query for a single `CaseStudy` node with the short text properties `title` and `subtitle`:
+
+```graphql
+  {
+    contentfulCaseStudy(filter: { title: { eq: 'bar' } })  {
+      title
+      subtitle
+    }
+  }
+```
+
+> Note the use of [GraphQL arguments](https://graphql.org/learn/queries/#arguments) on the `contentfulCaseStudy` fields. See [Gatsby's GraphQL reference docs for more info](https://www.gatsbyjs.org/docs/graphql-reference/).
+
+Note that if you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so Gatsby can transform it to HTML.
+
+`ShortText` type fields will be returned as strings.
+
+Querying a **single** `CaseStudy` node with the ShortText properties `title` and `subtitle` and LongText property `body` requires formatting the LongText fields as an object with the _child node containing the exact same field name as the parent_:
+
+```graphql
+{
+  contentfulCaseStudy {
+    title
+    subtitle
+    body {
+      body
+    }
+  }
+}
+```
+
+## How to query for Assets in ContentType nodes
+
+More typically your `Asset` nodes will be mixed inside of your `ContentType` nodes, so you'll query them together. All the same formatting rules for `Asset` and `ContentType` nodes apply.
+
+To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`, `subtitle`, LongText field `body` and image `Asset` field, we use `allContentful${entryTypeName}` to return all instances of that `ContentType`:
+
+```graphql
+{
+  allContentfulCaseStudy {
+    edges {
+      node {
+        id
+        slug
+        title
+        subtitle
+        body {
+          body
+        }
+        heroImage {
+          resolutions(width: 1600) {
             width
             height
             src
@@ -132,6 +220,35 @@ like the following:
   }
 }
 ```
+
+To query for a single `CaseStudy` node with ShortText fields `id`, `slug`, `title`, `subtitle`, LongText field `body` and image `Asset` field, we use `contentful${entryTypeName}` to return a single instance of that `ContentType`:
+
+```graphql
+{
+  contentfulCaseStudy(filter: { title: { eq: 'Robot cheesemongers - are they the future?' } }) {
+    id
+    slug
+    title
+    subtitle
+    body {
+      body
+    }
+    heroImage {
+      resolutions(width: 1600) {
+        width
+        height
+        src
+        srcSet
+      }
+    }
+  }
+}
+```
+
+## More on Queries with Contentful and Gatsby
+
+It is strongly recommended that you take a look at how real data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
+[using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
 
 ## **Beta** [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
 
