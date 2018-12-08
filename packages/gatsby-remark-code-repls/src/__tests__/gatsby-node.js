@@ -135,18 +135,6 @@ describe(`gatsby-remark-code-repls`, () => {
       }
     })
 
-    it(`should wrap any non-error rejection from recursive-readdir in an Error instance`, async () => {
-      const rejectionMessage = `an error message`
-
-      readdir.mockRejectedValue(rejectionMessage)
-
-      try {
-        await createPages(createPagesParams)
-      } catch (err) {
-        expect(err).toEqual(Error(rejectionMessage))
-      }
-    })
-
     it(`should not load any external packages by default`, async () => {
       readdir.mockResolvedValue([`file.js`])
 

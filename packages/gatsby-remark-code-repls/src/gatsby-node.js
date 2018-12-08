@@ -75,9 +75,7 @@ exports.createPages = async (
       }
     })
   } catch (error) {
-    if (error instanceof Error) {
-      throw error
-    }
-    throw Error(error)
+    // retrow errors upstream
+    throw error
   }
 }
