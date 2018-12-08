@@ -65,6 +65,17 @@ const prefetch = function(url) {
       return
     }
 
+    if (`connection` in navigator) {
+      if ((navigator.connection.effectiveType || ``).includes(`2g`)) {
+        resolve()
+        return
+      }
+      if (navigator.connection.saveData) {
+        resolve()
+        return
+      }
+    }
+
     supportedPrefetchStrategy(url)
       .then(() => {
         resolve()
