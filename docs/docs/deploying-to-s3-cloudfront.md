@@ -13,7 +13,7 @@ Using the **Hosting** feature, you can deploy your application to AWS as well as
 First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
 
 ```sh
-npm install - global gatsby-cli
+npm install --global gatsby-cli
 ```
 
 Next, we'll create a new Gatsby site:
