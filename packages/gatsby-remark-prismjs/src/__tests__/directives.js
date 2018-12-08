@@ -1,7 +1,7 @@
-const highlightLineRange = require(`../highlight-line-range`)
+const highlightLineRange = require(`../directives`)
 const fixtures = require(`./fixtures`)
 const output = highlighted => highlighted.map(({ code }) => code).join(`\n`)
-const getHighlighted = lines => lines.filter(line => line.highlighted)
+const getHighlighted = lines => lines.filter(line => line.highlight)
 describe(`highlighting a line range`, () => {
   describe(`highlight-line`, () => {
     it(`strips directive`, () => {
