@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Example value builds correct example value from array of nodes 1`] = `
+Object {
+  "array": Array [
+    1,
+  ],
+  "arrayOfNumbers": Array [
+    0.2,
+  ],
+  "bigInt": 10000000000,
+  "bool": false,
+  "date": "2018-01-01T00:00:00.000Z",
+  "dates": Array [
+    Object {
+      "0": "2",
+      "1": "0",
+      "10": "T",
+      "11": "0",
+      "12": "0",
+      "13": ":",
+      "14": "0",
+      "15": "0",
+      "16": ":",
+      "17": "0",
+      "18": "0",
+      "19": ".",
+      "2": "1",
+      "20": "0",
+      "21": "0",
+      "22": "0",
+      "23": "Z",
+      "3": "8",
+      "4": "-",
+      "5": "0",
+      "6": "1",
+      "7": "-",
+      "8": "0",
+      "9": "1",
+    },
+  ],
+  "float": 0.1,
+  "int": 0,
+  "nestedArrays": Array [
+    Array [
+      1,
+    ],
+  ],
+  "number": 0.1,
+  "object": Object {
+    "array": Array [
+      1,
+    ],
+    "bool": true,
+    "date": "2018-01-01T00:00:00.000Z",
+    "int": 1,
+    "nestedObject": Object {
+      "bool": true,
+      "string": "Foo bar",
+    },
+    "string": "Baz qux",
+  },
+  "objectsInArray": Array [
+    Object {
+      "bar": 1,
+      "baz": "qux",
+      "foo": true,
+    },
+  ],
+  "polymorphicArrayWithNull": Object {
+    "foo": Array [
+      Object {
+        "bar": true,
+        "baz": true,
+        "qux": false,
+      },
+    ],
+  },
+  "polymorphicWithNull": Object {
+    "foo": Object {
+      "bar": true,
+      "baz": true,
+    },
+  },
+  "string": "Foo bar",
+}
+`;
