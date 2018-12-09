@@ -12,6 +12,7 @@ const getUniqueValuesBy = require(`./get-unique-values-by`)
 const getValueAtSelector = require(`./get-value-at-selector`)
 const is32bitInteger = require(`./is-32bit-integer`)
 const isDate = require(`./is-date`)
+const isDefined = require(`./is-defined`)
 const isObject = require(`./is-object`)
 const isProductionBuild = require(`./is-production-build`)
 const toSnakeCase = require(`./to-snake-case`)
@@ -33,6 +34,7 @@ module.exports = {
   getValueAtSelector,
   is32bitInteger,
   isDate,
+  isDefined,
   isObject,
   isProductionBuild,
   toSnakeCase,
