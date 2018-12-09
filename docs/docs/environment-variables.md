@@ -114,7 +114,7 @@ Gatsby also allows you to specify another enviroment variable when runnng in `de
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
-If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to refresh the content you are working with. This can be very useful if you are working with dynamic content while writting your applications, and you want your data to be automatically re-sourced everytime a new change happens.
+If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to refresh the content you are working with. This can be very useful if you are working with dynamic content while writing your applications, and you want your data to be automatically re-sourced every time a new change happens.
 
 ## Additional Environments (Staging, Test, etc)
 
