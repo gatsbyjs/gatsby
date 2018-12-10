@@ -2,7 +2,7 @@
 title: Deploying to Now
 ---
 
-[ZEIT Now](https://zeit.co/now) is a [cloud platform for serverless deployment](https://zeit.co/docs/v2/getting-started/introduction-to-now/) that you can use to deploy your Gatsby projects and [alias them](https://zeit.co/docs/v2/domains-and-aliases/aliasing-a-deployment/) to your domain or a free `.now.sh` suffixed URL.
+[ZEIT Now](https://zeit.co/now) is a [cloud platform for serverless deployment](https://zeit.co/docs/v2/getting-started/introduction-to-now/) that you can use to deploy your Gatsby projects and [alias them](https://zeit.co/docs/v2/domains-and-aliases/aliasing-a-deployment/) to your personal domain or a free `.now.sh` suffixed URL.
 
 This guide will show you how to get started in a few quick steps:
 
