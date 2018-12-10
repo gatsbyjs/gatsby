@@ -57,4 +57,7 @@ You can deploy your application by running the following in the root of the proj
 
 That's all! Your application will now deploy, and you will receive a link similar to the following: https://my-gatsby-project-fhcc9hnqc.now.sh/
 
+## References:
+- [Deploying Gatsby with Now](https://zeit.co/examples/gatsby/)
+
 
