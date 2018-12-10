@@ -234,7 +234,7 @@ module.exports = (
 
     // Handle video tags.
     const videoRefs = []
-    $(`video source`).each(function() {
+    $(`video source, video`).each(function() {
       try {
         if (isRelativeUrl($(this).attr(`src`))) {
           videoRefs.push($(this))
