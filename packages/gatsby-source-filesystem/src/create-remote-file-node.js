@@ -75,7 +75,7 @@ const FS_PLUGIN_DIR = `gatsby-source-filesystem`
  * @return {String}
  */
 const createFilePath = (directory, filename, ext) =>
-  path.join(directory, CACHE_DIR, FS_PLUGIN_DIR, `${filename}${ext}`)
+  path.join(directory, `${filename}${ext}`)
 
 /********************
  * Queue Management *
@@ -178,8 +178,12 @@ async function processRemoteNode({
   ext,
 }) {
   // Ensure our cache directory exists.
-  const programDir = store.getState().program.directory
-  await fs.ensureDir(path.join(programDir, CACHE_DIR, FS_PLUGIN_DIR))
+  const pluginCacheDir = path.join(
+    store.getState().program.directory,
+    CACHE_DIR,
+    FS_PLUGIN_DIR
+  )
+  await fs.ensureDir(pluginCacheDir)
 
   // See if there's response headers for this url
   // from a previous request.
@@ -203,7 +207,7 @@ async function processRemoteNode({
     ext = getRemoteFileExtension(url)
   }
 
-  const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
+  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
   try {
@@ -220,8 +224,11 @@ async function processRemoteNode({
       }
     }
 
-    const digestFolder = path.join(programDir, digest)
-    const filename = createFilePath(digestFolder, name, ext)
+    const filename = createFilePath(
+      path.join(pluginCacheDir, digest),
+      name,
+      ext
+    )
     // If the status code is 200, move the piped temp file to the real name.
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
