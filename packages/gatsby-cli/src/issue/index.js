@@ -14,29 +14,28 @@ const issueTypeQuestion = {
   }),
 }
 
-module.exports = () => {
-  inquirer.prompt(issueTypeQuestion).then(({ issueType }) => {
-    inquirer.prompt(issueTypes[issueType].questions).then(async answers => {
-      const body =
-        issueTypes[issueType].template(answers).trim() +
-        `\n\n` +
-        (await telemetry(answers))
+module.exports = async function createIssue() {
+  const { issueType } = await inquirer.prompt(issueTypeQuestion)
+  const answers = await inquirer.prompt(issueTypes[issueType].questions)
 
-      const url = newGithubIssueUrl({
-        user: `gatsbyjs`,
-        repo: `gatsby`,
-        body,
-      })
+  const body =
+    issueTypes[issueType].template(answers).trim() +
+    `\n\n` +
+    (await telemetry(answers))
 
-      opn(url)
-      console.info(
-        `
+  const url = newGithubIssueUrl({
+    user: `gatsbyjs`,
+    repo: `gatsby`,
+    body,
+  })
+
+  opn(url)
+  console.info(
+    `
 ✔️ All done! We opened a page in your browser where you can provide furher details and submit your issue.
 🔗 If your browser wasn't launched, please open the following URL manually:
 
 ${url}
-          `.trim()
-      )
-    })
-  })
+    `.trim()
+  )
 }

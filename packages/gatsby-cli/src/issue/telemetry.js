@@ -15,7 +15,7 @@ module.exports = answers => {
     return Promise.resolve(``)
   }
 
-  const promises = []
+  let promises = []
 
   if (answers.envinfoConfirmation) {
     promises.push(
@@ -40,8 +40,8 @@ ${(result || error).toString().trim()}
       `gatsby-ssr.js`,
     ]
 
-    files.forEach(fileName => {
-      promises.push(
+    promises = promises.concat(
+      files.map(fileName =>
         fs
           .readFile(path.join(process.cwd(), fileName))
           .then((result, error) => {
@@ -63,7 +63,7 @@ ${content}
             `.trim()
           })
       )
-    })
+    )
   }
 
   return Promise.all(promises).then(results =>
