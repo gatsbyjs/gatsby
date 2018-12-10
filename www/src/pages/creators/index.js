@@ -1,19 +1,19 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
-import CommunityView from "../../views/community"
+import CreatorsView from "../../views/creators"
 
-class CompaniesPage extends Component {
+class CreatorsPage extends Component {
   render() {
     const { location, data } = this.props
-    return <CommunityView data={data} location={location} title={`Companies`} />
+    return <CreatorsView data={data} location={location} title={`All`} />
   }
 }
 
-export default CompaniesPage
+export default CreatorsPage
 
 export const pageQuery = graphql`
   query {
-    allCreatorsYaml(filter: { type: { eq: "company" } }) {
+    allCreatorsYaml {
       edges {
         node {
           ...CreatorData

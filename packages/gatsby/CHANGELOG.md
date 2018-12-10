@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.64"></a>
+
+## [2.0.64](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.63...gatsby@2.0.64) (2018-12-07)
+
+### Bug Fixes
+
+- **gatsby:** [loki] sync db autosaves ([#10212](https://github.com/gatsbyjs/gatsby/issues/10212)) ([1c0d051](https://github.com/gatsbyjs/gatsby/commit/1c0d051))
+
 <a name="2.0.63"></a>
 
 ## [2.0.63](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.62...gatsby@2.0.63) (2018-12-05)
