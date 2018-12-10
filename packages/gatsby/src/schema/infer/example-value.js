@@ -8,6 +8,23 @@ const {
   isDefined,
 } = require(`../utils`)
 
+const isMixOfDatesAndStrings = (types, arrayWrappers) => {
+  const acc = new Set()
+  types.every(type => {
+    let arrays = arrayWrappers
+    while (arrays--) {
+      if (type.startsWith(`[`)) {
+        type = type.slice(1, -1)
+      } else {
+        return false
+      }
+    }
+    type.split(`,`).forEach(t => acc.add(t))
+    return true
+  })
+  return acc.size === 2 && acc.has(`date`) && acc.has(`string`)
+}
+
 const findFloat = entries => {
   let result
   const find = numbers =>
@@ -65,21 +82,35 @@ const getExampleObject = (nodes, prefix, ignoreFields = []) => {
 
     const selector = createSelector(prefix, key)
 
-    const types = getUniqueValuesBy(entries, entry => entry.type)
-    if (!types.length) return acc
-    if (types.length > 1 || types[0].type.includes(`,`)) {
-      reportConflict(selector, types)
-      return acc
-    }
+    const entriesByType = getUniqueValuesBy(entries, entry => entry.type)
+    if (!entriesByType.length) return acc
 
     // TODO: This whole thing could be prettier!
-    let { value /*, type */ } = entries[0]
+
+    let { value, type } = entriesByType[0]
     let arrayWrappers = 0
-    let exampleFieldValue
     while (Array.isArray(value)) {
       value = value[0]
       arrayWrappers++
     }
+
+    if (entriesByType.length > 1 || type.includes(`,`)) {
+      if (
+        isMixOfDatesAndStrings(
+          entriesByType.map(entry => entry.type),
+          arrayWrappers
+        )
+      ) {
+        // FIXME: is a mix of date *objects* and strings problematic?
+        // I.e. does GraphQL automatically call toString()?
+        value = `String`
+      } else {
+        reportConflict(selector, entriesByType)
+        return acc
+      }
+    }
+
+    let exampleFieldValue
     if (typeof value === `object`) {
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
