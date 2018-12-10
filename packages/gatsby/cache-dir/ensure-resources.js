@@ -129,8 +129,8 @@ class EnsureResources extends React.Component {
     if (this.hasResources(this.state.pageResources)) {
       return this.props.children(this.state)
     } else {
-      const __html = document.getElementById(`___gatsby`).innerHTML
-      return <div dangerouslySetInnerHTML={{ __html }} />
+      // prevent hydrating
+      throw new Error(`Missing resources for ${this.state.location.pathname}`)
     }
   }
 }
