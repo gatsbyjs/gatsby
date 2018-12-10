@@ -41,7 +41,11 @@ With Now CLI installed, we can go on to deploy our previously setup Gatsby proje
 }
 ```
 
-This will allow Now to understand that we want to use the [latest Now 2.0 version](https://zeit.co/blog/now-2) of [the platform](https://zeit.co/docs/v2/platform/overview/), to set the project name to be `my-gatsby-project`, and to use the [@now/static-build builder](https://zeit.co/docs/v2/deployments/official-builders/static-build-now-static-build/) to take the `package.json` file as an entrypoint and use the `public` directory as the directory our final content will end up at.
+This `now.json` file will allow us to do several things, specifically:
+
+- Use the [latest Now 2.0 version](https://zeit.co/blog/now-2) of [the platform](https://zeit.co/docs/v2/platform/overview/)
+- Set the project name to `my-gatsby-project`
+- Use the [@now/static-build builder](https://zeit.co/docs/v2/deployments/official-builders/static-build-now-static-build/) to take the `package.json` file as an entrypoint and use the `public` directory as the our content directory
 
 The final setup step is to add a script to the `package.json` which will build our application:
 ```json:title=package.json
