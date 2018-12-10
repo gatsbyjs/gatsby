@@ -5,8 +5,6 @@ const {
   oneOf,
   query,
 } = require(`./sift`)
-// require(`./mingo`)
-// require(`./vanilla`)
 
 module.exports = {
   dropQueryOperators,
