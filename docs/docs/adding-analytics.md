@@ -62,3 +62,4 @@ Once this is configured you can deploy your site to test! If you navigate to the
 - [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
 - [Fathom](/packages/gatsby-plugin-fathom/)
 - [Baidu](/packages/gatsby-plugin-baidu-analytics/)
+- [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo/)
