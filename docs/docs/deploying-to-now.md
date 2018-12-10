@@ -2,36 +2,59 @@
 title: Deploying to Now
 ---
 
-In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can do the following:
+[ZEIT Now](https://zeit.co/now) is a [cloud platform for serverless deployment](https://zeit.co/docs/v2/getting-started/introduction-to-now/) that you can use to deploy your Gatsby projects and [alias them](https://zeit.co/docs/v2/domains-and-aliases/aliasing-a-deployment/) to your domain or a free `.now.sh` suffixed URL.
 
-1.  Install the Now CLI
+This guide will show you how to get started in a few quick steps:
 
-`npm install -g now`
+## Step 1: Getting Started with Gatsby
+If you haven't already [set up a Gatsby project](https://www.gatsbyjs.org/docs/quick-start) you can do so by using npm's `npx` command in your terminal:
 
-2.  Run `gatsby build` at the root of your project.
+```shell
+npx gatsby new <your project name>
+```
 
-3.  Run `now` inside `public/`. This will upload your project to the cloud.
+## Step 2: Getting Now
 
-For large project sizes, it is better to install a Node server package (such as `serve`, or `http-server`):
+If you're not acquainted with Now, it is an easy-to-use cloud platform for serverless deployments that you can use from [the command-line](https://zeit.co/docs/v2/getting-started/installation/#now-cli) or [the desktop app](https://zeit.co/docs/v2/getting-started/installation/#now-desktop)
 
-1.  Install a Node server package
+We recommend that you download and [install Now Desktop](https://zeit.co/download) which installs Now CLI and keeps it up-to-date automatically.
 
-`npm install --save serve`
+To install Now CLI quickly, use the following:
+```shell
+npm install -g now
+```
 
-2.  Add a `start` script to your `package.json` file. This is what Now will use to run your application:
+## Step 3: Preparing to Deploy
 
+With Now CLI installed, we can go on to deploy our previously setup Gatsby project by first creating a `now.json` file with the following contents:
+
+```json:title=now.json
+{
+  "version": 2,
+  "name": "my-gatsby-project",
+  "builds": [
+    { "src": "package.json", "use": "@now/static-build", "config": {"distDir": "public"} }
+  ]
+}
+```
+
+This will allow Now to understand that we want to use the [latest Now 2.0 version](https://zeit.co/blog/now-2) of [the platform](https://zeit.co/docs/v2/platform/overview/), to set the project name to be `my-gatsby-project`, and to use the [@now/static-build builder](https://zeit.co/docs/v2/deployments/official-builders/static-build-now-static-build/) to take the `package.json` file as an entrypoint and use the `public` directory as the directory our final content will end up at.
+
+The final setup step is to add a script to the `package.json` which will build our application:
 ```json:title=package.json
 {
   "scripts": {
-    "start": "serve public/"
+    ...
+    "now-build": "npm run build"
   }
 }
 ```
 
-3.  Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
+## Step 4: Deploying
 
-To deploy a custom path, run `now` as:
+You can deploy your application by running the following in the root of the project directory, where the `now.json` is:
+`now`
 
-```shell
-$ now /usr/src/project
-```
+That's all! Your application will now deploy, and you will receive a link similar to the following: https://my-gatsby-project-fhcc9hnqc.now.sh/
+
+
