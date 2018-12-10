@@ -19,16 +19,23 @@ module.exports = answers => {
 
   if (answers.envinfoConfirmation) {
     promises.push(
-      envInfo({ markdown: true }).then((result, error) =>
-        `
+      envInfo({ markdown: true })
+        .then(result => {
+          return { result, error: null }
+        })
+        .catch(error => {
+          return { result: null, error }
+        })
+        .then(({ result, error }) =>
+          `
 <details>
 <summary>Environment</summary>
 
 ${(result || error).toString().trim()}
 
 </details>
-        `.trim()
-      )
+          `.trim()
+        )
     )
   }
 
@@ -44,7 +51,13 @@ ${(result || error).toString().trim()}
       files.map(fileName =>
         fs
           .readFile(path.join(process.cwd(), fileName))
-          .then((result, error) => {
+          .then(result => {
+            return { result, error: null }
+          })
+          .catch(error => {
+            return { result: null, error }
+          })
+          .then(({ result, error }) => {
             const content = result
               ? mdCodeBlock(result, `javascript`)
               : !error
