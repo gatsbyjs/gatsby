@@ -1,4 +1,4 @@
-const readdirp = require(`readdirp-walk`)
+const readdirp = require(`readdirp`)
 
 const ignoredRE = /^\./
 const ignored = [`yarn.lock`, `package-lock.json`, `node_modules`, `dist`]
