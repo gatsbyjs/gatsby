@@ -247,7 +247,7 @@ To query for a single `CaseStudy` node with ShortText fields `id`, `slug`, `titl
 
 ## More on Queries with Contentful and Gatsby
 
-It is strongly recommended that you take a look at how real data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
+It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
 [using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
 
 ## **Beta** [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
