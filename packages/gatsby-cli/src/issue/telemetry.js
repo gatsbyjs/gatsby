@@ -48,10 +48,10 @@ ${(result || error).toString().trim()}
             const content = result
               ? mdCodeBlock(result, `javascript`)
               : !error
-              ? `Empty`
-              : error.code === `ENOENT`
-              ? `Non-existant`
-              : error.toString()
+                ? `Empty`
+                : error.code === `ENOENT`
+                  ? `Non-existant`
+                  : error.toString()
 
             return `
 <details>
