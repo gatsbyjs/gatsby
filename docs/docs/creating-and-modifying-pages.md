@@ -114,6 +114,8 @@ _Note: There's also a plugin that will remove all trailing slashes from pages au
 [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
 
 ```javascript:title=gatsby-node.js
+// Replacing '/' would result in empty string which is invalid
+const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {
@@ -121,13 +123,32 @@ exports.onCreatePage = ({ page, actions }) => {
   return new Promise(resolve => {
     const oldPage = Object.assign({}, page)
     // Remove trailing slash unless page is /
-    page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``))
+    page.path = replacePath(page.path)
     if (page.path !== oldPage.path) {
       // Replace new page with old page
       deletePage(oldPage)
       createPage(page)
     }
     resolve()
+  })
+}
+```
+
+### Pass context to pages
+
+The automatically created pages can receive context and use that as variables in their GraphQL queries. To override the default and pass your own context, open your site's `gatsby-node.js` and add similar to the following:
+
+```javascript:title=gatsby-node.js
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions
+
+  deletePage(page)
+  // You can access the variable "house" in your page queries now
+  createPage({
+    ...page,
+    context: {
+      house: Gryffindor,
+    },
   })
 }
 ```

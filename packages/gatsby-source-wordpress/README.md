@@ -83,6 +83,8 @@ module.exports = {
           // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
           // then add your clientId, clientSecret, username, and password here
           // Learn about environment variables: https://www.gatsbyjs.org/docs/environment-variables
+          // If two-factor authentication is enabled then you need to create an Application-Specific Password,
+          // see https://en.support.wordpress.com/security/two-step-authentication/#application-specific-passwords
           wpcom_app_clientSecret: process.env.WORDPRESS_CLIENT_SECRET,
           wpcom_app_clientId: "54793",
           wpcom_user: "gatsbyjswpexample@gmail.com",

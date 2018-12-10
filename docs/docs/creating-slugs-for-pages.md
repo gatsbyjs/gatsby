@@ -14,18 +14,22 @@ Add your new slugs directly onto the `MarkdownRemark` nodes. Any data you add to
 
 To do so, you'll use a function passed to our API implementation called [`createNodeField`](/docs/bound-action-creators/#createNodeField). This function allows you to create additional fields on nodes created by other plugins.
 
-```javascript{3,4,6-11}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
+// highlight-start
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
+  // highlight-end
   if (node.internal.type === `MarkdownRemark`) {
+    // highlight-start
     const slug = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
       node,
       name: `slug`,
       value: slug,
     })
+    // highlight-end
   }
 }
 ```

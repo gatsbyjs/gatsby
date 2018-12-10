@@ -63,7 +63,8 @@ const store = Redux.createStore(
 )
 
 // Persist state.
-const saveState = state => {
+function saveState() {
+  const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,
@@ -77,7 +78,7 @@ const saveState = state => {
     pickedState.staticQueryComponents
   )
   pickedState.components = mapToObject(pickedState.components)
-  pickedState.nodes = mapToObject(pickedState.nodes)
+  pickedState.nodes = pickedState.nodes ? mapToObject(pickedState.nodes) : []
   const stringified = stringify(pickedState, null, 2)
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
@@ -85,33 +86,13 @@ const saveState = state => {
     () => {}
   )
 }
-const saveStateDebounced = _.debounce(saveState, 1000)
+
+exports.saveState = saveState
 
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
   emitter.emit(lastAction.type, lastAction)
 })
-
-// During development, once bootstrap is finished, persist state on changes.
-let bootstrapFinished = false
-if (process.env.gatsby_executing_command === `develop`) {
-  emitter.on(`BOOTSTRAP_FINISHED`, () => {
-    bootstrapFinished = true
-    saveState(store.getState())
-  })
-  emitter.on(`*`, () => {
-    if (bootstrapFinished) {
-      saveStateDebounced(store.getState())
-    }
-  })
-}
-
-// During builds, persist state once bootstrap has finished.
-if (process.env.gatsby_executing_command === `build`) {
-  emitter.on(`BOOTSTRAP_FINISHED`, () => {
-    saveState(store.getState())
-  })
-}
 
 /** Event emitter */
 exports.emitter = emitter

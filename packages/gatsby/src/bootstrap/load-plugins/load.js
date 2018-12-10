@@ -162,6 +162,7 @@ module.exports = (config = {}) => {
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/query-runner`,
+    `../../internal-plugins/webpack-theme-component-shadowing`,
   ]
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
