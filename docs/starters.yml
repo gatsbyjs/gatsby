@@ -1349,3 +1349,17 @@
     - i18n
   features:
     - Support for precompiled string internationalization using ttag and it's babel plugin
+- url: https://gatsby-starter-typescript.netlify.com/
+  repo: https://github.com/goblindegook/gatsby-starter-typescript
+  description: Gatsby starter using TypeScript.
+  tags:
+    - Markdown
+    - Pagination
+    - TypeScript
+    - PWA
+    - Linting
+  features:
+    - Markdown
+    - Local search powered by Lunr
+    - Syntax highlighting
+    - Images
