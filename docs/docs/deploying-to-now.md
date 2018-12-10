@@ -69,4 +69,3 @@ That's all! Your application will now deploy, and you will receive a link simila
 ## References:
 - [Deploying Gatsby with Now](https://zeit.co/examples/gatsby/)
 
-
