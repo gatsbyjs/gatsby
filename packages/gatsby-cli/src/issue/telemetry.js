@@ -12,7 +12,7 @@ ${content}
 
 module.exports = answers => {
   if (!answers.envinfoConfirmation && !answers.filesConfirmation) {
-    return new Promise(resolve => resolve(``))
+    return Promise.resolve(``)
   }
 
   const promises = []
