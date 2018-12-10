@@ -3723,3 +3723,13 @@
     - Business
     - Food
     - Beverage
+- title: Satispay
+  url: https://www.satispay.com
+  main_url: https://www.satispay.com
+  categories:
+    - Business
+    - Finance
+    - Technology
+  built_by: Satispay
+  built_by_url: https://www.satispay.com
+  featured: false
