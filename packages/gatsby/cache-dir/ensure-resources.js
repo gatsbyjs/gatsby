@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 import loader from "./loader"
 import shallowCompare from "shallow-compare"
 
+let isInitialRender = true
+
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
 // will just render, else will render null.
@@ -126,12 +128,13 @@ class EnsureResources extends React.Component {
   }
 
   render() {
-    if (this.hasResources(this.state.pageResources)) {
-      return this.props.children(this.state)
-    } else {
+    if (!this.hasResources(this.state.pageResources) && isInitialRender) {
       // prevent hydrating
       throw new Error(`Missing resources for ${this.state.location.pathname}`)
     }
+
+    isInitialRender = false
+    return this.props.children(this.state)
   }
 }
 
