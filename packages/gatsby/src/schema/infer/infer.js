@@ -35,12 +35,7 @@ const addInferredFields = (tc, value, prefix, depth = 0) => {
         }
 
         if (lists === arrays && fieldType instanceof GraphQLObjectType) {
-          acc[key] = addInferredFields(
-            tc.getFieldTC(key),
-            value,
-            selector,
-            depth + 1
-          )
+          addInferredFields(tc.getFieldTC(key), value, selector, depth + 1)
         }
       }
       return acc
