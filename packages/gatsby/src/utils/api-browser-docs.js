@@ -206,10 +206,6 @@ exports.onServiceWorkerInstalled = true
  * Inform plugins of when a service worker has an update available.
  * @param {object} $0
  * @param {object} $0.serviceWorker The service worker instance.
- * @example
- * exports.onServiceWorkerUpdateFound = () => {
- *   window.alert(`An updated service worker was found.`)
- * }
  */
 exports.onServiceWorkerUpdateFound = true
 
