@@ -1,4 +1,5 @@
 /* global importScripts, workbox, idbKeyval */
+/* revision %revision% */
 
 importScripts(`idb-keyval-iife.min.js`)
 const WHITELIST_KEY = `custom-navigation-whitelist`
