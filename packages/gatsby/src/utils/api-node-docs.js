@@ -173,6 +173,35 @@ exports.onCreatePage = true
 exports.addTypeDefs = true
 
 /**
+ * Adds custom resolvers to the GraphQLSchema.
+ *
+ * Should be used in tandem with `addTypeDefs`.
+ *
+ * @param {object} $0
+ * @param {function} $0.addResolvers Add custom resolvers to GraphQL field configs.
+ * Useful helper functions are passed with `context`.
+ * @param {object} $1
+ * @param {string} resolvers Resolvers from plugin options in `gatsby-config.js`.
+ * @example
+ * ```js
+ * exports.addResolvers = ({ addResolvers }) => {
+ *   const resolvers = {
+ *     Author: {
+ *       fullName: {
+ *         resolve: (source, args, context, info) => {
+ *           // const { schemaComposer } = context
+ *           return source.firstName + source.lastName
+ *         }
+ *       }
+ *     }
+ *   }
+ *   addResolvers(resolvers)
+ * }
+ * ```
+ */
+exports.addResolvers = true
+
+/**
  * Called during the creation of the GraphQL schema. Allows plugins
  * to add new fields to the types created from data nodes. It will be called
  * separately for each type.

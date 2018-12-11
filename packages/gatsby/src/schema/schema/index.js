@@ -4,8 +4,10 @@ const { SchemaDirectiveVisitor } = require(`graphql-tools`)
 const { directives, visitors } = require(`../directives`)
 const { addNodeInterfaceFields, hasNodeInterface } = require(`../interfaces`)
 const { addInferredType, addInferredTypes } = require(`../infer`)
+const apiRunner = require(`../../utils/api-runner-node`)
 
 const addConvenienceChildrenFields = require(`./add-convenience-children-fields`)
+const addCustomResolveFunctions = require(`./add-custom-resolve-functions`)
 const addFieldsFromNodeAPI = require(`./add-fields-from-node-api`)
 const addResolvers = require(`./add-resolvers`)
 
@@ -19,10 +21,7 @@ const addTypeDefs = typeDefs => {
   })
 }
 
-const addTypes = async () => {
-  const apiRunner = require(`../../utils/api-runner-node`)
-  await apiRunner(`addTypeDefs`, { addTypeDefs })
-}
+const addTypes = () => apiRunner(`addTypeDefs`, { addTypeDefs })
 
 const addTypeToRootQuery = tc => {
   const typeName = tc.getTypeName()
@@ -55,6 +54,7 @@ const buildSchema = async () => {
       addTypeToRootQuery(tc)
     }
   })
+  await addCustomResolveFunctions()
   return getSchema()
 }
 

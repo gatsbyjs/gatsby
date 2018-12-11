@@ -10,6 +10,8 @@ const addFieldsFromNodeAPI = () => {
     types.map(async ([typeName, tc]) => {
       const [fields] = await apiRunner(`setFieldsOnGraphQLNodeType`, {
         type: { name: typeName },
+        // FIXME: Dont' pass schemaComposer
+        schemaComposer,
         // traceId: `initial-setFieldsOnGraphQLNodeType`,
         // parentSpan: span,
       })
