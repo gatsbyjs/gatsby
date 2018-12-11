@@ -7,7 +7,7 @@ If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may 
 1.  You can [add a manifest file](/docs/add-a-manifest-file/). Ensure that the manifest plugin is listed _before_ the offline plugin so that the offline plugin can cache the created `manifest.webmanifest`.
 2.  You can also add offline support, since another requirement for a website to qualify as a PWA is the use of a [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API). [Gatsby's offline plugin](/packages/gatsby-plugin-offline/) makes a Gatsby site work offline--and makes it more resistant to bad network conditions--by creating a service worker for your site.
 
-### What is a service worker
+### What is a service worker?
 
 A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction. They increase your site availability in spotty connections, and are essential to making a nice user experience.
 
@@ -27,21 +27,38 @@ Add this plugin to your `gatsby-config.js`
 
 ```javascript:title=gatsby-config.js
 {
-    plugins: [
-        {
-            resolve: `gatsby-plugin-manifest`,
-            options: {
-                ...
-            }
-        },
-        'gatsby-plugin-offline'
-    ]
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        ...
+      }
+    },
+    'gatsby-plugin-offline'
+  ]
 }
 ```
 
 That's all you need to add offline support to your Gatsby site.
 
 Note: Service worker registers only in production builds (`gatsby build`).
+
+### Displaying a message when a service worker updates
+
+To display a custom message once your service worker finds an update, you can use the [`onServiceWorkerUpdateFound`](/docs/browser-apis/#onServiceWorkerUpdateFound) browser API in your `gatsby-browser.js` file. The following code will display a prompt asking the user whether they would like to refresh the page when an update is found:
+
+```javascript:title=gatsby-browser.js
+exports.onServiceWorkerUpdateFound = () => {
+  const answer = window.prompt(
+    `This application has been updated. ` +
+      `Reload to display the latest version?`
+  )
+
+  if (answer === true) {
+    window.reload()
+  }
+}
+```
 
 ## References
 
