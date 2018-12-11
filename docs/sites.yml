@@ -1274,10 +1274,10 @@
 - title: LekoArts
   main_url: "https://www.lekoarts.de"
   url: "https://www.lekoarts.de"
-  source_url: "https://github.com/LeKoArts/portfolio"
+  source_url: "https://github.com/LekoArts/portfolio"
   featured: false
   built_by: LekoArts
-  built_by_url: "https://github.com/LeKoArts"
+  built_by_url: "https://github.com/LekoArts"
   description: >-
     Hi, I'm Lennart — a self-taught and passionate graphic/web designer &
     frontend developer based in Darmstadt, Germany. I love it to realize complex
@@ -3733,3 +3733,16 @@
   built_by: Satispay
   built_by_url: https://www.satispay.com
   featured: false
+- title: The Movie Database - Gatsby
+  url: https://tmdb.lekoarts.de
+  main_url: https://tmdb.lekoarts.de
+  source_url: https://github.com/LekoArts/gatsby-source-tmdb-example
+  categories:
+    - Open Source
+    - Entertainment
+    - Gallery
+  featured: false
+  built_by: LekoArts
+  built_by_url: "https://github.com/LekoArts"
+  description: >
+    Source from The Movie Database (TMDb) API (v3) in Gatsby. This example is built with react-spring, React hooks and react-tabs and showcases the gatsby-source-tmdb plugin. It also has some client-only paths and uses gatsby-image.
