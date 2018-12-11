@@ -2,6 +2,7 @@ const fs = require(`fs`)
 const workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const slash = require(`slash`)
+const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 const getResourcesFromHTML = require(`./get-resources-from-html`)
@@ -82,12 +83,12 @@ exports.onPostBuild = (args, pluginOptions) => {
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory,
     // since these files have unique URLs and their contents will never change
-    dontCacheBustUrlsMatching: /(\.js$|\.css$|\/static\/)/,
+    dontCacheBustUrlsMatching: /(\.js$|\.css$|static\/)/,
     runtimeCaching: [
       {
         // Use cacheFirst since these don't need to be revalidated (same RegExp
         // and same reason as above)
-        urlPattern: /(\.js$|\.css$|\/static\/)/,
+        urlPattern: /(\.js$|\.css$|static\/)/,
         handler: `cacheFirst`,
       },
       {
@@ -125,8 +126,9 @@ exports.onPostBuild = (args, pluginOptions) => {
       const swAppend = fs
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
         .replace(/%pathPrefix%/g, pathPrefix)
+        .replace(/%revision%/g, crypto.randomBytes(16).toString(`hex`))
 
-      fs.appendFileSync(`public/sw.js`, swAppend)
+      fs.appendFileSync(`public/sw.js`, `\n${swAppend}`)
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )
