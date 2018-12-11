@@ -16,6 +16,11 @@ describe(`isObject util`, () => {
     expect(isObject(possibleObject)).toBeFalsy()
   })
 
+  it(`does not identify strings as objects`, () => {
+    const possibleObject = new String()
+    expect(isObject(possibleObject)).toBeFalsy()
+  })
+
   it(`does not identify null as object`, () => {
     const possibleObject = null
     expect(isObject(possibleObject)).toBeFalsy()
