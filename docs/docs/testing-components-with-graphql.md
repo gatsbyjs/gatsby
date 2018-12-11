@@ -30,9 +30,7 @@ done.
 As this is testing a page component you will need to put your tests in another
 folder so that Gatsby doesn't try to turn the tests into pages.
 
-```js
-// src/__tests__/index.js
-
+```js:title=src/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
@@ -47,9 +45,7 @@ describe("BlogIndex", () =>
 If you run this test you will get an error, as the component is expecting a
 location object. You can fix this by passing one in:
 
-```js
-// src/__tests__/index.js
-
+```js:title=src/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
@@ -113,8 +109,7 @@ Here it is, trimmed to one node for brevity:
       "edges": [
         {
           "node": {
-            "excerpt":
-              "Far far away, behind the word mountains, far from the countries Vokalia and\nConsonantia, there live the blind texts. Separated they live in…",
+            "excerpt": "Far far away, behind the word mountains, far from the countries Vokalia and\nConsonantia, there live the blind texts. Separated they live in…",
             "fields": {
               "slug": "/hi-folks/"
             },
@@ -166,9 +161,7 @@ When you have the result, copy the `data` value from the output panel. Good
 practice is to store your fixtures in a separate file, but for simplicity here
 you will be defining it directly inside your test file:
 
-```js
-// src/__tests__/index.js
-
+```js:title=src/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import BlogIndex from "../pages/index"
@@ -234,8 +227,7 @@ test.
 Here is the example of a header component that queries the page data itself,
 rather than needing it to be passed from the layout:
 
-```js
-// src/components/Header.js
+```js:title=src/components/Header.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 
@@ -256,7 +248,7 @@ export default props => (
         }
       }
     `}
-    render={data => <Header data={data} {...props} />}
+    render={data => <Header {...props} data={data} />}
   />
 )
 ```
@@ -264,8 +256,7 @@ export default props => (
 This is almost ready: all you need to do is export the pure component that you
 are passing to StaticQuery. Rename it first to avoid confusion:
 
-```js
-// src/components/Header.js
+```js:title=src/components/Header.js
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
@@ -286,7 +277,7 @@ export const Header = props => (
         }
       }
     `}
-    render={data => <PureHeader data={data} {...props} />}
+    render={data => <PureHeader {...props} data={data} />}
   />
 )
 
@@ -301,7 +292,7 @@ GraphQL.
 This is a good example of the benefits of keeping components "pure", meaning
 they always generate the same output if given the same inputs and have no
 side-effects apart from their return value. This means we can be sure the tests
-are always reproducable and don't fail if, for example, the network is down or
+are always reproducible and don't fail if, for example, the network is down or
 the data source changes. In this example, `Header` is impure as it makes a
 query, so the output depends on something apart from its props. `PureHeader` is
 pure because its return value is entirely dependent on the props passed it it.
@@ -309,9 +300,7 @@ This means it's very easy to test, and a snapshot should never change.
 
 Here's how:
 
-```js
-// src/components/Header.test.js
-
+```js:title=src/components/Header.test.js
 import React from "react"
 import renderer from "react-test-renderer"
 import { PureHeader as Header } from "./Header"
@@ -334,5 +323,5 @@ describe("Header", () =>
 ## Using TypeScript
 
 If you are using TypeScript this is a lot easier to get right as the type errors
-will tell you exaclty what you should be passing to the components. This is why
+will tell you exactly what you should be passing to the components. This is why
 it is a good idea to define type interfaces for all of your GraphQL queries.

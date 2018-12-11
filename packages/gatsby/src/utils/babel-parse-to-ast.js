@@ -12,7 +12,12 @@ const PARSER_OPTIONS = {
     `flow`,
     `doExpressions`,
     `objectRestSpread`,
-    `decorators`,
+    [
+      `decorators`,
+      {
+        decoratorsBeforeExport: true,
+      },
+    ],
     `classProperties`,
     `classPrivateProperties`,
     `classPrivateMethods`,
@@ -28,7 +33,12 @@ const PARSER_OPTIONS = {
     `bigInt`,
     `optionalCatchBinding`,
     `throwExpressions`,
-    `pipelineOperator`,
+    [
+      `pipelineOperator`,
+      {
+        proposal: `minimal`,
+      },
+    ],
     `nullishCoalescingOperator`,
   ],
 }

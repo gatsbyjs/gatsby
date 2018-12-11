@@ -28,14 +28,14 @@ for more.
 At the root of a Gatsby site run `gatsby develop` to start the Gatsby
 development server.
 
-Options
+#### Options
 
-```
-  -H, --host    Set host. Defaults to localhost
-  -p, --port    Set port. Defaults to 8000
-  -o, --open    Open the site in your browser for you
-  -S, --https   Use HTTPS
-```
+|     Option      | Description                                     |
+| :-------------: | ----------------------------------------------- |
+| `-H`, `--host`  | Set host. Defaults to localhost                 |
+| `-p`, `--port`  | Set port. Defaults to 8000                      |
+| `-o`, `--open`  | Open the site in your (default) browser for you |
+| `-S`, `--https` | Use HTTPS                                       |
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
@@ -45,11 +45,40 @@ to find out how you can set up an HTTPS development server using Gatsby.
 At the root of a Gatsby site run `gatsby build` to do a production build of a
 site.
 
+#### Options
+
+|            Option            | Description                                                                                                 |
+| :--------------------------: | ----------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                         |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                     |
+| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |
+
 ### Serve
 
 At the root of a Gatsby site run `gatsby serve` to serve the production build of
 the site for testing.
 
+#### Options
+
+|      Option      | Description                                                                              |
+| :--------------: | ---------------------------------------------------------------------------------------- |
+|  `-H`, `--host`  | Set host. Defaults to localhost                                                          |
+|  `-p`, `--port`  | Set port. Defaults to 8000                                                               |
+|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
+| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
+
 ### Info
 
 At the root of a Gatsby site run `gatsby info` to get helpful environment information which will be required when reporting a bug.
+
+#### Options
+
+|       Option        | Description                                             |
+| :-----------------: | ------------------------------------------------------- |
+| `-C`, `--clipboard` | Automagically copy environment information to clipboard |
+
+### Repl
+
+Get a node repl with context of Gatsby environment
+
+<!-- TODO: add repl documentation link when ready -->

@@ -39,7 +39,7 @@ npm install --save gatsby-transformer-json
 
 Then in your site's `gatsby-config.js` you add `gatsby-transformer-json` to the plugins array like:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-transformer-json`],
 }
@@ -47,7 +47,7 @@ module.exports = {
 
 Plugins can take options. For example:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     // Shortcut for adding plugins without options.
@@ -80,13 +80,38 @@ module.exports = {
 
 Note that plugin options will be stringified by Gatsby, so they cannot be functions.
 
+## Loading plugins from your local plugins folder
+
+Gatsby can also load plugins from the your local website plugins folder which is a folder named `plugins` in the website's root directory.
+
+```javascript
+module.exports = {
+  plugins: [`gatsby-local-plugin`],
+}
+```
+
+If you want to reference a plugin that is not in the plugins folder then you could use something like the following:
+
+```javascript
+module.exports = {
+  plugins: [
+    // Shortcut for adding plugins without options.
+    "gatsby-plugin-react-helmet",
+    {
+      // Standard plugin with options example
+      resolve: require.resolve(`/path/to/gatsby-local-plugin`),
+    },
+  ],
+}
+```
+
 ## What don't you need plugins for?
 
-Most third-party functionality you want to add to your website will follow standard Javascript and React.js patterns for importing packages and composing UIs. These do not require a Gatsby plugin!
+Most third-party functionality you want to add to your website will follow standard JavaScript and React.js patterns for importing packages and composing UIs. These do not require a Gatsby plugin!
 
 Some examples:
 
-- Importing Javascript packages that provide general functionality, such as `lodash` or `axios`
+- Importing JavaScript packages that provide general functionality, such as `lodash` or `axios`
 - Using React components or component libraries you want to include in your UI, such as `Ant Design`, `Material UI`, or the typeahead from your component library.
 - Integrating visualization libraries, such as `Highcharts` or `d3`.
 

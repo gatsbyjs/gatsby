@@ -142,6 +142,7 @@ exports.onPreRenderHTML = true
  * @param {object} $0
  * @param {object} $0.element The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
+ * @param {string} $0.pathname Path of page.
  * @example
  * import React from "react"
  * import Layout from "./src/components/Layout"
@@ -149,7 +150,7 @@ exports.onPreRenderHTML = true
  * export const wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get
  *   // including location, data, etc - you don't need to pass it
- *   <Layout {...props}>{element}</Layout>
+ *   return <Layout {...props}>{element}</Layout>
  * }
  */
 exports.wrapPageElement = true

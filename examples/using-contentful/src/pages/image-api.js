@@ -10,14 +10,16 @@ const ImageAPI = props => {
     <Layout>
       <h1>Image API examples</h1>
       <p>
-        Gatsby offers rich integration with{` `}
+        Gatsby offers rich integration with
+        {` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/">
           Contentful's Image API
         </a>
       </p>
       <p>
-        Open Graph<em>i</em>QL on your own site to experiment with the following
-        options
+        Open Graph
+        <em>i</em>
+        QL on your own site to experiment with the following options
       </p>
       <h2>Resize</h2>
       {assets.map(({ node: { title, resize } }) => (
@@ -116,12 +118,14 @@ const ImageAPI = props => {
         argument to the GraphQL argument to crop the image to a certain size.
       </p>
       <p>
-        You can also set the{` `}
+        You can also set the
+        {` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/change-the-resizing-behavior">
           resizing behavior
         </a>
         {` `}
-        and{` `}
+        and
+        {` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-focus-area-for-resizing">
           resizing focus area
         </a>
@@ -211,15 +215,19 @@ const ImageAPI = props => {
       <h2>WebP Images</h2>
       <p>
         WebP is an image format that provides lossy and lossless compression
-        that may be better than JPEG or PNG. The <code>srcWebp</code> and{` `}
-        <code>srcSetWebp</code> fields are available for{` `}
+        that may be better than JPEG or PNG. The <code>srcWebp</code> and
+        {` `}
+        <code>srcSetWebp</code> fields are available for
+        {` `}
         <code>fixed</code> and <code>fluid</code> queries.
       </p>
       <p>
-        WebP is currently only supported in{` `}
+        WebP is currently only supported in
+        {` `}
         <a href="https://caniuse.com/#feat=webp">Chrome and Oprah browsers</a>,
         and you'll want to fall back to another format for other clients. When
-        this query is used with{` `}
+        this query is used with
+        {` `}
         <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
           <code>gatsby-image</code>
         </a>

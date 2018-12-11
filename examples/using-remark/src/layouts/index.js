@@ -56,7 +56,8 @@ class Layout extends React.Component {
                     color: styles.colors.light,
                   }}
                 >
-                  powered by{` `}
+                  powered by
+                  {` `}
                   <a target="_blank" rel="noopener noreferrer" href={homepage}>
                     {author}
                   </a>

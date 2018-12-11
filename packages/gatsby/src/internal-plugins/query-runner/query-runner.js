@@ -32,7 +32,6 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
 
   // Run query
   let result
-
   // Nothing to do if the query doesn't exist.
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
@@ -55,15 +54,10 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
     errorDetails.set(`Plugin`, queryJob.pluginCreatorId || `none`)
     errorDetails.set(`Query`, queryJob.query)
 
-    report.log(`
+    report.panicOnBuild(`
 The GraphQL query from ${queryJob.componentPath} failed.
 
 ${formatErrorDetails(errorDetails)}`)
-
-    // Perhaps this isn't the best way to see if we're building?
-    if (program._[0] === `build`) {
-      process.exit(1)
-    }
   }
 
   // Add the page context onto the results.
@@ -102,9 +96,7 @@ ${formatErrorDetails(errorDetails)}`)
     dataPath = queryJob.hash
   }
 
-  const programType = program._[0]
-
-  if (programType === `develop`) {
+  if (process.env.gatsby_executing_command === `develop`) {
     if (queryJob.isPage) {
       websocketManager.emitPageData({
         result,
