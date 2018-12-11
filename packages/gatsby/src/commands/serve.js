@@ -1,5 +1,5 @@
 /* @flow weak */
-const openurl = require(`opn`)
+const openurl = require(`better-opn`)
 const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)

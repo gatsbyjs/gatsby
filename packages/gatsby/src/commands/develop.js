@@ -439,7 +439,7 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        require(`opn`)(urls.localUrlForBrowser).catch(err =>
+        require(`better-opn`)(urls.localUrlForBrowser).catch(err =>
           console.log(
             `${chalk.yellow(
               `warn`
