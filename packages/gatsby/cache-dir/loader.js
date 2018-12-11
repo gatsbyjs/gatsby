@@ -195,15 +195,12 @@ const queue = {
 
     // Skip prefetching if we know user is on slow or constrained connection
     if (`connection` in navigator) {
-      window.___log = `connection type "${navigator.connection.effectiveType}"`
       if ((navigator.connection.effectiveType || ``).includes(`2g`)) {
         return false
       }
       if (navigator.connection.saveData) {
         return false
       }
-    } else {
-      window.___log = `no connection in navigator`
     }
 
     // Tell plugins with custom prefetching logic that they should start
