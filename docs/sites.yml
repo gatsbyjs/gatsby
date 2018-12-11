@@ -3743,6 +3743,6 @@
     - Gallery
   featured: false
   built_by: LekoArts
-  built_by_url: "https://github.com/LeKoArts"
+  built_by_url: "https://github.com/LekoArts"
   description: >
     Source from The Movie Database (TMDb) API (v3) in Gatsby. This example is built with react-spring, React hooks and react-tabs and showcases the gatsby-source-tmdb plugin. It also has some client-only paths and uses gatsby-image.
