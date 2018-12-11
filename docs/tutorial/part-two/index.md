@@ -413,14 +413,20 @@ Paste the following into the file:
 }
 ```
 
-Now import that file into the `about-css-modules.js` page you created earlier, by adding the following on lines 2 and 3.
-(The `console.log(styles)` code logs the resulting import so you can see what the processed file looks like).
+Now import that file into the `about-css-modules.js` page you created earlier, by editing the first few lines
+of the file to look like:
 
 ```javascript:title=src/pages/about-css-modules.js
+import React from "react"
+// highlight-next-line
 import styles from "./about-css-modules.module.css"
+import Container from "../components/container"
+
+// highlight-next-line
 console.log(styles)
 ```
 
+The `console.log(styles)` code logs the resulting import so you can see what the processed file looks like.
 If you open the developer console (using e.g. Firefox or Chrome's developer tools) in your browser, you'll see:
 
 ![css-modules-console](css-modules-console.png)
