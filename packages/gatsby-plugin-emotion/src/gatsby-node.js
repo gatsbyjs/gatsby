@@ -14,6 +14,7 @@ export const onCreateBabelConfig = ({ actions }, pluginOptions) => {
     name: `@babel/plugin-transform-react-jsx`,
     options: {
       pragma: pragmaName,
+      pragmaFrag: `React.Fragment`,
     },
   })
 

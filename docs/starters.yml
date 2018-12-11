@@ -69,7 +69,7 @@
     - Includes Contentful Delivery API for production build
     - Includes Contentful Preview API for development
 - url: https://react-firebase-authentication.wieruch.com/
-  repo: https://github.com/taming-the-state-in-react/gatsby-firebase-authentication
+  repo: https://github.com/the-road-to-react-with-firebase/react-gatsby-firebase-authentication
   description: n/a
   tags:
     - Firebase
@@ -791,7 +791,7 @@
   repo: https://github.com/cpinnix/verious-boilerplate
   description: n/a
   tags:
-    - no tag
+    - Styling:Other
   features:
     - Components only. Bring your own data, plugins, etc.
     - Bootstrap inspired grid system with Container, Row, Column components.
@@ -879,7 +879,6 @@
   tags:
     - Styling:CSS-in-JS
     - i18n
-    - react-intl
     - Formik
     - Yup
     - Netlify Form
@@ -1271,9 +1270,8 @@
     - Katex
     - Tensorflow
     - CSV
-    - Graph
+    - Charts
     - Linting
-    - Chart.js
   features:
     - Write easly your scientific blog with katex and publish your research
     - Machine learning ready with tensorflowjs
@@ -1344,3 +1342,24 @@
     - Support for code syntax highlighting
     - Support for mathematical expressions
     - Support for images
+- url: https://gatsby-starter-ttag.netlify.com/
+  repo: https://github.com/jaredh159/gatsby-starter-ttag
+  description: Gatsby starter with the minimum required to demonstrate using ttag for precompiled internationalization of strings.
+  tags:
+    - i18n
+  features:
+    - Support for precompiled string internationalization using ttag and it's babel plugin
+- url: https://gatsby-starter-typescript.netlify.com/
+  repo: https://github.com/goblindegook/gatsby-starter-typescript
+  description: Gatsby starter using TypeScript.
+  tags:
+    - Markdown
+    - Pagination
+    - TypeScript
+    - PWA
+    - Linting
+  features:
+    - Markdown
+    - Local search powered by Lunr
+    - Syntax highlighting
+    - Images

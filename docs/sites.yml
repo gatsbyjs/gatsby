@@ -1274,10 +1274,10 @@
 - title: LekoArts
   main_url: "https://www.lekoarts.de"
   url: "https://www.lekoarts.de"
-  source_url: "https://github.com/LeKoArts/portfolio"
+  source_url: "https://github.com/LekoArts/portfolio"
   featured: false
   built_by: LekoArts
-  built_by_url: "https://github.com/LeKoArts"
+  built_by_url: "https://github.com/LekoArts"
   description: >-
     Hi, I'm Lennart — a self-taught and passionate graphic/web designer &
     frontend developer based in Darmstadt, Germany. I love it to realize complex
@@ -3672,3 +3672,77 @@
   built_by: Ahmad Awais
   built_by_url: https://twitter.com/MrAhmadAwais/
   featured: false
+- title: Thijs Koerselman Portfolio
+  main_url: https://www.vauxlab.com
+  url: https://www.vauxlab.com
+  featured: false
+  description: >
+    Portfolio of Thijs Koerselman. A freelance software engineer, full-stack web developer and sound designer.
+  categories:
+    - Portfolio
+    - Business
+    - Freelance
+    - Technology
+    - Web Development
+    - React-Native
+    - Music
+- title: Ad Hoc Homework
+  main_url: https://homework.adhoc.team
+  url: https://homework.adhoc.team
+  description: >
+    Ad Hoc builds government digital services that are fast, efficient, and usable by everyone. Ad Hoc Homework is a collection of coding and design challenges for candidates applying to our open positions.
+  categories:
+    - Web Development
+    - Government
+    - Healthcare
+    - Programming
+  built_by_url: https://adhoc.team
+  featured: false
+- title: BetterDocs | Discord Themes & Plugins
+  main_url: https://betterdocs.us
+  url: https://betterdocs.us
+  description: >
+    All Discord enhancement projects in 1! Free quality Themes and Plugins for Discord and easy installation instructions for BetterDiscord and more!
+  categories:
+    - Web Development
+    - Programming
+    - Open Source
+  built_by: Christopher R. | Owner
+  built_by_url: https://github.com/MrRobotjs/
+  featured: false
+- title: Birra Napoli
+  main_url: http://www.birranapoli.it
+  url: http://www.birranapoli.it
+  built_by: Ribrain
+  built_by_url: https://www.ribrainstudio.com
+  featured: false
+  description: >
+    Birra Napoli official site
+  categories:
+    - Landing page
+    - Business
+    - Food
+    - Beverage
+- title: Satispay
+  url: https://www.satispay.com
+  main_url: https://www.satispay.com
+  categories:
+    - Business
+    - Finance
+    - Technology
+  built_by: Satispay
+  built_by_url: https://www.satispay.com
+  featured: false
+- title: The Movie Database - Gatsby
+  url: https://tmdb.lekoarts.de
+  main_url: https://tmdb.lekoarts.de
+  source_url: https://github.com/LekoArts/gatsby-source-tmdb-example
+  categories:
+    - Open Source
+    - Entertainment
+    - Gallery
+  featured: false
+  built_by: LekoArts
+  built_by_url: "https://github.com/LekoArts"
+  description: >
+    Source from The Movie Database (TMDb) API (v3) in Gatsby. This example is built with react-spring, React hooks and react-tabs and showcases the gatsby-source-tmdb plugin. It also has some client-only paths and uses gatsby-image.

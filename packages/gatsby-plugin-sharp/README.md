@@ -22,7 +22,15 @@ images. By default it uses a quality setting of [50-75].
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-sharp`]
+plugins: [
+  {
+    resolve: `gatsby-plugin-sharp`,
+    options: {
+      useMozJpeg: false,
+      stripMetadata: true,
+    },
+  },
+]
 ```
 
 ## Methods
@@ -242,11 +250,36 @@ You can opt-in to use [MozJPEG][16] for jpeg-encoding. MozJPEG provides even
 better image compression than the default encoder used in `gatsby-plugin-sharp`.
 However, when using MozJPEG the build time of your Gatsby project will increase
 significantly.
-To enable MozJPEG set the [environment variable](/docs/environment-variables/#environment-variables):
+
+To enable MozJPEG, you can set the `useMozJpeg` plugin option to `true` in
+`gatsby-config.js`.
+
+For backwards compatible reasons, if `useMozJpeg` is not defined in the plugin
+options, the [environment variable](/docs/environment-variables/#environment-variables)
+`GATSBY_JPEG_ENCODER` acts as a fallback if set to `MOZJPEG`:
 
 ```shell
 GATSBY_JPEG_ENCODER=MOZJPEG
 ```
+
+### EXIF and ICC metadata
+
+By default, `gatsby-plugin-sharp` strips all EXIF, ICC and other metadata
+present in your source file. This is the recommended default as it leads to
+smaller file sizes.
+
+However, in situations where you wish to preserve EXIF metadata or ICC profiles
+(example: you are building a photography portfolio and wish to conserve
+the color profile or the copyright information of the photos you've exported
+from Adobe Lightroom or Phase One's Capture One), you can set the `stripMetadata`
+plugin option to `false` in `gatsby-config.js`.
+
+It is important to note that if `stripMetadata` is set to `false`, **all**
+metadata information will be preserved from the source image, including but not
+limited to the latitude/longitude information of where the picture was taken
+(if present). If you wish to strip this information from the source file, you
+can either leave `stripMetadata` to its default of `true`, or manually
+pre-process your images with a tool such as [ExifTool][17].
 
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
@@ -264,3 +297,4 @@ GATSBY_JPEG_ENCODER=MOZJPEG
 [14]: https://github.com/oliver-moran/jimp
 [15]: http://sharp.dimens.io/en/stable/api-operation/#flatten
 [16]: https://github.com/mozilla/mozjpeg
+[17]: https://www.sno.phy.queensu.ca/~phil/exiftool/
