@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Type conflict reporter prints conflicts and their locations 1`] = `
+Array [
+  " - type: number
+   value: [33m1[39m
+   source: Foo Node
+",
+]
+`;
+
+exports[`Type conflict reporter prints conflicts and their locations 2`] = `
+Array [
+  " - type: boolean
+   value: [33mtrue[39m
+   source: Foo Node
+",
+]
+`;
+
+exports[`Type conflict reporter prints conflicts and their locations for nested objects 1`] = `
+Array [
+  " - type: number
+   value: [33m1[39m
+   source: Foo Node
+",
+]
+`;
+
+exports[`Type conflict reporter prints conflicts and their locations for nested objects 2`] = `
+Array [
+  " - type: boolean
+   value: [33mtrue[39m
+   source: Foo Node
+",
+]
+`;
