@@ -62,14 +62,6 @@
           link: /docs/adding-images-fonts-files/
         - title: Static folder
           link: /docs/static-folder/
-        - title: Dropping images into static folders*
-          link: /docs/dropping-images-into-static-folders/
-        - title: Importing single files*
-          link: /docs/importing-single-files/
-        - title: Importing media content*
-          link: /docs/importing-media-content/
-        - title: gatsby-source-filesystem programmatic import*
-          link: /docs/gatsby-source-filesystem-programmatic-import/
         - title: Working with images in Gatsby
           link: /docs/working-with-images/
         - title: Using gatsby-image
