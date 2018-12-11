@@ -410,7 +410,7 @@ Paste the following into the file:
 Now import that file into the `about-css-modules.js` page you created earlier, by editing the first few lines
 of the file to look like:
 
-```javascript:title=src/pages/about-css-modules.js
+```javascript{2,5}:title=src/pages/about-css-modules.js
 import React from "react"
 import styles from "./about-css-modules.module.css"
 import Container from "../components/container"
