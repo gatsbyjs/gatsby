@@ -12,7 +12,10 @@ describe(`Example value`, () => {
   const exampleValue = getExampleValue({ nodes })
 
   it(`builds correct example value from array of nodes`, () => {
-    expect(exampleValue).toMatchSnapshot()
+    expect(exampleValue).toMatchSnapshot({
+      // TODO: Use snapshot properties
+      // dates: expect.arrayContaining([expect.any(Date)]),
+    })
   })
 
   it(`does not mutate nodes`, () => {
@@ -82,11 +85,14 @@ describe(`Example value`, () => {
     expect(exampleValue.bigInt).toBe(1e10)
   })
 
-  it(`handles mix of date strings and date objects`, () => {
-    expect(exampleValue.date).toBeDefined()
-    expect(exampleValue.invalidDate).not.toBeDefined()
-    expect(exampleValue.dates).toBeDefined()
-    expect(exampleValue.invalidDates).not.toBeDefined()
+  it(`handles mix of valid date strings and date objects`, () => {
+    expect(exampleValue.date).toBe(`2018-01-01T00:00:00.000Z`)
+    expect(exampleValue.dates[0]).toBeInstanceOf(Date)
+  })
+
+  it(`treats mix of dates and strings as strings`, () => {
+    expect(exampleValue.invalidDate).toBe(`String`)
+    expect(exampleValue.invalidDates).toEqual([`String`])
   })
 })
 

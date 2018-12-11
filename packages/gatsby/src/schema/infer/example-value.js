@@ -6,6 +6,7 @@ const {
   is32bitInteger,
   isDate,
   isDefined,
+  isObject,
 } = require(`../utils`)
 
 const isMixOfDatesAndStrings = (types, arrayWrappers) => {
@@ -55,7 +56,7 @@ const getType = value => {
         )
         return uniqueValues.length ? `[${uniqueValues.join(`,`)}]` : null
       }
-      if (!Object.keys(value)) return null
+      if (!Object.keys(value).length) return null
       return `object`
     default:
       return null
@@ -102,7 +103,8 @@ const getExampleObject = (nodes, prefix, ignoreFields = []) => {
         )
       ) {
         // FIXME: is a mix of date *objects* and strings problematic?
-        // I.e. does GraphQL automatically call toString()?
+        // I.e. when date objects will be treated as strings,
+        // are they automatically stringified?
         value = `String`
       } else {
         reportConflict(selector, entriesByType)
@@ -111,7 +113,9 @@ const getExampleObject = (nodes, prefix, ignoreFields = []) => {
     }
 
     let exampleFieldValue
-    if (typeof value === `object`) {
+    if (isObject(value)) {
+      // FIXME: Do we actually have to pass on the unwrapped entries?
+      // Any performance benefit not to? (And just not rewrap further below)
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
         if (arrayWrappers) {
