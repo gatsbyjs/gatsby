@@ -16,10 +16,14 @@ describe(`getValueAtSelector util`, () => {
     expect(value).toBe(expected)
   })
 
-  // Maybe FIXME:
-  // it(`handles arrays`, () => {
-  //   const value = getValueAtSelector(obj, `foo.baz`)
-  //   const expected = `qux`
-  //   expect(value).toBe(expected)
-  // })
+  it.skip(`handles selector with key referencing non-existing props`, () => {
+    const value = getValueAtSelector(obj, `foo.qux.baz`)
+    expect(value).toBeUndefined()
+  })
+
+  it.skip(`handles arrays`, () => {
+    const value = getValueAtSelector(obj, `foo.baz`)
+    const expected = `qux`
+    expect(value).toBe(expected)
+  })
 })
