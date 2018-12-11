@@ -5,7 +5,7 @@ author: Shannon Soper
 tags: ["documentation", "launch"]
 ---
 
-We've been working on a new design for the docs sidebar. You can see it live on the next version of gatsbyjs.org at [next.gatsbyjs.org/docs/](https://next.gatsbyjs.org/docs/)!
+We've been working on a new design for the docs sidebar. You can see it live on at [www.gatsbyjs.org/docs/](/docs/)!
 
 ![New Sidebar collapsed](new-sidebar-collapsed.png)
 
@@ -64,7 +64,7 @@ Because redesigning the information architecture of the .org site would affect t
 
 ## Card sort
 
-Many of you (36 in fact!) took the card sort to give data on how Gatsby users currently categorize existing docs. The card sort data helped inform the new structure of the docs sidebar. You can read the [card sort blogpost](https://www.gatsbyjs.org/blog/2018-06-26-card-sort-results/), which has more detail about the card sort results.
+Many of you (36 in fact!) took the card sort to give data on how Gatsby users currently categorize existing docs. The card sort data helped inform the new structure of the docs sidebar. You can read the [card sort blogpost](/blog/2018-06-26-card-sort-results/), which has more detail about the card sort results.
 
 ## Usability testing
 
@@ -80,7 +80,7 @@ Common obstacle no.1:
 
 Possible solutions:
 
-- The tutorials won't have a monopoly on any information; it will also exist in the guides. This is already taken care of by stub articles that indicate what information we need to pull over from the tutorial, like [Creating slugs for pages](https://next.gatsbyjs.org/docs/creating-slugs-for-pages/) and [Linking between pages](https://next.gatsbyjs.org/docs/linking-between-pages/)
+- The tutorials won't have a monopoly on any information; it will also exist in the guides. This is already taken care of by stub articles that indicate what information we need to pull over from the tutorial, like [Creating slugs for pages](/docs/creating-slugs-for-pages/) and [Linking between pages](/docs/linking-between-pages/)
 
 Common obstacle no.2
 

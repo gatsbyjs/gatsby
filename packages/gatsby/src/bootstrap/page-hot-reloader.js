@@ -14,7 +14,9 @@ emitter.on(`CREATE_NODE`, action => {
   }
 })
 emitter.on(`DELETE_NODE`, action => {
-  pagesDirty = true
+  if (action.payload.internal.type !== `SitePage`) {
+    pagesDirty = true
+  }
 })
 
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'gatsby'
+import React from "react"
+import { Link } from "gatsby"
 import { colors } from "../../utils/presets"
 
 const PaginationLink = ({ to, children, ...props }) => {

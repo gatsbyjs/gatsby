@@ -7,25 +7,30 @@ import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import SearchIcon from "./search-icon"
 
-import { css } from "glamor"
+const loadJS = () => import(`./docsearch.min.js`)
+let loadedJs = false
+
+import { injectGlobal } from "react-emotion"
 
 const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
-css.insert(`
+const searchDropdownOffsetTop = rhythm(2)
+const homepageSearchDropdownOffsetTop = rhythm(4.5)
+
+injectGlobal`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
-    top: ${rhythm(2)} !important;
+    top: calc(${searchDropdownOffsetTop} + ${presets.bannerHeight}) !important;
     left: ${rhythm(0.5)} !important;
     right: ${rhythm(0.5)} !important;
     min-width: calc(100vw - ${rhythm(1)}) !important;
     max-width: calc(100vw - 2rem) !important;
-    max-height: calc(100vh - 5rem) !important;
     box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
   }
 
   .is-homepage .algolia-autocomplete .ds-dropdown-menu {
-    top: ${rhythm(2.5)} !important;
+    top: ${homepageSearchDropdownOffsetTop} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -75,8 +80,17 @@ css.insert(`
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+    max-height: calc(100vh - ${presets.headerHeight} - ${
+  presets.bannerHeight
+}) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;
+  }
+
+  .is-homepage .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+    max-height: calc(100vh - ${homepageSearchDropdownOffsetTop} - ${
+  presets.headerHeight
+} - ${presets.bannerHeight}) !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
@@ -166,9 +180,11 @@ css.insert(`
       padding: ${rhythm(0.5)} ${rhythm(0.75)} !important;
     }
 
+    /* stylelint-disable */
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       padding: ${rhythm(0.5)} ${rhythm(0.75)} !important;
     }
+    /* stylelint-enable */
 
     .algolia-autocomplete .algolia-docsearch-suggestion--content {
       width: 70% !important;
@@ -197,12 +213,18 @@ css.insert(`
   }
 
   @media ${presets.tablet} {
-    .is-homepage .algolia-autocomplete .ds-dropdown-menu,
-    .algolia-autocomplete .ds-dropdown-menu {
+    .algolia-autocomplete .ds-dropdown-menu,
+    .is-homepage .algolia-autocomplete .ds-dropdown-menu   {
       top: 100% !important;
       position: absolute !important;
       max-width: 600px !important;
       min-width: 500px !important;
+    }
+
+    .is-homepage .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+      max-height: calc(100vh - ${homepageSearchDropdownOffsetTop} - ${
+  presets.bannerHeight
+}) !important;
     }
 
     /* .searchWrap to beat docsearch.css' !important */
@@ -231,11 +253,12 @@ css.insert(`
       max-width: 65% !important;
     }
   }
-`)
+`
+
 class SearchForm extends Component {
   constructor() {
     super()
-    this.state = { enabled: true, focussed: false }
+    this.state = { focussed: false }
     this.autocompleteSelected = this.autocompleteSelected.bind(this)
   }
   /**
@@ -251,15 +274,11 @@ class SearchForm extends Component {
     this.searchInput.blur()
     navigate(`${a.pathname}${a.hash}`)
   }
-  componentDidMount() {
-    if (
-      typeof window === `undefined` ||
-      typeof window.docsearch === `undefined`
-    ) {
-      console.warn(`Search has failed to load and now is being disabled`)
-      this.setState({ enabled: false })
+  init() {
+    if (this.algoliaInitialized) {
       return
     }
+
     window.addEventListener(
       `autocomplete:selected`,
       this.autocompleteSelected,
@@ -277,11 +296,45 @@ class SearchForm extends Component {
         keyboardShortcuts: [`s`],
       },
     })
+    this.algoliaInitialized = true
+  }
+  componentDidMount() {
+    if (
+      typeof window === `undefined` ||
+      typeof window.docsearch === `undefined`
+    ) {
+      // Algolia's docsearch lib not loaded yet so load it.
+      // Lazy load css
+      const path = `https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css`
+      const link = document.createElement(`link`)
+      link.setAttribute(`rel`, `stylesheet`)
+      link.setAttribute(`type`, `text/css`)
+      link.setAttribute(`href`, path)
+      document.head.appendChild(link)
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener(
+      `autocomplete:selected`,
+      this.autocompleteSelected,
+      true
+    )
+  }
+  loadAlgoliaJS() {
+    if (!loadedJs) {
+      loadJS().then(a => {
+        loadedJs = true
+        window.docsearch = a.default
+        this.init()
+      })
+    } else {
+      this.init()
+    }
   }
   render() {
-    const { enabled, focussed } = this.state
-    const { iconStyles, isHomepage } = this.props
-    return enabled ? (
+    const { focussed } = this.state
+    const { iconColor, isHomepage, offsetVertical } = this.props
+    return (
       <form
         css={{
           display: `flex`,
@@ -290,40 +343,44 @@ class SearchForm extends Component {
           alignItems: `center`,
           marginLeft: rhythm(1 / 2),
           marginBottom: 0,
+          marginTop: offsetVertical ? offsetVertical : false,
         }}
         className="searchWrap"
+        onMouseOver={() => this.loadAlgoliaJS()}
+        onClick={() => this.loadAlgoliaJS()}
         onSubmit={e => e.preventDefault()}
       >
-        <label css={{ position: `relative` }}>
+        <label
+          css={{
+            position: `relative`,
+          }}
+        >
           <input
             id="doc-search"
             css={{
               appearance: `none`,
               backgroundColor: `transparent`,
               border: 0,
-              borderRadius: presets.radiusLg,
-              color: colors.gatsby,
+              borderRadius: presets.radius,
+              color: colors.lilac,
               paddingTop: rhythm(1 / 8),
               paddingRight: rhythm(1 / 4),
               paddingBottom: rhythm(1 / 8),
-              paddingLeft: rhythm(1),
+              paddingLeft: rhythm(5 / 4),
               overflow: `hidden`,
               width: rhythm(1),
               transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
               ":focus": {
-                outline: 0,
                 backgroundColor: colors.ui.light,
-                borderRadius: presets.radiusLg,
+                color: colors.gatsby,
+                outline: 0,
                 width: rhythm(5),
-                transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
               },
               [presets.Desktop]: {
                 backgroundColor: !isHomepage && `#fff`,
-                color: colors.gatsby,
                 width: !isHomepage && rhythm(3.5),
                 ":focus": {
                   backgroundColor: colors.ui.light,
-                  color: colors.gatsby,
                 },
               },
               [presets.Hd]: {
@@ -344,28 +401,28 @@ class SearchForm extends Component {
           />
           <SearchIcon
             overrideCSS={{
-              ...iconStyles,
-              fill: focussed && colors.gatsby,
+              fill: focussed ? colors.gatsby : colors.lilac,
               position: `absolute`,
-              left: `5px`,
+              left: rhythm(1 / 4),
               top: `50%`,
-              width: `16px`,
-              height: `16px`,
+              width: `1rem`,
+              height: `1rem`,
               pointerEvents: `none`,
               transition: `fill ${speedDefault} ${curveDefault}`,
-              transform: `translateY(-50%)`,
-              [presets.Hd]: {
-                fill: focussed && isHomepage && colors.gatsby,
+              transform: `translateY(-55%)`,
+              [presets.Phablet]: {
+                fill: focussed ? colors.gatsby : isHomepage ? iconColor : false,
               },
             }}
           />
         </label>
       </form>
-    ) : null
+    )
   }
 }
 SearchForm.propTypes = {
   isHomepage: PropTypes.bool,
-  iconStyles: PropTypes.object,
+  iconColor: PropTypes.string,
+  offsetVertical: PropTypes.string,
 }
 export default SearchForm

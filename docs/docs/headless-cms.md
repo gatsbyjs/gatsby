@@ -15,6 +15,22 @@ The guides in this section will walk through the process of setting up content s
 
 [[guidelist]]
 
+Other CMS systems you can connect to include:
+
+- [ButterCMS](https://www.gatsbyjs.org/packages/gatsby-source-buttercms)
+- [Shopify](https://www.gatsbyjs.org/packages/gatsby-source-shopify)
+- [Contentstack](https://www.gatsbyjs.org/packages/gatsby-source-contentstack)
+- [Ghost](https://www.gatsbyjs.org/packages/gatsby-source-ghost)
+- [Prismic](https://www.gatsbyjs.org/packages/gatsby-source-prismic)
+- [Strapi](https://www.gatsbyjs.org/packages/gatsby-source-strapi)
+- [Directus](https://www.gatsbyjs.org/packages/gatsby-source-directus)
+- [Cockpit](https://www.gatsbyjs.org/packages/gatsby-plugin-cockpit)
+- [GraphCMS](https://www.gatsbyjs.org/packages/gatsby-source-graphcms-beta-patch)
+- [CraftCMS](https://www.gatsbyjs.org/packages/gatsby-source-craftcms)
+- [DatoCMS](https://www.gatsbyjs.org/packages/gatsby-source-datocms)
+- [Storyblok](https://www.gatsbyjs.org/packages/gatsby-source-storyblok)
+- [Kentico Cloud](https://www.gatsbyjs.org/packages/gatsby-source-kentico-cloud)
+
 ## How to add new guides to this section
 
 If you don’t see your preferred CMS in this list, you can [write a new guide yourself](/docs/how-to-contribute/) or [open an issue to request it](https://github.com/gatsbyjs/gatsby/issues/new/choose).

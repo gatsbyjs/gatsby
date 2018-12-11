@@ -1,5 +1,5 @@
 import React from "react"
-import { css } from "glamor"
+import { keyframes } from "react-emotion"
 
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -11,7 +11,7 @@ import TechWithIcon from "../components/tech-with-icon"
 
 const stripeColor = `255, 255, 255, 0.9`
 const stripeSize = 15
-const stripeAnimation = css.keyframes({
+const stripeAnimation = keyframes({
   "0%": {
     backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
   },
@@ -23,7 +23,7 @@ const stripeBg = {
   backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
 }
-const lineAnimation = css.keyframes({
+const lineAnimation = keyframes({
   to: {
     strokeDashoffset: 10,
   },
@@ -48,7 +48,7 @@ const SegmentTitle = ({ children }) => (
     css={{
       display: `inline`,
       background: colors.accent,
-      color: `#fff`,
+      color: colors.gray.copy,
       borderRadius: presets.radius,
       margin: `0 auto`,
       position: `relative`,
@@ -163,7 +163,7 @@ const ItemDescription = ({ children }) => (
     css={{
       lineHeight: 1.2,
       display: `block`,
-      color: colors.lilac,
+      color: colors.gatsby,
       [presets.Hd]: {
         fontSize: scale(-1 / 5).fontSize,
       },
@@ -243,7 +243,7 @@ const Diagram = () => (
     <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
     <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
       <FuturaParagraph>
-        Gatsby lets you build blazing-fast sites with <em>your data</em>,
+        Gatsby lets you build blazing fast sites with <em>your data</em>,
         whatever the source. Liberate your sites from legacy CMSs and fly into
         the future.
       </FuturaParagraph>
@@ -294,7 +294,8 @@ const Diagram = () => (
           }}
         >
           <ItemDescription>
-            HTML &middot; CSS &middot;{` `}
+            HTML &middot; CSS &middot;
+            {` `}
             <TechWithIcon icon={ReactJSIcon} height="1.1em">
               React
             </TechWithIcon>

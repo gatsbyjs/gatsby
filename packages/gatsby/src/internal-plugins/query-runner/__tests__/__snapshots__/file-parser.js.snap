@@ -590,5 +590,284 @@ Map {
     ],
     "kind": "Document",
   },
+  "query-in-separate-variable.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 3748317405,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 47,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "queryInSeparateVariableJs3748317405",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 47,
+            "start": 0,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 46,
+                "start": 2,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 19,
+                  "start": 2,
+                },
+                "value": "allMarkdownRemark",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 46,
+                  "start": 20,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 45,
+                      "start": 22,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 26,
+                        "start": 22,
+                      },
+                      "value": "blah",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 45,
+                        "start": 27,
+                      },
+                      "selections": Array [
+                        Object {
+                          "alias": undefined,
+                          "arguments": Array [],
+                          "directives": Array [],
+                          "kind": "Field",
+                          "loc": Object {
+                            "end": 44,
+                            "start": 29,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 33,
+                              "start": 29,
+                            },
+                            "value": "node",
+                          },
+                          "selectionSet": Object {
+                            "kind": "SelectionSet",
+                            "loc": Object {
+                              "end": 44,
+                              "start": 34,
+                            },
+                            "selections": Array [
+                              Object {
+                                "alias": undefined,
+                                "arguments": Array [],
+                                "directives": Array [],
+                                "kind": "Field",
+                                "loc": Object {
+                                  "end": 42,
+                                  "start": 36,
+                                },
+                                "name": Object {
+                                  "kind": "Name",
+                                  "loc": Object {
+                                    "end": 42,
+                                    "start": 36,
+                                  },
+                                  "value": "cheese",
+                                },
+                                "selectionSet": undefined,
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "text": "{ allMarkdownRemark { blah { node { cheese }}}}",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "query-in-separate-variable-2.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 1352988887,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 49,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "queryInSeparateVariable2Js1352988887",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 49,
+            "start": 0,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 48,
+                "start": 2,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 21,
+                  "start": 2,
+                },
+                "value": "allStrangeQueryName",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 48,
+                  "start": 22,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 47,
+                      "start": 24,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 28,
+                        "start": 24,
+                      },
+                      "value": "blah",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 47,
+                        "start": 29,
+                      },
+                      "selections": Array [
+                        Object {
+                          "alias": undefined,
+                          "arguments": Array [],
+                          "directives": Array [],
+                          "kind": "Field",
+                          "loc": Object {
+                            "end": 46,
+                            "start": 31,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 35,
+                              "start": 31,
+                            },
+                            "value": "node",
+                          },
+                          "selectionSet": Object {
+                            "kind": "SelectionSet",
+                            "loc": Object {
+                              "end": 46,
+                              "start": 36,
+                            },
+                            "selections": Array [
+                              Object {
+                                "alias": undefined,
+                                "arguments": Array [],
+                                "directives": Array [],
+                                "kind": "Field",
+                                "loc": Object {
+                                  "end": 44,
+                                  "start": 38,
+                                },
+                                "name": Object {
+                                  "kind": "Name",
+                                  "loc": Object {
+                                    "end": 44,
+                                    "start": 38,
+                                  },
+                                  "value": "cheese",
+                                },
+                                "selectionSet": undefined,
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "text": "{ allStrangeQueryName { blah { node { cheese }}}}",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
 }
+`;
+
+exports[`File parser extracts query AST correctly from files 2`] = `
+Array [
+  "warning 
+We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the <StaticQuery> declaration in \\"query-not-defined.js\\".
+
+Perhaps the variable name has a typo?
+
+Also note that we are currently unable to use queries defined in files other than the file where the <StaticQuery> is defined. If you're attempting to import the query, please move it into \\"query-not-defined.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.",
+  "warning 
+We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the <StaticQuery> declaration in \\"query-imported.js\\".
+
+Perhaps the variable name has a typo?
+
+Also note that we are currently unable to use queries defined in files other than the file where the <StaticQuery> is defined. If you're attempting to import the query, please move it into \\"query-imported.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.",
+]
 `;

@@ -12,7 +12,7 @@ Because Gatsby pages are server-rendered, all the page content is available to G
 
 ### Speed boost
 
-Gatsby's many built-in performance optimizations, such as rendering to static files, progressive image loading, and the PRPL pattern—all help your site be lightning-fast by default.
+Gatsby's many built-in performance optimizations, such as rendering to static files, progressive image loading, and the [PRPL pattern](/docs/prpl-pattern/)—all help your site be lightning-fast by default.
 
 Starting in January 2018, Google [rewards faster sites with a bump in search rankings](https://searchengineland.com/google-speed-update-page-speed-will-become-ranking-factor-mobile-search-289904).
 
@@ -25,4 +25,5 @@ A common way to add metadata to pages is to add [react-helmet](https://github.co
 Some examples using react-helmet:
 
 - [Official GatsbyJS.org site](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/layout.js)
-- [Jason Lengstorf's personal website](https://github.com/jlengstorf/lengstorf.com/blob/master/src/components/SEO.js)
+- [Jason Lengstorf's personal website](https://github.com/jlengstorf/lengstorf.com/blob/master/src/components/SEO/SEO.js)
+- [Gatsby Mail](https://github.com/DSchau/gatsby-mail/blob/master/src/components/meta.js)

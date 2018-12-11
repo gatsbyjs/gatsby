@@ -90,6 +90,7 @@ const scalarFilterMap = {
     lt: { type: GraphQLInt },
     lte: { type: GraphQLInt },
     in: { type: new GraphQLList(GraphQLInt) },
+    nin: { type: new GraphQLList(GraphQLInt) },
   },
   Float: {
     eq: { type: GraphQLFloat },
@@ -99,11 +100,13 @@ const scalarFilterMap = {
     lt: { type: GraphQLFloat },
     lte: { type: GraphQLFloat },
     in: { type: new GraphQLList(GraphQLFloat) },
+    nin: { type: new GraphQLList(GraphQLFloat) },
   },
   ID: {
     eq: { type: GraphQLID },
     ne: { type: GraphQLID },
     in: { type: new GraphQLList(GraphQLID) },
+    nin: { type: new GraphQLList(GraphQLID) },
   },
   String: {
     eq: { type: GraphQLString },
@@ -111,11 +114,13 @@ const scalarFilterMap = {
     regex: { type: GraphQLString },
     glob: { type: GraphQLString },
     in: { type: new GraphQLList(GraphQLString) },
+    nin: { type: new GraphQLList(GraphQLString) },
   },
   Boolean: {
     eq: { type: GraphQLBoolean },
     ne: { type: GraphQLBoolean },
     in: { type: new GraphQLList(GraphQLBoolean) },
+    nin: { type: new GraphQLList(GraphQLBoolean) },
   },
 }
 
@@ -133,15 +138,19 @@ function convertToInputFilter(
       fields: fields,
     })
   } else if (type instanceof GraphQLInputObjectType) {
+    const fields = _.transform(type.getFields(), (out, fieldConfig, key) => {
+      const type = convertToInputFilter(
+        `${prefix}${_.upperFirst(key)}`,
+        fieldConfig.type
+      )
+      if (type) out[key] = { type }
+    })
+    if (Object.keys(fields).length === 0) {
+      return null
+    }
     return new GraphQLInputObjectType({
       name: createTypeName(`${prefix}{type.name}`),
-      fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
-        const type = convertToInputFilter(
-          `${prefix}${_.upperFirst(key)}`,
-          fieldConfig.type
-        )
-        if (type) out[key] = { type }
-      }),
+      fields: fields,
     })
   } else if (type instanceof GraphQLList) {
     const innerType = type.ofType

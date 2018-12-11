@@ -2,7 +2,7 @@ import React from "react"
 
 class AppShell extends React.Component {
   render() {
-    return <span />
+    return <React.Fragment />
   }
 }
 

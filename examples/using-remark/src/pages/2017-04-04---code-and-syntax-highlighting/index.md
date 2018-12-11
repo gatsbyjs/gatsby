@@ -122,9 +122,9 @@ plugins: [
         `gatsby-remark-copy-linked-files`,
         `gatsby-remark-smartypants`,
         `gatsby-remark-prismjs`,
-      ]
-    }
-  }
+      ],
+    },
+  },
 ]
 ```
 
@@ -158,17 +158,23 @@ Let's do something crazy and add a list with another code example:
 
   ```css{10,13}
   .clearfix:after {
-  	visibility: hidden;
-  	display: block;
-  	font-size: 0;
-  	content: " ";
-  	clear: both;
-  	height: 0;
-  	}
-  .clearfix { display: inline-table; }
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+  .clearfix {
+    display: inline-table;
+  }
   /* Hides from IE-mac \*/
-  * html .clearfix { height: 1%; }
-  .clearfix { display: block; }
+  * html .clearfix {
+    height: 1%;
+  }
+  .clearfix {
+    display: block;
+  }
   /* End hide from IE-mac */
   ```
 
