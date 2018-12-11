@@ -96,7 +96,7 @@ module.exports = async (
   <span
     class="gatsby-resp-image-wrapper"
     style="position: relative; display: block; ${
-      options.showCaptions ? null : options.wrapperStyle
+      options.wrapperStyle
     }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
