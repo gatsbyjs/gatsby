@@ -4,20 +4,28 @@ title: "Gatsby E-Commerce Tutorial"
 
 # Table of Contents
 
-1.  [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
-2.  [Prerequisites](#prerequisites)
-3.  [Setting up a Gatsby site](#setting-up-a-gatsby-site)
-4.  [Installing Stripe Checkout plugin](#installing-stripe-checkout-plugin)
-5.  [Creating a button](#creating-a-button)
-6.  [Importing checkout component into homepage](#importing-checkout-component-into-homepage)
-7.  [Getting Your Stripe test keys](#getting-your-stripe-test-keys)
-8.  [Configuring Stripe in Gatsby](#configuring-stripe-in-gatsby)
-9.  [Setting up a serverless function in AWS Lambda](#setting-up-a-serverless-function-in-aws-lambda)
-10. [Setting up a separate repo](#setting-up-a-separate-repo)
-11. [Editing your new repo](#editing-your-new-repo)
-12. [Pushing code to AWS](#pushing-code-to-aws)
-13. [Configuring serverless with your AWS credentials](#configuring-serverless-with-your-aws-credentials)
-14. [Testing Payments](#testing-payments)
+- [Table of Contents](#table-of-contents)
+- [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
+- [Prerequisites](#prerequisites)
+  - [How does Gatsby work with Stripe and AWS?](#how-does-gatsby-work-with-stripe-and-aws)
+- [Setting up a Gatsby site](#setting-up-a-gatsby-site)
+- [Installing Stripe Checkout plugin](#installing-stripe-checkout-plugin)
+  - [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
+  - [How does the Stripe Checkout plugin work?](#how-does-the-stripe-checkout-plugin-work)
+- [Creating a button](#creating-a-button)
+  - [Sequence of events](#sequence-of-events)
+  - [What did you just do?](#what-did-you-just-do)
+- [Importing checkout component into the homepage](#importing-checkout-component-into-the-homepage)
+- [Getting your Stripe test keys](#getting-your-stripe-test-keys)
+- [Configuring Stripe in Gatsby](#configuring-stripe-in-gatsby)
+- [Setting up a Serverless Function in AWS Lambda](#setting-up-a-serverless-function-in-aws-lambda)
+- [Setting up a separate repo](#setting-up-a-separate-repo)
+  - [What did you just do?](#what-did-you-just-do-1)
+- [Editing your new repo](#editing-your-new-repo)
+  - [How does the code work on this site?](#how-does-the-code-work-on-this-site)
+- [Pushing code to AWS](#pushing-code-to-aws)
+- [Configuring serverless with your AWS credentials](#configuring-serverless-with-your-aws-credentials)
+- [Testing Payments](#testing-payments)
 
 # Why use Gatsby for an e-commerce site?
 
@@ -254,14 +262,14 @@ The tags in the `render()` function define the structure of HTML elements that l
 
 Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other two imports and replace the tags inside the first `<div>` tag with a `<Checkout />` tag. Your `index.js` file should now look like this:
 
-```js{3,7}:title=src/pages/index.js
+```js:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
-import Checkout from "../components/checkout"
+import Checkout from "../components/checkout" // highlight-line
 
 const IndexPage = () => (
   <div>
-    <Checkout />
+    <Checkout /> {/* highlight-line */}
   </div>
 )
 
@@ -346,10 +354,12 @@ You don’t need to change any code in the `checkout.js` (not to be confused wit
 
 The beginning of the file looks like this:
 
-```js{1-3}:title=checkout.js
+```js:title=checkout.js
+// highlight-start
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports.handler = (event, context, callback) => {
+// highlight-end
 .
 .
 .
@@ -361,18 +371,18 @@ The next line exports `handler`, a function that will handle your checkout logic
 
 The next snippet of code (shown below), pulls some of the information on the `event` object that this function receives and stores them in the variables `requestData`, `amount`, and `token`.
 
-```js{6-11}:title=checkout.js
+```js:title=checkout.js
 // Pull out the amount and id for the charge from the POST
 console.log(event)
 const requestData = JSON.parse(event.body)
 console.log(requestData)
 const amount = requestData.amount
-const token = requestData.token.id
+const token = requestData.token.id //highlight-line
 ```
 
 The next 2 lines are to comply with web browser security standards. Because our Gatsby site will be at a different url than the function that we are going to upload to AWS, we have to include these headers in our response to say it’s okay to communicate with different URLs on the internet.
 
-```js{13-17}:title=checkout.js
+```js:title=checkout.js
 // Headers to prevent CORS issues
 const headers = {
   "Access-Control-Allow-Origin": "*",
@@ -382,7 +392,7 @@ const headers = {
 
 The last section of code is where the actual Stripe charge is created, and then the information about whether that charge was successful or not is sent back as a response.
 
-```js{19-50}:title=checkout.js
+```js:title=checkout.js
 return stripe.charges
   .create({
     // Create Stripe charge with token
@@ -401,6 +411,7 @@ return stripe.charges
         message: `Charge processed!`,
         charge,
       }),
+      // highlight-start
     }
     callback(null, response)
   })
@@ -416,6 +427,7 @@ return stripe.charges
     }
     callback(null, response)
   })
+// highlight-end
 ```
 
 A few things happen with `stripe.charges.create()`: it takes an object as an argument that tells the amount to charge, the unique token made by stripe that hides all the credit card information from us, as well as other information like currency to provide more information about the transaction.
@@ -480,7 +492,7 @@ functions:
 
 Copy the URL after the “-” in the post endpoint section, and paste it into your ecommerce-gatsby-tutorial site in the src > components > checkout.js file where it says `AWS_LAMBDA_URL`
 
-```js{9}:title=src/components/checkout.js
+```js:title=src/components/checkout.js
 openStripeCheckout(event) {
    event.preventDefault()
    this.setState({ disabled: true, buttonText: 'WAITING...' })
@@ -489,7 +501,7 @@ openStripeCheckout(event) {
      amount: amount,
      description: 'A product well worth your time',
      token: token => {
-       fetch(`AWS_LAMBDA_URL`, {
+       fetch(`AWS_LAMBDA_URL`, {  // highlight-line
          method: 'POST',
          body: JSON.stringify({
            token,

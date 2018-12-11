@@ -130,18 +130,18 @@ Now you need to import this new layout component into your page components.
 
 Change `src/pages/index.js` to look like:
 
-```jsx{2,5,11}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
-import Layout from "../components/layout"
+import Layout from "../components/layout" // highlight-line
 
 export default () => (
-  <Layout>
+  <Layout> {/* highlight-line */}
     <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
     <p>
       What do I like to do? Lots of course but definitely enjoy building
       websites.
     </p>
-  </Layout>
+  </Layout> {/* highlight-line */}
 )
 ```
 
@@ -156,12 +156,12 @@ isn't centered. Try now importing and adding the layout component to `about.js` 
 
 Now add your site title to the layout component:
 
-```jsx{5}:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
-    <h3>MySweetSite</h3>
+    <h3>MySweetSite</h3> {/* highlight-line */}
     {children}
   </div>
 )
@@ -174,8 +174,9 @@ If you go to any of your three pages you'll see the same title added e.g. the
 
 Add navigation links to each of your three pages:
 
-```jsx{2-9,12-21}:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
+// highlight-start
 import { Link } from "gatsby"
 
 const ListLink = props => (
@@ -183,9 +184,11 @@ const ListLink = props => (
     <Link to={props.to}>{props.children}</Link>
   </li>
 )
+// highlight-end
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
+    {/* highlight-start */}
     <header style={{ marginBottom: `1.5rem` }}>
       <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
         <h3 style={{ display: `inline` }}>MySweetSite</h3>
@@ -196,6 +199,7 @@ export default ({ children }) => (
         <ListLink to="/contact/">Contact</ListLink>
       </ul>
     </header>
+    {/* highlight-end */}
     {children}
   </div>
 )

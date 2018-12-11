@@ -41,6 +41,16 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
+/// Plugin options are loaded onPreInit in gatsby-node
+const pluginDefaults = {
+  useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
+  stripMetadata: true,
+}
+let pluginOptions = Object.assign({}, pluginDefaults)
+exports.setPluginOptions = opts => {
+  pluginOptions = Object.assign({}, pluginOptions, opts)
+}
+
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
 Promise.promisifyAll(sharp.prototype, { multiArgs: true })
@@ -116,8 +126,6 @@ const healOptions = (args, defaultArgs) => {
   return options
 }
 
-const useMozjpeg = process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`
-
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
@@ -130,7 +138,14 @@ const processFile = (file, jobs, cb, reporter) => {
 
   let pipeline
   try {
-    pipeline = sharp(file).rotate()
+    pipeline = sharp(file)
+
+    // Keep Metadata
+    if (!pluginOptions.stripMetadata) {
+      pipeline = pipeline.withMetadata()
+    }
+
+    pipeline = pipeline.rotate()
   } catch (err) {
     reportError(`Failed to process image ${file}`, err, reporter)
     jobs.forEach(job => job.outsideReject(err))
@@ -176,7 +191,7 @@ const processFile = (file, jobs, cb, reporter) => {
       })
 
     // jpeg
-    if (!useMozjpeg) {
+    if (!pluginOptions.useMozJpeg) {
       clonedPipeline = clonedPipeline.jpeg({
         quality: args.quality,
         progressive: args.jpegProgressive,
@@ -237,6 +252,7 @@ const processFile = (file, jobs, cb, reporter) => {
                     args.quality + 25,
                     100
                   )}`, // e.g. 40-65
+                  strip: !!pluginOptions.stripMetadata, // Must be a bool
                 }),
               ],
             })
@@ -248,7 +264,7 @@ const processFile = (file, jobs, cb, reporter) => {
         .catch(onFinish)
       // Compress jpeg
     } else if (
-      useMozjpeg &&
+      pluginOptions.useMozJpeg &&
       ((job.file.extension === `jpg` && args.toFormat === ``) ||
         (job.file.extension === `jpeg` && args.toFormat === ``) ||
         args.toFormat === `jpg`)
