@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-plugin-sentryio",
+  "description": "Sentry.io error tracking for Gatsby",
+  "version": "1.0.0",
+  "author": "Majid Hajian <majidhajian.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass"
+  },
+  "readme": "README.md",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sentryio#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "sentry",
+    "gatsby-plugin",
+    "gatsby"
+  ],
+  "dependencies": {
+    "@sentry/browser": "^4.4.1"
+  },
+  "peerDependencies": {
+    "gatsby": ">2.0.0",
+    "@sentry/browser": ">4.0.0"
+  }
+}
