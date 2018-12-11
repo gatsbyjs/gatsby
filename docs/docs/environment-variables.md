@@ -47,6 +47,10 @@ In addition to these Project Environment Variables defined in `.env.*` files, yo
 OS Env Vars. OS Env Vars which are prefixed with `GATSBY_` will become available in
 browser JavaScript.
 
+```shell:title=.env.*
+GATSBY_API_URL=https://dev.example.com/api
+```
+
 #### Server-side Node.js
 
 Gatsby runs several Node.js scripts at build time, notably `gatsby-config.js` and `gatsby-node.js`.
@@ -77,28 +81,42 @@ Now the variables are available on `process.env` as usual.
 
 ## Example
 
-```shell
-# Example .env.development file
-
-API_URL=https://dev.example.com/api
+```shell:title=.env.development
+GATSBY_API_URL=https://dev.example.com/api
+API_KEY=927349872349798
 ```
 
-```shell
-# Example .env.production file
-
-API_URL=https://example.com/api
+```shell:title=.env.production
+GATSBY_API_URL=https://example.com/api
+API_KEY=927349872349798
 ```
 
-These variables will be available to your site as `process.env.API_URL`:
+`GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`:
 
 ```jsx
-// usage
+// In any front-end code
 render() {
   return (
     <div>
-      <img src={`${process.env.API_URL}/logo.png`} alt="Logo" />
+      <img src={`${process.env.GATSBY_API_URL}/logo.png`} alt="Logo" />
     </div>
   )
+}
+```
+
+`API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`:
+
+```js
+// In any server-side code, e.g. gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-patronus`,
+      options: {
+        apiKey: process.env.API_KEY,
+      },
+    },
+  ],
 }
 ```
 
@@ -121,8 +139,7 @@ For instance. If you would like to add a `staging` environment with a custom Goo
 
 ### Example
 
-```shell
-# .env.staging
+```shell:title=.env.staging
 GA_TRACKING_ID="UA-1234567890"
 API_URL="http://foo.bar"
 ```
