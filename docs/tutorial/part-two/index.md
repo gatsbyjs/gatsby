@@ -98,8 +98,10 @@ This creates a new site with the following structure.
 
 This is the minimal setup for a Gatsby site.
 
-To install a plugin, there are two steps. First, you install the plugin's NPM
-package and second, you add the plugin to your site's `gatsby-config.js`.
+To install a plugin, there are two steps.
+
+1. You install the plugin's NPM package and,
+2. You add the plugin to your site's `gatsby-config.js`.
 
 Typography.js has a Gatsby plugin, so install that along with some additional required packages by running:
 
