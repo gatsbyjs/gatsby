@@ -1363,3 +1363,15 @@
     - Local search powered by Lunr
     - Syntax highlighting
     - Images
+- url: https://gatsby-netlify-cms-example.netlify.com/
+  repo: https://github.com/robertcoopercode/gatsby-netlify-cms
+  description: Gatsby starter using Netlify CMS
+  tags:
+    - Netlify CMS
+    - Styling:SCSS
+  features:
+    - Example of a website for a local developer meetup group
+    - NetlifyCMS used for easy data entry
+    - Mobile-friendly design
+    - Styling done with Sass
+    - Gatsby version 2
