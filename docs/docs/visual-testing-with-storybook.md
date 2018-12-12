@@ -18,7 +18,7 @@ npx -p @storybook/cli sb init
 ```
 
 > Note that this is the recommended method by Storybook. If you are running an older version of npm (< 5.2.0) you must install the Storybook CLI globally:
-
+>
 > ```sh
 > npm install -g @storybook/cli
 > cd my-awesome-gatsby-project
