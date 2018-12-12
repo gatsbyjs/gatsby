@@ -86,11 +86,11 @@ Storybook CLI adds this command to your `package.json` for you so you shouldn't 
 
 A full guide to writing stories is beyond the scope of this guide, but we'll take a look at creating a story.
 
-First, create the story file. Storybook looks for all files with a `.story.js` extension and loads them into Storybook for you. Generally you will want your stories near where the component is defined, however since this is Gatsby, if you want stories for your pages, you will have to create those files outside of the `pages` directory.
+First, create the story file. Storybook looks for all files with a `.stories.js` extension and loads them into Storybook for you. Generally you will want your stories near where the component is defined, however since this is Gatsby, if you want stories for your pages, you will have to create those files outside of the `pages` directory.
 
 > A good solution is to create a `__stories__` directory next to your `pages` directory and put any page stories in there.
 
-```js:title=src/components/example.story.js
+```js:title=src/components/example.stories.js
 import React from "react"
 import { storiesOf } from "@storybook/react"
 
