@@ -2,7 +2,6 @@ const fs = require(`fs`)
 const workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const slash = require(`slash`)
-const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 const getResourcesFromHTML = require(`./get-resources-from-html`)
@@ -126,9 +125,8 @@ exports.onPostBuild = (args, pluginOptions) => {
       const swAppend = fs
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
         .replace(/%pathPrefix%/g, pathPrefix)
-        .replace(/%revision%/g, crypto.randomBytes(16).toString(`hex`))
 
-      fs.appendFileSync(`public/sw.js`, `\n${swAppend}`)
+      fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )
