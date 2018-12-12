@@ -11,27 +11,26 @@ As your project grows over time having this information available will be invalu
 
 ## Setting up your environment
 
-To set up Storybook you need to install dependencies and do some custom configuration. First, install the Storybook CLI.
+To set up Storybook run the following command inside you project folder:
+
+```sh
+npx -p @storybook/cli sb init
+```
+
+> Note that this is the recommended method by Storybook. If you are running an older version of npm (< 5.2.0) you must install the Storybook CLI globally:
 
 ```sh
 npm install -g @storybook/cli
-```
-
-Once the CLI is installed, the next step is to run the `sb init` command that is now available from the root directory of your Gatsby project.
-
-```sh
 cd my-awesome-gatsby-project
 sb init
 ```
-
-> Note that if you're running a recent version of `npm` (5.2.0+) you can run the following single command instead: `npx -p @storybook/cli sb init`, which is the recommended method by Storybook. This doesn't install the CLI on your machine, thereby ensuring you're always running the latest version of the CLI.
 
 The `sb init` command bootstraps the basic config necessary to run Storybook for a React project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so that you don't get errors when trying to use Gatsby specific components inside of the stories.
 
 To update your Storybook config open `.storybook/config.js` and add the following before the `configure` method at the bottom of the file.
 
 ```js{3-17}:title=.storybook/config.js
-import ...
+import ... // original content
 
 // Gatsby's Link overrides:
 // Gatsby defines a global called ___loader to prevent its method calls from creating console errors you override it here
@@ -94,7 +93,7 @@ First, create the story file. Storybook looks for all files with a `.stories.js`
 
 > A good solution is to create a `__stories__` directory next to your `pages` directory and put any page stories in there.
 
-```js:title=src/components/example.stories.js
+```jsx:title=src/components/example.stories.js
 import React from "react"
 import { storiesOf } from "@storybook/react"
 
