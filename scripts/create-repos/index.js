@@ -66,7 +66,7 @@ function createRepos({ repos, prefix, organization, token }) {
 async function main() {
   try {
     if (args.repos && args.repos.length > 0) {
-      return await createRepos(args)
+      return createRepos(args)
     }
 
     const base = path.resolve(BASE_DIRECTORY)
