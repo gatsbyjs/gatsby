@@ -27,7 +27,6 @@
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-remove-graphql-queries": "^2.5.2",
     "babel-preset-gatsby": "^0.1.6",
-    "babel-traverse": "6.26.0",
     "better-queue": "^3.8.6",
     "bluebird": "^3.5.0",
     "browserslist": "3.2.8",
