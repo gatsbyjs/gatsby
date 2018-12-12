@@ -57,7 +57,7 @@ range of lines to highlight, relative to a `highlight-range` comment.
 
 #### JavaScript example
 
-```js
+```
 import React from "react"
 import ReactDOM from "react-dom"
 
@@ -74,7 +74,7 @@ ReactDOM.render(
 
 #### CSS example
 
-```css
+```
 html {
   /* highlight-range{1-2} */
   height: 100%;
@@ -88,7 +88,7 @@ html {
 
 #### HTML example
 
-```html
+```
 <html>
   <body>
     <h1>highlight me</h1> <!-- highlight-line -->
@@ -102,7 +102,7 @@ html {
 
 #### YAML example
 
-```yaml
+```
 foo: "highlighted" # highlight-line
 bar: "not highlighted"
 # highlight-range{1-2}
@@ -117,42 +117,43 @@ It's also possible to specify a range of lines to be hidden.
 #### JavaScript example
 
 ```js
-// hideline-range{1-2}
-import React from "react";
-import ReactDOM from "react-dom";
+// hide-range{1-2}
+import React from "react"
+import ReactDOM from "react-dom"
 
 function App() {
   return (
     <div className="App">
-       <ul>
+      <ul>
         <li>Not hidden</li>
         <li>Not hidden</li>
-        // hideline-range{1-2}
+        {/* hide-range{1-2} */}
         <li>Hidden</li>
         <li>Hidden</li>
-        // hideline-next-line
+        {/* hide-next-line */}
         <li>Hidden</li>
       </ul>
     </div>
-  );
+  )
 }
 
 // hideline-range{1-2}
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+const rootElement = document.getElementById("root")
+ReactDOM.render(<App />, rootElement)
 ```
 
 Will produce something like this:
+
 ```js
 function App() {
   return (
     <div className="App">
-       <ul>
+      <ul>
         <li>Not hidden</li>
         <li>Not hidden</li>
       </ul>
     </div>
-  );
+  )
 }
 ```
 

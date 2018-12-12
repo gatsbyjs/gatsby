@@ -193,6 +193,8 @@ This is some beautiful code:
     ]
     ```
 
+### Line numbering
+
 To see the line numbers alongside your code, you can use the `numberLines` option:
 
     ```javascript{numberLines: true}
@@ -226,6 +228,8 @@ will start at index 5):
     ]
     ```
 
+### Line highlighting
+
 You can also add line highlighting. It adds a span around lines of code with a
 special class `.gatsby-highlight-code-line` that you can target with styles. See
 this README for more info.
@@ -238,66 +242,74 @@ code:
 - `highlight-start` highlights the lines until the matching `hightlight-end`;
 - `highlight-range{1, 4-6}` will highlight the next line, and the fourth, fifth and sixth lines.
 
-  ```jsx
-  class FlavorForm extends React.Component { // highlight-line
-    constructor(props) {
-      super(props);
-      this.state = {value: 'coconut'};
+````
+```jsx
+class FlavorForm extends React.Component { // highlight-line
+  constructor(props) {
+    super(props);
+    this.state = {value: 'coconut'};
 
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-      // highlight-next-line
-      this.setState({value: event.target.value});
-    }
-
-    // highlight-start
-    handleSubmit(event) {
-      alert('Your favorite flavor is: ' + this.state.value);
-      event.preventDefault();
-    }
-    // highlight-end
-
-    render() {
-      return (
-        { /* highlight-range{1,4-9,12} */ }
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Pick your favorite flavor:
-            <select value={this.state.value} onChange={this.handleChange}>
-              <option value="grapefruit">Grapefruit</option>
-              <option value="lime">Lime</option>
-              <option value="coconut">Coconut</option>
-              <option value="mango">Mango</option>
-            </select>
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      );
-    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  ```
+
+  handleChange(event) {
+    // highlight-next-line
+    this.setState({value: event.target.value});
+  }
+
+  // highlight-start
+  handleSubmit(event) {
+    alert('Your favorite flavor is: ' + this.state.value);
+    event.preventDefault();
+  }
+  // highlight-end
+
+  render() {
+    return (
+      { /* highlight-range{1,4-9,12} */ }
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Pick your favorite flavor:
+          <select value={this.state.value} onChange={this.handleChange}>
+            <option value="grapefruit">Grapefruit</option>
+            <option value="lime">Lime</option>
+            <option value="coconut">Coconut</option>
+            <option value="mango">Mango</option>
+          </select>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+````
 
 You can also specify the highlighted lines outside of the code block.
 In the following code snippet, lines 1 and 4 through 6 will get the line
 highlighting. The line range parsing is done with
 <https://www.npmjs.com/package/parse-numeric-range>.
 
-    ```javascript{1,4-6}
-    // In your gatsby-config.js
-    plugins: [
-      {
-        resolve: `gatsby-transformer-remark`,
-        options: {
-          plugins: [
-            `gatsby-remark-prismjs`,
-          ]
-        }
-      }
-    ]
-    ```
+````
+```javascript{1,4-6}
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      plugins: [
+        `gatsby-remark-prismjs`,
+      ]
+    }
+  }
+]
+```
+````
+
+### Line hiding
+
+### Inline code blocks
 
 In addition to fenced code blocks, inline code blocks will be passed through
 PrismJS as well.
@@ -310,6 +322,8 @@ Here's an example of how to use this if the `inlineCodeMarker` was set to `±`:
 
 This will be rendered in a `<code class=language-css>` with just the (syntax
 highlighted) text of `.some-class { background-color: red }`
+
+### Disabling syntax highlighting
 
 If you need to prevent any escaping or highlighting, you can use the `none`
 language; the inner contents will not be changed at all.
