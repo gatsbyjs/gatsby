@@ -7,6 +7,9 @@ exports.onServiceWorkerActive = ({
   getResourceURLsForPathname,
   serviceWorker,
 }) => {
+  // reset whitelisted paths
+  serviceWorker.active.postMessage({ gatsbyApi: `resetWhitelist` })
+
   // grab nodes from head of document
   const nodes = document.querySelectorAll(`
     head > script[src],
