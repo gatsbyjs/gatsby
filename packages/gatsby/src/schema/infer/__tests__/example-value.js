@@ -12,10 +12,12 @@ describe(`Example value`, () => {
   const exampleValue = getExampleValue({ nodes })
 
   it(`builds correct example value from array of nodes`, () => {
-    expect(exampleValue).toMatchSnapshot({
-      // TODO: Use snapshot properties
-      // dates: expect.arrayContaining([expect.any(Date)]),
+    // Jest does not serialize String objects by default
+    expect.addSnapshotSerializer({
+      test: val => val instanceof String,
+      print: val => JSON.stringify(val),
     })
+    expect(exampleValue).toMatchSnapshot()
   })
 
   it(`does not mutate nodes`, () => {
@@ -35,8 +37,8 @@ describe(`Example value`, () => {
       nodes,
       ignoreFields: [`int`, `date`],
     })
-    expect(exampleValueWithIgnoredFields.int).not.toBeDefined()
-    expect(exampleValueWithIgnoredFields.date).not.toBeDefined()
+    expect(exampleValueWithIgnoredFields.int).toBeUndefined()
+    expect(exampleValueWithIgnoredFields.date).toBeUndefined()
     expect(exampleValueWithIgnoredFields.object.int).toBeDefined()
     expect(exampleValueWithIgnoredFields.object.date).toBeDefined()
   })
@@ -44,20 +46,20 @@ describe(`Example value`, () => {
   // Also tested with snapshot
 
   it(`skips null fields`, () => {
-    expect(exampleValue.null).not.toBeDefined()
+    expect(exampleValue.null).toBeUndefined()
   })
 
   it(`skips empty or sparse arrays`, () => {
-    expect(exampleValue.emptyArray).not.toBeDefined()
+    expect(exampleValue.emptyArray).toBeUndefined()
   })
 
   it(`skips empty objects`, () => {
-    expect(exampleValue.emptyObject).not.toBeDefined()
+    expect(exampleValue.emptyObject).toBeUndefined()
   })
 
   it(`skips polymorphic fields`, () => {
-    expect(exampleValue.polymorphic).not.toBeDefined()
-    expect(exampleValue.polymorphicArray).not.toBeDefined()
+    expect(exampleValue.polymorphic).toBeUndefined()
+    expect(exampleValue.polymorphicArray).toBeUndefined()
   })
 
   it(`does not confuse empty fields for polymorphic fields`, () => {
@@ -70,8 +72,8 @@ describe(`Example value`, () => {
   })
 
   it(`skips functions`, () => {
-    expect(exampleValue.function).not.toBeDefined()
-    expect(exampleValue.arrayOfFunctions).not.toBeDefined()
+    expect(exampleValue.function).toBeUndefined()
+    expect(exampleValue.arrayOfFunctions).toBeUndefined()
   })
 
   it(`prefers float in case of multiple number types`, () => {
