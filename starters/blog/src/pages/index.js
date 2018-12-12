@@ -1,31 +1,26 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
-import get from 'lodash/get'
-import Helmet from 'react-helmet'
 
-import Bio from '../components/Bio'
-import Layout from '../components/Layout'
+import Bio from '../components/bio'
+import Layout from '../components/layout'
+import SEO from '../components/seo'
 import { rhythm } from '../utils/typography'
 
 class BlogIndex extends React.Component {
   render() {
-    const siteTitle = get(this, `props.data.site.siteMetadata.title`)
-    const siteDescription = get(
-      this,
-      `props.data.site.siteMetadata.description`
-    )
-    const posts = get(this, `props.data.allMarkdownRemark.edges`)
+    const { data } = this.props
+    const siteTitle = data.site.siteMetadata.title
+    const posts = data.allMarkdownRemark.edges
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
-        <Helmet
-          htmlAttributes={{ lang: `en` }}
-          meta={[{ name: `description`, content: siteDescription }]}
-          title={siteTitle}
+        <SEO
+          title="All posts"
+          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
         <Bio />
         {posts.map(({ node }) => {
-          const title = get(node, `frontmatter.title`) || node.fields.slug
+          const title = node.frontmatter.title || node.fields.slug
           return (
             <div key={node.fields.slug}>
               <h3
@@ -54,7 +49,6 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
-        description
       }
     }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
@@ -65,7 +59,7 @@ export const pageQuery = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "DD MMMM, YYYY")
+            date(formatString: "MMMM DD, YYYY")
             title
           }
         }
