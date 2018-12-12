@@ -47,9 +47,7 @@ function createRepos({ repos, prefix, organization, token }) {
           return res.json().then(({ errors, message }) => {
             const error = errors ? errors.shift() : statusText
             if (error.message.match(`already exists`)) {
-              return Promise.resolve(
-                `${organization}/${name} (already existed)`
-              )
+              return Promise.resolve(false)
             }
             return Promise.reject(message || statusText)
           })
@@ -59,7 +57,12 @@ function createRepos({ repos, prefix, organization, token }) {
     })
   ).then(repos => {
     console.log(`Created the following repos:`)
-    console.log(repos.map(repo => `  - ${repo}`).join(`\n`))
+    console.log(
+      repos
+        .filter(repo => repo !== false)
+        .map(repo => `  - ${repo}`)
+        .join(`\n`)
+    )
   })
 }
 
