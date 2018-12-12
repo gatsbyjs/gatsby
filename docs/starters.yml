@@ -1368,7 +1368,6 @@
   description: Gatsby starter using Netlify CMS
   tags:
     - Netlify CMS
-    - Responsive
     - Styling:SCSS
     - Gatsby V2
   features:
