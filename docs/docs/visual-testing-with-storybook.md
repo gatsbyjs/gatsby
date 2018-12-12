@@ -7,7 +7,7 @@ Knowing your components look as intended in every permutation is not only a grea
 1. know what components are available to them in a given project and
 2. what props those components accept and what all of the states of that component are.
 
-As your project grows over time having this information available will be invaluable. This is the function of the Storybook library. Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
+As your project grows over time having this information available will be invaluable. This is the function of the [Storybook](https://storybook.js.org/) library. Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
 
 ## Setting up your environment
 
