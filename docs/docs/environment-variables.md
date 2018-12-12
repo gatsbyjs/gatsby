@@ -81,7 +81,7 @@ Now the variables are available on `process.env` as usual.
 
 ## Example
 
-Please note that you shouldn't commit `.env.*` files to your source control and rather use options given by your CD provider (e.g.  Netlify with its [build environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables)).
+Please note that you shouldn't commit `.env.*` files to your source control and rather use options given by your CD provider (e.g. Netlify with its [build environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables)).
 
 ```shell:title=.env.development
 GATSBY_API_URL=https://dev.example.com/api
