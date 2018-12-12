@@ -25,7 +25,7 @@ Gatsby ships with a default .babelrc setup that should work for most sites. If y
 to add custom Babel presets or plugins, you can create your own `.babelrc` at the root of your site, import [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby), and overwrite the `target` option.
 
 ```bash
-npm install --save babel-preset-gatsby
+npm install --save-dev babel-preset-gatsby
 ```
 
 ```json5:title=.babelrc
