@@ -30,7 +30,7 @@ The `sb init` command bootstraps the basic config necessary to run Storybook for
 
 To update your Storybook config open `.storybook/config.js` and add the following before the `configure` method at the bottom of the file.
 
-```js
+```js:title=.storybook/config.js
 // Gatsby's Link overrides:
 // Gatsby defines a global called ___loader to prevent its method calls from creating console errors you override it here
 global.___loader = {
@@ -51,7 +51,7 @@ Next make some adjustments to Storybook's default `webpack` configuration so you
 
 Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following in that file.
 
-```js
+```js:title=.storybook/webpack.config.js
 module.exports = (baseConfig, env, defaultConfig) => {
   // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
   defaultConfig.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
