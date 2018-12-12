@@ -147,7 +147,7 @@ class Image extends React.Component {
       IOSupported = true
     }
 
-    // Never render image for SSR
+    // Never render image during SSR
     if (typeof window === `undefined`) {
       isVisible = false
     }
