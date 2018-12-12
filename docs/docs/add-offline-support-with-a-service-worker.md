@@ -49,7 +49,7 @@ To display a custom message once your service worker finds an update, you can us
 
 ```javascript:title=gatsby-browser.js
 exports.onServiceWorkerUpdateFound = () => {
-  const answer = window.prompt(
+  const answer = window.confirm(
     `This application has been updated. ` +
       `Reload to display the latest version?`
   )
