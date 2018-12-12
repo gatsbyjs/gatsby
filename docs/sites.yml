@@ -3746,3 +3746,14 @@
   built_by_url: "https://github.com/LekoArts"
   description: >
     Source from The Movie Database (TMDb) API (v3) in Gatsby. This example is built with react-spring, React hooks and react-tabs and showcases the gatsby-source-tmdb plugin. It also has some client-only paths and uses gatsby-image.
+- title: LANDR - Creative Tools for Musicians
+  url: https://www.landr.com/en/
+  main_url: https://www.landr.com/en/
+  categories:
+    - Music
+    - Technology
+  featured: false
+  built_by: LANDR
+  built_by_url: "https://github.com/Mixgenius"
+  description: >
+    Marketing website built for LANDR. LANDR is a web application that provides tools for musicians to master their music (using artificial intelligence), collaborate with other musicians, and distribute their music to multiple platforms.
