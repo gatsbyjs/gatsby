@@ -1,0 +1,11 @@
+{
+  "name": "create-repos",
+  "author": "Dustin Schau <dustin@gatsbyjs.com>",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
