@@ -81,6 +81,8 @@ Now the variables are available on `process.env` as usual.
 
 ## Example
 
+Please note that you shouldn't commit `.env.*` files to your source control and rather use options given by your CD provider (e.g.  Netlify with its [build environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables)).
+
 ```shell:title=.env.development
 GATSBY_API_URL=https://dev.example.com/api
 API_KEY=927349872349798
@@ -104,7 +106,7 @@ render() {
 }
 ```
 
-`API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`:
+`API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`. If you commit your `.env.*` file containing `API_KEY` to source control it would also be available on the client-side. However we strongly advise against that! You should prefix your variable with `GATSBY_` (as shown above) instead and Gatsby automatically makes it available in the browser context.
 
 ```js
 // In any server-side code, e.g. gatsby-config.js
