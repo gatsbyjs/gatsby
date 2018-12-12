@@ -1367,7 +1367,7 @@
   repo: https://github.com/robertcoopercode/gatsby-netlify-cms
   description: Gatsby starter using Netlify CMS
   tags:
-    - NetlifyCMS
+    - Netlify CMS
     - Responsive
     - Sass
     - Gatsby V2
