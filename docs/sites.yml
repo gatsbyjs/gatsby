@@ -3761,9 +3761,9 @@
   url: https://clinicjs.org/
   main_url: https://clinicjs.org/
   categories:
-    - Tools
-    - NodeJs
     - Performance
+    - Technology
+    - Documentation
   featured: false
   built_by: NearForm
   built_by_url: "https://www.nearform.com/"
