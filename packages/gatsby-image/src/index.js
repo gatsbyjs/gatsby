@@ -148,6 +148,16 @@ class Image extends React.Component {
       IOSupported = true
     }
 
+    if (
+      !seenBefore &&
+      typeof window !== `undefined` &&
+      typeof window.IntersectionObserver === `undefined`
+    ) {
+      isVisible = true
+      imgLoaded = false
+      IOSupported = false
+    }
+
     // Always don't render image while server rendering
     if (typeof window === `undefined`) {
       isVisible = false
