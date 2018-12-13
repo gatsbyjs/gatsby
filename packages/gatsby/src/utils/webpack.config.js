@@ -294,7 +294,6 @@ module.exports = async (
     let configRules = [
       rules.mjs(),
       rules.js(),
-      rules.reactHot(),
       rules.yaml(),
       rules.fonts(),
       rules.images(),

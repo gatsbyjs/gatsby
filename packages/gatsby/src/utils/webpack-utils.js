@@ -252,13 +252,6 @@ module.exports = async ({
       }
     },
 
-    reactHot: options => {
-      return {
-        options,
-        loader: require.resolve(`react-hot-loader/webpack`),
-      }
-    },
-
     eslint: (schema = ``) => {
       const options = eslintConfig(schema)
 
@@ -301,18 +294,6 @@ module.exports = async ({
     }
 
     rules.js = js
-  }
-
-  {
-    let reactHot = (options = {}) => {
-      return {
-        test: /\.jsx?$/,
-        include: /node_modules/,
-        use: [loaders.reactHot(options)],
-      }
-    }
-
-    rules.reactHot = reactHot
   }
 
   /**
