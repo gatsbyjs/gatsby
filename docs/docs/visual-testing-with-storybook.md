@@ -30,15 +30,17 @@ The `sb init` command bootstraps the basic config necessary to run Storybook for
 
 To update your Storybook config open `.storybook/config.js` and modify the content as follows:
 
-```js{4,9-23}:title=.storybook/config.js
+```js:title=.storybook/config.js
 import { configure } from "@storybook/react"
 
 // automatically import all files ending in *.stories.js
+// highlight-next-line
 const req = require.context("../src", true, /.stories.js$/)
 function loadStories() {
   req.keys().forEach(filename => req(filename))
 }
 
+// highlight-start
 // Gatsby's Link overrides:
 // Gatsby defines a global called ___loader to prevent its method calls from creating console errors you override it here
 global.___loader = {
@@ -55,6 +57,7 @@ window.___navigate = pathname => {
 }
 
 configure(loadStories, module)
+// highlight-end
 ```
 
 > You can remove the `stories` folder from the root of your project, or move it inside you `src` folder
