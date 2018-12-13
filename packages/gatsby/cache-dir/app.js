@@ -1,7 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import domReady from "domready"
-import { hot, setConfig } from "react-hot-loader"
+import { setConfig } from "react-hot-loader"
+import { hot } from "react-hot-loader/root"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
