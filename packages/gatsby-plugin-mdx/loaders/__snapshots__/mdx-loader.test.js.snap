@@ -9,9 +9,9 @@ export default class MDXContent extends React.Component {
     super(props);
     this.layout = null;
   }
+
   render() {
     const { components, ...props } = this.props;
-
     return (
       <MDXTag name="wrapper" components={components}>
         <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
@@ -24,7 +24,6 @@ export default class MDXContent extends React.Component {
     );
   }
 }
-
 export const _frontmatter = {};
 
 `;
@@ -38,9 +37,9 @@ export default class MDXContent extends React.Component {
     super(props);
     this.layout = null;
   }
+
   render() {
     const { components, ...props } = this.props;
-
     return (
       <MDXTag name="wrapper" components={components}>
         <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
@@ -53,8 +52,11 @@ export default class MDXContent extends React.Component {
     );
   }
 }
-
-export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+export const _frontmatter = {
+  one: "two",
+  three: 4,
+  array: [1, 2, 3]
+};
 
 `;
 
@@ -65,11 +67,12 @@ import { MDXTag } from "@mdx-js/tag";
 export default class MDXContent extends React.Component {
   constructor(props) {
     super(props);
+
     this.layout = ({ children, ...props }) => <div>{children}</div>;
   }
+
   render() {
     const { components, ...props } = this.props;
-
     return (
       <MDXTag
         name="wrapper"
@@ -87,8 +90,11 @@ export default class MDXContent extends React.Component {
     );
   }
 }
-
-export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+export const _frontmatter = {
+  one: "two",
+  three: 4,
+  array: [1, 2, 3]
+};
 
 `;
 
@@ -96,15 +102,18 @@ exports[`mdx-loader snapshot with frontmatter-layout-namedExports 1`] = `
 import React from "react";
 import { MDXTag } from "@mdx-js/tag";
 
-export const meta = { author: "chris" };
+export const meta = {
+  author: "chris"
+};
 export default class MDXContent extends React.Component {
   constructor(props) {
     super(props);
+
     this.layout = ({ children, ...props }) => <div>{children}</div>;
   }
+
   render() {
     const { components, ...props } = this.props;
-
     return (
       <MDXTag
         name="wrapper"
@@ -122,8 +131,11 @@ export default class MDXContent extends React.Component {
     );
   }
 }
-
-export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+export const _frontmatter = {
+  one: "two",
+  three: 4,
+  array: [1, 2, 3]
+};
 
 `;
 
@@ -131,15 +143,17 @@ exports[`mdx-loader snapshot with frontmatter-namedExports 1`] = `
 import React from "react";
 import { MDXTag } from "@mdx-js/tag";
 
-export const meta = { author: "chris" };
+export const meta = {
+  author: "chris"
+};
 export default class MDXContent extends React.Component {
   constructor(props) {
     super(props);
     this.layout = null;
   }
+
   render() {
     const { components, ...props } = this.props;
-
     return (
       <MDXTag name="wrapper" components={components}>
         <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
@@ -152,8 +166,11 @@ export default class MDXContent extends React.Component {
     );
   }
 }
-
-export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+export const _frontmatter = {
+  one: "two",
+  three: 4,
+  array: [1, 2, 3]
+};
 
 `;
 
@@ -164,11 +181,12 @@ import { MDXTag } from "@mdx-js/tag";
 export default class MDXContent extends React.Component {
   constructor(props) {
     super(props);
+
     this.layout = ({ children, ...props }) => <div>{children}</div>;
   }
+
   render() {
     const { components, ...props } = this.props;
-
     return (
       <MDXTag
         name="wrapper"
@@ -186,7 +204,6 @@ export default class MDXContent extends React.Component {
     );
   }
 }
-
 export const _frontmatter = {};
 
 `;
@@ -195,15 +212,18 @@ exports[`mdx-loader snapshot with layout-namedExports 1`] = `
 import React from "react";
 import { MDXTag } from "@mdx-js/tag";
 
-export const meta = { author: "chris" };
+export const meta = {
+  author: "chris"
+};
 export default class MDXContent extends React.Component {
   constructor(props) {
     super(props);
+
     this.layout = ({ children, ...props }) => <div>{children}</div>;
   }
+
   render() {
     const { components, ...props } = this.props;
-
     return (
       <MDXTag
         name="wrapper"
@@ -221,7 +241,6 @@ export default class MDXContent extends React.Component {
     );
   }
 }
-
 export const _frontmatter = {};
 
 `;
@@ -230,15 +249,17 @@ exports[`mdx-loader snapshot with namedExports 1`] = `
 import React from "react";
 import { MDXTag } from "@mdx-js/tag";
 
-export const meta = { author: "chris" };
+export const meta = {
+  author: "chris"
+};
 export default class MDXContent extends React.Component {
   constructor(props) {
     super(props);
     this.layout = null;
   }
+
   render() {
     const { components, ...props } = this.props;
-
     return (
       <MDXTag name="wrapper" components={components}>
         <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
@@ -251,7 +272,6 @@ export default class MDXContent extends React.Component {
     );
   }
 }
-
 export const _frontmatter = {};
 
 `;

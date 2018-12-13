@@ -9,6 +9,7 @@ const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
 const debug = require("debug")("gatsby-mdx:gen-mdx");
 
 const getSourcePluginsAsRemarkPlugins = require("./get-source-plugins-as-remark-plugins");
+const htmlAttrToJSXAttr = require("./babel-plugin-html-attr-to-jsx-attr");
 //const MDXRenderer = require("../mdx-renderer");
 
 /*
@@ -108,7 +109,8 @@ module.exports = async function genMDX({
   debug("compiling scope");
   const instance = new BabelPluginPluckImports();
   const result = babel.transform(code, {
-    plugins: [instance.plugin, objRestSpread],
+    configFile: false,
+    plugins: [instance.plugin, objRestSpread, htmlAttrToJSXAttr],
     presets: [require("@babel/preset-react")]
   });
 
