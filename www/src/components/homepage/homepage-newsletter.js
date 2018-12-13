@@ -92,7 +92,7 @@ const HomepageNewsletter = () => (
       <Ornament dangerouslySetInnerHTML={{ __html: NewsletterFormOrnament }} />
       <header>
         <Name>The Gatsby Newsletter</Name>
-        <Title>Keep up with the latest things Gatsby!</Title>
+        <Title>Keep up with the latest things about Gatsby!</Title>
       </header>
       <Form
         isHomepage={true}
