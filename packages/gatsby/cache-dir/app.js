@@ -57,7 +57,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader.addDevRequires(syncRequires)
 
   loader.getResourcesForPathname(window.location.pathname).then(() => {
-    let Root = hot(module)(preferDefault(require(`./root`)))
+    let Root = hot(preferDefault(require(`./root`)))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
