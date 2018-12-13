@@ -173,6 +173,7 @@ class Unbird extends React.Component {
                 value={this.state.feedbackInput}
                 onChange={this.handleFeedbackInput}
                 placeholder={this.props.feedbackPlaceholder}
+                required
               />
               <Send>
                 <SendIcon
