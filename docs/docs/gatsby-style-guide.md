@@ -93,15 +93,15 @@ If the content is already somewhere else on the .org site, feel free to copy and
 
 Possible sources of great research materials:
 
-- Blogposts (on gatsbyjs.org and other sites)
-- Docs (on gatsbyjs.org and other sites)
-- Video tutorials
+- blogposts (on gatsbyjs.org and other sites)
+- docs (on gatsbyjs.org and other sites)
+- video tutorials
 - Discord, Spectrum, or Twitter conversations
 - Google search results
-- Presentations you or others have given
-- Textbooks
-- Dreams
-- Anything else you can think of
+- presentations you or others have given
+- textbooks
+- dreams
+- anything else you can think of
 
 ### Write drafts and get feedback
 
@@ -128,7 +128,7 @@ Avoid using words like "easy", "simple," and "basic" because if users have a har
 ### Avoid emojis, slang, and metaphors
 
 Avoid using emojis or emoticons in the Docs and idiomatic expressions / slang, or metaphors. Gatsby has a global community, and
-the cultural meaning of an emoji, emoticon, or slang may be different around the world.
+the cultural meaning of an emoji, emoticon, or slang may be different around the world. Use your best judgment!
 Also, emojis can render differently on different systems.
 
 ### Define jargon
@@ -188,9 +188,9 @@ Article titles should be short and reflect the main theme of the article to help
 
 Here are some title examples:
 
-- Creating and modifying pages
-- Adding a 404 page
-- Querying data with GraphQL
+- Creating & Modifying Pages
+- Adding a 404 Page
+- Querying Data with GraphQL
 
 The folder name is used in the URL, so only use dashes -, numbers 0-9, and
 lowercase letters a-z for it.
@@ -223,14 +223,16 @@ Article header or subhead:
 
 ### Format code blocks, inline code, and images
 
-- [Formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
-- [Adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
+Use the following as reference when creating and editing docs:
+
+- [formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
+- [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
   If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself. A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. Then you can right click the image and copy its image source.
-- [Header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
+- [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
 #### Code titles
 
-It's also possible to add code titles to your code blocks. As switching between multiple files in the course of the document can confuse some readers it's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, you need to add `:title=your-path-name` to it. Use it like so:
+It's also possible to add code titles to your code blocks. As switching between multiple files in the course of the document can confuse some readers, it's best to explicitly tell them where the code example should go. You need to add `:title=your-path-name` to it and can use syntax highlighting as usual, if needed. Use code titles like so:
 
 ````
 ```javascript:title=src/util/alert.js
@@ -255,15 +257,15 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 
 Front-end development (adjective form with a dash) is when you’re working on the
 front end (noun form with no dash). The same goes with the back end, full stack,
-and many other compound terms.
+and many other compound terms. ([Interesting Github discussion on "front-end" v. "front end" v. "frontend"](https://github.com/gatsbyjs/gatsby/pull/8873#issuecomment-444255465))
 
 ### Use active voice
 
 Use active voice instead of passive voice. Generally, it's a more concise and
 straightforward way to communicate a subject. For example:
 
-- (Passive) The for loop in JavaScript is used by programmers to...
-- (Active) Programmers use the for loop in JavaScript to...
+- (passive) The for loop in JavaScript is used by programmers to...
+- (active) Programmers use the for loop in JavaScript to...
 
 ### Make lists clear with the Oxford Comma
 
@@ -298,7 +300,7 @@ The main tutorial at `/tutorial/` is optimized for users who are not experts in 
 
 Through research, it's clear that developers of all skill levels read the tutorial and go back to reference it later.
 
-The tutorial should prioritize helping users with these attributes and goals.
+The tutorial should prioritize helping users with the following attributes and goals.
 
 Attributes:
 
@@ -306,6 +308,7 @@ Attributes:
 - interested in React
 - new to Gatsby
 - interested in Gatsby
+- interested in the JavaScript ecosystem (not necessarily new to it)
 - proficient with browsers and operating systems
 
 Looking for:
@@ -323,11 +326,11 @@ By following the steps in the tutorial, a user should:
   - make edits and see them thru hot reloading
   - publish a site
   - do basic tasks like create pages, link between pages, create routing, change styles
-- Know how to and actually start and deploy a site as quickly as possible
-- Be able to share their site
-- Know how to and actually find more advanced tutorials and docs
+- Know how to and actually start and deploy a site as quickly as possible.
+- Be able to share their site.
+- Know how to and actually find more advanced tutorials and docs.
 - Have fun!
-- Use enough React to do basic tasks like creating pages, links, styles
+- Use enough React to do basic tasks like creating pages, links, styles.
 
 ### Tutorial tone and style
 
@@ -345,12 +348,10 @@ Because the audience of the tutorial is people who do not consider themselves ex
 
 In practice, you can reach this goal by two rules of thumb:
 
-- reduce the number of hyperlinks, tabs, and environments to the least number required to complete the tasks in the tutorial.
-- when there are multiple ways to complete a task, give people only one way. This way ought to be the best practice possible within the constraints of the lowest supported versions of software. If the best practice isn't possible with the lowest supported versions of software, mention that as a side note.
+- Reduce the number of hyperlinks, tabs, and environments to the least number required to complete the tasks in the tutorial.
+- When there are multiple ways to complete a task, give people only one way. This way ought to be the best practice possible within the constraints of the lowest supported versions of software. If the best practice isn't possible with the lowest supported versions of software, mention that as a side note.
 
 ## Docs
-
-While the main tutorial is optimized for users who are not experts in React and/or Javascript, the `/docs/` are optimized for those with intermediate to expert mastery with React and Javascript. The purpose, tone, and style of the docs ought to align with this audience.
 
 ### Docs audience
 
@@ -374,7 +375,7 @@ Looking for:
 - how does Gatsby really work with Redux, React, and GraphQL?
 - error messages that tell them if it’s a known bug/issue, lead them to docs, and/or suggest fixes
 - guides for how things work in Gatsby
-- They usually already have strong opinions or requirements about what they want to use as their CMS or data source and want to know best practices for their workflow
+- they usually already have strong opinions or requirements about what they want to use as their CMS or data source and want to know best practices for their workflow
 - signs that Gatsby is a reliable, long-term choice (signs that it is growing and improving and evidence it will be around for a long time)
 - ways to check their project’s requirements against what Gatsby offers
 - open source code from well-built example sites
@@ -383,14 +384,14 @@ Looking for:
 
 By referencing the docs, a user should:
 
-- Get tasks done as quickly as possible
-- Evaluate options for getting tasks done as quickly as possible
-- Build sites and apps as quickly as possible, including the following kinds of sites:
-  - Marketing
-  - Blogs
-  - Portfolio
-  - E-commerce
-  - Authentication
+- get tasks done as quickly as possible
+- evaluate options for getting tasks done as quickly as possible
+- build sites and apps as quickly as possible, including the following kinds of sites:
+  - marketing
+  - blogs
+  - portfolio
+  - e-commerce
+  - authentication
 
 ### Docs tone and style
 
@@ -407,31 +408,37 @@ Because the audience of the docs is people who have intermediate to expert level
 In practice, you can reach this goal by two rules of thumb:
 
 - Include an "additional information" section at the bottom of each guide with hyperlinks to relevant external blogposts, tutorials, and other Gatsby resources and docs.
-- when there are multiple ways to complete a task, explain the following:
+- When there are multiple ways to complete a task, explain the following:
 
-1.  what is the most common way of accomplishing the task
-2.  what is the best way to accomplish the task on the lowest supported versions of software
-3.  what is the best practice and why is it the best (if different than 3)
-4.  any tips on how to pick an option
+1.  The most common way of accomplishing the task
+2.  The best way to accomplish the task on the lowest supported versions of software
+3.  The best practice and why is it the best (if different than 3)
+4.  Any tips on how to pick an option
 
 ## KPIs
 
 Here is how we measure the quality of the tutorial and docs.
 
-### Tutorial:
+### Tutorial
 
-- Obsessively improve time to value: how quickly, effectively, and painlessly can users experience the value of Gatsby?
-- Number active users
-- Daily, weekly, monthly “finishers” of the tutorial (finisher = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
-- Retention
+- time to value: how quickly, effectively, and painlessly can users experience the value of Gatsby?
+- daily, weekly, monthly active users
+- daily, weekly, monthly “finishers” of the tutorial (finisher = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
+- retention
 
-## Goals of docs maintenance
+### Docs
 
-The way the Gatsby community maintains docs must meet the following requirements:
+- time to task: how quickly and effectively can users accomplish tasks?
+- daily, weekly, monthly active users
+- retention
 
-- Ability to ship quickly
-- Ability to iterate quickly
+## Goals of docs and tutorial maintenance
+
+The way the Gatsby community maintains docs and tutorials must meet the following requirements:
+
+- ability to ship quickly
+- ability to iterate quickly
 - OSS contributor access
-- Code editing functionality
-- Version control
-- A way to get feedback on each doc
+- code editing functionality
+- version control
+- a way to get feedback on each doc
