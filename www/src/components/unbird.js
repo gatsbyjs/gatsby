@@ -202,7 +202,7 @@ class Unbird extends React.Component {
   }
 
   handleFeedbackInput = e => {
-    this.setState({ feedbackInput: event.target.value })
+    this.setState({ feedbackInput: e.target.value })
   }
 
   setStatusMessage = msg => {
