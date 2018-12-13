@@ -16,6 +16,7 @@ setApiRunnerForLoader(apiRunner)
 // necessary for hot-reloading of react hooks
 setConfig({
   ignoreSFC: true,
+  pureRender: true,
 })
 
 // Let the site/plugins run code very early.
