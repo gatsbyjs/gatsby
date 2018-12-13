@@ -1,6 +1,7 @@
 import React, { createElement } from "react"
 import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
+import { hot } from "react-hot-loader/root"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -109,4 +110,4 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
-export default () => WrappedRoot
+export default hot(() => WrappedRoot)

@@ -2,7 +2,6 @@ import React from "react"
 import ReactDOM from "react-dom"
 import domReady from "domready"
 import { setConfig } from "react-hot-loader"
-import { hot } from "react-hot-loader/root"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
@@ -57,7 +56,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader.addDevRequires(syncRequires)
 
   loader.getResourcesForPathname(window.location.pathname).then(() => {
-    let Root = hot(preferDefault(require(`./root`)))
+    let Root = preferDefault(require(`./root`))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
