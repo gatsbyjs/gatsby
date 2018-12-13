@@ -253,14 +253,17 @@ class Image extends React.Component {
     if (fluid) {
       const image = fluid
 
+      const divStyle = {
+        position: `relative`,
+        overflow: `hidden`,
+        maxWidth: image.presentationWidth,
+        ...style,
+      }
+
       return (
         <Tag
           className={`${className ? className : ``} gatsby-image-wrapper`}
-          style={{
-            position: `relative`,
-            overflow: `hidden`,
-            ...style,
-          }}
+          style={divStyle}
           ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
