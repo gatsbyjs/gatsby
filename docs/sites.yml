@@ -3757,3 +3757,15 @@
   built_by_url: "https://github.com/Mixgenius"
   description: >
     Marketing website built for LANDR. LANDR is a web application that provides tools for musicians to master their music (using artificial intelligence), collaborate with other musicians, and distribute their music to multiple platforms.
+- title: ClinicJS
+  url: https://clinicjs.org/
+  main_url: https://clinicjs.org/
+  categories:
+    - Performance
+    - Technology
+    - Documentation
+  featured: false
+  built_by: NearForm
+  built_by_url: "https://www.nearform.com/"
+  description: >
+    Tools to help diagnose and pinpoint Node.js performance issues.
