@@ -10,3 +10,9 @@ https://github.com/ChristopherBiscardi/gatsby-mdx
 ```sh
 npm install gatsby-mdx
 ```
+
+```javascript
+module.exports = {
+  plugins: [`gatsby-mdx`]
+};
+```
