@@ -57,6 +57,8 @@ window.___navigate = pathname => {
 configure(loadStories, module)
 ```
 
+> You can remove the `stories` folder from the root of your project, or move it inside you `src` folder
+
 Next make some adjustments to Storybook's default `webpack` configuration so you can transpile Gatsby source files, and to ensure you have the necessary `babel` plugins to transpile Gatsby components.
 
 Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following in that file.
