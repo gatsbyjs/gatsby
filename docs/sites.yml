@@ -3769,3 +3769,16 @@
   built_by_url: "https://www.nearform.com/"
   description: >
     Tools to help diagnose and pinpoint Node.js performance issues.
+- title: Crispin Porter Bogusky
+  url: https://cpbgroup.com/
+  main_url: https://cpbgroup.com/
+  description: >
+    We solve the world’s toughest communications problems with the most quantifiably potent creative assets.
+  categories:
+    - Creative
+    - Advertising
+    - Experience Design
+    - Marketing
+  built_by: Crispin Porter Bogusky
+  built_by_url: http://cpbgroup.com/
+  featured: false
