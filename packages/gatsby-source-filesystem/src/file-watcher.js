@@ -62,18 +62,7 @@ function fileWatcher(
 
   const watcher = findFiles(pluginOptions.path, {
     watch: process.env.GATSBY_EXECUTING_COMMAND === `develop`,
-    ignored: [
-      `**/*.un~`,
-      `**/.DS_Store`,
-      `**/.gitignore`,
-      `**/.npmignore`,
-      `**/.babelrc`,
-      `**/yarn.lock`,
-      `**/bower_components`,
-      `**/node_modules`,
-      `../**/dist/**`,
-      ...(pluginOptions.ignore || []),
-    ],
+    ignore: pluginOptions.ignore,
   })
 
   const createAndProcessNode = path => {

@@ -1,7 +1,7 @@
 const fs = require(`fs`)
 
-const fileFinder = require(`./file-finder`)
 const fileWatcher = require(`./file-watcher`)
+const findFiles = require(`./find-files`)
 
 const { createFileNode } = require(`./create-file-node`)
 
@@ -23,7 +23,10 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   }
 
   if (process.env.NODE_ENV === `production`) {
-    const pathQueue = await fileFinder(pluginOptions.path)
+    const pathQueue = await findFiles(pluginOptions.path, {
+      watch: false,
+      ignore: pluginOptions.ignore,
+    })
     const createAndProcessNode = path =>
       createFileNode(path, createNodeId, pluginOptions).then(createNode)
 

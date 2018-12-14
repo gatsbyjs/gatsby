@@ -6,9 +6,8 @@ describe(`findOnce`, () => {
     expect.assertions(3)
     const queue = await findFiles(`${__dirname}/fixtures/test-fs`, {
       watch: false,
-      ignored: [
+      ignore: [
         `.toBeIgnored.md`,
-        `**/.DS_Store`,
         `**/.placeholder.md`,
         `**/notInTheFixture.bar`,
       ],

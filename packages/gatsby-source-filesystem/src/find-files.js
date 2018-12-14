@@ -21,7 +21,20 @@ const findOnce = (path, options) => {
 }
 
 module.exports = (path, options) => {
-  const { watch, ignored } = options
+  const { watch, ignore } = options
+
+  const ignored = [
+    `**/*.un~`,
+    `**/.DS_Store`,
+    `**/.gitignore`,
+    `**/.npmignore`,
+    `**/.babelrc`,
+    `**/yarn.lock`,
+    `**/bower_components`,
+    `**/node_modules`,
+    `../**/dist/**`,
+    ...(ignore || []),
+  ]
 
   if (watch === true) {
     return chokidar.watch(path, { ignored })
