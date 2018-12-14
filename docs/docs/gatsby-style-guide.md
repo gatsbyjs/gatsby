@@ -368,10 +368,10 @@ Attributes:
 Looking for:
 
 - way to get a site up and running quickly
-- a quick way to get the right words, types, defaults, descriptions, parameters,and returns for the API
+- a quick way to get the right words, types, defaults, descriptions, parameters, and returns for the API
 - bits of source code to study and/or copy
 - step-by-step tutorials for advanced tasks
-- understanding how Gatsby works at a deep level, so deep that they could actually modify or customize their local stuff, or contribute to Gatsby core
+- understanding how Gatsby works at a deep level, so deep that they could actually modify or customize their own projects, or contribute to Gatsby core
 - how does Gatsby really work with Redux, React, and GraphQL?
 - error messages that tell them if it’s a known bug/issue, lead them to docs, and/or suggest fixes
 - guides for how things work in Gatsby
