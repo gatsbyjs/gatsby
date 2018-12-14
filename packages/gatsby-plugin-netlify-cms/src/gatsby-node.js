@@ -5,6 +5,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin"
 import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
+import { createFilePath } from "gatsby-source-filesystem"
 
 /**
  * Deep mapping function for plain objects and arrays. Allows any value,
@@ -12,8 +13,8 @@ import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
  */
 function deepMap(obj, fn) {
   /**
-   * If the transform function transforms the value, regardless of type,
-   * return the transformed value.
+   * If the transform function transforms the value, regardless of type, return
+   * the transformed value.
    */
   const mapped = fn(obj)
   if (mapped !== obj) {
@@ -30,6 +31,63 @@ function deepMap(obj, fn) {
     return mapValues(obj, value => deepMap(value, fn))
   }
   return obj
+}
+
+/**
+ * Here we use two optional plugin config properties:
+ *
+ * - contentFolder: The root folder where you configure Netlify CMS to store its
+ *   content. For example you can have used content/blog for blog posts and
+ *   content/assets for file uploads. Defaults to "content"
+ *
+ * - imageFields: A list of frontmatter fields which contain paths to images
+ *   stored at the CMS config `media_folder` setting. Defaults to ["image"]
+ */
+exports.onCreateNode = (
+  { node, actions, getNode },
+  { contentFolder = `content`, imageFields = [`image`] }
+) => {
+  const { createNodeField } = actions
+
+  switch (node.internal.type) {
+    case `MarkdownRemark`: {
+      const { frontmatter } = node
+      const { permalink, layout } = frontmatter
+
+      /**
+       * Make image filepath relative so that gatsby-transformer-sharp will
+       * match the frontmatter path with the actual file.
+       */
+      imageFields.forEach(fieldName => {
+        const imagePath = frontmatter[fieldName]
+
+        if (imagePath) {
+          const relativeImagePath = path.relative(
+            path.dirname(node.fileAbsolutePath),
+            path.join(process.cwd(), contentFolder, imagePath)
+          )
+
+          frontmatter[fieldName] = relativeImagePath
+        }
+      })
+
+      const slug = permalink || createFilePath({ node, getNode })
+
+      // Used to generate URL to view this content.
+      createNodeField({
+        node,
+        name: `slug`,
+        value: slug || ``,
+      })
+
+      // Used to determine a page layout.
+      createNodeField({
+        node,
+        name: `layout`,
+        value: layout || ``,
+      })
+    }
+  }
 }
 
 exports.onCreateWebpackConfig = (
