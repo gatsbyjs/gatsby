@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 
 import ClassComponent from '../components/class-component'
 import Layout from '../components/layout'
 import Image from '../components/image'
 import SEO from '../components/seo'
 
-const IndexPage = () => (
+const IndexPage = ({ data }) => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <h1>Hi people</h1>
@@ -22,7 +22,33 @@ const IndexPage = () => (
     <Link to="/__non_existant_page__/" data-testid="broken-link">
       Go to a broken link
     </Link>
+    <h2>Blog posts</h2>
+    <ul>
+      {data.posts.edges.map(({ node }) => (
+        <li key={node.id}>
+          <Link to={node.fields.slug}>{node.frontmatter.title}</Link>
+        </li>
+      ))}
+    </ul>
   </Layout>
 )
 
 export default IndexPage
+
+export const indexQuery = graphql`
+  {
+    posts: allMarkdownRemark {
+      edges {
+        node {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+          }
+        }
+      }
+    }
+  }
+`
