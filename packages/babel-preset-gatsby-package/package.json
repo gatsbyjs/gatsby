@@ -1,15 +1,16 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0"
   },
   "license": "MIT",
-  "main": "src/index.js"
+  "main": "index.js"
 }

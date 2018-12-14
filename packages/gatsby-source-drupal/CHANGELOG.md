@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.14"></a>
+
+## [3.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.13...gatsby-source-drupal@3.0.14) (2018-12-11)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+<a name="3.0.13"></a>
+
+## [3.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.12...gatsby-source-drupal@3.0.13) (2018-12-06)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** use basic auth credentials to fetch remote files as well. ([#10302](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/10302)) ([747943c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/747943c))
+
+<a name="3.0.12"></a>
+
+## [3.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.11...gatsby-source-drupal@3.0.12) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+<a name="3.0.11"></a>
+
+## [3.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.10...gatsby-source-drupal@3.0.11) (2018-11-26)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+<a name="3.0.10"></a>
+
+## [3.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.9...gatsby-source-drupal@3.0.10) (2018-11-16)
+
+### Features
+
+- **gatsby-source-drupal:** add basicauth support ([#9848](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/9848)) ([e208134](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/e208134))
+
+<a name="3.0.9"></a>
+
+## [3.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.8...gatsby-source-drupal@3.0.9) (2018-11-14)
+
+### Features
+
+- **gatsby-source-drupal:** add support for Drupal JSON API 2.x File URI format ([#9835](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/9835)) ([e86d141](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/e86d141))
+
+<a name="3.0.8"></a>
+
+## [3.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.7...gatsby-source-drupal@3.0.8) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+<a name="3.0.7"></a>
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.6...gatsby-source-drupal@3.0.7) (2018-11-01)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+<a name="3.0.6"></a>
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.5...gatsby-source-drupal@3.0.6) (2018-10-29)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** handle links outputted as objects in REST responses ([#9356](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/9356)) ([2add021](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/2add021))
+
 <a name="3.0.5"></a>
 
 ## [3.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.4...gatsby-source-drupal@3.0.5) (2018-10-19)

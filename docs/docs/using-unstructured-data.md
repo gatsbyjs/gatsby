@@ -12,7 +12,7 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
 
 In your Gatsby project's `gatsby-node.js` file, fetch the needed data, and supply it to the `createPage` action within the `createPages` API:
 
-```javascript{9,15,17}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions: { createPage } }) => {
   // `getPokemonData` is a function that fetches our data
   const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
@@ -21,15 +21,15 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
+    context: { allPokemon }, // highlight-line
   })
 
   // Create a page for each Pokémon.
   allPokemon.forEach(pokemon => {
     createPage({
-      path: `/pokemon/${pokemon.name}/`,
+      path: `/pokemon/${pokemon.name}/`, // highlight-line
       component: require.resolve("./src/templates/pokemon.js"),
-      context: { pokemon },
+      context: { pokemon }, // highlight-line
     })
   })
 }
@@ -40,17 +40,22 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 On the highlighted lines, the data is being supplied to the page template, where it can be accessed as props:
 
-```javascript{1,3-4,7-10}:title=/src/templates/pokemon.js
+```javascript:title=/src/templates/pokemon.js
+// highlight-next-line
 export default ({ pageContext: { pokemon } }) => (
   <div style={{ width: 960, margin: "4rem auto" }}>
+    {/* highlight-start */}
     <h1>{pokemon.name}</h1>
     <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+    {/* highlight-end */}
     <h2>Abilities</h2>
     <ul>
+      {/* highlight-start */}
       {pokemon.abilities.map(ability => (
         <li key={ability.name}>
           <Link to={`./pokemon/${pokemon.name}/ability/${ability.name}`}>
             {ability.name}
+            {/* highlight-end */}
           </Link>
         </li>
       ))}
@@ -78,7 +83,7 @@ Using Gatsby's data layer provides the following benefits:
 - Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries
 - It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
 - Improves performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
-- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
+- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
 > Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
 

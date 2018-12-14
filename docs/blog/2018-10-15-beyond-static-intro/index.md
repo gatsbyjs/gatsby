@@ -7,9 +7,9 @@ showImageInArticle: false
 tags: ["apps", "beyond static", "webinar"]
 ---
 
-We hear it regularly. Gatsby is for static sites, Next.js (or similar) is for when your data changes regularly and/or you need an "app." This raises a question... what actually _is_ an app? 
+We hear it regularly. Gatsby is for static sites, Next.js (or similar) is for when your data changes regularly and/or you need an "app." This raises a question... what actually _is_ an app?
 
-If this question interests you, consider attending [the upcoming webinar][webinar] where we'll focus on shedding some light on this very question as well as talk about how to build dynamic web apps with Gatsby. 
+If this question interests you, consider attending [the upcoming webinar][webinar] where we'll focus on shedding some light on this very question as well as talk about how to build dynamic web apps with Gatsby.
 
 Until then, I’d like to offer some brief teasers of some of the content we’ll be discussing during the webinar and some introductory information in _how_ Gatsby enables app development.
 
@@ -19,11 +19,11 @@ Until then, I’d like to offer some brief teasers of some of the content we’l
 
 ## What is an app?
 
-It's surprisingly challenging to define what separates an app from a static site. 
+It's surprisingly challenging to define what separates an app from a static site.
 
-- Authentication? 
-- Reacting to remote data changes? 
-- A shopping cart? 
+- Authentication?
+- Reacting to remote data changes?
+- A shopping cart?
 
 It's surprisingly murky where that line is drawn and why exactly many seem to clearly delineate the two _separate_ concepts.
 
@@ -43,7 +43,7 @@ One of the central ideas of Gatsby is that we statically generate our HTML conte
 1. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
 1. Transfer rendering to the [React reconciler][reconciler]
 
-It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make data calls, authenticate users, and perform all the app-like functionality you desire. 
+It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make data calls, authenticate users, and perform all the app-like functionality you desire.
 
 It's really that easy.
 

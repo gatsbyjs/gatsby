@@ -33,7 +33,7 @@ exports.createPages = ({ graphql, actions }) => {
       `
     ).then(result => {
       if (result.errors) {
-        console.log(result.errors)
+        return reject(result.errors)
       }
 
       // Create blog posts pages.
@@ -68,7 +68,7 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
-      resolve()
+      return resolve()
     })
   })
 }

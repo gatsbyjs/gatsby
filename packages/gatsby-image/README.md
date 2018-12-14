@@ -52,7 +52,7 @@ you need only:
 
 1. Import `gatsby-image` and use it in place of the built-in `img`
 2. Write a GraphQL query using one of the included GraphQL "fragments"
-    which specify the fields needed by `gatsby-image`.
+   which specify the fields needed by `gatsby-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
 compression. The `gatsby-image` component automatically sets up the "blur-up"
@@ -71,10 +71,7 @@ npm install --save gatsby-transformer-sharp gatsby-plugin-sharp
 Then in your `gatsby-config.js`:
 
 ```js
-plugins: [
-  `gatsby-transformer-sharp`,
-  `gatsby-plugin-sharp`
-];
+plugins: [`gatsby-transformer-sharp`, `gatsby-plugin-sharp`]
 ```
 
 Also, make sure you have set up a source plugin, so your images are available in `graphql` queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
@@ -103,6 +100,7 @@ This is what a component using `gatsby-image` looks like:
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 
 export default ({ data }) => (
@@ -264,22 +262,24 @@ prop. e.g. `<Img fluid={fluid} />`
 
 ## `gatsby-image` props
 
-| Name               | Type                | Description                                                                                                                 |
-| ------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `fixed`            | `object`            | Data returned from the `fixed` query                                                                                        |
-| `fluid`            | `object`            | Data returned from the `fluid` query                                                                                        |
-| `fadeIn`           | `bool`              | Defaults to fading in the image on load                                                                                     |
-| `title`            | `string`            | Passed to the `img` element                                                                                                 |
-| `alt`              | `string`            | Passed to the `img` element                                                                                                 |
-| `className`        | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `style`            | `object`            | Spread into the default styles of the wrapper element                                                                       |
-| `imgStyle`         | `object`            | Spread into the default styles of the actual `img` element                                                                  |
-| `placeholderStyle` | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
-| `backgroundColor`  | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
-| `onLoad`           | `func`              | A callback that is called when the full-size image has loaded.                                                              |
-| `onError`          | `func`              | A callback that is called when the image fails to load.                                                                     |
-| `Tag`              | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
-| `critical`         | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
+| Name                   | Type                | Description                                                                                                                 |
+| ---------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `fixed`                | `object`            | Data returned from the `fixed` query                                                                                        |
+| `fluid`                | `object`            | Data returned from the `fluid` query                                                                                        |
+| `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `title`                | `string`            | Passed to the `img` element                                                                                                 |
+| `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
+| `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
+| `style`                | `object`            | Spread into the default styles of the wrapper element                                                                       |
+| `imgStyle`             | `object`            | Spread into the default styles of the actual `img` element                                                                  |
+| `placeholderStyle`     | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
+| `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                     |
+| `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| `onLoad`               | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onStartLoad`          | `func`              | A callback that is called when the full-size image starts loading, it gets the parameter { wasCached: boolean } provided.   |
+| `onError`              | `func`              | A callback that is called when the image fails to load.                                                                     |
+| `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+| `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
 
 ## Image processing arguments
 

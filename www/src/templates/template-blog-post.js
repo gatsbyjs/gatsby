@@ -12,6 +12,7 @@ import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
+import Pullquote from "../components/shared/pullquote"
 import Chart from "../components/chart"
 
 const renderAst = new rehypeReact({
@@ -19,6 +20,7 @@ const renderAst = new rehypeReact({
   components: {
     "hubspot-form": HubspotForm,
     "date-chart": Chart,
+    pullquote: Pullquote,
   },
 }).Compiler
 
@@ -146,7 +148,18 @@ class BlogPostTemplate extends React.Component {
                   flex: `0 0 auto`,
                 }}
               >
-                <Link to={post.frontmatter.author.fields.slug}>
+                <Link
+                  to={post.frontmatter.author.fields.slug}
+                  css={{
+                    "&&": {
+                      borderBottom: 0,
+                      boxShadow: `none`,
+                      "&:hover": {
+                        background: `none`,
+                      },
+                    },
+                  }}
+                >
                   <Img
                     fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
                     css={{

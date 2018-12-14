@@ -21,6 +21,8 @@ const isEmptyObjectOrArray = (obj: any): boolean => {
     return true
   } else if (_.isDate(obj)) {
     return false
+  } else if (typeof obj === `function`) {
+    return true
     // Simple "is object empty" check.
   } else if (_.isObject(obj) && _.isEmpty(obj)) {
     return true

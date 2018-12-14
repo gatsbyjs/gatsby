@@ -1,7 +1,7 @@
 import React from "react"
 import Modal from "react-modal"
-import Helmet from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
@@ -9,6 +9,7 @@ import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
+import SiteMetadata from "../components/site-metadata"
 
 import mousetrap from "mousetrap"
 
@@ -147,41 +148,22 @@ class DefaultLayout extends React.Component {
 
     return (
       <div className={isHomepage ? `is-homepage` : ``}>
-        <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
-          <meta name="twitter:site" content="@gatsbyjs" />
-          <meta property="og:type" content="website" />
-          <meta property="og:site_name" content="GatsbyJS" />
-          <meta name="docsearch:version" content="2.0" />
-          <link
-            rel="canonical"
-            href={`https://gatsbyjs.org${this.props.location.pathname}`}
-          />
-          <html lang="en" />
-        </Helmet>
+        <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2.
-          {` `}
-          <a
-            href="https://v1.gatsbyjs.org/"
+          {/* !!! If you change the children of Banner remember to do the same in layout/layout-with-heading.js */}
+          <OutboundLink
+            href="https://www.gatsbyjs.com/content-mesh-contentful"
             css={{
               color: `#fff`,
+              "&:hover": {
+                color: `#fff`,
+              },
             }}
           >
-            View the v1 docs
-            <span
-              css={{
-                display: `none`,
-                [presets.Mobile]: {
-                  display: `inline`,
-                },
-              }}
-            >
-              {` `}
-              instead
-            </span>
-          </a>
-          .
+            Watch
+          </OutboundLink>
+          {`: “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div
@@ -194,6 +176,8 @@ class DefaultLayout extends React.Component {
                 ? presets.bannerHeight
                 : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
             },
+            paddingLeft: `env(safe-area-inset-left)`,
+            paddingRight: `env(safe-area-inset-right)`,
           }}
         >
           <PageWithSidebar
