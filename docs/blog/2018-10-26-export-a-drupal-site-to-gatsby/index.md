@@ -15,6 +15,7 @@ mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
 ```
 
 ## How to export a Drupal site to Gatsby yourself
+
 To do this yourself, you'll build a simple blog using the excellent [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) project. Create a new project and then add a [sqlite library](https://github.com/JoshuaWise/better-sqlite3) as a dev dependency:
 
 ```
