@@ -245,7 +245,7 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 - Node.js
 
 Frontend development (adjective form with a dash) is when you’re working on the
-frontend (noun form with no dash). The same goes with the back end, full stack,
+frontend (noun form with no dash). The same goes with the backend, full stack,
 and many other compound terms.
 
 ### Use active voice
