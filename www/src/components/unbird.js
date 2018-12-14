@@ -3,9 +3,9 @@ import PropTypes from "prop-types"
 import axios from "axios"
 import styled from "react-emotion"
 import { rhythm, options } from "../utils/typography"
-import { colors } from "../utils/presets"
-import EnvelopeIcon from "react-icons/lib/fa/envelope-o"
-import CancelIcon from "react-icons/lib/md/close"
+import presets, { colors } from "../utils/presets"
+import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
+import CancelMdIcon from "react-icons/lib/md/close"
 import SendIcon from "react-icons/lib/io/paper-airplane"
 
 const FeedbackComponent = styled(`section`)`
@@ -16,28 +16,43 @@ const FeedbackComponent = styled(`section`)`
 const FeedbackToggle = styled(`div`)`
   width: 60px;
   height: 60px;
+  bottom: 64px;
   background-color: ${colors.gatsby};
   color: #fff;
   border-radius: 100%;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  right: 20px;
   z-index: 99999;
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: center;
   cursor: pointer;
 
-  &:hover {
-    background-color: ${colors.gatsbyDarker};
+  :hover {
+    background-color: ${colors.gatsbyDark};
+  }
+
+  ${presets.Tablet} {
+    bottom: 30px;
+    right: 30px;
   }
 `
 
 const IconWrapper = styled(`div`)`
-  position: relative;
-  width: 60px;
-  height: 60px;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+
+  svg {
+    height: auto;
+  }
+`
+
+const EnvelopeIcon = styled(EnvelopeFaIcon)`
+  font-size: ${rhythm(1)};
+`
+const CancelIcon = styled(CancelMdIcon)`
+  font-size: ${rhythm(1.2)};
 `
 
 const StatusMessage = styled(`span`)`
@@ -49,66 +64,69 @@ const StatusMessage = styled(`span`)`
   font-size: 16px;
   padding: 0.4rem 0.8rem;
   text-align: left;
+  left: 0;
 `
 
 const FeedbackForm = styled(`div`)`
   position: fixed;
-  right: 30px;
-  bottom: 100px;
-  width: 350px;
-  height: 300px;
+  right: 5%;
+  bottom: 134px;
+  width: 90%;
   background-color: ${colors.gatsby};
   box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-  overflow: hidden;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
+  border-radius: ${presets.radiusLg}px;
   font-family: ${options.systemFontFamily.join(`,`)};
+
+  ${presets.Tablet} {
+    width: 350px;
+    right: 30px;
+    bottom: 100px;
+  }
 `
 
 const Label = styled(`label`)`
-  width: 100%;
+  font-family: ${options.headerFontFamily.join(`,`)};
+  font-weight: 600;
   height: 240px;
-  background-color: ${colors.gatsby};
   color: #fff;
-  font-weight: 200;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px;
   font-size: 22px;
+  float: left;
 `
 
 const Form = styled(`form`)`
-  height: 100%;
-  position: relative;
+  margin: 0;
 `
 
 const Input = styled(`input`)`
+  float: left;
   height: 60px;
-  width: 100%;
+  width: calc(100% - 60px);
   font-size: 14px;
-  padding: 20px 60px 20px 20px;
+  padding: 20px;
   border: none;
   resize: none;
-
-  &:hover {
-    outline: none;
-  }
+  border-right: 1px solid #ddd;
+  border-radius: 0;
 `
 
 const Send = styled(`button`)`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  right: 20px;
-  bottom: 15px;
+  float: left;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: center;
   border: none;
+  background: #fff;
+  padding: 0;
+
+  svg {
+    width: 50%;
+    height: auto;
+    fill: ${colors.gatsby};
+  }
 `
 
 class Unbird extends React.Component {
@@ -128,33 +146,7 @@ class Unbird extends React.Component {
       <FeedbackComponent>
         <FeedbackToggle onClick={this.toggleFeedbackForm}>
           <IconWrapper>
-            {this.state.visible ? (
-              <CancelIcon
-                css={{
-                  color: `#fff`,
-                  fontSize: rhythm(1.6),
-                  padding: rhythm(0.2),
-                  position: `absolute`,
-                  top: `50%`,
-                  left: `50%`,
-                  transform: `translate(-50%, -50%)`,
-                  cursor: `pointer`,
-                }}
-              />
-            ) : (
-              <EnvelopeIcon
-                css={{
-                  color: `#fff`,
-                  fontSize: rhythm(1.4),
-                  padding: rhythm(0.2),
-                  position: `absolute`,
-                  top: `50%`,
-                  left: `50%`,
-                  transform: `translate(-50%, -50%)`,
-                  cursor: `pointer`,
-                }}
-              />
-            )}
+            {this.state.visible ? <CancelIcon /> : <EnvelopeIcon />}
           </IconWrapper>
         </FeedbackToggle>
 
@@ -173,18 +165,10 @@ class Unbird extends React.Component {
                 value={this.state.feedbackInput}
                 onChange={this.handleFeedbackInput}
                 placeholder={this.props.feedbackPlaceholder}
+                required
               />
               <Send>
-                <SendIcon
-                  css={{
-                    color: colors.gatsby,
-                    fontSize: rhythm(1.4),
-                    padding: rhythm(0.2),
-                    position: `absolute`,
-                    top: `-25%`,
-                    left: 0,
-                  }}
-                />
+                <SendIcon />
               </Send>
             </Form>
           </FeedbackForm>
@@ -202,7 +186,7 @@ class Unbird extends React.Component {
   }
 
   handleFeedbackInput = e => {
-    this.setState({ feedbackInput: event.target.value })
+    this.setState({ feedbackInput: e.target.value })
   }
 
   setStatusMessage = msg => {
