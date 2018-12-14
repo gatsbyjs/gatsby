@@ -77,7 +77,7 @@ exports.onCreateNode = (
       createNodeField({
         node,
         name: `slug`,
-        value: slug || ``,
+        value: slug,
       })
 
       // Used to determine a page layout.
