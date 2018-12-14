@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 import loader from "./loader"
 import shallowCompare from "shallow-compare"
 
+let isInitialRender = true
+
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
 // will just render, else will render null.
@@ -19,53 +21,86 @@ class EnsureResources extends React.Component {
     }
   }
 
-  static getDerivedStateFromProps({ pageResources, location }, prevState) {
+  reloadPage(prevHref) {
+    // Do this, rather than simply `window.location.reload()`, so that
+    // pressing the back/forward buttons work - otherwise when pressing
+    // back, the browser will just change the URL and expect JS to handle
+    // the change, which won't always work since it might not be a Gatsby
+    // page.
+    const { href } = window.location
+    window.history.replaceState({}, ``, prevHref)
+    window.location.replace(href)
+  }
+
+  static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location !== location) {
       const pageResources = loader.getResourcesForPathnameSync(
         location.pathname
       )
 
-      if (pageResources) {
-        return {
-          pageResources,
-          location: { ...location },
-        }
+      return {
+        pageResources,
+        location: { ...location },
       }
     }
 
     return null
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps === this.props) return
+  hasResources(pageResources) {
+    if (pageResources && pageResources.json) {
+      return true
+    }
 
-    const { pathname } = this.props.location
+    if (pageResources && process.env.NODE_ENV !== `production`) {
+      return true
+    }
 
-    if (!loader.getResourcesForPathnameSync(pathname))
+    return false
+  }
+
+  retryResources(nextProps) {
+    const { pathname } = nextProps.location
+
+    if (!loader.getResourcesForPathnameSync(pathname)) {
+      // Store the previous and next location before resolving resources
+      const prevLocation = this.props.location
+      this.nextLocation = nextProps.location
+
       // Page resources won't be set in cases where the browser back button
       // or forward button is pushed as we can't wait as normal for resources
       // to load before changing the page.
       loader.getResourcesForPathname(pathname).then(pageResources => {
         // The page may have changed since we started this, in which case doesn't update
-
-        if (this.props.location.pathname !== location.pathname) {
+        if (this.nextLocation !== nextProps.location) {
           return
         }
 
-        this.setState({
-          location: { ...location },
-          pageResources,
-        })
+        if (this.hasResources(pageResources)) {
+          this.setState({
+            location: { ...window.location },
+            pageResources,
+          })
+          return
+        }
+
+        // If we still don't have resources, reload the page.
+        // (This won't happen on initial render, since shouldComponentUpdate
+        // is only called when the component updates.)
+        this.reloadPage(prevLocation.href)
       })
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // 404
-    if (!nextState.pageResources) {
-      return true
+    // Always return false if we're missing resources.
+    if (!this.hasResources(nextState.pageResources)) {
+      this.retryResources(nextProps)
+      return false
     }
+
     // Check if the component or json have changed.
-    if (!this.state.pageResources && nextState.pageResources) {
+    if (this.state.pageResources !== nextState.pageResources) {
       return true
     }
     if (
@@ -92,54 +127,14 @@ class EnsureResources extends React.Component {
     return shallowCompare(this, nextProps, nextState)
   }
 
-  shouldRenderStaticHTML() {
-    const { localStorage } = window
-    const { href, pathname } = window.location
-
-    // This should only occur if the network is offline, or if the
-    // path is nonexistent and there's no custom 404 page.
-    if (
-      process.env.NODE_ENV === `production` &&
-      !(this.state.pageResources && this.state.pageResources.json)
-    ) {
-      if (localStorage.getItem(`___failedResources`) === pathname) {
-        // Maybe it will work again in the future, so remove the flag
-        localStorage.removeItem(`___failedResources`)
-        console.error(
-          `WARNING: Resources cannot be loaded for the pathname ${pathname} - ` +
-            `falling back to static HTML instead.\n` +
-            `This is likely due to a bug in Gatsby, or misconfiguration in your project.`
-        )
-      } else {
-        // Mark the pathname as failed
-        localStorage.setItem(`___failedResources`, pathname)
-
-        // Reload the page.
-        // Do this, rather than simply `window.location.reload()`, so that
-        // pressing the back/forward buttons work - otherwise when pressing
-        // back, the browser will just change the URL and expect JS to handle
-        // the change, which won't always work since it might not be a Gatsby
-        // page.
-        const originalUrl = new URL(href)
-        window.history.replaceState({}, `404`, `${pathname}?gatsby-404`)
-        window.location.replace(originalUrl)
-      }
-
-      return true
-    } else {
-      localStorage.removeItem(`___failedResources`)
-      return false
-    }
-  }
-
   render() {
-    // TODO: find a nicer way to do this (e.g. React Suspense)
-    if (this.shouldRenderStaticHTML()) {
-      const __html = document.getElementById(`___gatsby`).innerHTML
-      return <div dangerouslySetInnerHTML={{ __html }} />
-    } else {
-      return this.props.children(this.state)
+    if (!this.hasResources(this.state.pageResources) && isInitialRender) {
+      // prevent hydrating
+      throw new Error(`Missing resources for ${this.state.location.pathname}`)
     }
+
+    isInitialRender = false
+    return this.props.children(this.state)
   }
 }
 

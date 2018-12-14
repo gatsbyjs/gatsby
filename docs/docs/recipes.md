@@ -41,7 +41,7 @@ Read the [Gatsby project structure](/docs/gatsby-project-structure/) guide for a
 Starters are boilerplate Gatsby sites maintained officially, or by the community.
 
 - Learn how to use the Gatsby CLI tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
-- See a list of [official and community starters](/docs/gatsby-starters/)
+- Browse the [Starter Library](/starters/)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
 
 ## Creating pages
