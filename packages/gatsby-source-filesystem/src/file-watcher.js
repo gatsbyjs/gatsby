@@ -1,6 +1,6 @@
 const path = require(`path`)
-const chokidar = require(`chokidar`)
 const { Machine } = require(`xstate`)
+const findFiles = require(`./find-files`)
 const { createFileNode } = require(`./create-file-node`)
 
 /**
@@ -60,7 +60,8 @@ function fileWatcher(
     )
   })
 
-  const watcher = chokidar.watch(pluginOptions.path, {
+  const watcher = findFiles(pluginOptions.path, {
+    watch: process.env.GATSBY_EXECUTING_COMMAND === `develop`,
     ignored: [
       `**/*.un~`,
       `**/.DS_Store`,

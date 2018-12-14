@@ -1,10 +1,18 @@
-const fileFinder = require(`../file-finder`)
+const findFiles = require(`../find-files`)
 const path = require(`path`)
 
-describe(`file-finder`, () => {
+describe(`findOnce`, () => {
   it(`resolves an array of file paths`, async done => {
     expect.assertions(3)
-    const queue = await fileFinder(`${__dirname}/fixtures/test-fs`)
+    const queue = await findFiles(`${__dirname}/fixtures/test-fs`, {
+      watch: false,
+      ignored: [
+        `.toBeIgnored.md`,
+        `**/.DS_Store`,
+        `**/.placeholder.md`,
+        `**/notInTheFixture.bar`,
+      ],
+    })
     const expectedQueue = [
       path.join(__dirname, `fixtures`, `test-fs`, `index.md`),
       path.join(__dirname, `fixtures`, `test-fs`, `dirA`, `index.md`),
