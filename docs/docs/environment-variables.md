@@ -96,7 +96,7 @@ API_KEY=927349872349798
 `GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`:
 
 ```jsx
-// In any front-end code
+// In any frontend code
 render() {
   return (
     <div>

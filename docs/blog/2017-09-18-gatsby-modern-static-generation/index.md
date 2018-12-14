@@ -165,11 +165,11 @@ ops required by such a stack. (There are paid hosting options, of course, but
 that comes with a different set of problems). So I switched to Gatsby.
 
 Another option, if you want to keep Wordpress' Admin UI is to maintain your
-content, is to separate the backend from the front end.
+content, is to separate the backend from the frontend.
 
 Imagine that instead of having [memcached](https://memcached.org/) caching your
 HTML in front of your WordPress site, you trigger a hook each time your database
-changes that will re-generate the front end using Gatsby’s
+changes that will re-generate the frontend using Gatsby’s
 [Wordpress plugin](/packages/gatsby-source-wordpress/). Yes, Gatsby supports
 multiple backend sources to load your content. Instead of storing them inside
 your version control like me, you can just as well load them from your

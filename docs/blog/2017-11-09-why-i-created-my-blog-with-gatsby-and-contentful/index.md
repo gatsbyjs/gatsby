@@ -207,7 +207,7 @@ time -- built using Phenomic.
 
 So, I went ahead and built my blog using Phenomic. Overall, I thought it was a
 very good Static Site Generator. It allowed me to use CSS Modules, PostCSS and
-Hot Reloading out of the box, which translated into a very pleasant front-end
+Hot Reloading out of the box, which translated into a very pleasant frontend
 development experience.
 
 However, at the end of the day, Phenomic was just another old-school Static Site
@@ -255,7 +255,7 @@ form we wish.
 
 That also means that our clients can now use a proper CMS to manage all the
 content of their sites, and whenever they publish, update or delete an entry,
-the whole static front end will be auto-generated from scratch, resulting in a
+the whole static frontend will be auto-generated from scratch, resulting in a
 new version that contains the updated information.
 
 As good as this architecture sounded in my head, I knew that I had to test it
@@ -275,7 +275,7 @@ installing plugins (i.e.
 
 Personally, however, I found the idea of maintaining a CMS server and a database
 just for my simple blog not very appealing. Yes, our decoupled architecture
-means that if our CMS server or database ever goes down our static front end
+means that if our CMS server or database ever goes down our static frontend
 won't be affected at all, but we still need to pay to have that CMS server up
 and running listening for requests -- which won't be that many -- and we still
 need to spend some time securing that MySQL database. Being a "Serverless"

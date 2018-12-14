@@ -35,7 +35,7 @@ These aspects all address the architecture for the back-end application services
 
 ## What’s Next?
 
-It is trite but true to say that every company is becoming a software company. This focus on digital transformation means that businesses are using apps and experiences as the primary interface to the customer. Most of the emphasis to date has been solving the back-end services for digital transformation. But as an industry, we haven’t rethought the front-end presentation layer architecture which is a vital part of that new customer interface.
+It is trite but true to say that every company is becoming a software company. This focus on digital transformation means that businesses are using apps and experiences as the primary interface to the customer. Most of the emphasis to date has been solving the back-end services for digital transformation. But as an industry, we haven’t rethought the frontend presentation layer architecture which is a vital part of that new customer interface.
 
 We now live in a world of cheap compute and storage, cloud/edge capabilities, and generally fast and pervasive network coverage. So it seems the time has come to dramatically improve the presentation layer. In this world, for instance, running traditional web servers and web content management systems may not make sense anymore. It is incredibly inefficient to have a web server talking to a content management system to pull information, create a response page and send it back to the user. Serverless is gaining interest in terms of the back-end architecture, so why not apply a similar approach to the presentation layer?
 

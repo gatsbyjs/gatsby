@@ -2,7 +2,7 @@
   type: individual
   description: >-
     Hello, I’m Fabian — a product designer and developer based in Potsdam,
-    Germany. I’ve been working both as a product designer and front-end developer
+    Germany. I’ve been working both as a product designer and frontend developer
     for over 5 years now. I particularly enjoy working with companies that try
     to meet broad and unique user needs.
   location: "Potsdam, Germany"
@@ -160,7 +160,7 @@
 - name: LekoArts
   type: individual
   description: >-
-    Hi, I'm Lennart — a self-taught and passionate graphic/web designer & front-end developer. I create accessible, fast and beautiful designed websites with Gatsby.
+    Hi, I'm Lennart — a self-taught and passionate graphic/web designer & frontend developer. I create accessible, fast and beautiful designed websites with Gatsby.
     I regularly create Gatsby starters, tutorials and contribute to the project. I know Gatsby by heart & can help you transition your website to the JAMStack.
     Feel free to contact me if you want to launch a blazingly fast website!
   location: "Darmstadt, Germany"
@@ -200,7 +200,7 @@
   type: individual
   description: >-
     Husband and father. 
-    Front-end engineer. 
+    Frontend engineer.
     Currently at EveryMundo previously at El Universo.
     Nodejs, React and Web performance.
   location: "Guayaquil, Ecuador"
@@ -213,7 +213,7 @@
 - name: Kevin Legrand
   type: individual
   description: >-
-    I am a front-end developer who lives in Lyon, France.
+    I am a frontend developer who lives in Lyon, France.
     I work in a web agency who builds websites using Laravel, React or WordPress
     depending on our clients.
   location: France

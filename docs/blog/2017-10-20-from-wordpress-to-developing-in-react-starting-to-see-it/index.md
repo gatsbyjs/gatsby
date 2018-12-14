@@ -5,7 +5,7 @@ author: "Benjamin Read"
 tags: ["React", "getting-started", "wordpress"]
 ---
 
-As a front-end designer I've always prided myself on being a HTML and CSS
+As a frontend designer I've always prided myself on being a HTML and CSS
 specialist. My use of JavaScript has been limited to animations and DOM
 manipulation. However, at
 [Indigo Tree](https://indigotree.co.uk "Indigo Tree: We Build Awesome Websites")
@@ -146,7 +146,7 @@ to learn independently.
 
 My initial concerns around using a JavaScript framework such as React seem to
 have all been allayed. With server-side React, we no longer have a dependency on
-front-end JavaScript, so progressive enhancement is not just a possibility but a
+frontend JavaScript, so progressive enhancement is not just a possibility but a
 standard. There's momentum towards better accessibility, and for me as a
 developer, the tools are there (such as Babel, Chrome Dev Tools React extension,
 and others) for a faster, more efficient development experience.

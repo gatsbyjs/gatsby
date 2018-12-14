@@ -142,7 +142,7 @@
 - title: The State of JavaScript
   description: >
     Data from over 20,000 developers, asking them questions on topics ranging
-    from front-end frameworks and state management, to build tools and testing
+    from frontend frameworks and state management, to build tools and testing
     libraries.
   main_url: "https://stateofjs.com/"
   url: "https://stateofjs.com/"
@@ -644,7 +644,7 @@
   featured: false
   description: >-
     Hello, I’m Fabian — a product designer and developer based in Potsdam,
-    Germany. I’ve been working both as a product designer and front-end developer
+    Germany. I’ve been working both as a product designer and frontend developer
     for over 5 years now. I particularly enjoy working with companies that try
     to meet broad and unique user needs.
   categories:
@@ -775,7 +775,7 @@
   featured: false
   description: >-
     manu.ninja is the personal blog of Manuel Wieser, where he talks about
-    front-end development, games and digital art
+    frontend development, games and digital art
   categories:
     - Blog
     - Technology
@@ -833,7 +833,7 @@
   source_url: "https://github.com/pravdomil/pravdomil.com"
   featured: false
   description: >-
-    I’ve been working both as a product designer and front-end developer for over
+    I’ve been working both as a product designer and frontend developer for over
     5 years now. I particularly enjoy working with companies that try to meet
     broad and unique user needs.
   categories:
@@ -944,13 +944,13 @@
   url: "https://www.charlespinnix.com/"
   featured: false
   description: >-
-    I’m a senior front end engineer with 8 years of experience building websites
+    I’m a senior frontend engineer with 8 years of experience building websites
     and web applications. I’m interested in leading creative, multidisciplinary
     engineering teams. I’m a creative technologist, merging photography, art,
     and design into engineering and visa versa. I take a pragmatic,
     product-oriented approach to development, allowing me to see the big picture
     and ensuring quality products are completed on time. I have a passion for
-    modern front end JavaScript frameworks such as React and Vue, and I have
+    modern frontend JavaScript frameworks such as React and Vue, and I have
     substantial experience on the back end with an interest in Node and
     container based deployment with Docker and AWS.
   categories:
@@ -1280,9 +1280,9 @@
   built_by_url: "https://github.com/LekoArts"
   description: >-
     Hi, I'm Lennart — a self-taught and passionate graphic/web designer &
-    front-end developer based in Darmstadt, Germany. I love it to realize complex
+    frontend developer based in Darmstadt, Germany. I love it to realize complex
     projects in a creative manner and face new challenges. Since 6 years I do
-    graphic design, my love for front-end development came up 3 years ago. I
+    graphic design, my love for frontend development came up 3 years ago. I
     enjoy acquiring new skills and cementing this knowledge by writing blogposts
     and creating tutorials.
   categories:
@@ -1535,7 +1535,7 @@
     - Portfolio
   built_by: Parker Sarsfield
   built_by_url: "https://parkersarsfield.com"
-- title: Front-end web development with Greg
+- title: Frontend web development with Greg
   description: |
     JavaScript, GatsbyJS, ReactJS, CSS in JS... Let's learn some stuff together.
   main_url: "https://dev.greglobinski.com"
@@ -1899,7 +1899,7 @@
     - Nonprofit
 - title: Artem Sapegin
   description: >
-    Little homepage of Artem Sapegin, a front-end developer, passionate
+    Little homepage of Artem Sapegin, a frontend developer, passionate
     photographer, coffee drinker and crazy dogs’ owner.
   main_url: "https://sapegin.me/"
   url: "https://sapegin.me/"
@@ -1994,7 +1994,7 @@
   url: "https://www.webpurple.net/"
   source_url: "https://github.com/WebPurple/site"
   description: >-
-    Site of local (Russia, Ryazan) front-end community. Main purpose is to show
+    Site of local (Russia, Ryazan) frontend community. Main purpose is to show
     info about meetups and keep blog.
   categories:
     - Nonprofit
@@ -2258,7 +2258,7 @@
   main_url: https://gedd.ski
   url: https://gedd.ski
   description: >
-    front-end mastery blog - level up your UI game.
+    frontend mastery blog - level up your UI game.
   categories:
     - Web Development
     - Education
@@ -2889,7 +2889,7 @@
   featured: false
 - title: Mirror Conf
   description: >
-    Mirror Conf is a conference designed to empower designers and front-end developers who have a thirst for knowledge and want to broaden their horizons.
+    Mirror Conf is a conference designed to empower designers and frontend developers who have a thirst for knowledge and want to broaden their horizons.
   main_url: "https://www.mirrorconf.com/"
   url: "https://www.mirrorconf.com/"
   categories:
@@ -3260,7 +3260,7 @@
   featured: false
 - title: Ramón Chancay
   description: >-
-    Front-end / Back-end Developer in Guayaquil Ecuador.
+    Frontend / Back-end Developer in Guayaquil Ecuador.
     Currently at Everymundo, previously at El Universo.
     I enjoy teaching and sharing what I know.
     I give professional advice to developers and companies.

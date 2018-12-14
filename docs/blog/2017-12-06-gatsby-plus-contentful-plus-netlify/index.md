@@ -96,7 +96,7 @@ repo.
 
 Contentful is a hosted headless CMS with a fantastic user experience. It’s
 similar to having a back end like Wordpress, but you are fully responsible for
-the front-end layer. The beauty of Contentful is threefold.
+the frontend layer. The beauty of Contentful is threefold.
 
 - Intuitive and attractive UI
 - Simple content modeling

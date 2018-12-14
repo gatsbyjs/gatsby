@@ -23,7 +23,7 @@
   avatar: avatars/moreno-feltscher.jpg
   twitter: "@luagsh_mrn"
 - id: David James
-  bio: Front End Developer at https://chromatix.com.au
+  bio: Frontend Developer at https://chromatix.com.au
   avatar: avatars/david-james.jpg
   twitter: "@daviddeejjames"
 - id: Samuel Goudie
@@ -78,7 +78,7 @@
   bio: Robin Vasan is an experienced early-stage venture investor and former repeat entrepreneur. His expertise covers the full life-cycle of building and scaling companies and he primarily invests in applications, cloud computing, open source, virtualization and security.
   avatar: avatars/robin-vasan.jpg
 - id: Ross Whitehouse
-  bio: React and Front-End Developer from Birmingham, UK
+  bio: React and Frontend Developer from Birmingham, UK
   avatar: avatars/ross-whitehouse.jpg
   twitter: "@RossWhitehouse"
 - id: Vlad Pasculescu
@@ -130,7 +130,7 @@
   avatar: avatars/ray-gesualdo.jpg
   twitter: "@RayGesualdo"
 - id: Michelle Barker
-  bio: Front end developer at Mud, CSS obsessive and blogger at https://css-irl.info
+  bio: Frontend developer at Mud, CSS obsessive and blogger at https://css-irl.info
   avatar: avatars/michelle-barker.jpg
   twitter: "@CSSInRealLife"
 - id: Jason Lengstorf

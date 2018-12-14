@@ -11,7 +11,7 @@ A static website contains Web pages with fixed content. Technically, it is a sim
 
 To make their creation easier, numerous open-source static websites generators are available: [Jekyll](https://jekyllrb.com/), [Hugo](https://gohugo.io/), [Hexo](https://hexo.io/), etc. Most of the time, the content is managed through static (ideally Markdown) files or a Content API. Then, the generator requests the content, injects it in templates defined by the developer and generates a bunch of HTML files.
 
-Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing front-end frameworks appeared over the last couple years: Angular, Vue and more recently, React.
+Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing frontend frameworks appeared over the last couple years: Angular, Vue and more recently, React.
 
 > Gatsby: when static websites meet Progressive Web Apps
 
