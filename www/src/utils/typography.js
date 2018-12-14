@@ -97,7 +97,7 @@ const _options = {
         paddingTop: `0.2em`,
         paddingBottom: `0.2em`,
       },
-      "tt, code, kbd, .gatsby-code-title": {
+      "tt, code, kbd, label, .gatsby-code-title": {
         fontFamily: options.monospaceFontFamily.join(`,`),
         fontSize: `80%`,
       },
