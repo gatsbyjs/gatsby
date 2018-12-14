@@ -6,7 +6,7 @@ import { hot, setConfig } from "react-hot-loader"
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
@@ -60,6 +60,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     let Root = hot(module)(preferDefault(require(`./root`)))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
+        postInitialRenderWork()
         apiRunner(`onInitialClientRender`)
       })
     })
