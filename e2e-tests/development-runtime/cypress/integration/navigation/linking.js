@@ -1,0 +1,35 @@
+describe(`navigation`, () => {
+  beforeEach(() => {
+    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+  })
+
+  it(`displays content from other pages`, () => {
+    cy.visit(`/page-2`).waitForAPI(`onRouteUpdate`)
+
+    cy.getTestElement(`page-2-message`)
+      .invoke(`text`)
+      .should(`equal`, `Hi from the second page`)
+  })
+
+  it(`re-routes on link click`, () => {
+    cy.getTestElement(`page-two`).click()
+
+    cy.location(`pathname`).should(`equal`, `/page-2/`)
+  })
+
+  it(`can navigate to and from pages`, () => {
+    cy.getTestElement(`page-two`).click()
+
+    cy.getTestElement(`back-button`).click()
+
+    cy.location(`pathname`).should(`equal`, `/`)
+  })
+
+  it(`displays 404 page on broken link`, () => {
+    cy.getTestElement(`broken-link`).click()
+
+    cy.getTestElement(`not-found-message`)
+      .invoke(`text`)
+      .should(`equal`, `Gatsby.js development 404 page`)
+  })
+})
