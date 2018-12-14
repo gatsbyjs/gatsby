@@ -1,3 +1,4 @@
 **/*.js.snap text eol=lf
 **/__testfixtures__/** text eol=lf
 **/__tests__/fixtures/** text eol=lf
+**/*.md text eol=lf

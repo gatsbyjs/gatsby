@@ -1,11 +1,17 @@
 const systemPath = require(`path`)
+const mm = require(`micromatch`)
 
 const tsDeclarationExtTest = /\.d\.tsx?$/
 const jsonYamlExtTest = /\.(json|ya?ml)$/
 
-function isTestFile(path) {
-  const testFileTest = new RegExp(`(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$`)
-  return path.match(testFileTest)
+// https://github.com/facebook/jest/blob/v24.0.0-alpha.4/packages/jest-config/src/Defaults.js#L71
+function isTestFile(filePath) {
+  const testPatterns = [
+    `**/__tests__/**/*.(js|ts)?(x)`,
+    `**/?(*.)+(spec|test).(js|ts)?(x)`,
+  ]
+
+  return mm.isMatch(filePath, testPatterns)
 }
 
 module.exports = path => {
@@ -19,6 +25,6 @@ module.exports = path => {
     parsedPath.name.slice(0, 9) !== `template-` &&
     !tsDeclarationExtTest.test(parsedPath.base) &&
     !jsonYamlExtTest.test(parsedPath.base) &&
-    !isTestFile(parsedPath.base)
+    !isTestFile(path)
   )
 }

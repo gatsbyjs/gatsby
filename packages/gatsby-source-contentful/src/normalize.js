@@ -83,7 +83,16 @@ exports.buildResolvableSet = ({
   defaultLocale,
 }) => {
   const resolvable = new Set()
-  existingNodes.forEach(n => resolvable.add(n.id))
+  existingNodes.forEach(n => {
+    if (n.contentful_id) {
+      // We need to add only root level resolvable (assets and entries)
+      // derived nodes (markdown or JSON) will be recreated if needed.
+      // We also need to apply `fixId` as some objects will have ids
+      // prefixed with `c` and fixIds will recursively apply that
+      // and resolvable ids need to match that.
+      resolvable.add(fixId(n.contentful_id))
+    }
+  })
 
   entryList.forEach(entries => {
     entries.forEach(entry => {
@@ -158,14 +167,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(
-  node,
-  key,
-  text,
-  createNode,
-  createNodeId,
-  createContentDigest
-) {
+function prepareTextNode(node, key, text, createNodeId, createContentDigest) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
@@ -183,6 +185,33 @@ function prepareTextNode(
   node.children = node.children.concat([textNode.id])
 
   return textNode
+}
+
+function prepareStructuredTextNode(
+  node,
+  key,
+  content,
+  createNodeId,
+  createContentDigest
+) {
+  const str = stringify(content)
+  const structuredTextNode = {
+    ...content,
+    id: createNodeId(`${node.id}${key}RichTextNode`),
+    parent: node.id,
+    children: [],
+    [key]: str,
+    internal: {
+      type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
+      mediaType: `text/richtext`,
+      content: str,
+      contentDigest: createContentDigest(str),
+    },
+  }
+
+  node.children = node.children.concat([structuredTextNode.id])
+
+  return structuredTextNode
 }
 
 function prepareJSONNode(
@@ -351,8 +380,6 @@ exports.createContentTypeNodes = ({
         if (entryItemFieldKey.split(`___`).length > 1) {
           return
         }
-
-        entryItemFields[entryItemFieldKey] = entryItemFields[entryItemFieldKey]
       })
 
       // Replace text fields with text nodes so we can process their markdown
@@ -375,13 +402,28 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNode,
             createNodeId,
             createContentDigest
           )
 
           childrenNodes.push(textNode)
           entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
+
+          delete entryItemFields[entryItemFieldKey]
+        } else if (
+          fieldType === `RichText` &&
+          _.isPlainObject(entryItemFields[entryItemFieldKey])
+        ) {
+          const richTextNode = prepareStructuredTextNode(
+            entryNode,
+            entryItemFieldKey,
+            entryItemFields[entryItemFieldKey],
+            createNodeId,
+            createContentDigest
+          )
+
+          childrenNodes.push(richTextNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
 
           delete entryItemFields[entryItemFieldKey]
         } else if (

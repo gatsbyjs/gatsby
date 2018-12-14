@@ -12,13 +12,12 @@ exports[`gatsby-plugin-sass Stage: build-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -26,15 +25,7 @@ exports[`gatsby-plugin-sass Stage: build-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({})",
-                    Object {
-                      "loader": "/resolved/path/sass-loader",
-                      "options": Object {
-                        "sourceMap": true,
-                      },
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -65,13 +56,12 @@ exports[`gatsby-plugin-sass Stage: build-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({\\"plugins\\":[\\"test1\\"]})",
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -79,15 +69,7 @@ exports[`gatsby-plugin-sass Stage: build-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({\\"plugins\\":[\\"test1\\"]})",
-                    Object {
-                      "loader": "/resolved/path/sass-loader",
-                      "options": Object {
-                        "sourceMap": true,
-                      },
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -118,7 +100,6 @@ exports[`gatsby-plugin-sass Stage: build-html / Sass options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -128,7 +109,7 @@ exports[`gatsby-plugin-sass Stage: build-html / Sass options 1`] = `
                           "absolute/path/a",
                           "absolute/path/b",
                         ],
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -136,19 +117,51 @@ exports[`gatsby-plugin-sass Stage: build-html / Sass options 1`] = `
                 Object {
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "null",
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sass Stage: build-html / css-loader options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "css({\\"camelCase\\":false,\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "includePaths": Array [
-                          "absolute/path/a",
-                          "absolute/path/b",
-                        ],
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "null",
                   ],
                 },
               ],
@@ -185,7 +198,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -199,7 +212,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -238,7 +251,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / PostCss plugins 1`] = `
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -252,7 +265,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / PostCss plugins 1`] = `
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -295,7 +308,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / Sass options 1`] = `
                           "absolute/path/a",
                           "absolute/path/b",
                         ],
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -313,7 +326,60 @@ exports[`gatsby-plugin-sass Stage: build-javascript / Sass options 1`] = `
                           "absolute/path/a",
                           "absolute/path/b",
                         ],
-                        "sourceMap": true,
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sass Stage: build-javascript / css-loader options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"camelCase\\":false,\\"modules\\":true,\\"importLoaders\\":2})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/sass-loader",
+                      "options": Object {
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"camelCase\\":false,\\"importLoaders\\":2})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/sass-loader",
+                      "options": Object {
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -501,7 +567,7 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
 }
 `;
 
-exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
+exports[`gatsby-plugin-sass Stage: develop / css-loader options 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -514,7 +580,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
                   "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"modules\\":true,\\"importLoaders\\":2})",
+                    "css({\\"camelCase\\":false,\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
                       "loader": "/resolved/path/sass-loader",
@@ -528,7 +594,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"camelCase\\":false,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
                       "loader": "/resolved/path/sass-loader",
@@ -536,6 +602,50 @@ exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
                         "sourceMap": true,
                       },
                     },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "css({\\"modules\\":true,\\"importLoaders\\":2})",
+                    "postcss({})",
+                    Object {
+                      "loader": "/resolved/path/sass-loader",
+                      "options": Object {
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "null",
                   ],
                 },
               ],
@@ -566,13 +676,12 @@ exports[`gatsby-plugin-sass Stage: develop-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({\\"plugins\\":[\\"test1\\"]})",
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -580,15 +689,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({\\"plugins\\":[\\"test1\\"]})",
-                    Object {
-                      "loader": "/resolved/path/sass-loader",
-                      "options": Object {
-                        "sourceMap": true,
-                      },
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -619,7 +720,6 @@ exports[`gatsby-plugin-sass Stage: develop-html / Sass options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -629,7 +729,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / Sass options 1`] = `
                           "absolute/path/a",
                           "absolute/path/b",
                         ],
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
                   ],
@@ -637,19 +737,51 @@ exports[`gatsby-plugin-sass Stage: develop-html / Sass options 1`] = `
                 Object {
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "null",
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sass Stage: develop-html / css-loader options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "css({\\"camelCase\\":false,\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
                       "loader": "/resolved/path/sass-loader",
                       "options": Object {
-                        "includePaths": Array [
-                          "absolute/path/a",
-                          "absolute/path/b",
-                        ],
-                        "sourceMap": true,
+                        "sourceMap": false,
                       },
                     },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "null",
                   ],
                 },
               ],

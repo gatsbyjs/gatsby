@@ -58,6 +58,7 @@ Related Gatsby docs:
 - [V2 Migration Guide](/docs/migrating-from-v1-to-v2/#migrate-from-react-router-to-reachrouter)
 - [Gatsby Link API reference](/docs/gatsby-link/)
 - [V2 announcement blog post](/blog/2018-09-17-gatsby-v2/)
+- [Making your site accessible](/docs/making-your-site-accessible)
 
 External references:
 

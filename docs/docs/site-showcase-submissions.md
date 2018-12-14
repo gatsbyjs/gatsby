@@ -1,5 +1,5 @@
 ---
-title: Site Showcase Submissions
+title: Submit to Site Showcase
 ---
 
 Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructions.

@@ -17,7 +17,6 @@ function reportFailure(msg, err: Error) {
 type BuildArgs = {
   directory: string,
   sitePackageJson: object,
-  browserslist: string[],
   prefixPaths: boolean,
   noUglify: boolean,
   openTracingConfigFile: string,
