@@ -94,6 +94,7 @@ class GatsbyLink extends React.Component {
       getProps = this.defaultGetProps,
       onClick,
       onMouseEnter,
+      onMouseLeave,
       /* eslint-disable no-unused-vars */
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
@@ -117,6 +118,9 @@ class GatsbyLink extends React.Component {
           // eslint-disable-line
           onMouseEnter && onMouseEnter(e)
           ___loader.hovering(parsePath(to).pathname)
+        }}
+        onMouseLeave={e => {
+          onMouseLeave && onMouseLeave(e)
         }}
         onClick={e => {
           // eslint-disable-line
