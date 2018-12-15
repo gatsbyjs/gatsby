@@ -25,6 +25,12 @@ if (
                 // have been added to the cache.
                 // We call the onServiceWorkerUpdateReady API so users can show update prompts.
                 apiRunner(`onServiceWorkerUpdateReady`, { serviceWorker: reg })
+
+                // If resources failed for the current page, reload.
+                if (window.___failedResources) {
+                  console.log(`resources failed, SW updated - reloading`)
+                  window.reload()
+                }
               } else {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a "Content is cached for offline use." message.
