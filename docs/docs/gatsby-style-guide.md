@@ -292,7 +292,7 @@ wording.
 
 ## The difference between tutorials and docs
 
-The main tutorial at `/tutorial/` is optimized for users who are not experts in React and/or Javascript, and therefore has a different purpose, tone, and style than the docs. The docs at `/docs/` are optimized for those with intermediate to expert mastery with React and Javascript.
+The main tutorial at `/tutorial/` is optimized for users who are not experts in React and/or JavaScript, and therefore has a different purpose, tone, and style than the docs. The docs at `/docs/` are optimized for those with intermediate to expert mastery with React and JavaScript.
 
 ## Tutorial
 
@@ -304,11 +304,9 @@ The tutorial should prioritize helping users with the following attributes and g
 
 Attributes:
 
-- new to React
-- interested in React
-- new to Gatsby
-- interested in Gatsby
-- interested in the JavaScript ecosystem (not necessarily new to it)
+- new to React and interested in it
+- new to Gatsby and interested in it
+- new to JavaScript ecosystem and interested in it
 - proficient with browsers and operating systems
 
 Looking for:
