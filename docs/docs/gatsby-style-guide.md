@@ -424,13 +424,13 @@ Here is how we measure the quality of the tutorial and docs.
 - time to value: how quickly, effectively, and painlessly can users experience the value of Gatsby?
 - daily, weekly, monthly active users
 - daily, weekly, monthly “finishers” of the tutorial (finisher = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
-- retention
+- weekly retention ([using cohort analysis](https://www.geckoboard.com/learn/kpi-examples/mobile-app-kpis/retention-rate/))
 
 ### Docs
 
 - time to task: how quickly and effectively can users accomplish tasks?
 - daily, weekly, monthly active users
-- retention
+- weekly retention ([using cohort analysis](https://www.geckoboard.com/learn/kpi-examples/mobile-app-kpis/retention-rate/))
 
 ## Goals of docs and tutorial maintenance
 
