@@ -1343,7 +1343,7 @@
     - Support for mathematical expressions
     - Support for images
 - url: https://gatsby-starter-ttag.netlify.com/
-  repo: https://github.com/jaredh159/gatsby-starter-ttag
+  repo: https://github.com/ttag-org/gatsby-starter-ttag
   description: Gatsby starter with the minimum required to demonstrate using ttag for precompiled internationalization of strings.
   tags:
     - i18n

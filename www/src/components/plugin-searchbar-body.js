@@ -301,14 +301,14 @@ class Search extends Component {
 }
 
 // the result component is fed into the InfiniteHits component
-const Result = ({ hit, pathname, search }) => {
+const Result = ({ hit, pathname, query }) => {
   // Example:
   // pathname = `/plugins/gatsby-link/` || `/plugins/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
   const selected = pathname.includes(hit.name)
   return (
     <Link
-      to={`/packages/${hit.name}/?=${search}`}
+      to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
           boxShadow: `none`,
