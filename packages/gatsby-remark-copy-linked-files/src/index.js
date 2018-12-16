@@ -242,7 +242,7 @@ module.exports = (
     }
 
     // Handle Images
-    extractUrlAttributeAndElement($(`img`), `src`).forEach(
+    extractUrlAttributeAndElement($(`img[src]`), `src`).forEach(
       ({ url, element }) => {
         try {
           const ext = url.split(`.`).pop()
@@ -256,15 +256,19 @@ module.exports = (
     )
 
     // Handle video tags.
-    extractUrlAttributeAndElement($(`video source, video`), `src`).forEach(
-      processUrl
-    )
+    extractUrlAttributeAndElement(
+      $(`video source[src], video[src]`),
+      `src`
+    ).forEach(processUrl)
 
     // Handle audio tags.
-    extractUrlAttributeAndElement($(`audio source`), `src`).forEach(processUrl)
+    extractUrlAttributeAndElement(
+      $(`audio source[src], audio[src]`),
+      `src`
+    ).forEach(processUrl)
 
     // Handle a tags.
-    extractUrlAttributeAndElement($(`a`), `href`).forEach(processUrl)
+    extractUrlAttributeAndElement($(`a[href]`), `href`).forEach(processUrl)
 
     return
   })
