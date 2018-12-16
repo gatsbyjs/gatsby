@@ -1,7 +1,7 @@
 ---
 title: Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity
 date: 2018-12-17
-author: Dustin Schau
+author: swyx
 tags:
   - apps
   - web apps
@@ -390,9 +390,9 @@ export function handler(event, context, callback) {
 }
 ```
 
-## Conclusion
+## Gatsby - Perfect for your next Hackathon
 
-It's 5 steps each to turn your static Gatsby sites into dynamic, authenticated, fully serverless apps with Netlify's free tools. If you'd like to see a full working demo, 
+It's 5 steps each to turn your static Gatsby sites into dynamic, authenticated, fully serverless apps with Netlify's free tools. This makes Gatsby a perfect tool for your next app. If you're at a hackathon, short on time, or just like to see a full working demo, check any of the following links.
 
 - **Code:** https://github.com/sw-yx/jamstack-hackathon-starter
 - **Starter:** https://www.gatsbyjs.org/starters/jamstack-hackathon-starter
