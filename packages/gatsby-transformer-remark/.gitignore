@@ -1,3 +1,2 @@
-/gatsby-node.js
-/extend-node-type.js
-/on-node-create.js
+/*.js
+!index.js

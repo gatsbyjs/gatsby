@@ -118,7 +118,7 @@ export const pageQuery = graphql`
 `src/html.jsx` is responsible for everything other than where Gatsby lives in
 the `<body />`.
 
-In this file you can modify the `<head>` metadata, general structure of the
+In this file, you can modify the `<head>` metadata and general structure of the
 document and add external links.
 
 Typically you should omit this from your site as the default html.js file will

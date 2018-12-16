@@ -173,7 +173,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text, createNode, createNodeId) {
+function prepareTextNode(node, key, text, createNodeId) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
@@ -194,7 +194,7 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
 }
 
 function prepareStructuredTextNode(node, key, content, createNodeId) {
-  const str = JSON.stringify(content)
+  const str = stringify(content)
   const structuredTextNode = {
     ...content,
     id: createNodeId(`${node.id}${key}RichTextNode`),
@@ -393,7 +393,6 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNode,
             createNodeId
           )
 
@@ -403,7 +402,6 @@ exports.createContentTypeNodes = ({
           delete entryItemFields[entryItemFieldKey]
         } else if (
           fieldType === `RichText` &&
-          process.env.GATSBY_CONTENTFUL_RICH_TEXT === `enabled` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
           const richTextNode = prepareStructuredTextNode(

@@ -40,6 +40,11 @@ module.exports = async (
       return resolve()
     }
 
+    let originalImg = node.url
+    if (!/^(http|https)?:\/\//i.test(node.url)) {
+      originalImg = `https:${node.url}`
+    }
+
     const srcSplit = node.url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
     const options = _.defaults(pluginOptions, defaults)
@@ -59,7 +64,7 @@ module.exports = async (
 
     const response = await axios({
       method: `GET`,
-      url: `https:${node.url}`, // for some reason there is a './' prefix
+      url: originalImg, // for some reason there is a './' prefix
       responseType: `stream`,
     })
 
@@ -71,18 +76,18 @@ module.exports = async (
 
     const responsiveSizesResult = await buildResponsiveSizes({
       metadata,
-      imageUrl: `https:${node.url}`,
+      imageUrl: originalImg,
       options,
     })
+
     // Calculate the paddingBottom %
     const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`
 
-    const fallbackSrc = `https${node.url}`
+    const fallbackSrc = originalImg
     const srcSet = responsiveSizesResult.srcSet
     const presentationWidth = responsiveSizesResult.presentationWidth
 
     // Generate default alt tag
-    const originalImg = node.url
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
