@@ -64,9 +64,12 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 - Commit and push to your fork.
 - Create a pull request from your branch.
 
-### Contributing to the documentation.
+### Contributing to the documentation
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! It's people like you that make this community great!
+
+#### Top priorities
+Check the Github repo for issues labeled with ["documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or ["documentation" and "status: help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22status%3A+help+wanted%22) to see all documentation issues that are ready for community help. Once you start a PR to address one of these issues, you can remove the "help wanted" label.
 
 #### Modifying markdown files in Gatsby documentation
 
