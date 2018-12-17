@@ -120,10 +120,10 @@ exports.createPages = ({ graphql, actions }) => {
     isPermanent: true,
   })
 
-  Object.entries(startersRedirects).forEach(([ from, to]) => {
+  Object.entries(startersRedirects).forEach(([fromPath, toPath]) => {
     createRedirect({
-      fromPath: from,
-      toPath: to,
+      fromPath,
+      toPath,
       isPermanent: true,
       redirectInBrowser: false,
     })
