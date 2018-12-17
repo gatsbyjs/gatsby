@@ -241,13 +241,13 @@ Earlier you defined React components as reusable pieces of code describing a UI.
 
 In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` to the imported `Header` sub-component:
 
-```jsx
+```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" />
 ```
 
 Over in `header.js`, the header component expects to receive the `headerText` prop (because you’ve written it to expect that) So you can access it like so:
 
-```jsx
+```jsx:title=src/pages/header.js
 <h1>{props.headerText}</h1>
 ```
 
@@ -255,7 +255,7 @@ Over in `header.js`, the header component expects to receive the `headerText` pr
 
 If you had passed another prop to our `<Header />` component, like so...
 
-```jsx
+```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
 ```
 
