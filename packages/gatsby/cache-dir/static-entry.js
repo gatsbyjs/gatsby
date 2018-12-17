@@ -277,10 +277,10 @@ export default (pagePath, callback) => {
     }.json`
     headComponents.push(
       <link
+        as="fetch"
         rel="preload"
         key={dataPath}
         href={dataPath}
-        as="fetch"
         crossOrigin="use-credentials"
       />
     )
