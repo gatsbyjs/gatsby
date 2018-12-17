@@ -62,7 +62,7 @@ module.exports = async function build(program: BuildArgs) {
       report.stripIndent`
         Building static HTML for pages failed
 
-        See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+        See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
       `,
       err
     )
