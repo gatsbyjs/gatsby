@@ -27,7 +27,10 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
   </a>
-  <a href="https://gatsbyjs.org/docs/how-to-submit-a-pr/">
+  <a href="https://npmcharts.com/compare/gatsby?minimal=true">
+    <img src="https://img.shields.io/npm/dt/gatsby.svg" alt="Total downloads on npm." />
+  </a>
+  <a href="https://gatsbyjs.org/docs/how-to-contribute">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
 </p>
@@ -39,7 +42,7 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/plugins/">Plugins</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <a href="https://gatsbyjs.org/starters/">Starters</a>
   <span> · </span>
   <a href="https://gatsbyjs.org/showcase/">Showcase</a>
   <span> · </span>
@@ -80,6 +83,7 @@ Gatsby is a modern framework for blazing fast websites.
 - [Learning Gatsby](#-learning-gatsby)
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
+- [License](#memo-license)
 - [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
 
 ## 🚀 Get Up and Running in 5 Minutes
@@ -138,11 +142,9 @@ Whether you're helping us fix bugs, improve the docs, or spread the word, we'd l
 
 Check out our [**Contributing Guide**](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
-
 ### Code of Conduct
 
 Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://gatsbyjs.org/docs/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
-
 
 ### A note on how this repository is organized
 
@@ -151,6 +153,10 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 ### Contributing to Gatsby v1
 
 We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
+
+## :memo: License
+
+Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks to Our Contributors and Sponsors
 

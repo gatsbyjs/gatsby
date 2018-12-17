@@ -49,7 +49,7 @@ You may also want to check out [the main issue](https://github.com/gatsbyjs/gats
 
 Through the month, we’ll be continuously curating and adding “Hacktoberfest” labeled issues targeting many different facets of the Gatsby ecosystem (docs, core, packages, etc). If everything is claimed, don’t worry! More issues are being added regularly. (And of course feel free to peruse [other open issues](https://github.com/gatsbyjs/gatsby/issues) in the queue). This is our first time actively organizing around Hacktoberfest, and we aim to be as responsive and supportive as possible.
 
-If you’re considering contributing to Gatsby for the first time -- or if you've already contributed --  we’re so glad you’re here!
+If you’re considering contributing to Gatsby for the first time -- or if you've already contributed -- we’re so glad you’re here!
 
 ## Still have questions?
 

@@ -11,11 +11,9 @@ import {
   RouteUpdates,
 } from "./navigation"
 import emitter from "./emitter"
-window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader, { setApiRunnerForLoader } from "./loader"
-import loadDirectlyOr404 from "./load-directly-or-404"
 import EnsureResources from "./ensure-resources"
 
 window.asyncRequires = asyncRequires
@@ -67,18 +65,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   if (
     // Make sure the window.page object is defined
     page &&
-
     // The canonical path doesn't match the actual path (i.e. the address bar)
     __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
-
     // ...and if matchPage is specified, it also doesn't match the actual path
     (!page.matchPath ||
       !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname)) &&
-
     // Ignore 404 pages, since we want to keep the same URL
     page.path !== `/404.html` &&
     !page.path.match(/^\/404\/?$/) &&
-
     // Also ignore the offline shell (since when using the offline plugin, all
     // pages have this canonical path)
     !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
@@ -89,56 +83,43 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     )
   }
 
-  loader
-    .getResourcesForPathname(browserLoc.pathname)
-    .then(resources => {
-      if (!resources || resources.page.path === `/404.html`) {
-        return loadDirectlyOr404(
-          resources,
-          browserLoc.pathname + browserLoc.search + browserLoc.hash,
-          true
-        )
+  loader.getResourcesForPathname(browserLoc.pathname).then(() => {
+    const Root = () =>
+      createElement(
+        Router,
+        {
+          basepath: __PATH_PREFIX__,
+        },
+        createElement(RouteHandler, { path: `/*` })
+      )
+
+    const WrappedRoot = apiRunner(
+      `wrapRootElement`,
+      { element: <Root /> },
+      <Root />,
+      ({ result }) => {
+        return { element: result }
       }
+    ).pop()
 
-      return null
-    })
-    .then(() => {
-      const Root = () =>
-        createElement(
-          Router,
-          {
-            basepath: __PATH_PREFIX__,
-          },
-          createElement(RouteHandler, { path: `/*` })
-        )
+    let NewRoot = () => WrappedRoot
 
-      const WrappedRoot = apiRunner(
-        `wrapRootElement`,
-        { element: <Root /> },
-        <Root />,
-        ({ result }) => {
-          return { element: result }
+    const renderer = apiRunner(
+      `replaceHydrateFunction`,
+      undefined,
+      ReactDOM.hydrate
+    )[0]
+
+    domReady(() => {
+      renderer(
+        <NewRoot />,
+        typeof window !== `undefined`
+          ? document.getElementById(`___gatsby`)
+          : void 0,
+        () => {
+          apiRunner(`onInitialClientRender`)
         }
-      ).pop()
-
-      let NewRoot = () => WrappedRoot
-
-      const renderer = apiRunner(
-        `replaceHydrateFunction`,
-        undefined,
-        ReactDOM.hydrate
-      )[0]
-
-      domReady(() => {
-        renderer(
-          <NewRoot />,
-          typeof window !== `undefined`
-            ? document.getElementById(`___gatsby`)
-            : void 0,
-          () => {
-            apiRunner(`onInitialClientRender`)
-          }
-        )
-      })
+      )
     })
+  })
 })

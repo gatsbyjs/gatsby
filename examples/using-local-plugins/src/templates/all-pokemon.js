@@ -19,16 +19,16 @@ export default () => (
       }
     `}
     render={data => (
-      <div style={{ width: 960, margin: "4rem auto" }}>
+      <div style={{ width: 960, margin: `4rem auto` }}>
         <h1>Choose a Pokémon!</h1>
         <ul style={{ padding: 0 }}>
           {data.allPokemon.edges.map(pokemon => (
             <li
               key={pokemon.node.id}
               style={{
-                textAlign: "center",
-                listStyle: "none",
-                display: "inline-block",
+                textAlign: `center`,
+                listStyle: `none`,
+                display: `inline-block`,
               }}
             >
               <Link to={`/pokemon/${pokemon.node.name}`}>

@@ -1,17 +1,10 @@
 const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
 const _ = require(`lodash`)
-const buildNodeTypes = require(`../build-node-types`)
-const buildNodeConnections = require(`../build-node-connections`)
-
-jest.mock(`../../redux/actions/add-page-dependency`, () => {
-  return {
-    createPageDependency: jest.fn(),
-  }
-})
-
-const {
-  createPageDependency,
-} = require(`../../redux/actions/add-page-dependency`)
+const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+jest.mock(`../../redux/actions/add-page-dependency`)
+const nodeTypes = require(`../build-node-types`)
+const nodeConnections = require(`../build-node-connections`)
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 describe(`build-node-connections`, () => {
   let schema, store, types, connections
@@ -56,8 +49,8 @@ describe(`build-node-connections`, () => {
       },
     ].forEach(n => store.dispatch({ type: `CREATE_NODE`, payload: n }))
 
-    types = await buildNodeTypes({})
-    connections = await buildNodeConnections(_.values(types))
+    types = await nodeTypes.buildAll({})
+    connections = await nodeConnections.buildAll(_.values(types))
 
     schema = new GraphQLSchema({
       query: new GraphQLObjectType({
