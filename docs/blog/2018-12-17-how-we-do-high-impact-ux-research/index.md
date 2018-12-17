@@ -8,11 +8,12 @@ tags:
 
 ## What this article is about:
 
-Recently, I gave a talk with this same title at Gatsby Days in the San Francisco Bay area. This article the following:
-Why do UX research on your website?
-How to do high-impact, low-effort research
-Top 5 pain points we’re solving at Gatsby
-How to sign up to be a usability tester
+Recently, I gave a talk with this same title at Gatsby Days in the San Francisco Bay area. This article reviews the following:
+
+- Why do UX research on your website?
+- How to do high-impact, low-effort research
+- Top 5 pain points we’re solving at Gatsby
+- How to sign up to be a usability tester
 
 ## Why do UX research?
 
@@ -87,11 +88,11 @@ We included two people on every usability test, whenever possible, and usually t
 
 ### Have a plan for sharing results
 
-Take notes, and prepare for and host a meeting in which the takeaways are a couple action items based on observations from the results. Come with observations and let everyone create insights and action items together, because “being a smart person is way more fun than listening to a smart person”, like [Erika Hall said](https://vimeo.com/129039134).
+Plan a meeting to present a summary of your research observations. Instead of telling them what to do, let everyone create insights and action items together, because “being a smart person is way more fun than listening to a smart person”, like [Erika Hall said](https://vimeo.com/129039134).
 
 ### Only gather as much research as your team can turn into action
 
-It can be tempting to start asking everyone about what they think about everything on your website. I know, because I’ve done it! I have giant spreadsheets and googledocs full of information that no one has read, and I don’t have the time to re-read.
+It can be tempting to start asking everyone about what they think about everything on your website. I know, because I’ve done it! In the past, I created giant spreadsheets and googledocs full of information that no one has read, and I don’t have the time to re-read.
 
 If you have a way of anticipating what budget, timelines, and resources you have to devote to the project, that is great. If there isn’t a clear way to anticipate that, just do a very small project that someone could fix in a half day to start. Because then people will get used to the value of research and be ready/open for bigger projects in the future. Just start small.
 
@@ -120,7 +121,7 @@ This is the standard process for surfacing major pain points and problems in a w
 
 ### Sometimes you need to aggregate thousands of data points for months
 
-There is also value in gathering passive feedback from something like google analytics or event tracking. Be careful to gather this kind of data for long enough that it doesn’t include trends for which you will never find the cause. For example, let’s say a butterfly flapped its wings in Fiji, which started an air current which traveled to Novia Scotia and was so warm that everyone got 10x the number of smoothies as they do on other weeks. If you only gathered data on “how many smoothies do people buy in Novia Scotia” that week and reacted quickly to it, you would be reacting to something fickle and mysterious that probably won’t help your smoothie company anticipate demand effectively. Unless you have a way of influencing butterflies in Fiji, that is.
+There is also value in gathering passive feedback from something like google analytics or event tracking. Be careful to gather this kind of data for a specific time period in response to a change on the website so you can compare data "before" and "after" the change. And make sure to gather data from time periods that are long enough to smooth out trends for which you will never find the cause. For example, let’s say a butterfly flapped its wings in Fiji, which started an air current which traveled to Novia Scotia and was so warm that everyone got 10x the number of smoothies as they do on other weeks. If you only gathered data on “how many smoothies do people buy in Novia Scotia” that week and reacted quickly to it, you would be reacting to something fickle and mysterious that probably won’t help your smoothie company anticipate demand effectively. Unless you have a way of influencing butterflies in Fiji, that is.
 
 ## How have we done this research at Gatsby?
 
@@ -130,10 +131,10 @@ Stay tuned for the next articles:
 - “Creating a smooth-as-butter onboarding experience for new users”
 - “Redesigning the .org homepage”
 
-## How to sign for a user interview
+## How to sign up for a user interview
 
-Sign up for a 15, 30, or 60 minute interview to tell me you experiences with Gatsby so far. These interviews are extremely valuable. [calendly.com/shannon-soper](https://calendly.com/shannon-soper)
+Sign up for a 15, 30, or 60 minute interview to tell me your experiences with Gatsby so far. These interviews are extremely valuable--we use the information to guide product development! [calendly.com/shannon-soper](https://calendly.com/shannon-soper)
 
 ## Know someone who has never used Gatsby before?
 
-And that someone might like to get some Gatsby swag for participating in a usability test for first-time visitors to Gatsby? [Submit your contact info and your friend’s contact info here!](https://docs.google.com/forms/d/e/1FAIpQLSeP4Z-7OnBeR2gyaLOu-N9GHQ59EFhIPqvzdp0UU70Fj4Bw2w/viewfor)
+If you know someone who might like to get some Gatsby swag for participating in a usability test for first-time visitors to Gatsby, [submit your contact info and your friend’s contact info here!](https://docs.google.com/forms/d/e/1FAIpQLSeP4Z-7OnBeR2gyaLOu-N9GHQ59EFhIPqvzdp0UU70Fj4Bw2w/viewfor)
