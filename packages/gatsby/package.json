@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.0.67",
+  "version": "2.0.68",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -69,7 +69,7 @@
     "glob": "^7.1.1",
     "graphql": "^0.13.2",
     "graphql-relay": "^0.5.5",
-    "graphql-skip-limit": "^2.0.3",
+    "graphql-skip-limit": "^2.0.4",
     "graphql-tools": "^3.0.4",
     "graphql-type-json": "^0.2.1",
     "hash-mod": "^0.0.5",
