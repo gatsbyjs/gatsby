@@ -25,7 +25,7 @@ When I first discovered Gatsby two years ago, React was already quite popular. I
 
 My design background (e.g. thinking in components), knowledge of JavaScript, and good tutorials definitely eased the learning curve but Gatsby also was of big help to me. My personal site always was a static site displaying my works. But now I wanted to update it more easily and also start blogging. That exactly sounds like one of Gatsby's use cases. It takes all the hard things away and offers you a **playground to learn React**, e.g. only using it as a templating language. So, to answer the question: I wouldn't say that it was a too big step for me 😊
 
-After the v1 release of Gatsby (June '17) I also gone live with my personal site which used markdown as its source and the inbuilt CSS modules for styling. I didn't know much React at that point and hence used it more as a templating language — but still had a PWA and excellent Lighthouse scores!
+After the v1 release of Gatsby (June '17) I also went live with my personal site which used Markdown as its source and the built in CSS Modules for styling. I didn't know much React at that point and hence used it more as a templating language — but still had a PWA and excellent Lighthouse scores!
 
 ## Move Fast and Break Things
 
@@ -45,9 +45,9 @@ So many people say after using Gatsby: "Wow, GraphQL for data querying is so gre
 
 ![Venn diagram showing Gatsby, React, GraphQL, and web performance](./images/Venn_React-GraphQL-Web-Performance.jpg)
 
-The Venn diagram tries to show that the above example also can be applied to other technologies/tools that Gatsby uses. Besides GraphQL I chose React, Headless CMS, and general website performance.
+The Venn diagram tries to show how the above example can also be applied to other technologies/tools that Gatsby uses. Besides GraphQL I chose React, Headless CMS, and general website performance.
 
-You can try different React frameworks/components, you can learn how to setup your own GraphQL server or learn how increase website performance. Headless CMS is another very interesting field to explore. And that's what I did. I used Next.js with Apollo and other great libraries, used Prisma to set up my own GraphQL server, and tuned my website performance (e.g. with optimizing fonts).
+You can try different React frameworks/components, you can learn how to setup your own GraphQL server or learn how to increase website performance. Headless CMS is another very interesting field to explore. And that's what I did. I used Next.js with Apollo and other great libraries, used Prisma to set up my own GraphQL server, and tuned my website performance (e.g. with optimizing fonts).
 
 **Result:** My Gatsby projects can benefit from the gained knowledge!
 
