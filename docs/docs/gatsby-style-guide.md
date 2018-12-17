@@ -285,9 +285,9 @@ wording.
 ## Best practices
 ### Support software versions
 
-When Gatsby commits to support a specific version of software (e.g. Node 6 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced commands and practices as side notes.
+When Gatsby commits to support a specific version of software (e.g. Node 6 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced command or practice as side notes.
 
-For example, npm 5.2.0 (which includes Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, documentation should only introduce `npx` as an optional command in a note like so:
+For example, npm 5.2.0 (which comes with Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, documentation should only introduce `npx` as an optional command in a note like so:
 
 > npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby supports Node 6 and up, so we introduce `npx` here as an optional command for users of npm 5.2.0 or greater.
 
