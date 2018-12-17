@@ -1,7 +1,6 @@
 const {
   GraphQLList,
   GraphQLNonNull,
-  GraphQLScalarType,
   GraphQLInputObjectType,
 } = require(`graphql`)
 const { InputTypeComposer } = require(`graphql-compose`)
@@ -29,16 +28,18 @@ const convert = itc => {
     (acc, [fieldName, fieldConfig]) => {
       let { type } = fieldConfig
 
+      // TODO: getNamedType()
       while (type instanceof GraphQLList || type instanceof GraphQLNonNull) {
         type = type.ofType
       }
       if (type instanceof GraphQLInputObjectType) {
         acc[fieldName] = convert(new InputTypeComposer(type))
       } else {
-        acc[fieldName] =
-          type instanceof GraphQLScalarType
-            ? getQueryOperators(type.name) || type
-            : type
+        // GraphQLScalarType || GraphQLEnumType
+        const operatorFields = getQueryOperators(type)
+        if (operatorFields) {
+          acc[fieldName] = operatorFields
+        }
       }
       return acc
     },

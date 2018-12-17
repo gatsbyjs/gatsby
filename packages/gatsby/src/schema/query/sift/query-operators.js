@@ -1,4 +1,5 @@
-const { InputTypeComposer } = require(`graphql-compose`)
+const { schemaComposer } = require(`graphql-compose`)
+const { GraphQLEnumType } = require(`graphql`)
 
 const EQ = `eq`
 const NE = `ne`
@@ -15,6 +16,9 @@ const GLOB = `glob`
 // const AND; OR; NOT; NOR;
 // const SIZE;
 
+// FIXME: What to do with custom scalars, and with JSON?
+//        Currently, we just omit them.
+// FIXME: Which enum operators?
 const allowedOperators = {
   Boolean: [EQ, NE],
   Date: [EQ, NE, GT, GTE, LT, LTE, IN, NIN],
@@ -23,29 +27,27 @@ const allowedOperators = {
   Int: [EQ, NE, GT, GTE, LT, LTE, IN, NIN],
   // JSON: [EQ, NE],
   String: [EQ, NE, IN, NIN, REGEX, GLOB],
+  Enum: [EQ, NE, IN, NIN],
 }
 
-const addOperators = (fieldType, operators) =>
+const getOperatorFields = (fieldType, operators) =>
   operators.reduce((acc, op) => {
     if (op.slice(-2) === `[]`) {
-      acc[op.slice(0, -2)] = `[${fieldType}]`
+      acc[op.slice(0, -2)] = [fieldType]
     } else {
       acc[op] = fieldType
     }
     return acc
   }, {})
 
-const operatorFields = Object.entries(allowedOperators).reduce(
-  (acc, [type, operators]) => {
-    acc[type] = InputTypeComposer.create({
-      name: type + `QueryOperatorInput`,
-      fields: addOperators(type, operators),
-    })
-    return acc
-  },
-  {}
-)
-
-const getQueryOperators = type => operatorFields[type]
+const getQueryOperators = type => {
+  const operators =
+    allowedOperators[type instanceof GraphQLEnumType ? `Enum` : type.name]
+  return operators
+    ? schemaComposer.getOrCreateITC(type.name + `QueryOperatorInput`, itc =>
+        itc.addFields(getOperatorFields(type, operators))
+      )
+    : null
+}
 
 module.exports = getQueryOperators
