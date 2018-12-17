@@ -474,3 +474,4 @@ If you want to learn more about using production-ready auth solutions, these lin
 - [The Gatsby store for swag and other Gatsby goodies](https://github.com/gatsbyjs/store.gatsbyjs.org)
 - [Building a blog with Gatsby, React and Webtask.io!](https://auth0.com/blog/building-a-blog-with-gatsby-react-and-webtask/)
 - [JAMstack PWA — Let’s Build a Polling App. with Gatsby.js, Firebase, and Styled-components Pt. 2](https://medium.com/@UnicornAgency/jamstack-pwa-lets-build-a-polling-app-with-gatsby-js-firebase-and-styled-components-pt-2-9044534ea6bc)
+- [JAMstack Hackathon Starter - Authenticated Gatsby app starter with Netlify Identity](https://www.gatsbyjs.org/starters/jamstack-hackathon-starter)
