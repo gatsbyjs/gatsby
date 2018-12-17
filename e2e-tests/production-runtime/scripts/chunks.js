@@ -89,6 +89,7 @@ const filterAssets = (assetsForPath, filter) =>
     } else if (filter === `extra`) {
       return !isMain
     }
+    return false
   })
 
 const blockAssetsForPath = ({ page, filter }) => {
