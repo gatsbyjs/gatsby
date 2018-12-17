@@ -406,12 +406,7 @@ Because the audience of the docs is people who have intermediate to expert level
 In practice, you can reach this goal by two rules of thumb:
 
 - Include an "additional information" section at the bottom of each guide with hyperlinks to relevant external blogposts, tutorials, and other Gatsby resources and docs.
-- When there are multiple ways to complete a task, explain the following:
-
-1.  The most common way of accomplishing the task
-2.  The best way to accomplish the task on the lowest supported versions of software
-3.  The best practice and why is it the best (if different than 3)
-4.  Any tips on how to pick an option
+- When there are multiple ways to complete a task, [follow these instructions](#share-best-practices-whenever-possible).
 
 ## KPIs
 
