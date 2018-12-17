@@ -27,10 +27,8 @@ const args = yargs
       )
     }
     `.trim(),
-    type: `string`
-  })
-  .argv
-  
+    type: `string`,
+  }).argv
 
 async function update() {
   const history = await getHistory()
@@ -39,10 +37,6 @@ async function update() {
   const filePath = path.resolve(fileArg)
   let exists = true
   if (!fs.existsSync(filePath)) {
-    const name = path
-      .basename(filePath)
-      .split(/\..+$/)
-      .shift()
     exists = false
     await fs.writeFile(filePath, args.content, `utf8`)
   }

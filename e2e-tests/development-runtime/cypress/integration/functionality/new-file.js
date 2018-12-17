@@ -14,9 +14,12 @@ describe(`new file functionality`, () => {
   })
 
   it(`re-runs GraphQL queries upon new file`, () => {
-    cy.exec(`npm run update -- --file content/sample.md --content "${FILE_CONTENT}"`)
+    cy.exec(
+      `npm run update -- --file content/sample.md --content "${FILE_CONTENT}"`
+    )
 
-    cy.get(`ul`).find(`li`)
+    cy.get(`ul`)
+      .find(`li`)
       .its(`length`)
       .should(`be.gt`, 1)
   })

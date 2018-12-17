@@ -28,7 +28,8 @@ describe(`navigation`, () => {
   it(`displays 404 page on broken link`, () => {
     cy.getTestElement(`broken-link`).click()
 
-    cy.get(`h1`).eq(0)
+    cy.get(`h1`)
+      .eq(0)
       .invoke(`text`)
       .should(`equal`, `Gatsby.js development 404 page`)
   })

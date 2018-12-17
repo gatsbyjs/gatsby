@@ -37,10 +37,9 @@ export default IndexPage
 
 export const indexQuery = graphql`
   {
-    posts: allMarkdownRemark(sort: {
-      fields:[frontmatter___date],
-      order:DESC
-    }) {
+    posts: allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       edges {
         node {
           id
