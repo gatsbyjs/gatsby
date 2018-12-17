@@ -7,11 +7,10 @@ class ClassComponent extends Component {
 
   render() {
     const custom = this.state[`%CUSTOM_STATE%`]
-    const props = { 'data-testid': `class-component` }
     if (custom) {
-      return <h1 {...props}>Custom Message</h1>
+      return <h1 data-test-id="stateful-class-component">Custom Message</h1>
     }
-    return <h1 {...props}>I am a %CLASS_COMPONENT%</h1>
+    return <h1 data-test-id="class-component">I am a %CLASS_COMPONENT%</h1>
   }
 }
 

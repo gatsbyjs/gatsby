@@ -27,7 +27,7 @@ describe(`reloading class component`, () => {
       `npm run update -- --file src/components/class-component.js --replacements "CUSTOM_STATE:${value}"`
     )
 
-    cy.getTestElement(TEST_ID)
+    cy.getTestElement(`stateful-${TEST_ID}`)
       .invoke(`text`)
       .should(`eq`, `Custom Message`)
   })
