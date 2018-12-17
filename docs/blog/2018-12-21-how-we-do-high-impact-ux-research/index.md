@@ -31,9 +31,10 @@ Creating awesome DX and UX are two of the company’s values. We know that devel
 ## Can’t we live our values _without_ research?
 
 You might wonder whether it’s possible to create awesome UX without research; valid question, especially since it’s always nice to save time, effort, and money. When done right, UX research:
-ensures meaningful work (e.g. you are focusing your efforts on what will make the most impact on your goals)
-saves time (because you focus on the right thing earlier and learn about your mistakes faster)
-is fun, surprising, and confidence building! (It’s incredibly fun to meet real users, and imagine having the confidence to _know_ that you’re building something that helps them, rather than just _hoping_ it helps them)
+
+- ensures meaningful work (e.g. you are focusing your efforts on what will make the most impact on your goals)
+- saves time (because you focus on the right thing earlier and learn about your mistakes faster)
+- is fun, surprising, and confidence building! (It’s incredibly fun to meet real users, and imagine having the confidence to _know_ that you’re building something that helps them, rather than just _hoping_ it helps them)
 
 ## How to do high-impact, low-effort projects
 
@@ -68,11 +69,15 @@ Identifying these risks to the homepage led us to our current research project.
 We needed to know two things to assess how the homepage was serving user needs, e.g. calculate the probability of failure.
 
 Question 1
-_How accurate are people’s first impressions of Gatsby?_
+_How accurate are people’s first impressions of Gatsby when they land on the homepage?_
 Answer
 _Not super accurate!_
 
-We found that the diagram below the fold and the READme file in GitHub gave the most accurate impressions of Gatsby, and those aren’t super visible.
+![image of gatsbyjs.org homepage above the fold](gatsby-days-dot-org-homepage.png)
+
+When looking at the image above, users had a lot of unanswered questions about Gatsby. We found that the diagram below the fold (see image below) and [the READme file in GitHub](https://github.com/gatsbyjs/gatsby#--gatsby-v2) gave the most accurate impressions of Gatsby, and those aren’t super visible.
+
+![image of diagram below the fold on gatsbyjs.org homepage](gatsby-days-dot-org-diagram.png)
 
 Question 2
 _How do people evaluate whether they want to use Gatsby for a project?_
