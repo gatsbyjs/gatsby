@@ -1,5 +1,5 @@
 ---
-title: IBM uses Gatsby to manage enterprise-level content
+title: IBM Uses Gatsby to Manage Enterprise-Level Content
 date: 2018-12-17
 author: Linda Watkins
 tags:
@@ -10,11 +10,11 @@ tags:
 
 ## Big Company. Big Website.
 
-When IBM, one of the biggest companies in the world, went looking for a solution to help them manage a vast website, they found Gatsby. Carbon Design System is the open source library for all IBM software products. That’s _all_ IBM software - which means the Carbon Design System website has hundreds of pages and more than a dozen developers, designers, and non-technical content contributors. IBM is one of the biggest companies in the world. And that was the problem - so much content led to a site that was difficult to optimize for performance. They needed to launch a refreshed site dedicated to product design requirements for all IBM-related product launches that worked as smart, fast, and reliably as IBM.
+When IBM, one of the biggest companies in the world, went looking for a solution to help them manage a vast website, they found Gatsby. Carbon Design System is the open source library for all IBM software products. That’s _all_ IBM software - which means the Carbon Design System website has hundreds of pages and more than a dozen developers, designers, and non-technical content contributors. IBM is one of the biggest companies in the world. And that was the problem - so much content led to a site that was difficult to optimize for performance. They needed to launch a refreshed website dedicated to product design requirements for all IBM-related product launches that worked as smart, fast, and reliably as IBM.
 
 ## When Your Website Performance Score is a Seven...
 
-The problem with being one of the biggest businesses in the world is the incredible amount of content that must be housed. It’s IBM’s own in-house director of internal content controls, features, standards, templates, and really everything related to marketing and web-based content. But to find what you were looking for, you had to sort through a lot of information, layered on pages and pages (literally hundreds of pages) of content. With a [Lighthouse][lighthouse] website performance score of only 7 out of 100, up was the only way to go.
+The problem with being one of the biggest businesses in the world is the incredible amount of content that must be housed. Carbon Design System is IBM’s own in-house director of internal content controls, features, standards, templates, and really everything related to marketing and web-based content. But to find what you were looking for, you had to sort through a lot of information, layered on pages and pages (literally hundreds of pages) of content. With a [Lighthouse][lighthouse] website performance score of only 7 out of 100, up was the only way to go.
 
 The original site was a home-grown static site based on Markdown and React that was complicated to update. Add to that many, many hands and minds working on it constantly - some with technical experience and some without. The large volume of content and content creators made it difficult to accomplish the main business objective for the website, which was to make it easy for anyone to contribute content, regardless of their level of technical ability.
 
