@@ -43,9 +43,12 @@ A home-grown system goes down when the people who created it leave. Gatsby doesn
 
 The new Carbon Design System website launched October 3, 2018, and is referenced by designers and developers as an open source project as well as internally at IBM. With a seamless design feel, most users didn’t “see” any changes, but they sure felt them with the lightning fast page load times. Alison pointed out their new Lighthouse performance score went from 7 to 96 (that’s a 89 point jump!) with PWA, Accessibility, Best Practices, and SEO scores in the high 90s - 100.
 
-## Lighthouse Performance Scores with Gatsby
-
-![Lighthouse scores](./images/lighthouse.png)
+<figure>
+  <img alt="Gatsby swag posts on Twitter." src="./images/lighthouse.png" />
+  <figcaption>
+    Lighthouse Performance Scores with Gatsby
+  </figcaption>
+</figure>
 
 <pullquote>
 We’re copying Gatsby as a best practice. Whenever we’re working out how to engage our community, we look to Gatsby as the shining example and ask ourselves, What does Gatsby do?
