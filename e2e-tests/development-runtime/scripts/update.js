@@ -13,8 +13,9 @@ const args = yargs
     default: [],
     type: `array`,
   })
-  .option(`content`, {
-    default: `
+  .option(`fileContent`, {
+    default: JSON.stringify(
+      `
     import React from 'react';
     
     import Layout from '../components/layout';
@@ -26,7 +27,8 @@ const args = yargs
         </Layout>
       )
     }
-    `.trim(),
+    `
+    ).trim(),
     type: `string`,
   }).argv
 
@@ -38,7 +40,11 @@ async function update() {
   let exists = true
   if (!fs.existsSync(filePath)) {
     exists = false
-    await fs.writeFile(filePath, args.content, `utf8`)
+    await fs.writeFile(
+      filePath,
+      JSON.parse(args.fileContent).replace(/\+n/g, `\n`),
+      `utf8`
+    )
   }
   let file = await fs.readFile(filePath, `utf8`)
 

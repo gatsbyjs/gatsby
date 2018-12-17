@@ -15,7 +15,9 @@ describe(`new file functionality`, () => {
 
   it(`re-runs GraphQL queries upon new file`, () => {
     cy.exec(
-      `npm run update -- --file content/sample.md --content "${FILE_CONTENT}"`
+      `npm run update -- --file content/sample.md --file-content '${JSON.stringify(
+        FILE_CONTENT
+      )}'`
     )
 
     cy.get(`ul`)
