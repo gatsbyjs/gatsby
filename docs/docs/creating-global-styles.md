@@ -46,7 +46,7 @@ div {
 
 In `src/components/layout.js`, include the stylesheet and export a layout component:
 
-```js:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import "./layout.css"
 
