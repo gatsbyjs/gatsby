@@ -156,7 +156,7 @@ match the container's width. In the case where the image's width is smaller than
 
 To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
 
-```js
+```jsx
 const NonStretchedImage = props => {
   let normalizedProps = props
   if (props.fluid && props.fluid.presentationWidth) {
