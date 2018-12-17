@@ -154,7 +154,7 @@ object called `fluid`.
 As mentioned previously, images using the _fluid_ type are stretched to
 match the container's width. In the case where the image's width is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
 
-To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, maxWidth:
+To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
 
 ```js
 const NonStretchedImage = props => {
