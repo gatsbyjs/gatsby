@@ -2,12 +2,15 @@
 
 Provide support for using the css-in-js library
 [Emotion](https://github.com/emotion-js/emotion) including server side
-rendering.
+rendering. This plugin supports Emotion v10+, older versions should use
+older plugins. Check the Emotion 10 [migration
+guide](https://emotion.sh/docs/migrating-to-emotion-10#incremental-migration)
+for more information.
 
 ## Install
 
 ```
-npm install --save gatsby-plugin-emotion emotion emotion-server @emotion/core @emotion/styled
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
 ## How to use
