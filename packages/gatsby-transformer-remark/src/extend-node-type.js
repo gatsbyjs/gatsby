@@ -24,7 +24,6 @@ const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 const prune = require(`underscore.string/prune`)
-
 const {
   getConcatenatedValue,
   cloneTreeUntil,
@@ -403,7 +402,9 @@ module.exports = (
                   nextNode.type === `raw` &&
                   nextNode.value === pluginOptions.excerpt_separator
               )
-              return hastToHTML(excerptAST)
+              return hastToHTML(excerptAST, {
+                allowDangerousHTML: true,
+              })
             }
             const fullAST = await getHTMLAst(markdownNode)
             if (!fullAST.children.length) {
@@ -420,7 +421,9 @@ module.exports = (
             }
 
             if (pruneLength && unprunedExcerpt.length < pruneLength) {
-              return hastToHTML(excerptAST)
+              return hastToHTML(excerptAST, {
+                allowDangerousHTML: true,
+              })
             }
 
             const lastTextNode = findLastTextNode(excerptAST)
@@ -438,7 +441,9 @@ module.exports = (
                 omission: `…`,
               })
             }
-            return hastToHTML(excerptAST)
+            return hastToHTML(excerptAST, {
+              allowDangerousHTML: true,
+            })
           }
           if (markdownNode.excerpt) {
             return Promise.resolve(markdownNode.excerpt)
