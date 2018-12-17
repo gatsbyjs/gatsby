@@ -289,13 +289,14 @@ When Gatsby commits to support a specific version of software (e.g. Node 6 and u
 
 For example, npm 5.2.0 (which includes Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, documentation should only introduce `npx` as an optional command in a note like so:
 
-> npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby supports Node 6 and up, we introduce `npx` here as an optional command for users of npm 5.2.0 or greater.
+> npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby supports Node 6 and up, so we introduce `npx` here as an optional command for users of npm 5.2.0 or greater.
 
 ### Share best practices whenever possible
 
-There is an infinite number of tasks that the documentation and tutorials could include, so they should not attempt to teach every way of doing a task. Usually, they should teach the following:
-- the most fundamental way possible to do a task with Gatsby
-- the most common way of doing a task
-- the best practice way of doing a task
+There is an infinite number of ways to do any given task. Docs should not attempt to teach every way of doing a task. Usually, they should mention both 1 and 2 while encouraging 3 and 4:
+1. the most fundamental way to do a task with Gatsby
+2. the most common way of doing a task
+3. the best practice way of doing a task that is possible on supported version(s) of software
+4. the best practice regardless of software versions
 
-For example, `gatsby-image` is a component that includes Gatsby best practices for handling images, yet there are more common and fundamental ways of handling them. Documentation ought to make the best practice clear in addition to the most common and fundamental ways.
+For example, `gatsby-image` is a component that includes Gatsby best practices for handling images, yet there are more fundamental and common ways of handling them. Documentation ought to make the best practice clear in addition to the most common and fundamental ways.
