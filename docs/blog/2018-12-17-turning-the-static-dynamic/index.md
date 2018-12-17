@@ -28,11 +28,11 @@ Why would you use something like Gatsby over Jekyll or Hugo or one of the [hundr
 
 Let's say you have a typical static Gatsby site, like [gatsby-starter-default](https://www.gatsbyjs.org/starters/gatsby-starter-default). You can `npm run build` it, and it spits out a bunch of HTML files. Great! I can host that for free!
 
-Now your client comes to you and asks you to add some custom logic that needs to be executed on the server: 
+Now your client comes to you and asks you to add some custom logic that needs to be executed on the server:
 
 - Maybe you have third party API secrets you don't want to expose to your user.
-- Maybe you need [a serverside proxy to get around CORS issues](https://developer.yahoo.com/javascript/howto-proxy.html?guccounter=1). 
-- Maybe you need to ping a database to check your inventory. 
+- Maybe you need [a serverside proxy to get around CORS issues](https://developer.yahoo.com/javascript/howto-proxy.html?guccounter=1).
+- Maybe you need to ping a database to check your inventory.
 
 **Oh no! Now you have to rewrite everything and move to a Digital Ocean droplet!**
 
@@ -42,7 +42,7 @@ The beauty of serverless functions is that it is incrementally adoptable - **you
 
 ## 5 Steps to add Netlify Functions to Gatsby
 
-Netlify Functions are a great low configuration solution for adding serverless functionality to your Gatsby site. You get 125,000 free calls a month - that's a function call every 20 seconds every day of the week, month, and year - and you can emulate them in local development with [`netlify-lambda`](https://github.com/netlify/netlify-lambda). 
+Netlify Functions are a great low configuration solution for adding serverless functionality to your Gatsby site. You get 125,000 free calls a month - that's a function call every 20 seconds every day of the week, month, and year - and you can emulate them in local development with [`netlify-lambda`](https://github.com/netlify/netlify-lambda).
 
 Let's walk through the steps:
 
@@ -60,7 +60,8 @@ Let's walk through the steps:
     "build:lambda": "netlify-lambda build src/lambda",
   },
 ```
-3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each Javascript/Typescript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename).  Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
+
+3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each Javascript/Typescript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
 
 ```toml
 [build]
@@ -70,22 +71,23 @@ Let's walk through the steps:
 ```
 
 For more info or configuration options (e.g. in different branches and build environments), check [the Netlify.toml reference](https://www.netlify.com/docs/netlify-toml-reference/).
+
 4. **Proxy the emulated functions for local development**: Head to `gatsby-config.js` and add this to your `module.exports`:
 
 ```js
 // gatsby-config.js
-var proxy = require('http-proxy-middleware')
+var proxy = require("http-proxy-middleware")
 
 module.exports = {
   // for avoiding CORS while developing Netlify Functions locally
   // read more: https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying
   developMiddleware: app => {
     app.use(
-      '/.netlify/functions/',
+      "/.netlify/functions/",
       proxy({
-        target: 'http://localhost:9000',
+        target: "http://localhost:9000",
         pathRewrite: {
-          '/.netlify/functions/': '',
+          "/.netlify/functions/": "",
         },
       })
     )
@@ -93,27 +95,29 @@ module.exports = {
   // ...
 }
 ```
+
 5. **Write your functions**: Make a `src/lambda` folder and write as many functions as you need. The only requirement is that each function must export a `handler`, although `netlify-lambda` helps you use webpack to bundle modules or you can [zip the functions yourself](https://www.netlify.com/blog/2018/09/14/forms-and-functions/#optional-zip-the-function-to-manage-dependencies). For example you can write `src/lambda/hello.js`:
 
 ```js
 // For more info, check https://www.netlify.com/docs/functions/#javascript-lambda-functions
 export function handler(event, context, callback) {
-  console.log('queryStringParameters', event.queryStringParameters)
-  callback(null, { // return null to show no errors
+  console.log("queryStringParameters", event.queryStringParameters)
+  callback(null, {
+    // return null to show no errors
     statusCode: 200, // http status code
     body: JSON.stringify({
-      msg: 'Hello, World! ' + Math.round(Math.random() * 10)
+      msg: "Hello, World! " + Math.round(Math.random() * 10),
     }),
   })
 }
 ```
 
-Now you are ready to access this API from anywhere in your Gatsby app! For example, in any event handler or lifecycle method, insert: 
+Now you are ready to access this API from anywhere in your Gatsby app! For example, in any event handler or lifecycle method, insert:
 
 ```js
-fetch('/.netlify/functions/hello')
-      .then(response => response.json())
-      .then(console.log)
+fetch("/.netlify/functions/hello")
+  .then(response => response.json())
+  .then(console.log)
 ```
 
 and watch "Hello World!" pop up in your console. (I added a random number as well to show the endpoint is dynamic) If you are new to React, I highly recommend [reading through the React docs](https://reactjs.org/docs/handling-events.html) to understand where and how to insert event handlers so you can, for example, [respond to a button click](https://reactjs.org/docs/handling-events.html).
@@ -122,7 +126,7 @@ The local proxying we are doing is only for local emulation, eg it is actually r
 
 ## That's cool, but its not an app
 
-So, yes, your site can now be more dynamic than any static site. It can hit any database or API. It runs rings around CORS (by the way, you can also use [Netlify Redirects](https://www.netlify.com/docs/redirects/) for that). But its not an *app* app. Yet!
+So, yes, your site can now be more dynamic than any static site. It can hit any database or API. It runs rings around CORS (by the way, you can also use [Netlify Redirects](https://www.netlify.com/docs/redirects/) for that). But its not an _app_ app. Yet!
 
 The key thing about web apps (and, lets face it, the key thing users really pay for) is they all have some concept of `user`, and that brings with it all manner of complication from security to state management to [role-based access control](https://www.netlify.com/docs/visitor-access-control/#role-based-access-controls-with-jwt-tokens). Entire routes need to be guarded by authentication, and sensitive content shielded from Gatsby's static generation. Sometimes there are things you -don't- want Google's spiders to see!
 
@@ -133,6 +137,7 @@ It's a different tier of concern, which makes it hard to write about in the same
 1. **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (eg `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity/) for further info on what you can do, for example add Facebook or Google social sign-on!
 2. **Install dependencies**: `npm install netlify-identity-widget gatsby-plugin-create-client-paths`
 3. **Configure Gatsby**: for dynamic-ness!
+
 ```js
 // gatsby-config.js
 module.exports = {
@@ -141,20 +146,21 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/app/*`] },
     },
-  // ...
-  ]
+    // ...
+  ],
   // ... (including what you also wrote earlier)
 }
 ```
+
 4. **Write an authentication service**: `netlify-identity-widget` is a framework-agnostic overlay that ships with a nice signup/login UI. This gets you up and running the fastest, however if you need a smaller solution you may want to use the underlying [gotrue-js](https://github.com/netlify/gotrue-js), or [react-netlify-identity](https://github.com/sw-yx/react-netlify-identity) for a React Hooks solution.
 
 Here's a usable example that stores your user in local storage:
 
 ```js
 // service/auth.js
-import netlifyIdentity from 'netlify-identity-widget'
+import netlifyIdentity from "netlify-identity-widget"
 
-export const isBrowser = () => typeof window !== 'undefined'
+export const isBrowser = () => typeof window !== "undefined"
 export const initAuth = () => {
   if (isBrowser()) {
     window.netlifyIdentity = netlifyIdentity
@@ -163,19 +169,19 @@ export const initAuth = () => {
   }
 }
 export const getUser = () =>
-  isBrowser() && window.localStorage.getItem('netlifyUser')
-    ? JSON.parse(window.localStorage.getItem('netlifyUser'))
+  isBrowser() && window.localStorage.getItem("netlifyUser")
+    ? JSON.parse(window.localStorage.getItem("netlifyUser"))
     : {}
 
 const setUser = user =>
-  window.localStorage.setItem('netlifyUser', JSON.stringify(user))
+  window.localStorage.setItem("netlifyUser", JSON.stringify(user))
 
 export const handleLogin = callback => {
   if (isLoggedIn()) {
     callback(getUser())
   } else {
     netlifyIdentity.open()
-    netlifyIdentity.on('login', user => {
+    netlifyIdentity.on("login", user => {
       setUser(user)
       callback(user)
     })
@@ -190,25 +196,26 @@ export const isLoggedIn = () => {
 
 export const logout = callback => {
   netlifyIdentity.logout()
-  netlifyIdentity.on('logout', () => {
+  netlifyIdentity.on("logout", () => {
     setUser({})
     callback()
   })
 }
 ```
+
 5. **Write your app**: Now, any sub paths in `src/pages/app` will be exempt from Gatsby static generation. To keep the dividing line between app and site crystal clear, I like to have all my dynamic Gatsby code in a dedicated `app` folder. This means you can use `@reach/router` with `netlify-identity-widget` to write a standard dynamic React app. Here's some sample code to give you an idea of how to hook them up:
 
 `app.js`:
 
 ```js
-import React from 'react'
-import { Router } from '@reach/router' // comes with gatsby v2
-import Layout from '../components/layout'
-import NavBar from './components/NavBar'
-import Profile from './profile'
-import Main from './main'    // NOT SHOWN
-import PrivateRoute from './components/PrivateRoute'
-import Login from './login'
+import React from "react"
+import { Router } from "@reach/router" // comes with gatsby v2
+import Layout from "../components/layout"
+import NavBar from "./components/NavBar"
+import Profile from "./profile"
+import Main from "./main" // NOT SHOWN
+import PrivateRoute from "./components/PrivateRoute"
+import Login from "./login"
 
 // remember everything in /app/* is dynamic now!
 const App = () => {
@@ -235,27 +242,27 @@ export default App
 `components/NavBar.js`:
 
 ```js
-import React from 'react'
-import { Link, navigate } from 'gatsby'
-import { getUser, isLoggedIn, logout } from '../services/auth'
+import React from "react"
+import { Link, navigate } from "gatsby"
+import { getUser, isLoggedIn, logout } from "../services/auth"
 
 export default () => {
-  const content = { message: '', login: true }
+  const content = { message: "", login: true }
   const user = getUser()
   if (isLoggedIn()) {
     content.message = `Hello, ${user.user_metadata &&
       user.user_metadata.full_name}`
   } else {
-    content.message = 'You are not logged in'
+    content.message = "You are not logged in"
   }
   return (
     <div
       style={{
-        display: 'flex',
-        flex: '1',
-        justifyContent: 'space-between',
-        borderBottom: '1px solid #d1c1e0',
-        backgroundColor: 'aliceblue',
+        display: "flex",
+        flex: "1",
+        justifyContent: "space-between",
+        borderBottom: "1px solid #d1c1e0",
+        backgroundColor: "aliceblue",
       }}
     >
       <span>{content.message}</span>
@@ -288,9 +295,9 @@ export default () => {
 `components/PrivateRoute.js`:
 
 ```js
-import React from 'react'
-import { isLoggedIn } from '../services/auth'
-import { navigate } from 'gatsby'
+import React from "react"
+import { isLoggedIn } from "../services/auth"
+import { navigate } from "gatsby"
 
 class PrivateRoute extends React.Component {
   componentDidMount = () => {
@@ -314,9 +321,9 @@ export default PrivateRoute
 `login.js`:
 
 ```js
-import React from 'react'
-import { navigate } from 'gatsby'
-import { handleLogin, isLoggedIn } from './services/auth'
+import React from "react"
+import { navigate } from "gatsby"
+import { handleLogin, isLoggedIn } from "./services/auth"
 
 class Login extends React.Component {
   handleSubmit = () => handleLogin(user => navigate(`/app/profile`))
@@ -337,21 +344,20 @@ Phew that was a lot! but you should have a solid starting point for your app :)
 
 ## Bonus points: Authenticated Lambda Functions for your Gatsby App
 
-Just like [every magic act has a pledge, a turn, and a prestige](https://en.wikipedia.org/wiki/The_Prestige_(film)), I have one last tidbit for you. [Nothing on the client-side is safe](https://stackoverflow.com/questions/50277192/react-security-concerns-restricted-pages-in-app), and although you can send along Netlify Identity user id's to your Netlify Function endpoints for authenticated access from your Gatsby App (for example in the body of a POST request), you'll never be truly sure if that flow is secure either from malicious users or snooping.
+Just like [every magic act has a pledge, a turn, and a prestige](<https://en.wikipedia.org/wiki/The_Prestige_(film)>), I have one last tidbit for you. [Nothing on the client-side is safe](https://stackoverflow.com/questions/50277192/react-security-concerns-restricted-pages-in-app), and although you can send along Netlify Identity user id's to your Netlify Function endpoints for authenticated access from your Gatsby App (for example in the body of a POST request), you'll never be truly sure if that flow is secure either from malicious users or snooping.
 
 The best way to do authenticated actions inside serverless functions is to do it from inside the context of the function itself. Fortunately, [Netlify Identity and Functions work seamlessly together](https://www.netlify.com/docs/functions/#identity-and-functions). All you have to do is to send along the user's [JWT](https://jwt.io/) when hitting your endpoint:
 
 ```js
 // in your gatsby app
-    const user = getUser()
-    fetch('/.netlify/functions/auth-hello', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + user.token.access_token, // like this
-      },
-    })
-      .then(/* etc */)
+const user = getUser()
+fetch("/.netlify/functions/auth-hello", {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + user.token.access_token, // like this
+  },
+}).then(/* etc */)
 ```
 
 And then inside a lambda function, you can now access the `user` object:
@@ -363,13 +369,13 @@ And then inside a lambda function, you can now access the `user` object:
 
 export function handler(event, context, callback) {
   if (context.clientContext) {
-    const { 
-      user      // actual user info you can use for your serverless functions
+    const {
+      user, // actual user info you can use for your serverless functions
     } = context.clientContext
     callback(null, {
       statusCode: 200,
       body: JSON.stringify({
-        msg: 'auth-hello: ' + Math.round(Math.random() * 10),
+        msg: "auth-hello: " + Math.round(Math.random() * 10),
         user,
       }),
     })
@@ -383,7 +389,7 @@ export function handler(event, context, callback) {
       statusCode: 200,
       body: JSON.stringify({
         msg:
-          'auth-hello - no authentication detected. Note that netlify-lambda doesnt locally emulate Netlify Identity.',
+          "auth-hello - no authentication detected. Note that netlify-lambda doesnt locally emulate Netlify Identity.",
       }),
     })
   }
