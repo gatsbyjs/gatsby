@@ -7,9 +7,12 @@ async function reset() {
   const history = await getHistory()
 
   await Promise.all(
-    Array.from(history).map(([filePath, value]) =>
-      fs.writeFile(path.resolve(filePath), value, `utf8`)
-    )
+    Array.from(history).map(([filePath, value]) => {
+      if (typeof value === `string`) {
+        return fs.writeFile(path.resolve(filePath), value, `utf8`)
+      }
+      return fs.remove(path.resolve(filePath))
+    })
   )
 
   await fs.remove(__HISTORY_FILE__)

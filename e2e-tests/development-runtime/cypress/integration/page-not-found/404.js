@@ -17,6 +17,7 @@ describe(`page not found`, () => {
   it(`shows page listing`, () => {
     cy.get(`ul`)
       .find(`li`)
-      .should(`have.length`, 4)
+      .its(`length`)
+      .should(`be.gte`, 4)
   })
 })
