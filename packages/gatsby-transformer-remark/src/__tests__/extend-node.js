@@ -261,13 +261,13 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
   )
 
   bootstrapTest(
-    `given an html format and an excerpt_separator, it correctly parses code tags`,
+    `given raw html in the text body, this html is not escaped`,
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 
-Where is my \`pony\` named leo?`,
+Where is my <code>pony</code> named leo?`,
     `excerpt(format: HTML)
       frontmatter {
           title
