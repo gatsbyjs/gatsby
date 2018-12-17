@@ -20,7 +20,7 @@ plugins: [
       footnotes: true,
       // Pedantic mode (default: true)
       pedantic: true,
-      // GitHub Flavored Markdown mode (default: true) 
+      // GitHub Flavored Markdown mode (default: true)
       gfm: true,
       // Plugins configs
       plugins: [],
