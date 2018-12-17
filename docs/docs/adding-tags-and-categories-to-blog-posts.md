@@ -42,7 +42,7 @@ If `gatsby develop` is running, restart it so Gatsby can pick up the new fields.
 
 ## Write a query to get all tags for your posts
 
-Now these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
+Now, these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
 
 Try running in Graph<em>i</em>QL (`localhost:8000/___graphql`) the following query
 
@@ -72,31 +72,31 @@ If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-p
 
 First, we'll add a tags template at `src/templates/tags.js`:
 
-```jsx
-import React from "react";
-import PropTypes from "prop-types";
+```jsx:title=src/templates/tags.js
+import React from "react"
+import PropTypes from "prop-types"
 
 // Components
-import Link from "gatsby-link";
+import { Link, graphql } from "gatsby"
 
-const Tags = ({ pathContext, data }) => {
-  const { tag } = pathContext;
-  const { edges, totalCount } = data.allMarkdownRemark;
+const Tags = ({ pageContext, data }) => {
+  const { tag } = pageContext
+  const { edges, totalCount } = data.allMarkdownRemark
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? "" : "s"
-  } tagged with "${tag}"`;
+  } tagged with "${tag}"`
 
   return (
     <div>
       <h1>{tagHeader}</h1>
       <ul>
         {edges.map(({ node }) => {
-          const { path, title } = node.frontmatter;
+          const { path, title } = node.frontmatter
           return (
             <li key={path}>
               <Link to={path}>{title}</Link>
             </li>
-          );
+          )
         })}
       </ul>
       {/*
@@ -105,11 +105,11 @@ const Tags = ({ pathContext, data }) => {
             */}
       <Link to="/tags">All tags</Link>
     </div>
-  );
-};
+  )
+}
 
 Tags.propTypes = {
-  pathContext: PropTypes.shape({
+  pageContext: PropTypes.shape({
     tag: PropTypes.string.isRequired,
   }),
   data: PropTypes.shape({
@@ -127,12 +127,12 @@ Tags.propTypes = {
       ),
     }),
   }),
-};
+}
 
-export default Tags;
+export default Tags
 
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
+  query($tag: String) {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }
@@ -149,7 +149,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 **Note**: `propTypes` are included in this example to help you ensure you're getting all the data you need in the component, and to help serve as a guide while destructuring / using those props.
@@ -158,14 +158,15 @@ export const pageQuery = graphql`
 
 Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
 
-```js
-const path = require("path");
+```js:title=gatsby-node.js
+const path = require("path")
+const _ = require("lodash")
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
-  const blogPostTemplate = path.resolve("src/templates/blog.js");
-  const tagTemplate = path.resolve("src/templates/tags.js");
+  const blogPostTemplate = path.resolve("src/templates/blog.js")
+  const tagTemplate = path.resolve("src/templates/tags.js")
 
   return graphql(`
     {
@@ -185,29 +186,29 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     }
   `).then(result => {
     if (result.errors) {
-      return Promise.reject(result.errors);
+      return Promise.reject(result.errors)
     }
 
-    const posts = result.data.allMarkdownRemark.edges;
+    const posts = result.data.allMarkdownRemark.edges
 
     // Create post detail pages
     posts.forEach(({ node }) => {
       createPage({
         path: node.frontmatter.path,
         component: blogPostTemplate,
-      });
-    });
+      })
+    })
 
     // Tag pages:
-    let tags = [];
+    let tags = []
     // Iterate through each post, putting all found tags into `tags`
     _.each(posts, edge => {
       if (_.get(edge, "node.frontmatter.tags")) {
-        tags = tags.concat(edge.node.frontmatter.tags);
+        tags = tags.concat(edge.node.frontmatter.tags)
       }
-    });
+    })
     // Eliminate duplicate tags
-    tags = _.uniq(tags);
+    tags = _.uniq(tags)
 
     // Make tag pages
     tags.forEach(tag => {
@@ -217,31 +218,31 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         context: {
           tag,
         },
-      });
-    });
-  });
-};
+      })
+    })
+  })
+}
 ```
 
 Some notes:
 
-* Our graphql query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
-* While making the tag pages, note that we pass `tag` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
+- Our GraphQL query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
+- While making the tag pages, note that we pass `tag` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
 
 Our `/tags` page will simply list out all tags, followed by the number of posts with that tag:
 
-```jsx
-import React from "react";
-import PropTypes from "prop-types";
+```jsx:title=src/pages/tags.js
+import React from "react"
+import PropTypes from "prop-types"
 
 // Utilities
-import kebabCase from "lodash/kebabCase";
+import kebabCase from "lodash/kebabCase"
 
 // Components
-import Helmet from "react-helmet";
-import Link from "gatsby-link";
+import Helmet from "react-helmet"
+import { Link, graphql } from "gatsby"
 
 const TagsPage = ({
   data: {
@@ -266,7 +267,7 @@ const TagsPage = ({
       </ul>
     </div>
   </div>
-);
+)
 
 TagsPage.propTypes = {
   data: PropTypes.shape({
@@ -284,12 +285,12 @@ TagsPage.propTypes = {
       }),
     }),
   }),
-};
+}
 
-export default TagsPage;
+export default TagsPage
 
 export const pageQuery = graphql`
-  query TagsQuery {
+  query {
     site {
       siteMetadata {
         title
@@ -305,7 +306,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## _(optional)_ Render tags inline with your blog posts

@@ -1,6 +1,5 @@
+import React from "react"
 import presets from "../utils/presets"
-import { rhythm, scale, options } from "../utils/typography"
-import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
 const Cards = ({ children }) => (
   <div
@@ -12,6 +11,7 @@ const Cards = ({ children }) => (
       borderRadius: presets.radiusLg,
       boxShadow: `0 5px 20px rgba(25, 17, 34, 0.1)`,
       transform: `translateZ(0)`,
+      width: `100%`,
     }}
   >
     {children}

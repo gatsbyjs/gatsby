@@ -10,7 +10,7 @@ Note: You generally will use this plugin together with the [`gatsby-source-files
 
 ## How to use
 
-If you put your csv's files in `./src/data`:
+If you put your `.csv` files in `./src/data`:
 
 ```javascript
 // In your gatsby-config.js
@@ -25,7 +25,7 @@ module.exports = {
     },
     `gatsby-transformer-csv`,
   ],
-};
+}
 ```
 
 Above is the minimal configuration required to begin working. Additional
@@ -70,12 +70,12 @@ c,67
 
 the following three nodes would be created.
 
-```javascript
+```json
 [
-  { letter: "a", value: 65, type: "LettersCsv" },
-  { letter: "b", value: 66, type: "LettersCsv" },
-  { letter: "c", value: 67, type: "LettersCsv" },
-];
+  { "letter": "a", "value": 65, "type": "LettersCsv" },
+  { "letter": "b", "value": 66, "type": "LettersCsv" },
+  { "letter": "c", "value": 67, "type": "LettersCsv" }
+]
 ```
 
 ## How to query
@@ -103,22 +103,22 @@ Which would return:
     edges: [
       {
         node: {
-          letter: 'a'
-          value: 65
-        }
+          letter: "a",
+          value: 65,
+        },
       },
       {
         node: {
-          letter: 'b'
-          value: 66
-        }
+          letter: "b",
+          value: 66,
+        },
       },
       {
         node: {
-          letter: 'c'
-          value: 67
-        }
-      }
+          letter: "c",
+          value: 67,
+        },
+      },
     ]
   }
 }

@@ -1,10 +1,10 @@
 import React from "react"
-import moment from "moment"
+import { graphql } from "gatsby"
 import BlogPostChrome from "../components/BlogPostChrome"
 
 class mdBlogPost extends React.Component {
   render() {
-    const { html, frontmatter } = this.props.data.markdownRemark
+    const { html } = this.props.data.markdownRemark
 
     return (
       <BlogPostChrome
@@ -24,7 +24,7 @@ class mdBlogPost extends React.Component {
 export default mdBlogPost
 
 export const pageQuery = graphql`
-  query mdBlogPostBySlug($slug: String!) {
+  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       ...MarkdownBlogPost_frontmatter

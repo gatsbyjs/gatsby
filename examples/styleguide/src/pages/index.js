@@ -1,11 +1,9 @@
 import React from "react"
-import { Route, Redirect } from "react-router-dom"
+import { Redirect } from "@reach/router"
 
 class Home extends React.Component {
   render() {
-    return (
-      <Route exact path="/" render={() => <Redirect to="/components/" />} />
-    )
+    return <Redirect from="/" to="/components/" />
   }
 }
 

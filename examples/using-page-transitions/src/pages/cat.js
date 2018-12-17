@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
-const Cat = ({ transition }) => (
-  <div style={transition && transition.style}>
+const Cat = () => (
+  <div>
     <h1>meow</h1>
     <div>
       <Link to="/">Go to home</Link>

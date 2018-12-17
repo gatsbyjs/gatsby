@@ -10,14 +10,14 @@ rendering and start writing React components that carry their styles with them.
 
 ## Install
 
-`npm install --save gatsby-plugin-glamor`
+`npm install --save gatsby-plugin-glamor glamor`
 
 ## How to use
 
 First add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [`gatsby-plugin-glamor`];
+plugins: [`gatsby-plugin-glamor`]
 ```
 
 Glamor

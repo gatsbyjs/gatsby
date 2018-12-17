@@ -41,10 +41,14 @@ machines for development (or if your dev environment is containerized in Docker)
 If you need to use a custom https setup, you can pass the `--https`, `--key-file` and
 `--cert-file` flags to `gatsby develop`.
 
-  - `--cert-file` [relative path to ssl certificate file]
-  - `--key-file` [relative path to ssl key file]
+- `--cert-file` [relative path to ssl certificate file]
+- `--key-file` [relative path to ssl key file]
 
-    $ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
+See the example command:
+
+```bash
+$ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
+```
 
 in most cases, the `--https` passed by itself is easier and more convenient to get local https.
 

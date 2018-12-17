@@ -1,6 +1,7 @@
 import * as PropTypes from "prop-types"
 import React from "react"
 import { rhythm } from "../utils/typography"
+import { graphql } from "gatsby"
 
 const propTypes = {
   user: PropTypes.shape({

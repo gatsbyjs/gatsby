@@ -1,9 +1,13 @@
 import React from "react"
 import Helmet from "react-helmet"
+import { graphql } from "gatsby"
 import get from "lodash/get"
 
+import Layout from "../components/layout"
 import Bio from "../components/Bio"
-import { rhythm, scale } from "../utils/typography"
+import typography from "../utils/typography"
+
+const { rhythm, scale } = typography
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -11,7 +15,7 @@ class BlogPostTemplate extends React.Component {
     const siteTitle = get(this.props, `data.site.siteMetadata.title`)
 
     return (
-      <div>
+      <Layout location={this.props.location}>
         <Helmet title={`${post.frontmatter.title} | ${siteTitle}`} />
         <h1>{post.frontmatter.title}</h1>
         <p
@@ -31,7 +35,7 @@ class BlogPostTemplate extends React.Component {
           }}
         />
         <Bio />
-      </div>
+      </Layout>
     )
   }
 }
@@ -39,14 +43,14 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query BlogPostByPath($path: String!) {
+  query($filePath: String!) {
     site {
       siteMetadata {
         title
         author
       }
     }
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
+    markdownRemark(frontmatter: { path: { eq: $filePath } }) {
       id
       html
       frontmatter {

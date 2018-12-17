@@ -1,69 +1,86 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
+import FloatingImage from "../components/floating-image"
+import PageTitle from "../components/page-title"
+import Layout from "../components/layout"
 
-import { rhythm, options } from "../utils/typography"
-
-const BlurUp = ({ data }) => (
-  <div>
-    <h2>Background color</h2>
-    <Img
-      backgroundColor
-      style={{ display: `inherit` }}
-      css={{
-        marginBottom: rhythm(options.blockMarginBottom * 2),
-        marginLeft: rhythm(options.blockMarginBottom * 2),
-        float: `right`,
-        "@media (min-width: 500px)": {
-          display: `none`,
-        },
-      }}
-      title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.resolutions}
-    />
-    <Img
-      backgroundColor
-      style={{ display: `inherit` }}
-      css={{
-        marginBottom: rhythm(options.blockMarginBottom * 2),
-        marginLeft: rhythm(options.blockMarginBottom * 2),
-        float: `right`,
-        display: `none`,
-        "@media (min-width: 500px)": {
-          display: `inline-block`,
-        },
-      }}
-      title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.resolutions}
+const BackgroundColor = ({ data, location }) => (
+  <Layout
+    location={location}
+    image={data.coverImage.localFile.childImageSharp.fluid}
+    imageTitle={`“${data.coverImage.title}” by ${
+      data.coverImage.credit
+    } (via unsplash.com)`}
+    imageBackgroundColor="#F0C450"
+  >
+    <PageTitle>Background Color</PageTitle>
+    <FloatingImage
+      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
+      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
+      title={`“${data.floatingImage.title}” by ${
+        data.floatingImage.credit
+      } (via unsplash.com)`}
+      backgroundColor="#DB3225"
     />
     <Lorem />
     <Img
-      sizes={data.kenImage.sizes}
-      backgroundColor
-      title={`Photo by Ken Treloar on Unsplash`}
+      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
+      backgroundColor="#F9D6CE"
+      title={`“${data.fullWidthImage.title}” by ${
+        data.fullWidthImage.credit
+      } (via unsplash.com)`}
     />
     <Ipsum />
-  </div>
+  </Layout>
 )
 
-export default BlurUp
+export default BackgroundColor
 
 export const query = graphql`
-  query BackgroundColorQuery {
-    reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 126) {
-        ...GatsbyImageSharpResolutions_noBase64
+  query {
+    coverImage: unsplashImagesYaml(title: { eq: "Cactus" }) {
+      credit
+      title
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 720) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
       }
     }
-    reddImage: imageSharp(id: { regex: "/redd/" }) {
-      resolutions(width: 201) {
-        ...GatsbyImageSharpResolutions_noBase64
+    floatingImageMobile: unsplashImagesYaml(title: { eq: "Pug with red hat" }) {
+      localFile {
+        childImageSharp {
+          fixed(width: 120) {
+            ...GatsbyImageSharpFixed_noBase64
+          }
+        }
       }
     }
-    kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      sizes(maxWidth: 599) {
-        ...GatsbyImageSharpSizes_noBase64
+    floatingImage: unsplashImagesYaml(title: { eq: "Pug with red hat" }) {
+      credit
+      title
+      localFile {
+        childImageSharp {
+          fixed(width: 200) {
+            ...GatsbyImageSharpFixed_noBase64
+          }
+        }
+      }
+    }
+    fullWidthImage: unsplashImagesYaml(title: { eq: "Cacti" }) {
+      credit
+      title
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 600) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
       }
     }
   }

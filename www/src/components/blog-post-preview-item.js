@@ -1,33 +1,46 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 import typography, { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
-class BlogPostPreviewItem extends React.Component {
-  render() {
-    const post = this.props.post
-    const avatar = post.frontmatter.author.avatar.childImageSharp.resolutions
+const BlogPostPreviewItem = ({ post, className }) => {
+  const avatar = post.frontmatter.author.avatar.childImageSharp.fixed
 
-    return (
-      <article className={this.props.className} css={{ position: `relative` }}>
-        <Link to={post.fields.slug}>
-          <h2>{post.frontmatter.title}</h2>
-          <p css={{ fontWeight: `normal` }}>
-            {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
-          </p>
-        </Link>
-        <div
+  return (
+    <article className={className} css={{ position: `relative` }}>
+      <Link to={post.fields.slug}>
+        <h2>{post.frontmatter.title}</h2>
+        <p css={{ fontWeight: `normal` }}>
+          {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
+        </p>
+      </Link>
+      <div
+        css={{
+          display: `flex`,
+          alignItems: `center`,
+          marginBottom: rhythm(2),
+        }}
+      >
+        <Link
+          to={post.frontmatter.author.fields.slug}
           css={{
-            display: `flex`,
-            alignItems: `center`,
-            marginBottom: rhythm(2),
+            position: `relative`,
+            zIndex: 1,
+            "&&": {
+              boxShadow: `none`,
+              borderBottom: `0`,
+              fontWeight: `normal`,
+              ":hover": {
+                background: `transparent`,
+              },
+            },
           }}
         >
           <Img
             alt=""
-            resolutions={avatar}
+            fixed={avatar}
             css={{
               borderRadius: `100%`,
               display: `inline-block`,
@@ -38,75 +51,71 @@ class BlogPostPreviewItem extends React.Component {
               transform: `translateZ(0)`,
             }}
           />
-          <div
-            css={{
-              display: `inline-block`,
-              fontFamily: typography.options.headerFontFamily.join(`,`),
-              color: colors.gray.calm,
-              ...scale(-2 / 5),
-              [presets.Mobile]: {
-                ...scale(-1 / 5),
-              },
-              [presets.Desktop]: {
-                ...scale(0),
-              },
-            }}
-          >
-            <div>
-              <Link
-                to={post.frontmatter.author.fields.slug}
-                css={{
-                  boxShadow: `none !important`,
-                  borderBottom: `0 !important`,
-                  position: `relative`,
-                  zIndex: 1,
-                  "&&": {
-                    fontWeight: `normal`,
-                    ":hover": {
-                      color: colors.gatsby,
-                      background: `transparent`,
-                    },
-                  },
-                }}
-              >
-                {post.frontmatter.author.id}
-              </Link>
-              {` `}
-              on
-              {` `}
-              {post.frontmatter.date}
-            </div>
-          </div>
-        </div>
-        <Link
-          to={post.fields.slug}
+        </Link>
+        <div
           css={{
-            position: `absolute`,
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            overflow: `hidden`,
-            textIndent: `-100%`,
-            whiteSpace: `nowrap`,
-            zIndex: 0,
-            "&&": {
-              border: 0,
-              boxShadow: `none`,
-              "&:hover": {
-                background: `none`,
-              },
+            display: `inline-block`,
+            fontFamily: typography.options.headerFontFamily.join(`,`),
+            color: colors.gray.calm,
+            ...scale(-2 / 5),
+            [presets.Mobile]: {
+              ...scale(-1 / 5),
+            },
+            [presets.Desktop]: {
+              ...scale(0),
             },
           }}
         >
-          Read more
-        </Link>
-      </article>
-    )
-  }
+          <div>
+            <Link
+              to={post.frontmatter.author.fields.slug}
+              css={{
+                position: `relative`,
+                zIndex: 1,
+                "&&": {
+                  color: `${colors.gatsby}`,
+                  fontWeight: `normal`,
+                  ":hover": {
+                    background: colors.ui.bright,
+                  },
+                },
+              }}
+            >
+              {post.frontmatter.author.id}
+            </Link>
+            {` `}
+            on
+            {` `}
+            {post.frontmatter.date}
+          </div>
+        </div>
+      </div>
+      <Link
+        to={post.fields.slug}
+        css={{
+          position: `absolute`,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          overflow: `hidden`,
+          textIndent: `-100%`,
+          whiteSpace: `nowrap`,
+          zIndex: 0,
+          "&&": {
+            border: 0,
+            boxShadow: `none`,
+            "&:hover": {
+              background: `none`,
+            },
+          },
+        }}
+      >
+        Read more
+      </Link>
+    </article>
+  )
 }
-
-export default BlogPostPreviewItem
 
 export const blogPostPreviewFragment = graphql`
   fragment BlogPostPreview_item on MarkdownRemark {
@@ -125,7 +134,7 @@ export const blogPostPreviewFragment = graphql`
         }
         avatar {
           childImageSharp {
-            resolutions(
+            fixed(
               width: 30
               height: 30
               quality: 80
@@ -135,7 +144,7 @@ export const blogPostPreviewFragment = graphql`
                 color: "#e0d6eb"
               }
             ) {
-              ...GatsbyImageSharpResolutions_tracedSVG
+              ...GatsbyImageSharpFixed_tracedSVG
             }
           }
         }
@@ -143,3 +152,5 @@ export const blogPostPreviewFragment = graphql`
     }
   }
 `
+
+export default BlogPostPreviewItem

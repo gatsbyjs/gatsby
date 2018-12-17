@@ -1,22 +1,36 @@
-// During bootstrap, we write requires at top of this file which looks
-// basically like:
-// var plugins = [
-//   {
-//     plugin: require("/path/to/plugin1/gatsby-browser.js"),
-//     options: { ... },
-//   },
-//   {
-//     plugin: require("/path/to/plugin2/gatsby-browser.js"),
-//     options: { ... },
-//   },
-// ]
+const plugins = require(`./api-runner-browser-plugins`)
+const {
+  getResourcesForPathname,
+  getResourcesForPathnameSync,
+  getResourceURLsForPathname,
+} = require(`./loader`).publicLoader
 
-export function apiRunner(api, args, defaultReturn) {
-  let results = plugins.map(plugin => {
-    if (plugin.plugin[api]) {
-      const result = plugin.plugin[api](args, plugin.options)
-      return result
+exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
+  // Hooks for cypress-gatsby's API handler
+  if (window.Cypress) {
+    if (window.___apiHandler) {
+      window.___apiHandler(api)
+    } else if (window.___resolvedAPIs) {
+      window.___resolvedAPIs.push(api)
+    } else {
+      window.___resolvedAPIs = [api]
     }
+  }
+
+  let results = plugins.map(plugin => {
+    if (!plugin.plugin[api]) {
+      return undefined
+    }
+
+    args.getResourcesForPathnameSync = getResourcesForPathnameSync
+    args.getResourcesForPathname = getResourcesForPathname
+    args.getResourceURLsForPathname = getResourceURLsForPathname
+
+    const result = plugin.plugin[api](args, plugin.options)
+    if (result && argTransform) {
+      args = argTransform({ args, result, plugin })
+    }
+    return result
   })
 
   // Filter out undefined results.
@@ -31,12 +45,11 @@ export function apiRunner(api, args, defaultReturn) {
   }
 }
 
-export function apiRunnerAsync(api, args, defaultReturn) {
-  return plugins.reduce(
+exports.apiRunnerAsync = (api, args, defaultReturn) =>
+  plugins.reduce(
     (previous, next) =>
       next.plugin[api]
         ? previous.then(() => next.plugin[api](args, next.options))
         : previous,
     Promise.resolve()
   )
-}

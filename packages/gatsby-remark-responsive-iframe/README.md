@@ -20,7 +20,7 @@ plugins: [
       plugins: [`gatsby-remark-responsive-iframe`],
     },
   },
-];
+]
 ```
 
 ### Usage in Markdown
@@ -33,5 +33,5 @@ example a percentage width), the wrapper will not be applied.
 Example usage:
 
     This is a beautiful iframe:
-    
+
     <iframe url="http://www.example.com/" width="600" height="400"></iframe>

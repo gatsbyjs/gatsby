@@ -217,7 +217,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >REPL</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqIQ6WgAsA9LVLzy8ei3mRYxBPyEgJbAB4FZtEVGY1GDJlIA8LCADcABBBYBeADogATqSktL4AfPbyTs4hIPoyCkoqajAaWoQkVnS2SCDWcLSuYIGunq6-AEZofr4A3DF6QA\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -259,7 +259,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >REPL</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqJw0QiRD8hICWwAeBABa0RUZjUYMmUgDwsIANwAEEFgF4AOiABOpUrQcA-IwHpTZ9_OFIWGIEZBA9ekYkcIo4WgswFwsbCwcAIzRHBwBueQUgA\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -301,7 +301,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >Click me</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqJw0QiRD8hICWwAeBABa0RUZjUYMmUgDwsIANwAEEFgF4AOiABOpUrQcA-IwHpTZ9_OFIWGIEZBA9ekYkcIo4WgswFwsbCwcAIzRHBwBueQUgA\\" >Click me</a>",
         },
       ],
       "position": Position {
@@ -343,7 +343,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >Custom link text</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqJw0QiRD8hICWwAeBABa0RUZjUYMmUgDwsIANwAEEFgF4AOiABOpUrQcA-IwHpTZ9_OFIWGIEZBA9ekYkcIo4WgswFwsbCwcAIzRHBwBueQUgA\\" >Custom link text</a>",
         },
       ],
       "position": Position {
@@ -385,7 +385,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqJw0QiRD8hICWwAeBABa0RUZjUYMmUgDwsIANwAEEFgF4AOiABOpUrQcA-IwHpTZ9_OFIWGIEZBA9ekYkcIo4WgswFwsbCwcAIzRHBwBueQUgA\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
         },
       ],
       "position": Position {
@@ -427,7 +427,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SEORgAPGSBT9SKBbQCeHBKICMAVgLWQAXyeyI5NluIXqdBiJA1yKQACMFJSIIBeIIAdEAAjNH5YgG5HFzdtAgALWhUoZgD6RnUAHhYIADcgiBYI2INSWliAPhKAenKK5scnIA\\" >REPL</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SEORgAPGSBT9SKBbQCeHBKICMAVgLWQAX1kq0ESqPS0AFgHpapH00pGBYfSFhiBAcnEDc2LQIvWhUoZhpGBhEQAB4WCAA3AAIIFgBeAB05UlJaSoA-bJ88_LrHWU9ff0D4elDwwhI0ukz1dKlCsGrC0sLKgCM0fkqAbkdooA\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -469,7 +469,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeOOjk6hAsukZapEYAfL4A9AFo5FE2gkA\\" >REPL</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqIQ6WgAsA9LVLzy8ei3mRYxBPyEgJbAB4FZtEVGY1GDJlIA8cdOQAEEFgF4AOuFKkfAHz28k5o5AEg-jIKSipqMBpahCRWdLZIINZwtC5gfi4eLj4ARmgATj4A3JF6QA\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -493,6 +493,48 @@ Object {
       "column": 41,
       "line": 1,
       "offset": 40,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform supports importing multiple files 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqIQ6WgAsA9LVLzy8ei3mRYxBPyEgJbAB4FZtEVGY1GDJlIA8LCADcABBBYBeADogATqSktL4AfPbyTs4hIPoyCkoqajAaWoQkVnS2SCDWcLSuYIGunq6-AEZofr4A3DHCcYrKqnnJ8mjkQbIwfgBi0GkIyDmZjNm5-YWkxaUgFVUgtbFoco2JLSn9BBhwg9QjdsPkeQVFJeWVNTF6QA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 95,
+          "line": 1,
+          "offset": 94,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 95,
+      "line": 1,
+      "offset": 94,
     },
     "start": Object {
       "column": 1,

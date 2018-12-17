@@ -1,6 +1,8 @@
+import fs from "fs"
 import path from "path"
 import RSS from "rss"
 import merge from "lodash.merge"
+import mkdirp from "mkdirp"
 import { defaultOptions, runQuery, writeFile } from "./internals"
 
 const publicPath = `./public`
@@ -29,9 +31,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
     ...pluginOptions,
   }
 
-  if (`query` in options) {
-    options.query = await runQuery(graphql, options.query)
-  }
+  options.query = await runQuery(graphql, options.query)
 
   for (let f of options.feeds) {
     if (f.query) {
@@ -54,7 +54,13 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
     const items = serializer(locals)
 
     items.forEach(i => feed.item(i))
-    await writeFile(path.join(publicPath, f.output), feed.xml())
+
+    const outputPath = path.join(publicPath, f.output)
+    const outputDir = path.dirname(outputPath)
+    if (!fs.existsSync(outputDir)) {
+      mkdirp.sync(outputDir)
+    }
+    await writeFile(outputPath, feed.xml())
   }
 
   return Promise.resolve()

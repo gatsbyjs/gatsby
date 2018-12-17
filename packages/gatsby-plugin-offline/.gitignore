@@ -1,4 +1,4 @@
-/gatsby-node.js
-/gatsby-ssr.js
-/gatsby-browser.js
-/app-shell.js
+/*.js
+!index.js
+!sw-append.js
+yarn.lock

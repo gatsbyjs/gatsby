@@ -1,15 +1,9 @@
 const normalize = require(`normalize-path`)
 
-const stateToMap = state => {
-  let stateMap = new Map()
-  state.forEach(payload => stateMap.set(payload.path, payload))
-  return stateMap
-}
-
-module.exports = (state = [], action) => {
+module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      return []
+      return new Map()
     case `CREATE_PAGE`: {
       action.payload.component = normalize(action.payload.component)
       if (!action.plugin && !action.plugin.name) {
@@ -25,14 +19,12 @@ module.exports = (state = [], action) => {
       action.payload.pluginCreator___NODE = action.plugin.id
       action.payload.pluginCreatorId = action.plugin.id
 
-      let stateMap = stateToMap(state)
-      stateMap.set(action.payload.path, action.payload)
-      return Array.from(stateMap.values())
+      state.set(action.payload.path, action.payload)
+      return state
     }
     case `DELETE_PAGE`: {
-      let stateMap = stateToMap(state)
-      stateMap.delete(action.payload.path)
-      return Array.from(stateMap.values())
+      state.delete(action.payload.path)
+      return state
     }
     default:
       return state

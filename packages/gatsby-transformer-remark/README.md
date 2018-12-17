@@ -10,7 +10,7 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-remark`];
+plugins: [`gatsby-transformer-remark`]
 ```
 
 A full explanation of how to use markdown in Gatsby can be found here:
@@ -22,14 +22,8 @@ There are many Gatsby Remark plugins which you can install to customize how Mark
 
 It recognizes files with the following extensions as Markdown:
 
-* md
-* rmd
-* mkd
-* mkdn
-* mdwn
-* mdown
-* litcoffee
-* markdown
+- md
+- markdown
 
 Each Markdown file is parsed into a node of type `MarkdownRemark`.
 
@@ -60,6 +54,94 @@ A sample GraphQL query to get MarkdownRemark nodes:
         }
       }
     }
+  }
+}
+```
+
+### Getting table of contents
+
+Using the following GraphQL query you'll be able to get the table of contents
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        html
+        tableOfContents(pathToSlugField: "frontmatter.path")
+        frontmatter {
+          # Assumes you're using path in your frontmatter.
+          path
+        }
+      }
+    }
+  }
+}
+```
+
+By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null.
+
+### Excerpts
+
+#### Length
+
+By default, excerpts have a maximum length of 140 characters. You can change the default using the `pruneLength` argument. For example, if you need 500 characters, you can specify:
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        html
+        excerpt(pruneLength: 500)
+      }
+    }
+  }
+}
+```
+
+#### Format
+
+By default, Gatsby will return excerpts as plain text. This might be useful for populating [opengraph](https://en.wikipedia.org/wiki/Facebook_Platform#Open_Graph_protocol) HTML tags for SEO reasons. You can also explicitly specify a `PLAIN` format like so:
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: PLAIN)
+      }
+    }
+  }
+}
+```
+
+It's also possible to ask Gatsby to return excerpts formatted as HTML. You might use this if you have a blog post whose an excerpt contains markdown content--e.g. header, link, etc.--and you want these links to render as HTML.
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: HTML)
+      }
+    }
+  }
+}
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
   }
 }
 ```

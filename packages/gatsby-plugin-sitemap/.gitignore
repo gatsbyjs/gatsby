@@ -1,3 +1,4 @@
 /*.js
+/__tests__
 !index.js
 yarn.lock

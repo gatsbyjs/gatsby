@@ -10,7 +10,7 @@ _This article was originally published on
 [Medium](https://medium.com/@ryanwiemer/gatsby-and-the-jam-stack-91e31508f364)
 on January 31, 2018._
 
-Recently I relaunched my wife’s photography portfolio, [KNW Photography](https://www.knw.io/), using a combination of Gatsby, [Contentful](https://www.contentful.com/) and [Netlify](https://www.netlify.com/). This particular group of tools represents a new and exciting web development architecture known as the [JAMstack](https://jamstack.org/) (Javascript, APIs and Markup). In this post I will be sharing my personal thoughts on each of these new tools and why together they represent the “holy grail” of the static website world.
+Recently I relaunched my wife’s photography portfolio, [KNW Photography](https://www.knw.io/), using a combination of Gatsby, [Contentful](https://www.contentful.com/) and [Netlify](https://www.netlify.com/). This particular group of tools represents a new and exciting web development architecture known as the [JAMstack](https://jamstack.org/) (JavaScript, APIs and Markup). In this post I will be sharing my personal thoughts on each of these new tools and why together they represent the “holy grail” of the static website world.
 
 ## Why Other Static Site Generators Didn’t Work For Me
 
@@ -35,5 +35,3 @@ The final piece of the puzzle was determining where to host the website. I had r
 After a little over a month of tinkering on the design during nights and weekends I had a fully functional website ready to be launched. During this process I learned a fair bit of how to code with React and the Gatsby community seemed genuinely nice and happy to help me to learn. The final product was a website that felt like it belonged in 2018 while still allowing my wife to easily update content with no assistance. Not only that the website was immensely faster than the previous WordPress version, served over HTTPS, utilized a CDN and cost me $0 dollars a month thanks to the extremely generous free tiers offered by Netlify and Contentful. 😍
 
 If you are currently on the fence about static site generators or the JAMstack in general there has never been a better time to jump in. In my humble opinion with these tools it has finally reached the level of maturity to not just be feasible for client work but actually pretty darn amazing.
-
-For those interested the source code for the website I built is available on GitHub: https://github.com/ryanwiemer/knw

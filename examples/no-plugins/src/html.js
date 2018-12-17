@@ -1,19 +1,11 @@
 import React, { Component } from "react"
 import * as PropTypes from "prop-types"
 
-const propTypes = {
-  headComponents: PropTypes.node.isRequired,
-  body: PropTypes.node.isRequired,
-  postBodyComponents: PropTypes.node.isRequired,
-}
-
 class Html extends Component {
   render() {
     return (
-      <html op="news" lang="en">
+      <html op="news" lang="en" {...this.props.htmlAttributes}>
         <head>
-          {this.props.headComponents}
-
           <meta name="referrer" content="origin" />
           <meta charSet="utf-8" />
           <meta
@@ -26,8 +18,10 @@ class Html extends Component {
             content="width=device-width, initial-scale=1.0"
           />
           <title>Gatsby - No Plugins</title>
+          {this.props.headComponents}
         </head>
-        <body>
+        <body {...this.props.bodyAttributes}>
+          {this.props.preBodyComponents}
           <div
             id="___gatsby"
             dangerouslySetInnerHTML={{ __html: this.props.body }}
@@ -39,6 +33,13 @@ class Html extends Component {
   }
 }
 
-Html.propTypes = propTypes
+Html.propTypes = {
+  htmlAttributes: PropTypes.object,
+  headComponents: PropTypes.array,
+  bodyAttributes: PropTypes.object,
+  preBodyComponents: PropTypes.array,
+  body: PropTypes.string,
+  postBodyComponents: PropTypes.array,
+}
 
-module.exports = Html
+export default Html

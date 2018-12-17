@@ -1,6 +1,6 @@
 # gatsby-plugin-twitter
 
-Loads the Twitter JavaScript for embedding tweets. Let's you add tweets to
+Loads the Twitter JavaScript for embedding tweets. Lets you add tweets to
 markdown and in other places.
 
 Note: when copying the embed code, just copy the blockquote section and not the
@@ -14,5 +14,5 @@ script.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-twitter`];
+plugins: [`gatsby-plugin-twitter`]
 ```

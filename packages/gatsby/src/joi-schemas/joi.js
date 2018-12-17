@@ -1,6 +1,7 @@
 const Joi = require(`joi`)
 
 export const gatsbyConfigSchema = Joi.object().keys({
+  __experimentalThemes: Joi.array(),
   polyfill: Joi.boolean(),
   siteMetadata: Joi.object(),
   pathPrefix: Joi.string(),
@@ -12,18 +13,6 @@ export const gatsbyConfigSchema = Joi.object().keys({
   }),
   developMiddleware: Joi.func(),
 })
-
-export const layoutSchema = Joi.object()
-  .keys({
-    id: Joi.string().required(),
-    machineId: Joi.string().required(),
-    component: Joi.string().required(),
-    componentWrapperPath: Joi.string().required(),
-    componentChunkName: Joi.string().required(),
-    isLayout: Joi.boolean().required(),
-    context: Joi.object(),
-  })
-  .unknown()
 
 export const pageSchema = Joi.object()
   .keys({
@@ -40,25 +29,22 @@ export const pageSchema = Joi.object()
 export const nodeSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
-    children: Joi.array()
-      .items(Joi.string(), Joi.object().forbidden())
-      .required(),
-    parent: Joi.string()
-      .allow(null)
-      .required()
-      .error(
-        () =>
-          `"parent" must be the "id" of another node or if there is no parent (common), "null"`
-      ),
+    children: Joi.array().items(Joi.string(), Joi.object().forbidden()),
+    parent: Joi.string().allow(null),
     fields: Joi.object(),
-    internal: Joi.object().keys({
-      contentDigest: Joi.string().required(),
-      mediaType: Joi.string(),
-      type: Joi.string().required(),
-      owner: Joi.string().required(),
-      fieldOwners: Joi.array(),
-      content: Joi.string().allow(``),
-      description: Joi.string(),
-    }),
+    internal: Joi.object()
+      .keys({
+        contentDigest: Joi.string().required(),
+        mediaType: Joi.string(),
+        type: Joi.string().required(),
+        owner: Joi.string().required(),
+        fieldOwners: Joi.array(),
+        content: Joi.string().allow(``),
+        description: Joi.string(),
+        ignoreType: Joi.boolean(),
+      })
+      .unknown({
+        allow: false,
+      }), // Don't allow non-standard fields
   })
   .unknown()

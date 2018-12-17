@@ -1,7 +1,7 @@
 // @flow
 
 import { print, visit, GraphQLError, getLocation } from "graphql"
-import babelCodeFrame from "babel-code-frame"
+import babelCodeFrame from "@babel/code-frame"
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
 

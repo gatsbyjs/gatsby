@@ -1,6 +1,8 @@
 import Typography from "typography"
-import { baseHsl, colors } from "../styles/colors"
+import styleColors from "../styles/colors"
 import presets from "../utils/presets"
+
+const { baseHsl, colors } = styleColors
 
 const linkRaw = colors.link.substr(1)
 const linkHoverRaw = colors.linkHover.substr(1)
@@ -138,6 +140,9 @@ const options = {
         minWidth: `100%`,
         textShadow: `none`,
       },
+      ".gatsby-highlight pre[class*='language-'].line-numbers": {
+        paddingLeft: `2.8em`,
+      },
       ".gatsby-highlight-code-line": {
         background: `#fff2cc`,
         display: `block`,
@@ -187,7 +192,7 @@ const options = {
       // Increase base font-size for phablet and desktop.
       [presets.Phablet]: {
         html: {
-          fontSize: `${18 / 16 * 100}%`,
+          fontSize: `${(18 / 16) * 100}%`,
         },
         h1: {
           ...scale(7 / 5),
@@ -195,7 +200,7 @@ const options = {
       },
       [presets.Desktop]: {
         html: {
-          fontSize: `${20 / 16 * 100}%`,
+          fontSize: `${(20 / 16) * 100}%`,
         },
       },
     }
@@ -204,9 +209,7 @@ const options = {
 
 const typography = new Typography(options)
 
-// Hot reload typography in development.
-if (process.env.NODE_ENV !== `production`) {
-  typography.injectStyles()
-}
+export default typography
 
-module.exports = typography
+export const scale = typography.scale
+export const rhythm = typography.rhythm

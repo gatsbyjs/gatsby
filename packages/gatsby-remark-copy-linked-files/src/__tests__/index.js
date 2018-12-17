@@ -82,6 +82,16 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
   })
 
+  it(`can copy reference-style images`, async () => {
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remark.parse(`![sample][1]\n\n[1]: ${path}`)
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy file links`, async () => {
     const path = `files/sample-file.txt`
 
@@ -153,6 +163,18 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     const markdownAST = remark.parse(
       `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
+  it(`can copy HTML videos from video elements with the src attribute`, async () => {
+    const path = `videos/sample-video.mp4`
+
+    const markdownAST = remark.parse(
+      `<video controls="controls" autoplay="true" src="${path}">\n<p>Your browser does not support the video element.</p>\n</video>`
     )
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })

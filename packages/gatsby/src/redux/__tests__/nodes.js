@@ -1,9 +1,22 @@
-const { actions, boundActionCreators } = require(`../actions`)
-const { store, getNode } = require(`../index`)
+const Redux = require(`redux`)
+const { actions } = require(`../actions`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 
+jest.mock(`../../db/nodes`)
+jest.mock(`../nodes`)
+
+const store = Redux.createStore(
+  Redux.combineReducers({ nodeReducer, nodeTouchedReducer }),
+  {}
+)
 describe(`Create and update nodes`, () => {
+  beforeEach(() => {
+    store.dispatch({
+      type: `DELETE_CACHE`,
+    })
+  })
+
   it(`allows creating nodes`, () => {
     const action = actions.createNode(
       {
@@ -16,7 +29,9 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     expect(action).toMatchSnapshot()
     expect(nodeReducer(undefined, action)).toMatchSnapshot()
@@ -34,10 +49,18 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
         deep: {
-          array: [0, 1, { boom: true }],
+          array: [
+            0,
+            1,
+            {
+              boom: true,
+            },
+          ],
         },
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     const updateAction = actions.createNode(
       {
@@ -56,243 +79,15 @@ describe(`Create and update nodes`, () => {
           boom: `foo`,
         },
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
-    expect(state[`hi`].pickle).toEqual(false)
-    expect(state[`hi`].deep.array[0]).toEqual(1)
-    expect(state[`hi`].deep2.boom).toEqual(`foo`)
-  })
-
-  it(`deletes previously transformed children nodes when the parent node is updated`, () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: null,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi`],
-        child: store.getState().nodes[`hi-1`],
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi-1`],
-        child: store.getState().nodes[`hi-1-1`],
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds2`,
-          type: `Test`,
-        },
-      },
-      { name: `tests` }
-    )
-    expect(Object.keys(store.getState().nodes).length).toEqual(1)
-  })
-
-  it(`deletes previously transformed children nodes when the parent node is deleted`, () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi2`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: store.getState().nodes[`hi`],
-        child: getNode(`hi-1`),
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: getNode(`hi-1`),
-        child: getNode(`hi-1-1`),
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.deleteNode(`hi`, getNode(`hi`), { name: `tests` })
-    expect(Object.keys(store.getState().nodes).length).toEqual(1)
-  })
-
-  it(`deletes previously transformed children nodes when parent nodes are deleted`, () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1`,
-        children: [],
-        parent: `hi`,
-        internal: {
-          contentDigest: `hasdfljds-1`,
-          type: `Test-1`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: getNode(`hi`),
-        child: getNode(`hi-1`),
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createNode(
-      {
-        id: `hi-1-1`,
-        children: [],
-        parent: `hi-1`,
-        internal: {
-          contentDigest: `hasdfljds-1-1`,
-          type: `Test-1-1`,
-        },
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.createParentChildLink(
-      {
-        parent: getNode(`hi-1`),
-        child: getNode(`hi-1-1`),
-      },
-      { name: `tests` }
-    )
-
-    boundActionCreators.deleteNodes([`hi`], { name: `tests` })
-    expect(Object.keys(store.getState().nodes).length).toEqual(0)
-  })
-
-  it(`allows deleting nodes`, () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    boundActionCreators.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
-        },
-        pickle: true,
-        deep: {
-          array: [0, 1, { boom: true }],
-        },
-      },
-      { name: `tests` }
-    )
-    boundActionCreators.deleteNode(`hi`, getNode(`hi`))
-
-    expect(getNode(`hi`)).toBeUndefined()
+    expect(state.get(`hi`).pickle).toEqual(false)
+    expect(state.get(`hi`).deep.array[0]).toEqual(1)
+    expect(state.get(`hi`).deep2.boom).toEqual(`foo`)
   })
 
   it(`nodes that are added are also "touched"`, () => {
@@ -307,7 +102,9 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     let state = nodeTouchedReducer(undefined, action)
     expect(state[`hi`]).toBe(true)
@@ -325,17 +122,21 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     let state = nodeReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
       {
-        node: state[`hi`],
+        node: state.get(`hi`),
         name: `joy`,
         value: `soul's delight`,
       },
-      { name: `test` }
+      {
+        name: `test`,
+      }
     )
     state = nodeReducer(state, addFieldAction)
     expect(state).toMatchSnapshot()
@@ -353,28 +154,34 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `tests` }
+      {
+        name: `tests`,
+      }
     )
     let state = nodeReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
       {
-        node: state[`hi`],
+        node: state.get(`hi`),
         name: `joy`,
         value: `soul's delight`,
       },
-      { name: `test` }
+      {
+        name: `test`,
+      }
     )
     state = nodeReducer(state, addFieldAction)
 
     function callActionCreator() {
       actions.createNodeField(
         {
-          node: state[`hi`],
+          node: state.get(`hi`),
           name: `joy`,
           value: `soul's delight`,
         },
-        { name: `test2` }
+        {
+          name: `test2`,
+        }
       )
     }
     expect(callActionCreator).toThrowErrorMatchingSnapshot()
@@ -392,7 +199,9 @@ describe(`Create and update nodes`, () => {
         },
         pickle: true,
       },
-      { name: `pluginA` }
+      {
+        name: `pluginA`,
+      }
     )
 
     function callActionCreator() {
@@ -407,7 +216,9 @@ describe(`Create and update nodes`, () => {
           },
           pickle: true,
         },
-        { name: `pluginB` }
+        {
+          name: `pluginB`,
+        }
       )
     }
 
@@ -430,15 +241,12 @@ describe(`Create and update nodes`, () => {
           },
           pickle: true,
         },
-        { name: `pluginA` }
+        {
+          name: `pluginA`,
+        }
       )
     }
 
     expect(callActionCreator).toThrowErrorMatchingSnapshot()
-  })
-
-  it(`does not crash when delete node is called on undefined`, () => {
-    boundActionCreators.deleteNode(undefined, undefined, { name: `tests` })
-    expect(Object.keys(store.getState().nodes).length).toEqual(0)
   })
 })

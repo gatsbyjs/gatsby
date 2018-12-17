@@ -1,3 +1,4 @@
+import { graphql } from "gatsby"
 import React from "react"
 
 class IndexComponent extends React.Component {
@@ -52,7 +53,7 @@ class IndexComponent extends React.Component {
 export default IndexComponent
 
 export const IndexQuery = graphql`
-  query IndexQuery {
+  query {
     allLettersXlsxSheet1 {
       edges {
         node {

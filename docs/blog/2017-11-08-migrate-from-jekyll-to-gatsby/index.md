@@ -45,7 +45,7 @@ matter block, so you don't have to change anything. You just need to install
 Then, in your `gatsby-config.js` file add:
 
 ```js
-plugins: ["gatsby-transformer-remark"];
+plugins: ["gatsby-transformer-remark"]
 ```
 
 ### Theme
@@ -84,35 +84,35 @@ filename: 2017-05-09-introducing-tomeito.md
 /app/macos/vuejs/electron/2017/05/09/introducing-tomeito/
 ```
 
-How did I create it? Inside my `gastby-node.js` I used the `onCreateNode`
+How did I create it? Inside my `gatsby-node.js` I used the `onCreateNode`
 extension API to tweak the slug:
 
 ```js
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators;
+  const { createNodeField } = boundActionCreators
 
   if (node.internal.type === `MarkdownRemark`) {
-    const { categories } = node.frontmatter;
+    const { categories } = node.frontmatter
 
-    const filename = createFilePath({ node, getNode, basePath: `pages` });
+    const filename = createFilePath({ node, getNode, basePath: `pages` })
 
     // get the date and title from the file name
     const [, date, title] = filename.match(
       /^\/([\d]{4}-[\d]{2}-[\d]{2})-{1}(.+)\/$/
-    );
+    )
 
     // create a new slug concatenating everything
     const slug = `/${slugify(
       categories.concat([date]).join("-"),
       "/"
-    )}/${title}/`;
+    )}/${title}/`
 
-    createNodeField({ node, name: `slug`, value: slug });
+    createNodeField({ node, name: `slug`, value: slug })
 
     // save the date for later use
-    createNodeField({ node, name: `date`, value: date });
+    createNodeField({ node, name: `date`, value: date })
   }
-};
+}
 ```
 
 ### Deploy
@@ -127,16 +127,16 @@ but I noticed that from time to time it’d go down, so I’m now testing
 
 Some key points:
 
-* Node instead of Ruby
-* Much faster development workflow e.g. hot reload out of the box
-* I can query the data I need and transform it before using it. (I'm looking
+- Node instead of Ruby
+- Much faster development workflow e.g. hot reload out of the box
+- I can query the data I need and transform it before using it. (I'm looking
   into the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/) to recreate the
   Atom Feed)
-* React and GraphQL for free with Gatsby
-* Since I am confident with the Node ecosystem I'm able to contribute: First
+- React and GraphQL for free with Gatsby
+- Since I am confident with the Node ecosystem I'm able to contribute: First
   pull request to Gatsby:
   [https://github.com/gatsbyjs/gatsby/pull/2569](https://github.com/gatsbyjs/gatsby/pull/2569)
-* Netlify vs GitLab Pages (hopefully 100% uptime)
+- Netlify vs GitLab Pages (hopefully 100% uptime)
 
 ## Final thoughts
 

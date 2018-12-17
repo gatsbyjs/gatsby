@@ -24,7 +24,7 @@ _Consider a less-expensive CMS or multi-modal architecture_
 
 Choosing Gatsby frees your CMS from doing a lot of the heavy lifting, such as scaling to meet peak load and having a rich, modern web development experience. If you're using an expensive enterprise CMS, Gatsby can help your project stay within budget by allowing you to choose a simpler, cheaper option, such as a hosted Drupal instance, or a content management SaaS like Contentful.
 
-Another consideration is that not all of your content _has_ to live in one system. Often, you can save time and money by create a multi-modal content architecture with best-in-class solutions for each of the different workflows & capabilities you require. You might choose to manage your e-commerce product catalog in Shopify, company-specific marketing pages in Contentful, and form-based event data in Google Sheets & Forms. Gatsby offers plugins to pull data from multiple sources, while building with one stack.
+Another consideration is that not all of your content _has_ to live in one system. Often, you can save time and money by creating a multi-modal content architecture with best-in-class solutions for each of the different workflows & capabilities you require. You might choose to manage your e-commerce product catalog in Shopify, company-specific marketing pages in Contentful, and form-based event data in Google Sheets & Forms. Gatsby offers plugins to pull data from multiple sources, while building with one stack.
 
 ### User Research
 
@@ -53,12 +53,11 @@ _Use development pages to communicate project status & collaborate with designer
 One option some teams have found powerful is to create static page components within Gatsby to [handle necessary parts of the development/QA workflow](https://www.gatsbyjs.org/blog/2018-04-11-trying-out-gatsby-at-work-and-co/#1-pre-integration-qa).
 
 This could include:
-* Checking UI implementation of various components to ensure behavior is intended
-* Enabling QA visibility into desired site-specific page-level validations, such as "don't end a page in a carousel"
-* Communicating build history and last build status
+
+- Checking UI implementation of various components to ensure behavior is intended
+- Enabling QA visibility into desired site-specific page-level validations, such as "don't end a page in a carousel"
+- Communicating build history and last build status
 
 _Use branch and pull request-based artifacts to collaborate on specific pieces of work_
 
-Using the [branch and pull request-based artifacts](https://www.gatsbyjs.org/blog/2018-04-11-trying-out-gatsby-at-work-and-co/#building-staging-urls
-) automatically created by a service like Netlify for collaboration between developers, designers, and QA. Because generated artifacts are static, pull request collaboration workflows are resilient to underlying content schema changes, such as field deletion, that might break a typical CMS development environment.
-
+Using the [branch and pull request-based artifacts](https://www.gatsbyjs.org/blog/2018-04-11-trying-out-gatsby-at-work-and-co/#building-staging-urls) automatically created by a service like Netlify for collaboration between developers, designers, and QA. Because generated artifacts are static, pull request collaboration workflows are resilient to underlying content schema changes, such as field deletion, that might break a typical CMS development environment.

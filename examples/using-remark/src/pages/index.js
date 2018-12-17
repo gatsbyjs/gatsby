@@ -1,5 +1,6 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link, graphql } from "gatsby"
+import Layout from "../layouts"
 import styles from "../styles"
 import presets from "../utils/presets"
 import { rhythm, scale } from "../utils/typography"
@@ -9,7 +10,7 @@ class Index extends React.Component {
     const posts = this.props.data.allMarkdownRemark.edges
 
     return (
-      <div>
+      <Layout location={this.props.location}>
         <div>
           <h1
             css={{
@@ -18,17 +19,20 @@ class Index extends React.Component {
               marginBottom: rhythm(2),
             }}
           >
-            This example demonstrates{` `}
+            This example demonstrates
+            {` `}
             <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-remark/">
               gatsby-transformer-remark
             </a>
             {` `}
-            and its plugins. It uses{` `}
+            and its plugins. It uses
+            {` `}
             <a href="https://github.com/KyleAMathews/typography.js">
               Typography.js
             </a>
             {` `}
-            and self-hosted fonts via the{` `}
+            and self-hosted fonts via the
+            {` `}
             <a href="https://github.com/KyleAMathews/typefaces">Typefaces</a>
             {` `}
             project.
@@ -63,7 +67,7 @@ class Index extends React.Component {
             ))}
           </ul>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
@@ -71,7 +75,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }

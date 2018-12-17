@@ -142,17 +142,17 @@ high on the Annoying UX metric.
 
 #### Speed Index
 
-* 8098 — CNN.com
-* 5568 — downy.com
-* 7649 — washingtonpost.com
-* 2365 — gatsbyjs.org
+- 8098 — CNN.com
+- 5568 — downy.com
+- 7649 — washingtonpost.com
+- 2365 — gatsbyjs.org
 
 #### Time to Interactive
 
-* 32.1s — CNN.com
-* 14.2s — downy.com
-* 31.4s — washingtonpost.com
-* 4.4s — gatsbyjs.org
+- 32.1s — CNN.com
+- 14.2s — downy.com
+- 31.4s — washingtonpost.com
+- 4.4s — gatsbyjs.org
 
 ![reactnext-gatsby-performance.038](reactnext-gatsby-performance.038.png)
 

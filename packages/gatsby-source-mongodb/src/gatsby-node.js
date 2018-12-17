@@ -2,12 +2,13 @@ const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const _ = require(`lodash`)
+const queryString = require(`query-string`)
 
 exports.sourceNodes = (
-  { boundActionCreators, getNode, hasNodeChanged },
+  { actions, getNode, createNodeId, hasNodeChanged },
   pluginOptions
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   let serverOptions = pluginOptions.server || {
     address: `localhost`,
@@ -18,9 +19,12 @@ exports.sourceNodes = (
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
+  let connectionExtraParams = getConnectionExtraParams(
+    pluginOptions.extraParams
+  )
   const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
     serverOptions.port
-  }/${dbName}`
+  }/${dbName}${connectionExtraParams}`
 
   return MongoClient.connect(connectionURL)
     .then(db => {
@@ -31,9 +35,17 @@ exports.sourceNodes = (
 
       return Promise.all(
         collection.map(col =>
-          createNodes(db, pluginOptions, dbName, createNode, col)
+          createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
         )
       )
+        .then(() => {
+          db.close()
+        })
+        .catch(err => {
+          console.warn(err)
+          db.close()
+          return err
+        })
     })
     .catch(err => {
       console.warn(err)
@@ -41,30 +53,39 @@ exports.sourceNodes = (
     })
 }
 
-function createNodes(db, pluginOptions, dbName, createNode, collectionName) {
+function createNodes(
+  db,
+  pluginOptions,
+  dbName,
+  createNode,
+  createNodeId,
+  collectionName
+) {
   return new Promise((resolve, reject) => {
     let collection = db.collection(collectionName)
     let cursor = collection.find()
 
     // Execute the each command, triggers for each document
-    cursor.each(function(err, item) {
-      // If the item is null then the cursor is exhausted/empty and closed
-      if (item == null) {
-        // Let's close the db
-        db.close()
-        resolve()
-      } else {
+    cursor.toArray((err, documents) => {
+      if (err) {
+        reject(err)
+      }
+
+      documents.forEach(item => {
         var id = item._id.toString()
         delete item._id
 
         var node = {
           // Data for the node.
           ...item,
-          id: `${id}`,
+          id: createNodeId(`${id}`),
+          mongodb_id: id,
           parent: `__${collectionName}__`,
           children: [],
           internal: {
-            type: `mongodb${caps(dbName)}${caps(collectionName)}`,
+            type: `mongodb${sanitizeName(dbName)}${sanitizeName(
+              collectionName
+            )}`,
             content: JSON.stringify(item),
             contentDigest: crypto
               .createHash(`md5`)
@@ -104,11 +125,21 @@ function createNodes(db, pluginOptions, dbName, createNode, collectionName) {
         childrenNodes.forEach(node => {
           createNode(node)
         })
-      }
+      })
+      resolve()
     })
   })
 }
 
-function caps(s) {
-  return s.replace(/\b\w/g, l => l.toUpperCase())
+function sanitizeName(s) {
+  return s.replace(/[^_a-zA-Z0-9]/, ``).replace(/\b\w/g, l => l.toUpperCase())
+}
+
+function getConnectionExtraParams(extraParams) {
+  let connectionSuffix
+  if (extraParams) {
+    connectionSuffix = queryString.stringify(extraParams, { sort: false })
+  }
+
+  return connectionSuffix ? `?` + connectionSuffix : ``
 }

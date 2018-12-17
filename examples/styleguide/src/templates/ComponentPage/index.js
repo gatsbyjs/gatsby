@@ -1,1 +1,3 @@
-export { default } from "./ComponentPage"
+import ComponentPage from "./ComponentPage"
+
+export default ComponentPage

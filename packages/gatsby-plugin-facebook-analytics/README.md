@@ -25,5 +25,5 @@ plugins: [
       language: "en_US",
     },
   },
-];
+]
 ```

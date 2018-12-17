@@ -25,11 +25,11 @@ The power within IT has clearly moved from infrastructure teams to application t
 
 Things are still evolving, but some of the elements of this new “cloud-native” architecture appear clear and include:
 
-* **Cloud**. Public or private cloud infrastructure provides the base services of compute, storage and networking. AWS, Azure, and Google are all racing to add more and more infrastructure and application services — though architects should actively consider finding abstractions that give them portability.
-* **Containers**: Containers provide the packaging format for how to build and deploy software as components. In earlier generations we were forced to think in larger constructs (.exe or jar files) that were sometimes tied to the underlying hardware, operating systems or runtimes.
-* **Microservices**: Microservices are components with well-defined API interfaces. This allows different parts of the system to evolve much more frequently and to scale independently. It also embraces the use of third-party operated services for common components like identity/auth, payments and more.
-* **Application Management**: Application servers have been replaced by cluster management solutions like Kubernetes. Virtualization was an intermediate step along the path to more elastic distributed systems. By leveraging the new cluster schedulers, systems can much more easily be built to be horizontally scalable and resilient.
-* **Polyglot Data**: Pick as many different data solutions as necessary depending on the different types of data and how it is accessed. Clearly, the SQL-based world of relational and analytics databases still matter, but very common data structures and access patterns now include: key/value caching, document/JSON, search, object, metrics/time-series and perhaps a few others. All of these new database solutions need to be natively distributed systems and simple to operate at any scale.
+- **Cloud**. Public or private cloud infrastructure provides the base services of compute, storage and networking. AWS, Azure, and Google are all racing to add more and more infrastructure and application services — though architects should actively consider finding abstractions that give them portability.
+- **Containers**: Containers provide the packaging format for how to build and deploy software as components. In earlier generations we were forced to think in larger constructs (.exe or jar files) that were sometimes tied to the underlying hardware, operating systems or runtimes.
+- **Microservices**: Microservices are components with well-defined API interfaces. This allows different parts of the system to evolve much more frequently and to scale independently. It also embraces the use of third-party operated services for common components like identity/auth, payments and more.
+- **Application Management**: Application servers have been replaced by cluster management solutions like Kubernetes. Virtualization was an intermediate step along the path to more elastic distributed systems. By leveraging the new cluster schedulers, systems can much more easily be built to be horizontally scalable and resilient.
+- **Polyglot Data**: Pick as many different data solutions as necessary depending on the different types of data and how it is accessed. Clearly, the SQL-based world of relational and analytics databases still matter, but very common data structures and access patterns now include: key/value caching, document/JSON, search, object, metrics/time-series and perhaps a few others. All of these new database solutions need to be natively distributed systems and simple to operate at any scale.
 
 These aspects all address the architecture for the backend application services and data. In this shift, open source software is prevalent and playing a critical role in every category of infrastructure software. Enterprise adoption of open source has skyrocketed as these open source solutions have been built specifically for cloud deployment and horizontal scalability.
 
@@ -43,12 +43,12 @@ For developers, there has always been rapid evolution in the area of presentatio
 
 Based on these new technologies, it seems that we can move to a new serverless presentation layer architecture with pre-built JavaScript code served from cloud/edge caches talking directly to backend or third-party microservices. Web and content management servers are no longer runtime components and instead, there is a process to build and deploy static or pre-compiled experiences. This new serverless architecture provides a number of dramatic improvements over the current approach, including:
 
-* **Performance**: Pages load much faster since they are served from caches, which are ideally geographically distributed.
-* **Security**: The attack surface is greatly reduced since you no longer have runtime web and CMS components that can be compromised.
-* **Cost**: The cost is completely variable and directly to usage, instead of having to size and pay for peak capacity.
-* **Scalability**: The presentation layer is completely elastic and requires no intervention to scale up and down.
-* **Operations**: There are no servers to manage.
-* **Agility**: The process of iterating on the user experience is greatly accelerated. Designers, developers and teams are able to leverage a familiar and tightly woven set of workflows and pipelines: from source code management through to the desired cloud platform.
+- **Performance**: Pages load much faster since they are served from caches, which are ideally geographically distributed.
+- **Security**: The attack surface is greatly reduced since you no longer have runtime web and CMS components that can be compromised.
+- **Cost**: The cost is completely variable and directly to usage, instead of having to size and pay for peak capacity.
+- **Scalability**: The presentation layer is completely elastic and requires no intervention to scale up and down.
+- **Operations**: There are no servers to manage.
+- **Agility**: The process of iterating on the user experience is greatly accelerated. Designers, developers and teams are able to leverage a familiar and tightly woven set of workflows and pipelines: from source code management through to the desired cloud platform.
 
 There are lots of pieces to this puzzle to still work out, but the shapes are starting to come into focus. The end result should be a streamlined process to design, build, test, and deploy new user experiences. And the resulting applications should be much faster, simpler to operate, cheaper to run, and more secure.
 

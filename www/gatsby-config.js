@@ -1,8 +1,13 @@
+require(`dotenv`).config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby`,
+    title: `GatsbyJS`,
     siteUrl: `https://www.gatsbyjs.org`,
-    description: `Blazing-fast static site generator for React`,
+    description: `Blazing fast modern site generator for React`,
+    twitter: `@gatsbyjs`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -29,18 +34,26 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `ecosystem`,
+        path: `${__dirname}/src/data/ecosystem/`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    `gatsby-transformer-sharp`,
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-graphviz`,
+          `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -54,9 +67,9 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.05rem`,
             },
           },
+          `gatsby-remark-autolink-headers`,
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-autolink-headers`,
           `gatsby-remark-smartypants`,
         ],
       },
@@ -68,10 +81,10 @@ module.exports = {
         showSpinner: false,
       },
     },
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
+    `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
-    `gatsby-plugin-react-next`,
     `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
@@ -85,29 +98,17 @@ module.exports = {
         icon: `src/assets/gatsby-icon.png`,
       },
     },
-    {
-      resolve: `gatsby-plugin-offline`,
-      options: {
-        navigateFallback: null,
-        navigateFallbackWhitelist: [],
-      },
-    },
+    `gatsby-plugin-offline`,
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-93349937-1`,
+        trackingId: `UA-93349937-5`,
       },
     },
-    {
-      resolve: `gatsby-plugin-fullstory`,
-      options: {
-        fs_org: `B2TRP`,
-      },
-    },
-    `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -172,11 +173,30 @@ module.exports = {
       },
     },
     `gatsby-plugin-netlify`,
+    `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,
       options: {
-          endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
+        endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
       },
     },
+    {
+      resolve: `gatsby-transformer-screenshot`,
+      options: {
+        nodeTypes: [`StartersYaml`],
+      },
+    },
+    `gatsby-plugin-subfont`,
+    // {
+    // resolve: `gatsby-plugin-guess-js`,
+    // options: {
+    // GAViewID: `142357465`,
+    // // The "period" for fetching analytic data.
+    // period: {
+    // startDate: new Date(`2018-1-1`),
+    // endDate: new Date(),
+    // },
+    // },
+    // },
   ],
 }

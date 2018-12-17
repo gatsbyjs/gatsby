@@ -20,14 +20,15 @@ import {
   multipleRootQueriesError,
 } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
+const websocketManager = require(`../../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
 const { printTransforms } = IRTransforms
 
 const {
-  ArgumentsOfCorrectTypeRule,
-  DefaultValuesOfCorrectTypeRule,
+  ValuesOfCorrectTypeRule,
+  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -41,13 +42,16 @@ type RootQuery = {
   name: string,
   path: string,
   text: string,
+  originalText: string,
+  isStaticQuery: boolean,
+  hash: string,
 }
 
 type Queries = Map<string, RootQuery>
 
 const validationRules = [
-  ArgumentsOfCorrectTypeRule,
-  DefaultValuesOfCorrectTypeRule,
+  ValuesOfCorrectTypeRule,
+  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -57,9 +61,13 @@ const validationRules = [
   VariablesInAllowedPositionRule,
 ]
 
+let lastRunHadErrors = null
+const overlayErrorID = `graphql-compiler`
+
 class Runner {
   baseDir: string
   schema: GraphQLSchema
+  errors: string[]
   fragmentsDir: string
 
   constructor(baseDir: string, fragmentsDir: string, schema: GraphQLSchema) {
@@ -69,10 +77,11 @@ class Runner {
   }
 
   reportError(message) {
-    if (process.env.NODE_ENV === `production`) {
-      report.panic(`${report.format.red(`GraphQL Error`)} ${message}`)
-    } else {
-      report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+    const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
+    report.panicOnBuild(queryErrorMessage)
+    if (process.env.gatsby_executing_command === `develop`) {
+      websocketManager.emitError(overlayErrorID, queryErrorMessage)
+      lastRunHadErrors = true
     }
   }
 
@@ -100,7 +109,7 @@ class Runner {
     // run babel on code in node_modules). Otherwise the component will throw
     // an error in the browser of "graphql is not defined".
     files = files.concat(
-      Object.keys(store.getState().components).map(c => normalize(c))
+      Array.from(store.getState().components.keys(), c => normalize(c))
     )
     files = _.uniq(files)
 
@@ -146,10 +155,14 @@ class Runner {
       return compiledNodes
     }
 
-    const printContext = printTransforms.reduce(
-      (ctx, transform) => transform(ctx, this.schema),
-      compilerContext
-    )
+    // relay-compiler v1.5.0 added "StripUnusedVariablesTransform" to
+    // printTransforms. Unfortunately it currently doesn't detect variables
+    // in input objects widely used in gatsby, and therefore removing
+    // variable declaration from queries.
+    // As a temporary workaround remove that transform by slicing printTransforms.
+    const printContext = printTransforms
+      .slice(0, -1)
+      .reduce((ctx, transform) => transform(ctx, this.schema), compilerContext)
 
     compilerContext.documents().forEach((node: { name: string }) => {
       if (node.kind !== `Root`) return
@@ -174,12 +187,32 @@ class Runner {
         .map(GraphQLIRPrinter.print)
         .join(`\n`)
 
-      compiledNodes.set(filePath, {
+      const query = {
         name,
         text,
-        path: path.join(this.baseDir, filePath),
-      })
+        originalText: nameDefMap.get(name).text,
+        path: filePath,
+        isStaticQuery: nameDefMap.get(name).isStaticQuery,
+        hash: nameDefMap.get(name).hash,
+      }
+
+      if (query.isStaticQuery) {
+        query.jsonName =
+          `sq--` +
+          _.kebabCase(
+            `${path.relative(store.getState().program.directory, filePath)}`
+          )
+      }
+      compiledNodes.set(filePath, query)
     })
+
+    if (
+      process.env.gatsby_executing_command === `develop` &&
+      lastRunHadErrors
+    ) {
+      websocketManager.emitError(overlayErrorID, null)
+      lastRunHadErrors = false
+    }
 
     return compiledNodes
   }

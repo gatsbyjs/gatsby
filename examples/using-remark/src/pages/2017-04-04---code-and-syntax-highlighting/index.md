@@ -50,8 +50,8 @@ names, see the [PrismJS homepage][3].
     ```
 
 ```javascript
-var s = "JavaScript syntax highlighting";
-alert(s);
+var s = "JavaScript syntax highlighting"
+alert(s)
 ```
 
 ```python
@@ -64,13 +64,13 @@ No language indicated, so no syntax highlighting.
 But let's throw in a <b>tag</b>.
 ```
 
-## Line highlighting
+## Line highlighting & numbering
 
-[gatsby-remark-prismjs][1] has its own line highlighting implementation which
+[gatsby-remark-prismjs][1] has its own line highlighting & numbering implementation which
 differs a bit from PrismJS's own. You can find out everything about it in the
 [corresponding README][1].
 
-    ```javascript{1-2,22}
+    ```javascript{1-2,22}{numberLines: true}
     // In your gatsby-config.js
     // Let's make this line very long so that our container has to scroll its overflow…
     plugins: [
@@ -99,7 +99,7 @@ differs a bit from PrismJS's own. You can find out everything about it in the
     ]
     ```
 
-```javascript{1-2,22}
+```javascript{1-2,22}{numberLines: true}
 // In your gatsby-config.js
 // Let's make this line very long so that our container has to scroll its overflow…
 plugins: [
@@ -122,15 +122,29 @@ plugins: [
         `gatsby-remark-copy-linked-files`,
         `gatsby-remark-smartypants`,
         `gatsby-remark-prismjs`,
-      ]
-    }
-  }
+      ],
+    },
+  },
 ]
+```
+
+Line numbers can start from anywhere, here's an example showing a small extract from a larger chunk of code:
+
+    ```{numberLines: 549}
+    ...
+    a long imaginary code block
+    ...
+    ```
+
+```{numberLines: 549}
+...
+ a long imaginary code block
+...
 ```
 
 Let's do something crazy and add a list with another code example:
 
-* **A list item**
+- **A list item**
 
   …and a paragraph! In my younger and more vulnerable years my father gave me
   some advice that I’ve been turning over in my mind ever since.
@@ -140,21 +154,27 @@ Let's do something crazy and add a list with another code example:
       that all the people in this world haven’t had the advantages that you’ve
       had.”
 
-* Roger that, now back to topic: _Highlighted code blocks work here, too:_
+- Roger that, now back to topic: _Highlighted code blocks work here, too:_
 
   ```css{10,13}
   .clearfix:after {
-  	visibility: hidden;
-  	display: block;
-  	font-size: 0;
-  	content: " ";
-  	clear: both;
-  	height: 0;
-  	}
-  .clearfix { display: inline-table; }
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+  .clearfix {
+    display: inline-table;
+  }
   /* Hides from IE-mac \*/
-  * html .clearfix { height: 1%; }
-  .clearfix { display: block; }
+  * html .clearfix {
+    height: 1%;
+  }
+  .clearfix {
+    display: block;
+  }
   /* End hide from IE-mac */
   ```
 
@@ -172,7 +192,7 @@ Let's do something crazy and add a list with another code example:
 
   Source: https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac
 
-* **The last list item** –- no more list items after this one, pinky swear!
+- **The last list item** –- no more list items after this one, pinky swear!
 
 [1]: https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
 [2]: http://prismjs.com/

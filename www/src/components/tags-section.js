@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import { rhythm, scale } from "../utils/typography"
 const _ = require(`lodash`)
 
@@ -9,7 +9,7 @@ const TagsSection = ({ tags }) => {
     const divider = i < tags.length - 1 && <span>{` | `}</span>
     return (
       <span key={tag}>
-        <Link to={`/blog/tags/${_.kebabCase(tag)}`}>{tag}</Link>
+        <Link to={`/blog/tags/${_.kebabCase(tag.toLowerCase())}`}>{tag}</Link>
         {divider}
       </span>
     )

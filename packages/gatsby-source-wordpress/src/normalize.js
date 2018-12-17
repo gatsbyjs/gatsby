@@ -67,6 +67,34 @@ const normalizeACF = entities =>
 
 exports.normalizeACF = normalizeACF
 
+// Combine all ACF Option page data
+exports.combineACF = function(entities) {
+  let acfOptionData = {}
+  // Map each ACF Options object keys/data to single object
+  _.forEach(entities.filter(e => e.__type === `wordpress__acf_options`), e => {
+    if (e[`acf`]) {
+      acfOptionData[e.__acfOptionPageId || `options`] = {}
+      Object.keys(e[`acf`]).map(
+        k => (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
+      )
+    }
+  })
+
+  // Remove previous ACF Options objects (if any)
+  _.pullAll(
+    entities,
+    entities.filter(e => e.__type === `wordpress__acf_options`)
+  )
+
+  // Create single ACF Options object
+  entities.push({
+    acf: acfOptionData || false,
+    __type: `wordpress__acf_options`,
+  })
+
+  return entities
+}
+
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
 const normalizeEntities = entities => {
@@ -137,9 +165,16 @@ exports.liftRenderedField = entities =>
   })
 
 // Exclude entities of unknown shape
-// Assume all entities contain a wordpress_id, except for whitelisted type wp_settings
+// Assume all entities contain a wordpress_id,
+// except for whitelisted type wp_settings and the site_metadata
 exports.excludeUnknownEntities = entities =>
-  entities.filter(e => e.wordpress_id || e.__type === `wordpress__wp_settings`) // Excluding entities without ID, or WP Settings
+  entities.filter(
+    e =>
+      e.wordpress_id ||
+      e.__type === `wordpress__wp_settings` ||
+      e.__type === `wordpress__site_metadata`
+  )
+// Excluding entities without ID, or WP Settings
 
 // Create node ID from known entities
 // excludeUnknownEntities whitelisted types don't contain a wordpress_id
@@ -202,7 +237,7 @@ exports.mapPostsToTagsCategories = entities => {
   return entities.map(e => {
     // Replace tags & categories with links to their nodes.
 
-    let entityHasTags = (e.tags && Array.isArray(e.tags) && e.tags.length)
+    let entityHasTags = e.tags && Array.isArray(e.tags) && e.tags.length
     if (tags.length && entityHasTags) {
       e.tags___NODE = e.tags.map(
         t => tags.find(tObj => t === tObj.wordpress_id).id
@@ -210,7 +245,8 @@ exports.mapPostsToTagsCategories = entities => {
       delete e.tags
     }
 
-    let entityHasCategories = (e.categories && Array.isArray(e.categories) && e.categories.length)
+    let entityHasCategories =
+      e.categories && Array.isArray(e.categories) && e.categories.length
     if (categories.length && entityHasCategories) {
       e.categories___NODE = e.categories.map(
         c => categories.find(cObj => c === cObj.wordpress_id).id
@@ -228,8 +264,11 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     // Where should api_menus stuff link to?
     if (e.taxonomy && e.__type !== `wordpress__wp_api_menus_menus`) {
       // Replace taxonomy with a link to the taxonomy node.
-      e.taxonomy___NODE = entities.find(t => t.wordpress_id === e.taxonomy).id
-      delete e.taxonomy
+      const taxonomyNode = entities.find(t => t.wordpress_id === e.taxonomy)
+      if (taxonomyNode) {
+        e.taxonomy___NODE = taxonomyNode.id
+        delete e.taxonomy
+      }
     }
     return e
   })
@@ -246,6 +285,24 @@ exports.mapElementsToParent = entities =>
       }
     }
     return e
+  })
+
+exports.mapPolylangTranslations = entities =>
+  entities.map(entity => {
+    if (entity.polylang_translations) {
+      entity.polylang_translations___NODE = entity.polylang_translations.map(
+        translation =>
+          entities.find(
+            t =>
+              t.wordpress_id === translation.wordpress_id &&
+              entity.__type === t.__type
+          ).id
+      )
+
+      delete entity.polylang_translations
+    }
+
+    return entity
   })
 
 exports.searchReplaceContentUrls = function({
@@ -407,6 +464,7 @@ exports.downloadMediaFiles = async ({
   store,
   cache,
   createNode,
+  createNodeId,
   touchNode,
   _auth,
 }) =>
@@ -421,7 +479,7 @@ exports.downloadMediaFiles = async ({
         // previously created file node to not try to redownload
         if (cacheMediaData && e.modified === cacheMediaData.modified) {
           fileNodeID = cacheMediaData.fileNodeID
-          touchNode(cacheMediaData.fileNodeID)
+          touchNode({ nodeId: cacheMediaData.fileNodeID })
         }
 
         // If we don't have cached data, download the file
@@ -432,6 +490,7 @@ exports.downloadMediaFiles = async ({
               store,
               cache,
               createNode,
+              createNodeId,
               auth: _auth,
             })
 
@@ -470,10 +529,10 @@ const prepareACFChildNodes = (
   _.each(obj, (value, key) => {
     if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
       obj[`${key}___NODE`] = value.map(
-        v =>
+        (v, indexItem) =>
           prepareACFChildNodes(
             v,
-            entityId,
+            `${entityId}_${indexItem}`,
             topLevelIndex,
             type + key,
             children,
