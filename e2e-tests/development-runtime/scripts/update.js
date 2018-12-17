@@ -15,7 +15,7 @@ const args = yargs
   })
   .option(`exact`, {
     default: false,
-    type: `boolean`
+    type: `boolean`,
   })
   .option(`fileContent`, {
     default: JSON.stringify(
@@ -58,7 +58,10 @@ async function update() {
 
   const contents = replacements.reduce((replaced, pair) => {
     const [key, value] = pair.split(`:`)
-    return replaced.replace(args.exact ? key : new RegExp(`%${key}%`, `g`), value)
+    return replaced.replace(
+      args.exact ? key : new RegExp(`%${key}%`, `g`),
+      value
+    )
   }, file)
 
   await fs.writeFile(filePath, contents, `utf8`)

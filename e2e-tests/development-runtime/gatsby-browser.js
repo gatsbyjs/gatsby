@@ -5,7 +5,7 @@ if (typeof window !== `undefined`) {
 const addLogEntry = (action, location) => {
   window.___PageComponentLifecycleCallsLog.push({
     action,
-    pathname: location.pathname
+    pathname: location.pathname,
   })
 }
 

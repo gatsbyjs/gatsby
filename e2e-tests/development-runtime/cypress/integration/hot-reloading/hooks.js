@@ -11,7 +11,7 @@ describe(`hot-reloading hooks`, () => {
       `npm run update -- --file src/pages/hooks.js --replacements "count + 1:count + ${amount}" --exact`
     )
 
-    cy.getTestElement('increment').click()
+    cy.getTestElement(`increment`).click()
 
     cy.getTestElement(COUNT_ID)
       .invoke(`text`)
