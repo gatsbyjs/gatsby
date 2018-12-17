@@ -4,14 +4,14 @@
   "version": "1.0.0",
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
-    "gatsby": "^2.0.53",
+    "gatsby": "^2.0.70",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-manifest": "^2.0.9",
-    "gatsby-plugin-offline": "^2.0.16",
+    "gatsby-plugin-offline": "^2.0.20",
     "gatsby-plugin-react-helmet": "^3.0.2",
     "gatsby-plugin-sharp": "^2.0.14",
     "gatsby-source-filesystem": "^2.0.12",
-    "gatsby-transformer-remark": "^2.1.15",
+    "gatsby-transformer-remark": "^2.1.17",
     "gatsby-transformer-sharp": "^2.1.8",
     "prop-types": "^15.6.2",
     "react": "16.7.0-alpha.2",
@@ -43,9 +43,6 @@
     "prettier": "^1.15.2",
     "start-server-and-test": "^1.7.11",
     "yargs": "^12.0.5"
-  },
-  "resolutions": {
-    "react-hot-loader": "^4.6.0"
   },
   "repository": {
     "type": "git",

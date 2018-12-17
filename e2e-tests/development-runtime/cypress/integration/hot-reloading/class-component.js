@@ -21,7 +21,7 @@ describe(`reloading class component`, () => {
       .should(`contain`, text)
   })
 
-  it(`updates stateful component and hot reloads`, () => {
+  it(`updates state and hot reloads`, () => {
     const value = `custom`
     cy.exec(
       `npm run update -- --file src/components/class-component.js --replacements "CUSTOM_STATE:${value}"`

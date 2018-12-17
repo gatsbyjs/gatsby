@@ -70,4 +70,5 @@ yarn-error.log
 
 # misc files
 cypress/screenshots
+cypress/fixtures
 __history__.json
