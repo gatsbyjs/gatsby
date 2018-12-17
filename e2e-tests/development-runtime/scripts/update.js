@@ -12,22 +12,25 @@ const args = yargs
   .option(`replacements`, {
     default: [],
     type: `array`,
-  }).argv
-
-const getFileContent = name =>
-  `
-import React from 'react';
-
-import Layout from '../components/layout';
-
-export default function ${name.substr(0, 1).toUpperCase()}${name.slice(1)}() {
-  return (
-    <Layout>
-      <h1 data-testid="message">Hello %${name.toUpperCase()}_REPLACEMENT%</h1>
-    </Layout>
-  )
-}
-`.trim()
+  })
+  .option(`content`, {
+    default: `
+    import React from 'react';
+    
+    import Layout from '../components/layout';
+    
+    export default function SomeComponent() {
+      return (
+        <Layout>
+          <h1 data-testid="message">Hello %REPLACEMENT%</h1>
+        </Layout>
+      )
+    }
+    `.trim(),
+    type: `string`
+  })
+  .argv
+  
 
 async function update() {
   const history = await getHistory()
@@ -41,7 +44,7 @@ async function update() {
       .split(/\..+$/)
       .shift()
     exists = false
-    await fs.writeFile(filePath, getFileContent(name), `utf8`)
+    await fs.writeFile(filePath, args.content, `utf8`)
   }
   let file = await fs.readFile(filePath, `utf8`)
 

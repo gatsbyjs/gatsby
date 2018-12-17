@@ -16,7 +16,7 @@ describe(`hot reloading new page component`, () => {
   it(`can hot reload a new page file`, () => {
     const text = `World`
     cy.exec(
-      `npm run update -- --file src/pages/sample.js --replacements "SAMPLE_REPLACEMENT:${text}"`
+      `npm run update -- --file src/pages/sample.js --replacements "REPLACEMENT:${text}"`
     )
 
     cy.visit(`/sample`).waitForAPI(`onRouteUpdate`)
