@@ -14,7 +14,7 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 1. Install both packages:
 
-```bash
+```shell
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 

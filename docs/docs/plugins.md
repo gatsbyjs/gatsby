@@ -33,7 +33,7 @@ For example, `gatsby-transformer-json` is a package which adds support for JSON 
 
 To install it, in the root of your site you run:
 
-```bash
+```shell
 npm install --save gatsby-transformer-json
 ```
 
