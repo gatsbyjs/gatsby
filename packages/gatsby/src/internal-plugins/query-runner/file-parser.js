@@ -4,7 +4,7 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 // Traverse is a es6 module...
-import traverse from "babel-traverse"
+import traverse from "@babel/traverse"
 const getGraphQLTag = require(`babel-plugin-remove-graphql-queries`)
   .getGraphQLTag
 const report = require(`gatsby-cli/lib/reporter`)

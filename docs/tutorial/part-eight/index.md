@@ -47,7 +47,7 @@ Once this starts, you can now view your site at `localhost:9000`.
 
 ### Run a Lighthouse audit
 
-Now let's run your first Lighthouse test.
+Now you're going to run your first Lighthouse test.
 
 1.  Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
 
@@ -87,7 +87,7 @@ npm install --save gatsby-plugin-manifest
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
   plugins: [
     {
@@ -98,7 +98,9 @@ npm install --save gatsby-plugin-manifest
         start_url: "/",
         background_color: "#6b37bf",
         theme_color: "#6b37bf",
-        display: "minimal-ui",
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: "standalone",
         icon: "src/images/icon.png", // This path is relative to the root of the site.
       },
     },
@@ -124,7 +126,7 @@ npm install --save gatsby-plugin-offline
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
     plugins: [
         {
@@ -160,7 +162,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
   plugins: [`gatsby-plugin-react-helmet`]
 }
@@ -168,7 +170,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 3.  Use `React Helmet` in your pages:
 
-```jsx{8-12}
+```jsx
 import React from "react"
 import { Helmet } from "react-helmet"
 
@@ -176,12 +178,14 @@ class Application extends React.Component {
   render() {
     return (
       <div className="application">
+        {/* highlight-start */}
         <Helmet>
           <meta charSet="utf-8" />
           <title>My Title</title>
           <link rel="canonical" href="http://mysite.com/example" />
         </Helmet>
         ...
+        {/* highlight-end */}
       </div>
     )
   }
@@ -195,6 +199,22 @@ class Application extends React.Component {
 In this section we've shown you a few Gatsby-specific tools to improve your site's performance and prepare to go live.
 
 Lighthouse is a great tool for site improvements and learning -- Continue looking through the detailed feedback it provides and keep making your site better!
+
+## Next Steps
+
+### Official Documentation
+
+- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_ and much more.
+
+### Official Plugins
+
+- [Official Plugins](https://github.com/gatsbyjs/gatsby/tree/master/packages): The complete list of all the Official Plugins maintained by Gatsby.
+
+### Official Starters
+
+1.  [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. _[working example](http://gatsbyjs.github.io/gatsby-starter-default/)_
+2.  [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. _[working example](http://gatsbyjs.github.io/gatsby-starter-blog/)_
+3.  [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
 
 ## That's all, folks
 

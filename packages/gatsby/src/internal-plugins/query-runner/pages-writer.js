@@ -36,10 +36,17 @@ const writePages = async () => {
   })
 
   pagesData = _(pagesData)
-    // Ensure pages keep the same sorting through builds
-    // and sort pages with matchPath to end so explicit routes
-    // will match before general.
-    .sortBy(p => `${p.matchPath ? 1 : 0}${p.path}`)
+    // Ensure pages keep the same sorting through builds.
+    // Pages without matchPath come first, then pages with matchPath,
+    // where more specific patterns come before less specific patterns.
+    // This ensures explicit routes will match before general.
+    // Specificity is inferred from number of path segments.
+    .sortBy(
+      p =>
+        `${p.matchPath ? 9999 - p.matchPath.split(`/`).length : `0000`}${
+          p.path
+        }`
+    )
     .value()
   const newHash = crypto
     .createHash(`md5`)
@@ -137,13 +144,11 @@ const resetLastHash = () => {
 exports.resetLastHash = resetLastHash
 
 let bootstrapFinished = false
-let oldPages
 const debouncedWritePages = _.debounce(
   () => {
     // Don't write pages again until bootstrap has finished.
-    if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
+    if (bootstrapFinished) {
       writePages()
-      oldPages = store.getState().pages
     }
   },
   500,

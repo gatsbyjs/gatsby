@@ -2,6 +2,8 @@
 title: Migrating from v1 to v2
 ---
 
+Looking for the v1 docs? [Find them here](https://v1.gatsbyjs.org/).
+
 > This document is a work in progress. Have you upgraded your site and run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/master/docs/docs/migrating-from-v1-to-v2.md)!
 
 ## Introduction
@@ -9,6 +11,14 @@ title: Migrating from v1 to v2
 This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While there's a lot covered here, you probably won't need to do everything for your site. We'll do our best to keep things easy to follow, and as sequential as possible so you can quickly get rocking on v2!
 
 > If you want to start fresh, check out the [starting a new project section](#for-explorers)
+
+## Why you should migrate
+
+This documentation page covers the _how_ of migrating from v1 to v2. The _why_ is covered in various blog posts:
+
+- [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
+- [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
+- [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
 
 ## What we'll cover
 
@@ -35,6 +45,7 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
   - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
   - [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
   - [Update Jest configuration](#update-jest-configuration)
+  - [gatsby-image's `outerWrapperClassName` was removed](#gatsby-images-outerwrapperclassname-was-removed)
 
 - [Resolving Deprecations](#resolving-deprecations)
 
@@ -71,9 +82,7 @@ The very first thing you will need to do is update your dependencies and install
 
 You need update your `package.json` to use the latest version of Gatsby.
 
-`package.json`
-
-```json
+```json:title=package.json
 "dependencies": {
   "gatsby": "^2.0.0",
 }
@@ -159,9 +168,7 @@ git mv src/layouts/index.js src/components/layout.js
 
 Adhering to the normal React composition model, import your layout component and use it to wrap the content of the page.
 
-`src/pages/index.js`
-
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -178,9 +185,7 @@ Repeat for every page and template that needs this layout.
 
 In v1, the layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
 
-`src/components/layout.js`
-
-```jsx
+```jsx:title=src/components/layout.js
 import React from "react"
 
 export default ({ children, location }) => (
@@ -191,9 +196,7 @@ export default ({ children, location }) => (
 )
 ```
 
-`src/pages/index.js`
-
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -210,9 +213,7 @@ If you were using the `data` prop in your Gatsby v1 layout, you now need to make
 
 Replacing a layout's query with `StaticQuery`:
 
-`src/components/layout.js`
-
-```diff
+```diff:title=src/components/layout.js
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
@@ -336,15 +337,13 @@ To have the same configuration that you had in v1 (if you were using these plugi
 
 #### 2. Include `gatsby-plugin-postcss` in your `gatsby-config.js` file
 
-```js
-// in gatsby-config.js
+```js:title=gatsby-config.js
 plugins: [`gatsby-plugin-postcss`],
 ```
 
 #### 3. Include PostCSS plugins in your `postcss.config.js` file
 
-```js
-// in postcss.config.js
+```js:title=postcss.config.js
 const postcssImport = require(`postcss-import`)
 const postcssCssNext = require(`postcss-cssnext`)
 const postcssBrowserReporter = require(`postcss-browser-reporter`)
@@ -457,7 +456,7 @@ If you have more advanced styling needs, [use the `getProps` prop](https://reach
 
 When creating a client route in `gatsby-node.js`, use a `*` to select all child routes instead of `:path`.
 
-```diff
+```diff:title=gatsby-node.js
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions
 
@@ -648,9 +647,7 @@ The GraphQL root type has been changed from `RootQueryType` to `Query`. This is 
 
 If you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
 
-`src/utils/typography.js`
-
-```diff
+```diff:title=src/utils/typography.js
 - const typography = new Typography();
 - export default typography;
 
@@ -679,7 +676,78 @@ export default ({ children }) => (
 )
 ```
 
-TODO: add a code snippet that uses [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to revert to Gatsby's v1 behaviour.
+The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader#options).
+
+For vanilla CSS without a preprocessor:
+
+```javascript:title=gatsby-node.js
+const cssLoaderRe = /\/css-loader\//
+const targetFile = `.module.css`
+
+const processRule = rule => {
+  if (rule.oneOf) {
+    return {
+      ...rule,
+      oneOf: rule.oneOf.map(processRule),
+    }
+  }
+
+  if (!rule.test.test(targetFile)) {
+    return rule
+  }
+
+  if (Array.isArray(rule.use)) {
+    return {
+      ...rule,
+      use: rule.use.map(use => {
+        if (!cssLoaderRe.test(use.loader)) {
+          return use
+        }
+
+        // adjust css-loader options
+        return {
+          ...use,
+          options: {
+            ...use.options,
+            camelCase: false,
+          },
+        }
+      }),
+    }
+  }
+
+  return rule
+}
+
+exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
+  const config = getConfig()
+
+  const newConfig = {
+    ...config,
+    module: {
+      ...config.module,
+      rules: config.module.rules.map(processRule),
+    },
+  }
+  actions.replaceWebpackConfig(newConfig)
+}
+```
+
+If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/packages/gatsby-plugin-sass/#how-to-use) or [`gatsby-plugin-less`](/packages/gatsby-plugin-less/#how-to-use):
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      cssLoaderOptions: {
+        camelCase: false,
+      },
+    },
+  },
+]
+```
 
 ### Update Jest configuration
 
@@ -687,7 +755,7 @@ If you were using Jest with Gatsby V1, you will need to make some updates to you
 
 ### gatsby-image's `outerWrapperClassName` was removed
 
-Because the outer wrapper `div` was removed, you can no longer use `outerWrapperClassName` for styling your images. You should merge those styles into your wrapper's class.
+Because the outer wrapper `div` was removed, you can no longer use the `outerWrapperClassName` prop for styling your images. You should merge those styles into your wrapper's class.
 
 ```diff
 <Img
@@ -696,6 +764,8 @@ Because the outer wrapper `div` was removed, you can no longer use `outerWrapper
 - outerWrapperClassName={styles.outerWrapper}
 />
 ```
+
+Similarly, if you have created any CSS styling rules referencing the `gatsby-image-outer-wrapper` class, you should merge those styles into the `gatsby-image-wrapper` class.
 
 ## Resolving Deprecations
 
@@ -715,11 +785,11 @@ export default props => (
 
 Furthermore you can remove the package from the `package.json`.
 
-```diff
+```diff:title=package.json
 "dependencies": {
-  "gatsby": "next",
-  "gatsby-image": "next",
-  "gatsby-plugin-sharp": "next",
+  "gatsby": "latest",
+  "gatsby-image": "latest",
+  "gatsby-plugin-sharp": "latest",
 - "gatsby-link": "^1.6.39"
 }
 ```
@@ -754,8 +824,6 @@ export const query = graphql`
 ### Rename `boundActionCreators` to `actions`
 
 `boundActionCreators` is deprecated in v2. You can continue using it, but it’s recommended that you rename it to `actions`.
-
-> TODO: document new actions - see [actions](/docs/actions)
 
 ### Rename `pathContext` to `pageContext`
 
@@ -867,7 +935,7 @@ In most cases you won't have to do anything to be v2 compatible, however there a
 
 `gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
 
-```diff
+```diff:title=package.json
 "peerDependencies": {
 -  "gatsby": "1"
 +  "gatsby": ">=1"

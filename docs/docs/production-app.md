@@ -1,8 +1,8 @@
 ---
-title: Building the Javascript App
+title: Building the JavaScript App
 ---
 
-Gatsby is a static site generator. It generates your site's HTML pages, but also creates a javascript runtime that takes over in the browser once the initial HTML has loaded. This enables other pages to load instantaneously. Read on to find out how that runtime is generated.
+Gatsby is a static site generator. It generates your site's HTML pages, but also creates a JavaScript runtime that takes over in the browser once the initial HTML has loaded. This enables other pages to load instantaneously. Read on to find out how that runtime is generated.
 
 ## Webpack config
 
@@ -68,11 +68,11 @@ This is a separate bundle for each page. The mechanics for how these are split o
 
 ## production-app.js
 
-This is the entrypoint to webpack that outputs `app-[contenthash].js` bundle. It is responsible for nagivation and page loading once the initial HTML has been loaded.
+This is the entrypoint to webpack that outputs `app-[contenthash].js` bundle. It is responsible for navigation and page loading once the initial HTML has been loaded.
 
 ### First load
 
-To show how `production-app` works, let's imagine that we've just refreshed the browser on our site's `/blog/2` page. The HTML loads immediately, painting our page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in our js code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
+To show how `production-app` works, let's imagine that we've just refreshed the browser on our site's `/blog/2` page. The HTML loads immediately, painting our page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in our JavaScript code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
 
 ```html
 /*
@@ -95,7 +95,7 @@ Then, the app, webpack-runtime, component, and data json bundles are loaded via 
 
 The first thing our app does is run the [onClientEntry](/docs/browser-apis/#onClientEntry) browser API. This allows plugins to perform any operations before we hit the rest of the page loading logic. For example [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/) will call rehydrate.
 
-It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
+It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in Node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
 
 One thing to note is that it gets the list of plugins from `./cache/api-runner-browser-plugins.js`, which is generated [early in bootstrap](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js#L289).
 
@@ -107,7 +107,7 @@ One thing to note is that it gets the list of plugins from `./cache/api-runner-b
 
 The hydration requires a new React component to "replace" the existing DOM with. Gatsby uses [reach router](https://github.com/reach/router) for this. Within it, we provide a [RouteHandler](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js#L35) component that uses [PageRenderer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/page-renderer.js) to create the navigated to page.
 
-PageRenderer's constructor [loads the page resources](/docs/production-app/#load-page-resources) for the path. On first load though, these will have already been requested from the server by `<link rel="preload" .../>` in the page's original HTML (see [Link Preloads](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) in HTML Generation Docs). The loaded page resources includes the imported component, with which we create the actual page component using [React.createElement()](https://reactjs.org/docs/react-api.html). This element is returned to our RouteHandler which hands it off to Reach Router for rendering.
+PageRenderer's constructor [loads the page resources](/docs/production-app/#load-page-resources) for the path. On first load though, these will have already been requested from the server by `<link rel="preload" ... />` in the page's original HTML (see [Link Preloads](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) in HTML Generation Docs). The loaded page resources includes the imported component, with which we create the actual page component using [React.createElement()](https://reactjs.org/docs/react-api.html). This element is returned to our RouteHandler which hands it off to Reach Router for rendering.
 
 ### Load Page Resources
 

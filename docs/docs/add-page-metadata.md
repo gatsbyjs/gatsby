@@ -1,8 +1,8 @@
---- 
-title: Add page metadata
+---
+title: Adding page metadata
 ---
 
-If you've run an [audit with Lighthouse](/audit-with-lighthouse/), you may have noticed a lackluster score in the "SEO" category. Let's address how you can improve that score.
+If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may have noticed a lackluster score in the "SEO" category. Let's address how you can improve that score.
 
 Adding metadata to pages (such as a title or description) are key in helping search engines like Google understand your content, and decide when to surface it in search results.
 
@@ -20,7 +20,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
   plugins: [`gatsby-plugin-react-helmet`]
 }
@@ -28,7 +28,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 3.  Use `React Helmet` in your pages:
 
-```jsx{8-12}
+```jsx
 import React from "react"
 import { Helmet } from "react-helmet"
 
@@ -36,12 +36,13 @@ class Application extends React.Component {
   render() {
     return (
       <div className="application">
+        {/* highlight-start */}
         <Helmet>
           <meta charSet="utf-8" />
           <title>My Title</title>
           <link rel="canonical" href="http://mysite.com/example" />
         </Helmet>
-        ...
+        {/* highlight-end */}
       </div>
     )
   }

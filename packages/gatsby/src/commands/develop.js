@@ -26,6 +26,7 @@ const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -154,9 +155,22 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
-      req.pipe(request(proxiedUrl)).pipe(res)
+      req
+        .pipe(
+          request(proxiedUrl).on(`error`, err => {
+            const message = `Error when trying to proxy request "${
+              req.originalUrl
+            }" to "${proxiedUrl}"`
+
+            report.error(message, err)
+            res.status(500).end()
+          })
+        )
+        .pipe(res)
     })
   }
+
+  await apiRunnerNode(`onCreateDevServer`, { app })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
@@ -425,7 +439,13 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        require(`opn`)(urls.localUrlForBrowser)
+        require(`opn`)(urls.localUrlForBrowser).catch(err =>
+          console.log(
+            `${chalk.yellow(
+              `warn`
+            )} Browser not opened because no browser was found`
+          )
+        )
       }
     }
 

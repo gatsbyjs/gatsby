@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
+  GraphQLList,
   GraphQLBoolean,
   GraphQLString,
   GraphQLInt,
@@ -50,6 +51,7 @@ const fixedNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
+  cache,
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -79,6 +81,7 @@ const fixedNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ src }) => src)
           },
@@ -95,6 +98,7 @@ const fixedNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -150,6 +154,7 @@ const fixedNodeType = ({
           file,
           args,
           reporter,
+          cache,
         })
       ).then(o =>
         Object.assign({}, o, {
@@ -168,6 +173,7 @@ const fluidNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
+  cache,
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -193,6 +199,7 @@ const fluidNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ src }) => src)
           },
@@ -209,6 +216,7 @@ const fluidNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -216,6 +224,8 @@ const fluidNodeType = ({
         sizes: { type: GraphQLString },
         originalImg: { type: GraphQLString },
         originalName: { type: GraphQLString },
+        presentationWidth: { type: GraphQLInt },
+        presentationHeight: { type: GraphQLInt },
       },
     }),
     args: {
@@ -257,6 +267,15 @@ const fluidNodeType = ({
         type: GraphQLInt,
         defaultValue: 0,
       },
+      sizes: {
+        type: GraphQLString,
+        defaultValue: ``,
+      },
+      srcSetBreakpoints: {
+        type: GraphQLList(GraphQLInt),
+        defaultValue: [],
+        description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
+      },
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
@@ -266,6 +285,7 @@ const fluidNodeType = ({
           file,
           args,
           reporter,
+          cache,
         })
       ).then(o =>
         Object.assign({}, o, {
@@ -283,6 +303,7 @@ module.exports = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
+  cache,
 }) => {
   if (type.name !== `ImageSharp`) {
     return {}
@@ -293,6 +314,7 @@ module.exports = ({
     pathPrefix,
     getNodeAndSavePathDependency,
     reporter,
+    cache,
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
@@ -428,6 +450,7 @@ module.exports = ({
             resolve(
               base64({
                 file,
+                cache,
               })
             )
           } else {

@@ -43,7 +43,7 @@ It is also used by [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/?=net
 
 ### jsonName
 
-The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For above page path, it is:
+The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
 
 `blog-2018-07-17-announcing-gatsby-preview-995`
 
@@ -51,13 +51,13 @@ The actual json file is written to disk after [Query Execution](/docs/query-exec
 
 ### component
 
-The path on disk to the javascript file containing the React component. E.g
+The path on disk to the JavaScript file containing the React component. E.g
 
 `/src/templates/template-blog-post.js`
 
 Think of this as `componentPath` instead.
 
-### Redux `components ` namespace
+### Redux `components` namespace
 
 Mapping from `component` (path on disk) to its [Page object](#page-object). It is created every time a page is created (by listening to `CREATE_PAGE`).
 

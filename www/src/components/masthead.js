@@ -98,7 +98,7 @@ const MastheadContent = () => (
             color={colors.lilac}
           />
         </span>
-        websites with React
+        apps and websites with React
       </h1>
       <Button large to="/docs/" icon={<ArrowForwardIcon />}>
         Get Started

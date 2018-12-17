@@ -155,7 +155,7 @@ const updateStateAndRunQueries = isFirstRun => {
         query (or other fragment) of the top-level page that renders this component, or
         use a <StaticQuery> in this component. For more info on fragments and
         composition, see http://graphql.org/learn/queries/#fragments and for more
-        information on <StaticQuery>, see https://next.gatsbyjs.org/docs/static-query
+        information on <StaticQuery>, see https://gatsbyjs.org/docs/static-query
       `)
     }
     runQueuedQueries()

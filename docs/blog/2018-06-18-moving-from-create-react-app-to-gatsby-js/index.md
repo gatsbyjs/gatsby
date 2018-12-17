@@ -34,7 +34,7 @@ When you build your Gatsby website you will end up with static files. They are e
 
 Gatsby provides code and data splitting out-of-the-box. It loads your critical HTML and CSS first. Once that's loaded it prefetches resources for other pages. That's why clicking around feels so fast.
 
-Gatsby uses React components as a view layer so you can share and reuse them across pages/projects. Once it loads the page's javascript code, your website becomes a full React app.
+Gatsby uses React components as a view layer so you can share and reuse them across pages/projects. Once it loads the page's JavaScript code, your website becomes a full React app.
 
 Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. You only get the data you need in the page. At build time Gatsby will resolve the query and embed it in your page.
 
@@ -67,9 +67,9 @@ There are two types of routes:
 Let's assume you have the following static routes in your `create-react-app` project:
 
 ```js
-<Route exact path='/' component={Home}/>
-<Route path='/blog' component={Blog}/>
-<Route path='/contact' component={Contact}/>
+<Route exact path='/' component={Home} />
+<Route path='/blog' component={Blog} />
+<Route path='/contact' component={Contact} />
 ```
 
 Gatsby will create these routes automatically based on files you create in your `pages` folder. The good news is you've already created the React components so it's a matter of copying them to the right place. The exception is the home page which should be named `index.js`.  You will end up with something like this:
@@ -265,7 +265,7 @@ I will not go in depth with how to manage state with React since there are a lot
 
 ![server-2160321 1280](https://images.ctfassets.net/4x6byznv2pet/2xjoMXpIKoAwAM4sqeOCcA/721945e76b4b5861476a9ce8781a326c/server-2160321_1280.jpg)
 
-Since Gatsby builds "static" files you can host them on tons of services. One of my favourites is [Netlify](https://www.netlify.com/). There is also [AWS S3](https://aws.amazon.com/s3/) and more, see the [deploying Gatsby documentation](/docs/deploy-gatsby/) for examples.
+Since Gatsby builds "static" files you can host them on tons of services. One of my favourites is [Netlify](https://www.netlify.com/). There is also [AWS S3](https://aws.amazon.com/s3/) and more, see the [deploying Gatsby documentation](/docs/deploying-and-hosting/) for examples.
 
 ## Resources
 

@@ -80,7 +80,7 @@ Other salient feedback includes that people who have used WordPress for a long t
 
 > If you ever decide to sell to consumers, I really think that the speed / responsiveness of Gatsby is a really good selling point. Like when I tried to sell my idea of building the new site in Gatsby (which would take a little longer compared to building it in Squarespace) to my husband, I simply showed him how quick it is to navigate around a Gatsby site and he was instantly sold. The explicit awareness that website speed matters a lot is currently kinda limited to Silicon Valley etc, but the benefits are definitely apparent as well to the average consumer. Pair that with stats around how speed increases conversions and it'd definitely be a pretty appealing offer to people.
 >
-> – Juliette Pichot, Germany, web dev
+> – Juliette Pichot, Germany, web developer
 
 ## So what does this all mean?
 
