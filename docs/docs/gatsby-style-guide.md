@@ -289,7 +289,7 @@ When Gatsby commits to support a specific version of software (e.g. Node 6 and u
 
 For example, npm 5.2.0 (which includes Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, documentation should only introduce `npx` as an optional command in a note like so:
 
-> npm 5.2.0 (which includes Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, we introduce `npx` here as an optional command for users of npm 5.2.0.
+> npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby supports Node 6 and up, we introduce `npx` here as an optional command for users of npm 5.2.0 or greater.
 
 ### Share best practices whenever possible
 
