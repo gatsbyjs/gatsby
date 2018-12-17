@@ -1375,3 +1375,14 @@
     - Mobile-friendly design
     - Styling done with Sass
     - Gatsby version 2
+- url: https://gatsby-typescript-starter-blog.netlify.com/
+  repo: https://github.com/frnki/gatsby-typescript-starter-blog
+  description: A starter blog for TypeScript-based Gatsby projects with minimal settings.
+  tags:
+    - TypeScript
+    - Blog
+    - Styling:None
+  features:
+    - Typescrip & TSLint
+    - No Styling (No Typography.js)
+    - Minimal settings based on official starter blog
