@@ -1,12 +1,12 @@
 ---
 title: "Building a custom, accessible image lightbox"
-date: 2018-11-03
+date: 2018-12-20
 author: "Sergiy Dybskiy"
 tags: ["lightbox", "gatsby-image", "accessibility"]
 canonicalLink: "https://416serg.me/building-a-custom-accessible-image-lightbox-in-gatsbyjs"
 ---
 
-In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example is on [Github](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
+In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example on [Github](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
 
 ## Getting started
 
@@ -267,7 +267,7 @@ Now, when you click the `Show Dialog` button, you should see something like this
 
 ### Connecting the image click to the Lightbox
 
-Now, you're going to convert each `Img` component into a button that you can click that will trigger the lightbox to open up and the right image will be selected. Here's how you do that:
+Now, you're going to convert each `Img` component into a button that you can click that will trigger the lightbox to open up with the right image selected. Here's how you do that:
 
 ```js
 import React, { Component, Fragment } from "react"
