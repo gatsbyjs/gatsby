@@ -127,7 +127,7 @@ Here's an example of a more complicated TransitionLink using [gsap](https://gree
   entry={{
     delay: 0.3,
     length: 0.6,
-    trigger: ({ entry, node }) => this.slideIn(entry, node, 'left'),
+    trigger: ({ entry, node }) => this.slideIn(entry, node, "left"),
   }}
 >
   {props.children}
