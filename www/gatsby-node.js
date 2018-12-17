@@ -10,6 +10,7 @@ const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
+const startersRedirects = require(`./starter-redirects.json`)
 
 let ecosystemFeaturedItems
 
@@ -117,6 +118,15 @@ exports.createPages = ({ graphql, actions }) => {
     fromPath: `/docs/add-offline-support`,
     toPath: `/docs/add-offline-support-with-a-service-worker`,
     isPermanent: true,
+  })
+
+  Object.entries(startersRedirects).forEach(([ from, to]) => {
+    createRedirect({
+      fromPath: from,
+      toPath: to,
+      isPermanent: true,
+      redirectInBrowser: false,
+    })
   })
 
   return new Promise((resolve, reject) => {
