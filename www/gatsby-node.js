@@ -125,7 +125,6 @@ exports.createPages = ({ graphql, actions }) => {
       fromPath,
       toPath,
       isPermanent: true,
-      redirectInBrowser: false,
     })
   })
 
