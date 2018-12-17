@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/compare/gatsby-plugin-typescript@2.0.2...gatsby-plugin-typescript@2.0.3) (2018-12-05)
+
+### Features
+
+- **gatsby-plugin-typescript:** allow specifying babel preset options ([#10248](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/issues/10248)) ([f106241](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/commit/f106241))
+
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/compare/gatsby-plugin-typescript@2.0.1...gatsby-plugin-typescript@2.0.2) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-typescript
+
+<a name="2.0.1"></a>
+
+## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/compare/gatsby-plugin-typescript@2.0.0...gatsby-plugin-typescript@2.0.1) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-plugin-typescript
+
 <a name="2.0.0"></a>
 
 # [2.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/compare/gatsby-plugin-typescript@2.0.0-rc.6...gatsby-plugin-typescript@2.0.0) (2018-09-17)

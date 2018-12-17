@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.12"></a>
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.11...gatsby-remark-autolink-headers@2.0.12) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+<a name="2.0.11"></a>
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.10...gatsby-remark-autolink-headers@2.0.11) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.9...gatsby-remark-autolink-headers@2.0.10) (2018-11-02)
+
+### Bug Fixes
+
+- **gatsby-remark-autolink-headers:** use shouldUpdateScroll api and not onRouteUpdate ([#9657](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/issues/9657)) ([390803c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/commit/390803c))
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.8...gatsby-remark-autolink-headers@2.0.9) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.7...gatsby-remark-autolink-headers@2.0.8) (2018-10-23)
+
+### Features
+
+- **gatsby-remark-autolink-headers:** add option to maintain case ([#9313](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/issues/9313)) ([4265ff3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/commit/4265ff3))
+
 <a name="2.0.7"></a>
 
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.6...gatsby-remark-autolink-headers@2.0.7) (2018-10-15)
