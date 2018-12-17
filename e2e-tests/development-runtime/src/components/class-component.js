@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class ClassComponent extends Component {
   state = {
-    custom: false,
+    custom: true,
   }
 
   render() {

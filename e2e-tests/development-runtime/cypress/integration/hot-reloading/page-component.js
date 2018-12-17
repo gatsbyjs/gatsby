@@ -10,7 +10,7 @@ describe(`hot reloading page component`, () => {
       .should(`contain`, `%GATSBY_SITE%`)
   })
 
-  it.skip(`hot reloads with new content`, () => {
+  it(`hot reloads with new content`, () => {
     const text = `Gatsby site`
     cy.exec(
       `npm run update -- --file src/pages/index.js --replacements "GATSBY_SITE:${text}"`

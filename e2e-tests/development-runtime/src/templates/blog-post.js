@@ -9,6 +9,7 @@ function BlogPost({ data: { post } }) {
     <Layout>
       <SEO title={post.frontmatter.title} description={post.excerpt} />
       <h1>{post.frontmatter.title}</h1>
+      <h2 data-testid="message">Hello %MESSAGE%</h2>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <Link to="/">Back to home</Link>
     </Layout>

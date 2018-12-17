@@ -10,14 +10,25 @@ describe(`reloading class component`, () => {
       .should(`contain`, `%CLASS_COMPONENT%`)
   })
 
-  it.skip(`updates placeholder and hot reloads`, () => {
+  it(`updates placeholder and hot reloads`, () => {
     const text = `class component`
     cy.exec(
       `npm run update -- --file src/components/class-component.js --replacements "CLASS_COMPONENT:${text}"`
-    ).then(() => {
-      cy.getTestElement(TEST_ID)
-        .invoke(`text`)
-        .should(`contain`, text)
-    })
+    )
+
+    cy.getTestElement(TEST_ID)
+      .invoke(`text`)
+      .should(`contain`, text)
+  })
+
+  it(`updates stateful component and hot reloads`, () => {
+    const value = `custom`
+    cy.exec(
+      `npm run update -- --file src/components/class-component.js --replacements "CUSTOM_STATE:${value}"`
+    )
+
+    cy.getTestElement(TEST_ID)
+      .invoke(`text`)
+      .should(`eq`, `Custom Message`)
   })
 })
