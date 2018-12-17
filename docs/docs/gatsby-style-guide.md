@@ -430,7 +430,7 @@ Here is how we measure the quality of the tutorial and docs. We will use ([cohor
 - daily, weekly, monthly active users
 - weekly retention rate
 
-## Goals of docs and tutorial maintenance
+## Why we chose Github for writing and maintaining docs
 
 The way the Gatsby community maintains docs and tutorials must meet the following requirements:
 
@@ -440,3 +440,5 @@ The way the Gatsby community maintains docs and tutorials must meet the followin
 - code editing functionality
 - version control
 - a way to get feedback on each doc
+
+Github meets this requirements.
