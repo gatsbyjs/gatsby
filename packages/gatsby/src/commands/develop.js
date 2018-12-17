@@ -60,7 +60,7 @@ async function startServer(program) {
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
 
-          See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+          See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
         `,
         err
       )
