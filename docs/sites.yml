@@ -3769,3 +3769,28 @@
   built_by_url: "https://www.nearform.com/"
   description: >
     Tools to help diagnose and pinpoint Node.js performance issues.
+- title: KOBIT
+  main_url: "https://kobit.in"
+  url: "https://kobit.in"
+  description: Automated Google Analytics Report with everything you need and more
+  featured: false
+  categories:
+    - Marketing
+    - Blog
+  built_by: mottox2
+  built_by_url: "https://mottox2.com"
+- title: Aleksander Hansson
+  main_url: https://ahansson.com
+  url: https://ahansson.com
+  featured: false
+  description: >
+    Portfolio website for Aleksander Hansson
+  categories:
+    - Portfolio
+    - Business
+    - Freelance
+    - Technology
+    - Web Development
+    - Consulting
+  built_by: Aleksander Hansson
+  built_by_url: https://www.linkedin.com/in/aleksanderhansson/
