@@ -1,11 +1,13 @@
 describe(`hot reloading new page component`, () => {
+  before(() => {
+    cy.exec(`npm run update -- --file src/pages/sample.js`)
+  })
+
   beforeEach(() => {
     cy.visit(`/`).waitForAPI(`onRouteUpdate`)
   })
 
   it(`can navigate to new page`, () => {
-    cy.exec(`npm run update -- --file src/pages/sample.js`)
-
     cy.visit(`/sample`).waitForAPI(`onRouteUpdate`)
 
     cy.getTestElement(`message`)

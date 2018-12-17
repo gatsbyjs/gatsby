@@ -1,10 +1,22 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/browser-apis/
- */
+if (typeof window !== `undefined`) {
+  window.___PageComponentLifecycleCallsLog = []
+}
 
-// You can delete this file if you're not using it
-exports.onRouteUpdate = function() {
-  console.log(`updating`)
+const addLogEntry = (action, location) => {
+  window.___PageComponentLifecycleCallsLog.push({
+    action,
+    pathname: location.pathname
+  })
+}
+
+exports.onPreRouteUpdate = ({ location }) => {
+  addLogEntry(`onPreRouteUpdate`, location)
+}
+
+exports.onRouteUpdate = ({ location }) => {
+  addLogEntry(`onRouteUpdate`, location)
+}
+
+exports.onPrefetchPathname = ({ pathname }) => {
+  addLogEntry(`onPrefetchPathname`, pathname)
 }

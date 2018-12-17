@@ -5,6 +5,7 @@ import ClassComponent from '../components/class-component'
 import Layout from '../components/layout'
 import Image from '../components/image'
 import SEO from '../components/seo'
+import InstrumentPage from '../utils/instrument-page'
 
 const IndexPage = ({ data }) => (
   <Layout>
@@ -33,7 +34,7 @@ const IndexPage = ({ data }) => (
   </Layout>
 )
 
-export default IndexPage
+export default InstrumentPage(IndexPage)
 
 export const indexQuery = graphql`
   {
