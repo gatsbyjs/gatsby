@@ -1,14 +1,15 @@
 ---
 title: How Gatsby does high-impact, low-effort UX research
 (and you can too!)
-author:
-date:
-tags:
+author: Shannon Soper
+date: 2018-12-17
+tags: 
+- ux
 ---
 
 ## What this article is about:
 
-Recently, I gave a talk with this same title at Gatsby Days in the San Francisco Bay area. This article reviews the following:
+Recently, I gave a talk with this same title at Gatsby Days in the San Francisco Bay area ([watch and listen to the talk here](https://www.gatsbyjs.com/gatsby-days-uxresearch-shannon/). This article reviews the following:
 
 - Why do UX research on your website?
 - How to do high-impact, low-effort research
@@ -137,4 +138,4 @@ Sign up for a 15, 30, or 60 minute interview to tell me your experiences with Ga
 
 ## Know someone who has never used Gatsby before?
 
-If you know someone who might like to get some Gatsby swag for participating in a usability test for first-time visitors to Gatsby, [submit your contact info and your friend’s contact info here!](https://docs.google.com/forms/d/e/1FAIpQLSeP4Z-7OnBeR2gyaLOu-N9GHQ59EFhIPqvzdp0UU70Fj4Bw2w/viewfor)
+If you know someone who might like to get an Amazon gift card for participating in a usability test for first-time visitors to Gatsby, [submit your contact info and your friend’s contact info here!](https://docs.google.com/forms/d/e/1FAIpQLSeP4Z-7OnBeR2gyaLOu-N9GHQ59EFhIPqvzdp0UU70Fj4Bw2w/viewfor)
