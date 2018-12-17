@@ -292,11 +292,11 @@ For example, npm 5.2.0 (which comes with Node 8) introduced a command called `np
 > npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby supports Node 6 and up, so we introduce `npx` here as an optional command for users of npm 5.2.0 or greater.
 
 ### Share best practices whenever possible
-
-There is an infinite number of ways to do any given task. Docs should not attempt to teach every way of doing a task. Usually, they should mention both 1 and 2 while encouraging 3 and 4:
-1. the most fundamental way to do a task with Gatsby
-2. the most common way of doing a task
-3. the best practice way of doing a task that is possible on supported version(s) of software
-4. the best practice regardless of software versions
+When there are multiple ways to complete a task, the docs should explain the following:
+1. The most fundamental way of completing the task
+2. The most common way of completing a task 
+3. The best way to complete the task on the lowest supported versions of software
+4. The best practice and why is it the best (if different than 3)
+5. Any tips on how to pick an option
 
 For example, `gatsby-image` is a component that includes Gatsby best practices for handling images, yet there are more fundamental and common ways of handling them. Documentation ought to make the best practice clear in addition to the most common and fundamental ways.
