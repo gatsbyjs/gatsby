@@ -16,7 +16,10 @@ import docsHierarchy from "../data/sidebars/doc-links.yaml"
 const guides = docsHierarchy.find(group => group.title === `Guides`).items
 
 // Finds child items for a given guide overview page using its slug.
-const getChildGuides = slug => guides.find(guide => guide.link === slug).items
+const getChildGuides = slug => {
+  const found = guides.find(guide => guide.link === slug)
+  return found ? found.items : []
+}
 
 // Create a table of contents from the child guides.
 const createGuideList = guides =>
@@ -29,12 +32,26 @@ const getPageHTML = page => {
     return page.html
   }
 
-  const guides = getChildGuides(page.fields.slug)
+  // Ugh. This is gross and I want to make it less gross.
+  let guides
+  if (page.fields.slug !== `/docs/headless-cms/`) {
+    // Normally, we’re pulling from the top level of guides.
+    guides = getChildGuides(page.fields.slug)
+  } else {
+    // For the Headless CMS section, we need to dig into sub-items.
+    // This is hard-coded and fragile and I hate it and I’m sorry.
+    guides = getChildGuides(`/docs/content-and-data/`).find(
+      guide => guide.link === page.fields.slug
+    ).items
+  }
+
   const guideList = createGuideList(guides)
-  const toc = `
+  const toc = guideList
+    ? `
     <h2>Guides in this section:</h2>
     <ul>${guideList}</ul>
   `
+    : ``
 
   // This is probably a capital offense in Reactland. 😱😱😱
   return page.html.replace(`[[guidelist]]`, toc)
@@ -51,10 +68,10 @@ class DocsTemplate extends React.Component {
         <Helmet>
           <title>{page.frontmatter.title}</title>
           <meta name="description" content={page.excerpt} />
-          <meta name="og:description" content={page.excerpt} />
+          <meta property="og:description" content={page.excerpt} />
+          <meta property="og:title" content={page.frontmatter.title} />
+          <meta property="og:type" content="article" />
           <meta name="twitter:description" content={page.excerpt} />
-          <meta name="og:title" content={page.frontmatter.title} />
-          <meta name="og:type" content="article" />
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
         </Helmet>

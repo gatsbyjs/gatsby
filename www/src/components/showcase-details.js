@@ -1,12 +1,12 @@
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 import url from "url"
-import hex2rgba from "hex2rgba"
 import Img from "gatsby-image"
 import qs from "qs"
 
 import presets, { colors } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
+import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
@@ -163,7 +163,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     ...styles.prevNextImage,
                   }}
                   backgroundColor
-                  resolutions={{
+                  fixed={{
                     srcSet: ``,
                     src:
                       nextSite.childScreenshot.screenshotFile.childImageSharp
@@ -215,7 +215,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     ...styles.prevNextImage,
                   }}
                   backgroundColor
-                  resolutions={{
+                  fixed={{
                     srcSet: ``,
                     src:
                       previousSite.childScreenshot.screenshotFile
@@ -263,15 +263,15 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <Helmet>
                 <title>{data.sitesYaml.title}</title>
                 <meta
-                  name="og:image"
-                  content={`https://next.gatsbyjs.org${
+                  property="og:image"
+                  content={`https://www.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
                   }`}
                 />
                 <meta
                   name="twitter:image"
-                  content={`https://next.gatsbyjs.org${
+                  content={`https://www.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
                   }`}
@@ -435,8 +435,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <div
                   css={{
                     position: `absolute`,
-                    right: gutter,
-                    top: gutter,
+                    right: rhythm(3 / 4),
+                    top: rhythm(-15 / 8),
                     left: `auto`,
                     zIndex: 1,
                     display: `flex`,
@@ -476,7 +476,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   <ShareMenu
                     url={data.sitesYaml.main_url}
                     title={data.sitesYaml.title}
-                    image={`https://next.gatsbyjs.org${
+                    image={`https://www.gatsbyjs.org${
                       data.sitesYaml.childScreenshot.screenshotFile
                         .childImageSharp.resize.src
                     }`}
@@ -484,15 +484,15 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 </div>
                 <Img
                   key={data.sitesYaml.id}
-                  sizes={
+                  fluid={
                     data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.sizes
+                      .childImageSharp.fluid
                   }
                   alt={`Screenshot of ${data.sitesYaml.title}`}
                   css={{
                     boxShadow: isModal
                       ? false
-                      : `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+                      : sharedStyles.screenshot.boxShadow,
                   }}
                 />
               </div>
@@ -525,6 +525,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       <Fragment key={c}>
                         <Link
                           to={`/showcase?${qs.stringify({ filters: [c] })}`}
+                          state={{ isModal: true }}
                         >
                           {c}
                         </Link>

@@ -57,4 +57,34 @@ describe(`remark prism plugin`, () => {
       expect(markdownAST).toMatchSnapshot()
     })
   })
+
+  it(`does not handle inline code if noInlineHighlight: true`, () => {
+    const code = `some text \`containing inline code\``
+    const markdownAST = remark.parse(code)
+    plugin({ markdownAST }, { noInlineHighlight: true })
+    expect(markdownAST).toMatchSnapshot()
+  })
+
+  describe(`numberLines`, () => {
+    it(`adds line-number markup when necessary`, () => {
+      const code = `\`\`\`js{numberLines:5}\n//.foo { \ncolor: red;\n }\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`adds line-number markup when configured globally`, () => {
+      const code = `\`\`\`js\n//.foo { \ncolor: red;\n }\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { showLineNumbers: true })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`does not add line-number markup when not configured globally`, () => {
+      const code = `\`\`\`js\n//.foo { \ncolor: red;\n }\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+  })
 })

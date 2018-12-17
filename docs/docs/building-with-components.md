@@ -53,9 +53,7 @@ otherwise your build will fail.
 
 Example:
 
-`src/pages/about.jsx`
-
-```jsx
+```jsx:title=src/pages/about.jsx
 import React, { Component } from "react"
 
 class AboutPage extends Component {
@@ -84,7 +82,7 @@ introduction to programmatically creating pages.
 
 Example:
 
-```jsx
+```jsx:title=src/templates/post.jsx
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -120,7 +118,7 @@ export const pageQuery = graphql`
 `src/html.jsx` is responsible for everything other than where Gatsby lives in
 the `<body />`.
 
-In this file you can modify the `<head>` metadata, general structure of the
+In this file, you can modify the `<head>` metadata and general structure of the
 document and add external links.
 
 Typically you should omit this from your site as the default html.js file will
@@ -129,7 +127,7 @@ have an html.js.
 
 Example:
 
-```jsx
+```jsx:title=src/html.jsx
 import React from "react"
 import favicon from "./favicon.png"
 

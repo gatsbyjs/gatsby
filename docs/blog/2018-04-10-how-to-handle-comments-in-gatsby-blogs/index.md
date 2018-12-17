@@ -12,7 +12,7 @@ You have a static site. Or you will have. You understand how the content will wo
 
 You have three choices.
 
-- Keep comments in git.
+- Keep comments in Git.
 - Use client side comment service.
 - Do something crazy.
 
@@ -22,11 +22,11 @@ The second is the simplest choice. [Disqus](https://disqus.com/) is a popular cl
 
 There are also open source alternatives like [commento](https://github.com/adtac/commento). You need to install them. You need to manage and maintain a server. This is probably too much work to be worthwhile.
 
-How do they work? You insert a javascript tag. That loads the comment service. It inserts the comments **client side**. This means your comments are not part of your Gatsby output. This means Google probably won't see them.
+How do they work? You insert a JavaScript tag. That loads the comment service. It inserts the comments **client side**. This means your comments are not part of your Gatsby output. This means Google probably won't see them.
 
-## Comments in git
+## Comments in Git
 
-Putting the comments inside git is awesome. Your content, your site, no external dependencies. Fantastic.
+Putting the comments inside Git is awesome. Your content, your site, no external dependencies. Fantastic.
 
 ### Staticman
 
@@ -40,17 +40,17 @@ You could create your own staticman alternative. You could use a framework like 
 
 ### Netlify
 
-Are you hosting on [netlify](https://serverless.com/)? Then you could use their forms service. If you pay for netlify, you can link forms to functions. Similar to serverless. You could use that to make PRs. Or push content to GitHub. Or other git hosts. Too complicated. Not worth it.
+Are you hosting on [netlify](https://serverless.com/)? Then you could use their forms service. If you pay for netlify, you can link forms to functions. Similar to serverless. You could use that to make PRs. Or push content to GitHub. Or other Git hosts. Too complicated. Not worth it.
 
 ### Email
 
-You could link your comment form to an email address. Then you could copy and paste comments into git. Manual comment moderation. Maybe with netlify's form service? Or a serverless setup. Again, this could be fun to setup. Again, it's probably not a very good idea!
+You could link your comment form to an email address. Then you could copy and paste comments into Git. Manual comment moderation. Maybe with netlify's form service? Or a serverless setup. Again, this could be fun to setup. Again, it's probably not a very good idea!
 
 ## Crazy
 
 There are many other options. Some crazier than others. You could push comments to WordPress. Then pull them from WordPress into Gatsby at build time. Or push them to a headless CMS. Via a serverless setup maybe.
 
-You could create a comment form. Then have it generate a mailto link. Then people email you the comment. Then you copy and paste it into git. Or the mailto link points to a service like mailgun. Then incoming emails turn into webhooks. Then forward to serverless. Then land as pull requests.
+You could create a comment form. Then have it generate a mailto link. Then people email you the comment. Then you copy and paste it into Git. Or the mailto link points to a service like mailgun. Then incoming emails turn into webhooks. Then forward to serverless. Then land as pull requests.
 
 The possibilities are limitless.
 

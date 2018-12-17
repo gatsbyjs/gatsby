@@ -35,10 +35,28 @@ module.exports = {
       options: {
         name: `data`,
         path: `${__dirname}/src/data/`,
+        ignore: [`**/\.*`], // ignore files starting with a dot
       },
     },
   ],
 }
+```
+
+## Options
+
+In addition to the name and path parameters you may pass an optional `ignore` array of file globs to ignore.
+
+They will be added to the following default list:
+
+```
+**/*.un~
+**/.DS_Store
+**/.gitignore
+**/.npmignore
+**/.babelrc
+**/yarn.lock
+**/node_modules
+../**/dist/**
 ```
 
 ## How to query
@@ -48,6 +66,22 @@ You can query file nodes like the following:
 ```graphql
 {
   allFile {
+    edges {
+      node {
+        extension
+        dir
+        modifiedTime
+      }
+    }
+  }
+}
+```
+
+To filter by the `name` you specified in the config, use `sourceInstanceName`:
+
+```graphql
+{
+  allFile(filter: { sourceInstanceName: { eq: "data" } }) {
     edges {
       node {
         extension
@@ -94,8 +128,8 @@ The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.o
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions
   // Ensures we are processing only markdown files
   if (node.internal.type === "MarkdownRemark") {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
@@ -141,6 +175,10 @@ createRemoteFileNode({
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
   auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
+
+  // OPTIONAL
+  // Sets the file extension
+  ext: ".jpg",
 })
 ```
 
@@ -188,3 +226,20 @@ exports.downloadMediaFiles = ({
 ```
 
 The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
+
+#### Retrieving the remote file extension
+
+The helper tries first to retrieve the file extension by parsing the url and the path provided (e.g. if the url is https://example.com/image.jpg, the extension will be inferred as `.jpg`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the extension _can_ be explicitly passed, like so:
+
+```javascript
+createRemoteFileNode({
+  // The source url of the remote file
+  url: `https://example.com/a-file-without-an-extension`,
+  store,
+  cache,
+  createNode,
+  createNodeId,
+  // if necessary!
+  ext: ".jpg",
+})
+```
