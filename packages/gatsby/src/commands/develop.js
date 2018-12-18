@@ -13,7 +13,7 @@ const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
-const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const { syncStaticDir } = require(`../utils/get-static-dir`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -31,10 +31,10 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 // const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
-// changed. Wait 10 seconds so copying doesn't interfer with the regular
+// changed. Wait 10 seconds so copying doesn't interfere with the regular
 // bootstrap.
 setTimeout(() => {
-  copyStaticDirectory()
+  syncStaticDir()
 }, 10000)
 
 const rlInterface = rl.createInterface({
