@@ -26,6 +26,7 @@ const {
 } = require(`./data-tree-utils`)
 const { run: runQuery } = require(`../db/nodes-query`)
 const lazyFields = require(`./lazy-fields`)
+const parallelQuery = require(`../internal-plugins/query-runner/parallel-query`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
@@ -188,6 +189,10 @@ async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
   })
 
   const mergedFieldsFromPlugins = _.merge(...pluginFields)
+
+  _.each(mergedFieldsFromPlugins, (fieldConfig, fieldName) => {
+    parallelQuery.upgradeResolver(fieldConfig, fieldName, { name: typeName })
+  })
 
   const pluginInputFields = inferInputObjectStructureFromFields({
     fields: mergedFieldsFromPlugins,
