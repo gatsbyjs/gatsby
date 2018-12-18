@@ -177,6 +177,10 @@
   avatar: avatars/michael-holtzman.jpg
   twitter: "@mikelax"
   bio: nyc • tech • I build things 🚀 & learn things 📖
+- id: Joaquín Bravo Contreras
+  avatar: avatars/joaquin-bravo.jpg
+  twitter: "@jackbravo"
+  bio: Developer based in Guadalajara, Mexico. Fond of Drupal, Python, Elixir and GatsbyJS
 - id: Chris Biscardi
   bio: Early stage software product consultant. React*, Go, GraphQL, Containers, k8s.
   avatar: avatars/chris-biscardi.png
