@@ -8,7 +8,7 @@ const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension } = require(`./utils`)
+const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 /********************
@@ -75,7 +75,7 @@ const FS_PLUGIN_DIR = `gatsby-source-filesystem`
  * @return {String}
  */
 const createFilePath = (directory, filename, ext) =>
-  path.join(directory, CACHE_DIR, FS_PLUGIN_DIR, `${filename}${ext}`)
+  path.join(directory, `${filename}${ext}`)
 
 /********************
  * Queue Management *
@@ -178,8 +178,12 @@ async function processRemoteNode({
   ext,
 }) {
   // Ensure our cache directory exists.
-  const programDir = store.getState().program.directory
-  await fs.ensureDir(path.join(programDir, CACHE_DIR, FS_PLUGIN_DIR))
+  const pluginCacheDir = path.join(
+    store.getState().program.directory,
+    CACHE_DIR,
+    FS_PLUGIN_DIR
+  )
+  await fs.ensureDir(pluginCacheDir)
 
   // See if there's response headers for this url
   // from a previous request.
@@ -198,11 +202,12 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
+  const name = getRemoteFileName(url)
   if (!ext) {
     ext = getRemoteFileExtension(url)
   }
 
-  const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
+  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
   try {
@@ -218,7 +223,12 @@ async function processRemoteNode({
         ext = `.${filetype.ext}`
       }
     }
-    const filename = createFilePath(programDir, digest, ext)
+
+    const filename = createFilePath(
+      path.join(pluginCacheDir, digest),
+      name,
+      ext
+    )
     // If the status code is 200, move the piped temp file to the real name.
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })

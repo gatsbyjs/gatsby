@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.20"></a>
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.19...gatsby-plugin-offline@2.0.20) (2018-12-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** prevent incorrect revisioning of static file by workbox ([#10416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10416)) ([008b5db](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/008b5db))
+
 <a name="2.0.19"></a>
 
 ## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.18...gatsby-plugin-offline@2.0.19) (2018-12-07)

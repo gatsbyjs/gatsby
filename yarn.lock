@@ -3701,7 +3701,7 @@ babel-template@^6.16.0, babel-template@^6.24.1, babel-template@^6.26.0, babel-te
     babylon "^6.18.0"
     lodash "^4.17.4"
 
-babel-traverse@6.26.0, babel-traverse@^6.0.0, babel-traverse@^6.18.0, babel-traverse@^6.24.1, babel-traverse@^6.26.0:
+babel-traverse@^6.0.0, babel-traverse@^6.18.0, babel-traverse@^6.24.1, babel-traverse@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.26.0.tgz#46a9cbd7edcc62c8e5c064e2d2d8d0f4035766ee"
   integrity sha1-RqnL1+3MYsjlwGTi0tjQ9ANXZu4=
@@ -9122,7 +9122,7 @@ graphql-type-json@^0.2.1:
   resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.2.1.tgz#d2c177e2f1b17d87f81072cd05311c0754baa420"
   integrity sha1-0sF34vGxfYf4EHLNBTEcB1S6pCA=
 
-graphql@0.13.2, graphql@^0.13.0, graphql@^0.13.2:
+graphql@^0.13.0, graphql@^0.13.2:
   version "0.13.2"
   resolved "http://registry.npmjs.org/graphql/-/graphql-0.13.2.tgz#4c740ae3c222823e7004096f832e7b93b2108270"
   integrity sha512-QZ5BL8ZO/B20VA8APauGBg3GyEgZ19eduvpLWoq5x7gMmWnHoy8rlQWPLmWgFvo1yNgjSEFMesmS4R6pPr7xog==
@@ -15641,10 +15641,10 @@ react-error-overlay@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
   integrity sha512-XzgvowFrwDo6TWcpJ/WTiarb9UI6lhA4PMzS7n1joK3sHfBBBOQHUc0U4u57D6DWO9vHv6lVSWx2Q/Ymfyv4hw==
 
-react-hot-loader@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.5.1.tgz#4a9cf136542b1db4f948ac74b31fa16a411ceebb"
-  integrity sha512-aqw8F0ZTCakfTXTj1n3F9vXfEKWWHEpQ3Mq9YmYvrNdHvey5RfkSGv7rz4r9TXjqVLt2mpItqydJQdhboZ/acQ==
+react-hot-loader@4.6:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.6.0.tgz#7a556efea51a3c79e8bffdb094fbe17883a79432"
+  integrity sha512-ytmtbJB0RlTUqa9HnpVsoZiZ6iRsTzu+O2WovKT++f+tDYOTNZYa7OesVAE+R90e/1w/OJO4G/tw4rNSMYCjFw==
   dependencies:
     fast-levenshtein "^2.0.6"
     global "^4.3.0"

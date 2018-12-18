@@ -189,20 +189,8 @@
     - title: Use cases with Gatsby (including apps)
       link: /docs/building-apps-with-gatsby/
       items:
-        - title: Client data fetching*
-          link: /docs/client-data-fetching/
         - title: Building a site with authentication
           link: /docs/building-a-site-with-authentication/
-        - title: Building an e-commerce site*
-          link: /docs/building-an-e-commerce-site/
-        - title: Building a site with asynchronous data*
-          link: /docs/building-a-site-with-asynchronous-data/
-        - title: Building a portfolio*
-          link: /docs/building-a-portfolio/
-        - title: Building a blog*
-          link: /docs/building-a-blog/
-        - title: Building an image-heavy site*
-          link: /docs/building-an-image-heavy-site/
     - title: Adding website functionality
       link: /docs/adding-website-functionality/
       items:
