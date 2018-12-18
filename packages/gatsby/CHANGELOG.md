@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.71"></a>
+
+## [2.0.71](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.70...gatsby@2.0.71) (2018-12-18)
+
+### Bug Fixes
+
+- **gatsby:** add Safari 10 support to default terser options ([#10536](https://github.com/gatsbyjs/gatsby/issues/10536)) ([9db27c1](https://github.com/gatsbyjs/gatsby/commit/9db27c1)), closes [/github.com/parcel-bundler/parcel/blob/75310e15f6fa3c8a0ce6593ada1bcca00240ea54/packages/core/parcel-bundler/src/transforms/terser.js#L13](https://github.com//github.com/parcel-bundler/parcel/blob/75310e15f6fa3c8a0ce6593ada1bcca00240ea54/packages/core/parcel-bundler/src/transforms/terser.js/issues/L13)
+- **gatsby:** bump minimum react-hot-loader version to get quick fix ([#10542](https://github.com/gatsbyjs/gatsby/issues/10542)) ([9cec72a](https://github.com/gatsbyjs/gatsby/commit/9cec72a)), closes [#10528](https://github.com/gatsbyjs/gatsby/issues/10528)
+
+### Features
+
+- **gatsby:** don't watch files in static directory for production builds ([#5807](https://github.com/gatsbyjs/gatsby/issues/5807)) ([a0bcc58](https://github.com/gatsbyjs/gatsby/commit/a0bcc58))
+
 <a name="2.0.70"></a>
 
 ## [2.0.70](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.69...gatsby@2.0.70) (2018-12-17)
