@@ -48,7 +48,7 @@ Navigate to `http://localhost:8000/___graphql` in your browser to view the Graph
 
 Examining the available types in GraphQL you will notice that you can query `site`. This GraphQL type further returns the `siteMetadata` which needs to be accessed to create the dynamic navigation. At this point, it is useful if you know a little GraphQL in order to extract the menu links. If you are unfamiliar with GraphQL, there is some excellent documentation available at GraphQL's official website found [here](https://graphql.org/learn/) that you can use to brush up on your skills! The query below will return the menu links.
 
-```js
+```graphql
 query SiteQuery {
   site {
     siteMetadata {
@@ -64,7 +64,7 @@ query SiteQuery {
 
 When executing this query within the GraphiQL editor you see output that looks similar to the following:
 
-```js
+```json
 {
   "data": {
     "site": {

@@ -53,9 +53,9 @@ Originally, following Scott's and the official Gatsby tutorial, I had it pulling
 my content from good ol' Markdown files. Then I saw it... too good to be true,
 the mention of connecting it to WordPress... I have been writing WordPress
 themes for almost 2 years now, so naturally this got me super excited. To have
-my back-end as WordPress (including
-[ACF](https://www.advancedcustomfields.com/)) and the front-end in React… I had
-found the perfect place to test my front-end abilities.
+my backend as WordPress (including
+[ACF](https://www.advancedcustomfields.com/)) and the frontend in React… I had
+found the perfect place to test my frontend abilities.
 
 I was skeptical at first: would I have to parse large amounts of JSON to get the
 data I needed? I have never even interacted with the WordPress REST API, how
