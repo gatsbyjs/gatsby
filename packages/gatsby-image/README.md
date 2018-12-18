@@ -149,31 +149,6 @@ child object of an image called `fixed` — which you can see in the sample
 component above. For the second type, you do a similar query but for a child
 object called `fluid`.
 
-### Avoiding stretched images using the fluid type
-
-As mentioned previously, images using the _fluid_ type are stretched to
-match the container's width. In the case where the image's width is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
-
-To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
-
-```jsx
-const NonStretchedImage = props => {
-  let normalizedProps = props
-  if (props.fluid && props.fluid.presentationWidth) {
-    normalizedProps = {
-      ...props,
-      style: {
-        ...(props.style || {}),
-        maxWidth: props.fluid.presentationWidth,
-        margin: "0 auto", // Used to center the image
-      },
-    }
-  }
-
-  return <Img {...normalizedProps} />
-}
-```
-
 ## Fragments
 
 GraphQL includes a concept called "query fragments". Which, as the name
@@ -280,6 +255,45 @@ prop. e.g. `<Img fluid={fluid} />`
     fluid(maxWidth: 700) {
       # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
       ...GatsbyImageSharpFluid_noBase64
+    }
+  }
+}
+```
+
+### Avoiding stretched images using the fluid type
+
+As mentioned previously, images using the _fluid_ type are stretched to
+match the container's width. In the case where the image's width is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
+
+To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
+
+```jsx
+const NonStretchedImage = props => {
+  let normalizedProps = props
+  if (props.fluid && props.fluid.presentationWidth) {
+    normalizedProps = {
+      ...props,
+      style: {
+        ...(props.style || {}),
+        maxWidth: props.fluid.presentationWidth,
+        margin: "0 auto", // Used to center the image
+      },
+    }
+  }
+
+  return <Img {...normalizedProps} />
+}
+```
+
+**Note:** The `GatsbyImageSharpFluid` fragment does not include `presentationWidth`.
+You will need to add it in your graphql query as is shown in the following snippet:
+
+```
+{
+  childImageSharp {
+    fluid(maxWidth: 500, quality: 100) {
+      ...GatsbyImageSharpFluid
+      presentationWidth
     }
   }
 }
