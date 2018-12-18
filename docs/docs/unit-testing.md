@@ -23,7 +23,7 @@ concepts should be the same or very similar for your site._
 First you need to install Jest and some more required packages. You need to
 install Babel 7 as it's required by Jest.
 
-```sh
+```shell
 npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy babel-core@^7.0.0-bridge.0 @babel/core babel-preset-gatsby
 ```
 
@@ -219,7 +219,7 @@ they are changed.
 
 Now, run `npm run test` and you should immediately get an error like this:
 
-```sh
+```shell
  @font-face {
     ^
 
@@ -254,7 +254,7 @@ by running `npm run test -- -u`.
 If you are using TypeScript, you need to make a couple of small changes to your
 config. First install `ts-jest`:
 
-```sh
+```shell
 npm install --save-dev ts-jest
 ```
 

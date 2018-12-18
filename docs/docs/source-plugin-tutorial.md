@@ -75,7 +75,7 @@ The bare essentials of a plugin are a directory named after your plugin, which c
 
 Start by creating the directory and changing into it:
 
-```
+```shell
 mkdir gatsby-source-pixabay
 cd gatsby-source-pixabay
 ```
@@ -102,7 +102,7 @@ npm install node-fetch query-string --save
 
 Open your `package.json` file and you'll see `node-fetch` and `query-string` have been added to a `dependencies` section at the end:
 
-```js:title=package.json
+```json:title=package.json
   "dependencies": {
     "node-fetch": "^2.2.0",
     "query-string": "^6.1.0"
@@ -137,20 +137,20 @@ exports.sourceNodes = (
 
 What did you do by adding this code? You started by importing the dependencies that you added earlier (along with one built in dependency):
 
-```js
+```js:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 ```
 
 Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. Gatsby expects sourceNodes to return either a promise or a callback (3rd parameter). This is important as it tells Gatsby to wait to move on to next stages until your nodes are sourced, ensuring your nodes are created before the schema is generated.
 
-```js
+```js:title=gatsby-node.js
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
 ```
 
 You do some initial setup:
 
-```js
+```js:title=gatsby-node.js
 const { createNode } = actions
 
 // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -159,7 +159,7 @@ delete configOptions.plugins
 
 And finally add a placeholder message:
 
-```js
+```js:title=gatsby-node.js
 // plugin code goes here...
 console.log("Testing my plugin", configOptions)
 ```

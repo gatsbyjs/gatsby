@@ -13,7 +13,7 @@ Everything related to webpack, loaders, Babel, React should work nearly
 identically under v1 of Gatsby compared to v0 so this part of the migration is
 super easy.
 
-```bash
+```shell
 mkdir src
 git mv pages src
 git mv components src

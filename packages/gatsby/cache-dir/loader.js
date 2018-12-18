@@ -89,8 +89,7 @@ const fetchResource = resourceName => {
     const fetchPromise = resourceFunction()
     let failed = false
     return fetchPromise
-      .catch(e => {
-        console.error(e)
+      .catch(() => {
         failed = true
       })
       .then(component => {
