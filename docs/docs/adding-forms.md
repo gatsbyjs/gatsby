@@ -14,7 +14,7 @@ export default () => <div>Hello world!</div>
 
 This gatsby page is a React component. When you want to create a form, you need to store the state of the form - what the user has entered. Convert your function (stateless) component to a class (stateful) component.
 
-```JSX
+ ```jsx
 import React from "react"
 
 export default class IndexPage extends React.Component {
