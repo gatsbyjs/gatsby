@@ -3807,3 +3807,16 @@
     - Marketing
   built_by: Desarol
   built_by_url: "https://www.desarol.com"
+- title: Crispin Porter Bogusky
+  url: https://cpbgroup.com/
+  main_url: https://cpbgroup.com/
+  description: >
+    We solve the world’s toughest communications problems with the most quantifiably potent creative assets.
+  categories:
+    - Agency
+    - Advertising
+    - Design
+    - Marketing
+  built_by: Crispin Porter Bogusky
+  built_by_url: https://cpbgroup.com/
+  featured: false
