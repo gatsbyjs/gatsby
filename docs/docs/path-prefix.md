@@ -39,7 +39,7 @@ module.exports = {
 
 Then pass `--prefix-paths` cmd option to Gatsby.
 
-```sh
+```shell
 gatsby build --prefix-paths
 ```
 

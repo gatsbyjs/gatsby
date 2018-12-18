@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.9...gatsby-transformer-screenshot@2.0.10) (2018-12-18)
+
+### Features
+
+- **gatsby-transformer-screenshot:** Added fullpage option for puppeteer API call ([#10517](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/issues/10517)) ([51a8c98](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/commit/51a8c98)), closes [#10483](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/issues/10483)
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.8...gatsby-transformer-screenshot@2.0.9) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
 <a name="2.0.8"></a>
 
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.7...gatsby-transformer-screenshot@2.0.8) (2018-11-09)
