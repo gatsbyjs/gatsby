@@ -137,7 +137,7 @@ function App() {
   )
 }
 
-// hideline-range{1-2}
+// hide-range{1-2}
 const rootElement = document.getElementById("root")
 ReactDOM.render(<App />, rootElement)
 ```
