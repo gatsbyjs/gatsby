@@ -2,6 +2,15 @@ const { fork } = require(`child_process`)
 const path = require(`path`)
 const invariant = require(`invariant`)
 const uuidv4 = require(`uuid/v4`)
+const {
+  loadNodeContent,
+  getNodes,
+  getNode,
+  getNodesByType,
+  hasNodeChanged,
+  getNodeAndSavePathDependency,
+} = require(`../../db/nodes`)
+const { store } = require(`../../redux`)
 
 const rpcs = new Map()
 
@@ -9,15 +18,9 @@ const rpcs = new Map()
 // Incoming Requests
 /////////////////////////////////////////////////////////////////////
 
-function getNode(id) {
-  return {
-    id,
-    foo: `bar`,
-  }
-}
-
 const rpcMethods = {
   getNode,
+  getNodesByType,
 }
 
 function handleRpcResponse(rpc) {
@@ -39,6 +42,7 @@ function handleRpcRequest(rpc, child) {
   const replyMessage = {
     rpc: {
       id,
+      type: `response`,
       response,
     },
   }
@@ -110,7 +114,11 @@ function makeNewResolver({ type, fieldName, asyncFile }) {
   const workerJsFile = path.join(__dirname, `query-worker.js`)
   const child = fork(workerJsFile)
   child.on(`message`, message => handleMessage(message, child))
-  child.send({ init: { asyncFile, type } })
+  let pathPrefix = ``
+  if (store.getState().program.prefixPaths) {
+    pathPrefix = store.getState().config.pathPrefix
+  }
+  child.send({ init: { asyncFile, type, pathPrefix } })
   return childResolve(child, fieldName)
 }
 

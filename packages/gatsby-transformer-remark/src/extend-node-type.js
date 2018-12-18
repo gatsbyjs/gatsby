@@ -68,7 +68,7 @@ const withPathPrefix = (url, pathPrefix) =>
 const ASTPromiseMap = new Map()
 
 module.exports = (
-  { type, store, pathPrefix, getNode, getNodesByType, cache, reporter },
+  { type, pathPrefix, getNode, getNodesByType, cache, reporter },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {

@@ -1,5 +1,6 @@
 const invariant = require(`invariant`)
 const uuidv4 = require(`uuid/v4`)
+const Cache = require(`../../utils/cache`)
 
 /////////////////////////////////////////////////////////////////////
 // Handle Incoming requests
@@ -20,6 +21,7 @@ async function handleRpcRequest(rpc) {
   const replyMessage = {
     rpc: {
       id,
+      type: `response`,
       response,
     },
   }
@@ -86,17 +88,18 @@ function makeRpc(fnName) {
 /////////////////////////////////////////////////////////////////////
 
 function makeRpcs() {
-  const getNode = makeRpc(`getNode`)
   return {
-    getNode,
+    getNode: makeRpc(`getNode`),
+    getNodesByType: makeRpc(`getNodesByType`),
   }
 }
 
-function init({ asyncFile, type }) {
+function init({ asyncFile, type, pathPrefix }) {
   console.log(`called worker`)
   invariant(asyncFile, `asyncFile`)
   const module = require(asyncFile)
-  const api = { type, ...makeRpcs() }
+  const cache = new Cache({ name: `some cache` }).init()
+  const api = { type, pathPrefix, cache, ...makeRpcs() }
   invariant(!pluginFields, `plugin fields already initialized`)
   pluginFields = module.setFieldsOnGraphQLNodeType(api)
   console.log(`pluginFields`)
@@ -105,9 +108,10 @@ function init({ asyncFile, type }) {
 
 function handleMessage(message) {
   invariant(message, `message`)
+  console.log(message)
   if (message.hasOwnProperty(`rpc`)) {
     const { rpc } = message
-    if (rpc.hasOwnProperty(`response`)) {
+    if (rpc.type === `response`) {
       handleRpcResponse(rpc)
     } else if (rpc.hasOwnProperty(`name`)) {
       // async
