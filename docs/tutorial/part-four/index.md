@@ -275,7 +275,7 @@ It worked! 🎉
 
 The basic GraphQL query that retrieves the `title` in our `about.js` changes above is:
 
-```
+```graphql:title=src/pages/about.js
 {
   site {
     siteMetadata {
