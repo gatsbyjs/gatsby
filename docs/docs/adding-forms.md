@@ -70,7 +70,7 @@ export default class IndexPage extends React.Component {
 
 When a user types into an input box, the state should update. Add an `onChange` prop to update state and add a `value` prop to keep the input up to date with the new state:
 
-```JSX
+ ```jsx
 import React from "react"
 
 export default class IndexPage extends React.Component {
