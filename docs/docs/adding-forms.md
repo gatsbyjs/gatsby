@@ -28,7 +28,7 @@ export default class IndexPage extends React.Component {
 
 Now that you have created a class component, you can add `state` to the component.
 
-```JSX
+ ```jsx
 import React from "react"
 
 export default class IndexPage extends React.Component {
