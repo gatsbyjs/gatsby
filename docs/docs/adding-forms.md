@@ -113,7 +113,7 @@ export default class IndexPage extends React.Component {
 
 Now that our inputs are working, we want something to happen when we submit the form. Add `onSubmit` props to the form element and add `handleSubmit` to show an alert when the user submits the form:
 
-```JSX
+ ```jsx
 import React from "react"
 
 export default class IndexPage extends React.Component {
