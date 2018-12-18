@@ -38,7 +38,6 @@ function handleRpcRequest(rpc, child) {
   invariant(name, `rpc name`)
   invariant(id, `rpc id`)
   const response = rpcMethods[name].apply(null, args)
-  console.log(`response is`, response)
   const replyMessage = {
     rpc: {
       id,
@@ -46,12 +45,10 @@ function handleRpcRequest(rpc, child) {
       response,
     },
   }
-  console.log(`server sending back`, replyMessage)
   child.send(replyMessage)
 }
 
 function handleMessage(message, child) {
-  console.log(`handle message`)
   const { rpc } = message
   invariant(rpc, `rpc`)
   if (rpc.hasOwnProperty(`response`)) {
@@ -71,7 +68,6 @@ function sendRpc({ child, name, args, resolve, reject }) {
   invariant(name, `rpc name`)
   invariant(resolve, `rpc resolve`)
   invariant(reject, `rpc reject`)
-  console.log(`send rpc`)
   // TODO id should be composite of processId and incrementing number. Perhaps
   const id = uuidv4()
   const msg = {
@@ -81,13 +77,11 @@ function sendRpc({ child, name, args, resolve, reject }) {
       id,
     },
   }
-  console.log(`msg`, name, args)
   rpcs.set(id, {
     time: new Date(),
     resolve,
     reject,
   })
-  console.log(rpcs)
   child.send(msg)
 }
 
@@ -97,7 +91,6 @@ function sendRpc({ child, name, args, resolve, reject }) {
 
 function childResolve(child, fieldName) {
   return (node, args2, context) => {
-    console.log(`rpc called`)
     return new Promise((resolve, reject) => {
       sendRpc({
         child,

@@ -9,29 +9,26 @@ const Cache = require(`../../utils/cache`)
 let pluginFields
 
 async function handleRpcRequest(rpc) {
-  console.log(`handling RPC`, rpc)
-  invariant(rpc, `rpc`)
-  const { id, name, args } = rpc
-  invariant(id, `id`)
-  console.log(`here`)
-  invariant(name, `name`)
-  invariant(pluginFields, `pluginFields hasn't been init'd yet`)
-  console.log(`here`, name, pluginFields[name])
-  const resolver = pluginFields[name].resolve
-  console.log(`here`)
-  invariant(resolver, `resolver`)
-  console.log(resolver)
-  const response = await resolver.apply(null, args)
-  console.log(`response is`, response)
-  const replyMessage = {
-    rpc: {
-      id,
-      type: `response`,
-      response,
-    },
+  try {
+    invariant(rpc, `rpc`)
+    const { id, name, args } = rpc
+    invariant(id, `id`)
+    invariant(name, `name`)
+    invariant(pluginFields, `pluginFields hasn't been init'd yet`)
+    const resolver = pluginFields[name].resolve
+    invariant(resolver, `resolver`)
+    const response = await resolver.apply(null, args)
+    const replyMessage = {
+      rpc: {
+        id,
+        type: `response`,
+        response,
+      },
+    }
+    process.send(replyMessage)
+  } catch (e) {
+    console.log(e)
   }
-  console.log(`sending back`, replyMessage)
-  process.send(replyMessage)
 }
 
 function handleRpcResponse(rpc) {
@@ -54,7 +51,6 @@ function sendRpc({ name, args, resolve, reject }) {
   invariant(name, `rpc name`)
   invariant(resolve, `rpc resolve`)
   invariant(reject, `rpc reject`)
-  console.log(`send rpc`)
   // TODO id should be composite of processId and incrementing number. Perhaps
   const id = uuidv4()
   const msg = {
@@ -64,19 +60,16 @@ function sendRpc({ name, args, resolve, reject }) {
       id,
     },
   }
-  console.log(`worker send msg`, msg)
   rpcs.set(id, {
     time: new Date(),
     resolve,
     reject,
   })
-  console.log(rpcs)
   process.send(msg)
 }
 
 function makeRpc(fnName) {
   return (...args) => {
-    console.log(`rpc called`)
     return new Promise((resolve, reject) => {
       sendRpc({
         name: fnName,
@@ -99,15 +92,14 @@ function makeRpcs() {
   }
 }
 
-function init({ asyncFile, pluginOptions, type, pathPrefix }) {
-  console.log(`called worker`)
+async function init({ asyncFile, pluginOptions, type, pathPrefix }) {
   invariant(asyncFile, `asyncFile`)
   invariant(pluginOptions, `pluginOptions`)
   const module = require(asyncFile)
   const cache = new Cache({ name: `some cache` }).init()
   const api = { type, pathPrefix, cache, ...makeRpcs() }
   invariant(!pluginFields, `plugin fields already initialized`)
-  pluginFields = module.setFieldsOnGraphQLNodeType(api, pluginOptions)
+  pluginFields = await module.setFieldsOnGraphQLNodeType(api, pluginOptions)
 }
 
 function handleMessage(message) {
