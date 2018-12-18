@@ -47,7 +47,7 @@ export default class IndexPage extends React.Component {
 
 And now we can add a few input fields
 
-```JSX
+ ```jsx
 import React from "react"
 
 export default class IndexPage extends React.Component {
