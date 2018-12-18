@@ -38,14 +38,12 @@ describe(`gatsby-remark-embed-snippet`, () => {
     )
   })
 
-  it(`should error if an invalid file path is specified`, () => {
+  it(`should not modify embed inlinCode nodes if the target file does not exist`, () => {
     fs.existsSync.mockImplementation(path => path !== `examples/hello-world.js`)
 
     const markdownAST = remark.parse(`\`embed:hello-world.js\``)
-
-    expect(() => plugin({ markdownAST }, { directory: `examples` })).toThrow(
-      `Invalid snippet specified; no such file "examples/hello-world.js"`
-    )
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+    expect(transformed).toMatchSnapshot()
   })
 
   it(`should not modify non-embed inlineCode nodes`, () => {
