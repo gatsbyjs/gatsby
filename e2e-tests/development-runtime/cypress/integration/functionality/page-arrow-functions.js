@@ -1,20 +1,20 @@
-describe.skip(`anonymous arrow function pages`, () => {
+describe(`anonymous arrow function pages`, () => {
   beforeEach(() => {
     cy.visit(`/anonymous-arrow`).waitForAPI(`onRouteUpdate`)
   })
 
   it(`displays arrow function component correctly`, () => {
-    cy.get(`h1`)
+    cy.getTestElement(`title`)
       .invoke(`text`)
-      .should(`eq`, `Anonymous Arrow Function`)
+      .should(`contain`, `Anonymous Arrow Function`)
   })
 
   it(`updates page on navigation`, () => {
-    cy.get(`a`)
+    cy.getTestElement(`link`)
       .click()
       .waitForAPI(`onRouteUpdate`)
 
-    cy.get(`h1`)
+    cy.getTestElement(`title`)
       .invoke(`text`)
       .should(`contain`, `Two`)
   })
