@@ -46,7 +46,7 @@ Focusing on the biggest risks to your product’s success involves mitigating pr
 
 ## Mitigate product risks
 
-UX research focuses on mitigating product risks, while other departments focus on mitigating market risks. Product risk is the possibility that the system or software might fail to satisfy or fulfill some reasonable expectation of the customer, user, or stakeholder. Risk-based testing involves testing the functionality which has the highest impact and probability of failure.
+UX research focuses on mitigating product risks, while other departments focus on mitigating market risks. Product risk is the possibility that the system or software might fail to satisfy or fulfill some reasonable expectation of the customer, user, or stakeholder. [Risk-based testing](http://tryqa.com/what-is-risk-based-testing/) involves testing the functionality which has the highest impact and probability of failure.
 
 An example of risk-based testing at Gatsby:
 
