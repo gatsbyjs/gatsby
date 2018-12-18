@@ -93,7 +93,8 @@ GATSBY_API_URL=https://example.com/api
 API_KEY=927349872349798
 ```
 
-`GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`:
+Note: since Gatsby uses the [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
+`GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`.:
 
 ```jsx
 // In any frontend code
