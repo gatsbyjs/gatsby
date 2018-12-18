@@ -142,7 +142,7 @@
 - title: The State of JavaScript
   description: >
     Data from over 20,000 developers, asking them questions on topics ranging
-    from front-end frameworks and state management, to build tools and testing
+    from frontend frameworks and state management, to build tools and testing
     libraries.
   main_url: "https://stateofjs.com/"
   url: "https://stateofjs.com/"
@@ -775,7 +775,7 @@
   featured: false
   description: >-
     manu.ninja is the personal blog of Manuel Wieser, where he talks about
-    front-end development, games and digital art
+    frontend development, games and digital art
   categories:
     - Blog
     - Technology
@@ -944,14 +944,14 @@
   url: "https://www.charlespinnix.com/"
   featured: false
   description: >-
-    I’m a senior front end engineer with 8 years of experience building websites
+    I’m a senior frontend engineer with 8 years of experience building websites
     and web applications. I’m interested in leading creative, multidisciplinary
     engineering teams. I’m a creative technologist, merging photography, art,
     and design into engineering and visa versa. I take a pragmatic,
     product-oriented approach to development, allowing me to see the big picture
     and ensuring quality products are completed on time. I have a passion for
-    modern front end JavaScript frameworks such as React and Vue, and I have
-    substantial experience on the back end with an interest in Node and
+    modern frontend JavaScript frameworks such as React and Vue, and I have
+    substantial experience on the backend with an interest in Node and
     container based deployment with Docker and AWS.
   categories:
     - Portfolio
@@ -1535,7 +1535,7 @@
     - Portfolio
   built_by: Parker Sarsfield
   built_by_url: "https://parkersarsfield.com"
-- title: Front-end web development with Greg
+- title: Frontend web development with Greg
   description: |
     JavaScript, GatsbyJS, ReactJS, CSS in JS... Let's learn some stuff together.
   main_url: "https://dev.greglobinski.com"
@@ -1920,7 +1920,7 @@
   featured: false
 - title: Malik Browne Portfolio 2018
   description: >
-    The portfolio blog of Malik Browne, a full stack engineer, foodie, and avid
+    The portfolio blog of Malik Browne, a full-stack engineer, foodie, and avid
     blogger/YouTuber.
   main_url: "https://www.malikbrowne.com/about"
   url: "https://www.malikbrowne.com"
@@ -2127,7 +2127,7 @@
   source_url: "https://github.com/mhjadav/mojaave"
   description: >
     mojaave.com is Mahipat's portfolio, I have developed it using Gatsby v2 and
-    Bootstrap, To get in touch with people looking for full stack developer.
+    Bootstrap, To get in touch with people looking for full-stack developer.
   categories:
     - Portfolio
     - Web Development
@@ -2258,7 +2258,7 @@
   main_url: https://gedd.ski
   url: https://gedd.ski
   description: >
-    Frontend mastery blog - level up your UI game.
+    frontend mastery blog - level up your UI game.
   categories:
     - Web Development
     - Education
@@ -2324,7 +2324,7 @@
   url: "https://www.cameronmaske.com/courses/introduction-to-pytest/"
   source_url: "https://github.com/cameronmaske/cameronmaske.com-v2"
   description: >
-    The homepage of Cameron Maske, a freelance full stack developer, who is currently working on a free pytest video course
+    The homepage of Cameron Maske, a freelance full-stack developer, who is currently working on a free pytest video course
   categories:
     - Education
     - Video
@@ -2351,7 +2351,7 @@
   main_url: "https://joseph.michael-chambers.com/"
   url: "https://joseph.michael-chambers.com/"
   description: >
-    The homepage of Joseph Chambers, a freelance full stack developer, who is currently looking for work.
+    The homepage of Joseph Chambers, a freelance full-stack developer, who is currently looking for work.
   categories:
     - Portfolio
     - Freelance
@@ -2374,7 +2374,7 @@
   description: >
     Madvoid is a team of expert developers dedicated to creating simple, clear, usable and blazing fast web and mobile apps.
     We are coders that help companies and agencies to create social & interactive experiences.
-    This includes full stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
+    This includes full-stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
   categories:
     - Portfolio
     - Technology
@@ -2445,7 +2445,7 @@
     - B2B Services
 - title: "Luciano Mammino's blog"
   description: >
-    Tech & programming blog of Luciano Mammino a.k.a. "loige", Fullstack Web Developer and International Speaker
+    Tech & programming blog of Luciano Mammino a.k.a. "loige", Full-Stack Web Developer and International Speaker
   main_url: https://loige.co
   url: https://loige.co
   featured: false
@@ -2889,7 +2889,7 @@
   featured: false
 - title: Mirror Conf
   description: >
-    Mirror Conf is a conference designed to empower designers and front-end developers who have a thirst for knowledge and want to broaden their horizons.
+    Mirror Conf is a conference designed to empower designers and frontend developers who have a thirst for knowledge and want to broaden their horizons.
   main_url: "https://www.mirrorconf.com/"
   url: "https://www.mirrorconf.com/"
   categories:
@@ -3260,7 +3260,7 @@
   featured: false
 - title: Ramón Chancay
   description: >-
-    Front-end / Back-end Developer in Guayaquil Ecuador.
+    Frontend / Backend Developer in Guayaquil Ecuador.
     Currently at Everymundo, previously at El Universo.
     I enjoy teaching and sharing what I know.
     I give professional advice to developers and companies.
