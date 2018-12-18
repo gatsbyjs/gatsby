@@ -8,9 +8,3 @@
 
 ## Related Issues
 <!-- Link to the issue that is fixed by this PR (if there is one) -->
-
-## Testing
-<!-- Describe how you tested your changes -->
-
-## Backward Compatibility
-<!-- Will your changes break backward compatibility or not? -->
