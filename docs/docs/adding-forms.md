@@ -165,6 +165,6 @@ export default class IndexPage extends React.Component {
 }
 ```
 
-This form isn't doing anything besides showing the user information that they just entered. At this point, you may want to move this form to a component, make a post to a server with axios, or add this submission to an array in your redux state. Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby.
+This form isn't doing anything besides showing the user information that they just entered. At this point, you may want to move this form to a component, send the form state to a backend server, or add robust validation. All of this is possible and more by leveraging the power of Gatsby and the React ecosystem!
 
 Additional details about how to create React forms can be found in the react documentation at [https://reactjs.org/docs/forms.html](https://reactjs.org/docs/forms.html) (which happens to be built with Gatsby!)
