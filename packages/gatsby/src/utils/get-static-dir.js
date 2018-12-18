@@ -18,7 +18,7 @@ exports.copyStaticDir = () => {
  * --
  * Set up a watcher to sync changes from the static directory to the public directory
  */
-module.syncStaticDir = () => {
+exports.syncStaticDir = () => {
   const staticDir = nodePath.join(process.cwd(), `static`)
   chokidar
     .watch(staticDir)
