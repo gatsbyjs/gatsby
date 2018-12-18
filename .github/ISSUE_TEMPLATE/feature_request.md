@@ -22,7 +22,7 @@ about: Suggest a new idea for the project.
 
 ## Summary
 
-A Brief explanation of the feature.
+Brief explanation of the feature.
 
 ### Basic example
 
