@@ -6,7 +6,7 @@ Gatsby is built on top of React. So anything that is possible with a React form 
 
 Let's start with the following page.
 
-```JSX
+ ```jsx
 import React from "react"
 
 export default () => <div>Hello world!</div>
