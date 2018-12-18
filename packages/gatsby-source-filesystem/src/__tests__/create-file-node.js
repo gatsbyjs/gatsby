@@ -10,8 +10,7 @@ describe(`create-file-node`, () => {
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     return createFileNode(
       path.resolve(`${__dirname}/fixtures/file.json`),
-      createNodeId,
-      {}
+      createNodeId
     )
   })
 })

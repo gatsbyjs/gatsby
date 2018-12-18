@@ -7,21 +7,14 @@ const prettyBytes = require(`pretty-bytes`)
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 const crypto = require(`crypto`)
 
-exports.createFileNode = async (
-  pathToFile,
-  createNodeId,
-  pluginOptions = {}
-) => {
+exports.createFileNode = async (pathToFile, createNodeId, pluginName) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
   const slashedFile = {
     ...parsedSlashed,
     absolutePath: slashed,
     // Useful for limiting graphql query with certain parent directory
-    relativeDirectory: path.relative(
-      pluginOptions.path || process.cwd(),
-      parsedSlashed.dir
-    ),
+    relativeDirectory: path.relative(process.cwd(), parsedSlashed.dir),
   }
 
   const stats = await fs.stat(slashedFile.absolutePath)
@@ -59,13 +52,10 @@ exports.createFileNode = async (
       children: [],
       parent: `___SOURCE___`,
       internal,
-      sourceInstanceName: pluginOptions.name || `__PROGRAMMATIC__`,
+      sourceInstanceName: pluginName || `__PROGRAMMATIC__`,
       absolutePath: slashedFile.absolutePath,
       relativePath: slash(
-        path.relative(
-          pluginOptions.path || process.cwd(),
-          slashedFile.absolutePath
-        )
+        path.relative(process.cwd(), slashedFile.absolutePath)
       ),
       extension: slashedFile.ext.slice(1).toLowerCase(),
       size: stats.size,

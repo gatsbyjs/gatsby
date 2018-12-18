@@ -1,8 +1,6 @@
 const chokidar = require(`chokidar`)
-const fs = require(`fs`)
-const path = require(`path`)
 const { Machine } = require(`xstate`)
-
+const { pathsExist, normalizePaths } = require(`./utils`)
 const { createFileNode } = require(`./create-file-node`)
 
 /**
@@ -40,28 +38,36 @@ const createFSMachine = () =>
   })
 
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
+  { actions, getNode, createNodeId, reporter, emitter },
   pluginOptions
 ) => {
   const { createNode, deleteNode } = actions
+  const watchPaths = normalizePaths(pluginOptions.path)
+  const ignored = [
+    `**/*.un~`,
+    `**/.DS_Store`,
+    `**/.gitignore`,
+    `**/.npmignore`,
+    `**/.babelrc`,
+    `**/yarn.lock`,
+    `**/bower_components`,
+    `**/node_modules`,
+    `../**/dist/**`,
+    ...(pluginOptions.ignore || []),
+  ]
 
   // Validate that the path exists.
-  if (!fs.existsSync(pluginOptions.path)) {
+  if (!pathsExist(watchPaths, ignored)) {
     reporter.panic(`
 The path passed to gatsby-source-filesystem does not exist on your file system:
 
-${pluginOptions.path}
+${JSON.stringify(pluginOptions.path)}
 
 Please pick a path to an existing directory.
 
 See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `)
-  }
-
-  // Validate that the path is absolute.
-  // Absolute paths are required to resolve images correctly.
-  if (!path.isAbsolute(pluginOptions.path)) {
-    pluginOptions.path = path.resolve(process.cwd(), pluginOptions.path)
+    return null
   }
 
   const fsMachine = createFSMachine()
@@ -76,20 +82,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     )
   })
 
-  const watcher = chokidar.watch(pluginOptions.path, {
-    ignored: [
-      `**/*.un~`,
-      `**/.DS_Store`,
-      `**/.gitignore`,
-      `**/.npmignore`,
-      `**/.babelrc`,
-      `**/yarn.lock`,
-      `**/bower_components`,
-      `**/node_modules`,
-      `../**/dist/**`,
-      ...(pluginOptions.ignore || []),
-    ],
-  })
+  const watcher = chokidar.watch(watchPaths, { ignored })
 
   const createAndProcessNode = path => {
     const fileNodePromise = createFileNode(

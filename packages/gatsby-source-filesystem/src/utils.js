@@ -1,5 +1,26 @@
 const path = require(`path`)
+const fs = require(`fs`)
+const anymatch = require(`anymatch`)
+const isGlob = require(`is-glob`)
+const globParent = require(`glob-parent`)
 const Url = require(`url`)
+
+export function normalizePaths(paths) {
+  paths = [].concat(paths)
+  return paths.reduce((acc, p) => acc.concat(p), []).map(p => {
+    p = isGlob(p) ? globParent(p) : p
+    // Validate that the path is absolute.
+    // Absolute paths are required to resolve images correctly.
+    if (!path.isAbsolute(p)) p = path.resolve(process.cwd(), p)
+    return p
+  })
+}
+
+export function pathsExist(paths, ignore) {
+  const isIgnored = anymatch(ignore)
+  paths = [].concat(paths)
+  return paths.filter(f => !isIgnored(f)).every(p => fs.existsSync(p))
+}
 
 /**
  * getParsedPath
