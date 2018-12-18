@@ -248,7 +248,7 @@ A full-stack developer (adjective form with a dash) works on the full stack
 (noun form with no dash). The same goes with many other compound terms.
 
 Use frontend for both adjective and noun forms as it's easier to maintain. For example,
-a frontend developer works on the  frontend. The same goes for backend.
+a frontend developer works on the frontend. The same goes for backend.
 
 ### Use active voice
 
