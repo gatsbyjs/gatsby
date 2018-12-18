@@ -7,7 +7,7 @@ tags:
   - web apps
   - applications
   - beyond static
-excerpt: Gatsby is great for not only static sites but also traditional web applications. You can add authentication and serverless functionality up and running incredibly quickly with Netlify - here's how.
+excerpt: Gatsby is great for not only static sites but also traditional web applications. You can add authentication and serverless functionality and get up and running incredibly quickly with Netlify - here's how.
 ---
 
 [In a recent Reactiflux interview](https://www.reactiflux.com/transcripts/gatsby-team/), the Gatsby team was asked this question:
@@ -74,8 +74,7 @@ For more info or configuration options (e.g. in different branches and build env
 
 4. **Proxy the emulated functions for local development**: Head to `gatsby-config.js` and add this to your `module.exports`:
 
-```js
-// gatsby-config.js
+```jsx:title=gatsby-config.js
 var proxy = require("http-proxy-middleware")
 
 module.exports = {
@@ -128,7 +127,7 @@ The local proxying we are doing is only for local emulation, eg it is actually r
 
 So, yes, your site can now be more dynamic than any static site. It can hit any database or API. It runs rings around CORS (by the way, you can also use [Netlify Redirects](https://www.netlify.com/docs/redirects/) for that). But its not an _app_ app. Yet!
 
-The key thing about web apps (and, lets face it, the key thing users really pay for) is they all have some concept of `user`, and that brings with it all manner of complication from security to state management to [role-based access control](https://www.netlify.com/docs/visitor-access-control/#role-based-access-controls-with-jwt-tokens). Entire routes need to be guarded by authentication, and sensitive content shielded from Gatsby's static generation. Sometimes there are things you -don't- want Google's spiders to see!
+The key thing about web apps (and, let's face it, the key thing users really pay for) is they all have some concept of `user`, and that brings with it all manner of complication from security to state management to [role-based access control](https://www.netlify.com/docs/visitor-access-control/#role-based-access-controls-with-jwt-tokens). Entire routes need to be guarded by authentication, and sensitive content shielded from Gatsby's static generation. Sometimes there are things you -don't- want Google's spiders to see!
 
 It's a different tier of concern, which makes it hard to write about in the same article as a typical Gatsby tutorial. But we're here to make apps, so let's bring it on!
 
@@ -138,8 +137,7 @@ It's a different tier of concern, which makes it hard to write about in the same
 2. **Install dependencies**: `npm install netlify-identity-widget gatsby-plugin-create-client-paths`
 3. **Configure Gatsby**: for dynamic-ness!
 
-```js
-// gatsby-config.js
+```jsx:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -156,8 +154,7 @@ module.exports = {
 
 Here's a usable example that stores your user in local storage:
 
-```js
-// service/auth.js
+```jsx:title=service/auth.js
 import netlifyIdentity from "netlify-identity-widget"
 
 export const isBrowser = () => typeof window !== "undefined"
@@ -205,9 +202,7 @@ export const logout = callback => {
 
 5. **Write your app**: Now, any sub paths in `src/pages/app` will be exempt from Gatsby static generation. To keep the dividing line between app and site crystal clear, I like to have all my dynamic Gatsby code in a dedicated `app` folder. This means you can use `@reach/router` with `netlify-identity-widget` to write a standard dynamic React app. Here's some sample code to give you an idea of how to hook them up:
 
-`app.js`:
-
-```js
+```jsx:title=app.js
 import React from "react"
 import { Router } from "@reach/router" // comes with gatsby v2
 import Layout from "../components/layout"
@@ -239,9 +234,7 @@ function PublicRoute(props) {
 export default App
 ```
 
-`components/NavBar.js`:
-
-```js
+```jsx:title=components/NavBar.js
 import React from "react"
 import { Link, navigate } from "gatsby"
 import { getUser, isLoggedIn, logout } from "../services/auth"
@@ -292,9 +285,7 @@ export default () => {
 }
 ```
 
-`components/PrivateRoute.js`:
-
-```js
+```jsx:title=components/PrivateRoute.js
 import React from "react"
 import { isLoggedIn } from "../services/auth"
 import { navigate } from "gatsby"
@@ -318,9 +309,7 @@ class PrivateRoute extends React.Component {
 export default PrivateRoute
 ```
 
-`login.js`:
-
-```js
+```jsx:title=login.js
 import React from "react"
 import { navigate } from "gatsby"
 import { handleLogin, isLoggedIn } from "./services/auth"
@@ -360,7 +349,7 @@ fetch("/.netlify/functions/auth-hello", {
 }).then(/* etc */)
 ```
 
-And then inside a lambda function, you can now access the `user` object:
+And then inside a Lambda function, you can now access the `user` object:
 
 ```js
 // more info: https://www.netlify.com/docs/functions/#identity-and-functions
