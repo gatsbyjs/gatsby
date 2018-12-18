@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.1"></a>
+
+## [3.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.0...gatsby-remark-images@3.0.1) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+<a name="3.0.0"></a>
+
+# [3.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.6...gatsby-remark-images@3.0.0) (2018-11-21)
+
+### Features
+
+- **gatsby-remark-images:** make images blur up ([#7800](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/7800)) ([5a5254e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/5a5254e))
+
+### BREAKING CHANGES
+
+- **gatsby-remark-images:** html markup has been changed, high resolution image (img.gatsby-resp-image-image) is no longer nested inside span with low resolution placeholder (span.gatsby-resp-image-wrapper) - it's sibling of that span now. This might affect any custom styling that is applied to inline images
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.5...gatsby-remark-images@2.0.6) (2018-11-06)
+
+### Features
+
+- **gatsby-plugin-sharp:** cache base64 if possible ([#9059](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/9059)) ([5dc9346](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/5dc9346)), closes [#6999](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/6999)
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.4...gatsby-remark-images@2.0.5) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 <a name="2.0.4"></a>
 
 ## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@2.0.3...gatsby-remark-images@2.0.4) (2018-10-09)

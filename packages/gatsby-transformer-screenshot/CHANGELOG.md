@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.9...gatsby-transformer-screenshot@2.0.10) (2018-12-18)
+
+### Features
+
+- **gatsby-transformer-screenshot:** Added fullpage option for puppeteer API call ([#10517](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/issues/10517)) ([51a8c98](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/commit/51a8c98)), closes [#10483](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/issues/10483)
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.8...gatsby-transformer-screenshot@2.0.9) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.7...gatsby-transformer-screenshot@2.0.8) (2018-11-09)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.6...gatsby-transformer-screenshot@2.0.7) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.5...gatsby-transformer-screenshot@2.0.6) (2018-10-29)
+
+### Features
+
+- **gatsby:** Add nodes db module ([#9416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/issues/9416)) ([7d31fe7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/commit/7d31fe7)), closes [#9338](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/issues/9338)
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.4...gatsby-transformer-screenshot@2.0.5) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
 <a name="2.0.4"></a>
 
 ## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot/compare/gatsby-transformer-screenshot@2.0.3...gatsby-transformer-screenshot@2.0.4) (2018-10-16)

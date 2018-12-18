@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-pdf",
   "description": "Gatsby transformer plugin for pdf files",
-  "version": "1.0.12",
+  "version": "1.0.15",
   "author": "Alex Munoz <almunozdo@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,6 +14,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.1.3",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-pdf#readme",

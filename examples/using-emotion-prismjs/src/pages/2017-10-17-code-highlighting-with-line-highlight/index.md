@@ -9,12 +9,15 @@ This post contains the same code snippet with syntax highlighting from the
 previous post, but now includes highlighted lines. The highlight theme is
 still same one used in the official React documentation.
 
-```jsx{1,4-6}
+```jsx
 function NumberList(props) {
+  // highlight-line
   const numbers = props.numbers
   const listItems = numbers.map(number => (
+    // highlight-start
     <li key={number.toString()}>{number}</li>
   ))
+  // highlight-end
   return <ul>{listItems}</ul>
 }
 

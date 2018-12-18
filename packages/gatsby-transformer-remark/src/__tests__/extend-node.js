@@ -11,7 +11,12 @@ const {
 const extendNodeType = require(`../extend-node-type`)
 
 // given a set of nodes and a query, return the result of the query
-async function queryResult(nodes, fragment, { types = [] } = {}, additionalParameters) {
+async function queryResult(
+  nodes,
+  fragment,
+  { types = [] } = {},
+  additionalParameters
+) {
   const inferredFields = inferObjectStructureFromNodes({
     nodes,
     types: [...types],
@@ -23,7 +28,7 @@ async function queryResult(nodes, fragment, { types = [] } = {}, additionalParam
         get: () => null,
         set: () => null,
       },
-      getNodes: () => [],
+      getNodesByType: type => [],
       ...additionalParameters,
     },
     {
@@ -70,7 +75,13 @@ async function queryResult(nodes, fragment, { types = [] } = {}, additionalParam
   return result
 }
 
-const bootstrapTest = (label, content, query, test, additionalParameters = {}) => {
+const bootstrapTest = (
+  label,
+  content,
+  query,
+  test,
+  additionalParameters = {}
+) => {
   const node = {
     id: `whatever`,
     children: [],
@@ -82,7 +93,7 @@ const bootstrapTest = (label, content, query, test, additionalParameters = {}) =
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  it(label, async (done) => {
+  it(label, async done => {
     node.content = content
     const createNode = markdownNode => {
       queryResult(
@@ -96,8 +107,7 @@ const bootstrapTest = (label, content, query, test, additionalParameters = {}) =
         try {
           test(result.data.listNode[0])
           done()
-        }
-        catch(err) {
+        } catch (err) {
           done.fail(err)
         }
       })
@@ -106,19 +116,19 @@ const bootstrapTest = (label, content, query, test, additionalParameters = {}) =
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-    },
-    { ...additionalParameters }
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+      },
+      { ...additionalParameters }
     )
-    })
+  })
 }
 
 describe(`Excerpt is generated correctly from schema`, () => {
-
   bootstrapTest(
     `correctly loads an excerpt`,
     `---
@@ -131,7 +141,7 @@ Where oh where is my little pony?`,
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     }
@@ -148,7 +158,7 @@ date: "2017-09-18T23:19:51.246Z"
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(``)
     }
@@ -171,7 +181,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     },
@@ -194,7 +204,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(139)
     }
@@ -208,7 +218,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(46)
     }
@@ -222,10 +232,78 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         title
     }
     `,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(50)
     }
+  )
+
+  bootstrapTest(
+    `given an html format, it correctly maps nested markdown to html`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
+    `excerpt(format: HTML)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
+      )
+    }
+  )
+
+  bootstrapTest(
+    `given an html format, it prunes large excerpts`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh where is that pony? Is he in the stable or down by the stream?`,
+    `excerpt(format: HTML, pruneLength: 50)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      // expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is that pony? Is he in the stable…</p>`
+      )
+    }
+  )
+
+  bootstrapTest(
+    `given an html format, it respects the excerpt_separator`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh where is that pony? Is he in the stable or by the stream?
+
+<!-- end -->
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+`,
+    `excerpt(format: HTML, pruneLength: 50)
+    frontmatter {
+        title
+    }
+    `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is that pony? Is he in the stable…</p>`
+      )
+    },
+    { excerpt_separator: `<!-- end -->` }
   )
 })
 
@@ -248,16 +326,15 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
-      expect(node.wordCount).toEqual(
-        {
+      expect(node.wordCount).toEqual({
         paragraphs: 2,
         sentences: 19,
         words: 150,
-        }
-      )
-    })
+      })
+    }
+  )
 
   const content = `---
 title: "my little pony"
@@ -276,16 +353,15 @@ date: "2017-09-18T23:19:51.246Z"
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
-      expect(node.wordCount).toEqual(
-        {
+      expect(node.wordCount).toEqual({
         paragraphs: null,
         sentences: null,
         words: null,
-        }
-      )
-    })
+      })
+    }
+  )
 
   bootstrapTest(
     `correctly uses a default value for timeToRead`,
@@ -294,10 +370,11 @@ date: "2017-09-18T23:19:51.246Z"
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.timeToRead).toBe(1)
-    })
+    }
+  )
 })
 
 describe(`Table of contents is generated correctly from schema`, () => {
@@ -322,11 +399,12 @@ some other text
     frontmatter {
         title
     }`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(console.warn).toBeCalled()
       expect(node.tableOfContents).toBe(null)
-    })
+    }
+  )
 
   bootstrapTest(
     `correctly generates table of contents`,
@@ -350,9 +428,10 @@ final text
     frontmatter {
         title
     }`,
-  (node) => {
-    expect(node).toMatchSnapshot()
-  })
+    node => {
+      expect(node).toMatchSnapshot()
+    }
+  )
 })
 
 describe(`Links are correctly prefixed`, () => {
@@ -366,7 +445,7 @@ This is [a reference]
 [a reference]: /path/to/page2
 `,
     `html`,
-    (node) => {
+    node => {
       expect(node).toMatchSnapshot()
       expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
       expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)

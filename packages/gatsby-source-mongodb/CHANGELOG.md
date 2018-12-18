@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.9...gatsby-source-mongodb@2.0.10) (2018-12-11)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.8...gatsby-source-mongodb@2.0.9) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.7...gatsby-source-mongodb@2.0.8) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.6...gatsby-source-mongodb@2.0.7) (2018-11-01)
+
+### Bug Fixes
+
+- **gatsby-source-mongodb:** sanitize type of nodes to only contain alphanumeric chars and underscores ([#7246](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/issues/7246)) ([47a800c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/commit/47a800c)), closes [#7218](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/issues/7218) [/github.com/graphql/graphql-js/blob/5fe39262a308df944a87cc85b225228e7556aaa4/src/utilities/assertValidName.js#L14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/issues/L14)
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.5...gatsby-source-mongodb@2.0.6) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
 <a name="2.0.5"></a>
 
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.0-rc.5...gatsby-source-mongodb@2.0.5) (2018-09-17)

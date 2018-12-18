@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.21"></a>
+
+## [3.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.20...gatsby-source-wordpress@3.0.21) (2018-12-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.20"></a>
+
+## [3.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.19...gatsby-source-wordpress@3.0.20) (2018-12-11)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.19"></a>
+
+## [3.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.18...gatsby-source-wordpress@3.0.19) (2018-12-06)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.18"></a>
+
+## [3.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.17...gatsby-source-wordpress@3.0.18) (2018-12-03)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.17"></a>
+
+## [3.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.16...gatsby-source-wordpress@3.0.17) (2018-12-01)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** add undefined check to avoid taxonomy mapping error ([#10216](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/10216)) ([24c7dfc](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/24c7dfc))
+
+<a name="3.0.16"></a>
+
+## [3.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.15...gatsby-source-wordpress@3.0.16) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.15"></a>
+
+## [3.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.14...gatsby-source-wordpress@3.0.15) (2018-11-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.14"></a>
+
+## [3.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.13...gatsby-source-wordpress@3.0.14) (2018-11-14)
+
+### Bug Fixes
+
+- **docs:** update broken links with working links ([#9912](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9912)) ([e9f2a6f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/e9f2a6f))
+
+<a name="3.0.13"></a>
+
+## [3.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.12...gatsby-source-wordpress@3.0.13) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.12"></a>
+
+## [3.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.11...gatsby-source-wordpress@3.0.12) (2018-11-05)
+
+### Features
+
+- **gatsby-source-wordpress:** allow users to obtain JWT Token to make authenticated requests ([#9509](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9509)) ([9177fc6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/9177fc6)), closes [#6879](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/6879)
+
+<a name="3.0.11"></a>
+
+## [3.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.10...gatsby-source-wordpress@3.0.11) (2018-11-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.10"></a>
+
+## [3.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.9...gatsby-source-wordpress@3.0.10) (2018-10-29)
+
+### Features
+
+- **gatsby-source-wordpress:** normalize baseUrl ([#9386](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/9386)) ([2235bf9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/2235bf9))
+
 <a name="3.0.9"></a>
 
 ## [3.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.8...gatsby-source-wordpress@3.0.9) (2018-10-24)

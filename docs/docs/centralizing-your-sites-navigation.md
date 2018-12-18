@@ -42,13 +42,13 @@ module.exports = {
 
 ### Viewing the `siteMetadata` in GraphQL
 
-GraphQL can be used to query for information contained in the `siteMetadata` object located in your project's `gatsby-config.js`. In order to test this out you can start the `default-starter-project` in development mode by running `npm run develop`.
+GraphQL can be used to query for information contained in the `siteMetadata` object located in your project's `gatsby-config.js`. In order to test this out, you can start the `default-starter-project` in development mode by running `npm run develop`.
 
 Navigate to `http://localhost:8000/___graphql` in your browser to view the GraphiQL editor, which enables you to test GraphQL queries on the underlying APIs. Using the documentation explorer you can view the current GraphQL schema for your project, which is an invaluable resource during development.
 
-Examining the available types in GraphQL you will notice that you can query `site`. This GraphQL type further returns the `siteMetadata` which needs to be accessed to create the dynamic navigation. At this point it is useful if you know a little GraphQL in order to extract the menu links. If you are unfamiliar with GraphQL, there is some excellent documentation available at GraphQL's official website found [here](https://graphql.org/learn/) tha you can use to brush up on your skills! The query below will return the menu links.
+Examining the available types in GraphQL you will notice that you can query `site`. This GraphQL type further returns the `siteMetadata` which needs to be accessed to create the dynamic navigation. At this point, it is useful if you know a little GraphQL in order to extract the menu links. If you are unfamiliar with GraphQL, there is some excellent documentation available at GraphQL's official website found [here](https://graphql.org/learn/) that you can use to brush up on your skills! The query below will return the menu links.
 
-```js
+```graphql
 query SiteQuery {
   site {
     siteMetadata {
@@ -64,7 +64,7 @@ query SiteQuery {
 
 When executing this query within the GraphiQL editor you see output that looks similar to the following:
 
-```js
+```json
 {
   "data": {
     "site": {
@@ -90,7 +90,7 @@ Perfect! You now have a way of obtaining data from the `gatsby-config.js` file. 
 
 ### Pulling data inside the layout component
 
-Inside your project, locate the `src/components` folder and navigate to the `layout.js` file. Within this layout component you should notice a component named `StaticQuery`.
+Inside your project, locate the `src/components` folder and navigate to the `layout.js` file. Within this layout component, you should notice a component named `StaticQuery`.
 
 StaticQuery is a new component introduced in Gatsby V2, which allows you to run GraphQL queries within your components, not just pages. It allows developers to collocate data with their components.
 
@@ -141,7 +141,7 @@ const Layout = ({ children }) => (
 
 With the above changes to your `StaticQuery` component, the `render` property, which accepts a function that takes one argument, now has access to the menu links for use inside the function (as the argument). The last thing that is left to do is to display the site's navigation.
 
-To do this, the header component that is already available in the project seems like it might be a good starting place to display the navigation. Lets pass the `menuLinks` object to this header component like so:
+To do this, the header component that is already available in the project seems like it might be a good starting place to display the navigation. Let's pass the `menuLinks` object to this header component like so:
 
 ```diff:title=src/components/layout.js
 const Layout = ({ children }) => (
