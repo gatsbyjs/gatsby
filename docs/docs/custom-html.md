@@ -33,7 +33,7 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
 "target container". Inside your `<body>` you must have a div with an id of
 `___gatsby` like:
 
-```jsx
+```jsx:title=src/html.js
 <div
   key={`body`}
   id="___gatsby"
@@ -45,7 +45,7 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
 
 You can add custom JavaScript to your HTML document by using React's [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) attribute.
 
-```jsx
+```jsx:title=src/html.js
 <script
   dangerouslySetInnerHTML={{
     __html: `

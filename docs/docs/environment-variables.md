@@ -47,7 +47,7 @@ In addition to these Project Environment Variables defined in `.env.*` files, yo
 OS Env Vars. OS Env Vars which are prefixed with `GATSBY_` will become available in
 browser JavaScript.
 
-```shell:title=.env.*
+```text:title=.env.*
 GATSBY_API_URL=https://dev.example.com/api
 ```
 
@@ -60,7 +60,7 @@ calling Gatsby on the command line.
 
 In Linux terminals this can be done with:
 
-```
+```shell
 MY_ENV_VAR=foo gatsby develop
 ```
 
@@ -83,20 +83,21 @@ Now the variables are available on `process.env` as usual.
 
 Please note that you shouldn't commit `.env.*` files to your source control and rather use options given by your CD provider (e.g. Netlify with its [build environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables)).
 
-```shell:title=.env.development
+```text:title=.env.development
 GATSBY_API_URL=https://dev.example.com/api
 API_KEY=927349872349798
 ```
 
-```shell:title=.env.production
+```text:title=.env.production
 GATSBY_API_URL=https://example.com/api
 API_KEY=927349872349798
 ```
 
-`GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`:
+Note: since Gatsby uses the [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
+`GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`.:
 
 ```jsx
-// In any front-end code
+// In any frontend code
 render() {
   return (
     <div>
@@ -141,7 +142,7 @@ For instance. If you would like to add a `staging` environment with a custom Goo
 
 ### Example
 
-```shell:title=.env.staging
+```text:title=.env.staging
 GA_TRACKING_ID="UA-1234567890"
 API_URL="http://foo.bar"
 ```
@@ -183,6 +184,6 @@ Note that `ACTIVE_ENV` could be called anything - it's not used or known about b
 
 Local testing of the `staging` environment can be done with:
 
-```
+```shell
 ACTIVE_ENV=staging gatsby develop
 ```

@@ -1386,3 +1386,20 @@
     - Typescrip & TSLint
     - No Styling (No Typography.js)
     - Minimal settings based on official starter blog
+- url: https://gatsby-serif.netlify.com/
+  repo: https://github.com/jugglerx/gatsby-serif-theme
+  description: Multi page/content-type starter using Markdown and SCSS. Serif is a beautiful small business theme for Gatsby. The theme is fully responsive, blazing fast and artfully illustrated.
+  tags:
+    - Styling:SCSS
+    - Markdown
+    - Linting
+  features:
+    - Multiple "content types" for `services`, `team` and `testimonials` using Markdown as the source
+    - Graphql query in `gatsby-node.js` using aliases that creates pages and templates by content type based on the folder `src/pages/services`, `src/pages/team`
+    - SCSS
+    - Responsive design
+    - Bootstrap 4 grid and media queries only
+    - Responsive menu
+    - Royalty free illustrations included
+    - SEO titles & meta using `gatsby-plugin-react-helmet`
+    - Eslint & Prettier
