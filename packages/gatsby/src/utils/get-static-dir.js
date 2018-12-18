@@ -3,7 +3,7 @@ const chokidar = require(`chokidar`)
 const nodePath = require(`path`)
 
 /**
- * syncStaticDir
+ * copyStaticDir
  * --
  * Copy files from the static directory to the public directory
  */
