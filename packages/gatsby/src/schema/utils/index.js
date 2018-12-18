@@ -15,6 +15,7 @@ const isDate = require(`./is-date`)
 const isDefined = require(`./is-defined`)
 const isObject = require(`./is-object`)
 const isProductionBuild = require(`./is-production-build`)
+const stringToRegExp = require(`./string-to-regexp`)
 const toSnakeCase = require(`./to-snake-case`)
 const { getParentNodeId, trackObjects } = require(`./node-tracking`)
 
@@ -37,6 +38,7 @@ module.exports = {
   isDefined,
   isObject,
   isProductionBuild,
+  stringToRegExp,
   toSnakeCase,
   trackObjects,
 }

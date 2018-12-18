@@ -1,6 +1,7 @@
+// TODO: Check out `picomatch`/`nanomatch`
 const { makeRe } = require(`micromatch`)
 
-const { isObject } = require(`../../utils`)
+const { isObject, stringToRegExp } = require(`../../utils`)
 
 const prepareQueryArgs = filterFields =>
   Object.entries(filterFields).reduce((acc, [key, value]) => {
@@ -9,9 +10,7 @@ const prepareQueryArgs = filterFields =>
     } else {
       switch (key) {
         case `regex`:
-          // NOTE: `value` must conform to the rules for the RegExp constructor,
-          // e.g. use '\\w' not '\w'.
-          acc[`$regex`] = new RegExp(value)
+          acc[`$regex`] = stringToRegExp(value)
           break
         case `glob`:
           acc[`$regex`] = makeRe(value)
