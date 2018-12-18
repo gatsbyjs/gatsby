@@ -1,8 +1,8 @@
 const fs = require(`fs-extra`)
-const nodePath = require(`path`)
+const path = require(`path`)
 
 module.exports = () => {
-  const path = `${process.cwd()}/static`
-  const relativePath = nodePath.relative(`${process.cwd()}/static`, path)
-  fs.copy(path, `${process.cwd()}/public/${relativePath}`)
+  const staticDir = path.join(process.cwd(), `static`)
+  if (!fs.existsSync(staticDir)) return
+  fs.copySync(staticDir, path.join(process.cwd(), `public`))
 }
