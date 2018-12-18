@@ -6,7 +6,7 @@ Gatsby is built on top of React. So anything that is possible with a React form 
 
 Let's start with the following page.
 
- ```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => <div>Hello world!</div>
@@ -14,46 +14,42 @@ export default () => <div>Hello world!</div>
 
 This gatsby page is a React component. When you want to create a form, you need to store the state of the form - what the user has entered. Convert your function (stateless) component to a class (stateful) component.
 
- ```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default class IndexPage extends React.Component {
   render() {
-    return (
-      <div>Hello world!</div>
-    )
+    return <div>Hello world!</div>
   }
 }
 ```
 
 Now that you have created a class component, you can add `state` to the component.
 
- ```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default class IndexPage extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
+    firstName: "",
+    lastName: "",
   }
 
   render() {
-    return (
-      <div>Hello world!</div>
-    )
+    return <div>Hello world!</div>
   }
 }
 ```
 
 And now we can add a few input fields
 
- ```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default class IndexPage extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
+    firstName: "",
+    lastName: "",
   }
 
   render() {
@@ -70,23 +66,23 @@ export default class IndexPage extends React.Component {
 
 When a user types into an input box, the state should update. Add an `onChange` prop to update state and add a `value` prop to keep the input up to date with the new state:
 
- ```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default class IndexPage extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
+    firstName: "",
+    lastName: "",
   }
 
-  handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+  handleInputChange = event => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
 
     this.setState({
       [name]: value,
-    });
+    })
   }
 
   render() {
@@ -113,28 +109,28 @@ export default class IndexPage extends React.Component {
 
 Now that our inputs are working, we want something to happen when we submit the form. Add `onSubmit` props to the form element and add `handleSubmit` to show an alert when the user submits the form:
 
- ```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default class IndexPage extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
+    firstName: "",
+    lastName: "",
   }
 
-  handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+  handleInputChange = event => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
 
     this.setState({
       [name]: value,
-    });
+    })
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    alert(`Welcome ${this.state.firstName} ${this.state.lastName}!`);
+  handleSubmit = event => {
+    event.preventDefault()
+    alert(`Welcome ${this.state.firstName} ${this.state.lastName}!`)
   }
 
   render() {
