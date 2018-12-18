@@ -9,13 +9,18 @@ const Cache = require(`../../utils/cache`)
 let pluginFields
 
 async function handleRpcRequest(rpc) {
+  console.log(`handling RPC`, rpc)
   invariant(rpc, `rpc`)
   const { id, name, args } = rpc
   invariant(id, `id`)
+  console.log(`here`)
   invariant(name, `name`)
   invariant(pluginFields, `pluginFields hasn't been init'd yet`)
+  console.log(`here`, name, pluginFields[name])
   const resolver = pluginFields[name].resolve
+  console.log(`here`)
   invariant(resolver, `resolver`)
+  console.log(resolver)
   const response = await resolver.apply(null, args)
   console.log(`response is`, response)
   const replyMessage = {
@@ -94,21 +99,18 @@ function makeRpcs() {
   }
 }
 
-function init({ asyncFile, type, pathPrefix }) {
+function init({ asyncFile, pluginOptions, type, pathPrefix }) {
   console.log(`called worker`)
   invariant(asyncFile, `asyncFile`)
+  invariant(pluginOptions, `pluginOptions`)
   const module = require(asyncFile)
   const cache = new Cache({ name: `some cache` }).init()
   const api = { type, pathPrefix, cache, ...makeRpcs() }
   invariant(!pluginFields, `plugin fields already initialized`)
-  pluginFields = module.setFieldsOnGraphQLNodeType(api)
-  console.log(`pluginFields`)
-  console.log(pluginFields)
+  pluginFields = module.setFieldsOnGraphQLNodeType(api, pluginOptions)
 }
 
 function handleMessage(message) {
-  invariant(message, `message`)
-  console.log(message)
   if (message.hasOwnProperty(`rpc`)) {
     const { rpc } = message
     if (rpc.type === `response`) {

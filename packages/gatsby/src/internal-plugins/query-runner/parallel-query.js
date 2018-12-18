@@ -81,7 +81,7 @@ function sendRpc({ child, name, args, resolve, reject }) {
       id,
     },
   }
-  console.log(`msg`, msg)
+  console.log(`msg`, name, args)
   rpcs.set(id, {
     time: new Date(),
     resolve,
@@ -96,13 +96,13 @@ function sendRpc({ child, name, args, resolve, reject }) {
 /////////////////////////////////////////////////////////////////////
 
 function childResolve(child, fieldName) {
-  return (node, args, context) => {
+  return (node, args2, context) => {
     console.log(`rpc called`)
     return new Promise((resolve, reject) => {
       sendRpc({
         child,
         name: fieldName,
-        args,
+        args: [node, args2],
         resolve,
         reject,
       })
@@ -110,7 +110,15 @@ function childResolve(child, fieldName) {
   }
 }
 
-function makeNewResolver({ type, fieldName, asyncFile }) {
+function getPlugin(pluginName) {
+  invariant(pluginName, `no pluginName`)
+  const plugins = store.getState().flattenedPlugins
+  const plugin = plugins.find(p => p.name === pluginName)
+  invariant(plugin, `plugin not found`)
+  return plugin
+}
+
+function makeNewResolver({ type, fieldName, asyncPlugin }) {
   const workerJsFile = path.join(__dirname, `query-worker.js`)
   const child = fork(workerJsFile)
   child.on(`message`, message => handleMessage(message, child))
@@ -118,7 +126,16 @@ function makeNewResolver({ type, fieldName, asyncFile }) {
   if (store.getState().program.prefixPaths) {
     pathPrefix = store.getState().config.pathPrefix
   }
-  child.send({ init: { asyncFile, type, pathPrefix } })
+  const plugin = getPlugin(asyncPlugin)
+  const asyncFile = path.join(plugin.resolve, `gatsby-node.js`)
+  invariant(asyncFile, `new resolver asyncFile`)
+  const initPayload = {
+    asyncFile,
+    pluginOptions: plugin.pluginOptions,
+    type,
+    pathPrefix,
+  }
+  child.send({ init: initPayload })
   return childResolve(child, fieldName)
 }
 
@@ -126,9 +143,9 @@ function upgradeResolver(fieldConfig, fieldName, type) {
   invariant(fieldConfig, `fieldConfig`)
   invariant(fieldName, `fieldName`)
   invariant(type, `type`)
-  const { asyncFile } = fieldConfig
-  if (asyncFile) {
-    fieldConfig.resolve = makeNewResolver({ type, fieldName, asyncFile })
+  const { asyncPlugin } = fieldConfig
+  if (asyncPlugin) {
+    fieldConfig.resolve = makeNewResolver({ type, fieldName, asyncPlugin })
   }
 }
 
