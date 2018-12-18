@@ -170,7 +170,7 @@ const Pullquote = ({ citation, children }) => {
   return (
     <PullquoteRoot className={className}>
       {children}
-      {citation && <Citation>- {citation}</Citation>}
+      {citation && <Citation>&mdash; {citation}</Citation>}
       <QuotationMark
         dangerouslySetInnerHTML={{ __html: QuotationMarkOrnament }}
       />
