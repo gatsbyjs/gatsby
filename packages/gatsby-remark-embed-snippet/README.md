@@ -57,7 +57,7 @@ range of lines to highlight, relative to a `highlight-range` comment.
 
 #### JavaScript example
 
-```
+```js
 import React from "react"
 import ReactDOM from "react-dom"
 
@@ -74,7 +74,7 @@ ReactDOM.render(
 
 #### CSS example
 
-```
+```css
 html {
   /* highlight-range{1-2} */
   height: 100%;
@@ -88,7 +88,7 @@ html {
 
 #### HTML example
 
-```
+```html
 <html>
   <body>
     <h1>highlight me</h1> <!-- highlight-line -->
@@ -102,7 +102,7 @@ html {
 
 #### YAML example
 
-```
+```yaml
 foo: "highlighted" # highlight-line
 bar: "not highlighted"
 # highlight-range{1-2}
@@ -165,7 +165,7 @@ function App() {
 
 **Important**: This module must appear before `gatsby-remark-prismjs` in your plugins array, or the markup will have already been transformed into a code block and this plugin will fail to detect it and inline the file.
 
-```javascript
+```js
 // In your gatsby-config.js
 module.exports = {
   plugins: [
