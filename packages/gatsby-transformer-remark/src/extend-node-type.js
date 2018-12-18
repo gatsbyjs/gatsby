@@ -139,7 +139,7 @@ module.exports = (
 
     async function getMarkdownAST(markdownNode) {
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
-        fileNodes = getNodesByType(`File`)
+        fileNodes = await getNodesByType(`File`)
       }
       // Use Bluebird's Promise function "each" to run remark plugins serially.
       await Promise.each(pluginOptions.plugins, plugin => {
@@ -205,7 +205,7 @@ module.exports = (
       // typegen plugins just modify the auto-generated types to add derived fields
       // as well as computationally expensive fields.
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
-        fileNodes = getNodesByType(`File`)
+        fileNodes = await getNodesByType(`File`)
       }
       // Use Bluebird's Promise function "each" to run remark plugins serially.
       await Promise.each(pluginOptions.plugins, plugin => {
