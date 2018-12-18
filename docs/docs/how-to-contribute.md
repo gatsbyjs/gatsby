@@ -83,7 +83,7 @@ Check the Github repo for issues labeled with ["documentation" and "good first i
 
 If you wrote a new document that was previously a stub, update `www/src/data/sidebars/doc-links.yaml` accordingly by removing the asterisk behind the document's title:
 
-```diff
+```diff:title=www/src/data/sidebars/doc-links.yaml
   ...
 - - title: Example Document*
 + - title: Example Document
@@ -106,7 +106,7 @@ To develop on the starter library, you'll need to supply a GitHub personal acces
 2. In the new token's settings, grant that token the "public_repo" scope.
 3. Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
 
-```
+```text:title=.env.development
 GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 

@@ -9,13 +9,13 @@ In the [**previous section**](/tutorial/part-zero/), you prepared your local dev
 
 In [**tutorial part zero**](/tutorial/part-zero/), you created a new site based on the “hello world” starter using the following command:
 
-```bash
+```shell
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 When creating a new Gatsby site, you can use the following command structure to create a new site based on any existing Gatsby starter:
 
-```bash
+```shell
 gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 ```
 
@@ -241,13 +241,13 @@ Earlier you defined React components as reusable pieces of code describing a UI.
 
 In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` to the imported `Header` sub-component:
 
-```jsx
+```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" />
 ```
 
 Over in `header.js`, the header component expects to receive the `headerText` prop (because you’ve written it to expect that) So you can access it like so:
 
-```jsx
+```jsx:title=src/pages/header.js
 <h1>{props.headerText}</h1>
 ```
 
@@ -255,7 +255,7 @@ Over in `header.js`, the header component expects to receive the `headerText` pr
 
 If you had passed another prop to our `<Header />` component, like so...
 
-```jsx
+```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
 ```
 
@@ -354,7 +354,7 @@ deploy Gatsby sites.
 
 If you haven't previously installed & set up Surge, open a new terminal window and install their terminal tool:
 
-```bash
+```shell
 npm install --global surge
 
 # Then create a (free) account with them
@@ -363,7 +363,7 @@ surge
 
 Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
 
-```bash
+```shell
 gatsby build
 ```
 
@@ -371,13 +371,13 @@ The build should take 15-30 seconds. Once the build is finished, it's interestin
 
 Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 
-```bash
+```shell
 ls public
 ```
 
 Then finally deploy your site by publishing the generated files to surge.sh.
 
-```bash
+```shell
 surge public/
 ```
 
