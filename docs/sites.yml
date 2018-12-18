@@ -3568,7 +3568,6 @@
   description: >
     Welcome to Portugal's best kept secret and be amazed with our nature. Here you can explore, surf, taste the world's best gastronomy and wine, feel the North Canyon's power with the biggest waves in the world and so many other amazing things. Find us, discover yourself!
   categories:
-    - Surf
     - Tourism
     - Travel
   built_by: Samuel Fialho
@@ -3684,7 +3683,7 @@
     - Freelance
     - Technology
     - Web Development
-    - React-Native
+    - React Native
     - Music
 - title: Ad Hoc Homework
   main_url: https://homework.adhoc.team
@@ -3800,7 +3799,6 @@
   description: Real estate, vacation, and surf report hub for Nosara, Costa Rica
   featured: false
   categories:
-    - Surfing
     - Business
     - Blog
     - Gallery
