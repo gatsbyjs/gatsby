@@ -39,10 +39,10 @@ const PullquoteRoot = styled(`blockquote`)`
 
 const Citation = styled(`cite`)`
   display: block;
-  text-align: right;
-  font-weight: normal;
   font-style: italic;
+  font-weight: normal;
   margin-top: 1rem;
+  text-align: right;
 `
 
 const QuotationMark = styled(`span`)`
