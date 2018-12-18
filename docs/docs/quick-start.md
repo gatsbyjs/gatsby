@@ -6,7 +6,7 @@ This quick start is intended for intermediate to advanced developers. For a gent
 
 ## Install Gatsby's command line tool
 
-```bash
+```shell
 npm install --global gatsby-cli
 ```
 
@@ -14,19 +14,19 @@ npm install --global gatsby-cli
 
 ### Create a new site.
 
-```bash
+```shell
 gatsby new gatsby-site
 ```
 
 ### Change directories into site folder.
 
-```bash
+```shell
 cd gatsby-site
 ```
 
 ### Start development server.
 
-```bash
+```shell
 gatsby develop
 ```
 
@@ -36,7 +36,7 @@ Try editing the JavaScript pages in `src/pages`. Saved changes will live reload 
 
 ### Create a production build.
 
-```bash
+```shell
 gatsby build
 ```
 
@@ -44,7 +44,7 @@ Gatsby will perform an optimized production build for your site, generating stat
 
 ### Serve the production build locally.
 
-```bash
+```shell
 gatsby serve
 ```
 

@@ -73,7 +73,7 @@ Other salient feedback includes that people who have used WordPress for a long t
 <pullquote>
 You guys are pretty much nailing it. Just keep killin’ it, I guess!
 
-– Alec Lomas, AZ, front-end dev and design
+ – Alec Lomas, AZ, frontend dev and design
 </pullquote>
 
 <pullquote>

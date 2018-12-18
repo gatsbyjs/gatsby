@@ -6,7 +6,7 @@ title: "End-to-end testing"
 
 In order to run Gatsby's development server and Cypress at the same time you'll use the little helper [start-server-and-test](https://github.com/bahmutov/start-server-and-test). If you're already using [react-testing-library](/docs/testing-react-components) for [unit testing](/docs/unit-testing) you might want to install [cypress-testing-library](https://github.com/kentcdodds/cypress-testing-library), too. This way you can use the exact same methods you used with `react-testing-library` in your Cypress tests. Install the following packages to your `devDependencies`:
 
-```sh
+```shell
 npm install --save-dev cypress start-server-and-test
 ```
 

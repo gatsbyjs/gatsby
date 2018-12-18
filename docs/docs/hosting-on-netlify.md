@@ -24,14 +24,14 @@ There are two ways, we can host our site.
 
 In Gatsby development mode, we constantly change content, add images, so Gatsby won't consume our time to optimize the source code as we are currently developing our site. For production usage, we want our site to load as fast as possible. Gatsby also informs us about it with below message.
 
-```sh
+```shell
 Note that the development build is not optimized.
 To create a production build, use Gatsby build
 ```
 
 For the production build, we will need to run `gatsby build` command and Gatsby will generate our production site under `public` folder, it will contain css, js, images and html files.
 
-```sh
+```shell
 gatsby build
 ```
 
