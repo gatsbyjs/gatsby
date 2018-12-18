@@ -1393,8 +1393,6 @@
     - Styling:SCSS
     - Markdown
     - Linting
-    - Multi-page
-    - Zerostatic
   features:
     - Multiple "content types" for `services`, `team` and `testimonials` using Markdown as the source
     - Graphql query in `gatsby-node.js` using aliases that creates pages and templates by content type based on the folder `src/pages/services`, `src/pages/team`
