@@ -364,14 +364,16 @@ module.exports = (
     return resolve({
       html: {
         type: GraphQLString,
-        asyncPlugin: `gatsby-transformer-remark`,
+        isAsync: true,
+        pluginName: `gatsby-transformer-remark`,
         resolve(markdownNode) {
           return getHTML(markdownNode)
         },
       },
       htmlAst: {
         type: GraphQLJSON,
-        asyncPlugin: `gatsby-transformer-remark`,
+        isAsync: true,
+        pluginName: `gatsby-transformer-remark`,
         resolve(markdownNode) {
           return getHTMLAst(markdownNode).then(ast => {
             const strippedAst = stripPosition(_.clone(ast), true)
@@ -395,7 +397,8 @@ module.exports = (
             defaultValue: `plain`,
           },
         },
-        asyncPlugin: `gatsby-transformer-remark`,
+        isAsync: true,
+        pluginName: `gatsby-transformer-remark`,
         async resolve(markdownNode, { format, pruneLength, truncate }) {
           if (format === `html`) {
             if (pluginOptions.excerpt_separator) {
@@ -471,7 +474,8 @@ module.exports = (
             type: HeadingLevels,
           },
         },
-        asyncPlugin: `gatsby-transformer-remark`,
+        isAsync: true,
+        pluginName: `gatsby-transformer-remark`,
         resolve(markdownNode, { depth }) {
           return getHeadings(markdownNode).then(headings => {
             if (typeof depth === `number`) {
@@ -483,7 +487,8 @@ module.exports = (
       },
       timeToRead: {
         type: GraphQLInt,
-        asyncPlugin: `gatsby-transformer-remark`,
+        isAsync: true,
+        pluginName: `gatsby-transformer-remark`,
         resolve(markdownNode) {
           console.log(`in time to read`)
           return getHTML(markdownNode).then(html => {
@@ -507,7 +512,8 @@ module.exports = (
             defaultValue: `fields.slug`,
           },
         },
-        asyncPlugin: `gatsby-transformer-remark`,
+        isAsync: true,
+        pluginName: `gatsby-transformer-remark`,
         resolve(markdownNode, { pathToSlugField }) {
           return getTableOfContents(markdownNode, pathToSlugField)
         },
@@ -528,7 +534,8 @@ module.exports = (
             },
           },
         }),
-        asyncPlugin: `gatsby-transformer-remark`,
+        isAsync: true,
+        pluginName: `gatsby-transformer-remark`,
         resolve(markdownNode) {
           let counts = {}
 

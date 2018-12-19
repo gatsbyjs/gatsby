@@ -7,7 +7,6 @@ const resolvers = {}
 const rpcs = new Map()
 
 function handleRpcResponse(rpc) {
-  console.log(`child got callback`, rpc)
   invariant(rpc, `rpc`)
   const { id, response } = rpc
   invariant(id, `id`)
@@ -37,7 +36,6 @@ function sendRpc({ name, args, resolve, reject }) {
     args,
     id,
   }
-  console.log(`send rpc`, rpc)
   rpcs.set(id, {
     time: new Date(),
     resolve,
@@ -86,17 +84,13 @@ async function initModule({
 async function setup(args) {
   const { fields } = args
   invariant(fields, `setup fields`)
-  console.log(`worker setup`)
   for (const field of fields) {
     await initModule(field)
   }
-  console.log(`setup complete`)
 }
 
 async function execResolver(resolver, node, args) {
-  console.log(resolver, node, args)
   const result = await resolvers[resolver](node, args)
-  console.log(`result`, result)
   return result
 }
 

@@ -8,12 +8,11 @@ let fields = []
 let pool
 
 const rpcMethods = {
-  getNode: () => ({ foo: `bar` }),
+  getNode,
   getNodesByType,
 }
 
 function ipcCallback(child, request) {
-  console.log(`got callback`, child, request)
   invariant(child, `no child`)
   invariant(request, `request`)
   const [rpc] = request
@@ -71,7 +70,6 @@ function makePool(fields) {
     setupArgs,
     exposedMethods,
   }
-  console.log(`worker options`, workerOptions)
   const pool = new Worker(
     require.resolve(`./resolver-worker.js`),
     workerOptions
@@ -80,7 +78,6 @@ function makePool(fields) {
 }
 
 function initPool() {
-  console.log(`init pool`)
   invariant(fields, `no fields configured`)
   pool = makePool(fields)
   invariant(pool, `pool`)
@@ -92,16 +89,12 @@ function endPool() {
 }
 
 function add(field) {
-  console.log(`add field`, field.fieldName)
-// TODO clear on CLEAR_CACHE etc
+  // TODO clear on CLEAR_CACHE etc
   fields.push(field)
 }
 
 function workerResolver({ fieldName }) {
-  return (node, args) => {
-    console.log(`about to call resolver`, fieldName)
-    return pool.execResolver(fieldName, node, args)
-  }
+  return (node, args) => pool.execResolver(fieldName, node, args)
 }
 
 function replaceResolver(field) {
