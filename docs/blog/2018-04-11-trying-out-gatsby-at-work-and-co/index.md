@@ -153,7 +153,7 @@ To enforce such validations, we set up a static validator page that runs a repor
 
 That same validation page also served as a site status page, containing the time and GitHub hash of the last build. The build time was particularly important. Since builds happen quite frequently (whenever content is updated), it’s helpful for the team to be able to easily see the time of the last build for a given environment. (We also had Netlify integrated to Slack, but this contained notifications about every branch and was a bit noisy for a less tech-savvy audience.)
 
-Capturing this information was easy and only took a few additional lines in our `createPages` hook. Netlify exposes a lot of interesting [environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables) (including some I hope to play with more on a future project, like `WEBHOOK_TITLE`, which can help you deduce the origin of the current build). In order to display these variables on the front end, we needed to rename them to begin with `GATSBY_`:
+Capturing this information was easy and only took a few additional lines in our `createPages` hook. Netlify exposes a lot of interesting [environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables) (including some I hope to play with more on a future project, like `WEBHOOK_TITLE`, which can help you deduce the origin of the current build). In order to display these variables on the frontend, we needed to rename them to begin with `GATSBY_`:
 
 ```
 exports.createPages = () => {

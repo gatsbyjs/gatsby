@@ -133,7 +133,7 @@ Open localhost:8000 and localhost:8000/\_\_\_graphql.
 
 Here’s an example of creating specific widths and heights for images:
 
-```jsx
+```graphql
 {
   allWordpressPost {
     edges {
@@ -142,8 +142,8 @@ Here’s an example of creating specific widths and heights for images:
           photo {
             localFile {
               childImageSharp {
-                  # Try editing the "width" and "height" values.
-                  resolutions(width: 200, height: 200) {
+                # Try editing the "width" and "height" values.
+                resolutions(width: 200, height: 200) {
                   # In the GraphQL explorer, use field names
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
@@ -165,7 +165,7 @@ Here’s an example of creating specific widths and heights for images:
 
 Here’s an example query for generating different sizes of an image:
 
-```jsx
+```graphql
 {
   allWordpressPost {
     edges {

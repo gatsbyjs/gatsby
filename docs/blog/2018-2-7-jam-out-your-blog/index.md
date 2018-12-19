@@ -51,12 +51,12 @@ Josh’s article provides a solution by way of using Contentful to manage conten
 - Free Tier
 - User Roles (admins, editors, content authors)
 - Comprehensive tutorials
-- Fully-customizable front end
+- Fully-customizable frontend
 - Article search and filters
 
 With such a robust set of features, it is easy to see why Contentful is a popular service. However, between a combination of having no prior experience with the platform, and wanting to keep things simple, I ran into issues, and felt that it was _too_ robust for my project goals.
 
-While, a fully-customizable front end may seem really flexible, _**there is NOTHING set up when you create a new project.**_ You will have to create your own content models for blog posts and use GraphQL to query for each blog post type you set up.
+While, a fully-customizable frontend may seem really flexible, _**there is NOTHING set up when you create a new project.**_ You will have to create your own content models for blog posts and use GraphQL to query for each blog post type you set up.
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/16e1J9ztaZ3na"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/bored-kanye-west-16e1J9ztaZ3na">via GIPHY</a></p>
 

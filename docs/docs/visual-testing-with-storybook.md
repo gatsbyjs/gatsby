@@ -13,13 +13,13 @@ As your project grows over time having this information available will be invalu
 
 To set up Storybook you need to install dependencies and do some custom configuration. First, install the Storybook CLI.
 
-```sh
+```shell
 npm install -g @storybook/cli
 ```
 
 Once the CLI is installed, the next step is to run the `sb init` command that is now available from the root directory of your Gatsby project.
 
-```sh
+```shell
 cd my-awesome-gatsby-project
 sb init
 ```
@@ -91,7 +91,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
 
 Once you have this configured you should run Storybook to ensure it can start up properly and you can see the default stories installed by the CLI. To run storybook:
 
-```sh
+```shell
 npm run storybook
 ```
 
