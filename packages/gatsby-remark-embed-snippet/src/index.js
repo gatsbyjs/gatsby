@@ -45,10 +45,8 @@ module.exports = (
       const file = value.substr(6)
       const path = normalizePath(`${directory}${file}`)
 
-      // no file? render the `embed:` as a normal string
       if (!fs.existsSync(path)) {
-        // TODO: log a message during `gatsby develop`?
-        return
+        throw Error(`Invalid snippet specified; no such file "${path}"`)
       }
 
       const code = fs.readFileSync(path, `utf8`).trim()

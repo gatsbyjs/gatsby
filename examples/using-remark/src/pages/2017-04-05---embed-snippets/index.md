@@ -17,7 +17,7 @@ Let's start by displaying file contents as a highlighted code block, then see ho
 
 After installing the required plugins you can embed a file within your Markdown by using `embed` snippets. To embed the file `src/code-examples/plain.js` you could write the following:
 
-<pre>embed:plain.js</pre>
+<pre>`embed:plain.js`</pre>
 
 This will look like:
 
@@ -45,7 +45,11 @@ ReactDOM.render(
 )
 ```
 
-When the file is embedded with `embed:name-of-your-file.js`, it will display like this:
+When the file is embedded with:
+
+<pre>`embed:highlight-lines.js`</pre>
+
+it will display like this:
 
 `embed:highlight-lines.js`
 
