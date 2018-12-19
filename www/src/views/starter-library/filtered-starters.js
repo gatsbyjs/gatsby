@@ -213,7 +213,7 @@ export default class FilteredStarterLibrary extends Component {
                     paddingLeft: rhythm(1),
                     width: rhythm(6),
                     ":focus": {
-                      outline: 0,
+                      outline: `${colors.wisteria} solid thin`,
                       backgroundColor: colors.ui.light,
                       borderRadius: presets.radiusLg,
                       transition: `width ${presets.animation.speedDefault} ${
