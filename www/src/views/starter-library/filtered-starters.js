@@ -179,6 +179,26 @@ export default class FilteredStarterLibrary extends Component {
                 },
               }}
             >
+              {/* @todo: add sorting. */}
+              <label
+                css={{
+                  display: `none`,
+                  [presets.Desktop]: {
+                    border: 0,
+                    borderRadius: presets.radiusLg,
+                    color: colors.gatsby,
+                    fontFamily: options.headerFontFamily.join(`,`),
+                    paddingTop: rhythm(1 / 8),
+                    paddingRight: rhythm(1 / 5),
+                    paddingBottom: rhythm(1 / 8),
+                    width: rhythm(5),
+                  },
+                }}
+                onClick={toggleSort}
+              >
+                <MdSort css={{ marginRight: 8 }} />
+                {urlState.sort === `recent` ? `Most recent` : `Most stars`}
+              </label>
               <label css={{ position: `relative` }}>
                 <DebounceInput
                   css={{
