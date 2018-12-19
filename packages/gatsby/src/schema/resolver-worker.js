@@ -17,7 +17,9 @@ function handleRpcResponse(rpc) {
 }
 
 function handleIpc(ipc) {
+  invariant(ipc, `handle IPC`)
   const [rpc] = ipc
+  invariant(rpc, `handle rpc`)
   if (rpc.type === `response`) {
     handleRpcResponse(rpc)
   } else {
@@ -56,10 +58,39 @@ function makeRpc(fnName) {
     })
 }
 
+function makeReporter() {
+  return {
+    table: (...args) => console.log(`table`, args),
+    step: (...args) => console.log(`step`, args),
+    inspect: (...args) => console.log(`inspect`, args),
+    list: (...args) => console.log(`list`, args),
+    header: (...args) => console.log(`header`, args),
+    footer: (...args) => console.log(`footer`, args),
+    log: (...args) => console.log(`log`, args),
+    success: (...args) => console.log(`success`, args),
+    error: (...args) => console.log(`error`, args),
+    info: (...args) => console.log(`info`, args),
+    command: (...args) => console.log(`command`, args),
+    warn: (...args) => console.log(`warn`, args),
+    question: (...args) => console.log(`question`, args),
+    tree: (...args) => console.log(`tree`, args),
+    activitySet: (...args) => console.log(`activitySet`, args),
+    activity: (...args) => console.log(`activity`, args),
+    select: (...args) => console.log(`select`, args),
+    progress: (...args) => console.log(`progress`, args),
+    close: (...args) => console.log(`close`, args),
+    createReporter: (...args) => console.log(`createReporter`, args),
+    panic: (...args) => console.log(`panic`, args),
+    panicOnBuild: (...args) => console.log(`panicOnBuild`, args),
+    uptime: (...args) => console.log(`uptime`, args),
+  }
+}
+
 function makeRpcs() {
   return {
     getNode: makeRpc(`getNode`),
     getNodesByType: makeRpc(`getNodesByType`),
+    reporter: makeReporter(),
   }
 }
 
@@ -90,8 +121,12 @@ async function setup(args) {
 }
 
 async function execResolver(resolver, node, args) {
-  const result = await resolvers[resolver](node, args)
-  return result
+  try {
+    return await resolvers[resolver](node, args)
+  } catch (e) {
+    console.log(e)
+    return null
+  }
 }
 
 process.on(`ipc`, handleIpc)

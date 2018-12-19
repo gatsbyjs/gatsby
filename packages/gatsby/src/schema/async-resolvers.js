@@ -94,7 +94,14 @@ function add(field) {
 }
 
 function workerResolver({ fieldName }) {
-  return (node, args) => pool.execResolver(fieldName, node, args)
+  return async (node, args) => {
+    try {
+      return await pool.execResolver(fieldName, node, args)
+    } catch (e) {
+      console.log(e)
+      return null
+    }
+  }
 }
 
 function replaceResolver(field) {

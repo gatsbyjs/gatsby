@@ -207,6 +207,7 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = await getNodesByType(`File`)
       }
+      const parentNode = await getNode(markdownNode.parent)
       // Use Bluebird's Promise function "each" to run remark plugins serially.
       await Promise.each(pluginOptions.plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
@@ -215,7 +216,7 @@ module.exports = (
             {
               markdownAST,
               markdownNode,
-              getNode,
+              parentNode,
               files: fileNodes,
               pathPrefix,
               reporter,
@@ -490,7 +491,6 @@ module.exports = (
         isAsync: true,
         pluginName: `gatsby-transformer-remark`,
         resolve(markdownNode) {
-          console.log(`in time to read`)
           return getHTML(markdownNode).then(html => {
             let timeToRead = 0
             const pureText = sanitizeHTML(html, { allowTags: [] })

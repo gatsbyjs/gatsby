@@ -58,7 +58,7 @@ function toArray(buf) {
 }
 
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode },
+  { files, markdownNode, markdownAST, pathPrefix, parentNode },
   pluginOptions = {}
 ) => {
   const defaults = {
@@ -74,14 +74,8 @@ module.exports = (
   // Copy linked files to the destination directory and modify the AST to point
   // to new location of the files.
   const visitor = link => {
-    if (
-      isRelativeUrl(link.url) &&
-      getNode(markdownNode.parent).internal.type === `File`
-    ) {
-      const linkPath = path.posix.join(
-        getNode(markdownNode.parent).dir,
-        link.url
-      )
+    if (isRelativeUrl(link.url) && parentNode.internal.type === `File`) {
+      const linkPath = path.posix.join(parentNode.dir, link.url)
       const linkNode = _.find(files, file => {
         if (file && file.absolutePath) {
           return file.absolutePath === linkPath
@@ -104,10 +98,7 @@ module.exports = (
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = function(image, node) {
-    const imagePath = path.posix.join(
-      getNode(markdownNode.parent).dir,
-      image.attr(`src`)
-    )
+    const imagePath = path.posix.join(parentNode, image.attr(`src`))
     const imageNode = _.find(files, file => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
@@ -179,17 +170,11 @@ module.exports = (
     }
 
     // since dir will be undefined on non-files
-    if (
-      markdownNode.parent &&
-      getNode(markdownNode.parent).internal.type !== `File`
-    ) {
+    if (markdownNode.parent && parentNode.internal.type !== `File`) {
       return
     }
 
-    const imagePath = path.posix.join(
-      getNode(markdownNode.parent).dir,
-      image.url
-    )
+    const imagePath = path.posix.join(parentNode.dir, image.url)
     const imageNode = _.find(files, file => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
