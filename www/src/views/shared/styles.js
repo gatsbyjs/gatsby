@@ -246,6 +246,7 @@ const styles = {
     display: `flex`,
     flexDirection: `row`,
     height: presets.headerHeight,
+    justifyContent: `space-between`,
     paddingLeft: `${rhythm(3 / 4)}`,
     paddingRight: `${rhythm(3 / 4)}`,
     zIndex: 1,
