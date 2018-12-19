@@ -233,9 +233,44 @@ Use the following as reference when creating and editing docs:
   If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself. A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. Then you can right click the image and copy its image source.
 - [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
-#### Code titles
+#### Code formatting: Type tab
 
-It's also possible to add code titles to your code blocks. As switching between multiple files in the course of the document can confuse some readers, it's best to explicitly tell them where the code example should go. You need to add `:title=your-path-name` to it and can use syntax highlighting as usual, if needed. Use code titles like so:
+Each code snippet will include a tab showing the language type the snippet contains. For example, the following YAML snippet will show a "YAML" tab...
+
+````
+```yaml
+- id: John Smith
+  bio: Thinks documentation is the coolest.
+  twitter: @j
+```
+````
+
+...like so:
+
+```yaml
+- id: John Smith
+  bio: Thinks documentation is the coolest.
+  twitter: @j
+```
+
+Please use the following language keywords where appropriate:
+
+- `javascript` or `js`
+- `jsx`
+- `graphql`
+- `html`
+- `css`
+- `shell`
+- `yaml`
+- `markdown`
+- `diff`
+- `flow`
+
+If a language keyword is omitted, the type will show as `TEXT` (as shown above).
+
+#### Code formatting: Titles
+
+Where appropriate, add code titles to your code blocks. Switching between multiple files in the course of the document can confuse some readers. It's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, then add `:title=your-path-name` to it. Use it like so:
 
 ````
 ```javascript:title=src/util/alert.js
@@ -249,6 +284,82 @@ Which will then look like:
 ```javascript:title=src/util/alert.js
 const s = "I solemnly swear that I'm up to no good."
 alert(s)
+```
+
+#### Code formatting: Line highlighting
+
+You may also choose in include line highlighting in your code snippets, using the following keywords inline in the snippet:
+
+##### `highlight-line`: highlights the current line
+
+````
+```javascript:title=gatsby-config.js
+module.exports = {
+	siteMetadata: {
+		title: `GatsbyJS`, // highlight-line
+		siteUrl: `https://www.gatsbyjs.org`,
+	},
+}
+```
+````
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: `GatsbyJS`, // highlight-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
+}
+```
+
+##### `highlight-next-line`: highlights the next line
+
+````
+```javascript:title=gatsby-config.js
+module.exports = {
+	siteMetadata: {
+		title: `GatsbyJS`,
+		// highlight-next-line
+		siteUrl: `https://www.gatsbyjs.org`,
+	},
+}
+```
+````
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: `GatsbyJS`,
+    // highlight-next-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
+}
+```
+
+##### `highlight-start` & `highlight-end`: highlights a range
+
+````
+```javascript:title=gatsby-config.js
+module.exports = {
+	// highlight-start
+	siteMetadata: {
+		title: `GatsbyJS`,
+		siteUrl: `https://www.gatsbyjs.org`,
+	},
+	// highlight-end
+}
+```
+````
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  // highlight-start
+  siteMetadata: {
+    title: `GatsbyJS`,
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
+  // highlight-end
+}
 ```
 
 ### Capitalize proper nouns
