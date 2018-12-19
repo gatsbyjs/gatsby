@@ -12,7 +12,7 @@ import React from "react"
 export default () => <div>Hello world!</div>
 ```
 
-This gatsby page is a React component. When you want to create a form, you need to store the state of the form - what the user has entered. Convert your function (stateless) component to a class (stateful) component.
+This Gatsby page is a React component. When you want to create a form, you need to store the state of the form - what the user has entered. Convert your function (stateless) component to a class (stateful) component.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -41,7 +41,7 @@ export default class IndexPage extends React.Component {
 }
 ```
 
-And now we can add a few input fields
+And now you can add a few input fields:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -107,7 +107,7 @@ export default class IndexPage extends React.Component {
 }
 ```
 
-Now that our inputs are working, we want something to happen when we submit the form. Add `onSubmit` props to the form element and add `handleSubmit` to show an alert when the user submits the form:
+Now that your inputs are working, you want something to happen when you submit the form. Add `onSubmit` props to the form element and add `handleSubmit` to show an alert when the user submits the form:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
