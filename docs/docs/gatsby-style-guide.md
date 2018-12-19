@@ -296,7 +296,9 @@ designed for scientific communication but might help avoid overspecialized
 wording.
 
 ## Best practices
+
 ### Support software versions
+
 When Gatsby commits to support a specific version of software (e.g. Node 6 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced command or practice as side notes.
 
 For example, npm 5.2.0 (which comes with Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, documentation should only introduce `npx` as an optional command in a note like so:
@@ -304,9 +306,11 @@ For example, npm 5.2.0 (which comes with Node 8) introduced a command called `np
 > npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby supports Node 6 and up, so we introduce `npx` here as an optional command for users of npm 5.2.0 or greater.
 
 ### Share best practices whenever possible
+
 When there are multiple ways to complete a task, the docs should explain the following:
+
 1. The most fundamental way of completing the task
-2. The most common way of completing a task 
+2. The most common way of completing a task
 3. The best way to complete the task on the lowest supported versions of software
 4. The best practice and why is it the best (if different than 3)
 5. Any tips on how to pick an option
@@ -320,6 +324,7 @@ The main tutorial at `/tutorial/` is optimized for users who are not experts in 
 ## Tutorial
 
 ### Tutorial audience
+
 Through research, it's clear that developers of all skill levels read the tutorial and go back to reference it later.
 
 The tutorial should prioritize helping users with the following attributes and goals.
@@ -337,6 +342,7 @@ Looking for:
 - a way to start a site and/or app project that uses React
 
 ### Tutorial purpose
+
 By following the steps in the tutorial, a user should:
 
 - Experience the value of Gatsby as quickly as possible. With Gatsby, a user typically values that it takes fewer steps (and is therefore easier) to:
