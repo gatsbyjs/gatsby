@@ -164,26 +164,21 @@ export default class FilteredStarterLibrary extends Component {
               edges={starters}
               what="size"
             />
-            <div css={{ marginLeft: `auto` }}>
-              <label
-                css={{
-                  display: `none`,
-                  [presets.Desktop]: {
-                    color: colors.gatsby,
-                    border: 0,
-                    borderRadius: presets.radiusLg,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
-                    width: rhythm(5),
-                  },
-                }}
-                onClick={toggleSort}
-              >
-                <MdSort css={{ marginRight: 8 }} />
-                {urlState.sort === `recent` ? `Most recent` : `Most stars`}
-              </label>
+            <div
+              className="wrapper"
+              css={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                marginBottom: `.4rem`,
+                minWidth: `270px`,
+                width: `100%`,
+                [presets.Phablet]: {
+                  justifyContent: `flex-end`,
+                  marginBottom: `0rem`,
+                  width: `50%`,
+                },
+              }}
+            >
               <label css={{ position: `relative` }}>
                 <DebounceInput
                   css={{
@@ -191,6 +186,7 @@ export default class FilteredStarterLibrary extends Component {
                     borderRadius: presets.radiusLg,
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
+                    marginTop: rhythm(1 / 8),
                     paddingTop: rhythm(1 / 8),
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
@@ -212,32 +208,32 @@ export default class FilteredStarterLibrary extends Component {
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
-                <Button
-                  to="https://gatsbyjs.org/docs/submit-to-starter-library/"
-                  tag="href"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  small
-                  icon={<ArrowForwardIcon />}
-                  overrideCSS={{
-                    marginLeft: 10,
-                  }}
-                >
-                  Submit a Starter
-                </Button>
                 <SearchIcon
                   overrideCSS={{
                     fill: colors.lilac,
-                    position: `absolute`,
-                    left: `5px`,
-                    top: `50%`,
-                    width: `16px`,
                     height: `16px`,
+                    left: `5px`,
                     pointerEvents: `none`,
+                    position: `absolute`,
+                    top: `50%`,
                     transform: `translateY(-50%)`,
+                    width: `16px`,
                   }}
                 />
               </label>
+              <Button
+                to="https://gatsbyjs.org/docs/submit-to-starter-library/"
+                tag="href"
+                target="_blank"
+                rel="noopener noreferrer"
+                small
+                icon={<ArrowForwardIcon />}
+                overrideCSS={{
+                  marginLeft: 10,
+                }}
+              >
+                Submit a Starter
+              </Button>
             </div>
           </ContentHeader>
           <StarterList

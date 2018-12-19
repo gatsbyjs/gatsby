@@ -245,11 +245,17 @@ const styles = {
     borderBottom: `1px solid ${colors.ui.light}`,
     display: `flex`,
     flexDirection: `row`,
-    height: presets.headerHeight,
+    flexWrap: `wrap`,
+    height: `6rem`,
     justifyContent: `space-between`,
     paddingLeft: `${rhythm(3 / 4)}`,
     paddingRight: `${rhythm(3 / 4)}`,
+    paddingTop: `${rhythm(3 / 4)}`,
     zIndex: 1,
+    [presets.Phablet]: {
+      height: presets.headerHeight,
+      paddingTop: `0px`,
+    },
   },
   contentTitle: {
     color: colors.gatsby,
