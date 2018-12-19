@@ -51,7 +51,6 @@ aliases:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
