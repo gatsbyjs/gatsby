@@ -37,8 +37,9 @@ module.exports = async (
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env =
-      process.env.ACTIVE_ENV || process.env.NODE_ENV || `${defaultNodeEnv}`
+    const env = [`ACTIVE_ENV`, `NODE_ENV`, `${defaultNodeEnv}`]
+      .map(key => process.env[key])
+      .find(value => typeof value === `string`)
     const envFile = path.join(process.cwd(), `./.env.${env}`)
     let parsed = {}
     try {
