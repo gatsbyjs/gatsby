@@ -5797,6 +5797,15 @@ css-select@^1.1.0, css-select@~1.2.0:
     domutils "1.5.1"
     nth-check "~1.0.1"
 
+css-select@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/css-select/-/css-select-2.0.0.tgz#7aa2921392114831f68db175c0b6a555df74bbd5"
+  dependencies:
+    boolbase "^1.0.0"
+    css-what "2.1"
+    domutils "^1.7.0"
+    nth-check "^1.0.1"
+
 css-select@~1.3.0-rc0:
   version "1.3.0-rc0"
   resolved "https://registry.yarnpkg.com/css-select/-/css-select-1.3.0-rc0.tgz#6f93196aaae737666ea1036a8cb14a8fcb7a9231"
@@ -5820,6 +5829,13 @@ css-selector-tokenizer@^0.7.0:
     cssesc "^0.1.0"
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
+
+css-tree@1.0.0-alpha.28:
+  version "1.0.0-alpha.28"
+  resolved "https://registry.yarnpkg.com/css-tree/-/css-tree-1.0.0-alpha.28.tgz#8e8968190d886c9477bc8d61e96f61af3f7ffa7f"
+  dependencies:
+    mdn-data "~1.1.0"
+    source-map "^0.5.3"
 
 css-tree@1.0.0-alpha.29:
   version "1.0.0-alpha.29"
@@ -6770,7 +6786,7 @@ domutils@1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
-domutils@^1.5.1:
+domutils@^1.5.1, domutils@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.7.0.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"
   integrity sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==
@@ -18180,6 +18196,25 @@ svgo@^1.0.0:
     css-url-regex "^1.1.0"
     csso "^3.5.0"
     js-yaml "~3.10.0"
+    mkdirp "~0.5.1"
+    object.values "^1.0.4"
+    sax "~1.2.4"
+    stable "~0.1.6"
+    unquote "~1.1.1"
+    util.promisify "~1.0.0"
+
+svgo@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/svgo/-/svgo-1.1.1.tgz#12384b03335bcecd85cfa5f4e3375fed671cb985"
+  dependencies:
+    coa "~2.0.1"
+    colors "~1.1.2"
+    css-select "^2.0.0"
+    css-select-base-adapter "~0.1.0"
+    css-tree "1.0.0-alpha.28"
+    css-url-regex "^1.1.0"
+    csso "^3.5.0"
+    js-yaml "^3.12.0"
     mkdirp "~0.5.1"
     object.values "^1.0.4"
     sax "~1.2.4"
