@@ -245,7 +245,7 @@ const extractFieldExamples = (
   for (let key of allKeys) {
     if (ignoreFields.includes(key)) continue
     // Unfortunately an empty string as an Object key is perfectly valid JavaScript
-    // We ignore these because our schema generation requires keys to have names
+    // We ignore these because GraphQL requires keys to have names
     if (key === ``) continue
     const nextSelector = selector ? `${selector}.${key}` : key
 
