@@ -13,6 +13,7 @@ const _ = require(`lodash`)
 
 const queue = require(`./query-queue`)
 const { store, emitter } = require(`../../redux`)
+const asyncResolvers = require(`../../schema/async-resolvers`)
 
 let queuedDirtyActions = []
 let active = false
@@ -52,8 +53,11 @@ const runQueries = async () => {
 
   runQueriesForPathnamesQueue.clear()
 
+  asyncResolvers.initPool()
+
   // Run these paths
   await runQueriesForPathnames(pathnamesToRun)
+//  asyncResolvers.endPool()
   return
 }
 
