@@ -158,7 +158,7 @@ jobs:
   variables:
     executor: node
     steps:
-      - run: echo $GITHUB_TOKEN
+      - run: echo $GITHUB_API_TOKEN
 
 workflows:
   version: 2
