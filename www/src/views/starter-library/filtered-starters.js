@@ -155,7 +155,16 @@ export default class FilteredStarterLibrary extends Component {
           </SidebarBody>
         </SidebarContainer>
         <ContentContainer>
-          <ContentHeader>
+          <ContentHeader
+            cssOverrides={{
+              height: `6rem`,
+              paddingTop: `${rhythm(3 / 4)}`,
+              [presets.Phablet]: {
+                height: presets.headerHeight,
+                paddingTop: `0px`,
+              },
+            }}
+          >
             <ContentTitle
               search={urlState.s}
               filters={filters}
@@ -170,7 +179,6 @@ export default class FilteredStarterLibrary extends Component {
                 display: `flex`,
                 justifyContent: `space-between`,
                 marginBottom: `.4rem`,
-                minWidth: `270px`,
                 width: `100%`,
                 [presets.Phablet]: {
                   justifyContent: `flex-end`,
