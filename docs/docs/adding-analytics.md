@@ -30,9 +30,9 @@ You can find this tracking ID later by going to `Admin > Tracking Info > Trackin
 
 Now, it's time to configure Gatsby to send page views to your Google Analytics account.
 
-We are going to use `gatsby-plugin-google-analytics`. For other analytics options (including Google Analytics gtag.js ang Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
+We are going to use `gatsby-plugin-google-analytics`. For other analytics options (including Google Analytics gtag.js and Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
 
-```bash
+```shell
 npm install --save gatsby-plugin-google-analytics
 ```
 
@@ -62,3 +62,4 @@ Once this is configured you can deploy your site to test! If you navigate to the
 - [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
 - [Fathom](/packages/gatsby-plugin-fathom/)
 - [Baidu](/packages/gatsby-plugin-baidu-analytics/)
+- [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo/)

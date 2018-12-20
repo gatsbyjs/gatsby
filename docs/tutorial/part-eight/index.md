@@ -31,7 +31,7 @@ First you need to create a production build of your Gatsby site. The Gatsby deve
 
 1.  Stop the development server (if it's still running) and run:
 
-```bash
+```shell
 gatsby build
 ```
 
@@ -39,7 +39,7 @@ gatsby build
 
 2.  View the production site locally. Run:
 
-```bash
+```shell
 gatsby serve
 ```
 
@@ -81,7 +81,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 1.  Install the plugin:
 
-```bash
+```shell
 npm install --save gatsby-plugin-manifest
 ```
 
@@ -98,7 +98,9 @@ npm install --save gatsby-plugin-manifest
         start_url: "/",
         background_color: "#6b37bf",
         theme_color: "#6b37bf",
-        display: "minimal-ui",
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: "standalone",
         icon: "src/images/icon.png", // This path is relative to the root of the site.
       },
     },
@@ -118,7 +120,7 @@ Another requirement for a website to qualify as a PWA is the use of a [service w
 
 1.  Install the plugin:
 
-```bash
+```shell
 npm install --save gatsby-plugin-offline
 ```
 
@@ -154,7 +156,7 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 1.  Install both packages:
 
-```bash
+```shell
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
@@ -168,7 +170,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 3.  Use `React Helmet` in your pages:
 
-```jsx{8-12}
+```jsx
 import React from "react"
 import { Helmet } from "react-helmet"
 
@@ -176,12 +178,14 @@ class Application extends React.Component {
   render() {
     return (
       <div className="application">
+        {/* highlight-start */}
         <Helmet>
           <meta charSet="utf-8" />
           <title>My Title</title>
           <link rel="canonical" href="http://mysite.com/example" />
         </Helmet>
         ...
+        {/* highlight-end */}
       </div>
     )
   }
