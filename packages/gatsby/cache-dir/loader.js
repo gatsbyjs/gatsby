@@ -412,9 +412,11 @@ const queue = {
 
 export const postInitialRenderWork = () => {
   inInitialRender = false
-  // We got all resources needed for first mount,
-  // we can fetch resoures for all pages.
-  fetchPageResourceMap()
+  if (process.env.NODE_ENV === `production`) {
+    // We got all resources needed for first mount,
+    // we can fetch resoures for all pages.
+    fetchPageResourceMap()
+  }
 }
 
 export const setApiRunnerForLoader = runner => {
