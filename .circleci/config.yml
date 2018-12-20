@@ -155,7 +155,13 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/gatsby-image
 
-  e2e_tests_runtime:
+  e2e_tests_development_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+
+  e2e_tests_production_runtime:
     <<: *e2e-executor
     steps:
       - e2e-test:
@@ -200,7 +206,9 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
           <<: *e2e-test-workflow
-      - e2e_tests_runtime:
+      - e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
       - starters_publish:
           filters:
