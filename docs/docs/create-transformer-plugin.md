@@ -14,31 +14,87 @@ This doc is concerned with transformer plugins.
 
 ## Transformer plugin example
 
-The [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) plugin
-"transforms" markdown nodes (fetched for example from the filesystem source plugin) into html and provides additional node details such as for example the `timeToRead` the `tableOfContents` and the `excerpt`.
+The [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) plugin "transforms" markdown nodes (fetched for example from the filesystem source plugin) into html and provides additional node details such as for example the `timeToRead` the `tableOfContents` and the `excerpt`.
 
 ## What do transformer plugins do?
 
-Each transformer plugin is responsible for "enhancing" the existing source nodes they
-are provided to provide additional information. Therefore, you'll often use both source plugins and transformer plugins in your Gatsby sites.
+Each transformer plugin is responsible for "enhancing" the existing source nodes they are provided to provide additional information. Therefore, you'll often use both source plugins and transformer plugins in your Gatsby sites.
 
-This loose coupling between the data source and transformer plugins allow Gatsby
-site builders to quickly assemble complex data transformation pipelines with
+This loose coupling between the data source and transformer plugins allow Gatsby site builders to quickly assemble complex data transformation pipelines with
 little work.
 
 ## What does the code look like?
 
-Just like a source plugin, a transformer plugin is a normal NPM package. It has a `package.json` file with optional
-dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js
-APIs. Transformer plugins make use of the `setFieldsOnGraphQLNodeType` function and they commonly provide this functionality in the `extend-node-type` file.
+Just like a source plugin, a transformer plugin is a normal NPM package. It has a `package.json` file with optional dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js APIs.
 
-Your `gatsby-node.js` should look something like:
+As an example, let's take a look at `gatsby-transformer-yaml`. This transformer plugin looks for new nodes with a media type of text/yaml (e.g. a .yaml file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
 
-```javascript:title=gatsby-node.js
-exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
+Let's say we have an example YAML file that looks like this:
+
+```yaml:title=src/data/example.yml
+- id: Jane Doe
+  bio: Developer based in Somewhere, USA
+- id: John Smith
+  bio: Developer based in Maintown, USA
 ```
 
-Information on the purpose of this function can be found in the [API reference](/docs/node-apis/#setFieldsOnGraphQLNodeType).
+First, we make sure the file is sourced, using `gatsby-source-filesystem` in `gatsby-config.js`:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`,
+      },
+    },
+  ],
+}
+```
+
+Now if we query `allFile`...
+
+```graphql
+query {
+  allFile {
+    edges {
+      node {
+        internal {
+          type
+          mediaType
+          description
+          owner
+        }
+      }
+    }
+  }
+}
+```
+
+... We see we have the sourced file.
+
+```json
+{
+  "data": {
+    "allFile": {
+      "edges": [
+        {
+          "node": {
+            "internal": {
+              "contentDigest": "c1644b03f380bc5508456ce91faf0c08",
+              "type": "File",
+              "mediaType": "text/yaml",
+              "description": "File \"src/data/example.yml\"",
+              "owner": "gatsby-source-filesystem"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
 
 ## Using the cache
 
