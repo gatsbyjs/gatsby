@@ -27,16 +27,18 @@ little work.
 
 Just like a source plugin, a transformer plugin is a normal NPM package. It has a `package.json` file with optional dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js APIs.
 
-As an example, let's take a look at `gatsby-transformer-yaml`. This transformer plugin looks for new nodes with a media type of text/yaml (e.g. a .yaml file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
+`gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/yaml (e.g. a .yaml file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
 
-Let's say we have an example YAML file that looks like this:
+As an example, let's partially rebuild a simplified `gatsby-transformer-yaml` directly in an example site. Let's say we have a default gatsby starter site which includes a YAML file:
 
 ```yaml:title=src/data/example.yml
-- id: Jane Doe
+- name: Jane Doe
   bio: Developer based in Somewhere, USA
-- id: John Smith
+- name: John Smith
   bio: Developer based in Maintown, USA
 ```
+
+### Make sure the data is sourced
 
 First, we make sure the file is sourced, using `gatsby-source-filesystem` in `gatsby-config.js`:
 
@@ -95,6 +97,178 @@ query {
   }
 }
 ```
+
+### Transform nodes of type `text/yaml`
+
+Now we can transform the sourced data by hooking into the `onCreateNode` API in `gatsby-node.js`.
+
+If you're following along in an example project, install the following packages:
+
+```shell
+npm install --save js-yaml lodash
+```
+
+Now, in `gatsby-node.js`:
+
+```javascript:title=gatsby-node.js
+const jsYaml = require(`js-yaml`)
+
+async function onCreateNode({ node, loadNodeContent }) {
+  // only log for nodes of mediaType `text/yaml`
+  if (node.internal.mediaType !== `text/yaml`) {
+    return
+  }
+
+  const fileContent = await loadNodeContent(node)
+  const parsedContent = jsYaml.load(content)
+}
+
+exports.onCreateNode = onCreateNode
+```
+
+File content:
+
+```text
+- id: Jane Doe
+  bio: Developer based in Somewhere, USA
+- id: John Smith
+  bio: Developer based in Maintown, USA
+```
+
+Parsed YAML content:
+
+```javascript
+;[
+  {
+    id: "Jane Doe",
+    bio: "Developer based in Somewhere, USA",
+  },
+  {
+    id: "John Smith",
+    bio: "Developer based in Maintown, USA",
+  },
+]
+```
+
+Now we'll write a helper function to transform the parsed YAML content into new Gatsby nodes:
+
+```javascript
+function transformObject(obj, id, type) {
+  const yamlNode = {
+    ...obj,
+    id,
+    children: [],
+    parent: node.id,
+    internal: {
+      contentDigest: createContentDigest(obj),
+      type,
+    },
+  }
+  createNode(yamlNode)
+  createParentChildLink({ parent: node, child: yamlNode })
+}
+```
+
+Above, we create a `yamlNode` object with the form expected by the [`createNode` action](/docs/actions/#createNode).
+
+We then create a link between the parent node (file) and the child node (yaml content).
+
+In our updated `gatsby-node.js`, we'll then iterate through the parsed YAML content, using the helper function to transform each into a new node:
+
+```javascript:title=gatsby-node.js
+const jsYaml = require(`js-yaml`)
+const _ = require(`lodash`)
+
+async function onCreateNode({
+  node,
+  actions, // highlight-line
+  loadNodeContent,
+  createNodeId, // highlight-line
+  createContentDigest, // highlight-line
+}) {
+  // highlight-start
+  function transformObject(obj, id, type) {
+    const yamlNode = {
+      ...obj,
+      id,
+      children: [],
+      parent: node.id,
+      internal: {
+        contentDigest: createContentDigest(obj),
+        type,
+      },
+    }
+
+    createNode(yamlNode)
+    createParentChildLink({ parent: node, child: yamlNode })
+  }
+  // highlight-end
+
+  const { createNode, createParentChildLink } = actions
+
+  if (node.internal.mediaType !== `text/yaml`) {
+    return
+  }
+
+  const content = await loadNodeContent(node)
+  const parsedContent = jsYaml.load(content)
+
+  // highlight-start
+  parsedContent.forEach((obj, i) => {
+    transformObject(
+      obj,
+      obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
+      _.upperFirst(_.camelCase(`${node.name} Yaml`))
+    )
+  })
+  // highlight-end
+}
+
+exports.onCreateNode = onCreateNode
+```
+
+Now we can query for our new nodes containing our transformed YAML data:
+
+```graphql
+query {
+  allExampleYaml {
+    edges {
+      node {
+        id
+        name
+        bio
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "data": {
+    "allExampleYaml": {
+      "edges": [
+        {
+          "node": {
+            "id": "3baa5e64-ac2a-5234-ba35-7af86746713f",
+            "name": "Jane Doe",
+            "bio": "Developer based in Somewhere, USA"
+          }
+        },
+        {
+          "node": {
+            "id": "2c733815-c342-5d85-aa3f-6795d0f25909",
+            "name": "John Smith",
+            "bio": "Developer based in Maintown, USA"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+Check out the [full source code](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-yaml/src/gatsby-node.js) of `gatsby-transformer-yaml`.
 
 ## Using the cache
 
