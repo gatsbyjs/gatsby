@@ -24,6 +24,7 @@
     "jest": true
   },
   "globals": {
+    "before": true,
     "spyOn": true,
     "__PATH_PREFIX__": true
   },
