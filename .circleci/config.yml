@@ -168,7 +168,6 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: ./scripts/assert-changed-files.sh "starters/*"
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
