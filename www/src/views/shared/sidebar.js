@@ -26,8 +26,10 @@ export const ContentContainer = ({ children }) => (
   <div css={{ width: `100%` }}>{children}</div>
 )
 
-export const ContentHeader = ({ children }) => (
-  <div css={{ ...styles.contentHeader, ...styles.sticky }}>{children}</div>
+export const ContentHeader = ({ children, cssOverrides = {} }) => (
+  <div css={{ ...styles.contentHeader, ...styles.sticky, ...cssOverrides }}>
+    {children}
+  </div>
 )
 
 export const ContentTitle = ({

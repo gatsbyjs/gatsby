@@ -432,7 +432,7 @@ that Gatsby delivers the HTML page at `/admin`.
 
 ```jsx
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 const AdminPage = () => (
   <div className="admin">
