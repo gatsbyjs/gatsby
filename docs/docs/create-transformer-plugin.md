@@ -12,16 +12,15 @@ and "transformer" plugins.
 
 This doc is concerned with transformer plugins.
 
+## What do transformer plugins do?
+
+Transformer plugins "transform" data of one type into another type. You'll often use both source plugins and transformer plugins in your Gatsby sites.
+
+This loose coupling between the data source and transformer plugins allow Gatsby site builders to quickly assemble complex data transformation pipelines with little work.
+
 ## Transformer plugin example
 
 The [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) plugin "transforms" markdown nodes (fetched for example from the filesystem source plugin) into html and provides additional node details such as for example the `timeToRead` the `tableOfContents` and the `excerpt`.
-
-## What do transformer plugins do?
-
-Each transformer plugin is responsible for "enhancing" the existing source nodes they are provided to provide additional information. Therefore, you'll often use both source plugins and transformer plugins in your Gatsby sites.
-
-This loose coupling between the data source and transformer plugins allow Gatsby site builders to quickly assemble complex data transformation pipelines with
-little work.
 
 ## What does the code look like?
 
