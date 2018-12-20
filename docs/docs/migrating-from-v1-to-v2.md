@@ -215,7 +215,7 @@ Replacing a layout's query with `StaticQuery`:
 
 ```diff:title=src/components/layout.js
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
 
 - export default ({ children, data }) => (
