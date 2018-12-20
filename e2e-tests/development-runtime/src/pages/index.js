@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link, graphql } from 'gatsby'
+import React from "react"
+import { Link, graphql } from "gatsby"
 
-import ClassComponent from '../components/class-component'
-import Layout from '../components/layout'
-import Image from '../components/image'
-import SEO from '../components/seo'
-import InstrumentPage from '../utils/instrument-page'
+import ClassComponent from "../components/class-component"
+import Layout from "../components/layout"
+import Image from "../components/image"
+import SEO from "../components/seo"
+import InstrumentPage from "../utils/instrument-page"
 
 const IndexPage = ({ data }) => (
   <Layout>

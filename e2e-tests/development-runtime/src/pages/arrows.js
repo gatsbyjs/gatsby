@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react"
 
-import Layout from '../components/layout'
-import Title from '../components/title'
-import Subtitle from '../components/sub-title'
+import Layout from "../components/layout"
+import Title from "../components/title"
+import Subtitle from "../components/sub-title"
 
 function Arrows() {
   return (
