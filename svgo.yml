@@ -1,0 +1,8 @@
+plugins:
+  - collapseGroups: true
+  - removeDesc: true
+  - removeScriptElement: true
+  - removeStyleElement: true
+  - removeTitle: true
+  - removeUselessDefs: true
+  - removeViewBox: false

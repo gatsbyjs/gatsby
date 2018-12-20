@@ -33,7 +33,7 @@ For example, `gatsby-transformer-json` is a package which adds support for JSON 
 
 To install it, in the root of your site you run:
 
-```bash
+```shell
 npm install --save gatsby-transformer-json
 ```
 
@@ -84,7 +84,7 @@ Note that plugin options will be stringified by Gatsby, so they cannot be functi
 
 Gatsby can also load plugins from the your local website plugins folder which is a folder named `plugins` in the website's root directory.
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-local-plugin`],
 }
@@ -92,7 +92,7 @@ module.exports = {
 
 If you want to reference a plugin that is not in the plugins folder then you could use something like the following:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     // Shortcut for adding plugins without options.

@@ -23,12 +23,14 @@
     "husky": "1.1.1",
     "jest": "^23.5.0",
     "jest-cli": "^23.5.0",
+    "jest-junit": "^5.0.0",
     "lerna": "^3.3.0",
     "lint-staged": "^8.0.4",
-    "npm-run-all": "4.1.2",
+    "npm-run-all": "4.1.5",
     "plop": "^1.8.1",
     "prettier": "^1.15.2",
     "rimraf": "^2.6.1",
+    "svgo": "^1.1.1",
     "yargs": "^10.0.3"
   },
   "engines": {
@@ -61,6 +63,7 @@
     "format": "npm run format:code && npm run format:other",
     "format:other": "npm run prettier -- --write",
     "format:code": "npm run lint:code -- --fix",
+    "format-svg": "find www examples packages | grep '\\.svg$' | xargs -Iz -n 1 svgo --pretty --indent=2 --config=svgo.yml z",
     "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
     "hooks:install": "node node_modules/husky/husky.js install",
     "jest": "jest",

@@ -11,7 +11,6 @@ import {
   RouteUpdates,
 } from "./navigation"
 import emitter from "./emitter"
-window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader, { setApiRunnerForLoader } from "./loader"

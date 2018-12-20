@@ -601,6 +601,7 @@ actions.createNode = (
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
+      oldNode,
       ...actionOptions,
       payload: node,
     }

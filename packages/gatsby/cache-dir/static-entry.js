@@ -277,10 +277,10 @@ export default (pagePath, callback) => {
     }.json`
     headComponents.push(
       <link
+        as="fetch"
         rel="preload"
         key={dataPath}
         href={dataPath}
-        as="fetch"
         crossOrigin="use-credentials"
       />
     )
@@ -351,15 +351,13 @@ export default (pagePath, callback) => {
 
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
-  const bodyScripts = scripts
-    .filter(s => s.rel !== `prefetch`)
-    .map(s => {
-      const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-        1,
-        -1
-      )}`
-      return <script key={scriptPath} src={scriptPath} async />
-    })
+  const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
+    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+      1,
+      -1
+    )}`
+    return <script key={scriptPath} src={scriptPath} async />
+  })
 
   postBodyComponents.push(...bodyScripts)
 
