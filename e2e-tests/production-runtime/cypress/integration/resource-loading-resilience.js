@@ -6,7 +6,7 @@ Cypress.on(`uncaught:exception`, (err, runnable) => {
 })
 
 const waitForAPIOptions = {
-  timeout: 5000,
+  timeout: 3000,
 }
 
 const runTests = () => {
