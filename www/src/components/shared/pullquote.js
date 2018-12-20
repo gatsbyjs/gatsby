@@ -37,6 +37,14 @@ const PullquoteRoot = styled(`blockquote`)`
   }
 `
 
+const Citation = styled(`cite`)`
+  display: block;
+  font-style: italic;
+  font-weight: normal;
+  margin-top: 1rem;
+  text-align: right;
+`
+
 const QuotationMark = styled(`span`)`
   display: flex;
   left: 2.5rem;
@@ -155,13 +163,14 @@ const Star = styled(`span`)`
 const variants = [`A`, `B`, `C`]
 let instancesCounter = -1
 
-const Pullquote = ({ children }) => {
+const Pullquote = ({ citation, children }) => {
   instancesCounter += 1
   const className = `variant${variants[instancesCounter % variants.length]}`
 
   return (
     <PullquoteRoot className={className}>
       {children}
+      {citation && <Citation>&mdash; {citation}</Citation>}
       <QuotationMark
         dangerouslySetInnerHTML={{ __html: QuotationMarkOrnament }}
       />

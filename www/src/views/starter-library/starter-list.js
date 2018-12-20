@@ -60,6 +60,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             githubFullName,
             lastUpdated,
             owner,
+            slug,
             stars,
             stub,
           } = starter.fields.starterShowcase
@@ -75,7 +76,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 }}
               >
                 <ThumbnailLink
-                  slug={`/starters/${stub}`}
+                  slug={`/starters${slug}`}
                   image={starter.childScreenshot}
                   title={starter.name}
                 />
