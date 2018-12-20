@@ -1,4 +1,4 @@
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 exports.onRenderBody = (
   { setHeadComponents, setHtmlAttributes, setBodyAttributes },
