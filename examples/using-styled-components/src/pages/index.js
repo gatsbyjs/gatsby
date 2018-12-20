@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import styled, { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
