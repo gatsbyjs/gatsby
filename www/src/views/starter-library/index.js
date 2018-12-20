@@ -20,8 +20,8 @@ class StarterLibraryPage extends Component {
       urlState.s !== undefined
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `Library` // if no search term or single dependency
+        ? urlState.d // if theres a single dependency
+        : `Library` // if no search term or single dependency
 
     return (
       <Layout location={location}>

@@ -53,8 +53,8 @@ const defaultNodeFields = {
 function groupChildNodesByType(nodes) {
   return _(nodes)
     .flatMap(node => node.children.map(getNode))
-    .groupBy(
-      node => (node.internal ? _.camelCase(node.internal.type) : undefined)
+    .groupBy(node =>
+      node.internal ? _.camelCase(node.internal.type) : undefined
     )
     .value()
 }

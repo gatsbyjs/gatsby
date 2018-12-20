@@ -147,16 +147,20 @@ The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](
 Then, at the [end of the body](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L331), we include the actual script tag that references the preloaded asset.
 
 ```html
-<script key="app-2e49587d85e03a033f58.js"
-        src="app-2e49587d85e03a033f58.js"
-        async />
+<script
+  key="app-2e49587d85e03a033f58.js"
+  src="app-2e49587d85e03a033f58.js"
+  async
+/>
 ```
 
 If the asset is CSS, we [inject it inline in the head](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L302).
 
 ```html
-<style data-href="/1.93002d5bafe5ca491b1a.css"
-       dangerouslySetInnerHTML="...contents of public/1.93002d5bafe5ca491b1a.css" />
+<style
+  data-href="/1.93002d5bafe5ca491b1a.css"
+  dangerouslySetInnerHTML="...contents of public/1.93002d5bafe5ca491b1a.css"
+/>
 ```
 
 ##### Prefetching chunks
