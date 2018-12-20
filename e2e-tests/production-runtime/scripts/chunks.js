@@ -10,14 +10,13 @@ const getAssetManifest = () => {
 const getPagesManifest = () => {
   const { pages, dataPaths } = require(`../.cache/data.json`)
 
-  const result = {}
-  pages.forEach(page => {
+  return pages.reduce((result, page) => {
     result[page.path] = {
       componentChunkName: page.componentChunkName,
       queryResult: dataPaths[page.jsonName],
     }
-  })
-  return result
+    return result
+  }, {})
 }
 
 const getAssetPath = assetFileName =>
