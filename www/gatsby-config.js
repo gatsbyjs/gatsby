@@ -85,6 +85,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
+    `gatsby-plugin-layout`,
     `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
