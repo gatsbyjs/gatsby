@@ -1,5 +1,5 @@
-import React from "react"
 import { graphql } from "gatsby"
+import React from "react"
 
 import { rhythm, scale, options } from "../utils/typography"
 
@@ -123,11 +123,11 @@ export default ({ functions }) => (
               <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
               {` `}
               {node.examples.map((example, i) => (
-                <div className="gatsby-highlight">
-                  <pre
-                    className="language-javascript"
-                    key={`${node.name} example ${i}`}
-                  >
+                <div
+                  className="gatsby-highlight"
+                  key={`${node.name} example ${i}`}
+                >
+                  <pre className="language-javascript">
                     <code
                       className="language-javascript"
                       dangerouslySetInnerHTML={{

@@ -57,7 +57,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema given an html format, it correctly maps nested markdown to html 1`] = `
 Object {
-  "excerpt": "<p>Where oh <a><em>where</em></a> <strong><em>is</em></strong> that pony?</p>",
+  "excerpt": "<p>Where oh <a href=\\"nick.com\\"><em>where</em></a> <strong><em>is</em></strong> <img src=\\"pony.png\\" alt=\\"that pony\\">?</p>",
   "frontmatter": Object {
     "title": "my little pony",
   },

@@ -20,7 +20,10 @@ const { nodeInterface } = require(`./node-interface`)
 const { getNodes, getNode } = require(`../db/nodes`)
 const pageDependencyResolver = require(`./page-dependency-resolver`)
 const { setFileNodeRootType } = require(`./types/type-file`)
-const { clearTypeExampleValues } = require(`./data-tree-utils`)
+const {
+  getExampleValues,
+  clearTypeExampleValues,
+} = require(`./data-tree-utils`)
 const { run: runQuery } = require(`../db/nodes-query`)
 const lazyFields = require(`./lazy-fields`)
 
@@ -200,9 +203,16 @@ async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
     processedTypes,
   })
 
+  const exampleValue = getExampleValues({
+    nodes,
+    typeName,
+    ignoreFields: Object.keys(mergedFieldsFromPlugins),
+  })
+
   const nodeInputFields = inferInputObjectStructureFromNodes({
     nodes,
     typeName,
+    exampleValue,
   })
 
   const filterFields = _.merge(

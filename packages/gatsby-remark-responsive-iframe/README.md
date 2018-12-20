@@ -34,4 +34,4 @@ Example usage:
 
     This is a beautiful iframe:
 
-    <iframe url="http://www.example.com/" width="600" height="400"></iframe>
+    <iframe src="http://www.example.com/" width="600" height="400"></iframe>

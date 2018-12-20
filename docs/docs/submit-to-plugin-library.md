@@ -10,7 +10,7 @@ After doing so, Algolia will take up to 12 hours to add it to the library search
 
 **NOTE:** You can include other _relevant_ keywords to your `package.json` file to help interested users in finding it. As an example, a Markdown MathJax transformer would include:
 
-```
+```json:title=package.json
 "keywords": [
   "gatsby",
   "gatsby-plugin",

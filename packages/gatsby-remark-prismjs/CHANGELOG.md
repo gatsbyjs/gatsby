@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.1.4"></a>
+
+## [3.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.3...gatsby-remark-prismjs@3.1.4) (2018-12-06)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+<a name="3.1.3"></a>
+
+## [3.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.2...gatsby-remark-prismjs@3.1.3) (2018-12-03)
+
+### Features
+
+- **gatsby-remark-prismjs:** Allow global line number config ([#10076](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/10076)) ([2efec7a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/2efec7a))
+
+<a name="3.1.2"></a>
+
+## [3.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.1...gatsby-remark-prismjs@3.1.2) (2018-11-30)
+
+### Bug Fixes
+
+- **gatsby-remark-prismjs:** prevent additional blank line from appearing ([#10209](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/10209)) ([71d7f23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/71d7f23))
+
 <a name="3.1.1"></a>
 
 ## [3.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.0...gatsby-remark-prismjs@3.1.1) (2018-11-29)

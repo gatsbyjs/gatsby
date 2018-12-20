@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 32">
-	<circle class="svg-fill-brightest" cx="15.4" cy="19.2" r="6.8"/>
-	<polygon fill="#fff" class="svg-stroke svg-stroke-accent" points="25.3,21.5 17.7,21.5 21.5,14.8 25.3,8.2 29.2,14.8 33,21.5 "/>
-	<path class="svg-fill-lilac" d="M15.5,13.4c3.4,0,6.1,2.7,6.1,6.1s-2.7,6.1-6.1,6.1s-6.1-2.7-6.1-6.1S12.1,13.4,15.5,13.4 M15.5,12
-		C11.4,12,8,15.4,8,19.5s3.4,7.5,7.5,7.5s7.5-3.4,7.5-7.5S19.6,12,15.5,12L15.5,12z"/>
-	<rect x="3.7" y="6.7" class="svg-fill-gradient-accent-white-top" width="10.6" height="10.6"/>
-	<path class="svg-fill-gatsby" d="M13.6,7.4v9.2H4.4V7.4H13.6 M15,6H3v12h12V6L15,6z"/>
+  <circle class="svg-fill-brightest" cx="15.4" cy="19.2" r="6.8"/>
+  <path fill="#fff" class="svg-stroke svg-stroke-accent" d="M25.3 21.5h-7.6l3.8-6.7 3.8-6.6 3.9 6.6 3.8 6.7z"/>
+  <path class="svg-fill-lilac" d="M15.5 13.4c3.4 0 6.1 2.7 6.1 6.1s-2.7 6.1-6.1 6.1-6.1-2.7-6.1-6.1 2.7-6.1 6.1-6.1m0-1.4C11.4 12 8 15.4 8 19.5s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5-3.4-7.5-7.5-7.5z"/>
+  <path class="svg-fill-gradient-accent-white-top" d="M3.7 6.7h10.6v10.6H3.7z"/>
+  <path class="svg-fill-gatsby" d="M13.6 7.4v9.2H4.4V7.4h9.2M15 6H3v12h12V6z"/>
 </svg>

@@ -26,7 +26,9 @@
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --browser chrome"
+    "cy:run": "npm run cy:run:normal && npm run cy:run:slow",
+    "cy:run:normal": "cypress run --browser chrome",
+    "cy:run:slow": "CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
   },
   "devDependencies": {
     "prettier": "^1.14.3",
