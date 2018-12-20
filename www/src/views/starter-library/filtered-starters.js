@@ -174,7 +174,6 @@ export default class FilteredStarterLibrary extends Component {
               what="size"
             />
             <div
-              className="wrapper"
               css={{
                 display: `flex`,
                 justifyContent: `space-between`,
