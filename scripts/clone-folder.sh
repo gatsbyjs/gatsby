@@ -9,7 +9,7 @@ for folder in $FOLDER/*; do
   NAME=$(cat $folder/package.json | jq -r '.name')
   CLONE_DIR="__${NAME}__clone__"
 
-  git clone --depth 1 https://$GITHUB_TOKEN@github.com/gatsbyjs/$NAME.git $CLONE_DIR
+  git clone --depth 1 https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git $CLONE_DIR
   cd $CLONE_DIR
   find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. . # copy all content
