@@ -43,7 +43,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   `
 
   const script = `
-    document.addEventListener("DOMContentLoaded", function(event) {
+    window.addEventListener("load", function(event) {
       var hash = window.decodeURI(location.hash.replace('#', ''))
       if (hash !== '') {
         var element = document.getElementById(hash)
