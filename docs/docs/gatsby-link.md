@@ -1,28 +1,14 @@
 ---
-title: Gatsby Link
+title: Gatsby Link & navigate
 ---
 
-A `<Link>` component for Gatsby.
+For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function.
 
-It's a wrapper around
-[@reach/router's Link component](https://reach.tech/router/api/Link)
-that adds enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
+These are what enable Gatsby's powerful per-route code splitting and page pre-loading. Preloading is triggered by a `<Link>` component entering the viewport-- normal HTML links will not be pre-loaded.
 
-You can set the `activeStyle` or `activeClassName` prop to add styling
-attributes to the rendered element when it matches the current URL.
+Gatsby's `<Link>` is a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link) that adds enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
 
-Gatsby does per-route code splitting. This means that when navigating to a new
-page, the code chunks necessary for that page might not be loaded. This is bad as
-any unnecessary latency when changing pages should be avoided. So to avoid that,
-Gatsby preloads code chunks and page data.
-
-Preloading is triggered by a link entering the viewport; Gatsby uses
-`Link`'s `innerRef` property to create a new IntersectionObserver (on
-supported browsers) to monitor visible links. This way, Gatsby only prefetches
-code/data chunks for pages the user is likely to navigate to. You can also get
-access to the link element by passing in a `innerRef` prop.
-
-## How to use
+## Using Link
 
 In JavaScript:
 
@@ -54,11 +40,33 @@ class Page extends React.Component {
 }
 ```
 
-## Replacing history entry
+## Using navigate()
+Sometimes you need to navigate to pages programatically:
 
-You can pass boolean `replace` property to replace previous history entry.
-Therefore clicking the back button after navigation to such Link would redirect
-to page before, _skipping_ the page the link was on.
+```jsx
+import { navigate } from "gatsby"
+
+render () {
+  return (
+    <div onClick={ () => navigate('/example')} role="link" tabIndex="0" onKeyUp={this.handleKeyUp}>
+      <p>Example</p>
+    </div>
+  )
+}
+```
+
+The `navigate` function accepts two parameters (see following sections):
+ * a string representing the destination
+ * optional settings object. The settings object can include two optional properties: `state (object)`, and `replace (bool, default false)`.
+
+Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2.
+
+## Pushing versus Replacing history entry
+By default, both `<Link>` and `navigate` will _push_ a new entry to the history stack.
+
+This can be changed by passing a `replace` prop to the Link component, or by passing `replace: true` to the `navigate` settings object. 
+
+When replace is enabled, clicking the browser back button will return the user to the page _preceeding the page from which they navigated_.
 
 ```jsx
 import { Link } from 'gatsby'
@@ -76,24 +84,6 @@ render () {
 ```
 
 Using `replace` also won't scroll the page after navigation.
-
-## Programmatic navigation
-
-For cases when you can only use event handlers for navigation, you can use `navigate`
-
-```jsx
-import { navigate } from "gatsby"
-
-render () {
-  return (
-    <div onClick={ () => navigate('/example')} role="link" tabIndex="0" onKeyUp={this.handleKeyUp}>
-      <p>Example</p>
-    </div>
-  )
-}
-```
-
-Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2.
 
 ## Passing state through Link and Navigate
 
@@ -127,6 +117,9 @@ componentDidMount() {
   })
 }
 ```
+## Styling
+You can set the `activeStyle` or `activeClassName` prop to add styling
+attributes to the rendered element when it matches the current URL.
 
 ## Prefixed paths helper
 
