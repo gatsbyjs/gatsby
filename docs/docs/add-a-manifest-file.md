@@ -37,6 +37,10 @@ npm install --save gatsby-plugin-manifest
         start_url: "/",
         background_color: "#6b37bf",
         theme_color: "#6b37bf",
+        // Optional: If is set to false then the meta theme-color won't be added to the head of the document
+        // Set it to false if you want to programmatically change color schemes
+        // See: https://developers.google.com/web/fundamentals/web-app-manifest/#theme-color
+        theme_color_in_head: true,
         // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
         display: "standalone",
