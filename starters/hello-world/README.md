@@ -83,8 +83,6 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 12. **`README.md`**: A text file containing useful reference information about your project.
 
-13. **`yarn.lock`**: [Yarn](https://yarnpkg.com/) is a package manager alternative to npm. You can use either yarn or npm, though all of the Gatsby docs reference npm. This file serves essentially the same purpose as `package-lock.json`, just for a different package management system.
-
 ## 🎓 Learning Gatsby
 
 Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
