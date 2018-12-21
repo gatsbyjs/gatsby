@@ -114,7 +114,7 @@ Copy the following into `gatsby-config.js`
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-typography`],
+  plugins: ['gatsby-plugin-typography'],
 }
 ```
 
@@ -174,7 +174,7 @@ in the middle of the page. To create this, add the following styles to the
 import React from "react"
 
 export default () => (
-  <div style={{ margin: `3rem auto`, maxWidth: 600 }}>
+  <div style={{ margin: '3rem auto', maxWidth: 600 }}>
     {" "}
     {/* highlight-line */}
     <h1>Richard Hamming on Luck</h1>
@@ -229,9 +229,9 @@ module.exports = {
   // highlight-start
   plugins: [
     {
-      resolve: `gatsby-plugin-typography`,
+      resolve: 'gatsby-plugin-typography',
       options: {
-        pathToConfigModule: `src/utils/typography.js`,
+        pathToConfigModule: 'src/utils/typography.js',
       },
     },
   ],
