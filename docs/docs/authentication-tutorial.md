@@ -342,7 +342,8 @@ const App = () => (
   <Layout>
     <Router>
       {/* highlight-next-line */}
-      <PrivateRoute path="/app/profile" component={Profile} /> <Login path="/app/login" />
+      <PrivateRoute path="/app/profile" component={Profile} />
+      <Login path="/app/login" />
     </Router>
   </Layout>
 )
