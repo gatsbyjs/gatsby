@@ -1,6 +1,5 @@
 const { schemaComposer } = require(`graphql-compose`)
 
-// const { store } = require(`../../redux`)
 const { getNodesByType } = require(`../db`)
 const { dropQueryOperators } = require(`../query`)
 const { isProductionBuild } = require(`../utils`)
@@ -9,68 +8,44 @@ const { trackObjects } = require(`../utils/node-tracking`)
 const cache = new Map()
 const nodeCache = new Map()
 
-// const getNullableType = type =>
-//   type instanceof GraphQLNonNull ? type.ofType : type
+// TODO: Filter sparse arrays?
+const resolveValue = (value, filterValue, fieldTC) =>
+  Array.isArray(value)
+    ? Promise.all(value.map(item => resolveValue(item, filterValue, fieldTC)))
+    : prepareForQuery(value, filterValue, fieldTC)
 
-// const getSingularType = type => {
-//   let t = type
-//   while (t instanceof GraphQLList) {
-//     t = t.ofType
-//   }
-//   return t
-// }
-
-const dropTypeModifiers = type => {
-  let t = type
-  while (t.ofType) {
-    t = t.ofType
-  }
-  return t
-}
-
-const prepareForQuery = (node, filter, gqFields) => {
-  // FIXME: Make this a .map() and resolve with Promise.all,
-  // since .reduce() must sequentially resolve `acc` before the next iteration
+const prepareForQuery = (node, filter, tc) => {
+  // FIXME: Make this a .map() instead of .reduce()
   const queryNode = Object.entries(filter).reduce(
-    async (acc, [filterName, filterValue]) => {
+    async (acc, [fieldName, filterValue]) => {
       const node = await acc
-      const gqField = gqFields[filterName]
-      const gqType = dropTypeModifiers(gqField.type) // TODO: should be two different steps for NonNull and List, so we can have the correct returnType
+      // FIXME: What is the expectation here if this is null?
+      // Continue and call the field resolver or not?
+      if (node[fieldName] == null) return node
 
-      if (typeof gqField.resolve === `function`) {
-        node[filterName] = await gqField.resolve(
+      const { resolve, type } = tc.getFieldConfig(fieldName)
+
+      if (typeof resolve === `function`) {
+        node[fieldName] = await resolve(
           node,
           {},
           {},
-          {
-            fieldName: gqField.name, // filterName,
-            parentType: ``, // TODO: Not important, but maybe return correct type
-            // returnType,
-          }
+          { fieldName, parentType: ``, returnType: type }
         )
       }
 
-      if (typeof filterValue === `object` && node[filterName] != null) {
-        const gqFields = gqType.getFields()
-        if (Array.isArray(node[filterName])) {
-          node[filterName] = await Promise.all(
-            node[filterName].map(item =>
-              prepareForQuery(item, filterValue, gqFields)
-            )
-          )
-          // .filter(n => n != null)
-        } else {
-          node[filterName] = await prepareForQuery(
-            node[filterName],
-            filterValue,
-            gqFields
-          )
-        }
+      // `dropQueryOperators` sets value to `true` for leaf values.
+      const isLeaf = filterValue === true
+      const value = node[fieldName]
+
+      if (!isLeaf && value != null) {
+        const fieldTC = tc.getFieldTC(fieldName)
+        node[fieldName] = await resolveValue(value, filterValue, fieldTC)
       }
 
       return node
     },
-    Promise.resolve(node)
+    { ...node }
   )
   return queryNode
 }
@@ -81,17 +56,16 @@ const getNodesForQuery = async (type, filter) => {
   if (!filter) return nodes
 
   const filterFields = dropQueryOperators(filter)
-  const cacheKey = JSON.stringify({ type, count: nodes.length, filterFields })
-  if (isProductionBuild && cache.has(cacheKey)) {
-    return cache.get(cacheKey)
+
+  let cacheKey
+  if (isProductionBuild) {
+    cacheKey = JSON.stringify({ type, count: nodes.length, filterFields })
+    if (cache.has(cacheKey)) {
+      return cache.get(cacheKey)
+    }
   }
 
-  // const { getType } = require(`../../redux`).store.getState().schema
-  // const gqFields = getType(type).getFields()
-  const gqFields = schemaComposer
-    .getTC(type)
-    .getType()
-    .getFields()
+  const tc = schemaComposer.getTC(type)
 
   const queryNodes = Promise.all(
     nodes.map(async node => {
@@ -104,7 +78,7 @@ const getNodesForQuery = async (type, filter) => {
         return nodeCache.get(cacheKey)
       }
 
-      const queryNode = prepareForQuery({ ...node }, filterFields, gqFields)
+      const queryNode = prepareForQuery(node, filterFields, tc)
 
       nodeCache.set(cacheKey, queryNode)
       trackObjects(await queryNode)
@@ -112,7 +86,10 @@ const getNodesForQuery = async (type, filter) => {
     })
   )
 
-  cache.set(cacheKey, queryNodes)
+  if (isProductionBuild) {
+    cache.set(cacheKey, queryNodes)
+  }
+
   return queryNodes
 }
 
