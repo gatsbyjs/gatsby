@@ -5,7 +5,7 @@ import domReady from "domready"
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
@@ -54,6 +54,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     let Root = preferDefault(require(`./root`))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
+        postInitialRenderWork()
         apiRunner(`onInitialClientRender`)
       })
     })

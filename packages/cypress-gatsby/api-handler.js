@@ -7,7 +7,7 @@ export function waitForAPI(api) {
   })
   awaitingAPI = api
 
-  if (this.___resolvedAPIs.includes(api)) {
+  if (this.___resolvedAPIs && this.___resolvedAPIs.includes(api)) {
     // If the API has been marked as pre-resolved,
     // resolve immediately and reset the variables.
     awaitingAPI = null
