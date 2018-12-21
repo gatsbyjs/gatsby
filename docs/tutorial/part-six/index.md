@@ -168,7 +168,12 @@ export const query = graphql`
 `
 ```
 
-Now the frontpage should look like:
+Notice in the above file that you are importing `css` from `@emotion/core`.  To make `emotion` available for import in your project, go to your terminal and execute the following command inside your project directory: 
+```
+npm install --save @emotion/core
+```
+
+Now, the frontpage should look like:
 
 ![frontpage](frontpage.png)
 
