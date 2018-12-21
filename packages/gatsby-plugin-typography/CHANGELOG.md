@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.2.3"></a>
+
+## [2.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.2...gatsby-plugin-typography@2.2.3) (2018-12-21)
+
+### Features
+
+- **gatsby-plugin-typography:** hot reloading for styles and Google Fonts ([#10545](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/issues/10545)) ([7fbbd60](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/commit/7fbbd60))
+
 <a name="2.2.2"></a>
 
 ## [2.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.1...gatsby-plugin-typography@2.2.2) (2018-11-29)
