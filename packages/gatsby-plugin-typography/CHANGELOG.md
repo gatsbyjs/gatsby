@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.2.4"></a>
+
+## [2.2.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.3...gatsby-plugin-typography@2.2.4) (2018-12-21)
+
+### Bug Fixes
+
+- support cjs modules when loading typography config ([#10610](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/issues/10610)) ([2f7303d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/commit/2f7303d))
+
 <a name="2.2.3"></a>
 
 ## [2.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.2...gatsby-plugin-typography@2.2.3) (2018-12-21)
