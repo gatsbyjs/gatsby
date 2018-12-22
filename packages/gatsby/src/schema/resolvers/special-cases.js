@@ -36,7 +36,7 @@ const withSpecialCases = ({ type, source, args, context, info }) => {
         const absolutePath = toAbsolutePath(
           args.filter.relativePath,
           source,
-          info.parentType.name === `Query`
+          info.parentType && info.parentType.name === `Query`
         )
         // TODO: Keep relativePath when !absolutePath?
         if (absolutePath) {

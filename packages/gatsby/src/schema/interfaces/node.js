@@ -24,6 +24,8 @@ const NodeInterfaceTC = InterfaceTypeComposer.create({
   resolveType: node => node.internal.type,
 })
 
+NodeInterfaceTC.getITC()
+
 const addNodeInterface = tc => {
   tc.addInterface(NodeInterfaceTC.getType())
   addNodeInterfaceFields(tc)

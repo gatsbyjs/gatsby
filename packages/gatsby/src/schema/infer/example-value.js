@@ -114,8 +114,6 @@ const getExampleObject = (nodes, prefix, ignoreFields = []) => {
 
     let exampleFieldValue
     if (isObject(value)) {
-      // FIXME: Do we actually have to pass on the unwrapped entries?
-      // Any performance benefit not to? (And just not rewrap further below)
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
         if (arrayWrappers) {

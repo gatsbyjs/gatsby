@@ -5,7 +5,6 @@ const getNodesForQuery = require(`./get-nodes-for-query`)
 const withPageDependencies = require(`./page-dependencies`)
 const withSpecialCases = require(`./special-cases`)
 
-// FIXME: Handle array of arrays
 const link = ({ by }) => resolve => (source, args, context, info) => {
   const fieldValue = source[info.fieldName]
 
@@ -18,19 +17,23 @@ const link = ({ by }) => resolve => (source, args, context, info) => {
   }
 
   if (by === `id`) {
-    return Array.isArray(fieldValue)
-      ? findByIds({ args: { ids: fieldValue } })
-      : findById({ args: { id: fieldValue } })
+    const [resolve, key] = Array.isArray(fieldValue)
+      ? [findByIds, `ids`]
+      : [findById, `id`]
+    return withPageDependencies(resolve)()({
+      source,
+      args: { [key]: fieldValue },
+      context,
+      info,
+    })
   }
 
   const operator = Array.isArray(fieldValue) ? oneOf : equals
-  args.filter = by.split(`.`).reduceRight(
-    /* eslint-disable-next-line arrow-body-style */
-    (acc, key, i, { length }) => ({
+  args.filter = by.split(`.`).reduceRight((acc, key, i, { length }) => {
+    return {
       [key]: i === length - 1 ? operator(acc) : acc,
-    }),
-    fieldValue
-  )
+    }
+  }, fieldValue)
   return resolve({ source, args, context, info })
 }
 
@@ -47,7 +50,7 @@ const findByIdsAndType = type => ({ args }, firstResultOnly) =>
         .map(getById)
         [firstResultOnly ? `find` : `filter`](
           node => node && node.internal.type === type
-        )
+        ) || null
     : firstResultOnly
       ? null
       : []
