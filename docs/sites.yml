@@ -3004,22 +3004,6 @@
   built_by: Ian Busko
   built_by_url: https://github.com/ianbusko
   featured: false
-- title: "LANDR"
-  url: https://www.landr.com/
-  main_url: https://www.landr.com/
-  description: >
-    LANDR is the place to create, master and sell your music.
-  categories:
-    - AI
-    - Business
-    - Entrepreneurship
-    - Freelance
-    - Marketing
-    - Media
-    - Music
-  built_by: LANDR
-  built_by_url: https://twitter.com/landr_music
-  featured: false
 - title: Got Milk
   main_url: "https://www.gotmilk.com/"
   url: "https://www.gotmilk.com/"
@@ -3746,14 +3730,20 @@
   description: >
     Source from The Movie Database (TMDb) API (v3) in Gatsby. This example is built with react-spring, React hooks and react-tabs and showcases the gatsby-source-tmdb plugin. It also has some client-only paths and uses gatsby-image.
 - title: LANDR - Creative Tools for Musicians
-  url: https://www.landr.com/en/
+  url: https://www.landr.com/
   main_url: https://www.landr.com/en/
   categories:
     - Music
     - Technology
+    - AI
+    - Business
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Media
   featured: false
   built_by: LANDR
-  built_by_url: "https://github.com/Mixgenius"
+  built_by_url: https://twitter.com/landr_music
   description: >
     Marketing website built for LANDR. LANDR is a web application that provides tools for musicians to master their music (using artificial intelligence), collaborate with other musicians, and distribute their music to multiple platforms.
 - title: ClinicJS
