@@ -503,7 +503,7 @@ function getValidRoutes({
 
     // A valid route exposes its _links (for now)
     if (route._links) {
-      const entityType = getRawEntityType(route)
+      const entityType = getRawEntityType(key)
 
       // Excluding the "technical" API Routes
       const excludedTypes = [
@@ -517,7 +517,8 @@ function getValidRoutes({
         `/jwt-auth/**`,
       ]
 
-      const routePath = getRoutePath(url, route._links.self)
+      const routePath = getRoutePath(url, key)
+
       const whiteList = _includedRoutes
       const blackList = [...excludedTypes, ..._excludedRoutes]
 
@@ -564,7 +565,7 @@ function getValidRoutes({
             )}_${entityType.replace(/-/g, `_`)}`
             break
         }
-        validRoutes.push({ url: route._links.self, type: validType })
+        validRoutes.push({ url: buildFullUrl(url, key), type: validType })
       } else {
         if (_verbose) {
           const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
@@ -591,23 +592,36 @@ function getValidRoutes({
 }
 
 /**
- * Extract the raw entity type from route
+ * Extract the raw entity type from fullPath
  *
- * @param {any} route
+ * @param {any} full path to extract raw entity from
  */
-const getRawEntityType = route =>
-  route._links.self.substring(
-    route._links.self.lastIndexOf(`/`) + 1,
-    route._links.self.length
-  )
+const getRawEntityType = fullPath =>
+  fullPath.substring(fullPath.lastIndexOf(`/`) + 1, fullPath.length)
 
 /**
  * Extract the route path for an endpoint
  *
  * @param {any} baseUrl The base site URL that should be removed
- * @param {any} fullUrl The full URL to retrieve the route path from
+ * @param {any} fullPath The full path to retrieve the route path from
  */
-const getRoutePath = (baseUrl, fullUrl) => fullUrl.replace(baseUrl, ``)
+const getRoutePath = (baseUrl, fullPath) => {
+  const baseUrlObj = new URL(baseUrl)
+  const basePath = baseUrlObj.pathname
+  return fullPath.replace(basePath, ``)
+}
+
+/**
+ * Build full URL from baseUrl and fullPath
+ *
+ * @param {any} baseUrl The base site URL that should be prepended to full path
+ * @param {any} fullPath The full path to build URL from
+ */
+const buildFullUrl = (baseUrl, fullPath) => {
+  const baseUrlObj = new URL(baseUrl)
+  const baseOrigin = baseUrlObj.origin
+  return `${baseOrigin}${fullPath}`
+}
 
 /**
  * Extract the route manufacturer
@@ -617,4 +631,7 @@ const getRoutePath = (baseUrl, fullUrl) => fullUrl.replace(baseUrl, ``)
 const getManufacturer = route =>
   route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
 
+fetch.getRawEntityType = getRawEntityType
+fetch.getRoutePath = getRoutePath
+fetch.buildFullUrl = buildFullUrl
 module.exports = fetch
