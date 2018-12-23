@@ -6,16 +6,36 @@ Cypress.Commands.add(`getTestElement`, selector =>
   cy.get(`[data-testid="${selector}"]`)
 )
 
+const TIMEOUT = 9999
+
 Cypress.Commands.add(
   `waitForAPI`,
   { prevSubject: `optional` },
-  (subject, api) => {
-    cy.window().then({ timeout: 9999 }, win => {
+  (subject, api, { timeout = TIMEOUT } = {}) => {
+    cy.window().then({ timeout: timeout }, win => {
       if (!win.___apiHandler) {
         win.___apiHandler = apiHandler.bind(win)
       }
 
       return waitForAPI.call(win, api).then(() => subject)
+    })
+  }
+)
+
+Cypress.Commands.add(
+  `waitForAPIorTimeout`,
+  { prevSubject: `optional` },
+  (subject, api, { timeout = TIMEOUT } = {}) => {
+    cy.window().then({ timeout: timeout + 1000 }, win => {
+      if (!win.___apiHandler) {
+        win.___apiHandler = apiHandler.bind(win)
+      }
+      return Promise.race([
+        waitForAPI.call(win, api).then(() => subject),
+        new Promise(resolve => {
+          setTimeout(resolve, timeout)
+        }),
+      ])
     })
   }
 )

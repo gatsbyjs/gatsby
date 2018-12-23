@@ -89,4 +89,4 @@ This system gives you lots of options when it comes to creating content. Maybe t
 
 ## Conclusion
 
-I’d definitely choose a headless CMS over a traditional CMS if I had talented front-end developers, because they could choose their favorite framework for the presentation layer. That setup would give us the flexibility to switch delivery methods, presentation methods, and content management methods with agility.
+I’d definitely choose a headless CMS over a traditional CMS if I had talented frontend developers, because they could choose their favorite framework for the presentation layer. That setup would give us the flexibility to switch delivery methods, presentation methods, and content management methods with agility.

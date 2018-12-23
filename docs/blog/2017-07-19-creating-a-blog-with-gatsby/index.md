@@ -260,7 +260,7 @@ We'll want to create the file `src/templates/blog-post.js` (please create the
 
 ```javascript:title=src/templates/blog-post.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 // import '../css/blog-post.css'; // make it pretty!
 
@@ -302,7 +302,7 @@ specified earlier.
 
 ```javascript:title=src/templates/blog-post.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 // import '../css/blog-post.css';
@@ -546,7 +546,7 @@ available within the browser and the statically generated site.
 ```javascript:title=src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 // import '../css/index.css'; // add some style if you want!
 

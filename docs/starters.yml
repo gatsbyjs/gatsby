@@ -1375,3 +1375,48 @@
     - Mobile-friendly design
     - Styling done with Sass
     - Gatsby version 2
+- url: https://gatsby-typescript-starter-blog.netlify.com/
+  repo: https://github.com/frnki/gatsby-typescript-starter-blog
+  description: A starter blog for TypeScript-based Gatsby projects with minimal settings.
+  tags:
+    - TypeScript
+    - Blog
+    - Styling:None
+  features:
+    - Typescrip & TSLint
+    - No Styling (No Typography.js)
+    - Minimal settings based on official starter blog
+- url: https://gatsby-serif.netlify.com/
+  repo: https://github.com/jugglerx/gatsby-serif-theme
+  description: Multi page/content-type starter using Markdown and SCSS. Serif is a beautiful small business theme for Gatsby. The theme is fully responsive, blazing fast and artfully illustrated.
+  tags:
+    - Styling:SCSS
+    - Markdown
+    - Linting
+  features:
+    - Multiple "content types" for `services`, `team` and `testimonials` using Markdown as the source
+    - Graphql query in `gatsby-node.js` using aliases that creates pages and templates by content type based on the folder `src/pages/services`, `src/pages/team`
+    - SCSS
+    - Responsive design
+    - Bootstrap 4 grid and media queries only
+    - Responsive menu
+    - Royalty free illustrations included
+    - SEO titles & meta using `gatsby-plugin-react-helmet`
+    - Eslint & Prettier
+- url: https://awesome-gatsby-starter.netlify.com/
+  repo: https://github.com/South-Paw/awesome-gatsby-starter
+  description: Starter with a preconfigured MDX, Storybook and ESLint environment for component first development of your next Gatsby site.
+  tags:
+    - MDX
+    - Markdown
+    - Storybook
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Gatsby MDX for JSX in Markdown loading, parsing, and rendering of pages
+    - Storybook for isolated component development
+    - styled-components for CSS-in-JS
+    - ESLint with Airbnb's config
+    - Prettier integrated into ESLint
+    - Jest for component testing
+    - A few example components and pages with stories and simple site structure

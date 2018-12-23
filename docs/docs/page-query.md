@@ -25,7 +25,7 @@ module.exports = {
 
 A simple index page (`src/pages/index.js`) can be marked up like so:
 
-```js:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 const HomePage = () => {

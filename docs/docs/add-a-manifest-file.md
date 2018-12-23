@@ -20,7 +20,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 1.  Install the plugin:
 
-```bash
+```shell
 npm install --save gatsby-plugin-manifest
 ```
 

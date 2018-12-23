@@ -24,6 +24,7 @@ See the [library of official and community plugins](/plugins/)
 ## Podcasts
 
 - [2018-11-30: Kyle Mathews on Founders Talk #59](https://changelog.com/founderstalk/59)
+- [2018-11-14: Jason Lengstorf on React Podcast](https://reactpodcast.simplecast.fm/28)
 - [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
 - [2018-04-17: Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
 - [2018-02-28: syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
@@ -33,6 +34,7 @@ See the [library of official and community plugins](/plugins/)
 
 ## Videos
 
+- [Gatsby Days Bay Area December 2018 - Kyle Mathews & Guest Speakers](https://www.youtube.com/playlist?list=PLCU2qJekvcN1wzgVKymbjbGtZ3VgAWOdj)
 - [Static Site Generation with Gatsby.js v0 — Scott Nonnenberg](https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/)
 - [React.js Conf 2016 - Lightning Talks - Kyle Mathews](https://www.youtube.com/watch?v=RFkNRKL6ZoE)
 - [Developing with React and Gatsby.js — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
