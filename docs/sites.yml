@@ -3817,3 +3817,17 @@
     - API
     - Documentation
   featured: false
+- title: Sabbiu Shah
+  main_url: https://sabbiushah.com.np
+  url: https://sabbiushah.com.np
+  source_url: https://github.com/sabbiu/sabbiushah.com.np
+  description: >
+    Sabbiu Shah is a personal blog written by me. Blogs are written on Artificial Intelligence, Mathematics, Economics. Visual explanation and codes are also in the blog.
+  categories:
+    - Blog
+    - Education
+    - Open Source
+  featured: false
+  built_by: Sabbiu Shah
+  built_by_url: https://twitter.com/sabbiushah
+  
