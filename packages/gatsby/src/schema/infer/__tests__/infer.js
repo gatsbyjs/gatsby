@@ -1,4 +1,4 @@
-const { schemaComposer, TypeComposer, GraphQLJSON } = require(`graphql-compose`)
+const { TypeComposer, GraphQLJSON } = require(`graphql-compose`)
 const { GraphQLBoolean, GraphQLList, GraphQLObjectType } = require(`graphql`)
 
 const { addInferredFields } = require(`../infer`)

@@ -42,6 +42,7 @@ const getOperatorFields = (fieldType, operators) =>
 
 const getQueryOperators = type => {
   const operators =
+    // FIXME: Do we have to check for EnumTypeComposer as well?
     allowedOperators[type instanceof GraphQLEnumType ? `Enum` : type.name]
   return operators
     ? schemaComposer.getOrCreateITC(type.name + `QueryOperatorInput`, itc =>
@@ -49,5 +50,20 @@ const getQueryOperators = type => {
       )
     : null
 }
+
+// const getQueryOperators = type => {
+//   const name = type.name + `QueryOperatorInput`
+//   if (schemaComposer.has(name)) {
+//     return schemaComposer.getITC(name)
+//   }
+//   const operators =
+//     allowedOperators[type instanceof GraphQLEnumType ? `Enum` : type.name]
+//   return operators
+//     ? InputTypeComposer.create({
+//         name,
+//         fields: getOperatorFields(type, operators),
+//       })
+//     : null
+// }
 
 module.exports = getQueryOperators

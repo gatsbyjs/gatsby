@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter input constructs input filter with query operator fields 1`] = `
+Array [
+  Object {
+    "field": "bool",
+    "type": Object {
+      "fields": Array [
+        "eq",
+        "ne",
+      ],
+      "name": "BooleanQueryOperatorInput",
+    },
+  },
+  Object {
+    "field": "int",
+    "type": Object {
+      "fields": Array [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin",
+      ],
+      "name": "IntQueryOperatorInput",
+    },
+  },
+  Object {
+    "field": "float",
+    "type": Object {
+      "fields": Array [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin",
+      ],
+      "name": "FloatQueryOperatorInput",
+    },
+  },
+  Object {
+    "field": "string",
+    "type": Object {
+      "fields": Array [
+        "eq",
+        "ne",
+        "in",
+        "nin",
+        "regex",
+        "glob",
+      ],
+      "name": "StringQueryOperatorInput",
+    },
+  },
+  Object {
+    "field": "date",
+    "type": Object {
+      "fields": Array [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin",
+      ],
+      "name": "DateQueryOperatorInput",
+    },
+  },
+  Object {
+    "field": "array",
+    "type": Object {
+      "fields": Array [
+        "eq",
+        "ne",
+      ],
+      "name": "BooleanQueryOperatorInput",
+    },
+  },
+  Object {
+    "field": "nested",
+    "type": Object {
+      "fields": Array [
+        "bool",
+      ],
+      "name": "FooNestedInput",
+    },
+  },
+  Object {
+    "field": "enum",
+    "type": Object {
+      "fields": Array [
+        "eq",
+        "ne",
+        "in",
+        "nin",
+      ],
+      "name": "CustomEnumQueryOperatorInput",
+    },
+  },
+  Object {
+    "field": "id",
+    "type": Object {
+      "fields": Array [
+        "eq",
+        "ne",
+        "in",
+        "nin",
+      ],
+      "name": "IDQueryOperatorInput",
+    },
+  },
+  Object {
+    "field": "parent",
+    "type": Object {
+      "fields": Array [
+        "id",
+        "parent",
+        "children",
+        "internal",
+      ],
+      "name": "NodeInput",
+    },
+  },
+  Object {
+    "field": "children",
+    "type": Object {
+      "fields": Array [
+        "id",
+        "parent",
+        "children",
+        "internal",
+      ],
+      "name": "NodeInput",
+    },
+  },
+  Object {
+    "field": "internal",
+    "type": Object {
+      "fields": Array [
+        "type",
+      ],
+      "name": "FooInternalInput",
+    },
+  },
+]
+`;

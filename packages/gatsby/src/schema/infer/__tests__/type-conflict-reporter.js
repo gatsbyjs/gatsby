@@ -67,6 +67,9 @@ describe(`Type conflict reporter`, () => {
     expect(warn).toBeCalledWith(
       expect.stringContaining(`There are conflicting field types in your data.`)
     )
+    // Could also use Jest's mock serializer, but that also includes return values,
+    // which in this case is just noise.
+    // expect(log).toMatchSnapshot()
     expect(log.mock.calls[1]).toMatchSnapshot()
     expect(log.mock.calls[2]).toMatchSnapshot()
   })

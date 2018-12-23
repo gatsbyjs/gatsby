@@ -58,14 +58,6 @@ Object {
     },
   },
   "string": "Foo bar",
-  "stringObject": String {
-    "0": "F",
-    "1": "o",
-    "2": "o",
-    "3": " ",
-    "4": "b",
-    "5": "a",
-    "6": "r",
-  },
+  "stringObject": "Foo bar",
 }
 `;

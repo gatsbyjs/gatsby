@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sort input built sort input fields match snapshot 1`] = `
+Array [
+  Object {
+    "name": "BOOL",
+    "value": "bool",
+  },
+  Object {
+    "name": "ARRAY",
+    "value": "array",
+  },
+  Object {
+    "name": "NESTED___BOOL",
+    "value": "nested.bool",
+  },
+  Object {
+    "name": "ENUM",
+    "value": "enum",
+  },
+  Object {
+    "name": "ID",
+    "value": "id",
+  },
+  Object {
+    "name": "PARENT___ID",
+    "value": "parent.id",
+  },
+  Object {
+    "name": "PARENT___PARENT___ID",
+    "value": "parent.parent.id",
+  },
+  Object {
+    "name": "PARENT___PARENT___PARENT___ID",
+    "value": "parent.parent.parent.id",
+  },
+  Object {
+    "name": "PARENT___PARENT___CHILDREN___ID",
+    "value": "parent.parent.children.id",
+  },
+  Object {
+    "name": "PARENT___PARENT___INTERNAL___TYPE",
+    "value": "parent.parent.internal.type",
+  },
+  Object {
+    "name": "PARENT___CHILDREN___ID",
+    "value": "parent.children.id",
+  },
+  Object {
+    "name": "PARENT___CHILDREN___PARENT___ID",
+    "value": "parent.children.parent.id",
+  },
+  Object {
+    "name": "PARENT___CHILDREN___CHILDREN___ID",
+    "value": "parent.children.children.id",
+  },
+  Object {
+    "name": "PARENT___CHILDREN___INTERNAL___TYPE",
+    "value": "parent.children.internal.type",
+  },
+  Object {
+    "name": "PARENT___INTERNAL___TYPE",
+    "value": "parent.internal.type",
+  },
+  Object {
+    "name": "CHILDREN___ID",
+    "value": "children.id",
+  },
+  Object {
+    "name": "CHILDREN___PARENT___ID",
+    "value": "children.parent.id",
+  },
+  Object {
+    "name": "CHILDREN___PARENT___PARENT___ID",
+    "value": "children.parent.parent.id",
+  },
+  Object {
+    "name": "CHILDREN___PARENT___CHILDREN___ID",
+    "value": "children.parent.children.id",
+  },
+  Object {
+    "name": "CHILDREN___PARENT___INTERNAL___TYPE",
+    "value": "children.parent.internal.type",
+  },
+  Object {
+    "name": "CHILDREN___CHILDREN___ID",
+    "value": "children.children.id",
+  },
+  Object {
+    "name": "CHILDREN___CHILDREN___PARENT___ID",
+    "value": "children.children.parent.id",
+  },
+  Object {
+    "name": "CHILDREN___CHILDREN___CHILDREN___ID",
+    "value": "children.children.children.id",
+  },
+  Object {
+    "name": "CHILDREN___CHILDREN___INTERNAL___TYPE",
+    "value": "children.children.internal.type",
+  },
+  Object {
+    "name": "CHILDREN___INTERNAL___TYPE",
+    "value": "children.internal.type",
+  },
+  Object {
+    "name": "INTERNAL___TYPE",
+    "value": "internal.type",
+  },
+]
+`;
