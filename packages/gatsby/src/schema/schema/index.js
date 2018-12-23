@@ -27,11 +27,11 @@ const addTypeToRootQuery = tc => {
   const typeName = tc.getTypeName()
   const queryName = typeName.charAt(0).toLowerCase() + typeName.slice(1)
   const queryNamePlural = `all` + typeName
-  const queryNamePageination = `page` + typeName
+  const queryNamePagination = `page` + typeName
   schemaComposer.Query.addFields({
     [queryName]: tc.getResolver(`findOne`),
     [queryNamePlural]: tc.getResolver(`findMany`),
-    [queryNamePageination]: tc.getResolver(`pagination`),
+    [queryNamePagination]: tc.getResolver(`pagination`),
   })
 }
 
