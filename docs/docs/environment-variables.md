@@ -110,7 +110,7 @@ render() {
 - `NODE_ENV`
 - `PUBLIC_DIR`
 
-Gatsby also allows you to specify another enviroment variable when runnng in `development`: 
+Gatsby allows you to specify another enviroment variable when runnng in `development`: 
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
