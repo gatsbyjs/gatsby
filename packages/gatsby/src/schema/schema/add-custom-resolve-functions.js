@@ -4,7 +4,7 @@ const apiRunner = require(`../../utils/api-runner-node`)
 
 const withContext = resolve => (source, args, context, info) =>
   // FIXME: Dont' pass schemaComposer (cf. `add-fields-from-node-api.js`)
-  resolve(source, args, { ...context, schemaComposer }, info)
+  resolve({ source, args, context: { ...context, schemaComposer }, info })
 
 // UPSTREAM: addResolveMethods should accept arg for wrapper fn
 const addResolvers = resolvers => {

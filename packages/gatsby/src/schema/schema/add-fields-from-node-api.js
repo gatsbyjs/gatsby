@@ -8,15 +8,22 @@ const addFieldsFromNodeAPI = () => {
   )
   return Promise.all(
     types.map(async ([typeName, tc]) => {
-      const [fields] = await apiRunner(`setFieldsOnGraphQLNodeType`, {
+      const fields = await apiRunner(`setFieldsOnGraphQLNodeType`, {
+        // FIXME: Currently, nodes are passed as well, but that seems
+        // unnecessary since we pass down `getNodesByType()` anyway
+        // type { name: typeName, nodes: getNodesByType(typeName)},
         type: { name: typeName },
-        // FIXME: Dont' pass schemaComposer
+        // FIXME: Dont' pass schemaComposer (but one of the above - same in add-custom-resolvers)
         schemaComposer,
         // traceId: `initial-setFieldsOnGraphQLNodeType`,
         // parentSpan: span,
       })
       if (fields) {
-        tc.addFields(fields)
+        // NOTE: `setFieldsOnGraphQLNodeType` only allows setting
+        // nested fields with a path as property name, i.e.
+        // `{ 'frontmatter.published': 'Boolean' }`, but not in the form
+        // `{ frontmatter: { published: 'Boolean' }}`
+        tc.addNestedFields(fields)
       }
     })
   )
