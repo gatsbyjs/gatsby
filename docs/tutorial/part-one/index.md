@@ -247,7 +247,7 @@ In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` 
 
 Over in `header.js`, the header component expects to receive the `headerText` prop (because you’ve written it to expect that) So you can access it like so:
 
-```jsx:title=src/pages/header.js
+```jsx:title=src/components/header.js
 <h1>{props.headerText}</h1>
 ```
 
