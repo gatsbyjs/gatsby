@@ -137,7 +137,7 @@ describe(`Resolvers`, () => {
     it(`sorts nodes matching filter`, async () => {
       const type = `Foo`
       const filter = { baz: { ne: `foo` } }
-      const sort = { fields: [`ID`], order: `DESC` }
+      const sort = { fields: [`id`], order: `DESC` }
       const result = await findMany(type)({ args: { filter, sort } })
       expect(result).toEqual([3, 1].map(getById))
     })
@@ -166,7 +166,7 @@ describe(`Resolvers`, () => {
     it(`sorts nodes matching filter`, async () => {
       const type = `Foo`
       const filter = { baz: { ne: `foo` } }
-      const sort = { fields: [`ID`], order: `DESC` }
+      const sort = { fields: [`id`], order: `DESC` }
       const { count, items } = await paginate(type)({
         args: { filter, sort },
       })
