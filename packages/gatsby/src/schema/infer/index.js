@@ -17,6 +17,7 @@ const addInferredType = typeName => {
   })
   // getNodeInterfaceFields().forEach(fieldName => delete exampleValue[fieldName])
   addInferredFields(tc, exampleValue, typeName)
+  return tc
 }
 
 const addInferredTypes = () => {

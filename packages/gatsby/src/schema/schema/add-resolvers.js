@@ -20,7 +20,7 @@ const getPaginationType = tc => {
   const typeName = tc.getTypeName()
   // TODO: get or create
   return TypeComposer.create({
-    name: `page` + typeName,
+    name: `Page` + typeName,
     fields: {
       count: `Int`,
       items: [tc],
