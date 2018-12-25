@@ -102,8 +102,8 @@ npm install --save gatsby-plugin-typography typography react-typography typograp
 Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
 
 ```jsx:title=src/components/layout.js
-import React from "react"
-import { css } from "@emotion/core"
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core"
 import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
@@ -149,7 +149,7 @@ export default () => (
   <Layout>
     <h1>Amazing Pandas Eating Things</h1>
     <div>
-      <img
+      <img style={{width:`100%`}}
         src="https://2.bp.blogspot.com/-BMP2l6Hwvp4/TiAxeGx4CTI/AAAAAAAAD_M/XlC_mY3SoEw/s1600/panda-group-eating-bamboo.jpg"
         alt="Group of pandas eating bamboo"
       />
