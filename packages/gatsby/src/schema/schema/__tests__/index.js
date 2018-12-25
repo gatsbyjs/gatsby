@@ -2,6 +2,7 @@ const { GraphQLSchema, GraphQLBoolean, GraphQLInt } = require(`graphql`)
 
 const { buildSchema, updateSchema } = require(`..`)
 
+const { getById } = require(`../../db`)
 jest.mock(`../../db`, () => {
   const nodes = [
     {
@@ -14,7 +15,7 @@ jest.mock(`../../db`, () => {
     {
       id: 2,
       parent: null,
-      children: [],
+      children: [1],
       internal: { type: `File` },
     },
     {
@@ -108,9 +109,12 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
 })
 
 describe(`Schema builder`, () => {
-  it(`builds schema`, async () => {
-    const schema = await buildSchema()
+  let schema
+  beforeAll(async () => {
+    schema = await buildSchema()
+  })
 
+  it(`builds schema with root query fields`, async () => {
     expect(schema).toBeInstanceOf(GraphQLSchema)
     expect(Object.keys(schema.getQueryType().getFields())).toEqual(
       expect.arrayContaining([
@@ -122,7 +126,9 @@ describe(`Schema builder`, () => {
         `pageAuthor`,
       ])
     )
+  })
 
+  it(`build schema with input fields`, () => {
     const args = schema
       .getQueryType()
       .getFields()
@@ -135,11 +141,20 @@ describe(`Schema builder`, () => {
         { name: `limit`, type: GraphQLInt },
       ])
     )
+  })
 
-    // TODO: children fields
-    // const childrenFields = schema.getType(`File`).getFields()
-    // expect(childrenFields).toBeUndefined()
+  it(`builds schema with children convenience fields`, () => {
+    const fields = Object.values(schema.getType(`File`).getFields()).map(
+      ({ name, type }) => ({ name, type })
+    )
+    expect(fields).toEqual(
+      expect.arrayContaining([
+        { name: `childMarkdown`, type: schema.getType(`Markdown`) },
+      ])
+    )
+  })
 
+  it(`builds schema with directives`, () => {
     expect(schema.getDirectives().map(directive => directive.name)).toEqual([
       `deprecated`,
       `include`,
@@ -147,39 +162,54 @@ describe(`Schema builder`, () => {
       `dateformat`,
       `link`,
     ])
+  })
 
+  it(`builds schema with added inferred fields and types`, () => {
     expect(schema.getType(`Frontmatter`).getFields().important.type).toBe(
       GraphQLBoolean
     )
-    // TODO: Should also check that inferred `File` type is created
+    expect(schema.getType(`File`).getFields().internal.type.name).toBe(
+      `Internal`
+    )
+  })
 
+  it(`builds schema with fields added by setFieldsOnGraphQLNodeType`, () => {
     expect(schema.getType(`Markdown`).getFields().archived.type).toBe(
       GraphQLBoolean
     )
     expect(schema.getType(`Frontmatter`).getFields().viral.type).toBe(
       GraphQLBoolean
     )
+  })
 
+  it(`builds schema with resolvers added by @link directive`, () => {
     expect(
       schema.getType(`Frontmatter`).getFields().authors.resolve
     ).toBeInstanceOf(Function)
+  })
+
+  it(`builds schema with added custom resolvers`, async () => {
     expect(schema.getType(`Author`).getFields().posts.resolve).toBeInstanceOf(
       Function
     )
-
+    const author = getById(3)
     const authorType = schema.getType(`Author`)
-    const result = authorType
+    const posts = await authorType
       .getFields()
       .posts.resolve(
-        { lastname: `Foo`, firstname: `Bar` },
+        author,
         {},
         {},
         { fieldName: `posts`, returnType: authorType.getFields().posts.type }
       )
-    expect(result.id).toBe(1)
+    expect(posts.length).toBe(1)
+    expect(posts[0].frontmatter.authors[0]).toEqual(author)
   })
 
-  it.skip(`updates schema`, () => {
-    // TODO:
+  it(`updates schema with SitePage type`, async () => {
+    await updateSchema()
+    expect(schema.getQueryType().getFields().sitePage.type.name).toBe(
+      `SitePage`
+    )
   })
 })
