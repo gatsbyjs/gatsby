@@ -130,7 +130,10 @@ const runQueriesForPathnames = pathnames => {
       jsonName: staticQueryComponent.jsonName,
       query: staticQueryComponent.query,
       componentPath: staticQueryComponent.componentPath,
-      context: { path: staticQueryComponent.jsonName },
+      context: {
+        path: staticQueryComponent.jsonName,
+        componentPath: staticQueryComponent.componentPath,
+      },
     }
     queue.push(queryJob)
   })

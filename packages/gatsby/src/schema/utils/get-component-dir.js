@@ -1,14 +1,10 @@
 const path = require(`path`)
 
-const { store } = require(`../../redux`)
-
 const getComponentDir = source => {
   if (!source) return null
 
-  const componentPath =
-    source.componentPath ||
-    // TODO: Easier way?
-    store.getState().staticQueryComponents.get(source.path).componentPath
+  // TODO: should be on context, not source
+  const { componentPath } = source
   return componentPath && path.dirname(componentPath)
 }
 
