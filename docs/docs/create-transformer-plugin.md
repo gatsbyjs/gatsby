@@ -16,7 +16,7 @@ and "transformer" plugins.
 
 Transformer plugins "transform" data of one type into another type. You'll often use both source plugins and transformer plugins in your Gatsby sites.
 
-This loose coupling between the data source and transformer plugins allow Gatsby site builders to quickly assemble complex data transformation pipelines with little work.
+ This loose coupling between the data source and transformer plugins allow Gatsby developers to quickly assemble complex data transformation pipelines with little work.
 
 ## Transformer plugin example
 
