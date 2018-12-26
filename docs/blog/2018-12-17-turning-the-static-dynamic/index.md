@@ -1,6 +1,6 @@
 ---
 title: Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity
-date: 2018-12-17
+date: 2018-12-26
 author: swyx
 tags:
   - apps
