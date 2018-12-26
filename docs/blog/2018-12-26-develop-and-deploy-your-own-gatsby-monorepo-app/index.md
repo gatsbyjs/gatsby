@@ -25,7 +25,7 @@ This tutorial will take about two hours to complete. If you're unfamiliar with L
 
 If you work alone or in a small team, you’re likely to have started working on small programs that slowly grow complex and convoluted. Shit happens and you’ll soon find that your perfectly balanced lasagna evolves into a heaped bowlful of spaghetti.
 
-The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of css style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be an arse-ache to keep track of. These are some of the problems monorepos solve.
+The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of css style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be an headache to keep track of. These are some of the problems monorepos solve.
 
 ![Monorepo Diagram](./images/monorepo-diagram.jpeg)
 
@@ -38,9 +38,9 @@ With monorepos the code is split into specific packages (aisles). Meaning you ca
 Everything is accessible from a single place, while still being organised enough to navigate painlessly.
 Enough with the theory, let’s move on to the tutorial, which is split into 2 sections: development and deployment.
 
-Development — We’ll configure an existing application, built with Gatsby, into a monorepo. If you haven’t heard of Gatsby before, then take some time to [read up on it](https://www.gatsbyjs.org/). I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it. Another tool we’ll use is [Lerna](https://github.com/lerna/lerna), which will manage the dependencies of our project. Lerna will also allow us to link packages together which we’ll use to share components.
+*Development* — We’ll configure an existing application, built with [Gatsby](https://www.gatsbyjs.org/), into a monorepo. If you haven’t heard of Gatsby before, then take some time to [read up on it](https://www.gatsbyjs.org/). I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it. Another tool we’ll use is [Lerna](https://github.com/lerna/lerna), which will manage the dependencies of our project. Lerna will also allow us to link packages together which we’ll use to share components.
 
-Deployment — After we’ve converted our app into a monorepo we’ll hook our GitHub account to Travis-CI and create a CI pipeline. The CI pipeline will test, build and deploy our application. W̵e̵’̵l̵l̵ ̵b̵e̵ ̵u̵s̵i̵n̵g̵ ̵H̵e̵r̵o̵k̵u̵ ̵̵to h̵andle-d̵e̵p̵l̵o̵y̵m̵e̵n̵t̵s ̵t̵o̵o̵l̵ ̵b̵e̵c̵a̵u̵s̵e̵ ̵i̵t̵’̵s̵ ̵e̵a̵s̵y̵ ̵t̵o̵ ̵u̵s̵e̵,̵ ̵f̵l̵e̵x̵i̵b̵l̵e̵ ̵a̵n̵d̵ ̵i̵n̵t̵e̵g̵r̵a̵t̵e̵s̵ ̵r̵e̵a̵l̵l̵y̵ ̵w̵e̵l̵l̵ ̵w̵i̵t̵h̵ ̵T̵r̵a̵v̵i̵s̵-̵C̵I̵.̵ I changed my mind after spending three days trying to get my Monorepo deployed with Heroku, and managed it in an hour with Now. So we’re using Now!
+Deployment — After we’ve converted our app into a monorepo we’ll hook our GitHub account to Travis-CI and create a CI pipeline. The CI pipeline will test, build and deploy our application.
 
 There are a couple of caveats to address prior to beginning:
 
@@ -113,8 +113,6 @@ packages
 ```
 
 The next step is to move the contents from our current application into their respective folders. All the files in our `components` folder will be moved to our `shared-ui` directory since we’d like to be able to use them anywhere throughout our codebase.
-
-[confirm with run through]We shouldn’t need to reinstall Gatsby to get our shared-ui components working, but we may need to install gatsby-link so the routing doesn’t break.
 
 For now we’ll move everything over to `shared-ui` components and import them using a relative url.
 
@@ -242,7 +240,7 @@ Src directory with layouts and pages — In `packages/blog/src/layouts`, cre
 
 gatsby-config.js — Again, copy the contents of the top level `gatsby-config.js` file with the one in the blog package.
 
-gatsby-node.js — We’ll only know whether everything works or if our site shits itself once we move this file and add the `package.json`. We want to copy over only the logic relating to the processing of the blog data. Copy and paste everything into the empty `gatsby-node.js` file. Remove all the lines between and including 6–33, as well as the bottom most right curly bracket, and the right parenthesis on the second to last line.
+gatsby-node.js — We’ll only know whether everything works or if our site craps itself once we move this file and add the `package.json`. We want to copy over only the logic relating to the processing of the blog data. Copy and paste everything into the empty `gatsby-node.js` file. Remove all the lines between and including 6–33, as well as the bottom most right curly bracket, and the right parenthesis on the second to last line.
 
 package.json- Add the following to the `package.json` file:
 
@@ -543,17 +541,13 @@ Even if you push everything forward now the site’s navigation will still be br
 
 Do the same for your shop url, commit and push. Congrats!
 
-### Conclusion
-
-You should now be able to access the site and navigate easily between your shop and your blog. Great job! If things didn’t work out quite as planned then don’t sweat it. This tutorial is made of tiny moving parts which make for loads of opportunities for things to go wrong. I’ll try to make myself available to answer any messages left in the comments regarding any issues you come across.
-
 ### Thanks for reading!
 
-Adding to your arsenal of web architecture tools is an excellent way of improving your capabilities as a developer or engineer. Monorepos aren’t perfect but it might just work for your next project. Good luck.
+You should now be able to access the site and navigate easily between your shop and your blog. Great job! If things didn’t work out quite as planned then don’t sweat it. This tutorial is made of tiny moving parts which make for loads of opportunities for things to go wrong.
 
 If you enjoyed the article then please reach out to me on [twitter](https://twitter.com/andricokaroulla?lang=en)!
 
-I also have a variety of JavaScript related articles [here](https://medium.com/@andricokaroulla)
+You can find a variety of JavaScript related articles [here](https://medium.com/@andricokaroulla)
 
 I'm also running a [Gatsby workshop](https://www.eventbrite.com/e/gatsbyjs-workshop-develop-and-deploy-your-own-blog-tickets-52432622385?aff=GatsbyBlog) in London, February 2019.
 
@@ -572,12 +566,6 @@ My first go to when the application doesn’t work as expected is to run `lerna 
 You need `react` specified in the package level `package.json` file to run your application. And you’ll also need `react` and `react-router-dom` specified in the top-level `package.json` to run the tests. This left me stumped, and the only logical reason why I think this happens is because Gatsby only seems to look for React in the package level `node_modules` directory, Since the tests are run from the top level, React also needs to exist there.
 
 My suggestion would be to have the package level react dependency the latest version of React, while the top-level react dependency as version 16.0.0.
-
-Testing your application:
-
-Building your application:
-
-Pushing your application:
 
 Running the pipeline for your application:
 
