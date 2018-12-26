@@ -42,7 +42,7 @@ Enough with the theory, let’s move on to the tutorial, which is split into 2 s
 
 Another tool we’ll use is [Lerna](https://github.com/lerna/lerna), which will manage the dependencies of our project. Lerna will also allow us to link packages together which we’ll use to share components.
 
-Deployment — After we’ve converted our app into a monorepo we’ll hook our GitHub account to Travis-CI and create a CI pipeline. The CI pipeline will test, build and deploy our application.
+*Deployment* — After we’ve converted our app into a monorepo we’ll hook our GitHub account to Travis-CI and create a CI pipeline. The CI pipeline will test, build and deploy our application.
 
 There are a couple of caveats to address prior to beginning:
 
