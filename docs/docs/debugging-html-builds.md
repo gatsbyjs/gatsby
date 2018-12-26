@@ -2,7 +2,7 @@
 title: Debugging HTML Builds
 ---
 
-You can use the [docs/debugging-the-build-process/](previous debugging methods) for builds as well as in development.
+You can use the [previous debugging methods](docs/debugging-the-build-process/) for builds as well as in development.
 
 In addition, there are some classes of errors that show up only in builds, but not in development. These include:
 
