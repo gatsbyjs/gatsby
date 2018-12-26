@@ -17,6 +17,27 @@
           link: /docs/gatsby-on-windows/
         - title: Gatsby on Linux
           link: /docs/gatsby-on-linux/
+    - title: Deploying & hosting
+      link: /docs/deploying-and-hosting/
+      items:
+        - title: Preparing your site for deployment*
+          link: /docs/preparing-for-deployment/
+        - title: Deploying to S3 and CloudFront
+          link: /docs/deploying-to-s3-cloudfront
+        - title: Deploying to Aerobatic
+          link: /docs/deploying-to-aerobatic/
+        - title: Deploying to Heroku
+          link: /docs/deploying-to-heroku/
+        - title: Deploying to Now
+          link: /docs/deploying-to-now/
+        - title: Deploying to GitLab Pages
+          link: /docs/deploying-to-gitlab-pages/
+        - title: Hosting on Netlify
+          link: /docs/hosting-on-netlify
+        - title: Path Prefix
+          link: /docs/path-prefix/
+        - title: How Gatsby works with GitHub pages
+          link: /docs/how-gatsby-works-with-github-pages/
     - title: Custom configuration
       link: /docs/customization/
       items:
@@ -222,27 +243,6 @@
           link: /docs/seo/
         - title: Optimize Prefetching with Guess.js*
           link: /docs/optimize-prefetching-with-guessjs/
-    - title: Deploying & hosting
-      link: /docs/deploying-and-hosting/
-      items:
-        - title: Preparing your site for deployment*
-          link: /docs/preparing-for-deployment/
-        - title: Deploying to S3 and CloudFront
-          link: /docs/deploying-to-s3-cloudfront
-        - title: Deploying to Aerobatic
-          link: /docs/deploying-to-aerobatic/
-        - title: Deploying to Heroku
-          link: /docs/deploying-to-heroku/
-        - title: Deploying to Now
-          link: /docs/deploying-to-now/
-        - title: Deploying to GitLab Pages
-          link: /docs/deploying-to-gitlab-pages/
-        - title: Hosting on Netlify
-          link: /docs/hosting-on-netlify
-        - title: Path Prefix
-          link: /docs/path-prefix/
-        - title: How Gatsby works with GitHub pages
-          link: /docs/how-gatsby-works-with-github-pages/
 - title: Ecosystem
   link: /ecosystem/
   items:
