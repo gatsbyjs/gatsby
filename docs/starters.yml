@@ -1420,3 +1420,21 @@
     - Prettier integrated into ESLint
     - Jest for component testing
     - A few example components and pages with stories and simple site structure
+- url: https://vigilant-leakey-a4f8cd.netlify.com/
+  repo: https://github.com/BoyWithSilverWings/gatsby-blog-starter
+  description: Minimal Blog Starter Template with Styled Components.
+  tags:
+    - MDX
+    - Markdown
+    - Styled Components
+    - Styling:CSS-in-JS
+    - Blog
+  features:
+    - Gatsby MDX for JSX in Markdown loading, parsing, and rendering of pages
+    - Minimal UI for blog
+    - Styled-components for CSS-in-JS
+    - Prettier added as pre-commit hook
+    - Google Analytics
+    - Image Optimisation
+    - Code Styling and Formatting in markdown
+    - Responsive Design
