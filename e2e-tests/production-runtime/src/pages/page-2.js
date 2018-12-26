@@ -2,13 +2,26 @@ import React from 'react'
 import { Link } from 'gatsby'
 
 import Layout from '../components/layout'
+import InstrumentPage from '../utils/instrument-page'
 
 const SecondPage = () => (
   <Layout>
     <h1>Hi from the second page</h1>
     <p>Welcome to page 2</p>
-    <Link to="/">Go back to the homepage</Link>
+    <pre data-testid="dom-marker">page-2</pre>
+    <ul>
+      <li>
+        <Link to="/" data-testid="index">
+          Go to Index
+        </Link>
+      </li>
+      <li>
+        <Link to="/page-3/" data-testid="404">
+          To non-existent page
+        </Link>
+      </li>
+    </ul>
   </Layout>
 )
 
-export default SecondPage
+export default InstrumentPage(SecondPage)

@@ -1,14 +1,15 @@
 <!--
-  Q. Which branch should I use for my pull request?
-  A. Use `master` branch (probably).
+  Have any questions? Check out the contributing docs at https://gatsby.app/contribute, or
+  ask in this Pull Request and a Gatsby maintainer will be happy to help :)
+-->
 
-  Q. Which branch if my change is a bug fix for Gatsby v1?
-  A. In this case, you should use the `v1` branch
+## Description
 
-  Q. Which branch if I'm still not sure?
-  A. Use `master` branch. Ask in the PR if you're not sure and a Gatsby maintainer will be happy to help :)
+<!-- Write a brief description of the changes introduced by this PR -->
 
-  Note: We will only accept bug fixes for Gatsby v1. New features should be added to Gatsby v2.
+## Related Issues
 
-  Learn more about contributing: https://www.gatsbyjs.org/docs/how-to-contribute/
+<!--
+  Link to the issue that is fixed by this PR (if there is one)
+  e.g. Fixes #1234, Addresses #1234, Related to #1234, etc.
 -->

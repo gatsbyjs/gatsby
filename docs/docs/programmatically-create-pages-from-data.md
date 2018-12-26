@@ -21,7 +21,7 @@ access to the
 [`createPage`](https://www.gatsbyjs.org/docs/actions/#createPage) action
 which is at the core of programmatically creating a page.
 
-```javascript{17-25}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return new Promise((resolve, reject) => {
@@ -38,6 +38,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     `).then(result => {
+      // highlight-start
       result.data.allMarkdownRemark.edges.forEach(({ node }) => {
         createPage({
           path: node.fields.slug,
@@ -47,6 +48,7 @@ exports.createPages = ({ graphql, actions }) => {
           },
         })
       })
+      // highlight-end
       resolve()
     })
   })
@@ -65,7 +67,7 @@ The `createPage` action required that we specify the `component` template
 that will be used to render the page. Here is an example of what the
 referenced template could look like:
 
-```javascript:title=gatsby-node.js
+```javascript:title=blog-post.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"

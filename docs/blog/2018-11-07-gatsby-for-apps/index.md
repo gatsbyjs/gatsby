@@ -8,6 +8,7 @@ tags:
   - applications
   - beyond static
 excerpt: Gatsby is great for not only static sites but also traditional web applications. Using Gatsby enables the benefits of both static and web applications so you don't have to sacrifice the advantages of one approach to reap the benefits of the other.
+cover: images/what-if-i-told-you.jpg
 ---
 
 Gatsby is great for static sites. You probably know this! It’s equally great for web applications. You may not know this. Gatsby is great for building web experiences that leverage the benefits of both so called static sites and web applications -- simultaneously. You don't have to sacrifice the advantages of one approach to reap the benefits of the other.

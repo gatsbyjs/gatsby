@@ -11,6 +11,7 @@ module.exports = (
     inlineCodeMarker = null,
     aliases = {},
     noInlineHighlight = false,
+    showLineNumbers: showLineNumbersGlobal = false,
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -23,9 +24,10 @@ module.exports = (
     let {
       splitLanguage,
       highlightLines,
-      numberLines,
+      showLineNumbersLocal,
       numberLinesStartAt,
     } = parseLineNumberRange(language)
+    const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
     language = splitLanguage
 
     // PrismJS's theme styles are targeting pre[class*="language-"]
@@ -48,7 +50,7 @@ module.exports = (
 
     let numLinesStyle, numLinesClass, numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
-    if (numberLines) {
+    if (showLineNumbers) {
       numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt -
         1}"`
       numLinesClass = ` line-numbers`

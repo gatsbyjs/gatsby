@@ -42,18 +42,19 @@ explore how it works.
 
 First install the plugin at the root of the project:
 
-```sh
+```shell
 npm install --save gatsby-source-filesystem
 ```
 
 Then add it to your `gatsby-config.js`:
 
-```javascript{6-12}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
   },
   plugins: [
+    // highlight-start
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -61,6 +62,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
+    // highlight-end
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -108,13 +110,13 @@ Let's try this.
 Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
 created:
 
-```jsx{6}:title=src/pages/my-files.js
+```jsx:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
-  console.log(data)
+  console.log(data) // highlight-line
   return (
     <Layout>
       <div>Hello world</div>
@@ -151,7 +153,7 @@ The shape of the data matches the shape of the GraphQL query.
 
 Add some code to your component to print out the File data.
 
-```jsx{9-31}:title=src/pages/my-files.js
+```jsx:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -160,6 +162,7 @@ export default ({ data }) => {
   console.log(data)
   return (
     <Layout>
+      {/* highlight-start */}
       <div>
         <h1>My Site's Files</h1>
         <table>
@@ -183,6 +186,7 @@ export default ({ data }) => {
           </tbody>
         </table>
       </div>
+      {/* highlight-end */}
     </Layout>
   )
 }

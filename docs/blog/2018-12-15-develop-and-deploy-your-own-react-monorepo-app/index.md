@@ -1,5 +1,5 @@
 ---
-title: Develop and Deploy your own React monorepo app in under 2 hours, using Lerna, Travis and Now.
+title: Develop & Deploy Your Own React Monorepo App in Under 2 Hours, Using Lerna, Travis & Now
 date: 2018-12-15
 author: Andrico Karoulla
 tags:
@@ -17,7 +17,7 @@ excerpt: Learn how to create a balanced lasagna instead of a tangled mess of spa
 
 ### Foreword
 
-Please put aside time for this tutorial and make sure you’ve got a good hour or two free from distractions. If I’ve done my job right you’ll improve your general knowledge of web architecture. You’ll also be introduced to new tools whose strengths you can leverage in the wild. If you’ve used any, or all, of these tools before then getting up and running won’t take as long. But for those unfamiliar with Lerna, Travis or Now, you’ll likely find a few traps along the way, as I did during my journey writing this tutorial. I’ve got a troubleshooting section at the end of the article for common problems, so refer to it at any time. That said, enjoy and I hope you gain a lot from this article.
+Please put aside time for this tutorial and make sure you’ve got a good hour or two free from distractions. If I’ve done my job right, you’ll improve your general knowledge of web architecture. You’ll also be introduced to new tools whose strengths you can leverage in the wild. If you’ve used any, or all, of these tools before, then getting up and running won’t take as long. But for those unfamiliar with Lerna, Travis or Now, you’ll likely find a few traps along the way, as I did during my journey writing this tutorial. I’ve got a troubleshooting section at the end of the article for common problems, so refer to it at any time. That said, enjoy and I hope you gain a lot from this article.
 
 ### Introduction
 
@@ -33,7 +33,7 @@ A monorepo is an architectural design pattern that allows us to maintain several
 
 Think of monorepos like a well-organised supermarket. Each aisle contains a particular kind of food, making it easy to navigate and find the item of food you want. Supermarkets also contain a variety of different foods so you don’t need to go to a series of specific shops to find your gluten-free, dairy-free banoffee pie (which is very much a [thing](https://glutenfreecuppatea.co.uk/2016/02/14/recipe-healthy-banoffee-pie-gluten-free-vegan-refined-sugar-free-dairy-free/)).
 
-With monorepos the code is split into specific packages (aisles). Meaning you can easily navigate the project to find the component or module you want to work on. It also means not needing to maintain separate repos for when making changes that affect multiple parts of your stack (the single shop).
+With monorepos the code is split into specific packages (aisles). Meaning you can easily navigate the project to find the component or module you want to work on. It also means not needing to maintain separate repos when making changes that affect multiple parts of your stack (the single shop).
 
 Everything is accessible from a single place, while still being organised enough to navigate painlessly.
 Enough with the theory, let’s move on to the tutorial, which is split into 2 sections: development and deployment.
