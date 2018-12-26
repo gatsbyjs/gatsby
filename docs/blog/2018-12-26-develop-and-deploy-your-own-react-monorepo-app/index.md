@@ -1,6 +1,6 @@
 ---
 title: Develop & Deploy Your Own React Monorepo App in Under 2 Hours, Using Lerna, Travis & Now
-date: 2018-12-15
+date: 2018-12-26
 author: Andrico Karoulla
 tags:
   - apps
