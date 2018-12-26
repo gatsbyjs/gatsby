@@ -178,13 +178,13 @@
     - title: Debugging
       link: /docs/debugging/
       items:
-        - title: Debugging HTML builds
+        - title: Debugging in development
+          link: /docs/debugging-the-build-process/
+        - title: Debugging (builds) in production
           link: /docs/debugging-html-builds/
         - title: Debugging Replace Renderer API
           link: /docs/debugging-replace-renderer-api/
-        - title: Debugging the build process
-          link: /docs/debugging-the-build-process/
-        - title: Trace Gatsby builds
+        - title: Tracing Gatsby builds
           link: /docs/performance-tracing/
     - title: Use cases with Gatsby (including apps)
       link: /docs/building-apps-with-gatsby/
