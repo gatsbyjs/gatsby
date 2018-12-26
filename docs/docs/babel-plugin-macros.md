@@ -24,7 +24,7 @@ they are named by their function, followed by `.macro`.
 For example, [`preval.macro`](https://www.npmjs.com/package/preval.macro) is a
 macro that pre-evaluates JavaScript code. You can install it by running:
 
-```bash
+```shell
 npm install --save-dev preval.macro
 ```
 

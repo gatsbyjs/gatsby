@@ -1,9 +1,10 @@
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
-exports.onRenderBody = (
-  { setHeadComponents, setHtmlAttributes, setBodyAttributes },
-  pluginOptions
-) => {
+exports.onRenderBody = ({
+  setHeadComponents,
+  setHtmlAttributes,
+  setBodyAttributes,
+}) => {
   const helmet = Helmet.renderStatic()
   // These action functions were added partway through the Gatsby 1.x cycle.
   if (setHtmlAttributes) {

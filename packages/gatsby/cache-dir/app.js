@@ -1,23 +1,16 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import domReady from "domready"
-import { hot, setConfig } from "react-hot-loader"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
 window.___emitter = emitter
 setApiRunnerForLoader(apiRunner)
-
-// necessary for hot-reloading of react hooks
-setConfig({
-  ignoreSFC: true,
-  pureRender: true,
-})
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
@@ -57,16 +50,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader.addDevRequires(syncRequires)
 
   loader.getResourcesForPathname(window.location.pathname).then(() => {
-    let Root = hot(module)(preferDefault(require(`./root`)))
+    const preferDefault = m => (m && m.default) || m
+    let Root = preferDefault(require(`./root`))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
+        postInitialRenderWork()
         apiRunner(`onInitialClientRender`)
       })
     })
   })
 })
-
-const preferDefault = m => (m && m.default) || m
 
 function supportsServiceWorkers(location, navigator) {
   if (location.hostname === `localhost` || location.protocol === `https:`) {

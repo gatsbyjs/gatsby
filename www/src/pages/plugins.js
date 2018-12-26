@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
+import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm, options } from "../utils/typography"
@@ -69,6 +70,11 @@ class Plugins extends Component {
                 <Link to="/docs/plugins">plugins doc page</Link>.
               </p>
             </div>
+            <Unbird
+              dataSetId="5c1ac24b4a828a169b6c235c"
+              publicKey="oZwK1Uy9i4PVy5EpAQiXiZr0uVG6Xt1q"
+              feedbackPrompt="Have feedback on the Plugin Library?"
+            />
           </Container>
         </PageWithPluginSearchBar>
       </Layout>

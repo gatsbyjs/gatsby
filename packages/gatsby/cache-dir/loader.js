@@ -13,6 +13,7 @@ let jsonDataPaths = {}
 let fetchHistory = []
 let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
+let hasPageResourceMap = false
 let apiRunner
 const failedPaths = {}
 const MAX_HISTORY = 5
@@ -30,15 +31,29 @@ if (process.env.NODE_ENV !== `production`) {
 const fetchPageResourceMap = () => {
   if (!fetchingPageResourceMapPromise) {
     fetchingPageResourceMapPromise = new Promise(resolve => {
-      asyncRequires.data().then(({ pages, dataPaths }) => {
-        // TODO — expose proper way to access this data from plugins.
-        // Need to come up with an API for plugins to access
-        // site info.
-        window.___dataPaths = dataPaths
-        queue.addPagesArray(pages)
-        queue.addDataPaths(dataPaths)
-        resolve((fetchedPageResourceMap = true))
-      })
+      asyncRequires
+        .data()
+        .then(({ pages, dataPaths }) => {
+          // TODO — expose proper way to access this data from plugins.
+          // Need to come up with an API for plugins to access
+          // site info.
+          window.___dataPaths = dataPaths
+          queue.addPagesArray(pages)
+          queue.addDataPaths(dataPaths)
+          hasPageResourceMap = true
+          resolve((fetchedPageResourceMap = true))
+        })
+        .catch(e => {
+          console.warn(
+            `Failed to fetch pages manifest. Gatsby will reload on next navigation.`
+          )
+          // failed to grab pages metadata
+          // for now let's just resolve this - on navigation this will cause missing resources
+          // and will trigger page reload and then it will retry
+          // this can happen with service worker updates when webpack manifest points to old
+          // chunk that no longer exists on server
+          resolve((fetchedPageResourceMap = true))
+        })
     })
   }
   return fetchingPageResourceMapPromise
@@ -157,6 +172,9 @@ const onPostPrefetchPathname = pathname => {
   }
 }
 
+const shouldFallbackTo404Resources = path =>
+  (hasPageResourceMap || inInitialRender) && path !== `/404.html`
+
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
 // we load all resources for likely-to-be-visited paths.
@@ -269,7 +287,7 @@ const queue = {
     const page = findPage(path)
     if (page) {
       return pathScriptsCache[page.path]
-    } else if (path !== `/404.html`) {
+    } else if (shouldFallbackTo404Resources(path)) {
       return queue.getResourcesForPathnameSync(`/404.html`)
     } else {
       return null
@@ -281,9 +299,6 @@ const queue = {
   // and getting resources for page changes.
   getResourcesForPathname: path =>
     new Promise((resolve, reject) => {
-      const doingInitialRender = inInitialRender
-      inInitialRender = false
-
       // Production code path
       if (failedPaths[path]) {
         handleResourceLoadError(
@@ -311,10 +326,10 @@ const queue = {
       }
 
       if (!page) {
-        console.log(`A page wasn't found for "${path}"`)
+        if (shouldFallbackTo404Resources(path)) {
+          console.log(`A page wasn't found for "${path}"`)
 
-        // Preload the custom 404 page
-        if (path !== `/404.html`) {
+          // Preload the custom 404 page
           resolve(queue.getResourcesForPathname(`/404.html`))
           return
         }
@@ -390,15 +405,18 @@ const queue = {
 
           // Tell plugins the path has been successfully prefetched
           onPostPrefetchPathname(path)
-
-          if (doingInitialRender) {
-            // We got all resources needed for first mount,
-            // we can fetch resoures for all pages.
-            fetchPageResourceMap()
-          }
         })
       }
     }),
+}
+
+export const postInitialRenderWork = () => {
+  inInitialRender = false
+  if (process.env.NODE_ENV === `production`) {
+    // We got all resources needed for first mount,
+    // we can fetch resoures for all pages.
+    fetchPageResourceMap()
+  }
 }
 
 export const setApiRunnerForLoader = runner => {
