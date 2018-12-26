@@ -1,15 +1,17 @@
 ---
-title: Develop & Deploy Your Own React Monorepo App in Under 2 Hours, Using Lerna, Travis & Now
+title: Develop & Deploy Your Own Gatsby Monorepo App in Under 2 Hours, Using Lerna, Travis & Now
 date: 2018-12-26
 author: Andrico Karoulla
 tags:
-  - apps
-  - web apps
-  - applications
-  - deployment
-  - testing
-  - CI
-  - continuous integration
+  [
+    "apps",
+    "web apps",
+    "applications",
+    "deployment",
+    "testing",
+    "CI",
+    "continuous integration",
+  ]
 excerpt: Learn how to create a balanced lasagna instead of a tangled mess of spaghetti.
 ---
 
@@ -17,13 +19,11 @@ excerpt: Learn how to create a balanced lasagna instead of a tangled mess of spa
 
 ### Foreword
 
-Please put aside time for this tutorial and make sure you’ve got a good hour or two free from distractions. If I’ve done my job right, you’ll improve your general knowledge of web architecture. You’ll also be introduced to new tools whose strengths you can leverage in the wild. If you’ve used any, or all, of these tools before, then getting up and running won’t take as long. But for those unfamiliar with Lerna, Travis or Now, you’ll likely find a few traps along the way, as I did during my journey writing this tutorial. I’ve got a troubleshooting section at the end of the article for common problems, so refer to it at any time. That said, enjoy and I hope you gain a lot from this article.
+This tutorial will take about two hours to complete. If you're unfamiliar with Lerna, Travis or Now, you may fall into a few traps, but it's all part of the learning process! I’ve included a troubleshooting section at the end of the article for common problems, so refer to it at any time.
 
 ### Introduction
 
 If you work alone or in a small team, you’re likely to have started working on small programs that slowly grow complex and convoluted. Shit happens and you’ll soon find that your perfectly balanced lasagna evolves into a heaped bowlful of spaghetti.
-
-Note: I'm running a [Gatsby workshop](https://www.eventbrite.com/e/gatsbyjs-workshop-develop-and-deploy-your-own-blog-tickets-52432622385?aff=GatsbyBlog) in London, February 2019.
 
 The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of css style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be an arse-ache to keep track of. These are some of the problems monorepos solve.
 
@@ -63,7 +63,7 @@ Go to your GitHub account and create a new repo, this’ll be the repo that you 
 Run the code that GitHub outputs when creating a new repo:
 
 ```
-git remote add origin git@github.com:andrico1234/lerna-monorepo-runthrough.git
+git remote add origin git@github.com:<account-name>/lerna-monorepo-starter.git
 git push -u origin master
 ```
 
@@ -374,7 +374,7 @@ You can stop the tutorial now and you’ll have a working knowedge of when, how 
 
 ### Part Two: Claire (Deployment)
 
-Let’s take a second to reflect on where we are right now. We’ve managed to start with a single application with two discrete sections and split them apart in a monorepo. This is allows us to _separate the concerns_ and share reusable components.
+Let’s take a second to reflect on where we are right now. We’ve managed to start with a single application with two discrete sections and split them apart in a monorepo. This allows us to _separate the concerns_ and share reusable components.
 
 There are two parts to this section, our Continuous Integration (CI) pipeline and the site’s deployment. Our CI pipeline will be used to automate a series of checks to ensure our tests pass and our build compiles. If either of these, or any part of the pipeline, fails then our site won’t deploy. The second part is how we deal with a successful build, and that’s deployment! If everything passes, our site will deploy using Now, where it will be hosted for the world to see on the interwebs.
 
@@ -553,17 +553,9 @@ Adding to your arsenal of web architecture tools is an excellent way of improvin
 
 If you enjoyed the article then please reach out to me on [twitter](https://twitter.com/andricokaroulla?lang=en)!
 
-### You can also check out my other articles below:
+I also have a variety of JavaScript related articles [here](https://medium.com/@andricokaroulla)
 
-[How to use Apollo’s brand new Query components to manage local state](https://medium.com/@andricokaroulla/updated-for-apollo-v2-1-managing-local-state-with-apollo-d1882f2fbb7)
-
-[Add a touch of Suspense to your web app with React.lazy()](https://codeburst.io/add-a-touch-of-suspense-to-your-web-app-with-react-lazy-374e66ee05af)
-
-[No need to wait for the holidays, start Decorating now](https://codeburst.io/no-need-to-wait-for-the-holidays-start-decorating-now-67b9dabd60d7)
-
-[Managing local state with Apollo and Higher Order Components](https://itnext.io/managing-local-state-with-apollo-client-3be522258645)
-
-[The React Conference drinking game](https://medium.com/@andricokaroulla/the-react-conference-drinking-game-7a996bfbef3)
+I'm also running a [Gatsby workshop](https://www.eventbrite.com/e/gatsbyjs-workshop-develop-and-deploy-your-own-blog-tickets-52432622385?aff=GatsbyBlog) in London, February 2019.
 
 ### Troubleshooting
 
