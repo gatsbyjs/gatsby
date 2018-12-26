@@ -10,7 +10,7 @@ and "transformer" plugins.
 - **Transformer** plugins "transform" data provided by source plugins into new
   nodes and/or node fields.
 
-This doc is concerned with transformer plugins.
+ This doc focuses on transformer plugins.
 
 ## What do transformer plugins do?
 
