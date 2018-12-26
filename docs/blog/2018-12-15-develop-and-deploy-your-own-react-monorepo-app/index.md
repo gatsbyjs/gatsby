@@ -10,10 +10,10 @@ tags:
   - testing
   - CI
   - continuous integration
-excerpt: Learn how to create a balanced Lasagna instead of a tangled mess of Spaghetti.
+excerpt: Learn how to create a balanced lasagna instead of a tangled mess of spaghetti.
 ---
 
-## Learn how to create a balanced Lasagna instead of a tangled mess of Spaghetti.
+## Learn how to create a balanced lasagna instead of a tangled mess of spaghetti.
 
 ### Foreword
 
@@ -21,7 +21,7 @@ Please put aside time for this tutorial and make sure you’ve got a good hour o
 
 ### Introduction
 
-If you work alone or in a small team, you’re likely to have started working on small programs that slowly grow complex and convoluted. Shit happens and you’ll soon find that your perfectly balanced Lasagna evolves into a heaped bowlful of Spaghetti.
+If you work alone or in a small team, you’re likely to have started working on small programs that slowly grow complex and convoluted. Shit happens and you’ll soon find that your perfectly balanced lasagna evolves into a heaped bowlful of spaghetti.
 
 Note: I'm running a [Gatsby workshop](https://www.eventbrite.com/e/gatsbyjs-workshop-develop-and-deploy-your-own-blog-tickets-52432622385?aff=GatsbyBlog) in London, February 2019.
 
@@ -38,7 +38,7 @@ With monorepos the code is split into specific packages (aisles). Meaning you ca
 Everything is accessible from a single place, while still being organised enough to navigate painlessly.
 Enough with the theory, let’s move on to the tutorial, which is split into 2 sections: development and deployment.
 
-Development — We’ll configure an existing application, built with Gastby, into a monorepo. If you haven’t heard of Gatsby before, then take some time to [read up on it](https://www.gatsbyjs.org/). I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it. Another tool we’ll use is [Lerna](https://github.com/lerna/lerna), which will manage the dependencies of our project. Lerna will also allow us to link packages together which we’ll use to share components.
+Development — We’ll configure an existing application, built with Gatsby, into a monorepo. If you haven’t heard of Gatsby before, then take some time to [read up on it](https://www.gatsbyjs.org/). I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it. Another tool we’ll use is [Lerna](https://github.com/lerna/lerna), which will manage the dependencies of our project. Lerna will also allow us to link packages together which we’ll use to share components.
 
 Deployment — After we’ve converted our app into a monorepo we’ll hook our GitHub account to Travis-CI and create a CI pipeline. The CI pipeline will test, build and deploy our application. W̵e̵’̵l̵l̵ ̵b̵e̵ ̵u̵s̵i̵n̵g̵ ̵H̵e̵r̵o̵k̵u̵ ̵̵to h̵andle-d̵e̵p̵l̵o̵y̵m̵e̵n̵t̵s ̵t̵o̵o̵l̵ ̵b̵e̵c̵a̵u̵s̵e̵ ̵i̵t̵’̵s̵ ̵e̵a̵s̵y̵ ̵t̵o̵ ̵u̵s̵e̵,̵ ̵f̵l̵e̵x̵i̵b̵l̵e̵ ̵a̵n̵d̵ ̵i̵n̵t̵e̵g̵r̵a̵t̵e̵s̵ ̵r̵e̵a̵l̵l̵y̵ ̵w̵e̵l̵l̵ ̵w̵i̵t̵h̵ ̵T̵r̵a̵v̵i̵s̵-̵C̵I̵.̵ I changed my mind after spending three days trying to get my Monorepo deployed with Heroku, and managed it in an hour with Now. So we’re using Now!
 
@@ -132,13 +132,15 @@ In `packages/shared-ui`, create a new directory called `layouts/PrimaryLayouts`.
 
 Back in the `src/layouts` file we can get rid of everything and replace it with this:
 
-```
-import React from 'react'
-import PropTypes from 'prop-types'
+```jsx:title=layout/index.js
+import React from "react"
+import PropTypes from "prop-types"
 
-import { PrimaryLayout } from '../../packages/shared-ui'
+import { PrimaryLayout } from "../../packages/shared-ui"
 
-const Layout = ({ children, data }) => <PrimaryLayout children={children} data={data} />;
+const Layout = ({ children, data }) => (
+  <PrimaryLayout children={children} data={data} />
+)
 
 Layout.propTypes = {
   children: PropTypes.func,
@@ -159,14 +161,14 @@ export const query = graphql`
 
 Once that’s done update the export statements in `the shared-ui/index.js` file to look like the following.
 
-```
-export { default as theme } from './theme';
+```jsx:title=index.js
+export { default as theme } from "./theme"
 
-export { default as Button } from './components/Button';
-export { default as Header } from './components/Header';
-export { ItemCard, ItemCardWrapper } from './components/ItemCard';
+export { default as Button } from "./components/Button"
+export { default as Header } from "./components/Header"
+export { ItemCard, ItemCardWrapper } from "./components/ItemCard"
 
-export { default as PrimaryLayout } from './layouts/PrimaryLayouts';
+export { default as PrimaryLayout } from "./layouts/PrimaryLayouts"
 ```
 
 Your packages folder hierarchy should look like this now
@@ -200,7 +202,7 @@ Just make sure the Header import for your `PrimaryLayout/index.js` is as follows
 
 Now we’ve got this working, we want to take it one step further and make the shared-ui behave in the same way a public package does. Create a `package.json` file inside of the `shared-ui` package and add the following:
 
-```
+```jsx:title=package.json
 {
   name: "@lerna-monorepo/shared-ui",
   description: "Lerna monorepo starter",
@@ -244,7 +246,7 @@ gatsby-node.js — We’ll only know whether everything works or if our site
 
 package.json- Add the following to the `package.json` file:
 
-```
+```jsx:title=package.json
 {
   name: "@lerna-monorepo/blog",
   description: "Lerna monorepo starter",
@@ -283,7 +285,7 @@ Once you’ve done this, try navigating to the `packages/blog` directory and run
 
 Here’s the `package.json` file for the shop package:
 
-```
+```jsx:title=package.json
 {
   name: "@lerna-monorepo/shop",
   description: "Lerna monorepo finisher",
@@ -322,7 +324,7 @@ We’ll resolve the first issue by creating a top level script that runs both th
 
 Add the following to the scripts block of your top level `package.json` file.
 
-```
+```jsx:title=package.json
 "scripts": {
   "run:blog": "cd packages/blog && yarn develop",
   "run:shop": "cd packages/shop && yarn develop",
@@ -348,10 +350,10 @@ Leave the production file alone for now and repeat for blog package, just change
 
 Now add the following code to the top of your `gatsby-config.js` file in your shop package.
 
-```
-const activeEnv = process.env.ACTIVE_ENV | 'development'
+```jsx:title=gatsby-config.js
+const activeEnv = process.env.ACTIVE_ENV | "development"
 
-require('dotenv').config({
+require("dotenv").config({
   path: `.env.${activeEnv}`,
 })
 ```
@@ -382,7 +384,7 @@ Once you’ve done this we’ll create our `.travis.yml` which outlines the step
 
 In the root of your project create a file named `.travis.yml`. And please, please, pleaaase make sure you’ve spelt the file name correctly. I was racking my head for the best part of an hour wondering why my build wasn’t running, only to discover I had left out the leading period in the `.travis.yml`.
 
-```
+```yaml:title=.travis.yml
 language: node_js
 node_js:
   - "10.9.0"
@@ -394,12 +396,12 @@ Once you’ve done this, commit your changes and push them forward. Travis shoul
 
 You should be getting feedback from Travis about your builds, and that they’re failing. This is expected as by default, travis runs a `yarn test` as part of its pipeline. We have no tests so error code 1 is thrown causing the pipeline to fail. To get this passing, we’ll add a token test to our codebase. In `blog/src/pages` create a new file `blogitem.test.js` and add the following:
 
-```
-import React from 'react'
-import { shallow } from 'enzyme'
-import BlogItem from './blogItem'
+```jsx:title=blogItem.test.js
+import React from "react"
+import { shallow } from "enzyme"
+import BlogItem from "./blogItem"
 
-describe('Layout component', () => {
+describe("Layout component", () => {
   const mockProps = {
     pathContext: {
       data: {
@@ -410,7 +412,7 @@ describe('Layout component', () => {
     },
   }
 
-  it('should render', () => {
+  it("should render", () => {
     const wrapper = shallow(<BlogItem {...mockProps} />)
 
     expect(wrapper)
@@ -424,7 +426,7 @@ Note: you’ll likely need `react-router-dom` specified as a dependency to get t
 
 Before we push, we need to make a couple more changes to our pipeline. Update your `.travis.yml` file so it looks like the following:
 
-```
+```yml:title=travis.yml
 language: node_js
 node_js:
   - "10.9.0"
@@ -478,7 +480,7 @@ Travis-CI isn’t permitted to deploy to your Now account by default, and requir
 
 We’ll add the final part of our pipeline now, which deals with deployment. Make sure your `.travis.yml` file looks like the following, and we’ll run through the additions.
 
-```
+```yml:title=.travis.yml
 language: node_js
 node_js:
   - "10.9.0"
@@ -491,10 +493,10 @@ install:
 
 matrix:
   include:
-  - name: Blog Pipeline
-    env: PACKAGE_LOCATION=packages/blog PACKAGE_NAME=lerna-monorepo-blog
-  - name: Shop Pipeline
-    env: PACKAGE_LOCATION=packages/shop PACKAGE_NAME=lerna-monorepo-shop
+    - name: Blog Pipeline
+      env: PACKAGE_LOCATION=packages/blog PACKAGE_NAME=lerna-monorepo-blog
+    - name: Shop Pipeline
+      env: PACKAGE_LOCATION=packages/shop PACKAGE_NAME=lerna-monorepo-shop
 
 script:
   - cd $PACKAGE_LOCATION
@@ -517,14 +519,14 @@ Note that we’ve added some additional environment variables to our matrix so a
 
 We have to do add a little bit of configuration on our side to ensure that Now hosts our sites correctly. The config comes in the form of a `now.json` file, which outlines the options we want Now to use when deploying our site. Go into the directory for our blog packages and create a `now.json` file. We want to let Now know that we’re deploying a static site, the entry directory to the static site, and what alias we want to assign our site. Put this inside your `now.json` file.
 
-```
+```jsx:title=now.json
 {
-  type: "static",
-  alias: "lerna-monorepo-blog",
-  static: {
-    public: "public"
+  "type": "static",
+  "alias": "lerna-monorepo-blog",
+  "static": {
+    "public": "public"
   },
-  public: true
+  "public": true
 }
 ```
 
@@ -547,7 +549,7 @@ You should now be able to access the site and navigate easily between your shop 
 
 ### Thanks for reading!
 
-Adding to your arsenal of Web Architecture tools is an excellent way of improving your capabilities as a developer or engineer. Monorepos aren’t perfect but it might just work for your next project. Good luck.
+Adding to your arsenal of web architecture tools is an excellent way of improving your capabilities as a developer or engineer. Monorepos aren’t perfect but it might just work for your next project. Good luck.
 
 If you enjoyed the article then please reach out to me on [twitter](https://twitter.com/andricokaroulla?lang=en)!
 
