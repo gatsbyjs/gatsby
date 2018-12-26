@@ -163,7 +163,7 @@ class ClientFetchingExample extends Component {
             style={{ width: 300 }}
           />
         </div>
-        // highlight-start
+         {/* highlight-start */}
         <div>
           {this.state.loading ? (
             <p>Please hold, pupper incoming!</p>
