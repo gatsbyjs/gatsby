@@ -20,7 +20,7 @@ Transformer plugins "transform" data of one type into another type. You'll often
 
 ## Transformer plugin example
 
-The [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) plugin "transforms" markdown nodes (fetched for example from the filesystem source plugin) into html and provides additional node details such as for example the `timeToRead` the `tableOfContents` and the `excerpt`.
+ The [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) plugin "transforms" markdown nodes (typically fetched from the `gatsby-source-filesystem` plugin) into html and provides additional node fields, for example: `timeToRead`, `tableOfContents`, `excerpt`, etc.
 
 ## What does the code look like?
 
