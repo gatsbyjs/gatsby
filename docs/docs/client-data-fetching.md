@@ -210,7 +210,7 @@ class ClientFetchingExample extends Component {
 export default ClientFetchingExample
 ```
 
-That's it -- an example of querying for data at build time using the Gatsby layer, and dynamically requesting data on the client at run time.
+ That's it -- an example of querying for data at build time using the Gatsby GraphQL data layer and dynamically requesting data on the client at run time.
 
 ## Other resources
 
