@@ -39,7 +39,7 @@ As an example, let's partially rebuild a simplified `gatsby-transformer-yaml` di
 
 ### Make sure the data is sourced
 
-First, we make sure the file is sourced, using `gatsby-source-filesystem` in `gatsby-config.js`:
+First, in `gatsby-config.js`, use the `gatsby-source-filesystem` plugin to create File nodes.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -54,7 +54,7 @@ module.exports = {
 }
 ```
 
-Now if we query `allFile`...
+These are exposed in your graphql schema which you can query:
 
 ```graphql
 query {
@@ -73,7 +73,7 @@ query {
 }
 ```
 
-... We see we have the sourced file.
+Now you have a `File` node to work with:
 
 ```json
 {
@@ -99,7 +99,7 @@ query {
 
 ### Transform nodes of type `text/yaml`
 
-Now we can transform the sourced data by hooking into the `onCreateNode` API in `gatsby-node.js`.
+Now, transform the newly created `File` nodes by hooking into the `onCreateNode` API in `gatsby-node.js`.
 
 If you're following along in an example project, install the following packages:
 
