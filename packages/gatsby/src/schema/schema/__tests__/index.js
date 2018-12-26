@@ -43,7 +43,7 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
       type Frontmatter {
         title: String!
         date: Date!
-        authors: [Author] @link(by: "lastname")
+        authors: [Author!]! @link(by: "lastname")
         tags: [String]
         published: Boolean
       }
@@ -58,7 +58,7 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
         lastname: String
         firstname: String
         email: String
-        posts: [Markdown]
+        posts: [Markdown!]!
       }`,
       ]
       typeDefs.forEach(options.addTypeDefs)
@@ -112,6 +112,10 @@ describe(`Schema builder`, () => {
   let schema
   beforeAll(async () => {
     schema = await buildSchema()
+    require(`../../../redux`).store.dispatch({
+      type: `SET_SCHEMA`,
+      payload: schema,
+    })
   })
 
   it(`builds schema with root query fields`, async () => {

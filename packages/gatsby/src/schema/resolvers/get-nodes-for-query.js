@@ -7,8 +7,8 @@
  */
 
 const { schemaComposer } = require(`graphql-compose`)
+const { GraphQLNonNull } = require(`graphql`)
 
-// const { store } = require(`../../redux`)
 const { getNodesByType } = require(`../db`)
 const { dropQueryOperators } = require(`../query`)
 const { isProductionBuild } = require(`../utils`)
@@ -17,34 +17,20 @@ const { trackObjects } = require(`../utils/node-tracking`)
 const cache = new Map()
 const nodeCache = new Map()
 
-const getLinkResolver = (astNode, type) => {
-  const linkDirective = astNode.directives.find(
-    directive => directive.name.value === `link`
-  )
-  if (linkDirective) {
-    const { GraphQLList } = require(`graphql`)
-    const { findOne, findMany, link } = require(`./resolvers`)
-
-    const by = linkDirective.arguments.find(
-      argument => argument.name.value === `by`
-    ).value.value
-
-    return link({ by })(
-      type instanceof GraphQLList
-        ? findMany(type.ofType.name)
-        : findOne(type.name)
-    )
-  }
-  return null
+// TODO: Filter sparse arrays?
+const resolveValue = (value, filterValue, type) => {
+  const nullableType = type instanceof GraphQLNonNull ? type.ofType : type
+  // FIXME: We probably have to check that node data and schema are actually in sync,
+  // wrt arrays/scalars.
+  // return Array.isArray(value) && nullableType instanceof GraphQLList
+  return Array.isArray(value)
+    ? Promise.all(
+        value.map(item => resolveValue(item, filterValue, nullableType.ofType))
+      )
+    : prepareForQuery(value, filterValue, nullableType.getFields())
 }
 
-// TODO: Filter sparse arrays?
-const resolveValue = (value, filterValue, fieldTC) =>
-  Array.isArray(value)
-    ? Promise.all(value.map(item => resolveValue(item, filterValue, fieldTC)))
-    : prepareForQuery(value, filterValue, fieldTC)
-
-const prepareForQuery = (node, filter, tc) => {
+const prepareForQuery = (node, filter, fields) => {
   const queryNode = Object.entries(filter).reduce(
     async (acc, [fieldName, filterValue]) => {
       const node = await acc
@@ -52,15 +38,10 @@ const prepareForQuery = (node, filter, tc) => {
       // Continue and call the field resolver or not?
       if (node[fieldName] == null) return node
 
-      const { resolve, type, astNode } = tc.getFieldConfig(fieldName)
+      const { resolve, type } = fields[fieldName]
 
-      // FIXME: This is just to test if manually calling the link directive
-      // resolver would work (it does). Instead we should use the executable
-      // schema where the link resolvers are already added.
-      const resolver = (astNode && getLinkResolver(astNode, type)) || resolve
-
-      if (typeof resolver === `function`) {
-        node[fieldName] = await resolver(
+      if (typeof resolve === `function`) {
+        node[fieldName] = await resolve(
           node,
           {},
           {},
@@ -74,8 +55,7 @@ const prepareForQuery = (node, filter, tc) => {
       const value = node[fieldName]
 
       if (!isLeaf && value != null) {
-        const fieldTC = tc.getFieldTC(fieldName)
-        node[fieldName] = await resolveValue(value, filterValue, fieldTC)
+        node[fieldName] = await resolveValue(value, filterValue, type)
       }
 
       return node
@@ -100,8 +80,20 @@ const getNodesForQuery = async (type, filter) => {
     }
   }
 
-  // FIXME: Use schema from store (includes resolvers added by @link directive)
-  const tc = schemaComposer.getTC(type)
+  // Use executable schema from store (includes resolvers added by @link directive).
+  // Alternatively, call @link resolvers manually (@see 4f5df2dca5665d7d13da6daf456d5302fc9274b7).
+  const { GraphQLSchema } = require(`graphql`)
+  const { schema } = require(`../../redux`).store.getState()
+
+  // FIXME: In testing, when no schema is built yet, use schemaComposer.
+  // Should mock store in tests instead.
+  const fields =
+    schema instanceof GraphQLSchema
+      ? schema.getType(type).getFields()
+      : schemaComposer
+          .getTC(type)
+          .getType()
+          .getFields()
 
   const queryNodes = Promise.all(
     nodes.map(async node => {
@@ -114,7 +106,7 @@ const getNodesForQuery = async (type, filter) => {
         return nodeCache.get(cacheKey)
       }
 
-      const queryNode = prepareForQuery(node, filterFields, tc)
+      const queryNode = prepareForQuery(node, filterFields, fields)
 
       nodeCache.set(cacheKey, queryNode)
       trackObjects(await queryNode)
