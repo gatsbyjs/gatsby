@@ -1420,3 +1420,22 @@
     - Prettier integrated into ESLint
     - Jest for component testing
     - A few example components and pages with stories and simple site structure
+- url: https://gatsby-starter-event-calendar.netlify.com/
+  repo: https://github.com/EmaSuriano/gatsby-starter-event-calendar
+  description: Gatsby Starter to display information about events from Google Spreadsheets with Calendars
+  tags:
+    - Linting
+    - Styling:CSS-in-JS
+    - PWA
+    - SEO
+    - Theming
+    - Google Spreadsheet
+  features:
+    - Grommet
+    - Google Spreadsheet integration
+    - PWA
+    - A11y
+    - SEO
+    - Netlify Deployment Friendly
+    - ESLint with Airbnb's config
+    - Prettier integrated into ESLint
