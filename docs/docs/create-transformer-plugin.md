@@ -10,7 +10,10 @@ and "transformer" plugins.
 - **Transformer** plugins "transform" data provided by source plugins into new
   nodes and/or node fields.
 
- This doc focuses on transformer plugins.
+The purpose of this doc is to:
+
+1. Define what a Gatsby transformer plugin is, and
+2. Walk through a simplified reimplementation of an existing plugin, to demonstrate how to create a transformer plugin.
 
 ## What do transformer plugins do?
 
@@ -18,7 +21,7 @@ Transformer plugins "transform" data of one type into another type. You'll often
 
 This loose coupling between the data source and transformer plugins allow Gatsby developers to quickly assemble complex data transformation pipelines with little work.
 
-## What does the code look like?
+## How do you create a transformer plugin?
 
 Just like a source plugin, a transformer plugin is a normal NPM package. It has a `package.json` file with optional dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js APIs.
 
