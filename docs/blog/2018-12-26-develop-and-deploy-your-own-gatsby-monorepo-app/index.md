@@ -526,7 +526,8 @@ We have to do add a little bit of configuration on our side to ensure that Now h
   "static": {
     "public": "public"
   },
-  "public": true
+  "public": true,
+  "version": 1
 }
 ```
 
