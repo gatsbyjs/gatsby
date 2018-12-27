@@ -1424,7 +1424,6 @@
   repo: https://github.com/BoyWithSilverWings/gatsby-blog-starter
   description: Minimal Blog Starter Template with Styled Components.
   tags:
-    - MDX
     - Markdown
     - Styled Components
     - Styling:CSS-in-JS
