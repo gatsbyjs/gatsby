@@ -271,7 +271,7 @@ function isLocalGatsbySite() {
   return inGatsbySite
 }
 
-module.exports = (argv, handlers) => {
+module.exports = argv => {
   let cli = yargs()
   let isLocalSite = isLocalGatsbySite()
 
