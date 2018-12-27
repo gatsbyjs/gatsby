@@ -8,6 +8,11 @@ Sometimes, you need to create a site with gated content, available only to authe
 
 You should have already configured your environment to be able to use the `gatsby-cli`. A good starting point is the [main tutorial](/tutorial).
 
+You'll also need to have `react-helmet` installed.
+```shell
+npm install --save react-helmet
+```
+
 ## Security notice
 
 In production, you should use a tested and robust solution to handle the authentication. [Auth0](https://www.auth0.com), [Firebase](https://firebase.google.com), and [Passport.js](http://passportjs.org) are good examples. This tutorial will only cover the authentication workflow, but you should take the security of your app as seriously as possible.
@@ -68,9 +73,7 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
 
-import Header from "./header"
 import NavBar from "./navBar" // highlight-line
-import "./layout.css"
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -94,7 +97,6 @@ const Layout = ({ children }) => (
         >
           <html lang="en" />
         </Helmet>
-        <Header siteTitle={data.site.siteMetadata.title} />
         <div
           style={{
             margin: "0 auto",
