@@ -1,4 +1,16 @@
-const sharp = require(`sharp`)
+let sharp
+
+try {
+  sharp = require(`sharp`)
+} catch (error) {
+  // Bail early if sharp isn't working
+  reportError(
+    `Sharp doesn't seem to have been built or installed correctly`,
+    error
+  )
+  process.exit(1)
+}
+
 const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
 const { promisify } = require(`bluebird`)
