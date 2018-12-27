@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const SizePlugin = require(`size-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -252,6 +253,7 @@ module.exports = async (
               )
             },
           },
+          new SizePlugin(),
         ])
         break
       }
