@@ -182,7 +182,7 @@ the extension `.spec.js` or `.test.js`. The decision comes down to your own
 taste. For this guide you will be testing the `<Bio />` component, so create a
 `Bio.test.js` file next to it in `src/components`:
 
-```js:title=src/components/Bio.test.js
+```js:title=src/components/bio.test.js
 import React from "react"
 import renderer from "react-test-renderer"
 import Bio from "./Bio"

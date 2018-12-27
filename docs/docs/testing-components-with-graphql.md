@@ -227,7 +227,7 @@ test.
 Here is the example of a header component that queries the page data itself,
 rather than needing it to be passed from the layout:
 
-```jsx:title=src/components/Header.js
+```jsx:title=src/components/header.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 
@@ -256,7 +256,7 @@ export default props => (
 This is almost ready: all you need to do is export the pure component that you
 are passing to StaticQuery. Rename it first to avoid confusion:
 
-```jsx:title=src/components/Header.js
+```jsx:title=src/components/header.js
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
@@ -300,7 +300,7 @@ This means it's very easy to test, and a snapshot should never change.
 
 Here's how:
 
-```js:title=src/components/Header.test.js
+```js:title=src/components/header.test.js
 import React from "react"
 import renderer from "react-test-renderer"
 import { PureHeader as Header } from "./Header"
