@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Img from "gatsby-image"
-import CommunityHeader from "../views/community/community-header"
-import Badge from "../views/community/badge"
+import CreatorsHeader from "../views/creators/creators-header"
+import Badge from "../views/creators/badge"
 import presets, { colors } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
@@ -83,7 +83,7 @@ class CreatorTemplate extends Component {
         <Helmet>
           <title>{creator.name}</title>
         </Helmet>
-        <CommunityHeader submissionText="Add Yourself" />
+        <CreatorsHeader submissionText="Add Yourself" />
         <main
           role="main"
           css={{

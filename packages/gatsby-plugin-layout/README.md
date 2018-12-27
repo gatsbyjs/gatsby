@@ -46,6 +46,8 @@ module.exports = {
 ];
 ```
 
+Once the plugin is added, you don't need to manually wrap your pages with the Layout component. The plugin does this automatically.
+
 ## Why would you want to reimplement the V1 layout behavior?
 
 There are a few scenarios where it makes sense to reimplement the V1 layout handling:

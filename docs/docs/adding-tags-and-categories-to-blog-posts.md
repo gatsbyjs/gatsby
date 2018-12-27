@@ -42,9 +42,9 @@ If `gatsby develop` is running, restart it so Gatsby can pick up the new fields.
 
 ## Write a query to get all tags for your posts
 
-Now these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
+Now, these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
 
-Try running in Graph<em>i</em>QL (`localhost:8000/___graphql`) the following query
+Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql`):
 
 ```graphql
 {
@@ -109,7 +109,7 @@ const Tags = ({ pageContext, data }) => {
 }
 
 Tags.propTypes = {
-  pathContext: PropTypes.shape({
+  pageContext: PropTypes.shape({
     tag: PropTypes.string.isRequired,
   }),
   data: PropTypes.shape({
@@ -241,7 +241,7 @@ import PropTypes from "prop-types"
 import kebabCase from "lodash/kebabCase"
 
 // Components
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 
 const TagsPage = ({

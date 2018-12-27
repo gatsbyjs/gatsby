@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.3"></a>
+
+## [0.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/cypress-gatsby-commands/compare/cypress-gatsby@0.1.2...cypress-gatsby@0.1.3) (2018-12-24)
+
+### Bug Fixes
+
+- **gatsby:** handle missing pages metadata chunk ([#10507](https://github.com/gatsbyjs/gatsby/tree/master/packages/cypress-gatsby-commands/issues/10507)) ([b9411d8](https://github.com/gatsbyjs/gatsby/tree/master/packages/cypress-gatsby-commands/commit/b9411d8))
+
 <a name="0.1.2"></a>
 
 ## [0.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/cypress-gatsby-commands/compare/cypress-gatsby@0.1.1...cypress-gatsby@0.1.2) (2018-10-02)
