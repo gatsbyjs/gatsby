@@ -227,6 +227,7 @@ function buildLocalCommands(cli, isLocalSite) {
             System: [`OS`, `CPU`, `Shell`],
             Binaries: [`Node`, `npm`, `Yarn`],
             Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
+            Languages: [`Python`],
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
           },
