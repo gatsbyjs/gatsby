@@ -45,7 +45,7 @@ export const query = graphql`
 
 This defines a fragment named `SiteInformation`. Now it can be used from within the page's GraphQL query:
 
-```jsx:title=src/pages/Main.jsx
+```jsx:title=src/pages/main.jsx
 import React from "react"
 import { graphql } from "gatsby"
 import IndexPost from "../components/IndexPost"
