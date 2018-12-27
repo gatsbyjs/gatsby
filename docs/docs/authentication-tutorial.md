@@ -9,6 +9,7 @@ Sometimes, you need to create a site with gated content, available only to authe
 You should have already configured your environment to be able to use the `gatsby-cli`. A good starting point is the [main tutorial](/tutorial).
 
 You'll also need to have `react-helmet` installed.
+
 ```shell
 npm install --save react-helmet
 ```
