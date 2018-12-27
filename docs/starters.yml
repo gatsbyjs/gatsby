@@ -1428,7 +1428,7 @@
     - Styling:CSS-in-JS
     - Blog
   features:
-    - Gatsby MDX for JSX in Markdown loading, parsing, and rendering of pages
+    - Markdown loading, parsing, and rendering of pages
     - Minimal UI for blog
     - Styled-components for CSS-in-JS
     - Prettier added as pre-commit hook
