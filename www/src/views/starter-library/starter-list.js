@@ -62,7 +62,6 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             owner,
             slug,
             stars,
-            stub,
           } = starter.fields.starterShowcase
           const { url: demoUrl } = starter
 
