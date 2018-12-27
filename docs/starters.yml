@@ -1425,7 +1425,6 @@
   description: Minimal Blog Starter Template with Styled Components.
   tags:
     - Markdown
-    - Styled Components
     - Styling:CSS-in-JS
     - Blog
   features:
