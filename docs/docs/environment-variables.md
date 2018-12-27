@@ -131,7 +131,7 @@ module.exports = {
 - `NODE_ENV`
 - `PUBLIC_DIR`
 
-Gatsby also allows you to specify another enviroment variable when runnng in `development`: 
+ Gatsby also allows you to specify another enviroment variable when running the local development server (e.g. `gatsby develop`): 
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
