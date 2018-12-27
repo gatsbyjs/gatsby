@@ -1420,3 +1420,18 @@
     - Prettier integrated into ESLint
     - Jest for component testing
     - A few example components and pages with stories and simple site structure
+- url: https://devchico.com/gatsby-starter-cv/
+  repo: https://github.com/santosfrancisco/gatsby-starter-cv
+  description: A simple starter to get up and developing your digital curriculum with GatsbyJS'
+  tags:
+    - Styling:CSS-in-JS
+    - PWA
+    - Onepage
+  features:
+    - Gatsby v2
+    - Based on default starter
+    - Google Analytics
+    - Web App Manifest
+    - SEO
+    - Styling with styled-components
+    - Responsive Design, optimized for Mobile devices
