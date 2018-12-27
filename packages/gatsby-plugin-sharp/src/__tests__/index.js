@@ -45,6 +45,29 @@ describe(`gatsby-plugin-sharp`, () => {
       // We expect value to be rounded to 1
       expect(result.height).toBe(1)
     })
+
+    it(`file name works with spaces & special characters`, async () => {
+      // test name encoding with various characters
+      const testName = `spaces and '"@#$%^&,`
+
+      const queueResult = await queueImageResizing({
+        file: getFileObject(
+          path.join(__dirname, `images/144-density.png`),
+          testName
+        ),
+        args: { width: 3 },
+      })
+
+      const queueResultName = path.parse(queueResult.src).name
+
+      // decoding to check for outputting same name
+      expect(decodeURIComponent(queueResultName)).toBe(testName)
+
+      // regex for special characters above and spaces
+      // testname should match, the queue result should not
+      expect(testName.match(/[!@#$^&," ]/)).not.toBe(false)
+      expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
+    })
   })
 
   describe(`fluid`, () => {
@@ -298,10 +321,10 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 })
 
-function getFileObject(absolutePath) {
+function getFileObject(absolutePath, name = `test`) {
   return {
     id: `${absolutePath} absPath of file`,
-    name: `test`,
+    name: name,
     absolutePath,
     extension: `png`,
     internal: {
