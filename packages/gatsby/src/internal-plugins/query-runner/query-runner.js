@@ -87,11 +87,11 @@ ${formatErrorDetails(errorDetails)}`)
     // Remove potentially unsafe characters. This increases chances of collisions
     // slightly but it should still be very safe + we get a shorter
     // url vs hex.
-    .replace(/[^a-zA-Z0-9-_]/g, ``)
+    .replace(/[^a-zA-Z0-9-_]/g, ``);
 
   let dataPath
   if (queryJob.isPage) {
-    dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
+    dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`.toLowerCase()
   } else {
     dataPath = queryJob.hash
   }
