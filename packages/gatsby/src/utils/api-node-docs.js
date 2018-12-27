@@ -275,7 +275,7 @@ exports.onPostBuild = true
  * Run before GraphQL queries/fragments are extracted from JavaScript files. Useful for plugins
  * to add more JavaScript files with queries/fragments e.g. from node_modules.
  *
- * See gatsby-transformer-remark and gatsby-source-contentful for examples.
+ * See gatsby-transformer-sharp and gatsby-source-contentful for examples.
  */
 exports.onPreExtractQueries = true
 
