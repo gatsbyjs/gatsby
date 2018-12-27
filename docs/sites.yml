@@ -3817,6 +3817,14 @@
     - API
     - Documentation
   featured: false
+- title: klarna
+  url: https://developers.klarna.com/en/gb/kco-v3
+  main_url: https://developers.klarna.com/en/gb/kco-v3
+  description: Here you will find the integration guides, API documentation, and more to easily integrate with Klarna.
+  categories:
+    - API
+    - Documentation
+  featured: false
 - title: Sabbiu Shah
   main_url: https://sabbiushah.com.np
   url: https://sabbiushah.com.np
@@ -3830,11 +3838,4 @@
   featured: false
   built_by: Sabbiu Shah
   built_by_url: https://twitter.com/sabbiushah
-- title: klarna
-  url: https://developers.klarna.com/en/gb/kco-v3
-  main_url: https://developers.klarna.com/en/gb/kco-v3
-  description: Here you will find the integration guides, API documentation, and more to easily integrate with Klarna.
-  categories:
-    - API
-    - Documentation
-  featured: false
+  
