@@ -3817,3 +3817,11 @@
     - API
     - Documentation
   featured: false
+- title: klarna
+  url: https://developers.klarna.com/en/gb/kco-v3
+  main_url: https://developers.klarna.com/en/gb/kco-v3
+  description: Here you will find the integration guides, API documentation, and more to easily integrate with Klarna.
+  categories:
+    - API
+    - Documentation
+  featured: false
