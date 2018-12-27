@@ -1,12 +1,12 @@
-// const Promise = require(`bluebird`)
-// const _ = require(`lodash`)
 const asciidoc = require(`asciidoctor.js`)()
-// import asciidoc from 'asciidoctor.js'
 
-async function onCreateNode(
-  { node, actions, loadNodeContent, createNodeId, createContentDigest },
-  options
-) {
+async function onCreateNode({
+  node,
+  actions,
+  loadNodeContent,
+  createNodeId,
+  createContentDigest,
+}) {
   // Filter out non-adoc content
   if (!node.extension || node.extension !== `adoc`) {
     return
@@ -16,7 +16,7 @@ async function onCreateNode(
   // Load Asciidoc contents
   const content = await loadNodeContent(node)
   const html = asciidoc.convert(content)
-  
+
   const asciiNode = {
     id: createNodeId(`${node.id} >>> ASCIIDOC`),
     parent: node.id,
@@ -27,7 +27,6 @@ async function onCreateNode(
     },
     children: [],
     html,
-    relativePath: node.relativePath,
   }
 
   asciiNode.internal.contentDigest = createContentDigest(asciiNode)

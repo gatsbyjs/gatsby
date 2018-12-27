@@ -6,7 +6,6 @@ Parses AsciiDoc files using [Asciidoctor.js](https://asciidoctor.org/docs/asciid
 
 `npm install --save gatsby-transformer-asciidoc`
 
-
 ## How to use
 
 ```javascript
@@ -22,8 +21,7 @@ It recognizes files with the following extensions as AsciiDoc:
 
 - adoc
 
-Each Markdown file is parsed into a node of type `asciidoc`.
-
+Each AsciiDoc file is parsed into a node of type `asciidoc`.
 
 ## How to query
 
@@ -41,5 +39,3 @@ A sample GraphQL query to get AsciiDoc nodes:
   }
 }
 ```
-
-## Troubleshooting
