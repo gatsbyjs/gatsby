@@ -1451,3 +1451,15 @@
     - Image Optimisation
     - Code Styling and Formatting in markdown
     - Responsive Design
+- url: https://inspiring-me-lwz7512.netlify.com/
+  repo: https://github.com/lwz7512/gatsby-netlify-identity-starter
+  description: Gatsby Netlify Identity Starter with NIW auth support, and content gating, as well as responsive layout.
+  tags:
+    - Netlify Identity
+    - Pagination
+  features:
+    - Mobile Screen support
+    - Privacy control for post content view & profile page
+    - User authentication by Netlify Identity Widget/Service
+    - Pagination for posts
+    - Navigation menu with active status
