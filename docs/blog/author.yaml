@@ -189,6 +189,9 @@
   bio: Early stage software product consultant. React*, Go, GraphQL, Containers, k8s.
   avatar: avatars/chris-biscardi.png
   twitter: "@chrisbiscardi"
+- id: Tyler Barnes
+  bio: React - front-end dev - cycling - music
+  avatar: avatars/tyler-barnes.jpg
 - id: swyx
   bio: Infinite Builder working on DX @ Netlify. Helping people Learn In Public at /r/reactjs
   avatar: avatars/swyx.jpg
