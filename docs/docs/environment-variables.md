@@ -131,11 +131,11 @@ module.exports = {
 - `NODE_ENV`
 - `PUBLIC_DIR`
 
- Gatsby also allows you to specify another enviroment variable when running the local development server (e.g. `gatsby develop`): 
+Gatsby also allows you to specify another enviroment variable when running the local development server (e.g. `gatsby develop`): 
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
- If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
+If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
 
 ## Additional Environments (Staging, Test, etc)
 
