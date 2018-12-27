@@ -21,7 +21,7 @@ module.exports = (modulePath, resolver = require.resolve) => {
 
   try {
     absPath = resolver(modulePath)
-  } catch (err) {
+  } catch {
     return exportNames // doesn't exist
   }
   const code = fs.readFileSync(absPath, `utf8`) // get file contents

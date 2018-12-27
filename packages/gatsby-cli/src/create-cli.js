@@ -40,7 +40,7 @@ function buildLocalCommands(cli, isLocalSite) {
         `package.json`
       ))
       majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
-    } catch (err) {
+    } catch {
       /* ignore */
     }
 
@@ -265,7 +265,7 @@ function isLocalGatsbySite() {
     inGatsbySite =
       (dependencies && dependencies.gatsby) ||
       (devDependencies && devDependencies.gatsby)
-  } catch (err) {
+  } catch {
     /* ignore */
   }
   return inGatsbySite

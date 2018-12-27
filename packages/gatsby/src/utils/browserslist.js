@@ -10,7 +10,7 @@ function installedGatsbyVersion(directory) {
       `package.json`
     ))
     return parseInt(version.split(`.`)[0], 10)
-  } catch (e) {
+  } catch {
     return undefined
   }
 }

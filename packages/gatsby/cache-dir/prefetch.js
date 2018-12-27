@@ -7,7 +7,7 @@ const support = function(feature) {
     if (fakeLink.relList && typeof fakeLink.relList.supports === `function`) {
       return fakeLink.relList.supports(feature)
     }
-  } catch (err) {
+  } catch {
     return false
   }
   return false

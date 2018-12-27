@@ -37,7 +37,7 @@ module.exports = async (program: any) => {
         // Remove the temp JS bundle file built for the static-site-generator-plugin
         try {
           fs.unlinkSync(outputFile)
-        } catch (e) {
+        } catch {
           // This function will fail on Windows with no further consequences.
         }
 

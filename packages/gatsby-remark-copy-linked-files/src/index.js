@@ -216,7 +216,7 @@ module.exports = (
           visitor(link)
           node.value = node.value.replace(new RegExp(url, `g`), link.url)
         }
-      } catch (err) {
+      } catch {
         // Ignore
       }
     }
@@ -249,7 +249,7 @@ module.exports = (
           if (!options.ignoreFileExtensions.includes(ext)) {
             generateImagesAndUpdateNode(element, node)
           }
-        } catch (err) {
+        } catch {
           // Ignore
         }
       }

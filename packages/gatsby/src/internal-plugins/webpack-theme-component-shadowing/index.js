@@ -63,7 +63,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           try {
             require.resolve(possibleComponentPath)
             return true
-          } catch (e) {
+          } catch {
             return false
           }
         })

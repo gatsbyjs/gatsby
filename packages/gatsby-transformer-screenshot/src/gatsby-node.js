@@ -103,7 +103,7 @@ exports.onCreateNode = async (
       parent: node,
       child: screenshotNode,
     })
-  } catch (e) {
+  } catch {
     return
   }
 }

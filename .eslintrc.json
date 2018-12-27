@@ -37,6 +37,7 @@
     "consistent-return": ["error"],
     "no-console": "off",
     "no-inner-declarations": "off",
+    "no-unused-vars": ["error", { "args": "none", "caughtErrors": "all" }],
     "prettier/prettier": "error",
     "quotes": ["error", "backtick"],
     "react/display-name": "off",

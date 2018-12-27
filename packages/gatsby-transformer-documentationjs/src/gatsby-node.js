@@ -74,7 +74,7 @@ exports.onCreateNode = async ({
     documentationJson = await documentation.build(node.absolutePath, {
       shallow: true,
     })
-  } catch (e) {
+  } catch {
     // Ignore as there'll probably be other tooling already checking for errors
     // and an error here kills Gatsby.
   }

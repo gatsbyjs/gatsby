@@ -49,7 +49,7 @@ export default function socketIo() {
             ___emitter.emit(msg.type, msg.payload)
           }
         })
-      } catch (err) {
+      } catch {
         console.error(`Could not connect to socket.io on dev server.`)
       }
     }

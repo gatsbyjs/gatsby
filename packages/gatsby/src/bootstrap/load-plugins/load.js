@@ -94,7 +94,7 @@ function resolvePlugin(pluginName) {
       name: packageJSON.name,
       version: packageJSON.version,
     }
-  } catch (err) {
+  } catch {
     throw new Error(
       `Unable to find plugin "${pluginName}". Perhaps you need to install its package?`
     )

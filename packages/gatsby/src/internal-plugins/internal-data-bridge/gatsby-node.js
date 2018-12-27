@@ -120,7 +120,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       delete require.cache[require.resolve(pathToGatsbyConfig)]
       const config = require(pathToGatsbyConfig)
       createGatsbyConfigNode(config)
-    } catch (e) {
+    } catch {
       // Restore the old cache since requiring the new gatsby-config.js failed.
       if (oldCache !== undefined) {
         require.cache[require.resolve(pathToGatsbyConfig)] = oldCache

@@ -5,6 +5,6 @@ try {
   if (process.platform !== `win32`) {
     execFileSync(flowBin, [`check`], { stdio: `inherit` })
   }
-} catch (e) {
+} catch {
   process.exit(1)
 }

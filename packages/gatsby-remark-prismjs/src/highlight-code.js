@@ -9,7 +9,7 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
   if (!Prism.languages[language]) {
     try {
       loadPrismLanguage(language)
-    } catch (e) {
+    } catch {
       // Language wasn't loaded so let's bail.
       if (language === `none`) {
         return code // Don't escape if set to none.

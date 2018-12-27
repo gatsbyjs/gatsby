@@ -1,7 +1,7 @@
 // Add Babel plugin
 try {
   require.resolve(`babel-plugin-styled-components`)
-} catch (e) {
+} catch {
   throw new Error(
     `'babel-plugin-styled-components' is not installed which is needed by plugin 'gatsby-plugin-styled-components'`
   )

@@ -47,7 +47,7 @@ module.exports = async (program: any, activity: any) => {
           try {
             fs.unlinkSync(outputFile)
             fs.unlinkSync(`${outputFile}.map`)
-          } catch (e) {
+          } catch {
             // This function will fail on Windows with no further consequences.
           }
           return resolve(null, stats)

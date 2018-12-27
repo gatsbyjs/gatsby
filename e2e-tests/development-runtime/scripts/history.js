@@ -11,7 +11,7 @@ exports.getHistory = async (file = HISTORY_FILE) => {
       .then(contents => JSON.parse(contents))
 
     return new Map(contents)
-  } catch (e) {
+  } catch {
     return new Map()
   }
 }

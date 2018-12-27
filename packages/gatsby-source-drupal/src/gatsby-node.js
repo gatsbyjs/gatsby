@@ -210,7 +210,7 @@ exports.sourceNodes = async (
             createNodeId,
             auth,
           })
-        } catch (e) {
+        } catch {
           // Ignore
         }
         if (fileNode) {

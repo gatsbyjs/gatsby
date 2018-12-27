@@ -237,7 +237,7 @@ module.exports = async (args: BootstrapArgs) => {
       await loki.start({
         saveFile: dbSaveFile,
       })
-    } catch (e) {
+    } catch {
       report.error(
         `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
       )
@@ -291,7 +291,7 @@ module.exports = async (args: BootstrapArgs) => {
           require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
         )
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
 

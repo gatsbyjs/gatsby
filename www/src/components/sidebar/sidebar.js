@@ -16,7 +16,7 @@ try {
   ls = global.localStorage
   ls.setItem(testKey, `test`)
   ls.removeItem(testKey)
-} catch (e) {
+} catch {
   hasLocalStorage = false
 }
 

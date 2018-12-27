@@ -64,7 +64,7 @@ function createErrorFromString(errorStr: string = ``, sourceMapFile: string) {
   error.name = `WebpackError`
   try {
     if (sourceMapFile) prepareStackTrace(error, sourceMapFile)
-  } catch (err) {
+  } catch {
     // don't shadow a real error because of a parsing issue
   }
   return error

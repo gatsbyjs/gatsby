@@ -54,7 +54,7 @@ module.exports = function getUnownedPackages({
         try {
           return !execSync(`npm view ${pkg.name} version`, { stdio: `pipe` })
             .stderr
-        } catch (e) {
+        } catch {
           return false
         }
       }

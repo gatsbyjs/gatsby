@@ -324,7 +324,7 @@ module.exports = async (program: any) => {
             lanUrlForConfig = undefined
           }
         }
-      } catch (_e) {
+      } catch {
         // ignored
       }
     }

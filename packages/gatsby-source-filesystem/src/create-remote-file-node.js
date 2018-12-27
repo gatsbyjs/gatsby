@@ -247,7 +247,7 @@ async function processRemoteNode({
     createNode(fileNode, { name: `gatsby-source-filesystem` })
 
     return fileNode
-  } catch (err) {
+  } catch {
     // ignore
   }
   return null

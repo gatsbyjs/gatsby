@@ -53,7 +53,7 @@ async function parseToAst(filePath, fileStr) {
   } else {
     try {
       ast = babelParseToAst(fileStr, filePath)
-    } catch (error) {
+    } catch {
       report.error(
         `There was a problem parsing "${filePath}"; any GraphQL ` +
           `fragments or queries in this file were not processed. \n` +

@@ -502,7 +502,7 @@ exports.downloadMediaFiles = async ({
                 modified: e.modified,
               })
             }
-          } catch (e) {
+          } catch {
             // Ignore
           }
         }

@@ -232,7 +232,7 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
   try {
     require.resolve(`gatsby-image`)
     gatsbyImageDoesNotExist = false
-  } catch (e) {
+  } catch {
     // Ignore
   }
 

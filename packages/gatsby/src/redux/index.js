@@ -47,7 +47,7 @@ try {
   if (initialState.nodes) {
     initialState.nodes = objectToMap(initialState.nodes)
   }
-} catch (e) {
+} catch {
   // ignore errors.
 }
 

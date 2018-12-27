@@ -8,7 +8,7 @@ export default class SessionStorage {
     try {
       const value = window.sessionStorage.getItem(stateKey)
       return JSON.parse(value)
-    } catch (e) {
+    } catch {
       console.warn(
         `[gatsby-react-router-scroll] Unable to access sessionStorage; sessionStorage is not available.`
       )
@@ -31,7 +31,7 @@ export default class SessionStorage {
 
     try {
       window.sessionStorage.setItem(stateKey, storedValue)
-    } catch (e) {
+    } catch {
       if (window && window[GATSBY_ROUTER_SCROLL_STATE]) {
         window[GATSBY_ROUTER_SCROLL_STATE][stateKey] = JSON.parse(storedValue)
       } else {
