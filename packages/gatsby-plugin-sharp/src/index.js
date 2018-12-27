@@ -394,7 +394,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${encodeURI(file.name)}.${fileExtension}`
+  const imgSrc = `/${file.name}.${fileExtension}`
   const dirPath = path.join(
     process.cwd(),
     `public`,
@@ -451,9 +451,13 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   queueJob(job, reporter)
 
+  // encode the file name for URL
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
+
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
-  const prefixedSrc = options.pathPrefix + `/static/${digestDirPrefix}` + imgSrc
+  const prefixedSrc =
+    options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
 
   return {
     src: prefixedSrc,
