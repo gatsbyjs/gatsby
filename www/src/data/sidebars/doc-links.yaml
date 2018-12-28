@@ -87,11 +87,9 @@
           link: /docs/sourcing-from-saas-services/
         - title: Sourcing from private APIs*
           link: /docs/sourcing-from-private-apis/
-        - title: Headless CMS
+        - title: Sourcing fom (headless) CMSs
           link: /docs/headless-cms/
           items:
-            - title: Sourcing from Netlify CMS
-              link: /docs/sourcing-from-netlify-cms/
             - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
@@ -100,6 +98,8 @@
               link: /docs/sourcing-from-contentful/
             - title: Sourcing from Prismic
               link: /docs/sourcing-from-prismic/
+            - title: Sourcing from Netlify CMS
+              link: /docs/sourcing-from-netlify-cms/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
@@ -141,7 +141,7 @@
       items:
         - title: Create a Starter*
           link: /docs/create-a-starter/
-    - title: Styling
+    - title: Styling your site
       link: /docs/styling/
       items:
         - title: Layout Components
@@ -160,7 +160,7 @@
           link: /docs/component-css/
         - title: PostCSS
           link: /docs/post-css/
-    - title: Testing
+    - title: Adding testing
       link: /docs/testing/
       items:
         - title: Unit testing
@@ -175,7 +175,7 @@
           link: /docs/testing-react-components/
         - title: Visual testing with Storybook
           link: /docs/visual-testing-with-storybook/
-    - title: Debugging
+    - title: Debugging Gatsby
       link: /docs/debugging/
       items:
         - title: Debugging HTML builds
@@ -186,11 +186,6 @@
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
-    - title: Use cases with Gatsby (including apps)
-      link: /docs/building-apps-with-gatsby/
-      items:
-        - title: Building a site with authentication
-          link: /docs/building-a-site-with-authentication/
     - title: Adding website functionality
       link: /docs/adding-website-functionality/
       items:
@@ -198,6 +193,8 @@
           link: /docs/adding-search/
         - title: Adding analytics
           link: /docs/adding-analytics/
+        - title: Adding authentication
+          link: /docs/building-a-site-with-authentication/
         - title: Adding forms
           link: /docs/adding-forms/
         - title: Adding a 404 Page
@@ -225,7 +222,7 @@
               link: /docs/centralizing-your-sites-navigation/
             - title: Rendering sidebar navigation dynamically*
               link: /docs/rendering-sidebar-navigation-dynamically/
-    - title: Performance
+    - title: Improving performance
       link: /docs/performance/
       items:
         - title: Progressive web app (PWA)
