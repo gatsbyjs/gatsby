@@ -13,13 +13,18 @@ async function onCreateNode(
   const { createNode, createParentChildLink } = actions
   // Load Asciidoc contents
   const content = await loadNodeContent(node)
+  // Load Asciidoc file for extracting
+  // https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/extract-api/
   const doc = await asciidoc.loadFile(node.absolutePath)
 
   try {
     const html = asciidoc.convert(content, pluginOptions)
+    // Use "partition" option to be able to get title, subtitle, combined
     const title = doc.getDocumentTitle({ partition: true })
+
     let revision = null
     let author = null
+
     if (doc.hasRevisionInfo()) {
       revision = {
         date: doc.getRevisionDate(),
@@ -32,16 +37,10 @@ async function onCreateNode(
       author = {
         fullName: doc.getAttribute(`author`),
         firstName: doc.getAttribute(`firstname`),
-        lastName: doc.getAttribute(`lastname`)
-          ? doc.getAttribute(`lastname`)
-          : ``,
-        middleName: doc.getAttribute(`middlename`)
-          ? doc.getAttribute(`middlename`)
-          : ``,
-        authorInitials: doc.getAttribute(`authorinitials`)
-          ? doc.getAttribute(`authorinitials`)
-          : ``,
-        email: doc.getAttribute(`email`) ? doc.getAttribute(`email`) : ``,
+        lastName: doc.getAttribute(`lastname`) || ``,
+        middleName: doc.getAttribute(`middlename`) || ``,
+        authorInitials: doc.getAttribute(`authorinitials`) || ``,
+        email: doc.getAttribute(`email`) || ``,
       }
     }
 
