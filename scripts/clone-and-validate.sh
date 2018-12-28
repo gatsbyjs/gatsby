@@ -25,7 +25,7 @@ for folder in $FOLDER/*; do
   # sync to read-only clones
   if [ "$CLONE" != false ]; then
     rm -rf yarn.lock
-    yarn import
+    yarn import # generate a new yarn.lock file based on package-lock.json
 
     git add .
     git commit --message "$COMMIT_MESSAGE"
