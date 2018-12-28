@@ -24,6 +24,7 @@ for folder in $FOLDER/*; do
   cp -r $BASE/$folder/. .
   
   # validate
+  npm audit
   npm install
   npm run build
 
