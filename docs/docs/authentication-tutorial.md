@@ -23,7 +23,7 @@ cd gatsby-auth
 
 Create a new component to hold the links. For now, it will act as a placeholder:
 
-```jsx:title=src/components/navBar.js
+```jsx:title=src/components/nav-bar.js
 import React from "react"
 import { Link } from "gatsby"
 
@@ -54,7 +54,7 @@ And create the layout component that will wrap all pages and display navigation 
 ```jsx:title=src/components/layout.js
 import React from "react"
 
-import NavBar from "./navBar"
+import NavBar from "./nav-bar"
 
 const Layout = ({ children }) => (
   <>
@@ -299,7 +299,7 @@ With the client-only routes in place, you must now refactor some files to accoun
 
 The navigation bar will show the user name and logout option to registered users:
 
-```jsx:title=src/components/navBar.js
+```jsx:title=src/components/nav-bar.js
 import React from "react"
 import { Link, navigate } from "gatsby" // highlight-line
 import { getUser, isLoggedIn, logout } from "../services/auth" // highlight-line
