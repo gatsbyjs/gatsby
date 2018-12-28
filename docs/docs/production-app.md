@@ -60,7 +60,7 @@ This is bundle produced from [production-app.js](https://github.com/gatsbyjs/gat
 
 ##### webpack-runtime-[contenthash].js
 
-This contains the small [webpack-runtime](https://webpack.js.org/concepts/manifest/#runtime) as a separate bundle (configured in `optimization` section). In practise, the app and webpack-runtime are always needed together.
+This contains the small [webpack-runtime](https://webpack.js.org/concepts/manifest/#runtime) as a separate bundle (configured in `optimization` section). In practice, the app and webpack-runtime are always needed together.
 
 ##### component---[name]-[contenthash].js
 
