@@ -25,10 +25,7 @@ describe(`navigation`, () => {
     cy.location(`pathname`).should(`equal`, `/`)
   })
 
-  /*
-   * Browser API onRouteUpdate is not triggered on a 404
-   */
-  it.skip(`displays 404 page on broken link`, () => {
+  it(`displays 404 page on broken link`, () => {
     cy.getTestElement(`broken-link`)
       .click()
       .waitForAPI(`onRouteUpdate`)

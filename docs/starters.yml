@@ -1420,6 +1420,49 @@
     - Prettier integrated into ESLint
     - Jest for component testing
     - A few example components and pages with stories and simple site structure
+- url: https://devchico.com/gatsby-starter-cv/
+  repo: https://github.com/santosfrancisco/gatsby-starter-cv
+  description: A simple starter to get up and developing your digital curriculum with GatsbyJS'
+  tags:
+    - Styling:CSS-in-JS
+    - PWA
+    - Onepage
+  features:
+    - Gatsby v2
+    - Based on default starter
+    - Google Analytics
+    - Web App Manifest
+    - SEO
+    - Styling with styled-components
+    - Responsive Design, optimized for Mobile devices
+- url: https://vigilant-leakey-a4f8cd.netlify.com/
+  repo: https://github.com/BoyWithSilverWings/gatsby-blog-starter
+  description: Minimal Blog Starter Template with Styled Components.
+  tags:
+    - Markdown
+    - Styling:CSS-in-JS
+    - Blog
+  features:
+    - Markdown loading, parsing, and rendering of pages
+    - Minimal UI for blog
+    - Styled-components for CSS-in-JS
+    - Prettier added as pre-commit hook
+    - Google Analytics
+    - Image Optimisation
+    - Code Styling and Formatting in markdown
+    - Responsive Design
+- url: https://inspiring-me-lwz7512.netlify.com/
+  repo: https://github.com/lwz7512/gatsby-netlify-identity-starter
+  description: Gatsby Netlify Identity Starter with NIW auth support, and content gating, as well as responsive layout.
+  tags:
+    - Netlify Identity
+    - Pagination
+  features:
+    - Mobile Screen support
+    - Privacy control for post content view & profile page
+    - User authentication by Netlify Identity Widget/Service
+    - Pagination for posts
+    - Navigation menu with active status
 - url: https://gatsby-starter-event-calendar.netlify.com/
   repo: https://github.com/EmaSuriano/gatsby-starter-event-calendar
   description: Gatsby Starter to display information about events from Google Spreadsheets with Calendars
@@ -1431,6 +1474,7 @@
     - Google Spreadsheet
   features:
     - Grommet
+    - Theming
     - Google Spreadsheet integration
     - PWA
     - A11y

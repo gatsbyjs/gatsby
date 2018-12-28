@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.77"></a>
+
+## [2.0.77](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.76...gatsby@2.0.77) (2018-12-27)
+
+### Bug Fixes
+
+- **gatsby:** wrap dev 404 component with route update ([#10653](https://github.com/gatsbyjs/gatsby/issues/10653)) ([754174d](https://github.com/gatsbyjs/gatsby/commit/754174d))
+
 <a name="2.0.76"></a>
 
 ## [2.0.76](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.75...gatsby@2.0.76) (2018-12-24)
