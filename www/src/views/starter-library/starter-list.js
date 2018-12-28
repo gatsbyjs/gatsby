@@ -78,7 +78,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 <ThumbnailLink
                   slug={`/starters${slug}`}
                   image={starter.childScreenshot}
-                  title={starter.name}
+                  title={name}
                 />
                 <div
                   css={{
@@ -109,7 +109,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                     </span>
                   </div>
                   <div>
-                    <Link to={`/starters/${stub}`}>
+                    <Link to={`/starters/${slug}`}>
                       <h5 css={{ margin: 0 }}>
                         <strong className="title">{name}</strong>
                       </h5>
