@@ -13,7 +13,12 @@ let jsonDataPaths = {}
 let fetchHistory = []
 let fetchingPageResourceMapPromise = null
 let fetchedPageResourceMap = false
-let hasPageResourceMap = false
+/**
+ * Indicate if pages manifest is loaded
+ *  - in production it is split to separate "pages-manifest" chunk that need to be lazy loaded,
+ *  - in development it is part of single "common" chunk and is available from the start.
+ */
+let hasPageResourceMap = process.env.NODE_ENV !== `production`
 let apiRunner
 const failedPaths = {}
 const MAX_HISTORY = 5
@@ -172,6 +177,15 @@ const onPostPrefetchPathname = pathname => {
   }
 }
 
+/**
+ * Check if we should fallback to resources for 404 page if resources for a page are not found
+ *
+ * We can't do that when we don't have full pages manifest - we don't know if page exist or not if we don't have it.
+ * We also can't do that on initial render / mount in case we just can't load resources needed for first page.
+ * Not falling back to 404 resources will cause "EnsureResources" component to handle scenarios like this with
+ * potential reload
+ * @param {string} path Path to a page
+ */
 const shouldFallbackTo404Resources = path =>
   (hasPageResourceMap || inInitialRender) && path !== `/404.html`
 

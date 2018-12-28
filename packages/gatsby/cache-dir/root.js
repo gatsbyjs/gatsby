@@ -67,23 +67,29 @@ class RouteHandler extends React.Component {
       const Dev404Page = syncRequires.components[dev404Page.componentChunkName]
 
       if (!loader.getPage(`/404.html`)) {
-        return <Dev404Page pages={pages} {...this.props} />
+        return (
+          <RouteUpdates location={location}>
+            <Dev404Page pages={pages} {...this.props} />
+          </RouteUpdates>
+        )
       }
 
       return (
         <EnsureResources location={location}>
           {locationAndPageResources => (
-            <Dev404Page
-              pages={pages}
-              custom404={
-                <JSONStore
-                  pages={pages}
-                  {...this.props}
-                  {...locationAndPageResources}
-                />
-              }
-              {...this.props}
-            />
+            <RouteUpdates location={location}>
+              <Dev404Page
+                pages={pages}
+                custom404={
+                  <JSONStore
+                    pages={pages}
+                    {...this.props}
+                    {...locationAndPageResources}
+                  />
+                }
+                {...this.props}
+              />
+            </RouteUpdates>
           )}
         </EnsureResources>
       )
