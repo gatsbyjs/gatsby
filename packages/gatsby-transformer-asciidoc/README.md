@@ -15,11 +15,27 @@ plugins: [`gatsby-transformer-asciidoc`]
 
 A full explanation of asciidoc can be found here: [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js)
 
+You can also pass all [Asciidoctor's convert options](https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/convert-options/) to the transformer. An example would be:
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-asciidoc`,
+    options: {
+      attributes: {
+        showtitle: true,
+      },
+    },
+  },
+]
+```
+
 ## Parsing algorithm
 
-It recognizes files with the following extensions as AsciiDoc:
+It recognizes files with the following [extensions](https://asciidoctor.org/docs/asciidoc-recommended-practices/#document-extension) as AsciiDoc:
 
-- adoc
+- `adoc`
 
 Each AsciiDoc file is parsed into a node of type `asciidoc`.
 
@@ -33,6 +49,24 @@ A sample GraphQL query to get AsciiDoc nodes:
     edges {
       node {
         html
+        document {
+          title
+          subtitle
+          main
+        }
+        author {
+          fullName
+          firstName
+          lastName
+          middleName
+          authorInitials
+          email
+        }
+        revision {
+          date
+          number
+          remark
+        }
       }
     }
   }

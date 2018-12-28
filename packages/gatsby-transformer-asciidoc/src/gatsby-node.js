@@ -1,7 +1,8 @@
 const asciidoc = require(`asciidoctor.js`)()
+const crypto = require(`crypto`)
 
 async function onCreateNode(
-  { node, actions, loadNodeContent, createNodeId, createContentDigest },
+  { node, actions, loadNodeContent, createNodeId, reporter },
   pluginOptions
 ) {
   // Filter out non-adoc content
@@ -12,24 +13,72 @@ async function onCreateNode(
   const { createNode, createParentChildLink } = actions
   // Load Asciidoc contents
   const content = await loadNodeContent(node)
-  const html = asciidoc.convert(content, pluginOptions)
+  const doc = await asciidoc.loadFile(node.absolutePath)
 
-  const asciiNode = {
-    id: createNodeId(`${node.id} >>> ASCIIDOC`),
-    parent: node.id,
-    internal: {
-      type: `Asciidoc`,
-      mediaType: `text/html`,
-      content: html,
-    },
-    children: [],
-    html,
+  try {
+    const html = asciidoc.convert(content, pluginOptions)
+    const title = doc.getDocumentTitle({ partition: true })
+    let revision = null
+    let author = null
+    if (doc.hasRevisionInfo()) {
+      revision = {
+        date: doc.getRevisionDate(),
+        number: doc.getRevisionNumber(),
+        remark: doc.getRevisionRemark(),
+      }
+    }
+
+    if (doc.getAuthor()) {
+      author = {
+        fullName: doc.getAttribute(`author`),
+        firstName: doc.getAttribute(`firstname`),
+        lastName: doc.getAttribute(`lastname`)
+          ? doc.getAttribute(`lastname`)
+          : ``,
+        middleName: doc.getAttribute(`middlename`)
+          ? doc.getAttribute(`middlename`)
+          : ``,
+        authorInitials: doc.getAttribute(`authorinitials`)
+          ? doc.getAttribute(`authorinitials`)
+          : ``,
+        email: doc.getAttribute(`email`) ? doc.getAttribute(`email`) : ``,
+      }
+    }
+
+    const asciiNode = {
+      id: createNodeId(`${node.id} >>> ASCIIDOC`),
+      parent: node.id,
+      internal: {
+        type: `Asciidoc`,
+        mediaType: `text/html`,
+        content: html,
+      },
+      children: [],
+      html,
+      document: {
+        title: title.getCombined(),
+        subtitle: title.hasSubtitle() ? title.getSubtitle() : ``,
+        main: title.getMain(),
+      },
+      revision,
+      author,
+    }
+
+    asciiNode.internal.contentDigest = crypto
+      .createHash(`md5`)
+      .update(JSON.stringify(asciiNode))
+      .digest(`hex`)
+
+    createNode(asciiNode)
+    createParentChildLink({ parent: node, child: asciiNode })
+  } catch (err) {
+    reporter.panicOnBuild(
+      `Error processing Asciidoc ${
+        node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`
+      }:\n
+      ${err.message}`
+    )
   }
-
-  asciiNode.internal.contentDigest = createContentDigest(asciiNode)
-
-  createNode(asciiNode)
-  createParentChildLink({ parent: node, child: asciiNode })
 }
 
 exports.onCreateNode = onCreateNode
