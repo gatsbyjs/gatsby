@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.17"></a>
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.16...gatsby-plugin-sharp@2.0.17) (2018-12-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** url encode file names ([#10650](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/10650)) ([4685bcb](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/4685bcb))
+
 <a name="2.0.16"></a>
 
 ## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.15...gatsby-plugin-sharp@2.0.16) (2018-12-21)
