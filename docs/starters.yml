@@ -1463,3 +1463,22 @@
     - User authentication by Netlify Identity Widget/Service
     - Pagination for posts
     - Navigation menu with active status
+- url: https://gatsby-starter-event-calendar.netlify.com/
+  repo: https://github.com/EmaSuriano/gatsby-starter-event-calendar
+  description: Gatsby Starter to display information about events from Google Spreadsheets with Calendars
+  tags:
+    - Linting
+    - Styling:Grommet
+    - PWA
+    - SEO
+    - Google Spreadsheet
+  features:
+    - Grommet
+    - Theming
+    - Google Spreadsheet integration
+    - PWA
+    - A11y
+    - SEO
+    - Netlify Deployment Friendly
+    - ESLint with Airbnb's config
+    - Prettier integrated into ESLint
