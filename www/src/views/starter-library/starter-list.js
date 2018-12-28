@@ -77,7 +77,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 <ThumbnailLink
                   slug={`/starters${slug}`}
                   image={starter.childScreenshot}
-                  title={name}
+                  title={`${owner}/${name}`}
                 />
                 <div
                   css={{
