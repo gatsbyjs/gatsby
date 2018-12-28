@@ -210,7 +210,7 @@ module.exports = {
 
 ## Removing `theme-color` meta tag
 
-By default `gatsby-plugin-manifest` inserts `<meta content={theme_color} name="theme-color" />` tag to html output. This can be problematic if you want to programatically control that tag - for example when implementing light/dark themes in your project. You can set `theme_color_in_head` plugin option to `false` to opt-out of this behaviour. 
+By default `gatsby-plugin-manifest` inserts `<meta content={theme_color} name="theme-color" />` tag to html output. This can be problematic if you want to programatically control that tag - for example when implementing light/dark themes in your project. You can set `theme_color_in_head` plugin option to `false` to opt-out of this behaviour.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -231,5 +231,3 @@ module.exports = {
   ],
 }
 ```
-
-
