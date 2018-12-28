@@ -1,8 +1,13 @@
 #!/bin/bash
 FOLDER=$1
 CLONE=$2
+IS_CI="${CI:-false}"
 BASE=$(pwd)
 COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+
+if [ "$IS_CI" = true ]; then
+  sudo apt-get update && sudo apt-get install jq
+fi
 
 for folder in $FOLDER/*; do
   [ -d "$folder" ] || continue # only directories
