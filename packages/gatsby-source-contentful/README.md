@@ -52,6 +52,70 @@ module.exports = {
 }
 ```
 
+### Download assets for static distribution
+
+Downloads and caches Contentful Assets to the local filesystem. Useful for reduced data usage in development or projects where you want the assets copied locally with builds for deploying without links to Contentful's CDN.
+
+Enable this feature with the `downloadLocal: true` option.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        // Learn about environment variables: https://gatsby.app/env-vars
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        downloadLocal: true,
+      },
+    },
+  ],
+}
+```
+
+Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
+
+```GraphQL
+graphql`
+  query MyQuery {
+    # Example is for a `ContentType` with a `ContenfulAsset` field
+    # You could also query an asset directly via
+    # `allContentfulAsset { edges{ node { } } }`
+    # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
+    contentfulMyContentType {
+      myContentfulAssetField {
+        # Direct URL to Contentful CDN for this asset
+        file { url }
+
+        # Query for a fluid image resource on this `ContentfulAsset` node
+        fluid(maxWidth: 500){
+          ...GatsbyContentfulFluid_withWebp
+        }
+
+        # Query for locally stored file(eg An image) - `File` node
+        localFile {
+          # Where the asset is downloaded into cache, don't use this
+          absolutePath
+          # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
+          publicURL
+          # Use `gatsby-image` to create fluid image resource
+          childImageSharp {
+            fluid(maxWidth: 500) {
+              ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
+
+For any troubleshooting related to this feature, first try clearing your `./cache/` directory. `gatsby-source-contentful` will acquire fresh data, and all `ContentfulAsset`s will be downloaded and cached again.
+
 ### Offline
 
 If you don't have internet connection you can add `export GATSBY_CONTENTFUL_OFFLINE=true` to tell the plugin to fallback to the cached data, if there is any.
