@@ -20,6 +20,7 @@ for folder in $FOLDER/*; do
   
   # validate
   yarn import
+  yarn
   yarn build
 
   # sync to read-only clones
