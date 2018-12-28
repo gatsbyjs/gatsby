@@ -220,6 +220,7 @@ class Image extends React.Component {
       imgStyle = {},
       placeholderStyle = {},
       placeholderClassName,
+      blurSize,
       fluid,
       fixed,
       backgroundColor,
@@ -229,10 +230,20 @@ class Image extends React.Component {
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
+    // The scale transform improves the quality of the blur around the images bounding box
+    let enhancedBlur = {}
+    if (!(fluid && fluid.tracedSVG) && !(fixed && !fixed.tracedSVG)) {
+      enhancedBlur = {
+        filter: `blur(${blurSize})`,
+        transform: `scale(1.04)`,
+      }
+    }
+
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       transition: `opacity 0.5s`,
       transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
+      ...enhancedBlur,
       ...imgStyle,
       ...placeholderStyle,
     }
@@ -436,6 +447,7 @@ Image.defaultProps = {
   fadeIn: true,
   alt: ``,
   Tag: `div`,
+  blurSize: `16px`,
 }
 
 const fixedObject = PropTypes.shape({
@@ -474,6 +486,7 @@ Image.propTypes = {
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,
   placeholderClassName: PropTypes.string,
+  blurSize: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
