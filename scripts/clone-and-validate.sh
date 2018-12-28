@@ -1,5 +1,6 @@
 #!/bin/bash
 FOLDER=$1
+CLONE=$2
 BASE=$(pwd)
 COMMIT_MESSAGE=$(git log -1 --pretty=%B)
 
@@ -15,10 +16,19 @@ for folder in $FOLDER/*; do
   git clone --depth 1 https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git $CLONE_DIR
   cd $CLONE_DIR
   find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
-  cp -r $BASE/$folder/. . # copy all content
-  git add .
-  git commit --message "$COMMIT_MESSAGE"
-  git push origin master
+  cp -r $BASE/$folder/. .
+  
+  # validate
+  yarn import
+  yarn build
+
+  # sync to read-only clones
+  if [ "$CLONE" != false ]; then
+    echo "syncing to read-only clones"
+    git add .
+    git commit --message "$COMMIT_MESSAGE"
+    git push origin master
+  fi
 
   cd $BASE
 done
