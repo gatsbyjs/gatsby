@@ -2,8 +2,9 @@ const {
   DirectiveLocation,
   GraphQLDirective,
   GraphQLList,
-  GraphQLNonNull,
   GraphQLString,
+  getNamedType,
+  getNullableType,
 } = require(`graphql`)
 const { SchemaDirectiveVisitor } = require(`graphql-tools`)
 
@@ -22,22 +23,14 @@ class LinkNodeDirectiveVisitor extends SchemaDirectiveVisitor {
     const { by } = this.args
     const { type } = field // info.returnType
 
-    let typeWithoutModifiers = type
-    let isWrappedInList = false
-    while (
-      typeWithoutModifiers instanceof GraphQLList ||
-      typeWithoutModifiers instanceof GraphQLNonNull
-    ) {
-      isWrappedInList =
-        isWrappedInList || typeWithoutModifiers instanceof GraphQLList
-      typeWithoutModifiers = typeWithoutModifiers.ofType
-    }
+    const nullableType = getNullableType(type)
 
     // TODO: Should `link` be called with the `resolver`,
     // or should this be figured out in `link` itself?
     // We have all we need on `info.returnType`.
-    const resolver = (isWrappedInList ? findMany : findOne)(
-      typeWithoutModifiers.name
+    // TODO: Do we have to take care of an existing resolver?
+    const resolver = (nullableType instanceof GraphQLList ? findMany : findOne)(
+      getNamedType(nullableType).name
     )
 
     field.resolve = link({ by })(resolver)

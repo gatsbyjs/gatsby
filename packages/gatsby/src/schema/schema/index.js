@@ -62,7 +62,10 @@ const buildSchema = async () => {
 const updateSchema = async () => {
   // Schema is updated during bootstrap for SitePage.
   // @see https://github.com/gatsbyjs/gatsby/issues/2685#issuecomment-340645874
-  // FIXME: What else must be updated?
+  // Avoid regenerating everything.
+  // FIXME: This step is probably not needed -- the only thing added is being able
+  // to query SitePage.context fields and fields added with
+  // createNodeField. Do we actually need this?
   const tc = addInferredType(`SitePage`)
   addResolvers(tc)
   addTypeToRootQuery(tc)
