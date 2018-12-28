@@ -126,15 +126,14 @@ module.exports = {
     {
       resolve: `gatsby-transformer-excel`,
       options: {
-        defval: '',
+        defval: "",
       },
     },
   ],
 }
 ```
 
-This will make sure that any blank cells are assigned the `defval` value. 
-
+This will make sure that any blank cells are assigned the `defval` value.
 
 ### Field Type Conflicts
 
