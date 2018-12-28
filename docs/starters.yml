@@ -1498,3 +1498,18 @@
     - SEO support
     - PWA support
     - Offline support
+- url: https://infallible-brown-28846b.netlify.com/
+  repo: https://github.com/tylergreulich/gatsby-typescript-mdx-prismjs-starter
+  description: Gatsby starter using TypeScript, MDX, Prismjs, and styled-components
+  tags:
+    - TypeScript
+    - Linting
+    - Styling:CSS-in-JS
+    - MDX
+  features:
+    - Gatsby v2 + TypeScript
+    - Syntax highlighting with Prismjs
+    - MDX
+    - Jest
+    - react-testing-library
+    - styled-components
