@@ -33,7 +33,6 @@ A sample GraphQL query to get AsciiDoc nodes:
     edges {
       node {
         html
-        relativePath
       }
     }
   }

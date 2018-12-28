@@ -1,12 +1,9 @@
 const asciidoc = require(`asciidoctor.js`)()
 
-async function onCreateNode({
-  node,
-  actions,
-  loadNodeContent,
-  createNodeId,
-  createContentDigest,
-}) {
+async function onCreateNode(
+  { node, actions, loadNodeContent, createNodeId, createContentDigest },
+  pluginOptions
+) {
   // Filter out non-adoc content
   if (!node.extension || node.extension !== `adoc`) {
     return
@@ -15,7 +12,7 @@ async function onCreateNode({
   const { createNode, createParentChildLink } = actions
   // Load Asciidoc contents
   const content = await loadNodeContent(node)
-  const html = asciidoc.convert(content)
+  const html = asciidoc.convert(content, pluginOptions)
 
   const asciiNode = {
     id: createNodeId(`${node.id} >>> ASCIIDOC`),
