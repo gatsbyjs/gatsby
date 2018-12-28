@@ -1425,7 +1425,7 @@
   description: Gatsby Starter to display information about events from Google Spreadsheets with Calendars
   tags:
     - Linting
-    - Styling:CSS-in-JS
+    - Styling:Grommet
     - PWA
     - SEO
     - Theming
