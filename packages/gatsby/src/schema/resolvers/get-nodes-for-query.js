@@ -45,7 +45,7 @@ const prepareForQuery = (node, filter, fields) => {
           node,
           {},
           {},
-          { fieldName, parentType: {}, returnType: type }
+          { fieldName, fieldNodes: [{}], parentType: {}, returnType: type }
         )
       }
 

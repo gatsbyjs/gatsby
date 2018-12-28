@@ -180,6 +180,7 @@ describe(`Get nodes for query`, () => {
         {},
         expect.objectContaining({
           fieldName: `counter`,
+          fieldNodes: [{}],
           parentType: {},
           returnType: GraphQLBoolean,
         })
