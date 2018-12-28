@@ -29,6 +29,6 @@ function withPrefix(prefix, callback) {
 
 exports.joinPath = joinPath
 exports.withBasePath = withBasePath
-exports.withPathPrefix = withPrefix
 
+exports.withPathPrefix = withPrefix
 exports.withAssetPrefix = prefix => withPrefix(prefix, register)

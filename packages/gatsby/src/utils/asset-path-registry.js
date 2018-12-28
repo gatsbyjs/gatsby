@@ -1,9 +1,6 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
 
-/*
- * TODO: persist this between runs?
- */
 let assets = new Set()
 
 exports.register = function register(file) {
@@ -24,8 +21,15 @@ exports.clear = function clear() {
   return assets
 }
 
-exports.getAssets = async function getAssets(directory) {
-  const webpackStats = path.join(directory, `public`, `webpack.stats.json`)
+exports.getAssets = async function getAssets(
+  directory,
+  assetsDirectory = `public`
+) {
+  const webpackStats = path.join(
+    directory,
+    assetsDirectory,
+    `webpack.stats.json`
+  )
   let webpackAssets
   try {
     const { namedChunkGroups = {} } = await fs
