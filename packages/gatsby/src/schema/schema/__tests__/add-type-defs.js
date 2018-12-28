@@ -1,4 +1,5 @@
 const { schemaComposer } = require(`graphql-compose`)
+const { GraphQLBoolean } = require(`graphql`)
 
 const { addTypeDefs } = require(`..`)
 const { getNodeInterfaceFields, hasNodeInterface } = require(`../../interfaces`)
@@ -23,7 +24,7 @@ const typeDefs = [
     lastname: String
     firstname: String
     email: String
-    posts: [Markdown]
+    posts(published: Boolean): [Markdown]
   }
 `,
 ]
@@ -61,6 +62,10 @@ describe(`Add types to schema`, () => {
       `posts`,
       ...interfaceFields,
     ])
+
+    expect(
+      schemaComposer.getTC(`Author`).getFieldArgs(`posts`).published
+    ).toEqual(expect.objectContaining({ type: GraphQLBoolean }))
 
     expect(
       schemaComposer

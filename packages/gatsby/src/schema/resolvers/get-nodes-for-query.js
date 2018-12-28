@@ -51,6 +51,7 @@ const prepareForQuery = (node, filter, parentType) => {
           node,
           {},
           {},
+          // NOTE: fieldNodes is needed for `graphql-tools` schema stitching to work
           { fieldName, fieldNodes: [{}], parentType, returnType: type }
         )
       }
