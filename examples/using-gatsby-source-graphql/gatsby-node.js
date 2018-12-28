@@ -18,7 +18,7 @@ exports.createPages = async ({ actions, graphql }) => {
   data.cms.blogPosts.forEach(blog => {
     actions.createPage({
       path: makeBlogPath(blog),
-      component: path.resolve(`./src/components/BlogPost.js`),
+      component: path.resolve(`./src/components/blog-post.js`),
       context: {
         blogId: blog.id,
       },
