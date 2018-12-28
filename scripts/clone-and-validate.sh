@@ -19,13 +19,14 @@ for folder in $FOLDER/*; do
   cp -r $BASE/$folder/. .
   
   # validate
-  yarn import
-  yarn
-  yarn build
+  npm install
+  npm run build
 
   # sync to read-only clones
   if [ "$CLONE" != false ]; then
-    echo "syncing to read-only clones"
+    rm -rf yarn.lock
+    yarn import
+
     git add .
     git commit --message "$COMMIT_MESSAGE"
     git push origin master
