@@ -1,5 +1,6 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { keyframes } from "react-emotion"
+import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
@@ -173,6 +174,12 @@ const ItemDescription = ({ children }) => (
   </small>
 )
 
+const ItemDescriptionLink = ({ to, children }) => (
+  <Link css={{ "&&": { fontWeight: `normal` } }} to={to}>
+    {children}
+  </Link>
+)
+
 const Gatsby = ({ children }) => (
   <div
     css={{
@@ -223,105 +230,132 @@ const Gatsby = ({ children }) => (
 )
 
 const Diagram = () => (
-  <section
-    className="Diagram"
-    css={{
-      borderRadius: presets.radiusLg,
-      fontFamily: options.headerFontFamily.join(`,`),
-      padding: vP,
-      marginTop: rhythm(1),
-      textAlign: `center`,
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-      flex: `1 1 100%`,
-      borderTop: `1px solid ${colors.ui.light}`,
-      [presets.Tablet]: {
-        marginTop: 0,
-      },
-    }}
-  >
-    <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
-    <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
-      <FuturaParagraph>
-        Gatsby lets you build blazing fast sites with <em>your data</em>,
-        whatever the source. Liberate your sites from legacy CMSs and fly into
-        the future.
-      </FuturaParagraph>
-    </div>
-
-    <Segment className="Source">
-      <SegmentTitle>Data Sources</SegmentTitle>
-      <SourceItems>
-        <SourceItem>
-          <ItemTitle>CMSs</ItemTitle>
-          <ItemDescription>Contentful, Drupal, WordPress, etc.</ItemDescription>
-        </SourceItem>
-        <SourceItem>
-          <ItemTitle>Markdown</ItemTitle>
-          <ItemDescription>Documentation, Posts, etc.</ItemDescription>
-        </SourceItem>
-        <SourceItem>
-          <ItemTitle>Data</ItemTitle>
-          <ItemDescription>
-            APIs, Databases, YAML, JSON, CSV, etc.
-          </ItemDescription>
-        </SourceItem>
-      </SourceItems>
-    </Segment>
-
-    <Segment className="Build">
-      <VerticalLine />
-      <SegmentTitle>Build</SegmentTitle>
-      <div
+  <StaticQuery
+    query={graphql`
+      query StaticHostsQuery {
+        allStaticHostsYaml {
+          edges {
+            node {
+              title
+              url
+            }
+          }
+        }
+      }
+    `}
+    render={({ allStaticHostsYaml: { edges: staticHosts } }) => (
+      <section
+        className="Diagram"
         css={{
-          ...box,
-          ...stripeBg,
-          paddingTop: 0,
-          paddingBottom: 0,
+          borderRadius: presets.radiusLg,
+          fontFamily: options.headerFontFamily.join(`,`),
+          padding: vP,
+          marginTop: rhythm(1),
+          textAlign: `center`,
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          flex: `1 1 100%`,
+          borderTop: `1px solid ${colors.ui.light}`,
+          [presets.Tablet]: {
+            marginTop: 0,
+          },
         }}
       >
-        <VerticalLine />
-        <Gatsby />
-        <VerticalLine />
-        <div
-          css={{
-            ...borderAndBoxShadow,
-            ...boxPadding,
-            paddingTop: rhythm(1 / 2),
-            paddingBottom: rhythm(1 / 2),
-            width: `auto`,
-            display: `inline-block`,
-          }}
-        >
-          <ItemDescription>
-            HTML &middot; CSS &middot;
-            {` `}
-            <TechWithIcon icon={ReactJSIcon} height="1.1em">
-              React
-            </TechWithIcon>
-          </ItemDescription>
+        <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>
+          How Gatsby works
+        </h1>
+        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
+          <FuturaParagraph>
+            Gatsby lets you build blazing fast sites with <em>your data</em>,
+            whatever the source. Liberate your sites from legacy CMSs and fly
+            into the future.
+          </FuturaParagraph>
         </div>
-        <VerticalLine />
-      </div>
-    </Segment>
 
-    <Segment className="Deploy">
-      <VerticalLine />
-      <SegmentTitle>Deploy</SegmentTitle>
-      <div
-        css={{
-          ...box,
-          paddingBottom: rhythm(1),
-        }}
-      >
-        <ItemTitle>Static Web Host</ItemTitle>
-        <ItemDescription>
-          Amazon S3, Netlify, GitHub Pages, Surge.sh, Aerobatic, Now.sh, & many
-          more
-        </ItemDescription>
-      </div>
-    </Segment>
-  </section>
+        <Segment className="Source">
+          <SegmentTitle>Data Sources</SegmentTitle>
+          <SourceItems>
+            <SourceItem>
+              <ItemTitle>CMSs</ItemTitle>
+              <ItemDescription>
+                Contentful, Drupal, WordPress, etc.
+              </ItemDescription>
+            </SourceItem>
+            <SourceItem>
+              <ItemTitle>Markdown</ItemTitle>
+              <ItemDescription>Documentation, Posts, etc.</ItemDescription>
+            </SourceItem>
+            <SourceItem>
+              <ItemTitle>Data</ItemTitle>
+              <ItemDescription>
+                APIs, Databases, YAML, JSON, CSV, etc.
+              </ItemDescription>
+            </SourceItem>
+          </SourceItems>
+        </Segment>
+
+        <Segment className="Build">
+          <VerticalLine />
+          <SegmentTitle>Build</SegmentTitle>
+          <div
+            css={{
+              ...box,
+              ...stripeBg,
+              paddingTop: 0,
+              paddingBottom: 0,
+            }}
+          >
+            <VerticalLine />
+            <Gatsby />
+            <VerticalLine />
+            <div
+              css={{
+                ...borderAndBoxShadow,
+                ...boxPadding,
+                paddingTop: rhythm(1 / 2),
+                paddingBottom: rhythm(1 / 2),
+                width: `auto`,
+                display: `inline-block`,
+              }}
+            >
+              <ItemDescription>
+                HTML &middot; CSS &middot;
+                {` `}
+                <TechWithIcon icon={ReactJSIcon} height="1.1em">
+                  React
+                </TechWithIcon>
+              </ItemDescription>
+            </div>
+            <VerticalLine />
+          </div>
+        </Segment>
+
+        <Segment className="Deploy">
+          <VerticalLine />
+          <SegmentTitle>Deploy</SegmentTitle>
+          <div
+            css={{
+              ...box,
+              paddingBottom: rhythm(1),
+            }}
+          >
+            <ItemTitle>Static Web Host</ItemTitle>
+            <ItemDescription>
+              {staticHosts.map(({ node: staticHost }, index) => (
+                <Fragment key={staticHost.url}>
+                  {index > 0 && `, `}
+                  <ItemDescriptionLink to={staticHost.url}>
+                    {staticHost.title}
+                  </ItemDescriptionLink>
+                </Fragment>
+              ))}
+              {` `}& many more
+            </ItemDescription>
+          </div>
+        </Segment>
+      </section>
+    )}
+  />
 )
 
 export default Diagram
