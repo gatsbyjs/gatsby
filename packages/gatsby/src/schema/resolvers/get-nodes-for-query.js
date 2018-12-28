@@ -31,10 +31,12 @@ const resolveValue = (value, filterValue, type) => {
     ? Promise.all(
         value.map(item => resolveValue(item, filterValue, nullableType.ofType))
       )
-    : prepareForQuery(value, filterValue, nullableType.getFields())
+    : prepareForQuery(value, filterValue, nullableType)
 }
 
-const prepareForQuery = (node, filter, fields) => {
+const prepareForQuery = (node, filter, parentType) => {
+  const fields = parentType.getFields()
+
   const queryNode = Object.entries(filter).reduce(
     async (acc, [fieldName, filterValue]) => {
       const node = await acc
@@ -49,7 +51,7 @@ const prepareForQuery = (node, filter, fields) => {
           node,
           {},
           {},
-          { fieldName, fieldNodes: [{}], parentType: {}, returnType: type }
+          { fieldName, fieldNodes: [{}], parentType, returnType: type }
         )
       }
 
@@ -91,13 +93,10 @@ const getNodesForQuery = async (type, filter) => {
 
   // FIXME: In testing, when no schema is built yet, use schemaComposer.
   // Should mock store in tests instead.
-  const fields =
+  const parentType =
     schema instanceof GraphQLSchema
-      ? schema.getType(type).getFields()
-      : schemaComposer
-          .getTC(type)
-          .getType()
-          .getFields()
+      ? schema.getType(type)
+      : schemaComposer.getTC(type).getType()
 
   const queryNodes = Promise.all(
     nodes.map(async node => {
@@ -110,7 +109,7 @@ const getNodesForQuery = async (type, filter) => {
         return nodeCache.get(cacheKey)
       }
 
-      const queryNode = prepareForQuery(node, filterFields, fields)
+      const queryNode = prepareForQuery(node, filterFields, parentType)
 
       nodeCache.set(cacheKey, queryNode)
       trackObjects(await queryNode)

@@ -1,4 +1,4 @@
-const { TypeComposer } = require(`graphql-compose`)
+const { TypeComposer, schemaComposer } = require(`graphql-compose`)
 const { GraphQLBoolean } = require(`graphql`)
 
 const getNodesForQuery = require(`../get-nodes-for-query`)
@@ -181,7 +181,7 @@ describe(`Get nodes for query`, () => {
         expect.objectContaining({
           fieldName: `counter`,
           fieldNodes: [{}],
-          parentType: {},
+          parentType: schemaComposer.get(`Nested`).getType(),
           returnType: GraphQLBoolean,
         })
       )
