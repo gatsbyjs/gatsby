@@ -1,6 +1,5 @@
 {
-    "presets": [
-      ["../../.babel-preset.js"]
-    ]
-  }
-  
+  "presets": [
+    ["babel-preset-gatsby-package"]
+  ]
+}
