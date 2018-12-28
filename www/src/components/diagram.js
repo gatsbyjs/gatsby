@@ -175,7 +175,7 @@ const ItemDescription = ({ children }) => (
 )
 
 const ItemDescriptionLink = ({ to, children }) => (
-  <Link css={{ "&&": { fontWeight: "normal" } }} to={to}>
+  <Link css={{ "&&": { fontWeight: `normal` } }} to={to}>
     {children}
   </Link>
 )
@@ -343,13 +343,13 @@ const Diagram = () => (
             <ItemDescription>
               {staticHosts.map(({ node: staticHost }, index) => (
                 <Fragment key={staticHost.url}>
-                  {index > 0 && ", "}
+                  {index > 0 && `, `}
                   <ItemDescriptionLink to={staticHost.url}>
                     {staticHost.title}
                   </ItemDescriptionLink>
                 </Fragment>
-              ))}{" "}
-              & many more
+              ))}
+              {` `}& many more
             </ItemDescription>
           </div>
         </Segment>
