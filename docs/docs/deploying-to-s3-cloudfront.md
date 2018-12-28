@@ -51,6 +51,7 @@ npm i gatsby-plugin-s3
 ```
 
 Add it to your `gatsby-config.js`: (don't forget to change the bucket name)
+
 ```
 plugins: [
  {
@@ -63,6 +64,7 @@ plugins: [
 ```
 
 And finally, add the deployment script to your `package.json`:
+
 ```js
 "scripts": {
    ...
@@ -76,6 +78,7 @@ Run `npm run build && npm run deploy` to do a build and have it immediately depl
 ## Taking things a step further
 
 Read on how to use the serverless framework to add lambda functions, cloudfront, and more:
+
 - [Using serverless with gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3/blob/master/recipes/with-serverless.md)
 
 ## References:
