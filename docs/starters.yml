@@ -1482,3 +1482,19 @@
     - Netlify Deployment Friendly
     - ESLint with Airbnb's config
     - Prettier integrated into ESLint
+- url: https://gatsby-starter-tech-blog.netlify.com/
+  repo: https://github.com/email2vimalraj/gatsby-starter-tech-blog
+  description: A simple tech blog starter kit for gatsbyjs
+  tags:
+    - Blog
+    - Portfolio
+  features:
+    - Markdown based blog
+    - Filter blog posts by Tags
+    - Easy customization
+    - Using styled components
+    - Minimal styles
+    - Best scoring by Lighthouse
+    - SEO support
+    - PWA support
+    - Offline support
