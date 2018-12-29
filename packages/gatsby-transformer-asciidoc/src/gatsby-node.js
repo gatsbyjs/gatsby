@@ -1,8 +1,14 @@
 const asciidoc = require(`asciidoctor.js`)()
-const crypto = require(`crypto`)
 
 async function onCreateNode(
-  { node, actions, loadNodeContent, createNodeId, reporter },
+  {
+    node,
+    actions,
+    loadNodeContent,
+    createNodeId,
+    reporter,
+    createContentDigest,
+  },
   pluginOptions
 ) {
   // Filter out non-adoc content
@@ -63,10 +69,7 @@ async function onCreateNode(
       author,
     }
 
-    asciiNode.internal.contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(asciiNode))
-      .digest(`hex`)
+    asciiNode.internal.contentDigest = createContentDigest(asciiNode)
 
     createNode(asciiNode)
     createParentChildLink({ parent: node, child: asciiNode })
