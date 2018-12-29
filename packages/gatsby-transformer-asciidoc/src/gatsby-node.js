@@ -56,7 +56,6 @@ async function onCreateNode(
       internal: {
         type: `Asciidoc`,
         mediaType: `text/html`,
-        content: html,
       },
       children: [],
       html,
