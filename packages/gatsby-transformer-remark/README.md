@@ -161,7 +161,7 @@ It's also possible to ask Gatsby to return excerpts formatted as HTML. You might
 
 ### Example: Excerpts
 
-If you don't want to use `pruneLength` for excerpts but a custom seperator, you can specify a `excerpt_separator`:
+If you don't want to use `pruneLength` for excerpts but a custom seperator, you can specify an `excerpt_separator`:
 
 ```javascript
 {
