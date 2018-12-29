@@ -87,7 +87,7 @@
           link: /docs/sourcing-from-saas-services/
         - title: Sourcing from private APIs*
           link: /docs/sourcing-from-private-apis/
-        - title: Sourcing fom (headless) CMSs
+        - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/
           items:
             - title: Sourcing from WordPress
