@@ -3838,3 +3838,13 @@
   built_by: Song Wang
   built_by_url: "https://github.com/wangsongiam/"
   featured: false
+- title: Engel & Völkers Ibiza Holiday Rentals
+  main_url: "https://www.ev-ibiza.com/"
+  url: "https://www.ev-ibiza.com/"
+  featured: false
+  built_by: Ventura Digitalagentur
+  description: >
+    Engel & Völkers, one of the most successful real estate agencies in the world, offers luxury holiday villas to rent in Ibiza.
+  categories:
+    - Tourism
+    - Travel
