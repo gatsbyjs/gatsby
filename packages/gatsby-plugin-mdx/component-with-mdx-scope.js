@@ -15,8 +15,8 @@ module.exports = function componentWithMDXScope(
   codeScopeAbsPaths = [],
   projectRoot = process.cwd()
 ) {
-  if (typeof codeScopeAbsPaths === "string") {
-    codeScopeAbsPaths = [codeScopeAbsPaths];
+  if (!(codeScopeAbsPaths instanceof Array)) {
+    codeScopeAbsPaths = [codeScopeAbsPaths].filter(Boolean);
   }
   const isTS = absWrapperPath.endsWith(".ts");
   const isTSX = absWrapperPath.endsWith(".tsx");
