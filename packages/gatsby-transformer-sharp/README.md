@@ -21,6 +21,8 @@ module.exports = {
 }
 ```
 
+Please note that you must have a source plugin (which brings in images) installed in your project. Otherwise no `ImageSharp` nodes can be created for your files. Examples would be [`gatsby-source-filesystem`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem) or source plugins for (headless) CMSs like [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress).
+
 ## Parsing algorithm
 
 It recognizes files with the following extensions as images.
