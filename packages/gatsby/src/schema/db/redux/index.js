@@ -1,21 +1,25 @@
 const { getNodes, getNode } = require(`../../../redux/nodes`)
 const isProductionBuild = require(`../../utils/is-production-build`)
 
-// const { emitter } = require(`../../../redux`)
-// let isBootstrapFinished = false
-// emitter.on(`BOOTSTRAP_FINISHED`, () => (isBootstrapFinished = true))
+const { emitter } = require(`../../../redux`)
+let isBootstrapFinished = false
+emitter.on(`BOOTSTRAP_FINISHED`, () => (isBootstrapFinished = true))
 
 const cache = new Map()
+let totalCount = 0
 
 // TODO: We need a proper type mapping in the store
 // new Map([type: new Map([id, node])])
 const getNodesByType = type => {
-  if (isProductionBuild && cache.has(type)) {
-    return cache.get(type)
+  const allNodes = getNodes()
+  if (isProductionBuild || !isBootstrapFinished) {
+    if (allNodes.length === totalCount && cache.has(type))
+      return cache.get(type)
   }
-  const nodes = getNodes().filter(node => node.internal.type === type)
-  if (isProductionBuild) {
+  const nodes = allNodes.filter(node => node.internal.type === type)
+  if (isProductionBuild || !isBootstrapFinished) {
     cache.set(type, nodes)
+    totalCount = nodes.length
   }
   return nodes
 }

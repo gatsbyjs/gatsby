@@ -23,6 +23,7 @@ const nodeCache = new Map()
 
 // TODO: Filter sparse arrays?
 const resolveValue = (value, filterValue, type) => {
+  // TODO: Maybe use const { getNullableType } = require(`graphql`)
   const nullableType = type instanceof GraphQLNonNull ? type.ofType : type
   // FIXME: We probably have to check that node data and schema are actually in sync,
   // wrt arrays/scalars.
