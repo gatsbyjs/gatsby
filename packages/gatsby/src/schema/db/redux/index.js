@@ -12,9 +12,13 @@ let totalCount = 0
 // new Map([type: new Map([id, node])])
 const getNodesByType = type => {
   const allNodes = getNodes()
-  if (isProductionBuild || !isBootstrapFinished) {
-    if (allNodes.length === totalCount && cache.has(type))
+  if (
+    isProductionBuild ||
+    (!isBootstrapFinished && allNodes.length === totalCount)
+  ) {
+    if (cache.has(type)) {
       return cache.get(type)
+    }
   }
   const nodes = allNodes.filter(node => node.internal.type === type)
   if (isProductionBuild || !isBootstrapFinished) {
