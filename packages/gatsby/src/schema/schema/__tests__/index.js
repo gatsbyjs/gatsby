@@ -95,12 +95,14 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
     case `setFieldsOnGraphQLNodeType`:
       // FIXME:
       // const { schemaComposer } = options
-      return (
-        options.type.name === `Markdown` && {
-          archived: `Boolean`,
-          [`frontmatter.viral`]: `Boolean`,
-        }
-      )
+      return options.type.name === `Markdown`
+        ? [
+            {
+              archived: `Boolean`,
+              [`frontmatter.viral`]: `Boolean`,
+            },
+          ]
+        : []
 
     default:
     //noop
