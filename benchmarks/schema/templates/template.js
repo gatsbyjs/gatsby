@@ -1,23 +1,23 @@
-import React from 'react';
-import { graphql } from 'gatsby';
+import React from "react"
+import { graphql } from "gatsby"
 
 const Post = ({ data }) => {
-  const { title, date, authors } = data.markdown.frontmatter;
+  const { title, date, authors } = data.markdown.frontmatter
   return (
     <>
       <h1>{title}</h1>
       <time>{date}</time>
       {authors.map(({ name, firstname, email, image }) => (
         <div key={email}>
-          <img src={'/' + image.relativePath} alt={name} />
+          <img src={`/` + image.relativePath} alt={name} />
           {firstname} {name} ({email})
         </div>
       ))}
     </>
-  );
-};
+  )
+}
 
-export default Post;
+export default Post
 
 export const query = graphql`
   query($id: ID) {
@@ -36,4 +36,4 @@ export const query = graphql`
       }
     }
   }
-`;
+`
