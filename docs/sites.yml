@@ -3848,3 +3848,15 @@
   categories:
     - Tourism
     - Travel
+- title: Sylvain Hamann's personal website
+  url: "https://shamann.fr"
+  main_url: "https://shamann.fr"
+  source_url: "https://github.com/sylvhama/shamann-gatsby/"
+  description: >
+    Sylvain Hamann, web developer from France
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Sylvain Hamann
+  built_by_url: "https://twitter.com/sylvhama"
+  featured: false
