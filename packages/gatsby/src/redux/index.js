@@ -15,7 +15,7 @@ const readFileSync = file => v8.deserialize(fs.readFileSync(file))
 const writeFileSync = (file, contents) =>
   fs.writeFileSync(file, v8.serialize(contents))
 
-const file = `${process.cwd()}/.cache/redux-state.json`
+const file = `${process.cwd()}/.cache/redux.state`
 
 // Read old node data from cache.
 let initialState = {}
