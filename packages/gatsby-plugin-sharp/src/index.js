@@ -475,8 +475,9 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
+const defaultBase64Width = 20 // A value in pixels(Int)
 async function generateBase64({ file, args, reporter }) {
-  const options = healOptions(args, { width: 20 })
+  const options = healOptions(args, { width: defaultBase64Width })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -570,9 +571,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   const { width, height, density, format } = metadata
+  const density_72PPI = 72 // Standard digital image pixel density
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
-      ? density / 72
+      ? density / density_72PPI
       : 1
 
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
@@ -672,7 +674,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     })
   })
 
-  const base64Width = options.base64Width || 20
+  const base64Width = options.base64Width || defaultBase64Width
   const base64Height = Math.max(1, Math.round((base64Width * height) / width))
   const base64Args = {
     duotone: options.duotone,
