@@ -33,10 +33,10 @@ plugins: [
           options: {
             blocks: {
               danger: {
-                classes: "custom-block-danger",
+                classes: "danger",
               },
               info: {
-                classes: "custom-block-info",
+                classes: "info",
                 title: "optional",
               },
             },
@@ -86,7 +86,7 @@ Here is an example configuration for using details:
 ```javascript
   blocks: {
     danger: {
-      classes: "custom-block-danger",
+      classes: "danger",
       details: true,
     },
     info: {

@@ -1,37 +1,38 @@
 {
   "name": "gatsby-plugin-emotion",
   "description": "Gatsby plugin to add support for Emotion",
-  "version": "2.0.5",
+  "version": "4.0.1",
   "author": "Tegan Churchill <churchill.tegan@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0"
+    "@babel/runtime": "^7.0.0",
+    "@emotion/babel-preset-css-prop": "10.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.1.3",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
   "keywords": [
-    "emotion",
     "gatsby",
-    "gatsby-plugin"
+    "gatsby-plugin",
+    "emotion",
+    "css-in-js"
   ],
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "emotion": "7 || 8 || 9",
-    "emotion-server": "7 || 8 || 9",
-    "gatsby": ">2.0.0-alpha"
+    "@emotion/core": "^10.0.5",
+    "gatsby": ">2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
-  },
-  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
+  }
 }

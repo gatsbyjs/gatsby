@@ -63,7 +63,7 @@ markdown to HTML for including in our React components.
 To do this, we modify the plugin configuration in `gatsby-config.js` like
 follows:
 
-```javascript{8-10}
+```javascript
 module.exports = {
   plugins: [
     {
@@ -71,9 +71,11 @@ module.exports = {
       options: {
         dbName: `local`,
         collection: `documents`
+        // highlight-start
         map: {
           {documents: {body: `text/markdown`}
         },
+        // highlight-end
       },
     }
   ],

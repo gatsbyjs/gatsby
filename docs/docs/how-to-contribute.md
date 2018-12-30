@@ -35,29 +35,22 @@ Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
 
 #### Using Yarn
 
-Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple package.json files in sub-folders, enabling a faster and lighter installation process.
+Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple `package.json` files in sub-folders, enabling a faster and lighter installation process.
 
-```
-// package.json
+```json:title=package.json
 {
   "workspaces": ["workspace-a", "workspace-b"]
 }
 ```
 
-You can install the latest version of Gatsby by following these steps:
-
-- Clone the repo, navigate to its directory.
-- Ensure you have the latest version of Yarn installed (>= 1.0.2)
-  https://yarnpkg.com/en/docs/install. 
-- Install dependencies using `yarn run bootstrap` in the root of the repo.
-
-There are two ways to contribute. This is the most usual way:
-
+- [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
+- Ensure you have the latest version of Yarn installed (>= 1.0.2). `yarn --version`
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
-- Setup up repo and install dependencies: `yarn run bootstrap`
+- Set up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
+  - Note: if making a docs only change, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `yarn run watch -- --scope=gatsby`.
 - Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
@@ -71,28 +64,53 @@ There are two ways to contribute. This is the most usual way:
 - Commit and push to your fork.
 - Create a pull request from your branch.
 
-### Contributing to the documentation.
+### Contributing to the documentation
 
-Gatsby, unsurprisingly, uses Gatsby for its documentation website.
+Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! It's people like you that make this community great!
 
-If you want to add/modify any Gatsby documentation, go to the
-[docs folder on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
-use the file editor to edit and then preview your changes. GitHub then allows
-you to commit the change and raise a PR right in the UI. This is the _easiest_
-way you can contribute to the project!
+#### Top priorities
 
-However, if you want to make more changes to the website, that is, change
-layout components or templates, add sections/pages, follow the steps below. You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
+Check the Github repo for issues labeled with ["documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or ["documentation" and "status: help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22status%3A+help+wanted%22) to see all documentation issues that are ready for community help. Once you start a PR to address one of these issues, you can remove the "help wanted" label.
+
+#### Modifying markdown files in Gatsby documentation
+
+1. If you want to add/modify any Gatsby documentation, go to the
+   [docs folder on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
+   use the file editor to edit and then preview your changes.
+2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria: make sure your contribution meets the standards outlined in the [Gatsby Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/). Also, if your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the the [Docs Decision Tree](https://www.gatsbyjs.org/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
+   > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
+3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
+
+If you wrote a new document that was previously a stub, update `www/src/data/sidebars/doc-links.yaml` accordingly by removing the asterisk behind the document's title:
+
+```diff:title=www/src/data/sidebars/doc-links.yaml
+  ...
+- - title: Example Document*
++ - title: Example Document
+    link: /docs/example-document/
+  ...
+```
+
+#### Making changes to the website
+
+If you want to make more changes to the website functionality in documentation, that is, change layout components or templates, add sections/pages, follow the steps for [contributing to the repo](#contributing-to-the-repo). You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
 a pull request.
 
-- Clone the repo and navigate to `/www`
-- Run `yarn` to install all of the website's dependencies.
-- Run `gatsby develop` to preview the website in `http://localhost:8000`
-- The Markdown files for the documentation live in `/docs` folder. Make
-  additions or modifications here.
-- Make sure to double check your grammar and capitalise correctly.
-- Commit and push to your fork.
-- Create a pull request from your branch.
+### Making changes to the starter library
+
+Note: You don't need to follow these steps to submit to the starter library. This is only necessary if you'd like to contribute to the functionality of the starter library. To submit a starter, [follow these steps instead](/docs/submit-to-starter-library/).
+
+To develop on the starter library, you'll need to supply a GitHub personal access token.
+
+1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
+2. In the new token's settings, grant that token the "public_repo" scope.
+3. Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
+
+```text:title=.env.development
+GITHUB_API_TOKEN=YOUR_TOKEN_HERE
+```
+
+The `.env.development` file is ignored by git. Your token should never be committed.
 
 ### Contributing to the blog
 
@@ -110,9 +128,11 @@ To add a new blog post to the gatsbyjs.org blog:
 - Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
 - If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
 - Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
+- Follow the [Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/#word-choice) to make sure you're using the appropriate wording.
 - Double check your grammar and capitalise correctly
 - Commit and push to your fork
 - Create a pull request from your branch
+  - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change`
 
 ## Development tools
 

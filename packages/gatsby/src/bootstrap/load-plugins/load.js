@@ -4,8 +4,10 @@ const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 const glob = require(`glob`)
+const { warnOnIncompatiblePeerDependency } = require(`./validate`)
 const { store } = require(`../../redux`)
 const existsSync = require(`fs-exists-cached`).sync
+const createNodeId = require(`../../utils/create-node-id`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -17,6 +19,19 @@ function createFileContentHash(root, globPattern) {
 
   return hash.digest(`hex`)
 }
+
+/**
+ * Make sure key is unique to plugin options. E.g there could
+ * be multiple source-filesystem plugins, with different names
+ * (docs, blogs).
+ * @param {*} name Name of the plugin
+ * @param {*} pluginObject
+ */
+const createPluginId = (name, pluginObject = null) =>
+  createNodeId(
+    name + (pluginObject ? JSON.stringify(pluginObject.options) : ``),
+    `Plugin`
+  )
 
 /**
  * @typedef {Object} PluginInfo
@@ -44,11 +59,13 @@ function resolvePlugin(pluginName) {
         const packageJSON = JSON.parse(
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
+        const name = packageJSON.name || pluginName
+        warnOnIncompatiblePeerDependency(name, packageJSON)
 
         return {
           resolve: resolvedPath,
-          name: packageJSON.name || pluginName,
-          id: `Plugin ${packageJSON.name || pluginName}`,
+          name,
+          id: createPluginId(name),
           version:
             packageJSON.version || createFileContentHash(resolvedPath, `**`),
         }
@@ -69,10 +86,11 @@ function resolvePlugin(pluginName) {
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
     )
+    warnOnIncompatiblePeerDependency(packageJSON.name, packageJSON)
 
     return {
       resolve: resolvedPath,
-      id: `Plugin ${packageJSON.name}`,
+      id: createPluginId(packageJSON.name),
       name: packageJSON.name,
       version: packageJSON.version,
     }
@@ -101,9 +119,11 @@ module.exports = (config = {}) => {
         },
       }
     } else {
+      plugin.options = plugin.options || {}
+
       // Plugins can have plugins.
       const subplugins = []
-      if (plugin.options && plugin.options.plugins) {
+      if (plugin.options.plugins) {
         plugin.options.plugins.forEach(p => {
           subplugins.push(processPlugin(p))
         })
@@ -114,8 +134,11 @@ module.exports = (config = {}) => {
       // Add some default values for tests as we don't actually
       // want to try to load anything during tests.
       if (plugin.resolve === `___TEST___`) {
+        const name = `TEST`
+
         return {
-          name: `TEST`,
+          id: createPluginId(name, plugin),
+          name,
           pluginOptions: {
             plugins: [],
           },
@@ -126,6 +149,7 @@ module.exports = (config = {}) => {
 
       return {
         ...info,
+        id: createPluginId(info.name, plugin),
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
@@ -138,6 +162,7 @@ module.exports = (config = {}) => {
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/query-runner`,
+    `../../internal-plugins/webpack-theme-component-shadowing`,
   ]
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
@@ -154,7 +179,7 @@ module.exports = (config = {}) => {
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
     resolve: slash(process.cwd()),
-    id: `Plugin default-site-plugin`,
+    id: createPluginId(`default-site-plugin`),
     name: `default-site-plugin`,
     version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {

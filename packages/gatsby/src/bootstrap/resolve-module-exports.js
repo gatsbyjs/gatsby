@@ -1,6 +1,6 @@
 // @flow
 const fs = require(`fs`)
-const traverse = require(`babel-traverse`).default
+const traverse = require(`@babel/traverse`).default
 const get = require(`lodash/get`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
@@ -74,6 +74,9 @@ module.exports = (modulePath, resolver = require.resolve) => {
       const nodeLeft = astPath.node.left
 
       if (nodeLeft.type !== `MemberExpression`) return
+
+      // ignore marker property `__esModule`
+      if (get(nodeLeft, `property.name`) === `__esModule`) return
 
       // get foo from `exports.foo = bar`
       if (get(nodeLeft, `object.name`) === `exports`) {

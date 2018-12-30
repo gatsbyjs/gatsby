@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-hacker-news/compare/gatsby-source-hacker-news@2.0.6...gatsby-source-hacker-news@2.0.7) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-hacker-news/compare/gatsby-source-hacker-news@2.0.5...gatsby-source-hacker-news@2.0.6) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
 <a name="2.0.5"></a>
 
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-hacker-news/compare/gatsby-source-hacker-news@2.0.0-rc.5...gatsby-source-hacker-news@2.0.5) (2018-09-17)

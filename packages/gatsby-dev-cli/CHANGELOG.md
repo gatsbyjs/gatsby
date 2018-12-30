@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.4.8"></a>
+
+## [2.4.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.7...gatsby-dev-cli@2.4.8) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+<a name="2.4.7"></a>
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.6...gatsby-dev-cli@2.4.7) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+<a name="2.4.6"></a>
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.5...gatsby-dev-cli@2.4.6) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
 <a name="2.4.5"></a>
 
 ## [2.4.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.4...gatsby-dev-cli@2.4.5) (2018-10-05)
