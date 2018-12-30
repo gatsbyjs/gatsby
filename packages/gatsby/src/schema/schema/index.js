@@ -35,12 +35,6 @@ const addTypeToRootQuery = tc => {
   })
 }
 
-const getSchema = () => {
-  const schema = schemaComposer.buildSchema({ directives })
-  SchemaDirectiveVisitor.visitSchemaDirectives(schema, visitors)
-  return schema
-}
-
 const buildSchema = async () => {
   await addTypes()
   addInferredTypes()
@@ -56,7 +50,11 @@ const buildSchema = async () => {
   })
   // TODO: Move this to updateSchema()?
   await addCustomResolveFunctions()
-  return getSchema()
+  const schema = schemaComposer.buildSchema({ directives })
+  // NOTE: Beware that `visitSchemaDirectives` mutates the schema handled by schemaComposer!
+  // So don't call it twice!
+  SchemaDirectiveVisitor.visitSchemaDirectives(schema, visitors)
+  return schema
 }
 
 const updateSchema = async () => {
@@ -69,7 +67,7 @@ const updateSchema = async () => {
   const tc = addInferredType(`SitePage`)
   addResolvers(tc)
   addTypeToRootQuery(tc)
-  return getSchema()
+  return schemaComposer.buildSchema({ directives })
 }
 
 module.exports = {

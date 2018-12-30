@@ -1,4 +1,4 @@
-const { mergeSchemas } = require(`graphql-tools`)
+// const { mergeSchemas } = require(`graphql-tools`)
 // const tracer = require(`opentracing`).globalTracer()
 
 const { buildSchema, updateSchema } = require(`./schema`)
@@ -8,14 +8,17 @@ module.exports = async ({ parentSpan, update }) => {
   // const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   // const span = tracer.startSpan(`build schema`, spanArgs)
 
-  const thirdPartySchemas = store.getState().thirdPartySchemas || []
+  // const thirdPartySchemas = store.getState().thirdPartySchemas || []
   const gatsbySchema = update ? await updateSchema() : await buildSchema()
 
   // span.finish()
 
-  const schema = mergeSchemas({
-    schemas: [gatsbySchema, ...thirdPartySchemas],
-  })
+  // FIXME: Disable schema stitching for now, because `mergeSchemas` is all over
+  // the place -- and unfortunately breaks everything. Explain in more detail soon.
+  // const schema = mergeSchemas({
+  //   schemas: [gatsbySchema, ...thirdPartySchemas],
+  // })
+  const schema = gatsbySchema
 
   store.dispatch({
     type: `SET_SCHEMA`,
