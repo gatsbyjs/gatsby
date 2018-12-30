@@ -1513,3 +1513,14 @@
     - Jest
     - react-testing-library
     - styled-components
+- url: https://hardcore-darwin-d7328f.netlify.com/
+  repo: https://github.com/BoyWithSilverWings/gatsby-careers-page
+  description: A Careers Page for startups using Gatsby
+  tags:
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Careers Listing
+    - Application Format
+    - Markdown for creating job description
+    - styled-components
