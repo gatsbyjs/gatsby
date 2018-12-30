@@ -672,7 +672,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     })
   })
 
-  const base64Width = 20
+  const base64Width = options.base64Width || 20
   const base64Height = Math.max(1, Math.round((base64Width * height) / width))
   const base64Args = {
     duotone: options.duotone,
@@ -787,6 +787,8 @@ async function fixed({ file, args = {}, reporter, cache }) {
   })
 
   const base64Args = {
+    // height is adjusted accordingly with respect to the aspect ratio
+    width: options.base64Width,
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,

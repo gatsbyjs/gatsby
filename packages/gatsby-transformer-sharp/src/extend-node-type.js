@@ -115,6 +115,9 @@ const fixedNodeType = ({
       height: {
         type: GraphQLInt,
       },
+      base64Width: {
+        type: GraphQLInt,
+      },
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
@@ -239,6 +242,9 @@ const fluidNodeType = ({
         type: GraphQLInt,
       },
       maxHeight: {
+        type: GraphQLInt,
+      },
+      base64Width: {
         type: GraphQLInt,
       },
       grayscale: {
