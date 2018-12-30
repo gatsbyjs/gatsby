@@ -565,7 +565,7 @@
     - One-page layout with sub-pages for case studies
     - Easily configurable
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
-- url: https://portfolio-cara.netlify.com/
+- url: https://cara.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-cara
   description: A portfolio starter for Gatsby. The target audience are designers and photographers. The playful & colorful Onepage has beautiful parallax effects (made possible by React Spring) and has a Hero, Projects, About and Contact section. The styling is defined by TailwindCSS which enables easy edits and a consistent look. General settings and colors can be changed in a config & theme file.
   tags:
@@ -576,7 +576,8 @@
     - PWA
   features:
     - React Spring
-    - TailwindCSS & Emotion
+    - TailwindCSS & Styled Components
+    - Uses tailwind.macro (Babel macro) for easy TailwindCSS styling
     - Playful & Colorful One-Page website with Parallax effect
     - Easily configurable
     - And other good stuff (SEO, Responsive images, Offline Support, WebApp Manifest Support)
