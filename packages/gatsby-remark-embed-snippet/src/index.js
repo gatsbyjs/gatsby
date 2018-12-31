@@ -70,13 +70,18 @@ module.exports = (
         .join(` `)
 
       // Replace the node with the markup we need to make 100% width highlighted code lines work
-      node.type = `html`
-      node.value = `<div class="gatsby-highlight">
+      try {
+        node.value = `<div class="gatsby-highlight">
         <pre class="${className}"><code>${highlightCode(
-        language,
-        code
-      )}</code></pre>
+          language,
+          code
+        ).trim()}</code></pre>
         </div>`
+        node.type = `html`
+      } catch (e) {
+        // rethrow error pointing to a file
+        throw Error(`${e.message}\nFile: ${file}`)
+      }
     }
   })
 

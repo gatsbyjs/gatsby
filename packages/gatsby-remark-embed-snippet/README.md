@@ -110,6 +110,53 @@ baz: "highlighted"
 quz: "highlighted"
 ```
 
+### Hide Lines
+
+It's also possible to specify a range of lines to be hidden.
+
+#### JavaScript example
+
+```js
+// hide-range{1-2}
+import React from "react"
+import ReactDOM from "react-dom"
+
+function App() {
+  return (
+    <div className="App">
+      <ul>
+        <li>Not hidden</li>
+        <li>Not hidden</li>
+        {/* hide-range{1-2} */}
+        <li>Hidden</li>
+        <li>Hidden</li>
+        {/* hide-next-line */}
+        <li>Hidden</li>
+      </ul>
+    </div>
+  )
+}
+
+// hide-range{1-2}
+const rootElement = document.getElementById("root")
+ReactDOM.render(<App />, rootElement)
+```
+
+Will produce something like this:
+
+```js
+function App() {
+  return (
+    <div className="App">
+      <ul>
+        <li>Not hidden</li>
+        <li>Not hidden</li>
+      </ul>
+    </div>
+  )
+}
+```
+
 ## Installation
 
 `npm install --save gatsby-remark-embed-snippet`
@@ -118,7 +165,7 @@ quz: "highlighted"
 
 **Important**: This module must appear before `gatsby-remark-prismjs` in your plugins array, or the markup will have already been transformed into a code block and this plugin will fail to detect it and inline the file.
 
-```javascript
+```js
 // In your gatsby-config.js
 module.exports = {
   plugins: [
