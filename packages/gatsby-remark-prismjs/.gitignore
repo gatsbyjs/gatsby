@@ -1,7 +1,1 @@
-/index.js
-/add-line-numbers.js
-/highlight-code.js
-/highlight-line-range.js
-/parse-line-number-range.js
-/load-prism-language.js
-/prism-language-dependencies.js
+/*.js
