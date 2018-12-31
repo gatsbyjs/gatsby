@@ -155,6 +155,25 @@ It's also possible to ask Gatsby to return excerpts formatted as HTML. You might
 }
 ```
 
+## gray-matter options
+
+`gatsby-transformer-remark` uses [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse markdown frontmatter, so you can specify any of the options mentioned [here](https://github.com/jonschlinkert/gray-matter#options) in the `gatsby-config.js` file.
+
+### Example: Excerpts
+
+If you don't want to use `pruneLength` for excerpts but a custom seperator, you can specify an `excerpt_separator`:
+
+```javascript
+{
+  "resolve": `gatsby-transformer-remark`,
+  "options": {
+    "excerpt_separator": `<!-- end -->`
+  }
+}
+```
+
+Any file that does not have the given `excerpt_separator` will fall back to the default pruning method.
+
 ## Troubleshooting
 
 ### Excerpts for non-latin languages
