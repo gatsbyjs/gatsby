@@ -13,9 +13,6 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "babel-plugin-gather-exports": "0.0.1",
-    "babel-plugin-pluck-exports": "0.0.1",
-    "babel-plugin-pluck-imports": "0.0.1",
     "debug": "^4.0.1",
     "escape-string-regexp": "^1.0.5",
     "fs-extra": "^7.0.0",
