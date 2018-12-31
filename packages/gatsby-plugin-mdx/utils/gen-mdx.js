@@ -1,16 +1,13 @@
-const BabelPluginPluckImports = require("babel-plugin-pluck-imports");
-//const React = require("react");
 const babel = require("@babel/core");
 const grayMatter = require("gray-matter");
 const mdx = require("@mdx-js/mdx");
 const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
-//const { renderToStaticMarkup } = require("react-dom/server");
 
 const debug = require("debug")("gatsby-mdx:gen-mdx");
 
 const getSourcePluginsAsRemarkPlugins = require("./get-source-plugins-as-remark-plugins");
 const htmlAttrToJSXAttr = require("./babel-plugin-html-attr-to-jsx-attr");
-//const MDXRenderer = require("../mdx-renderer");
+const BabelPluginPluckImports = require("./babel-plugin-pluck-imports");
 
 /*
  * function mutateNode({
