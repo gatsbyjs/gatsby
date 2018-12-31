@@ -3,7 +3,7 @@ title: Set Up Your Development Environment
 typora-copy-images-to: ./
 ---
 
-Before you start building your first Gatsby site, you’ll need to familiarize yourself with some core web technologies and make sure that you have installed all required software tools.
+Before you start building your first Gatsby site, you’ll need to familiarize yourself with some core web technologies and make sure that you have installed all the required software tools.
 
 ## Overview of core technologies
 
@@ -19,7 +19,7 @@ It’s not necessary to be an expert with these already — if you’re not, don
 
 ## Familiarize yourself with the command line
 
-The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
+The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial, we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
 Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/) or [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows).
 
@@ -59,7 +59,7 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need to have Git installed to set up your first Gatsby site.
 
-The steps to download and install Git depend on your operating system. Follow the guide for your system:
+The steps to download and install Git depends on your operating system. Follow the guide for your system:
 
 - [Install Git on macOS](https://www.atlassian.com/git/tutorials/install-git#mac-os-x)
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
@@ -163,7 +163,7 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 1.  Open the extensions view on VS Code (View => Extensions).
 2.  Search for "Prettier - Code formatter".
-3.  Click "Install". After installation you'll be prompted to restart VS Code to enable the extension.
+3.  Click "Install". After installation,you'll be prompted to restart VS Code to enable the extension.
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 
