@@ -1,6 +1,6 @@
 import React from "react";
 import { MDXScopeProvider } from "./context";
-import scopeContexts from "./mdx-scopes!";
+import scopeContexts from "./loaders/mdx-scopes!";
 
 const WrapRootElement = ({ element }) => {
   return (
