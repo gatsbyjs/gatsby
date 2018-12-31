@@ -39,7 +39,7 @@ Even though Gatsby is pretty new, the developers using it seem really involved. 
 
 ## Some thoughts on Gatsby
 
-It's telling that [most of the websites that are made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) are developer portfolios and documentation websites. It shows that Gatsby is still a bit in its early-adopters phase. But seeing what kind of sites are already made with Gatsby, I'm sure the future is bright. I've had a blast creating my own site with Gatsby ([checkout the github repo here](https://github.com/aderaaij/ardennl-gatsby)) and in the end it didn't take more than a weekend to complete, including doing the [tutorial](/tutorial/) and experimenting with the [Gatsby starters](/docs/gatsby-starters/).
+It's telling that [most of the websites that are made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) are developer portfolios and documentation websites. It shows that Gatsby is still a bit in its early-adopters phase. But seeing what kind of sites are already made with Gatsby, I'm sure the future is bright. I've had a blast creating my own site with Gatsby ([checkout the GitHub repo here](https://github.com/aderaaij/ardennl-gatsby)) and in the end it didn't take more than a weekend to complete, including doing the [tutorial](/tutorial/) and experimenting with the [Gatsby starters](/docs/gatsby-starters/).
 
 Some other thoughts I had while working with Gatsby:
 

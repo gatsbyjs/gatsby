@@ -14,6 +14,27 @@ describe(`gatsby-plugin-manifest`, () => {
     headComponents = []
   })
 
+  it(`Adds a "theme color" meta tag to head if "theme_color_in_head" is not provided`, () => {
+    onRenderBody(ssrArgs, { theme_color: `#000000` })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Does not add a "theme color" meta tag if "theme_color_in_head" is set to false`, () => {
+    onRenderBody(ssrArgs, {
+      theme_color: `#000000`,
+      theme_color_in_head: false,
+    })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Add a "theme color" meta tag if "theme_color_in_head" is set to true`, () => {
+    onRenderBody(ssrArgs, {
+      theme_color: `#000000`,
+      theme_color_in_head: true,
+    })
+    expect(headComponents).toMatchSnapshot()
+  })
+
   it(`Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head`, () => {
     onRenderBody(ssrArgs, { icon: true, theme_color: `#000000` })
     expect(headComponents).toMatchSnapshot()

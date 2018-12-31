@@ -6,7 +6,7 @@ tags: ["lightbox", "gatsby-image", "accessibility"]
 canonicalLink: "https://416serg.me/building-a-custom-accessible-image-lightbox-in-gatsbyjs"
 ---
 
-In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example on [Github](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
+In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example on [GitHub](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
 
 ## Getting started
 
@@ -45,7 +45,7 @@ You'll take a similar approach.
 
 ### Configure `gatsby-config.js`
 
-You'll put all of the images in a folder inside `src/cars` (You can get them from the [Github repo](https://github.com/416serg/GatsbyLightbox/tree/master/src/cars) or use your own, just make sure to follow a similar format). Then, you'll edit the `gatsby-config.js` file to expose that folder to a GraphQL query.
+You'll put all of the images in a folder inside `src/cars` (You can get them from the [GitHub repo](https://github.com/416serg/GatsbyLightbox/tree/master/src/cars) or use your own, just make sure to follow a similar format). Then, you'll edit the `gatsby-config.js` file to expose that folder to a GraphQL query.
 
 ```js
 {
