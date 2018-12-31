@@ -31,6 +31,11 @@ const nodes = [
     sparse: [null, null],
     sparseResolver: true,
   },
+  {
+    id: 100,
+    internal: { type: `Arg` },
+    arg: 1,
+  },
 ]
 
 const { getNodesByType } = require(`../../db`)
@@ -101,6 +106,19 @@ TypeComposer.create({
     sparseResolver: {
       type: [[`Foo`]],
       resolve: () => [null, [null, null]],
+    },
+  },
+})
+
+TypeComposer.create({
+  name: `Arg`,
+  fields: {
+    arg: {
+      type: `Int`,
+      args: {
+        arg: { type: `Int`, defaultValue: 2 },
+      },
+      resolve: (source, args) => args.arg,
     },
   },
 })
@@ -245,6 +263,13 @@ describe(`Get nodes for query`, () => {
       expect(queryNodes[0].sparse[0]).toBeNull()
       expect(queryNodes[0].sparseResolver[0]).toBeNull()
       expect(queryNodes[0].sparseResolver[1][0]).toBeNull()
+    })
+
+    it(`passes default values to the resolver`, async () => {
+      const type = `Arg`
+      const filter = { arg: { eq: true } }
+      const queryNodes = await getNodesForQuery(type, filter)
+      expect(queryNodes[0].arg).toBe(2)
     })
   })
 

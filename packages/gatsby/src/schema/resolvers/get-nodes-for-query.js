@@ -45,14 +45,19 @@ const prepareForQuery = (node, filter, parentType) => {
       // Continue and call the field resolver or not?
       if (node[fieldName] == null) return node
 
-      const { resolve, type } = fields[fieldName]
+      const { type, args, resolve } = fields[fieldName]
 
       if (typeof resolve === `function`) {
+        const defaultValues = args.reduce((acc, { name, defaultValue }) => {
+          acc[name] = defaultValue
+          return acc
+        }, {})
         node[fieldName] = await resolve(
           node,
+          defaultValues,
           {},
-          {},
-          // NOTE: fieldNodes is needed for `graphql-tools` schema stitching to work
+          // NOTE: fieldNodes is needed for `graphql-tools` schema stitching
+          // to work (which we don't use currently)
           { fieldName, fieldNodes: [{}], parentType, returnType: type }
         )
       }
@@ -92,6 +97,13 @@ const getNodesForQuery = async (type, filter) => {
   // Alternatively, call @link resolvers manually (@see 4f5df2dca5665d7d13da6daf456d5302fc9274b7).
   const { GraphQLSchema } = require(`graphql`)
   const { schema } = require(`../../redux`).store.getState()
+
+  // Just an experiment. This works as well -- but does not cache resolved nodes.
+  // const { execute, parse } = require(`graphql`)
+  // const queryField = `all${type}`
+  // const query = `{ ${queryField} { ${Object.keys(filterFields).join(`, `)} } }`
+  // const { data, errors } = await execute({ schema, document: parse(query) })
+  // const queryNodes = data && data[queryField]
 
   // FIXME: In testing, when no schema is built yet, use schemaComposer.
   // Should mock store in tests instead.
