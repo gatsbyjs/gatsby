@@ -37,6 +37,7 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "onCreatePage",
+      "addTypeDefs",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -141,6 +142,7 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "onCreatePage",
+      "addTypeDefs",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
