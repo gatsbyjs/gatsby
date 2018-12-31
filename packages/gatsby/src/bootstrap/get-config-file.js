@@ -25,6 +25,11 @@ module.exports = async function getConfigFile(
   try {
     configModule = require(configPath)
   } catch (err) {
+    if (!configModule) {
+      // If you forget the gatsby-config.js in a theme, then nearMatch throws an error as it is looking in your local files.
+      // This error is more for theme creators and the following will catch issues with local config.
+      report.panic(`It appears you may be missing the gatsby-config.js at ${rootDir}. Please create one here.`, err)
+    }
     const nearMatch = await fs.readdir(rootDir).then(files =>
       files.find(file => {
         const fileName = file.split(rootDir).pop()
