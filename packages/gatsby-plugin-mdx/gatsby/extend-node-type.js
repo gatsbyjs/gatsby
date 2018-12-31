@@ -14,12 +14,7 @@ const remove = require("unist-util-remove");
 const toString = require("mdast-util-to-string");
 const generateTOC = require("mdast-util-toc");
 const stripMarkdown = require("strip-markdown");
-
 const prune = require("underscore.string/prune");
-const crypto = require("crypto");
-const fs = require("fs");
-const path = require("path");
-const { MDX_SCOPES_LOCATION } = require("../constants");
 
 const debug = require("debug")("gatsby-mdx:extend-node-type");
 const renderHTML = require("../utils/render-html");
@@ -128,35 +123,8 @@ module.exports = (
             },
             scope: {
               type: GraphQLString,
-              async resolve(mdxNode) {
-                const createFilePath = (directory, filename, ext) =>
-                  path.join(
-                    directory,
-                    MDX_SCOPES_LOCATION,
-                    `${filename}${ext}`
-                  );
-
-                const createHash = str =>
-                  crypto
-                    .createHash(`md5`)
-                    .update(str)
-                    .digest(`hex`);
-
-                const { scopeImports, scopeIdentifiers } = await processMDX({
-                  node: mdxNode
-                });
-                const scopeFileContent = `${scopeImports.join("\n")}
-
-export default { ${scopeIdentifiers.join(", ")} }`;
-
-                const filePath = createFilePath(
-                  options.root,
-                  createHash(scopeFileContent),
-                  ".js"
-                );
-
-                fs.writeFileSync(filePath, scopeFileContent);
-                return filePath;
+              async resolve() {
+                return "";
               }
             }
           }
