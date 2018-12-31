@@ -6,7 +6,6 @@ const _ = require(`lodash`)
 const { emitter } = require(`../../redux`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const { getNode } = require(`../../db/nodes`)
-const createContentDigest = require(`../../utils/create-content-digest`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
