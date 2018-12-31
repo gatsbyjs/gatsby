@@ -10,6 +10,7 @@ const addConvenienceChildrenFields = require(`./add-convenience-children-fields`
 const addCustomResolveFunctions = require(`./add-custom-resolve-functions`)
 const addFieldsFromNodeAPI = require(`./add-fields-from-node-api`)
 const addResolvers = require(`./add-resolvers`)
+const addThirdPartySchemas = require(`./add-third-party-schemas`)
 
 const addTypeDefs = typeDefs => {
   const types = schemaComposer.addTypeDefs(typeDefs)
@@ -48,6 +49,7 @@ const buildSchema = async () => {
       addTypeToRootQuery(tc)
     }
   })
+  addThirdPartySchemas()
   // TODO: Move this to updateSchema()?
   await addCustomResolveFunctions()
   const schema = schemaComposer.buildSchema({ directives })

@@ -9,7 +9,7 @@ module.exports = async ({ parentSpan, update }) => {
   // const span = tracer.startSpan(`build schema`, spanArgs)
 
   // const thirdPartySchemas = store.getState().thirdPartySchemas || []
-  const gatsbySchema = update ? await updateSchema() : await buildSchema()
+  const schema = update ? await updateSchema() : await buildSchema()
 
   // span.finish()
 
@@ -18,7 +18,6 @@ module.exports = async ({ parentSpan, update }) => {
   // const schema = mergeSchemas({
   //   schemas: [gatsbySchema, ...thirdPartySchemas],
   // })
-  const schema = gatsbySchema
 
   store.dispatch({
     type: `SET_SCHEMA`,
