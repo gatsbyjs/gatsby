@@ -3,6 +3,7 @@
 const url = require(`url`)
 const glob = require(`glob`)
 const fs = require(`fs`)
+const openurl = require(`better-opn`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
@@ -439,7 +440,7 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        require(`opn`)(urls.localUrlForBrowser).catch(err =>
+        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
           console.log(
             `${chalk.yellow(
               `warn`
