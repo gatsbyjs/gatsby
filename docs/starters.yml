@@ -565,7 +565,7 @@
     - One-page layout with sub-pages for case studies
     - Easily configurable
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
-- url: https://portfolio-cara.netlify.com/
+- url: https://cara.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-cara
   description: A portfolio starter for Gatsby. The target audience are designers and photographers. The playful & colorful Onepage has beautiful parallax effects (made possible by React Spring) and has a Hero, Projects, About and Contact section. The styling is defined by TailwindCSS which enables easy edits and a consistent look. General settings and colors can be changed in a config & theme file.
   tags:
@@ -576,41 +576,44 @@
     - PWA
   features:
     - React Spring
-    - TailwindCSS & Emotion
+    - TailwindCSS & Styled Components
+    - Uses tailwind.macro (Babel macro) for easy TailwindCSS styling
     - Playful & Colorful One-Page website with Parallax effect
     - Easily configurable
     - And other good stuff (SEO, Responsive images, Offline Support, WebApp Manifest Support)
-- url: https://portfolio-emilia.netlify.com/
+- url: https://emilia.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-emilia
-  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The dark themed website shows your work with large images in a grid-layout (powered by CSS Grid). The transition effects on the header add a playful touch to the overall minimal design. The website is a Onepage design with programmatically created pages for your projects. General settings and colors can be changed in a config & theme file.
+  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The dark themed website shows your work with large images in a grid-layout (powered by CSS Grid). The transition effects on the header add a playful touch to the overall minimal design. The website has programmatically created pages for your projects (with automatic image import). General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
-    - Onepage
     - PWA
     - Transitions
-    - Markdown
+    - MDX
     - Styling:CSS-in-JS
   features:
     - Focus on big images (with gatsby-image)
     - Dark Theme with HeroPatterns Header
-    - CSS Grid and Emotion
+    - CSS Grid and styled-components
+    - Page transitions
+    - react-spring animations
     - One-Page layout with sub-pages for projects
-    - React Overdrive transitions
-    - Create your projects in Markdown (automatic import of images)
+    - Create your projects in MDX (automatic import of images)
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
-- url: https://portfolio-emma.netlify.com/
+- url: https://emma.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-emma
-  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images in a full-width grid-layout. The randomized color overlays add a playful touch to the overall minimal design. The website has three pages (Index, About, Contact) and programmatically created pages for your projects. General settings and colors can be changed in a config & theme file.
+  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images in a full-width grid-layout. Choose color overlays for card items and your projects. The website has three pages (Index, About, Contact) and programmatically created pages for your projects. General settings and colors can be changed in a config & theme file.
   tags:
     - Portfolio
-    - Markdown
+    - MDX
+    - Transitions
     - Styling:CSS-in-JS
     - PWA
   features:
     - Full-width photo grid-layout (with gatsby-image)
     - Minimalistic light theme with large images
-    - Create your projects in Markdown
-    - Styling with Emotion and Typography.js
+    - Create your projects in MDX
+    - Styling with styled-components
+    - react-spring animations
     - Easily configurable
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 - url: https://gatsby-starter-procyon.netlify.com/
