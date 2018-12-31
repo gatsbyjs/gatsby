@@ -60,6 +60,10 @@ exports.onServiceWorkerUpdateFound = () => {
 }
 ```
 
+### Using a custom service worker in Gatsby
+
+If your use case requires something that `gatsby-plugin-offline` doesn't support and you'd like to write your own custom service worker, you can add a file called `sw.js` in `/static` and Gatsby will register it as the service worker.
+
 ## References
 
 - [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
