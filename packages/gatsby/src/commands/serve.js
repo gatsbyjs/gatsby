@@ -40,7 +40,7 @@ module.exports = async program => {
     )
     if (open) {
       console.log(`${chalk.blue(`info`)} Opening browser...`)
-      openurl(openUrlString).catch(err =>
+      Promise.resolve(openurl(openUrlString)).catch(err =>
         console.log(
           `${chalk.yellow(
             `warn`
