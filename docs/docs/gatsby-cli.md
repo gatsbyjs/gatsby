@@ -6,10 +6,10 @@ title: Commands (Gatsby CLI)
 
 Gatsby command line tool. This doc exists in [READme form in GitHub here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md).
 
-Let's you create new Gatsby sites using
+Lets you create new Gatsby sites using
 [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/).
 
-It also let's you run commands on sites. The tool runs code from the `gatsby`
+It also lets you run commands on sites. The tool runs code from the `gatsby`
 package installed locally.
 
 ## Install

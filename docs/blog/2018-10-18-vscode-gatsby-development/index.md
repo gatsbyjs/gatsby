@@ -48,7 +48,7 @@ Of course once you start browsing the Extensions Marketplace you'll want to inst
 - [Rainbow Brackets](https://marketplace.visualstudio.com/items?itemName=2gua.rainbow-brackets)
 - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons)
 
-You can take a look at my ["dotfiles" Github](https://github.com/mikelax/dotfiles/tree/master/vscode) for a README on the VS Code Extensions I am using along with editor settings.
+You can take a look at my ["dotfiles" GitHub](https://github.com/mikelax/dotfiles/tree/master/vscode) for a README on the VS Code Extensions I am using along with editor settings.
 
 ## 🚀 Debugging in Chrome 🚀
 
@@ -80,6 +80,6 @@ In this article we have learned some of the basics about configuring and using V
 
 You may want to browse through the [VS Code Updates page](https://code.visualstudio.com/updates/) to see some of the recent features added. You'll notice they publish major updates monthly. It seems they are listening to the user community and continually adding features to the Editor and improvements to the user expereince.
 
-A great way to contribute is to browse the [open issues on Github](https://github.com/gatsbyjs/gatsby/issues), and find some that look interesting! Armed with some of the techniques I've shown here today, authoring these fixes, features, and more will be a breeze thanks to some of the great features of VS Code.
+A great way to contribute is to browse the [open issues on GitHub](https://github.com/gatsbyjs/gatsby/issues), and find some that look interesting! Armed with some of the techniques I've shown here today, authoring these fixes, features, and more will be a breeze thanks to some of the great features of VS Code.
 
 Do you use an Extension that I missed in this tutorial? Send send a message to [@mikelax on Twitter](https://twitter.com/mikelax) to let me know.

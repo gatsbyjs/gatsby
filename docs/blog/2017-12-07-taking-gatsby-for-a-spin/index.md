@@ -39,7 +39,7 @@ Even though Gatsby is pretty new, the developers using it seem really involved. 
 
 ## Some thoughts on Gatsby
 
-It's telling that [most of the websites that are made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) are developer portfolios and documentation websites. It shows that Gatsby is still a bit in its early-adopters phase. But seeing what kind of sites are already made with Gatsby, I'm sure the future is bright. I've had a blast creating my own site with Gatsby ([checkout the github repo here](https://github.com/aderaaij/ardennl-gatsby)) and in the end it didn't take more than a weekend to complete, including doing the [tutorial](/tutorial/) and experimenting with the [Gatsby starters](/docs/gatsby-starters/).
+It's telling that [most of the websites that are made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) are developer portfolios and documentation websites. It shows that Gatsby is still a bit in its early-adopters phase. But seeing what kind of sites are already made with Gatsby, I'm sure the future is bright. I've had a blast creating my own site with Gatsby ([checkout the GitHub repo here](https://github.com/aderaaij/ardennl-gatsby)) and in the end it didn't take more than a weekend to complete, including doing the [tutorial](/tutorial/) and experimenting with the [Gatsby starters](/docs/gatsby-starters/).
 
 Some other thoughts I had while working with Gatsby:
 
@@ -49,7 +49,7 @@ Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work 
 
 ### GraphQL is amazing
 
-Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph*i*QL IDE is the perfect helper. In a way, GraphQL allows you to separate your front-end from the type of data source.
+Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph*i*QL IDE is the perfect helper. In a way, GraphQL allows you to separate your frontend from the type of data source.
 
 ```es6
 export const query = graphql`

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.18"></a>
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.17...gatsby-transformer-remark@2.1.18) (2018-12-31)
+
+### Features
+
+- **gatsby-transformer-remark:** Note about gray-matter ([#10718](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10718)) ([0e84ff3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/0e84ff3))
+
+<a name="2.1.17"></a>
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.16...gatsby-transformer-remark@2.1.17) (2018-12-17)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+<a name="2.1.16"></a>
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.15...gatsby-transformer-remark@2.1.16) (2018-12-17)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
 <a name="2.1.15"></a>
 
 ## [2.1.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.14...gatsby-transformer-remark@2.1.15) (2018-11-30)

@@ -41,7 +41,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           projectRoot: this.projectRoot,
         })
       )
-      // this callback ends the resolver fallthrough chain.
+      // this callbackends the resolver fallthrough chain.
       return callback(null, {
         directory: request.directory,
         path: resolvedComponentPath,

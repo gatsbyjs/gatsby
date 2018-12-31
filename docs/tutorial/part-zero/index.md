@@ -65,7 +65,7 @@ The steps to download and install Git depend on your operating system. Follow th
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
 - [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
 
-> 💡 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and Github, check out Github's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
+> 💡 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
 
 ## Install Gatsby CLI
 
@@ -78,7 +78,7 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 A couple of different things are happening here.
 
-```bash
+```shell
 npm install --global gatsby-cli
 ```
 
@@ -112,7 +112,7 @@ Now you are ready to use Gatsby CLI tool to create your first Gatsby site. Using
 
 What just happened?
 
-```bash
+```shell
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
@@ -121,13 +121,13 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
 - Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
 
-```bash
+```shell
 cd hello-world
 ```
 
 - This says 'I want to change directories (`cd`) to the “hello-world” subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
 
-```bash
+```shell
 gatsby develop
 ```
 

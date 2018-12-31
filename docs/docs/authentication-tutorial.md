@@ -65,7 +65,7 @@ And edit the layout component to include it:
 ```jsx:title=src/components/layout.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
@@ -342,7 +342,8 @@ const App = () => (
   <Layout>
     <Router>
       {/* highlight-next-line */}
-      <PrivateRoute path="/app/profile" component={Profile} /> <Login path="/app/login" />
+      <PrivateRoute path="/app/profile" component={Profile} />
+      <Login path="/app/login" />
     </Router>
   </Layout>
 )
@@ -474,3 +475,4 @@ If you want to learn more about using production-ready auth solutions, these lin
 - [The Gatsby store for swag and other Gatsby goodies](https://github.com/gatsbyjs/store.gatsbyjs.org)
 - [Building a blog with Gatsby, React and Webtask.io!](https://auth0.com/blog/building-a-blog-with-gatsby-react-and-webtask/)
 - [JAMstack PWA — Let’s Build a Polling App. with Gatsby.js, Firebase, and Styled-components Pt. 2](https://medium.com/@UnicornAgency/jamstack-pwa-lets-build-a-polling-app-with-gatsby-js-firebase-and-styled-components-pt-2-9044534ea6bc)
+- [JAMstack Hackathon Starter - Authenticated Gatsby app starter with Netlify Identity](https://www.gatsbyjs.org/starters/sw-yx/jamstack-hackathon-starter)

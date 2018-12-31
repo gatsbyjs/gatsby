@@ -42,7 +42,7 @@ function transformPackageJson(json) {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.sourceNodes = ({ actions, store }) => {
+exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   const { createNode } = actions
   const state = store.getState()
   const { program } = state
@@ -130,7 +130,7 @@ exports.sourceNodes = ({ actions, store }) => {
   })
 }
 
-exports.onCreatePage = ({ page, actions }) => {
+exports.onCreatePage = ({ createContentDigest, page, actions }) => {
   const { createNode } = actions
   // eslint-disable-next-line
   const { updatedAt, ...pageWithoutUpdated } = page

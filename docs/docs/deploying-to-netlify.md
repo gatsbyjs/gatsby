@@ -17,19 +17,19 @@ continuous deployment from public or private repos and more.
 
 First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
 
-```sh
+```shell
 npm install --global gatsby-cli
 ```
 
 Next, we'll create a new Gatsby site:
 
-```sh
+```shell
 gatsby new my-gatsby-site
 ```
 
 Finally, change into the new site directory:
 
-```sh
+```shell
 cd my-gatsby-site
 ```
 

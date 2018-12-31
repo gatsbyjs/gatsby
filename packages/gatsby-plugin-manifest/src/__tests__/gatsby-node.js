@@ -71,6 +71,7 @@ describe(`Test plugin manifest options`, () => {
       icon: undefined,
       legacy: true,
       plugins: [],
+      theme_color_in_head: false,
     }
     await onPostBootstrap([], {
       ...manifestOptions,

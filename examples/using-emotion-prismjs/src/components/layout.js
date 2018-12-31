@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import { Link, StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 import { css } from "react-emotion"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import { rhythm } from "../utils/typography"
 import "../prism-styles"
