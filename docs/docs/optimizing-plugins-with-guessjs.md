@@ -2,58 +2,19 @@
 title: Optimizing plugins with Guess.js
 ---
 
-This guide will walk you through integrating [Guess.js](https://github.com/guess-js/guess) into your Gatsby plugin.
+Pre-loading resources is a great way to improve application performance. However, pre-loading everything on a page can waist bandwidth. This is especially true for mobile phone users who may have limited data and bandwidth. So how do you know which resources to pre-load? Is it just a guessing game? Not anymore.
 
-> Guess.js is a collection of libraries & tools for enabling data-driven user-experience on the web.
+## Introducing Guess.js
 
-Guess.js will fetch data from Google Analytics and use that data to generate a model for predictive pre-fetching. As a user browses the site, Guess will lookup which pages are most likely to be viewed next and pre-fetch that content. The data from Google Analytics is downloaded when the application builds and is included in the bundle.
+[Guess.js](https://github.com/guess-js/guess) By leveraging Google Analytics data and machine learning Guess.js is able determine which pages a user is most likely to navigate to from the current page and only pre-load those resources. Thus, there are fewer network requests which improves performance on slower networks.
 
-### Installing Guess
+## How does it work?
 
-`npm i guess-webpack --save-dev`
+Guess.js will download a file from Google Analytics during the production build. This file is then used to construct the model for predictive analytics.
 
-### Configuring Guess
+## Guess.js and Gatsby
 
-```js
-new GuessPlugin({
-  // GA view ID.
-  GA: GAViewID,
-
-  // Tell Guess to pre-fetching or delegate this logic to its consumer.
-  runtime: {
-    delegate: true,
-  },
-
-  // set custom route mappings
-  routeProvider: false,
-
-  // Optional
-  period: period ? period : undefined,
-})
-```
-
-- `GA` - the view ID from Google Analytics
-- `runtime` - configures the runtime of the GuessPlugin. In this case, the delegate property means that the Guess.js will not handle route changes
-- `routeProvider` - establishes URL mappings between the Google Analytics report and the JavaScript bundles of the application.
-- `period` - the period for the Google Analytics report that Guess.js will download when the application builds.
-
-> the mapping between the JavaScript bundles of the application and the individual URLs from the Google Analytics report, is the most fragile part of the entire process.
-
-You may need to provide custom bundle to URL mappings. You can do this by either setting the `routeProvider` to `false` or providing a custom `routeProvider` which returns an array of individual routing modules similar to the example below.
-
-```js
-export interface RoutingModule {
-  // Entry point of the bundle associated with
-  // the given route
-  modulePath: string;
-
-  // Entry point of the parent bundle
-  parentModulePath: string | null;
-
-  path: string;
-  lazy: boolean;
-}
-```
+See the [Gatsby Guess.js Plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-guess-js) for more information on integrating Guess.js with Gatsby.
 
 ### References:
 
