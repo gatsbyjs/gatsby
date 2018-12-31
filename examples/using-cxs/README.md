@@ -5,4 +5,4 @@ Example site that demonstrates how to build Gatsby sites with
 
 ## References
 
-- [cxs Github](https://github.com/cxs-css/cxs)
+- [cxs GitHub](https://github.com/cxs-css/cxs)

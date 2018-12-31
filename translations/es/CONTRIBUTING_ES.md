@@ -17,7 +17,7 @@ Queremos contribuir con Gatsby para que sea divertido, agradable y educativo par
 - Buscar a Gatsby en [Discord](https://discordapp.com/invite/jUFVxtB) o [Spectrum](https://spectrum.chat/gatsby-js) y ayudar a alguien más que lo necesite
 - ¡Enseñar a otros cómo contribuir al repositorio de Gatsby!
 
-Si estás preocupado o no sabes por dónde empezar, siempre puedes comunicarte con Shannon Soper (@shannonb_ux) en Twitter o simplemente presentar el problema en github y una persona encargada del mantenimiento podrá ayudarlo a orientarse.
+Si estás preocupado o no sabes por dónde empezar, siempre puedes comunicarte con Shannon Soper (@shannonb_ux) en Twitter o simplemente presentar el problema en GitHub y una persona encargada del mantenimiento podrá ayudarlo a orientarse.
 
 ¿Quieres dar una charla de Gatsby? ¡Nos encantaría revisar tus ideas para la charla! ¡Puedes enviarlo por correo electrónico a shannon [arroba] gatsbyjs [punto] com y podemos darte consejos o sugerencias!
 
