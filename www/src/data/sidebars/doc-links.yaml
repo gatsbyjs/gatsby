@@ -81,7 +81,7 @@
           link: /docs/using-unstructured-data/
         - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
-        - title: Sourcing from databases*
+        - title: Sourcing from databases
           link: /docs/sourcing-from-databases/
         - title: Sourcing from SaaS services*
           link: /docs/sourcing-from-saas-services/
