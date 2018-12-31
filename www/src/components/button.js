@@ -16,7 +16,9 @@ const Button = ({
   tag,
   large,
   small,
+  tiny,
   secondary,
+  ondark,
   ...rest
 }) => {
   const Tag = components[tag || `link`]
@@ -24,20 +26,23 @@ const Button = ({
   const props = {
     to: !tag ? to : undefined,
     href: tag === `href` ? to : undefined,
-    css: {
-      "&&": {
-        ...buttonStyles.default,
-        ...overrideCSS,
-        ...(secondary && { ...buttonStyles.secondary }),
-        ...(large && { ...buttonStyles.large }),
-        ...(small && { ...buttonStyles.small }),
-      },
-    },
     ...rest,
   }
 
+  const css = {
+    "&&": {
+      ...buttonStyles.default,
+      ...overrideCSS,
+      ...(secondary && buttonStyles.secondary),
+      ...(large && buttonStyles.large),
+      ...(small && buttonStyles.small),
+      ...(tiny && buttonStyles.tiny),
+      ...(ondark && buttonStyles.ondark),
+    },
+  }
+
   return (
-    <Tag {...props}>
+    <Tag {...props} css={css}>
       {children}
       {icon && <>{icon}</>}
     </Tag>

@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-manifest Add a "theme color" meta tag if "theme_color_in_head" is set to true 1`] = `
+Array [
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <meta
+    content="#000000"
+    name="theme-color"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
+Array [
+  <link
+    href="/icons/icon-48x48.png"
+    rel="shortcut icon"
+  />,
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <meta
+    content="#000000"
+    name="theme-color"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Adds a "theme color" meta tag to head if "theme_color_in_head" is not provided 1`] = `
+Array [
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <meta
+    content="#000000"
+    name="theme-color"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Creates legacy apple touch links if opted in Using default set of icons 1`] = `
+Array [
+  <link
+    href="/icons/icon-48x48.png"
+    rel="shortcut icon"
+  />,
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <meta
+    content="#000000"
+    name="theme-color"
+  />,
+  <link
+    href="/icons/icon-48x48.png"
+    rel="apple-touch-icon"
+    sizes="48x48"
+  />,
+  <link
+    href="/icons/icon-72x72.png"
+    rel="apple-touch-icon"
+    sizes="72x72"
+  />,
+  <link
+    href="/icons/icon-96x96.png"
+    rel="apple-touch-icon"
+    sizes="96x96"
+  />,
+  <link
+    href="/icons/icon-144x144.png"
+    rel="apple-touch-icon"
+    sizes="144x144"
+  />,
+  <link
+    href="/icons/icon-192x192.png"
+    rel="apple-touch-icon"
+    sizes="192x192"
+  />,
+  <link
+    href="/icons/icon-256x256.png"
+    rel="apple-touch-icon"
+    sizes="256x256"
+  />,
+  <link
+    href="/icons/icon-384x384.png"
+    rel="apple-touch-icon"
+    sizes="384x384"
+  />,
+  <link
+    href="/icons/icon-512x512.png"
+    rel="apple-touch-icon"
+    sizes="512x512"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Creates legacy apple touch links if opted in Using user specified list of icons 1`] = `
+Array [
+  <link
+    href="/favicons/android-chrome-48x48.png"
+    rel="shortcut icon"
+  />,
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <meta
+    content="#000000"
+    name="theme-color"
+  />,
+  <link
+    href="/favicons/android-chrome-48x48.png"
+    rel="apple-touch-icon"
+    sizes="48x48"
+  />,
+  <link
+    href="/favicons/android-chrome-512x512.png"
+    rel="apple-touch-icon"
+    sizes="512x512"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Does not add a "theme color" meta tag if "theme_color_in_head" is set to false 1`] = `
+Array [
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string 1`] = `
+Array [
+  <link
+    href="/icons/icon-48x48.png"
+    rel="shortcut icon"
+  />,
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+]
+`;

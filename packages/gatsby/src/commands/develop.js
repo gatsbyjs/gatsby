@@ -13,7 +13,7 @@ const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
-const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const { syncStaticDir } = require(`../utils/get-static-dir`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -26,14 +26,15 @@ const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 // const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
-// changed. Wait 10 seconds so copying doesn't interfer with the regular
+// changed. Wait 10 seconds so copying doesn't interfere with the regular
 // bootstrap.
 setTimeout(() => {
-  copyStaticDirectory()
+  syncStaticDir()
 }, 10000)
 
 const rlInterface = rl.createInterface({
@@ -59,7 +60,7 @@ async function startServer(program) {
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
 
-          See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+          See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
         `,
         err
       )
@@ -154,9 +155,22 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
-      req.pipe(request(proxiedUrl)).pipe(res)
+      req
+        .pipe(
+          request(proxiedUrl).on(`error`, err => {
+            const message = `Error when trying to proxy request "${
+              req.originalUrl
+            }" to "${proxiedUrl}"`
+
+            report.error(message, err)
+            res.status(500).end()
+          })
+        )
+        .pipe(res)
     })
   }
+
+  await apiRunnerNode(`onCreateDevServer`, { app })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
@@ -425,8 +439,13 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        require(`opn`)(urls.localUrlForBrowser)
-          .catch(err => console.log(`${chalk.yellow(`warn`)} Browser not opened because no browser was found`))
+        require(`opn`)(urls.localUrlForBrowser).catch(err =>
+          console.log(
+            `${chalk.yellow(
+              `warn`
+            )} Browser not opened because no browser was found`
+          )
+        )
       }
     }
 

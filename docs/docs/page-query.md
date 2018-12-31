@@ -1,10 +1,10 @@
 ---
-title: Querying data in pages with graphql
+title: Querying data in pages with GraphQL
 ---
 
 Gatsby's `graphql` tag enables page components to retrieve data via GraphQL query.
 
-In this guide, you will learn [how to use the `graphql` tag](/page-query#adding-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/page-query#how-does-the-graphql-tag-work).
+In this guide, you will learn [how to use the `graphql` tag](/docs/page-query#add-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/docs/page-query#how-does-the-graphql-tag-work).
 
 ## How to use the `graphql` tag in pages
 
@@ -25,7 +25,7 @@ module.exports = {
 
 A simple index page (`src/pages/index.js`) can be marked up like so:
 
-```js:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 const HomePage = () => {
@@ -122,7 +122,7 @@ export default HomePage
 
 After restarting `gatsby develop`, your home page will now display "This is where I write my thoughts." from the description set in `gatsby-config.js`!
 
-## How does the graphql tag work?
+## How does the `graphql` tag work?
 
 `graphql` is a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals). Behind the scenes Gatsby handles these tags in a particular way:
 

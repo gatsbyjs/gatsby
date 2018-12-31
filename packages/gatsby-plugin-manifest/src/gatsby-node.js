@@ -20,12 +20,13 @@ function generateIcons(icons, srcIcon) {
 
 exports.onPostBootstrap = (args, pluginOptions) =>
   new Promise((resolve, reject) => {
-    const { icon } = pluginOptions
-    const manifest = { ...pluginOptions }
+    const { icon, ...manifest } = pluginOptions
 
     // Delete options we won't pass to the manifest.webmanifest.
+
     delete manifest.plugins
-    delete manifest.icon
+    delete manifest.legacy
+    delete manifest.theme_color_in_head
 
     // If icons are not manually defined, use the default icon set.
     if (!manifest.icons) {

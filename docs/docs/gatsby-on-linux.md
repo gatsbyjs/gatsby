@@ -4,13 +4,15 @@ title: Gatsby on Linux
 
 # Linux
 
-TODO
+> This is a TODO. Help our community expand it.
+
+> Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your pull request gets accepted.
 
 ## Windows Subsystem Linux (WSL)
 
 As of October 17th 2017, Windows 10 ships with WSL and Linux distributions are available via the [Windows Store], there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
 
-```sh
+```shell
 # set default distribution to Ubuntu
 wslconfig /setdefault ubuntu
 ```
@@ -19,7 +21,7 @@ wslconfig /setdefault ubuntu
 
 If you have a fresh install of Ubuntu then update and upgrade:
 
-```sh
+```shell
 sudo apt update
 sudo apt -y upgrade
 ```
@@ -30,7 +32,7 @@ sudo apt -y upgrade
 
 To compile and install native addons from npm you may also need to install build tools for `node-gyp`:
 
-```sh
+```shell
 sudo apt install -y build-essential
 ```
 
@@ -38,7 +40,7 @@ sudo apt install -y build-essential
 
 Following the install instructions on nodejs.org leaves a slightly broken install (i.e. permission errors when trying to `npm install`). Instead try installing node versions using [n] which you can install with [n-install]:
 
-```sh
+```shell
 curl -L https://git.io/n-install | bash
 ```
 
@@ -48,7 +50,7 @@ There are other alternatives for managing your node versions such as [nvm] but t
 
 Debian setup is nearly identical to Ubuntu except for the additional installs of `git` and `libpng-dev`.
 
-```sh
+```shell
 sudo apt update
 sudo apt -y upgrade
 sudo apt install build-essential
@@ -56,9 +58,9 @@ sudo apt install git
 sudo apt install libpng-dev
 ```
 
-Or to install all at the same time and approve (y) all installs:
+Or to install all at the same time and approve `(y)` all installs:
 
-```sh
+```shell
 sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && sudo apt install git && sudo apt install libpng-dev
 ```
 

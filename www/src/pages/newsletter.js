@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { rhythm } from "../utils/typography"
 import { colors } from "../utils/presets"
 
@@ -9,7 +9,7 @@ import EmailCaptureForm from "../components/email-capture-form"
 
 class NewsLetter extends Component {
   render() {
-    const { location, data } = this.props
+    const { location } = this.props
 
     return (
       <Layout location={location}>
