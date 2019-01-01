@@ -4,7 +4,7 @@ title: Client data fetching
 
 Because a Gatsby site hydrates into a React app after loading statically, Gatsby is not just for static sites. You can fetch data dynamically on the client, as needed, as you would with any other React app.
 
- To illustrate this, we'll walk through a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. This example is based loosely on Jason Lengstorf's [Gatsby with Apollo](https://github.com/jlengstorf/gatsby-with-apollo) example. We'll be fetching character data for Rick (of Rick and Morty) and a random pupper image.
+To illustrate this, we'll walk through a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. This example is based loosely on Jason Lengstorf's [Gatsby with Apollo](https://github.com/jlengstorf/gatsby-with-apollo) example. We'll be fetching character data for Rick (of Rick and Morty) and a random pupper image.
 
 > Note: Check out the [full example here](https://github.com/amberleyromo/gatsby-client-data-fetching), if helpful.
 
@@ -210,7 +210,7 @@ class ClientFetchingExample extends Component {
 export default ClientFetchingExample
 ```
 
- That's it -- an example of querying for data at build time using the Gatsby GraphQL data layer and dynamically requesting data on the client at run time.
+That's it -- an example of querying for data at build time using the Gatsby GraphQL data layer and dynamically requesting data on the client at run time.
 
 ## Other resources
 
