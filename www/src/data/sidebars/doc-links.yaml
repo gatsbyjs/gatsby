@@ -186,6 +186,11 @@
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
+    - title: Use cases with Gatsby (including apps)
+      link: /docs/building-apps-with-gatsby/
+      items:
+        - title: Building a blog
+        link: /docs/building-a-blog/      
     - title: Adding website functionality
       link: /docs/adding-website-functionality/
       items:
@@ -211,8 +216,6 @@
           link: /docs/linking-between-pages/
         - title: Making your site accessible
           link: /docs/making-your-site-accessible
-        - title Building a blog
-          link: /docs/building-a-blog/
         - title: Routing
           link: /docs/routing/
           items:
