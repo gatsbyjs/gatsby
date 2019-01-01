@@ -1,5 +1,5 @@
 ---
-title: Publish Multiple Gatsby Sites, Using Lerna, Travis & Now
+title: Publish Multiple Gatsby Sites in a Monorepo, Using Lerna, Travis & Now
 date: 2019-01-01
 author: Andrico Karoulla
 tags:
