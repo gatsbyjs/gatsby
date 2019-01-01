@@ -33,7 +33,7 @@ This isn’t ideal. Optimized images should be easy and the default.
 
 ## Solution
 
-With Gatsby, we can make images way way better.
+With Gatsby, we can make images way better.
 
 `gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images, you only need to:
 
