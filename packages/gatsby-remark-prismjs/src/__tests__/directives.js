@@ -1,8 +1,29 @@
-const highlightLineRange = require(`../highlight-line-range`)
+const highlightLineRange = require(`../directives`)
 const fixtures = require(`./fixtures`)
 const output = highlighted => highlighted.map(({ code }) => code).join(`\n`)
-const getHighlighted = lines => lines.filter(line => line.highlighted)
-describe(`highlighting a line range`, () => {
+const getHighlighted = lines => lines.filter(line => line.highlight)
+
+describe(`hiding lines`, () => {
+  it(`should support hide markers in CSS`, () => {
+    const processed = highlightLineRange(fixtures.hideLineCss)
+    expect(processed).toMatchSnapshot()
+    expect(processed.length).toEqual(4)
+  })
+
+  it(`should support hide markers in HTML`, () => {
+    const processed = highlightLineRange(fixtures.hideLineHtml)
+    expect(processed).toMatchSnapshot()
+    expect(processed.length).toEqual(10)
+  })
+
+  it(`should support hide markers in JS`, () => {
+    const processed = highlightLineRange(fixtures.hideLine)
+    expect(processed).toMatchSnapshot()
+    expect(processed.length).toEqual(14)
+  })
+})
+
+describe(`highlighting lines`, () => {
   describe(`highlight-line`, () => {
     it(`strips directive`, () => {
       const highlights = highlightLineRange(fixtures.highlightLine)
@@ -13,6 +34,7 @@ describe(`highlighting a line range`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
+
   describe(`highlight-next-line`, () => {
     it(`strips directive`, () => {
       const highlights = highlightLineRange(fixtures.highlightNextLine)
@@ -23,6 +45,7 @@ describe(`highlighting a line range`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
+
   describe(`highlight-start / highlight-end`, () => {
     it(`strips directives`, () => {
       const highlights = highlightLineRange(fixtures.highlightStartEnd)
@@ -40,6 +63,7 @@ describe(`highlighting a line range`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
+
   describe(`highlight-range`, () => {
     it(`strips directives`, () => {
       const highlights = highlightLineRange(fixtures.highlightRange)
@@ -65,6 +89,7 @@ describe(`highlighting a line range`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
+
   describe(`jsx comment`, () => {
     it(`removes directive`, () => {
       const highlights = highlightLineRange(fixtures.highlightJsxComment)
@@ -81,6 +106,7 @@ describe(`highlighting a line range`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
+
   describe(`yaml`, () => {
     it(`strips directive`, () => {
       const highlights = highlightLineRange(fixtures.highlightYaml)
@@ -91,7 +117,8 @@ describe(`highlighting a line range`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
   })
-  describe(`kitchen sink`, () => {
+
+  describe(`highlight kitchen sink`, () => {
     it(`strips directives`, () => {
       const highlights = highlightLineRange(fixtures.highlightKitchenSink)
       const code = output(highlights)
@@ -109,5 +136,20 @@ describe(`highlighting a line range`, () => {
       const highlights = highlightLineRange(fixtures.highlightKitchenSink)
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
+  })
+})
+
+describe(`mixed highlight and hide lines`, () => {
+  it(`should support mixed hide and highlight markers`, () => {
+    const processed = highlightLineRange(fixtures.hideAndHighlight)
+    expect(processed).toMatchSnapshot()
+    expect(processed.length).toEqual(11)
+    expect(output(getHighlighted(processed))).toMatchSnapshot()
+  })
+
+  it(`should error when hidden and highlighted lines overlap`, () => {
+    expect(() => highlightLineRange(fixtures.hideAndHighlightOverlap)).toThrow(
+      `Line 8 has been marked as both hidden and highlighted.\n  - Line 1: hide ("hide-range{2-3,7}")\n  - Line 2: highlight ("highlight-range{5-7,9}")`
+    )
   })
 })

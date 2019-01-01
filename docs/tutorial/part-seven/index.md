@@ -73,8 +73,8 @@ the "node graph" to its _parent_ `File` node, as `File` nodes contain data you
 need about files on disk. To do that, modify your function again:
 
 ```javascript:title=gatsby-node.js
+// highlight-next-line
 exports.onCreateNode = ({ node, getNode }) => {
-  // highlight-line
   if (node.internal.type === `MarkdownRemark`) {
     // highlight-start
     const fileNode = getNode(node.parent)

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"

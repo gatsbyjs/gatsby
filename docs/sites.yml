@@ -201,12 +201,12 @@
     - Documentation
     - Featured
   featured: true
-- title: KNW Photography
-  main_url: "https://www.knw.io/"
-  url: "https://www.knw.io/galleries/"
+- title: Kirsten Noelle
+  main_url: "https://www.kirstennoelle.com/"
+  url: "https://www.kirstennoelle.com/"
   featured: true
   description: >
-    Digital portfolio for San Francisco Bay Area photographer Kirsten Wiemer.
+    Digital portfolio for San Francisco Bay Area photographer Kirsten Noelle Wiemer.
   categories:
     - Photography
     - Portfolio
@@ -3004,22 +3004,6 @@
   built_by: Ian Busko
   built_by_url: https://github.com/ianbusko
   featured: false
-- title: "LANDR"
-  url: https://www.landr.com/
-  main_url: https://www.landr.com/
-  description: >
-    LANDR is the place to create, master and sell your music.
-  categories:
-    - AI
-    - Business
-    - Entrepreneurship
-    - Freelance
-    - Marketing
-    - Media
-    - Music
-  built_by: LANDR
-  built_by_url: https://twitter.com/landr_music
-  featured: false
 - title: Got Milk
   main_url: "https://www.gotmilk.com/"
   url: "https://www.gotmilk.com/"
@@ -3746,14 +3730,20 @@
   description: >
     Source from The Movie Database (TMDb) API (v3) in Gatsby. This example is built with react-spring, React hooks and react-tabs and showcases the gatsby-source-tmdb plugin. It also has some client-only paths and uses gatsby-image.
 - title: LANDR - Creative Tools for Musicians
-  url: https://www.landr.com/en/
+  url: https://www.landr.com/
   main_url: https://www.landr.com/en/
   categories:
     - Music
     - Technology
+    - AI
+    - Business
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Media
   featured: false
   built_by: LANDR
-  built_by_url: "https://github.com/Mixgenius"
+  built_by_url: https://twitter.com/landr_music
   description: >
     Marketing website built for LANDR. LANDR is a web application that provides tools for musicians to master their music (using artificial intelligence), collaborate with other musicians, and distribute their music to multiple platforms.
 - title: ClinicJS
@@ -3817,4 +3807,68 @@
     - Marketing
   built_by: Crispin Porter Bogusky
   built_by_url: https://cpbgroup.com/
+  featured: false
+- title: graphene-python
+  url: https://graphene-python.org
+  main_url: https://graphene-python.org
+  description: Graphene is a collaboratively funded project.Graphene-Python is a library for building GraphQL APIs in Python easily.
+  categories:
+    - Library
+    - API
+    - Documentation
+  featured: false
+- title: klarna
+  url: https://developers.klarna.com/en/gb/kco-v3
+  main_url: https://developers.klarna.com/en/gb/kco-v3
+  description: Here you will find the integration guides, API documentation, and more to easily integrate with Klarna.
+  categories:
+    - API
+    - Documentation
+  featured: false
+- title: Song Wang's Blog
+  main_url: "https://songwang.io/"
+  url: "https://songwang.io/"
+  source_url: "https://github.com/wangsongiam/songwang.io/"
+  description: >
+    The website about Song Wang.
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Song Wang
+  built_by_url: "https://github.com/wangsongiam/"
+  featured: false
+- title: Engel & Völkers Ibiza Holiday Rentals
+  main_url: "https://www.ev-ibiza.com/"
+  url: "https://www.ev-ibiza.com/"
+  featured: false
+  built_by: Ventura Digitalagentur
+  description: >
+    Engel & Völkers, one of the most successful real estate agencies in the world, offers luxury holiday villas to rent in Ibiza.
+  categories:
+    - Tourism
+    - Travel
+- title: Sylvain Hamann's personal website
+  url: "https://shamann.fr"
+  main_url: "https://shamann.fr"
+  source_url: "https://github.com/sylvhama/shamann-gatsby/"
+  description: >
+    Sylvain Hamann, web developer from France
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Sylvain Hamann
+  built_by_url: "https://twitter.com/sylvhama"
+  featured: false
+- title: Jane Manchun Wong's Personal Website
+  main_url: "https://wongmjane.com/"
+  url: "https://wongmjane.com/"
+  description: >
+    Jane Manchun Wong's Personal Website is where she posts bug bounty write-ups, discoveries from reverse engineering apps and personal thoughts. This site is built on Gatsby v2 and it leverages the ecosystem to provide PWA features such as offline support.
+  categories:
+    - Blog
+    - Portfolio
+    - Security
+  built_by: Jane Manchun Wong
+  built_by_url: "https://twitter.com/wongmjane"
   featured: false
