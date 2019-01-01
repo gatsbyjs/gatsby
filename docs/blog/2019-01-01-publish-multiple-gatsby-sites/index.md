@@ -1,6 +1,6 @@
 ---
-title: Develop & Deploy Your Own Gatsby Monorepo App in Under 2 Hours, Using Lerna, Travis & Now
-date: 2018-12-26
+title: Publish Multiple Gatsby Sites, Using Lerna, Travis & Now
+date: 2019-01-01
 author: Andrico Karoulla
 tags:
   [
@@ -52,7 +52,7 @@ This tutorial deals with loads of small changes which make for plenty of opportu
 
 I’m also assuming fundamental web dev knowledge including experience with React, Git and the command line.
 
-### Part One: Justine (Development)
+### Part One
 
 Let’s begin! Navigate to an empty folder in the terminal and clone the repo by running the following command
 
@@ -372,7 +372,7 @@ Congratulations, the site now behaves in exactly the same way as when we started
 
 You can stop the tutorial now and you’ll have a working knowedge of when, how and why to use monorepos, but the latter half of this tutorial will show us how we can take things a step further. We’ll get a CI pipeline set up for our application and deploy it on success.
 
-### Part Two: Claire (Deployment)
+### Part Two
 
 Let’s take a second to reflect on where we are right now. We’ve managed to start with a single application with two discrete sections and split them apart in a monorepo. This allows us to _separate the concerns_ and share reusable components.
 
@@ -546,9 +546,9 @@ Do the same for your shop url, commit and push. Congrats!
 
 ### Thanks for reading!
 
-You should now be able to access the site and navigate easily between your shop and your blog. Great job! If things didn’t work out quite as planned then don’t sweat it. This tutorial is made of tiny moving parts which make for loads of opportunities for things to go wrong.
+You should now be able to access the site and navigate easily between your shop and your blog. Great job!
 
-If you enjoyed the article then please reach out to me on [twitter](https://twitter.com/andricokaroulla?lang=en)!
+If you enjoyed the article or have any questions, please reach out to me on [twitter](https://twitter.com/andricokaroulla?lang=en)!
 
 You can find a variety of JavaScript related articles [here](https://medium.com/@andricokaroulla)
 
