@@ -232,10 +232,11 @@ class Image extends React.Component {
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
+    const initialDelay = `0.25s`
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       transition: `opacity 0.5s`,
-      transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
+      transitionDelay: this.state.imgLoaded ? `0.5s` : initialDelay,
       ...imgStyle,
       ...placeholderStyle,
     }
@@ -285,7 +286,7 @@ class Image extends React.Component {
                 top: 0,
                 bottom: 0,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: `0.35s`,
+                transitionDelay: initialDelay,
                 right: 0,
                 left: 0,
               }}
@@ -369,7 +370,7 @@ class Image extends React.Component {
                 backgroundColor: bgColor,
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: `0.25s`,
+                transitionDelay: initialDelay,
                 height: image.height,
               }}
             />
