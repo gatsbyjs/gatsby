@@ -9,7 +9,7 @@ Using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-st
 
 ### Prerequisites
 
-You must know how to set up a basic Gatsby project based on a starter. If you need to, check the [main tutorial](https://www.gatsbyjs.org/tutorial).
+You must know how to set up a basic Gatsby project based on a starter. For instructions on how to setup a basic Gatsby project based on a starter, check the [using starters tutorial](https://www.gatsbyjs.org/tutorial/part-one/#using-gatsby-starters).
 
 ### Setting up blog metadata
 
