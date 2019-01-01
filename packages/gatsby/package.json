@@ -121,7 +121,7 @@
     "v8-compile-cache": "^1.1.0",
     "webpack": "^4.12.0",
     "webpack-dev-middleware": "^3.0.1",
-    "webpack-dev-server": "^3.1.1",
+    "webpack-dev-server": "^3.1.14",
     "webpack-hot-middleware": "^2.21.0",
     "webpack-merge": "^4.1.0",
     "webpack-stats-plugin": "^0.1.5",
