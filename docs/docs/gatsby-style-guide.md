@@ -36,15 +36,15 @@ The community plans, writes, and maintains these Docs on GitHub.
 - [Best practices](#best-practices)
   - [Support software versions](#software-versions)
   - [Share best practices whenever possible](#share-best-practices-whenever-possible)
-  - [The difference between tutorials and docs](#the-difference-between tutorials-and-docs)
+- [The difference between tutorials and docs](#the-difference-between tutorials-and-docs)
   - [Tutorial](#tutorial)
-    - [Audience](#tutorial-audience)
-    - [Purpose](#tutorial-purpose)
-    - [Tone and style](#tutorial-tone-and-style)
+    - [Tutorial Audience](#tutorial-audience)
+    - [Tutorial Purpose](#tutorial-purpose)
+    - [Tutorial Tone and style](#tutorial-tone-and-style)
   - [Docs](#docs)
-    - [Audience](#docs-audience)
-    - [Purpose](#docs-purpose)
-    - [Tone and style](#docs-tone-and-style)
+    - [Docs Audience](#docs-audience)
+    - [Docs Purpose](#docs-purpose)
+    - [Docs Tone and style](#docs-tone-and-style)
 
 ## Welcome!
 
