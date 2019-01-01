@@ -275,16 +275,6 @@ class Image extends React.Component {
             }}
           />
 
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
-          )}
-
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
-          )}
-
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
@@ -300,6 +290,16 @@ class Image extends React.Component {
                 left: 0,
               }}
             />
+          )}
+
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Img src={image.base64} {...placeholderImageProps} />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
@@ -361,16 +361,6 @@ class Image extends React.Component {
           ref={this.handleRef}
           key={`fixed-${JSON.stringify(image.srcSet)}`}
         >
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
-          )}
-
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
-          )}
-
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
@@ -383,6 +373,16 @@ class Image extends React.Component {
                 height: image.height,
               }}
             />
+          )}
+
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Img src={image.base64} {...placeholderImageProps} />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Once the image is visible, start downloading the image */}
