@@ -5,7 +5,7 @@ title: Building a blog
 
 ### Building a blog
 
-Using gatsby-starter-blog you will build a full-featured blog. 
+Using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/) you will build a full-featured blog. 
 
 ### Prerequisites
 
