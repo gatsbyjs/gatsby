@@ -20,6 +20,11 @@ module.exports = (
           use: [loaders.js()]
         },
         {
+          test: /\.js$/,
+          include: path.dirname(require.resolve("gatsby-mdx")),
+          use: [loaders.js()]
+        },
+        {
           test: testPattern,
           use: [
             loaders.js(),
