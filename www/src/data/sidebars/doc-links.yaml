@@ -211,6 +211,8 @@
           link: /docs/linking-between-pages/
         - title: Making your site accessible
           link: /docs/making-your-site-accessible
+        - title Building a blog
+          link: /docs/building-a-blog/
         - title: Routing
           link: /docs/routing/
           items:
