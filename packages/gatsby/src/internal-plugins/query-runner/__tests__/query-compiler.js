@@ -81,4 +81,16 @@ describe(`resolveThemes`, () => {
       ])
     ).toEqual([theme])
   })
+
+  it(`handles scoped packages`, () => {
+    const theme = `@dschau/gatsby-theme-example`
+
+    expect(
+      resolveThemes(base, [
+        {
+          resolve: path.join(base, theme),
+        },
+      ])
+    ).toEqual([theme])
+  })
 })
