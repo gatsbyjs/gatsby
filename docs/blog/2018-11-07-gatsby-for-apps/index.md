@@ -220,7 +220,7 @@ and even a light/dark theme, because why not! You can see all of these concepts 
 
 ![App Shell with Gatsby Mail](./images/gatsby-mail-app-shell.gif)
 
-Check out the [Github repo][gatsby-mail-repo] to learn more about how it was built and adopt some of the techniques as you build your next great Gatsby web **application**.
+Check out the [GitHub repo][gatsby-mail-repo] to learn more about how it was built and adopt some of the techniques as you build your next great Gatsby web **application**.
 
 We can't wait to see what you build.
 

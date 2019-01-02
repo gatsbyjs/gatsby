@@ -1,6 +1,6 @@
 {
   "name": "cypress-gatsby",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Cypress tools for Gatsby projects",
   "main": "index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/cypress-gatsby-commands#readme",

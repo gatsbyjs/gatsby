@@ -14,7 +14,7 @@ It provides light utility functions on top of `react-dom` and `react-dom/test-ut
 
 Install the library as one of your project's `devDependencies`. Optionally you may install `jest-dom` to use its [custom jest matchers](https://github.com/gnapse/jest-dom#custom-matchers).
 
-```sh
+```shell
 npm install --save-dev react-testing-library jest-dom
 ```
 

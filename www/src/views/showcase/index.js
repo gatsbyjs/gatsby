@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import FeaturedSites from "./featured-sites"
 import FilteredShowcase from "./filtered-showcase"

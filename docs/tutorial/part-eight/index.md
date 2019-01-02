@@ -31,7 +31,7 @@ First you need to create a production build of your Gatsby site. The Gatsby deve
 
 1.  Stop the development server (if it's still running) and run:
 
-```bash
+```shell
 gatsby build
 ```
 
@@ -39,7 +39,7 @@ gatsby build
 
 2.  View the production site locally. Run:
 
-```bash
+```shell
 gatsby serve
 ```
 
@@ -81,7 +81,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 1.  Install the plugin:
 
-```bash
+```shell
 npm install --save gatsby-plugin-manifest
 ```
 
@@ -120,7 +120,7 @@ Another requirement for a website to qualify as a PWA is the use of a [service w
 
 1.  Install the plugin:
 
-```bash
+```shell
 npm install --save gatsby-plugin-offline
 ```
 
@@ -156,7 +156,7 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 1.  Install both packages:
 
-```bash
+```shell
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 

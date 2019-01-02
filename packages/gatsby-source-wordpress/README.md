@@ -154,7 +154,7 @@ plugins.
     [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in
     WordPress.
   - Will pull the `acf: { ... }` fields's contents from any entity which has it
-    attached (pages, posts, medias, ... you choose from in WordPress back-end
+    attached (pages, posts, medias, ... you choose from in WordPress backend
     while creating a Group of Fields).
   - [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF :
   - Will work with

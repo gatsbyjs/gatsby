@@ -2,7 +2,7 @@
 title: "Proxying API Requests in Development"
 ---
 
-People often serve the front-end React app from the same host and port as their
+People often serve the frontend React app from the same host and port as their
 backend implementation.
 
 To tell the development server to proxy any unknown requests to your API server

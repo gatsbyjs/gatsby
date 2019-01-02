@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit/compare/graphql-skip-limit@2.0.3...graphql-skip-limit@2.0.4) (2018-12-17)
+
+### Bug Fixes
+
+- **graphql-skip-limit:** fix hasNextPage ([#10504](https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit/issues/10504)) ([ea56c49](https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit/commit/ea56c49))
+
 <a name="2.0.3"></a>
 
 ## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit/compare/graphql-skip-limit@2.0.2...graphql-skip-limit@2.0.3) (2018-12-07)

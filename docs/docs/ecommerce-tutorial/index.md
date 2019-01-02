@@ -50,7 +50,7 @@ Stripe is a payment processing service that allows you to securely collect and p
 
 There are alternatives to Stripe, like Square and Braintree, and their setup is very similar to Stripe.
 
-Stripe requires a server to process the information to make a charge, so you’ll need more than just static pages. Gatsby builds the pages for your front-end, but it won’t be able to handle the server logic that Stripe requires to process payments. That means you’ll need to set up a simple function that your Gatsby project can POST to in order to handle a payment.
+Stripe requires a server to process the information to make a charge, so you’ll need more than just static pages. Gatsby builds the pages for your frontend, but it won’t be able to handle the server logic that Stripe requires to process payments. That means you’ll need to set up a simple function that your Gatsby project can POST to in order to handle a payment.
 
 That function can be set up a number of different ways. To set up that function from scratch, you could:
 

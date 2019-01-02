@@ -32,7 +32,7 @@
 - name: Mahipat Jadav
   type: individual
   description: >-
-    Since last 7 years, I have been working as full stack developer with
+    Since last 7 years, I have been working as full-stack developer with
     companies in india, I have designed and developed reliable, fast, engaging &
     responsive websites, with strong focus on performance & responsive design
     using the latest technologies.
@@ -94,7 +94,7 @@
 - name: Ste O'Neill
   type: individual
   description: >-
-    Hi I'm Ste! I’m a full stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
+    Hi I'm Ste! I’m a full-stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
   location: "Leeds, England"
   website: "https://steoneill.me"
   github: "https://github.com/steoneill"
@@ -150,7 +150,7 @@
   type: individual
   description: >-
     I'm a developer for hire. I can help you make the transition from WordPress to Gatsby, providing you with the level of customization that makes you feel comfortable.
-    I'm a full stack software engineer. I can also handle your iOS development, web application development, and cross-platform desktop applications.
+    I'm a full-stack software engineer. I can also handle your iOS development, web application development, and cross-platform desktop applications.
     I am here to help you launch your product or idea.
   website: https://giraffesyo.io
   image: images/michael-mcquade.jpg
@@ -200,7 +200,7 @@
   type: individual
   description: >-
     Husband and father. 
-    Front-end engineer. 
+    Frontend engineer.
     Currently at EveryMundo previously at El Universo.
     Nodejs, React and Web performance.
   location: "Guayaquil, Ecuador"
@@ -213,7 +213,7 @@
 - name: Kevin Legrand
   type: individual
   description: >-
-    I am a front-end developer who lives in Lyon, France.
+    I am a frontend developer who lives in Lyon, France.
     I work in a web agency who builds websites using Laravel, React or WordPress
     depending on our clients.
   location: France

@@ -69,7 +69,7 @@ The final step is to add a script to the `package.json` which will build our app
 
 You can deploy your application by running the following in the root of the project directory, where the `now.json` is:
 
-```bash
+```shell
 now
 ```
 

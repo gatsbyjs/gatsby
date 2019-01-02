@@ -89,7 +89,7 @@ cd tutorial-part-two
 
 This creates a new site with the following structure.
 
-```shell
+```text
 ├── package.json
 ├── src
 │   └── pages
