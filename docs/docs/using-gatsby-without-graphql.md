@@ -40,7 +40,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 On the highlighted lines, the data is being supplied to the page template, where it can be accessed as props:
 
-```javascript:title=/src/templates/pokemon.js
+```jsx:title=/src/templates/pokemon.js
 // highlight-next-line
 export default ({ pageContext: { pokemon } }) => (
   <div style={{ width: 960, margin: "4rem auto" }}>
