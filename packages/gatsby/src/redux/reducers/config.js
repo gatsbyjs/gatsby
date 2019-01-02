@@ -40,6 +40,12 @@ module.exports = (state = {}, action) => {
         action = _.set(action, [`payload`, `pathPrefix`], ``)
       }
 
+      // If pathPrefix isn't set, set it to an empty string
+      // to avoid it showing up as undefined elsewhere.
+      if (!_.has(action, [`payload`, `assetPrefix`])) {
+        action = _.set(action, [`payload`, `assetPrefix`], ``)
+      }
+
       // Default polyfill to true.
       if (!_.has(action, [`payload`, `polyfill`])) {
         action = _.set(action, [`payload`, `polyfill`], true)
