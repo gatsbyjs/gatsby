@@ -1,6 +1,13 @@
 ---
 title: "Adding search"
+overview: true
 ---
+
+See below for a list of guides in this section, or keep reading for an overview on adding search functionality to your site.
+
+[[guidelist]]
+
+## Site search overview
 
 Before we go through the steps for adding search to your Gatsby website, let's examine the components needed for adding search to a website.
 
