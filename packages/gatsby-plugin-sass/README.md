@@ -8,15 +8,33 @@ Provides drop-in support for SASS/SCSS stylesheets
 
 ## How to use
 
-1.  Include the plugin in your `gatsby-config.js` file.
-2.  Write your stylesheets in SASS/SCSS and require or import them as normal.
+1. Include the plugin in your `gatsby-config.js` file.
+2. Write your stylesheets in SASS/SCSS and require or import them as normal.
 
 ```javascript
 // in gatsby-config.js
 plugins: [`gatsby-plugin-sass`]
 ```
 
-If you need to pass options to Sass use the plugins options, see [node-sass](https://github.com/sass/node-sass)
+By Default `node-sass` is used. To use `dart-sass`.
+
+```bash
+npm i -D sass
+```
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      implementation: require("sass"),
+    },
+  },
+]
+```
+
+If you need to pass options to Sass use the plugins options, see [node-sass](https://github.com/sass/node-sass)/[dart-sass](https://github.com/sass/dart-sass) docs
 for all available options.
 
 ```javascript
@@ -26,6 +44,7 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       includePaths: ["absolute/path/a", "absolute/path/b"],
+      ...
     },
   },
 ]

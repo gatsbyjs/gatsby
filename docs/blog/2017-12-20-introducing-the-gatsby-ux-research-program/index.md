@@ -72,7 +72,7 @@ Other salient feedback includes that people who have used WordPress for a long t
 
 > You guys are pretty much nailing it. Just keep killin’ it, I guess!
 >
-> – Alec Lomas, AZ, front-end dev and design
+> – Alec Lomas, AZ, frontend dev and design
 
 > I’ve played around with static sites in Jekyll in the past, but I’ve always hit a pain point with how much functionality I could build into the different includes and partials and things that were starting to become popular with different templating languages. So I’ve always loved React for all the encapsulation of style and functionality. And components--but I never really knew how to use it. And Gatsby has been that first opportunity where everything comes together, everything can be in one system. My background is really design focused, so I think of a component library along those lines. Until Gatsby, I never really had a way to see how I could use that across all of our pages instead of relying on a content management library that was kind of slow to develop in.
 >

@@ -53,7 +53,7 @@ npm install --save gatsby-transformer-remark
 
 Then add it to the `gatsby-config.js` like normal:
 
-```javascript{13}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -66,7 +66,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-transformer-remark`,
+    `gatsby-transformer-remark`, // highlight-line
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,

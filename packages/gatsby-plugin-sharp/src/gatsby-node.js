@@ -1,7 +1,8 @@
-const { setBoundActionCreators } = require(`./index`)
+const { setBoundActionCreators, setPluginOptions } = require(`./index`)
 
-exports.onPreInit = ({ actions }) => {
+exports.onPreInit = ({ actions }, pluginOptions) => {
   setBoundActionCreators(actions)
+  setPluginOptions(pluginOptions)
 }
 
 // TODO

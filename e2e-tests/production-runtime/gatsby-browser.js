@@ -18,3 +18,7 @@ exports.onPreRouteUpdate = ({ location }) => {
 exports.onRouteUpdate = ({ location }) => {
   addLogEntry(`onRouteUpdate`, location)
 }
+
+exports.onPrefetchPathname = ({ pathname }) => {
+  addLogEntry(`onPrefetchPathname`, pathname)
+}
