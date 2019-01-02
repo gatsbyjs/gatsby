@@ -1,7 +1,8 @@
 const path = require("path");
 const mkdirp = require("mkdirp");
-const { MDX_WRAPPERS_LOCATION, MDX_SCOPES_LOCATION } = require("./constants");
+const { MDX_SCOPES_LOCATION } = require("./constants");
 const defaultOptions = require("./utils/default-options");
+const fs = require("fs");
 
 /**
  * Create Mdx nodes from MDX files.
@@ -46,6 +47,14 @@ exports.onCreateBabelConfig = ({ actions }) => {
 
 exports.onPreBootstrap = ({ store }) => {
   const { directory } = store.getState().program;
-  mkdirp.sync(path.join(directory, MDX_WRAPPERS_LOCATION));
   mkdirp.sync(path.join(directory, MDX_SCOPES_LOCATION));
+};
+
+exports.onPostBootstrap = (_, pluginOptions) => {
+  if (pluginOptions.globalScope) {
+    fs.writeFileSync(
+      `${MDX_SCOPES_LOCATION}/global-scope.js`,
+      pluginOptions.globalScope
+    );
+  }
 };
