@@ -177,10 +177,25 @@
   avatar: avatars/michael-holtzman.jpg
   twitter: "@mikelax"
   bio: nyc • tech • I build things 🚀 & learn things 📖
+- id: Sergiy Dybskiy
+  avatar: avatars/sergiy-dybskiy.jpg
+  twitter: "@416serg"
+  bio: JavaScript Developer ⚛️ Burrito enthusiast 🌯 Snowboarder 🏂🏼
+- id: Joaquín Bravo Contreras
+  avatar: avatars/joaquin-bravo.jpg
+  twitter: "@jackbravo"
+  bio: Developer based in Guadalajara, Mexico. Fond of Drupal, Python, Elixir and GatsbyJS
 - id: Chris Biscardi
   bio: Early stage software product consultant. React*, Go, GraphQL, Containers, k8s.
   avatar: avatars/chris-biscardi.png
   twitter: "@chrisbiscardi"
+- id: Tyler Barnes
+  bio: React - front-end dev - cycling - music
+  avatar: avatars/tyler-barnes.jpg
+- id: swyx
+  bio: Infinite Builder working on DX @ Netlify. Helping people Learn In Public at /r/reactjs
+  avatar: avatars/swyx.jpg
+  twitter: "@swyx"
 - id: Ondrej Polesny
   bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Cloud.
   avatar: avatars/ondrej-polesny.jpg

@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import Layout from "../../components/layout"
 import Unbird from "../../components/unbird"
 import RRSM from "../../utils/reach-router-state-manager"
