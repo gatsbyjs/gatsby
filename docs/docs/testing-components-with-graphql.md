@@ -209,7 +209,7 @@ the output.
 
 ## Testing StaticQuery
 
-The method above works for page queries, as you can pass the data indirectly to
+ The method above works for page queries, as you can pass the data in directly to
 the component. This doesn't work for components that use `StaticQuery` though,
 as that uses `context` rather than `props` so we need to take a slightly
 different approach to testing these. The blog starter project doesn't include
