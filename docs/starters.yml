@@ -1527,3 +1527,13 @@
     - Application Format
     - Markdown for creating job description
     - styled-components
+- url: https://saikrishna.me/
+  repo: https://github.com/s-kris/gatsby-minimal-portfolio-blog
+  description: A minimal portfolio website with blog using Gatsby. Suitable for developers.
+  tags:
+    - Portfolio
+    - Blog
+  features:
+    - Portfolio Page
+    - Timline (Journey) page
+    - Minimal
