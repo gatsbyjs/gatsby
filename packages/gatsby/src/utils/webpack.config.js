@@ -99,6 +99,14 @@ module.exports = async (
 
   debug(`Loading webpack config for stage "${stage}"`)
   function getOutput() {
+    const assetPrefix = program.prefixAssets
+      ? `${store.getState().config.assetPrefix}/`
+      : `/`
+    const pathPrefix =
+      assetPrefix || program.prefixPaths
+        ? `${store.getState().config.pathPrefix}/`
+        : `/`
+    const publicPath = assetPrefix || pathPrefix
     switch (stage) {
       case `develop`:
         return {
@@ -129,18 +137,14 @@ module.exports = async (
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          publicPath,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          publicPath,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
