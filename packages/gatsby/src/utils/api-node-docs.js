@@ -20,7 +20,7 @@ exports.resolvableExtensions = true
  *   // Query for markdown nodes to use in creating pages.
  *   // You can query for whatever data you want to create pages for e.g.
  *   // products, portfolio items, landing pages, etc.
- *   graphql(`
+ *   return graphql(`
  *     {
  *       allMarkdownRemark(limit: 1000) {
  *         edges {
@@ -34,7 +34,7 @@ exports.resolvableExtensions = true
  *     }
  *   `).then(result => {
  *     if (result.errors) {
- *       reject(result.errors)
+ *       throw result.errors
  *     }
  *
  *     // Create blog post pages.
@@ -55,8 +55,6 @@ exports.resolvableExtensions = true
  *         },
  *       })
  *     })
- *
- *     return
  *   })
  * }
  */
