@@ -1,10 +1,9 @@
 ---
-title: How Gatsby does high-impact, low-effort UX research
-(and you can too!)
+title: How Gatsby does high-impact, low-effort UX research (and you can too!)
 author: Shannon Soper
 date: 2018-12-31
-tags: 
-- ux
+tags:
+  - ux
 ---
 
 ## What this article is about:
@@ -23,8 +22,9 @@ In October 2017, when I first started asking developers if I could interview the
 To make sure it’s clear why we do UX research at Gatsby, here is the reason:
 
 We do UX research to live up to these two Gatsby values:
-1.Create awesome DX
-2.Create awesome UX
+
+1. Create awesome DX
+2. Create awesome UX
 
 Creating awesome DX and UX are two of the company’s values. We know that developers who use Gatsby and anyone who visits a Gatsby site are the experts on what makes their lives easier, so we make efforts to empathize deeply with our users so we can create the best available developer experience (DX) for making websites and best user experience (UX) for using websites. I think of these both as UX in a way, so will just use UX from here on out.
 
