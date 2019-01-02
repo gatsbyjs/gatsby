@@ -177,7 +177,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 // highlight-start
 exports.createPages = ({ graphql, actions }) => {
-  // the graphql function call returns a Promise
+  // **Note:** The graphql function call returns a Promise
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
   return graphql(`
     {
