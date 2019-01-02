@@ -152,7 +152,7 @@ const updateStateAndRunQueries = isFirstRun => {
       report.log(report.stripIndent`
 
         Exported queries are only executed for Page components. It's possible you're
-        trying to create a page in your gatsby-node.js and that's failing for some
+        trying to create pages in your gatsby-node.js and that's failing for some
         reason.
 
         If the failing component(s) is a regular component and not intended to be a page
