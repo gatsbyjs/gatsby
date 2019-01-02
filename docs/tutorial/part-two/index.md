@@ -174,9 +174,8 @@ in the middle of the page. To create this, add the following styles to the
 import React from "react"
 
 export default () => (
+  {/* highlight-next-line */}
   <div style={{ margin: `3rem auto`, maxWidth: 600 }}>
-    {" "}
-    {/* highlight-line */}
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
