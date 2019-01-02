@@ -15,9 +15,26 @@ import docsHierarchy from "../data/sidebars/doc-links.yaml"
 // Find the guides in the sidebar YAML.
 const guides = docsHierarchy.find(group => group.title === `Guides`).items
 
+// Search through the guides and their children to find the first item that
+// matches the given slug
+const findBySlug = (guides, slug) => {
+  let result
+
+  const iter = a => {
+    if (a.link === slug) {
+      result = a
+      return true
+    }
+    return Array.isArray(a.items) && a.items.some(iter)
+  }
+
+  guides.some(iter)
+  return result
+}
+
 // Finds child items for a given guide overview page using its slug.
 const getChildGuides = slug => {
-  const found = guides.find(guide => guide.link === slug)
+  const found = findBySlug(guides, slug)
   return found ? found.items : []
 }
 
@@ -32,20 +49,8 @@ const getPageHTML = page => {
     return page.html
   }
 
-  // Ugh. This is gross and I want to make it less gross.
-  let guides
-  if (page.fields.slug !== `/docs/headless-cms/`) {
-    // Normally, we’re pulling from the top level of guides.
-    guides = getChildGuides(page.fields.slug)
-  } else {
-    // For the Headless CMS section, we need to dig into sub-items.
-    // This is hard-coded and fragile and I hate it and I’m sorry.
-    guides = getChildGuides(`/docs/content-and-data/`).find(
-      guide => guide.link === page.fields.slug
-    ).items
-  }
-
-  const guideList = createGuideList(guides)
+  const guidesForPage = getChildGuides(page.fields.slug)
+  const guideList = createGuideList(guidesForPage)
   const toc = guideList
     ? `
     <h2>Guides in this section:</h2>
