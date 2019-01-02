@@ -3886,3 +3886,13 @@
   built_by: Jonathan Simcoe
   built_by_url: "https://twitter.com/jdsimcoe"
   featured: false
+- title: Luca Crea's portfolio
+  main_url: https://lcrea.github.io
+  url: https://lcrea.github.io
+  description: >
+    Portfolio and personal website of Luca Crea, an Italian software engineer.
+  categories:
+    - Portfolio
+  built_by: Luca Crea
+  built_by_url: https://github.com/lcrea
+  featured: false
