@@ -53,7 +53,7 @@ Often, to ensure a fast site, you'll need both.
 
 To do delivery optimization, you'll need to pick a JAMStack site generator like Hugo or Gatsby.
 
-To do payload optimization, your team will need to implement a [long performance checklist](https://www.smashingmagazine.com/2018/01/front-end-performance-checklist-2018-pdf-pages/), or pick a framework such as Gatsby that [performs payload optimization](https://www.gatsbyjs.org/features/#legend) out of the box.
+To do payload optimization, your team will need to implement a [long performance checklist](https://www.smashingmagazine.com/2018/01/frontend-performance-checklist-2018-pdf-pages/), or pick a framework such as Gatsby that [performs payload optimization](https://www.gatsbyjs.org/features/#legend) out of the box.
 
 ### Fourth, choose your content mesh
 

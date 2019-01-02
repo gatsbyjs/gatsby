@@ -12,7 +12,7 @@ const buildSortArg = require(`./create-sort-field`)
 const buildConnectionFields = require(`./build-connection-fields`)
 const createPageDependency = require(`../redux/actions/add-page-dependency`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
-const { runQuery } = require(`../db/nodes`)
+const { run: runQuery } = require(`../db/nodes-query`)
 
 function handleQueryResult({ results, queryArgs, path }) {
   if (results && results.length) {

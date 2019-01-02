@@ -23,8 +23,8 @@ concepts should be the same or very similar for your site._
 First you need to install Jest and some more required packages. You need to
 install Babel 7 as it's required by Jest.
 
-```sh
-npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy 'babel-core@^7.0.0-0' @babel/core babel-preset-gatsby
+```shell
+npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy babel-core@^7.0.0-bridge.0 @babel/core babel-preset-gatsby
 ```
 
 ### 2. Creating a configuration file for Jest
@@ -85,7 +85,7 @@ module.exports = "test-file-stub"
   any tests in the `node_modules` or `.cache` directories.
 
 - The next option is very important, and is different from what you'll find in other
-  Jest guides. The reason that you need `transformIgnorePatterns` is because Gastby
+  Jest guides. The reason that you need `transformIgnorePatterns` is because Gatsby
   includes un-transpiled ES6 code. By default Jest doesn't try to transform code
   inside `node_modules`, so you will get an error like this:
 
@@ -120,7 +120,7 @@ global.___loader = {
 
 ### 3. Useful mocks to complete your testing environment
 
-#### Mocking `gastby`
+#### Mocking `gatsby`
 
 Finally it's a good idea to mock the `gatsby` module itself. This may not be
 needed at first, but will make things a lot easier if you want to test
@@ -219,7 +219,7 @@ they are changed.
 
 Now, run `npm run test` and you should immediately get an error like this:
 
-```sh
+```shell
  @font-face {
     ^
 
@@ -254,7 +254,7 @@ by running `npm run test -- -u`.
 If you are using TypeScript, you need to make a couple of small changes to your
 config. First install `ts-jest`:
 
-```sh
+```shell
 npm install --save-dev ts-jest
 ```
 

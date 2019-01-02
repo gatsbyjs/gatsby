@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.21"></a>
+
+## [3.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.20...gatsby-source-wordpress@3.0.21) (2018-12-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.20"></a>
+
+## [3.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.19...gatsby-source-wordpress@3.0.20) (2018-12-11)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.19"></a>
+
+## [3.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.18...gatsby-source-wordpress@3.0.19) (2018-12-06)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.18"></a>
+
+## [3.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.17...gatsby-source-wordpress@3.0.18) (2018-12-03)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.17"></a>
+
+## [3.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.16...gatsby-source-wordpress@3.0.17) (2018-12-01)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** add undefined check to avoid taxonomy mapping error ([#10216](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/10216)) ([24c7dfc](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/24c7dfc))
+
+<a name="3.0.16"></a>
+
+## [3.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.15...gatsby-source-wordpress@3.0.16) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.15"></a>
+
+## [3.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.14...gatsby-source-wordpress@3.0.15) (2018-11-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 <a name="3.0.14"></a>
 
 ## [3.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.13...gatsby-source-wordpress@3.0.14) (2018-11-14)

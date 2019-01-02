@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
 const { mergeSchemas } = require(`graphql-tools`)
 
-const buildNodeTypes = require(`./build-node-types`)
+const nodeTypes = require(`./build-node-types`)
 const nodeConnections = require(`./build-node-connections`)
 const { store } = require(`../redux`)
 const invariant = require(`invariant`)
@@ -21,7 +21,7 @@ module.exports.buildNodesSchema = buildNodesSchema
 
 module.exports.build = async ({ parentSpan }) => {
   clearUnionTypes()
-  const typesGQL = await buildNodeTypes({ parentSpan })
+  const typesGQL = await nodeTypes.buildAll({ parentSpan })
   const connections = nodeConnections.buildAll(_.values(typesGQL))
 
   // Pull off just the graphql node from each type object.

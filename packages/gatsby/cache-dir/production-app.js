@@ -11,10 +11,9 @@ import {
   RouteUpdates,
 } from "./navigation"
 import emitter from "./emitter"
-window.___emitter = emitter
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
 import EnsureResources from "./ensure-resources"
 
 window.asyncRequires = asyncRequires
@@ -118,6 +117,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           ? document.getElementById(`___gatsby`)
           : void 0,
         () => {
+          postInitialRenderWork()
           apiRunner(`onInitialClientRender`)
         }
       )

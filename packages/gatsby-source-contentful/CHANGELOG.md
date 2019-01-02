@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.22"></a>
+
+## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.21...gatsby-source-contentful@2.0.22) (2018-12-27)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.21"></a>
+
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.20...gatsby-source-contentful@2.0.21) (2018-12-21)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.20"></a>
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.19...gatsby-source-contentful@2.0.20) (2018-12-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.19"></a>
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.18...gatsby-source-contentful@2.0.19) (2018-12-07)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.18"></a>
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.17...gatsby-source-contentful@2.0.18) (2018-12-05)
+
+### Features
+
+- **gatsby-source-contentful:** enable RichText for all users ([#10301](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/10301)) ([ce65534](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/ce65534))
+
+<a name="2.0.17"></a>
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.16...gatsby-source-contentful@2.0.17) (2018-12-03)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** use safe stringification for Rich Text fields ([#10228](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/10228)) ([2d2ac7c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/2d2ac7c))
+
+<a name="2.0.16"></a>
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.15...gatsby-source-contentful@2.0.16) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.15"></a>
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.14...gatsby-source-contentful@2.0.15) (2018-11-21)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 <a name="2.0.14"></a>
 
 ## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.13...gatsby-source-contentful@2.0.14) (2018-11-12)

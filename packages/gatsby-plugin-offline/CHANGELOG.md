@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.20"></a>
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.19...gatsby-plugin-offline@2.0.20) (2018-12-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** prevent incorrect revisioning of static file by workbox ([#10416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10416)) ([008b5db](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/008b5db))
+
+<a name="2.0.19"></a>
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.18...gatsby-plugin-offline@2.0.19) (2018-12-07)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** gracefully degrade if appshell isn't precached ([#10329](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10329)) ([19e9f3e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/19e9f3e))
+
+<a name="2.0.18"></a>
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.17...gatsby-plugin-offline@2.0.18) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+<a name="2.0.17"></a>
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.16...gatsby-plugin-offline@2.0.17) (2018-11-21)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 <a name="2.0.16"></a>
 
 ## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.15...gatsby-plugin-offline@2.0.16) (2018-11-20)

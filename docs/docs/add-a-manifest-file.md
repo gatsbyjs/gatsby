@@ -8,11 +8,11 @@ But first, what exactly _are_ PWAs?
 
 They are regular websites that take advantage of modern browser functionality to augment the web experience with app-like features and benefits. Check out [Google's overview](https://developers.google.com/web/progressive-web-apps/) of what defines a PWA experience and the [Progressive web apps (PWAs) doc](/docs/progressive-web-app/) to learn how a Gatsby site is a progressive web app.
 
-Inclusion of a web app manifest is one of the three generally accepted [baseline requirements for a PWA](https://alistapart.com/article/yes-that-web-project-should-be-a-pwa#section1).
+The inclusion of a web app manifest is one of the three generally accepted [baseline requirements for a PWA](https://alistapart.com/article/yes-that-web-project-should-be-a-pwa#section1).
 
 Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest/):
 
-> The web app manifest is a simple JSON file that tells the browser about your web application and how it should behave when 'installed' on the users mobile device or desktop.
+> The web app manifest is a simple JSON file that tells the browser about your web application and how it should behave when 'installed' on the user's mobile device or desktop.
 
 [Gatsby's manifest plugin](/packages/gatsby-plugin-manifest/) configures Gatsby to create a `manifest.webmanifest` file on every site build.
 
@@ -20,7 +20,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 1.  Install the plugin:
 
-```bash
+```shell
 npm install --save gatsby-plugin-manifest
 ```
 
@@ -37,7 +37,9 @@ npm install --save gatsby-plugin-manifest
         start_url: "/",
         background_color: "#6b37bf",
         theme_color: "#6b37bf",
-        display: "minimal-ui",
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: "standalone",
         icon: "src/images/icon.png", // This path is relative to the root of the site.
       },
     },

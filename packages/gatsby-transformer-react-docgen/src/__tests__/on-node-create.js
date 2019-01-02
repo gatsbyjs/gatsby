@@ -1,7 +1,7 @@
 import fs from "fs"
-import path from "path"
 import { groupBy } from "lodash"
 import onCreateNode from "../on-node-create"
+import path from "path"
 
 const readFile = file =>
   new Promise((y, n) => {
@@ -80,6 +80,16 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     ])
   })
 
+  it(`should handle duplicate doclet values`, async () => {
+    await run(node)
+
+    let Bar = groupBy(createdNodes, `internal.type`).ComponentMetadata.find(
+      d => d.displayName === `Bar`
+    )
+
+    expect(Bar.doclets.filter(d => d.tag === `property`)).toHaveLength(2)
+  })
+
   it(`should infer a name`, async () => {
     node.__fixture = `unnamed.js`
     node.absolutePath = path.join(__dirname, `UnnamedExport`)
@@ -102,10 +112,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     expect(types.ComponentProp[0].description).toEqual(
       `An object hash of field (fix this @mention?) errors for the form.`
     )
-    expect(types.ComponentProp[0].doclets).toEqual({
-      type: `{Foo}`,
-      default: `blue`,
-    })
+    expect(types.ComponentProp[0].doclets).toEqual([
+      { tag: `type`, value: `{Foo}` },
+      { tag: `default`, value: `blue` },
+    ])
   })
 
   it(`should extract create description nodes with markdown types`, async () => {
