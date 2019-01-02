@@ -113,4 +113,4 @@ programmatically create pages.
 ### Other Resources
 
 - [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
-- [Using Unstructured Data](https://www.gatsbyjs.org/docs/using-unstructured-data/)
+- [Using Gatsby without GraphQL](https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/)

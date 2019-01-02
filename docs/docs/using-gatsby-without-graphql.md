@@ -1,8 +1,8 @@
 ---
-title: Using unstructured data
+title: Using Gatsby without GraphQL
 ---
 
-Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. However, source plugins (or even Gatsby nodes) aren't strictly necessary to pull data into a Gatsby site! It's also possible to use an “unstructured data” approach in Gatsby sites.
+Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. However, source plugins (or even Gatsby nodes) aren't strictly necessary to pull data into a Gatsby site! It's also possible to use an “unstructured data” approach in Gatsby sites, no GraphQL required.
 
 > Note: For our purposes here, “unstructured data” means data “handled outside of Gatsby’s data layer” (we’re using the data directly, and not transforming the data into Gatsby nodes).
 
