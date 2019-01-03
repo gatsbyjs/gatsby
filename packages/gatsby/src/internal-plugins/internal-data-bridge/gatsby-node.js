@@ -184,11 +184,6 @@ exports.addTypeDefs = ({ addTypeDefs }) => {
       pluginCreatorId: String
     }
 
-    type PluginOptions {
-      path: String
-      pathCheck: Boolean
-    }
-
     type PackageDependencies {
       name: String
       version: String
@@ -196,6 +191,7 @@ exports.addTypeDefs = ({ addTypeDefs }) => {
 
     type PackageJson {
       author: String
+      bundledDependecies: [PackageDependencies]
       dependencies: [PackageDependencies]
       description: String
       devDependencies: [PackageDependencies]
@@ -203,17 +199,19 @@ exports.addTypeDefs = ({ addTypeDefs }) => {
       license: String
       main: String
       name: String
+      optionalDependecies: [PackageDependencies]
       peerDependencies: [PackageDependencies]
       version: String
     }
 
     type SitePlugin implements Node {
+      browserAPIs: [String]
       name: String
       nodeAPIs: [String]
       packageJson: PackageJson
       pluginFilePath: String
-      pluginOptions: PluginOptions
       resolve: String
+      ssrAPIs: [String]
       version: String
     }
   `
