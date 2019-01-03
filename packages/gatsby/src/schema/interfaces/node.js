@@ -1,6 +1,24 @@
-const { schemaComposer, InterfaceTypeComposer } = require(`graphql-compose`)
+const {
+  schemaComposer,
+  InterfaceTypeComposer,
+  TypeComposer,
+} = require(`graphql-compose`)
 
 const { findById, findByIds } = require(`../resolvers`)
+
+// TODO: why is `mediaType` on Internal? Applies only to File!?
+// What about `content`?
+const InternalTC = TypeComposer.create({
+  name: `Internal`,
+  fields: {
+    contentDigest: `String`,
+    description: `String`,
+    ignoreType: `Boolean`,
+    mediaType: `String`,
+    owner: `String`,
+    type: `String!`,
+  },
+})
 
 const NodeInterfaceTC = InterfaceTypeComposer.create({
   name: `Node`,
@@ -19,11 +37,12 @@ const NodeInterfaceTC = InterfaceTypeComposer.create({
       resolve: async (source, args, context, info) =>
         findByIds()({ source, args: { ids: source.children }, context, info }),
     },
-    internal: `type Internal { type: String! }`,
+    internal: `Internal`,
   },
   resolveType: node => node.internal.type,
 })
 
+InternalTC.getITC()
 NodeInterfaceTC.getITC()
 
 const addNodeInterface = tc => {

@@ -145,9 +145,14 @@ Array [
     "field": "internal",
     "type": Object {
       "fields": Array [
+        "contentDigest",
+        "description",
+        "ignoreType",
+        "mediaType",
+        "owner",
         "type",
       ],
-      "name": "FooInternalInput",
+      "name": "InternalInput",
     },
   },
 ]

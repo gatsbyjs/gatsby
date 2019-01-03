@@ -101,8 +101,15 @@ describe(`Filter input`, () => {
     expect(filter.getFieldType(`internal`)).toBeInstanceOf(
       GraphQLInputObjectType
     )
-    expect(filter.getFieldType(`internal`).name).toBe(`FooInternalInput`)
-    expect(filter.getFieldTC(`internal`).getFieldNames()).toEqual([`type`])
+    expect(filter.getFieldType(`internal`).name).toBe(`InternalInput`)
+    expect(filter.getFieldTC(`internal`).getFieldNames()).toEqual([
+      `contentDigest`,
+      `description`,
+      `ignoreType`,
+      `mediaType`,
+      `owner`,
+      `type`,
+    ])
     expect(
       filter
         .getFieldTC(`internal`)

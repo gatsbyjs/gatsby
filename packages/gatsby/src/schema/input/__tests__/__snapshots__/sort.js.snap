@@ -39,6 +39,26 @@ Array [
     "value": "parent.parent.children.id",
   },
   Object {
+    "name": "PARENT___PARENT___INTERNAL___CONTENT_DIGEST",
+    "value": "parent.parent.internal.contentDigest",
+  },
+  Object {
+    "name": "PARENT___PARENT___INTERNAL___DESCRIPTION",
+    "value": "parent.parent.internal.description",
+  },
+  Object {
+    "name": "PARENT___PARENT___INTERNAL___IGNORE_TYPE",
+    "value": "parent.parent.internal.ignoreType",
+  },
+  Object {
+    "name": "PARENT___PARENT___INTERNAL___MEDIA_TYPE",
+    "value": "parent.parent.internal.mediaType",
+  },
+  Object {
+    "name": "PARENT___PARENT___INTERNAL___OWNER",
+    "value": "parent.parent.internal.owner",
+  },
+  Object {
     "name": "PARENT___PARENT___INTERNAL___TYPE",
     "value": "parent.parent.internal.type",
   },
@@ -55,8 +75,48 @@ Array [
     "value": "parent.children.children.id",
   },
   Object {
+    "name": "PARENT___CHILDREN___INTERNAL___CONTENT_DIGEST",
+    "value": "parent.children.internal.contentDigest",
+  },
+  Object {
+    "name": "PARENT___CHILDREN___INTERNAL___DESCRIPTION",
+    "value": "parent.children.internal.description",
+  },
+  Object {
+    "name": "PARENT___CHILDREN___INTERNAL___IGNORE_TYPE",
+    "value": "parent.children.internal.ignoreType",
+  },
+  Object {
+    "name": "PARENT___CHILDREN___INTERNAL___MEDIA_TYPE",
+    "value": "parent.children.internal.mediaType",
+  },
+  Object {
+    "name": "PARENT___CHILDREN___INTERNAL___OWNER",
+    "value": "parent.children.internal.owner",
+  },
+  Object {
     "name": "PARENT___CHILDREN___INTERNAL___TYPE",
     "value": "parent.children.internal.type",
+  },
+  Object {
+    "name": "PARENT___INTERNAL___CONTENT_DIGEST",
+    "value": "parent.internal.contentDigest",
+  },
+  Object {
+    "name": "PARENT___INTERNAL___DESCRIPTION",
+    "value": "parent.internal.description",
+  },
+  Object {
+    "name": "PARENT___INTERNAL___IGNORE_TYPE",
+    "value": "parent.internal.ignoreType",
+  },
+  Object {
+    "name": "PARENT___INTERNAL___MEDIA_TYPE",
+    "value": "parent.internal.mediaType",
+  },
+  Object {
+    "name": "PARENT___INTERNAL___OWNER",
+    "value": "parent.internal.owner",
   },
   Object {
     "name": "PARENT___INTERNAL___TYPE",
@@ -79,6 +139,26 @@ Array [
     "value": "children.parent.children.id",
   },
   Object {
+    "name": "CHILDREN___PARENT___INTERNAL___CONTENT_DIGEST",
+    "value": "children.parent.internal.contentDigest",
+  },
+  Object {
+    "name": "CHILDREN___PARENT___INTERNAL___DESCRIPTION",
+    "value": "children.parent.internal.description",
+  },
+  Object {
+    "name": "CHILDREN___PARENT___INTERNAL___IGNORE_TYPE",
+    "value": "children.parent.internal.ignoreType",
+  },
+  Object {
+    "name": "CHILDREN___PARENT___INTERNAL___MEDIA_TYPE",
+    "value": "children.parent.internal.mediaType",
+  },
+  Object {
+    "name": "CHILDREN___PARENT___INTERNAL___OWNER",
+    "value": "children.parent.internal.owner",
+  },
+  Object {
     "name": "CHILDREN___PARENT___INTERNAL___TYPE",
     "value": "children.parent.internal.type",
   },
@@ -95,12 +175,72 @@ Array [
     "value": "children.children.children.id",
   },
   Object {
+    "name": "CHILDREN___CHILDREN___INTERNAL___CONTENT_DIGEST",
+    "value": "children.children.internal.contentDigest",
+  },
+  Object {
+    "name": "CHILDREN___CHILDREN___INTERNAL___DESCRIPTION",
+    "value": "children.children.internal.description",
+  },
+  Object {
+    "name": "CHILDREN___CHILDREN___INTERNAL___IGNORE_TYPE",
+    "value": "children.children.internal.ignoreType",
+  },
+  Object {
+    "name": "CHILDREN___CHILDREN___INTERNAL___MEDIA_TYPE",
+    "value": "children.children.internal.mediaType",
+  },
+  Object {
+    "name": "CHILDREN___CHILDREN___INTERNAL___OWNER",
+    "value": "children.children.internal.owner",
+  },
+  Object {
     "name": "CHILDREN___CHILDREN___INTERNAL___TYPE",
     "value": "children.children.internal.type",
   },
   Object {
+    "name": "CHILDREN___INTERNAL___CONTENT_DIGEST",
+    "value": "children.internal.contentDigest",
+  },
+  Object {
+    "name": "CHILDREN___INTERNAL___DESCRIPTION",
+    "value": "children.internal.description",
+  },
+  Object {
+    "name": "CHILDREN___INTERNAL___IGNORE_TYPE",
+    "value": "children.internal.ignoreType",
+  },
+  Object {
+    "name": "CHILDREN___INTERNAL___MEDIA_TYPE",
+    "value": "children.internal.mediaType",
+  },
+  Object {
+    "name": "CHILDREN___INTERNAL___OWNER",
+    "value": "children.internal.owner",
+  },
+  Object {
     "name": "CHILDREN___INTERNAL___TYPE",
     "value": "children.internal.type",
+  },
+  Object {
+    "name": "INTERNAL___CONTENT_DIGEST",
+    "value": "internal.contentDigest",
+  },
+  Object {
+    "name": "INTERNAL___DESCRIPTION",
+    "value": "internal.description",
+  },
+  Object {
+    "name": "INTERNAL___IGNORE_TYPE",
+    "value": "internal.ignoreType",
+  },
+  Object {
+    "name": "INTERNAL___MEDIA_TYPE",
+    "value": "internal.mediaType",
+  },
+  Object {
+    "name": "INTERNAL___OWNER",
+    "value": "internal.owner",
   },
   Object {
     "name": "INTERNAL___TYPE",
