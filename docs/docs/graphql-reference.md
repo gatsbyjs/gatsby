@@ -6,7 +6,7 @@ title: GraphQL Reference
 
 ## Intro
 
-This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. You'll be querying the _real_ schema used on gatsbyjs.org so feel free to experiment and poke around the innards of our site!
+This page will walk you through a series of GraphQL queries, each designed to demonstrate a particular feature of GraphQL. You'll be querying the _real_ schema used on [gatsby-graphql-reference](https://github.com/LekoArts/gatsby-graphql-reference) so feel free to experiment and poke around the innards of the site! You can also open the [Codesandbox version](https://codesandbox.io/s/github/LekoArts/gatsby-graphql-reference/tree/master) of it.
 
 You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-five/#introducing-graphiql).
 
@@ -14,7 +14,7 @@ You'll be using GraphiQL, an interactive editor you can also use [while building
 
 Let's start with the basics, pulling up the site `title` from your `gatsby-config.js`'s `siteMetaData`. Here the query is on the left and the results are on the right.
 
-<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
+<iframe src="https://2ojq0r6qkp.sse.codesandbox.io/___graphql?query=%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
 
 Try editing the query to include the `description` from `siteMetadata`. When typing in the query editor you can use `Ctrl + Space` to see autocomplete options and `Ctrl + Enter` to run the current query.
 
@@ -22,15 +22,15 @@ Try editing the query to include the `description` from `siteMetadata`. When typ
 
 Gatsby structures its content as collections of `nodes`, which are connected to each other with `edges`. In this query you ask for the total count of plugins in this Gatsby site, along with specific information about each one.
 
-<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allSitePlugin%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20version%0A%20%20%20%20%20%20%20%20packageJson%20%7B%0A%20%20%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
+<iframe src="https://2ojq0r6qkp.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePlugin%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20version%0A%20%20%20%20%20%20%20%20packageJson%20%7B%0A%20%20%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
 
 Try using the editor's autocomplete (`Ctrl + Space`) to get extended details from the `packageJson` nodes.
 
 ## Limit
 
-There are several ways to reduce the number of results from a query. Here `totalCount` tells you there's a few hundred results, but `limit` is used to show only the first two.
+There are several ways to reduce the number of results from a query. Here `totalCount` tells you there's 8 results, but `limit` is used to show only the first three.
 
-<iframe src="https://gatsbygraphql.sloppy.zone/?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20limit%3A%202%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
+<iframe src="https://2ojq0r6qkp.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(limit%3A%203)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A" width="600" height="400"></iframe>
 
 ## Skip
 
