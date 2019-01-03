@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link, graphql } from 'gatsby'
+import React from "react"
+import { Link, graphql } from "gatsby"
 
-import Layout from '../components/Layout'
-import { rhythm } from '../utils/typography'
+import Layout from "../components/Layout"
+import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
   render() {

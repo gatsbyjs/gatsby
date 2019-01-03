@@ -4,7 +4,7 @@ module.exports = {
     description: `List of books & authors published in the wizarding world`,
   },
   mapping: {
-    'MarkdownRemark.frontmatter.author': `AuthorYaml`,
+    "MarkdownRemark.frontmatter.author": `AuthorYaml`,
   },
   plugins: [
     {
