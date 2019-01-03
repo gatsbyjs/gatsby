@@ -46,7 +46,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-csv`,
       options: {
-        noheader: true,
+        noheader: false,
       },
     },
   ];
