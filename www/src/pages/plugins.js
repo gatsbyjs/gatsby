@@ -72,7 +72,7 @@ class Plugins extends Component {
             </div>
             <Unbird
               dataSetId="5c1ac24b4a828a169b6c235c"
-              publicKey="oZwK1Uy9i4PVy5EpAQiXiZr0uVG6Xt1q"
+              publicKey={process.env.UNBIRD_FEEDBACK_KEY_PLUGINLIB}
               feedbackPrompt="Have feedback on the Plugin Library?"
             />
           </Container>
