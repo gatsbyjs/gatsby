@@ -103,6 +103,8 @@ exports.onCreateWebpackConfig = (
             },
           }),
 
+        stage === `develop` && new webpack.HotModuleReplacementPlugin(),
+
         /**
          * Use a simple filename with no hash so we can access from source by
          * path.
