@@ -2,7 +2,9 @@ const Redux = require(`redux`)
 const _ = require(`lodash`)
 const fs = require(`fs`)
 const mitt = require(`mitt`)
-const stringify = require(`json-stringify-safe`)
+const v8 = require(`v8`)
+
+const { trackObjects } = require(`../schema/utils/node-tracking`)
 
 // Create event emitter for actions
 const emitter = mitt()
@@ -10,48 +12,32 @@ const emitter = mitt()
 // Reducers
 const reducers = require(`./reducers`)
 
-const objectToMap = obj => {
-  let map = new Map()
-  Object.keys(obj).forEach(key => {
-    map.set(key, obj[key])
-  })
-  return map
-}
+const readFileSync = filePath => v8.deserialize(fs.readFileSync(filePath))
 
-const mapToObject = map => {
-  const obj = {}
-  for (let [key, value] of map) {
-    obj[key] = value
-  }
-  return obj
-}
+const writeFileSync = (filePath, contents) =>
+  fs.writeFileSync(filePath, v8.serialize(contents))
 
-// Read from cache the old node data.
+const filePath = `${process.cwd()}/.cache/redux-state.json`
+
+// Read the old node data from cache.
 let initialState = {}
 try {
-  const file = fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
-  // Apparently the file mocking in node-tracking-test.js
-  // can override the file reading replacing the mocked string with
-  // an already parsed object.
-  if (Buffer.isBuffer(file) || typeof file === `string`) {
-    initialState = JSON.parse(file)
-  }
-  if (initialState.staticQueryComponents) {
-    initialState.staticQueryComponents = objectToMap(
-      initialState.staticQueryComponents
-    )
-  }
-  if (initialState.components) {
-    initialState.components = objectToMap(initialState.components)
-  }
-  if (initialState.nodes) {
-    initialState.nodes = objectToMap(initialState.nodes)
-    // FIXME: Why not persist node-tracking cache?
-    const { trackObjects } = require(`../schema/utils/node-tracking`)
-    initialState.nodes.forEach(trackObjects)
-  }
+  initialState = readFileSync(filePath)
 } catch (e) {
   // ignore errors.
+}
+
+// FIXME: Why not persist node-tracking cache?
+if (initialState.nodes) {
+  initialState.nodes.forEach(trackObjects)
+  initialState.nodesByType = initialState.nodes.reduce((acc, node) => {
+    const { type } = node.internal
+    if (!acc.has(type)) {
+      acc.set(type, new Map())
+    }
+    acc.get(type).set(node.id, node)
+    return acc
+  }, new Map())
 }
 
 const store = Redux.createStore(
@@ -65,7 +51,6 @@ const store = Redux.createStore(
   })
 )
 
-// Persist state.
 const saveState = state => {
   const pickedState = _.pick(state, [
     `nodes`,
@@ -75,18 +60,7 @@ const saveState = state => {
     `components`,
     `staticQueryComponents`,
   ])
-
-  pickedState.staticQueryComponents = mapToObject(
-    pickedState.staticQueryComponents
-  )
-  pickedState.components = mapToObject(pickedState.components)
-  pickedState.nodes = mapToObject(pickedState.nodes)
-  const stringified = stringify(pickedState, null, 2)
-  fs.writeFile(
-    `${process.cwd()}/.cache/redux-state.json`,
-    stringified,
-    () => {}
-  )
+  writeFileSync(filePath, pickedState)
 }
 const saveStateDebounced = _.debounce(saveState, 1000)
 
@@ -96,8 +70,8 @@ store.subscribe(() => {
 })
 
 // During development, once bootstrap is finished, persist state on changes.
-let bootstrapFinished = false
 if (process.env.gatsby_executing_command === `develop`) {
+  let bootstrapFinished = false
   emitter.on(`BOOTSTRAP_FINISHED`, () => {
     bootstrapFinished = true
     saveState(store.getState())

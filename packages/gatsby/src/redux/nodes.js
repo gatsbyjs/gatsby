@@ -18,17 +18,40 @@ const getNodes = () => {
 
 exports.getNodes = getNodes
 
-const getNode = id => store.getState().nodes.get(id)
+/**
+ * Get all nodes of type from redux store.
+ *
+ * @param {string} type
+ * @returns {Array}
+ */
+const getNodesByType = type => {
+  const nodes = store.getState().nodesByType.get(type)
+  if (nodes) {
+    return Array.from(nodes.values())
+  } else {
+    return []
+  }
+}
 
-/** Get node by id from store.
+exports.getNodesByType = getNodesByType
+
+/**
+ * Get all types from redux store.
+ *
+ * @returns {Array}
+ */
+const getTypes = () => Array.from(store.getState().nodesByType.keys())
+
+exports.getTypes = getTypes
+
+/** Get node by id from redux store.
  *
  * @param {string} id
  * @returns {Object}
  */
-exports.getNode = getNode
+const getNode = id => store.getState().nodes.get(id)
 
-exports.getNodesByType = type =>
-  getNodes().filter(node => node.internal.type === type)
+exports.getNode = getNode
 
 /**
  * Determine if node has changed.
