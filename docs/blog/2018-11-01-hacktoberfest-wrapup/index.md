@@ -29,7 +29,7 @@ Most of the [Docs issues](https://github.com/gatsbyjs/gatsby/issues/7928) stemme
 Thanks to everyone's contributions, throughout October we merged 439 pull requests from 250 different authors into the Gatsby repo!
 
 <figure>
-  <img alt="Github insights for the Gatsby repo, October 1 - November 1, 2018" height="400" src="./gatsby-hacktoberfest.png" />
+  <img alt="GitHub insights for the Gatsby repo, October 1 - November 1, 2018" height="400" src="./gatsby-hacktoberfest.png" />
   <figcaption>
     An awesome community response for Hacktoberfest!
   </figcaption>

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.25"></a>
+
+## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.24...gatsby-image@2.0.25) (2018-12-13)
+
+### Bug Fixes
+
+- **gatsby-image:** update typescript definitions - properly mark fields as optional ([#10419](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/10419)) ([f2b1821](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/f2b1821))
+
+<a name="2.0.24"></a>
+
+## [2.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.23...gatsby-image@2.0.24) (2018-12-12)
+
+**Note:** Version bump only for package gatsby-image
+
+<a name="2.0.23"></a>
+
+## [2.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.22...gatsby-image@2.0.23) (2018-12-11)
+
+### Features
+
+- **gatsby-image:** add onStartLoad prop ([#6702](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/6702)) ([1d25a95](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/1d25a95))
+
 <a name="2.0.22"></a>
 
 ## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.21...gatsby-image@2.0.22) (2018-11-29)

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.13"></a>
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.12...gatsby-plugin-manifest@2.0.13) (2018-12-29)
+
+### Features
+
+- **gatsby-plugin-manifest:** add option to remove the "theme color" meta tag ([#10440](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/10440)) ([129c5d8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/129c5d8))
+
+<a name="2.0.12"></a>
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.11...gatsby-plugin-manifest@2.0.12) (2018-12-11)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
 <a name="2.0.11"></a>
 
 ## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.10...gatsby-plugin-manifest@2.0.11) (2018-11-29)

@@ -100,6 +100,10 @@ const _options = {
       "tt, code, kbd, .gatsby-code-title": {
         fontFamily: options.monospaceFontFamily.join(`,`),
         fontSize: `80%`,
+        // Disable ligatures as they look funny as code.
+        fontVariant: `none`,
+        WebkitFontFeatureSettings: `"clig" 0, "calt" 0`,
+        fontFeatureSettings: `"clig" 0, "calt" 0`,
       },
       ".gatsby-highlight": {
         background: colors.code.bg,
@@ -119,6 +123,82 @@ const _options = {
         float: `left`,
         minWidth: `100%`,
         overflow: `initial`,
+      },
+      ".gatsby-highlight pre[class*='language-']::before": {
+        position: `absolute`,
+        top: `0px`,
+        right: `20px`,
+        padding: `3px 10px`,
+        fontSize: `12px`,
+        textAlign: `right`,
+        color: `#444`,
+        fontWeight: `700`,
+        letterSpacing: `0.8px`,
+        textTransform: `uppercase`,
+        borderRadius: `0 0 5px 5px`,
+        background: `#ddd`,
+      },
+      ".gatsby-highlight pre[class='language-javascript']::before": {
+        content: `'js'`,
+        background: `#f7df1e`,
+      },
+      ".gatsby-highlight pre[class='language-js']::before": {
+        content: `'js'`,
+        background: `#f7df1e`,
+      },
+      ".gatsby-highlight pre[class='language-jsx']::before": {
+        content: `'jsx'`,
+        background: `#61dafb`,
+      },
+      ".gatsby-highlight pre[class='language-graphql']::before": {
+        content: `'GraphQL'`,
+        background: `#E10098`,
+        color: `#fff`,
+        fontWeight: `400`,
+      },
+      ".gatsby-highlight pre[class='language-html']::before": {
+        content: `'html'`,
+        background: `#005A9C`,
+        color: `#fff`,
+        fontWeight: `400`,
+      },
+      ".gatsby-highlight pre[class='language-css']::before": {
+        content: `'css'`,
+        background: `#ff9800`,
+        color: `#fff`,
+        fontWeight: `400`,
+      },
+      ".gatsby-highlight pre[class='language-shell']::before": {
+        content: `'shell'`,
+      },
+      ".gatsby-highlight pre[class='language-sh']::before": {
+        content: `'sh'`,
+      },
+      ".gatsby-highlight pre[class='language-bash']::before": {
+        content: `'bash'`,
+      },
+      ".gatsby-highlight pre[class='language-yaml']::before": {
+        content: `'yaml'`,
+        background: `#ffa8df`,
+      },
+      ".gatsby-highlight pre[class='language-markdown']::before": {
+        content: `'md'`,
+      },
+      ".gatsby-highlight pre[class='language-json']::before, .gatsby-highlight pre[class='language-json5']::before": {
+        content: `'json'`,
+        background: `linen`,
+      },
+      ".gatsby-highlight pre[class='language-diff']::before": {
+        content: `'diff'`,
+        background: `#e6ffed`,
+      },
+      ".gatsby-highlight pre[class='language-text']::before": {
+        content: `'text'`,
+        background: `#fff`,
+      },
+      ".gatsby-highlight pre[class='language-flow']::before": {
+        content: `'flow'`,
+        background: `#E8BD36`,
       },
       ".gatsby-highlight pre code": {
         display: `block`,

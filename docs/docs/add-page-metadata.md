@@ -12,13 +12,13 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 ### Using `React Helmet` and `gatsby-plugin-react-helmet`
 
-1.  Install both packages:
+1. Install both packages:
 
-```bash
+```shell
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -26,9 +26,9 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 }
 ```
 
-3.  Use `React Helmet` in your pages:
+3. Use `React Helmet` in your pages:
 
-```jsx{8-12}
+```jsx
 import React from "react"
 import { Helmet } from "react-helmet"
 
@@ -36,12 +36,13 @@ class Application extends React.Component {
   render() {
     return (
       <div className="application">
+        {/* highlight-start */}
         <Helmet>
           <meta charSet="utf-8" />
           <title>My Title</title>
           <link rel="canonical" href="http://mysite.com/example" />
         </Helmet>
-        ...
+        {/* highlight-end */}
       </div>
     )
   }
@@ -49,3 +50,5 @@ class Application extends React.Component {
 ```
 
 > 💡 The above example is from the [React Helmet docs](https://github.com/nfl/react-helmet#example). Check those out for more!
+
+You may also be interested in checking out the doc on [adding an SEO component](/docs/add-seo-component/).

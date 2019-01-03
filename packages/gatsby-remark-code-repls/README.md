@@ -155,7 +155,7 @@ specified examples directory. (This will avoid broken links at runtime.)
     // Optional path to a custom redirect template.
     // The redirect page is only shown briefly,
     // But you can use this setting to override its CSS styling.
-    redirectTemplate: `${__dirname}/src/redirect-template.js`),
+    redirectTemplate: `${__dirname}/src/redirect-template.js`,
 
     // Optional link target.
     // Note that if a target is specified, "noreferrer" will also be added.

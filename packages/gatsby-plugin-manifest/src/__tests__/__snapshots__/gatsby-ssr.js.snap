@@ -1,11 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`gatsby-plugin-manifest Add a "theme color" meta tag if "theme_color_in_head" is set to true 1`] = `
+Array [
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <meta
+    content="#000000"
+    name="theme-color"
+  />,
+]
+`;
+
 exports[`gatsby-plugin-manifest Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
 Array [
   <link
     href="/icons/icon-48x48.png"
     rel="shortcut icon"
   />,
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <meta
+    content="#000000"
+    name="theme-color"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Adds a "theme color" meta tag to head if "theme_color_in_head" is not provided 1`] = `
+Array [
   <link
     href="/manifest.webmanifest"
     rel="manifest"
@@ -97,6 +123,15 @@ Array [
     href="/favicons/android-chrome-512x512.png"
     rel="apple-touch-icon"
     sizes="512x512"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Does not add a "theme color" meta tag if "theme_color_in_head" is set to false 1`] = `
+Array [
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
   />,
 ]
 `;

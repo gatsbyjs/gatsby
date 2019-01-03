@@ -14,7 +14,7 @@ If you haven't yet, you need to create a production build of your Gatsby site. T
 
 1.  Stop the development server (if it's still running) and run:
 
-```bash
+```shell
 gatsby build
 ```
 
@@ -22,7 +22,7 @@ gatsby build
 
 2.  View the production site locally. Run:
 
-```bash
+```shell
 gatsby serve
 ```
 

@@ -142,7 +142,7 @@
 - title: The State of JavaScript
   description: >
     Data from over 20,000 developers, asking them questions on topics ranging
-    from front-end frameworks and state management, to build tools and testing
+    from frontend frameworks and state management, to build tools and testing
     libraries.
   main_url: "https://stateofjs.com/"
   url: "https://stateofjs.com/"
@@ -201,12 +201,12 @@
     - Documentation
     - Featured
   featured: true
-- title: KNW Photography
-  main_url: "https://www.knw.io/"
-  url: "https://www.knw.io/galleries/"
+- title: Kirsten Noelle
+  main_url: "https://www.kirstennoelle.com/"
+  url: "https://www.kirstennoelle.com/"
   featured: true
   description: >
-    Digital portfolio for San Francisco Bay Area photographer Kirsten Wiemer.
+    Digital portfolio for San Francisco Bay Area photographer Kirsten Noelle Wiemer.
   categories:
     - Photography
     - Portfolio
@@ -441,19 +441,19 @@
   categories:
     - Education
     - Entertainment
-- title: William Owen UK Portfolio / Blog
-  main_url: "http://william-owen.co.uk/"
-  url: "http://william-owen.co.uk/"
-  featured: false
-  description: >-
-    Over 20 years experience delivering customer-facing websites, internet-based
-    solutions and creative visual design for a wide range of companies and
-    organisations.
-  categories:
-    - Portfolio
-    - Blog
-  built_by: William Owen
-  built_by_url: "https://twitter.com/twilowen"
+# - title: William Owen UK Portfolio / Blog
+#   main_url: "http://william-owen.co.uk/"
+#   url: "http://william-owen.co.uk/"
+#   featured: false
+#   description: >-
+#     Over 20 years experience delivering customer-facing websites, internet-based
+#     solutions and creative visual design for a wide range of companies and
+#     organisations.
+#   categories:
+#     - Portfolio
+#     - Blog
+#   built_by: William Owen
+#   built_by_url: "https://twitter.com/twilowen"
 - title: A4 纸网
   main_url: "http://www.a4z.cn/"
   url: "http://www.a4z.cn/price"
@@ -775,7 +775,7 @@
   featured: false
   description: >-
     manu.ninja is the personal blog of Manuel Wieser, where he talks about
-    front-end development, games and digital art
+    frontend development, games and digital art
   categories:
     - Blog
     - Technology
@@ -944,14 +944,14 @@
   url: "https://www.charlespinnix.com/"
   featured: false
   description: >-
-    I’m a senior front end engineer with 8 years of experience building websites
+    I’m a senior frontend engineer with 8 years of experience building websites
     and web applications. I’m interested in leading creative, multidisciplinary
     engineering teams. I’m a creative technologist, merging photography, art,
     and design into engineering and visa versa. I take a pragmatic,
     product-oriented approach to development, allowing me to see the big picture
     and ensuring quality products are completed on time. I have a passion for
-    modern front end JavaScript frameworks such as React and Vue, and I have
-    substantial experience on the back end with an interest in Node and
+    modern frontend JavaScript frameworks such as React and Vue, and I have
+    substantial experience on the backend with an interest in Node and
     container based deployment with Docker and AWS.
   categories:
     - Portfolio
@@ -1274,10 +1274,10 @@
 - title: LekoArts
   main_url: "https://www.lekoarts.de"
   url: "https://www.lekoarts.de"
-  source_url: "https://github.com/LeKoArts/portfolio"
+  source_url: "https://github.com/LekoArts/portfolio"
   featured: false
   built_by: LekoArts
-  built_by_url: "https://github.com/LeKoArts"
+  built_by_url: "https://github.com/LekoArts"
   description: >-
     Hi, I'm Lennart — a self-taught and passionate graphic/web designer &
     frontend developer based in Darmstadt, Germany. I love it to realize complex
@@ -1535,7 +1535,7 @@
     - Portfolio
   built_by: Parker Sarsfield
   built_by_url: "https://parkersarsfield.com"
-- title: Front-end web development with Greg
+- title: Frontend web development with Greg
   description: |
     JavaScript, GatsbyJS, ReactJS, CSS in JS... Let's learn some stuff together.
   main_url: "https://dev.greglobinski.com"
@@ -1920,7 +1920,7 @@
   featured: false
 - title: Malik Browne Portfolio 2018
   description: >
-    The portfolio blog of Malik Browne, a full stack engineer, foodie, and avid
+    The portfolio blog of Malik Browne, a full-stack engineer, foodie, and avid
     blogger/YouTuber.
   main_url: "https://www.malikbrowne.com/about"
   url: "https://www.malikbrowne.com"
@@ -2127,7 +2127,7 @@
   source_url: "https://github.com/mhjadav/mojaave"
   description: >
     mojaave.com is Mahipat's portfolio, I have developed it using Gatsby v2 and
-    Bootstrap, To get in touch with people looking for full stack developer.
+    Bootstrap, To get in touch with people looking for full-stack developer.
   categories:
     - Portfolio
     - Web Development
@@ -2258,7 +2258,7 @@
   main_url: https://gedd.ski
   url: https://gedd.ski
   description: >
-    Frontend mastery blog - level up your UI game.
+    frontend mastery blog - level up your UI game.
   categories:
     - Web Development
     - Education
@@ -2324,7 +2324,7 @@
   url: "https://www.cameronmaske.com/courses/introduction-to-pytest/"
   source_url: "https://github.com/cameronmaske/cameronmaske.com-v2"
   description: >
-    The homepage of Cameron Maske, a freelance full stack developer, who is currently working on a free pytest video course
+    The homepage of Cameron Maske, a freelance full-stack developer, who is currently working on a free pytest video course
   categories:
     - Education
     - Video
@@ -2351,7 +2351,7 @@
   main_url: "https://joseph.michael-chambers.com/"
   url: "https://joseph.michael-chambers.com/"
   description: >
-    The homepage of Joseph Chambers, a freelance full stack developer, who is currently looking for work.
+    The homepage of Joseph Chambers, a freelance full-stack developer, who is currently looking for work.
   categories:
     - Portfolio
     - Freelance
@@ -2374,7 +2374,7 @@
   description: >
     Madvoid is a team of expert developers dedicated to creating simple, clear, usable and blazing fast web and mobile apps.
     We are coders that help companies and agencies to create social & interactive experiences.
-    This includes full stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
+    This includes full-stack development using React, WebGL, Static Site Generators, Ruby On Rails, Phoenix, GraphQL, Chatbots, CI / CD, Docker and more!
   categories:
     - Portfolio
     - Technology
@@ -2445,7 +2445,7 @@
     - B2B Services
 - title: "Luciano Mammino's blog"
   description: >
-    Tech & programming blog of Luciano Mammino a.k.a. "loige", Fullstack Web Developer and International Speaker
+    Tech & programming blog of Luciano Mammino a.k.a. "loige", Full-Stack Web Developer and International Speaker
   main_url: https://loige.co
   url: https://loige.co
   featured: false
@@ -2889,7 +2889,7 @@
   featured: false
 - title: Mirror Conf
   description: >
-    Mirror Conf is a conference designed to empower designers and front-end developers who have a thirst for knowledge and want to broaden their horizons.
+    Mirror Conf is a conference designed to empower designers and frontend developers who have a thirst for knowledge and want to broaden their horizons.
   main_url: "https://www.mirrorconf.com/"
   url: "https://www.mirrorconf.com/"
   categories:
@@ -3003,22 +3003,6 @@
     - Gallery
   built_by: Ian Busko
   built_by_url: https://github.com/ianbusko
-  featured: false
-- title: "LANDR"
-  url: https://www.landr.com/
-  main_url: https://www.landr.com/
-  description: >
-    LANDR is the place to create, master and sell your music.
-  categories:
-    - AI
-    - Business
-    - Entrepreneurship
-    - Freelance
-    - Marketing
-    - Media
-    - Music
-  built_by: LANDR
-  built_by_url: https://twitter.com/landr_music
   featured: false
 - title: Got Milk
   main_url: "https://www.gotmilk.com/"
@@ -3150,6 +3134,17 @@
   built_by: Gabe Ragland
   built_by_url: https://twitter.com/gabe_ragland
   featured: false
+- title: Disrupting Nate
+  description: >
+    Ketogenic Diet, Podcasts, and Blockchain.
+  url: https://www.disruptingnate.com/
+  main_url: https://disruptingnate.com/
+  categories:
+    - Technology
+    - Podcasts
+  built_by: Nathan Olmstead
+  built_by_url: https://twitter.com/disruptingnate
+  featured: false
 - title: Ambassador
   url: https://www.getambassador.io
   main_url: https://www.getambassador.io
@@ -3249,7 +3244,7 @@
   featured: false
 - title: Ramón Chancay
   description: >-
-    Front-end / Back-end Developer in Guayaquil Ecuador.
+    Frontend / Backend Developer in Guayaquil Ecuador.
     Currently at Everymundo, previously at El Universo.
     I enjoy teaching and sharing what I know.
     I give professional advice to developers and companies.
@@ -3557,7 +3552,6 @@
   description: >
     Welcome to Portugal's best kept secret and be amazed with our nature. Here you can explore, surf, taste the world's best gastronomy and wine, feel the North Canyon's power with the biggest waves in the world and so many other amazing things. Find us, discover yourself!
   categories:
-    - Surf
     - Tourism
     - Travel
   built_by: Samuel Fialho
@@ -3611,3 +3605,294 @@
     - Education
   built_by: Michael Uloth
   built_by_url: "https://www.michaeluloth.com"
+- title: Grooovinger
+  url: https://www.grooovinger.com
+  main_url: https://www.grooovinger.com
+  description: >
+    Martin Grubinger, a web developer from Austria
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Martin Grubinger
+  built_by_url: https://www.grooovinger.com
+  featured: false
+- title: LXDX - the Crypto Derivatives Exchange
+  main_url: https://www.lxdx.co/
+  url: https://www.lxdx.co/
+  description: >
+    LXDX is the world's fastest crypto exchange. Our mission is to bring innovative financial products to retail crypto investors, providing access to the same speed and scalability that institutional investors already depend on us to deliver each and every day.
+  categories:
+    - Marketing
+    - Blockchain
+    - Finance
+  built_by: Corey Ward
+  built_by_url: http://www.coreyward.me/
+  featured: false
+- title: Kyle McDonald
+  url: https://kylemcd.com
+  main_url: https://kylemcd.com
+  source_url: https://github.com/kylemcd/personal-site-react
+  description: >
+    Personal site + blog for Kyle McDonald
+  categories:
+    - Blog
+  built_by: Kyle McDonald
+  built_by_url: https://kylemcd.com
+  featured: false
+- title: VSCode Power User Course
+  main_url: https://VSCode.pro
+  url: https://VSCode.pro
+  description: >
+    After 10 years with Sublime, I switched to VSCode. Love it. Spent 1000+ hours building a premium video course to help you switch today. 200+ power user tips & tricks turn you into a VSCode.pro
+  categories:
+    - Education
+    - Learning
+    - eCommerce
+    - Marketing
+    - VSCode
+    - Technology
+    - Web Development
+  built_by: Ahmad Awais
+  built_by_url: https://twitter.com/MrAhmadAwais/
+  featured: false
+- title: Thijs Koerselman Portfolio
+  main_url: https://www.vauxlab.com
+  url: https://www.vauxlab.com
+  featured: false
+  description: >
+    Portfolio of Thijs Koerselman. A freelance software engineer, full-stack web developer and sound designer.
+  categories:
+    - Portfolio
+    - Business
+    - Freelance
+    - Technology
+    - Web Development
+    - React Native
+    - Music
+- title: Ad Hoc Homework
+  main_url: https://homework.adhoc.team
+  url: https://homework.adhoc.team
+  description: >
+    Ad Hoc builds government digital services that are fast, efficient, and usable by everyone. Ad Hoc Homework is a collection of coding and design challenges for candidates applying to our open positions.
+  categories:
+    - Web Development
+    - Government
+    - Healthcare
+    - Programming
+  built_by_url: https://adhoc.team
+  featured: false
+- title: BetterDocs | Discord Themes & Plugins
+  main_url: https://betterdocs.us
+  url: https://betterdocs.us
+  description: >
+    All Discord enhancement projects in 1! Free quality Themes and Plugins for Discord and easy installation instructions for BetterDiscord and more!
+  categories:
+    - Web Development
+    - Programming
+    - Open Source
+  built_by: Christopher R. | Owner
+  built_by_url: https://github.com/MrRobotjs/
+  featured: false
+- title: Birra Napoli
+  main_url: http://www.birranapoli.it
+  url: http://www.birranapoli.it
+  built_by: Ribrain
+  built_by_url: https://www.ribrainstudio.com
+  featured: false
+  description: >
+    Birra Napoli official site
+  categories:
+    - Landing page
+    - Business
+    - Food
+    - Beverage
+- title: Satispay
+  url: https://www.satispay.com
+  main_url: https://www.satispay.com
+  categories:
+    - Business
+    - Finance
+    - Technology
+  built_by: Satispay
+  built_by_url: https://www.satispay.com
+  featured: false
+- title: The Movie Database - Gatsby
+  url: https://tmdb.lekoarts.de
+  main_url: https://tmdb.lekoarts.de
+  source_url: https://github.com/LekoArts/gatsby-source-tmdb-example
+  categories:
+    - Open Source
+    - Entertainment
+    - Gallery
+  featured: false
+  built_by: LekoArts
+  built_by_url: "https://github.com/LekoArts"
+  description: >
+    Source from The Movie Database (TMDb) API (v3) in Gatsby. This example is built with react-spring, React hooks and react-tabs and showcases the gatsby-source-tmdb plugin. It also has some client-only paths and uses gatsby-image.
+- title: LANDR - Creative Tools for Musicians
+  url: https://www.landr.com/
+  main_url: https://www.landr.com/en/
+  categories:
+    - Music
+    - Technology
+    - AI
+    - Business
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Media
+  featured: false
+  built_by: LANDR
+  built_by_url: https://twitter.com/landr_music
+  description: >
+    Marketing website built for LANDR. LANDR is a web application that provides tools for musicians to master their music (using artificial intelligence), collaborate with other musicians, and distribute their music to multiple platforms.
+- title: ClinicJS
+  url: https://clinicjs.org/
+  main_url: https://clinicjs.org/
+  categories:
+    - Performance
+    - Technology
+    - Documentation
+  featured: false
+  built_by: NearForm
+  built_by_url: "https://www.nearform.com/"
+  description: >
+    Tools to help diagnose and pinpoint Node.js performance issues.
+- title: KOBIT
+  main_url: "https://kobit.in"
+  url: "https://kobit.in"
+  description: Automated Google Analytics Report with everything you need and more
+  featured: false
+  categories:
+    - Marketing
+    - Blog
+  built_by: mottox2
+  built_by_url: "https://mottox2.com"
+- title: Aleksander Hansson
+  main_url: https://ahansson.com
+  url: https://ahansson.com
+  featured: false
+  description: >
+    Portfolio website for Aleksander Hansson
+  categories:
+    - Portfolio
+    - Business
+    - Freelance
+    - Technology
+    - Web Development
+    - Consulting
+  built_by: Aleksander Hansson
+  built_by_url: https://www.linkedin.com/in/aleksanderhansson/
+- title: Surfing Nosara
+  main_url: "https://www.surfingnosara.com"
+  url: "https://www.surfingnosara.com"
+  description: Real estate, vacation, and surf report hub for Nosara, Costa Rica
+  featured: false
+  categories:
+    - Business
+    - Blog
+    - Gallery
+    - Marketing
+  built_by: Desarol
+  built_by_url: "https://www.desarol.com"
+- title: Crispin Porter Bogusky
+  url: https://cpbgroup.com/
+  main_url: https://cpbgroup.com/
+  description: >
+    We solve the world’s toughest communications problems with the most quantifiably potent creative assets.
+  categories:
+    - Agency
+    - Advertising
+    - Design
+    - Marketing
+  built_by: Crispin Porter Bogusky
+  built_by_url: https://cpbgroup.com/
+  featured: false
+- title: graphene-python
+  url: https://graphene-python.org
+  main_url: https://graphene-python.org
+  description: Graphene is a collaboratively funded project.Graphene-Python is a library for building GraphQL APIs in Python easily.
+  categories:
+    - Library
+    - API
+    - Documentation
+  featured: false
+- title: klarna
+  url: https://developers.klarna.com/en/gb/kco-v3
+  main_url: https://developers.klarna.com/en/gb/kco-v3
+  description: Here you will find the integration guides, API documentation, and more to easily integrate with Klarna.
+  categories:
+    - API
+    - Documentation
+  featured: false
+- title: Song Wang's Blog
+  main_url: "https://songwang.io/"
+  url: "https://songwang.io/"
+  source_url: "https://github.com/wangsongiam/songwang.io/"
+  description: >
+    The website about Song Wang.
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Song Wang
+  built_by_url: "https://github.com/wangsongiam/"
+  featured: false
+- title: Engel & Völkers Ibiza Holiday Rentals
+  main_url: "https://www.ev-ibiza.com/"
+  url: "https://www.ev-ibiza.com/"
+  featured: false
+  built_by: Ventura Digitalagentur
+  description: >
+    Engel & Völkers, one of the most successful real estate agencies in the world, offers luxury holiday villas to rent in Ibiza.
+  categories:
+    - Tourism
+    - Travel
+- title: Sylvain Hamann's personal website
+  url: "https://shamann.fr"
+  main_url: "https://shamann.fr"
+  source_url: "https://github.com/sylvhama/shamann-gatsby/"
+  description: >
+    Sylvain Hamann, web developer from France
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Sylvain Hamann
+  built_by_url: "https://twitter.com/sylvhama"
+  featured: false
+- title: Jane Manchun Wong's Personal Website
+  main_url: "https://wongmjane.com/"
+  url: "https://wongmjane.com/"
+  description: >
+    Jane Manchun Wong's Personal Website is where she posts bug bounty write-ups, discoveries from reverse engineering apps and personal thoughts. This site is built on Gatsby v2 and it leverages the ecosystem to provide PWA features such as offline support.
+  categories:
+    - Blog
+    - Portfolio
+    - Security
+  built_by: Jane Manchun Wong
+  built_by_url: "https://twitter.com/wongmjane"
+  featured: false
+- title: PostPost
+  main_url: "https://postpost.design"
+  source_url: "https://github.com/postpostpdx/website"
+  url: "https://postpost.design"
+  description: >
+    PostPost is a small studio based in Portland, OR that is focused on product design, web design/development, branding, and strategy.
+  categories:
+    - Portfolio
+    - Design
+    - Agency
+    - Web Development
+  built_by: Jonathan Simcoe
+  built_by_url: "https://twitter.com/jdsimcoe"
+  featured: false
+- title: Luca Crea's portfolio
+  main_url: https://lcrea.github.io
+  url: https://lcrea.github.io
+  description: >
+    Portfolio and personal website of Luca Crea, an Italian software engineer.
+  categories:
+    - Portfolio
+  built_by: Luca Crea
+  built_by_url: https://github.com/lcrea
+  featured: false

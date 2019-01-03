@@ -56,11 +56,13 @@ nodes.
 
 Change your function so it now only logs `MarkdownRemark` nodes.
 
-```javascript{2-4}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.onCreateNode = ({ node }) => {
+  // highlight-start
   if (node.internal.type === `MarkdownRemark`) {
     console.log(node.internal.type)
   }
+  // highlight-end
 }
 ```
 
@@ -70,11 +72,14 @@ the file name from the `MarkdownRemark` node? To get it, you need to _traverse_
 the "node graph" to its _parent_ `File` node, as `File` nodes contain data you
 need about files on disk. To do that, modify your function again:
 
-```javascript{1,3-4}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
+// highlight-next-line
 exports.onCreateNode = ({ node, getNode }) => {
   if (node.internal.type === `MarkdownRemark`) {
+    // highlight-start
     const fileNode = getNode(node.parent)
     console.log(`\n`, fileNode.relativePath)
+    // highlight-end
   }
 }
 ```
@@ -88,12 +93,12 @@ Now you'll have to create slugs. As the logic for creating slugs from file names
 tricky, the `gatsby-source-filesystem` plugin ships with a function for creating
 slugs. Let's use that.
 
-```javascript{1,5}:title=gatsby-node.js
-const { createFilePath } = require(`gatsby-source-filesystem`)
+```javascript:title=gatsby-node.js
+const { createFilePath } = require(`gatsby-source-filesystem`) // highlight-line
 
 exports.onCreateNode = ({ node, getNode }) => {
   if (node.internal.type === `MarkdownRemark`) {
-    console.log(createFilePath({ node, getNode, basePath: `pages` }))
+    console.log(createFilePath({ node, getNode, basePath: `pages` })) // highlight-line
   }
 }
 ```
@@ -113,18 +118,21 @@ the original creator of a node can directly modify the node—all other plugins
 (including your `gatsby-node.js`) must use this function to create additional
 fields.
 
-```javascript{3,4,6-11}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+  // highlight-line
+  const { createNodeField } = actions // highlight-line
   if (node.internal.type === `MarkdownRemark`) {
+    // highlight-start
     const slug = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
       node,
       name: `slug`,
       value: slug,
     })
+    // highlight-end
   }
 }
 ```
@@ -152,7 +160,7 @@ Now that the slugs are created, you can create the pages.
 
 In the same `gatsby-node.js` file, add the following.
 
-```javascript{15-34}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -167,26 +175,27 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
+// highlight-start
 exports.createPages = ({ graphql, actions }) => {
-  return new Promise((resolve, reject) => {
-    graphql(`
-      {
-        allMarkdownRemark {
-          edges {
-            node {
-              fields {
-                slug
-              }
+  // **Note:** The graphql function call returns a Promise
+  // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
+  return graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            fields {
+              slug
             }
           }
         }
       }
-    `).then(result => {
-      console.log(JSON.stringify(result, null, 4))
-      resolve()
-    })
+    }
+  `).then(result => {
+    console.log(JSON.stringify(result, null, 4))
   })
 }
+// highlight-end
 ```
 
 You've added an implementation of the
@@ -226,8 +235,8 @@ export default () => {
 
 Then update `gatsby-node.js`
 
-```javascript{1,17,32-42}:title=gatsby-node.js
-const path = require(`path`)
+```javascript:title=gatsby-node.js
+const path = require(`path`) // highlight-line
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -243,34 +252,33 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 }
 
 exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
-  return new Promise((resolve, reject) => {
-    graphql(`
-      {
-        allMarkdownRemark {
-          edges {
-            node {
-              fields {
-                slug
-              }
+  const { createPage } = actions // highlight-line
+  return graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            fields {
+              slug
             }
           }
         }
       }
-    `).then(result => {
-      result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-        createPage({
-          path: node.fields.slug,
-          component: path.resolve(`./src/templates/blog-post.js`),
-          context: {
-            // Data passed to context is available
-            // in page queries as GraphQL variables.
-            slug: node.fields.slug,
-          },
-        })
+    }
+  `).then(result => {
+    // highlight-start
+    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+      createPage({
+        path: node.fields.slug,
+        component: path.resolve(`./src/templates/blog-post.js`),
+        context: {
+          // Data passed to context is available
+          // in page queries as GraphQL variables.
+          slug: node.fields.slug,
+        },
       })
-      resolve()
     })
+    // highlight-end
   })
 }
 ```
@@ -289,23 +297,28 @@ Visit one of them and you see:
 Which is a bit boring and not what you want. Now you can pull in data from your markdown post. Change
 `src/templates/blog-post.js` to:
 
-```jsx{2,5-6,9-12,15-26}:title=src/templates/blog-post.js
+```jsx:title=src/templates/blog-post.js
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
+// highlight-start
 export default ({ data }) => {
   const post = data.markdownRemark
+  // highlight-end
   return (
     <Layout>
+      {/* highlight-start */}
       <div>
         <h1>{post.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
+      {/* highlight-end */}
     </Layout>
   )
 }
 
+// highlight-start
 export const query = graphql`
   query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
@@ -316,6 +329,7 @@ export const query = graphql`
     }
   }
 `
+// highlight-end
 ```
 
 And…
@@ -329,10 +343,10 @@ The last step is to link to your new pages from the index page.
 Return to `src/pages/index.js` and query for your markdown slugs and create
 links.
 
-```jsx{3,22-28,44,63-65}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
-import { css } from "react-emotion"
-import { Link, graphql } from "gatsby"
+import { css } from "@emotion/core"
+import { Link, graphql } from "gatsby" // highlight-line
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
@@ -341,7 +355,7 @@ export default ({ data }) => {
     <Layout>
       <div>
         <h1
-          className={css`
+          css={css`
             display: inline-block;
             border-bottom: 1px solid;
           `}
@@ -351,21 +365,23 @@ export default ({ data }) => {
         <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
         {data.allMarkdownRemark.edges.map(({ node }) => (
           <div key={node.id}>
+            {/* highlight-start */}
             <Link
               to={node.fields.slug}
-              className={css`
+              css={css`
                 text-decoration: none;
                 color: inherit;
               `}
             >
+              {/* highlight-end */}
               <h3
-                className={css`
+                css={css`
                   margin-bottom: ${rhythm(1 / 4)};
                 `}
               >
                 {node.frontmatter.title}{" "}
                 <span
-                  className={css`
+                  css={css`
                     color: #bbb;
                   `}
                 >
@@ -373,7 +389,7 @@ export default ({ data }) => {
                 </span>
               </h3>
               <p>{node.excerpt}</p>
-            </Link>
+            </Link> {/* highlight-line */}
           </div>
         ))}
       </div>
@@ -392,9 +408,11 @@ export const query = graphql`
             title
             date(formatString: "DD MMMM, YYYY")
           }
+          // highlight-start
           fields {
             slug
           }
+          // highlight-end
           excerpt
         }
       }

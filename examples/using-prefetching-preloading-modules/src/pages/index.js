@@ -1,5 +1,5 @@
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import styled from "styled-components"
 import DynamicComponent from "../components/DynamicComponent"
 import "./style.css"

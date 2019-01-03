@@ -21,7 +21,7 @@ describe(`Test plugin manifest options`, () => {
       start_url: `/`,
       background_color: `#f7f0eb`,
       theme_color: `#a2466c`,
-      display: `minimal-ui`,
+      display: `standalone`,
     })
     const [filePath, contents] = fs.writeFileSync.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
@@ -36,7 +36,7 @@ describe(`Test plugin manifest options`, () => {
       start_url: `/`,
       background_color: `#f7f0eb`,
       theme_color: `#a2466c`,
-      display: `minimal-ui`,
+      display: `standalone`,
       icon: `non/existing/path`,
       icons: [
         {
@@ -58,7 +58,7 @@ describe(`Test plugin manifest options`, () => {
       start_url: `/`,
       background_color: `#f7f0eb`,
       theme_color: `#a2466c`,
-      display: `minimal-ui`,
+      display: `standalone`,
       icons: [
         {
           src: `icons/icon-48x48.png`,
@@ -71,6 +71,7 @@ describe(`Test plugin manifest options`, () => {
       icon: undefined,
       legacy: true,
       plugins: [],
+      theme_color_in_head: false,
     }
     await onPostBootstrap([], {
       ...manifestOptions,

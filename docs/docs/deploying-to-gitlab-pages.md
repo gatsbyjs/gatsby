@@ -6,7 +6,7 @@ GitLab Pages are very similar to GitHub Pages. GitLab Pages also supports custom
 
 Create a new GitLab repository, [create a new Gatsby site](/docs/) if you haven't already, and add the GitLab remote.
 
-```bash
+```shell
 git init
 git remote add origin git@gitlab.com:examplerepository
 git add .
