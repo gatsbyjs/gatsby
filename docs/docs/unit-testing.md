@@ -32,7 +32,7 @@ npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy ba
 Because Gatsby handles its own Babel configuration, you will need to manually
 tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.config.js`. You can set up some useful defaults at the same time:
 
-```json:title=jest.config.js
+```js:title=jest.config.js
 module.exports = {
   "transform": {
     "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
