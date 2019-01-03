@@ -33,5 +33,3 @@ fields:
   type: boolean
   hidden: false
   default: ''
-pages:
-- docs/blog/2019-01-03-test-post/test-post.md
