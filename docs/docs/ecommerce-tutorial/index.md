@@ -42,7 +42,7 @@ There are alternatives to Stripe, like Square and Braintree, and their setup is 
 
 Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve all SKUs at build time. If you want your Gastby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or SKU is added.
 
-> **NOTE**:  Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you might need to set up a simple function that your Gatsby project can POST to in order to handle the payment. See the ["custom example"]((#custom-fully-custom-checkout-flow-requires-backend-component)) section below for more details.
+> **NOTE**: Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you might need to set up a simple function that your Gatsby project can POST to in order to handle the payment. See the ["custom example"](<(#custom-fully-custom-checkout-flow-requires-backend-component)>) section below for more details.
 
 # Setting up a Gatsby site
 
@@ -98,7 +98,7 @@ View your API credentials by logging into your Stripe account, and then going to
 
 You have 2 keys in both test mode and production mode:
 
-- a publishable key 
+- a publishable key
 - a secret key
 
 While testing, you must use the key(s) that include _test_. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
@@ -120,40 +120,40 @@ For Stripe Checkout to work without any backend component, you need to create a 
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
 
 ```jsx:title=src/components/checkout.js
-import React from 'react'
+import React from "react"
 
 const buttonStyles = {
-  fontSize: '13px',
-  textAlign: 'center',
-  color: '#fff',
-  outline: 'none',
-  padding: '12px 60px',
-  boxShadow: '2px 5px 10px rgba(0,0,0,.1)',
-  backgroundColor: 'rgb(255, 178, 56)',
-  borderRadius: '6px',
-  letterSpacing: '1.5px',
+  fontSize: "13px",
+  textAlign: "center",
+  color: "#fff",
+  outline: "none",
+  padding: "12px 60px",
+  boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
+  backgroundColor: "rgb(255, 178, 56)",
+  borderRadius: "6px",
+  letterSpacing: "1.5px",
 }
 
 const Checkout = class extends React.Component {
   // Initialise Stripe.js with your publishable key.
-  // You can find your key in the Dashboard: 
+  // You can find your key in the Dashboard:
   // https://dashboard.stripe.com/account/apikeys
   componentDidMount() {
-    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd', {
-      betas: ['checkout_beta_4'],
+    this.stripe = window.Stripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd", {
+      betas: ["checkout_beta_4"],
     })
   }
 
   async redirectToCheckout(event) {
     event.preventDefault()
     const { error } = await this.stripe.redirectToCheckout({
-      items: [{ sku: 'sku_DjQJN2HJ1kkvI3', quantity: 1 }],
+      items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
       successUrl: `http://localhost:8000/page-2/`,
       cancelUrl: `http://localhost:8000/`,
     })
 
     if (error) {
-      console.warn('Error:', error)
+      console.warn("Error:", error)
     }
   }
 
@@ -223,14 +223,14 @@ The `render()` function applies our styles to the button and binds the `redirect
 Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look like similar to this:
 
 ```js:title=src/pages/index.js
-import React from 'react'
-import { Link } from 'gatsby'
+import React from "react"
+import { Link } from "gatsby"
 
-import Layout from '../components/layout'
-import Image from '../components/image'
-import SEO from '../components/seo'
+import Layout from "../components/layout"
+import Image from "../components/image"
+import SEO from "../components/seo"
 
-import Checkout from '../components/checkout' // highlight-line
+import Checkout from "../components/checkout" // highlight-line
 
 const IndexPage = () => (
   <Layout>
@@ -253,14 +253,16 @@ If you go back to [localhost:8000](http://localhost:8000/) in your browser and y
 
 ## Advanced: Import SKUs via source plugin
 
- Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve your SKUs at build time.
+Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve your SKUs at build time.
 
 ### Add the Stripe source plugin
+
 Add the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) which you can use to pull in the SKUs from your Stripe account.
 
 ```shell
 npm install gatsby-source-stripe
 ```
+
 Now you can add the plugin configuration in your `gatsby-config` file:
 
 ```js:title=gatsby-config.js
@@ -270,15 +272,15 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    'gatsby-plugin-stripe',
+    "gatsby-plugin-stripe",
     {
       resolve: `gatsby-source-stripe`,
       options: {
-        objects: ['Sku'],
+        objects: ["Sku"],
         secretKey: process.env.STRIPE_SECRET_KEY,
         downloadFiles: true,
       },
-    }
+    },
   ],
 }
 ```
@@ -310,11 +312,12 @@ Lastly make sure that your `.gitignore` file excludes all of your `.env.*` files
 ```
 
 ### Create a component that lists your SKUs
+
 In your components folder add a new `Products` folder. This folder will entail your components that interact with the Stripe SKUs. First you need a components that queries and lists your SKUs:
 
 ```jsx:title=src/components/Products/Skus.js
-import React from 'react'
-import { graphql, StaticQuery } from 'gatsby'
+import React from "react"
+import { graphql, StaticQuery } from "gatsby"
 
 export default props => (
   <StaticQuery
@@ -350,13 +353,13 @@ You can validate your query and see what data is being returned in GraphiQL, whi
 Once you're happy with your query, create a new page where you can import the newly created Sku componenet:
 
 ```jsx:title=src/pages/advanced.js
-import React from 'react'
-import { Link } from 'gatsby'
+import React from "react"
+import { Link } from "gatsby"
 
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
-import Skus from '../components/Products/Skus' // highlight-line
+import Skus from "../components/Products/Skus" // highlight-line
 
 const AdvancedExamplePage = () => (
   <Layout>
@@ -376,38 +379,38 @@ When navigating to http://localhost:8000/advanced/ you should now see a list of 
 To make your SKUs more visually appealing and interactive, create a new `SkuCard` component in your `Products` folder:
 
 ```jsx:title=src/components/Products/SkuCard.js
-import React from 'react'
+import React from "react"
 
 const cardStyles = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-around',
-  alignItems: 'flex-start',
-  padding: '1rem',
-  marginBottom: '1rem',
-  boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
-  backgroundColor: '#fff',
-  borderRadius: '6px',
-  maxWidth: '300px',
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+  alignItems: "flex-start",
+  padding: "1rem",
+  marginBottom: "1rem",
+  boxShadow: "5px 5px 25px 0 rgba(46,61,73,.2)",
+  backgroundColor: "#fff",
+  borderRadius: "6px",
+  maxWidth: "300px",
 }
 const buttonStyles = {
-  fontSize: '13px',
-  textAlign: 'center',
-  color: '#fff',
-  outline: 'none',
-  padding: '12px',
-  boxShadow: '2px 5px 10px rgba(0,0,0,.1)',
-  backgroundColor: 'rgb(255, 178, 56)',
-  borderRadius: '6px',
-  letterSpacing: '1.5px',
+  fontSize: "13px",
+  textAlign: "center",
+  color: "#fff",
+  outline: "none",
+  padding: "12px",
+  boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
+  backgroundColor: "rgb(255, 178, 56)",
+  borderRadius: "6px",
+  letterSpacing: "1.5px",
 }
 
 const formatPrice = (amount, currency) => {
   let price = (amount / 100).toFixed(2)
-  let numberFormat = new Intl.NumberFormat(['en-US'], {
-    style: 'currency',
+  let numberFormat = new Intl.NumberFormat(["en-US"], {
+    style: "currency",
     currency: currency,
-    currencyDisplay: 'symbol',
+    currencyDisplay: "symbol",
   })
   return numberFormat.format(price)
 }
@@ -422,7 +425,7 @@ const SkuCard = class extends React.Component {
     })
 
     if (error) {
-      console.warn('Error:', error)
+      console.warn("Error:", error)
     }
   }
 
