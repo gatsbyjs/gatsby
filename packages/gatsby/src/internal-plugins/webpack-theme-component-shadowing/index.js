@@ -1,5 +1,6 @@
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
+const debug = require("debug")("gatsby:component-shadowing")
 
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
@@ -36,7 +37,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       )
 
       const builtComponentPath = this.resolveComponentPath({
-        theme,
+        matchingTheme: theme,
+        themes: this.themes,
         component,
         projectRoot: this.projectRoot,
       })
@@ -61,20 +63,14 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 
   // check the cache, the user's project, and finally the theme files
   resolveComponentPath({ theme, component, projectRoot }) {
+    debug("path", path.resolve("."))
     if (!this.cache[`${theme}-${component}`]) {
       this.cache[`${theme}-${component}`] = [
         path.join(projectRoot, `src`, `components`, theme),
         path.join(path.dirname(require.resolve(theme)), `src`, `components`),
       ]
         .map(dir => path.join(dir, component))
-        .find(possibleComponentPath => {
-          try {
-            require.resolve(possibleComponentPath)
-            return true
-          } catch (e) {
-            return false
-          }
-        })
+        .find(possibleComponentPath => fs.existsSync(possibleComponentPath))
     }
 
     return this.cache[`${theme}-${component}`]

@@ -29,10 +29,7 @@ const processTheme = ({ themeName, themeConfigObj, themeSpec }) => {
         const themeObj = await resolveTheme(spec)
         return processTheme(themeObj)
       }
-    ).then(arr => {
-      console.log(arr)
-      return arr.concat([{ themeName, themeConfigObj, themeSpec }])
-    })
+    ).then(arr => arr.concat([{ themeName, themeConfigObj, themeSpec }]))
   } else {
     return [{ themeName, themeConfigObj, themeSpec }]
   }

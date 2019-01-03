@@ -86,6 +86,11 @@ module.exports = async (args: BootstrapArgs) => {
   if (config && config.__experimentalThemes) {
     const themes = await loadThemes(config)
     config = themes.config
+
+    store.dispatch({
+      type: `SET_RESOLVED_THEMES`,
+      payload: themes.themes,
+    })
   }
 
   if (config && config.polyfill) {
