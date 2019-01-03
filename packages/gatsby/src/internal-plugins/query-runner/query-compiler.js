@@ -100,13 +100,16 @@ class Runner {
   }
 
   async parseEverything() {
-    const filesRegex = `/**/*.+(t|j)s?(x)`
-    let files = [`${this.base}/src`, `${this.base}/.cache/fragments`]
-      .concat(this.additional.map(additional => `${additional}/src`))
+    const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
+    let files = [
+      path.join(this.base, `src`),
+      path.join(this.base, `.cache`, `fragments`),
+    ]
+      .concat(this.additional.map(additional => path.join(additional, `src`)))
       .reduce(
         (merged, folderPath) =>
           merged.concat(
-            glob.sync(`${folderPath}${filesRegex}`, {
+            glob.sync(path.join(folderPath, filesRegex), {
               nodir: true,
             })
           ),
