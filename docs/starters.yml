@@ -1537,3 +1537,13 @@
     - Portfolio Page
     - Timline (Journey) page
     - Minimal
+- url: https://gatsby-starter-blog-mdx-demo.netlify.com
+  repo: https://github.com/hagnerd/gatsby-starter-blog-mdx
+  description: A fork of the Official Gatsby Starter Blog with support for MDX out of the box.
+  tags:
+    - MDX
+    - Blog
+  features:
+    - MDX
+    - Blog
+    - RSS Feed
