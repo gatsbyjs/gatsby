@@ -10,6 +10,7 @@ const getParentNode = require(`./get-parent-node`)
 const getUniqueValues = require(`./get-unique-values`)
 const getUniqueValuesBy = require(`./get-unique-values-by`)
 const getValueAtSelector = require(`./get-value-at-selector`)
+const hasResolvers = require(`./has-resolvers`)
 const is32bitInteger = require(`./is-32bit-integer`)
 const isDate = require(`./is-date`)
 const isDefined = require(`./is-defined`)
@@ -33,6 +34,7 @@ module.exports = {
   getUniqueValues,
   getUniqueValuesBy,
   getValueAtSelector,
+  hasResolvers,
   is32bitInteger,
   isDate,
   isDefined,
