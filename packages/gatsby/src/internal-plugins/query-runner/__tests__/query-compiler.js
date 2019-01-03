@@ -48,7 +48,11 @@ describe(`Runner`, () => {
 
     it(`compiles themes directory(s)`, async () => {
       const theme = `gatsby-theme-whatever`
-      const runner = new Runner(base, [path.join(`node_modules`, theme)], {})
+      const runner = new Runner(
+        base,
+        [path.join(base, `node_modules`, theme)],
+        {}
+      )
 
       await runner.parseEverything()
 
@@ -67,30 +71,30 @@ describe(`resolveThemes`, () => {
       [{ resolve: path.join(base, `gatsby-plugin-whatever`) }],
       undefined,
     ].forEach(testRun => {
-      expect(resolveThemes(base, testRun)).toEqual([])
+      expect(resolveThemes(testRun)).toEqual([])
     })
   })
 
   it(`returns plugins matching gatsby-theme prefix`, () => {
     const theme = `gatsby-theme-example`
     expect(
-      resolveThemes(base, [
+      resolveThemes([
         {
           resolve: path.join(base, `gatsby-theme-example`),
         },
       ])
-    ).toEqual([theme])
+    ).toEqual([expect.stringContaining(theme)])
   })
 
   it(`handles scoped packages`, () => {
     const theme = `@dschau/gatsby-theme-example`
 
     expect(
-      resolveThemes(base, [
+      resolveThemes([
         {
           resolve: path.join(base, theme),
         },
       ])
-    ).toEqual([theme])
+    ).toEqual([expect.stringContaining(theme.split(`/`).join(path.sep))])
   })
 })

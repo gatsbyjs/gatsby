@@ -64,10 +64,10 @@ const validationRules = [
 let lastRunHadErrors = null
 const overlayErrorID = `graphql-compiler`
 
-const resolveThemes = (base, plugins = []) =>
+const resolveThemes = (plugins = []) =>
   plugins.reduce((merged, plugin) => {
     if (plugin.resolve.includes(`gatsby-theme-`)) {
-      merged.push(path.relative(base, plugin.resolve))
+      merged.push(plugin.resolve)
     }
     return merged
   }, [])
@@ -102,13 +102,11 @@ class Runner {
   async parseEverything() {
     const filesRegex = `/**/*.+(t|j)s?(x)`
     let files = [`${this.base}/src`, `${this.base}/.cache/fragments`]
-      .concat(
-        this.additional.map(additional => path.join(this.base, additional))
-      )
+      .concat(this.additional.map(additional => `${additional}/src`))
       .reduce(
-        (merged, base) =>
+        (merged, folderPath) =>
           merged.concat(
-            glob.sync(`${base}${filesRegex}`, {
+            glob.sync(`${folderPath}${filesRegex}`, {
               nodir: true,
             })
           ),
@@ -235,13 +233,10 @@ class Runner {
 export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
+  // TODO: swap plugins to themes
   const { program, schema, plugins } = store.getState()
 
-  const runner = new Runner(
-    program.directory,
-    resolveThemes(program.directory, plugins),
-    schema
-  )
+  const runner = new Runner(program.directory, resolveThemes(plugins), schema)
 
   const queries = await runner.compileAll()
 
