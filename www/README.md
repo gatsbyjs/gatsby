@@ -27,7 +27,7 @@ The `.env.development` file is ignored by git. Your token should never be commit
 
 If you are not working on starter or site showcase, it might be beneficial to use a placeholder image instead of actual screenshots. It will skip downloading screenshots and generating responsive images for all screenshots and replace them with a placeholder image.
 
-Add the following env variable to your `.env.development` file.
+Add the following env variable to your `.env.development` file to enable placeholder behaviour:
 
 ```
 GATSBY_SCREENSHOT_PLACEHOLDER=true
