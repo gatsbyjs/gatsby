@@ -1537,3 +1537,14 @@
     - Portfolio Page
     - Timline (Journey) page
     - Minimal
+- url: https://gatsby-tailwindcss-sass-starter-demo.netlify.com/
+  repo: https://github.com/durianstack/gatsby-tailwindcss-sass-starter
+  description: Just another Gatsby Tailwind with SASS starter
+  tags:
+    - TailwindCSS
+    - SASS
+  features:
+    - Tailwind, A Utility-First CSS Framework for Rapid UI Development
+    - SASS/SCSS
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
