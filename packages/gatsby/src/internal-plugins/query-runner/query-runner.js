@@ -73,7 +73,7 @@ ${formatErrorDetails(errorDetails)}`)
     delete result.pageContext.component
     delete result.pageContext.componentChunkName
     delete result.pageContext.updatedAt
-    delete result.pageContext.pluginCreator___NODE
+    delete result.pageContext.pluginCreator
     delete result.pageContext.pluginCreatorId
     delete result.pageContext.componentPath
     delete result.pageContext.context

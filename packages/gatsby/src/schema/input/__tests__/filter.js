@@ -103,8 +103,10 @@ describe(`Filter input`, () => {
     )
     expect(filter.getFieldType(`internal`).name).toBe(`InternalInput`)
     expect(filter.getFieldTC(`internal`).getFieldNames()).toEqual([
+      `content`,
       `contentDigest`,
       `description`,
+      `fieldOwners`,
       `ignoreType`,
       `mediaType`,
       `owner`,

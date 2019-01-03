@@ -145,8 +145,10 @@ Array [
     "field": "internal",
     "type": Object {
       "fields": Array [
+        "content",
         "contentDigest",
         "description",
+        "fieldOwners",
         "ignoreType",
         "mediaType",
         "owner",

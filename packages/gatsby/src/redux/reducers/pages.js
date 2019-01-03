@@ -16,7 +16,7 @@ module.exports = (state = new Map(), action) => {
         )
       }
       // Link page to its plugin.
-      action.payload.pluginCreator___NODE = action.plugin.id
+      action.payload.pluginCreator = action.plugin.id
       action.payload.pluginCreatorId = action.plugin.id
 
       state.set(action.payload.path, action.payload)

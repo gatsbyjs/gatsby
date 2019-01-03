@@ -137,7 +137,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorName`,
+      `pluginCreatorId`,
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 

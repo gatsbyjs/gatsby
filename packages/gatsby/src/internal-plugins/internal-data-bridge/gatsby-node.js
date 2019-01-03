@@ -173,6 +173,20 @@ emitter.on(`DELETE_PAGE`, action => {
 
 exports.addTypeDefs = ({ addTypeDefs }) => {
   const typeDefs = `
+    type SiteProxy {
+      prefix: String
+      url: String
+    }
+
+    type Site implements Node {
+      buildTime: Date
+      host: String
+      pathPrefix: String
+      polyfill: Boolean
+      port: Int
+      proxy: SiteProxy
+    }
+
     type SitePage implements Node {
       component: String
       componentChunkName: String
@@ -180,6 +194,7 @@ exports.addTypeDefs = ({ addTypeDefs }) => {
       internalComponentName: String
       jsonName: String
       path: String
+      matchPath: String
       pluginCreator: SitePlugin @link
       pluginCreatorId: String
     }
