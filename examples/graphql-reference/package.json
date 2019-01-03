@@ -24,11 +24,6 @@
     "typography": "^0.16.17",
     "typography-theme-wordpress-2016": "^0.15.10"
   },
-  "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.14.2"
-  },
   "keywords": [
     "gatsby"
   ],
@@ -36,8 +31,6 @@
   "main": "n/a",
   "scripts": {
     "dev": "gatsby develop -o",
-    "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
-    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md'",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "build": "gatsby build"
