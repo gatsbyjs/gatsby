@@ -295,7 +295,7 @@ side-effects apart from their return value. This means we can be sure the tests
 are always reproducible and don't fail if, for example, the network is down or
 the data source changes. In this example, `Header` is impure as it makes a
 query, so the output depends on something apart from its props. `PureHeader` is
-pure because its return value is entirely dependent on the props passed it it.
+pure because its return value is entirely dependent on the props passed to it.
 This means it's very easy to test, and a snapshot should never change.
 
 Here's how:

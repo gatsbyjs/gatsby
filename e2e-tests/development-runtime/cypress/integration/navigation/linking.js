@@ -25,13 +25,40 @@ describe(`navigation`, () => {
     cy.location(`pathname`).should(`equal`, `/`)
   })
 
-  it(`displays 404 page on broken link`, () => {
-    cy.getTestElement(`broken-link`)
-      .click()
-      .waitForAPI(`onRouteUpdate`)
+  describe(`non-existant route`, () => {
+    beforeEach(() => {
+      cy.getTestElement(`broken-link`)
+        .click()
+        .waitForAPI(`onRouteUpdate`)
+    })
 
-    cy.get(`h1`)
-      .invoke(`text`)
-      .should(`eq`, `Gatsby.js development 404 page`)
+    it(`displays 404 page on broken link`, () => {
+      cy.get(`h1`)
+        .invoke(`text`)
+        .should(`eq`, `Gatsby.js development 404 page`)
+
+      /*
+       * Two route updates:
+       * - initial render of /
+       * - (default) development 404 page
+       */
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
+    })
+
+    it(`can display a custom 404 page`, () => {
+      cy.get(`button`).click()
+
+      cy.getTestElement(`page-title`)
+        .invoke(`text`)
+        .should(`eq`, `NOT FOUND`)
+
+      /*
+       * Two route updates:
+       * - initial render
+       * - 404 page
+       * a re-render does not occur because the route remains the same
+       */
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
+    })
   })
 })

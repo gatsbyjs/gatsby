@@ -134,7 +134,7 @@ Here's an example of a more complicated TransitionLink using [gsap](https://gree
 </TransitionLink>
 ```
 
-The animation code for `this.createRipple` would be a bit much to copy here but you can check it out on the [TransitionLink github](https://github.com/TylerBarnes/gatsby-plugin-transition-link/blob/master/src/AniLink/PaintDrip.js). If you'd like you can also try it out with AniLink's paintDrip transition (check the [AniLink docs](https://transitionlink.tylerbarnes.ca/docs/anilink/) for usage).
+The animation code for `this.createRipple` would be a bit much to copy here but you can check it out on the [TransitionLink GitHub](https://github.com/TylerBarnes/gatsby-plugin-transition-link/blob/master/src/AniLink/PaintDrip.js). If you'd like you can also try it out with AniLink's paintDrip transition (check the [AniLink docs](https://transitionlink.tylerbarnes.ca/docs/anilink/) for usage).
 
 As you can see, TransitionLink offers quite a wide variety of control for page transitions! You're able to set the length, delay, state, and a trigger function for both entering and exiting pages, allowing you to use both declarative and imperative animations and as many transitions as you need.
 
