@@ -104,8 +104,8 @@ There aren't really any reasonable alternatives. A library must eventually be de
 
 The impact of _not_ doing this is two-fold:
 
-1) Maintance/support cost of explaining _when_ to use async/await or _why_ to use async/await
-1) 
+1) The _engineering cost_ of not being able to use a growing number of libraries that require Node 8 or greater
+1) The _support cost_ of answering questions/concerns re: possibily confusing APIs, global installs, and general just many experiencing _more issues_ on Node 6
 
 # Adoption strategy
 
