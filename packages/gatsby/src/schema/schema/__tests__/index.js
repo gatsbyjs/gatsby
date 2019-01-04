@@ -212,6 +212,11 @@ describe(`Schema builder`, () => {
     expect(posts[0].frontmatter.authors[0]).toEqual(author)
   })
 
+  it(`builds schema with Node interface`, () => {
+    expect(schema.getType(`Node`).resolveType).toBeInstanceOf(Function)
+    expect(schema.getType(`Node`).resolveType(getById(1))).toBe(`Markdown`)
+  })
+
   it(`updates schema with SitePage type`, async () => {
     await updateSchema()
     expect(schema.getQueryType().getFields().sitePage.type.name).toBe(
