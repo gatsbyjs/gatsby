@@ -1,7 +1,13 @@
 #!/bin/bash
 FOLDER=$1
+CLONE=$2
+IS_CI="${CI:-false}"
 BASE=$(pwd)
 COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+
+if [ "$IS_CI" = true ]; then
+  sudo apt-get update && sudo apt-get install jq
+fi
 
 for folder in $FOLDER/*; do
   [ -d "$folder" ] || continue # only directories
@@ -15,10 +21,22 @@ for folder in $FOLDER/*; do
   git clone --depth 1 https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git $CLONE_DIR
   cd $CLONE_DIR
   find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
-  cp -r $BASE/$folder/. . # copy all content
-  git add .
-  git commit --message "$COMMIT_MESSAGE"
-  git push origin master
+  cp -r $BASE/$folder/. .
+  
+  # validate
+  npm audit
+  npm install
+  npm run build
+
+  # sync to read-only clones
+  if [ "$CLONE" != false ]; then
+    rm -rf yarn.lock
+    yarn import # generate a new yarn.lock file based on package-lock.json
+
+    git add .
+    git commit --message "$COMMIT_MESSAGE"
+    git push origin master
+  fi
 
   cd $BASE
 done
