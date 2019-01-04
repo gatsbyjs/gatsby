@@ -185,7 +185,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-folder.sh starters
+      - run: sh ./scripts/clone-and-validate.sh starters
 
 workflows:
   version: 2
