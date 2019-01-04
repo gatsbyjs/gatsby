@@ -132,4 +132,4 @@ I strongly feel that tweaking the documentation, as well as minimum version requ
 - How do we measure the number of developers we're impacting (e.g. % of Gatsby users impacted by this change)
 
 [node6-lts]: https://nodejs.org/en/blog/release/v6.9.0/
-[babel-preset-gatsby]: https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby-package
+[babel-preset-gatsby-package]: https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby-package
