@@ -187,6 +187,9 @@ module.exports = async (
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
+        __ASSET_PREFIX__: JSON.stringify(
+          program.prefixAssets ? store.getState().config.assetPrefix : ``
+        ),
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
