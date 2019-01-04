@@ -17,7 +17,7 @@ for folder in $FOLDER/*; do
   CLONE_DIR="__${NAME}__clone__"
   
   # sync to read-only clones
-  if [ "$CLONE" != false ]; then
+  if [ "$CLONE" = true ]; then
     # clone, delete files in the clone, and copy (new) files over
     # this handles file deletions, additions, and changes seamlessly
     git clone --depth 1 https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git $CLONE_DIR
@@ -32,8 +32,8 @@ for folder in $FOLDER/*; do
     git commit --message "$COMMIT_MESSAGE"
     git push origin master
   else
-    cd $folder
     # validate
+    cd $folder
     npm audit
     npm install
     npm run build
