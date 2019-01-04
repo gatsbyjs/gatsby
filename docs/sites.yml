@@ -3905,3 +3905,19 @@
   built_by: Escalade Sports
   built_by_url: "https://www.escaladesports.com/"
   featured: false
+- title: Exposify
+  main_url: "https://www.exposify.de/"
+  url: "https://www.exposify.de/"
+  description: >
+    This is our German website built with Gatsby 2.0, Emotion and styled-system.
+    Exposify is a proptech startup and builds technology for real estate businesses.
+    We provide our customers with an elegant agent software in combination
+    with beautifully designed and fast websites.
+  categories:
+    - Web Development
+    - Real Estate
+    - Agency
+    - Marketing
+  built_by: Exposify
+  built_by_url: "https://www.exposify.de/"
+  featured: false
