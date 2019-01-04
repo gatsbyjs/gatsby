@@ -1,17 +1,9 @@
-/**
- * Nodes in the store don't have fields which are
- * - added in `setFieldsOnGraphQLNodeType`
- * - added in `@link` directive.
- * Therefore we need to resolve those fields so they are
- * available for querying.
- */
-
-const { schemaComposer } = require(`graphql-compose`)
 const { GraphQLNonNull } = require(`graphql`)
 
+const { store } = require(`../../redux`)
 const { getNodesByType } = require(`../db`)
 const { dropQueryOperators } = require(`../query`)
-const { isProductionBuild } = require(`../utils`)
+const { hasResolvers, isProductionBuild } = require(`../utils`)
 const { trackObjects } = require(`../utils/node-tracking`)
 
 const { emitter } = require(`../../redux`)
@@ -94,9 +86,8 @@ const getNodesForQuery = async (type, filter) => {
   }
 
   // Use executable schema from store (includes resolvers added by @link directive).
-  // Alternatively, call @link resolvers manually (@see 4f5df2dca5665d7d13da6daf456d5302fc9274b7).
-  const { GraphQLSchema } = require(`graphql`)
-  const { schema } = require(`../../redux`).store.getState()
+  // Alternatively, call @link resolvers manually.
+  const { schema } = store.getState()
 
   // Just an experiment. This works as well -- but does not cache resolved nodes.
   // const { execute, parse } = require(`graphql`)
@@ -105,12 +96,12 @@ const getNodesForQuery = async (type, filter) => {
   // const { data, errors } = await execute({ schema, document: parse(query) })
   // const queryNodes = data && data[queryField]
 
-  // FIXME: In testing, when no schema is built yet, use schemaComposer.
-  // Should mock store in tests instead.
-  const parentType =
-    schema instanceof GraphQLSchema
-      ? schema.getType(type)
-      : schemaComposer.getTC(type).getType()
+  const parentType = schema.getType(type)
+
+  // If there are no resolvers to call manually, we can just return nodes.
+  if (!hasResolvers(parentType, filterFields)) {
+    return nodes
+  }
 
   const queryNodes = Promise.all(
     nodes.map(async node => {

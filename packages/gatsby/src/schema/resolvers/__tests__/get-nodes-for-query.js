@@ -102,6 +102,7 @@ TypeComposer.create({
 TypeComposer.create({
   name: `Sparse`,
   fields: {
+    null: `Boolean`,
     sparse: [`Int`],
     sparseResolver: {
       type: [[`Foo`]],
@@ -121,6 +122,14 @@ TypeComposer.create({
       resolve: (source, args) => args.arg,
     },
   },
+})
+
+schemaComposer.Query.addFields({ foo: `Foo`, sparse: `Sparse`, arg: `Arg` })
+const schema = schemaComposer.buildSchema()
+const { store } = require(`../../../redux`)
+store.dispatch({
+  type: `SET_SCHEMA`,
+  payload: schema,
 })
 
 describe(`Get nodes for query`, () => {
@@ -156,6 +165,10 @@ describe(`Get nodes for query`, () => {
       expect(trackObjects).not.toHaveBeenCalled() // nodes are cached
 
       filter = { id: { eq: 0 } }
+      await getNodesForQuery(type, filter)
+      expect(trackObjects).not.toHaveBeenCalled() // !hasResolvers
+
+      filter = { id: { eq: 0 }, withResolver: { ne: `` } }
       await getNodesForQuery(type, filter)
       expect(trackObjects).toHaveBeenCalledTimes(3)
     })
@@ -283,11 +296,20 @@ describe(`Get nodes for query`, () => {
       getNodesByType: () => [{ id: 1, internal: { type: `Foo` } }],
     }))
     const { TypeComposer } = require(`graphql-compose`)
-    TypeComposer.create(`type Foo { id: ID }`)
+    TypeComposer.create({
+      name: `Foo`,
+      fields: {
+        id: `ID`,
+        withResolver: {
+          type: `String`,
+          resolve: () => {},
+        },
+      },
+    })
 
     it(`caches nodes`, async () => {
       const type = `Foo`
-      const filter = { id: { ne: 0 } }
+      const filter = { id: { ne: 0 }, withResolver: { ne: `` } }
       const queryNodes = await getNodesForQuery(type, filter)
       const sameQueryNodes = await getNodesForQuery(type, filter)
       expect(queryNodes).toBe(sameQueryNodes)

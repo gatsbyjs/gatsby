@@ -8,13 +8,21 @@ const {
   paginate,
 } = require(`..`)
 
-const { TypeComposer } = require(`graphql-compose`)
+const { TypeComposer, schemaComposer } = require(`graphql-compose`)
 TypeComposer.create({
   name: `Nested`,
   fields: { bar: `type Baz { baz: String }` },
 })
 TypeComposer.create(`type Foo { baz: String, foo: Nested }`)
 TypeComposer.create(`type Bar { baz: String, foo: Nested }`)
+
+schemaComposer.Query.addFields({ foo: `Foo`, bar: `Bar`, nested: `Nested` })
+const schema = schemaComposer.buildSchema()
+const { store } = require(`../../../redux`)
+store.dispatch({
+  type: `SET_SCHEMA`,
+  payload: schema,
+})
 
 const { getById } = require(`../../db`)
 jest.mock(`../../db`, () => {
