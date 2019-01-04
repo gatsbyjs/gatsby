@@ -2,11 +2,6 @@
 title: Building a blog
 ---
 
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
-
 ## Building a blog
 
 Using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/) you will build a full-featured blog.
