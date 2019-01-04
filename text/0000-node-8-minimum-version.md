@@ -129,6 +129,7 @@ I strongly feel that tweaking the documentation, as well as minimum version requ
   - It seems weird to bump to a major release of Gatsby (e.g. Gatsby v3.0.0) for a change that is _not necessarily breaking_; that being said, it is safer to do this since this is and could be a breaking change
   - Could we couple this with more meaningful changes that necessitate targeting Node 8?
 - How do we best communicate this change?
+  - @pieh mentioned perhaps an "annoying" warning suggesting to migrate to Node 8 if we detect Node 6
 - How do we measure the number of developers we're impacting (e.g. % of Gatsby users impacted by this change)
 
 [node6-lts]: https://nodejs.org/en/blog/release/v6.9.0/
