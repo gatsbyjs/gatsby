@@ -77,8 +77,8 @@
     - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
-        - title: Using unstructured data
-          link: /docs/using-unstructured-data/
+        - title: Using Gatsby without GraphQL
+          link: /docs/using-gatsby-without-graphql/
         - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases

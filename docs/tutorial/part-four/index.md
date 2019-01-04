@@ -54,9 +54,9 @@ directly into your components**—in the shape and form you want.
 
 ### Do I have to use GraphQL and source plugins to pull data into Gatsby sites?
 
-Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby pages directly, rather than through the GraphQL data layer. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-See the [Using Unstructured Data](/docs/using-unstructured-data/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
+See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
 
 ### When do I use unstructured data vs GraphQL?
 

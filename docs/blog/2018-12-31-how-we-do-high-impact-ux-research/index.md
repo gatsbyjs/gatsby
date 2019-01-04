@@ -1,10 +1,9 @@
 ---
-title: How Gatsby does high-impact, low-effort UX research
-(and you can too!)
+title: How Gatsby does high-impact, low-effort UX research (and you can too!)
 author: Shannon Soper
 date: 2018-12-31
-tags: 
-- ux
+tags:
+  - ux
 ---
 
 ## What this article is about:
@@ -23,8 +22,9 @@ In October 2017, when I first started asking developers if I could interview the
 To make sure it’s clear why we do UX research at Gatsby, here is the reason:
 
 We do UX research to live up to these two Gatsby values:
-1.Create awesome DX
-2.Create awesome UX
+
+1. Create awesome DX
+2. Create awesome UX
 
 Creating awesome DX and UX are two of the company’s values. We know that developers who use Gatsby and anyone who visits a Gatsby site are the experts on what makes their lives easier, so we make efforts to empathize deeply with our users so we can create the best available developer experience (DX) for making websites and best user experience (UX) for using websites. I think of these both as UX in a way, so will just use UX from here on out.
 
@@ -94,7 +94,7 @@ We included two people on every usability test, whenever possible, and usually t
 
 ### Have a plan for sharing results
 
-Plan a meeting to present a summary of your research observations. Instead of telling them what to do, let everyone create insights and action items together, because “being a smart person is way more fun than listening to a smart person”, like [Erika Hall said](https://vimeo.com/129039134).
+Plan a meeting to present a summary of your research observations. Instead of telling them what to do, let everyone create insights and action items together, because "being a smart person is way more fun than listening to a smart person", like [Erika Hall said](https://vimeo.com/129039134).
 
 ### Only gather as much research as your team can turn into action
 
@@ -127,15 +127,15 @@ This is the standard process for surfacing major pain points and problems in a w
 
 ### Sometimes you need to aggregate thousands of data points for months
 
-There is also value in gathering passive feedback from something like google analytics or event tracking. Be careful to gather this kind of data for a specific time period in response to a change on the website so you can compare data "before" and "after" the change. And make sure to gather data from time periods that are long enough to smooth out trends for which you will never find the cause. For example, let’s say a butterfly flapped its wings in Fiji, which started an air current which traveled to Novia Scotia and was so warm that everyone got 10x the number of smoothies as they do on other weeks. If you only gathered data on “how many smoothies do people buy in Novia Scotia” that week and reacted quickly to it, you would be reacting to something fickle and mysterious that probably won’t help your smoothie company anticipate demand effectively. Unless you have a way of influencing butterflies in Fiji, that is.
+There is also value in gathering passive feedback from something like google analytics or event tracking. Be careful to gather this kind of data for a specific time period in response to a change on the website so you can compare data "before" and "after" the change. And make sure to gather data from time periods that are long enough to smooth out trends for which you will never find the cause. For example, let’s say a butterfly flapped its wings in Fiji, which started an air current which traveled to Novia Scotia and was so warm that everyone got 10x the number of smoothies as they do on other weeks. If you only gathered data on "how many smoothies do people buy in Novia Scotia" that week and reacted quickly to it, you would be reacting to something fickle and mysterious that probably won’t help your smoothie company anticipate demand effectively. Unless you have a way of influencing butterflies in Fiji, that is.
 
 ## How have we done this research at Gatsby?
 
 Stay tuned for the next articles:
 
-- “Solving the top 5 pain points uncovered by research in 2018”
-- “Creating a smooth-as-butter onboarding experience for new users”
-- “Redesigning the .org homepage”
+- "Solving the top 5 pain points uncovered by research in 2018"
+- "Creating a smooth-as-butter onboarding experience for new users"
+- "Redesigning the .org homepage"
 
 ## How to sign up for a user interview
 
