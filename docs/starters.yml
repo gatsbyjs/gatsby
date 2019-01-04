@@ -1527,3 +1527,34 @@
     - Application Format
     - Markdown for creating job description
     - styled-components
+- url: https://saikrishna.me/
+  repo: https://github.com/s-kris/gatsby-minimal-portfolio-blog
+  description: A minimal portfolio website with blog using Gatsby. Suitable for developers.
+  tags:
+    - Portfolio
+    - Blog
+  features:
+    - Portfolio Page
+    - Timline (Journey) page
+    - Minimal
+- url: https://gatsby-starter-blog-mdx-demo.netlify.com
+  repo: https://github.com/hagnerd/gatsby-starter-blog-mdx
+  description: A fork of the Official Gatsby Starter Blog with support for MDX out of the box.
+  tags:
+    - MDX
+    - Blog
+  features:
+    - MDX
+    - Blog
+    - RSS Feed
+- url: https://gatsby-tailwindcss-sass-starter-demo.netlify.com/
+  repo: https://github.com/durianstack/gatsby-tailwindcss-sass-starter
+  description: Just another Gatsby Tailwind with SASS starter
+  tags:
+    - Styling:Tailwind
+    - Styling:SCSS
+  features:
+    - Tailwind, A Utility-First CSS Framework for Rapid UI Development
+    - SASS/SCSS
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box

@@ -167,6 +167,16 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/production-runtime
 
+  starters_validate:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: sh ./scripts/clone-and-validate.sh starters false
+
   starters_publish:
     executor: node
     steps:
@@ -210,6 +220,8 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
       - starters_publish:
           filters:
             branches:

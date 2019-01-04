@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.85"></a>
+
+## [2.0.85](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.84...gatsby@2.0.85) (2019-01-04)
+
+### Bug Fixes
+
+- **gatsby:** correctly inject static query in theme components ([#10786](https://github.com/gatsbyjs/gatsby/issues/10786)) ([edff703](https://github.com/gatsbyjs/gatsby/commit/edff703))
+
+<a name="2.0.84"></a>
+
+## [2.0.84](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.83...gatsby@2.0.84) (2019-01-04)
+
+### Features
+
+- update builtin ESLint to v5 ([#10220](https://github.com/gatsbyjs/gatsby/issues/10220)) ([2429459](https://github.com/gatsbyjs/gatsby/commit/2429459))
+
+<a name="2.0.83"></a>
+
+## [2.0.83](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.82...gatsby@2.0.83) (2019-01-03)
+
+### Bug Fixes
+
+- don't change default node_modules resolution ([#10561](https://github.com/gatsbyjs/gatsby/issues/10561)) ([201ff4b](https://github.com/gatsbyjs/gatsby/commit/201ff4b))
+
+<a name="2.0.82"></a>
+
+## [2.0.82](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.81...gatsby@2.0.82) (2019-01-02)
+
+**Note:** Version bump only for package gatsby
+
+<a name="2.0.81"></a>
+
+## [2.0.81](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.80...gatsby@2.0.81) (2019-01-01)
+
+**Note:** Version bump only for package gatsby
+
 <a name="2.0.80"></a>
 
 ## [2.0.80](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.79...gatsby@2.0.80) (2019-01-01)
