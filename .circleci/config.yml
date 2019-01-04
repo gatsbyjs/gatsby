@@ -172,9 +172,6 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
       - run: sh ./scripts/clone-and-validate.sh starters false
 
   starters_publish:
