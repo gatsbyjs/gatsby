@@ -8,8 +8,11 @@ const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
+const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const mergeGatsbyConfig = require(`../utils/merge-gatsby-config`)
+const getBrowserslist = require(`../utils/browserslist`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
@@ -17,6 +20,8 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
+const nodeTracking = require(`../db/node-tracking`)
+require(`../db`).startAutosave()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -50,10 +55,17 @@ module.exports = async (args: BootstrapArgs) => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
+  // Start plugin runner which listens to the store
+  // and invokes Gatsby API based on actions.
+  require(`../redux/plugin-runner`)
+
+  const directory = slash(args.directory)
+
   const program = {
     ...args,
+    browserslist: getBrowserslist(directory),
     // Fix program directory path for windows env.
-    directory: slash(args.directory),
+    directory,
   }
 
   store.dispatch({
@@ -62,13 +74,43 @@ module.exports = async (args: BootstrapArgs) => {
   })
 
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-config`, {
+  let activity = report.activityTimer(`open and validate gatsby-configs`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  const config = await preferDefault(
+  let config = await preferDefault(
     getConfigFile(program.directory, `gatsby-config`)
   )
+
+  // theme gatsby configs can be functions or objects
+  if (config && config.__experimentalThemes) {
+    const themesConfig = await Promise.mapSeries(
+      config.__experimentalThemes,
+      async plugin => {
+        const themeName = plugin.resolve || plugin
+        const themeConfig = plugin.options || {}
+        const theme = await preferDefault(
+          getConfigFile(themeName, `gatsby-config`)
+        )
+        // if theme is a function, call it with the themeConfig
+        let themeConfigObj = theme
+        if (_.isFunction(theme)) {
+          themeConfigObj = theme(themeConfig)
+        }
+        // themes function as plugins too (gatsby-node, etc)
+        return {
+          ...themeConfigObj,
+          plugins: [
+            ...(themeConfigObj.plugins || []),
+            // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
+            { resolve: themeName, options: themeConfig },
+          ],
+        }
+      }
+    ).reduce(mergeGatsbyConfig, {})
+
+    config = mergeGatsbyConfig(themesConfig, config)
+  }
 
   if (config && config.polyfill) {
     report.warn(
@@ -180,6 +222,32 @@ module.exports = async (args: BootstrapArgs) => {
   await fs.ensureDir(`${program.directory}/public/static`)
 
   activity.end()
+
+  if (process.env.GATSBY_DB_NODES === `loki`) {
+    const loki = require(`../db/loki`)
+    // Start the nodes database (in memory loki js with interval disk
+    // saves). If data was saved from a previous build, it will be
+    // loaded here
+    activity = report.activityTimer(`start nodes db`, {
+      parentSpan: bootstrapSpan,
+    })
+    activity.start()
+    const dbSaveFile = `${program.directory}/.cache/loki/loki.db`
+    try {
+      await loki.start({
+        saveFile: dbSaveFile,
+      })
+    } catch (e) {
+      report.error(
+        `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
+      )
+    }
+    activity.end()
+  }
+
+  // By now, our nodes database has been loaded, so ensure that we
+  // have tracked all inline objects
+  nodeTracking.trackDbNodes()
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`, {
@@ -315,7 +383,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   // Collect resolvable extensions and attach to program.
@@ -378,7 +446,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   require(`../schema/type-conflict-reporter`).printConflicts()

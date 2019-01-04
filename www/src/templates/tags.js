@@ -61,10 +61,11 @@ export const pageQuery = graphql`
   query($tag: String) {
     allMarkdownRemark(
       limit: 2000
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { fields: [frontmatter___date, fields___slug], order: DESC }
       filter: {
         frontmatter: { tags: { in: [$tag] } }
         fileAbsolutePath: { regex: "/docs.blog/" }
+        fields: { released: { eq: true } }
       }
     ) {
       totalCount

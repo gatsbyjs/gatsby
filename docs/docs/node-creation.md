@@ -53,7 +53,7 @@ Let's say you create the following node by passing it to `createNode`
 
 The value for `baz` is itself an object. That value's parent is the top level object. In this case, Gatsby simply saves the top level node as is to redux. It doesn't attempt to extract `baz` into its own node. It does however track the subobject's root NodeID using [Node Tracking](/docs/node-tracking/)
 
-During schema compilation, Gatsby will infer the sub object's type while [creating the gqlType](/docs/schema-gql-type#plain-object-or-value-field). 
+During schema compilation, Gatsby will infer the sub object's type while [creating the gqlType](/docs/schema-gql-type#plain-object-or-value-field).
 
 ## Fresh/stale nodes
 

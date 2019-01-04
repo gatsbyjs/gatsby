@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout"
 import Container from "../components/container"
@@ -112,10 +112,11 @@ export default BlogPostsIndex
 export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
+      sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/docs.blog/" }
+        fields: { released: { eq: true } }
       }
       limit: $limit
       skip: $skip

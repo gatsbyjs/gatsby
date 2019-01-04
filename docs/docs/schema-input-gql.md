@@ -54,7 +54,7 @@ If the key is a foreign key reference (ends in `___NODE`), then we find the fiel
 
 ### Inferring input filters from plugin fields
 
-Plugins themselves have the opportunity to create custom fields that apply to ALL nodes of a particular type, as opposed to having to expicitly add the field on every node creation. An example would be `markdownRemark` which adds a `wordcount` field to each node automatically. This section deals with the generation of input filters so that we can query by these fields as well. E.g:
+Plugins themselves have the opportunity to create custom fields that apply to ALL nodes of a particular type, as opposed to having to explicitly add the field on every node creation. An example would be `markdownRemark` which adds a `wordcount` field to each node automatically. This section deals with the generation of input filters so that we can query by these fields as well. E.g:
 
 ```graphql
 {

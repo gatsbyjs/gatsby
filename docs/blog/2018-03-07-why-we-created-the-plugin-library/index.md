@@ -57,7 +57,7 @@ We liked when these libraries let users:
 
 We _didn't_ like these things in some of the above libraries:
 
-- poor contrast and poor information heirarchy
+- poor contrast and poor information hierarchy
 - limited filters
 - too many filters
 - low information density

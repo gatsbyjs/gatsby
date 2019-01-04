@@ -267,6 +267,14 @@ describe(`GraphQL Input args from fields, test-only`, () => {
                 },
               })
             ),
+            baz: typeField(
+              new GraphQLObjectType({
+                name: `Jbo2`,
+                fields: {
+                  aa: typeField(OddType),
+                },
+              })
+            ),
           },
         }),
       },
@@ -293,6 +301,10 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     isStringInput(innerObjFields.foo.type)
     expect(innerObjFields.ba).toBeUndefined()
     isIntInput(innerObjFields.bar.type)
+
+    // innerObj.baz is object containing only unsupported types
+    // so it should not be defined
+    expect(innerObj.baz).toBeUndefined()
   })
 
   it(`includes the filters of list elements`, async () => {

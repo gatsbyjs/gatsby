@@ -21,7 +21,7 @@ const {
 } = require(`./data-tree-utils`)
 
 const { findLinkedNode } = require(`./infer-graphql-type`)
-const { getNodes } = require(`../redux`)
+const { getNodesByType } = require(`../db/nodes`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
 
 import type {
@@ -210,6 +210,7 @@ function inferGraphQLInputFields({
 const EXCLUDE_KEYS = {
   parent: 1,
   children: 1,
+  $loki: 1,
 }
 
 type InferInputOptions = {
@@ -269,16 +270,22 @@ export function inferInputObjectStructureFromNodes({
 
     if (_.includes(key, `___NODE`)) {
       // TODO: Union the objects in array
-      const nodeToFind = _.isArray(value) ? value[0] : value
+      const isArray = _.isArray(value)
+      const nodeToFind = isArray ? value[0] : value
       const linkedNode = findLinkedNode(nodeToFind)
+
+      // Fall back if the linked node can't be found. Prevents crashing, and is
+      // picked up in infer-graphql-type.js with an error that gives context to
+      // the user about which node is missing
+      if (!linkedNode) {
+        return
+      }
 
       // Get from cache if found, else store into it
       if (linkedNodeCache[linkedNode.internal.type]) {
         value = linkedNodeCache[linkedNode.internal.type]
       } else {
-        const relatedNodes = getNodes().filter(
-          node => node.internal.type === linkedNode.internal.type
-        )
+        const relatedNodes = getNodesByType(linkedNode.internal.type)
         value = getExampleValues({
           nodes: relatedNodes,
           typeName: linkedNode.internal.type,
@@ -287,7 +294,7 @@ export function inferInputObjectStructureFromNodes({
         linkedNodeCache[linkedNode.internal.type] = value
       }
 
-      if (_.isArray(value)) {
+      if (isArray) {
         value = [value]
       }
 
@@ -300,7 +307,7 @@ export function inferInputObjectStructureFromNodes({
       prefix: `${prefix}${_.upperFirst(key)}`,
     })
 
-    if (field == null) return
+    if (field === null) return
     inferredFields[createKey(key)] = field
   })
 

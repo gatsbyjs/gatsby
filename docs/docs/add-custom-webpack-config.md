@@ -33,7 +33,7 @@ for the source.
 
 There are many plugins in the Gatsby repo using this API to look to for examples
 e.g. [Sass](/packages/gatsby-plugin-sass/),
-[Typescript](/packages/gatsby-plugin-typescript/),
+[TypeScript](/packages/gatsby-plugin-typescript/),
 [Glamor](/packages/gatsby-plugin-glamor/), and many more!
 
 ## Examples

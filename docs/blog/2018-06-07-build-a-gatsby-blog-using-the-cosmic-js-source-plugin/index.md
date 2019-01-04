@@ -122,7 +122,7 @@ First, we want to display the list of posts on the homepage. To do so, add the f
 import React from "react"
 import { Link } from "gatsby"
 import get from "lodash/get"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import Bio from "../components/Bio"
 import { rhythm } from "../utils/typography"
@@ -211,7 +211,7 @@ Create the template at `src/templates/blog-post.js`:
 
 ```javascript
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link } from "gatsby"
 import get from "lodash/get"
 

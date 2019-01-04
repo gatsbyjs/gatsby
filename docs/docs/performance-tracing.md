@@ -24,7 +24,7 @@ Add an [OpenTracing compatible library](https://github.com/opentracing) to your 
 
 Each OpenTracing library must be configured. For example, what is the URL of the tracing backend? How often should spans be sent to the backend? What service name should the trace be recorded under? Etc.
 
-The configuration file is a JavaScript file that exports two functions. `create` and `stop`
+The configuration file is a JavaScript file that exports two functions: `create` and `stop`.
 
 - **create**: Create and return an [OpenTracing compatible Tracer](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts). It is called at the start of the build
 - **stop**: Called at the end of the build. Any cleanup required by the tracer should be performed here. Such as clearing out any span queues and sending them to the tracing backend.

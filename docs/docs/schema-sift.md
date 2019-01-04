@@ -4,7 +4,7 @@ title: Querying with Sift
 
 ## Summary
 
-Gatsby stores all data loaded during the source-nodes phase in redux. And it allows you to write GraphQL queries to query that data. But Redux is a plain JavaScript object store. So how does Gatsby query over those nodes using the GraphQL Query language?
+Gatsby stores all data loaded during the source-nodes phase in Redux. And it allows you to write GraphQL queries to query that data. But Redux is a plain JavaScript object store. So how does Gatsby query over those nodes using the GraphQL query language?
 
 The answer is that it uses the [sift.js](https://github.com/crcn/sift.js/tree/master) library. It is a port of the MongoDB query language that works over plain JavaScript objects. It turns out that mongo's query language is very compatible with GraphQL.
 
@@ -16,7 +16,7 @@ Remember, at the point this resolve function is created, we have been iterating 
 
 The `resolve()` function calls `run-sift.js`, and provides it with the following arguments:
 
-- GraphQLArgs (as js object). Within a filter. E.g `wordcount: { paragraphs: { eq: 4 } }`
+- GraphQLArgs (as JavaScript object). Within a filter. E.g `wordcount: { paragraphs: { eq: 4 } }`
 - All nodes in redux of this type. E.g where `internal.type == MmarkdownRemark'`
 - Context `path`, if being called as part of a [page query](/docs/query-execution/#query-queue-execution)
 - typeName. E.g `markdownRemark`

@@ -14,7 +14,7 @@ creating websites with functionality that our clients require, whilst maximising
 their budget.
 
 We're also bracing ourselves for what we’re anticipating to be the stormfront of
-[Gutenberg](https://wordpress.org/plugins/gutenberg/ "Gutenberg Wordpress plugins")
+[Gutenberg](https://wordpress.org/plugins/gutenberg/ "Gutenberg WordPress plugins")
 for our WordPress projects. Once it's included in the WordPress Core, writing
 components in JavaScript for the Gutenberg editor will be necessary for every
 developer on a project.
@@ -36,7 +36,7 @@ people had been enthusing about.
 Managing everything in one place is such a cathartic experience.
 
 With WordPress templating, I used to have function files, filter files, template
-files, and SASS partials, often with similar names, depending on the framework
+files, and Sass partials, often with similar names, depending on the framework
 I'd be using. To build a site meant needing to buffer the entire project in my
 short-term memory. Not an easy feat to manage.
 
@@ -45,7 +45,7 @@ to the client...
 
 Every time a client returned with a last-minute change, I would open up the code
 (which I might not have touched for weeks or months), and try to grok what
-function lived where, or what I had called that SASS partial. Even with the help
+function lived where, or what I had called that Sass partial. Even with the help
 of browser dev tools, this can be really annoying.
 
 Now with Gatsby and React, I have my logic in one language, and in a way that

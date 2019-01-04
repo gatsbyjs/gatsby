@@ -30,7 +30,7 @@ This framework would have to be:
   new features is easy and complexity is contained.
 - **internet scale**, launch your site to millions without crashing your site
   (or your wallet).
-- **secure**, doesn't put your your users' data at risk of hacking.
+- **secure**, doesn't put your users' data at risk of hacking.
 
 I believe that Gatsby fulfills these requirements. After several years of
 working on the project and seeing it used successfully by many people on a wide
@@ -108,15 +108,15 @@ paradigms feel almost easy with React.
 
 ## Time for a JavaScript web framework?
 
-The internet runs on Open Source CMSs—primarily Wordpress and Drupal. I spent
+The internet runs on Open Source CMSs—primarily WordPress and Drupal. I spent
 most of college building Drupal websites and writing
 [open-source Drupal modules](https://www.bricolage.io/first-beta-release-drupal-native-mailinglist-module/).
 My first startup job was at [Pantheon](https://pantheon.io)—where I helped
 [design and build developer tools](https://www.bricolage.io/new-beginnings/) for
-teams building Drupal & Wordpress sites.
+teams building Drupal & WordPress sites.
 
 These open source CMSs are _extraordinary tools and have remarkably dynamic
-ecosystems_. They truly run the web. Wordpress alone runs more than 25% of all
+ecosystems_. They truly run the web. WordPress alone runs more than 25% of all
 websites on the internet!
 
 But still, the time seems ripe for a client-centric web framework.
@@ -193,7 +193,7 @@ on features.
 
 ### Plugin and Theme systems
 
-Wordpress & Jekyll are both great examples of open source communities with
+WordPress & Jekyll are both great examples of open source communities with
 robust theme & plugins ecosystems.
 
 Themes and plugins help accelerate building as you can build on what others have
