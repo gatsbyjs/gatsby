@@ -4,6 +4,8 @@ export const gatsbyConfigSchema = Joi.object().keys({
   __experimentalThemes: Joi.array(),
   polyfill: Joi.boolean(),
   siteMetadata: Joi.object(),
+  // TODO: validate as URL
+  assetPrefix: Joi.string(),
   pathPrefix: Joi.string(),
   mapping: Joi.object(),
   plugins: Joi.array(),
