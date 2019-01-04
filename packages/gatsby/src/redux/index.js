@@ -27,17 +27,17 @@ try {
   // ignore errors.
 }
 
-// FIXME: Why not persist node-tracking cache?
 if (initialState.nodes) {
   initialState.nodes.forEach(trackObjects)
-  initialState.nodesByType = initialState.nodes.reduce((acc, node) => {
+
+  initialState.nodesByType = new Map()
+  initialState.nodes.forEach(node => {
     const { type } = node.internal
-    if (!acc.has(type)) {
-      acc.set(type, new Map())
+    if (!initialState.nodesByType.has(type)) {
+      initialState.nodesByType.set(type, new Map())
     }
-    acc.get(type).set(node.id, node)
-    return acc
-  }, new Map())
+    initialState.nodesByType.get(type).set(node.id, node)
+  })
 }
 
 const store = Redux.createStore(
