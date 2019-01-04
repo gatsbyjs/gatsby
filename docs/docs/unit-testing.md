@@ -261,7 +261,7 @@ npm install --save-dev ts-jest
 
 Then update the configuration in `jest.config.js`, like so:
 
-```json:title=jest.config.js
+```js:title=jest.config.js
 module.exports = {
   "transform": {
     "^.+\\.tsx?$": "ts-jest",
