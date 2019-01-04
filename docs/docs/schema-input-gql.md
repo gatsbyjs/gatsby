@@ -64,7 +64,7 @@ Plugins themselves have the opportunity to create custom fields that apply to AL
 }
 ```
 
-Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. They must return a full GraphQLObjectType, complete with `resolve` function. Once this API has been run, the fields are passed to [inferInputObjectStructureFromFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields-from-fields.js#L195), which will generate input filters for thew new fields. The result would look something like:
+Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. They must return a full GraphQLObjectType, complete with `resolve` function. Once this API has been run, the fields are passed to [inferInputObjectStructureFromFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields-from-fields.js#L195), which will generate input filters for the new fields. The result would look something like:
 
 ```javascript
 { //GraphQLInputObjectType
