@@ -1,9 +1,9 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
 import { vP } from "../components/gutters"
 import Container from "../components/container"
@@ -14,12 +14,12 @@ import Card from "../components/card"
 import UsedBy from "../components/used-by"
 import CardHeadline from "../components/card-headline"
 import Diagram from "../components/diagram"
-import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
 import Button from "../components/button"
 import TechWithIcon from "../components/tech-with-icon"
-import EmailCaptureForm from "../components/email-capture-form"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
+import HomepageBlog from "../components/homepage/homepage-blog"
+import HomepageNewsletter from "../components/homepage/homepage-newsletter"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -45,7 +45,7 @@ class IndexRoute extends React.Component {
   render() {
     const {
       data: {
-        allMarkdownRemark: blogPosts,
+        allMarkdownRemark: { edges: postsData },
         allStartersYaml: { edges: startersData },
         allNpmPackage: { edges: pluginsData },
       },
@@ -86,6 +86,8 @@ class IndexRoute extends React.Component {
       starters,
     })
 
+    const posts = postsData.map(item => item.node)
+
     return (
       <Layout location={this.props.location}>
         <Helmet>
@@ -109,9 +111,10 @@ class IndexRoute extends React.Component {
             <div
               css={{
                 padding: rhythm(presets.gutters.default / 2),
+                paddingBottom: 0,
                 flex: `0 0 100%`,
                 maxWidth: `100%`,
-                [presets.Hd]: { padding: vP, paddingTop: 0 },
+                [presets.Hd]: { padding: vP, paddingTop: 0, paddingBottom: 0 },
               }}
             >
               <main
@@ -223,58 +226,9 @@ class IndexRoute extends React.Component {
 
                 <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
 
-                <Cards>
-                  <div
-                    css={{
-                      borderTop: `1px solid ${colors.ui.light}`,
-                      flex: `1 1 100%`,
-                      [presets.Tablet]: { paddingTop: rhythm(1) },
-                    }}
-                  >
-                    <Container
-                      hasSideBar={false}
-                      overrideCSS={{
-                        maxWidth: rhythm(30),
-                        paddingBottom: `0 !important`,
-                      }}
-                    >
-                      <EmailCaptureForm
-                        signupMessage="Want to keep up to date with the latest posts on our blog? Subscribe to our newsletter!"
-                        overrideCSS={{
-                          marginTop: 0,
-                          marginBottom: rhythm(2),
-                          border: `none`,
-                        }}
-                      />
-                      <h2
-                        css={{
-                          textAlign: `left`,
-                          marginTop: 0,
-                          color: colors.gatsby,
-                          [presets.Tablet]: { paddingBottom: rhythm(1) },
-                        }}
-                      >
-                        Latest from the Gatsby blog
-                      </h2>
-                      {blogPosts.edges.map(({ node }) => (
-                        <BlogPostPreviewItem
-                          post={node}
-                          key={node.fields.slug}
-                          css={{ marginBottom: rhythm(2) }}
-                        />
-                      ))}
-                      <Button
-                        secondary
-                        to="/blog/"
-                        overrideCSS={{
-                          marginBottom: rhythm(options.blockMarginBottom * 2),
-                        }}
-                      >
-                        Read More
-                      </Button>
-                    </Container>
-                  </div>
-                </Cards>
+                <HomepageBlog posts={posts} />
+
+                <HomepageNewsletter />
               </main>
             </div>
           </div>
@@ -302,7 +256,7 @@ export const pageQuery = graphql`
     }
     allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
-      limit: 3
+      limit: 4
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/docs.blog/" }
@@ -311,7 +265,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
-          ...BlogPostPreview_item
+          ...HomepageBlogPostData
         }
       }
     }

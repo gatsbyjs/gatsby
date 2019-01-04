@@ -42,7 +42,7 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/plugins/">Plugins</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <a href="https://gatsbyjs.org/starters/">Starters</a>
   <span> · </span>
   <a href="https://gatsbyjs.org/showcase/">Showcase</a>
   <span> · </span>
@@ -61,7 +61,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
-  whether the data is coming from the same back-end.
+  whether the data is coming from the same backend.
 
 - **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
   files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
@@ -83,6 +83,7 @@ Gatsby is a modern framework for blazing fast websites.
 - [Learning Gatsby](#-learning-gatsby)
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
+- [License](#memo-license)
 - [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
 
 ## 🚀 Get Up and Running in 5 Minutes

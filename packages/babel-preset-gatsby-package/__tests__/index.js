@@ -32,6 +32,9 @@ it(`Specifies proper presets and plugins in Node mode`, () => {
       path.join(`@babel`, `plugin-proposal-optional-chaining`)
     ),
     expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-syntax-dynamic-import`)
+    ),
   ])
 })
 
@@ -66,6 +69,9 @@ it(`Specifies proper presets and plugins in debug Node mode`, () => {
       path.join(`@babel`, `plugin-proposal-optional-chaining`)
     ),
     expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-syntax-dynamic-import`)
+    ),
   ])
 })
 
@@ -100,6 +106,9 @@ it(`Specifies proper presets and plugins in browser mode`, () => {
       path.join(`@babel`, `plugin-proposal-optional-chaining`)
     ),
     expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-syntax-dynamic-import`)
+    ),
   ])
 })
 
@@ -134,5 +143,8 @@ it(`Specifies proper presets and plugins in debug browser mode`, () => {
       path.join(`@babel`, `plugin-proposal-optional-chaining`)
     ),
     expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-syntax-dynamic-import`)
+    ),
   ])
 })

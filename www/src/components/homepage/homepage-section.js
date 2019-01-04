@@ -14,30 +14,30 @@ const HomepageSectionRoot = styled(`section`)`
   background: ${props => (props.inverse ? colors.gatsby : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   margin: 0 -${rhythm(presets.gutters.default / 2)};
-  padding: ${rhythm(2)} ${rhythm(presets.gutters.default / 2)};
+  padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
   width: calc(100% + ${rhythm(presets.gutters.default)});
 
   ${presets.Hd} {
-    margin: 0 -${vP};
+    margin: -1px -${vP};
+    padding: ${rhythm(1)} 5%;
     width: calc(100% + (${vP} * 2));
   }
 
   ${presets.VHd} {
-    padding: ${rhythm(2)} 5%;
+    padding: ${rhythm(1.5)} 8%;
   }
 `
-const Header = styled(`header`)`
+export const Header = styled(`header`)`
   ${presets.Tablet} {
-    margin-left: 3rem;
     max-width: 30rem;
   }
 
   ${presets.Desktop} {
-    margin-left: 6rem;
+    margin-left: 3rem;
   }
 `
 
-const Name = styled(`h3`)`
+export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
@@ -60,33 +60,38 @@ const Icon = styled(`span`)`
   }
 
   svg {
+    fill: transparent;
     height: ${ICON_SIZE};
     stroke: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
     width: ${ICON_SIZE};
   }
 `
 
-const Title = styled(`h1`)`
+export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
   font-size: 1.75rem;
   margin: 0;
-  margin-bottom: 0.5em;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   font-size: 1.125rem;
   font-family: ${options.headerFontFamily.join(`,`)};
-  margin-bottom: 0;
+  margin: 0;
+  margin-top: ${rhythm(4 / 5)};
 `
 
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: -${rhythm(1 / 4)};
+  margin: 1rem 0 1.5rem;
 
   > a {
-    margin: ${rhythm(1.2)} 0 ${rhythm(1.5)};
+    margin-right: ${rhythm(0.2)};
+  }
+
+  ${presets.Desktop} {
+    margin: 1rem 0 2.5rem;
   }
 `
 
@@ -98,10 +103,11 @@ const HomepageSection = ({
   introduction,
   inverseStyle,
   links,
+  className,
 }) => (
-  <HomepageSectionRoot inverse={inverseStyle}>
-    <Header>
-      {sectionName && (
+  <HomepageSectionRoot inverse={inverseStyle} className={className}>
+    {sectionName && (
+      <Header>
         <Name inverse={inverseStyle}>
           {sectionIcon && (
             <Icon
@@ -111,23 +117,31 @@ const HomepageSection = ({
           )}
           {sectionName}
         </Name>
-      )}
-      {title && <Title inverse={inverseStyle}>{title}</Title>}
-      {introduction && (
-        <Introduction inverse={inverseStyle}>{introduction}</Introduction>
-      )}
-      <Actions>
-        {links.map((item, idx) => {
-          const { to, label, icon: Icon } = item
+        {title && <Title inverse={inverseStyle}>{title}</Title>}
+        {introduction && (
+          <Introduction inverse={inverseStyle}>{introduction}</Introduction>
+        )}
+        {links && (
+          <Actions>
+            {links.map((item, idx) => {
+              const { to, label, icon: Icon, secondary } = item
 
-          return (
-            <Button key={label} to={to} ondark small>
-              {label} {Icon && <Icon />}
-            </Button>
-          )
-        })}
-      </Actions>
-    </Header>
+              return (
+                <Button
+                  key={label}
+                  to={to}
+                  small
+                  ondark={inverseStyle ? true : false}
+                  secondary={secondary}
+                >
+                  {label} {Icon && <Icon />}
+                </Button>
+              )
+            })}
+          </Actions>
+        )}
+      </Header>
+    )}
     {children}
   </HomepageSectionRoot>
 )
@@ -140,6 +154,7 @@ HomepageSection.propTypes = {
   introduction: PropTypes.string,
   links: PropTypes.array,
   inverseStyle: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 export default HomepageSection

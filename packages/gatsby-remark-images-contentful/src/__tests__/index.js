@@ -135,6 +135,22 @@ test(`it transforms images in markdown`, async () => {
   expect(node.value).not.toMatch(`<html>`)
 })
 
+test(`it transforms images with a https scheme in markdown`, async () => {
+  const imagePath = `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
+  const content = `
+![image](${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
 test(`it transforms multiple images in markdown`, async () => {
   const imagePaths = [
     `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,

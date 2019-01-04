@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.19"></a>
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.18...gatsby-transformer-remark@2.1.19) (2019-01-01)
+
+### Features
+
+- **gatsby-transformer-remark:** support raw HTML in markdown excerpts ([#10499](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10499)) ([29a8c5c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/29a8c5c)), closes [#10498](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10498)
+
+<a name="2.1.18"></a>
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.17...gatsby-transformer-remark@2.1.18) (2018-12-31)
+
+### Features
+
+- **gatsby-transformer-remark:** Note about gray-matter ([#10718](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10718)) ([0e84ff3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/0e84ff3))
+
+<a name="2.1.17"></a>
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.16...gatsby-transformer-remark@2.1.17) (2018-12-17)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+<a name="2.1.16"></a>
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.15...gatsby-transformer-remark@2.1.16) (2018-12-17)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+<a name="2.1.15"></a>
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.14...gatsby-transformer-remark@2.1.15) (2018-11-30)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** render html attributes in html excerpt ([#10196](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10196)) ([2483aef](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/2483aef))
+
+<a name="2.1.14"></a>
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.13...gatsby-transformer-remark@2.1.14) (2018-11-29)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** properly bubble up errors thrown in subplugins ([#9972](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/9972)) ([b7d4656](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/b7d4656))
+
+<a name="2.1.13"></a>
+
+## [2.1.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.12...gatsby-transformer-remark@2.1.13) (2018-11-27)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
 <a name="2.1.12"></a>
 
 ## [2.1.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.11...gatsby-transformer-remark@2.1.12) (2018-11-08)

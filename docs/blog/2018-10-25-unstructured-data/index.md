@@ -56,17 +56,18 @@ That's it!
 
 By [exporting `createPages`](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) from our example Gatsby site's `gatsby-node.js` file, we're saying, "at this point in the bootstrapping sequence, run this code".
 
-```javascript{1,3}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
+// highlight-next-line
 exports.createPages = () => {
   // Run this code
-}
+} // highlight-line
 ```
 
 #### 2. [Fetch the data](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L22) from the PokéAPI.
 
-```javascript{2}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.createPages = async () => {
-  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"]) // highlight-line
 }
 ```
 
@@ -76,7 +77,8 @@ _Note: [`getPokemonData`](https://github.com/jlengstorf/gatsby-with-unstructured
 
 When you hook into a Gatsby API (like `createPages` from step one), you are passed a collection of actions. In this example, we're extracting the [`createPage` action](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) using ES6 object destructuring:
 
-```javascript{1}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
+// highlight-next-line
 exports.createPages = async ({ actions: { createPage } }) => {
   const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
 }
@@ -84,16 +86,18 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 #### 4. Create a page that [lists all Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L25).
 
-```javascript{4-9}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions: { createPage } }) => {
   const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
 
+  // highlight-start
   // Create a page that lists all Pokémon.
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
     context: { allPokemon },
   })
+  // highlight-end
 }
 ```
 
@@ -105,21 +109,23 @@ The [`createPage` action](/docs/actions/#createPage) is passed an object contain
 
 In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4). This allows us to completely circumvent Gatsby’s data layer; it’s just props.
 
-```jsx{1,3,5,12-14}:title=src/templates/all-pokemon.js
-export default ({ pageContext: { allPokemon } }) => (
+```jsx:title=src/templates/all-pokemon.js
+export default ({ pageContext: { allPokemon } }) => (// highlight-line
     {...}
-        {allPokemon.map(pokemon => (
+        {allPokemon.map(pokemon => ( // highlight-line
             <li
-                key={pokemon.id}
+                key={pokemon.id}  {/* highlight-line */}
                 style={{
                     textAlign: 'center',
                     listStyle: 'none',
                     display: 'inline-block'
                 }}
             >
+             {/* highlight-start */}
                 <Link to={`/pokemon/${pokemon.name}`}>
                     <img src={pokemon.sprites.front_default} alt={pokemon.name} />
                     <p>{pokemon.name}</p>
+              {/* highlight-end */}
                 </Link>
             </li>
         ))}
@@ -129,7 +135,7 @@ export default ({ pageContext: { allPokemon } }) => (
 
 #### 5. Create a page [for each Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L32).
 
-```javascript{11-18}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions: { createPage } }) => {
   const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
 
@@ -140,6 +146,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     context: { allPokemon },
   })
 
+  // highlight-start
   // Create a page for each Pokémon.
   allPokemon.forEach(pokemon => {
     createPage({
@@ -148,12 +155,13 @@ exports.createPages = async ({ actions: { createPage } }) => {
       context: { pokemon },
     })
   })
+  // highlight-end
 }
 ```
 
 #### 6. Create a page [for each ability of each Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L40).
 
-```javascript{19-26}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions: { createPage } }) => {
   const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
 
@@ -172,6 +180,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
       context: { pokemon },
     })
 
+    // highlight-start
     // Create a page for each ability of the current Pokémon.
     pokemon.abilities.forEach(ability => {
       createPage({
@@ -180,6 +189,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
         context: { pokemon, ability },
       })
     })
+    // highlight-end
   })
 }
 ```
@@ -219,6 +229,7 @@ Another difficulty added when working with unstructured data is that your data f
 - GitHub issue: ["Choosing not to use the GraphQL feature of Gatsby – a bad idea?"](https://github.com/gatsbyjs/gatsby/issues/4994)
 - Kyle Mathews' reasoning for [going with GraphQL](https://github.com/gatsbyjs/gatsby/issues/4994#issuecomment-382110077).
 - The issue [introducing 1.0 GraphQL data layer](https://github.com/gatsbyjs/gatsby/issues/420).
+- Gatsby docs on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql)
 
 ## Thanks
 

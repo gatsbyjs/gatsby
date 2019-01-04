@@ -10,6 +10,7 @@ const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
+const startersRedirects = require(`./starter-redirects.json`)
 
 let ecosystemFeaturedItems
 
@@ -45,6 +46,12 @@ const slugToAnchor = slug =>
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
+
+  createRedirect({
+    fromPath: `/docs/using-unstructured-data`,
+    toPath: `/docs/using-gatsby-without-graphql/`,
+    isPermanent: true,
+  })
 
   // Random redirects
   createRedirect({
@@ -117,6 +124,14 @@ exports.createPages = ({ graphql, actions }) => {
     fromPath: `/docs/add-offline-support`,
     toPath: `/docs/add-offline-support-with-a-service-worker`,
     isPermanent: true,
+  })
+
+  Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
+    createRedirect({
+      fromPath: `/starters${fromSlug}`,
+      toPath: `/starters${toSlug}`,
+      isPermanent: true,
+    })
   })
 
   return new Promise((resolve, reject) => {
@@ -490,7 +505,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     // Default fields are to avoid graphql errors.
     const { owner, name: repoStub } = parseGHUrl(node.repo)
     const defaultFields = {
-      slug: `/${repoStub}/`,
+      slug: `/${owner}/${repoStub}/`,
       stub: repoStub,
       name: ``,
       description: ``,
@@ -560,7 +575,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           // If a new field is added here, make sure a corresponding
           // change is made to "defaultFields" to not break DX
           const starterShowcaseFields = {
-            slug: `/${repoStub}/`,
+            slug: `/${owner}/${repoStub}/`,
             stub: repoStub,
             name,
             description: pkgjson.description,
@@ -594,7 +609,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     }
   }
 
-  // Community/Creators Pages
+  // Creator pages
   else if (node.internal.type === `CreatorsYaml`) {
     const validTypes = {
       individual: `people`,
@@ -609,12 +624,12 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         }” was provided for ${node.name}.`
       )
     }
-    slug = `/community/${validTypes[node.type]}/${slugify(node.name, {
+    slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
       lower: true,
     })}`
     createNodeField({ node, name: `slug`, value: slug })
   }
-  // end Community/Creators Pages
+  // end Creator pages
   return null
 }
 
