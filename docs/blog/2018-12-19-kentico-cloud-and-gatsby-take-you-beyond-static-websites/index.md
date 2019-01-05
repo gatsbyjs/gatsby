@@ -1,6 +1,6 @@
 ---
 title: Kentico Cloud & Gatsby Take You Beyond Static Websites
-date: 2018-12-19
+date: 2019-01-07
 author: "Ondrej Polesny"
 image: "images/teaser.png"
 imageTitle: Kentico Cloud and Gatsby
