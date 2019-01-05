@@ -1558,3 +1558,4 @@
     - SASS/SCSS
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+    - PurgeCSS to shave off unused styles
