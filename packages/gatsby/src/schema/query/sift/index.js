@@ -1,4 +1,4 @@
-const sift = require(`sift`)
+const { default: sift, indexOf: siftFirst } = require(`sift`)
 
 const sort = require(`./sort`)
 const getQueryOperators = require(`./query-operators`)
@@ -13,7 +13,7 @@ const oneOf = value => ({ in: value })
 const filter = (filters, nodes) => sift({ $and: filters }, nodes)
 
 const find = (filters, nodes) => {
-  const index = sift.indexOf({ $and: filters }, nodes)
+  const index = siftFirst({ $and: filters }, nodes)
   return index !== -1 ? nodes[index] : null
 }
 
