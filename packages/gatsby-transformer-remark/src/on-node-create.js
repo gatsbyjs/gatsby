@@ -20,17 +20,6 @@ module.exports = async function onCreateNode(
 
   try {
     let data = grayMatter(content, pluginOptions)
-    // Convert date objects to string. Otherwise there's type mismatches
-    // during inference as some dates are strings and others date objects.
-    if (data.data) {
-      data.data = _.mapValues(data.data, v => {
-        if (_.isDate(v)) {
-          return v.toJSON()
-        } else {
-          return v
-        }
-      })
-    }
 
     const markdownNode = {
       id: createNodeId(`${node.id} >>> MarkdownRemark`),
