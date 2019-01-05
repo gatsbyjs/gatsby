@@ -40,7 +40,7 @@ function extractHostname(url) {
   //find & remove "?"
   hostname = hostname.split('?')[0];
 
-  return hostname;
+  return hostname
 }
 
 
