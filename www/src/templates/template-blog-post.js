@@ -213,7 +213,9 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {post.frontmatter.publishedAt}
+                        {!post.frontmatter.publishedAt
+                          ? new URL(post.frontmatter.canonicalLink).hostname
+                          : post.frontmatter.publishedAt}
                       </a>
                       )
                     </span>
