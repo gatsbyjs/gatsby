@@ -252,7 +252,7 @@ module.exports = async (program: any) => {
   // Scoped names are converted from @npm/package-name to npm--package-name
   if (program.https) {
     program.ssl = await getSslCert({
-      name: program.sitePackageJson.name.replace('@', '').replace('/', '--'),
+      name: program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`),
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
