@@ -49,7 +49,7 @@ Once this starts, you can now view your site at `localhost:9000`.
 
 Now you're going to run your first Lighthouse test.
 
-1.  Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
+1.  Open the site in Chrome Incognito Mode (if you didn't already do so) and then open up the Chrome DevTools.
 
 2.  Click on the "Audits" tab where you'll see a screen that looks like:
 
