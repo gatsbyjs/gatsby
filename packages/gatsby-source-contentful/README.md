@@ -94,6 +94,8 @@ Two standard node types are available from Contentful: `Asset` and `ContentType`
 
 In all cases querying for nodes like `contentfulX` will return a single node, and nodes like `allContentfulX` will return all nodes of that type.
 
+When Contentful pulls the data, all localizations will be pulled. Therefore, if you have a localization active, it will duplicate the entries. Narrow the search by filtering the query with '(filter : { node_locale: { eq: "en-US" }})'
+
 ### Query for all nodes
 
 You might query for **all** of a type of node:
