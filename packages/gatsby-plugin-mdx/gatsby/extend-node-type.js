@@ -23,7 +23,7 @@ const defaultOptions = require("../utils/default-options");
 const genMDX = require("../utils/gen-mdx");
 
 module.exports = (
-  { type /*store*/, pathPrefix, getNode, getNodes, cache, reporter },
+  { type, store, pathPrefix, getNode, getNodes, cache, reporter },
   pluginOptions
 ) => {
   if (type.name !== `Mdx`) {
@@ -184,9 +184,9 @@ module.exports = (
           if (mdxNode.html) {
             return Promise.resolve(mdxNode.html);
           }
-
           const { body } = await processMDX({ node: mdxNode });
-          return renderHTML(body);
+          const withMDX = renderHTML(body);
+          return withMDX(store.getState().webpack);
         }
       },
       tableOfContents: {
