@@ -2,3 +2,6 @@
 /node_modules
 /gatsby-node.js
 /duotone.js
+/cache.js
+/queue.js
+/processFile.js
