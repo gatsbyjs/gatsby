@@ -31,7 +31,8 @@ module.exports = {
             ...edge.node.frontmatter,
             description: edge.node.excerpt,
             url: site.siteMetadata.siteUrl + edge.node.fields.slug,
-            guid: site.siteMetadata.siteUrl + edge.node.fields.slug
+            guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
+            custom_elements: [{ "content:encoded": edge.node.html }]
           };
         });
       },
@@ -54,6 +55,7 @@ module.exports = {
                 slug
               }
               excerpt
+              html
             }
           }
         }
