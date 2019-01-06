@@ -23,7 +23,7 @@ const typography = new Typography()
 module.exports = typography`
   }
 
-  const dir = `${program.directory}/.cache`
+  const dir = `${__dirname}/.cache`
 
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
