@@ -27,6 +27,20 @@ const shouldUseYarn = () => {
   }
 }
 
+// Initialize newly cloned directory as a git repo
+const gitInit = async rootPath => {
+  const prevDir = process.cwd()
+
+  report.info(`Initialising git in ${rootPath}`)
+  process.chdir(rootPath)
+
+  try {
+    await spawn(`git init`)
+  } finally {
+    process.chdir(prevDir)
+  }
+}
+
 // Executes `npm install` or `yarn install` in rootPath.
 const install = async rootPath => {
   const prevDir = process.cwd()
@@ -98,6 +112,7 @@ const clone = async (hostInfo: any, rootPath: string) => {
   await fs.remove(sysPath.join(rootPath, `.git`))
 
   await install(rootPath)
+  await gitInit(rootPath)
 }
 
 type InitOptions = {
