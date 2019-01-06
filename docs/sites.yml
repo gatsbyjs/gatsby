@@ -3921,3 +3921,16 @@
   built_by: Exposify
   built_by_url: "https://www.exposify.de/"
   featured: false
+- title: Max Desiatov
+  main_url: "https://desiatov.com/"
+  url: "https://desiatov.com/"
+  description: >
+    This is a tech blog of Max Desiatov, a software consultant building mobile and 
+    backend apps in Swift and TypeScript.
+  categories:
+    - Blog
+    - Web Development
+    - Technology
+  built_by: Max Desiatov
+  built_by_url: "https://github.com/maxdesiatov"
+  featured: false
