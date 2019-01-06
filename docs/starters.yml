@@ -1558,3 +1558,15 @@
     - SASS/SCSS
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+- url: https://tyra-starter.netlify.com/
+  repo: https://github.com/madelyneriksen/gatsby-starter-tyra
+  description: A feminine GatsbyJS Starter Optimized for SEO
+  tags:
+    - SEO
+    - Blog
+    - Styling:Tachyons
+  features:
+    - Integration with Social Media and Mailchimp.
+    - Styled with Tachyons.
+    - Rich structured data on blog posts for SEO.
+    - Pagination and category pages.
