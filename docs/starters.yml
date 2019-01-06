@@ -248,7 +248,7 @@
     - Responsive Design, optimized for Mobile devices
 - url: https://gatsby-starter-contentful-i18n.netlify.com/
   repo: https://github.com/mccrodp/gatsby-starter-contentful-i18n
-  description: n/a
+  description: Contentful starter repo with added i18n support and language switcher
   tags:
     - i18n
     - Contentful
