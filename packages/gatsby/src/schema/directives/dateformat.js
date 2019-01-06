@@ -6,17 +6,8 @@ const {
   GraphQLBoolean,
 } = require(`graphql`)
 const { SchemaDirectiveVisitor } = require(`graphql-tools`)
-const { format, distanceInWordsToNow } = require(`date-fns`)
-
-// `date-fns-timezone` (compatible with v1): `formatToTimeZone(date, pattern. { locale, timeZone })`
-// `date-fns-tz` (compatible with v2): `format(date, pattern. { locale, timeZone })`
-// When updating to `date-fns` v2, don't forget that locale names have changed!
-// Also: distanceInWordsFromNow => formatDistance/formatRelative(date, baseDate, { locale })
-
-// Keep an eye on Intl.DateTimeFormat and Intl.RelativeTimeFormat
-
-// full-icu support can be enabled in Node with `yarn add full-icu` and
-// setting NODE_ICU_DATA=./node_modules/full-icu
+const format = require(`date-fns/format`)
+const formatRelative = require(`date-fns/formatRelative`)
 
 // UPSTREAM: GraphQLDate.parseLiteral should accept date strings in other
 // formats but toISOString
@@ -24,10 +15,10 @@ const { format, distanceInWordsToNow } = require(`date-fns`)
 const formatDate = (date, pattern, lang, timeZone, distanceToNow) => {
   const locale = lang && require(`date-fns/locale/${lang}`)
   return distanceToNow
-    ? distanceInWordsToNow(date, { locale })
+    ? formatRelative(date, Date.now(), { locale }) // TODO: Use formatDistanceStrict?
     : format(date, pattern, {
         locale,
-        // timeZone, // IANA time zone, needs `date-fns-timezone`
+        // timeZone, // IANA time zone, needs `date-fns-tz`
       })
 }
 
@@ -35,8 +26,8 @@ const DateFormatDirective = new GraphQLDirective({
   name: `dateformat`,
   locations: [DirectiveLocation.FIELD_DEFINITION],
   args: {
-    defaultFormat: { type: GraphQLString, defaultValue: `YYYY-MM-DD` },
-    defaultLocale: { type: GraphQLString, defaultValue: `en` },
+    defaultFormat: { type: GraphQLString, defaultValue: `yyyy-MM-dd` },
+    defaultLocale: { type: GraphQLString, defaultValue: `en-US` },
     defaultTimeZone: { type: GraphQLString, defaultValue: `UTC` },
     defaultDistanceToNow: { type: GraphQLBoolean, defaultValue: false },
   },

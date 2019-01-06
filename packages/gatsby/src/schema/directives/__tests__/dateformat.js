@@ -1,4 +1,4 @@
-const { TypeComposer, schemaComposer, GraphQLDate } = require(`graphql-compose`)
+const { TypeComposer, schemaComposer } = require(`graphql-compose`)
 const { SchemaDirectiveVisitor } = require(`graphql-tools`)
 const { GraphQLString } = require(`graphql`)
 
@@ -8,7 +8,7 @@ const addResolvers = require(`../../schema/add-resolvers`)
 const tc = TypeComposer.create(`
   type Foo {
     formattable: Date @dateformat
-    formatted: Date @dateformat(defaultFormat: "DD. MMMM YYYY", defaultLocale: "de")
+    formatted: Date @dateformat(defaultFormat: "dd. MMMM yyyy", defaultLocale: "de")
     distanceToNow: Date @dateformat(defaultDistanceToNow: true, defaultLocale: "de")
   }
 `)
@@ -88,7 +88,7 @@ describe(`@dateformat directive`, () => {
     const date = new Date(Date.UTC(2019, 0, 1))
     Date.now = jest.fn().mockReturnValue(new Date(Date.UTC(2019, 0, 3)))
 
-    // defaultValue: "YYYY-MM-DD", "en", "UTC", false
+    // defaultValue: "yyyy-MM-dd", "en-US", "UTC", false
     const formattableDate = await fields.formattable.resolve(
       { date },
       {},
@@ -97,7 +97,7 @@ describe(`@dateformat directive`, () => {
     )
     expect(formattableDate).toBe(`2019-01-01`)
 
-    // defaultFormat: "DD. MMMM YYYY", defaultLocale: "de"
+    // defaultFormat: "dd. MMMM yyyy", defaultLocale: "de"
     const formattedDate = await fields.formatted.resolve(
       { date },
       {},
@@ -113,7 +113,7 @@ describe(`@dateformat directive`, () => {
       {},
       { fieldName: `date` }
     )
-    expect(distanceToNow).toBe(`2 Tage`)
+    expect(distanceToNow).toBe(`letzten Dienstag um 01:00`)
   })
 
   it(`uses input args`, async () => {
@@ -122,7 +122,7 @@ describe(`@dateformat directive`, () => {
 
     const formattableDate = await fields.formattable.resolve(
       { date },
-      { format: `YYYY` },
+      { format: `yyyy` },
       {},
       { fieldName: `date` }
     )
@@ -130,7 +130,7 @@ describe(`@dateformat directive`, () => {
 
     const formattedDate = await fields.formatted.resolve(
       { date },
-      { format: `YYYY` },
+      { format: `yyyy` },
       {},
       { fieldName: `date` }
     )
@@ -140,7 +140,7 @@ describe(`@dateformat directive`, () => {
     // explicitly disable it for formatting args to take effect.
     const distanceToNow = await fields.distanceToNow.resolve(
       { date },
-      { format: `YYYY`, distanceToNow: false },
+      { format: `yyyy`, distanceToNow: false },
       {},
       { fieldName: `date` }
     )
