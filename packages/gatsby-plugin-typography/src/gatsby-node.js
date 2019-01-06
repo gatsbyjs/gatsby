@@ -9,11 +9,12 @@ exports.onPreBootstrap = ({ store }, pluginOptions) => {
 
   let module
   if (pluginOptions.pathToConfigModule) {
-    module = `module.exports = require("${path.join(
-      program.directory,
-      pluginOptions.pathToConfigModule
-    )}")`
-    if (os.platform() == `win32`) {
+    module = `module.exports = require("${
+      path.isAbsolute(pluginOptions.pathToConfigModule)
+        ? pluginOptions.pathToConfigModule
+        : path.join(program.directory, pluginOptions.pathToConfigModule)
+    }")`
+    if (os.platform() === `win32`) {
       module = module.split(`\\`).join(`\\\\`)
     }
   } else {
@@ -22,7 +23,7 @@ const typography = new Typography()
 module.exports = typography`
   }
 
-  const dir = `${__dirname}/.cache`
+  const dir = `${program.directory}/.cache`
 
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
