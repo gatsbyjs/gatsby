@@ -290,11 +290,14 @@ describe(`Get nodes for query`, () => {
     // TODO: When Jest 24 is released, use isolateModules()
     // @see https://github.com/facebook/jest/pull/6701
     jest.resetModules()
+
     jest.mock(`../../utils/is-production-build`, () => true)
+
     const getNodesForQuery = require(`../get-nodes-for-query`)
     jest.mock(`../../db`, () => ({
       getNodesByType: () => [{ id: 1, internal: { type: `Foo` } }],
     }))
+
     const { TypeComposer } = require(`graphql-compose`)
     TypeComposer.create({
       name: `Foo`,
@@ -305,6 +308,14 @@ describe(`Get nodes for query`, () => {
           resolve: () => {},
         },
       },
+    })
+
+    schemaComposer.Query.addFields({ foo: `Foo` })
+    const schema = schemaComposer.buildSchema()
+    const { store } = require(`../../../redux`)
+    store.dispatch({
+      type: `SET_SCHEMA`,
+      payload: schema,
     })
 
     it(`caches nodes`, async () => {
