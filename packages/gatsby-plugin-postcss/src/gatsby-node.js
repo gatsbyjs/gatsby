@@ -38,6 +38,7 @@ exports.onCreateWebpackConfig = (
   const config = getConfig()
   const cssRules = findCssRules(config)
   const postcssOptions = getOptions(pluginOptions)
+
   const postcssLoader = {
     loader: resolve(`postcss-loader`),
     options: { sourceMap: !isProduction, ...postcssOptions },
@@ -51,10 +52,15 @@ exports.onCreateWebpackConfig = (
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
     use: [
-      loaders.css({
-        modules: true,
-        importLoaders: 1,
-      }),
+      loaders.css(
+        Object.assign(
+          {
+            modules: true,
+            importLoaders: 1,
+          },
+          pluginOptions.cssOptions || {}
+        )
+      ),
       postcssLoader,
     ],
   }
