@@ -41,6 +41,19 @@ const gitInit = async rootPath => {
   }
 }
 
+// Create a .gitignore file if it is missing in the new directory
+const maybeCreateGitIgnore = async rootPath => {
+  if (existsSync(sysPath.join(rootPath, `.gitignore`))) {
+    return
+  }
+
+  report.info(`Creating minimal .gitignore in ${rootPath}`)
+  await fs.writeFile(
+    sysPath.join(rootPath, `.gitignore`),
+    `.cache\nnode_modules\npublic`
+  )
+}
+
 // Executes `npm install` or `yarn install` in rootPath.
 const install = async rootPath => {
   const prevDir = process.cwd()
@@ -113,6 +126,7 @@ const clone = async (hostInfo: any, rootPath: string) => {
 
   await install(rootPath)
   await gitInit(rootPath)
+  await maybeCreateGitIgnore(rootPath)
 }
 
 type InitOptions = {
