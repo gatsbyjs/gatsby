@@ -1558,3 +1558,12 @@
     - SASS/SCSS
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+- url: https://gatsby-starter-tailwind-purgecss.netlify.com
+  repo: https://github.com/lukebennett88/gatsby-starter-tailwind-purgecss
+  description: Gatsby starter with Tailwind and PurgeCSS
+  tags:
+    - Styling:Tailwind
+    - Styling:PostCSS
+    - Styling:postcss-preset-env
+  features:
+    - Extremely lightweight Gatsby starter using Tailwind for styling and PurgeCSS to remove unused classes.
