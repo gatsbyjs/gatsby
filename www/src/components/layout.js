@@ -156,7 +156,7 @@ class DefaultLayout extends React.Component {
             href="https://www.gatsbyjs.com/behind-the-scenes/"
             css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
           >
-            Register
+            Register now
           </OutboundLink>
           {`: “Behind the Scenes: What makes Gatsby Great”.`}
         </Banner>
