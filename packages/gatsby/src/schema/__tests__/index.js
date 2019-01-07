@@ -103,13 +103,18 @@ jest.mock(`../../utils/api-runner-node`, () => (api, options) => {
     case `addResolvers`:
       options.addResolvers({
         Author: {
-          posts: ({ source, args, context, info }) => {
+          posts: (source, args, context, info) => {
             const { email } = source
-            const {
-              resolve,
-            } = info.schema.getQueryType().getFields().allMarkdown
-            return resolve(undefined, {
-              filter: { frontmatter: { authors: { email: { in: [email] } } } },
+            const resolve = context.resolvers.findMany(`Markdown`)
+            return resolve({
+              source,
+              args: {
+                filter: {
+                  frontmatter: { authors: { email: { in: [email] } } },
+                },
+              },
+              context,
+              info,
             })
           },
         },
@@ -127,9 +132,14 @@ jest.mock(`../../utils/api-runner-node`, () => (api, options) => {
                   const {
                     resolve,
                   } = info.schema.getQueryType().getFields().allAuthor
-                  const authors = await resolve(undefined, {
-                    filter: { email: { in: authorEmails } },
-                  })
+                  const authors = await resolve(
+                    source,
+                    {
+                      filter: { email: { in: authorEmails } },
+                    },
+                    context,
+                    info
+                  )
                   return authors.map(author => author.name)
                 },
               },
@@ -285,7 +295,7 @@ describe(`Schema query`, () => {
     expect(results.data).toEqual(expected)
   })
 
-  it.only(`processes deep query args`, async () => {
+  it(`processes deep query args`, async () => {
     const query = `
       query {
         allMarkdown(

@@ -1,6 +1,7 @@
 const { TypeComposer, schemaComposer } = require(`graphql-compose`)
 
 const addCustomResolveFunctions = require(`../add-custom-resolve-functions`)
+const resolvers = require(`../../resolvers`)
 
 TypeComposer.create({
   name: `Foo`,
@@ -50,7 +51,10 @@ describe(`Add custom resolvers`, () => {
       .getFields()
       .bar.resolve()
     expect(resolver).toBeCalledWith(
-      expect.objectContaining({ context: { schemaComposer } })
+      undefined,
+      undefined,
+      expect.objectContaining({ resolvers }),
+      undefined
     )
   })
 })

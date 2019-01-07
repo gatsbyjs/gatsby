@@ -67,13 +67,10 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
     case `addResolvers`:
       const resolvers = {
         Author: {
-          posts: ({ source, context, info }) => {
-            // FIXME:
-            const { schemaComposer } = context
+          posts: (source, ignoredArgs, context, info) => {
             // const type = info.returnType.ofType.name
             const type = `Markdown`
-            const findMany = schemaComposer.getTC(type).getResolver(`findMany`)
-              .resolve
+            const resolve = context.resolvers.findMany(type)
             const { firstname, lastname } = source
             const args = {
               filter: {
@@ -85,7 +82,7 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
                 },
               },
             }
-            return findMany({ source, args, context, info })
+            return resolve({ source, args, context, info })
           },
         },
       }
