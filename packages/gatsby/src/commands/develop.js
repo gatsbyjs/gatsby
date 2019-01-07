@@ -249,9 +249,10 @@ module.exports = async (program: any) => {
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
+  // Scoped names are converted from @npm/package-name to npm--package-name
   if (program.https) {
     program.ssl = await getSslCert({
-      name: program.sitePackageJson.name,
+      name: program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`),
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
