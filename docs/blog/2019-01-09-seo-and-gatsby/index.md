@@ -2,7 +2,7 @@
 date: "2019-01-09"
 title: "Search Engine Optimization with Gatsby"
 author: Dustin Schau
-featured: images/seo.jpg
+cover: images/seo.jpg
 excerpt: "Learn how to use Gatsby to implement SEO with React Helmet and smart defaults!"
 tags:
   - gatsby
