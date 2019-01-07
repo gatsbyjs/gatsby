@@ -26,10 +26,10 @@ const DateFormatDirective = new GraphQLDirective({
   name: `dateformat`,
   locations: [DirectiveLocation.FIELD_DEFINITION],
   args: {
-    defaultFormat: { type: GraphQLString, defaultValue: `yyyy-MM-dd` },
-    defaultLocale: { type: GraphQLString, defaultValue: `en-US` },
-    defaultTimeZone: { type: GraphQLString, defaultValue: `UTC` },
-    defaultDistanceToNow: { type: GraphQLBoolean, defaultValue: false },
+    format: { type: GraphQLString, defaultValue: `yyyy-MM-dd` },
+    locale: { type: GraphQLString, defaultValue: `en-US` },
+    timeZone: { type: GraphQLString, defaultValue: `UTC` },
+    distanceToNow: { type: GraphQLBoolean, defaultValue: false },
   },
 })
 
@@ -38,10 +38,10 @@ class DateFormatDirectiveVisitor extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const { resolve = defaultFieldResolver } = field
     const {
-      defaultFormat,
-      defaultLocale,
-      defaultTimeZone,
-      defaultDistanceToNow,
+      format: defaultFormat,
+      locale: defaultLocale,
+      timeZone: defaultTimeZone,
+      distanceToNow: defaultDistanceToNow,
     } = this.args
 
     field.args.push(

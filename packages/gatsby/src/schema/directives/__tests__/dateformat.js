@@ -8,8 +8,8 @@ const addResolvers = require(`../../schema/add-resolvers`)
 const tc = TypeComposer.create(`
   type Foo {
     formattable: Date @dateformat
-    formatted: Date @dateformat(defaultFormat: "dd. MMMM yyyy", defaultLocale: "de")
-    distanceToNow: Date @dateformat(defaultDistanceToNow: true, defaultLocale: "de")
+    formatted: Date @dateformat(format: "dd. MMMM yyyy", locale: "de")
+    distanceToNow: Date @dateformat(distanceToNow: true, locale: "de")
   }
 `)
 
@@ -30,14 +30,14 @@ describe(`@dateformat directive`, () => {
     const formattedDirective = fields.formatted.astNode.directives[0]
     expect(formattedDirective.name.value).toBe(`dateformat`)
     expect(formattedDirective.arguments.map(arg => arg.name.value)).toEqual([
-      `defaultFormat`,
-      `defaultLocale`,
+      `format`,
+      `locale`,
     ])
 
     const distanceToNowDirective = fields.distanceToNow.astNode.directives[0]
     expect(distanceToNowDirective.name.value).toBe(`dateformat`)
     expect(distanceToNowDirective.arguments.map(arg => arg.name.value)).toEqual(
-      [`defaultDistanceToNow`, `defaultLocale`]
+      [`distanceToNow`, `locale`]
     )
   })
 
@@ -97,7 +97,7 @@ describe(`@dateformat directive`, () => {
     )
     expect(formattableDate).toBe(`2019-01-01`)
 
-    // defaultFormat: "dd. MMMM yyyy", defaultLocale: "de"
+    // default format: "dd. MMMM yyyy", default locale: "de"
     const formattedDate = await fields.formatted.resolve(
       { date },
       {},
@@ -106,7 +106,7 @@ describe(`@dateformat directive`, () => {
     )
     expect(formattedDate).toBe(`01. Januar 2019`)
 
-    // defaultDistanceToNow: true, defaultLocale: "de"
+    // default distanceToNow: true, default locale: "de"
     const distanceToNow = await fields.distanceToNow.resolve(
       { date },
       {},
@@ -136,7 +136,7 @@ describe(`@dateformat directive`, () => {
     )
     expect(formattedDate).toBe(`2019`)
 
-    // NOTE: If you set `defaultDistanceToNow: true`, you need to
+    // NOTE: If you set default `distanceToNow: true`, you need to
     // explicitly disable it for formatting args to take effect.
     const distanceToNow = await fields.distanceToNow.resolve(
       { date },
