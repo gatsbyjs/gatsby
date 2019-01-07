@@ -490,6 +490,14 @@ The finished page should now look like:
 
 ![css-modules-final](css-modules-final.png)
 
+### CSS Modules and BEM
+
+If you're used to writing CSS with the [BEM](http://getbem.com/) methodology, a quick thing to note is that Gatsby camelizes class names that contain dashes.
+
+For example: `block--modifier` turns into `blockModifier`.
+
+We do this to make access in JavaScript easier.
+
 ### Other CSS options
 
 Gatsby supports almost every possible styling option (if there isn't a plugin
