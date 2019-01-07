@@ -1,5 +1,5 @@
 const { TypeComposer, schemaComposer } = require(`graphql-compose`)
-const { GraphQLBoolean } = require(`graphql`)
+const { GraphQLBoolean, GraphQLSchema } = require(`graphql`)
 
 const getNodesForQuery = require(`../get-nodes-for-query`)
 
@@ -180,11 +180,10 @@ describe(`Get nodes for query`, () => {
       expect(queryNodes).not.toEqual(getNodesByType(type))
 
       expect(nodes[0].withResolver).toBeUndefined()
-      expect(queryNodes[0].withResolver).toBeUndefined()
+      expect(queryNodes[0].withResolver).toBe(`bar`)
 
-      // TODO: Should resolver be called for null fields?
       expect(nodes[1].withResolver).toBeNull()
-      expect(queryNodes[1].withResolver).toBeNull()
+      expect(queryNodes[1].withResolver).toBe(`bar`)
 
       expect(nodes[2].withResolver).toBe(`foo`)
       expect(queryNodes[2].withResolver).toBe(`bar`)
@@ -204,16 +203,16 @@ describe(`Get nodes for query`, () => {
       expect(nodes[0].deeply).toBeUndefined()
       expect(queryNodes[0].deeply).toBeUndefined()
 
-      expect(counter).toHaveBeenCalledTimes(2)
+      expect(counter).toHaveBeenCalledTimes(4)
       expect(counter).toBeCalledWith(
         expect.any(Object),
         {},
         {},
         expect.objectContaining({
           fieldName: `counter`,
-          fieldNodes: [{}],
           parentType: schemaComposer.get(`Nested`).getType(),
           returnType: GraphQLBoolean,
+          schema: expect.any(GraphQLSchema),
         })
       )
 
@@ -252,7 +251,7 @@ describe(`Get nodes for query`, () => {
       }
       const queryNodes = await getNodesForQuery(type, filter)
 
-      expect(counter).toHaveBeenCalledTimes(6)
+      expect(counter).toHaveBeenCalledTimes(12)
       expect(
         queryNodes[1].added[0][0].added.deeply[0][0].nestedResolver
       ).toEqual([`foo`])

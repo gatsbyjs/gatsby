@@ -13,29 +13,25 @@ emitter.on(`BOOTSTRAP_FINISHED`, () => (isBootstrapFinished = true))
 const cache = new Map()
 const nodeCache = new Map()
 
-// TODO: Filter sparse arrays?
-const resolveValue = (value, filterValue, type) => {
-  // TODO: Maybe use const { getNullableType } = require(`graphql`)
+const resolveValue = (value, filterValue, type, schema) => {
+  // TODO: Use const { getNullableType } = require(`graphql`)
   const nullableType = type instanceof GraphQLNonNull ? type.ofType : type
-  // FIXME: We probably have to check that node data and schema are actually in sync,
-  // wrt arrays/scalars.
-  // return Array.isArray(value) && nullableType instanceof GraphQLList
   return Array.isArray(value)
     ? Promise.all(
-        value.map(item => resolveValue(item, filterValue, nullableType.ofType))
+        value.map(item =>
+          resolveValue(item, filterValue, nullableType.ofType, schema)
+        )
       )
-    : prepareForQuery(value, filterValue, nullableType)
+    : prepareForQuery(value, filterValue, nullableType, schema)
 }
 
-const prepareForQuery = (node, filter, parentType) => {
+const prepareForQuery = (node, filter, parentType, schema) => {
+
   const fields = parentType.getFields()
 
   const queryNode = Object.entries(filter).reduce(
     async (acc, [fieldName, filterValue]) => {
       const node = await acc
-      // FIXME: What is the expectation here if this is null?
-      // Continue and call the field resolver or not?
-      if (node[fieldName] == null) return node
 
       const { type, args, resolve } = fields[fieldName]
 
@@ -48,19 +44,16 @@ const prepareForQuery = (node, filter, parentType) => {
           node,
           defaultValues,
           {},
-          // NOTE: fieldNodes is needed for `graphql-tools` schema stitching
-          // to work (which we don't use currently)
-          { fieldName, fieldNodes: [{}], parentType, returnType: type }
+          { fieldName, parentType, returnType: type, schema }
         )
       }
 
       // `dropQueryOperators` sets value to `true` for leaf values.
-      // Maybe be more explicit: `const isLeaf = !isObject(filterValue)`
       const isLeaf = filterValue === true
       const value = node[fieldName]
 
       if (!isLeaf && value != null) {
-        node[fieldName] = await resolveValue(value, filterValue, type)
+        node[fieldName] = await resolveValue(value, filterValue, type, schema)
       }
 
       return node
@@ -85,17 +78,7 @@ const getNodesForQuery = async (type, filter) => {
     }
   }
 
-  // Use executable schema from store (includes resolvers added by @link directive).
-  // Alternatively, call @link resolvers manually.
   const { schema } = store.getState()
-
-  // Just an experiment. This works as well -- but does not cache resolved nodes.
-  // const { execute, parse } = require(`graphql`)
-  // const queryField = `all${type}`
-  // const query = `{ ${queryField} { ${Object.keys(filterFields).join(`, `)} } }`
-  // const { data, errors } = await execute({ schema, document: parse(query) })
-  // const queryNodes = data && data[queryField]
-
   const parentType = schema.getType(type)
 
   // If there are no resolvers to call manually, we can just return nodes.
@@ -114,7 +97,7 @@ const getNodesForQuery = async (type, filter) => {
         return nodeCache.get(cacheKey)
       }
 
-      const queryNode = prepareForQuery(node, filterFields, parentType)
+      const queryNode = prepareForQuery(node, filterFields, parentType, schema)
 
       nodeCache.set(cacheKey, queryNode)
       trackObjects(await queryNode)
