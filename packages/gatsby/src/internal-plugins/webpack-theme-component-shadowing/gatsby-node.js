@@ -6,7 +6,7 @@ exports.onCreateWebpackConfig = (
 ) => {
   const { program, themes } = store.getState()
 
-   if (themes.themes) {
+  if (themes.themes) {
     actions.setWebpackConfig({
       resolve: {
         plugins: [

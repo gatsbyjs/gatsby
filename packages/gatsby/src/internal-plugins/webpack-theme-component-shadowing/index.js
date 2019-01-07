@@ -1,11 +1,13 @@
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const debug = require("debug")("gatsby:component-shadowing")
+const fs = require("fs")
 
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
 
   constructor({ projectRoot, themes }) {
+    debug("themes list", themes)
     this.themes = themes
     this.projectRoot = projectRoot
   }
@@ -42,12 +44,14 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         component,
         projectRoot: this.projectRoot,
       })
+
       if (!builtComponentPath) {
-        // if you mess up your component imports in a theme, resolveComponentPath will return undefined
-        report.panic(
-          `We can't find the component located at ${
-            request.path
-          } and imported in ${request.context.issuer}`
+        return resolver.doResolve(
+          "describedRelative",
+          request,
+          null,
+          {},
+          callback
         )
       }
       const resolvedComponentPath = require.resolve(builtComponentPath)
@@ -62,15 +66,34 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   // check the cache, the user's project, and finally the theme files
-  resolveComponentPath({ theme, component, projectRoot }) {
-    debug("path", path.resolve("."))
+  resolveComponentPath({
+    matchingTheme: theme,
+    themes,
+    component,
+    projectRoot,
+  }) {
     if (!this.cache[`${theme}-${component}`]) {
       this.cache[`${theme}-${component}`] = [
-        path.join(projectRoot, `src`, `components`, theme),
+        path.join(path.resolve("."), `src`, `components`, theme),
         path.join(path.dirname(require.resolve(theme)), `src`, `components`),
       ]
         .map(dir => path.join(dir, component))
-        .find(possibleComponentPath => fs.existsSync(possibleComponentPath))
+        .find(possibleComponentPath => {
+          let dir
+          try {
+            dir = fs.readdirSync(path.dirname(possibleComponentPath))
+          } catch (e) {
+            return false
+          }
+          const exists = dir
+            .map(filepath => {
+              const ext = path.extname(filepath)
+              const filenameWithoutExtension = path.basename(filepath, ext)
+              return filenameWithoutExtension
+            })
+            .includes(path.basename(possibleComponentPath))
+          return exists
+        })
     }
 
     return this.cache[`${theme}-${component}`]
