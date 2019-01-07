@@ -5,7 +5,6 @@ author: Dustin Schau
 cover: images/seo.jpg
 excerpt: "Learn how to use Gatsby to implement SEO with React Helmet and smart defaults!"
 tags:
-  - gatsby
   - javascript
   - react
   - seo
