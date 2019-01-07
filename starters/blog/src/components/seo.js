@@ -94,7 +94,7 @@ const detailsQuery = graphql`
     site {
       siteMetadata {
         author
-        description
+        description(pruneLength: 160)
         title
       }
     }
