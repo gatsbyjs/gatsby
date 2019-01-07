@@ -734,7 +734,7 @@
     - Uses Flexbox
 - url: https://gatsby-starter-typescript-plus.netlify.com/
   repo: https://github.com/resir014/gatsby-starter-typescript-plus
-  description: n/a
+  description: This is a starter kit for Gatsby.js websites written in TypeScript. It includes the bare essentials for you to get started (styling, Markdown parsing, minimal toolset).
   tags:
     - Styling:CSS-in-JS
     - TypeScript
@@ -744,7 +744,7 @@
     - TSLint (with custom TSLint rules)
     - Markdown rendering with Remark
     - Basic component structure
-    - Styling with styled-components
+    - Styling with emotion
 - url: https://haysclark.github.io/gatsby-starter-typescript/
   repo: https://github.com/haysclark/gatsby-starter-typescript
   description: n/a
@@ -1558,6 +1558,19 @@
     - SASS/SCSS
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+    - PurgeCSS to shave off unused styles
+- url: https://tyra-starter.netlify.com/
+  repo: https://github.com/madelyneriksen/gatsby-starter-tyra
+  description: A feminine GatsbyJS Starter Optimized for SEO
+  tags:
+    - SEO
+    - Blog
+    - Styling:Tachyons
+  features:
+    - Integration with Social Media and Mailchimp.
+    - Styled with Tachyons.
+    - Rich structured data on blog posts for SEO.
+    - Pagination and category pages.
 - url: https://gatsby-starter-styled.netlify.com/
   repo: https://github.com/gregoralbrecht/gatsby-starter-styled
   description: Yet another simple starter with Styled-System, Typography.js, SEO and Google Analytics.
