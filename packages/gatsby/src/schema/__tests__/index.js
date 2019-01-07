@@ -13,6 +13,7 @@ const nodes = [
       type: `File`,
       contentDigest: `file1`,
     },
+    name: `1.md`,
   },
   {
     id: `file2`,
@@ -22,6 +23,7 @@ const nodes = [
       type: `File`,
       contentDigest: `file2`,
     },
+    name: `2.md`,
   },
   {
     id: `file3`,
@@ -31,6 +33,7 @@ const nodes = [
       type: `File`,
       contentDigest: `file3`,
     },
+    name: `authors.yaml`,
   },
   {
     id: `md1`,
@@ -223,11 +226,11 @@ describe(`Schema query`, () => {
       query {
         allFile {
           children {
-            ... on Markdown { id }
-            ... on Author { id }
+            ... on Markdown { frontmatter { title } }
+            ... on Author { name }
           }
-          childMarkdown { id }
-          childrenAuthor { id }
+          childMarkdown { frontmatter { title } }
+          childrenAuthor { name }
         }
       }
     `
@@ -236,23 +239,93 @@ describe(`Schema query`, () => {
     const expected = {
       allFile: [
         {
-          childMarkdown: { id: `md1` },
-          children: [{ id: `md1` }],
+          childMarkdown: { frontmatter: { title: `Markdown File 1` } },
+          children: [{ frontmatter: { title: `Markdown File 1` } }],
           childrenAuthor: [],
         },
         {
-          childMarkdown: { id: `md2` },
-          children: [{ id: `md2` }],
+          childMarkdown: { frontmatter: { title: `Markdown File 2` } },
+          children: [{ frontmatter: { title: `Markdown File 2` } }],
           childrenAuthor: [],
         },
         {
           childMarkdown: null,
-          children: [{ id: `author1` }, { id: `author2` }],
-          childrenAuthor: [{ id: `author1` }, { id: `author2` }],
+          children: [{ name: `Author 1` }, { name: `Author 2` }],
+          childrenAuthor: [{ name: `Author 1` }, { name: `Author 2` }],
         },
       ],
     }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
 
+  it(`processes query args`, async () => {
+    const query = `
+      query {
+        allFile(
+          filter: { children: { internal: { type: { eq: "Markdown" } } } }
+          sort: { fields: [ID], order: DESC }
+        ) {
+          name
+          children {
+            id
+          }
+        }
+      }
+    `
+    const { schema } = store.getState()
+    const results = await graphql(schema, query)
+    const expected = {
+      allFile: [
+        { name: `2.md`, children: [{ id: `md2` }] },
+        { name: `1.md`, children: [{ id: `md1` }] },
+      ],
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+
+  it.only(`processes deep query args`, async () => {
+    const query = `
+      query {
+        allMarkdown(
+          filter: {
+            frontmatter: {
+              authors: {
+                posts: {
+                  frontmatter: {
+                    title: {
+                      eq: "Markdown File 2"
+                    }
+                  }
+                }
+              }
+            }
+          }
+          sort: { fields: [FRONTMATTER___TITLE], order: DESC }
+        ) {
+          id
+          frontmatter {
+            authors {
+              name
+            }
+          }
+        }
+      }
+    `
+    const { schema } = store.getState()
+    const results = await graphql(schema, query)
+    const expected = {
+      allMarkdown: [
+        { id: `md2`, frontmatter: { authors: [{ name: `Author 1` }] } },
+        {
+          id: `md1`,
+          frontmatter: {
+            authors: [{ name: `Author 1` }, { name: `Author 2` }],
+          },
+        },
+      ],
+    }
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual(expected)
   })
