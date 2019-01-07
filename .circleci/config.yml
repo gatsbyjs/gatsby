@@ -172,10 +172,7 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
-      - run: sh ./scripts/clone-and-validate.sh starters false
+      - run: sh ./scripts/clone-and-validate.sh starters
 
   starters_publish:
     executor: node
@@ -188,7 +185,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-folder.sh starters
+      - run: sh ./scripts/clone-and-validate.sh starters true
 
 workflows:
   version: 2
