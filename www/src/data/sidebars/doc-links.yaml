@@ -22,7 +22,7 @@
       items:
         - title: Preparing your site for deployment*
           link: /docs/preparing-for-deployment/
-        - title: Deploying to S3 and CloudFront
+        - title: Hosting on AWS Amplify
           link: /docs/deploying-to-s3-cloudfront
         - title: Deploying to Aerobatic
           link: /docs/deploying-to-aerobatic/
