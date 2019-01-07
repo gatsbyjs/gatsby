@@ -73,6 +73,7 @@ function SEO({ children, description, lang, meta, keywords, title, ...rest }) {
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
+  link: [],
   keywords: [],
 }
 
@@ -80,6 +81,7 @@ SEO.propTypes = {
   children: PropTypes.node,
   description: PropTypes.string,
   lang: PropTypes.string,
+  link: PropTypes.array,
   meta: PropTypes.array,
   keywords: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string.isRequired,
