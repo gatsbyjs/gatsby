@@ -24,8 +24,9 @@ const addConvenienceChildrenFields = tc => {
     const field = {
       [fieldName]: {
         type,
-        resolve: (source, args, context, info) =>
-          findByIdsAndType(type)(
+        resolve: (source, args, context, info) => {
+          debugger
+          return findByIdsAndType(typeName)(
             {
               source,
               args: {
@@ -35,7 +36,8 @@ const addConvenienceChildrenFields = tc => {
               info,
             },
             !hasChildren
-          ),
+          )
+        },
       },
     }
     tc.addFields(field)
