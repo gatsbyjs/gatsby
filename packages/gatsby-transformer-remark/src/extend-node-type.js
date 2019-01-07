@@ -67,7 +67,16 @@ const withPathPrefix = (url, pathPrefix) =>
 const ASTPromiseMap = new Map()
 
 module.exports = (
-  { type, store, pathPrefix, getNode, getNodesByType, cache, reporter },
+  {
+    type,
+    pathPrefix,
+    getNode,
+    getNodesByType,
+    cache,
+    getCache,
+    reporter,
+    ...rest
+  },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -150,7 +159,9 @@ module.exports = (
               files: fileNodes,
               getNode,
               reporter,
-              cache,
+              cache: getCache(plugin.name),
+              getCache,
+              ...rest,
             },
             plugin.pluginOptions
           )
@@ -218,7 +229,9 @@ module.exports = (
               files: fileNodes,
               pathPrefix,
               reporter,
-              cache,
+              cache: getCache(plugin.name),
+              getCache,
+              ...rest,
             },
             plugin.pluginOptions
           )
