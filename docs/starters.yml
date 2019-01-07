@@ -734,7 +734,7 @@
     - Uses Flexbox
 - url: https://gatsby-starter-typescript-plus.netlify.com/
   repo: https://github.com/resir014/gatsby-starter-typescript-plus
-  description: n/a
+  description: This is a starter kit for Gatsby.js websites written in TypeScript. It includes the bare essentials for you to get started (styling, Markdown parsing, minimal toolset).
   tags:
     - Styling:CSS-in-JS
     - TypeScript
@@ -744,7 +744,7 @@
     - TSLint (with custom TSLint rules)
     - Markdown rendering with Remark
     - Basic component structure
-    - Styling with styled-components
+    - Styling with emotion
 - url: https://haysclark.github.io/gatsby-starter-typescript/
   repo: https://github.com/haysclark/gatsby-starter-typescript
   description: n/a
