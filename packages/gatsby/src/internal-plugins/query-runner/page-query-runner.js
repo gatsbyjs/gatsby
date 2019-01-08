@@ -162,9 +162,11 @@ const runQueriesForPathnames = pathnames => {
   }
 
   return new Promise(resolve => {
-    queue.on(`drain`, () => {
+    const onDrain = () => {
+      queue.removeListener(`drain`, onDrain)
       resolve()
-    })
+    }
+    queue.on(`drain`, onDrain)
   })
 }
 
