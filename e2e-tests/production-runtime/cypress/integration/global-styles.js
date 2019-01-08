@@ -1,4 +1,4 @@
-const rgbBlack = `rgb(0, 0, 0, 0.8)` // css jQuery method returns rgb
+const zIndex = `9001`
 
 describe(`Global style from gatsby-browser.js`, () => {
   beforeEach(() => {
@@ -6,14 +6,14 @@ describe(`Global style from gatsby-browser.js`, () => {
   })
 
   it(`should apply any styles in root gatsby-browser.js`, () => {
-    cy.getTestElement(`global-style`).should(`not.have.css`, `color`, rgbBlack)
+    cy.getTestElement(`global-style`).should(`have.css`, `zIndex`, zIndex)
   })
 
   it(`should apply any styles in root gatsby-browser.js`, () => {
     cy.getTestElement(`global-plugin-style`).should(
-      `not.have.css`,
-      `color`,
-      rgbBlack
+      `have.css`,
+      `zIndex`,
+      zIndex
     )
   })
 })
