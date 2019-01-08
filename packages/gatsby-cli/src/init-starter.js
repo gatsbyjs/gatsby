@@ -50,8 +50,25 @@ const maybeCreateGitIgnore = async rootPath => {
   report.info(`Creating minimal .gitignore in ${rootPath}`)
   await fs.writeFile(
     sysPath.join(rootPath, `.gitignore`),
-    `.cache\nnode_modules\npublic`
+    `.cache\nnode_modules\npublic\n`
   )
+}
+
+// Create an initial git commit in the new directory
+const createInitialGitCommit = async (rootPath, starterUrl) => {
+  const prevDir = process.cwd()
+
+  report.info(`Create initial git commit in ${rootPath}`)
+  process.chdir(rootPath)
+
+  try {
+    await spawn(`git add -A`)
+    // use execSync instead of spawn to handle git clients using
+    // pgp signatures (with password)
+    execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`)
+  } finally {
+    process.chdir(prevDir)
+  }
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
@@ -127,6 +144,7 @@ const clone = async (hostInfo: any, rootPath: string) => {
   await install(rootPath)
   await gitInit(rootPath)
   await maybeCreateGitIgnore(rootPath)
+  await createInitialGitCommit(rootPath, url)
 }
 
 type InitOptions = {
