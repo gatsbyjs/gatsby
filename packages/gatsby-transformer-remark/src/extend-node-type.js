@@ -58,6 +58,10 @@ const tableOfContentsCacheKey = node =>
 const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
+// A GraphQL Field config can include this to inform Gatsby that the
+// field's resolver is safe to run in another thread
+const workerPlugin = `gatsby-transformer-remark`
+
 /**
  * Map that keeps track of generation of AST to not generate it multiple
  * times in parallel.
@@ -364,16 +368,14 @@ module.exports = (
     return resolve({
       html: {
         type: GraphQLString,
-        isAsync: true,
-        pluginName: `gatsby-transformer-remark`,
+        workerPlugin,
         resolve(markdownNode) {
           return getHTML(markdownNode)
         },
       },
       htmlAst: {
         type: GraphQLJSON,
-        isAsync: true,
-        pluginName: `gatsby-transformer-remark`,
+        workerPlugin,
         resolve(markdownNode) {
           return getHTMLAst(markdownNode).then(ast => {
             const strippedAst = stripPosition(_.clone(ast), true)
@@ -397,8 +399,7 @@ module.exports = (
             defaultValue: `plain`,
           },
         },
-        isAsync: true,
-        pluginName: `gatsby-transformer-remark`,
+        workerPlugin,
         async resolve(markdownNode, { format, pruneLength, truncate }) {
           if (format === `html`) {
             if (pluginOptions.excerpt_separator) {
@@ -480,8 +481,7 @@ module.exports = (
             type: HeadingLevels,
           },
         },
-        isAsync: true,
-        pluginName: `gatsby-transformer-remark`,
+        workerPlugin,
         resolve(markdownNode, { depth }) {
           return getHeadings(markdownNode).then(headings => {
             if (typeof depth === `number`) {
@@ -493,8 +493,7 @@ module.exports = (
       },
       timeToRead: {
         type: GraphQLInt,
-        isAsync: true,
-        pluginName: `gatsby-transformer-remark`,
+        workerPlugin,
         resolve(markdownNode) {
           return getHTML(markdownNode).then(html => {
             let timeToRead = 0
@@ -517,8 +516,7 @@ module.exports = (
             defaultValue: `fields.slug`,
           },
         },
-        isAsync: true,
-        pluginName: `gatsby-transformer-remark`,
+        workerPlugin,
         resolve(markdownNode, { pathToSlugField }) {
           return getTableOfContents(markdownNode, pathToSlugField)
         },
@@ -539,8 +537,7 @@ module.exports = (
             },
           },
         }),
-        isAsync: true,
-        pluginName: `gatsby-transformer-remark`,
+        workerPlugin,
         resolve(markdownNode) {
           let counts = {}
 

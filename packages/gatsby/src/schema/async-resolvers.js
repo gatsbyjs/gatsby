@@ -48,8 +48,8 @@ function makeFieldSetup({ fieldConfig, typeName, fieldName }) {
   invariant(fieldConfig, `fieldCOnfig`)
   invariant(typeName, `typeName`)
   invariant(fieldName, `fieldName`)
-  const { pluginName } = fieldConfig
-  const plugin = getPlugin(pluginName)
+  const { workerPlugin } = fieldConfig
+  const plugin = getPlugin(workerPlugin)
   const resolverFile = path.join(plugin.resolve, `gatsby-node.js`)
   invariant(resolverFile, `new resolver asyncFile`)
   const type = { name: typeName }
