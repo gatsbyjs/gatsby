@@ -3,87 +3,45 @@ title: Introduction to Using CSS in Gatsby
 typora-copy-images-to: ./
 ---
 
+<!-- Idea: Create a glossary to refer to. A lot of these terms get jumbled -->
+
+<!--
+  - Global styles
+  - Component css
+  - CSS-in-JS
+  - CSS Modules
+
+-->
+
 Welcome to part two of the Gatsby tutorial!
 
 ## What's in this tutorial?
 
 In this part, you're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
 
-## Creating global styles
+## Using global styles
 
 Every site has some sort of global style. This includes things like the site's
 typography and background colors. These styles set the overall feel of the
 site—much like the color and texture of a wall sets the overall feel of a room.
 
-For this tutorial, let's explore a JavaScript library called
-[Typography.js](https://github.com/kyleamathews/typography.js) that generates
-global styles and works particularly well with Gatsby and React.
+### Creating global styles with standard CSS files
 
-### Typography.js
+One of the most straightforward ways to add global styles to a site is using a global `.css` stylesheet.
 
-Typography.js is a JavaScript library which generates typographic CSS.
+#### ✋ Create a new Gatsby site
 
-Instead of directly setting the `font-size` of different HTML elements, you tell
-Typography.js things like your desired `baseFontSize` and `baseLineHeight` and
-based on these, it generates the base CSS for all your elements.
+Start by creating a new Gatsby site. It may be best (especially if you're new to the command line) to close the terminal windows you used for part one, and start a new terminal session for this.
 
-This makes it trivial to change the font size of all elements on a site without
-having to directly modify the dozens of CSS rules.
-
-Using it looks something like this:
-
-```javascript
-import Typography from "typography"
-
-const typography = new Typography({
-  baseFontSize: "18px",
-  baseLineHeight: 1.45,
-  headerFontFamily: [
-    "Avenir Next",
-    "Helvetica Neue",
-    "Segoe UI",
-    "Helvetica",
-    "Arial",
-    "sans-serif",
-  ],
-  bodyFontFamily: ["Georgia", "serif"],
-})
-```
-
-## Gatsby plugins
-
-But before you can get back to building and trying out Typography.js, let's make
-a quick diversion and talk about Gatsby plugins.
-
-You're probably familiar with the idea of plugins. Many software systems support
-adding custom plugins to add new functionality or even modify the core workings
-of the software.
-
-Gatsby plugins work the same way.
-
-Community members (like you!) can contribute plugins (small amounts of
-JavaScript code) that others can then use when building Gatsby sites.
-
-There are already hundreds of plugins! Check them out at the
-[plugins section of the site](/plugins/).
-
-Our goal with Gatsby plugins is to make them straightforward to install and use. In almost every Gatsby site you
-build, you will be installing plugins. While working through the rest of the
-tutorial, you'll have many opportunities to practice installing and using
-plugins.
-
-## Installing your first Gatsby plugin
-
-Start by creating a new site. At this point, it probably makes sense to close the terminal windows you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
-
-Just like in part one, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-two`. Then, change to this new directory:
+Open a new terminal window, create a new "hello world" gatsby site, and start the development server:
 
 ```shell
 gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-two
+gatsby develop
 ```
 
-This creates a new site with the following structure.
+You now have a new Gatsby site (based on the Gatsby "hello world" starter) with the following structure:
 
 ```text
 ├── package.json
@@ -92,205 +50,82 @@ This creates a new site with the following structure.
 │       └── index.js
 ```
 
-This is the minimal setup for a Gatsby site.
+#### ✋ Add styles to a css file
 
-To install a plugin, there are two steps. First, you install the plugin's NPM
-package and second, you add the plugin to your site's `gatsby-config.js`.
-
-Typography.js has a Gatsby plugin, so install that along with some additional required packages by running:
+1. Create a `.css` file in your new project:
 
 ```shell
-npm install --save gatsby-plugin-typography react-typography typography
+cd src
+mkdir styles
+cd styles
+touch global.css
 ```
 
-Next, in your code editor, create a file at the root of your project folder named `gatsby-config.js`.
-This is where you add plugins along with other site configuration.
+> Note: You'll need to either stop or restart the running development server, or open a second terminal window. Also, feel free to create these directories and files using your code editor, if you'd prefer.
 
-Copy the following into `gatsby-config.js`
+You should now have a structure like this:
 
-```javascript:title=gatsby-config.js
-module.exports = {
-  plugins: [`gatsby-plugin-typography`],
+```text
+├── package.json
+├── src
+│   └── pages
+│       └── index.js
+│   └── styles
+│       └── global.css
+```
+
+2. Define some styles in the `global.css` file:
+
+```css:title=src/styles/global.css
+html {
+  background-color: lavenderblush;
+  color: rebeccapurple;
 }
 ```
 
-Gatsby reads the site's config file when starting. Here, you tell it to look for a
-plugin named `gatsby-plugin-typography`. Gatsby knows to look for plugins that
-are NPM packages, so it will find the package you installed previously.
+> Note: The placement of the example css file in a `/src/styles/` folder is arbitrary.
 
-Now run `gatsby develop`. Once you load the site, if you inspect the generated
-HTML using the Chrome developer tools, you'll see that the typography plugin
-added a `<style>` element to the `<head>` element with its generated CSS.
+#### ✋ Include the stylesheet in `gatsby-browser.js`
 
-![typography-styles](typography-styles.png)
-
-Copy the following into your `src/pages/index.js` so you can better see the
-effect of the typography CSS generated by Typography.js.
-
-```jsx:title=src/pages/index.js
-import React from "react"
-
-export default () => (
-  <div>
-    <h1>Richard Hamming on Luck</h1>
-    <div>
-      <p>
-        From Richard Hamming’s classic and must-read talk, “
-        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
-          You and Your Research
-        </a>
-        ”.
-      </p>
-      <blockquote>
-        <p>
-          There is indeed an element of luck, and no, there isn’t. The prepared
-          mind sooner or later finds something important and does it. So yes, it
-          is luck.{" "}
-          <em>
-            The particular thing you do is luck, but that you do something is
-            not.
-          </em>
-        </p>
-      </blockquote>
-    </div>
-    <p>Posted April 09, 2011</p>
-  </div>
-)
-```
-
-Your site should now look like this:
-
-![typography-not-centered](typography-not-centered.png)
-
-Let's make a quick improvement. Many sites have a single column of text centered
-in the middle of the page. To create this, add the following styles to the
-`<div>` in `src/pages/index.js`.
-
-```jsx:title=src/pages/index.js
-import React from "react"
-
-export default () => (
-  // highlight-next-line
-  <div style={{ margin: `3rem auto`, maxWidth: 600 }}>
-    <h1>Richard Hamming on Luck</h1>
-    <div>
-      <p>
-        From Richard Hamming’s classic and must-read talk, “
-        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
-          You and Your Research
-        </a>
-        ”.
-      </p>
-      <blockquote>
-        <p>
-          There is indeed an element of luck, and no, there isn’t. The prepared
-          mind sooner or later finds something important and does it. So yes, it
-          is luck.
-          {` `}
-          <em>
-            The particular thing you do is luck, but that you do something is
-            not.
-          </em>
-        </p>
-      </blockquote>
-    </div>
-    <p>Posted April 09, 2011</p>
-  </div>
-)
-```
-
-![basic-typography-centered](typography-centered.png)
-
-Ah, this is starting to look nice!
-
-What you're seeing here is the default CSS Typography.js produces. You can easily
-customize it, however. Let's do that.
-
-In your site, create a new directory at `src/utils`. In that directory, create a file named
-`typography.js`. In that file, add the following code.
-
-```javascript:title=src/utils/typography.js
-import Typography from "typography"
-
-const typography = new Typography({ baseFontSize: "18px" })
-
-export default typography
-```
-
-Then set this module to be used by `gatsby-plugin-typography` as its config in
-your `gatsby-config.js` file.
-
-```javascript:title=gatsby-config.js
-module.exports = {
-  // highlight-start
-  plugins: [
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography.js`,
-      },
-    },
-  ],
-  // highlight-end
-}
-```
-
-Stop `gatsby develop` by typing <kbd>Ctrl + c</kbd> into the terminal window where the development process has been running. Then, run `gatsby develop` again to restart it. This will allow your plugin change to take effect.
-
-Now, all the text font sizes should be slightly bigger. Try changing the
-`baseFontSize` to `24px` then `12px`. All elements get resized as their
-`font-size` is based on the `baseFontSize`.
-
-_Note that if you use `gatsby-plugin-typography` with the default starter, you'll need to delete the default layout.css used by that starter as it overrides the Typography.js CSS_
-
-There are
-[many themes available](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes)
-for Typography.js. Try a couple. In your terminal at the root of your
-site, run:
+1. Create the `gatsby-browser.js`
 
 ```shell
-npm install --save typography-theme-bootstrap typography-theme-lawton
+cd ../..
+touch gatsby-browser.js
 ```
 
-To use the Bootstrap theme, change your typography code to:
+Your project's file structure should now look like this:
 
-```javascript:title=src/utils/typography.js
-import Typography from "typography"
-import bootstrapTheme from "typography-theme-bootstrap" // highlight-line
-
-const typography = new Typography(bootstrapTheme) // highlight-line
-
-export default typography
+```text
+├── package.json
+├── src
+│   └── pages
+│       └── index.js
+│   └── styles
+│       └── global.css
+├── gatsby-browser.js
 ```
 
-![typography-bootstrap](typography-bootstrap.png)
+> 💡 What is `gatsby-browser.js`? Don't worry about this too much for now -- For now, know that `gatsby-browser.js` is one of a handful of special files that Gatsby looks for, and uses (if they exist). Here, the naming of the file **is** important.
 
-Themes can also add Google Fonts. The Lawton theme you installed along with the
-Bootstrap theme does this. Replace your typography module code with the
-following, then restart the dev server (necessary to load the new Google Fonts).
+2. Import the stylesheet in the `gatsby-browser.js` file:
 
-```javascript:title=src/utils/typography.js
-import Typography from "typography"
-// highlight-start
-// import bootstrapTheme from "typography-theme-bootstrap"
-import lawtonTheme from "typography-theme-lawton"
-// highlight-end
+```javascript:title=gatsby-browser.js
+import "./src/styles/global.css"
 
-const typography = new Typography(lawtonTheme) // highlight-line
-
-export default typography
+// or:
+// require('./src/styles/global.css')
 ```
 
-![typography-lawton](typography-lawton.png)
+> Note: You can use Node.js `require` or `import` syntax. If you're not sure of the difference, just pick one.
 
-_Challenge:_ Typography.js has more than 30 themes!
-[Try them live](http://kyleamathews.github.io/typography.js) or check out
-[the complete list](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes) and try installing one on your current Gatsby site.
+If you take a look another look at your "hello world" project site, you should see your global css changes applied.
+
+> Tip: This part of the tutorial has focused on the quickest and most straightforward way to get started styling a Gatsby site -- importing standard CSS files directly, using `gatsby-browser.js`. In most cases, the best way to add global styles is with a shared layout component. [Check out the docs](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-with-standard-css-files) for more on that approach.
 
 ## Component CSS
 
-Gatsby has a wealth of options available for styling components. In this tutorial, you'll explore
-one very popular method: CSS Modules.
+Gatsby has a wealth of options available for styling components. In this tutorial, you'll explore one very popular method: CSS Modules.
 
 ### CSS-in-JS
 

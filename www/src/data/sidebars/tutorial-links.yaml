@@ -40,16 +40,16 @@
       link: /tutorial/part-two/
       ui: steps
       items:
-        - title: Creating Global Styles
-          link: /tutorial/part-two/#creating-global-styles
-        - title: Typography.js
-          link: /tutorial/part-two/#typographyjs
-        - title: Gatsby Plugins
-          link: /tutorial/part-two/#gatsby-plugins
-        - title: Component CSS
-          link: /tutorial/part-two/#component-css
-        - title: CSS Modules
-          link: /tutorial/part-two/#css-modules
+        - title: Using global styles
+          link: /tutorial/part-two/#using-global-styles
+        - title: Creating global styles using a css stylesheet
+          link: /tutorial/part-two/#creating-global-styles-using-a-css-stylesheet
+        - title: Using component styles
+          link: /tutorial/part-two/#using-component-styles
+        - title: Creating component styles using CSS Modules
+          link: /tutorial/part-two/#creating-component-styles-using-css-modules
+        - title: Creating component styles using CSS-in-JS
+          link: /tutorial/part-two/#creating-component-styles-using-css-in-js
     - title: 3. Creating nested layout components
       link: /tutorial/part-three/
       ui: steps
