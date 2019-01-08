@@ -39,8 +39,8 @@ The following fields are used by the page object and should be avoided.
   * \\"matchPath\\"
   * \\"component\\"
   * \\"componentChunkName\\"
-  * \\"pluginCreator___NODE\\"
-  * \\"pluginCreatorName\\"
+  * \\"pluginCreator\\"
+  * \\"pluginCreatorId\\"
 
             "
 `;
@@ -55,8 +55,8 @@ Map {
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
   "/hi/pizza/" => Object {
@@ -67,8 +67,8 @@ Map {
     "jsonName": "hi-pizza-f10",
     "matchPath": undefined,
     "path": "/hi/pizza/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
 }
@@ -84,8 +84,8 @@ Object {
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
@@ -106,8 +106,8 @@ Map {
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
 }
@@ -125,8 +125,8 @@ Object {
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
@@ -149,8 +149,8 @@ Map {
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
 }
@@ -166,8 +166,8 @@ Object {
     "jsonName": "hi-18e",
     "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
@@ -188,8 +188,8 @@ Map {
     "jsonName": "hi-18e",
     "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
 }
