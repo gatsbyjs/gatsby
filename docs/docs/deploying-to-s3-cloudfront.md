@@ -1,38 +1,88 @@
 ---
-title: Deploying to AWS Amplify
+title: Deploying to S3/Cloudfront
 ---
 
-In this guide we'll walkthrough how to deploy and host your Gatsby site using the [AWS Amplify Console](https://console.amplify.aws).
+In this guide, we'll walkthrough how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/). If you are looking for a managed hosting service, the AWS Amplify Console offers the fastest way to deploy your Gatsby site on AWS. The Amplify Console provides features such as continuous deployment, multiple environments w. feature branch deploys, custom domains with SSL, redirects/rewrites, atomic deploys, and password protection. [Learn more](./deploying-to-aws-amplify.md)
 
-AWS Amplify is a combination of client library, CLI toolchain, and a Console for continuous deployment and hosting. The Amplify CLI and library allow developers to get up & running with full-stack cloud-powered applications with features like authentication, storage, serverless GraphQL or REST APIs, analytics, Lambda functions, & more. The Amplify Console provides continuous deployment and hosting for modern web apps (single page apps and static site generators). Continuous deployment allows developers to deploy updates to their web app on every code commit to their Git repository. Hosting includes features such as globally available CDNs, easy custom domain setup + HTTPS, feature branch deployments, and password protection.
+Additionally, you can add [lambda functions](https://serverless.com/framework/docs/providers/aws/guide/functions/), [cloudfront](https://github.com/serverless/examples/tree/master/aws-node-single-page-app-via-cloudfront), and other AWS services later on as you expand.
 
+## Getting Started - Gatsby
 
-## Pre-requisites
+First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
 
+```shell
+npm install --global gatsby-cli
+```
 
-1. [Sign up for an AWS Account](https://portal.aws.amazon.com/billing/signup?redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation). There are no upfront charges or any term commitments to create an AWS account and signing up gives you immediate access to the AWS Free Tier
+Next, we'll create a new Gatsby site:
 
-1. This guide assumes that you have setup a Gatsby project. If you need to set up a project, start with the [Gatsby Auth starter with AWS Amplify](https://github.com/dabit3/gatsby-auth-starter-aws-amplify) then come back. The starter implements a basic authentication flow for signing up signing in users as well as protected client side routing.
+```shell
+gatsby new my-gatsby-site
+```
 
-![Gatsby Amplify](./images/amplify-gatsby-auth.gif)
+Finally, change into the new site directory:
 
+```shell
+cd my-gatsby-site
+```
 
+## Getting Started - AWS CLI
 
-## Deployment
+Create a [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create a access id and secret for it.
+You'll need these in the next step.
 
-1. Log in to the [AWS Amplify Console](https://console.aws.amazon.com/amplify/home) and choose Get Started under Deploy. 
-![Gatsby Amplify2](./images/amplify-gettingstarted.png)
+Install the AWS CLI and configure it (ensure python is installed before running these commands)
 
-2. Connect a branch from your GitHub, Bitbucket, GitLab, or AWS CodeCommit repository. Connecting your repository allows Amplify to deploy updates on every code commit to a branch.
-![Gatsby Amplify2](./images/amplify-connect-repo.gif)
+```shell
+pip install aws
+aws configure
+```
 
-3. Accept the default build settings. Give the Amplify Console permission to deploy backend resources with your frontend with a service role. This allows the Console to detect changes to both your backend and frontend on every code commit and make updates. If you do not have a service role follow the prompts to create one, then come back to the console and pick it from the dropdown.
-![Gatsby Amplify2](./images/amplify-build-settings.gif)
+The AWS CLI will now prompt you for the key & secret, add them.
 
-4. Review your changes and then choose **Save and deploy**. The Amplify Console will pull code from your repository, build changes to the backend and frontend, and deploy your build artifacts at `https://master.unique-id.amplifyapp.com`. Bonus: Screenshots of your app on different devices to find layout issues :fire:
-![Gatsby Amplify2](./images/amplify-gatsby-deploy.gif)
+## Getting Started - gatsby-plugin-s3
+
+Now that we have our Gatsby site up & running, let's add hosting & make the site live on AWS.
+
+First, we'll install the Gatsby S3 plugin:
+
+```shell
+npm i gatsby-plugin-s3
+```
+
+Add it to your `gatsby-config.js`: (don't forget to change the bucket name)
+
+```
+plugins: [
+ {
+     resolve: `gatsby-plugin-s3`,
+     options: {
+         bucketName: 'my-website-bucket'
+     },
+ },
+]
+```
+
+And finally, add the deployment script to your `package.json`:
+
+```js
+"scripts": {
+   ...
+   "deploy": "gatsby-plugin-s3 deploy"
+}
+```
+
+That's it!
+Run `npm run build && npm run deploy` to do a build and have it immediately deployed to S3!
+
+## Taking things a step further
+
+Read on how to use the serverless framework to add lambda functions, cloudfront, and more:
+
+- [Using serverless with gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3/blob/master/recipes/with-serverless.md)
 
 ## References:
 
 - [Publishing Your Next Gatsby Site to AWS With AWS Amplify](https://www.gatsbyjs.org/blog/2018-08-24-gatsby-aws-hosting/)
+- [Escalade Sports: From $5000 to $5/month in Hosting With Gatsby](https://www.gatsbyjs.org/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
 - [Deploy your Gatsby.js Site to AWS S3](https://benenewton.com/deploy-your-gatsby-js-site-to-aws-s-3)
