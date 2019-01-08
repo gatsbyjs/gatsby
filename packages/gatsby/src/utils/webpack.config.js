@@ -35,6 +35,12 @@ module.exports = async (
   const stage = suppliedStage
   const { rules, loaders, plugins } = await createUtils({ stage, program })
 
+  const assetPrefix = store.getState().config.assetPrefix
+  const pathPrefix = program.prefixPaths
+    ? `${store.getState().config.pathPrefix}`
+    : ``
+  const publicPath = [assetPrefix, pathPrefix].filter(Boolean).join(`/`) || `/`
+
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
     const env = process.env.NODE_ENV
@@ -99,14 +105,6 @@ module.exports = async (
 
   debug(`Loading webpack config for stage "${stage}"`)
   function getOutput() {
-    const assetPrefix = program.prefixAssets
-      ? `${store.getState().config.assetPrefix}/`
-      : `/`
-    const pathPrefix =
-      assetPrefix || program.prefixPaths
-        ? `${store.getState().config.pathPrefix}/`
-        : `/`
-    const publicPath = assetPrefix || pathPrefix
     switch (stage) {
       case `develop`:
         return {
@@ -187,12 +185,7 @@ module.exports = async (
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
-        __ASSET_PREFIX__: JSON.stringify(
-          program.prefixAssets ? store.getState().config.assetPrefix : ``
-        ),
-        __PATH_PREFIX__: JSON.stringify(
-          program.prefixPaths ? store.getState().config.pathPrefix : ``
-        ),
+        __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
       }),
     ]
 

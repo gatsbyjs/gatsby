@@ -3,6 +3,7 @@ const path = require(`path`)
 
 const {
   joinPath,
+  normalizePath,
   withBasePath,
   withPathPrefix,
   withAssetPrefix,
@@ -61,6 +62,32 @@ describe(`paths`, () => {
         expect(actual).toBe(expected)
       })
     }
+  })
+})
+
+describe(`normalizePath`, () => {
+  it(`returns single slash if empty array`, () => {
+    expect(normalizePath()).toBe(`/`)
+  })
+
+  it(`returns single slash if parts are empty`, () => {
+    ;[[null], [undefined], [false], []].forEach(args => {
+      expect(normalizePath(...args)).toBe(`/`)
+    })
+  })
+
+  it(`normalizes malformed path part`, () => {
+    expect(normalizePath(`///blog/////`)).toBe(`/blog/`)
+  })
+
+  it(`normalizes all malformed path parts`, () => {
+    expect(normalizePath(`/something/`, `/blog/`)).toBe(`/something/blog/`)
+  })
+
+  it(`handle URLs`, () => {
+    expect(normalizePath(`https://cdn.gatsbyjs.org////`, `/blog/`)).toBe(
+      `https://cdn.gatsbyjs.org/blog/`
+    )
   })
 })
 

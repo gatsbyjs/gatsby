@@ -16,6 +16,17 @@ function withBasePath(basePath) {
   return (...paths) => joinPath(basePath, ...paths)
 }
 
+function normalizePath(...parts) {
+  const normalized = parts
+    .filter(part => part && part.length > 0)
+    .map(part => part.replace(/^\/+/, ``).replace(/\/+$/, ``))
+
+  return ((parts[0] || ``).match(/^http/) ? [] : [``])
+    .concat(normalized)
+    .concat(``)
+    .join(`/`)
+}
+
 function withPrefix(prefix, callback) {
   prefix = typeof prefix === `undefined` || prefix === `` ? `/` : prefix
   return function join(...parts) {
@@ -28,6 +39,7 @@ function withPrefix(prefix, callback) {
 }
 
 exports.joinPath = joinPath
+exports.normalizePath = normalizePath
 exports.withBasePath = withBasePath
 
 exports.withPathPrefix = withPrefix
