@@ -20,7 +20,7 @@ If you need to insert custom html into the `<head>` or `<footer>` of each page o
 ### Required props
 
 Note: the various props that are rendered into pages _are_ required e.g.
-`headComponents`, `preBodyComponents`, `body`, and `postBodyComponents`. 
+`headComponents`, `preBodyComponents`, `body`, and `postBodyComponents`.
 
 ### Inserting html into the <head>
 
