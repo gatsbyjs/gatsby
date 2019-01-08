@@ -3,7 +3,7 @@ const uuidv4 = require(`uuid/v4`)
 const Cache = require(`../utils/cache`)
 const _ = require(`lodash`)
 
-const resolvers = {}
+const types = {}
 const rpcs = new Map()
 
 function handleRpcResponse(rpc) {
@@ -94,6 +94,10 @@ function makeRpcs() {
   }
 }
 
+function storeResolver(typeName, fieldName, fieldConfig) {
+  _.set(types, [typeName, `fields`, fieldName], fieldConfig)
+}
+
 async function initModule({
   fieldName,
   resolverFile,
@@ -107,8 +111,8 @@ async function initModule({
   const cache = new Cache({ name: `some cache` }).init()
   const api = { type, pathPrefix, cache, ...makeRpcs() }
   const newFields = await module.setFieldsOnGraphQLNodeType(api, pluginOptions)
-  _.forEach(newFields, (v, k) => {
-    resolvers[k] = v.resolve
+  _.forEach(newFields, (fieldConfig, fieldName) => {
+    storeResolver(type.name, fieldName, fieldConfig)
   })
 }
 
@@ -120,9 +124,17 @@ async function setup(args) {
   }
 }
 
-async function execResolver(resolver, node, args) {
+async function execResolver(typeName, fieldName, node, args) {
   try {
-    return await resolvers[resolver](node, args)
+    invariant(typeName, `execResolver typeName`)
+    invariant(fieldName, `execResolver fieldName`)
+    const type = types[typeName]
+    invariant(type, `execResolver type`)
+    const field = type.fields[fieldName]
+    invariant(field, `execResolver field`)
+    const resolver = field.resolve
+    invariant(resolver, `execResolver resolver`)
+    return await resolver(node, args)
   } catch (e) {
     console.log(e)
     return null

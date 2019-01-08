@@ -93,10 +93,10 @@ function add(field) {
   fields.push(field)
 }
 
-function workerResolver({ fieldName }) {
+function workerResolver({ typeName, fieldName }) {
   return async (node, args) => {
     try {
-      return await pool.execResolver(fieldName, node, args)
+      return await pool.execResolver(typeName, fieldName, node, args)
     } catch (e) {
       console.log(e)
       return null
