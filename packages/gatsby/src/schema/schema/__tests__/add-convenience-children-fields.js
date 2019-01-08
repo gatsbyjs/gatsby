@@ -1,4 +1,4 @@
-const { TypeComposer, schemaComposer } = require(`graphql-compose`)
+const { TypeComposer } = require(`graphql-compose`)
 
 const addConvenienceChildrenFields = require(`../add-convenience-children-fields`)
 
