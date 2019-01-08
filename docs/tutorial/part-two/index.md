@@ -15,10 +15,6 @@ Every site has some sort of global style. This includes things like the site's
 typography and background colors. These styles set the overall feel of the
 site—much like the color and texture of a wall sets the overall feel of a room.
 
-Often people will use something like Bootstrap or Foundation for their global
-styles. The problem with these, however, is they're difficult to customize and
-they're not designed to work well with React components.
-
 For this tutorial, let's explore a JavaScript library called
 [Typography.js](https://github.com/kyleamathews/typography.js) that generates
 global styles and works particularly well with Gatsby and React.
