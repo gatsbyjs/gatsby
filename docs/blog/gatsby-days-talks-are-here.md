@@ -11,20 +11,22 @@ image: "/src/uploads/Gatsby-Days copy.png"
 showImageInArticle: false
 
 ---
-The wait is over! Gatsby Days talks are posted below. Get caught up on all the latest presentations from Gatsby Days in Mountain View, California such as Kyle Mathews' presentation on the future of the web, Chris Biscardi on Gatsby Themes, Andrew Rhyne on product announcements, Linda Watkins on selling Gatsby to your clients, and more. Check out the recordings below:
+The wait is over! Gatsby Days talks are posted below. Gatsby Days are one-day, in-person conferences on the modern website technology stack and the future of the web. 
+
+Get caught up on all the latest presentations from Gatsby Days in Mountain View, California such as Kyle Mathews' presentation on the future of the web, Chris Biscardi on Gatsby Themes, product announcements, how to sell Gatsby to your clients, and more. Check out the recordings below and if you'd like to come to a Gatsby Days in your city, [**cast your vote here**](https://www.gatsbyjs.com/gatsby-days-signup/). 
 
 ### Gatsby Days Talks
 
 [How We Got Here and The Future of Website Development](https://www.gatsbyjs.com/gatsby-days-keynote-kyle/) by **Kyle Mathews**, CEO and Co-founder
 
+[Introducing Gatsby Themes](https://www.gatsbyjs.com/gatsby-days-themes-chris/) with **Chris Biscardi**, Developer
+
+[Announcing Gatsby Preview: The Future is in the Cloud ](https://www.gatsbyjs.com/gatsby-days-preview-andrew/)with **Andrew Rhyne**, Cloud Services Engineer
+
 [The Power of Positioning: Selling Gatsby to Your Clients](https://www.gatsbyjs.com/gatsby-days-positioning-linda/) by **Linda Watkins**, Director of Marketing
 
-[How Gatsby Does High-Impact, Low-Effort UX Research (and You Can Too!)](https://www.gatsbyjs.com/gatsby-days-UXresearch-shannon/) by **Shannon Soper**, UX Researcher
-
-[Move Fast, Don't Break Things: Trends in Modern Web Development with Mediacurrent](https://www.gatsbyjs.com/gatsby-days-mediacurrent-ben/) by **Ben Robertson** with Mediacurrent
-
-[Introducing Gatsby Themes](https://www.gatsbyjs.com/gatsby-days-themes-chris/) with **Chris Biscardi**, Contractor for Gatsby
-
-[Announcing Gatsby Preview: The Future is in the Cloud ](https://www.gatsbyjs.com/gatsby-days-preview-andrew/)with **Andrew Rhyne**, Head of Cloud
-
 [The Journey to the Content Mesh](https://www.gatsbyjs.com/gatsby-days-content-mesh-sam/) with **Sam Bhagwat**, Co-Founder and Head of Enterprise
+
+[How Gatsby Does High-Impact, Low-Effort UX Research (and You Can Too!)](https://www.gatsbyjs.com/gatsby-days-UXresearch-shannon/) by **Shannon Soper**, UX Specialist and Head of Learning
+
+[Move Fast, Don't Break Things: Trends in Modern Web Development with Mediacurrent](https://www.gatsbyjs.com/gatsby-days-mediacurrent-ben/) by **Ben Robertson**, Front-End Developer with Mediacurrent
