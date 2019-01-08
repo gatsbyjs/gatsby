@@ -45,7 +45,6 @@ module.exports = async function onCreateNode(
     markdownNode.frontmatter = {
       title: ``, // always include a title
       ...data.data,
-      _PARENT: node.id,
     }
 
     markdownNode.excerpt = data.excerpt
