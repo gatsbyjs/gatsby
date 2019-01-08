@@ -34,24 +34,24 @@
           link: /docs/deploying-to-gitlab-pages/
         - title: Hosting on Netlify
           link: /docs/hosting-on-netlify
-        - title: Path Prefix
+        - title: Adding a path prefix
           link: /docs/path-prefix/
         - title: How Gatsby works with GitHub pages
           link: /docs/how-gatsby-works-with-github-pages/
     - title: Custom configuration
       link: /docs/customization/
       items:
-        - title: Babel.js
+        - title: Customizing Babel.js config
           link: /docs/babel/
-        - title: Babel plugin macros
+        - title: Using Babel.js plugin macros
           link: /docs/babel-plugin-macros/
-        - title: Custom webpack config
+        - title: Customizing webpack config
           link: /docs/add-custom-webpack-config/
         - title: Customizing html.js
           link: /docs/custom-html/
-        - title: Environment variables
+        - title: Using environment variables
           link: /docs/environment-variables/
-        - title: ESLint
+        - title: Using ESLint
           link: /docs/eslint/
         - title: Proxying API requests
           link: /docs/api-proxy/
@@ -60,7 +60,7 @@
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
-        - title: Static folder
+        - title: Using the static folder
           link: /docs/static-folder/
         - title: Dropping images into static folders*
           link: /docs/dropping-images-into-static-folders/
@@ -144,11 +144,11 @@
     - title: Styling your site
       link: /docs/styling/
       items:
-        - title: Layout Components
+        - title: Using layout components
           link: /docs/layout-components/
-        - title: CSS Modules
+        - title: Using CSS Modules
           link: /docs/css-modules/
-        - title: Typography.js
+        - title: Using Typography.js
           link: /docs/typography-js/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
@@ -156,9 +156,9 @@
           link: /docs/styled-components/
         - title: Creating global styles
           link: /docs/creating-global-styles/
-        - title: Component CSS
+        - title: Using component CSS
           link: /docs/component-css/
-        - title: PostCSS
+        - title: Using PostCSS
           link: /docs/post-css/
     - title: Adding testing
       link: /docs/testing/
@@ -184,7 +184,7 @@
           link: /docs/debugging-replace-renderer-api/
         - title: Debugging the build process
           link: /docs/debugging-the-build-process/
-        - title: Trace Gatsby builds
+        - title: Tracing Gatsby builds
           link: /docs/performance-tracing/
     - title: Adding website functionality
       link: /docs/adding-website-functionality/
