@@ -2,9 +2,11 @@
 title: Deploying to S3/Cloudfront
 ---
 
-In this guide, we'll walkthrough how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/). If you are looking for a managed hosting service, the AWS Amplify Console offers the fastest way to deploy your Gatsby site on AWS. The Amplify Console provides features such as continuous deployment, multiple environments w. feature branch deploys, custom domains with SSL, redirects/rewrites, atomic deploys, and password protection. [Deploy using AWS Amplify](/docs/deploying-to-aws-amplify/)
+In this guide, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io/).
 
-Additionally, you can add [lambda functions](https://serverless.com/framework/docs/providers/aws/guide/functions/), [cloudfront](https://github.com/serverless/examples/tree/master/aws-node-single-page-app-via-cloudfront), and other AWS services later on as you expand.
+AWS Amplify is a combination of client library, CLI toolchain, and UI components. Amplify allow developers to get up & running with full-stack cloud-powered applications with features like authentication, GraphQL, storage, REST APIs, analytics, Lambda functions, hosting & more.
+
+Using the **Hosting** feature, you can deploy your application to AWS as well as set up your site with Amazon Cloudfront CDN. This is what we'll be doing in this tutorial. Let's begin!
 
 ## Getting Started - Gatsby
 
@@ -26,60 +28,94 @@ Finally, change into the new site directory:
 cd my-gatsby-site
 ```
 
-## Getting Started - AWS CLI
-
-Create a [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create a access id and secret for it.
-You'll need these in the next step.
-
-Install the AWS CLI and configure it (ensure python is installed before running these commands)
-
-```shell
-pip install aws
-aws configure
-```
-
-The AWS CLI will now prompt you for the key & secret, add them.
-
-## Getting Started - gatsby-plugin-s3
+## Getting Started - AWS Amplify
 
 Now that we have our Gatsby site up & running, let's add hosting & make the site live on AWS.
 
-First, we'll install the Gatsby S3 plugin:
+First, we'll install the AWS Amplify CLI:
 
 ```shell
-npm i gatsby-plugin-s3
+npm i -g @aws-amplify/cli
 ```
 
-Add it to your `gatsby-config.js`: (don't forget to change the bucket name)
+With the AWS Amplify CLI installed, we now need to configure it with an IAM User:
 
-```
-plugins: [
- {
-     resolve: `gatsby-plugin-s3`,
-     options: {
-         bucketName: 'my-website-bucket'
-     },
- },
-]
+```shell
+amplify configure
 ```
 
-And finally, add the deployment script to your `package.json`:
+> For a video walkthrough of how to configure the AWS Amplify CLI, click [here](https://www.youtube.com/watch?v=fWbM5DLh25U).
 
-```js
-"scripts": {
-   ...
-   "deploy": "gatsby-plugin-s3 deploy"
-}
+Now, we can create a new Amplify project in the root of our Gatsby project:
+
+```shell
+amplify init
 ```
 
-That's it!
-Run `npm run build && npm run deploy` to do a build and have it immediately deployed to S3!
+- Choose your default editor: **(for me, this is Visual Studio Code)**
+- Please choose the type of app that you're building: **javascript**
+- What JavaScript framework are you using: **react**
+- Source Directory Path: **src**
+- Distribution Directory Path: **public**
+- Build Command: **npm run-script build**
+- Start Command: **npm run-script develop**
+- Do you want to use an AWS profile? **Y**
+- Please choose the profile you want to use: **default**
 
-## Taking things a step further
+Now, the Amplify project has been created. You will see that you have a new amplify folder in your project directory as well as an .amplifyrc file. Both of these contain your AWS Amplify project configuration.
 
-Read on how to use the serverless framework to add lambda functions, cloudfront, and more:
+Next, we can type amplify into our command line & see all of the options that we have:
 
-- [Using serverless with gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3/blob/master/recipes/with-serverless.md)
+```shell
+amplify
+```
+
+At the bottom, we can see the available categories available to us. Hosting is the category we would like to enable, so let's do so now:
+
+```shell
+amplify add hosting
+```
+
+Here, we'll be prompted for the following:
+
+- Select the environment setup: **DEV**
+- hosting bucket name: **gatsbyproj-20180808112129-hosting-bucket (or type whatever you'd like the bucket name to be)**
+
+This will set up our local project with everything we need, now we can publish the app to AWS. To do so, we'll run the following command:
+
+```shell
+amplify publish
+```
+
+Here, we'll be prompted for the following:
+
+- Are you sure you want to continue? **Y**
+
+Now, our resources will be pushed up to our account & our site will be published to a live url!
+
+What just happened? A few things:
+
+1. Amplify runs npm run build to build a new distribution of your app
+2. A new S3 bucket is created in your AWS account
+3. All code in the public directory is uploaded to the S3 bucket
+
+We should have also be given the URL that the site is hosted on. At any time that we would like to get the url for our site, we can run:
+
+```shell
+amplify status
+```
+
+This command should give us all of the info about our app including the url of our website.
+
+If we ever want to configure the hosting setup, including adding Cloudfront, we can run:
+
+```shell
+amplify configure hosting
+```
+
+Here, we'll be prompted for what we would like to change about the project configuration.
+
+> To learn more about AWS Amplify, check out the [Getting Started](https://aws-amplify.github.io/media/get_started) page.
 
 ## References:
 
