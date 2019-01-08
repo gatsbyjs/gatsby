@@ -15,17 +15,23 @@ cp .cache/default-html.js src/html.js
 
 And then make modifications as needed.
 
+If you need to insert custom html into the `<head>` or `<footer>` of each page on your site, you can use `html.js`.
+
 ### Required props
 
 Note: the various props that are rendered into pages _are_ required e.g.
 `headComponents`, `preBodyComponents`, `body`, and `postBodyComponents`.
 
-### React Helmet
+### Inserting html into the <head>
 
-Also, anything you render in the `html.js` component will _not_ be made "live" in
+Anything you render in the `html.js` component will _not_ be made "live" in
 the client like other components. If you want to dynamically update your
 `<head>` we recommend using
 [React Helmet](/packages/gatsby-plugin-react-helmet/)
+
+### Inserting html into the <footer>
+
+If you want to insert custom html into the footer, html.js is the preferred way of doing this. If you're writing a plugin, consider using the `setPostBodyComponents` prop in the [Gatsby SSR API](/docs/ssr-apis/).
 
 ### Target container
 
