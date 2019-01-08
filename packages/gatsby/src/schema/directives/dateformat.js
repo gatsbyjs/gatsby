@@ -54,13 +54,15 @@ class DateFormatDirectiveVisitor extends SchemaDirectiveVisitor {
     field.resolve = async (source, args, context, info) => {
       const { format, locale, timeZone, distanceToNow, ...rest } = args
       const date = await resolve(source, rest, context, info)
-      return formatDate(
-        date,
-        format || defaultFormat,
-        locale || defaultLocale,
-        timeZone || defaultTimeZone,
-        distanceToNow !== undefined ? distanceToNow : defaultDistanceToNow
-      )
+      return date
+        ? formatDate(
+            date,
+            format || defaultFormat,
+            locale || defaultLocale,
+            timeZone || defaultTimeZone,
+            distanceToNow !== undefined ? distanceToNow : defaultDistanceToNow
+          )
+        : null
     }
 
     field.type = GraphQLString

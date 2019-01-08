@@ -89,6 +89,24 @@ const addInferredFields = (tc, value, prefix, depth = 0) => {
         fieldConfig = `JSON`
     }
 
+    // There is currently no non-hacky way to programmatically add
+    // directives to fields.
+    if (fieldConfig === `Date`) {
+      fieldConfig = {
+        type: `Date`,
+        astNode: {
+          kind: `FieldDefinition`,
+          directives: [
+            {
+              arguments: [],
+              kind: `Directive`,
+              name: { kind: `Name`, value: `dateformat` },
+            },
+          ],
+        },
+      }
+    }
+
     // UPSTREAM: TC.makeFieldPlural
     // @see https://github.com/stefanprobst/graphql-compose/pull/new/make-field-plural
     while (arrays--) {

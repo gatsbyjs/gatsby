@@ -70,10 +70,22 @@ describe(`Type inference`, () => {
       array: [`Int`],
       bigInt: `Float`,
       bool: `Boolean`,
-      dateString: `Date`,
-      dateStrings: [`Date`],
-      dateObject: `Date`,
-      dateObjects: [`Date`],
+      dateString: {
+        type: `Date`,
+        astNode: expect.objectContaining({ directives: expect.any(Array) }),
+      },
+      dateStrings: {
+        type: [`Date`],
+        astNode: expect.objectContaining({ directives: expect.any(Array) }),
+      },
+      dateObject: {
+        type: `Date`,
+        astNode: expect.objectContaining({ directives: expect.any(Array) }),
+      },
+      dateObjects: {
+        type: [`Date`],
+        astNode: expect.objectContaining({ directives: expect.any(Array) }),
+      },
       float: `Float`,
       int: `Int`,
       nestedArray: [[`Int`]],

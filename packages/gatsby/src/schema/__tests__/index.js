@@ -161,7 +161,7 @@ describe(`Schema query`, () => {
         allMarkdown {
           frontmatter {
             title
-            date
+            date(format: "MM-dd-yyyy")
             published
             authors {
               name
@@ -198,7 +198,7 @@ describe(`Schema query`, () => {
                 posts: [{ frontmatter: { title: `Markdown File 1` } }],
               },
             ],
-            date: `2019-01-01T00:00:00.000Z`,
+            date: `01-01-2019`,
             published: null,
             title: `Markdown File 1`,
           },
