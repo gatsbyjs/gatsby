@@ -12,7 +12,9 @@ Tailwind uses PostCSS under the hood, so you will need PostCSS set up before we 
 
 1.  Install the Gatsby plugin [**gatsby-plugin-postcss**](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss).
 
-`npm install --save gatsby-plugin-postcss`
+```shell
+npm install --save gatsby-plugin-postcss`
+```
 
 2.  Include the plugin in your `gatsby-config.js` file.
 
