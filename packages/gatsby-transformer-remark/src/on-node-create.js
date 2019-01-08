@@ -1,6 +1,5 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
-const yaml = require(`js-yaml`)
 
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId, reporter },
@@ -19,10 +18,7 @@ module.exports = async function onCreateNode(
   const content = await loadNodeContent(node)
 
   try {
-    const data = grayMatter(content, {
-      schema: yaml.CORE_SCHEMA,
-      ...pluginOptions,
-    })
+    const data = grayMatter(content, pluginOptions)
 
     const markdownNode = {
       id: createNodeId(`${node.id} >>> MarkdownRemark`),
