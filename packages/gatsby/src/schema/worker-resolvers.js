@@ -146,11 +146,8 @@ function workerResolver({ typeName, fieldName }) {
   return async (node, args) => {
     try {
       return await pool.execResolver(typeName, fieldName, node, args)
-    } catch (e) {
-      reporter.panicOnBuild(
-        `Error calling worker resolver. type = [${typeName}], field = [${fieldName}].\n
-        ${e.message}`
-      )
+    } catch (err) {
+      reporter.panicOnBuild(err)
       return null // Never reached. for linter
     }
   }

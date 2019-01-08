@@ -12,23 +12,36 @@ const JEST_WORKER_CHILD_MESSAGE_IPC = 3
 // requests for field resolvers for.
 const types = {}
 
-// List of all in-flight RPCs
-const rpcs = new Map()
+// List of all in-flight RPCs. keys are RPC ids, and values are
+// objects containing the `time` the RPC was sent, and the `resolve`
+// and `reject` callbacks.
+const inFlightRpcs = new Map()
 
-function handleRpcResponse(rpc) {
-  invariant(rpc, `rpc`)
-  const { id, response } = rpc
-  invariant(id, `id`)
-  const { resolve } = rpcs.get(id)
-  invariant(resolve, `resolve`)
-  rpcs.delete(id)
-  resolve(response)
+/**
+ * Handle rpc response by removing the original rpc from in flight
+ * rpcs and calling its `resolve` with the response
+ */
+function handleRpcResponse(rpcResponse) {
+  const { id, response } = rpcResponse
+  invariant(
+    id && response,
+    `RPC response should contain the "id" of the original RPC and a "response".`
+  )
+  const rpc = inFlightRpcs.get(id)
+  invariant(rpc, `RPC for id [${id}] not found`)
+  // Response for RPC has been received, so remove it from
+  // inFlightRpcs.
+  // TODO: Periodically expire old in flight RPCs
+  inFlightRpcs.delete(id)
+  rpc.resolve(response)
 }
 
 function handleIpc(ipc) {
-  invariant(ipc, `handle IPC`)
   const [rpc] = ipc
-  invariant(rpc, `handle rpc`)
+  invariant(
+    rpc,
+    `IPC request should be an array with a single element representing the "rpc"`
+  )
   if (rpc.type === `response`) {
     handleRpcResponse(rpc)
   } else {
@@ -40,14 +53,9 @@ function sendRpc({ name, args, resolve, reject }) {
   invariant(name, `rpc name`)
   invariant(resolve, `rpc resolve`)
   invariant(reject, `rpc reject`)
-  // TODO id should be composite of processId and incrementing number. Perhaps
   const id = uuidv4()
-  const rpc = {
-    name,
-    args,
-    id,
-  }
-  rpcs.set(id, {
+  const rpc = { name, args, id }
+  inFlightRpcs.set(id, {
     time: new Date(),
     resolve,
     reject,
@@ -103,6 +111,15 @@ function makeUnsupportedProps(o, props) {
   return o
 }
 
+/**
+ * GraphQL fields are normally created by plugins during the
+ * `setFieldsOnGraphQLNodeType` API, and as such they expect API
+ * functions such as `getNode()` to be available. But workers operate
+ * outside of the main process so can't call these
+ * functions. Therefore we supply implementations for these APIs that
+ * result in RPC calls back to the main process. This goes for static
+ * values such as `type`.
+ */
 function makeApi(type, pathPrefix) {
   const cache = new Cache({ name: `some cache` }).init()
   const api = {
@@ -152,6 +169,12 @@ async function initModule(
   })
 }
 
+/**
+ * Called by jest-worker when the worker is created. Setup involves
+ * requiring each field's resolver module and storing it in the
+ * `fields` global so that they can be found when `execResolver` is
+ * called
+ */
 async function setup(args) {
   const { pathPrefix, fields } = args
   invariant(fields, `setup fields`)
@@ -160,21 +183,22 @@ async function setup(args) {
   }
 }
 
+/**
+ * main function exported for jest-worker. Takes a typeName and
+ * fieldName and finds previously configured resolver for it, then
+ * calls it with node and args. The response will be sent back to the
+ * main process by jest-worker
+ */
 async function execResolver(typeName, fieldName, node, args) {
-  try {
-    invariant(typeName, `execResolver typeName`)
-    invariant(fieldName, `execResolver fieldName`)
-    const type = types[typeName]
-    invariant(type, `execResolver type`)
-    const field = type.fields[fieldName]
-    invariant(field, `execResolver field`)
-    const resolver = field.resolve
-    invariant(resolver, `execResolver resolver`)
-    return await resolver(node, args)
-  } catch (e) {
-    console.log(e)
-    return null
-  }
+  invariant(typeName, `execResolver typeName`)
+  invariant(fieldName, `execResolver fieldName`)
+  const type = types[typeName]
+  invariant(type, `execResolver type`)
+  const field = type.fields[fieldName]
+  invariant(field, `execResolver field`)
+  const resolver = field.resolve
+  invariant(resolver, `execResolver resolver`)
+  return await resolver(node, args)
 }
 
 process.on(`ipc`, handleIpc)
