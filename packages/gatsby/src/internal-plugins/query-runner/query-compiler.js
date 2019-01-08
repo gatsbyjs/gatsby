@@ -104,6 +104,7 @@ class Runner {
     let files = [
       path.join(this.base, `src`),
       path.join(this.base, `.cache`, `fragments`),
+      path.join(this.base, `node_modules`, `gatsby-seo`),
     ]
       .concat(this.additional.map(additional => path.join(additional, `src`)))
       .reduce(

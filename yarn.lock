@@ -875,6 +875,13 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.1.5":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.2.0.tgz#b03e42eeddf5898e00646e4c840fa07ba8dcad7f"
+  integrity sha512-oouEibCbHMVdZSDlJBO6bZmID/zA/G/Qx3H1d3rSNPTD+L8UNKvCat7aKWSJ74zYbm5zWGh0GQN0hKj8zYFTCg==
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@7.0.0-beta.36":
   version "7.0.0-beta.36"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.36.tgz#02e903de5d68bd7899bce3c5b5447e59529abb00"
@@ -6566,6 +6573,16 @@ dom-serializer@0, dom-serializer@~0.1.0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
+dom-testing-library@^3.13.1:
+  version "3.16.3"
+  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.16.3.tgz#9dbf88d0a0c12f653248ad8f2a5aa17cc66f85e9"
+  integrity sha512-AZJJ/lmw+/yZxUVWoua5BofYK9EAQ/7Ai2wldUb6mSjE1XZy2H/+IrhG57lp3GqYN5WK7c2HzBLu8lW3c6/bXQ==
+  dependencies:
+    "@babel/runtime" "^7.1.5"
+    "@sheerun/mutationobserver-shim" "^0.3.2"
+    pretty-format "^23.6.0"
+    wait-for-expect "^1.1.0"
+
 dom-testing-library@^3.9.0:
   version "3.11.2"
   resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.11.2.tgz#11ecb840641f89fbbdcf8cc625009c24e7779615"
@@ -7528,6 +7545,11 @@ executable@^4.1.0:
   integrity sha512-8iA79xD3uAch729dUG8xaaBBFGaEa0wdD2VkYLFHwlqosEj/jT66AzcreRDSgV7ehnNLBW2WR5jIXwGKjVdTLg==
   dependencies:
     pify "^2.2.0"
+
+exenv@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
 
 exif-parser@^0.1.9:
   version "0.1.12"
@@ -15066,7 +15088,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.4, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
@@ -15392,6 +15414,16 @@ react-error-overlay@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
   integrity sha512-XzgvowFrwDo6TWcpJ/WTiarb9UI6lhA4PMzS7n1joK3sHfBBBOQHUc0U4u57D6DWO9vHv6lVSWx2Q/Ymfyv4hw==
 
+react-helmet@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.0.tgz#a81811df21313a6d55c5f058c4aeba5d6f3d97a7"
+  integrity sha1-qBgR3yExOm1VxfBYxK66XW89l6c=
+  dependencies:
+    deep-equal "^1.0.1"
+    object-assign "^4.1.1"
+    prop-types "^15.5.4"
+    react-side-effect "^1.1.0"
+
 react-hot-loader@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.6.2.tgz#9844b76a7bf4b6fdd45dd91f7e757ddf3aad5289"
@@ -15412,12 +15444,27 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-side-effect@^1.1.0:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.1.5.tgz#f26059e50ed9c626d91d661b9f3c8bb38cd0ff2d"
+  integrity sha512-Z2ZJE4p/jIfvUpiUMRydEVpQRf2f8GMHczT6qLcARmX7QRb28JDBTpnM2g/i5y/p7ZDEXYGHWg0RbhikE+hJRw==
+  dependencies:
+    exenv "^1.2.1"
+    shallowequal "^1.0.1"
+
 react-testing-library@^5.0.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-5.2.1.tgz#31f163e900457e5c0dcff7669ae06b502f8a9a7a"
   integrity sha512-UNOWuWWFkqKvvIfnVK9JH9hMHk9Xd7G8Bl0F5zdxJJIhdcakKX2I0w+6SSIgI+Ru3UYDDVqgQTW2Zu1fc2PH8w==
   dependencies:
     dom-testing-library "^3.9.0"
+
+react-testing-library@^5.4.4:
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-5.4.4.tgz#3fa787999492be94b228e4540a7211556bf4fd94"
+  integrity sha512-/TiERZ+URSNhZQfjrUXh0VLsiLSmhqP1WP+2e2wWqWqrRIWpcAxrfuBxzlT75LYMDNmicEikaXJqRDi/pqCEDg==
+  dependencies:
+    dom-testing-library "^3.13.1"
 
 react@^16.4.1:
   version "16.5.1"
@@ -16799,7 +16846,7 @@ shallow-copy@~0.0.1:
   resolved "https://registry.yarnpkg.com/shallow-copy/-/shallow-copy-0.0.1.tgz#415f42702d73d810330292cc5ee86eae1a11a170"
   integrity sha1-QV9CcC1z2BAzApLMXuhurhoRoXA=
 
-shallowequal@^1.0.2:
+shallowequal@^1.0.1, shallowequal@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
@@ -19216,6 +19263,11 @@ wait-for-expect@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-1.0.0.tgz#edf2d5790c36dc67c4e21ac6ccedd7d4b79dc6ac"
   integrity sha512-I6OlPKnd4qVdKJf1Gjx9M9qQjIk29rALoUkjwIKa9pNDCdzUuJTfaNv1mtsm2QdSvF0ZQogrWJMifTN1lUeXig==
+
+wait-for-expect@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-1.1.0.tgz#6607375c3f79d32add35cd2c87ce13f351a3d453"
+  integrity sha512-vQDokqxyMyknfX3luCDn16bSaRcOyH6gGuUXMIbxBLeTo6nWuEWYqMTT9a+44FmW8c2m6TRWBdNvBBjA1hwEKg==
 
 walker@~1.0.5:
   version "1.0.7"
