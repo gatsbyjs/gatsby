@@ -26,7 +26,7 @@ const {
 } = require(`./data-tree-utils`)
 const { run: runQuery } = require(`../db/nodes-query`)
 const lazyFields = require(`./lazy-fields`)
-const asyncResolvers = require(`./async-resolvers`)
+const workerResolvers = require(`./worker-resolvers`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
@@ -193,8 +193,7 @@ async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
   _.each(mergedFieldsFromPlugins, (fieldConfig, fieldName) => {
     if (fieldConfig.workerPlugin) {
       const asyncField = { fieldConfig, fieldName, typeName }
-      asyncResolvers.add(asyncField)
-      asyncResolvers.replaceResolver(asyncField)
+      fieldConfig.resolve = workerResolvers.defineResolver(asyncField)
     }
   })
 

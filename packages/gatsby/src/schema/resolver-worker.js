@@ -8,7 +8,11 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 // From jest-worker library `src/types.js`
 const JEST_WORKER_CHILD_MESSAGE_IPC = 3
 
+// Contains all the types that this worker is configured to handle
+// requests for field resolvers for.
 const types = {}
+
+// List of all in-flight RPCs
 const rpcs = new Map()
 
 function handleRpcResponse(rpc) {
