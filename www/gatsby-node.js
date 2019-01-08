@@ -472,7 +472,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         createNodeField({ node, name: `released`, value: released })
 
         const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
-        let publishedAt = _.get(node, `frontmatter.publishedAt`)
+        const publishedAt = _.get(node, `frontmatter.publishedAt`)
 
         createNodeField({
           node,
