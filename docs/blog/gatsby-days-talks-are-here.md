@@ -21,4 +21,10 @@ The wait is over! Gatsby Days talks are posted below. Get caught up on all the l
 
 [How Gatsby Does High-Impact, Low-Effort UX Research (and You Can Too!)](https://www.gatsbyjs.com/gatsby-days-UXresearch-shannon/) by **Shannon Soper**, UX Researcher
 
-[Move Fast, Don't Break Things: Trends in Modern Web Development with Mediacurrent](https://www.gatsbyjs.com/gatsby-days-mediacurrent-ben/) by Ben Robertson with Mediacurrent
+[Move Fast, Don't Break Things: Trends in Modern Web Development with Mediacurrent](https://www.gatsbyjs.com/gatsby-days-mediacurrent-ben/) by **Ben Robertson** with Mediacurrent
+
+[Introducing Gatsby Themes](https://www.gatsbyjs.com/gatsby-days-themes-chris/) with **Chris Biscardi**, Contractor for Gatsby
+
+[Announcing Gatsby Preview: The Future is in the Cloud ](https://www.gatsbyjs.com/gatsby-days-preview-andrew/)with **Andrew Rhyne**, Head of Cloud
+
+[The Journey to the Content Mesh](https://www.gatsbyjs.com/gatsby-days-content-mesh-sam/) with **Sam Bhagwat**, Co-Founder and Head of Enterprise
