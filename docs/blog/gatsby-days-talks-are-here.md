@@ -13,7 +13,7 @@ showImageInArticle: false
 ---
 The wait is over! Gatsby Days talks are posted below. Gatsby Days are one-day, in-person conferences on the modern website technology stack and the future of the web. 
 
-Get caught up on all the latest presentations from Gatsby Days in Mountain View, California such as Kyle Mathews' presentation on the future of the web, Chris Biscardi on Gatsby Themes, product announcements, how to sell Gatsby to your clients, and more. Check out the recordings below and if you'd like to come to a Gatsby Days in your city, [**cast your vote here**](https://www.gatsbyjs.com/gatsby-days-signup/). 
+Get caught up on all the latest presentations from Gatsby Days in Mountain View, California such as Kyle Mathews' presentation on the future of the web, Chris Biscardi on Gatsby Themes, product announcements, how to sell Gatsby to your clients, and more. Check out the recordings below and if you'd like to see a Gatsby Days come to your city, [**cast your vote here**](https://www.gatsbyjs.com/gatsby-days-signup/). 
 
 ### Gatsby Days Talks
 
