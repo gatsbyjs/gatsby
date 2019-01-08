@@ -213,7 +213,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {post.frontmatter.publishedAt}
+                        {this.props.data.markdownRemark.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -344,6 +344,7 @@ export const pageQuery = graphql`
       timeToRead
       fields {
         slug
+        publishedAt
       }
       frontmatter {
         title
@@ -351,7 +352,6 @@ export const pageQuery = graphql`
         date(formatString: "MMMM Do YYYY")
         rawDate: date
         canonicalLink
-        publishedAt
         tags
         image {
           childImageSharp {

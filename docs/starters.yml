@@ -1571,3 +1571,20 @@
     - Styled with Tachyons.
     - Rich structured data on blog posts for SEO.
     - Pagination and category pages.
+- url: https://gatsby-starter-styled.netlify.com/
+  repo: https://github.com/gregoralbrecht/gatsby-starter-styled
+  description: Yet another simple starter with Styled-System, Typography.js, SEO and Google Analytics.
+  tags:
+    - Styling:CSS-in-JS
+    - PWA
+    - SEO
+  features:
+    - Styled-Components
+    - Styled-System
+    - Rebass Grid
+    - Typography.js to easily set up font styles
+    - Google Analytics
+    - Prettier, ESLint & Stylelint
+    - SEO (meta tags and schema.org via JSON-LD)
+    - Offline support
+    - Web App Manifest

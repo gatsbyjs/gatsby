@@ -48,7 +48,13 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
-    fromPath: `/docs/using-unstructured-data`,
+    fromPath: `/blog/2018-10-25-unstructured-data/`,
+    toPath: `/blog/2018-10-25-using-gatsby-without-graphql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-unstructured-data/`,
     toPath: `/docs/using-gatsby-without-graphql/`,
     isPermanent: true,
   })
@@ -272,7 +278,9 @@ exports.createPages = ({ graphql, actions }) => {
       const postsPerPage = 8
       const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
 
-      Array.from({ length: numPages }).forEach((_, i) => {
+      Array.from({
+        length: numPages,
+      }).forEach((_, i) => {
         createPage({
           path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
           component: slash(blogListTemplate),
@@ -462,7 +470,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         slug = `/${parsedFilePath.dir}/`
       }
 
-      // Set released status for blog posts.
+      // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
         let released = false
         const date = _.get(node, `frontmatter.date`)
@@ -470,6 +478,17 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           released = moment().isSameOrAfter(moment.utc(date))
         }
         createNodeField({ node, name: `released`, value: released })
+
+        const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
+        const publishedAt = _.get(node, `frontmatter.publishedAt`)
+
+        createNodeField({
+          node,
+          name: `publishedAt`,
+          value: canonicalLink
+            ? publishedAt || url.parse(canonicalLink).hostname
+            : null,
+        })
       }
     }
     // Add slugs for package READMEs.
