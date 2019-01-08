@@ -8,7 +8,7 @@ const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath } = require(`./path`)
+const { normalizePath, withBasePath } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -39,7 +39,7 @@ module.exports = async (
   const pathPrefix = program.prefixPaths
     ? `${store.getState().config.pathPrefix}`
     : ``
-  const publicPath = [assetPrefix, pathPrefix].filter(Boolean).join(`/`) || `/`
+  const publicPath = normalizePath(assetPrefix, pathPrefix)
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)

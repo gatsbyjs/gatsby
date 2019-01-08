@@ -23,7 +23,6 @@ function normalizePath(...parts) {
 
   return ((parts[0] || ``).match(/^http/) ? [] : [``])
     .concat(normalized)
-    .concat(``)
     .join(`/`)
 }
 
