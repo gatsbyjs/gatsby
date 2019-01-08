@@ -8,11 +8,14 @@ exports.onRouteUpdate = function({ location }) {
     ) {
       return
     }
-    window.ga(
-      `set`,
-      `page`,
-      location ? location.pathname + location.search + location.hash : undefined
-    )
-    window.ga(`send`, `pageview`)
+    
+    setTimeout(() => {
+      window.ga(
+        `set`,
+        `page`,
+        location ? location.pathname + location.search + location.hash : undefined
+      )
+      window.ga(`send`, `pageview`)
+    }, 0)
   }
 }
