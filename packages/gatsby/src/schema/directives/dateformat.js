@@ -7,29 +7,44 @@ const {
 } = require(`graphql`)
 const { SchemaDirectiveVisitor } = require(`graphql-tools`)
 const format = require(`date-fns/format`)
+const formatDistance = require(`date-fns/formatDistance`)
 const formatRelative = require(`date-fns/formatRelative`)
 
 // UPSTREAM: GraphQLDate.parseLiteral should accept date strings in other
 // formats but toISOString
 
-const formatDate = (date, pattern, lang, timeZone, distanceToNow) => {
+const formatDate = (
+  date,
+  formatString,
+  lang,
+  timeZone,
+  fromNow,
+  difference
+) => {
   const locale = lang && require(`date-fns/locale/${lang}`)
-  return distanceToNow
-    ? formatRelative(date, Date.now(), { locale }) // TODO: Use formatDistanceStrict?
-    : format(date, pattern, {
-        locale,
-        // timeZone, // IANA time zone, needs `date-fns-tz`
-      })
+  return fromNow
+    ? formatRelative(date, Date.now(), { locale })
+    : difference
+      ? // TODO: Use formatDistanceStrict?
+        formatDistance(date, difference, { locale, addSuffix: true })
+      : format(date, formatString, {
+          locale,
+          // Allow formatting with YYYY-MM-DD, instead of the more correct yyyy-MM-dd
+          // @see: https://git.io/fxCyr
+          awareOfUnicodeTokens: true,
+          // timeZone, // IANA time zone, needs `date-fns-tz`
+        })
 }
 
 const DateFormatDirective = new GraphQLDirective({
   name: `dateformat`,
   locations: [DirectiveLocation.FIELD_DEFINITION],
   args: {
-    format: { type: GraphQLString, defaultValue: `yyyy-MM-dd` },
+    difference: { type: GraphQLString },
+    formatString: { type: GraphQLString, defaultValue: `yyyy-MM-dd` },
+    fromNow: { type: GraphQLBoolean },
     locale: { type: GraphQLString, defaultValue: `en-US` },
     timeZone: { type: GraphQLString, defaultValue: `UTC` },
-    distanceToNow: { type: GraphQLBoolean, defaultValue: false },
   },
 })
 
@@ -38,29 +53,39 @@ class DateFormatDirectiveVisitor extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const { resolve = defaultFieldResolver } = field
     const {
-      format: defaultFormat,
+      difference: defaultDifference,
+      formatString: defaultFormatString,
+      fromNow: defaultFromNow,
       locale: defaultLocale,
       timeZone: defaultTimeZone,
-      distanceToNow: defaultDistanceToNow,
     } = this.args
 
     field.args.push(
-      { name: `format`, type: GraphQLString },
+      { name: `difference`, type: GraphQLString },
+      { name: `formatString`, type: GraphQLString },
+      { name: `fromNow`, type: GraphQLBoolean },
       { name: `locale`, type: GraphQLString },
-      { name: `timeZone`, type: GraphQLString },
-      { name: `distanceToNow`, type: GraphQLBoolean }
+      { name: `timeZone`, type: GraphQLString }
     )
 
     field.resolve = async (source, args, context, info) => {
-      const { format, locale, timeZone, distanceToNow, ...rest } = args
+      const {
+        difference,
+        formatString,
+        fromNow,
+        locale,
+        timeZone,
+        ...rest
+      } = args
       const date = await resolve(source, rest, context, info)
       return date
         ? formatDate(
             date,
-            format || defaultFormat,
+            formatString || defaultFormatString,
             locale || defaultLocale,
             timeZone || defaultTimeZone,
-            distanceToNow !== undefined ? distanceToNow : defaultDistanceToNow
+            fromNow !== undefined ? fromNow : defaultFromNow,
+            difference !== undefined ? difference : defaultDifference
           )
         : null
     }

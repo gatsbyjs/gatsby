@@ -8,8 +8,9 @@ const addResolvers = require(`../../schema/add-resolvers`)
 const tc = TypeComposer.create(`
   type Foo {
     formattable: Date @dateformat
-    formatted: Date @dateformat(format: "dd. MMMM yyyy", locale: "de")
-    distanceToNow: Date @dateformat(distanceToNow: true, locale: "de")
+    formatted: Date @dateformat(formatString: "dd. MMMM yyyy", locale: "de")
+    fromNow: Date @dateformat(fromNow: true, locale: "de")
+    difference: Date @dateformat(difference: "2019-01-01T00:00:00.000Z")
   }
 `)
 
@@ -30,48 +31,60 @@ describe(`@dateformat directive`, () => {
     const formattedDirective = fields.formatted.astNode.directives[0]
     expect(formattedDirective.name.value).toBe(`dateformat`)
     expect(formattedDirective.arguments.map(arg => arg.name.value)).toEqual([
-      `format`,
+      `formatString`,
       `locale`,
     ])
 
-    const distanceToNowDirective = fields.distanceToNow.astNode.directives[0]
-    expect(distanceToNowDirective.name.value).toBe(`dateformat`)
-    expect(distanceToNowDirective.arguments.map(arg => arg.name.value)).toEqual(
-      [`distanceToNow`, `locale`]
-    )
+    const fromNowDirective = fields.fromNow.astNode.directives[0]
+    expect(fromNowDirective.name.value).toBe(`dateformat`)
+    expect(fromNowDirective.arguments.map(arg => arg.name.value)).toEqual([
+      `fromNow`,
+      `locale`,
+    ])
+
+    const differenceDirective = fields.difference.astNode.directives[0]
+    expect(differenceDirective.name.value).toBe(`dateformat`)
+    expect(differenceDirective.arguments.map(arg => arg.name.value)).toEqual([
+      `difference`,
+    ])
   })
 
   it(`adds input args to field`, () => {
     expect(fields.formattable.args.map(arg => arg.name)).toEqual([
-      `format`,
+      `difference`,
+      `formatString`,
+      `fromNow`,
       `locale`,
       `timeZone`,
-      `distanceToNow`,
     ])
     expect(fields.formatted.args.map(arg => arg.name)).toEqual([
-      `format`,
+      `difference`,
+      `formatString`,
+      `fromNow`,
       `locale`,
       `timeZone`,
-      `distanceToNow`,
     ])
-    expect(fields.distanceToNow.args.map(arg => arg.name)).toEqual([
-      `format`,
+    expect(fields.fromNow.args.map(arg => arg.name)).toEqual([
+      `difference`,
+      `formatString`,
+      `fromNow`,
       `locale`,
       `timeZone`,
-      `distanceToNow`,
     ])
   })
 
   it(`adds field resolver`, () => {
     expect(fields.formattable.resolve).toBeInstanceOf(Function)
     expect(fields.formatted.resolve).toBeInstanceOf(Function)
-    expect(fields.distanceToNow.resolve).toBeInstanceOf(Function)
+    expect(fields.fromNow.resolve).toBeInstanceOf(Function)
+    expect(fields.difference.resolve).toBeInstanceOf(Function)
   })
 
   it(`sets field type to String`, () => {
     expect(fields.formattable.type).toBe(GraphQLString)
     expect(fields.formatted.type).toBe(GraphQLString)
-    expect(fields.distanceToNow.type).toBe(GraphQLString)
+    expect(fields.fromNow.type).toBe(GraphQLString)
+    expect(fields.difference.type).toBe(GraphQLString)
   })
 
   it(`keeps Date type of input filter`, () => {
@@ -81,14 +94,15 @@ describe(`@dateformat directive`, () => {
       .foo.args[0].type.getFields()
     expect(filterFields.formattable.type.name).toBe(`DateQueryOperatorInput`)
     expect(filterFields.formatted.type.name).toBe(`DateQueryOperatorInput`)
-    expect(filterFields.distanceToNow.type.name).toBe(`DateQueryOperatorInput`)
+    expect(filterFields.fromNow.type.name).toBe(`DateQueryOperatorInput`)
+    expect(filterFields.difference.type.name).toBe(`DateQueryOperatorInput`)
   })
 
   it(`uses default directive args`, async () => {
     const date = new Date(Date.UTC(2019, 0, 1))
     Date.now = jest.fn().mockReturnValue(new Date(Date.UTC(2019, 0, 3)))
 
-    // defaultValue: "yyyy-MM-dd", "en-US", "UTC", false
+    // defaultValue: "yyyy-MM-dd", "en-US", "UTC", false, undefined
     const formattableDate = await fields.formattable.resolve(
       { date },
       {},
@@ -97,7 +111,7 @@ describe(`@dateformat directive`, () => {
     )
     expect(formattableDate).toBe(`2019-01-01`)
 
-    // default format: "dd. MMMM yyyy", default locale: "de"
+    // default formatString: "dd. MMMM yyyy", default locale: "de"
     const formattedDate = await fields.formatted.resolve(
       { date },
       {},
@@ -106,14 +120,25 @@ describe(`@dateformat directive`, () => {
     )
     expect(formattedDate).toBe(`01. Januar 2019`)
 
-    // default distanceToNow: true, default locale: "de"
-    const distanceToNow = await fields.distanceToNow.resolve(
+    // default fromNow: true, default locale: "de"
+    const fromNow = await fields.fromNow.resolve(
       { date },
       {},
       {},
       { fieldName: `date` }
     )
-    expect(distanceToNow).toBe(`letzten Dienstag um 01:00`)
+    expect(fromNow).toBe(`letzten Dienstag um 01:00`)
+
+    // default difference: "2019-01-01T00:00:00.000Z"
+    // NOTE: If not otherwise specified, the default base date for `difference`
+    // is interpreted as being in the local timeZone.
+    const difference = await fields.difference.resolve(
+      { date },
+      {},
+      {},
+      { fieldName: `date` }
+    )
+    expect(difference).toBe(`less than a minute ago`)
   })
 
   it(`uses input args`, async () => {
@@ -122,7 +147,7 @@ describe(`@dateformat directive`, () => {
 
     const formattableDate = await fields.formattable.resolve(
       { date },
-      { format: `yyyy` },
+      { formatString: `yyyy` },
       {},
       { fieldName: `date` }
     )
@@ -130,20 +155,28 @@ describe(`@dateformat directive`, () => {
 
     const formattedDate = await fields.formatted.resolve(
       { date },
-      { format: `yyyy` },
+      { formatString: `YYYY` },
       {},
       { fieldName: `date` }
     )
     expect(formattedDate).toBe(`2019`)
 
-    // NOTE: If you set default `distanceToNow: true`, you need to
+    // NOTE: If you set default `fromNow: true`, you need to
     // explicitly disable it for formatting args to take effect.
-    const distanceToNow = await fields.distanceToNow.resolve(
+    const fromNow = await fields.fromNow.resolve(
       { date },
-      { format: `yyyy`, distanceToNow: false },
+      { formatString: `yyyy`, fromNow: false },
       {},
       { fieldName: `date` }
     )
-    expect(distanceToNow).toBe(`2019`)
+    expect(fromNow).toBe(`2019`)
+
+    const difference = await fields.difference.resolve(
+      { date },
+      { difference: new Date(Date.UTC(2019, 0, 5)) },
+      {},
+      { fieldName: `date` }
+    )
+    expect(difference).toBe(`4 days ago`)
   })
 })

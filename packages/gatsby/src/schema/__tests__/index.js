@@ -161,7 +161,7 @@ describe(`Schema query`, () => {
         allMarkdown {
           frontmatter {
             title
-            date(format: "MM-dd-yyyy")
+            date(formatString: "MM-dd-yyyy")
             published
             authors {
               name
