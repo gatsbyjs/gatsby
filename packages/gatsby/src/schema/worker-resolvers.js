@@ -1,7 +1,7 @@
 const path = require(`path`)
+const invariant = require(`invariant`)
 const Worker = require(`jest-worker`).default
 const { store } = require(`../redux`)
-const invariant = require(`invariant`)
 const nodesAPI = require(`../db/nodes`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
@@ -41,12 +41,14 @@ const rpcMethods = {
  * @param request the raw message args sent from the worker.
  */
 function ipcCallback(child, request) {
-  invariant(child, `no child`)
-  invariant(request, `request`)
+  invariant(request, `Empty IPC request`)
   const [rpc] = request
-  invariant(rpc, `rpc`)
+  invariant(
+    rpc,
+    `IPC request should be an array with a single element representing the "rpc"`
+  )
   const { name, args, id } = rpc
-  invariant(name, `rpc name`)
+  invariant(name, `RPC should contain the name of the RPC being called`)
   const response = rpcMethods[name].apply(null, args)
   // Only respond if id is present (this means the message was an RPC)
   if (id) {
@@ -60,28 +62,12 @@ function ipcCallback(child, request) {
 }
 
 /**
- * Given the name of a plugin, returns the plugin object stored in
- * redux
- */
-function getPlugin(pluginName) {
-  const plugins = store.getState().flattenedPlugins
-  return plugins.find(p => p.name === pluginName)
-}
-
-/**
  * Returns an object that contains all the information needed by a
  * worker-resolver to initialize itself and start answering requests
  * for the passed in field
  */
-function makeFieldSetup({ typeName, fieldName, fieldConfig }) {
-  invariant(fieldConfig, `fieldConfig`)
-  invariant(typeName, `typeName`)
-  invariant(fieldName, `fieldName`)
-  const { workerPlugin } = fieldConfig
-  const plugin = getPlugin(workerPlugin)
-  invariant(plugin, `plugin not found`)
+function makeFieldSetup({ typeName, fieldName, fieldConfig, plugin }) {
   const resolverFile = path.join(plugin.resolve, `gatsby-node.js`)
-  invariant(resolverFile, `new resolver asyncFile`)
   const type = { name: typeName }
   return {
     fieldName,
@@ -145,7 +131,6 @@ function initPool() {
     return
   }
   pool = makeJestWorkerPool(fields)
-  invariant(pool, `pool`)
 }
 
 function endPool() {
@@ -162,10 +147,22 @@ function workerResolver({ typeName, fieldName }) {
     try {
       return await pool.execResolver(typeName, fieldName, node, args)
     } catch (e) {
-      console.log(e)
-      return null
+      reporter.panicOnBuild(
+        `Error calling worker resolver. type = [${typeName}], field = [${fieldName}].\n
+        ${e.message}`
+      )
+      return null // Never reached. for linter
     }
   }
+}
+
+/**
+ * Given the name of a plugin, returns the plugin object stored in
+ * redux
+ */
+function getPlugin(pluginName) {
+  const plugins = store.getState().flattenedPlugins
+  return plugins.find(p => p.name === pluginName)
 }
 
 /**
@@ -173,8 +170,35 @@ function workerResolver({ typeName, fieldName }) {
  * resolve function that will call the worker
  */
 function defineResolver(field) {
+  // Bunch of checks to make sure field is what we expect
+  invariant(field, `field passed to defineResolver is undefined`)
+  const { typeName, fieldName, fieldConfig } = field
+  invariant(typeName, `field.typeName passed to defineResolver is undefined`)
+  invariant(fieldName, `field.fieldName passed to defineResolver is undefined`)
+  invariant(
+    fieldConfig,
+    `field.fieldConfig passed to defineResolver is undefined`
+  )
+  invariant(
+    fieldConfig.workerPlugin,
+    `field.fieldConfig.workerPlugin passed to defineResolver is undefined`
+  )
+  invariant(
+    fieldConfig.workerPlugin,
+    `field.fieldConfig.workerPlugin passed to defineResolver is undefined`
+  )
+
+  // Make sure workerPlugin is valid
+  const { workerPlugin } = fieldConfig
+  const plugin = getPlugin(workerPlugin)
+  if (!plugin) {
+    throw new Error(
+      `can't find [${workerPlugin}] workerPlugin specified in GraphQL field [${fieldName}] for type [${typeName}]. workerPlugin should be the name of the plugin that implements the "setFieldsOnGraphQLNodeType" API.`
+    )
+  }
+
   // TODO clear on CLEAR_CACHE etc
-  fields.push(field)
+  fields.push({ plugin, ...field })
   return workerResolver(field)
 }
 
