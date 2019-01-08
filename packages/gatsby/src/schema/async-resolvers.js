@@ -2,14 +2,19 @@ const path = require(`path`)
 const Worker = require(`jest-worker`).default
 const { store } = require(`../redux`)
 const invariant = require(`invariant`)
-const { getNode, getNodesByType } = require(`../db/nodes`)
+const nodesAPI = require(`../db/nodes`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 
 let fields = []
 let pool
 
+function reporterHandler({ fnName, args }) {
+  reporter[fnName].apply(null, args)
+}
+
 const rpcMethods = {
-  getNode,
-  getNodesByType,
+  ...nodesAPI,
+  reporter: reporterHandler,
 }
 
 function ipcCallback(child, request) {
@@ -19,14 +24,16 @@ function ipcCallback(child, request) {
   invariant(rpc, `rpc`)
   const { name, args, id } = rpc
   invariant(name, `rpc name`)
-  invariant(id, `rpc id`)
   const response = rpcMethods[name].apply(null, args)
-  const replyMessage = {
-    id,
-    type: `response`,
-    response,
+  // Only respond if id is present (this means the message was an RPC)
+  if (id) {
+    const replyMessage = {
+      id,
+      type: `response`,
+      response,
+    }
+    child.send([3, replyMessage])
   }
-  child.send([3, replyMessage])
 }
 
 function getPlugin(pluginName) {
@@ -42,10 +49,6 @@ function makeFieldSetup({ fieldConfig, typeName, fieldName }) {
   invariant(typeName, `typeName`)
   invariant(fieldName, `fieldName`)
   const { pluginName } = fieldConfig
-  let pathPrefix = ``
-  if (store.getState().program.prefixPaths) {
-    pathPrefix = store.getState().config.pathPrefix
-  }
   const plugin = getPlugin(pluginName)
   const resolverFile = path.join(plugin.resolve, `gatsby-node.js`)
   invariant(resolverFile, `new resolver asyncFile`)
@@ -53,14 +56,17 @@ function makeFieldSetup({ fieldConfig, typeName, fieldName }) {
   return {
     fieldName,
     resolverFile,
-    pathPrefix,
     type,
     pluginOptions: plugin.pluginOptions,
   }
 }
 
 function makePool(fields) {
-  const setupArgs = [{ fields: fields.map(makeFieldSetup) }]
+  let pathPrefix = ``
+  if (store.getState().program.prefixPaths) {
+    pathPrefix = store.getState().config.pathPrefix
+  }
+  const setupArgs = [{ pathPrefix, fields: fields.map(makeFieldSetup) }]
   const exposedMethods = [`execResolver`]
   const workerOptions = {
     ipcCallback,

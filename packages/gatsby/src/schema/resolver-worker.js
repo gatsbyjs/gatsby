@@ -1,7 +1,9 @@
+const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const uuidv4 = require(`uuid/v4`)
 const Cache = require(`../utils/cache`)
-const _ = require(`lodash`)
+const createContentDigest = require(`../utils/create-content-digest`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 
 const types = {}
 const rpcs = new Map()
@@ -59,57 +61,83 @@ function makeRpc(fnName) {
 }
 
 function makeReporter() {
-  return {
-    table: (...args) => console.log(`table`, args),
-    step: (...args) => console.log(`step`, args),
-    inspect: (...args) => console.log(`inspect`, args),
-    list: (...args) => console.log(`list`, args),
-    header: (...args) => console.log(`header`, args),
-    footer: (...args) => console.log(`footer`, args),
-    log: (...args) => console.log(`log`, args),
-    success: (...args) => console.log(`success`, args),
-    error: (...args) => console.log(`error`, args),
-    info: (...args) => console.log(`info`, args),
-    command: (...args) => console.log(`command`, args),
-    warn: (...args) => console.log(`warn`, args),
-    question: (...args) => console.log(`question`, args),
-    tree: (...args) => console.log(`tree`, args),
-    activitySet: (...args) => console.log(`activitySet`, args),
-    activity: (...args) => console.log(`activity`, args),
-    select: (...args) => console.log(`select`, args),
-    progress: (...args) => console.log(`progress`, args),
-    close: (...args) => console.log(`close`, args),
-    createReporter: (...args) => console.log(`createReporter`, args),
-    panic: (...args) => console.log(`panic`, args),
-    panicOnBuild: (...args) => console.log(`panicOnBuild`, args),
-    uptime: (...args) => console.log(`uptime`, args),
+  return Object.assign(reporter, {
+    panicOnBuild(...args) {
+      // panicOnBuild will send the panic message to the parent
+      // process, which will terminate, thus killing this and all
+      // other workers. All other reporter functions operate locally
+      const msg = {
+        name: `reporter`,
+        args: { fnName: `panicOnBuild`, args },
+      }
+      process.send([3, msg])
+    },
+  })
+}
+
+function makeRpcs(o, rpcNames) {
+  for (const rpcName of rpcNames) {
+    o[rpcName] = makeRpc(rpcName)
+  }
+  return o
+}
+
+function unsupportedFn(name) {
+  return () => {
+    throw new Error(`API [${name}] is unsupported in parallel resolver`)
   }
 }
 
-function makeRpcs() {
-  return {
-    getNode: makeRpc(`getNode`),
-    getNodesByType: makeRpc(`getNodesByType`),
-    reporter: makeReporter(),
+function makeUnsupportedProps(o, props) {
+  for (const prop of props) {
+    Object.defineProperty(o, prop, unsupportedFn(prop))
   }
+  return o
+}
+
+function makeApi(type, pathPrefix) {
+  const cache = new Cache({ name: `some cache` }).init()
+  const api = {
+    cache,
+    createContentDigest,
+    // TODO pass in plugin.name into worker so this can mimic api-runner-node
+    // createNodeId: namespacedCreateNodeId,
+    // TODO remember to remove from unsupported
+    reporter: makeReporter(),
+    type,
+    pathPrefix,
+  }
+  makeUnsupportedProps(api, [
+    `boundActionCreators`,
+    `createNodeId`,
+    `actions`,
+    `store`,
+    `emitter`,
+    `tracing`,
+    `getNodes`,
+  ])
+  makeRpcs(api, [
+    `loadNodeContent`,
+    `getNode`,
+    `getNodesByType`,
+    `hasNodeChanged`,
+    `getNodeAndSavePathDependency`,
+  ])
+  return api
 }
 
 function storeResolver(typeName, fieldName, fieldConfig) {
   _.set(types, [typeName, `fields`, fieldName], fieldConfig)
 }
 
-async function initModule({
-  fieldName,
-  resolverFile,
-  pluginOptions,
-  type,
+async function initModule(
   pathPrefix,
-}) {
+  { fieldName, resolverFile, pluginOptions, type }
+) {
   invariant(resolverFile, `asyncFile`)
   invariant(pluginOptions, `pluginOptions`)
   const module = require(resolverFile)
-  const cache = new Cache({ name: `some cache` }).init()
-  const api = { type, pathPrefix, cache, ...makeRpcs() }
+  const api = makeApi(type, pathPrefix)
   const newFields = await module.setFieldsOnGraphQLNodeType(api, pluginOptions)
   _.forEach(newFields, (fieldConfig, fieldName) => {
     storeResolver(type.name, fieldName, fieldConfig)
@@ -117,10 +145,10 @@ async function initModule({
 }
 
 async function setup(args) {
-  const { fields } = args
+  const { pathPrefix, fields } = args
   invariant(fields, `setup fields`)
   for (const field of fields) {
-    await initModule(field)
+    await initModule(pathPrefix, field)
   }
 }
 
