@@ -9,6 +9,8 @@ const {
 } = require(`../path`)
 const { clear, getAssets } = require(`../asset-path-registry`)
 
+const join = (...parts) => parts.join(`/`)
+
 describe(`paths`, () => {
   describe(`joinPath`, () => {
     if (os.platform() !== `win32`) {
@@ -91,21 +93,21 @@ describe(`withAssetPrefix`, () => {
 
     const filePath = withAssetPrefix(``)(...route)
 
-    expect(filePath).toEqual(path.join(`/`, ...route))
+    expect(filePath).toEqual(join(`/`, ...route))
   })
 
   it(`returns a function that binds to asset prefix`, () => {
     const route = [`page-one`]
     const filePath = boundWithAssetPrefix(...route)
 
-    expect(filePath).toEqual(path.join(prefix, ...route))
+    expect(filePath).toEqual(join(prefix, ...route))
   })
 
   it(`works with multiple part pieces`, () => {
     const routes = [`page-one`, `sample`, `index.html`]
     const filePath = boundWithAssetPrefix(...routes)
 
-    expect(filePath).toEqual(path.join(prefix, ...routes))
+    expect(filePath).toEqual(join(prefix, ...routes))
   })
 
   it(`registers with asset prefix API`, async () => {
