@@ -1,6 +1,5 @@
 const DOCLET_PATTERN = /^@(\w+)(?:$|\s((?:[^](?!^@\w))*))/gim
 
-const { hasOwnProperty: has } = Object.prototype
 let cleanDocletValue = str => {
   str = str.trim()
   if (str.endsWith(`}`) && str.startsWith(`{`)) str = str.slice(1, -1)
@@ -26,15 +25,15 @@ export const cleanDoclets = desc => {
  * Updated to strip \r from the end of doclets
  */
 const getDoclets = str => {
-  let doclets = Object.create(null)
+  let doclets = []
   let match = DOCLET_PATTERN.exec(str)
   let val
 
   for (; match; match = DOCLET_PATTERN.exec(str)) {
     val = match[2] ? match[2].replace(/\r$/, ``) : true
-    doclets[match[1]] = val
+    const key = match[1]
+    doclets.push({ tag: key, value: val })
   }
-
   return doclets
 }
 
@@ -57,41 +56,39 @@ export const parseDoclets = obj => {
  * @param  {String} propName
  */
 export const applyPropDoclets = prop => {
-  let doclets = prop.doclets
-  let value
+  prop.doclets.forEach(({ tag, value }) => {
+    // the @type doclet to provide a prop type
+    // Also allows enums (oneOf) if string literals are provided
+    // ex: @type {("optionA"|"optionB")}
+    if (tag === `type`) {
+      value = cleanDocletValue(value)
+      prop.type.name = value
 
-  // the @type doclet to provide a prop type
-  // Also allows enums (oneOf) if string literals are provided
-  // ex: @type {("optionA"|"optionB")}
-  if (doclets.type) {
-    value = cleanDocletValue(doclets.type)
-    prop.type.name = value
-
-    if (value[0] === `(`) {
-      value = value.substring(1, value.length - 1).split(`|`)
-      const name = value.every(isLiteral) ? `enum` : `union`
-      prop.type.name = name
-      prop.type.value = value.map(
-        value =>
-          name === `enum` ? { value, computed: false } : { name: value }
-      )
+      if (value[0] === `(`) {
+        value = value.substring(1, value.length - 1).split(`|`)
+        const name = value.every(isLiteral) ? `enum` : `union`
+        prop.type.name = name
+        prop.type.value = value.map(
+          value =>
+            name === `enum` ? { value, computed: false } : { name: value }
+        )
+      }
+      return
     }
-  }
 
-  // Use @required to mark a prop as required
-  // useful for custom propTypes where there isn't a `.isRequired` addon
-  if (doclets.required) {
-    prop.required = true
-  }
-  const dft = has.call(doclets, `default`)
-    ? doclets.default
-    : doclets.defaultValue
-  // Use @defaultValue to provide a prop's default value
-  if (dft != null) {
-    prop.defaultValue = {
-      value: dft,
-      computed: false,
+    // Use @required to mark a prop as required
+    // useful for custom propTypes where there isn't a `.isRequired` addon
+    if (tag === `required` && value) {
+      prop.required = true
+      return
     }
-  }
+
+    // Use @defaultValue to provide a prop's default value
+    if ((tag === `default` || tag === `defaultValue`) && value != null) {
+      prop.defaultValue = { value, computed: false }
+      return
+    }
+  })
+
   return prop
 }

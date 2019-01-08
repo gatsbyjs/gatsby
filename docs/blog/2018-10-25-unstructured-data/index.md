@@ -229,6 +229,7 @@ Another difficulty added when working with unstructured data is that your data f
 - GitHub issue: ["Choosing not to use the GraphQL feature of Gatsby – a bad idea?"](https://github.com/gatsbyjs/gatsby/issues/4994)
 - Kyle Mathews' reasoning for [going with GraphQL](https://github.com/gatsbyjs/gatsby/issues/4994#issuecomment-382110077).
 - The issue [introducing 1.0 GraphQL data layer](https://github.com/gatsbyjs/gatsby/issues/420).
+- Gatsby docs on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql)
 
 ## Thanks
 

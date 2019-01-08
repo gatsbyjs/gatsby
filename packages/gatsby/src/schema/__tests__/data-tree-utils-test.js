@@ -93,6 +93,7 @@ describe(`Gatsby data tree utils`, () => {
           someOtherProperty: 3,
         },
       },
+      "": ``,
     },
   ]
 
@@ -102,6 +103,10 @@ describe(`Gatsby data tree utils`, () => {
 
   it(`skips null fields`, () => {
     expect(getExampleValues({ nodes }).iAmNull).not.toBeDefined()
+  })
+
+  it(`skips fields with key set to empty string`, () => {
+    expect(getExampleValues({ nodes })[``]).not.toBeDefined()
   })
 
   it(`should not mutate the nodes`, () => {

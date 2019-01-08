@@ -23,8 +23,10 @@ exports.onPostBootstrap = (args, pluginOptions) =>
     const { icon, ...manifest } = pluginOptions
 
     // Delete options we won't pass to the manifest.webmanifest.
+
     delete manifest.plugins
     delete manifest.legacy
+    delete manifest.theme_color_in_head
 
     // If icons are not manually defined, use the default icon set.
     if (!manifest.icons) {

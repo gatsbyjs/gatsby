@@ -93,7 +93,8 @@ GATSBY_API_URL=https://example.com/api
 API_KEY=927349872349798
 ```
 
-`GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`:
+Note: since Gatsby uses the [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
+`GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`.:
 
 ```jsx
 // In any frontend code
@@ -129,6 +130,14 @@ module.exports = {
 
 - `NODE_ENV`
 - `PUBLIC_DIR`
+
+Gatsby also allows you to specify another environment variable when running the local development server (e.g. `gatsby develop`):
+
+- `ENABLE_GATSBY_REFRESH_ENDPOINT`
+
+If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
+
+You can trigger this endpoint locally for example on Unix-based operating systems (like Ubuntu and MacOS) you can use `curl -X POST http://localhost:8000/__refresh`.
 
 ## Additional Environments (Staging, Test, etc)
 
