@@ -77,17 +77,17 @@
     - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
-        - title: Using unstructured data
-          link: /docs/using-unstructured-data/
+        - title: Using Gatsby without GraphQL
+          link: /docs/using-gatsby-without-graphql/
         - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
-        - title: Sourcing from databases*
+        - title: Sourcing from databases
           link: /docs/sourcing-from-databases/
         - title: Sourcing from SaaS services*
           link: /docs/sourcing-from-saas-services/
         - title: Sourcing from private APIs*
           link: /docs/sourcing-from-private-apis/
-        - title: Sourcing fom (headless) CMSs
+        - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/
           items:
             - title: Sourcing from WordPress

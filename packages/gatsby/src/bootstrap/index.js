@@ -283,10 +283,10 @@ module.exports = async (args: BootstrapArgs) => {
 
     const envAPIs = plugin[`${env}APIs`]
 
-    // Always include the site's gatsby-browser.js if it exists as it's
+    // Always include gatsby-browser.js files if they exists as they're
     // a handy place to include global styles and other global imports.
     try {
-      if (env === `browser` && plugin.name === `default-site-plugin`) {
+      if (env === `browser`) {
         return slash(
           require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
         )

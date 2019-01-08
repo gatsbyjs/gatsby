@@ -39,6 +39,7 @@
     "gatsby-remark-copy-linked-files": "^2.0.5",
     "gatsby-remark-graphviz": "^1.0.0",
     "gatsby-remark-images": "^2.0.1",
+    "gatsby-remark-normalize-paths": "^1.0.0",
     "gatsby-remark-prismjs": "^3.0.2",
     "gatsby-remark-responsive-iframe": "^2.0.5",
     "gatsby-remark-smartypants": "^2.0.5",
@@ -96,7 +97,8 @@
     "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1",
     "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js",
-    "stylelint": "stylelint './src/**/*.js'"
+    "stylelint": "stylelint './src/**/*.js'",
+    "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0"
   },
   "devDependencies": {
     "front-matter": "^2.3.0",

@@ -189,6 +189,10 @@
   bio: Early stage software product consultant. React*, Go, GraphQL, Containers, k8s.
   avatar: avatars/chris-biscardi.png
   twitter: "@chrisbiscardi"
+- id: LekoArts
+  bio: Designer & Frontend Dev. Loves good typography & tv series. Blogs at lekoarts.de
+  avatar: avatars/lekoarts.png
+  twitter: "@lekoarts_de"
 - id: Tyler Barnes
   bio: React - front-end dev - cycling - music
   avatar: avatars/tyler-barnes.jpg
@@ -196,3 +200,7 @@
   bio: Infinite Builder working on DX @ Netlify. Helping people Learn In Public at /r/reactjs
   avatar: avatars/swyx.jpg
   twitter: "@swyx"
+- id: Ondrej Polesny
+  bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Cloud.
+  avatar: avatars/ondrej-polesny.jpg
+  twitter: "@ondrabus"

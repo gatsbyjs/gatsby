@@ -201,12 +201,12 @@
     - Documentation
     - Featured
   featured: true
-- title: KNW Photography
-  main_url: "https://www.knw.io/"
-  url: "https://www.knw.io/galleries/"
+- title: Kirsten Noelle
+  main_url: "https://www.kirstennoelle.com/"
+  url: "https://www.kirstennoelle.com/"
   featured: true
   description: >
-    Digital portfolio for San Francisco Bay Area photographer Kirsten Wiemer.
+    Digital portfolio for San Francisco Bay Area photographer Kirsten Noelle Wiemer.
   categories:
     - Photography
     - Portfolio
@@ -2245,12 +2245,13 @@
   main_url: https://www.peterkroyer.at/en/
   url: https://www.peterkroyer.at/en/
   description: >
-    Freelance web designer / web developer based in Vienna, Austria.
+    Freelance web designer / web developer based in Vienna, Austria (Wien, Österreich).
   categories:
     - Agency
     - Web Development
     - Design
     - Portfolio
+    - Freelance
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
@@ -3837,4 +3838,98 @@
     - Web Development
   built_by: Song Wang
   built_by_url: "https://github.com/wangsongiam/"
+  featured: false
+- title: Engel & Völkers Ibiza Holiday Rentals
+  main_url: "https://www.ev-ibiza.com/"
+  url: "https://www.ev-ibiza.com/"
+  featured: false
+  built_by: Ventura Digitalagentur
+  description: >
+    Engel & Völkers, one of the most successful real estate agencies in the world, offers luxury holiday villas to rent in Ibiza.
+  categories:
+    - Tourism
+    - Travel
+- title: Sylvain Hamann's personal website
+  url: "https://shamann.fr"
+  main_url: "https://shamann.fr"
+  source_url: "https://github.com/sylvhama/shamann-gatsby/"
+  description: >
+    Sylvain Hamann, web developer from France
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Sylvain Hamann
+  built_by_url: "https://twitter.com/sylvhama"
+  featured: false
+- title: Jane Manchun Wong's Personal Website
+  main_url: "https://wongmjane.com/"
+  url: "https://wongmjane.com/"
+  description: >
+    Jane Manchun Wong's Personal Website is where she posts bug bounty write-ups, discoveries from reverse engineering apps and personal thoughts. This site is built on Gatsby v2 and it leverages the ecosystem to provide PWA features such as offline support.
+  categories:
+    - Blog
+    - Portfolio
+    - Security
+  built_by: Jane Manchun Wong
+  built_by_url: "https://twitter.com/wongmjane"
+  featured: false
+- title: PostPost
+  main_url: "https://postpost.design"
+  source_url: "https://github.com/postpostpdx/website"
+  url: "https://postpost.design"
+  description: >
+    PostPost is a small studio based in Portland, OR that is focused on product design, web design/development, branding, and strategy.
+  categories:
+    - Portfolio
+    - Design
+    - Agency
+    - Web Development
+  built_by: Jonathan Simcoe
+  built_by_url: "https://twitter.com/jdsimcoe"
+  featured: false
+- title: Luca Crea's portfolio
+  main_url: https://lcrea.github.io
+  url: https://lcrea.github.io
+  description: >
+    Portfolio and personal website of Luca Crea, an Italian software engineer.
+  categories:
+    - Portfolio
+  built_by: Luca Crea
+  built_by_url: https://github.com/lcrea
+  featured: false
+- title: Escalade Sports
+  main_url: "https://www.escaladesports.com/"
+  url: "https://www.escaladesports.com/"
+  categories:
+    - eCommerce
+    - Sports
+  built_by: Escalade Sports
+  built_by_url: "https://www.escaladesports.com/"
+  featured: false
+- title: Exposify
+  main_url: "https://www.exposify.de/"
+  url: "https://www.exposify.de/"
+  description: >
+    This is our German website built with Gatsby 2.0, Emotion and styled-system.
+    Exposify is a proptech startup and builds technology for real estate businesses.
+    We provide our customers with an elegant agent software in combination
+    with beautifully designed and fast websites.
+  categories:
+    - Web Development
+    - Real Estate
+    - Agency
+    - Marketing
+  built_by: Exposify
+  built_by_url: "https://www.exposify.de/"
+  featured: false
+- title: Steak Point
+  main_url: https://www.steakpoint.at/
+  url: https://www.steakpoint.at/
+  description: >
+    Steak Restaurant in Vienna, Austria (Wien, Österreich).
+  categories:
+    - Restaurant
+    - Food
+  built_by: Peter Kroyer
+  built_by_url: https://www.peterkroyer.at/
   featured: false

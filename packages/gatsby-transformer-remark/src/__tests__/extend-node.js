@@ -15,7 +15,7 @@ async function queryResult(
   nodes,
   fragment,
   { types = [] } = {},
-  additionalParameters
+  { additionalParameters = {}, pluginOptions = {} }
 ) {
   const inferredFields = inferObjectStructureFromNodes({
     nodes,
@@ -33,6 +33,7 @@ async function queryResult(
     },
     {
       plugins: [],
+      ...pluginOptions,
     }
   )
 
@@ -80,7 +81,7 @@ const bootstrapTest = (
   content,
   query,
   test,
-  additionalParameters = {}
+  { additionalParameters = {}, pluginOptions = {} } = {}
 ) => {
   const node = {
     id: `whatever`,
@@ -102,7 +103,7 @@ const bootstrapTest = (
         {
           types: [{ name: `MarkdownRemark` }],
         },
-        additionalParameters
+        { additionalParameters, pluginOptions }
       ).then(result => {
         try {
           test(result.data.listNode[0])
@@ -137,10 +138,10 @@ date: "2017-09-18T23:19:51.246Z"
 ---
 Where oh where is my little pony?`,
     `excerpt
-    frontmatter {
-        title
-    }
-    `,
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
@@ -154,10 +155,10 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---`,
     `excerpt
-    frontmatter {
-        title
-    }
-    `,
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(``)
@@ -175,17 +176,17 @@ Where oh where is my little pony?
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-    `,
+      `,
     `excerpt
-    frontmatter {
-        title
-    }
-    `,
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     },
-    { excerpt_separator: `<!-- end -->` }
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 
   const content = `---
@@ -194,16 +195,16 @@ date: "2017-09-18T23:19:51.246Z"
 ---
 Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-`
+  `
 
   bootstrapTest(
     `correctly prunes length to default value`,
     content,
     `excerpt
-    frontmatter {
-        title
-    }
-    `,
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(139)
@@ -214,10 +215,10 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `correctly prunes length to provided parameter`,
     content,
     `excerpt(pruneLength: 50)
-    frontmatter {
-        title
-    }
-    `,
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(46)
@@ -228,10 +229,10 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `correctly prunes length to provided parameter with truncate`,
     content,
     `excerpt(pruneLength: 50, truncate: true)
-    frontmatter {
-        title
-    }
-    `,
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(50)
@@ -247,16 +248,38 @@ date: "2017-09-18T23:19:51.246Z"
 
 Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
     `excerpt(format: HTML)
-    frontmatter {
-        title
-    }
-    `,
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(
         `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
       )
     }
+  )
+
+  bootstrapTest(
+    `given raw html in the text body, this html is not escaped`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where is my <code>pony</code> named leo?`,
+    `excerpt(format: HTML)
+      frontmatter {
+          title
+      }
+      `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where is my <code>pony</code> named leo?</p>`
+      )
+    },
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 
   bootstrapTest(
@@ -268,12 +291,12 @@ date: "2017-09-18T23:19:51.246Z"
 
 Where oh where is that pony? Is he in the stable or down by the stream?`,
     `excerpt(format: HTML, pruneLength: 50)
-    frontmatter {
-        title
-    }
-    `,
+      frontmatter {
+          title
+      }
+      `,
     node => {
-      // expect(node).toMatchSnapshot()
+      expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(
         `<p>Where oh where is that pony? Is he in the stable…</p>`
       )
@@ -287,7 +310,7 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 
-Where oh where is that pony? Is he in the stable or by the stream?
+Where oh where is that *pony*? Is he in the stable or by the stream?
 
 <!-- end -->
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
@@ -300,10 +323,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(
-        `<p>Where oh where is that pony? Is he in the stable…</p>`
+        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>`
       )
     },
-    { excerpt_separator: `<!-- end -->` }
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 })
 
@@ -450,6 +473,6 @@ This is [a reference]
       expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
       expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
     },
-    { pathPrefix: `/prefix` }
+    { additionalParameters: { pathPrefix: `/prefix` } }
   )
 })

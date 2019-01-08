@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.2.0"></a>
+
+# [3.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.4...gatsby-remark-prismjs@3.2.0) (2018-12-31)
+
+### Features
+
+- Support hide lines in remark-embed-snippet ([#6084](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/6084)) ([dad0628](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/dad0628))
+
 <a name="3.1.4"></a>
 
 ## [3.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.3...gatsby-remark-prismjs@3.1.4) (2018-12-06)

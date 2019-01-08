@@ -65,7 +65,7 @@ The steps to download and install Git depend on your operating system. Follow th
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
 - [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
 
-> 💡 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and Github, check out Github's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
+> 💡 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
 
 ## Install Gatsby CLI
 
