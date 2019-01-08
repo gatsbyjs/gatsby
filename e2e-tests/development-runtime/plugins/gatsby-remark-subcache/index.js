@@ -5,7 +5,7 @@ module.exports = function remarkPlugin({ cache, markdownAST }) {
   visit(markdownAST, `html`, async node => {
     if (node.value.match(id)) {
       const value = await cache.get(id)
-      node.value = node.value.replace(/%SUBCACHE_VALUE%/, () => `>${value}<`)
+      node.value = node.value.replace(/%SUBCACHE_VALUE%/, value)
     }
   })
 }

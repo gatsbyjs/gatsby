@@ -59,23 +59,11 @@ const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
 // TODO: remove this check with next major release
-// the getCache feature was implemented in gatsby@2.0.88
-const safeGetCache = ({ getCache, cache, reporter }) => {
-  const GATSBY_VERSION_WITH_GET_CACHE = `2.0.88`
-  let warned = false
-  return id => {
-    if (!getCache) {
-      if (!warned) {
-        warned = true
-        reporter.warn(reporter.stripIndent`
-          It looks like you're using a slightly outdated version of gatsby with gatsby-transformer-remark.
-          To update, run 'npm install gatsby@^${GATSBY_VERSION_WITH_GET_CACHE} --save' or 'yarn add gatsby@^${GATSBY_VERSION_WITH_GET_CACHE}'
-        `)
-      }
-      return cache
-    }
-    return getCache(id)
+const safeGetCache = ({ getCache, cache }) => id => {
+  if (!getCache) {
+    return cache
   }
+  return getCache(id)
 }
 
 /**
@@ -105,7 +93,7 @@ module.exports = (
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = pathPrefix || ``
 
-  const getCache = safeGetCache({ cache, getCache: possibleGetCache, reporter })
+  const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
