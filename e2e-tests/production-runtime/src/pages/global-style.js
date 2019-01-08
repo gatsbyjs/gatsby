@@ -8,7 +8,7 @@ const GlobalStyle = () => (
       This text should be red (via `gatsby-plugin-global-style`)
     </h1>
     <h2 data-testid="global-style">
-      This text should be blue from gatsby-browser.js
+      This text should be blue (via root-level `gatsby-browser.js`)
     </h2>
   </Layout>
 )
