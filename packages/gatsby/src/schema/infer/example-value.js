@@ -67,8 +67,7 @@ const getExampleObject = (nodes, prefix, ignoreFields = []) => {
   const allKeys = nodes.reduce(
     (acc, node) =>
       Object.keys(node).forEach(
-        // TODO: @see #10557: && key !== ``
-        key => !acc.has(key) && !ignoreFields.includes(key) && acc.add(key)
+        key => key && !ignoreFields.includes(key) && acc.add(key)
       ) || acc,
     new Set()
   )
