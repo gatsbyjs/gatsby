@@ -204,17 +204,12 @@ describe(`Get nodes for query`, () => {
       expect(queryNodes[0].deeply).toBeUndefined()
 
       expect(counter).toHaveBeenCalledTimes(4)
-      expect(counter).toBeCalledWith(
-        expect.any(Object),
-        {},
-        {},
-        expect.objectContaining({
-          fieldName: `counter`,
-          parentType: schemaComposer.get(`Nested`).getType(),
-          returnType: GraphQLBoolean,
-          schema: expect.any(GraphQLSchema),
-        })
-      )
+      expect(counter.mock.calls[0][3]).toEqual({
+        fieldName: `counter`,
+        parentType: schemaComposer.get(`Nested`).getType(),
+        returnType: GraphQLBoolean,
+        schema: expect.any(GraphQLSchema),
+      })
 
       expect(nodes[2].deeply[0][0].nested).toEqual([true, false])
       expect(queryNodes[2].deeply[0][0].nested).toEqual([true, false])

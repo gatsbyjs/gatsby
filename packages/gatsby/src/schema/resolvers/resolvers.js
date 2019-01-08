@@ -58,7 +58,7 @@ const findByIdsAndType = type => ({ args }, firstResultOnly) =>
 const find = type => async (rp, firstResultOnly) => {
   const queryArgs = withSpecialCases({ type, ...rp })
   return query(
-    await getNodesForQuery(type, queryArgs.filter),
+    await getNodesForQuery(type, queryArgs.filter, rp.context),
     queryArgs,
     firstResultOnly
   )

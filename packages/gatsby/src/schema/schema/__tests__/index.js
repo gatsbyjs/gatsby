@@ -68,9 +68,9 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
       const resolvers = {
         Author: {
           posts: (source, ignoredArgs, context, info) => {
-            // const type = info.returnType.ofType.name
-            const type = `Markdown`
-            const resolve = context.resolvers.findMany(type)
+            const {
+              resolve,
+            } = info.schema.getQueryType().getFields().allMarkdown
             const { firstname, lastname } = source
             const args = {
               filter: {
@@ -82,7 +82,7 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
                 },
               },
             }
-            return resolve({ source, args, context, info })
+            return resolve(source, args, context, info)
           },
         },
       }
@@ -90,8 +90,6 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
       break
 
     case `setFieldsOnGraphQLNodeType`:
-      // FIXME:
-      // const { schemaComposer } = options
       return options.type.name === `Markdown`
         ? [
             {
@@ -197,14 +195,16 @@ describe(`Schema builder`, () => {
     )
     const author = getById(3)
     const authorType = schema.getType(`Author`)
-    const posts = await authorType
-      .getFields()
-      .posts.resolve(
-        author,
-        {},
-        {},
-        { fieldName: `posts`, returnType: authorType.getFields().posts.type }
-      )
+    const posts = await authorType.getFields().posts.resolve(
+      author,
+      {},
+      {},
+      {
+        fieldName: `posts`,
+        returnType: authorType.getFields().posts.type,
+        schema,
+      }
+    )
     expect(posts.length).toBe(1)
     expect(posts[0].frontmatter.authors[0]).toEqual(author)
   })

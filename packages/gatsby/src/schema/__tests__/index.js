@@ -1,8 +1,7 @@
-const { graphql } = require(`graphql`)
-
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { buildSchema } = require(`../schema`)
+const graphql = require(`../../internal-plugins/query-runner/graphql`)
 
 const nodes = [
   {
@@ -103,7 +102,7 @@ jest.mock(`../../utils/api-runner-node`, () => (api, options) => {
     case `addResolvers`:
       options.addResolvers({
         Author: {
-          posts: (source, args, context, info) => {
+          posts: (source, ignoredArgs, context, info) => {
             const { email } = source
             const resolve = context.resolvers.findMany(`Markdown`)
             return resolve({
@@ -127,19 +126,17 @@ jest.mock(`../../utils/api-runner-node`, () => (api, options) => {
             {
               [`frontmatter.authorNames`]: {
                 type: [`String`],
-                resolve: async (source, args, context, info) => {
+                resolve: async (source, ignoredArgs, context, info) => {
                   const { authors: authorEmails } = source
-                  const {
-                    resolve,
-                  } = info.schema.getQueryType().getFields().allAuthor
-                  const authors = await resolve(
+                  const resolve = context.resolvers.findMany(`Author`)
+                  const authors = await resolve({
                     source,
-                    {
+                    args: {
                       filter: { email: { in: authorEmails } },
                     },
                     context,
-                    info
-                  )
+                    info,
+                  })
                   return authors.map(author => author.name)
                 },
               },
@@ -180,8 +177,7 @@ describe(`Schema query`, () => {
         }
       }
     `
-    const { schema } = store.getState()
-    const results = await graphql(schema, query)
+    const results = await graphql(query)
     const expected = {
       allMarkdown: [
         {
@@ -244,8 +240,7 @@ describe(`Schema query`, () => {
         }
       }
     `
-    const { schema } = store.getState()
-    const results = await graphql(schema, query)
+    const results = await graphql(query)
     const expected = {
       allFile: [
         {
@@ -283,8 +278,7 @@ describe(`Schema query`, () => {
         }
       }
     `
-    const { schema } = store.getState()
-    const results = await graphql(schema, query)
+    const results = await graphql(query)
     const expected = {
       allFile: [
         { name: `2.md`, children: [{ id: `md2` }] },
@@ -323,8 +317,7 @@ describe(`Schema query`, () => {
         }
       }
     `
-    const { schema } = store.getState()
-    const results = await graphql(schema, query)
+    const results = await graphql(query)
     const expected = {
       allMarkdown: [
         { id: `md2`, frontmatter: { authors: [{ name: `Author 1` }] } },
