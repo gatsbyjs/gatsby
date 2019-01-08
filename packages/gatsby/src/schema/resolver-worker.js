@@ -5,6 +5,9 @@ const Cache = require(`../utils/cache`)
 const createContentDigest = require(`../utils/create-content-digest`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
+// From jest-worker library `src/types.js`
+const JEST_WORKER_CHILD_MESSAGE_IPC = 3
+
 const types = {}
 const rpcs = new Map()
 
@@ -45,7 +48,7 @@ function sendRpc({ name, args, resolve, reject }) {
     resolve,
     reject,
   })
-  process.send([3, rpc])
+  process.send([JEST_WORKER_CHILD_MESSAGE_IPC, rpc])
 }
 
 function makeRpc(fnName) {
@@ -60,17 +63,18 @@ function makeRpc(fnName) {
     })
 }
 
+// panicOnBuild will send the panic message to the parent process,
+// which will terminate, thus killing this and all other workers. All
+// other reporter functions operate locally by calling gatsby-cli
+// `reporter` directly
 function makeReporter() {
   return Object.assign(reporter, {
     panicOnBuild(...args) {
-      // panicOnBuild will send the panic message to the parent
-      // process, which will terminate, thus killing this and all
-      // other workers. All other reporter functions operate locally
       const msg = {
         name: `reporter`,
         args: { fnName: `panicOnBuild`, args },
       }
-      process.send([3, msg])
+      process.send([JEST_WORKER_CHILD_MESSAGE_IPC, msg])
     },
   })
 }

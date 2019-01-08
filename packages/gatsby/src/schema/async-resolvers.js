@@ -5,6 +5,9 @@ const invariant = require(`invariant`)
 const nodesAPI = require(`../db/nodes`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
+// From jest-worker library `src/types.js`
+const JEST_WORKER_PARENT_MESSAGE_IPC = 3
+
 let fields = []
 let pool
 
@@ -32,7 +35,7 @@ function ipcCallback(child, request) {
       type: `response`,
       response,
     }
-    child.send([3, replyMessage])
+    child.send([JEST_WORKER_PARENT_MESSAGE_IPC, replyMessage])
   }
 }
 
