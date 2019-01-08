@@ -470,7 +470,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         slug = `/${parsedFilePath.dir}/`
       }
 
-      // Set released status for blog posts.
+      // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
         let released = false
         const date = _.get(node, `frontmatter.date`)
@@ -478,6 +478,17 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           released = moment().isSameOrAfter(moment.utc(date))
         }
         createNodeField({ node, name: `released`, value: released })
+
+        const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
+        const publishedAt = _.get(node, `frontmatter.publishedAt`)
+
+        createNodeField({
+          node,
+          name: `publishedAt`,
+          value: canonicalLink
+            ? publishedAt || url.parse(canonicalLink).hostname
+            : null,
+        })
       }
     }
     // Add slugs for package READMEs.
