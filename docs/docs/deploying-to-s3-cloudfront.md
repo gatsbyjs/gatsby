@@ -2,7 +2,7 @@
 title: Deploying to S3/Cloudfront
 ---
 
-In this guide, we'll walkthrough how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/). If you are looking for a managed hosting service, the AWS Amplify Console offers the fastest way to deploy your Gatsby site on AWS. The Amplify Console provides features such as continuous deployment, multiple environments w. feature branch deploys, custom domains with SSL, redirects/rewrites, atomic deploys, and password protection. [Learn more](./deploying-to-aws-amplify.md)
+In this guide, we'll walkthrough how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/). If you are looking for a managed hosting service, the AWS Amplify Console offers the fastest way to deploy your Gatsby site on AWS. The Amplify Console provides features such as continuous deployment, multiple environments w. feature branch deploys, custom domains with SSL, redirects/rewrites, atomic deploys, and password protection. [Deploy using AWS Amplify](/docs/deploying-to-aws-amplify/)
 
 Additionally, you can add [lambda functions](https://serverless.com/framework/docs/providers/aws/guide/functions/), [cloudfront](https://github.com/serverless/examples/tree/master/aws-node-single-page-app-via-cloudfront), and other AWS services later on as you expand.
 
