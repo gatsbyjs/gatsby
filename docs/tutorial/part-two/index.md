@@ -31,7 +31,7 @@ One of the most straightforward ways to add global styles to a site is using a g
 
 #### ✋ Create a new Gatsby site
 
-Start by creating a new Gatsby site. It may be best (especially if you're new to the command line) to close the terminal windows you used for part one, and start a new terminal session for this.
+Start by creating a new Gatsby site. It may be best (especially if you're new to the command line) to close the terminal windows you used for [part one](/tutorial/part-one/), and start a new terminal session for part two.
 
 Open a new terminal window, create a new "hello world" gatsby site, and start the development server:
 
@@ -108,7 +108,7 @@ Your project's file structure should now look like this:
 
 > 💡 What is `gatsby-browser.js`? Don't worry about this too much for now -- For now, know that `gatsby-browser.js` is one of a handful of special files that Gatsby looks for, and uses (if they exist). Here, the naming of the file **is** important.
 
-2. Import the stylesheet in the `gatsby-browser.js` file:
+2. Import your recently-created stylesheet in the `gatsby-browser.js` file:
 
 ```javascript:title=gatsby-browser.js
 import "./src/styles/global.css"
@@ -123,42 +123,29 @@ If you take a look another look at your "hello world" project site, you should s
 
 > Tip: This part of the tutorial has focused on the quickest and most straightforward way to get started styling a Gatsby site -- importing standard CSS files directly, using `gatsby-browser.js`. In most cases, the best way to add global styles is with a shared layout component. [Check out the docs](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-with-standard-css-files) for more on that approach.
 
-## Component CSS
+## Using component CSS
 
-Gatsby has a wealth of options available for styling components. In this tutorial, you'll explore one very popular method: CSS Modules.
-
-### CSS-in-JS
-
-While we won't cover CSS-in-JS in this initial tutorial, we encourage you to explore CSS-in-JS libraries because these solve many of the problems with traditional CSS plus help make your React components even smarter. There are mini-tutorials for two libraries, [Glamor](/docs/glamor/) and [Styled Components](/docs/styled-components/). Check out the following resources for background reading on CSS-in-JS:
-
-[Christopher "vjeux" Chedeau's 2014 presentation that sparked this movement](https://speakerdeck.com/vjeux/react-css-in-js)
-as well as
-[Mark Dalgleish's more recent post "A Unified Styling Language"](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660).
+So far, we've talked about the more traditional approach of using standard css stylesheets. Now, we'll talk about various methods of modularizing CSS to tackle styling in a component-oriented way.
 
 ### CSS Modules
 
-Let's explore **CSS Modules**.
-
-Quoting from
+Let's explore **CSS Modules**. Quoting from
 [the CSS Module homepage](https://github.com/css-modules/css-modules):
 
 > A **CSS Module** is a CSS file in which all class names and animation names
 > are scoped locally by default.
 
-CSS Modules are very popular as they let you write CSS like normal but with a lot
-more safety. The tool automatically makes class and animation names unique so
-you don't have to worry about selector name collisions.
+CSS Modules are very popular because they let you write CSS normally, but with a lot more safety. The tool automatically generates unique class and animation names, so you don't have to worry about selector name collisions.
 
-CSS Modules are highly recommended for those new to building with Gatsby (and
-React in general).
+Gatsby works out of the box with CSS Modules. This approach is highly recommended for those new to building with Gatsby (and React in general).
 
-Gatsby works out of the box with CSS Modules.
+#### ✋ Build a new page using CSS Modules
 
-### Build a page using CSS Modules.
+In this section, you'll create a new page component, and style that page component using a CSS Module.
 
-First, create a new `Container` component. Create a new directory at
-`src/components` and then, in this new directory, create a file named
-`container.js` and paste the following:
+First, create a new `Container` component.
+
+1. Create a new directory at `src/components` and then, in this new directory, create a file named `container.js` and paste the following:
 
 ```javascript:title=src/components/container.js
 import React from "react"
@@ -169,9 +156,9 @@ export default ({ children }) => (
 )
 ```
 
-You'll notice we imported a css modules file named `container.module.css`. Let's make that.
+You'll notice we imported a css module file named `container.module.css`. Let's create that file now.
 
-In the same directory, create the `container.module.css` file and paste in it:
+2. In the same directory (`src/components`), create a `container.module.css` file and copy/paste the following:
 
 ```css:title=src/components/container.module.css
 .container {
@@ -180,8 +167,10 @@ In the same directory, create the `container.module.css` file and paste in it:
 }
 ```
 
-Then, create a new page component by creating a file at
-`src/pages/about-css-modules.js`:
+You'll notice that the file name ends with `.module.css` instead of the usual `.css`. This is how you tell Gatsby that this CSS file should be processed as a CSS module, rather than plain CSS.
+
+3. Create a new page component by creating a file at
+   `src/pages/about-css-modules.js`:
 
 ```javascript:title=src/pages/about-css-modules.js
 import React from "react"
@@ -196,19 +185,17 @@ export default () => (
 )
 ```
 
-If you visit `http://localhost:8000/about-css-modules/`, your page should now look like:
+Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look like something like this:
 
 ![css-modules-1](css-modules-1.png)
 
-Create a list of people with names, avatars, and short latin
-biographies.
+#### ✋ Style a component using CSS Modules
 
-First, create the file for the CSS at
-`src/pages/about-css-modules.module.css`. You'll notice that the file name ends
-with `.module.css` instead of `.css` like normal. This is how you tell Gatsby
-that this CSS file should be processed as CSS modules.
+In this section, you'll create a list of people with names, avatars, and short latin biographies. You'll create a `<User />` component, and style that component using a CSS module.
 
-Paste the following into the file:
+1. Create the file for the CSS at `src/pages/about-css-modules.module.css`.
+
+2. Paste the following into the new file:
 
 ```css:title=src/pages/about-css-modules.module.css
 .user {
@@ -244,8 +231,7 @@ Paste the following into the file:
 }
 ```
 
-Now import that file into the `about-css-modules.js` page you created earlier, by editing the first few lines
-of the file to look like:
+3. Import the new `src/pages/about-css-modules.module.css` file into the `about-css-modules.js` page you created earlier, by editing the first few lines of the file like so:
 
 ```javascript:title=src/pages/about-css-modules.js
 import React from "react"
@@ -257,26 +243,20 @@ import Container from "../components/container"
 console.log(styles)
 ```
 
-The `console.log(styles)` code logs the resulting import so you can see what the processed file looks like.
-If you open the developer console (using e.g. Firefox or Chrome's developer tools) in your browser, you'll see:
+The `console.log(styles)` code will log the resulting import so you can see the result of your processed `./about-css-modules.module.css` file. If you open the developer console (using e.g. Firefox or Chrome's developer tools) in your browser, you'll see:
 
 ![css-modules-console](css-modules-console.png)
 
-If you compare that to your CSS file, you'll see that each class is now a key in
-the imported object pointing to a long string e.g. `avatar` points to
+If you compare that to your CSS file, you'll see that each class is now a key in the imported object pointing to a long string e.g. `avatar` points to
 `about-css-modules-module---avatar----hYcv`. These are the class names CSS
 Modules generates. They're guaranteed to be unique across your site. And because
 you have to import them to use the classes, there's never any question about
 where some CSS is being used.
 
-Use your styles to create a `User` component.
+4. Create a `User` component..
 
-Create the new component inline in the `about-css-modules.js` page
-component. The general rule of thumb is this: if you use a component in multiple
-places on a site, it should be in its own module file in the `components`
-directory. But, if it's used only in one file, create it inline.
-
-Modify `about-css-modules.js` so it looks like the following:
+Create a new `<User />` component inline in the `about-css-modules.js` page
+component. Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx:title=src/pages/about-css-modules.js
 import React from "react"
@@ -317,9 +297,25 @@ export default () => (
 )
 ```
 
+> Tip: Generally, if you use a component in multiple places on a site, it should be in its own module file in the `components` directory. But, if it's used only in one file, create it inline.
+
 The finished page should now look like:
 
 ![css-modules-final](css-modules-final.png)
+
+### CSS-in-JS
+
+CSS-in-JS is a component-oriented styling approach. Most generally, it is a pattern where [CSS is composed inline using JavaScript](https://reactjs.org/docs/faq-styling.html#what-is-css-in-js).
+
+#### Using CSS-in-JS with Gatsby
+
+There are many different CSS-in-JS libraries, and many of them have Gatsby plugins already. We won't cover an example of CSS-in-JS in this initial tutorial, but we encourage you to [explore](/docs/styling/) what the ecosystem has to offer. There are mini-tutorials for two libraries in particular, [Glamor](/docs/glamor/) and [Styled Components](/docs/styled-components/).
+
+#### Suggested reading on CSS-in-JS
+
+If you're interested in further reading, check out [Christopher "vjeux" Chedeau's 2014 presentation that sparked this movement](https://speakerdeck.com/vjeux/react-css-in-js)
+as well as
+[Mark Dalgleish's more recent post "A Unified Styling Language"](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660).
 
 ### Other CSS options
 
@@ -327,6 +323,7 @@ Gatsby supports almost every possible styling option (if there isn't a plugin
 yet for your favorite CSS option,
 [please contribute one!](/docs/how-to-contribute/))
 
+- [Typography.js](/packages/gatsby-plugin-typography/)
 - [Sass](/packages/gatsby-plugin-sass/)
 - [Emotion](/packages/gatsby-plugin-emotion/)
 - [JSS](/packages/gatsby-plugin-jss/)

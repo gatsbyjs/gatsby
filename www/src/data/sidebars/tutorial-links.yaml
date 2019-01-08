@@ -42,14 +42,14 @@
       items:
         - title: Using global styles
           link: /tutorial/part-two/#using-global-styles
-        - title: Creating global styles using a css stylesheet
-          link: /tutorial/part-two/#creating-global-styles-using-a-css-stylesheet
-        - title: Using component styles
-          link: /tutorial/part-two/#using-component-styles
-        - title: Creating component styles using CSS Modules
-          link: /tutorial/part-two/#creating-component-styles-using-css-modules
-        - title: Creating component styles using CSS-in-JS
-          link: /tutorial/part-two/#creating-component-styles-using-css-in-js
+        - title: Creating global styles with standard css files
+          link: /tutorial/part-two/#creating-global-styles-with-standard-css-files
+        - title: Using component CSS
+          link: /tutorial/part-two/#using-component-css
+        - title: Styling using CSS Modules
+          link: /tutorial/part-two/#css-modules
+        - title: Styling using CSS-in-JS
+          link: /tutorial/part-two/#css-in-js
     - title: 3. Creating nested layout components
       link: /tutorial/part-three/
       ui: steps
