@@ -7,4 +7,4 @@ This is a truly meaningful blog post
 
 <h2 data-testid="sub-title">%SUB_TITLE%</h2>
 
-<h2 data-testid="gatsby-remark-subcache-value"></h2>
+<h2 data-testid="gatsby-remark-subcache-value">%SUBCACHE_VALUE%</h2>
