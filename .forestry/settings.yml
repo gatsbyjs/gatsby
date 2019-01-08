@@ -1,15 +1,11 @@
 ---
 new_page_extension: md
 auto_deploy: false
-admin_path: 
+admin_path: ''
 webhook_url: 
 sections:
 - type: heading
   label: Content
-- type: document
-  path: 2019-01-08-gatsby-days-videos
-  label: Blog Post
-  match: "**/*"
 upload_dir: uploads
 public_path: "/uploads"
 front_matter_path: ''
