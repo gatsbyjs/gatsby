@@ -48,7 +48,13 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
-    fromPath: `/docs/using-unstructured-data`,
+    fromPath: `/blog/2018-10-25-unstructured-data/`,
+    toPath: `/blog/2018-10-25-using-gatsby-without-graphql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-unstructured-data/`,
     toPath: `/docs/using-gatsby-without-graphql/`,
     isPermanent: true,
   })
@@ -272,7 +278,9 @@ exports.createPages = ({ graphql, actions }) => {
       const postsPerPage = 8
       const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
 
-      Array.from({ length: numPages }).forEach((_, i) => {
+      Array.from({
+        length: numPages,
+      }).forEach((_, i) => {
         createPage({
           path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
           component: slash(blogListTemplate),
