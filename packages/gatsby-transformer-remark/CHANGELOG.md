@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.20"></a>
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.19...gatsby-transformer-remark@2.1.20) (2019-01-08)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** remove unused \_PARENT field from frontmatter ([#10919](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10919)) ([e831b42](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/e831b42))
+
 <a name="2.1.19"></a>
 
 ## [2.1.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.18...gatsby-transformer-remark@2.1.19) (2019-01-01)
