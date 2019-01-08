@@ -177,7 +177,7 @@ When Contentful pulls the data, all localizations will be pulled. Therefore, if 
 
 ```graphql
 {
-  allContentfulCaseStudy(filter : { node_locale: { eq: "en-US" }}) {
+  allContentfulCaseStudy(filter: { node_locale: { eq: "en-US" } }) {
     edges {
       node {
         id
