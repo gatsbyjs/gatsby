@@ -1576,7 +1576,6 @@
   tags:
     - Styling:Tailwind
     - Styling:PostCSS
-    - Styling:postcss-preset-env
   features:
     - Extremely lightweight Gatsby starter using Tailwind for styling and PurgeCSS to remove unused classes.
     - PurgeCSS to shave off unused styles
