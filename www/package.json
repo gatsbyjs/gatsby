@@ -21,6 +21,7 @@
     "gatsby-plugin-google-analytics": "^2.0.5",
     "gatsby-plugin-google-tagmanager": "^2.0.5",
     "gatsby-plugin-guess-js": "^1.0.0",
+    "gatsby-plugin-layout": "^1.0.10",
     "gatsby-plugin-lodash": "^3.0.1",
     "gatsby-plugin-mailchimp": "^2.2.3",
     "gatsby-plugin-manifest": "^2.0.2",

@@ -414,6 +414,7 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
+              layout: `plugins`,
             },
           })
         } else {
@@ -423,6 +424,7 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
+              layout: `plugins`,
             },
           })
         }
@@ -661,6 +663,15 @@ exports.onCreatePage = ({ page, actions }) => {
     page.context.featuredStarters = ecosystemFeaturedItems.starters
     page.context.featuredPlugins = ecosystemFeaturedItems.plugins
 
+    deletePage(oldPage)
+    createPage(page)
+  }
+
+  if (page.path === `/plugins/`) {
+    const { createPage, deletePage } = actions
+    const oldPage = Object.assign({}, page)
+
+    page.context.layout = `plugins`
     deletePage(oldPage)
     createPage(page)
   }
