@@ -77,7 +77,6 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         display: `flex`,
         flexWrap: `nowrap`,
         flexGrow: 1,
-        justifyContent: `space-between`,
         borderBottom: `1px solid ${colors.ui.light}`,
         paddingBottom: rhythm(2 / 4),
         [presets.Phablet]: {
@@ -122,42 +121,53 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           zIndex: 1,
         }}
       >
-        <a
-          href={demo}
+        <div
           css={{
-            border: 0,
-            borderRadius: presets.radius,
-            color: colors.accent,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontWeight: `bold`,
-            marginRight: rhythm(1.5 / 4),
-            padding: `${rhythm(1 / 6)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
-            textDecoration: `none`,
-            WebkitFontSmoothing: `antialiased`,
-            "&&": {
-              backgroundColor: colors.accent,
-              borderBottom: `none`,
-              boxShadow: `none`,
-              color: colors.gatsby,
-              "&:hover": {
-                backgroundColor: colors.accent,
-              },
-            },
+            position: `absolute`,
+            right: rhythm(3 / 4),
+            top: rhythm(0 / 8),
+            left: `auto`,
+            zIndex: 1,
+            display: `flex`,
           }}
         >
-          <MdLaunch
-            style={{
-              verticalAlign: `sub`,
+          <a
+            href={demo}
+            css={{
+              border: 0,
+              borderRadius: presets.radius,
+              color: colors.accent,
+              fontFamily: options.headerFontFamily.join(`,`),
+              fontWeight: `bold`,
+              marginRight: rhythm(1.5 / 4),
+              padding: `${rhythm(1 / 6)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
+              textDecoration: `none`,
+              WebkitFontSmoothing: `antialiased`,
+              "&&": {
+                backgroundColor: colors.accent,
+                borderBottom: `none`,
+                boxShadow: `none`,
+                color: colors.gatsby,
+                "&:hover": {
+                  backgroundColor: colors.accent,
+                },
+              },
             }}
+          >
+            <MdLaunch
+              style={{
+                verticalAlign: `sub`,
+              }}
+            />
+            {` Visit demo `}
+          </a>
+          <ShareMenu
+            url={`https://github.com/${starter.githubFullName}`}
+            title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
+            image={imageSharp.childImageSharp.resize.src}
+            theme={`accent`}
           />
-          {` Visit demo `}
-        </a>
-        <ShareMenu
-          url={`https://github.com/${starter.githubFullName}`}
-          title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
-          image={imageSharp.childImageSharp.resize.src}
-          theme={`accent`}
-        />
+        </div>
       </div>
     </div>
   </div>

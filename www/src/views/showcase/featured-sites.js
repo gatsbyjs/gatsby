@@ -86,8 +86,8 @@ class FeaturedSites extends Component {
             {(_, updateQuery) => (
               <a
                 href="#showcase"
-                {...styles.withTitleHover}
                 css={{
+                  ...styles.withTitleHover,
                   display: `none`,
                   [presets.Phablet]: {
                     display: `block`,
@@ -167,8 +167,10 @@ class FeaturedSites extends Component {
             {featured.slice(0, 9).map(({ node }) => (
               <div
                 key={node.id}
-                {...styles.featuredSitesCard}
-                {...styles.withTitleHover}
+                css={{
+                  ...styles.featuredSitesCard,
+                  ...styles.withTitleHover,
+                }}
               >
                 <Link
                   css={{
@@ -232,7 +234,6 @@ class FeaturedSites extends Component {
                 {(_, updateQuery) => (
                   <a
                     href="#showcase"
-                    {...styles.featuredSitesCard}
                     css={{
                       marginRight: `${rhythm(3 / 4)} !important`,
                       backgroundColor: hex2rgba(colors.ui.light, 0.25),
@@ -253,6 +254,7 @@ class FeaturedSites extends Component {
                           )}`,
                         },
                       },
+                      ...styles.featuredSitesCard,
                     }}
                     onClick={this.onClickHandler(
                       showcase,

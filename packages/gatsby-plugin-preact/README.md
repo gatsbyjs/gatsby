@@ -3,7 +3,7 @@
 Provides drop-in support for replacing React with [Preact](https://preactjs.com/).
 
 While Preact doesn't provide full support for the React ecosystem, it is an
-intriguing option for Gatsby sites as it saves ~30kb of Javascript vs. using
+intriguing option for Gatsby sites as it saves ~30kb of JavaScript vs. using
 React.
 
 ## Install

@@ -7,7 +7,12 @@ const colorized = require(`./output-color`)
  */
 function httpExceptionHandler(e) {
   const { response, code } = e
-  console.log(colorized.out(`Path: ${response.request.path}`, colorized.color.Font.FgRed))
+  console.log(
+    colorized.out(
+      `\nPath: ${response.request.path}`,
+      colorized.color.Font.FgRed
+    )
+  )
   if (!response) {
     console.log(
       colorized.out(

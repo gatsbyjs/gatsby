@@ -680,5 +680,5 @@ blockquote p {
   text-align: center;
   font-size: 1.4vw;
   /* Hate me or not, Comic Sans is a great fit here */
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
 }

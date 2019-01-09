@@ -18,5 +18,5 @@ Complex/complete websites are for studying how to build more complex websites.
 - Free of errors
 - Has Google Analytics setup
 - Notifications setup to ping PRs on success/failure of build
-- For `using-x` websites, link to the site from the the plugin README and to the
+- For `using-x` websites, link to the site from the plugin README and to the
   plugin(s) from the website.

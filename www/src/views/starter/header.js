@@ -28,7 +28,6 @@ const Header = ({ stub }) => (
     >
       <Link
         to={`/starters`}
-        {...sharedStyles.withTitleHover}
         css={{
           "&&": {
             ...scale(1 / 5),
@@ -43,6 +42,7 @@ const Header = ({ stub }) => (
               color: colors.lilac,
             },
           },
+          ...sharedStyles.withTitleHover,
         }}
       >
         <MdArrowBack style={{ marginRight: 4, verticalAlign: `sub` }} />

@@ -37,4 +37,5 @@ module.exports = {
   headerHeight: `3.5rem`,
   bannerHeight: `2.5rem`,
   sidebarUtilityHeight: `2.5rem`,
+  pageHeadingDesktopWidth: `3.5rem`,
 }

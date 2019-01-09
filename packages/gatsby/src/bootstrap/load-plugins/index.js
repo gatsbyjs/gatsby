@@ -52,8 +52,7 @@ module.exports = async (config = {}) => {
   const badExports = x.badExports
 
   // Show errors for any non-Gatsby APIs exported from plugins
-  const isBad = handleBadExports({ apis, badExports })
-  if (isBad && process.env.NODE_ENV === `production`) process.exit(1) // TODO: change to panicOnBuild
+  handleBadExports({ apis, badExports })
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({

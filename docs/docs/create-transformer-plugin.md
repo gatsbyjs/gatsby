@@ -7,7 +7,7 @@ Transformer plugins are responsible for "transforming" data provided by
 
 ## Transformer plugin example
 
-The [`gatsby-transform-remark`](/packages/gatsby-transform-remark/) plugin
+The [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) plugin
 "transforms" markdown nodes (fetched for example from the filesystem source plugin) into html and provides additional node details such as for example the `timeToRead` the `tableOfContents` and the `excerpt`.
 
 ## What do transformer plugins do?
@@ -31,13 +31,13 @@ Your `gatsby-node.js` should look something like:
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
 ```
 
-Information on the purpose of this function can be found in the [API reference](docs/node-apis/#setFieldsOnGraphQLNodeType).
+Information on the purpose of this function can be found in the [API reference](/docs/node-apis/#setFieldsOnGraphQLNodeType).
 
 ## Using the cache
 
-Sometimes transforming properties costs time and resources and in order to avoid recreating these properties at each run you can profit from the global cache mechanism Gatsby provides.
+Sometimes transforming properties costs time and resources. In order to avoid recreating these properties at each run, you can profit from the global cache mechanism Gatsby provides.
 
-Cache keys should at least contain the contentDigest of the concerned. For example the `gatsby-transformer-remark` uses the following cache key for the html node:
+Cache keys should at least contain the contentDigest of the concerned. For example, the `gatsby-transformer-remark` uses the following cache key for the html node:
 
 ```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>

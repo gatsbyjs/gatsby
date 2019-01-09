@@ -71,7 +71,7 @@ class StickyResponsiveSidebar extends Component {
           role="button"
           aria-label="Show Secondary Navigation"
           aria-controls="SecondaryNavigation"
-          aria-expanded={open ? "true" : "false"}
+          aria-expanded={open ? `true` : `false`}
           tabIndex={0}
         >
           <div css={{ ...styles.sidebarToggleButtonInner }}>
@@ -85,7 +85,8 @@ class StickyResponsiveSidebar extends Component {
             <ChevronSvg
               size={15}
               cssProps={{
-                transform: `translate(${5 - iconOffset}px, -5px) rotate(270deg)`,
+                transform: `translate(${5 -
+                  iconOffset}px, -5px) rotate(270deg)`,
                 transition: `transform 0.2s ease`,
               }}
             />

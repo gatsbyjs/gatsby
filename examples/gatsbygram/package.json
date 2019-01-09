@@ -46,6 +46,7 @@
     "develop": "gatsby develop",
     "dev": "gatsby develop",
     "build": "gatsby build",
+    "start": "npm run develop",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome"
