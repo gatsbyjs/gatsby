@@ -124,6 +124,8 @@ function makeApi(type, pathPrefix) {
   const cache = new Cache({ name: `some cache` }).init()
   const api = {
     cache,
+    // Caching story needs more thinking
+    getCache: () => cache,
     createContentDigest,
     // TODO pass in plugin.name into worker so this can mimic api-runner-node
     // createNodeId: namespacedCreateNodeId,
