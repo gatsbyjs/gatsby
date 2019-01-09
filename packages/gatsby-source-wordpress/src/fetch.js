@@ -49,6 +49,7 @@ async function fetch({
   _auth,
   _perPage,
   _concurrentRequests,
+  _allRoutes,
   _includedRoutes,
   _excludedRoutes,
   typePrefix,
@@ -128,6 +129,22 @@ Mama Route URL: ${url}
   ]
 
   if (allRoutes) {
+    // Add custom routes to the allRoutes.data.routes object.
+    for (var _i = 0; _i < _allRoutes.length; _i++) {
+      let namespace = _allRoutes[_i].namespace
+      let endpoint = _allRoutes[_i].endpoint
+      let route = `/${namespace}${endpoint}`
+      let link = url + route;
+
+      let routeObj = {}
+      routeObj[route] = {
+        namespace: namespace,
+        _links: { self: link }
+      }
+
+      _.merge(allRoutes.data.routes, routeObj)
+    }
+
     let validRoutes = getValidRoutes({
       allRoutes,
       url,
@@ -595,11 +612,26 @@ function getValidRoutes({
  *
  * @param {any} route
  */
-const getRawEntityType = route =>
-  route._links.self.substring(
-    route._links.self.lastIndexOf(`/`) + 1,
-    route._links.self.length
-  )
+const getRawEntityType = route => {
+  let link = route._links.self
+  let entityType = link.substring(link.lastIndexOf(`/`) + 1, link.length)
+
+  // Respect link parameters.
+  if (entityType.startsWith(`?`)) {
+    let linkWithoutParams = link.replace(`/${entityType}`, ``)
+    let params = _.chain(entityType) // Convert params to object.
+      .replace('?', '')
+      .split('&')
+      .map(_.partial(_.split, _, '=', 2))
+      .fromPairs()
+      .value()
+
+    entityType = linkWithoutParams.substring(linkWithoutParams.lastIndexOf(`/`) + 1, linkWithoutParams.length)
+    _.forOwn(params, (value, key) => entityType += `_${key}_${value}`) // Add params to entity type.
+  }
+
+  return entityType
+}
 
 /**
  * Extract the route path for an endpoint
