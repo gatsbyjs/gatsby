@@ -12,49 +12,49 @@ exports.resolvableExtensions = true
  *
  * See also [the documentation for the action `createPage`](/docs/actions/#createPage).
  * @example
+ * const path = require(`path`)
+ *
  * exports.createPages = ({ graphql, actions }) => {
  *   const { createPage } = actions
- *   return new Promise((resolve, reject) => {
- *     const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
- *     // Query for markdown nodes to use in creating pages.
- *     resolve(
- *       graphql(
- *         `
- *       {
- *         allMarkdownRemark(limit: 1000) {
- *           edges {
- *             node {
- *               fields {
- *                 slug
- *               }
+ *   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+ *   // Query for markdown nodes to use in creating pages.
+ *   // You can query for whatever data you want to create pages for e.g.
+ *   // products, portfolio items, landing pages, etc.
+ *   return graphql(`
+ *     {
+ *       allMarkdownRemark(limit: 1000) {
+ *         edges {
+ *           node {
+ *             fields {
+ *               slug
  *             }
  *           }
  *         }
  *       }
- *     `
- *       ).then(result => {
- *         if (result.errors) {
- *           reject(result.errors)
- *         }
+ *     }
+ *   `).then(result => {
+ *     if (result.errors) {
+ *       throw result.errors
+ *     }
  *
- *         // Create blog post pages.
- *         result.data.allMarkdownRemark.edges.forEach(edge => {
- *             createPage({
- *               path: `${edge.node.fields.slug}`, // required
- *               component: blogPostTemplate,
- *               context: {
- *                 // Add optional context data. Data can be used as
- *                 // arguments to the page GraphQL query.
- *                 //
- *                 // The page "path" is always available as a GraphQL
- *                 // argument.
- *               },
- *             })
- *         })
- *
- *         return
+ *     // Create blog post pages.
+ *     result.data.allMarkdownRemark.edges.forEach(edge => {
+ *       createPage({
+ *         // Path for this page — required
+ *         path: `${edge.node.fields.slug}`,
+ *         component: blogPostTemplate,
+ *         context: {
+ *           // Add optional context data to be inserted
+ *           // as props into the page component..
+ *           //
+ *           // The context data can also be used as
+ *           // arguments to the page GraphQL query.
+ *           //
+ *           // The page "path" is always available as a GraphQL
+ *           // argument.
+ *         },
  *       })
- *     )
+ *     })
  *   })
  * }
  */
@@ -78,7 +78,12 @@ exports.createPages = true
 exports.createPagesStatefully = true
 
 /**
- * Extension point to tell plugins to source nodes.
+ * Extension point to tell plugins to source nodes. This API is called during
+ * the Gatsby bootstrap sequence. Source plugins use this hook to create nodes.
+ * This API is called exactly once per plugin (and once for your site's
+ * `gatsby-config.js` file). If you define this hook in `gatsby-node.js` it
+ * will be called exactly once after all of your source plugins have finished
+ * creating nodes.
  *
  * See also the documentation for [`createNode`](/docs/actions/#createNode).
  * @example
@@ -173,8 +178,8 @@ exports.onCreatePage = true
  *         args: {
  *           myArgument: {
  *             type: GraphQLString,
- *          }
- *         }
+ *           }
+ *         },
  *         resolve: (source, fieldArgs) => {
  *           return `Id of this node is ${source.id}.
  *                   Field was called with argument: ${fieldArgs.myArgument}`
@@ -270,7 +275,7 @@ exports.onPostBuild = true
  * Run before GraphQL queries/fragments are extracted from JavaScript files. Useful for plugins
  * to add more JavaScript files with queries/fragments e.g. from node_modules.
  *
- * See gatsby-transformer-remark and gatsby-source-contentful for examples.
+ * See gatsby-transformer-sharp and gatsby-source-contentful for examples.
  */
 exports.onPreExtractQueries = true
 

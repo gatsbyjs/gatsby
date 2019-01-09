@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.12"></a>
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.11...gatsby-transformer-sqip@2.0.12) (2018-12-27)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.11"></a>
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.10...gatsby-transformer-sqip@2.0.11) (2018-12-21)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.9...gatsby-transformer-sqip@2.0.10) (2018-12-07)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.8...gatsby-transformer-sqip@2.0.9) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.7...gatsby-transformer-sqip@2.0.8) (2018-11-21)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.6...gatsby-transformer-sqip@2.0.7) (2018-11-06)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.5...gatsby-transformer-sqip@2.0.6) (2018-11-01)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.4...gatsby-transformer-sqip@2.0.5) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.3...gatsby-transformer-sqip@2.0.4) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.2...gatsby-transformer-sqip@2.0.3) (2018-10-24)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.0.1...gatsby-transformer-sqip@2.0.2) (2018-10-16)

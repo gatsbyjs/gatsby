@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
@@ -263,7 +263,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <Helmet>
                 <title>{data.sitesYaml.title}</title>
                 <meta
-                  name="og:image"
+                  property="og:image"
                   content={`https://www.gatsbyjs.org${
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
@@ -435,8 +435,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <div
                   css={{
                     position: `absolute`,
-                    right: gutter,
-                    top: gutter,
+                    right: rhythm(3 / 4),
+                    top: rhythm(-15 / 8),
                     left: `auto`,
                     zIndex: 1,
                     display: `flex`,

@@ -3,39 +3,41 @@
 ## [2.0.0] - 2018-09-13
 
 ### Added
+
 - Improve Gatsby's routing accessibility by integrating @reach/router (#6918) @KyleAMathews
 - Add new onPreRenderHTML SSR API to manage head components in html.js (#6760) @octalmage
-- Improve build speeds on larger sites (HulkSmash!)	(#6226) @KyleAMathews
-- Add multi-process HTML rendering support(#6417)	@KyleAMathews
-- Add babel-plugin-macros for custom babel config	(#7129) @porfirioribeiro
+- Improve build speeds on larger sites (HulkSmash!) (#6226) @KyleAMathews
+- Add multi-process HTML rendering support(#6417) @KyleAMathews
+- Add babel-plugin-macros for custom babel config (#7129) @porfirioribeiro
 - Upgrade webpack to v3, improve webpack utils (#3126) @jquense
-- Add gatsby-remark-graphviz plugin to render dot (graphviz) code blocks to SVG	(#7341) @Moocar
+- Add gatsby-remark-graphviz plugin to render dot (graphviz) code blocks to SVG (#7341) @Moocar
 - Improve support for non-latin language content in gatsby-transformer-remark (#6992) @youngboy
 - Improve support for Drupal relationships in gatsby-source-drupal (#5020) @pieh
-- Add support for extra connection string params in gatsby-source-mongodb	(#5972) @lcostea
+- Add support for extra connection string params in gatsby-source-mongodb (#5972) @lcostea
 - Add support for additional options supplied to gatsby-plugin-styled-components (#5240) @nihgwu
-- Add guide on debugging the Gatsby build process	(#6369) @pieh
-- Add docs on unit testing, Cypress, react-testing-library and testing CSS-in-JS	(#6678, #6708) @ascorbic, @LeKoArts
-- Redesigned docs navigation and expanded docs topics	(#6245, #6610) @shannonbux, @fk
-- Allow plugins to override core prefetching behavior	(#5320) @KyleAMathews
-- Add gatsby-codemods package to assist v1 -> v2 transition	(#6122) @jquense
--	Add gatsby-plugin-layout package to allow use of v1 layout components in v2 (#7204) @pieh
-- Add support for service worker caching of prefetched resources in gatsby-plugin-offline	(#6566) @kkemple
+- Add guide on debugging the Gatsby build process (#6369) @pieh
+- Add docs on unit testing, Cypress, react-testing-library and testing CSS-in-JS (#6678, #6708) @ascorbic, @LeKoArts
+- Redesigned docs navigation and expanded docs topics (#6245, #6610) @shannonbux, @fk
+- Allow plugins to override core prefetching behavior (#5320) @KyleAMathews
+- Add gatsby-codemods package to assist v1 -> v2 transition (#6122) @jquense
+- Add gatsby-plugin-layout package to allow use of v1 layout components in v2 (#7204) @pieh
+- Add support for service worker caching of prefetched resources in gatsby-plugin-offline (#6566) @kkemple
 - Add critical scripts and links to static file globs in service worker in gatsby-plugin-offline (#6316) @kkemple
 - Add snapshot testing for gatsby-link (#7090) @alexandernanberg
-- Introduce REPL command to gatsby-cli	(#7262) @kkemple
-- Add support for webpackPrefetch	(#5901) @pistachiology
+- Introduce REPL command to gatsby-cli (#7262) @kkemple
+- Add support for webpackPrefetch (#5901) @pistachiology
 - Explicitly export graphql tag from Gatsby (#5415) @pieh
 - Add eslint-loader and eslint configuration (#4893) @kkemple
 - Improve loading graphql query results ("ludicrous mode!") (#4555) @m-allanson
-- Improve error messaging when Gatsby is not installed	(#7106) @KyleAMathews
-- Improve modifyWebpackConfig error messaging	(#7152) @m-allanson
+- Improve error messaging when Gatsby is not installed (#7106) @KyleAMathews
+- Improve modifyWebpackConfig error messaging (#7152) @m-allanson
 - Add support for open tracing with zipkin (#6347) @Moocar
-- Improve error messaging when plugin can't be loaded	(#7023) @KyleAMathews
-- Display formatted message for graphql resolver errors	(#6142) @pieh
-- Improve error formatting on HTML build errors	(#6188) @pieh
+- Improve error messaging when plugin can't be loaded (#7023) @KyleAMathews
+- Display formatted message for graphql resolver errors (#6142) @pieh
+- Improve error formatting on HTML build errors (#6188) @pieh
 
 ### Fixed
+
 - Fix out of memory error by saving state to after bootstrap is complete (#6636) @KyleAMathews
 - Fix out of memory error by flattening entry values (#6797) @chuntley
 - Fix code syntax formatting bug which highlighted keywords in plaintext (#7342) @tryzniak
@@ -44,7 +46,7 @@
 - Fix service worker bug originating from inlining webpack-runtime (#5540) @KyleAMathews
 - Fix bug producing duplicates when naming GraphQL queries (#6765) @fusepilot
 - Fix typo in type annotation (#6288) @sudodoki
-- Fix showing 404 page in development	(#7140) @KyleAMathews
+- Fix showing 404 page in development (#7140) @KyleAMathews
 - Tighten externals matching to prevent code imports from causing build errors (#7325) @m-allanson
 
 ## [1.5.0] - 2017-07-27
@@ -533,7 +535,7 @@ API changes:
 - The default layout component should be at `layouts/index.js` not
   `layouts/default.js`
   https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300537162
-- `this.props.children` in layout components is now a _function_
+- `this.props.children` in layout components is now a function
   https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300878300
 - Change the default port for serve-build to 9000
 - Change the path to GraphiQL to `/___graphql`

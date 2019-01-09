@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.10"></a>
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.9...gatsby-transformer-sharp@2.1.10) (2018-12-31)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+<a name="2.1.9"></a>
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.8...gatsby-transformer-sharp@2.1.9) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+<a name="2.1.8"></a>
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.7...gatsby-transformer-sharp@2.1.8) (2018-11-06)
+
+### Features
+
+- **gatsby-plugin-sharp:** cache base64 if possible ([#9059](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/9059)) ([5dc9346](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/5dc9346)), closes [#6999](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/6999)
+
+<a name="2.1.7"></a>
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.6...gatsby-transformer-sharp@2.1.7) (2018-10-29)
+
+### Features
+
+- **gatsby:** Add nodes db module ([#9416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/9416)) ([7d31fe7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/7d31fe7)), closes [#9338](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/9338)
+
+<a name="2.1.6"></a>
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.5...gatsby-transformer-sharp@2.1.6) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+<a name="2.1.5"></a>
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.4...gatsby-transformer-sharp@2.1.5) (2018-10-24)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
 <a name="2.1.4"></a>
 
 ## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.3...gatsby-transformer-sharp@2.1.4) (2018-10-16)

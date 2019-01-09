@@ -1,12 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { navigate as reachNavigate } from "@reach/router"
 import parsePath from "./parse-path"
-import loadDirectlyOr404 from "./load-directly-or-404"
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
@@ -66,8 +65,12 @@ const navigate = (to, options = {}) => {
     pathname = parsePath(to).pathname
   }
 
-  // If we had a service worker update, no matter the path, reload window
+  // If we had a service worker update, no matter the path, reload window and
+  // reset the pathname whitelist
   if (window.GATSBY_SW_UPDATED) {
+    const { controller } = navigator.serviceWorker
+    controller.postMessage({ gatsbyApi: `resetWhitelist` })
+
     window.location = pathname
     return
   }
@@ -82,18 +85,8 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
-    if (
-      (!pageResources || pageResources.page.path === `/404.html`) &&
-      process.env.NODE_ENV === `production`
-    ) {
-      clearTimeout(timeoutId)
-      loadDirectlyOr404(pageResources, to).then(() =>
-        reachNavigate(to, options)
-      )
-    } else {
-      reachNavigate(to, options)
-      clearTimeout(timeoutId)
-    }
+    reachNavigate(to, options)
+    clearTimeout(timeoutId)
   })
 }
 

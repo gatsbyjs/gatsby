@@ -22,6 +22,9 @@ export default class GatsbyHubspotForm extends Component {
           color: colors.gatsby,
           fontFamily: options.headerFontFamily.join(`,`),
           padding: `15px`,
+          "& form": {
+            margin: 0,
+          },
           "& .hs-form fieldset": {
             maxWidth: `none`,
             width: `100%`,

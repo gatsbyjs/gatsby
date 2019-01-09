@@ -9,17 +9,17 @@ In the [**previous section**](/tutorial/part-zero/), you prepared your local dev
 
 In [**tutorial part zero**](/tutorial/part-zero/), you created a new site based on the “hello world” starter using the following command:
 
-```bash
+```shell
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 When creating a new Gatsby site, you can use the following command structure to create a new site based on any existing Gatsby starter:
 
-```bash
+```shell
 gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 ```
 
-> 💡 See a list of the existing [**official and community starters**](/docs/gatsby-starters/)!
+> 💡 See a list of the existing [**official and community starters**](/starters/)!
 
 If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, stick with the “Hello World” site you already created in tutorial part zero.
 
@@ -66,13 +66,15 @@ export default () => (
 
 3.  Remove the font size styling. Change the “Hello Gatsby!” text to a level-one header. Add a paragraph beneath the header.
 
-```jsx{4-6}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
+  {/* highlight-start */}
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
+  {/* highlight-end */}
   </div>
 )
 ```
@@ -81,13 +83,14 @@ export default () => (
 
 4.  Add an image. (In this case, a random image from Unsplash).
 
-```jsx{7}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
+    {/* highlight-next-line */}
     <img src="https://source.unsplash.com/random/400x200" alt="" />
   </div>
 )
@@ -129,7 +132,7 @@ One of the big mental shifts you make when starting to build with components (if
 
 While a seemingly simple change, this has profound implications for how you think about building websites.
 
-Take the example of creating a custom button. In the past you would
+Take the example of creating a custom button. In the past, you would
 create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
 
 ```html
@@ -190,13 +193,13 @@ export default () => <h1>This is a header.</h1>
 
 3.  Modify the `about.js` file to import the `Header` component. Replace the `h1` markup with `<Header />`:
 
-```jsx{2,6}:title=src/pages/about.js
+```jsx:title=src/pages/about.js
 import React from "react"
-import Header from "../components/header"
+import Header from "../components/header" // highlight-line
 
 export default () => (
   <div style={{ color: `teal` }}>
-    <Header />
+    <Header /> {/* highlight-line */}
     <p>Such wow. Very React.</p>
   </div>
 )
@@ -208,21 +211,21 @@ In the browser, the “About Gatsby” header text should now be replaced with �
 
 4.  Head back to `src/components/header.js`, and make the following change:
 
-```jsx{3}:title=src/components/header.js
+```jsx:title=src/components/header.js
 import React from "react"
 
-export default props => <h1>{props.headerText}</h1>
+export default props => <h1>{props.headerText}</h1> {/* highlight-line */}
 ```
 
 5.  Head back to `src/pages/about.js` and make the following change:
 
-```jsx{6}:title=src/pages/about.js
+```jsx:title=src/pages/about.js
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
-    <Header headerText="About Gatsby" />
+    <Header headerText="About Gatsby" /> {/* highlight-line */}
     <p>Such wow. Very React.</p>
   </div>
 )
@@ -238,13 +241,13 @@ Earlier you defined React components as reusable pieces of code describing a UI.
 
 In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` to the imported `Header` sub-component:
 
-```jsx
+```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" />
 ```
 
 Over in `header.js`, the header component expects to receive the `headerText` prop (because you’ve written it to expect that) So you can access it like so:
 
-```jsx
+```jsx:title=src/components/header.js
 <h1>{props.headerText}</h1>
 ```
 
@@ -252,7 +255,7 @@ Over in `header.js`, the header component expects to receive the `headerText` pr
 
 If you had passed another prop to our `<Header />` component, like so...
 
-```jsx
+```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
 ```
 
@@ -260,14 +263,14 @@ If you had passed another prop to our `<Header />` component, like so...
 
 6.  To emphasize how this makes your components reusable, add an extra `<Header />` component to the about page. Add the following code to the `src/pages/about.js` file, and save.
 
-```jsx{7}:title=src/pages/about.js
+```jsx:title=src/pages/about.js
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
     <Header headerText="About Gatsby" />
-    <Header headerText="It's pretty cool" />
+    <Header headerText="It's pretty cool" /> {/* highlight-line */}
     <p>Such wow. Very React.</p>
   </div>
 )
@@ -291,14 +294,14 @@ You'll often want to link between pages -- Let's look at routing in a Gatsby sit
 
 1.  Open the index page component (`src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
 
-```jsx{2,7}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
-import { Link } from "gatsby"
+import { Link } from "gatsby" // highlight-line
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contact</Link>
+    <Link to="/contact/">Contact</Link> {/* highlight-line */}
     <Header headerText="Hello Gatsby!" />
     <p>What a world.</p>
     <img src="https://source.unsplash.com/random/400x200" alt="" />
@@ -351,7 +354,7 @@ deploy Gatsby sites.
 
 If you haven't previously installed & set up Surge, open a new terminal window and install their terminal tool:
 
-```bash
+```shell
 npm install --global surge
 
 # Then create a (free) account with them
@@ -360,21 +363,21 @@ surge
 
 Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
 
-```bash
+```shell
 gatsby build
 ```
 
-Building should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
+The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
 
 Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 
-```bash
+```shell
 ls public
 ```
 
 Then finally deploy your site by publishing the generated files to surge.sh.
 
-```bash
+```shell
 surge public/
 ```
 

@@ -425,14 +425,14 @@ production.
 The branch in this configuration has to match to deployment branch of Netlify
 service:
 
-![](Efubv8f.png)
+![Deploy Settings](Efubv8f.png)
 
 This is my admin page React component which is placed in `src/pages/admin` so
 that Gatsby delivers the HTML page at `/admin`.
 
 ```jsx
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 const AdminPage = () => (
   <div className="admin">

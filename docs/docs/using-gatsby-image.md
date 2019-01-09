@@ -44,7 +44,7 @@ The GraphQL query creates multiple thumbnails with optimized JPEG and PNG compre
 
 Here’s what a really simple Gatsby page component using gatsby-image would look like:
 
-```js
+```jsx
 import React from "react"
 import Img from "gatsby-image"
 

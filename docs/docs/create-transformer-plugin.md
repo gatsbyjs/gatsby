@@ -35,9 +35,9 @@ Information on the purpose of this function can be found in the [API reference](
 
 ## Using the cache
 
-Sometimes transforming properties costs time and resources and in order to avoid recreating these properties at each run you can profit from the global cache mechanism Gatsby provides.
+Sometimes transforming properties costs time and resources. In order to avoid recreating these properties at each run, you can profit from the global cache mechanism Gatsby provides.
 
-Cache keys should at least contain the contentDigest of the concerned. For example the `gatsby-transformer-remark` uses the following cache key for the html node:
+Cache keys should at least contain the contentDigest of the concerned. For example, the `gatsby-transformer-remark` uses the following cache key for the html node:
 
 ```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>

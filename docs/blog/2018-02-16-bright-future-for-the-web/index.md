@@ -35,5 +35,3 @@ The final piece of the puzzle was determining where to host the website. I had r
 After a little over a month of tinkering on the design during nights and weekends I had a fully functional website ready to be launched. During this process I learned a fair bit of how to code with React and the Gatsby community seemed genuinely nice and happy to help me to learn. The final product was a website that felt like it belonged in 2018 while still allowing my wife to easily update content with no assistance. Not only that the website was immensely faster than the previous WordPress version, served over HTTPS, utilized a CDN and cost me $0 dollars a month thanks to the extremely generous free tiers offered by Netlify and Contentful. 😍
 
 If you are currently on the fence about static site generators or the JAMstack in general there has never been a better time to jump in. In my humble opinion with these tools it has finally reached the level of maturity to not just be feasible for client work but actually pretty darn amazing.
-
-For those interested the source code for the website I built is available on GitHub: https://github.com/ryanwiemer/knw

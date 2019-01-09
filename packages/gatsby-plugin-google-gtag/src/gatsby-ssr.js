@@ -1,11 +1,18 @@
 import React from "react"
 import { Minimatch } from "minimatch"
 
-export const onRenderBody = (
+exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
   if (process.env.NODE_ENV !== `production`) return null
+
+  const gtagConfig = pluginOptions.gtagConfig || {}
+
+  // Prevent duplicate or excluded pageview events being emitted on initial load of page by the `config` command
+  // https://developers.google.com/analytics/devguides/collection/gtagjs/#disable_pageview_tracking
+
+  gtagConfig.send_page_view = false
 
   const firstTrackingId =
     pluginOptions.trackingIds && pluginOptions.trackingIds.length
@@ -31,8 +38,8 @@ export const onRenderBody = (
           : ``
       }
       ${
-        typeof pluginOptions.gtagConfig.anonymize_ip !== `undefined` &&
-        pluginOptions.gtagConfig.anonymize_ip === true
+        typeof gtagConfig.anonymize_ip !== `undefined` &&
+        gtagConfig.anonymize_ip === true
           ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${firstTrackingId}',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
           : ``
       }
@@ -49,9 +56,7 @@ export const onRenderBody = (
         ${pluginOptions.trackingIds
           .map(
             trackingId =>
-              `gtag('config', '${trackingId}', ${JSON.stringify(
-                pluginOptions.gtagConfig || {}
-              )});`
+              `gtag('config', '${trackingId}', ${JSON.stringify(gtagConfig)});`
           )
           .join(``)}
       }

@@ -19,7 +19,6 @@ The best way to add global styles is with a [shared layout component](/tutorial/
 To create a shared layout with global styles, start by creating a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
 
 ```shell
-# Create the site
 gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
@@ -47,7 +46,7 @@ div {
 
 In `src/components/layout.js`, include the stylesheet and export a layout component:
 
-```js:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import "./layout.css"
 
@@ -74,10 +73,9 @@ Run `gatsby develop` and you’ll see the global styles applied.
 To start, create a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world) and install [`gatsby-plugin-emotion`](/packages/gatsby-plugin-emotion/) and its dependencies:
 
 ```shell
-# Create the site
 gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
-
-npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
+cd global-styles
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
 Create `gatsby-config.js` and add the Emotion plugin:
@@ -92,22 +90,27 @@ Next, add a layout component at `src/components/layout.js`:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
-import styled from "react-emotion"
-import { injectGlobal } from "emotion"
-
-injectGlobal`
-  div {
-    background: red;
-    color: white;
-  }
-`
+import { Global, css } from "@emotion/core"
+import styled from "@emotion/styled"
 
 const Wrapper = styled("div")`
   border: 2px solid green;
   padding: 10px;
 `
 
-export default ({ children }) => <Wrapper>{children}</Wrapper>
+export default ({ children }) => (
+  <Wrapper>
+    <Global
+      styles={css`
+        div {
+          background: red;
+          color: white;
+        }
+      `}
+    />
+    {children}
+  </Wrapper>
+)
 ```
 
 Then, update `src/pages/index.js` to use the layout:
@@ -131,6 +134,7 @@ First, open a new terminal window and run the following commands to create a new
 
 ```shell
 gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default
+cd global-style-tutorial
 gatsby develop
 ```
 

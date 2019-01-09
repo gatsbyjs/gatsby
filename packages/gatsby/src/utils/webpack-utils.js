@@ -446,6 +446,9 @@ module.exports = async ({
       sourceMap: true,
       terserOptions: {
         ie8: false,
+        mangle: {
+          safari10: true,
+        },
         parse: {
           ecma: 8,
         },

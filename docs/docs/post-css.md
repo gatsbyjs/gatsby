@@ -10,13 +10,13 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 
 1.  Install the Gatsby plugin [**gatsby-plugin-postcss**](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss).
 
-  `npm install --save gatsby-plugin-postcss`
+`npm install --save gatsby-plugin-postcss`
 
 2.  Include the plugin in your `gatsby-config.js` file.
 
-  ```javascript:title=gatsby-config.js
-  plugins: [`gatsby-plugin-postcss`],
-  ```
+```javascript:title=gatsby-config.js
+plugins: [`gatsby-plugin-postcss`],
+```
 
 3.  Write your stylesheets using PostCSS (.css files) and require or import them as normal.
 
@@ -28,7 +28,7 @@ If you need to pass options to PostCSS use the plugins options; see postcss-load
 @custom-media --med (width <= 50rem);
 
 @media (--med) {
-  a { 
+  a {
     &:hover {
       color: color-mod(black alpha(54%));
     }
@@ -71,4 +71,4 @@ module.exports = () => ({
 
 ### Other resources
 
-* [Introduction to postcss](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
+- [Introduction to postcss](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)

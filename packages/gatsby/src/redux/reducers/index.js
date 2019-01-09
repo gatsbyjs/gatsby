@@ -1,6 +1,28 @@
+const reduxNodes = require(`./nodes`)
+const lokiNodes = require(`../../db/loki/nodes`).reducer
+
+const backend = process.env.GATSBY_DB_NODES || `redux`
+
+function getNodesReducer() {
+  let nodesReducer
+  switch (backend) {
+    case `redux`:
+      nodesReducer = reduxNodes
+      break
+    case `loki`:
+      nodesReducer = lokiNodes
+      break
+    default:
+      throw new Error(
+        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
+      )
+  }
+  return nodesReducer
+}
+
 module.exports = {
   program: require(`./program`),
-  nodes: require(`./nodes`),
+  nodes: getNodesReducer(),
   nodesTouched: require(`./nodes-touched`),
   lastAction: require(`./last-action`),
   plugins: require(`./plugins`),

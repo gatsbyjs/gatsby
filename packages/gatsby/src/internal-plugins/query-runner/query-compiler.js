@@ -20,6 +20,7 @@ import {
   multipleRootQueriesError,
 } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
+const websocketManager = require(`../../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
@@ -60,22 +61,36 @@ const validationRules = [
   VariablesInAllowedPositionRule,
 ]
 
+let lastRunHadErrors = null
+const overlayErrorID = `graphql-compiler`
+
+const resolveThemes = (plugins = []) =>
+  plugins.reduce((merged, plugin) => {
+    if (plugin.resolve.includes(`gatsby-theme-`)) {
+      merged.push(plugin.resolve)
+    }
+    return merged
+  }, [])
+
 class Runner {
-  baseDir: string
+  base: string
+  additional: string[]
   schema: GraphQLSchema
+  errors: string[]
   fragmentsDir: string
 
-  constructor(baseDir: string, fragmentsDir: string, schema: GraphQLSchema) {
-    this.baseDir = baseDir
-    this.fragmentsDir = fragmentsDir
+  constructor(base: string, additional: string[], schema: GraphQLSchema) {
+    this.base = base
+    this.additional = additional
     this.schema = schema
   }
 
   reportError(message) {
-    if (process.env.NODE_ENV === `production`) {
-      report.panic(`${report.format.red(`GraphQL Error`)} ${message}`)
-    } else {
-      report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+    const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
+    report.panicOnBuild(queryErrorMessage)
+    if (process.env.gatsby_executing_command === `develop`) {
+      websocketManager.emitError(overlayErrorID, queryErrorMessage)
+      lastRunHadErrors = true
     }
   }
 
@@ -85,14 +100,21 @@ class Runner {
   }
 
   async parseEverything() {
-    // FIXME: this should all use gatsby's configuration to determine parsable
-    // files (and how to parse them)
-    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`, {
-      nodir: true,
-    })
-    files = files.concat(
-      glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`, { nodir: true })
-    )
+    const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
+    let files = [
+      path.join(this.base, `src`),
+      path.join(this.base, `.cache`, `fragments`),
+    ]
+      .concat(this.additional.map(additional => path.join(additional, `src`)))
+      .reduce(
+        (merged, folderPath) =>
+          merged.concat(
+            glob.sync(path.join(folderPath, filesRegex), {
+              nodir: true,
+            })
+          ),
+        []
+      )
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
 
@@ -200,19 +222,24 @@ class Runner {
       compiledNodes.set(filePath, query)
     })
 
+    if (
+      process.env.gatsby_executing_command === `develop` &&
+      lastRunHadErrors
+    ) {
+      websocketManager.emitError(overlayErrorID, null)
+      lastRunHadErrors = false
+    }
+
     return compiledNodes
   }
 }
-export { Runner }
+export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
-  const { program, schema } = store.getState()
+  // TODO: swap plugins to themes
+  const { program, schema, plugins } = store.getState()
 
-  const runner = new Runner(
-    `${program.directory}/src`,
-    `${program.directory}/.cache/fragments`,
-    schema
-  )
+  const runner = new Runner(program.directory, resolveThemes(plugins), schema)
 
   const queries = await runner.compileAll()
 

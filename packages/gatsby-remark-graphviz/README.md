@@ -44,10 +44,6 @@ Which will be rendered using viz.js and the output html will replace the code bl
 
 In your gatsby-config.js, make sure you place this plugin before other remark plugins that modify code blocks (like prism).
 
-## Caveats
-
-In your gatsby-config.js, make sure you place this plugin before other remark plugins that modify code blocks (like prism).
-
 ## Alternatives
 
 If you want a broader range of drawing options, checkout [gatsby-remark-draw](https://www.npmjs.com/package/gatsby-remark-draw). It provides SvgBobRus, Graphviz, and Mermaid, but note that you must have these already installed on your system

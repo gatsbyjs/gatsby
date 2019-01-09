@@ -5,7 +5,7 @@ import { rhythm, options } from "../utils/typography"
 
 const Container = ({
   children,
-  className,
+  className = ``,
   hasSideBar = true,
   overrideCSS = {},
 }) => (

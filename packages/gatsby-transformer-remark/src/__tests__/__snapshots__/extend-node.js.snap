@@ -47,8 +47,44 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony?
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given an html format, it correctly maps nested markdown to html 1`] = `
+Object {
+  "excerpt": "<p>Where oh <a href=\\"nick.com\\"><em>where</em></a> <strong><em>is</em></strong> <img src=\\"pony.png\\" alt=\\"that pony\\">?</p>",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given an html format, it prunes large excerpts 1`] = `
+Object {
+  "excerpt": "<p>Where oh where is that pony? Is he in the stable…</p>",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given an html format, it respects the excerpt_separator 1`] = `
+Object {
+  "excerpt": "<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>
 ",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given raw html in the text body, this html is not escaped 1`] = `
+Object {
+  "excerpt": "<p>Where is my <code>pony</code> named leo?</p>",
   "frontmatter": Object {
     "title": "my little pony",
   },
