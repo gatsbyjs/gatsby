@@ -5,44 +5,44 @@ jest.mock(`../../db`, () => {
     {
       id: 1,
       internal: { type: `File` },
-      absolutePath: `/home/me/foo.node`,
+      absolutePath: `/home/me/foo.txt`,
       dir: `/home/me`,
     },
     {
       id: 2,
       internal: { type: `File` },
-      absolutePath: `/home/me/foo/bar.baz`,
+      absolutePath: `/home/me/foo/bar.txt`,
       dir: `/home/me/foo`,
     },
     {
       id: 3,
       parent: 1,
       internal: { type: `Foo` },
-      file: `./foo/bar.baz`,
+      file: `./foo/bar.txt`,
     },
     {
       id: 4,
       parent: 1,
       internal: { type: `Foo` },
-      file: `./foo/bar/bar.baz`,
+      file: `./foo/bar/bar.txt`,
     },
     {
       id: 5,
       internal: { type: `File` },
-      absolutePath: `C:\\Users\\me\\foo.node`,
+      absolutePath: `C:\\Users\\me\\foo.txt`,
       dir: `C:\\Users\\me`,
     },
     {
       id: 6,
       internal: { type: `File` },
-      absolutePath: `C:\\Users\\me\\foo\\bar.baz`,
+      absolutePath: `C:\\Users\\me\\foo\\bar.txt`,
       dir: `C:\\Users\\me\\foo`,
     },
     {
       id: 7,
       parent: 5,
       internal: { type: `Foo` },
-      file: `foo\\bar.baz`,
+      file: `foo\\bar.txt`,
     },
   ]
   return {
@@ -54,13 +54,13 @@ jest.mock(`../../db`, () => {
 describe(`isFile util`, () => {
   it(`handles file paths referencing existing File nodes`, () => {
     const selector = `Foo.file`
-    const relativePath = `./foo/bar.baz`
+    const relativePath = `./foo/bar.txt`
     expect(isFile(selector, relativePath)).toBeTruthy()
   })
 
   it(`handles file paths referencing non-existing File nodes`, () => {
     const selector = `Foo.file`
-    const relativePath = `./foo/bar/bar.baz`
+    const relativePath = `./foo/bar/bar.txt`
     expect(isFile(selector, relativePath)).toBeFalsy()
   })
 
@@ -70,7 +70,7 @@ describe(`isFile util`, () => {
       jest.spyOn(path, `join`).mockImplementation(path.win32.join)
 
       const selector = `Foo.file`
-      const relativePath = `foo\\bar.baz`
+      const relativePath = `foo\\bar.txt`
       expect(isFile(selector, relativePath)).toBeTruthy()
 
       path.join.mockRestore()

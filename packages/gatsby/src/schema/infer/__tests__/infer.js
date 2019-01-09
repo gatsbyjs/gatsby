@@ -20,14 +20,14 @@ const nodes = [
     id: 2,
     parent: 1,
     internal: { type: `Foo` },
-    filePath: `./bar/baz.qux`,
-    filePaths: [[`./bar/baz.qux`]],
+    filePath: `./bar/baz.txt`,
+    filePaths: [[`./bar/baz.txt`]],
   },
   {
     id: 3,
     parent: null,
     internal: { type: `File` },
-    absolutePath: `/home/me/foo/bar/baz.qux`,
+    absolutePath: `/home/me/foo/bar/baz.txt`,
   },
 ]
 
@@ -55,7 +55,7 @@ describe(`Type inference`, () => {
       float: 0.1,
       int: 1,
       nestedArray: [[1]],
-      nonExistingFilePath: `./foobar.baz`,
+      nonExistingFilePath: `./foobar.txt`,
       string: `Foo bar`,
       stringObject: new String(`Foo bar`),
     }
