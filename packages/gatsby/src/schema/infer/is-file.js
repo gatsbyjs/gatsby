@@ -3,7 +3,7 @@ const path = require(`path`)
 const { getAbsolutePath, getValueAtSelector } = require(`../utils`)
 const { getNodesByType } = require(`../db`)
 
-const getValueAt = (selector, node) => {
+const getValueAt = (node, selector) => {
   let value = getValueAtSelector(node, selector)
   while (Array.isArray(value)) {
     value = value[0]
@@ -17,15 +17,21 @@ const getFilePath = (field, relativePath) => {
 
   if (typeName === `File`) return null
 
-  const looksLikeFile = !path.isAbsolute(relativePath)
-  // mime.getType(relativePath) !== null &&
-  // require('is-relative')(relativePath) &&
-  // require('is-relative-url')(relativePath);
+  const mime = require(`mime`)
+  const isRelative = require(`is-relative`)
+  const isRelativeUrl = require(`is-relative-url`)
+  const looksLikeFile =
+    !path.isAbsolute(relativePath) &&
+    // FIXME: Do we need all of this?
+    mime.getType(relativePath) !== null &&
+    mime.getType(relativePath) !== `application/x-msdownload` &&
+    isRelative(relativePath) &&
+    isRelativeUrl(relativePath)
 
   if (!looksLikeFile) return null
 
   const node = getNodesByType(typeName).find(
-    node => getValueAt(selector, node) === relativePath
+    node => getValueAt(node, selector) === relativePath
   )
 
   return node ? getAbsolutePath(node, relativePath) : null
