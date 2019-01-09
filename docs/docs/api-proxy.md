@@ -2,6 +2,12 @@
 title: "Proxying API Requests in Development"
 ---
 
+## Resources
+
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/gatsby-lifecycle-apis/).
+
+## Proxying API requests in development
+
 People often serve the frontend React app from the same host and port as their
 backend implementation.
 
