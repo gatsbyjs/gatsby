@@ -8,7 +8,7 @@ const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { normalizePath, withBasePath } = require(`./path`)
+const { normalizePath, withBasePath, withTrailingSlash } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -96,7 +96,7 @@ module.exports = async (
       if (pubPath.substr(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
-        hmrBasePath = `${pubPath}/`
+        hmrBasePath = withTrailingSlash(pubPath)
       }
     }
 
@@ -115,9 +115,11 @@ module.exports = async (
           // Point sourcemap entries to original disk location (format as URL on Windows)
           publicPath:
             process.env.GATSBY_WEBPACK_PUBLICPATH ||
-            `${program.ssl ? `https` : `http`}://${
-              program.host
-            }:${webpackPort}/`,
+            withTrailingSlash(
+              `${program.ssl ? `https` : `http`}://${
+                program.host
+              }:${webpackPort}`
+            ),
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
@@ -135,14 +137,14 @@ module.exports = async (
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath,
+          publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
-          publicPath,
+          publicPath: withTrailingSlash(publicPath),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -475,7 +477,7 @@ module.exports = async (
     ]
 
     config.externals = [
-      function(context, request, callback) {
+      function(_, request, callback) {
         if (
           externalList.some(item => {
             if (typeof item === `string` && item === request) {

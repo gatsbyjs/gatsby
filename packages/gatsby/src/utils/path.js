@@ -37,9 +37,14 @@ function withPrefix(prefix, callback) {
   }
 }
 
+function withTrailingSlash(filePath) {
+  return `${filePath}/`
+}
+
 exports.joinPath = joinPath
 exports.normalizePath = normalizePath
 exports.withBasePath = withBasePath
+exports.withTrailingSlash = withTrailingSlash
 
 exports.withPathPrefix = withPrefix
 exports.withAssetPrefix = prefix => withPrefix(prefix, register)
