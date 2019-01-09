@@ -182,8 +182,7 @@ export default () => (
 
 ![with-layout2](with-layout2.png)
 
-Sweet, the layout is working! Now, your text is centered and constrained to
-a column 650 pixels wide, as you specified.
+Sweet, the layout is working! The content of your index page is still centered.
 
 But try navigating to `/about/`, or `/contact/`. The content on those pages still won't be centered.
 

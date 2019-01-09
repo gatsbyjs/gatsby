@@ -78,7 +78,6 @@ You should now have a structure like this:
 ```css:title=src/styles/global.css
 html {
   background-color: lavenderblush;
-  color: rebeccapurple;
 }
 ```
 
@@ -124,7 +123,7 @@ import "./src/styles/global.css"
 gatsby develop
 ```
 
-If you take a look at your project in the browser, you should see your global css styles applied to the "hello world" starter:
+If you take a look at your project in the browser, you should see a lavender background applied to the "hello world" starter:
 
 ![global-css](global-css.png)
 
@@ -194,7 +193,7 @@ export default () => (
 
 Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look like something like this:
 
-![css-modules-1](css-modules-1.png)
+![css-modules-basic](css-modules-basic.png)
 
 #### ✋ Style a component using CSS Modules
 
@@ -308,7 +307,7 @@ export default () => (
 
 The finished page should now look like:
 
-![css-modules-final](css-modules-final.png)
+![css-modules-userlist](css-modules-userlist.png)
 
 ### CSS-in-JS
 
