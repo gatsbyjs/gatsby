@@ -27,8 +27,14 @@ jest.mock(`../../db`, () => {
     },
   ]
   return {
-    getNodes: () => nodes,
     getNodesByType: type => nodes.filter(n => n.internal.type === type),
+    getTypes: () =>
+      Array.from(
+        nodes.reduce(
+          (acc, node) => acc.add(node.internal.type) || acc,
+          new Set()
+        )
+      ),
   }
 })
 
