@@ -62,9 +62,9 @@ describe(`Production build tests`, () => {
     cy.reload()
       .waitForAPI(`onRouteUpdate`)
       .go(`back`)
-      .waitForAPI(`onRouteUpdate`)
 
-    cy.getTestElement(`page2`)
+    cy.waitForAPI(`onRouteUpdate`)
+      .getTestElement(`page2`)
       .should(`exist`)
       .location(`pathname`)
       .should(`equal`, `/`)
