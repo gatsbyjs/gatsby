@@ -30,13 +30,11 @@ const NodeInterfaceTC = InterfaceTypeComposer.create({
     id: `ID!`,
     parent: {
       type: `Node`,
-      // resolve: async ({ parent: id }) => findById({ args: { id } }),
       resolve: async (source, args, context, info) =>
         findById()({ source, args: { id: source.parent }, context, info }),
     },
     children: {
       type: `[Node]!`,
-      // resolve: async ({ children: ids }) => findByIds({ args: { ids } }),
       resolve: async (source, args, context, info) =>
         findByIds()({ source, args: { ids: source.children }, context, info }),
     },

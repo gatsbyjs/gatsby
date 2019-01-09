@@ -16,6 +16,10 @@ Object {
   ],
   "float": 0.1,
   "int": 0,
+  "invalidDate": "String",
+  "invalidDates": Array [
+    "String",
+  ],
   "nestedArrays": Array [
     Array [
       1,

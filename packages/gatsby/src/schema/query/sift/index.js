@@ -4,10 +4,8 @@ const sort = require(`./sort`)
 const getQueryOperators = require(`./query-operators`)
 const { dropQueryOperators, prepareQueryArgs } = require(`./query-args`)
 
-/* eslint-disable-next-line arrow-body-style */
 const equals = value => ({ eq: value })
 
-/* eslint-disable-next-line arrow-body-style */
 const oneOf = value => ({ in: value })
 
 const filter = (filters, nodes) => sift({ $and: filters }, nodes)

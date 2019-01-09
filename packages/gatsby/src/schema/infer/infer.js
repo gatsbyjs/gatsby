@@ -26,7 +26,6 @@ const addInferredFields = (tc, value, prefix, depth = 0) => {
 
     if (tc.hasField(key)) {
       if (isObject(value) /* && depth < MAX_DEPTH */) {
-        // TODO: Use helper (similar to dropTypeModifiers)
         let lists = 0
         let fieldType = tc.getFieldType(key)
         while (fieldType.ofType) {
@@ -54,14 +53,13 @@ const addInferredFields = (tc, value, prefix, depth = 0) => {
           fieldConfig = `Date`
           break
         }
-        if (isFile(selector, value)) {
+        // FIXME: We are trying to infer a File, but cannot assume that a
+        // source plugin for File nodes is actually present.
+        if (/* schemaComposer.has(`File`) && */ isFile(selector, value)) {
           // NOTE: For arrays of files, where not every path references
           // a File node in the db, it is semi-random if the field is
           // inferred as File or String, since the exampleValue only has
           // the first entry (which could point to an existing file or not).
-          // TODO: Should `link` be called with the `resolver`,
-          // or should this be figured out in `link` itself?
-          // We have all we need on `info.returnType`.
           const resolver = (arrays ? findMany : findOne)(`File`)
           fieldConfig = {
             type: `File`,
@@ -72,17 +70,24 @@ const addInferredFields = (tc, value, prefix, depth = 0) => {
         fieldConfig = `String`
         break
       case `object`:
-        fieldConfig =
-          value instanceof Date
-            ? `Date`
-            : value && depth < MAX_DEPTH
-              ? addInferredFields(
-                  schemaComposer.getOrCreateTC(createTypeName(selector)),
-                  value,
-                  selector,
-                  depth + 1
-                )
-              : `JSON`
+        if (value instanceof Date) {
+          fieldConfig = `Date`
+          break
+        }
+        if (value instanceof String) {
+          fieldConfig = `String`
+          break
+        }
+        if (value && depth < MAX_DEPTH) {
+          fieldConfig = addInferredFields(
+            schemaComposer.getOrCreateTC(createTypeName(selector)),
+            value,
+            selector,
+            depth + 1
+          )
+          break
+        }
+        fieldConfig = `JSON`
         break
       default:
         // null
@@ -107,23 +112,19 @@ const addInferredFields = (tc, value, prefix, depth = 0) => {
       }
     }
 
-    // UPSTREAM: TC.makeFieldPlural
-    // @see https://github.com/stefanprobst/graphql-compose/pull/new/make-field-plural
     while (arrays--) {
       fieldConfig = fieldConfig.type
         ? { ...fieldConfig, type: [fieldConfig.type] }
         : [fieldConfig]
     }
-    // while (arrays--) fieldConfig = [fieldConfig]
 
     acc[key] = fieldConfig
 
     return acc
   }, {})
 
-  Object.entries(fields).forEach(
-    ([fieldName, fieldConfig]) =>
-      !tc.hasField(fieldName) && tc.setField(fieldName, fieldConfig)
+  Object.entries(fields).forEach(([fieldName, fieldConfig]) =>
+    tc.setField(fieldName, fieldConfig)
   )
   return tc
 }

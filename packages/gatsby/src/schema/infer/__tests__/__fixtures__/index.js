@@ -58,6 +58,7 @@ const nodes = [
     polymorphicWithNull: { foo: { bar: true } },
     polymorphicArrayWithNull: { foo: null },
     string: `Foo bar`,
+    stringObject: new String(`Foo bar`),
   },
   {
     array: [],
@@ -67,6 +68,7 @@ const nodes = [
       foo: [{ baz: true }, { bar: false, qux: false }],
     },
     string: `Baz qux`,
+    stringObject: `Baz qux`,
   },
   {
     object: {

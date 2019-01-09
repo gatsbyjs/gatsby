@@ -29,11 +29,12 @@ const link = ({ by }) => resolve => (source, args, context, info) => {
   }
 
   const operator = Array.isArray(fieldValue) ? oneOf : equals
-  args.filter = by.split(`.`).reduceRight((acc, key, i, { length }) => {
-    return {
+  args.filter = by.split(`.`).reduceRight(
+    (acc, key, i, { length }) => ({
       [key]: i === length - 1 ? operator(acc) : acc,
-    }
-  }, fieldValue)
+    }),
+    fieldValue
+  )
   return resolve({ source, args, context, info })
 }
 
@@ -42,8 +43,6 @@ const findById = () => ({ args }) => getById(args.id)
 const findByIds = () => ({ args }) =>
   Array.isArray(args.ids) ? args.ids.map(getById).filter(Boolean) : []
 
-// TODO: Should we merge this with `findByIds`?
-// Or: Split in `findChildOfType` and `findChildrenOfType`,
 const findByIdsAndType = type => ({ args }, firstResultOnly) =>
   Array.isArray(args.ids)
     ? args.ids

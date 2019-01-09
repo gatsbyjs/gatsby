@@ -25,10 +25,6 @@ class LinkNodeDirectiveVisitor extends SchemaDirectiveVisitor {
 
     const nullableType = getNullableType(type)
 
-    // TODO: Should `link` be called with the `resolver`,
-    // or should this be figured out in `link` itself?
-    // We have all we need on `info.returnType`.
-    // TODO: Do we have to take care of an existing resolver?
     const resolver = (nullableType instanceof GraphQLList ? findMany : findOne)(
       getNamedType(nullableType).name
     )

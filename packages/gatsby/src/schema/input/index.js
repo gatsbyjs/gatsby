@@ -11,7 +11,6 @@ const getSortInput = require(`./sort`)
 //   should already be unique.
 // * allow option to drop type modifiers, since types are already being
 //   unwrapped
-// * InterfaceTypeComposer needs getInputTypeComposer/hasInputTypeComposer
 
 // const cache = new Map()
 

@@ -50,6 +50,7 @@ const getType = value => {
     case `object`:
       if (value === null) return null
       if (value instanceof Date) return `date`
+      if (value instanceof String) return `string`
       if (Array.isArray(value)) {
         const uniqueValues = getUniqueValues(
           value.map(getType).filter(isDefined)
@@ -102,9 +103,6 @@ const getExampleObject = (nodes, prefix, ignoreFields = []) => {
           arrayWrappers
         )
       ) {
-        // FIXME: is a mix of date *objects* and strings problematic?
-        // I.e. when date objects will be treated as strings,
-        // are they automatically stringified?
         value = `String`
       } else {
         reportConflict(selector, entriesByType)
@@ -116,10 +114,8 @@ const getExampleObject = (nodes, prefix, ignoreFields = []) => {
     if (isObject(value)) {
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
-        if (arrayWrappers) {
-          let arrays = arrayWrappers - 1
-          while (arrays--) value = value[0]
-        }
+        let arrays = arrayWrappers - 1
+        while (arrays-- > 0) value = value[0]
         return acc.concat(value)
       }, [])
       const exampleObject = getExampleObject(objects, selector)
