@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.15"></a>
+
+## [3.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.14...gatsby-source-drupal@3.0.15) (2019-01-08)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 <a name="3.0.14"></a>
 
 ## [3.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.13...gatsby-source-drupal@3.0.14) (2018-12-11)
