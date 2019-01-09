@@ -21,9 +21,11 @@ function normalizePath(...parts) {
     .filter(part => part && part.length > 0)
     .map(part => part.replace(/^\/+/, ``).replace(/\/+$/, ``))
 
-  return ((parts[0] || ``).match(/^http/) ? [] : [``])
-    .concat(normalized)
-    .join(`/`)
+  return (
+    ((parts[0] || ``).match(/^http/) ? [] : [``])
+      .concat(normalized)
+      .join(`/`) || `/`
+  )
 }
 
 function withPrefix(prefix, callback) {

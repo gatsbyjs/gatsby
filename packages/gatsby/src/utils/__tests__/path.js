@@ -7,6 +7,7 @@ const {
   withBasePath,
   withPathPrefix,
   withAssetPrefix,
+  withTrailingSlash,
 } = require(`../path`)
 const { clear, getAssets } = require(`../asset-path-registry`)
 
@@ -77,16 +78,16 @@ describe(`normalizePath`, () => {
   })
 
   it(`normalizes malformed path part`, () => {
-    expect(normalizePath(`///blog/////`)).toBe(`/blog/`)
+    expect(normalizePath(`///blog/////`)).toBe(`/blog`)
   })
 
   it(`normalizes all malformed path parts`, () => {
-    expect(normalizePath(`/something/`, `/blog/`)).toBe(`/something/blog/`)
+    expect(normalizePath(`/something/`, `/blog/`)).toBe(`/something/blog`)
   })
 
   it(`handle URLs`, () => {
     expect(normalizePath(`https://cdn.gatsbyjs.org////`, `/blog/`)).toBe(
-      `https://cdn.gatsbyjs.org/blog/`
+      `https://cdn.gatsbyjs.org/blog`
     )
   })
 })
@@ -152,5 +153,11 @@ describe(`withAssetPrefix`, () => {
 
     const assets = await getAssets(__dirname)
     expect(Array.from(assets)).toEqual(assetPaths)
+  })
+})
+
+describe(`withTrailingSlash`, () => {
+  it(`adds a trailing slash`, () => {
+    expect(withTrailingSlash(`/blog`)).toBe(`/blog/`)
   })
 })
