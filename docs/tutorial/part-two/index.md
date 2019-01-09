@@ -38,7 +38,6 @@ Open a new terminal window, create a new "hello world" gatsby site, and start th
 ```shell
 gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-two
-gatsby develop
 ```
 
 You now have a new Gatsby site (based on the Gatsby "hello world" starter) with the following structure:
@@ -61,7 +60,7 @@ cd styles
 touch global.css
 ```
 
-> Note: You'll need to either stop or restart the running development server, or open a second terminal window. Also, feel free to create these directories and files using your code editor, if you'd prefer.
+> Note: Feel free to create these directories and files using your code editor, if you'd prefer.
 
 You should now have a structure like this:
 
@@ -119,11 +118,19 @@ import "./src/styles/global.css"
 
 > Note: You can use Node.js `require` or `import` syntax. If you're not sure of the difference, just pick one.
 
-If you take a look another look at your "hello world" project site, you should see your global css changes applied.
+3. Start the development server:
+
+```shell
+gatsby develop
+```
+
+If you take a look at your project in the browser, you should see your global css styles applied to the "hello world" starter:
+
+![global-css](global-css.png)
 
 > Tip: This part of the tutorial has focused on the quickest and most straightforward way to get started styling a Gatsby site -- importing standard CSS files directly, using `gatsby-browser.js`. In most cases, the best way to add global styles is with a shared layout component. [Check out the docs](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-with-standard-css-files) for more on that approach.
 
-## Using component CSS
+## Using component-scoped CSS
 
 So far, we've talked about the more traditional approach of using standard css stylesheets. Now, we'll talk about various methods of modularizing CSS to tackle styling in a component-oriented way.
 
@@ -333,4 +340,4 @@ and more!
 
 ## What's coming next?
 
-Now continue on to [Creating nested layout components](/tutorial/part-three/), the third part of the tutorial.
+Now continue on to [part three of the tutorial](/tutorial/part-three/), where you'll learn about Gatsby plugins and layout components.

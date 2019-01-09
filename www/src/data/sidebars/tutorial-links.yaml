@@ -44,7 +44,7 @@
           link: /tutorial/part-two/#using-global-styles
         - title: Creating global styles with standard css files
           link: /tutorial/part-two/#creating-global-styles-with-standard-css-files
-        - title: Using component CSS
+        - title: Using component-scoped CSS
           link: /tutorial/part-two/#using-component-css
         - title: Styling using CSS Modules
           link: /tutorial/part-two/#css-modules
