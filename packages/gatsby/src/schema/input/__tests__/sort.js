@@ -47,11 +47,11 @@ describe(`Sort input`, () => {
     expect(sort.getFieldType(`fields`).ofType).toBeInstanceOf(GraphQLEnumType)
     expect(sort.getFieldType(`fields`).ofType.getValues()).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: `BOOL`, value: `bool` }),
-        expect.objectContaining({ name: `ARRAY`, value: `array` }),
-        expect.objectContaining({ name: `ENUM`, value: `enum` }),
+        expect.objectContaining({ name: `bool`, value: `bool` }),
+        expect.objectContaining({ name: `array`, value: `array` }),
+        expect.objectContaining({ name: `enum`, value: `enum` }),
         expect.objectContaining({
-          name: `NESTED___BOOL`,
+          name: `nested___bool`,
           value: `nested.bool`,
         }),
       ])
@@ -62,14 +62,14 @@ describe(`Sort input`, () => {
     const sortKeys = sort.getFieldType(`fields`).ofType.getValues()
     expect(sortKeys).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: `ID`, value: `id` }),
-        expect.objectContaining({ name: `PARENT___ID`, value: `parent.id` }),
+        expect.objectContaining({ name: `id`, value: `id` }),
+        expect.objectContaining({ name: `parent___id`, value: `parent.id` }),
         expect.objectContaining({
-          name: `PARENT___PARENT___ID`,
+          name: `parent___parent___id`,
           value: `parent.parent.id`,
         }),
         expect.objectContaining({
-          name: `PARENT___PARENT___PARENT___ID`,
+          name: `parent___parent___parent___id`,
           value: `parent.parent.parent.id`,
         }),
       ])
@@ -81,7 +81,7 @@ describe(`Sort input`, () => {
     expect(sortKeys).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          name: `PARENT___PARENT___PARENT___PARENT___ID`,
+          name: `parent___parent___parent___parent___id`,
           value: `parent.parent.parent.parent.id`,
         }),
       ])

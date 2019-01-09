@@ -4,14 +4,14 @@ describe(`createSortKey util`, () => {
   it(`creates a valid sort key from a selector`, () => {
     const selector = `foo.bar.baz`
     const sortKey = createSortKey(selector, `.`)
-    const expected = `FOO_BAR_BAZ`
+    const expected = `foo_bar_baz`
     expect(sortKey).toBe(expected)
   })
 
   it(`accepts a delimiter argument`, () => {
     const selector = `foo.bar.baz`
     const sortKey = createSortKey(selector, `___`)
-    const expected = `FOO___BAR___BAZ`
+    const expected = `foo___bar___baz`
     expect(sortKey).toBe(expected)
   })
 
@@ -23,9 +23,9 @@ describe(`createSortKey util`, () => {
   })
 
   it(`correctly snakecases everything but the first character`, () => {
-    const selector = `FooBar.bazQuz`
+    const selector = `FooBar.bazQux`
     const sortKey = createSortKey(selector, `___`)
-    const expected = `FOO_BAR___BAZ_QUZ`
+    const expected = `Foo_bar___baz_qux`
     expect(sortKey).toBe(expected)
   })
 

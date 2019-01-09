@@ -269,7 +269,7 @@ describe(`Schema query`, () => {
       query {
         allFile(
           filter: { children: { internal: { type: { eq: "Markdown" } } } }
-          sort: { fields: [ID], order: DESC }
+          sort: { fields: [id], order: DESC }
         ) {
           name
           children {
@@ -306,7 +306,7 @@ describe(`Schema query`, () => {
               }
             }
           }
-          sort: { fields: [FRONTMATTER___TITLE], order: DESC }
+          sort: { fields: [frontmatter___title], order: DESC }
         ) {
           id
           frontmatter {
