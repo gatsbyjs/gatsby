@@ -3,11 +3,11 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Software Engineer @ GatsbyJS. Likes all things front-end, and travel. And other things too. Blogs at blog.dustinschau.com.
-  avatar: avatars/dustin-schau.jpeg
+  bio: Software Engineer @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
+  avatar: avatars/dustin-schau.png
   twitter: "@schaudustin"
 - id: Kostas Bariotis
-  bio: Senior full stack engineer, @devitconf & @skgnodejs co-organizer, http://devastation.tv  host, creator of http://janitr.net & others
+  bio: Senior full-stack engineer, @devitconf & @skgnodejs co-organizer, http://devastation.tv  host, creator of http://janitr.net & others
   avatar: avatars/kostas-bariotis.jpg
   twitter: "@kbariotis"
 - id: Tim Arney
@@ -19,11 +19,11 @@
   avatar: avatars/ian-sinnott.jpg
   twitter: "@ian_sinn"
 - id: Moreno Feltscher
-  bio: Full Stack Web Engineer and Partner at https://smartive.ch
+  bio: Full-Stack Web Engineer and Partner at https://smartive.ch
   avatar: avatars/moreno-feltscher.jpg
   twitter: "@luagsh_mrn"
 - id: David James
-  bio: Front End Developer at https://chromatix.com.au
+  bio: Frontend Developer at https://chromatix.com.au
   avatar: avatars/david-james.jpg
   twitter: "@daviddeejjames"
 - id: Samuel Goudie
@@ -39,7 +39,7 @@
   avatar: avatars/tal-bereznitskey.jpg
   twitter: "@ketacode"
 - id: Kalin Chernev
-  bio: Full Stack Web Developer
+  bio: Full-Stack Web Developer
   avatar: avatars/kalin-chernev.jpg
   twitter: "@kalinchernev"
 - id: Nahuel Scotti
@@ -47,7 +47,7 @@
   avatar: avatars/nahuel-scotti.jpeg
   twitter: "@singuerinc"
 - id: Fernando Poumian
-  bio: Full Stack Web Developer - https://www.halfelectronic.com
+  bio: Full-Stack Web Developer - https://www.halfelectronic.com
   avatar: avatars/fernando-poumian.jpeg
   twitter: "@fernandopoumian"
 - id: Josh Weaver
@@ -78,7 +78,7 @@
   bio: Robin Vasan is an experienced early-stage venture investor and former repeat entrepreneur. His expertise covers the full life-cycle of building and scaling companies and he primarily invests in applications, cloud computing, open source, virtualization and security.
   avatar: avatars/robin-vasan.jpg
 - id: Ross Whitehouse
-  bio: React and Front-End Developer from Birmingham, UK
+  bio: React and Frontend Developer from Birmingham, UK
   avatar: avatars/ross-whitehouse.jpg
   twitter: "@RossWhitehouse"
 - id: Vlad Pasculescu
@@ -130,7 +130,7 @@
   avatar: avatars/ray-gesualdo.jpg
   twitter: "@RayGesualdo"
 - id: Michelle Barker
-  bio: Front end developer at Mud, CSS obsessive and blogger at https://css-irl.info
+  bio: Frontend developer at Mud, CSS obsessive and blogger at https://css-irl.info
   avatar: avatars/michelle-barker.jpg
   twitter: "@CSSInRealLife"
 - id: Jason Lengstorf
@@ -177,3 +177,30 @@
   avatar: avatars/michael-holtzman.jpg
   twitter: "@mikelax"
   bio: nyc • tech • I build things 🚀 & learn things 📖
+- id: Sergiy Dybskiy
+  avatar: avatars/sergiy-dybskiy.jpg
+  twitter: "@416serg"
+  bio: JavaScript Developer ⚛️ Burrito enthusiast 🌯 Snowboarder 🏂🏼
+- id: Joaquín Bravo Contreras
+  avatar: avatars/joaquin-bravo.jpg
+  twitter: "@jackbravo"
+  bio: Developer based in Guadalajara, Mexico. Fond of Drupal, Python, Elixir and GatsbyJS
+- id: Chris Biscardi
+  bio: Early stage software product consultant. React*, Go, GraphQL, Containers, k8s.
+  avatar: avatars/chris-biscardi.png
+  twitter: "@chrisbiscardi"
+- id: LekoArts
+  bio: Designer & Frontend Dev. Loves good typography & tv series. Blogs at lekoarts.de
+  avatar: avatars/lekoarts.png
+  twitter: "@lekoarts_de"
+- id: Tyler Barnes
+  bio: React - front-end dev - cycling - music
+  avatar: avatars/tyler-barnes.jpg
+- id: swyx
+  bio: Infinite Builder working on DX @ Netlify. Helping people Learn In Public at /r/reactjs
+  avatar: avatars/swyx.jpg
+  twitter: "@swyx"
+- id: Ondrej Polesny
+  bio: Full-stack developer, speaker and trainer with passion for anything new and intriguing. Opensource contributor. Dev evangelist @ Kentico Cloud.
+  avatar: avatars/ondrej-polesny.jpg
+  twitter: "@ondrabus"

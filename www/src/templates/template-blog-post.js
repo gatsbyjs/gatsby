@@ -1,5 +1,5 @@
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -12,6 +12,7 @@ import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
+import Pullquote from "../components/shared/pullquote"
 import Chart from "../components/chart"
 
 const renderAst = new rehypeReact({
@@ -19,6 +20,7 @@ const renderAst = new rehypeReact({
   components: {
     "hubspot-form": HubspotForm,
     "date-chart": Chart,
+    pullquote: Pullquote,
   },
 }).Compiler
 
@@ -211,7 +213,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {post.frontmatter.publishedAt}
+                        {this.props.data.markdownRemark.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -342,6 +344,7 @@ export const pageQuery = graphql`
       timeToRead
       fields {
         slug
+        publishedAt
       }
       frontmatter {
         title
@@ -349,7 +352,6 @@ export const pageQuery = graphql`
         date(formatString: "MMMM Do YYYY")
         rawDate: date
         canonicalLink
-        publishedAt
         tags
         image {
           childImageSharp {

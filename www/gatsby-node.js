@@ -10,12 +10,9 @@ const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
+const startersRedirects = require(`./starter-redirects.json`)
 
 let ecosystemFeaturedItems
-
-require(`dotenv`).config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
 
 if (
   process.env.gatsby_executing_command === `build` &&
@@ -49,6 +46,18 @@ const slugToAnchor = slug =>
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
+
+  createRedirect({
+    fromPath: `/blog/2018-10-25-unstructured-data/`,
+    toPath: `/blog/2018-10-25-using-gatsby-without-graphql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-unstructured-data/`,
+    toPath: `/docs/using-gatsby-without-graphql/`,
+    isPermanent: true,
+  })
 
   // Random redirects
   createRedirect({
@@ -123,6 +132,14 @@ exports.createPages = ({ graphql, actions }) => {
     isPermanent: true,
   })
 
+  Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
+    createRedirect({
+      fromPath: `/starters${fromSlug}`,
+      toPath: `/starters${toSlug}`,
+      isPermanent: true,
+    })
+  })
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -148,7 +165,7 @@ exports.createPages = ({ graphql, actions }) => {
     graphql(`
       query {
         allMarkdownRemark(
-          sort: { order: DESC, fields: [frontmatter___date] }
+          sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
           limit: 10000
           filter: { fileAbsolutePath: { ne: null } }
         ) {
@@ -261,7 +278,9 @@ exports.createPages = ({ graphql, actions }) => {
       const postsPerPage = 8
       const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
 
-      Array.from({ length: numPages }).forEach((_, i) => {
+      Array.from({
+        length: numPages,
+      }).forEach((_, i) => {
         createPage({
           path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
           component: slash(blogListTemplate),
@@ -451,7 +470,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         slug = `/${parsedFilePath.dir}/`
       }
 
-      // Set released status for blog posts.
+      // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
         let released = false
         const date = _.get(node, `frontmatter.date`)
@@ -459,6 +478,17 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           released = moment().isSameOrAfter(moment.utc(date))
         }
         createNodeField({ node, name: `released`, value: released })
+
+        const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
+        const publishedAt = _.get(node, `frontmatter.publishedAt`)
+
+        createNodeField({
+          node,
+          name: `publishedAt`,
+          value: canonicalLink
+            ? publishedAt || url.parse(canonicalLink).hostname
+            : null,
+        })
       }
     }
     // Add slugs for package READMEs.
@@ -494,7 +524,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     // Default fields are to avoid graphql errors.
     const { owner, name: repoStub } = parseGHUrl(node.repo)
     const defaultFields = {
-      slug: `/${repoStub}/`,
+      slug: `/${owner}/${repoStub}/`,
       stub: repoStub,
       name: ``,
       description: ``,
@@ -564,7 +594,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           // If a new field is added here, make sure a corresponding
           // change is made to "defaultFields" to not break DX
           const starterShowcaseFields = {
-            slug: `/${repoStub}/`,
+            slug: `/${owner}/${repoStub}/`,
             stub: repoStub,
             name,
             description: pkgjson.description,
@@ -598,7 +628,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     }
   }
 
-  // Community/Creators Pages
+  // Creator pages
   else if (node.internal.type === `CreatorsYaml`) {
     const validTypes = {
       individual: `people`,
@@ -613,18 +643,18 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         }” was provided for ${node.name}.`
       )
     }
-    slug = `/community/${validTypes[node.type]}/${slugify(node.name, {
+    slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
       lower: true,
     })}`
     createNodeField({ node, name: `slug`, value: slug })
   }
-  // end Community/Creators Pages
+  // end Creator pages
   return null
 }
 
 exports.onCreatePage = ({ page, actions }) => {
   // add lists of featured items to Ecosystem page
-  if (page.path === `/ecosystem/`) {
+  if (page.path === `/ecosystem/` || page.path === `/`) {
     const { createPage, deletePage } = actions
     const oldPage = Object.assign({}, page)
 

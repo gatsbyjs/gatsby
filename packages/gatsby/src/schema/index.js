@@ -3,16 +3,26 @@ const _ = require(`lodash`)
 const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
 const { mergeSchemas } = require(`graphql-tools`)
 
-const buildNodeTypes = require(`./build-node-types`)
-const buildNodeConnections = require(`./build-node-connections`)
+const nodeTypes = require(`./build-node-types`)
+const nodeConnections = require(`./build-node-connections`)
 const { store } = require(`../redux`)
 const invariant = require(`invariant`)
 const { clearUnionTypes } = require(`./infer-graphql-type`)
 
-module.exports = async ({ parentSpan }) => {
+function buildNodesSchema(fields) {
+  return new GraphQLSchema({
+    query: new GraphQLObjectType({
+      name: `RootQueryType`,
+      fields,
+    }),
+  })
+}
+module.exports.buildNodesSchema = buildNodesSchema
+
+module.exports.build = async ({ parentSpan }) => {
   clearUnionTypes()
-  const typesGQL = await buildNodeTypes({ parentSpan })
-  const connections = buildNodeConnections(_.values(typesGQL))
+  const typesGQL = await nodeTypes.buildAll({ parentSpan })
+  const connections = nodeConnections.buildAll(_.values(typesGQL))
 
   // Pull off just the graphql node from each type object.
   const nodes = _.mapValues(typesGQL, `node`)
@@ -22,12 +32,7 @@ module.exports = async ({ parentSpan }) => {
 
   const thirdPartySchemas = store.getState().thirdPartySchemas || []
 
-  const gatsbySchema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields: { ...connections, ...nodes },
-    }),
-  })
+  const gatsbySchema = buildNodesSchema({ ...connections, ...nodes })
 
   const schema = mergeSchemas({
     schemas: [gatsbySchema, ...thirdPartySchemas],

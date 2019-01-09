@@ -590,6 +590,118 @@ Map {
     ],
     "kind": "Document",
   },
+  "fragment-shorthand.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 1097489062,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 74,
+          "start": 3,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "fragmentShorthandJs1097489062",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 74,
+            "start": 9,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 70,
+                "start": 15,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 19,
+                  "start": 15,
+                },
+                "value": "site",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 70,
+                  "start": 20,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 64,
+                      "start": 28,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 40,
+                        "start": 28,
+                      },
+                      "value": "siteMetadata",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 64,
+                        "start": 41,
+                      },
+                      "selections": Array [
+                        Object {
+                          "alias": undefined,
+                          "arguments": Array [],
+                          "directives": Array [],
+                          "kind": "Field",
+                          "loc": Object {
+                            "end": 56,
+                            "start": 51,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 56,
+                              "start": 51,
+                            },
+                            "value": "title",
+                          },
+                          "selectionSet": undefined,
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "text": "
+  query {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
   "query-in-separate-variable.js" => Object {
     "definitions": Array [
       Object {

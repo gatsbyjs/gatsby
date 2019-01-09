@@ -27,8 +27,14 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
   </a>
-  <a href="https://gatsbyjs.org/docs/how-to-submit-a-pr/">
+  <a href="https://npmcharts.com/compare/gatsby?minimal=true">
+    <img src="https://img.shields.io/npm/dt/gatsby.svg" alt="Total downloads on npm." />
+  </a>
+  <a href="https://gatsbyjs.org/docs/how-to-contribute">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+  <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
+    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
   </a>
 </p>
 
@@ -39,7 +45,7 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/plugins/">Plugins</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <a href="https://gatsbyjs.org/starters/">Starters</a>
   <span> · </span>
   <a href="https://gatsbyjs.org/showcase/">Showcase</a>
   <span> · </span>
@@ -58,7 +64,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
-  whether the data is coming from the same back-end.
+  whether the data is coming from the same backend.
 
 - **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
   files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
@@ -80,6 +86,7 @@ Gatsby is a modern framework for blazing fast websites.
 - [Learning Gatsby](#-learning-gatsby)
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
+- [License](#memo-license)
 - [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
 
 ## 🚀 Get Up and Running in 5 Minutes
@@ -149,6 +156,10 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 ### Contributing to Gatsby v1
 
 We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
+
+## :memo: License
+
+Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks to Our Contributors and Sponsors
 

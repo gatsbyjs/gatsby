@@ -1,3 +1,7 @@
+require(`dotenv`).config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
@@ -44,6 +48,12 @@ module.exports = {
     },
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/data/diagram`,
+      },
+    },
     {
       resolve: `gatsby-transformer-remark`,
       options: {

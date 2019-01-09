@@ -39,41 +39,14 @@ const Content = styled(`div`)`
   white-space: nowrap;
 `
 
-const Link = styled(`a`)`
-  color: #fff;
-  span {
-    display: none;
-    ${presets.Mobile} {
-      display: inline;
-    }
-  }
-`
-
 const Banner = ({ children, background }) => (
   <BannerContainer background={background} className="banner">
-    <InnerContainer>
-      {children ? (
-        <Content>{children}</Content>
-      ) : (
-        <Content>
-          These are the docs for v2.
-          {` `}
-          <Link href="https://v1.gatsbyjs.org/">
-            View the v1 docs
-            <span>
-              {` `}
-              instead
-            </span>
-          </Link>
-          .
-        </Content>
-      )}
-    </InnerContainer>
+    <InnerContainer>{children && <Content>{children}</Content>}</InnerContainer>
   </BannerContainer>
 )
 
 Banner.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   background: PropTypes.any,
 }
 
