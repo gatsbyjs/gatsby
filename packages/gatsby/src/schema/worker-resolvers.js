@@ -1,3 +1,36 @@
+// Worker resolvers are resolvers that perform their work in forked
+// processes rather than in the main Gatsby process.
+//
+// Most Gatsby field resolvers simply return a property of a parent
+// object, but resolvers defined by plugins via the
+// `setFieldsOnGraphQLNodeType` often perform large amounts of CPU
+// processing. E.g `gatsby-transformer-remark`. This module runs those
+// resolvers on child processes.
+//
+// The worker-pool is implemented by `jest-worker` which works by
+// creating a pool of node.js processes that load a given module. It
+// then creates an API that mimics the module's exports. Calls to that
+// API will result in IPC messages being sent to the child process and
+// calling the same API.
+//
+// To declare that a field's resolver should be run on a worker, call
+// `defineResolver` with the field definition. The field should
+// include a `workerPlugin` property that defines the plugin name
+// where `setFieldsOnGraphQLNodeType` is defined.
+//
+// After fields are declared, `initPool()` will create the worker
+// pool, passing the field resolver information via the `setupArgs`
+// option. jest-worker will then call the worker
+// (./resolver-worker.js) `setup` method, which will load the plugin's
+// `gatsby-node.js` and call the `setFieldsOnGraphQLNodeType` API. The
+// resolver functions are now ready to be called in each worker.
+//
+// One other thing to note is that the APIs provided to
+// `setFieldsOnGraphQLNodeType` are all replaced by RPC versions in
+// ./resolver-worker.js. So a call like `getNode()` that would
+// normally be run in memory on the main process, is instead backed by
+// an async RPC call over IPC from the child to the parent process.
+
 const path = require(`path`)
 const invariant = require(`invariant`)
 const Worker = require(`jest-worker`).default
