@@ -5,7 +5,8 @@ beforeEach(clear)
 
 describe(`general registry behavior`, () => {
   it(`starts with empty registry`, () => {
-    expect(register()).toEqual(expect.any(Set))
+    const registry = register()
+    expect(registry.size).toBe(0)
   })
 
   it(`registers a file path to registry`, () => {
