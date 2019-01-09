@@ -1,7 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Link, graphql } from "gatsby"
+import TagsIcon from "react-icons/lib/ti/tags"
 
+import Button from "../components/button"
 import Container from "../components/container"
 import Layout from "../components/layout"
 
@@ -29,7 +31,9 @@ const Tags = ({ pageContext, data, location }) => {
             )
           })}
         </ul>
-        <Link to="/blog/tags">All tags</Link>
+        <Button tiny key="blog-post-view-all-tags-button" to="/blog/tags">
+          View All Tags <TagsIcon />
+        </Button>
       </Container>
     </Layout>
   )
