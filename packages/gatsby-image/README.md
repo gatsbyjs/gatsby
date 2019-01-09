@@ -288,7 +288,7 @@ const NonStretchedImage = props => {
 **Note:** The `GatsbyImageSharpFluid` fragment does not include `presentationWidth`.
 You will need to add it in your graphql query as is shown in the following snippet:
 
-```
+```graphql
 {
   childImageSharp {
     fluid(maxWidth: 500, quality: 100) {
