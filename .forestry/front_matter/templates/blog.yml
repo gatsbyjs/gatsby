@@ -33,3 +33,5 @@ fields:
   type: boolean
   hidden: false
   default: ''
+pages:
+- docs/blog/gatsby-days-talks-are-here.md
