@@ -192,8 +192,8 @@ async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
 
   _.each(mergedFieldsFromPlugins, (fieldConfig, fieldName) => {
     if (fieldConfig.workerPlugin) {
-      const asyncField = { fieldConfig, fieldName, typeName }
-      fieldConfig.resolve = workerResolvers.defineResolver(asyncField)
+      const workerField = { fieldConfig, fieldName, typeName }
+      fieldConfig.resolve = workerResolvers.defineResolver(workerField)
     }
   })
 

@@ -54,7 +54,7 @@ const runQueries = async () => {
 
   // Run these paths
   await runQueriesForPathnames(pathnamesToRun)
-  //  asyncResolvers.endPool()
+
   return
 }
 

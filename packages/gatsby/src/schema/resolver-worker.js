@@ -53,6 +53,7 @@ function sendRpc({ name, args, resolve, reject }) {
   invariant(name, `rpc name`)
   invariant(resolve, `rpc resolve`)
   invariant(reject, `rpc reject`)
+  // Used for randomness. There might be cheaper options
   const id = uuidv4()
   const rpc = { name, args, id }
   inFlightRpcs.set(id, {
@@ -106,7 +107,9 @@ function unsupportedFn(name) {
 
 function makeUnsupportedProps(o, props) {
   for (const prop of props) {
-    Object.defineProperty(o, prop, unsupportedFn(prop))
+    // Defines prop so that when it's accessed for a `get`, it throws
+    // an error instead
+    Object.defineProperty(o, prop, { get: unsupportedFn(prop) })
   }
   return o
 }
