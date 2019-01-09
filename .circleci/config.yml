@@ -9,28 +9,26 @@ executors:
 
 aliases:
   e2e-executor: &e2e-executor
-    executor:
-      name: node
-      image: 10-browsers
+    docker:
+      - image: cypress/browsers:chrome69
 
-  restore_node_modules: &restore_node_modules
+  restore_cache: &restore_cache
     restore_cache:
       name: Restore node_modules cache
       keys:
-        - node-modules-{{ checksum "yarn.lock" }}
+        - yarn-cypress-cache-{{ checksum "yarn.lock" }}
 
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: |
-        yarn
+      command: yarn --frozen-lockfile
 
-  persist_node_modules: &persist_node_modules
+  persist_cache: &persist_cache
     save_cache:
       name: Save node modules cache
-      key: node-modules-{{ checksum "yarn.lock" }}
+      key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
       paths:
-        - node_modules
+        - ~/.cache
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
@@ -42,18 +40,30 @@ aliases:
         ignore:
           - master
 
+  ignore_docs: &ignore_docs
+    filters:
+      branches:
+        ignore:
+          - /docs.+/
+          - /blog.+/
+
   test_template: &test_template
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*"
-      - <<: *restore_node_modules
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *restore_cache
       - <<: *install_node_modules
-      - <<: *persist_node_modules
+      - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - run: yarn jest -w 1
 
   e2e-test-workflow: &e2e-test-workflow
-    <<: *ignore_master
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+          - /blog.+/
     requires:
       - bootstrap
 
@@ -68,8 +78,9 @@ commands:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-      - <<: *restore_node_modules
+      - <<: *restore_cache
       - <<: *install_node_modules
+      - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>"
 
@@ -80,10 +91,10 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*"
-      - <<: *restore_node_modules
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - <<: *restore_cache
       - <<: *install_node_modules
-      - <<: *persist_node_modules
+      - <<: *persist_cache
       - run: yarn bootstrap
       - persist_to_workspace:
           root: packages
@@ -94,9 +105,9 @@ jobs:
     executor: node
     steps:
       - checkout
-      - <<: *restore_node_modules
+      - <<: *restore_cache
       - <<: *install_node_modules
-      - <<: *persist_node_modules
+      - <<: *persist_cache
       - run: yarn lint
 
   unit_tests_node6:
@@ -120,8 +131,9 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|.circleci/*"
-      - <<: *restore_node_modules
+      - <<: *restore_cache
       - <<: *install_node_modules
+      - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 
@@ -143,11 +155,37 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/gatsby-image
 
-  e2e_tests_runtime:
+  e2e_tests_development_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+
+  e2e_tests_production_runtime:
     <<: *e2e-executor
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
+
+  starters_validate:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - run: sh ./scripts/clone-and-validate.sh starters
+
+  starters_publish:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: yarn markdown
+      - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "admin@gatsbyjs.com"
+      - run: sh ./scripts/clone-and-validate.sh starters true
 
 workflows:
   version: 2
@@ -156,20 +194,33 @@ workflows:
       - bootstrap
       - lint
       - unit_tests_node6:
+          <<: *ignore_docs
           requires:
             - bootstrap
       - unit_tests_node8:
+          <<: *ignore_docs
           requires:
             - bootstrap
       - unit_tests_node10:
+          <<: *ignore_docs
           requires:
             - bootstrap
-      - integration_tests
+      - integration_tests:
+          <<: *ignore_docs
       - e2e_tests_gatsbygram:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
           <<: *e2e-test-workflow
-      - e2e_tests_runtime:
+      - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
+      - starters_publish:
+          filters:
+            branches:
+              only:
+                - master

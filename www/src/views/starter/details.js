@@ -80,11 +80,10 @@ const Details = ({
       <div
         css={{
           display: `grid`,
-          gridAutoRows: `50px`,
           marginBottom: rhythm(options.blockMarginBottom * 5),
           [presets.Desktop]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridColumnGap: 20,
+            gridGap: 20,
           },
         }}
       >
@@ -100,7 +99,6 @@ const Details = ({
                   key={dep}
                   css={{
                     ...sharedStyles.truncate,
-                    marginBottom: `1rem`,
                   }}
                 >
                   <a href={`https://npm.im/${dep}`}>

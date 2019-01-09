@@ -19,6 +19,7 @@
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "start": "npm run develop"
   }
 }

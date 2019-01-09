@@ -19,7 +19,7 @@ Here's how it all got started. The goal with [Gatsby Manor](https://gatsbymanor.
 is to create professional designed Gatsby starters
 to give your site a clean, modern look the moment you create a new project.
 While creating our newest starter
-[gatsby-starter-eventually](https://gatsbymanor.com/demo/eventually),
+[gatsby-starter-eventually](https://github.com/gatsbymanor/gatsby-starter-eventually),
 I wanted to organize the directory structure of the project to better fit my
 workflow.
 

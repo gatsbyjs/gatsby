@@ -13,7 +13,7 @@ The information needed to query for those specific items (i.e. values for [`limi
 
 ### Example
 
-```js{20-25}:title=src/templates/blog-list-template.js
+```js:title=src/templates/blog-list-template.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -33,12 +33,14 @@ export default class BlogList extends React.Component {
 }
 
 export const blogListQuery = graphql`
+// highlight-start
   query blogListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
       limit: $limit
       skip: $skip
     ) {
+// highlight-end
       edges {
         node {
           fields {
@@ -54,7 +56,7 @@ export const blogListQuery = graphql`
 `
 ```
 
-```js{34-47}:title=gatsby-node.js
+```js:title=gatsby-node.js
 const path = require("path")
 const { createFilePath } = require("gatsby-source-filesystem")
 
@@ -88,6 +90,7 @@ exports.createPages = ({ graphql, actions }) => {
         // ...
 
         // Create blog-list pages
+        // highlight-start
         const posts = result.data.allMarkdownRemark.edges
         const postsPerPage = 6
         const numPages = Math.ceil(posts.length / postsPerPage)
@@ -102,6 +105,7 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
         })
+        // highlight-end
       })
     )
   })

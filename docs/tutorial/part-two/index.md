@@ -7,7 +7,7 @@ Welcome to part two of the Gatsby tutorial!
 
 ## What's in this tutorial?
 
-In this part you're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
+In this part, you're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
 
 ## Creating global styles
 
@@ -68,7 +68,7 @@ Gatsby plugins work the same way.
 Community members (like you!) can contribute plugins (small amounts of
 JavaScript code) that others can then use when building Gatsby sites.
 
-There's already dozens of plugins! Check them out at the
+There are already hundreds of plugins! Check them out at the
 [plugins section of the site](/plugins/).
 
 Our goal with Gatsby plugins is to make them straightforward to install and use. In almost every Gatsby site you
@@ -78,7 +78,7 @@ plugins.
 
 ## Installing your first Gatsby plugin
 
-Start by creating a new site. At this point it probably makes sense to close the terminal windows you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
+Start by creating a new site. At this point, it probably makes sense to close the terminal windows you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
 
 Just like in part one, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-two`. Then, change to this new directory:
 
@@ -89,7 +89,7 @@ cd tutorial-part-two
 
 This creates a new site with the following structure.
 
-```shell
+```text
 ├── package.json
 ├── src
 │   └── pages
@@ -170,10 +170,11 @@ Let's make a quick improvement. Many sites have a single column of text centered
 in the middle of the page. To create this, add the following styles to the
 `<div>` in `src/pages/index.js`.
 
-```jsx{4}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
+  // highlight-next-line
   <div style={{ margin: `3rem auto`, maxWidth: 600 }}>
     <h1>Richard Hamming on Luck</h1>
     <div>
@@ -188,7 +189,8 @@ export default () => (
         <p>
           There is indeed an element of luck, and no, there isn’t. The prepared
           mind sooner or later finds something important and does it. So yes, it
-          is luck.{" "}
+          is luck.
+          {` `}
           <em>
             The particular thing you do is luck, but that you do something is
             not.
@@ -222,8 +224,9 @@ export default typography
 Then set this module to be used by `gatsby-plugin-typography` as its config in
 your `gatsby-config.js` file.
 
-```javascript{2..9}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
+  // highlight-start
   plugins: [
     {
       resolve: `gatsby-plugin-typography`,
@@ -232,6 +235,7 @@ module.exports = {
       },
     },
   ],
+  // highlight-end
 }
 ```
 
@@ -254,11 +258,11 @@ npm install --save typography-theme-bootstrap typography-theme-lawton
 
 To use the Bootstrap theme, change your typography code to:
 
-```javascript{2,4}:title=src/utils/typography.js
+```javascript:title=src/utils/typography.js
 import Typography from "typography"
-import bootstrapTheme from "typography-theme-bootstrap"
+import bootstrapTheme from "typography-theme-bootstrap" // highlight-line
 
-const typography = new Typography(bootstrapTheme)
+const typography = new Typography(bootstrapTheme) // highlight-line
 
 export default typography
 ```
@@ -269,12 +273,14 @@ Themes can also add Google Fonts. The Lawton theme you installed along with the
 Bootstrap theme does this. Replace your typography module code with the
 following, then restart the dev server (necessary to load the new Google Fonts).
 
-```javascript{2-3,5}:title=src/utils/typography.js
+```javascript:title=src/utils/typography.js
 import Typography from "typography"
+// highlight-start
 // import bootstrapTheme from "typography-theme-bootstrap"
 import lawtonTheme from "typography-theme-lawton"
+// highlight-end
 
-const typography = new Typography(lawtonTheme)
+const typography = new Typography(lawtonTheme) // highlight-line
 
 export default typography
 ```
@@ -317,7 +323,7 @@ React in general).
 
 Gatsby works out of the box with CSS Modules.
 
-Build a page using CSS Modules.
+### Build a page using CSS Modules.
 
 First, create a new `Container` component. Create a new directory at
 `src/components` and then, in this new directory, create a file named
@@ -407,14 +413,20 @@ Paste the following into the file:
 }
 ```
 
-Now import that file into the `about-css-modules.js` page you created earlier, by adding the following on lines 2 and 3.
-(The `console.log(styles)` code logs the resulting import so you can see what the processed file looks like).
+Now import that file into the `about-css-modules.js` page you created earlier, by editing the first few lines
+of the file to look like:
 
 ```javascript:title=src/pages/about-css-modules.js
+import React from "react"
+// highlight-next-line
 import styles from "./about-css-modules.module.css"
+import Container from "../components/container"
+
+// highlight-next-line
 console.log(styles)
 ```
 
+The `console.log(styles)` code logs the resulting import so you can see what the processed file looks like.
 If you open the developer console (using e.g. Firefox or Chrome's developer tools) in your browser, you'll see:
 
 ![css-modules-console](css-modules-console.png)
@@ -435,13 +447,14 @@ directory. But, if it's used only in one file, create it inline.
 
 Modify `about-css-modules.js` so it looks like the following:
 
-```jsx{7-15,21-30}:title=src/pages/about-css-modules.js
+```jsx:title=src/pages/about-css-modules.js
 import React from "react"
 import styles from "./about-css-modules.module.css"
 import Container from "../components/container"
 
 console.log(styles)
 
+// highlight-start
 const User = props => (
   <div className={styles.user}>
     <img src={props.avatar} className={styles.avatar} alt="" />
@@ -451,11 +464,13 @@ const User = props => (
     </div>
   </div>
 )
+// highlight-end
 
 export default () => (
   <Container>
     <h1>About CSS Modules</h1>
     <p>CSS Modules are cool</p>
+    {/* highlight-start */}
     <User
       username="Jane Doe"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
@@ -466,6 +481,7 @@ export default () => (
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
+    {/* highlight-end */}
   </Container>
 )
 ```
@@ -484,8 +500,9 @@ yet for your favorite CSS option,
 - [Emotion](/packages/gatsby-plugin-emotion/)
 - [JSS](/packages/gatsby-plugin-jss/)
 - [Stylus](/packages/gatsby-plugin-stylus/)
-- and more!
+
+and more!
 
 ## What's coming next?
 
-Now continue on to [Part Three](/tutorial/part-three/) of the tutorial.
+Now continue on to [Creating nested layout components](/tutorial/part-three/), the third part of the tutorial.

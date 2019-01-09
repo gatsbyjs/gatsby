@@ -24,7 +24,7 @@ _Consider a less-expensive CMS or multi-modal architecture_
 
 Choosing Gatsby frees your CMS from doing a lot of the heavy lifting, such as scaling to meet peak load and having a rich, modern web development experience. If you're using an expensive enterprise CMS, Gatsby can help your project stay within budget by allowing you to choose a simpler, cheaper option, such as a hosted Drupal instance, or a content management SaaS like Contentful.
 
-Another consideration is that not all of your content _has_ to live in one system. Often, you can save time and money by create a multi-modal content architecture with best-in-class solutions for each of the different workflows & capabilities you require. You might choose to manage your e-commerce product catalog in Shopify, company-specific marketing pages in Contentful, and form-based event data in Google Sheets & Forms. Gatsby offers plugins to pull data from multiple sources, while building with one stack.
+Another consideration is that not all of your content _has_ to live in one system. Often, you can save time and money by creating a multi-modal content architecture with best-in-class solutions for each of the different workflows & capabilities you require. You might choose to manage your e-commerce product catalog in Shopify, company-specific marketing pages in Contentful, and form-based event data in Google Sheets & Forms. Gatsby offers plugins to pull data from multiple sources, while building with one stack.
 
 ### User Research
 

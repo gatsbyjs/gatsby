@@ -6,13 +6,13 @@ In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack
 
 The high level process is:
 
-1. Create a webpack configuration for node.js Server Side Rendering (SSR)
+1. Create a webpack configuration for Node.js Server Side Rendering (SSR)
 1. Build a `page-renderer.js` that takes a page path and renders its HTML
 1. For each page in redux, call `page-renderer.js`
 
 ## Webpack
 
-For the first step, we use webpack to build an optimized node.js bundle. The entry point for this is called `static-entry.js`
+For the first step, we use webpack to build an optimized Node.js bundle. The entry point for this is called `static-entry.js`
 
 ## static-entry.js
 
@@ -52,7 +52,7 @@ We create an `html` React component that will eventually be rendered to a file. 
 
 #### 3. Load Page and Data
 
-The only input to `static-entry.js` is a path. So we must look up the page for that path in order to find its `componentChunkName` and `jsonName`. This is achived by simply looking up the pages array contained in `data.json`. We can then load its data by looking it up in `dataPaths`.
+The only input to `static-entry.js` is a path. So we must look up the page for that path in order to find its `componentChunkName` and `jsonName`. This is achieved by simply looking up the pages array contained in `data.json`. We can then load its data by looking it up in `dataPaths`.
 
 #### 4. Create Page Component
 

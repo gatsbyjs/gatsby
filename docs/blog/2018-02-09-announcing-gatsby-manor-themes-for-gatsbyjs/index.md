@@ -6,10 +6,10 @@ author: "Steven Natera"
 tags: ["themes"]
 ---
 
-I am proud to announce [Gatsby Manor](https://www.gatsbymanor.com/), a gallery
+I am proud to announce [Gatsby Manor](https://landing.gatsbymanor.com/news/gatsbymanor-live), a gallery
 of themes for Gatsby. After 5 months of
 development, Gatsby Manor is now in public alpha. Check out our
-[themes](https://www.gatsbymanor.com/themes) then use our [getting started](https://www.gatsbymanor.com/docs/quick-start/getting-started) guide to
+[themes](https://landing.gatsbymanor.com/news/gatsbymanor-live) then use our [getting started](https://landing.gatsbymanor.com/news/gatsbymanor-live) guide to
 kickstart your Gatsby project.
 
 ## Overview
@@ -17,7 +17,7 @@ kickstart your Gatsby project.
 Gatsby Manor is built on top of Gatsby to provide a painless way of building
 websites with reusable React components we call themes. We even have a
 cleverly named npm module for theme management called
-[Jay](https://github.com/gatsbymanor/gatsby-jay) 😄.
+[Jay](https://landing.gatsbymanor.com/news/gatsbymanor-live) 😄.
 
 With Jay you can download a theme from our collection, and mount it as a default
 theme. Styles are applied instantly without server restarts or additional lines
@@ -26,7 +26,7 @@ of code. Because of React, interactivity is supported out of the box.
 Want to switch themes? No problem. Jay can archive themes for later use in a
 themes folder in your local directory. Edit and swap themes as often as you want
 and Jay will manage the process. Want to learn more? Read our
-[docs](https://www.gatsbymanor.com/docs/cli/)!
+[docs](https://landing.gatsbymanor.com/news/gatsbymanor-live)!
 
 ## How it all started
 
@@ -76,13 +76,13 @@ months later, Gatsby Manor was born.
 
 Gatsby Manor is in public alpha stage. There are plenty of
 [GitHub](https://github.com/gatsbymanor) contributions to go around. To get
-started, try out a Gatsby Manor theme using our tutorial on [getting started](https://www.gatsbymanor.com/docs/quick-start/getting-started). Open an
+started, try out a Gatsby Manor theme using our tutorial on [getting started](https://landing.gatsbymanor.com/news/gatsbymanor-live). Open an
 issue if you see an area of improvement. Follow and send us positive vibes on
 Twitter using [@TheGatsbyManor](https://twitter.com/TheGatsbyManor).
 
-TL;DR [Gatsby Manor](https://www.gatsbymanor.com/) is a place to get themes for
-your Gatsby project. Use our [getting started](https://www.gatsbymanor.com/docs/quick-start/getting-started) tutorial to use
-a [theme](https://www.gatsbymanor.com/themes) in your Gatsby project today.
+TL;DR [Gatsby Manor](https://landing.gatsbymanor.com/news/gatsbymanor-live) is a place to get themes for
+your Gatsby project. Use our [getting started](https://landing.gatsbymanor.com/news/gatsbymanor-live) tutorial to use
+a [theme](https://landing.gatsbymanor.com/news/gatsbymanor-live) in your Gatsby project today.
 
 Cheers! 🎉🎊
 

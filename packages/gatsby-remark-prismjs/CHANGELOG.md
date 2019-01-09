@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.2.0"></a>
+
+# [3.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.4...gatsby-remark-prismjs@3.2.0) (2018-12-31)
+
+### Features
+
+- Support hide lines in remark-embed-snippet ([#6084](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/6084)) ([dad0628](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/dad0628))
+
+<a name="3.1.4"></a>
+
+## [3.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.3...gatsby-remark-prismjs@3.1.4) (2018-12-06)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+<a name="3.1.3"></a>
+
+## [3.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.2...gatsby-remark-prismjs@3.1.3) (2018-12-03)
+
+### Features
+
+- **gatsby-remark-prismjs:** Allow global line number config ([#10076](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/10076)) ([2efec7a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/2efec7a))
+
+<a name="3.1.2"></a>
+
+## [3.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.1...gatsby-remark-prismjs@3.1.2) (2018-11-30)
+
+### Bug Fixes
+
+- **gatsby-remark-prismjs:** prevent additional blank line from appearing ([#10209](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/10209)) ([71d7f23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/71d7f23))
+
+<a name="3.1.1"></a>
+
+## [3.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.0...gatsby-remark-prismjs@3.1.1) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+<a name="3.1.0"></a>
+
+# [3.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.0.3...gatsby-remark-prismjs@3.1.0) (2018-11-26)
+
+### Features
+
+- **gatsby-remark-prismjs:** add in ability to use comments to specify line highlighting ([#9696](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/9696)) ([11e1834](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/11e1834))
+
+<a name="3.0.3"></a>
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.0.2...gatsby-remark-prismjs@3.0.3) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
 <a name="3.0.2"></a>
 
 ## [3.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.0.1...gatsby-remark-prismjs@3.0.2) (2018-10-12)

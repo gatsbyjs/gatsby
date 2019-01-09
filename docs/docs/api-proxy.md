@@ -2,7 +2,13 @@
 title: "Proxying API Requests in Development"
 ---
 
-People often serve the front-end React app from the same host and port as their
+## Resources
+
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/gatsby-lifecycle-apis/).
+
+## Proxying API requests in development
+
+People often serve the frontend React app from the same host and port as their
 backend implementation.
 
 To tell the development server to proxy any unknown requests to your API server
@@ -26,8 +32,8 @@ the right place in production.
 
 ## Advanced proxying
 
-Sometimes you need more granular/flexible access to the develop server.
-Gatsby exposes the [Express.js](https://expressjs.com/) develop server to your site's `gatsby-config.js` where you
+Sometimes you need more granular/flexible access to the development server.
+Gatsby exposes the [Express.js](https://expressjs.com/) development server to your site's `gatsby-config.js` where you
 can add Express middleware as needed.
 
 ```javascript:title=gatsby-config.js

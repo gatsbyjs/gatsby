@@ -34,7 +34,7 @@ const filterByCategories = (list, categories) => {
 class FilteredShowcase extends Component {
   state = {
     search: ``,
-    sitesToShow: 9,
+    sitesToShow: 12,
   }
 
   constructor(props) {

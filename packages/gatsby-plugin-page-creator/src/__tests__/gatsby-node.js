@@ -10,28 +10,26 @@ describe(`JavaScript page creator`, () => {
       { path: `somedir/dir2/test1.js` },
     ]
 
-    expect(validFiles.filter(file => validatePath(file.path)).length).toEqual(validFiles.length)
+    expect(validFiles.filter(file => validatePath(file.path))).toEqual(
+      validFiles
+    )
   })
 
   it(`filters out files that start with underscores`, () => {
-    const validFiles = [
-      { path: `something/blah.js` },
-      { path: `test1.js` },
-    ]
+    const validFiles = [{ path: `something/blah.js` }, { path: `test1.js` }]
 
     const testFiles = validFiles.concat([
       { path: `something/_foo.js` },
       { path: `_blah.js` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path)).length).toEqual(validFiles.length)
+    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
+      validFiles
+    )
   })
 
   it(`filters out files that start with dot`, () => {
-    const validFiles = [
-      { path: `something/blah.js` },
-      { path: `test1.ts` },
-    ]
+    const validFiles = [{ path: `something/blah.js` }, { path: `test1.ts` }]
 
     const testFiles = validFiles.concat([
       { path: `.eslintrc` },
@@ -41,14 +39,13 @@ describe(`JavaScript page creator`, () => {
       { path: `something/.markdownlint.json` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path)).length).toEqual(validFiles.length)
+    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
+      validFiles
+    )
   })
 
   it(`filters out json and yaml files`, () => {
-    const validFiles = [
-      { path: `somefile.js` },
-      { path: `something/blah.js` },
-    ]
+    const validFiles = [{ path: `somefile.js` }, { path: `something/blah.js` }]
 
     const testFiles = validFiles.concat([
       { path: `something/otherConfig.yml` },
@@ -58,20 +55,21 @@ describe(`JavaScript page creator`, () => {
       { path: `dir1/dir2/file.json` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path)).length).toEqual(validFiles.length)
+    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
+      validFiles
+    )
   })
 
   it(`filters out files that start with template-*`, () => {
-    const validFiles = [
-      { path: `something/blah.js` },
-      { path: `file1.js` },
-    ]
+    const validFiles = [{ path: `something/blah.js` }, { path: `file1.js` }]
 
     const testFiles = validFiles.concat([
       { path: `template-cool-page-type.js` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path)).length).toEqual(validFiles.length)
+    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
+      validFiles
+    )
   })
 
   it(`filters out files that have TypeScript declaration extensions`, () => {
@@ -85,22 +83,30 @@ describe(`JavaScript page creator`, () => {
       { path: `something-else/other-declaration-file.d.tsx` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path)).length).toEqual(validFiles.length)
+    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
+      validFiles
+    )
   })
 
   it(`filters out test files`, () => {
-    const validFiles = [
-      { path: `page.js` },
-      { path: `page.jsx` },
-    ]
+    const validFiles = [{ path: `page.js` }, { path: `page.jsx` }]
 
     const testFiles = validFiles.concat([
-      { path: `__tests__/something.test.js` },
-      { path: `foo.spec.js` },
-      { path: `bar.test.js` },
+      { path: `src/pages/__tests__/something.test.js` },
+      { path: `src/pages/__tests__/something.test.tsx` },
+      { path: `src/pages/__tests__/something.js` },
+      { path: `src/pages/__tests__/nested-directory/something.js` },
+      { path: `src/pages/foo.spec.js` },
+      { path: `src/pages/foo.spec.tsx` },
+      { path: `src/pages/bar.test.js` },
+      { path: `src/pages/bar.test.tsx` },
+      { path: `src\\pages\\bar.test.js` },
+      { path: `src\\pages\\__tests__\\nested-directory\\something.js` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path)).length).toEqual(validFiles.length)
+    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
+      validFiles
+    )
   })
 
   describe(`create-path`, () => {

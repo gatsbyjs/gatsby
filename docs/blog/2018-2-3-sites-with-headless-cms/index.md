@@ -73,7 +73,7 @@ Their sleek design impressed me: the left hand side bar and onboarding process w
 
 ### ButterCMS
 
-I've read that ButterCMS is particularly good for blogs, and after seeing how easy it is to add metadata and SEO title / metadescription to blog posts, it makes sense why this might be the case. Sometimes there were more clicks than necessary when saving things. And sometimes the jargon in this environment threw me off. Like “object”? What is that? It’s basically a category of content. So, if I’m going to create a lot of event descriptions, the event titles will be one object, the event description, another object, etc. It's an unfamiliar and abstract word for someone new to headless CMSs.
+I've read that [ButterCMS](https://buttercms.com) is particularly good for blogs, and after seeing how easy it is to add metadata and SEO title / metadescription to blog posts, it makes sense why this might be the case. Sometimes there were more clicks than necessary when saving things. And sometimes the jargon in this environment threw me off. Like “object”? What is that? It’s basically a category of content. So, if I’m going to create a lot of event descriptions, the event titles will be one object, the event description, another object, etc. It's an unfamiliar and abstract word for someone new to headless CMSs.
 
 ### Built.io (Contentstack)
 
@@ -89,4 +89,4 @@ This system gives you lots of options when it comes to creating content. Maybe t
 
 ## Conclusion
 
-I’d definitely choose a headless CMS over a traditional CMS if I had talented front-end developers, because they could choose their favorite framework for the presentation layer. That setup would give us the flexibility to switch delivery methods, presentation methods, and content management methods with agility.
+I’d definitely choose a headless CMS over a traditional CMS if I had talented frontend developers, because they could choose their favorite framework for the presentation layer. That setup would give us the flexibility to switch delivery methods, presentation methods, and content management methods with agility.

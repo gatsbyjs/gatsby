@@ -1,5 +1,5 @@
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import "../../static/css/base.scss"
 
 class MasterLayout extends React.Component {
