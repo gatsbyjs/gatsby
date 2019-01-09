@@ -271,7 +271,7 @@ describe(`Schema query`, () => {
           name
         }
         otherAuthor: author(
-          filter: { name: { eq: "Author 2" } }
+          name: { eq: "Author 2" }
         ) {
           name
         }

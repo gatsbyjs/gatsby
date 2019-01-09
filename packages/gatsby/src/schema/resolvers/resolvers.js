@@ -35,6 +35,10 @@ const link = ({ by }) => resolve => (source, args, context, info) => {
     }),
     fieldValue
   )
+  // FIXME: Unnecessary when filter args are always on a `filter` field
+  const { GraphQLList, getNullableType } = require(`graphql`)
+  args =
+    getNullableType(info.returnType) instanceof GraphQLList ? args : args.filter
   return resolve({ source, args, context, info })
 }
 
@@ -68,7 +72,11 @@ const find = type => async (rp, firstResultOnly) => {
 
 const findMany = type => async rp => (await find(type)(rp, false)).items
 
-const findOne = type => rp => find(type)(rp, true)
+const findOne = type => rp => {
+  // FIXME: filter args should be on a `filter` field
+  rp.args = { filter: { ...rp.args } }
+  return find(type)(rp, true)
+}
 
 const paginate = type => async rp => {
   const { items, count } = await find(type)(rp, false)

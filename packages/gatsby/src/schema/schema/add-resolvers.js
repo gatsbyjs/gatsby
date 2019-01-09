@@ -36,7 +36,8 @@ const addResolvers = tc => {
     name: `findOne`,
     type: tc,
     args: {
-      filter,
+      // FIXME: Should be on à `filter` field
+      ...filter.getFields(),
     },
     resolve: findOne(typeName),
   })

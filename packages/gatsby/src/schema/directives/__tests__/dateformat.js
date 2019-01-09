@@ -88,14 +88,11 @@ describe(`@dateformat directive`, () => {
   })
 
   it(`keeps Date type of input filter`, () => {
-    const filterFields = schema
-      .getQueryType()
-      .getFields()
-      .foo.args[0].type.getFields()
-    expect(filterFields.formattable.type.name).toBe(`DateQueryOperatorInput`)
-    expect(filterFields.formatted.type.name).toBe(`DateQueryOperatorInput`)
-    expect(filterFields.fromNow.type.name).toBe(`DateQueryOperatorInput`)
-    expect(filterFields.difference.type.name).toBe(`DateQueryOperatorInput`)
+    const filterFields = schema.getQueryType().getFields().foo.args
+    expect(filterFields[0].type.name).toBe(`DateQueryOperatorInput`)
+    expect(filterFields[1].type.name).toBe(`DateQueryOperatorInput`)
+    expect(filterFields[2].type.name).toBe(`DateQueryOperatorInput`)
+    expect(filterFields[3].type.name).toBe(`DateQueryOperatorInput`)
   })
 
   it(`uses default directive args`, async () => {

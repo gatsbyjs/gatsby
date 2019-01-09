@@ -14,9 +14,7 @@ describe(`Add resolvers (fieldConfigs)`, () => {
       `pagination`,
     ])
 
-    expect(tc.getResolver(`findOne`).args.filter).toBeInstanceOf(
-      InputTypeComposer
-    )
+    expect(tc.getResolver(`findOne`).args.foo).toBeInstanceOf(InputTypeComposer)
     expect(tc.getResolver(`findOne`).resolve).toBeInstanceOf(Function)
     expect(tc.getResolver(`findOne`).type).toBeInstanceOf(TypeComposer)
 

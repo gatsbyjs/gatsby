@@ -72,6 +72,8 @@ const withPageDependencies = require(`../page-dependencies`)
 jest.spyOn({ withPageDependencies }, `withPageDependencies`)
 
 describe(`Resolvers`, () => {
+  const type = `Foo`
+
   describe(`findById`, () => {
     it(`finds node by id`, async () => {
       const result = await findById()({ args: { id: 1 } })
@@ -104,19 +106,16 @@ describe(`Resolvers`, () => {
 
   describe(`findByIdsAndType`, () => {
     it(`finds nodes by ids and type`, async () => {
-      const type = `Foo`
       const result = await findByIdsAndType(type)({ args: { ids: [1, 3] } })
       expect(result).toEqual([1, 3].map(getById))
     })
 
     it(`filters out nodes of wrong type`, async () => {
-      const type = `Foo`
       const result = await findByIdsAndType(type)({ args: { ids: [1, 2] } })
       expect(result).toEqual([getById(1)])
     })
 
     it(`finds single node`, async () => {
-      const type = `Foo`
       const firstResultOnly = true
       const result = await findByIdsAndType(type)(
         { args: { ids: [1] } },
@@ -126,7 +125,6 @@ describe(`Resolvers`, () => {
     })
 
     it(`returns null or empty array when nothing was found`, async () => {
-      const type = `Foo`
       let result = await findByIdsAndType(type)({ args: { ids: [0] } }, true)
       expect(result).toBeNull()
       result = await findByIdsAndType(type)({ args: { ids: [0] } })
@@ -136,14 +134,12 @@ describe(`Resolvers`, () => {
 
   describe(`findMany`, () => {
     it(`finds nodes matching filter`, async () => {
-      const type = `Foo`
       const filter = { baz: { ne: `foo` } }
       const result = await findMany(type)({ args: { filter } })
       expect(result).toEqual([1, 3].map(getById))
     })
 
     it(`sorts nodes matching filter`, async () => {
-      const type = `Foo`
       const filter = { baz: { ne: `foo` } }
       const sort = { fields: [`id`], order: `DESC` }
       const result = await findMany(type)({ args: { filter, sort } })
@@ -153,16 +149,14 @@ describe(`Resolvers`, () => {
 
   describe(`findOne`, () => {
     it(`finds first node matching filter`, async () => {
-      const type = `Foo`
       const filter = { baz: { ne: `foo` } }
-      const result = await findOne(type)({ args: { filter } })
+      const result = await findOne(type)({ args: filter })
       expect(result).toEqual(getById(1))
     })
   })
 
   describe(`paginate resolver wrapper`, () => {
     it(`finds nodes matching filter`, async () => {
-      const type = `Foo`
       const filter = { baz: { ne: `foo` } }
       const { count, items } = await paginate(type)({
         args: { filter },
@@ -172,7 +166,6 @@ describe(`Resolvers`, () => {
     })
 
     it(`sorts nodes matching filter`, async () => {
-      const type = `Foo`
       const filter = { baz: { ne: `foo` } }
       const sort = { fields: [`id`], order: `DESC` }
       const { count, items } = await paginate(type)({
@@ -183,7 +176,6 @@ describe(`Resolvers`, () => {
     })
 
     it(`returns correct pagination info`, async () => {
-      const type = `Foo`
       const filter = { baz: { ne: `foo` } }
       const limit = 1
       const { pageInfo } = await paginate(type)({ args: { filter, limit } })
@@ -198,7 +190,6 @@ describe(`Resolvers`, () => {
     })
 
     it(`returns correct pagination info`, async () => {
-      const type = `Foo`
       const filter = { baz: { ne: `foo` } }
       const skip = 1
       const limit = 1
@@ -216,7 +207,6 @@ describe(`Resolvers`, () => {
     })
 
     it(`returns correct pagination info`, async () => {
-      const type = `Foo`
       const filter = { baz: { ne: `bar` } }
       const skip = 1
       const limit = 1
@@ -235,19 +225,21 @@ describe(`Resolvers`, () => {
   })
 
   describe(`resolve linked nodes`, () => {
+    const { GraphQLList } = require(`graphql`)
+    const FooType = schema.getType(`Foo`)
+    const FoosType = new GraphQLList(FooType)
+
     it(`resolves one-to-one`, async () => {
-      const type = `Foo` // TODO: info.returnType
       const source = { id: 1000, linkedFoo: `qux` }
-      const info = { fieldName: `linkedFoo` }
+      const info = { fieldName: `linkedFoo`, returnType: FooType }
       const resolver = link({ by: `baz` })(findOne(type))
       const resolved = await resolver(source, {}, {}, info)
       expect(resolved).toEqual(getById(3))
     })
 
     it(`resolves many-to-many`, async () => {
-      const type = `Foo`
       const source = { id: 1000, linkedFoos: [`baz`, `foo`] }
-      const info = { fieldName: `linkedFoos` }
+      const info = { fieldName: `linkedFoos`, returnType: FoosType }
       const resolver = link({ by: `baz` })(findMany(type))
       const resolved = await resolver(source, {}, {}, info)
       expect(resolved).toEqual([1, 4].map(getById))
@@ -256,34 +248,31 @@ describe(`Resolvers`, () => {
     it(`resolves one-to-many`, async () => {
       const type = `Bar`
       const source = { id: 1000, linkedBars: `baz` }
-      const info = { fieldName: `linkedBars` }
+      const info = { fieldName: `linkedBars`, returnType: FoosType }
       const resolver = link({ by: `baz` })(findMany(type))
       const resolved = await resolver(source, {}, {}, info)
       expect(resolved).toEqual([2, 5].map(getById))
     })
 
     it(`resolves nested one-to-one`, async () => {
-      const type = `Foo`
       const source = { id: 1000, linkedFoo: `qux` }
-      const info = { fieldName: `linkedFoo` }
+      const info = { fieldName: `linkedFoo`, returnType: FooType }
       const resolver = link({ by: `foo.bar.baz` })(findOne(type))
       const resolved = await resolver(source, {}, {}, info)
       expect(resolved).toEqual(getById(3))
     })
 
     it(`resolves nested many-to-many`, async () => {
-      const type = `Foo`
       const source = { id: 1000, linkedFoos: [`baz`, `qux`] }
-      const info = { fieldName: `linkedFoos` }
+      const info = { fieldName: `linkedFoos`, returnType: FoosType }
       const resolver = link({ by: `foo.bar.baz` })(findMany(type))
       const resolved = await resolver(source, {}, {}, info)
       expect(resolved).toEqual([1, 3, 4].map(getById))
     })
 
     it(`resolves nested one-to-many`, async () => {
-      const type = `Foo`
       const source = { id: 1000, linkedFoos: `baz` }
-      const info = { fieldName: `linkedFoos` }
+      const info = { fieldName: `linkedFoos`, returnType: FoosType }
       const resolver = link({ by: `foo.bar.baz` })(findMany(type))
       const resolved = await resolver(source, {}, {}, info)
       expect(resolved).toEqual([1, 4].map(getById))
@@ -291,9 +280,8 @@ describe(`Resolvers`, () => {
 
     it(`resolves id`, async () => {
       getById.mockClear()
-      const type = `Foo`
       const source = { id: 1000, linkedFoo: 1 }
-      const info = { fieldName: `linkedFoo` }
+      const info = { fieldName: `linkedFoo`, returnType: FooType }
       const resolver = link({ by: `id` })(findOne(type))
       const resolved = await resolver(source, {}, {}, info)
       expect(getById).toHaveBeenCalledTimes(1)
@@ -302,9 +290,8 @@ describe(`Resolvers`, () => {
 
     it(`resolves ids`, async () => {
       getById.mockClear()
-      const type = `Foo`
       const source = { id: 1000, linkedFoos: [3, 4] }
-      const info = { fieldName: `linkedFoos` }
+      const info = { fieldName: `linkedFoos`, returnType: FoosType }
       const resolver = link({ by: `id` })(findMany(type))
       const resolved = await resolver(source, {}, {}, info)
       expect(getById).toHaveBeenCalledTimes(2)
@@ -312,9 +299,8 @@ describe(`Resolvers`, () => {
     })
 
     it(`returns field value when link already resolved`, async () => {
-      const type = `Foo`
       const source = { id: 1000, linkedFoo: getById(1) }
-      const info = { fieldName: `linkedFoo` }
+      const info = { fieldName: `linkedFoo`, returnType: FooType }
       const resolver = link({ by: `id` })(findOne(type))
       getById.mockClear()
       const resolved = await resolver(source, {}, {}, info)
@@ -323,9 +309,8 @@ describe(`Resolvers`, () => {
     })
 
     it(`bails early when field value is null`, async () => {
-      const type = `Foo`
       const source = { id: 1000, linkedFoo: null }
-      const info = { fieldName: `linkedFoo` }
+      const info = { fieldName: `linkedFoo`, returnType: FooType }
       const resolver = link({ by: `id` })(findOne(type))
       getById.mockClear()
       const resolved = await resolver(source, {}, {}, info)
@@ -334,10 +319,13 @@ describe(`Resolvers`, () => {
     })
 
     it(`creates page dependencies for nodes linked by id`, async () => {
-      const type = `Foo`
       const source = { id: 1000, linkedFoo: 1 }
       const context = { path: `foo` }
-      const info = { fieldName: `linkedFoo`, parentType: { name: `Query` } }
+      const info = {
+        fieldName: `linkedFoo`,
+        parentType: { name: `Query` },
+        returnType: FooType,
+      }
       const resolver = link({ by: `id` })(findOne(type))
       createPageDependency.mockClear()
       await resolver(source, {}, context, info)
@@ -349,7 +337,11 @@ describe(`Resolvers`, () => {
       const type = `Bar`
       const source = { id: 1000, linkedBar: `baz` }
       const context = { path: `foo` }
-      const info = { fieldName: `linkedBar`, parentType: { name: `Query` } }
+      const info = {
+        fieldName: `linkedBar`,
+        parentType: { name: `Query` },
+        returnType: FoosType,
+      }
       const resolver = link({ by: `baz` })(findMany(type))
       createPageDependency.mockClear()
       await resolver(source, {}, context, info)
