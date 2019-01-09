@@ -93,7 +93,7 @@ Mama Route URL: ${url}
     )
   }
 
-  // Call the main API Route to discover the all the routes exposed on this API.
+  // Call the main API Route to discover all the routes exposed on this API.
   let allRoutes
   try {
     let options = {
@@ -134,12 +134,12 @@ Mama Route URL: ${url}
       let namespace = _allRoutes[_i].namespace
       let endpoint = _allRoutes[_i].endpoint
       let route = `/${namespace}${endpoint}`
-      let link = url + route;
+      let link = url + route
 
       let routeObj = {}
       routeObj[route] = {
         namespace: namespace,
-        _links: { self: link }
+        _links: { self: link },
       }
 
       _.merge(allRoutes.data.routes, routeObj)
@@ -620,9 +620,9 @@ const getRawEntityType = route => {
   if (entityType.startsWith(`?`)) {
     let linkWithoutParams = link.replace(`/${entityType}`, ``)
     let params = _.chain(entityType) // Convert params to object.
-      .replace('?', '')
-      .split('&')
-      .map(_.partial(_.split, _, '=', 2))
+      .replace(`?`, ``)
+      .split(`&`)
+      .map(_.partial(_.split, _, `=`, 2))
       .fromPairs()
       .value()
 
