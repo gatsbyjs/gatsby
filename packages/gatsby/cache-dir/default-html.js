@@ -16,6 +16,11 @@ export default class HTML extends React.Component {
         </head>
         <body {...this.props.bodyAttributes}>
           {this.props.preBodyComponents}
+          <noscript key={`noscript`} id={`gatsby-noscript`}>
+            This site works best with JavaScript enabled. If this site uses
+            service workers and you see a blank screen, try removing the service
+            worker.
+          </noscript>
           <div
             key={`body`}
             id="___gatsby"
