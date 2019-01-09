@@ -207,8 +207,8 @@ Map {
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
+    "pluginCreator": "test",
     "pluginCreatorId": "test",
-    "pluginCreator___NODE": "test",
     "updatedAt": 1482363367071,
   },
 }
