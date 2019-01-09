@@ -267,6 +267,14 @@ describe(`Schema query`, () => {
   it(`processes query args`, async () => {
     const query = `
       query {
+        author {
+          name
+        }
+        otherAuthor: author(
+          filter: { name: { eq: "Author 2" } }
+        ) {
+          name
+        }
         allFile(
           filter: { children: { internal: { type: { eq: "Markdown" } } } }
           sort: { fields: [id], order: DESC }
@@ -280,6 +288,12 @@ describe(`Schema query`, () => {
     `
     const results = await graphql(query)
     const expected = {
+      author: {
+        name: `Author 1`,
+      },
+      otherAuthor: {
+        name: `Author 2`,
+      },
       allFile: [
         { name: `2.md`, children: [{ id: `md2` }] },
         { name: `1.md`, children: [{ id: `md1` }] },
