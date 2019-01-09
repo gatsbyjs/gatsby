@@ -56,8 +56,11 @@ const findByIdsAndType = type => ({ args }, firstResultOnly) =>
 
 const find = type => async (rp, firstResultOnly) => {
   const queryArgs = withSpecialCases({ type, ...rp })
+  // Don't create page dependencies in getNodesForQuery
+  /* eslint-disable-next-line no-unused-vars */
+  const { path, ...context } = rp.context
   return query(
-    await getNodesForQuery(type, queryArgs.filter, rp.context),
+    await getNodesForQuery(type, queryArgs.filter, context),
     queryArgs,
     firstResultOnly
   )
