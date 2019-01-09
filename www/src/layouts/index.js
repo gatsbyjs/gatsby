@@ -9,5 +9,5 @@ export default props => {
       </PluginLibraryWrapper>
     )
   }
-  return <div>{props.children}</div>
+  return <>{props.children}</>
 }
