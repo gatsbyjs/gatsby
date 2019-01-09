@@ -9,6 +9,10 @@ The two top priorities of the API are a) enable a broad and robust plugin
 ecosystem and b) on top of that a broad and robust theme ecosystem (themes are
 on the back burner btw until after v1 comes out).
 
+## Prerequisites
+
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/gatsby-lifecycle-apis/).
+
 ## Plugins
 
 Plugins can extend Gatsby in many ways:
