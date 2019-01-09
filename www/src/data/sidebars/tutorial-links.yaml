@@ -36,7 +36,7 @@
           link: /tutorial/part-one/#linking-between-pages
         - title: Deploying a Gatsby site
           link: /tutorial/part-one/#deploying-a-gatsby-site
-    - title: 2. Introduction to using CSS in Gatsby
+    - title: 2. Introduction to styling in Gatsby
       link: /tutorial/part-two/
       ui: steps
       items:
@@ -54,8 +54,10 @@
       link: /tutorial/part-three/
       ui: steps
       items:
-        - title: Your first layout component
-          link: /tutorial/part-three/#your-first-layout-component
+        - title: Using Gatsby plugins
+          link: /tutorial/part-three/#using-plugins
+        - title: Creating layout components
+          link: /tutorial/part-three/#creating-layout-components
     - title: 4. Data in Gatsby
       link: /tutorial/part-four/
       ui: steps

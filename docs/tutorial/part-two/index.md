@@ -1,5 +1,5 @@
 ---
-title: Introduction to Using CSS in Gatsby
+title: Introduction to Styling in Gatsby
 typora-copy-images-to: ./
 ---
 
