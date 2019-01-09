@@ -16,6 +16,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@babel/traverse": "^7.0.0",
+    "@moocar/jest-worker": "^1.0.1",
     "@moocar/lokijs": "^1.0.1",
     "@reach/router": "^1.1.1",
     "address": "1.0.3",

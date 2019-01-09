@@ -33,7 +33,7 @@
 
 const path = require(`path`)
 const invariant = require(`invariant`)
-const Worker = require(`jest-worker`).default
+const Worker = require(`@moocar/jest-worker`).default
 const { store } = require(`../redux`)
 const nodesAPI = require(`../db/nodes`)
 const reporter = require(`gatsby-cli/lib/reporter`)
