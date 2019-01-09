@@ -1585,6 +1585,14 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
+"@moocar/jest-worker@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@moocar/jest-worker/-/jest-worker-1.0.1.tgz#d77a399885cf8ac0db5ff262f6520130bdf2d987"
+  integrity sha512-zE8aw4+swhQOnbfYwQjwkiHBdWRPxITXzan0QrW9FPPI3HWGrd+ahgZIaVxoYUqd2etxqtxDgK2dp9nclBQFwA==
+  dependencies:
+    merge-stream "^1.0.1"
+    supports-color "^5.5.0"
+
 "@moocar/lokijs@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@moocar/lokijs/-/lokijs-1.0.1.tgz#545227c173030dd0e6b1e6bdcef528012a6c325c"
