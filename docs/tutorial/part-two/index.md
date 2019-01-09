@@ -115,7 +115,7 @@ import "./src/styles/global.css"
 // require('./src/styles/global.css')
 ```
 
-> Note: You can use Node.js `require` or `import` syntax. If you're not sure of the difference, just pick one.
+> Note: Both CommonJS (`require`) and ES Module (`import`) syntax work here. If you’re not sure which to choose, we use `import` most of the time.
 
 3. Start the development server:
 
