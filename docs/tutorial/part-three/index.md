@@ -62,6 +62,12 @@ The `gatsby-config.js` is another special file that Gatsby will automatically re
 
 > Check out the [doc on `gatsby-config.js`](/docs/gatsby-config/) to read more, if you wish.
 
+3. Start the development server.
+
+```shell
+gatsby develop
+```
+
 Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:
 
 ![typography-styles](typography-styles.png)
@@ -157,7 +163,7 @@ You'll tackle these changes by creating your first layout component.
 import React from "react"
 
 export default ({ children }) => (
-  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
+  <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
     {children}
   </div>
 )
@@ -198,7 +204,7 @@ The content of all three of your pages is centered, thanks to this single shared
 import React from "react"
 
 export default ({ children }) => (
-  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
+  <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
     <h3>MySweetSite</h3> {/* highlight-line */}
     {children}
   </div>
@@ -244,7 +250,7 @@ export default ({ children }) => (
 )
 ```
 
-![with-navigation](with-navigation.png)
+![with-navigation2](with-navigation2.png)
 
 And there you have it! A three page site with a basic global navigation.
 
