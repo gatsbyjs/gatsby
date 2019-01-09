@@ -43,6 +43,7 @@ exports.setBoundActionCreators = actions => {
 
 /// Plugin options are loaded onPreInit in gatsby-node
 const pluginDefaults = {
+  forceBase64Format: false,
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
 }
@@ -486,6 +487,10 @@ async function generateBase64({ file, args, reporter }) {
     return null
   }
 
+  if (pluginOptions.forceBase64Format) {
+    args.toFormat = pluginOptions.forceBase64Format
+  }
+
   pipeline
     .resize(options.width, options.height, {
       position: options.cropFocus,
@@ -499,6 +504,10 @@ async function generateBase64({ file, args, reporter }) {
       quality: options.quality,
       progressive: options.jpegProgressive,
       force: args.toFormat === `jpg`,
+    })
+    .webp({
+      quality: options.quality,
+      force: args.toFormat === `webp`,
     })
 
   // grayscale
