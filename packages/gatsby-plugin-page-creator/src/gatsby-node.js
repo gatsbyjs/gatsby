@@ -4,26 +4,38 @@ const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
 const existsSync = require(`fs-exists-cached`).sync
+const slash = require(`slash`)
 
 const glob = Promise.promisify(globCB)
 
-const createPath = require(`./create-path`)
-const validatePath = require(`./validate-path`)
-const slash = require(`slash`)
+const defaultCreatePath = require(`./create-path`)
+const defaultValidatePath = require(`./validate-path`)
 
 // Path creator.
 // Auto-create pages.
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
-// takes control of that page component in gatsby-node.
+// takes control of that page component in gatsby-node,
+// or provides a custom algorithm, via options.
 exports.createPagesStatefully = async (
   { store, actions, reporter },
-  { path: pagesPath, pathCheck = true },
+  {
+    path: pagesPath,
+    pathCheck = true,
+    createPath = defaultCreatePath,
+    validatePath = defaultValidatePath,
+  },
   doneCb
 ) => {
   const { createPage, deletePage } = actions
   const program = store.getState().program
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
+  const create = _createPage(
+    createPage,
+    validatePath,
+    createPath,
+    pagesDirectory
+  )
 
   if (!pagesPath) {
     reporter.panic(
@@ -53,14 +65,14 @@ exports.createPagesStatefully = async (
 
   // Get initial list of files.
   let files = await glob(pagesGlob)
-  files.forEach(file => _createPage(file, pagesDirectory, createPage))
+  files.forEach(file => create(file))
 
   // Listen for new component pages to be added or removed.
   chokidar
     .watch(pagesGlob)
     .on(`add`, path => {
       if (!_.includes(files, path)) {
-        _createPage(path, pagesDirectory, createPage)
+        create(path)
         files.push(path)
       }
     })
@@ -70,7 +82,7 @@ exports.createPagesStatefully = async (
       store.getState().pages.forEach(page => {
         if (page.component === path) {
           deletePage({
-            path: createPath(pagesDirectory, path),
+            path: createPath(pagesDirectory, path, defaultCreatePath),
             component: path,
           })
         }
@@ -79,16 +91,19 @@ exports.createPagesStatefully = async (
     })
     .on(`ready`, () => doneCb())
 }
-const _createPage = (filePath, pagesDirectory, createPage) => {
-  // Filter out special components that shouldn't be made into
-  // pages.
-  if (!validatePath(systemPath.posix.relative(pagesDirectory, filePath))) {
-    return
-  }
+const _createPage = (
+  createPage,
+  validatePath,
+  createPath,
+  pagesDirectory
+) => filePath => {
+  // Filter out special components that shouldn't be made into pages.
+  const relativePath = systemPath.posix.relative(pagesDirectory, filePath)
+  if (!validatePath(relativePath, defaultValidatePath)) return
 
   // Create page object
   const page = {
-    path: createPath(pagesDirectory, filePath),
+    path: createPath(pagesDirectory, filePath, defaultCreatePath),
     component: filePath,
   }
 

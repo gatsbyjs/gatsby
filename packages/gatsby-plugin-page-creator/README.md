@@ -43,6 +43,25 @@ module.exports = {
         path: `${__dirname}/src/settings/pages`,
       },
     },
+    // You can also provide "createPath" and "validatePath" functions
+    // to override default behaviour, if needed
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/articles`,
+        createPath: (basePath, filePath) => {
+          // Creates a custom URL based on filename
+          return `/articles/${slugify(basename(filePath))}/`
+        },
+        validatePath: (relativePath, isValid) => {
+          // Filter page creation based on criteria,
+          // the second argument is the default validatePath function
+          if (!isValid(relativePath)) return false
+          if (basename(relativePath).startsWith("draft-")) return false
+          return true
+        },
+      },
+    },
   ],
 }
 ```
