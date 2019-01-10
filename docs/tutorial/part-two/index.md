@@ -242,7 +242,7 @@ In this section, you'll create a list of people with names, avatars, and short l
 ```javascript:title=src/pages/about-css-modules.js
 import React from "react"
 // highlight-next-line
-import styles from "./about-css-modules.module.css"
+import styles from "../components/about-css-modules.module.css"
 import Container from "../components/container"
 
 // highlight-next-line
