@@ -1,9 +1,10 @@
 const path = require(`path`)
+const slash = require(`slash`)
 
 const { getAbsolutePath, getValueAtSelector } = require(`../utils`)
 const { getNodesByType } = require(`../db`)
 
-const getValueAt = (node, selector) => {
+const getFirstValueAt = (node, selector) => {
   let value = getValueAtSelector(node, selector)
   while (Array.isArray(value)) {
     value = value[0]
@@ -11,7 +12,6 @@ const getValueAt = (node, selector) => {
   return value
 }
 
-// TODO: Do we need to do anything special for Windows paths?
 const getFilePath = (field, relativePath) => {
   const [typeName, ...selector] = field.split(`.`)
 
@@ -31,17 +31,20 @@ const getFilePath = (field, relativePath) => {
   if (!looksLikeFile) return null
 
   const node = getNodesByType(typeName).find(
-    node => getValueAt(node, selector) === relativePath
+    node => getFirstValueAt(node, selector) === relativePath
   )
 
   return node ? getAbsolutePath(node, relativePath) : null
 }
 
 const isFile = (field, relativePath) => {
-  const filePath = getFilePath(field, relativePath)
-  const filePathExists =
-    filePath &&
-    getNodesByType(`File`).some(node => node.absolutePath === filePath)
+  const normalizedPath = slash(relativePath)
+  const filePath = getFilePath(field, normalizedPath)
+  if (!filePath) return false
+  const normalizedFilePath = slash(filePath)
+  const filePathExists = getNodesByType(`File`).some(
+    node => node.absolutePath === normalizedFilePath
+  )
   return filePathExists
 }
 

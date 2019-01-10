@@ -29,20 +29,20 @@ jest.mock(`../../db`, () => {
     {
       id: 5,
       internal: { type: `File` },
-      absolutePath: `C:\\Users\\me\\foo.txt`,
-      dir: `C:\\Users\\me`,
+      absolutePath: `C:/Users/me/foo.txt`,
+      dir: `C:/Users/me`,
     },
     {
       id: 6,
       internal: { type: `File` },
-      absolutePath: `C:\\Users\\me\\foo\\bar.txt`,
-      dir: `C:\\Users\\me\\foo`,
+      absolutePath: `C:/Users/me/foo/bar.txt`,
+      dir: `C:/Users/me/foo`,
     },
     {
       id: 7,
       parent: 5,
       internal: { type: `Foo` },
-      file: `foo\\bar.txt`,
+      file: `foo/bar.txt`,
     },
   ]
   return {
