@@ -55,3 +55,25 @@ module.exports = {
 ```
 
 Keep in mind that middleware only has effect in development (with `gatsby develop`).
+
+### Self-signed certificates
+
+If you proxy to local APIs with self-signed certificates, set the option `secure` to `false`.
+
+```javascript:title=gatsby-config.js
+var proxy = require("http-proxy-middleware")
+module.exports = {
+  developMiddleware: app => {
+    app.use(
+      "/.netlify/functions/",
+      proxy({
+        target: "http://localhost:9000",
+        secure: false, // Do not reject self-signed certificates.
+        pathRewrite: {
+          "/.netlify/functions/": "",
+        },
+      })
+    )
+  },
+}
+```
