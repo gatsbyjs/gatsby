@@ -18,6 +18,7 @@ class EvaluationTable extends Component {
       return [
         words.slice(0, words.length - 1).join(` `),
         <span
+          key={words[words.length - 1]}
           css={{
             // WebkitHyphens: `auto`,
             // MsHyphens: `auto`,
@@ -114,17 +115,18 @@ class EvaluationTable extends Component {
           {flatten(
             sections.map((section, s) =>
               [
-                <SectionTitle text={sectionHeaders[s]} />,
-                <SectionHeaderTop />,
+                <SectionTitle key={s} text={sectionHeaders[s]} />,
+                <SectionHeaderTop key={s} />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
                     [].concat([
                       <SectionHeaderBottom
+                        key={i}
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
                       />,
-                      <tr>
+                      <tr key={i}>
                         {headers.map((header, j) => (
                           <td
                             key={j}
@@ -162,6 +164,7 @@ class EvaluationTable extends Component {
                         ))}
                       </tr>,
                       <tr
+                        key={i}
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,
                         }}

@@ -127,6 +127,7 @@ class IndexPage extends React.Component {
               <FirstPromoted recipe={topRecipe} />
               {nextTwoPromotedRecipes.map(recipe => (
                 <PromotedCard
+                  key={recipe.title}
                   recipe={recipe}
                   square={true}
                   columns={4}
@@ -147,7 +148,7 @@ class IndexPage extends React.Component {
               }}
             >
               <div css={{ maxWidth: rhythm(15) }}>
-                <h2>In this month's edition</h2>
+                <h2>In this month&apos;s edition</h2>
                 <p>
                   Quisque vitae pulvinar arcu. Aliquam ac pellentesque erat, at
                   finibus massa.
@@ -186,7 +187,7 @@ class IndexPage extends React.Component {
               }}
             >
               {nextFourPromotedRecipes.map(recipe => (
-                <PromotedCard recipe={recipe} columns={2} />
+                <PromotedCard key={recipe.title} recipe={recipe} columns={2} />
               ))}
             </div>
           </Container>

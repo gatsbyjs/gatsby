@@ -9,8 +9,8 @@ const AllRecipes = ({ data }) => (
     <Container>
       <h1>Recipes</h1>
       <ul>
-        {data.allRecipes.edges.map(({ node }) => (
-          <li>
+        {data.allRecipes.edges.map(({ node }, index) => (
+          <li key={index}>
             <Link to={node.fields.slug}>{node.title}</Link>
           </li>
         ))}
