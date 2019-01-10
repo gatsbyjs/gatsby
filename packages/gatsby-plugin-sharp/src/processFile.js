@@ -39,7 +39,8 @@ module.exports = (file, transforms, options = {}) => {
     throw new Error(`Failed to process image ${file}`)
   }
 
-  return transforms.map(async ({ file: transformFile, outputPath, args }) => {
+  return transforms.map(async transform => {
+    const { file: transformFile, outputPath, args } = transform
     debug(`Start processing ${outputPath}`)
 
     let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
@@ -107,10 +108,11 @@ module.exports = (file, transforms, options = {}) => {
       (transformFile.extension === `png` && args.toFormat === ``) ||
       args.toFormat === `png`
     ) {
-      return compressPng(clonedPipeline, outputPath, {
+      await compressPng(clonedPipeline, outputPath, {
         ...args,
         stripMetadata: options.stripMetadata,
       })
+      return transform
     }
 
     if (
@@ -119,17 +121,20 @@ module.exports = (file, transforms, options = {}) => {
         (transformFile.extension === `jpeg` && args.toFormat === ``) ||
         args.toFormat === `jpg`)
     ) {
-      return compressJpg(clonedPipeline, outputPath, args)
+      await compressJpg(clonedPipeline, outputPath, args)
+      return transform
     }
 
     if (
       (file.extension === `webp` && args.toFormat === ``) ||
       args.toFormat === `webp`
     ) {
-      return compressWebP(clonedPipeline, outputPath, args)
+      await compressWebP(clonedPipeline, outputPath, args)
+      return transform
     }
 
-    return clonedPipeline.toFile(outputPath)
+    await clonedPipeline.toFile(outputPath)
+    return transform
   })
 }
 

@@ -3,12 +3,8 @@ const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
-const ProgressBar = require(`progress`)
-const queue = require(`async/queue`)
 const path = require(`path`)
-const existsSync = require(`fs-exists-cached`).sync
-const cache = require(`./cache`)
-const processFile = require(`./processFile`)
+const { scheduleJob } = require(`./scheduler`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -38,6 +34,10 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
+// We set the queue to a Map instead of an array to easily search in onCreateDevServer Api hook
+const queue = new Map()
+exports.queue = queue
+
 /// Plugin options are loaded onPreInit in gatsby-node
 const pluginDefaults = {
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
@@ -47,14 +47,6 @@ let pluginOptions = Object.assign({}, pluginDefaults)
 exports.setPluginOptions = opts => {
   pluginOptions = Object.assign({}, pluginOptions, opts)
 }
-
-const bar = new ProgressBar(
-  `Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
 
 const reportError = (message, err, reporter) => {
   if (reporter) {
@@ -67,6 +59,7 @@ const reportError = (message, err, reporter) => {
     process.exit(1)
   }
 }
+exports.reportError = reportError
 
 const generalArgs = {
   quality: 50,
@@ -110,93 +103,6 @@ const healOptions = (args, defaultArgs) => {
   return options
 }
 
-let totalJobs = 0
-
-const toProcess = {}
-const q = queue((task, callback) => {
-  task(callback)
-}, 1)
-
-const queueJob = (job, reporter) => {
-  const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
-  const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
-  const jobPath = `${inputFileKey}.${outputFileKey}`
-
-  // Check if the job has already been queued. If it has, there's nothing
-  // to do, return.
-  if (_.has(toProcess, jobPath)) {
-    return
-  }
-
-  // Check if the output file already exists so we don't redo work.
-  if (existsSync(job.outputPath)) {
-    return
-  }
-
-  let notQueued = true
-  if (toProcess[inputFileKey]) {
-    notQueued = false
-  }
-  _.set(toProcess, jobPath, job)
-
-  totalJobs += 1
-
-  if (notQueued) {
-    q.push(cb => {
-      const jobs = _.values(toProcess[inputFileKey])
-      // Delete the input key from the toProcess list so more jobs can be queued.
-      delete toProcess[inputFileKey]
-      boundActionCreators.createJob(
-        {
-          id: `processing image ${job.file.absolutePath}`,
-          imagesCount: _.values(toProcess[inputFileKey]).length,
-        },
-        { name: `gatsby-plugin-sharp` }
-      )
-      // We're now processing the file's jobs.
-      let imagesFinished = 0
-      bar.total = totalJobs
-      let promises = processFile(
-        job.file.absolutePath,
-        jobs,
-        pluginOptions
-      ).map(promise =>
-        promise
-          .then(() => {
-            job.outsideResolve()
-          })
-          .catch(err => {
-            reportError(
-              `Failed to process image ${job.file.absolutePath}`,
-              err,
-              reporter
-            )
-            job.outsideReject(err)
-          })
-          .then(() => {
-            imagesFinished += 1
-            bar.tick()
-            boundActionCreators.setJob(
-              {
-                id: `processing image ${job.file.absolutePath}`,
-                imagesFinished,
-              },
-              { name: `gatsby-plugin-sharp` }
-            )
-          })
-      )
-
-      Promise.all(promises).then(() => {
-        boundActionCreators.endJob(
-          { id: `processing image ${job.file.absolutePath}` },
-          { name: `gatsby-plugin-sharp` }
-        )
-        cb()
-      })
-    })
-  }
-}
-
 function queueImageResizing({ file, args = {}, reporter }) {
   const options = healOptions(args, {})
   // Filter out false args, and args not for this extension and put width at
@@ -236,13 +142,6 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const filePath = path.join(dirPath, imgSrc)
   fs.ensureDirSync(dirPath)
 
-  // Create function to call when the image is finished.
-  let outsideResolve, outsideReject
-  const finishedPromise = new Promise((resolve, reject) => {
-    outsideResolve = resolve
-    outsideReject = reject
-  })
-
   let width
   let height
   // Calculate the eventual width/height of the image.
@@ -269,21 +168,6 @@ function queueImageResizing({ file, args = {}, reporter }) {
     width = Math.round(options.height * aspectRatio)
   }
 
-  // Create job and process.
-  const job = {
-    file,
-    args: options,
-    finishedPromise,
-    outsideResolve,
-    outsideReject,
-    inputPath: file.absolutePath,
-    outputPath: filePath,
-  }
-
-  if (process.env.NODE_ENV === `production`) {
-    queueJob(job, reporter)
-  }
-
   // encode the file name for URL
   const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
 
@@ -292,9 +176,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const prefixedSrc =
     options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
 
-  if (process.env.NODE_ENV !== `production`) {
-    cache.set(prefixedSrc, { job, pluginOptions })
+  // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
+  const job = {
+    file,
+    args: options,
+    inputPath: file.absolutePath,
+    outputPath: filePath,
+    src: prefixedSrc,
   }
+
+  queue.set(prefixedSrc, job)
 
   return {
     src: prefixedSrc,
@@ -302,7 +193,10 @@ function queueImageResizing({ file, args = {}, reporter }) {
     width,
     height,
     aspectRatio,
-    finishedPromise,
+    // finishedPromise is needed to not break our API (https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sqip/src/extend-node-type.js#L115)
+    finishedPromise: () => ({
+      then: () => scheduleJob(job, boundActionCreators, pluginOptions),
+    }),
     originalName: originalName,
   }
 }
