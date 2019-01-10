@@ -136,7 +136,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
         <Layout
           location={parent.props.location}
           isModal={isModal}
-          modalBackgroundPath="/showcase"
+          modalBackgroundPath={parent.getExitLocation()}
           modalNext={() => parent.next(allSitesYaml)}
           modalPrevious={() => parent.previous(allSitesYaml)}
           modalNextLink={
