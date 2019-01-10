@@ -1613,7 +1613,6 @@
   repo: https://github.com/ueno-llc/ueno-gatsby-starter
   description: Ueno's starter template for Gatsby
   tags:
-    - Ueno
     - TypeScript
   features:
     - GraphQL hybrid
