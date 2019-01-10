@@ -1,46 +1,8 @@
 const { getById } = require(`../db`)
-const { equals, oneOf, query } = require(`../query`)
-const { isObject } = require(`../utils`)
+const { query } = require(`../query`)
 const getNodesForQuery = require(`./get-nodes-for-query`)
 const withPageDependencies = require(`./page-dependencies`)
 const withSpecialCases = require(`./special-cases`)
-
-const link = ({ by }) => resolve => (source, args, context, info) => {
-  const fieldValue = source[info.fieldName]
-
-  if (fieldValue == null || isObject(fieldValue)) return fieldValue
-  if (
-    Array.isArray(fieldValue) &&
-    (fieldValue[0] == null || isObject(fieldValue[0]))
-  ) {
-    return fieldValue
-  }
-
-  if (by === `id`) {
-    const [resolve, key] = Array.isArray(fieldValue)
-      ? [findByIds, `ids`]
-      : [findById, `id`]
-    return withPageDependencies(resolve)()({
-      source,
-      args: { [key]: fieldValue },
-      context,
-      info,
-    })
-  }
-
-  const operator = Array.isArray(fieldValue) ? oneOf : equals
-  args.filter = by.split(`.`).reduceRight(
-    (acc, key, i, { length }) => ({
-      [key]: i === length - 1 ? operator(acc) : acc,
-    }),
-    fieldValue
-  )
-  // FIXME: Unnecessary when filter args are always on a `filter` field
-  const { GraphQLList, getNullableType } = require(`graphql`)
-  args =
-    getNullableType(info.returnType) instanceof GraphQLList ? args : args.filter
-  return resolve({ source, args, context, info })
-}
 
 const findById = () => ({ args }) => getById(args.id)
 
@@ -115,6 +77,5 @@ module.exports = {
   findByIdsAndType: withPageDependencies(findByIdsAndType),
   findMany: withPageDependencies(findMany),
   findOne: withPageDependencies(findOne),
-  link,
   paginate: withPageDependencies(paginate),
 }

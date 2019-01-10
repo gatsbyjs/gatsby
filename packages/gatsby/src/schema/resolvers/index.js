@@ -4,13 +4,13 @@ const {
   findByIdsAndType,
   findMany,
   findOne,
-  link,
   paginate,
 } = require(`./resolvers`)
+const link = require(`./link`)
 
 module.exports = {
-  findById,
-  findByIds,
+  findById: findById(),
+  findByIds: findByIds(),
   findByIdsAndType,
   findMany,
   findOne,

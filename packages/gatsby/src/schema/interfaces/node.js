@@ -31,12 +31,12 @@ const NodeInterfaceTC = InterfaceTypeComposer.create({
     parent: {
       type: `Node`,
       resolve: async (source, args, context, info) =>
-        findById()({ source, args: { id: source.parent }, context, info }),
+        findById({ source, args: { id: source.parent }, context, info }),
     },
     children: {
       type: `[Node]!`,
       resolve: async (source, args, context, info) =>
-        findByIds()({ source, args: { ids: source.children }, context, info }),
+        findByIds({ source, args: { ids: source.children }, context, info }),
     },
     internal: `Internal`,
   },

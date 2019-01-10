@@ -2,7 +2,7 @@ const { schemaComposer } = require(`graphql-compose`)
 const { GraphQLList, GraphQLObjectType } = require(`graphql`)
 
 const { isFile } = require(`./is-file`)
-const { findMany, findOne, link } = require(`../resolvers`)
+const { link } = require(`../resolvers`)
 const {
   createSelector,
   createTypeName,
@@ -60,10 +60,9 @@ const addInferredFields = (tc, value, prefix, depth = 0) => {
           // a File node in the db, it is semi-random if the field is
           // inferred as File or String, since the exampleValue only has
           // the first entry (which could point to an existing file or not).
-          const resolver = (arrays ? findMany : findOne)(`File`)
           fieldConfig = {
             type: `File`,
-            resolve: link({ by: `relativePath` })(resolver),
+            resolve: link({ by: `relativePath` }),
           }
           break
         }
