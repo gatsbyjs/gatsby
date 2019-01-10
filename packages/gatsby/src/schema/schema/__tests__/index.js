@@ -41,9 +41,8 @@ jest.mock(`../../db`, () => {
 })
 
 jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
-  /* eslint-disable no-case-declarations */
   switch (api) {
-    case `addTypeDefs`:
+    case `addTypeDefs`: {
       const typeDefs = [
         `
       type Frontmatter {
@@ -69,8 +68,9 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
       ]
       typeDefs.forEach(options.addTypeDefs)
       break
+    }
 
-    case `addResolvers`:
+    case `addResolvers`: {
       const resolvers = {
         Author: {
           posts: (source, ignoredArgs, context, info) => {
@@ -94,6 +94,7 @@ jest.mock(`../../../utils/api-runner-node`, () => (api, options) => {
       }
       options.addResolvers(resolvers)
       break
+    }
 
     case `setFieldsOnGraphQLNodeType`:
       return options.type.name === `Markdown`

@@ -6,7 +6,6 @@ const getNodesOfType = (node, state) => {
   return state.get(type)
 }
 
-/* eslint-disable no-case-declarations */
 module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
@@ -35,7 +34,7 @@ module.exports = (state = new Map(), action) => {
     }
 
     // TODO: Payload should be nodes, not ids
-    case `DELETE_NODES`:
+    case `DELETE_NODES`: {
       const ids = action.payload
       ids.forEach(id => {
         state.values().some(nodesOfType => {
@@ -48,6 +47,7 @@ module.exports = (state = new Map(), action) => {
         })
       })
       return state
+    }
 
     default:
       return state

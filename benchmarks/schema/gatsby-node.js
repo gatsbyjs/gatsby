@@ -82,9 +82,8 @@ const onCreateNode = ({ actions, node, createNodeId, createContentDigest }) => {
   const { id, name, internal } = node
   const { content } = internal
 
-  /* eslint-disable no-case-declarations */
   switch (node.internal.mediaType) {
-    case `text/markdown`:
+    case `text/markdown`: {
       const [frontmatter, md] = content.split(`---`).filter(Boolean)
       const child = {
         id: createNodeId(`Markdown ${id}`),
@@ -101,8 +100,9 @@ const onCreateNode = ({ actions, node, createNodeId, createContentDigest }) => {
       createNode(child)
       createParentChildLink({ parent: node, child })
       break
+    }
 
-    case `text/yaml`:
+    case `text/yaml`: {
       const type = capitalize(name.slice(0, name.lastIndexOf(`.`))) + `Yaml`
       const createYamlNode = (fields, i) => {
         if (!isObject(fields)) return
@@ -125,6 +125,7 @@ const onCreateNode = ({ actions, node, createNodeId, createContentDigest }) => {
         ? parsed.forEach(createYamlNode)
         : createYamlNode(parsed)
       break
+    }
 
     default:
   }
