@@ -34,7 +34,6 @@ public_path: "/src/uploads"
 front_matter_path: ''
 use_front_matter_path: false
 file_template: ":filename:"
-custom_preview: true
 build:
   preview_command: npm run forestry:preview
   preview_env:
