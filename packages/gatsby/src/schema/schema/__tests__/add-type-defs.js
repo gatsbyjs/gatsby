@@ -2,7 +2,7 @@ const { schemaComposer } = require(`graphql-compose`)
 const { GraphQLBoolean } = require(`graphql`)
 
 const { addTypeDefs } = require(`..`)
-const { getNodeInterfaceFields, hasNodeInterface } = require(`../../interfaces`)
+const { hasNodeInterface } = require(`../../interfaces`)
 
 const typeDefs = [
   `
@@ -41,7 +41,6 @@ describe(`Add types to schema`, () => {
     expect(hasNodeInterface(schemaComposer.getTC(`Markdown`))).toBeTruthy()
     expect(hasNodeInterface(schemaComposer.getTC(`Author`))).toBeTruthy()
 
-    const interfaceFields = getNodeInterfaceFields()
     expect(schemaComposer.getTC(`Frontmatter`).getFieldNames()).toEqual([
       `title`,
       `date`,
@@ -53,14 +52,12 @@ describe(`Add types to schema`, () => {
       `html`,
       `htmlAst`,
       `frontmatter`,
-      ...interfaceFields,
     ])
     expect(schemaComposer.getTC(`Author`).getFieldNames()).toEqual([
       `lastname`,
       `firstname`,
       `email`,
       `posts`,
-      ...interfaceFields,
     ])
 
     expect(
