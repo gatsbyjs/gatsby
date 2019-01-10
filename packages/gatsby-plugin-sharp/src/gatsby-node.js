@@ -6,7 +6,6 @@ const {
 } = require(`./index`)
 const processFile = require(`./processFile`)
 const { scheduleJob } = require(`./scheduler`)
-const fs = require(`fs-extra`)
 
 const getQueueFromCache = async cache => {
   const rawQueue = await cache.get(`queue`)
