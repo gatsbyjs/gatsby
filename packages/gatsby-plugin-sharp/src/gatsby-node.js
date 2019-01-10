@@ -22,7 +22,9 @@ exports.onPreInit = async ({ actions }, pluginOptions) => {
   setPluginOptions(pluginOptions)
 }
 
-// JSON.stringify doesn't work on an Map so we need to convert it to an array
+/**
+ * save queue to the cache
+ */
 exports.onPostBootstrap = async ({ cache }) => {
   const cachedQueue = await getQueueFromCache(cache)
 
@@ -31,6 +33,7 @@ exports.onPostBootstrap = async ({ cache }) => {
     queue.set(key, job)
   }
 
+  // JSON.stringify doesn't work on an Map so we need to convert it to an array
   return cache.set(`queue`, Array.from(queue))
 }
 
