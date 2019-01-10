@@ -13,7 +13,7 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
 import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
 
-const ShowcaseList = ({ items, count }) => {
+const ShowcaseList = ({ items, count, filters }) => {
   if (count) items = items.slice(0, count)
 
   return (
@@ -32,6 +32,7 @@ const ShowcaseList = ({ items, count }) => {
                 slug={node.fields.slug}
                 image={node.childScreenshot}
                 title={node.title}
+                state={{ filters }}
               >
                 <strong className="title">{node.title}</strong>
               </ThumbnailLink>
