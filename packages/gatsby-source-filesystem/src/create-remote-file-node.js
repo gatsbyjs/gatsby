@@ -114,7 +114,8 @@ async function pushToQueue(task, cb) {
     const node = await processRemoteNode(task)
     return cb(null, node)
   } catch (e) {
-    return cb(null, e)
+    console.warn(`Failed to process remote content ${task.url}`)
+    return cb(e)
   }
 }
 
