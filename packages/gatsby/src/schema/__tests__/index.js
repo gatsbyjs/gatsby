@@ -93,11 +93,12 @@ nodes.forEach(node => {
 jest.mock(`../../utils/api-runner-node`, () => (api, options) => {
   switch (api) {
     case `addTypeDefs`:
-      options.addTypeDefs(`
-        type Frontmatter { authors: [Author] @link(by: "email") }
-        type Markdown implements Node { frontmatter: Frontmatter }
-        type Author implements Node { posts: [Markdown] }
-      `)
+      ;[
+        `type Test implements Node { isOnlyDefinedLater: Author } `,
+        `type Markdown implements Node { frontmatter: Frontmatter }`,
+        `type Frontmatter { authors: [Author] @link(by: "email") }`,
+        `type Author implements Node { posts: [Markdown] }`,
+      ].forEach(options.addTypeDefs)
       break
     case `addResolvers`:
       options.addResolvers({
