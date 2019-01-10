@@ -183,3 +183,5 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 }
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-file-node`)
+
+exports.addTypeDefs = require(`./add-type-defs`)
