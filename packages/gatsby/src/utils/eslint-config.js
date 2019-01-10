@@ -7,6 +7,7 @@ module.exports = schema => {
       globals: {
         graphql: true,
         __PATH_PREFIX__: true,
+        __ASSET_PREFIX__: true,
       },
       extends: `react-app`,
       plugins: [`graphql`],
