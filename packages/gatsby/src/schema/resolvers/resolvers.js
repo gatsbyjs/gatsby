@@ -93,8 +93,10 @@ const paginate = type => async rp => {
   const hasPreviousPage = currentPage > 1
   const hasNextPage = skip + limit < count // currentPage < pageCount
 
+  // FIXME: Should `count` be the number of all query results (before skip/limit),
+  // or `items.length`?
   return {
-    count,
+    count: items.length,
     items,
     pageInfo: {
       currentPage,

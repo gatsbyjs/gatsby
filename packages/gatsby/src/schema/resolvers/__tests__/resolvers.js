@@ -178,7 +178,10 @@ describe(`Resolvers`, () => {
     it(`returns correct pagination info`, async () => {
       const filter = { baz: { ne: `foo` } }
       const limit = 1
-      const { pageInfo } = await paginate(type)({ args: { filter, limit } })
+      const { pageInfo, count } = await paginate(type)({
+        args: { filter, limit },
+      })
+      expect(count).toBe(1)
       expect(pageInfo).toEqual({
         currentPage: 1,
         hasNextPage: true,

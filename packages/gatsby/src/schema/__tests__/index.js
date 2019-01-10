@@ -27,7 +27,7 @@ const nodes = [
   {
     id: `file3`,
     parent: null,
-    children: [`author1`, `author2`],
+    children: [`author2`, `author1`],
     internal: {
       type: `File`,
       contentDigest: `file3`,
@@ -255,8 +255,8 @@ describe(`Schema query`, () => {
         },
         {
           childMarkdown: null,
-          children: [{ name: `Author 1` }, { name: `Author 2` }],
-          childrenAuthor: [{ name: `Author 1` }, { name: `Author 2` }],
+          children: [{ name: `Author 2` }, { name: `Author 1` }],
+          childrenAuthor: [{ name: `Author 2` }, { name: `Author 1` }],
         },
       ],
     }
@@ -342,6 +342,85 @@ describe(`Schema query`, () => {
           },
         },
       ],
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+
+  it.only(`paginates results`, async () => {
+    const query = `
+      query {
+        pages: pageMarkdown {
+          count
+          items {
+            frontmatter {
+              title
+              authors {
+                name
+              }
+            }
+          }
+        }
+        skiplimit: pageMarkdown(
+          skip: 1
+          limit: 1
+        ) {
+          count
+          items { id }
+        }
+        findsort: pageMarkdown(
+          filter: { frontmatter: { authors: { name: { regex: "/^Author\\\\s\\\\d/" }}} }
+          sort: { fields: [frontmatter___title], order: DESC }
+        ) {
+          count
+          items {
+            frontmatter {
+              title
+              authors {
+                name
+              }
+            }
+          }
+        }
+      }
+    `
+    const results = await graphql(query)
+    const expected = {
+      findsort: {
+        count: 2,
+        items: [
+          {
+            frontmatter: {
+              authors: [{ name: `Author 1` }],
+              title: `Markdown File 2`,
+            },
+          },
+          {
+            frontmatter: {
+              authors: [{ name: `Author 1` }, { name: `Author 2` }],
+              title: `Markdown File 1`,
+            },
+          },
+        ],
+      },
+      pages: {
+        count: 2,
+        items: [
+          {
+            frontmatter: {
+              authors: [{ name: `Author 1` }, { name: `Author 2` }],
+              title: `Markdown File 1`,
+            },
+          },
+          {
+            frontmatter: {
+              authors: [{ name: `Author 1` }],
+              title: `Markdown File 2`,
+            },
+          },
+        ],
+      },
+      skiplimit: { count: 1, items: [{ id: `md2` }] },
     }
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual(expected)
