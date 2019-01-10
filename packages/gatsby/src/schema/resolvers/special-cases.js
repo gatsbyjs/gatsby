@@ -2,9 +2,6 @@ const path = require(`path`)
 
 const { getBaseDir, getComponentDir, getParentNode } = require(`../utils`)
 
-// FIXME: vs. current behavior of relativePath!?!?
-// TODO: `relativeDirectory`
-
 const convert = (relativePath, baseDir) => {
   switch (typeof relativePath) {
     case `string`:
@@ -32,14 +29,28 @@ const toAbsolutePath = (relativePath, source, isRootQuery) => {
 const withSpecialCases = ({ type, source, args, context, info }) => {
   switch (type) {
     case `File`:
-      if (args.filter && args.filter.relativePath && source) {
-        const absolutePath = toAbsolutePath(
-          args.filter.relativePath,
-          source,
-          info.parentType && info.parentType.name === `Query`
-        )
-        delete args.filter.relativePath
-        args.filter.absolutePath = absolutePath
+      if (args.filter && source) {
+        if (args.filter.relativePath) {
+          const absolutePath = toAbsolutePath(
+            args.filter.relativePath,
+            source,
+            // FIXME: For now, keep v2 behavior
+            false
+            // info.parentType && info.parentType.name === `Query`
+          )
+          delete args.filter.relativePath
+          args.filter.absolutePath = absolutePath
+        } else if (args.filter.relativeDirectory) {
+          const absoluteDirectory = toAbsolutePath(
+            args.filter.relativeDirectory,
+            source,
+            // FIXME: For now, keep v2 behavior
+            false
+            // info.parentType && info.parentType.name === `Query`
+          )
+          delete args.filter.relativeDirectory
+          args.filter.absoluteDirectory = absoluteDirectory
+        }
       }
       break
     default:

@@ -28,7 +28,14 @@ describe(`Resolver special cases`, () => {
       expect(queryArgs.filter.absolutePath).toEqual({ eq: `/foo/bar.baz` })
     })
 
-    it(`resolves relative path to absolute path derived from page`, () => {
+    it(`resolves relative directory to absolute directory derived from parent node`, () => {
+      const args = { filter: { relativeDirectory: { eq: `../foo` } } }
+      const queryArgs = withSpecialCases({ type, source, args, info })
+      expect(queryArgs.filter.relativeDirectory).toBeUndefined()
+      expect(queryArgs.filter.absoluteDirectory).toEqual({ eq: `/foo` })
+    })
+
+    it.skip(`resolves relative path to absolute path derived from page`, () => {
       const info = { parentType: { name: `Query` } }
       const context = { path: `/home` }
       const queryArgs = withSpecialCases({ type, source, args, context, info })
@@ -36,7 +43,7 @@ describe(`Resolver special cases`, () => {
       expect(queryArgs.filter.absolutePath).toEqual({ eq: `/foo/bar.baz` })
     })
 
-    it(`resolves relative path to absolute path derived from component`, () => {
+    it.skip(`resolves relative path to absolute path derived from component`, () => {
       const info = { parentType: { name: `Query` } }
       const source = { componentPath: `/home` }
       const queryArgs = withSpecialCases({ type, source, args, info })
