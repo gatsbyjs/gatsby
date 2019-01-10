@@ -13,7 +13,7 @@ const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 const bar = new ProgressBar(
-  `Downloading remote content [:bar] :current/:total :elapsed secs :percent`,
+  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
   {
     total: 0,
     width: 30,
