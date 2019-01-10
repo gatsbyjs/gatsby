@@ -8,7 +8,7 @@ const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
-const { withPathPrefix, withAssetPrefix } = require(`./path`)
+const { normalizePath, withPathPrefix, withAssetPrefix } = require(`./path`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -85,16 +85,13 @@ const runAPI = (plugin, api, args) => {
     )
 
     let pathPrefix = ``
-    let assetPrefix = ``
     const { config, program } = store.getState()
 
     if (program.prefixPaths) {
       pathPrefix = config.pathPrefix
     }
 
-    if (program.prefixAssets) {
-      assetPrefix = config.assetPrefix
-    }
+    const assetPrefix = normalizePath(config.assetPrefix, pathPrefix)
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 

@@ -136,6 +136,7 @@ describe(`develop-static-entry`, () => {
 describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__ASSET_PREFIX__ = ``
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
