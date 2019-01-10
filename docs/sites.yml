@@ -3933,6 +3933,25 @@
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
+- title: Takumon blog
+  main_url: "https://takumon.com"
+  url: "https://takumon.com"
+  source_url: "https://github.com/Takumon/blog"
+  description: Java Engineer's tech blog.
+  featured: false
+  categories:
+    - Blog
+  built_by: Takumon
+  built_by_url: "https://twitter.com/inouetakumon"
+- title: DayThirty
+  main_url: "https://daythirty.com"
+  url: "https://daythirty.com"
+  description: DayThirty - ideas for the new year.
+  featured: false
+  categories:
+    - Health & Wellness
+  built_by: Jack Oliver
+  built_by_url: "https://twitter.com/mrjackolai"
 - title: Karen Hou's portfolio
   main_url: https://www.karenhou.com/
   url: https://www.karenhou.com/

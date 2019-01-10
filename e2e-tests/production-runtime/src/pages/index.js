@@ -34,6 +34,11 @@ const IndexPage = ({ pageContext }) => (
           Client only paths
         </Link>
       </li>
+      <li>
+        <Link to="/global-style/" data-testid="global-style">
+          gatsby-browser.js (global styles)
+        </Link>
+      </li>
     </ul>
   </Layout>
 )
