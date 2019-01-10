@@ -104,6 +104,12 @@ class GatsbyLink extends React.Component {
       ...rest
     } = this.props
 
+    if (process.env.NODE_ENV !== `production` && !/^\/(?!\/)/.test(to)) {
+      console.warn(
+        `Use <Link> only for internal links. Read more https://www.gatsbyjs.org/docs/gatsby-link/#use-link-only-for-internal-links`
+      )
+    }
+
     const prefixedTo = withPrefix(to)
 
     return (
