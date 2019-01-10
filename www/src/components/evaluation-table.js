@@ -115,21 +115,24 @@ class EvaluationTable extends Component {
           {flatten(
             sections.map((section, s) =>
               [
-                <SectionTitle key={s} text={sectionHeaders[s]} />,
-                <SectionHeaderTop key={s} />,
+                <SectionTitle
+                  key={[`a`, s].join(`__`)}
+                  text={sectionHeaders[s]}
+                />,
+                <SectionHeaderTop key={[`b`, s].join(`__`)} />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
                     [].concat([
                       <SectionHeaderBottom
-                        key={i}
+                        key={[`c`, s, i].join(`__`)}
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
                       />,
-                      <tr key={i}>
+                      <tr key={[`d`, s, i].join(`__`)}>
                         {headers.map((header, j) => (
                           <td
-                            key={j}
+                            key={[`e`, s, i, j].join(`__`)}
                             css={{
                               display: `table-cell`,
                               "&:hover": {
@@ -164,7 +167,7 @@ class EvaluationTable extends Component {
                         ))}
                       </tr>,
                       <tr
-                        key={i}
+                        key={[`f`, s, i].join(`__`)}
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,
                         }}
