@@ -1,4 +1,4 @@
-const { TypeComposer, GraphQLJSON } = require(`graphql-compose`)
+const { TypeComposer, GraphQLJSON, schemaComposer } = require(`graphql-compose`)
 const { GraphQLBoolean, GraphQLList, GraphQLObjectType } = require(`graphql`)
 
 const { addInferredFields } = require(`../infer`)
@@ -37,6 +37,8 @@ getById.mockImplementation(id => nodes.find(n => n.id === id))
 getNodesByType.mockImplementation(type =>
   nodes.filter(n => n.internal.type === type)
 )
+
+TypeComposer.create(`File`)
 
 describe(`Type inference`, () => {
   // beforeEach(() => {
@@ -293,5 +295,21 @@ describe(`Type inference`, () => {
       .getFieldTC(`baz`)
       .getFieldType(`qux`)
     expect(addedType).toBe(GraphQLJSON)
+  })
+
+  it(`does not infer File types when File is not registered`, () => {
+    schemaComposer.delete(`File`)
+
+    const exampleValue = nodes[1]
+
+    const typeName = `Foo`
+    const tc = TypeComposer.createTemp(typeName)
+    addInferredFields(tc, exampleValue, typeName)
+
+    const filePathField = tc.getField(`filePath`)
+    expect(filePathField).toBe(`String`)
+
+    const filePathsField = tc.getField(`filePaths`)
+    expect(filePathsField).toEqual([[`String`]])
   })
 })

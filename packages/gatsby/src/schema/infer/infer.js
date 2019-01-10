@@ -53,9 +53,7 @@ const addInferredFields = (tc, value, prefix, depth = 0) => {
           fieldConfig = `Date`
           break
         }
-        // FIXME: We are trying to infer a File, but cannot assume that a
-        // source plugin for File nodes is actually present.
-        if (/* schemaComposer.has(`File`) && */ isFile(selector, value)) {
+        if (schemaComposer.has(`File`) && isFile(selector, value)) {
           // NOTE: For arrays of files, where not every path references
           // a File node in the db, it is semi-random if the field is
           // inferred as File or String, since the exampleValue only has
