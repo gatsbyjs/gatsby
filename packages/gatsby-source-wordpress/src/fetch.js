@@ -635,8 +635,11 @@ const getRawEntityType = route => {
       .fromPairs()
       .value()
 
-    entityType = linkWithoutParams.substring(linkWithoutParams.lastIndexOf(`/`) + 1, linkWithoutParams.length)
-    _.forOwn(params, (value, key) => entityType += `_${key}_${value}`) // Add params to entity type.
+    entityType = linkWithoutParams.substring(
+      linkWithoutParams.lastIndexOf(`/`) + 1,
+      linkWithoutParams.length
+    )
+    _.forOwn(params, (value, key) => (entityType += `_${key}_${value}`)) // Add params to entity type.
   }
 
   return entityType
