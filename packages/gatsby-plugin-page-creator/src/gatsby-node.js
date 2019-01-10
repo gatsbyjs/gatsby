@@ -30,12 +30,6 @@ exports.createPagesStatefully = async (
   const { createPage, deletePage } = actions
   const program = store.getState().program
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
-  const create = _createPage(
-    createPage,
-    validatePath,
-    createPath,
-    pagesDirectory
-  )
 
   if (!pagesPath) {
     reporter.panic(
@@ -62,6 +56,12 @@ exports.createPagesStatefully = async (
 
   const pagesDirectory = systemPath.posix.join(pagesPath)
   const pagesGlob = `${pagesDirectory}/**/*.{${exts}}`
+  const create = _createPage(
+    createPage,
+    validatePath,
+    createPath,
+    pagesDirectory
+  )
 
   // Get initial list of files.
   let files = await glob(pagesGlob)
