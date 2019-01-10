@@ -1,0 +1,11 @@
+[
+  {
+    "title": "Gatsby is pretty amazing",
+    "author": "Mikhail Novikov",
+    "picture": "../images/gatsby-astronaut.png"
+  },
+  {
+    "title": "But Gatsby blog posts might not have author",
+    "picture": "../images/gatsby-astronaut.png"
+  }
+]

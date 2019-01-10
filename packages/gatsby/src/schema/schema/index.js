@@ -13,13 +13,7 @@ const addResolvers = require(`./add-resolvers`)
 const addThirdPartySchemas = require(`./add-third-party-schemas`)
 
 const addTypeDefs = typeDefs => {
-  const types = schemaComposer.addTypeDefs(typeDefs)
-  types.forEach(type => {
-    const tc = schemaComposer.getTC(type.name)
-    if (hasNodeInterface(tc)) {
-      addNodeInterfaceFields(tc)
-    }
-  })
+  schemaComposer.addTypeDefs(typeDefs)
 }
 
 const addTypes = () => apiRunner(`addTypeDefs`, { addTypeDefs })
@@ -44,6 +38,7 @@ const buildSchema = async () => {
   // @see https://github.com/gatsbyjs/gatsby/blob/76e358c10b104b9c610234f8940e59937db4b005/packages/gatsby/src/schema/infer-graphql-type.js#L393
   schemaComposer.forEach(tc => {
     if (tc instanceof TypeComposer && hasNodeInterface(tc)) {
+      addNodeInterfaceFields(tc)
       addResolvers(tc)
       addConvenienceChildrenFields(tc)
       addTypeToRootQuery(tc)

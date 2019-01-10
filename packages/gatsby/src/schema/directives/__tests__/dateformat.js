@@ -96,8 +96,8 @@ describe(`@dateformat directive`, () => {
   })
 
   it(`uses default directive args`, async () => {
-    const date = new Date(Date.UTC(2019, 0, 1))
-    Date.now = jest.fn().mockReturnValue(new Date(Date.UTC(2019, 0, 3)))
+    const date = new Date(2019, 0, 1, 10)
+    Date.now = jest.fn().mockReturnValue(new Date(2019, 0, 3))
 
     // defaultValue: "yyyy-MM-dd", "en-US", "UTC", false, undefined
     const formattableDate = await fields.formattable.resolve(
@@ -124,7 +124,7 @@ describe(`@dateformat directive`, () => {
       {},
       { fieldName: `date` }
     )
-    expect(fromNow).toBe(`letzten Dienstag um 01:00`)
+    expect(fromNow).toBe(`letzten Dienstag um 10:00`)
 
     // default difference: "2019-01-01T00:00:00.000Z"
     // NOTE: If not otherwise specified, the default base date for `difference`
@@ -135,7 +135,7 @@ describe(`@dateformat directive`, () => {
       {},
       { fieldName: `date` }
     )
-    expect(difference).toBe(`less than a minute ago`)
+    expect(difference).toBe(`in about 8 hours`)
   })
 
   it(`uses input args`, async () => {
