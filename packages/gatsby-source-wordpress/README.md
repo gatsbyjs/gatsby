@@ -913,11 +913,13 @@ In order to resolve this, you can manually change the `post_parent` value of the
 
 When running locally, or in other situations that may involve self-signed certificates, you may run into the error: `The request failed with error code "DEPTH_ZERO_SELF_SIGNED_CERT"`.
 
-To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `gatsby-node.js`:
+To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `.env.development`:
 
-```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 ```
+NODE_TLS_REJECT_UNAUTHORIZED=0
+```
+
+**CAUTION:** This should never be set in production. Always ensure that you disable `NODE_TLS_REJECT_UNAUTHORIZED` in development with `gatsby develop` only.
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://www.gatsbyjs.org/docs/environment-variables
