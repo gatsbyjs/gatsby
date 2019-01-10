@@ -38,7 +38,7 @@ const handleIntersection = (el, cb) => {
 
 class GatsbyLink extends React.Component {
   constructor(props) {
-    super()
+    super(props)
     // Default to no support for IntersectionObserver
     let IOSupported = false
     if (typeof window !== `undefined` && window.IntersectionObserver) {
@@ -97,7 +97,6 @@ class GatsbyLink extends React.Component {
       /* eslint-disable no-unused-vars */
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
-      ref: $ref,
       innerRef: $innerRef,
       state,
       replace,
@@ -154,7 +153,9 @@ GatsbyLink.propTypes = {
   replace: PropTypes.bool,
 }
 
-export default GatsbyLink
+export default React.forwardRef((props, ref) => (
+  <GatsbyLink innerRef={ref} {...props} />
+))
 
 export const navigate = (to, options) => {
   window.___navigate(withPrefix(to), options)
