@@ -1617,7 +1617,7 @@
     - PWA
     - SEO
     - Styling:Material
-    - Styling:styled-components
+    - Styling:CSS-in-JS
   features:
     - Netlify integration ready to deploy
     - Material UI
