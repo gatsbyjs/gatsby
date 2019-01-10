@@ -14,10 +14,9 @@ exports.onPreInit = ({ actions, cache }, pluginOptions) => {
   setPluginOptions(pluginOptions)
 }
 
-exports.onPostBootstrap = async ({ cache }) => {
-  // JSON.stringify doesn't work on an Map so we need to convert it to an array
-  return cache.set(`queue`, Array.from(queue))
-}
+// JSON.stringify doesn't work on an Map so we need to convert it to an array
+exports.onPostBootstrap = async ({ cache }) =>
+  cache.set(`queue`, Array.from(queue))
 
 /**
  * Execute all unprocessed images on gatsby build

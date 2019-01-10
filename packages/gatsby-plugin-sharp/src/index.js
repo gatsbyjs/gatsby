@@ -194,9 +194,11 @@ function queueImageResizing({ file, args = {}, reporter }) {
     height,
     aspectRatio,
     // finishedPromise is needed to not break our API (https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sqip/src/extend-node-type.js#L115)
-    finishedPromise: () => ({
-      then: () => scheduleJob(job, boundActionCreators, pluginOptions),
-    }),
+    finishedPromise: () => {
+      return {
+        then: () => scheduleJob(job, boundActionCreators, pluginOptions),
+      }
+    },
     originalName: originalName,
   }
 }
