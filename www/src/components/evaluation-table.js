@@ -154,7 +154,7 @@ class EvaluationTable extends Component {
                                 ? row.node.Feature.toLowerCase()
                                     .split(` `)
                                     .join(`-`)
-                                : false
+                                : ``
                             }
                             onClick={() => {
                               this.setState({
