@@ -125,12 +125,13 @@ class IndexPage extends React.Component {
               }}
             >
               <FirstPromoted recipe={topRecipe} />
-              {nextTwoPromotedRecipes.map(recipe => (
+              {nextTwoPromotedRecipes.map((recipe, index) => (
                 <PromotedCard
                   recipe={recipe}
                   square={true}
                   columns={4}
                   marginBottom={0}
+                  key={`promoted-card-${index}`}
                 />
               ))}
             </div>
@@ -147,7 +148,7 @@ class IndexPage extends React.Component {
               }}
             >
               <div css={{ maxWidth: rhythm(15) }}>
-                <h2>In this month's edition</h2>
+                <h2>In this {`month's`} edition</h2>
                 <p>
                   Quisque vitae pulvinar arcu. Aliquam ac pellentesque erat, at
                   finibus massa.
@@ -185,8 +186,12 @@ class IndexPage extends React.Component {
                 flexWrap: `wrap`,
               }}
             >
-              {nextFourPromotedRecipes.map(recipe => (
-                <PromotedCard recipe={recipe} columns={2} />
+              {nextFourPromotedRecipes.map((recipe, index) => (
+                <PromotedCard
+                  recipe={recipe}
+                  columns={2}
+                  key={`promoted-card-${index}`}
+                />
               ))}
             </div>
           </Container>
