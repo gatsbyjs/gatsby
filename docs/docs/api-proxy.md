@@ -62,7 +62,6 @@ If you proxy to local APIs with self-signed certificates, set the option `secure
 
 ```javascript:title=gatsby-config.js
 var proxy = require("http-proxy-middleware")
-
 module.exports = {
   developMiddleware: app => {
     app.use(
@@ -78,4 +77,3 @@ module.exports = {
   },
 }
 ```
-
