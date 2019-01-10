@@ -60,11 +60,11 @@ describe(`Resolver special cases`, () => {
       expect(queryArgs.filter.absolutePath).toEqual({ in: [`/foo/bar.baz`] })
     })
 
-    it(`keeps unmodified relativePath when base dir cannot be determined`, () => {
+    it(`removes relativePath even when base dir cannot be determined`, () => {
       const source = getById(4)
       const args = { filter: { relativePath: { eq: `../foo/bar.baz` } } }
       const queryArgs = withSpecialCases({ type, source, args, info })
-      expect(queryArgs.filter.relativePath).toEqual({ eq: `../foo/bar.baz` })
+      expect(queryArgs.filter.relativePath).toBeUndefined()
       expect(queryArgs.filter.absolutePath).toBeUndefined()
     })
   })
