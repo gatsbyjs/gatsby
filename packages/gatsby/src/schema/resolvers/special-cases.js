@@ -38,8 +38,10 @@ const withSpecialCases = ({ type, source, args, context, info }) => {
             false
             // info.parentType && info.parentType.name === `Query`
           )
-          delete args.filter.relativePath
-          args.filter.absolutePath = absolutePath
+          if (absolutePath) {
+            delete args.filter.relativePath
+            args.filter.absolutePath = absolutePath
+          }
         } else if (args.filter.relativeDirectory) {
           const absoluteDirectory = toAbsolutePath(
             args.filter.relativeDirectory,
@@ -48,8 +50,10 @@ const withSpecialCases = ({ type, source, args, context, info }) => {
             false
             // info.parentType && info.parentType.name === `Query`
           )
-          delete args.filter.relativeDirectory
-          args.filter.absoluteDirectory = absoluteDirectory
+          if (absoluteDirectory) {
+            delete args.filter.relativeDirectory
+            args.filter.absoluteDirectory = absoluteDirectory
+          }
         }
       }
       break
