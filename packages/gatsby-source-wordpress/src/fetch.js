@@ -358,9 +358,18 @@ async function getPages(
     let result = []
 
     const getOptions = page => {
+      let entityType = url.substring(url.lastIndexOf(`/`) + 1, url.length)
+      let querySep
+
+      if (entityType.startsWith(`?`)) {
+        querySep = `&`
+      } else {
+        querySep = `?`
+      }
+
       let o = {
         method: `get`,
-        url: `${url}?${querystring.stringify({
+        url: `${url}${querySep}${querystring.stringify({
           per_page: _perPage,
           page: page,
         })}`,
