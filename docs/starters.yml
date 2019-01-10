@@ -1609,3 +1609,15 @@
     - Progressive Web app
     - Offline Support
     - RSS Feed
+- url: https://ueno.co/
+  repo: https://github.com/ueno-llc/ueno-gatsby-starter
+  description: Ueno's starter template for Gatsby
+  tags:
+    - Ueno
+    - TypeScript
+  features:
+    - GraphQL hybrid
+    - SEO friendly
+    - GSAP ready
+    - Nice devtools
+    - Decorators
