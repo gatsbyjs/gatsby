@@ -125,13 +125,13 @@ class IndexPage extends React.Component {
               }}
             >
               <FirstPromoted recipe={topRecipe} />
-              {nextTwoPromotedRecipes.map((recipe, index) => (
+              {nextTwoPromotedRecipes.map(recipe => (
                 <PromotedCard
                   recipe={recipe}
                   square={true}
                   columns={4}
                   marginBottom={0}
-                  key={`promoted-card-${index}`}
+                  key={recipe.fields.slug}
                 />
               ))}
             </div>
@@ -186,11 +186,11 @@ class IndexPage extends React.Component {
                 flexWrap: `wrap`,
               }}
             >
-              {nextFourPromotedRecipes.map((recipe, index) => (
+              {nextFourPromotedRecipes.map(recipe => (
                 <PromotedCard
                   recipe={recipe}
                   columns={2}
-                  key={`promoted-card-${index}`}
+                  key={recipe.fields.slug}
                 />
               ))}
             </div>
