@@ -24,7 +24,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [],
+        plugins: [`gatsby-remark-subcache`],
       },
     },
     `gatsby-plugin-sharp`,
