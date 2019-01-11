@@ -31,7 +31,7 @@
 // normally be run in memory on the main process, is instead backed by
 // an async RPC call over IPC from the child to the parent process.
 
-const path = require(`path`)
+const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const Worker = require(`@moocar/jest-worker`).default
 const { store } = require(`../redux`)
@@ -100,13 +100,11 @@ function ipcCallback(child, request) {
  * for the passed in field
  */
 function makeFieldSetup({ typeName, fieldName, fieldConfig, plugin }) {
-  const resolverFile = path.join(plugin.resolve, `gatsby-node.js`)
   const type = { name: typeName }
   return {
     fieldName,
-    resolverFile,
+    plugin: _.pick(plugin, [`name`, `pluginOptions`, `resolve`]),
     type,
-    pluginOptions: plugin.pluginOptions,
   }
 }
 

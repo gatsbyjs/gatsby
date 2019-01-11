@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const path = require(`path`)
 const invariant = require(`invariant`)
 const uuidv4 = require(`uuid/v4`)
 const Cache = require(`../utils/cache`)
@@ -123,8 +124,8 @@ function makeUnsupportedProps(o, props) {
  * result in RPC calls back to the main process. This goes for static
  * values such as `type`.
  */
-function makeApi(type, pathPrefix) {
-  const cache = new Cache({ name: `some cache` }).init()
+function makeApi({ type, pathPrefix, plugin }) {
+  const cache = new Cache({ name: plugin.name }).init()
   const api = {
     cache,
     // Caching story needs more thinking
@@ -160,15 +161,17 @@ function storeResolver(typeName, fieldName, fieldConfig) {
   _.set(types, [typeName, `fields`, fieldName], fieldConfig)
 }
 
-async function initModule(
-  pathPrefix,
-  { fieldName, resolverFile, pluginOptions, type }
-) {
-  invariant(resolverFile, `asyncFile`)
-  invariant(pluginOptions, `pluginOptions`)
+async function initModule(pathPrefix, { fieldName, plugin, type }) {
+  invariant(plugin, `plugin`)
+  invariant(plugin.resolve, `plugin.resolve`)
+  invariant(plugin.name, `plugin.name`)
+  const resolverFile = path.join(plugin.resolve, `gatsby-node.js`)
   const module = require(resolverFile)
-  const api = makeApi(type, pathPrefix)
-  const newFields = await module.setFieldsOnGraphQLNodeType(api, pluginOptions)
+  const api = makeApi({ type, pathPrefix, plugin })
+  const newFields = await module.setFieldsOnGraphQLNodeType(
+    api,
+    plugin.pluginOptions
+  )
   _.forEach(newFields, (fieldConfig, fieldName) => {
     storeResolver(type.name, fieldName, fieldConfig)
   })
