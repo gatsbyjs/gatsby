@@ -29,7 +29,7 @@ if (
                 // If resources failed for the current page, reload.
                 if (window.___failedResources) {
                   console.log(`resources failed, SW updated - reloading`)
-                  window.reload()
+                  window.location.reload()
                 }
               } else {
                 // At this point, everything has been precached.
