@@ -1609,3 +1609,17 @@
     - Progressive Web app
     - Offline Support
     - RSS Feed
+- url: https://traveler-blog.netlify.com/
+  repo: https://github.com/QingpingMeng/gatsby-starter-traveler-blog
+  description: A fork of the Official Gatsby Starter Blog to build a travler blog with images support
+  tags:
+    - Blog
+    - PWA
+    - SEO
+    - Styling:Material
+    - Styling:CSS-in-JS
+  features:
+    - Netlify integration ready to deploy
+    - Material UI
+    - styled-components
+    - Github markdown css support
