@@ -36,25 +36,25 @@ class NodeAPIDocs extends React.Component {
             plugins are finished as some APIs, to work correctly, require
             previous APIs to be complete first.
           </p>
-          <pre>
-            <code
+          <div className="gatsby-highlight" data-language="javascript">
+            <pre
               className="language-javascript"
               dangerouslySetInnerHTML={{
-                __html: `// Promise API
-  exports.createPages = () => {
-    return new Promise((resolve, reject) => {
-      // do async work
-    })
-  }
+                __html: `<code class="language-javascript"><span class="token comment">// Promise API</span>
+exports<span class="token punctuation">.</span><span class="token function-variable function">createPages</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// do async work</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-  // Callback API
-  exports.createPages = (_, pluginOptions, cb) => {
-    // do Async work
-    cb()
-  }`,
+<span class="token comment">// Callback API</span>
+exports<span class="token punctuation">.</span><span class="token function-variable function">createPages</span> <span class="token operator">=</span> <span class="token punctuation">(</span>_<span class="token punctuation">,</span> pluginOptions<span class="token punctuation">,</span> cb<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// do Async work</span>
+  <span class="token function">cb</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code>`,
               }}
             />
-          </pre>
+          </div>
           <p>
             If your plugin does not do async work, you can just return directly.
           </p>
