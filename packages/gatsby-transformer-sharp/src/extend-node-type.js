@@ -38,21 +38,14 @@ function toArray(buf) {
   return arr
 }
 
-const getTracedSVG = async ({ file, image, fieldArgs }) =>
+const getTracedSVG = async ({ file, fieldArgs }) =>
   traceSVG({
     file,
     args: { ...fieldArgs.traceSVG },
     fileArgs: fieldArgs,
   })
 
-const fixedNodeType = ({
-  type,
-  pathPrefix,
-  getNodeAndSavePathDependency,
-  reporter,
-  name,
-  cache,
-}) => {
+const fixedNodeType = ({ getNodeAndSavePathDependency, name, ...rest }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
@@ -75,13 +68,12 @@ const fixedNodeType = ({
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, toFormat: `webp` }
             return Promise.resolve(
               fixed({
                 file,
                 args,
-                reporter,
-                cache,
+                ...rest,
               })
             ).then(({ src }) => src)
           },
@@ -92,13 +84,12 @@ const fixedNodeType = ({
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, toFormat: `webp` }
             return Promise.resolve(
               fixed({
                 file,
                 args,
-                reporter,
-                cache,
+                ...rest,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -148,17 +139,15 @@ const fixedNodeType = ({
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs, pathPrefix }
       return Promise.resolve(
         fixed({
           file,
-          args,
-          reporter,
-          cache,
+          args: fieldArgs,
+          ...rest,
         })
       ).then(o =>
         Object.assign({}, o, {
-          fieldArgs: args,
+          fieldArgs,
           image,
           file,
         })
@@ -167,14 +156,7 @@ const fixedNodeType = ({
   }
 }
 
-const fluidNodeType = ({
-  type,
-  pathPrefix,
-  getNodeAndSavePathDependency,
-  reporter,
-  name,
-  cache,
-}) => {
+const fluidNodeType = ({ getNodeAndSavePathDependency, name, ...rest }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
@@ -193,13 +175,12 @@ const fluidNodeType = ({
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, toFormat: `webp` }
             return Promise.resolve(
               fluid({
                 file,
                 args,
-                reporter,
-                cache,
+                ...rest,
               })
             ).then(({ src }) => src)
           },
@@ -210,13 +191,12 @@ const fluidNodeType = ({
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, toFormat: `webp` }
             return Promise.resolve(
               fluid({
                 file,
                 args,
-                reporter,
-                cache,
+                ...rest,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -279,17 +259,15 @@ const fluidNodeType = ({
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs, pathPrefix }
       return Promise.resolve(
         fluid({
           file,
-          args,
-          reporter,
-          cache,
+          args: fieldArgs,
+          ...rest,
         })
       ).then(o =>
         Object.assign({}, o, {
-          fieldArgs: args,
+          fieldArgs,
           image,
           file,
         })
@@ -298,23 +276,17 @@ const fluidNodeType = ({
   }
 }
 
-module.exports = ({
-  type,
-  pathPrefix,
-  getNodeAndSavePathDependency,
-  reporter,
-  cache,
-}) => {
+module.exports = ({ type, getNodeAndSavePathDependency, ...rest }) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }
 
+  const { cache, pathPrefix } = rest
+
   const nodeOptions = {
     type,
-    pathPrefix,
     getNodeAndSavePathDependency,
-    reporter,
-    cache,
+    ...rest,
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
@@ -444,7 +416,6 @@ module.exports = ({
       },
       resolve: (image, fieldArgs, context) => {
         const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const args = { ...fieldArgs, pathPrefix }
         return new Promise(resolve => {
           if (fieldArgs.base64) {
             resolve(
@@ -456,13 +427,13 @@ module.exports = ({
           } else {
             const o = queueImageResizing({
               file,
-              args,
+              args: fieldArgs,
             })
             resolve(
               Object.assign({}, o, {
                 image,
                 file,
-                fieldArgs: args,
+                fieldArgs,
               })
             )
           }
