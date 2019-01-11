@@ -117,6 +117,11 @@ const healOptions = (args, defaultArgs) => {
     options.maxHeight = parseInt(options.maxHeight, 10)
   }
 
+  if (!options.withAssetPrefix) {
+    options.withAssetPrefix = (...paths) =>
+      path.join(options.pathPrefix, ...paths)
+  }
+
   return options
 }
 
@@ -366,8 +371,8 @@ const queueJob = (job, reporter) => {
   }
 }
 
-function queueImageResizing({ file, args = {}, reporter }) {
-  const options = healOptions(args, {})
+function queueImageResizing({ file, args = {}, reporter, ...rest }) {
+  const options = healOptions(args, rest)
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
   const pairedArgs = _.toPairs(args)
@@ -456,8 +461,11 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
-  const prefixedSrc =
-    options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
+  const prefixedSrc = options.withAssetPrefix(
+    `/static`,
+    digestDirPrefix,
+    encodedImgSrc
+  )
 
   return {
     src: prefixedSrc,
@@ -470,7 +478,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-async function generateBase64({ file, args, reporter }) {
+async function generateBase64({ file, args, reporter, ...rest }) {
   const options = healOptions(args, { width: 20 })
   let pipeline
   try {
@@ -552,7 +560,7 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
-async function fluid({ file, args = {}, reporter, cache }) {
+async function fluid({ file, args = {}, reporter, cache, ...rest }) {
   const options = healOptions(args, {})
 
   // Account for images with a high pixel density. We assume that these types of
@@ -665,6 +673,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       file,
       args: arrrgs, // matey
       reporter,
+      ...rest,
     })
   })
 
@@ -728,7 +737,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 }
 
-async function fixed({ file, args = {}, reporter, cache }) {
+async function fixed({ file, args = {}, reporter, cache, ...rest }) {
   const options = healOptions(args, {})
 
   // if no width is passed, we need to resize the image based on the passed height
@@ -779,6 +788,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
       file,
       args: arrrgs,
       reporter,
+      ...rest,
     })
   })
 
