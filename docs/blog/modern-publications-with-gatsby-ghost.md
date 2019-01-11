@@ -21,7 +21,7 @@ Our latest updates allow you to completely replace the default Handlebars theme 
 
 ## Why use a headless CMS?
 
-Many developers use static site generators alongside locally stored Markdown files, using a code editor to create content and a GIT workflow to publish. While this works great and is suitable for some sites, it quickly becomes unmanageable for publishers that need to scale, or teams that are not solely developers. 
+Many developers use static site generators alongside locally stored Markdown files, using a code editor to create content and a GIT workflow to publish. While this works great and is suitable for some sites, it quickly becomes unmanageable for publishers that need to scale, or teams that are not solely developers.
 
 This is where a headless CMS comes in, which provides an admin client for authoring and content management, while still bringing all of the benefits of having a static front-end. Developers can use their preferred stack, and writers have an editor, content scheduling, SEO and much more at their fingertips.
 
@@ -37,4 +37,12 @@ A straightforward Gatsby source plugin which wraps the Ghost API and makes it co
 
 * [gatsby-starter-ghost](https://github.com/tryghost/gatsby-starter-ghost)
 
-An official Gatsby starter repository which is pre-configured to get content from Ghost and output it in a clean, blog-style design. The fastest way to get up and running with Gatsby and Ghost is to fork this repository, and check out our Gatsby docs.
+An official [Gatsby starter repository](https://github.com/tryghost/gatsby-starter-ghost) which is pre-configured to get content from Ghost and output it in a clean, blog-style design. The fastest way to get up and running with Gatsby and Ghost is to fork this repository, and check out our [Gatsby docs.](https://docs.ghost.org/api/gatsby/)
+
+We’ve also introduced an official [Netlify integration](https://docs.ghost.org/integrations/netlify/) to make deployment a breeze, with outgoing webhooks in Ghost to trigger a site rebuild and automate the publishing process. 
+
+## Publishing on the JAMstack
+
+I’m really excited to see what people build with these new technologies. The concept of having just one front-end and many APIs all connected together and served as a single site or application with Gatsby opens up so much opportunity in the publishing space. 
+
+If you want to give it a try with Ghost, sign up for a free trial account at [Ghost.org](https://ghost.org/pricing/) and use our official Gatsby plugin + starter to put it through it’s paces!
