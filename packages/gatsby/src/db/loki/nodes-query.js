@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const prepareRegex = require(`../../utils/prepare-regex`)
 const { getNodeTypeCollection } = require(`./nodes`)
-const sift = require(`sift`)
+const sift = require(`sift`).default
 const { emitter } = require(`../../redux`)
 
 // Cleared on DELETE_CACHE
