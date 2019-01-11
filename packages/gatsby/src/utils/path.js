@@ -31,11 +31,11 @@ function normalizePath(...parts) {
 function withPrefix(prefix, callback) {
   prefix = typeof prefix === `undefined` || prefix === `` ? `/` : prefix
   return function join(...parts) {
-    const filePath = [prefix].concat(parts).join(`/`)
+    const filePath = [].concat(parts).join(`/`)
     if (typeof callback === `function`) {
       callback(filePath)
     }
-    return filePath
+    return [prefix].concat(filePath).join(`/`)
   }
 }
 

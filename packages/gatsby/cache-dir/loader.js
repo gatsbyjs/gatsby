@@ -64,10 +64,11 @@ const fetchPageResourceMap = () => {
   return fetchingPageResourceMapPromise
 }
 
-const createJsonURL = jsonName => `${__PATH_PREFIX__}/static/d/${jsonName}.json`
+const createJsonURL = jsonName =>
+  `${__ASSET_PREFIX__}/static/d/${jsonName}.json`
 const createComponentUrls = componentChunkName =>
   window.___chunkMapping[componentChunkName].map(
-    chunk => __PATH_PREFIX__ + chunk
+    chunk => __ASSET_PREFIX__ + chunk
   )
 
 const fetchResource = resourceName => {
