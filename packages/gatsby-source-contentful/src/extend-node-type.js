@@ -108,7 +108,7 @@ const resolveFixed = (image, options) => {
   fixedSizes = fixedSizes.map(Math.round)
 
   // Filter out sizes larger than the image's width.
-  const filteredSizes = fixedSizes.filter(size => size < width)
+  const filteredSizes = fixedSizes.filter(size => size <= width)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -197,7 +197,7 @@ const resolveFluid = (image, options) => {
   fluidSizes = fluidSizes.map(Math.round)
 
   // Filter out sizes larger than the image's maxWidth.
-  const filteredSizes = fluidSizes.filter(size => size < width)
+  const filteredSizes = fluidSizes.filter(size => size <= width)
 
   // Add the original image to ensure the largest image possible
   // is available for small images.
