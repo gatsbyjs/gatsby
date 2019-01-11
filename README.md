@@ -95,7 +95,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
 1.  **Create a Gatsby site from a Gatsby starter.**
 
-    Get your Gatsby blog set up in a single command:
+    Get your Gatsby blog set up using a single command:
 
     ```sh
     # install the Gatsby CLI globally
@@ -163,5 +163,5 @@ Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks to Our Contributors and Sponsors
 
-Thanks to our many contributors and sponsors as well as the companies sponsoring
+Thanks to all our contributors and sponsors as well as the companies sponsoring
 our testing and hosting infrastructure: [Travis CI](https://travis-ci.com/), [Appveyor](https://www.appveyor.com/), and [Netlify](https://www.netlify.com/).
