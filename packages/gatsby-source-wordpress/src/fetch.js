@@ -131,6 +131,7 @@ Mama Route URL: ${url}
     let validRoutes = getValidRoutes({
       allRoutes,
       url,
+      baseUrl,
       _verbose,
       _useACF,
       _acfOptionPageIds,
@@ -431,6 +432,7 @@ function checkRouteList(routePath, routeList) {
 function getValidRoutes({
   allRoutes,
   url,
+  baseUrl,
   _verbose,
   _useACF,
   _acfOptionPageIds,
@@ -564,7 +566,16 @@ function getValidRoutes({
             )}_${entityType.replace(/-/g, `_`)}`
             break
         }
-        validRoutes.push({ url: route._links.self, type: validType })
+
+        // If current link is relative then we need to
+        // concatenate it with baseUrl to make an absolute path
+        let absolutePath = route._links.self
+        if (absolutePath.startsWith(`/`)) {
+          const basePath = baseUrl.replace(/\/?$/, ``)
+          absolutePath = `${basePath}${absolutePath}`
+        }
+
+        validRoutes.push({ url: absolutePath, type: validType })
       } else {
         if (_verbose) {
           const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
