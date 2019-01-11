@@ -5,7 +5,7 @@ author: John O’Nolan
 tags:
 - Ghost
 - publishing platform
-image: ''
+image: "/src/uploads/John ONolan.jpg"
 showImageInArticle: true
 
 ---
@@ -21,7 +21,7 @@ Ghost has always been architected into 3 distinct areas: A core Node.js API, an 
 
 ![](/src/uploads/ghost-core-1.png)
 
-Our latest updates allow you to completely replace the default Handlebars theme layer in favour of a front-end framework, so you can use Gatsby to build your site statically from the Ghost API.
+Our latest updates allow you to completely replace the default Handlebars theme layer in favor of a front-end framework, so you can use Gatsby to build your site statically from the Ghost API.
 
 ## Why use a headless CMS?
 
