@@ -10,7 +10,7 @@ const tc = TypeComposer.create(`
     formattable: Date @dateformat
     formatted: Date @dateformat(formatString: "dd. MMMM yyyy", locale: "de")
     fromNow: Date @dateformat(fromNow: true, locale: "de")
-    difference: Date @dateformat(difference: "2019-01-01T00:00:00.000Z")
+    difference: Date @dateformat(difference: "2019-01-01T00:00:00.000")
   }
 `)
 
@@ -135,7 +135,7 @@ describe(`@dateformat directive`, () => {
       {},
       { fieldName: `date` }
     )
-    expect(difference).toBe(`in about 8 hours`)
+    expect(difference).toBe(`in about 10 hours`)
   })
 
   it(`uses input args`, async () => {
