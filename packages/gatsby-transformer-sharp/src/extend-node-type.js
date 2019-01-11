@@ -290,7 +290,9 @@ module.exports = ({ type, getNodeAndSavePathDependency, ...rest }) => {
   const nodeOptions = {
     type,
     getNodeAndSavePathDependency,
+    cache,
     ...rest,
+    withAssetPrefix,
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
