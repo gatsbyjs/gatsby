@@ -199,9 +199,9 @@ const resolveFluid = (image, options) => {
   // Filter out sizes larger than the image's maxWidth.
   const filteredSizes = fluidSizes.filter(size => size <= width)
 
-  // Add the original image to ensure the largest image possible
+  // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
-  filteredSizes.push(width)
+  if (!filteredSizes.includes(parseInt(width))) filteredSizes.push(width)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
