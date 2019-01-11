@@ -6,10 +6,19 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
+const ProgressBar = require(`progress`)
 
 const { createFileNode } = require(`./create-file-node`)
 const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
+
+const bar = new ProgressBar(
+  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
+  {
+    total: 0,
+    width: 30,
+  }
+)
 
 /********************
  * Type Definitions *
@@ -278,6 +287,9 @@ const pushTask = task =>
       })
   })
 
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
+
 /***************
  * Entry Point *
  ***************/
@@ -332,7 +344,10 @@ module.exports = ({
     return Promise.resolve()
   }
 
-  return (processingCache[url] = pushTask({
+  totalJobs += 1
+  bar.total = totalJobs
+
+  const fileDownloadPromise = pushTask({
     url,
     store,
     cache,
@@ -340,5 +355,10 @@ module.exports = ({
     createNodeId,
     auth,
     ext,
-  }))
+  })
+
+  fileDownloadPromise.then(() => bar.tick())
+
+  processingCache[url] = fileDownloadPromise
+  return fileDownloadPromise
 }
