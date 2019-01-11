@@ -22,11 +22,11 @@ If you don't specify a custom starter, your site will be created from the [defau
 
 Official starters are maintained by Gatsby.
 
-- [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+- [gatsby-starter-default](https://github.com/gatsbyjs/gatsby/tree/master/starters/default)
   [(demo)](https://gatsby-starter-default-demo.netlify.com/)
-- [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)
+- [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby/tree/master/starters/blog)
   [(demo)](https://gatsby-starter-blog-demo.netlify.com/)
-- [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)
+- [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby/tree/master/starters/hello-world)
   [(demo)](https://gatsby-starter-hello-world-demo.netlify.com/)
 
 ## Community starters
