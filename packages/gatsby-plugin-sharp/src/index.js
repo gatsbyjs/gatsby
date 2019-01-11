@@ -66,7 +66,8 @@ const generalArgs = {
   quality: 50,
   jpegProgressive: true,
   pngCompressionLevel: 9,
-  pngCompressionSpeed: 0,
+  // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
+  pngCompressionSpeed: 4,
   base64: false,
   grayscale: false,
   duotone: false,
