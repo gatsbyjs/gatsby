@@ -1623,3 +1623,14 @@
     - Material UI
     - styled-components
     - Github markdown css support
+- url: https://ueno.co/
+  repo: https://github.com/ueno-llc/ueno-gatsby-starter
+  description: Ueno's starter template for Gatsby
+  tags:
+    - TypeScript
+  features:
+    - GraphQL hybrid
+    - SEO friendly
+    - GSAP ready
+    - Nice devtools
+    - Decorators
