@@ -1,5 +1,5 @@
 // @flow
-const sift = require(`sift`)
+const { default: sift, indexOf } = require(`sift`)
 const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
 const Promise = require(`bluebird`)
@@ -241,7 +241,7 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
 function handleFirst(siftArgs, nodes) {
   const index = _.isEmpty(siftArgs)
     ? 0
-    : sift.indexOf(
+    : indexOf(
         {
           $and: siftArgs,
         },
