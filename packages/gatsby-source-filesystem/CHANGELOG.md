@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.16"></a>
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.14...gatsby-source-filesystem@2.0.16) (2019-01-11)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 <a name="2.0.14"></a>
 
 ## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.13...gatsby-source-filesystem@2.0.14) (2019-01-11)
