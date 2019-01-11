@@ -6,9 +6,11 @@ tags:
 - Ghost
 - publishing platform
 image: ''
-showImageInArticle: false
+showImageInArticle: true
 
 ---
+![](/src/uploads/ghost-headless-feature-image.png)
+
 There has been a lot of progress around static site generators, front end frameworks and API-centric infrastructure in recent years. At [Ghost](https://ghost.org/), we’ve been building open source technology for modern publishing for over 5 years and as a developer-centric team, the momentum around static sites didn’t go unnoticed.
 
 Wildly fast websites which have no back end and can be deployed just about anywhere felt very much like the future. So I’m thrilled to share that with the recent updates to the Ghost API, it’s now possible to use Ghost as a completely decoupled headless CMS and bring your own front-end written in Gatsby.js!
@@ -16,6 +18,8 @@ Wildly fast websites which have no back end and can be deployed just about anywh
 ## API driven publishing
 
 Ghost has always been architected into 3 distinct areas: A core Node.js API, an Ember.js Admin client, and a speedy Handlebars.js front-end theme layer. Until now those 3 areas have been fairly tightly coupled, so it hasn't been possible to use them separately.
+
+![](/src/uploads/ghost-core-1.png)
 
 Our latest updates allow you to completely replace the default Handlebars theme layer in favour of a front-end framework, so you can use Gatsby to build your site statically from the Ghost API.
 
@@ -26,6 +30,8 @@ Many developers use static site generators alongside locally stored Markdown fil
 This is where a headless CMS comes in, which provides an admin client for authoring and content management, while still bringing all of the benefits of having a static front-end. Developers can use their preferred stack, and writers have an editor, content scheduling, SEO and much more at their fingertips.
 
 When you look at the bigger picture of the [content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/), it really starts to feel like an inevitable future for building publishing websites.
+
+![](/src/uploads/ghost-jamstack.png)
 
 ## Official Gatsby.js Source Plugin + Starter
 
@@ -38,6 +44,8 @@ A straightforward Gatsby source plugin which wraps the Ghost API and makes it co
 * [gatsby-starter-ghost](https://github.com/tryghost/gatsby-starter-ghost)
 
 An official [Gatsby starter repository](https://github.com/tryghost/gatsby-starter-ghost) which is pre-configured to get content from Ghost and output it in a clean, blog-style design. The fastest way to get up and running with Gatsby and Ghost is to fork this repository, and check out our [Gatsby docs.](https://docs.ghost.org/api/gatsby/)
+
+![Gatsby and Ghost](/src/uploads/gatsby-starter-ghost.jpg)
 
 We’ve also introduced an official [Netlify integration](https://docs.ghost.org/integrations/netlify/) to make deployment a breeze, with outgoing webhooks in Ghost to trigger a site rebuild and automate the publishing process. 
 
