@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-drupal",
   "description": "Gatsby source plugin for building websites using the Drupal CMS as a data source",
-  "version": "3.0.16",
+  "version": "3.0.17",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -35,5 +35,5 @@
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
-  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
+  "gitHead": "afc22bfad9e23be36b73d469f7abbb8eb5fb1e18"
 }
