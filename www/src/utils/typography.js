@@ -108,29 +108,20 @@ const _options = {
       ".gatsby-highlight": {
         background: colors.code.bg,
         borderRadius: `${presets.radius}px`,
-        padding: rhythm(options.blockMarginBottom),
-        marginBottom: rhythm(options.blockMarginBottom),
-        overflow: `auto`,
-        WebkitOverflowScrolling: `touch`,
         position: `relative`,
       },
       ".gatsby-highlight pre[class*='language-']": {
-        padding: 0,
-        marginTop: 0,
-        marginBottom: 0,
         backgroundColor: `transparent`,
         border: 0,
-        float: `left`,
-        minWidth: `100%`,
-        overflow: `initial`,
+        WebkitOverflowScrolling: `touch`,
       },
-      ".gatsby-highlight pre[class*='language-']::before": {
+      ".gatsby-highlight::before": {
+        fontFamily: `monospace`,
         position: `absolute`,
         top: `0px`,
         right: `20px`,
         padding: `3px 10px`,
         fontSize: `12px`,
-        textAlign: `right`,
         color: `#444`,
         fontWeight: `700`,
         letterSpacing: `0.8px`,
@@ -138,65 +129,65 @@ const _options = {
         borderRadius: `0 0 5px 5px`,
         background: `#ddd`,
       },
-      ".gatsby-highlight pre[class='language-javascript']::before": {
+      ".gatsby-highlight[data-language='javascript']::before": {
         content: `'js'`,
         background: `#f7df1e`,
       },
-      ".gatsby-highlight pre[class='language-js']::before": {
+      ".gatsby-highlight[data-language='js']::before": {
         content: `'js'`,
         background: `#f7df1e`,
       },
-      ".gatsby-highlight pre[class='language-jsx']::before": {
+      ".gatsby-highlight[data-language='jsx']::before": {
         content: `'jsx'`,
         background: `#61dafb`,
       },
-      ".gatsby-highlight pre[class='language-graphql']::before": {
+      ".gatsby-highlight[data-language='graphql']::before": {
         content: `'GraphQL'`,
         background: `#E10098`,
         color: `#fff`,
         fontWeight: `400`,
       },
-      ".gatsby-highlight pre[class='language-html']::before": {
+      ".gatsby-highlight[data-language='html']::before": {
         content: `'html'`,
         background: `#005A9C`,
         color: `#fff`,
         fontWeight: `400`,
       },
-      ".gatsby-highlight pre[class='language-css']::before": {
+      ".gatsby-highlight[data-language='css']::before": {
         content: `'css'`,
         background: `#ff9800`,
         color: `#fff`,
         fontWeight: `400`,
       },
-      ".gatsby-highlight pre[class='language-shell']::before": {
+      ".gatsby-highlight[data-language='shell']::before": {
         content: `'shell'`,
       },
-      ".gatsby-highlight pre[class='language-sh']::before": {
+      ".gatsby-highlight[data-language='sh']::before": {
         content: `'sh'`,
       },
-      ".gatsby-highlight pre[class='language-bash']::before": {
+      ".gatsby-highlight[data-language='bash']::before": {
         content: `'bash'`,
       },
-      ".gatsby-highlight pre[class='language-yaml']::before": {
+      ".gatsby-highlight[data-language='yaml']::before": {
         content: `'yaml'`,
         background: `#ffa8df`,
       },
-      ".gatsby-highlight pre[class='language-markdown']::before": {
+      ".gatsby-highlight[data-language='markdown']::before": {
         content: `'md'`,
       },
-      ".gatsby-highlight pre[class='language-json']::before, .gatsby-highlight pre[class='language-json5']::before": {
+      ".gatsby-highlight[data-language='json']::before, .gatsby-highlight[data-language='json5']::before": {
         content: `'json'`,
         background: `linen`,
       },
-      ".gatsby-highlight pre[class='language-diff']::before": {
+      ".gatsby-highlight[data-language='diff']::before": {
         content: `'diff'`,
         background: `#e6ffed`,
       },
-      ".gatsby-highlight pre[class='language-text']::before": {
+      ".gatsby-highlight[data-language='text']::before": {
         content: `'text'`,
         background: `#fff`,
       },
-      ".gatsby-highlight pre[class='language-flow']::before": {
+      ".gatsby-highlight[data-language='flow']::before": {
         content: `'flow'`,
         background: `#E8BD36`,
       },
@@ -204,6 +195,8 @@ const _options = {
         display: `block`,
         fontSize: `94%`,
         lineHeight: 1.5,
+        float: `left`,
+        minWidth: `100%`,
         // reset code vertical padding declared earlier
         padding: 0,
       },
@@ -218,14 +211,14 @@ const _options = {
         }`,
         display: `block`,
       },
-      ".gatsby-highlight::-webkit-scrollbar": {
+      ".gatsby-highlight pre::-webkit-scrollbar": {
         width: `6px`,
         height: `6px`,
       },
-      ".gatsby-highlight::-webkit-scrollbar-thumb": {
+      ".gatsby-highlight pre::-webkit-scrollbar-thumb": {
         background: colors.code.scrollbarThumb,
       },
-      ".gatsby-highlight::-webkit-scrollbar-track": {
+      ".gatsby-highlight pre::-webkit-scrollbar-track": {
         background: colors.code.border,
         borderRadius: `0 0 ${presets.radiusLg}px ${presets.radiusLg}px`,
       },
@@ -349,7 +342,7 @@ const _options = {
           marginLeft: rhythm(-options.blockMarginBottom * 1.5),
           marginRight: rhythm(-options.blockMarginBottom * 1.5),
         },
-        ".gatsby-highlight": {
+        ".gatsby-highlight pre": {
           padding: rhythm(options.blockMarginBottom * 1.5),
           marginBottom: rhythm(options.blockMarginBottom * 1.5),
         },
