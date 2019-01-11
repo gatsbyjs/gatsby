@@ -16,7 +16,9 @@ const Button = ({
   tag,
   large,
   small,
+  tiny,
   secondary,
+  ondark,
   ...rest
 }) => {
   const Tag = components[tag || `link`]
@@ -31,9 +33,11 @@ const Button = ({
     "&&": {
       ...buttonStyles.default,
       ...overrideCSS,
-      ...(secondary && { ...buttonStyles.secondary }),
-      ...(large && { ...buttonStyles.large }),
-      ...(small && { ...buttonStyles.small }),
+      ...(secondary && buttonStyles.secondary),
+      ...(large && buttonStyles.large),
+      ...(small && buttonStyles.small),
+      ...(tiny && buttonStyles.tiny),
+      ...(ondark && buttonStyles.ondark),
     },
   }
 

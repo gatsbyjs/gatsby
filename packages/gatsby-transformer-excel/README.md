@@ -113,6 +113,28 @@ Which would return:
 
 ## Troubleshooting
 
+### Default Values
+
+If your spreadsheet contains column headers with only blank cells, the default behaviour is to exclude this column in the graphql output as per the [documentation](https://docs.sheetjs.com/#json)
+
+> If `defval` is not specified, `null` and `undefined` values are skipped normally. If specified, all `null` and `undefined` points will be filled with `defval`.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-excel`,
+      options: {
+        defval: "",
+      },
+    },
+  ],
+}
+```
+
+This will make sure that any blank cells are assigned the `defval` value.
+
 ### Field Type Conflicts
 
 If your columns have different data types, e.g. numbers and strings graphql will omit these values and provide you with a field type conflicts warning during build.
@@ -132,6 +154,6 @@ module.exports = {
 }
 ```
 
-_NOTE 1_: A previous version of this library used the attribute name `rawOutput`. This name still works, but is an alias for the correct attribute `raw`. If both attributes are specified, the value for `raw` takes precedence.
+This will make sure that all field types are converted to strings.
 
-This will make sure, that all field types are converted to strings.
+_NOTE 1_: A previous version of this library used the attribute name `rawOutput`. This name still works, but is an alias for the correct attribute `raw`. If both attributes are specified, the value for `raw` takes precedence.

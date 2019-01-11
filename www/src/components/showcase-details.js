@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
@@ -136,7 +136,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
         <Layout
           location={parent.props.location}
           isModal={isModal}
-          modalBackgroundPath="/showcase"
+          modalBackgroundPath={parent.getExitLocation()}
           modalNext={() => parent.next(allSitesYaml)}
           modalPrevious={() => parent.previous(allSitesYaml)}
           modalNextLink={

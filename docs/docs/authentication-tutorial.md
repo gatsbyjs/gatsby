@@ -2,15 +2,15 @@
 title: Making a site with user authentication
 ---
 
-Sometimes, you need to create a site with gated content, available only to authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/#client-only-routes), to define which pages a user can view only after logging in.
+Sometimes, you need to create a site with gated content, available only to authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](/docs/building-apps-with-gatsby/#client-only-routes), to define which pages a user can view only after logging in.
 
 ## Prerequisites
 
-You should have already configured your environment to be able to use the `gatsby-cli`. A good starting point is the [main tutorial](https://www.gatsbyjs.org/tutorial/).
+You should have already configured your environment to be able to use the `gatsby-cli`. A good starting point is the [main tutorial](/tutorial).
 
 ## Security notice
 
-In production, you should use a tested and robust solution to handle the authentication. [Auth0](https://www.auth0.com), [Firebase](https://firebase.google.com), and [Passport.js](passportjs.org) are good examples. This tutorial will only cover the authentication workflow, but you should take the security of your app as seriously as possible.
+In production, you should use a tested and robust solution to handle the authentication. [Auth0](https://www.auth0.com), [Firebase](https://firebase.google.com), and [Passport.js](http://passportjs.org) are good examples. This tutorial will only cover the authentication workflow, but you should take the security of your app as seriously as possible.
 
 ## Building your Gatsby app
 
@@ -62,14 +62,14 @@ export default () => (
 
 And edit the layout component to include it:
 
-```jsx{7,41}:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
-import NavBar from "./navBar"
+import NavBar from "./navBar" // highlight-line
 import "./layout.css"
 
 const Layout = ({ children }) => (
@@ -103,7 +103,7 @@ const Layout = ({ children }) => (
             paddingTop: 0,
           }}
         >
-          <NavBar />
+          <NavBar /> {/* highlight-line */}
           {children}
         </div>
       </>
@@ -120,7 +120,7 @@ export default Layout
 
 Lastly, change the index page to include this new content:
 
-```jsx{9-11}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
 
@@ -129,9 +129,11 @@ import Layout from "../components/layout"
 const IndexPage = () => (
   <Layout>
     <h1>Hi people</h1>
+    {/* highlight-start */}
     <p>
       You should <Link to="/">log in</Link> to see restricted content
     </p>
+    {/* highlight-end */}
   </Layout>
 )
 
@@ -183,7 +185,7 @@ At the beginning of this tutorial, you created a "default" Gatsby site, which in
 
 First, edit `gatsby-node.js`. You will define that any route that starts with `/app/` is part of your restricted content and the page will be created on demand:
 
-```javascript:title=gatsby-config.js
+```javascript:title=gatsby-node.js
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = async ({ page, actions }) => {
@@ -200,7 +202,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 }
 ```
 
-> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](https://www.gatsbyjs.org/packages/gatsby-plugin-create-client-paths/)
+> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths)
 
 Now, you must create a generic page that will have the task to generate the restricted content:
 
@@ -308,7 +310,7 @@ Though the routing is working now, you still can access all routes without restr
 
 To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
-```jsx:title=scr/components/privateRoute.js
+```jsx:title=src/components/privateRoute.js
 import React from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
@@ -328,17 +330,18 @@ export default PrivateRoute
 
 And now you can edit your Router to use the PrivateRoute component:
 
-```jsx{4,11}:title=src/pages/app.js
+```jsx:title=src/pages/app.js
 import React from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/layout"
-import PrivateRoute from "../components/privateRoute"
+import PrivateRoute from "../components/privateRoute" // highlight-line
 import Profile from "../components/profile"
 import Login from "../components/login"
 
 const App = () => (
   <Layout>
     <Router>
+      {/* highlight-next-line */}
       <PrivateRoute path="/app/profile" component={Profile} />
       <Login path="/app/login" />
     </Router>
@@ -354,11 +357,12 @@ With the client-only routes in place, you must now refactor some files to accoun
 
 The navigation bar will show the user name and logout option to registered users:
 
-```jsx{2-3,5-12,21,26,28-38,42}:title=src/components/navBar.js
+```jsx:title=src/components/navBar.js
 import React from "react"
-import { Link, navigate } from "gatsby"
-import { getUser, isLoggedIn, logout } from "../services/auth"
+import { Link, navigate } from "gatsby" // highlight-line
+import { getUser, isLoggedIn, logout } from "../services/auth" // highlight-line
 
+// highlight-start
 export default () => {
   const content = { message: "", login: true }
   if (isLoggedIn()) {
@@ -367,6 +371,7 @@ export default () => {
     content.message = "You are not logged in"
   }
   return (
+    {/* highlight-end */}
     <div
       style={{
         display: "flex",
@@ -375,13 +380,14 @@ export default () => {
         borderBottom: "1px solid #d1c1e0",
       }}
     >
-      <span>{content.message}</span>
+      <span>{content.message}</span> {/* highlight-line */}
 
       <nav>
         <Link to="/">Home</Link>
         {` `}
-        <Link to="/app/profile">Profile</Link>
+        <Link to="/app/profile">Profile</Link> {/* highlight-line */}
         {` `}
+        {/* highlight-start */}
         {isLoggedIn() ? (
           <a
             href="/"
@@ -393,24 +399,28 @@ export default () => {
             Logout
           </a>
         ) : null}
+        {/* highlight-end */}
       </nav>
     </div>
   )
-}
+} // highlight-line
 ```
 
 The index page will suggest to login or check the profile accordingly:
 
-```jsx{3,7-8,10-23,26}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
-import { getUser, isLoggedIn } from "../services/auth"
+import { getUser, isLoggedIn } from "../services/auth" // highlight-line
 
 import Layout from "../components/layout"
 
+// highlight-start
 const IndexPage = () => {
   return (
+    // highlight-end
     <Layout>
+      {/* highlight-start */}
       <h1>Hi {isLoggedIn() ? getUser().name : "people"}</h1>
       <p>
         {isLoggedIn() ? (
@@ -425,25 +435,28 @@ const IndexPage = () => {
           </>
         )}
       </p>
+      {/* highlight-end */}
     </Layout>
   )
-}
+} // highlight-line
 
 export default IndexPage
 ```
 
 And the profile will show the user data:
 
-```jsx{2,8,9}:title=src/components/profile.js
+```jsx:title=src/components/profile.js
 import React from "react"
-import { getUser } from "../services/auth"
+import { getUser } from "../services/auth" // highlight-line
 
 const Profile = () => (
   <>
     <h1>Your profile</h1>
     <ul>
+      {/* highlight-start */}
       <li>Name: {getUser().name}</li>
       <li>E-mail: {getUser().email}</li>
+      {/* highlight-end */}
     </ul>
   </>
 )
@@ -462,3 +475,4 @@ If you want to learn more about using production-ready auth solutions, these lin
 - [The Gatsby store for swag and other Gatsby goodies](https://github.com/gatsbyjs/store.gatsbyjs.org)
 - [Building a blog with Gatsby, React and Webtask.io!](https://auth0.com/blog/building-a-blog-with-gatsby-react-and-webtask/)
 - [JAMstack PWA — Let’s Build a Polling App. with Gatsby.js, Firebase, and Styled-components Pt. 2](https://medium.com/@UnicornAgency/jamstack-pwa-lets-build-a-polling-app-with-gatsby-js-firebase-and-styled-components-pt-2-9044534ea6bc)
+- [JAMstack Hackathon Starter - Authenticated Gatsby app starter with Netlify Identity](https://www.gatsbyjs.org/starters/sw-yx/jamstack-hackathon-starter)

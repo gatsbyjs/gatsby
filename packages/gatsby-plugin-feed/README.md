@@ -49,6 +49,7 @@ plugins: [
             return allMarkdownRemark.edges.map(edge => {
               return Object.assign({}, edge.node.frontmatter, {
                 description: edge.node.excerpt,
+                date: edge.node.frontmatter.date,
                 url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                 guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
                 custom_elements: [{ "content:encoded": edge.node.html }],
@@ -84,5 +85,7 @@ plugins: [
   },
 ]
 ```
+
+To see what option keys are valid, see [the itemOptions section](https://www.npmjs.com/package/rss#itemoptions) of the RSS module.
 
 NOTE: This plugin only generates the `/rss.xml` file when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`.

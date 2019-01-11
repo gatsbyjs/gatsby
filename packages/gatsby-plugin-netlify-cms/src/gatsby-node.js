@@ -4,7 +4,6 @@ import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import UglifyJsPlugin from "uglifyjs-webpack-plugin"
 import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
 
 /**
@@ -83,8 +82,9 @@ exports.onCreateWebpackConfig = (
          */
         ...gatsbyConfig.plugins.filter(
           plugin =>
-            ![UglifyJsPlugin, MiniCssExtractPlugin, FriendlyErrorsPlugin].find(
-              Plugin => plugin instanceof Plugin
+            ![`MiniCssExtractPlugin`].find(
+              pluginName =>
+                plugin.constructor && plugin.constructor.name === pluginName
             )
         ),
 
@@ -145,14 +145,4 @@ exports.onCreateWebpackConfig = (
     }
     webpack(config).run()
   }
-}
-
-exports.onPostBuild = ({ actions }, { publicPath = `admin` }) => {
-  const { createRedirect } = actions
-
-  createRedirect({
-    fromPath: `/${publicPath}`,
-    toPath: `/${publicPath}/`,
-    isPermanent: true,
-  })
 }

@@ -1,6 +1,6 @@
 const path = require(`path`)
 
-const r = m => require.resolve(m)
+const resolve = m => require.resolve(m)
 
 const loadCachedConfig = () => {
   let pluginBabelConfig = {}
@@ -13,37 +13,35 @@ const loadCachedConfig = () => {
   return pluginBabelConfig
 }
 
-function preset(context, options = {}) {
+module.exports = function preset(_, options = {}) {
   let { targets = null } = options
 
   const pluginBabelConfig = loadCachedConfig()
   const stage = process.env.GATSBY_BUILD_STAGE || `test`
 
   if (!targets) {
-    if (stage === `build-html`) {
+    if (stage === `build-html` || stage === `test`) {
       targets = {
         node: `current`,
       }
     } else {
-      targets = {
-        browsers: pluginBabelConfig.browserslist,
-      }
+      targets = pluginBabelConfig.browserslist
     }
   }
 
   return {
     presets: [
       [
-        r(`@babel/preset-env`),
+        resolve(`@babel/preset-env`),
         {
           loose: true,
-          modules: false,
+          modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
           targets,
         },
       ],
       [
-        r(`@babel/preset-react`),
+        resolve(`@babel/preset-react`),
         {
           useBuiltIns: true,
           pragma: `React.createElement`,
@@ -53,15 +51,15 @@ function preset(context, options = {}) {
     ],
     plugins: [
       [
-        r(`@babel/plugin-proposal-class-properties`),
+        resolve(`@babel/plugin-proposal-class-properties`),
         {
           loose: true,
         },
       ],
-      r(`babel-plugin-macros`),
-      r(`@babel/plugin-syntax-dynamic-import`),
+      resolve(`babel-plugin-macros`),
+      resolve(`@babel/plugin-syntax-dynamic-import`),
       [
-        r(`@babel/plugin-transform-runtime`),
+        resolve(`@babel/plugin-transform-runtime`),
         {
           helpers: true,
           regenerator: true,
@@ -70,5 +68,3 @@ function preset(context, options = {}) {
     ],
   }
 }
-
-module.exports = preset

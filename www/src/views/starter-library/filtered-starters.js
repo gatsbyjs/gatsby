@@ -27,8 +27,9 @@ export default class FilteredStarterLibrary extends Component {
   state = {
     sitesToShow: 12,
   }
-  setFiltersCategory = filtersCategory =>
+  setFiltersCategory = filtersCategory => {
     this.props.setURLState({ c: Array.from(filtersCategory) })
+  }
   setFiltersDependency = filtersDependency =>
     this.props.setURLState({ d: Array.from(filtersDependency) })
   setFiltersVersion = filtersVersion =>
@@ -37,8 +38,7 @@ export default class FilteredStarterLibrary extends Component {
     this.props.setURLState({
       sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
     })
-  resetFilters = () =>
-    this.props.setURLState({ c: null, d: null, v: null, s: `` })
+  resetFilters = () => this.props.setURLState({ c: [], d: [], v: [], s: `` })
   showMoreSites = starters => {
     let showAll =
       this.state.sitesToShow + 15 > starters.length ? starters.length : false
@@ -49,7 +49,7 @@ export default class FilteredStarterLibrary extends Component {
   onChangeUrlWithText = value => this.props.setURLState({ s: value })
 
   render() {
-    const { data, urlState, setURLState } = this.props
+    const { data, urlState } = this.props
     const {
       setFiltersCategory,
       setFiltersDependency,
@@ -76,9 +76,9 @@ export default class FilteredStarterLibrary extends Component {
     )
 
     // stopgap for missing gh data (#8763)
-    let starters = data.allStartersYaml.edges.filter(({ node: starter }) => {
-      return starter.fields && starter.fields.starterShowcase
-    })
+    let starters = data.allStartersYaml.edges.filter(
+      ({ node: starter }) => starter.fields && starter.fields.starterShowcase
+    )
 
     if (urlState.s.length > 0) {
       starters = starters.filter(starter =>
@@ -101,7 +101,7 @@ export default class FilteredStarterLibrary extends Component {
 
     return (
       <section className="showcase" css={{ display: `flex` }}>
-        <SidebarContainer>
+        <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
             <div css={{ height: `3.5rem` }}>
@@ -155,7 +155,16 @@ export default class FilteredStarterLibrary extends Component {
           </SidebarBody>
         </SidebarContainer>
         <ContentContainer>
-          <ContentHeader>
+          <ContentHeader
+            cssOverrides={{
+              height: `6rem`,
+              paddingTop: `${rhythm(3 / 4)}`,
+              [presets.Phablet]: {
+                height: presets.headerHeight,
+                paddingTop: `0px`,
+              },
+            }}
+          >
             <ContentTitle
               search={urlState.s}
               filters={filters}
@@ -164,14 +173,27 @@ export default class FilteredStarterLibrary extends Component {
               edges={starters}
               what="size"
             />
-            <div css={{ marginLeft: `auto` }}>
+            <div
+              css={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                marginBottom: `.4rem`,
+                width: `100%`,
+                [presets.Phablet]: {
+                  justifyContent: `flex-end`,
+                  marginBottom: `0rem`,
+                  width: `50%`,
+                },
+              }}
+            >
+              {/* @todo: add sorting. */}
               <label
                 css={{
                   display: `none`,
                   [presets.Desktop]: {
-                    color: colors.gatsby,
                     border: 0,
                     borderRadius: presets.radiusLg,
+                    color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     paddingTop: rhythm(1 / 8),
                     paddingRight: rhythm(1 / 5),
@@ -191,13 +213,14 @@ export default class FilteredStarterLibrary extends Component {
                     borderRadius: presets.radiusLg,
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
+                    marginTop: rhythm(1 / 8),
                     paddingTop: rhythm(1 / 8),
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
                     paddingLeft: rhythm(1),
                     width: rhythm(6),
                     ":focus": {
-                      outline: 0,
+                      outline: `${colors.wisteria} solid thin`,
                       backgroundColor: colors.ui.light,
                       borderRadius: presets.radiusLg,
                       transition: `width ${presets.animation.speedDefault} ${
@@ -212,32 +235,32 @@ export default class FilteredStarterLibrary extends Component {
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
-                <Button
-                  to="https://gatsbyjs.org/docs/submit-to-starter-library/"
-                  tag="href"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  small
-                  icon={<ArrowForwardIcon />}
-                  overrideCSS={{
-                    marginLeft: 10,
-                  }}
-                >
-                  Submit a Starter
-                </Button>
                 <SearchIcon
                   overrideCSS={{
                     fill: colors.lilac,
-                    position: `absolute`,
-                    left: `5px`,
-                    top: `50%`,
-                    width: `16px`,
                     height: `16px`,
+                    left: `5px`,
                     pointerEvents: `none`,
+                    position: `absolute`,
+                    top: `50%`,
                     transform: `translateY(-50%)`,
+                    width: `16px`,
                   }}
                 />
               </label>
+              <Button
+                to="https://gatsbyjs.org/docs/submit-to-starter-library/"
+                tag="href"
+                target="_blank"
+                rel="noopener noreferrer"
+                small
+                icon={<ArrowForwardIcon />}
+                overrideCSS={{
+                  marginLeft: 10,
+                }}
+              >
+                Submit a Starter
+              </Button>
             </div>
           </ContentHeader>
           <StarterList

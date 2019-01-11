@@ -1,10 +1,5 @@
 {
   "globals": {
     "graphql": true
-  },
-  "rules": {
-    "react/display-name": [0],
-    "react/jsx-key": [1],
-    "react/prop-types": [0]
   }
 }

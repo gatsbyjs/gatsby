@@ -4,22 +4,25 @@
   "description": "Gatsby example site using using-emotion",
   "author": "Tegan Churchill <churchill.tegan@gmail.com>",
   "dependencies": {
-    "emotion": "^9.2.12",
-    "emotion-server": "^9.2.12",
+    "@emotion/core": "^10.0.0",
+    "@emotion/styled": "^10.0.0",
+    "emotion": "^10.0.0",
+    "emotion-server": "^10.0.0",
     "gatsby": "^2.0.0",
-    "gatsby-plugin-emotion": "^2.0.5",
+    "gatsby-plugin-emotion": "^3.0.0",
     "gatsby-plugin-google-analytics": "^2.0.5",
     "gatsby-plugin-offline": "^2.0.5",
     "gatsby-plugin-react-helmet": "^3.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-emotion": "^9.2.12",
     "react-helmet": "^5.2.0"
   },
   "license": "MIT",
   "main": "n/a",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "start": "npm run develop"
   }
 }

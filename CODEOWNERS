@@ -8,6 +8,7 @@
 /packages/gatsby-link/                          @gatsbyjs/core
 /packages/gatsby-dev-cli/                       @gatsbyjs/core
 /packages/gatsby-cli/                           @gatsbyjs/core
+/starters/                                      @gatsbyjs/core
 
 # We also need to be careful with CI/CD and repo config files.
 .circleci/                                      @gatsbyjs/core
@@ -17,6 +18,8 @@ appveyor.yml                                    @gatsbyjs/core
 
 # The ecosystem files are error-prone, so we require an extra set of eyes on them.
 /docs/*                                         @gatsbyjs/ecosystem
+/docs/creators/*                                @gatsbyjs/ecosystem
+/docs/creators/images/*                         @gatsbyjs/ecosystem
 
 # The website auto-deploys, so we need an extra check to avoid shenanigans.
 /www/                                           @gatsbyjs/website

@@ -63,6 +63,7 @@ module.exports = {
 ```
 
 ## Using WordPress data
+
 Once your source plugin is pulling data, you can construct your site pages by implementing the `createPages` API in `gatsby-node.js`. When this is called, your data has already been fetched and is available to query with GraphQL. Gatsby uses [GraphQL at build time](/docs/querying-with-graphql/#how-does-graphql-and-gatsby-work-together); Your source plugin (in this case, `gatsby-source-wordpress`) fetches your data, and Gatsby uses that data to "[automatically _infer_ a GraphQL schema](/docs/querying-with-graphql/#how-does-graphql-and-gatsby-work-together)" that you can query against.
 
 The `createPages` API exposes the `graphql` function:
@@ -103,5 +104,5 @@ created to support this guide.
 ## Other resources
 
 - [Blog post on which this guide is based on](https://www.gatsbyjs.org/blog/2018-01-22-getting-started-gatsby-and-wordpress/)
-- [Video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
+- [Watch + Learn video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
 - [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)

@@ -1,11 +1,11 @@
 ---
-title: Picking a back-end for GatsbyJS
+title: Picking a backend for GatsbyJS
 date: "2018-02-06"
 author: "Ross Whitehouse"
 tags: ["headless-cms", "wordpress", "contentful", "netlify-cms", "jamstack"]
 ---
 
-A little while ago I had the six-monthly itch to redo my portfolio site, and I decided I was going to learn to use Gatsby. But that seems to be only half the battle. After you’ve built your front-end, how do you decide on the back-end? There’s so many out there!
+A little while ago I had the six-monthly itch to redo my portfolio site, and I decided I was going to learn to use Gatsby. But that seems to be only half the battle. After you’ve built your frontend, how do you decide on the backend? There’s so many out there!
 
 ![GatsbyJS](gatsby.jpeg)
 
@@ -29,16 +29,16 @@ So if you have any experience with React, or if you’re just getting started, t
 
 You build your site. You’ve got your Sass, you’ve got your Markdown files (or not), but everything’s blank! So now what? How do we populate it with content?
 
-## The Next Step: A back-end
+## The Next Step: A backend
 
 Now we need a system to manage and deliver our content in a nice API (instructed by our GraphQL of course). And there’s a whole bunch of them about. To help us out, Gatsby has plugins that cater to some Headless CMS like the WordPress API, Contentful, Cockpit, Prismic and NetlifyCMS - which Gatsby actually has a guide for. I’ll be going through a few of these to see which one might be more useful for this small project, and going forward.
 
-> After posting this, I heard some really good thing about [GraphCMS](https://graphcms.com/) - It’s designed to work with GraphQL inherently and they have a [Gatsby Starter Project](https://github.com/GraphCMS/graphcms-examples/tree/master/gatsby-source-plugin-blog) example to check out.
+> After posting this, I heard some really good thing about [GraphCMS](https://graphcms.com/) - It’s designed to work with GraphQL inherently and they have a [Gatsby Starter Project](https://github.com/GraphCMS/graphcms-examples/tree/master/current/gatsby-source-plugin-blog) example to check out.
 
 Firstly, though, why do we want a Headless CMS and a JAMstack for the project? There are a few reasons most people use them, and some that are down to personal preference:
 
 1.  **Easy setup!**
-2.  **No back-end code.** I’m a front-end dev and honestly don’t want to spend hours setting up some PHP that I won’t enjoy. Gimme the good stuff.
+2.  **No backend code.** I’m a frontend dev and honestly don’t want to spend hours setting up some PHP that I won’t enjoy. Gimme the good stuff.
 3.  **No server needed.** Cloud CMSs mean that I don’t need to pay the hosting people to setup an SQL database.
 4.  **Easy to edit.** If I need to edit a site on the fly or have a client who needs to do the same, they don’t need to touch any code or run to their home workstation to fix a spelling error. They can access it anywhere.
 
@@ -124,7 +124,7 @@ Cockpit also seems to share a lot of the same features except for two big differ
 
 ---
 
-## Conclusion - Which Back-End is right?
+## Conclusion - Which backend is right?
 
 If nothing else, writing this article has given me a checklist that I need a CMS to fulfill. Some other CMSs have great features, but a couple of them are much more important to my use-case than others.
 

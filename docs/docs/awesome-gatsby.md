@@ -1,5 +1,5 @@
 ---
-title: "Awesome Gatsby"
+title: "Awesome Gatsby Resources"
 ---
 
 A curated list of interesting Gatsby community projects and learning resources.
@@ -10,11 +10,11 @@ See the [site showcase](/showcase/)
 
 ## Starters
 
-See the [list of official and community starters](/docs/gatsby-starters/)
+See the [library of official and community starters](/starters/)
 
 ## Plugins
 
-See the [list of official and community plugins](/docs/plugins/)
+See the [library of official and community plugins](/plugins/)
 
 ## Tools
 
@@ -23,15 +23,18 @@ See the [list of official and community plugins](/docs/plugins/)
 
 ## Podcasts
 
-- [2018-07-18 The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
-- [2018-04-17 Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
-- [2018-02-28 syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
-- [2017-09-21 Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
-- [2017-07-21 Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
-- [2017-08-17 Kyle Mathews on Software Engineering Daily](https://softwareengineeringdaily.com/2017/08/17/gatsbyjs-with-kyle-mathews/)
+- [2018-11-30: Kyle Mathews on Founders Talk #59](https://changelog.com/founderstalk/59)
+- [2018-11-14: Jason Lengstorf on React Podcast](https://reactpodcast.simplecast.fm/28)
+- [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
+- [2018-04-17: Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
+- [2018-02-28: syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
+- [2017-09-21: Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
+- [2017-07-21: Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
+- [2017-08-17: Kyle Mathews on Software Engineering Daily](https://softwareengineeringdaily.com/2017/08/17/gatsbyjs-with-kyle-mathews/)
 
 ## Videos
 
+- [Gatsby Days Bay Area December 2018 - Kyle Mathews & Guest Speakers](https://www.youtube.com/playlist?list=PLCU2qJekvcN1wzgVKymbjbGtZ3VgAWOdj)
 - [Static Site Generation with Gatsby.js v0 — Scott Nonnenberg](https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/)
 - [React.js Conf 2016 - Lightning Talks - Kyle Mathews](https://www.youtube.com/watch?v=RFkNRKL6ZoE)
 - [Developing with React and Gatsby.js — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
@@ -61,6 +64,8 @@ See the [list of official and community plugins](/docs/plugins/)
 - [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
 - [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
+- [JAMstack Basics: How to Create a Gatsby Starter with Contentful and Deploy to Netlify](https://itnext.io/jamstack-basics-how-to-create-a-gatsby-starter-with-contentful-and-deploy-to-netlify-846354cc74bc)
+- [How to deploy a static Gatsby app to Heroku](https://medium.freecodecamp.org/how-to-deploy-a-static-gatsby-app-to-heroku-3362e3ecda0f)
 
 ## Other resources
 

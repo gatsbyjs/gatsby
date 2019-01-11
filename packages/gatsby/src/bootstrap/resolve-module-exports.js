@@ -1,6 +1,6 @@
 // @flow
 const fs = require(`fs`)
-const traverse = require(`babel-traverse`).default
+const traverse = require(`@babel/traverse`).default
 const get = require(`lodash/get`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)

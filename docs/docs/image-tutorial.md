@@ -31,7 +31,7 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```javascript{32-58}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby WordPress Tutorial",
@@ -42,6 +42,7 @@ module.exports = {
      * Gatsby's data processing layer begins with “source”
      * plugins. Here the site sources its data from WordPress.
      */
+    // highlight-start
     {
       resolve: `gatsby-source-wordpress`,
       options: {
@@ -62,6 +63,7 @@ module.exports = {
         useACF: true,
       },
     },
+    // highlight-end
   ],
 }
 ```
@@ -77,7 +79,7 @@ npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
 
 Place these plugins in your `gatsby-config.js` like this:
 
-```javascript{112-121}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby WordPress Tutorial",
@@ -108,9 +110,11 @@ module.exports = {
         useACF: true,
       },
     },
+    // highlight-start
     "gatsby-plugin-react-helmet",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
+    // highlight-end
   ],
 }
 ```
@@ -129,7 +133,7 @@ Open localhost:8000 and localhost:8000/\_\_\_graphql.
 
 Here’s an example of creating specific widths and heights for images:
 
-```jsx
+```graphql
 {
   allWordpressPost {
     edges {
@@ -138,8 +142,8 @@ Here’s an example of creating specific widths and heights for images:
           photo {
             localFile {
               childImageSharp {
-                  # Try editing the "width" and "height" values.
-                  resolutions(width: 200, height: 200) {
+                # Try editing the "width" and "height" values.
+                resolutions(width: 200, height: 200) {
                   # In the GraphQL explorer, use field names
                   # like "src". In your site's code, remove them
                   # and use the fragments provided by Gatsby.
@@ -161,7 +165,7 @@ Here’s an example of creating specific widths and heights for images:
 
 Here’s an example query for generating different sizes of an image:
 
-```jsx
+```graphql
 {
   allWordpressPost {
     edges {

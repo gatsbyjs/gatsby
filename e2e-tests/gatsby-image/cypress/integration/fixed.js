@@ -25,8 +25,8 @@ describe(`fixed`, () => {
   // TODO: figure out why these tests are failing
   it(`applies 1x/2x/3x`, () => {
     cy.getTestElement(fixedTestId)
-      .find('picture > source')
-      .should('have.attr', 'srcset')
+      .find(`picture > source`)
+      .should(`have.attr`, `srcset`)
       .and(srcset => {
         ;[`1x`, `2x`, `3x`].forEach(size => {
           expect(srcset).contains(size)

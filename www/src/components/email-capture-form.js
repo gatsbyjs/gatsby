@@ -1,55 +1,81 @@
 import React from "react"
+import styled from "react-emotion"
+
+import SendIcon from "react-icons/lib/md/send"
+
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/form-styles"
 import { buttonStyles } from "../utils/styles"
 
-const Label = props => (
-  <label htmlFor={props.for}>
-    {props.children}
-    {props.isRequired && (
-      <span
-        css={{
-          color: `red`,
-          "&:before": {
-            content: `'*'`,
-            color: colors.warning,
-          },
-        }}
-      />
-    )}
-  </label>
-)
+const StyledForm = styled(`form`)`
+  margin: 0;
 
-const SingleLineInput = React.forwardRef((props, ref) => (
-  <input
-    ref={ref}
-    css={{
-      ...formInput,
-      width: `100% !important`,
-      ":focus": {
-        borderColor: colors.gatsby,
-        outline: 0,
-        boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
-      },
-    }}
-    {...props}
-  />
-))
+  ${presets.Desktop} {
+    display: ${props => (props.isHomepage ? `flex` : `block`)};
+  }
+`
 
-const ErrorMessage = ({ children }) => (
-  <div
-    css={{
-      // dunno where this is comming from - just straight copied li style from dev tools
-      marginBottom: `calc(1.05rem / 2)`,
-      color: colors.warning,
-      fontSize: rhythm(1 / 2),
-    }}
-  >
-    {children}
-  </div>
-)
+const Label = styled(`label`)`
+  :after {
+    content: ${props => (props.isRequired ? `'*'` : ``)};
+    color: ${colors.warning};
+  }
+`
+
+const SingleLineInput = styled(`input`)`
+  ${formInput};
+  width: 100%;
+
+  :focus {
+    border-color: ${colors.gatsby};
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)};
+  }
+`
+
+const SingleLineInputOnHomepage = styled(SingleLineInput)`
+  font-family: ${options.systemFontFamily.join(`,`)};
+  font-size: 1rem;
+  padding: 0.6rem;
+`
+
+const ErrorMessage = styled(`div`)`
+  color: ${colors.warning};
+  font-family: ${options.systemFontFamily.join(`,`)};
+  font-size: 0.875rem;
+  margin: calc(1.05rem / 2) 0;
+`
+
+const SuccesMessage = styled(`div`)`
+  font-family: ${options.systemFontFamily.join(`,`)};
+`
+
+const Submit = styled(`input`)`
+  ${buttonStyles.default};
+  margin-top: 20px;
+`
+
+const SubmitOnHomepage = styled(`button`)`
+  ${buttonStyles.default};
+  font-size: 1.125rem;
+  width: 100%;
+  margin-top: 10px;
+
+  span {
+    align-items: center;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  ${presets.Desktop} {
+    width: auto;
+    margin-top: 0;
+    margin-left: 0.5rem;
+  }
+`
 
 class Form extends React.Component {
   constructor(props) {
@@ -58,7 +84,7 @@ class Form extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
 
     // let's use uncontrolled components https://reactjs.org/docs/uncontrolled-components.html
-    this.email = React.createRef()
+    this.email = null
   }
 
   state = {
@@ -78,7 +104,7 @@ class Form extends React.Component {
       fields: [
         {
           name: `email`,
-          value: this.email.current.value,
+          value: this.email.value,
         },
       ],
       context: {
@@ -133,33 +159,49 @@ class Form extends React.Component {
   }
 
   render() {
+    const { isHomepage } = this.props
+
+    const SingleLineInputComponent = isHomepage
+      ? SingleLineInputOnHomepage
+      : SingleLineInput
+
     return (
-      <form onSubmit={this.onSubmit}>
-        <div
-          css={{
-            paddingBottom: `20px`,
-          }}
-        >
-          <Label isRequired for="email">
+      <StyledForm onSubmit={this.onSubmit} isHomepage={isHomepage}>
+        {!isHomepage && (
+          <Label isRequired htmlFor="email">
             Email
           </Label>
-          <SingleLineInput
-            id="email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            ref={this.email}
-          />
-          {this.state.fieldErrors.email && (
-            <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
-          )}
-        </div>
+        )}
+        <SingleLineInputComponent
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          innerRef={input => {
+            this.email = input
+          }}
+          aria-label={isHomepage ? `Email` : ``}
+          placeholder={isHomepage ? `your.email@example.com` : ``}
+        />
+        {this.state.fieldErrors.email && (
+          <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
+        )}
         {this.state.errorMessage && (
           <ErrorMessage>{this.state.errorMessage}</ErrorMessage>
         )}
-        <input type="submit" value="Subscribe" css={buttonStyles.default} />
-      </form>
+
+        {isHomepage ? (
+          <SubmitOnHomepage type="submit">
+            <span>
+              Subscribe
+              <SendIcon />
+            </span>
+          </SubmitOnHomepage>
+        ) : (
+          <Submit type="submit" value="Subscribe" />
+        )}
+      </StyledForm>
     )
   }
 }
@@ -179,44 +221,65 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS } = this.props
+    const { signupMessage, overrideCSS, isHomepage, className } = this.props
+
+    const FormComponent = props => (
+      <Form
+        onSuccess={this.onSuccess}
+        portalId="4731712"
+        formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
+        sfdcCampaignId="701f4000000Us7pAAC"
+        {...props}
+      />
+    )
 
     return (
-      <div
-        css={{
-          borderTop: `2px solid ${colors.lilac}`,
-          fontFamily: options.headerFontFamily.join(`,`),
-          marginTop: rhythm(3),
-          paddingTop: `${rhythm(1)}`,
-          ...overrideCSS,
-        }}
-      >
-        <div>
-          <p>{signupMessage}</p>
-          <div
-            css={{
-              backgroundColor: colors.ui.light,
-              borderRadius: presets.radius,
-              color: colors.gatsby,
-              fontFamily: options.headerFontFamily.join(`,`),
-              padding: `15px`,
-            }}
-          >
+      <React.Fragment>
+        {isHomepage ? (
+          <div className={className}>
             {this.state.successMessage ? (
-              <div
+              <SuccesMessage
                 dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
               />
             ) : (
-              <Form
-                onSuccess={this.onSuccess}
-                portalId="4731712"
-                formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
-                sfdcCampaignId="701f4000000Us7pAAC"
-              />
+              <FormComponent isHomepage={true} />
             )}
           </div>
-        </div>
-      </div>
+        ) : (
+          <div
+            css={{
+              borderTop: `2px solid ${colors.lilac}`,
+              fontFamily: options.headerFontFamily.join(`,`),
+              marginTop: rhythm(3),
+              paddingTop: `${rhythm(1)}`,
+              ...overrideCSS,
+            }}
+          >
+            <div>
+              <p>{signupMessage}</p>
+              <div
+                css={{
+                  backgroundColor: colors.ui.light,
+                  borderRadius: presets.radius,
+                  color: colors.gatsby,
+                  fontFamily: options.headerFontFamily.join(`,`),
+                  padding: `15px`,
+                }}
+              >
+                {this.state.successMessage ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: this.state.successMessage,
+                    }}
+                  />
+                ) : (
+                  <FormComponent />
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </React.Fragment>
     )
   }
 }
@@ -225,6 +288,8 @@ EmailCaptureForm.defaultProps = {
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
   overrideCSS: {},
+  isHomepage: false,
+  className: ``,
 }
 
 export default EmailCaptureForm

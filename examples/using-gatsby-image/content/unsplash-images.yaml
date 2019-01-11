@@ -1,0 +1,81 @@
+- url: https://images.unsplash.com/photo-1534432586043-ead5b99229fb
+  title: Pug with hoodie
+  credit: Charles Deluvio
+- url: https://images.unsplash.com/photo-1530041539828-114de669390e
+  title: Pug with yellow raincoat
+  credit: Charles Deluvio
+- url: https://images.unsplash.com/photo-1495121553079-4c61bcce1894
+  title: Vintage camera
+  credit: Alexander Andrews
+- url: https://images.unsplash.com/photo-1517519014922-8fc06b814a0e
+  title: Pug with red hat
+  credit: Charles Deluvio
+- url: https://images.unsplash.com/photo-1530041587872-d823b3d4bed7
+  title: Pug without hoodie
+  credit: Charles Deluvio
+
+# gallery specific
+- url: https://images.unsplash.com/photo-1528475478853-5b89bed65c4c
+  title: Cactus
+  credit: Charles Deluvio
+  gallery: true
+- url: https://images.unsplash.com/photo-1528476625962-40d0763c921f
+  title: Cacti
+  credit: Charles Deluvio
+  gallery: true
+- url: https://images.unsplash.com/photo-1525498128493-380d1990a112
+  title: Leaves
+  credit: Chris Lee
+  gallery: true
+- url: https://images.unsplash.com/photo-1539656262152-6cb9103f1a33
+  title: City from above
+  credit: chuttersnap
+  gallery: true
+- url: https://images.unsplash.com/photo-1501004318641-b39e6451bec6
+  title: Plant with leaves
+  credit: Igor Son
+  gallery: true
+- url: https://images.unsplash.com/photo-1469201039728-6c8998f9872a
+  title: Alien in the forest
+  credit: Martin Reisch
+  gallery: true
+- url: https://images.unsplash.com/photo-1483728788451-2708e0270131
+  title: Person in center from above
+  credit: Martin Reisch
+  gallery: true
+- url: https://images.unsplash.com/photo-1485827031228-b1736cb1fd06
+  title: Person on football field from above
+  credit: Martin Reisch
+  gallery: true
+- url: https://images.unsplash.com/photo-1496241028573-69327bf8f9d5
+  title: Person on roof from above
+  credit: Martin Reisch
+  gallery: true
+- url: https://images.unsplash.com/photo-1479859546309-cd77fa21c8f6
+  title: Tennis court
+  credit: Michele Feola
+  gallery: true
+- url: https://images.unsplash.com/photo-1504981775868-badb3c4ec2bd
+  title: Beach
+  credit: Ryan Christodoulou
+  gallery: true
+- url: https://images.unsplash.com/photo-1505903658795-8d3cc48039e4
+  title: Top of house
+  credit: Simone Hutsch
+  gallery: true
+- url: https://images.unsplash.com/photo-1505904909252-8ce17de9f287
+  title: Gala
+  credit: Simone Hutsch
+  gallery: true
+- url: https://images.unsplash.com/photo-1504492729478-4ea346b648ae
+  title: Pool from above
+  credit: Spencer Watson
+  gallery: true
+- url: https://images.unsplash.com/photo-1498248193836-88f8c8d70a3f
+  title: Beach and tents from above
+  credit: Syd Sujuaan
+  gallery: true
+- url: https://images.unsplash.com/photo-1516962126636-27ad087061cc
+  title: Polaroid Pronto 600
+  credit: Yoann Siloine
+  gallery: true
