@@ -17,6 +17,7 @@
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
     "pretty-bytes": "^4.0.2",
+    "progress": "^1.1.8",
     "read-chunk": "^3.0.0",
     "slash": "^1.0.0",
     "valid-url": "^1.0.9",
