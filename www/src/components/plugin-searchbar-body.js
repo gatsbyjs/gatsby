@@ -158,7 +158,7 @@ injectGlobal`
     outline: none;
     transition: all ${presets.animation.speedDefault} ${
   presets.animation.curveDefault
-};
+  };
     font-family: ${typography.options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover {
@@ -224,7 +224,7 @@ class Search extends Component {
           >
             <Stats
               translations={{
-                stats: function(n, ms) {
+                stats: function (n, ms) {
                   return `${n} results`
                 },
               }}
@@ -238,7 +238,7 @@ class Search extends Component {
               [presets.Tablet]: {
                 height: `calc(100vh - ${presets.headerHeight} - ${
                   presets.bannerHeight
-                } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+                  } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
                 ...scrollbarStyles,
               },
@@ -303,9 +303,11 @@ class Search extends Component {
 // the result component is fed into the InfiniteHits component
 const Result = ({ hit, pathname, query }) => {
   // Example:
-  // pathname = `/plugins/gatsby-link/` || `/plugins/@comsoc/gatsby-mdast-copy-linked-files`
+  // pathname = `/packages/gatsby-link/` || `/packages/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
-  const selected = pathname.includes(hit.name)
+  const packagesRegex = new RegExp(`\/packages\/`, `g`)
+  const packageName = pathname.replace(packagesRegex, ``).slice(0, -1)
+  const selected = packageName === hit.name
   return (
     <Link
       to={`/packages/${hit.name}/?=${query}`}
@@ -321,7 +323,7 @@ const Result = ({ hit, pathname, query }) => {
           position: `relative`,
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
-          }`,
+            }`,
           zIndex: selected ? 1 : false,
           "&:hover": {
             background: selected ? `#fff` : colors.ui.border,
