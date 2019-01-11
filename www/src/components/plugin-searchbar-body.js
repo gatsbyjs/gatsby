@@ -305,7 +305,7 @@ const Result = ({ hit, pathname, query }) => {
   // Example:
   // pathname = `/packages/gatsby-link/` || `/packages/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
-  const packagesRegex = new RegExp(`\/packages\/`, `g`)
+  const packagesRegex = new RegExp(`/packages/`, `g`)
   const packageName = pathname.replace(packagesRegex, ``).slice(0, -1)
   const selected = packageName === hit.name
   return (
