@@ -44,7 +44,6 @@ let promises = []
 exports.onPreBuild = async ({ cache, boundActionCreators }, pluginOptions) => {
   const cachedQueue = await getQueueFromCache(cache)
 
-  let promises = []
   for (const [, job] of cachedQueue) {
     promises.push(scheduleJob(job, boundActionCreators, pluginOptions))
   }
@@ -74,6 +73,10 @@ exports.onCreateDevServer = ({ app, cache }, pluginOptions) => {
 
     // wait until the file has been processed and saved to disk
     await Promise.all(processFile(job.file.absolutePath, [job], pluginOptions))
+    queue.delete(req.originalUrl)
+
+    // JSON.stringify doesn't work on an Map so we need to convert it to an array
+    cache.set(`queue`, Array.from(queue))
 
     return res.sendFile(job.outputPath)
   })

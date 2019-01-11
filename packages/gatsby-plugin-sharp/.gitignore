@@ -1,7 +1,2 @@
-/index.js
 /node_modules
-/gatsby-node.js
-/duotone.js
-/queue.js
-/processFile.js
-/scheduler.js
+/*.js
