@@ -86,10 +86,8 @@ describe(`<Link />`, () => {
     }
 
     it(`accepts to as a string`, () => {
-      jest.spyOn(global.console, `warn`)
       const location = `/courses?sort=name`
       const { link } = setup({ linkProps: { to: location } })
-      expect(console.warn).not.toBeCalled()
       expect(link.getAttribute(`href`)).toEqual(location)
     })
 
@@ -98,6 +96,13 @@ describe(`<Link />`, () => {
       const location = `/courses?sort=name`
       const { link } = setup({ linkProps: { to: location }, pathPrefix })
       expect(link.getAttribute(`href`)).toEqual(`${pathPrefix}${location}`)
+    })
+
+    it(`does not warn when internal`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `/courses?sort=name`
+      setup({ linkProps: { to } })
+      expect(console.warn).not.toBeCalled()
     })
 
     it(`warns when not internal`, () => {

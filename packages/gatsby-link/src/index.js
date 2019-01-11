@@ -104,7 +104,8 @@ class GatsbyLink extends React.Component {
       ...rest
     } = this.props
 
-    if (process.env.NODE_ENV !== `production` && !/^\/(?!\/)/.test(to)) {
+    const LOCAL_URL = /^\/(?!\/)/
+    if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
       console.warn(
         `Use the Link component only for internal links. See: https://gatsby.app/internal-links`
       )
