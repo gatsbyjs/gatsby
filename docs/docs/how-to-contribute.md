@@ -61,7 +61,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
   Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
-- Commit and push to your fork.
+- Commit and push the changes to your fork.
 - Create a pull request from your branch.
 
 ### Contributing to the documentation
@@ -130,7 +130,7 @@ To add a new blog post to the gatsbyjs.org blog:
 - Ensure any links to gatsbyjs.org are relative links - `/docs/how-to-contribute` instead of `https://gatsbyjs.org/docs/how-to-contribute`
 - Follow the [Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/#word-choice) to make sure you're using the appropriate wording.
 - Double check your grammar and capitalise correctly
-- Commit and push to your fork
+- Commit and push the changes to your fork
 - Create a pull request from your branch
   - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change`
 
