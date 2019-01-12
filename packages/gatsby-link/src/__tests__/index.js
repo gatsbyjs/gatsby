@@ -88,7 +88,6 @@ describe(`<Link />`, () => {
     it(`accepts to as a string`, () => {
       const location = `/courses?sort=name`
       const { link } = setup({ linkProps: { to: location } })
-
       expect(link.getAttribute(`href`)).toEqual(location)
     })
 
@@ -97,6 +96,20 @@ describe(`<Link />`, () => {
       const location = `/courses?sort=name`
       const { link } = setup({ linkProps: { to: location }, pathPrefix })
       expect(link.getAttribute(`href`)).toEqual(`${pathPrefix}${location}`)
+    })
+
+    it(`does not warn when internal`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `/courses?sort=name`
+      setup({ linkProps: { to } })
+      expect(console.warn).not.toBeCalled()
+    })
+
+    it(`warns when not internal`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `https://gatsby.org`
+      setup({ linkProps: { to } })
+      expect(console.warn).toBeCalled()
     })
   })
 
