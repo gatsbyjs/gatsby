@@ -13,6 +13,8 @@ import Container from "../../components/container"
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 
+let currentLetter = ``
+
 class TagsPage extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
@@ -35,6 +37,7 @@ class TagsPage extends React.Component {
   }
 
   handleChange = ({ target: { name, value } }) => {
+    currentLetter = ``
     this.setState({ [name]: value })
   }
 
@@ -107,7 +110,7 @@ class TagsPage extends React.Component {
               css={{
                 display: `flex`,
                 flexFlow: `row wrap`,
-                justifyContent: `center`,
+                justifyContent: `start`,
                 padding: 0,
                 margin: 0,
               }}
@@ -117,7 +120,8 @@ class TagsPage extends React.Component {
                 .filter(key => uniqGroup[key].fieldValue.includes(filterQuery))
                 .map(key => {
                   const tag = uniqGroup[key]
-                  return (
+                  const firstLetter = tag.fieldValue.charAt(0).toLowerCase()
+                  const buildTag = (
                     <li
                       key={tag.fieldValue}
                       css={{
@@ -131,6 +135,19 @@ class TagsPage extends React.Component {
                       </Link>
                     </li>
                   )
+
+                  if (currentLetter !== firstLetter) {
+                    currentLetter = firstLetter
+                    return (
+                      <React.Fragment>
+                        <h4 css={{ width: `100%`, flexBasis: `100%` }}>
+                          {currentLetter.toUpperCase()}
+                        </h4>
+                        {buildTag}
+                      </React.Fragment>
+                    )
+                  }
+                  return buildTag
                 })}
             </ul>
           </div>
