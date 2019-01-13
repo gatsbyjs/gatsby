@@ -135,7 +135,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"javascript\\"><pre class=\\"language-javascript\\"><code class=\\"language-javascript\\">// Fake</code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"javascript\\"><pre class=\\"language-javascript\\"><code class=\\"language-javascript\\"><span class=\\"token comment\\">// Fake</span></code></pre></div>",
     },
   ],
   "position": Object {
