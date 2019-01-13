@@ -294,9 +294,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     fileOkCache[internalPage.component] = true
   }
 
+  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const contextModified =
+    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
+    contextModified,
     plugin,
     payload: internalPage,
   }
