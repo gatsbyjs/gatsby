@@ -185,6 +185,7 @@ async function processRemoteNode({
   auth = {},
   createNodeId,
   ext,
+  name,
 }) {
   // Ensure our cache directory exists.
   const pluginCacheDir = path.join(
@@ -211,7 +212,9 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
-  const name = getRemoteFileName(url)
+  if (!name) {
+    name = getRemoteFileName(url)
+  }
   if (!ext) {
     ext = getRemoteFileExtension(url)
   }
@@ -313,6 +316,7 @@ module.exports = ({
   auth = {},
   createNodeId,
   ext = null,
+  name = null,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -355,6 +359,7 @@ module.exports = ({
     createNodeId,
     auth,
     ext,
+    name,
   })
 
   fileDownloadPromise.then(() => bar.tick())
