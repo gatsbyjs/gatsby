@@ -68,6 +68,7 @@ module.exports = function () {
             // someone develop a contentful site even if not connected to the internet.
             // For prod builds though always fail if we can't get the latest data.
             process.exit(1);
+            break;
 
           case 18:
             currentSyncData = void 0;
@@ -87,6 +88,7 @@ module.exports = function () {
 
             console.log("error fetching contentful data", _context.t1);
             process.exit(1);
+            break;
 
           case 30:
 
@@ -107,6 +109,7 @@ module.exports = function () {
             _context.t2 = _context["catch"](31);
 
             console.log("error fetching content types", _context.t2);
+            break;
 
           case 40:
             console.log("contentTypes fetched", contentTypes.items.length);
