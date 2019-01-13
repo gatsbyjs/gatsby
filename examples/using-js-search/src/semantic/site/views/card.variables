@@ -1,0 +1,220 @@
+/*******************************
+             Card
+*******************************/
+
+/*-------------------
+         View
+--------------------*/
+
+/* Shadow */
+@shadowDistance: 1px;
+@shadowBoxShadow: 0px @shadowDistance 3px 0px @solidBorderColor;
+
+/* Card */
+@fontFamily: @pageFont;
+@display: flex;
+@background: @white;
+@borderRadius: @defaultBorderRadius;
+@margin: 1em 0em;
+@minHeight: 0px;
+@padding: 0em;
+@width: 290px;
+@borderWidth: 1px;
+@borderShadow: 0px 0px 0px @borderWidth @solidBorderColor;
+@boxShadow:
+  @shadowBoxShadow,
+  @borderShadow
+;
+@border: none;
+@zIndex: '';
+@transition:
+  box-shadow @defaultDuration @defaultEasing,
+  transform @defaultDuration @defaultEasing
+;
+
+/* Card Group */
+@horizontalSpacing: 1em;
+@rowSpacing: 1.75em;
+
+@groupMargin: -(@rowSpacing / 2) -(@horizontalSpacing / 2);
+@groupDisplay: flex;
+
+@groupCardFloat: none;
+@groupCardDisplay: flex;
+@groupCardMargin: (@rowSpacing / 2) (@horizontalSpacing / 2);
+
+/* Consecutive Cards */
+@consecutiveGroupDistance: (@rowSpacing / 2);
+
+/*-------------------
+       Content
+--------------------*/
+
+
+/* Image */
+@imageBackground: @transparentBlack;
+@imagePadding: 0em;
+@imageBorder: none;
+@imageBoxShadow: none;
+@imageBorder: none;
+
+/* Content */
+@contentDivider: @borderWidth solid @internalBorderColor;
+@contentMargin: 0em;
+@contentBackground: none;
+@contentPadding: 1em 1em;
+@contentFontSize: 1em;
+@contentBorderRadius: 0em;
+@contentBoxShadow: none;
+@contentBorder: none;
+
+
+/* Header */
+@headerMargin: '';
+@headerFontWeight: @bold;
+@headerFontSize: @relativeBig;
+@headerLineHeightOffset: -(@lineHeight - 1em) / 2;
+@headerColor: @darkTextColor;
+
+/* Metadata */
+@metaFontSize: @relativeMedium;
+@metaSpacing: 0.3em;
+@metaColor: @lightTextColor;
+
+/* Icons */
+@actionOpacity: 0.75;
+@actionHoverOpacity: 1;
+@actionTransition: color @defaultDuration @defaultEasing;
+
+@starColor: #FFB70A;
+@starActiveColor: #FFE623;
+
+@likeColor: #FF2733;
+@likeActiveColor: #FF2733;
+
+/* Links */
+@contentLinkColor: '';
+@contentLinkHoverColor: '';
+@contentLinkTransition: color @defaultDuration @defaultEasing;
+
+@headerLinkColor: @headerColor;
+@headerLinkHoverColor: @linkHoverColor;
+
+@metaLinkColor: @lightTextColor;
+@metaLinkHoverColor: @textColor;
+
+/* Description */
+@descriptionDistance: 0.5em;
+@descriptionColor: rgba(0, 0, 0, 0.68);
+
+/* Content Image */
+@contentImageWidth: '';
+@contentImageVerticalAlign: middle;
+
+/* Avatar Image */
+@avatarSize: 2em;
+@avatarBorderRadius: @circularRadius;
+
+/* Paragraph */
+@paragraphDistance: 0.5em;
+
+/* Dimmer */
+@dimmerZIndex: 10;
+@dimmerColor: '';
+
+/* Additional Content */
+@extraDivider: 1px solid rgba(0, 0, 0, 0.05);
+@extraBackground: none;
+@extraPosition: static;
+@extraWidth: auto;
+@extraTop: 0em;
+@extraLeft: 0em;
+@extraMargin: 0em 0em;
+@extraPadding: 0.75em 1em;
+@extraBoxShadow: none;
+@extraColor: @lightTextColor;
+@extraTransition: color @defaultDuration @defaultEasing;
+
+/* Extra Links */
+@extraLinkColor: @unselectedTextColor;
+@extraLinkHoverColor: @linkHoverColor;
+
+/* Buttons */
+@buttonMargin: 0px -@borderWidth;
+@buttonWidth: ~"calc(100% + "(@borderWidth * 2)~")";
+
+/*-------------------
+      Variations
+--------------------*/
+
+/* Link */
+@linkHoverBackground: @white;
+@linkHoverBorder: @border;
+@linkHoverZIndex: 5;
+@linkHoverRaiseDistance: 3px;
+@linkHoverTransform: translateY(-@linkHoverRaiseDistance);
+
+@shadowHoverBoxShadow: 0px @shadowDistance @linkHoverRaiseDistance 0px @solidSelectedBorderColor;
+@linkHoverBoxShadow:
+  @shadowHoverBoxShadow,
+  @borderShadow
+;
+
+
+/* Raised */
+@raisedShadow:
+  @borderShadow,
+  @floatingShadow
+;
+@raisedShadowHover:
+  @borderShadow,
+  @floatingShadowHover
+;
+
+/* Card Count */
+@wideCardSpacing: 1em;
+@cardSpacing: 0.75em;
+@smallCardSpacing: 0.5em;
+
+@oneCardSpacing: 0em;
+@twoCardSpacing: @wideCardSpacing;
+@threeCardSpacing: @wideCardSpacing;
+@fourCardSpacing: @cardSpacing;
+@fiveCardSpacing: @cardSpacing;
+@sixCardSpacing: @cardSpacing;
+@sevenCardSpacing: @smallCardSpacing;
+@eightCardSpacing: @smallCardSpacing;
+@nineCardSpacing: @smallCardSpacing;
+@tenCardSpacing: @smallCardSpacing;
+
+@oneCard: @oneColumn;
+@oneCardOffset: 0em;
+@twoCard: ~"calc("@twoColumn~" - "(@twoCardSpacing * 2)~")";
+@twoCardOffset: -@twoCardSpacing;
+@threeCard: ~"calc("@threeColumn~" - "(@threeCardSpacing * 2)~")";
+@threeCardOffset: -@threeCardSpacing;
+@fourCard: ~"calc("@fourColumn~" - "(@fourCardSpacing * 2)~")";
+@fourCardOffset: -@fourCardSpacing;
+@fiveCard: ~"calc("@fiveColumn~" - "(@fiveCardSpacing * 2)~")";
+@fiveCardOffset: -@fiveCardSpacing;
+@sixCard: ~"calc("@sixColumn~" - "(@sixCardSpacing * 2)~")";
+@sixCardOffset: -@sixCardSpacing;
+@sevenCard: ~"calc("@sevenColumn~" - "(@sevenCardSpacing * 2)~")";
+@sevenCardOffset: -@sevenCardSpacing;
+@eightCard: ~"calc("@eightColumn~" - "(@sevenCardSpacing * 2)~")";
+@eightCardOffset: -@sevenCardSpacing;
+@nineCard: ~"calc("@nineColumn~" - "(@nineCardSpacing * 2)~")";
+@nineCardOffset: -@nineCardSpacing;
+@tenCard: ~"calc("@tenColumn~" - "(@tenCardSpacing * 2)~")";
+@tenCardOffset: -@tenCardSpacing;
+
+/* Stackable */
+@stackableRowSpacing: 1em;
+@stackableCardSpacing: 1em;
+@stackableMargin: ~"calc("@oneColumn~" - "(@stackableCardSpacing * 2)~")";
+
+/* Sizes */
+@medium: 1em;
+
+/* Colored */
+@coloredShadowDistance: 2px;

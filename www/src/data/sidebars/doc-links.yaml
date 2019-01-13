@@ -191,6 +191,9 @@
       items:
         - title: Adding search
           link: /docs/adding-search/
+          items: 
+            - title: "Adding search with js-search"
+              link: /docs/adding-search-with-js-search/
         - title: Adding analytics
           link: /docs/adding-analytics/
         - title: Adding authentication

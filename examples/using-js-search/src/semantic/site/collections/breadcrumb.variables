@@ -1,0 +1,33 @@
+/*******************************
+          Breadcrumb
+*******************************/
+
+/*-------------------
+     Breadcrumb
+--------------------*/
+
+@verticalMargin: 0em;
+@display: inline-block;
+@verticalAlign: middle;
+
+@dividerSpacing: @3px;
+@dividerOpacity: 0.7;
+@dividerColor: @lightTextColor;
+
+@dividerSize: @relativeSmall;
+@dividerVerticalAlign: baseline;
+
+@iconDividerSize: @relativeTiny;
+@iconDividerVerticalAlign: baseline;
+
+@sectionMargin: 0em;
+@sectionPadding: 0em;
+
+/* Coupling */
+@segmentPadding: @relativeMini @relativeMedium;
+
+/*-------------------
+       States
+--------------------*/
+
+@activeFontWeight: @bold;
