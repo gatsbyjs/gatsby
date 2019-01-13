@@ -180,7 +180,7 @@ function inferFromMapping(
       const fieldValue = node[fieldName]
 
       if (fieldValue) {
-        return findNode(fieldValue, b.path)
+        return findNode(fieldValue)
       } else {
         return null
       }
