@@ -9,11 +9,11 @@
         - title: Overview of core technologies
           link: /tutorial/part-zero/#overview-of-core-technologies
         - title: Familiarize with the command line
-          link: /tutorial/part-zero/#familiarize-with-the-command-line
+          link: /tutorial/part-zero/#familiarize-yourself-with-the-command-line
         - title: Install Node.js
           link: /tutorial/part-zero/#install-nodejs
         - title: Familiarize with npm
-          link: /tutorial/part-zero/#familiarize-with-npm
+          link: /tutorial/part-zero/#familiarize-yourself-with-npm
         - title: Install Git
           link: /tutorial/part-zero/#install-git
         - title: Install Gatsby CLI
