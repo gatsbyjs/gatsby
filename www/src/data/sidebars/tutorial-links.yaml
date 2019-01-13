@@ -45,7 +45,7 @@
         - title: Creating global styles with standard css files
           link: /tutorial/part-two/#creating-global-styles-with-standard-css-files
         - title: Using component-scoped CSS
-          link: /tutorial/part-two/#using-component-css
+          link: /tutorial/part-two/#using-component-scoped-css
         - title: Styling using CSS Modules
           link: /tutorial/part-two/#css-modules
         - title: Styling using CSS-in-JS
@@ -101,7 +101,7 @@
       ui: steps
       items:
         - title: Audit with Lighthouse
-          link: /tutorial/part-eight/#auditing-with-lighthouse
+          link: /tutorial/part-eight/#audit-with-lighthouse
         - title: Add a manifest file
           link: /tutorial/part-eight/#add-a-manifest-file
         - title: Add offline support
