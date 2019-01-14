@@ -712,7 +712,7 @@
     - Using Tachyons for CSS.
 - url: https://quizzical-mcclintock-0226ac.netlify.com/
   repo: https://github.com/taylorbryant/gatsby-starter-tailwind
-  description: n/a
+  description: A Gatsby v2 starter styled using Tailwind, a utility-first CSS framework. Uses Purgecss to remove unused CSS.
   tags:
     - Styling:Tailwind
   features:
