@@ -3,13 +3,11 @@ title: Modern publications with Gatsby & Ghost
 date: 2019-01-14T08:00:00+00:00
 author: John O’Nolan
 tags:
-- Ghost
-- publishing platform
-image: "/src/uploads/John ONolan.jpg"
+  - Ghost
+  - publishing platform
+image: "./images/ghost-headless-feature-image.png"
 showImageInArticle: true
-
 ---
-![](/src/uploads/ghost-headless-feature-image.png)
 
 There has been a lot of progress around static site generators, front end frameworks and API-centric infrastructure in recent years. At [Ghost](https://ghost.org/), we’ve been building open source technology for modern publishing for over 5 years and as a developer-centric team, the momentum around static sites didn’t go unnoticed.
 
@@ -19,7 +17,7 @@ Wildly fast websites which have no back end and can be deployed just about anywh
 
 Ghost has always been architected into 3 distinct areas: A core Node.js API, an Ember.js Admin client, and a speedy Handlebars.js front-end theme layer. Until now those 3 areas have been fairly tightly coupled, so it hasn't been possible to use them separately.
 
-![](/src/uploads/ghost-core-1.png)
+![](./images/ghost-core-1.png)
 
 Our latest updates allow you to completely replace the default Handlebars theme layer in favor of a front-end framework, so you can use Gatsby to build your site statically from the Ghost API.
 
@@ -31,17 +29,17 @@ This is where a headless CMS comes in, which provides an admin client for author
 
 When you look at the bigger picture of the [content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/), it really starts to feel like an inevitable future for building publishing websites.
 
-![](/src/uploads/ghost-jamstack.png)
+![](./images/ghost-jamstack.png)
 
 ## Official Gatsby.js Source Plugin + Starter
 
 We rebuilt our entire [Ghost Docs site](https://docs.ghost.org/) with Gatsby, using the Ghost API to deliver content. Truth be told, we fell in love straight away and have been building new things with Gatsby ever since. To give others a head start on building their own publications using the same stack, we’ve just shipped some new tooling:
 
-* [gatsby-source-ghost plugin](https://github.com/tryghost/gatsby-source-ghost)
+- [gatsby-source-ghost plugin](https://github.com/tryghost/gatsby-source-ghost)
 
 A straightforward Gatsby source plugin which wraps the Ghost API and makes it compatible with Gatsby and GraphQL, so it's quick and easy to load all your Ghost data into any Gatsby project.
 
-* [gatsby-starter-ghost](https://github.com/tryghost/gatsby-starter-ghost)
+- [gatsby-starter-ghost](https://github.com/tryghost/gatsby-starter-ghost)
 
 An official [Gatsby starter repository](https://github.com/tryghost/gatsby-starter-ghost) which is pre-configured to get content from Ghost and output it in a clean, blog-style design. The fastest way to get up and running with Gatsby and Ghost is to fork this repository, and check out our [Gatsby docs.](https://docs.ghost.org/api/gatsby/)
 
