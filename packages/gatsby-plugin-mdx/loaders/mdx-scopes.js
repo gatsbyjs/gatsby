@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const slash = require("slash");
 
 module.exports = () => {
   const files = fs.readdirSync("./.cache/gatsby-mdx/mdx-scopes-dir");
@@ -8,7 +9,7 @@ module.exports = () => {
     files
       .map(
         (file, i) =>
-          `const scope_${i} = require('${path.join(abs, file)}').default;`
+          `const scope_${i} = require('${slash(path.join(abs, file))}').default;`
       )
       .join("\n") +
     `export default {
