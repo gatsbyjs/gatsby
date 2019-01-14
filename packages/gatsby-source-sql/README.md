@@ -217,8 +217,8 @@ query {
 }
 ```
 
-[website]: https://mrfunnyshoes.github.io/gatsby-source-sql
-[website-source]: https://github.com/mrfunnyshoes/gatsby-source-sql/tree/example-site
+[website]: https://mrfunnyshoes.github.io/using-gatsby-source-sql
+[website-source]: https://github.com/mrfunnyshoes/using-gatsby-source-sql
 [feat-req]: https://github.com/gatsbyjs/gatsby/issues/8714
 [knex]: https://github.com/tgriesser/knex
 [knex-config]: https://knexjs.org/#Installation-client
