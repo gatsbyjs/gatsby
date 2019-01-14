@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-source-sql",
+  "description": "Plugin for connecting arbitrary SQL databases to Gatsby. Supported SQL databases are MySQL/MariaDB, PostgreSQL, Amazon Redshift, SQLite3, Oracle and MSSQL",
+  "version": "0.1.0",
+  "author": "Edgar Ramírez-Mondragón <edgarrm358@gmail.com>",
+  "repository": "https://github.com/mrfunnyshoes/gatsby-source-sql",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.1.5",
+    "knex": "^0.15.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "babel-preset-gatsby-package": "^0.1.2",
+    "cross-env": "^5.2.0"
+  }
+}

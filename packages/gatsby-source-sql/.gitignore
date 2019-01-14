@@ -1,0 +1,8 @@
+/*.js
+!index.js
+yarn.lock
+package-lock.json
+
+# Dependency directory
+node_modules/
+
