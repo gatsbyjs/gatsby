@@ -132,7 +132,7 @@ Caching a traditional CMS website is another possibility -- though this often cr
 
 But if delivery optimization is _hard_, payload optimization can be _near impossible_ to deliver within time and budget for many agencies and enterprises.
 
-Comprehensive checklists [weigh in at around 40 items](https://www.smashingmagazine.com/2018/01/frontend-performance-checklist-2018-pdf-pages/), including points like route-based code splitting, HTTP/2 asset serving, background prefetching, lazy-loading non-critical assets, service workers, dead code elimination, and server-side rendering. Each of these points is technically feasible but quite rare.
+Comprehensive checklists [weigh in at around 40 items](https://www.smashingmagazine.com/2019/01/front-end-performance-checklist-2019-pdf-pages/), including points like route-based code splitting, HTTP/2 asset serving, background prefetching, lazy-loading non-critical assets, service workers, dead code elimination, and server-side rendering. Each of these points is technically feasible but quite rare.
 
 Among the many implementation challenges are:
 
