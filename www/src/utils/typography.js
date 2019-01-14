@@ -115,8 +115,7 @@ const _options = {
         border: 0,
         WebkitOverflowScrolling: `touch`,
       },
-      ".gatsby-highlight::before": {
-        fontFamily: `monospace`,
+      ".gatsby-highlight pre[class*='language-']::before": {
         position: `absolute`,
         top: `0px`,
         right: `20px`,
@@ -129,65 +128,65 @@ const _options = {
         borderRadius: `0 0 5px 5px`,
         background: `#ddd`,
       },
-      ".gatsby-highlight[data-language='javascript']::before": {
+      ".gatsby-highlight pre[class='language-javascript']::before": {
         content: `'js'`,
         background: `#f7df1e`,
       },
-      ".gatsby-highlight[data-language='js']::before": {
+      ".gatsby-highlight pre[class='language-js']::before": {
         content: `'js'`,
         background: `#f7df1e`,
       },
-      ".gatsby-highlight[data-language='jsx']::before": {
+      ".gatsby-highlight pre[class='language-jsx']::before": {
         content: `'jsx'`,
         background: `#61dafb`,
       },
-      ".gatsby-highlight[data-language='graphql']::before": {
+      ".gatsby-highlight pre[class='language-graphql']::before": {
         content: `'GraphQL'`,
         background: `#E10098`,
         color: `#fff`,
         fontWeight: `400`,
       },
-      ".gatsby-highlight[data-language='html']::before": {
+      ".gatsby-highlight pre[class='language-html']::before": {
         content: `'html'`,
         background: `#005A9C`,
         color: `#fff`,
         fontWeight: `400`,
       },
-      ".gatsby-highlight[data-language='css']::before": {
+      ".gatsby-highlight pre[class='language-css']::before": {
         content: `'css'`,
         background: `#ff9800`,
         color: `#fff`,
         fontWeight: `400`,
       },
-      ".gatsby-highlight[data-language='shell']::before": {
+      ".gatsby-highlight pre[class='language-shell']::before": {
         content: `'shell'`,
       },
-      ".gatsby-highlight[data-language='sh']::before": {
+      ".gatsby-highlight pre[class='language-sh']::before": {
         content: `'sh'`,
       },
-      ".gatsby-highlight[data-language='bash']::before": {
+      ".gatsby-highlight pre[class='language-bash']::before": {
         content: `'bash'`,
       },
-      ".gatsby-highlight[data-language='yaml']::before": {
+      ".gatsby-highlight pre[class='language-yaml']::before": {
         content: `'yaml'`,
         background: `#ffa8df`,
       },
-      ".gatsby-highlight[data-language='markdown']::before": {
+      ".gatsby-highlight pre[class='language-markdown']::before": {
         content: `'md'`,
       },
-      ".gatsby-highlight[data-language='json']::before, .gatsby-highlight[data-language='json5']::before": {
+      ".gatsby-highlight pre[class='language-json']::before, .gatsby-highlight pre[class='language-json5']::before": {
         content: `'json'`,
         background: `linen`,
       },
-      ".gatsby-highlight[data-language='diff']::before": {
+      ".gatsby-highlight pre[class='language-diff']::before": {
         content: `'diff'`,
         background: `#e6ffed`,
       },
-      ".gatsby-highlight[data-language='text']::before": {
+      ".gatsby-highlight pre[class='language-text']::before": {
         content: `'text'`,
         background: `#fff`,
       },
-      ".gatsby-highlight[data-language='flow']::before": {
+      ".gatsby-highlight pre[class='language-flow']::before": {
         content: `'flow'`,
         background: `#E8BD36`,
       },

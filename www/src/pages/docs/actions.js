@@ -40,7 +40,7 @@ class ActionCreatorsDocs extends React.Component {
             contains the functions and these can be individually extracted by
             using ES6 object destructuring.
           </p>
-          <div className="gatsby-highlight" data-language="javascript">
+          <div className="gatsby-highlight">
             <pre
               className="language-javascript"
               dangerouslySetInnerHTML={{

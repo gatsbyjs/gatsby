@@ -36,7 +36,7 @@ class NodeAPIDocs extends React.Component {
             plugins are finished as some APIs, to work correctly, require
             previous APIs to be complete first.
           </p>
-          <div className="gatsby-highlight" data-language="javascript">
+          <div className="gatsby-highlight">
             <pre
               className="language-javascript"
               dangerouslySetInnerHTML={{

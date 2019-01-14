@@ -125,7 +125,6 @@ export default ({ functions }) => (
               {node.examples.map((example, i) => (
                 <div
                   className="gatsby-highlight"
-                  data-language="javascript"
                   key={`${node.name} example ${i}`}
                 >
                   <pre className="language-javascript">
