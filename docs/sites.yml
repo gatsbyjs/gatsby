@@ -3987,7 +3987,7 @@
   description: The portfolio of web developer Cole Walker, built with the help of Gatsby v2, React-Spring, and SASS.
   featured: false
   categories:
-   - Portfolio
-   - Web Development
+    - Portfolio
+    - Web Development
   built_by: Cole Walker
   built_by_url: "https://www.walkermakes.com"
