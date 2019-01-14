@@ -34,4 +34,4 @@ fields:
   hidden: false
   default: ''
 pages:
-- docs/blog/gatsby-days-talks-are-here.md
+- docs/blog/modern-publications-with-gatsby-ghost.md
