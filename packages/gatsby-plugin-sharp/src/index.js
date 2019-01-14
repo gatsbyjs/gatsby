@@ -476,9 +476,10 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-const defaultBase64Width = 20 // A value in pixels(Int)
+// A value in pixels(Int)
+const defaultBase64Width = () => pluginOptions.base64Width || 20
 async function generateBase64({ file, args, reporter }) {
-  const options = healOptions(args, { width: defaultBase64Width })
+  const options = healOptions(args, { width: defaultBase64Width() })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -683,7 +684,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     })
   })
 
-  const base64Width = options.base64Width || defaultBase64Width
+  const base64Width = options.base64Width || defaultBase64Width()
   const base64Height = Math.max(1, Math.round((base64Width * height) / width))
   const base64Args = {
     duotone: options.duotone,
