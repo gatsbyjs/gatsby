@@ -148,7 +148,7 @@ Among the many implementation challenges are:
 
 Web performance is critical for retaining and engaging users, especially on mobile. If [every 100ms of latency costs 1% of sales](https://www.digitalrealty.com/blog/the-cost-of-latency/), reducing average page load times from 5 seconds to 1-2 seconds could generate 30-40% more sales.
 
-But just because performance is the *right *thing doesn’t make it the _easy_ thing. Implementing performance optimizations on a _per-site basis_ is often *difficult *and _costly_.
+But just because performance is the _right_ thing doesn’t make it the _easy_ thing. Implementing performance optimizations on a _per-site basis_ is often _difficult_ and _costly_.
 
 To overcome these obstacles, high-performing website teams should look to a content mesh that bakes in performance on a _framework_ level.
 
