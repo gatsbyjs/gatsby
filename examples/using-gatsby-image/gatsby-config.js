@@ -20,7 +20,7 @@ module.exports = {
     {
       resolve: `gatsby-source-remote-images`,
       options: {
-        filter: node => node.internal.type === `UnsplashImagesYaml`,
+        typeName: `UnsplashImagesYaml`,
       },
     },
   ],
