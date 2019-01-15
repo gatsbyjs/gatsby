@@ -12,7 +12,7 @@ To show our appreciation, _**everyone who contributes to Gatsby is eligible to r
 
 If you contribute to the Gatsby org on GitHub, you can claim your swag by [logging into the Gatsby Maintainer Dashboard](https://store.gatsbyjs.org/login) and requesting a discount code.
 
-If you contribute to the Gatsby org on GitHub five times, you can claim your _**Level 2**_ swag by [logging into the Gatsby Maintainer Dashboard](https://store.gatsbyjs.org/login) and requesting a discount code.
+If you contribute five or more times, you can claim your _**Level 2**_ swag. 
 
 If you’ve contributed in other ways, such as giving talks about Gatsby, teaching others to use it, writing Gatsby articles/tutorials, participating in a Gatsby research project, or any other way, please email <mailto:jason@gatsbyjs.com> or [tweet at Gatsby on Twitter](https://twitter.com/gatsbyjs) to claim your swag.
 
