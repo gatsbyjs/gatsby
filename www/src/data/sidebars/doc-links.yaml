@@ -87,7 +87,7 @@
           link: /docs/sourcing-from-databases/
         - title: Sourcing from SaaS services*
           link: /docs/sourcing-from-saas-services/
-        - title: Sourcing from private APIs*
+        - title: Sourcing from private APIs
           link: /docs/sourcing-from-private-apis/
         - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/
