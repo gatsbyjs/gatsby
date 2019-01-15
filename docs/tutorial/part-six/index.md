@@ -198,8 +198,7 @@ this powerful set of operators, you can select any data you want—in the format
 need.
 
 In your index page's GraphQL query, change `allMarkdownRemark` to
-`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. _Note: There are 3 underscores between `frontmatter` and `date`._ Save
-this and the sort order should be fixed.
+`allMarkdownRemark(sort: { fields: frontmatter___date, order: DESC })`. _Note: There are 3 underscores between `frontmatter` and `date`._ Save the index.js file and restart the development server. Now the sort order should be fixed.
 
 Try opening Graph_i_QL and playing with different sort options. You can sort the
 `allFile` connection along with other connections.
