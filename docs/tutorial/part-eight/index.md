@@ -85,7 +85,9 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 npm install --save gatsby-plugin-manifest
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2. If you intend to have a favicon for your app, add one under `src/images/icon.png`.
+
+3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -101,6 +103,7 @@ npm install --save gatsby-plugin-manifest
         // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
         display: "standalone",
+        // Skip this if you don't wish to have a favicon for your app.
         icon: "src/images/icon.png", // This path is relative to the root of the site.
       },
     },
