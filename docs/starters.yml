@@ -1634,3 +1634,15 @@
     - GSAP ready
     - Nice devtools
     - Decorators
+url: https://gatsby-contentstack-starter.netlify.com/
+  repo: https://github.com/contentstack/gatsby-starter-contentstack
+  description: A gatsby starter using contentstack source plugin powered by Headless CMS Contentstack.
+  tags:
+    - Contentstack
+    - Headless CMS
+    - Gatbsy contentstack source plugin
+    - Blog
+  features:
+    - Includes Contentstack Delivery API for any environment
+    - Dynamic content from Contentstack CMS
+    
