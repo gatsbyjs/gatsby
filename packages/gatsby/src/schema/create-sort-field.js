@@ -37,8 +37,8 @@ module.exports = function createSortField(
           type: new GraphQLEnumType({
             name: _.camelCase(`${typeName} sortOrderValues`),
             values: {
-              ASC: { value: `asc` },
-              DESC: { value: `desc` },
+              ASC: { value: `ASC` },
+              DESC: { value: `DESC` },
             },
           }),
         },
