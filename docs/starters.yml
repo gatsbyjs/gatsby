@@ -1638,7 +1638,6 @@
   repo: https://github.com/SeonHyungJo/gatsby-sseon-starter
   description: Simple starter template for Gatsby
   tags:
-    - Simple
     - Blog
     - Disqus
     - Markdown
