@@ -4,7 +4,7 @@ const {
   imageWrapperClass,
 } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
-const getDefinitions = require('mdast-util-definitions');
+const getDefinitions = require(`mdast-util-definitions`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
@@ -43,7 +43,7 @@ module.exports = (
     )
 
   // Get all the available definitions in the markdown tree
-  const definitions = getDefinitions(markdownAST);
+  const definitions = getDefinitions(markdownAST)
 
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
@@ -57,11 +57,15 @@ module.exports = (
   // This will only work for markdown syntax image tags
   let markdownImageNodes = []
 
-  visitWithParents(markdownAST, [`image`, `imageReference`], (node, ancestors) => {
-    const inLink = ancestors.some(findParentLinks)
+  visitWithParents(
+    markdownAST,
+    [`image`, `imageReference`],
+    (node, ancestors) => {
+      const inLink = ancestors.some(findParentLinks)
 
-    markdownImageNodes.push({ node, inLink })
-  })
+      markdownImageNodes.push({ node, inLink })
+    }
+  )
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
@@ -230,11 +234,14 @@ module.exports = (
     markdownImageNodes.map(
       ({ node, inLink }) =>
         new Promise(async (resolve, reject) => {
-          let refNode;
-          if (!node.hasOwnProperty('url') && node.hasOwnProperty('identifier')) {
+          let refNode
+          if (
+            !node.hasOwnProperty(`url`) &&
+            node.hasOwnProperty(`identifier`)
+          ) {
             //consider as imageReference node
-            refNode = node;
-            node = definitions(refNode.identifier);
+            refNode = node
+            node = definitions(refNode.identifier)
           }
           const fileType = node.url.slice(-3)
 
@@ -254,7 +261,7 @@ module.exports = (
             if (rawHTML) {
               // Replace the image or ref node with an inline HTML node.
               if (refNode) {
-                node = refNode;
+                node = refNode
               }
               node.type = `html`
               node.value = rawHTML
