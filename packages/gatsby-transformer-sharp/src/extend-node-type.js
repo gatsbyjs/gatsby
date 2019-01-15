@@ -146,6 +146,10 @@ const fixedNodeType = ({
         type: ImageFormatType,
         defaultValue: ``,
       },
+      toFormatBase64: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
       cropFocus: {
         type: ImageCropFocusType,
         defaultValue: sharp.strategy.attention,
@@ -272,6 +276,10 @@ const fluidNodeType = ({
         defaultValue: 50,
       },
       toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      toFormatBase64: {
         type: ImageFormatType,
         defaultValue: ``,
       },
