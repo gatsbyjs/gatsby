@@ -1641,7 +1641,7 @@
     - Blog
     - Disqus
     - Markdown
-    - Sseon
+    - Styling:SCSS
   features:
     - SASS/SCSS
     - Comes with React Helmet for adding site meta tags
