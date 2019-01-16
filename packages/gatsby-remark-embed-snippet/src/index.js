@@ -31,12 +31,12 @@ module.exports = (
   { classPrefix = `language-`, directory } = {}
 ) => {
   if (!directory) {
-    throw Error("Required option 'directory' not specified: must be absolute path OR function")
+    throw Error(`Required option 'directory' not specified: must be absolute path OR function`)
   }
 
   let filePathResolve
 
-  if(typeof directory === "string") {
+  if (typeof directory === `string`) {
     if (!fs.existsSync(directory)) {
       throw Error(`Invalid directory specified "${directory}"`)
     }
@@ -44,10 +44,10 @@ module.exports = (
       directory += `/`
     }
 
-    filePathResolve = file => normalizePath(`${directory}${file}`);
+    filePathResolve = file => normalizePath(`${directory}${file}`)
   } else {
     //its function
-    filePathResolve = file => directory(markdownNode.fileAbsolutePath, file);
+    filePathResolve = file => directory(markdownNode.fileAbsolutePath, file)
   }
 
   visit(markdownAST, `inlineCode`, node => {
