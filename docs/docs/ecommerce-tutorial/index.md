@@ -302,7 +302,7 @@ require("dotenv").config({
 })
 ```
 
-Lastly make sure that your `.gitignore` file excludes all of your `.env.*` files:
+Lastly, make sure that your `.gitignore` file excludes all of your `.env.*` files:
 
 ```text:title=.gitignore
 # dotenv environment variables files
@@ -313,7 +313,7 @@ Lastly make sure that your `.gitignore` file excludes all of your `.env.*` files
 
 ### Create a component that lists your SKUs
 
-In your components folder add a new `Products` folder. This folder will entail your components that interact with the Stripe SKUs. First you need a components that queries and lists your SKUs:
+In your components folder add a new `Products` folder. This folder will entail your components that interact with the Stripe SKUs. First, you need a component that queries and lists your SKUs:
 
 ```jsx:title=src/components/Products/Skus.js
 import React from "react"
