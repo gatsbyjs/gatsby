@@ -18,6 +18,7 @@ const { curveDefault, speedDefault } = presets.animation
 const searchDropdownOffsetTop = rhythm(2)
 const homepageSearchDropdownOffsetTop = rhythm(4.5)
 
+// eslint-disable-next-line no-unused-expressions
 injectGlobal`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;

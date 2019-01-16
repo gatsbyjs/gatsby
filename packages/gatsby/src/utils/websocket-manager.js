@@ -103,8 +103,8 @@ class WebsocketManager {
     this.pageResults = new Map()
     this.staticQueryResults = new Map()
     this.errors = new Map()
-    this.websocket
-    this.programDir
+    this.websocket // eslint-disable-line no-unused-expressions
+    this.programDir // eslint-disable-line no-unused-expressions
 
     this.init = this.init.bind(this)
     this.getSocket = this.getSocket.bind(this)

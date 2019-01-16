@@ -1,6 +1,6 @@
 exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
   const isDevelopment = process.env.NODE_ENV !== `production`
-
+  // eslint-disable-next-line no-unused-expressions
   pluginOptions.plugins && delete pluginOptions.plugins
 
   actions.setBabelPlugin({

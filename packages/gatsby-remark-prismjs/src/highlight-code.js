@@ -30,6 +30,7 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
   // Don't add back the new line character after highlighted lines
   // as they need to be display: block and full-width.
   codeSplits.forEach((split, idx) => {
+    // eslint-disable-next-line no-unused-expressions
     split.highlight
       ? (finalCode += split.code)
       : (finalCode += `${split.code}${idx == lastIdx ? `` : `\n`}`)

@@ -30,6 +30,7 @@ const searchMetaHeight = rhythm(8 / 4)
 const searchInputWrapperMargin = rhythm(3 / 4)
 
 /* stylelint-disable */
+// eslint-disable-next-line no-unused-expressions
 injectGlobal`
   .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
     display: block;

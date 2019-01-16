@@ -66,6 +66,7 @@ class GatsbyLink extends React.Component {
   }
 
   handleRef(ref) {
+    // eslint-disable-next-line no-unused-expressions
     this.props.innerRef && this.props.innerRef(ref)
 
     if (this.state.IOSupported && ref) {
@@ -113,12 +114,12 @@ class GatsbyLink extends React.Component {
         getProps={getProps}
         innerRef={this.handleRef}
         onMouseEnter={e => {
-          // eslint-disable-line
+          // eslint-disable-next-line no-unused-expressions
           onMouseEnter && onMouseEnter(e)
           ___loader.hovering(parsePath(to).pathname)
         }}
         onClick={e => {
-          // eslint-disable-line
+          // eslint-disable-next-line no-unused-expressions
           onClick && onClick(e)
 
           if (
