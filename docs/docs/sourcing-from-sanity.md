@@ -108,7 +108,7 @@ export const query = graphql`
 
 ### Fixed
 
-```js
+```jsx
 import React from "react"
 import Img from "gatsby-image"
 
