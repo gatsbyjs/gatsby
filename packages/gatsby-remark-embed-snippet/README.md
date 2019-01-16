@@ -185,8 +185,19 @@ module.exports = {
               // If you're unsure, it's best to use the default value.
               classPrefix: "language-",
 
-              // Example code links are relative to this dir.
-              // eg examples/path/to/file.js
+              // Can be string or function
+              //
+              // When string: Example code links are relative to this dir.
+              //               eg examples/path/to/file.js
+              //
+              // When function:  Map markdown filename (where link declared)
+              //                  and code link to result filename.
+              //                Example value: (mdFilenameFull, fileLink) => {
+              //                      let rv = path.dirname(mdFilenameFull);
+              //                      if (!rv.endsWith(`/`)) rv += `/`;
+              //                      return normalizePath(`${rv}${fileLink}`);
+              //                 }
+              //
               directory: `${__dirname}/examples/`,
             },
           },
