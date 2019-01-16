@@ -77,7 +77,7 @@ There are two types of responsive images supported; _fixed_ and _fluid_. To deci
 
 ### Fluid
 
-```js
+```jsx
 import React from "react"
 import Img from "gatsby-image"
 
