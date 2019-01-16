@@ -21,6 +21,7 @@ exports.onInitialClientRender = true
  * Called when changing location is started.
  * @param {object} $0
  * @param {object} $0.location A location object
+ * @param {object|null} $0.prevLocation The previous location object
  * @param {object} $0.action The "action" that caused the route change
  * @example
  * exports.onPreRouteUpdate = ({ location, prevLocation }) => {
@@ -46,6 +47,7 @@ exports.onRouteUpdateDelayed = true
  * Called when the user changes routes
  * @param {object} $0
  * @param {object} $0.location A location object
+ * @param {object|null} $0.prevLocation The previous location object
  * @param {object} $0.action The "action" that caused the route change
  * @example
  * exports.onRouteUpdate = ({ location, prevLocation }) => {
