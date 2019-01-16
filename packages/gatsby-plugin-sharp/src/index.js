@@ -248,7 +248,9 @@ const processFile = (file, jobs, cb, reporter) => {
                     args.quality + 25,
                     100
                   )}`,
-                  speed: args.pngCompressionSpeed,
+                  speed: args.pngCompressionSpeed
+                    ? args.pngCompressionSpeed
+                    : undefined,
                   strip: !!pluginOptions.stripMetadata, // Must be a bool
                 }),
               ],

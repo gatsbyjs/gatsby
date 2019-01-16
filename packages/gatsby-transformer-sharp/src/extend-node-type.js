@@ -21,6 +21,8 @@ const fsExtra = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 
+const DEFAULT_PNG_COMPRESSION_SPEED = 4
+
 const {
   ImageFormatType,
   ImageCropFocusType,
@@ -119,7 +121,7 @@ const fixedNodeType = ({
       },
       pngCompressionSpeed: {
         type: GraphQLInt,
-        defaultValue: 0,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
       },
       grayscale: {
         type: GraphQLBoolean,
@@ -249,7 +251,7 @@ const fluidNodeType = ({
       },
       pngCompressionSpeed: {
         type: GraphQLInt,
-        defaultValue: 0,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
       },
       duotone: {
         type: DuotoneGradientType,
@@ -423,7 +425,7 @@ module.exports = ({
         },
         pngCompressionSpeed: {
           type: GraphQLInt,
-          defaultValue: 0,
+          defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
         },
         grayscale: {
           type: GraphQLBoolean,
