@@ -242,6 +242,11 @@ module.exports = (
             //consider as imageReference node
             refNode = node
             node = definitions(refNode.identifier)
+            if (!node) {
+              // no definition found for image reference,
+              // so there's nothing for us to do.
+              return resolve()
+            }
           }
           const fileType = node.url.slice(-3)
 
