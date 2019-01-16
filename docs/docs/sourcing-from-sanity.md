@@ -18,7 +18,7 @@ This guide will cover how configure and use the [`gatsby-source-sanity`](https:/
 
 ## Basic usage
 
-```
+```shell
 yarn add gatsby-source-sanity
 # or
 npm i gatsby-source-sanity --save
