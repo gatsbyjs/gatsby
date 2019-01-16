@@ -8,6 +8,7 @@ exports.onRenderBody = (
   if (process.env.NODE_ENV !== `production`) return null
 
   const gtagConfig = pluginOptions.gtagConfig || {}
+  const pluginConfig = pluginOptions.pluginConfig || {}
 
   // Prevent duplicate or excluded pageview events being emitted on initial load of page by the `config` command
   // https://developers.google.com/analytics/devguides/collection/gtagjs/#disable_pageview_tracking
@@ -20,14 +21,14 @@ exports.onRenderBody = (
       : ``
 
   const excludeGtagPaths = []
-  if (typeof pluginOptions.pluginConfig.exclude !== `undefined`) {
-    pluginOptions.pluginConfig.exclude.map(exclude => {
+  if (typeof pluginConfig.exclude !== `undefined`) {
+    pluginConfig.exclude.map(exclude => {
       const mm = new Minimatch(exclude)
       excludeGtagPaths.push(mm.makeRe())
     })
   }
 
-  const setComponents = pluginOptions.pluginConfig.head
+  const setComponents = pluginConfig.head
     ? setHeadComponents
     : setPostBodyComponents
 
