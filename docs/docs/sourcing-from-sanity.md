@@ -24,7 +24,7 @@ yarn add gatsby-source-sanity
 npm i gatsby-source-sanity --save
 ```
 
-```js
+```js:title=gatsby-config.js
 // in your gatsby-config.js
 module.exports = {
   // ...
