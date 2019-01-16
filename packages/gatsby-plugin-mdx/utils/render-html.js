@@ -6,6 +6,7 @@ const { cloneDeep } = require("lodash");
 
 module.exports = mdxBody => wConfig => {
   const webpackConfig = cloneDeep(wConfig);
+  webpackConfig.externals = undefined;
   webpackConfig.entry = require.resolve("./wrap-root-render-html-entry.js");
   webpackConfig.output = {
     filename: "output.txt",
