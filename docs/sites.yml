@@ -6,17 +6,6 @@
   categories:
     - Web Development
     - Featured
-- title: Stitch Fix
-  main_url: "https://www.stitchfix.com/"
-  url: "https://www.stitchfix.com/"
-  description: >
-    Stitch Fix is an online styling service that delivers a truly personalized
-    shopping experience.
-  categories:
-    - eCommerce
-    - Fashion
-    - Featured
-  featured: true
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
