@@ -1,0 +1,41 @@
+{
+  "name": "using-gatsby-source-sql",
+  "description": "Gatsby SQLite source example site",
+  "version": "1.0.0",
+  "author": "Edgar Ramírez-Mondragón <edgarrm358@gmail.com>",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "gatsby": "^2.0.19",
+    "gatsby-cli": "^2.4.5",
+    "gatsby-image": "^2.0.15",
+    "gatsby-plugin-manifest": "^2.0.5",
+    "gatsby-plugin-offline": "^2.0.11",
+    "gatsby-plugin-react-helmet": "^3.0.0",
+    "gatsby-plugin-sharp": "^2.0.7",
+    "gatsby-source-filesystem": "^2.0.4",
+    "gatsby-source-sql": "git+https://github.com/mrfunnyshoes/gatsby-source-sql.git",
+    "gatsby-transformer-remark": "^2.2.0",
+    "gatsby-transformer-sharp": "^2.1.4",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-helmet": "^5.2.0",
+    "remark-html": "^9.0.0",
+    "sqlite3": "^4.0.4"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "format": "prettier --write \"src/**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "prettier": "^1.14.2"
+  }
+}
