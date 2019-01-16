@@ -34,6 +34,12 @@
       "as-needed",
       { "requireReturnForObjectLiteral": true }
     ],
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowTaggedTemplates": true
+      }
+    ],
     "consistent-return": ["error"],
     "no-console": "off",
     "no-inner-declarations": "off",
