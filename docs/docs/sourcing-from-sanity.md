@@ -170,7 +170,7 @@ As with any Gatsby site, you'll want to create a `gatsby-node.js` in the root of
 
 For instance, if you have a `project` document type in Sanity that you want to generate pages for, you could do something along the lines of this:
 
-```js
+```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage, createPageDependency } = actions
 
