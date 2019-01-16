@@ -232,6 +232,8 @@ Rich text in Sanity is usually represented as [Portable Text](https://www.portab
 
 These data structures can be deep and a chore to query (specifying all the possible fields). As [noted above](#raw-fields), there is a "raw" alternative available for these fields which is usually what you'll want to use.
 
+You can install [block-content-to-react](https://www.npmjs.com/package/@sanity/block-content-to-react) from npm and use it in your Gatsby project to serialize Portable Text. It lets you use your own React components to override defaults and render custom content types. [Learn more about Portable Text in our documentation](https://www.sanity.io/docs/content-studio/what-you-need-to-know-about-block-text).
+
 ## Using .env variables
 
 If you don't want to attach your Sanity project's ID to the repo, you can easily store it in .env files by doing the following:
@@ -264,4 +266,4 @@ module.exports = {
 }
 ```
 
-This example is based off [Gatsby Docs’ implementation](https://www.gatsbyjs.org/docs/environment-variables/).
+This example is based off [Gatsby Docs' implementation](https://www.gatsbyjs.org/docs/environment-variables/).
