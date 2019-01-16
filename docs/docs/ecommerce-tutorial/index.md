@@ -372,7 +372,7 @@ const AdvancedExamplePage = () => (
 export default AdvancedExamplePage
 ```
 
-When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your sku names.
+When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your SKU names.
 
 ### Create a component that presents a single SKU
 
