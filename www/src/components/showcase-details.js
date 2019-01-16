@@ -144,6 +144,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               to={nextSite.fields.slug}
               state={{
                 isModal: true,
+                filters: parent.props.location.state.filters,
               }}
               css={{
                 display: `block`,
@@ -196,6 +197,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               to={previousSite.fields.slug}
               state={{
                 isModal: true,
+                filters: parent.props.location.state.filters,
               }}
               css={{
                 display: `block`,
