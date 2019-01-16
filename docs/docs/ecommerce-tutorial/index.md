@@ -350,7 +350,7 @@ export default props => (
 
 You can validate your query and see what data is being returned in GraphiQL, which is available at http://localhost:8000/___graphql when running `gatsby develop`.
 
-Once you're happy with your query, create a new page where you can import the newly created Sku componenet:
+Once you're happy with your query, create a new page where you can import the newly created Sku component:
 
 ```jsx:title=src/pages/advanced.js
 import React from "react"
