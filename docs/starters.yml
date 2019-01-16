@@ -1655,7 +1655,9 @@
     - authentication
     - amplify
   features:
-    - User sign up
+    - Full authentication workflow
+    - Registration form
+    - Signup form
     - User sign in
     - Multi-factor Authentication
     - User sign-out
