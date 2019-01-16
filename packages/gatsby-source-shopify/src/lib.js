@@ -46,10 +46,10 @@ export const queryAll = async (
 
   const edges = get([...path, `edges`], data)
   const nodes = edges.map(edge => edge.node)
-  // eslint-disable-next-line no-unused-expressions
-  aggregatedResponse
-    ? (aggregatedResponse = aggregatedResponse.concat(nodes))
-    : (aggregatedResponse = nodes)
+
+  aggregatedResponse = aggregatedResponse
+    ? aggregatedResponse.concat(nodes)
+    : nodes
 
   if (get([...path, `pageInfo`, `hasNextPage`], false, data))
     return queryAll(

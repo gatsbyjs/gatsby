@@ -21,7 +21,7 @@ const prismColors = {
   method: `#6699CC`,
   operator: `#fc929e`,
 }
-// eslint-disable-next-line no-unused-expressions
+
 injectGlobal`
   .gatsby-highlight {
     background: ${colors.dark};

@@ -208,8 +208,10 @@ class Image extends React.Component {
     if (this.state.seenBefore) {
       this.setState({ fadeIn: false })
     }
-    // eslint-disable-next-line no-unused-expressions
-    this.props.onLoad && this.props.onLoad()
+
+    if (this.props.onLoad) {
+      this.props.onLoad()
+    }
   }
 
   render() {
