@@ -31,7 +31,7 @@ module.exports = (
   { classPrefix = `language-`, directory } = {}
 ) => {
   if (!directory) {
-    throw Error(`Required option 'directory' not specified: must be absolute path OR function`)
+    throw Error(`Required option "directory" not specified`)
   }
 
   let filePathResolve
