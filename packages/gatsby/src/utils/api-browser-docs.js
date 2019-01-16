@@ -23,8 +23,9 @@ exports.onInitialClientRender = true
  * @param {object} $0.location A location object
  * @param {object} $0.action The "action" that caused the route change
  * @example
- * exports.onPreRouteUpdate = ({ location }) => {
- *   console.log("Gatsby started to change location", location.pathname)
+ * exports.onPreRouteUpdate = ({ location, prevLocation }) => {
+ *   console.log("Gatsby started to change location to", location.pathname)
+ *   console.log("Gatsby started to change location from", prevLocation ? prevLocation.pathname : null)
  * }
  */
 exports.onPreRouteUpdate = true
@@ -47,8 +48,9 @@ exports.onRouteUpdateDelayed = true
  * @param {object} $0.location A location object
  * @param {object} $0.action The "action" that caused the route change
  * @example
- * exports.onRouteUpdate = ({ location }) => {
+ * exports.onRouteUpdate = ({ location, prevLocation }) => {
  *   console.log('new pathname', location.pathname)
+ *   console.log('old pathname', prevLocation ? prevLocation.pathname : null)
  *
  *   // Track pageview with google analytics
  *   window.ga(
