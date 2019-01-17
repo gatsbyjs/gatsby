@@ -56,7 +56,7 @@ In case you've already installed Visual Studio 2017, run the Visual Studio Insta
 
 ![Visual Studio Installer](https://i.imgur.com/H5PVEbu.png)
 
-In the products list, select the More dropdown beside Visual Studio 2017 and select Modify option. On the next screen select the Desktop Development with C++ workflow.
+In the products list, select the "More" dropdown beside Visual Studio 2017 and select Modify option. On the next screen select the Desktop Development with C++ workflow.
 
 ![Visual Studio Installer](https://i.imgur.com/7SFsS99.png)
 
@@ -87,6 +87,6 @@ Sharp uses a C library, libvips. If you are having issues while installing Sharp
 
 ## Windows Subsystem for Linux
 
-If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. In the above scenario you would download e.g. Ubuntu, open the terminal, [install Node](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions), and run `sudo apt-get install build-essential` in the terminal — and the compilation works way more reliably. Please note that you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
+If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. In the above scenario you would download e.g. Ubuntu, open the terminal, [install Node](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions), and run `sudo apt-get install build-essential` in the terminal — and the compilation works way more reliable. Please note that you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
 
 You can also visit [Gatsby on Linux](/docs/gatsby-on-linux/) to learn more.
