@@ -37,9 +37,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
       };
   }
 
-  if (process.env.NODE_ENV !== `production` || !fileNodes) {
-    fileNodes = getNodes().filter(n => n.internal.type === `File`);
-  }
+  fileNodes = getNodes().filter(n => n.internal.type === `File`);
 
   // return list of mdPlugins
   const userPlugins = gatsbyRemarkPlugins
