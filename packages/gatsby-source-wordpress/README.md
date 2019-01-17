@@ -773,9 +773,11 @@ exports.createPages = ({ graphql, actions }) => {
         // Create Page pages.
         const pageTemplate = path.resolve("./src/templates/page.js")
         // We want to create a detailed page for each
-        // page node. We'll just use the WordPress Slug for the slug.
+        // page node. We'll use the WordPress link for the slug to preserve url structure.
         // The Page ID is prefixed with 'PAGE_'
         _.each(result.data.allWordpressPage.edges, edge => {
+          const link = new URL(edge.node.link)
+        
           // Gatsby uses Redux to manage its internal state.
           // Plugins and sites can use functions like "createPage"
           // to interact with Gatsby.
@@ -784,7 +786,7 @@ exports.createPages = ({ graphql, actions }) => {
             // as a template component. The `context` is
             // optional but is often necessary so the template
             // can query data specific to each page.
-            path: `/${edge.node.slug}/`,
+            path: link.pathname,
             component: slash(pageTemplate),
             context: {
               id: edge.node.id,
@@ -819,11 +821,13 @@ exports.createPages = ({ graphql, actions }) => {
           }
           const postTemplate = path.resolve("./src/templates/post.js")
           // We want to create a detailed page for each
-          // post node. We'll just use the WordPress Slug for the slug.
+          // post node. We'll use the WordPress link for the slug to preserve url structure.
           // The Post ID is prefixed with 'POST_'
           _.each(result.data.allWordpressPost.edges, edge => {
+            const link = new URL(edge.node.link)
+
             createPage({
-              path: `/${edge.node.slug}/`,
+              path: link.pathname,
               component: slash(postTemplate),
               context: {
                 id: edge.node.id,
