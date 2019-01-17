@@ -97,7 +97,7 @@ const Actions = styled(`div`)`
   }
 `
 
-const EcosysteSection = ({
+const EcosystemSection = ({
   title,
   description,
   subTitle,
@@ -137,7 +137,7 @@ const EcosysteSection = ({
   </EcosystemSectionRoot>
 )
 
-EcosysteSection.propTypes = {
+EcosystemSection.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   className: PropTypes.string,
@@ -147,4 +147,4 @@ EcosysteSection.propTypes = {
   featuredItems: PropTypes.array,
 }
 
-export default EcosysteSection
+export default EcosystemSection

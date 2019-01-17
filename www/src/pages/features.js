@@ -43,31 +43,54 @@ const LegendTable = () => {
   }
 
   const balls = [
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-1`}>
       <h4 style={{ margin: 0 }}>Icon</h4>
     </div>,
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
       <EvaluationCell num="3" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-3`}>
       <EvaluationCell num="2" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-4`}>
       <EvaluationCell num="1" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-5`}>
       <EvaluationCell num="0" style={legendBallStyle} />
     </div>,
   ]
 
   const legendText = [
-    <div css={legendExplanationCellStyle}>
+    <div
+      css={legendExplanationCellStyle}
+      key={`${legendExplanationCellStyle}-1`}
+    >
       <h5 style={{ margin: 0 }}>Feature Availability</h5>
     </div>,
-    <div css={legendExplanationCellStyle}>Out of the box</div>,
-    <div css={legendExplanationCellStyle}>Plugins available</div>,
-    <div css={legendExplanationCellStyle}>Needs customization</div>,
-    <div css={legendExplanationCellStyle}>Not possible</div>,
+    <div
+      css={legendExplanationCellStyle}
+      key={`${legendExplanationCellStyle}-2`}
+    >
+      Out of the box
+    </div>,
+    <div
+      css={legendExplanationCellStyle}
+      key={`${legendExplanationCellStyle}-3`}
+    >
+      Plugins available
+    </div>,
+    <div
+      css={legendExplanationCellStyle}
+      key={`${legendExplanationCellStyle}-4`}
+    >
+      Needs customization
+    </div>,
+    <div
+      css={legendExplanationCellStyle}
+      key={`${legendExplanationCellStyle}-5`}
+    >
+      Not possible
+    </div>,
   ]
 
   return (

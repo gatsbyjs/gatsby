@@ -122,7 +122,7 @@ const restore = () => {
 
   console.log(`Restored resources`)
 }
-
+// eslint-disable-next-line no-unused-expressions
 yargs
   .command(
     `block <chunk>`,

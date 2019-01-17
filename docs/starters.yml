@@ -1634,13 +1634,25 @@
     - GSAP ready
     - Nice devtools
     - Decorators
+- url: https://gatsby-sseon-starter.netlify.com/
+  repo: https://github.com/SeonHyungJo/gatsby-sseon-starter
+  description: Simple starter template for Gatsby
+  tags:
+    - Blog
+    - Disqus
+    - Markdown
+    - Styling:SCSS
+  features:
+    - SASS/SCSS
+    - Comes with React Helmet for adding site meta tags
+    - Add Disqus
+    - Nice Pagination
 - url: https://gatsby-contentstack-starter.netlify.com/
   repo: https://github.com/contentstack/gatsby-starter-contentstack
-  description: A gatsby starter using contentstack source plugin powered by Headless CMS Contentstack.
+  description: A Gatsby starter powered by Headless CMS Contentstack.
   tags:
     - Contentstack
     - Headless CMS
-    - Gatbsy contentstack source plugin
     - Blog
   features:
     - Includes Contentstack Delivery API for any environment
