@@ -20,7 +20,7 @@ Preloading is triggered by a link entering the viewport; Gatsby uses
 `Link`'s `innerRef` property to create a new IntersectionObserver (on
 supported browsers) to monitor visible links. This way, Gatsby only prefetches
 code/data chunks for pages the user is likely to navigate to. You can also get
-access to the link element by passing in a `innerRef` prop.
+access to the link element by passing in a `ref` prop, which will be forwarded to the `@reach/router` `Link` element directly.
 
 ## How to use
 
@@ -39,7 +39,7 @@ class Page extends React.Component {
           activeStyle={{
             color: "red",
           }}
-          innerRef={el => {
+          ref={el => {
             this.myLink = el
           }}
           state={{
