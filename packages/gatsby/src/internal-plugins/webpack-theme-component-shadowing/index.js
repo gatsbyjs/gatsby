@@ -68,19 +68,33 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   // check the cache, the user's project, and finally the theme files
   resolveComponentPath({
     matchingTheme: theme,
-    themes,
+    themes: ogThemes,
     component,
     projectRoot,
   }) {
+    // don't include matching theme in possible shadowing paths
+    const themes = ogThemes.filter(t => t !== theme)
     if (!this.cache[`${theme}-${component}`]) {
       this.cache[`${theme}-${component}`] = [
         path.join(path.resolve("."), `src`, `components`, theme),
-        path.join(path.dirname(require.resolve(theme)), `src`, `components`),
       ]
+        .concat(
+          themes.map(aTheme =>
+            path.join(
+              path.dirname(require.resolve(aTheme)),
+              `src`,
+              `components`,
+              theme
+            )
+          )
+        )
         .map(dir => path.join(dir, component))
         .find(possibleComponentPath => {
+          debug("possibleComponentPath", possibleComponentPath)
           let dir
           try {
+            // we use fs/path instead of require.resolve to work with
+            // TypeScript and alternate syntaxes
             dir = fs.readdirSync(path.dirname(possibleComponentPath))
           } catch (e) {
             return false
