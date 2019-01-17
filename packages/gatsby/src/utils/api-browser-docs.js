@@ -22,7 +22,6 @@ exports.onInitialClientRender = true
  * @param {object} $0
  * @param {object} $0.location A location object
  * @param {object|null} $0.prevLocation The previous location object
- * @param {object} $0.action The "action" that caused the route change
  * @example
  * exports.onPreRouteUpdate = ({ location, prevLocation }) => {
  *   console.log("Gatsby started to change location to", location.pathname)
@@ -48,7 +47,6 @@ exports.onRouteUpdateDelayed = true
  * @param {object} $0
  * @param {object} $0.location A location object
  * @param {object|null} $0.prevLocation The previous location object
- * @param {object} $0.action The "action" that caused the route change
  * @example
  * exports.onRouteUpdate = ({ location, prevLocation }) => {
  *   console.log('new pathname', location.pathname)
