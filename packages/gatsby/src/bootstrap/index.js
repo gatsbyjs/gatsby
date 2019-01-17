@@ -386,6 +386,8 @@ module.exports = async (args: BootstrapArgs) => {
   await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
+  require(`../schema/type-conflict-reporter`).printConflicts()
+
   // Collect resolvable extensions and attach to program.
   const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
   // Change to this being an action and plugins implement `onPreBootstrap`
@@ -440,16 +442,6 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
   activity.end()
-
-  // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await require(`../schema`).build({ parentSpan: activity.span })
-  activity.end()
-
-  require(`../schema/type-conflict-reporter`).printConflicts()
 
   // Extract queries
   activity = report.activityTimer(`extract queries from components`, {
