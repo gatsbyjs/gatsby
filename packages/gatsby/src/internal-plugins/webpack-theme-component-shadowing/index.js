@@ -16,7 +16,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     resolver.plugin(`relative`, (request, callback) => {
       // find out which theme's src/components dir we're requiring from
       const matchingThemes = this.themes.filter(name =>
-        request.path.includes(path.join(name, `src`, `components`))
+        request.path.includes(path.join(name, `src`))
       )
       // 0 matching themes happens a lot fo rpaths we don't want to handle
       // > 1 matching theme means we have a path like
@@ -33,10 +33,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       }
       // theme is the theme package from which we're requiring the relative component
       const [theme] = matchingThemes
-      // get the location of the component relative to src/components
-      const [, component] = request.path.split(
-        path.join(theme, `src`, `components`)
-      )
+      // get the location of the component relative to src/
+      const [, component] = request.path.split(path.join(theme, `src`))
 
       const builtComponentPath = this.resolveComponentPath({
         matchingTheme: theme,
@@ -76,16 +74,11 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     const themes = ogThemes.filter(t => t !== theme)
     if (!this.cache[`${theme}-${component}`]) {
       this.cache[`${theme}-${component}`] = [
-        path.join(path.resolve("."), `src`, `components`, theme),
+        path.join(path.resolve("."), `src`, theme),
       ]
         .concat(
           themes.map(aTheme =>
-            path.join(
-              path.dirname(require.resolve(aTheme)),
-              `src`,
-              `components`,
-              theme
-            )
+            path.join(path.dirname(require.resolve(aTheme)), `src`, theme)
           )
         )
         .map(dir => path.join(dir, component))
