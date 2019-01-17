@@ -5,7 +5,7 @@ exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV !== `production` || process.env.NODE_ENV !== `test`)
+  if (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
     return null
 
   const gtagConfig = pluginOptions.gtagConfig || {}
