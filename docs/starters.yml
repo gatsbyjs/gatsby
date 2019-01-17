@@ -468,16 +468,21 @@
     - Offline support.
     - Google Analytics support.
     - Disqus Comments support.
-- url: https://minimal-blog.netlify.com/
+- url: https://minimal-blog.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-minimal-blog
   description: This starter is part of a german tutorial series on Gatsby. The starter will change over time to use more advanced stuff (feel free to express your ideas in the repository). Its first priority is a minimalistic style coupled with a lot of features for the content.
   tags:
     - Blog
+    - MDX
+    - Styling:CSS-in-JS
+    - Netlify Form
+    - Linting
+    - PWA
   features:
     - Minimal and clean white layout
+    - Write your blog posts in MDX
     - Offline Support, WebApp Manifest, SEO
-    - Automatic Favicons
-    - Typography.js
+    - Code highlighting (with prism-react-renderer) and live preview (with react-live)
 - url: https://gatsby-starter-modern-demo.netlify.com/
   repo: https://github.com/kripod/gatsby-starter-modern
   description: no description yet
@@ -557,6 +562,7 @@
     - Styling:CSS-in-JS
     - Onepage
     - PWA
+    - Linting
   features:
     - Big typography & images
     - White theme
@@ -574,6 +580,7 @@
     - Styling:CSS-in-JS
     - Styling:Tailwind
     - PWA
+    - Linting
   features:
     - React Spring
     - TailwindCSS & Styled Components
@@ -590,6 +597,7 @@
     - Transitions
     - MDX
     - Styling:CSS-in-JS
+    - Linting
   features:
     - Focus on big images (with gatsby-image)
     - Dark Theme with HeroPatterns Header
@@ -608,6 +616,7 @@
     - Transitions
     - Styling:CSS-in-JS
     - PWA
+    - Linting
   features:
     - Full-width photo grid-layout (with gatsby-image)
     - Minimalistic light theme with large images
@@ -1016,7 +1025,7 @@
     - Prismic
     - Headless CMS
     - Styling:CSS-in-JS
-    - SEO
+    - Linting
     - Blog
     - PWA
   features:
