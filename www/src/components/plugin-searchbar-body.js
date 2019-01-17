@@ -307,7 +307,7 @@ const Result = ({ hit, pathname, query }) => {
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
   const packagesRegex = new RegExp(`/packages/`, `g`)
   const packageName = pathname.replace(packagesRegex, ``).slice(0, -1)
-  const selected = packageName === hit.name
+  const selected = new RegExp(`^/packages/${hit.name}/?$`).test(pathname)
   return (
     <Link
       to={`/packages/${hit.name}/?=${query}`}
