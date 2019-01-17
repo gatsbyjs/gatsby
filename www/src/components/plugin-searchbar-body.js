@@ -158,7 +158,7 @@ injectGlobal`
     outline: none;
     transition: all ${presets.animation.speedDefault} ${
   presets.animation.curveDefault
-  };
+};
     font-family: ${typography.options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover {
@@ -224,7 +224,7 @@ class Search extends Component {
           >
             <Stats
               translations={{
-                stats: function (n, ms) {
+                stats: function(n, ms) {
                   return `${n} results`
                 },
               }}
@@ -238,7 +238,7 @@ class Search extends Component {
               [presets.Tablet]: {
                 height: `calc(100vh - ${presets.headerHeight} - ${
                   presets.bannerHeight
-                  } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+                } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
                 ...scrollbarStyles,
               },
@@ -323,7 +323,7 @@ const Result = ({ hit, pathname, query }) => {
           position: `relative`,
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
-            }`,
+          }`,
           zIndex: selected ? 1 : false,
           "&:hover": {
             background: selected ? `#fff` : colors.ui.border,
