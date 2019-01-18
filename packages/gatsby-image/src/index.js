@@ -128,57 +128,7 @@ Img.propTypes = {
   onLoad: PropTypes.func,
 }
 
-const fixedObject = PropTypes.shape({
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  src: PropTypes.string.isRequired,
-  srcSet: PropTypes.string.isRequired,
-  base64: PropTypes.string,
-  tracedSVG: PropTypes.string,
-  srcWebp: PropTypes.string,
-  srcSetWebp: PropTypes.string,
-})
-
-const fluidObject = PropTypes.shape({
-  aspectRatio: PropTypes.number.isRequired,
-  src: PropTypes.string.isRequired,
-  srcSet: PropTypes.string.isRequired,
-  sizes: PropTypes.string.isRequired,
-  base64: PropTypes.string,
-  tracedSVG: PropTypes.string,
-  srcWebp: PropTypes.string,
-  srcSetWebp: PropTypes.string,
-})
-
 class Image extends React.Component {
-  static propTypes = {
-    resolutions: fixedObject,
-    sizes: fluidObject,
-    fixed: fixedObject,
-    fluid: fluidObject,
-    fadeIn: PropTypes.bool,
-    title: PropTypes.string,
-    alt: PropTypes.string,
-    className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
-    critical: PropTypes.bool,
-    style: PropTypes.object,
-    imgStyle: PropTypes.object,
-    placeholderStyle: PropTypes.object,
-    placeholderClassName: PropTypes.string,
-    backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    onLoad: PropTypes.func,
-    onError: PropTypes.func,
-    onStartLoad: PropTypes.func,
-    Tag: PropTypes.string,
-  }
-
-  static defaultProps = {
-    critical: false,
-    fadeIn: true,
-    alt: ``,
-    Tag: `div`,
-  }
-
   imageRef = React.createRef()
 
   wrapperRef = React.createRef()
@@ -487,6 +437,56 @@ class Image extends React.Component {
 
     return null
   }
+}
+
+Image.defaultProps = {
+  critical: false,
+  fadeIn: true,
+  alt: ``,
+  Tag: `div`,
+}
+
+const fixedObject = PropTypes.shape({
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+})
+
+const fluidObject = PropTypes.shape({
+  aspectRatio: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  srcSet: PropTypes.string.isRequired,
+  sizes: PropTypes.string.isRequired,
+  base64: PropTypes.string,
+  tracedSVG: PropTypes.string,
+  srcWebp: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+})
+
+Image.propTypes = {
+  resolutions: fixedObject,
+  sizes: fluidObject,
+  fixed: fixedObject,
+  fluid: fluidObject,
+  fadeIn: PropTypes.bool,
+  title: PropTypes.string,
+  alt: PropTypes.string,
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
+  critical: PropTypes.bool,
+  style: PropTypes.object,
+  imgStyle: PropTypes.object,
+  placeholderStyle: PropTypes.object,
+  placeholderClassName: PropTypes.string,
+  backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onLoad: PropTypes.func,
+  onError: PropTypes.func,
+  onStartLoad: PropTypes.func,
+  Tag: PropTypes.string,
 }
 
 export default Image
