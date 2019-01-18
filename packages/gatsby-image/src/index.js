@@ -168,6 +168,7 @@ class Image extends React.Component {
     backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     onLoad: PropTypes.func,
     onError: PropTypes.func,
+    onStartLoad: PropTypes.func,
     Tag: PropTypes.string,
   }
 
@@ -177,6 +178,10 @@ class Image extends React.Component {
     alt: ``,
     Tag: `div`,
   }
+
+  imageRef = React.createRef()
+
+  wrapperRef = React.createRef()
 
   constructor(props) {
     super(props)
@@ -224,10 +229,6 @@ class Image extends React.Component {
     }
   }
 
-  imageRef = React.createRef()
-
-  wrapperRef = React.createRef()
-
   componentDidMount() {
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
@@ -235,13 +236,11 @@ class Image extends React.Component {
     const img = this.imageRef.current
     const wrapper = this.wrapperRef.current
 
-    if (critical) {
-      if (img && img.complete) {
-        this.handleImageLoaded()
-      }
+    if (this.props.critical && img && img.complete) {
+      this.handleImageLoaded()
     }
 
-    if (IOSupported && wrapper) {
+    if (this.state.IOSupported && wrapper) {
       listenToIntersections(wrapper, () => {
         if (
           !this.state.isVisible &&
@@ -257,7 +256,7 @@ class Image extends React.Component {
 
   componentWillUnmount() {
     activateCacheForImage(this.props)
-
+  }
 
   handleImageLoaded = () => {
     this.setState({ imgLoaded: true })
@@ -487,5 +486,4 @@ class Image extends React.Component {
   }
 }
 
-  onStartLoad: PropTypes.func,
 export default Image
