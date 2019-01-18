@@ -8,7 +8,7 @@ const { getExampleValues } = require(`../data-tree-utils`)
 const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
-const { store } = require(`../../redux`)
+const { store, emitter } = require(`../../redux`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function makeNodes() {
@@ -51,7 +51,10 @@ describe(`filtering on linked nodes`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
+
+  emitter.emit(`BOOTSTRAP_FINISHED`)
   clearUnionTypes()
+
   it(`filters on linked nodes via id`, async () => {
     let result = await queryResult(
       makeNodes().concat([

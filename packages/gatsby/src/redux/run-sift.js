@@ -5,6 +5,11 @@ const prepareRegex = require(`../utils/prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { getNode, getNodesByType } = require(`../db/nodes`)
+const { emitter } = require(`.`)
+
+let isBootstrapRunning = true
+emitter.on(`BOOTSTRAP_FINISHED`, () => (isBootstrapRunning = false))
+const isProductionBuild = process.env.NODE_ENV === `production`
 
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
@@ -189,6 +194,7 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
 }
 
 function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
+  const shouldUseCache = isProductionBuild || isBootstrapRunning
   const nodesCacheKey = JSON.stringify({
     // typeName + count being the same is a pretty good
     // indication that the nodes are the same.
@@ -197,10 +203,7 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
     nodesLength: nodes.length,
     ...fieldsToSift,
   })
-  if (
-    process.env.NODE_ENV === `production` &&
-    resolvedNodesCache.has(nodesCacheKey)
-  ) {
+  if (shouldUseCache && resolvedNodesCache.has(nodesCacheKey)) {
     return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
   } else {
     return Promise.all(
@@ -228,7 +231,9 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
         return enhancedNodeGenerationPromise
       })
     ).then(resolvedNodes => {
-      resolvedNodesCache.set(nodesCacheKey, resolvedNodes)
+      if (shouldUseCache) {
+        resolvedNodesCache.set(nodesCacheKey, resolvedNodes)
+      }
       return resolvedNodes
     })
   }
