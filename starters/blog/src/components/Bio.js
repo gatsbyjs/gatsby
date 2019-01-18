@@ -26,6 +26,9 @@ function Bio() {
                 minWidth: 50,
                 borderRadius: `100%`,
               }}
+              imgStyle={{
+                borderRadius: `50%`,
+              }}
             />
             <p>
               Written by <strong>{author}</strong> who lives and works in San

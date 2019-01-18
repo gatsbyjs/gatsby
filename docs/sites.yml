@@ -6,17 +6,6 @@
   categories:
     - Web Development
     - Featured
-- title: Stitch Fix
-  main_url: "https://www.stitchfix.com/"
-  url: "https://www.stitchfix.com/"
-  description: >
-    Stitch Fix is an online styling service that delivers a truly personalized
-    shopping experience.
-  categories:
-    - eCommerce
-    - Fashion
-    - Featured
-  featured: true
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
@@ -2245,12 +2234,13 @@
   main_url: https://www.peterkroyer.at/en/
   url: https://www.peterkroyer.at/en/
   description: >
-    Freelance web designer / web developer based in Vienna, Austria.
+    Freelance web designer / web developer based in Vienna, Austria (Wien, Österreich).
   categories:
     - Agency
     - Web Development
     - Design
     - Portfolio
+    - Freelance
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
@@ -3872,3 +3862,121 @@
   built_by: Jane Manchun Wong
   built_by_url: "https://twitter.com/wongmjane"
   featured: false
+- title: PostPost
+  main_url: "https://postpost.design"
+  source_url: "https://github.com/postpostpdx/website"
+  url: "https://postpost.design"
+  description: >
+    PostPost is a small studio based in Portland, OR that is focused on product design, web design/development, branding, and strategy.
+  categories:
+    - Portfolio
+    - Design
+    - Agency
+    - Web Development
+  built_by: Jonathan Simcoe
+  built_by_url: "https://twitter.com/jdsimcoe"
+  featured: false
+- title: Luca Crea's portfolio
+  main_url: https://lcrea.github.io
+  url: https://lcrea.github.io
+  description: >
+    Portfolio and personal website of Luca Crea, an Italian software engineer.
+  categories:
+    - Portfolio
+  built_by: Luca Crea
+  built_by_url: https://github.com/lcrea
+  featured: false
+- title: Escalade Sports
+  main_url: "https://www.escaladesports.com/"
+  url: "https://www.escaladesports.com/"
+  categories:
+    - eCommerce
+    - Sports
+  built_by: Escalade Sports
+  built_by_url: "https://www.escaladesports.com/"
+  featured: false
+- title: Exposify
+  main_url: "https://www.exposify.de/"
+  url: "https://www.exposify.de/"
+  description: >
+    This is our German website built with Gatsby 2.0, Emotion and styled-system.
+    Exposify is a proptech startup and builds technology for real estate businesses.
+    We provide our customers with an elegant agent software in combination
+    with beautifully designed and fast websites.
+  categories:
+    - Web Development
+    - Real Estate
+    - Agency
+    - Marketing
+  built_by: Exposify
+  built_by_url: "https://www.exposify.de/"
+  featured: false
+- title: Steak Point
+  main_url: https://www.steakpoint.at/
+  url: https://www.steakpoint.at/
+  description: >
+    Steak Restaurant in Vienna, Austria (Wien, Österreich).
+  categories:
+    - Restaurant
+    - Food
+  built_by: Peter Kroyer
+  built_by_url: https://www.peterkroyer.at/
+  featured: false
+- title: Takumon blog
+  main_url: "https://takumon.com"
+  url: "https://takumon.com"
+  source_url: "https://github.com/Takumon/blog"
+  description: Java Engineer's tech blog.
+  featured: false
+  categories:
+    - Blog
+  built_by: Takumon
+  built_by_url: "https://twitter.com/inouetakumon"
+- title: DayThirty
+  main_url: "https://daythirty.com"
+  url: "https://daythirty.com"
+  description: DayThirty - ideas for the new year.
+  featured: false
+  categories:
+    - Health & Wellness
+  built_by: Jack Oliver
+  built_by_url: "https://twitter.com/mrjackolai"
+- title: Karen Hou's portfolio
+  main_url: https://www.karenhou.com/
+  url: https://www.karenhou.com/
+  categories:
+    - Portfolio
+  built_by: Karen H. Developer
+  built_by_url: https://github.com/karenhou
+  featured: false
+- title: Jean Luc Ponty
+  main_url: "https://ponty.com"
+  url: "https://ponty.com"
+  description: Official site for Jean Luc Ponty, French virtuoso violinist and jazz composer.
+  featured: false
+  categories:
+    - Music
+    - Entertainment
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
+- title: Rosewood Family Advisors
+  main_url: "https://www.rfallp.com/"
+  url: "https://www.rfallp.com/"
+  description: Rosewood Family Advisors LLP (Palo Alto) provides a diverse range of family office services customized for ultra high net worth individuals.
+  featured: false
+  categories:
+    - Finance
+    - Business
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
+- title: Cole Walker's Portfolio
+  main_url: "https://www.walkermakes.com"
+  url: "https://www.walkermakes.com"
+  source_url: "https://github.com/ColeWalker/portfolio"
+  description: The portfolio of web developer Cole Walker, built with the help of Gatsby v2, React-Spring, and SASS.
+  featured: false
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Cole Walker
+  built_by_url: "https://www.walkermakes.com"

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.2.0"></a>
+
+# [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.20...gatsby-transformer-remark@2.2.0) (2019-01-08)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** correctly pass cache to sub plugins ([#10892](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10892)) ([8ea9a52](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/8ea9a52))
+
+<a name="2.1.20"></a>
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.19...gatsby-transformer-remark@2.1.20) (2019-01-08)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** remove unused \_PARENT field from frontmatter ([#10919](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10919)) ([e831b42](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/e831b42))
+
+<a name="2.1.19"></a>
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.18...gatsby-transformer-remark@2.1.19) (2019-01-01)
+
+### Features
+
+- **gatsby-transformer-remark:** support raw HTML in markdown excerpts ([#10499](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10499)) ([29a8c5c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/29a8c5c)), closes [#10498](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10498)
+
 <a name="2.1.18"></a>
 
 ## [2.1.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.17...gatsby-transformer-remark@2.1.18) (2018-12-31)
