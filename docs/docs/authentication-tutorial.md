@@ -65,7 +65,7 @@ And edit the layout component to include it:
 ```jsx:title=src/components/layout.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
@@ -310,7 +310,7 @@ Though the routing is working now, you still can access all routes without restr
 
 To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
-```jsx:title=scr/components/privateRoute.js
+```jsx:title=src/components/privateRoute.js
 import React from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
@@ -342,7 +342,8 @@ const App = () => (
   <Layout>
     <Router>
       {/* highlight-next-line */}
-      <PrivateRoute path="/app/profile" component={Profile} /> <Login path="/app/login" />
+      <PrivateRoute path="/app/profile" component={Profile} />
+      <Login path="/app/login" />
     </Router>
   </Layout>
 )

@@ -189,7 +189,7 @@ function inferFromMapping(
 }
 
 function findLinkedNodeByField(linkedField, value) {
-  getNodes().find(n => n[linkedField] === value)
+  return getNodes().find(n => n[linkedField] === value)
 }
 
 export function findLinkedNode(value, linkedField, path) {

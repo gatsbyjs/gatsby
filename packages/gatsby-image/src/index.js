@@ -263,7 +263,10 @@ class Image extends React.Component {
     if (this.state.seenBefore) {
       this.setState({ fadeIn: false })
     }
-    this.props.onLoad && this.props.onLoad()
+
+    if (this.props.onLoad) {
+      this.props.onLoad()
+    }
   }
 
   render() {

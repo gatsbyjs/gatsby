@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
-  { node, getNode, loadNodeContent, actions, createNodeId, reporter },
+  { node, loadNodeContent, actions, createNodeId, reporter },
   pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
@@ -45,7 +45,6 @@ module.exports = async function onCreateNode(
     markdownNode.frontmatter = {
       title: ``, // always include a title
       ...data.data,
-      _PARENT: node.id,
     }
 
     markdownNode.excerpt = data.excerpt
