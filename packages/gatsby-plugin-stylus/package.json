@@ -29,7 +29,11 @@
     "gatsby": "^2.0.0"
   },
   "readme": "README.md",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-stylus"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",

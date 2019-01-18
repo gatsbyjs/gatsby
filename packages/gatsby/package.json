@@ -170,7 +170,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby.git"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby"
   },
   "resolutions": {
     "graphql": "^14.1.1"

@@ -31,7 +31,11 @@
     "gatsby": "^2.0.0",
     "katex": "^0.10.0"
   },
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-katex",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-remark-katex"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
