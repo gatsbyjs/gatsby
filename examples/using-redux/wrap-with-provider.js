@@ -7,5 +7,5 @@ import createStore from "./src/state/createStore"
 export default ({ element }) => {
   // Create a fresh store for each SSR page:
   const store = createStore()
-  return (<Provider store={store}>{element}</Provider>)
+  return <Provider store={store}>{element}</Provider>
 }
