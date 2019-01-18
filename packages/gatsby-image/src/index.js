@@ -26,7 +26,7 @@ const inImageCache = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  return imageCache[src] || false
+  return imageCache.has(src)
 }
 
 const activateCacheForImage = props => {
@@ -36,7 +36,7 @@ const activateCacheForImage = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  imageCache[src] = true
+  imageCache.set(src)
 }
 
 let io
