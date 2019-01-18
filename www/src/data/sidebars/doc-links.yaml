@@ -294,7 +294,7 @@
       link: /docs/prpl-pattern/
     - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
-    - title: Client data fetching
+    - title: Fetching client data
       link: /docs/client-data-fetching/
 - title: Behind the Scenes
   link: /docs/behind-the-scenes/
