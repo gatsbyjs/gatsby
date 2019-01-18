@@ -205,10 +205,12 @@ class Image extends React.Component {
   }
 
   componentWillUnmount() {
-    activateCacheForImage(this.props)
+    listeners.delete(this.wrapperRef.current)
   }
 
   handleImageLoaded = () => {
+    activateCacheForImage(this.props)
+
     this.setState({ imgLoaded: true })
     if (this.state.seenBefore) {
       this.setState({ fadeIn: false })
