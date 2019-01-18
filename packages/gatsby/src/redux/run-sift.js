@@ -62,22 +62,21 @@ function siftifyArgs(object) {
 
 // Build an object that excludes the innermost leafs,
 // this avoids including { eq: x } when resolving fields.
-function extractFieldsToSift(prekey, key, preobj, obj, val) {
-  if (_.isPlainObject(val)) {
-    _.forEach((val: any), (v, k) => {
-      if (k === `elemMatch`) {
-        // elemMatch is operator for arrays and not field we want to prepare
-        // so we need to skip it
-        extractFieldsToSift(prekey, key, preobj, obj, v)
-        return
-      }
-      preobj[prekey] = obj
-      extractFieldsToSift(key, k, obj, {}, v)
-    })
-  } else {
-    preobj[prekey] = true
-  }
-}
+const extractFieldsToSift = filter =>
+  Object.entries(filter).reduce((acc, [key, value]) => {
+    if (key === `elemMatch`) {
+      const [k, v] = Object.entries(value)[0]
+      acc[k] = extractFieldsToSift(v)
+    } else if (
+      _.isPlainObject(value) &&
+      _.isPlainObject(Object.values(value)[0])
+    ) {
+      acc[key] = extractFieldsToSift(value)
+    } else {
+      acc[key] = true
+    }
+    return acc
+  }, {})
 
 /**
  * Parse filter and returns an object with two fields:
@@ -87,19 +86,16 @@ function extractFieldsToSift(prekey, key, preobj, obj, val) {
  */
 function parseFilter(filter) {
   const siftArgs = []
-  const fieldsToSift = {}
+  let fieldsToSift = {}
   if (filter) {
     _.each(filter, (v, k) => {
-      // Ignore connection and sorting args.
-      if (_.includes([`skip`, `limit`, `sort`], k)) return
-
       siftArgs.push(
         siftifyArgs({
           [k]: v,
         })
       )
-      extractFieldsToSift(``, k, {}, fieldsToSift, v)
     })
+    fieldsToSift = extractFieldsToSift(filter)
   }
   return { siftArgs, fieldsToSift }
 }
