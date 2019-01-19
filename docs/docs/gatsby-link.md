@@ -152,7 +152,7 @@ const IndexLayout = ({ children, location }) => {
 
 ## Use `<Link>` only for internal links!
 
-This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
+This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element. Links using the `<a>` element require a URL protocol e.g. `http://` or `https://`. 
 
 Sometimes you won't know ahead of time whether a link will be internal or not,
 such as when the data is coming from a CMS.
