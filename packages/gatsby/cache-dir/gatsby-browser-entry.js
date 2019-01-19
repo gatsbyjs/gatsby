@@ -36,7 +36,11 @@ StaticQuery.propTypes = {
   children: PropTypes.func,
 }
 
-function graphql() {
+function graphql(query) {
+  if (process.env.GATSBY_GRAPHQL_PASSTHROUGH) {
+    return query
+  }
+
   throw new Error(
     `It appears like Gatsby is misconfigured. Gatsby related \`graphql\` calls ` +
       `are supposed to only be evaluated at compile time, and then compiled away,. ` +
