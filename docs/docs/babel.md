@@ -30,12 +30,12 @@ npm install --save-dev babel-preset-gatsby
 
 ```json5:title=.babelrc
 {
-  presets: [
+  "presets": [
     [
       "babel-preset-gatsby",
       {
-        targets: {
-          browsers: [">0.25%", "not dead"],
+        "targets": {
+          "browsers": [">0.25%", "not dead"],
         },
       },
     ],
