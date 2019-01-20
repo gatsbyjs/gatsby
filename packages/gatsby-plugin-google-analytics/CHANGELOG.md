@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.8...gatsby-plugin-google-analytics@2.0.9) (2019-01-08)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** add support for google optimize experiment and variation id ([#10903](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/10903)) ([45ec012](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/45ec012))
+
 <a name="2.0.8"></a>
 
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.7...gatsby-plugin-google-analytics@2.0.8) (2018-11-29)
