@@ -2,11 +2,11 @@
 title: Optimizing Site Performance with Guess.js
 ---
 
-Pre-loading resources is a great way to improve application performance. However, pre-loading everything on a page can waste bandwidth. This is especially true for mobile phone users who may have limited data and bandwidth. So how do you know which resources to pre-load? Is it just a guessing game? Not anymore.
+Preloading resources is a great way to improve application performance. However, preloading everything on a page can waste bandwidth. This is especially true for mobile phone users who may have limited data and bandwidth. So how do you know which resources to preload? Is it just a guessing game? Not anymore.
 
 ## Introducing Guess.js
 
-By leveraging Google Analytics data and machine learning, [Guess.js](https://github.com/guess-js/guess) is able determine which pages a user is most likely to navigate to from the current page and only pre-load those resources. Thus, there are fewer network requests which improves performance on slower networks.
+By leveraging Google Analytics data and machine learning, [Guess.js](https://github.com/guess-js/guess) is able determine which pages a user is most likely to navigate to from the current page and only preload those resources. Thus, there are fewer network requests which improves performance on slower networks.
 
 ## How does it work?
 
