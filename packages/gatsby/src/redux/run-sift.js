@@ -63,14 +63,13 @@ function siftifyArgs(object) {
 // Build an object that excludes the innermost leafs,
 // this avoids including { eq: x } when resolving fields.
 const extractFieldsToSift = filter =>
-  Object.entries(filter).reduce((acc, [key, value]) => {
+  Object.keys(filter).reduce((acc, key) => {
+    const value = filter[key]
+    const k = Object.keys(value)[0]
+    const v = value[k]
     if (key === `elemMatch`) {
-      const [k, v] = Object.entries(value)[0]
       acc[k] = extractFieldsToSift(v)
-    } else if (
-      _.isPlainObject(value) &&
-      _.isPlainObject(Object.values(value)[0])
-    ) {
+    } else if (_.isPlainObject(value) && _.isPlainObject(v)) {
       acc[key] = extractFieldsToSift(value)
     } else {
       acc[key] = true
