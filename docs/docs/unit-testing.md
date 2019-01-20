@@ -5,7 +5,7 @@ title: Unit testing
 Unit testing is a great way to protect against errors in your code before you
 deploy it. While Gatsby does not include support for unit testing out of the
 box, it only takes a few steps to get up and running. However there are a few
-features of the Gatsby build process that mean the standard Jest setup doesn't
+features of the Gatsby build process that means the standard Jest setup doesn't
 quite work. This guide shows you how to set it up.
 
 ## Setting up your environment
