@@ -60,7 +60,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps so you can create high-quality,
-  dynamic web apps, from blogs to e-commerce sites to user dashboards.
+  dynamic web apps, from blogs to e-commerce sites and user dashboards.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
