@@ -59,9 +59,9 @@ class Page extends React.Component {
 The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
 
 - We may want `/blog/hello-world` to match `<Link to="/blog">`
-- or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
+- Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
 
-In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles
+In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
 
 ```jsx
 import React from "react"
