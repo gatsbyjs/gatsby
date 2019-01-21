@@ -98,7 +98,7 @@ async function startServer(program) {
     `/___graphql`,
     graphqlHTTP({
       schema: store.getState().schema,
-      graphiql: false,
+      graphiql: true,
     })
   )
   app.use(
