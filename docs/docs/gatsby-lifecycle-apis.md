@@ -24,7 +24,7 @@ During "bootstrap" gatsby:
 - pulls in and preprocesses data ("source and transform nodes") into a GraphQL schema
 - creates pages in memory
   - from your `/pages` folder
-  - from your `gatsby-node.js` if you implement `createPages`/`createPagesStatefully` (e.g. templates)
+  - from your `gatsby-node.js` if you implement `createPages` (e.g. templates)
   - from any plugins that implement `createPages`/`createPagesStatefully`
 - extracts, runs, and replaces graphql queries for pages and `StaticQuery`s
 - writes out the pages to cache
