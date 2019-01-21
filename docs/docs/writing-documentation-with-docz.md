@@ -54,7 +54,7 @@ global.__PATH_PREFIX__ = ""
 export default ({ children }) => children
 ```
 
-> We are essentially creating a dummy wrapper that does nothing else than making sure that `global.__PATH_PREFIX__` is defined on every page.
+> You are essentially creating a dummy wrapper that does nothing else than making sure that `global.__PATH_PREFIX__` is defined on every page.
 
 Create a new file called `doczrc.js` in the root directory of your Gatsby project, and add the following content:
 
@@ -113,7 +113,7 @@ If Docz builds successfully you should be able to navigate to `http://localhost:
 
 ## Writing documentation
 
-Docz searches your directory for `mdx` files and renders them. Let's add you first documentation page by creating a file `index.mdx` in the root directory of your Gatsby project.
+Docz searches your directory for `mdx` files and renders them. Let's add your first documentation page by creating a file `index.mdx` in the root directory of your Gatsby project.
 
 ```mdx:title=index.mdx
 ---
