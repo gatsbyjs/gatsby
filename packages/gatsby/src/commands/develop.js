@@ -94,15 +94,15 @@ async function startServer(program) {
       heartbeat: 10 * 1000,
     })
   )
-  app.use(
+  app.post(
     `/___graphql`,
     graphqlHTTP({
       schema: store.getState().schema,
-      graphiql: true,
+      graphiql: false,
     })
   )
-  app.use(
-    `/___playground`,
+  app.get(
+    `/___graphql`,
     graphqlPlayground({
       endpoint: `/___graphql`,
       codeTheme: {},
@@ -371,10 +371,10 @@ module.exports = async (program: any) => {
 
     console.log()
     console.log(
-      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+      `View the Playground, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
-    console.log(`  ${urls.localUrlForTerminal}___playground`)
+    console.log(`  ${urls.localUrlForTerminal}___graphql`)
 
     console.log()
     console.log(`Note that the development build is not optimized.`)
