@@ -52,7 +52,11 @@ const createElement = React.createElement
 export default (pagePath, callback) => {
   let bodyHtml = ``
   let headComponents = [
-    <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />,
+    <meta
+      name="generator"
+      content={`Gatsby ${gatsbyVersion}`}
+      key={`generator-${gatsbyVersion}`}
+    />,
   ]
   let htmlAttributes = {}
   let bodyAttributes = {}
