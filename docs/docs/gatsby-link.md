@@ -76,6 +76,8 @@ const PartialNavLink = props => (
 )
 ```
 
+Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
+
 ## Replacing history entry
 
 You can pass boolean `replace` property to replace previous history entry.
