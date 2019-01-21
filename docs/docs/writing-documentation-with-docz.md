@@ -10,15 +10,25 @@ Alternatively, the following guide should help you to get Docz working within an
 
 ## Setting up your environment
 
-To set up Docz you need to install dependencies and do some custom configuration. First, make sure you are in the root directory of your Gatsby project.
+First, if you do not have a Gatsby project set up yet, use the Gatsby CLI to create a new site:
 
 ```shell
-cd my-awesome-gatsby-project
+npx gatsby new my-gatsby-site-with-docz
 ```
 
-Install the necessary dev dependencies to get a Docz site up and running.
+To set up Docz you need to install dependencies and do some custom configuration. Make sure you are in the root directory of your Gatsby project,
 
 ```shell
+cd my-gatsby-site-with-docz
+gatsby develop
+```
+
+and test that your Gatsby site is running by going to http://localhost:8000.
+
+Going back to your terminal, install the necessary dev dependencies to get a Docz site up and running.
+
+```shell
+# run this from my-gatsby-site-with-docz/
 npm install --save-dev docz docz-theme-default docz-plugin-css @babel/plugin-syntax-dynamic-import webpack-merge
 ```
 
@@ -103,7 +113,7 @@ export default {
 }
 ```
 
-Once you have this configured you should run Docz to ensure it can start up properly. You should see by default a _Page Not Found_ page: You haven't created any `mdx` file yet. To run Docz:
+Once you have this configured you should run Docz to ensure it can start up properly. You should see by default a _Page Not Found_ page: you haven't created any `mdx` file yet. To run Docz:
 
 ```shell
 npm run docz:dev
