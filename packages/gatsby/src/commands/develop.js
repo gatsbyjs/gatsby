@@ -98,7 +98,6 @@ async function startServer(program) {
     `/___graphql`,
     graphqlHTTP({
       schema: store.getState().schema,
-      graphiql: false,
     })
   )
   app.get(
@@ -400,7 +399,7 @@ module.exports = async (program: any) => {
 
     console.log()
     console.log(
-      `View the Playground, an in-browser IDE, to explore your site's data and schema`
+      `View the GraphQL Playground, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
     console.log(`  ${urls.localUrlForTerminal}___graphql`)
