@@ -56,7 +56,7 @@ class Page extends React.Component {
 
 ## Partial Link matching
 
-The `activeStyle` or `activeClassName` prop are only set to a `<Link>` component if the current URL matches it _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
+The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
 
 - We may want `/blog/hello-world` to match `<Link to="/blog">`
 - or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
