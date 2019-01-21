@@ -24,7 +24,7 @@ npm install --save-dev docz docz-theme-default docz-plugin-css @babel/plugin-syn
 
 Add the following scripts to your `package.json` file:
 
-```json:package.json
+```json:title=package.json
 {
     ...
     "scripts": {
@@ -37,7 +37,7 @@ Add the following scripts to your `package.json` file:
 }
 ```
 
-We are now going to create two files:
+Create these two files:
 
 - `doczrc.js` to configure Docz,
 - `docz/wrapper.js` to inject some JavaScript in Docz pages, to ensure compatibility with Gatsby.
@@ -56,7 +56,7 @@ export default ({ children }) => children
 
 > We are essentially creating a dummy wrapper that does nothing else than making sure that `global.__PATH_PREFIX__` is defined on every page.
 
-Create now a new file called `doczrc.js` in the root directory of your Gatsby project, and add the following content:
+Create a new file called `doczrc.js` in the root directory of your Gatsby project, and add the following content:
 
 ```js:title=doczrc.js
 import merge from "webpack-merge"
@@ -103,7 +103,7 @@ export default {
 }
 ```
 
-Once you have this configured you should run Docz to ensure it can start up properly. You should see by default a _Page Not Found_ page: we haven't created any `mdx` file yet. To run Docz:
+Once you have this configured you should run Docz to ensure it can start up properly. You should see by default a _Page Not Found_ page: You haven't created any `mdx` file yet. To run Docz:
 
 ```shell
 npm run docz:dev
@@ -113,9 +113,9 @@ If Docz builds successfully you should be able to navigate to `http://localhost:
 
 ## Writing documentation
 
-Docz searches your directory for `mdx` files and renders them. Let's add our first documentation page by creating a file `index.mdx` in the root directory of your Gatsby project.
+Docz searches your directory for `mdx` files and renders them. Let's add you first documentation page by creating a file `index.mdx` in the root directory of your Gatsby project.
 
-```mdx:index.mdx
+```mdx:title=index.mdx
 ---
 name: Getting started
 route: /
@@ -126,9 +126,9 @@ route: /
 This is the start of an amazing Docz site
 ```
 
-This is a very simple documentation page without much going on, but let's spice things up by adding and rendering a Gatsby component. Assuming you have a header component in your components folder which does not rely on `StaticQuery` or `graphql`, we can add:
+This is a very simple documentation page without much going on, but let's spice things up by adding and rendering a Gatsby component. Assuming you have a header component in your components folder which does not rely on `StaticQuery` or `graphql`, you can add:
 
-```mdx:index.mdx
+```mdx:title=index.mdx
 ---
 name: Getting started
 route: /
