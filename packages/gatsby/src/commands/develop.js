@@ -7,6 +7,8 @@ const openurl = require(`better-opn`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
+const graphqlPlayground = require(`graphql-playground-middleware-express`)
+  .default
 const parsePath = require(`parse-filepath`)
 const request = require(`request`)
 const rl = require(`readline`)
@@ -96,8 +98,16 @@ async function startServer(program) {
     `/___graphql`,
     graphqlHTTP({
       schema: store.getState().schema,
-      graphiql: true,
+      graphiql: false,
     })
+  )
+  app.use(
+    `/___playground`,
+    graphqlPlayground({
+      endpoint: `/___graphql`,
+      codeTheme: {},
+    }),
+    () => {}
   )
 
   // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
@@ -364,7 +374,7 @@ module.exports = async (program: any) => {
       `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
-    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+    console.log(`  ${urls.localUrlForTerminal}___playground`)
 
     console.log()
     console.log(`Note that the development build is not optimized.`)
