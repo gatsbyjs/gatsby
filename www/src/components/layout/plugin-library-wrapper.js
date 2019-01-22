@@ -10,7 +10,7 @@ const PluginLibraryWrappedLayout = props => {
   return (
     <Layout location={location}>
       <PageWithPluginSearchBar
-        isPluginsIndex={location.pathname === "/plugins/"}
+        isPluginsIndex={location.pathname === `/plugins/`}
         location={location}
       >
         {children}
