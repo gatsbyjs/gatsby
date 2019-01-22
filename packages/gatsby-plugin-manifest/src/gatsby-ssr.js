@@ -7,7 +7,8 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   let headComponents = []
 
   const icons = pluginOptions.icons || defaultIcons
-  const legacy = pluginOptions.legacy || true
+  const legacy =
+    typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 
   // If icons were generated, also add a favicon link.
   if (pluginOptions.icon) {
