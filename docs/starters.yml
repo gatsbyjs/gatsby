@@ -1670,7 +1670,7 @@
   repo: https://github.com/frankievalentine/gatsby-craftcms-barebones
   description: Barebones setup for using Craft CMS and Gatsby locally.
   tags:
-    - Craft
+    - Craft CMS
     - Headless CMS
   features:
     - Full setup instructions included
