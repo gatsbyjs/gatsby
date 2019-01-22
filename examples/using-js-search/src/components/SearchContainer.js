@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import { Segment, Form, Header } from 'semantic-ui-react'
 import * as JsSearch from 'js-search'
 import DataTable from './DataTable'
-
+import './search.css'
 class Search extends Component {
   state = {
     bookList: [],
     search: [],
     searchResults: [],
+    isLoading: true,
     isError: false,
     indexByTitle: true,
     indexByAuthor: true,
@@ -35,6 +35,7 @@ class Search extends Component {
         console.log(`====================================`)
       })
   }
+
   /* eslint-disable */
   onChangeIndexTitle = () => {
     this.setState(prevstate => ({
@@ -49,7 +50,7 @@ class Search extends Component {
     }))
     this.rebuildIndex()
   }
-
+   
   onChangeStopWords = () => {
     this.setState(prevstate => ({
       removeStopWords: !prevstate.removeStopWords,
@@ -57,12 +58,12 @@ class Search extends Component {
     this.rebuildIndex()
   }
   /* eslint-enable */
-  onChangeStrategy = (e, { value }) => {
-    this.setState({ selectedStrategy: value })
+  onChangeStrategy = e => {
+    this.setState({ selectedStrategy: e.target.value })
     this.rebuildIndex()
   }
-  onChangeSanitizer = (e, { value }) => {
-    this.setState({ selectedSanitizer: value })
+  onChangeSanitizer = e => {
+    this.setState({ selectedSanitizer: e.target.value })
     this.rebuildIndex()
   }
 
@@ -121,7 +122,7 @@ class Search extends Component {
       dataToSearch.addIndex(`author`) // defines the index attribute for the data
     }
     dataToSearch.addDocuments(bookList) // adds the data to be searched
-    this.setState({ search: dataToSearch })
+    this.setState({ search: dataToSearch, isLoading: false })
   }
   searchData = e => {
     const { search } = this.state
@@ -134,6 +135,7 @@ class Search extends Component {
   render() {
     const {
       isError,
+      isLoading,
       bookList,
       searchResults,
       searchQuery,
@@ -143,98 +145,99 @@ class Search extends Component {
       selectedStrategy,
       selectedSanitizer,
     } = this.state
+    if (isLoading) {
+      return (
+        <div>
+          <h1 style={{ marginTop: `3em` }}>Getting the search all setup</h1>
+          <h1 style={{ marginTop: `3em`, textAlign: `center` }}>
+            Getting the search all setup
+          </h1>
+        </div>
+      )
+    }
     if (isError) {
       return (
-        <Segment raised>
-          <Header
-            as="h1"
-            content="Ohh no!!!!!"
-            style={{ marginTop: `3em` }}
-            textAlign="center"
-          />
-          <Segment>
-            <Header
-              as="h3"
-              content="Something really bad happened"
-              style={{ marginTop: `2em`, padding: `2em 0em` }}
-              textAlign="center"
-            />
-          </Segment>
-        </Segment>
+        <div>
+          <h1 style={{ marginTop: `3em`, textAlign: `center` }}>Ohh no!!!!!</h1>
+          <h3
+            style={{
+              marginTop: `2em`,
+              padding: `2em 0em`,
+              textAlign: `center`,
+            }}
+          >
+            Something really bad happened
+          </h3>
+        </div>
       )
     }
     return (
       <div>
-        <Segment raised>
-          <Form>
-            <Form.Group widths="equal">
-              <Form.Input
-                fluid
-                label="Search"
-                placeholder="Enter your search here"
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="Search" className="form-label">
+                Enter your search here
+              </label>
+              <input
+                id="Search"
                 value={searchQuery}
                 onChange={this.searchData}
+                placeholder="Enter your search here"
+                className="searchQuery"
               />
-            </Form.Group>
-            <Form.Group inline>
-              <Form.Checkbox
-                label="Title"
-                checked={indexByTitle}
-                onChange={this.onChangeIndexTitle}
-              />
-              <Form.Checkbox
-                label="Author"
-                checked={indexByAuthor}
-                onChange={this.onChangeIndexAuthor}
-              />
-              <Form.Checkbox
-                label="Remove Stop Words"
-                checked={removeStopWords}
-                onChange={this.onChangeStopWords}
-              />
-              <Form.Select
-                fluid
-                label="Select a strategy for indexing"
-                defaultValue={selectedStrategy}
-                options={[
-                  { key: `A`, text: `All`, value: `All` },
-                  { key: `EM`, text: `Exact match`, value: `Exact match` },
-                  {
-                    key: `PM`,
-                    text: `Prefix match`,
-                    value: `Prefix match`,
-                  },
-                ]}
-                placeholder="Select a strategy"
-                onChange={this.onChangeStrategy}
-              />
-              <Form.Select
-                fluid
-                label="Select a sanitizer"
-                defaultValue={selectedSanitizer}
-                onChange={this.onChangeSanitizer}
-                options={[
-                  {
-                    key: `CS`,
-                    text: `Case Sensitive`,
-                    value: `Case Sensitive`,
-                  },
-                  {
-                    key: `LS`,
-                    text: `Lower Case`,
-                    value: `Lower Case`,
-                  },
-                ]}
-                placeholder="Select a sanitizer"
-              />
-            </Form.Group>
-          </Form>
-        </Segment>
-        <Segment>
-          Number of items:
-          {searchQuery === `` ? bookList.length : searchResults.length}
-          <DataTable data={searchQuery === `` ? bookList : searchResults} />
-        </Segment>
+            </div>
+            <div className="form-group">
+              <label>
+                Title
+                <input
+                  type="checkbox"
+                  onChange={this.onChangeIndexTitle}
+                  checked={indexByTitle}
+                />
+              </label>
+              <label>
+                Author
+                <input
+                  type="checkbox"
+                  checked={indexByAuthor}
+                  onChange={this.onChangeIndexAuthor}
+                />
+              </label>
+              <label>
+                Remove Stop Words
+                <input
+                  type="checkbox"
+                  checked={removeStopWords}
+                  onChange={this.onChangeStopWords}
+                />
+              </label>
+            </div>
+            <div className="form-group">
+              <label>Select a strategy</label>
+              <select onChange={this.onChangeStrategy} value={selectedStrategy}>
+                <option value="All">All</option>
+                <option value="Exact match">Exact match</option>
+                <option value="Prefix match">Prefix match</option>
+              </select>
+              <label>
+                Select a sanitizer
+                <select
+                  onChange={this.onChangeSanitizer}
+                  value={selectedSanitizer}
+                >
+                  <option value="Case Sensitive">Case Sensitive</option>
+                  <option value="Lower Case">Lower Case</option>
+                </select>
+              </label>
+            </div>
+          </form>
+          <div>
+            Number of items:
+            {searchQuery === `` ? bookList.length : searchResults.length}
+            <DataTable data={searchQuery === `` ? bookList : searchResults} />
+          </div>
+        </div>
       </div>
     )
   }

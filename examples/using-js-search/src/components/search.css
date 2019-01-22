@@ -1,0 +1,43 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  background-color: white;
+}
+
+thead {
+  border-bottom: 1px solid gray;
+}
+
+th {
+  text-align: left;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 2px solid lightgray;
+  cursor: pointer;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+label{
+  padding-right:10px;
+}
+
+input{
+  margin-left: 10px;
+}
+.searchQuery{
+  margin: 0 auto;
+  width: 400px;
+}
+.form-group{
+  margin: 1.2rem 1rem 1.2rem 1rem;
+}
+td {
+  font-size: 14px;
+  border: 1px solid lightgray;
+  padding: 5px;
+}

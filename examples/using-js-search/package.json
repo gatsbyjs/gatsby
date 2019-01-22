@@ -8,7 +8,6 @@
     "axios": "^0.18.0",
     "gatsby": "^2.0.76",
     "gatsby-image": "^2.0.20",
-    "gatsby-plugin-less": "^2.0.8",
     "gatsby-plugin-manifest": "^2.0.9",
     "gatsby-plugin-offline": "^2.0.16",
     "gatsby-plugin-react-helmet": "^3.0.2",
@@ -16,14 +15,11 @@
     "gatsby-source-filesystem": "^2.0.8",
     "gatsby-transformer-sharp": "^2.1.8",
     "js-search": "^1.4.2",
-    "less": "^3.9.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-helmet": "^5.2.0",
-    "semantic-ui-less": "^2.4.1",
-    "semantic-ui-react": "^0.84.0"
+    "react-helmet": "^5.2.0"
   },
   "keywords": [
     "gatsby"

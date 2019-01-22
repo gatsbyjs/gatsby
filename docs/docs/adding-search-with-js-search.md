@@ -38,69 +38,16 @@ After the process is complete, some additional packages are needed.
 Navigate into the `jsSearchExample` folder and issue the following command:
 
 ```bash
-npm install --save js-search axios gatsby-plugin-less less semantic-ui-less semantic-ui-react
+npm install --save js-search axios
 ```
 Or if Yarn is being used:
 
 ```bash
-yarn add js-search axios gatsby-plugin-less less semantic-ui-less semantic-ui-react
+yarn add js-search axios
 ```
 Note:
 
-For this particular example [axios](https://github.com/axios/axios) will be used to handle all of the promise based HTTP requests, also [semantic-ui-react](https://react.semantic-ui.com/) for building a UI, but others can be used, it's up to the developer to choose what suits it's needs.
-
-Once the process is complete and in order for the UI for this example to work properly, the `gatsby-config.js` file needs some changes.
-
-The `gatsby-plugin-less` plugin needs to be added, resulting in the following file contents:
-
-```javascript
-module.exports = {
-    ...
-  plugins: [
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    `gatsby-plugin-less`, // the plugin was added here
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
-        start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
-    },
-  ],
-}
-```
-
-Also copy the contents of the `semantic` folder located [here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/semantic) to the local development environmnent.
-
-And finally make a small change in the `gatsby-node.js` file, resulting in the following:
-
-```javascript
-const path= require('path')
-exports.onCreateWebpackConfig=({stage,actions})=>{
-    actions.setWebpackConfig({
-        resolve: {
-          alias: {
-            '../../theme.config$': path.join(__dirname, 'src/semantic/theme.config'),
-          },
-        },
-      });
-}
-```
-What the code above is doing, is notifying Gatsby's build process to fetch the data needed for semantic ui to work properly.
+For this particular example [axios](https://github.com/axios/axios) will be used, to handle all of the promise based HTTP requests.
 
 After all of this is done the actual implementation can be started.
 
@@ -115,9 +62,9 @@ Start by creating a file in the `components` folder, for this particular case th
 ```javascript
 import React, { Component } from 'react'
 import Axios from 'axios'
-import { Segment, Form, Header } from 'semantic-ui-react'
 import * as JsSearch from 'js-search'
 import DataTable from './DataTable'
+import './search.css'
 class Search extends Component {
     state = {
         bookList: [], // the data that will be fetched
@@ -238,23 +185,28 @@ class Search extends Component {
     } = this.state
     return (
       <div>
-        <Segment raised>
-          <Form>
-            <Form.Group widths="equal">
-              <Form.Input
-                fluid
-                label="Search"
-                placeholder="Enter your search here"
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="Search" className="form-label">
+                Enter your search here
+              </label>
+              <input
+                id="Search"
                 value={searchQuery}
                 onChange={this.searchData}
+                placeholder="Enter your search here"
+                className="searchQuery"
               />
-            </Form.Group>
+            </div>
             .....
-          </Form>
-        </Segment>
-        <Segment>
-          <DataTable data={searchQuery === '' ? bookList : searchResults} />
-        </Segment>
+          </form>
+          <div>
+            Number of items:
+            {searchQuery === '' ? books.length : searchResults.length}
+            <DataTable data={searchQuery === '' ? books : searchResults} />
+          </div>
+        </div>
       </div>
     )
   }
@@ -272,6 +224,7 @@ Breaking down the code into smaller parts:
   5. When the contents of the input is changed, the js-plugin starts the search process based on it and returns the contents, which is then presented to the user via the `DataTable` component.
 
 Note:
+
 For brevity purposes, most of the component implementation is ommited, with the exception of the es6 fat arrow function `searchData()`, as this one is responsible for making the search, also the implementation of the `DataTable` component and the page holding this component will not shown. The full code of this example is available in [here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search).
 
 
@@ -335,53 +288,30 @@ It will be created in the following location `/src/templates`, under the name `C
 
 ```javascript
 import React from 'react'
-import { Container, Header } from 'semantic-ui-react'
 import Layout from '../components/layout'
 import ClientSearch from '../components/ClientSearch'
 
-const style = {
-  h1: {
-    marginTop: '3em',
-  },
-  h2: {
-    margin: '4em 0em 2em',
-  },
-  h3: {
-    marginTop: '2em',
-    padding: '2em 0em',
-  },
-  last: {
-    marginBottom: '300px',
-  },
-}
-
 const SearchTemplate = props => {
-  const { pageContext } = props // destructures the pageContext object in the props
-  const { bookData } = pageContext // destructures the bookData object that was created in gatsby-node.js
+  const { pageContext } = props
+  const { bookData } = pageContext
   const { allBooks, options } = bookData
   return (
     <Layout>
-      <Header
-        as="h1"
-        content="Search data using JS Search using Gatsby Api"
-        style={style.h1}
-        textAlign="center"
-      />
-      <Header
-        as="h3"
-        textAlign="center"
-        style={style.h3}
-        content="Books Indexed by:"
-      />
-      <Container>
+      <h1 style={{ marginTop: '3em', textAlign: 'center' }}>
+        Search data using JS Search using Gatsby Api
+      </h1>
+      <h3 style={{ marginTop: '2em', padding: '2em 0em', textAlign: 'center' }}>
+        Books Indexed by:
+      </h3>
+
+      <div>
         <ClientSearch books={allBooks} engine={options} />
-      </Container>
+      </div>
     </Layout>
   )
 }
 
 export default SearchTemplate
-
 ```
 
 And the second one, created in the `components` folder, called `ClientSearch.js`, with the following code as a baseline:
@@ -391,7 +321,7 @@ import React, { Component } from 'react'
 import { Segment, Form, Header } from 'semantic-ui-react'
 import * as JsSearch from 'js-search'
 import DataTable from './DataTable'
-
+import './search.css'
 class ClientSearch extends Component {
   state = {
     isLoading: true,

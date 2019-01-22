@@ -1,28 +1,24 @@
 import React from 'react'
-import { Table } from 'semantic-ui-react'
-
+import './search.css'
 const DataTable = props => (
-  <Table celled>
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Book ISBN</Table.HeaderCell>
-        <Table.HeaderCell>Book Title</Table.HeaderCell>
-        <Table.HeaderCell>Book Author</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
-    <Table.Body>
-      {/* eslint-disable */}
-      {props.data.map(item => {
-        return (
-          <Table.Row key={`row_${item.isbn}`}>
-            <Table.Cell>{item.isbn}</Table.Cell>
-            <Table.Cell>{item.title}</Table.Cell>
-            <Table.Cell>{item.author}</Table.Cell>
-          </Table.Row>
-        )
-      })}
-    </Table.Body>
-  </Table>
+  <table>
+    <thead>
+      <tr>
+        <th>Book ISBN</th>
+        <th>Book Title</th>
+        <th>Book Author</th>
+      </tr>
+    </thead>
+    <tbody>
+      {props.data.map(item => (
+        <tr key={`row_${item.isbn}`}>
+          <td>{item.isbn}</td>
+          <td>{item.title}</td>
+          <td>{item.author}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 )
 
 export default DataTable
