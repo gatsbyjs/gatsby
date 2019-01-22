@@ -284,8 +284,9 @@ exports.onPreExtractQueries = true
  * to the dev server app
  * @param {object} $0
  * @param {Express} $0.app The [Express app](https://expressjs.com/en/4x/api.html#app) used to run the dev server
+ * @param {http.Server} $1.server The HTTP server instance
  * @example
- * exports.onCreateDevServer = ({ app }) => {
+ * exports.onCreateDevServer = ({ app, server }) => {
  *   app.get('/hello', function (req, res) {
  *     res.send('hello world')
  *   })
