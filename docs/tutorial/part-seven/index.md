@@ -121,8 +121,7 @@ fields.
 ```javascript:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  // highlight-line
+exports.onCreateNode = ({ node, getNode, actions }) => { // highlight-line
   const { createNodeField } = actions // highlight-line
   if (node.internal.type === `MarkdownRemark`) {
     // highlight-start
