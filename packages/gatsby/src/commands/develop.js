@@ -171,8 +171,6 @@ async function startServer(program) {
     })
   }
 
-  await apiRunnerNode(`onCreateDevServer`, { app })
-
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.path)
@@ -200,6 +198,9 @@ async function startServer(program) {
   if (program.ssl) {
     server = require(`https`).createServer(program.ssl, app)
   }
+  
+  await apiRunnerNode(`onCreateDevServer`, { app, server })
+  
   websocketManager.init({ server, directory: program.directory })
   const socket = websocketManager.getSocket()
 
