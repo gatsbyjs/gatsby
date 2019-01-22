@@ -45,12 +45,11 @@ describe(`gatsby-plugin-manifest`, () => {
     expect(headComponents).toMatchSnapshot()
   })
 
-  describe(`Creates legacy apple touch links if opted in`, () => {
+  describe(`Creates legacy apple touch links`, () => {
     it(`Using default set of icons`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
-        legacy: true,
       })
       expect(headComponents).toMatchSnapshot()
     })
