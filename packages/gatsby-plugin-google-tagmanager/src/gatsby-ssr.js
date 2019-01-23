@@ -37,12 +37,7 @@ exports.onRenderBody = (
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
           __html: stripIndent`
-            <iframe `+
-              `src="https://www.googletagmanager.com/ns.html?id=${pluginOptions.id}${environmentParamStr}" `+
-              `height="0" `+
-              `width="0" `+
-              `style="display: none; visibility: hidden"`+
-            `></iframe>`,
+            <iframe src="https://www.googletagmanager.com/ns.html?id=${pluginOptions.id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`,
         }}
       />,
     ])
