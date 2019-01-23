@@ -32,6 +32,7 @@ exports.onRenderBody = (
       />,
     ])
 
+    // TODO: add a test to verify iframe contains no line breaks. Ref: https://github.com/gatsbyjs/gatsby/issues/11014
     setPreBodyComponents([
       <noscript
         key="plugin-google-tagmanager"
