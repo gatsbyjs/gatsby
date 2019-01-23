@@ -72,5 +72,19 @@ describe(`remark prism plugin`, () => {
       plugin({ markdownAST })
       expect(markdownAST).toMatchSnapshot()
     })
+
+    it(`adds line-number markup when configured globally`, () => {
+      const code = `\`\`\`js\n//.foo { \ncolor: red;\n }\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { showLineNumbers: true })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`does not add line-number markup when not configured globally`, () => {
+      const code = `\`\`\`js\n//.foo { \ncolor: red;\n }\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
   })
 })

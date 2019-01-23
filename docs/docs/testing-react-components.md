@@ -14,7 +14,7 @@ It provides light utility functions on top of `react-dom` and `react-dom/test-ut
 
 Install the library as one of your project's `devDependencies`. Optionally you may install `jest-dom` to use its [custom jest matchers](https://github.com/gnapse/jest-dom#custom-matchers).
 
-```sh
+```shell
 npm install --save-dev react-testing-library jest-dom
 ```
 
@@ -29,11 +29,11 @@ import "react-testing-library/cleanup-after-each"
 
 This file gets run automatically by Jest before every test and therefore you don't need to add the imports to every single test file.
 
-Lastly you need to tell Jest where to find this file. Open your `package.json` and add this entry to your `"jest"` section:
+Lastly you need to tell Jest where to find this file. Open your `jest.config.js` and add this entry to the bottom after 'setupFiles':
 
-```json:title=package.json
-"jest": {
-  "setupTestFrameworkScriptFile": "<rootDir>/setup-test-env.js"
+```js:title=jest.config.js
+module.exports = {
+  setupTestFrameworkScriptFile: "<rootDir>/setup-test-env.js",
 }
 ```
 

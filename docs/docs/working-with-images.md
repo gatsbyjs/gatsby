@@ -22,7 +22,7 @@ You can also use arguments in your query to specify exact, minimum, and maximum 
 
 This example is for an image gallery where images stretch when the page is resized. It uses the `fluid` method and the fluid fragment to grab the right data to use in `gatsby-image` component and arguments to set the maximum width as 400px and maximum height as 250px.
 
-```jsx
+```js
 export const query = graphql`
   query {
     fileName: file(relativePath: { eq: "images/myimage.jpg" }) {
@@ -49,8 +49,8 @@ export const query = graphql`
 
 Here is an image component that uses the query from the previous example:
 
-```
-<Img fluid={data.fileName.childImageSharp.fluid}  />
+```jsx
+<Img fluid={data.fileName.childImageSharp.fluid} />
 ```
 
 ## Using Fragments To Standardize Formatting
@@ -59,34 +59,34 @@ What if you have a bunch of images and you want them all to use the same formatt
 
 A custom fragment is an easy way to standardize formatting and re-use it on multiple images:
 
-```
+```js
 export const squareImage = graphql`
-fragment squareImage on File {
-      childImageSharp {
-        fluid(maxWidth: 200, maxHeight: 200) {
-          ...GatsbyImageSharpFluid
-        }
+  fragment squareImage on File {
+    childImageSharp {
+      fluid(maxWidth: 200, maxHeight: 200) {
+        ...GatsbyImageSharpFluid
       }
-}
-`;
+    }
+  }
+`
 ```
 
 The fragment can then be referenced in the image query:
 
-```
+```js
 export const query = graphql`
   query {
-    image1:file(relativePath: { eq: "images/image1.jpg" }) {
+    image1: file(relativePath: { eq: "images/image1.jpg" }) {
       ...squareImage
     }
 
-    image2:file(relativePath: { eq: "images/image2.jpg" }) {
+    image2: file(relativePath: { eq: "images/image2.jpg" }) {
       ...squareImage
     }
 
-   image3:file(relativePath: { eq: "images/image3.jpg" }) {
+    image3: file(relativePath: { eq: "images/image3.jpg" }) {
       ...squareImage
     }
   }
-`;
+`
 ```

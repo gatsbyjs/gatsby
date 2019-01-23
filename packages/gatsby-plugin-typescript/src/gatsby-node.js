@@ -1,8 +1,9 @@
 const resolvableExtensions = () => [`.ts`, `.tsx`]
 
-function onCreateBabelConfig({ actions }, pluginOptions) {
+function onCreateBabelConfig({ actions }, options) {
   actions.setBabelPreset({
     name: `@babel/preset-typescript`,
+    options,
   })
 }
 

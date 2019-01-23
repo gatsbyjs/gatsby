@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const { store } = require(`../`)
 const { actions } = require(`../actions.js`)
 
-exports.createPageDependency = ({ path, nodeId, connection }) => {
+function createPageDependency({ path, nodeId, connection }) {
   const state = store.getState()
 
   // Check that the dependencies aren't already recorded so we
@@ -36,3 +36,5 @@ exports.createPageDependency = ({ path, nodeId, connection }) => {
   const action = actions.createPageDependency({ path, nodeId, connection })
   store.dispatch(action)
 }
+
+module.exports = createPageDependency

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.8...gatsby-link@2.0.9) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-link
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.7...gatsby-link@2.0.8) (2019-01-10)
+
+### Bug Fixes
+
+- enable ref forwarding with forwardRef ([#9892](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/9892)) ([b6d9775](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/b6d9775))
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.6...gatsby-link@2.0.7) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-link
+
 <a name="2.0.6"></a>
 
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.5...gatsby-link@2.0.6) (2018-10-29)

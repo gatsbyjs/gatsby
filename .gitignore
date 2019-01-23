@@ -16,7 +16,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
-.nyc_output
+junit.xml
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -50,6 +50,12 @@ node_modules/
 .vscode/
 *.sw*
 
+# misc
 .serverless/
+
+# lock files
 yarn.lock
 package-lock.json
+
+# starters are special; we want to persist the lock files
+!starters/*/package-lock.json

@@ -52,7 +52,11 @@ const createElement = React.createElement
 export default (pagePath, callback) => {
   let bodyHtml = ``
   let headComponents = [
-    <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />,
+    <meta
+      name="generator"
+      content={`Gatsby ${gatsbyVersion}`}
+      key={`generator-${gatsbyVersion}`}
+    />,
   ]
   let htmlAttributes = {}
   let bodyAttributes = {}
@@ -180,6 +184,8 @@ export default (pagePath, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   // If no one stepped up, we'll handle it.
@@ -275,10 +281,10 @@ export default (pagePath, callback) => {
     }.json`
     headComponents.push(
       <link
+        as="fetch"
         rel="preload"
         key={dataPath}
         href={dataPath}
-        as="fetch"
         crossOrigin="use-credentials"
       />
     )
@@ -366,6 +372,8 @@ export default (pagePath, callback) => {
     replacePreBodyComponents,
     getPostBodyComponents,
     replacePostBodyComponents,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(

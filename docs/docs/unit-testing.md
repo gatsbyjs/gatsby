@@ -15,42 +15,49 @@ which was created by Facebook. While Jest is a general purpose JavaScript unit
 testing framework, it has lots of features that make it work particularly well
 with React.
 
-For this guide, you will be starting with `gatsby-starter-blog`, but the
-concepts should be the same or very similar for your site.
+_Note: For this guide, you will be starting with `gatsby-starter-blog`, but the
+concepts should be the same or very similar for your site._
+
+### 1. Installing dependencies
 
 First you need to install Jest and some more required packages. You need to
 install Babel 7 as it's required by Jest.
 
-```sh
-npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy 'babel-core@^7.0.0-0' @babel/core babel-preset-gatsby
+```shell
+npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy babel-core@^7.0.0-bridge.0 @babel/core babel-preset-gatsby
 ```
+
+### 2. Creating a configuration file for Jest
 
 Because Gatsby handles its own Babel configuration, you will need to manually
 tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.config.js`. You can set up some useful defaults at the same time:
 
-```json:title=jest.config.js
+```js:title=jest.config.js
 module.exports = {
-  "transform": {
-    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
+  transform: {
+    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js",
   },
-  "moduleNameMapper": {
+  moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js",
   },
-  "testPathIgnorePatterns": ["node_modules", ".cache"],
-  "transformIgnorePatterns": ["node_modules/(?!(gatsby)/)"],
-  "globals": {
-    "__PATH_PREFIX__": ""
+  testPathIgnorePatterns: ["node_modules", ".cache"],
+  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
+  globals: {
+    __PATH_PREFIX__: "",
   },
-  "testURL": "http://localhost",
-  "setupFiles": ["<rootDir>/loadershim.js"]
+  testURL: "http://localhost",
+  setupFiles: ["<rootDir>/loadershim.js"],
 }
 ```
 
-The `transform` section tells Jest that all `js` or `jsx` files need to be
-transformed using a `jest-preprocess.js` file in the project root. Go ahead and
-create this file now. This is where you set up your Babel config. You can start
-with a minimal config.
+Let's go over the content of this configuration file:
+
+- The `transform` section tells Jest that all `js` or `jsx` files need to be
+  transformed using a `jest-preprocess.js` file in the project root. Go ahead and
+  create this file now. This is where you set up your Babel config. You can start
+  with the following minimal config:
 
 ```js:title=jest-preprocess.js
 const babelOptions = {
@@ -60,32 +67,28 @@ const babelOptions = {
 module.exports = require("babel-jest").createTransformer(babelOptions)
 ```
 
-Back to the Jest config, you can see the next option is `testRegex`. This is the
-pattern telling Jest which files contain tests. The pattern above matches any
-`.js` file inside a `__tests__` directory, or any file elsewhere with the
-extension `.test.js` or `.spec.js`. You are telling Jest to ignore any tests in
-the `node_modules` or `.cache` directories.
-
-The `moduleNameMapper` section works a bit like webpack rules, and tells Jest
-how to handle imports. You are mainly concerned here with mocking static file
-imports, which Jest can't handle. A mock is a dummy module that is used instead
-of the real module inside tests. It is good when you have something that you
-can't or don't want to test. You can mock anything, and here you are mocking
-assets rather than code. For stylesheets you need to use the package
-`identity-obj-proxy`. For all other assets you need to use a manual mock called
-`fileMock.js`. You need to create this yourself. The convention is to create a
-directory called `__mocks__` in the root directory for this. Note the pair of
-double underscores in the name.
+- The next option is `moduleNameMapper`. This
+  section works a bit like webpack rules, and tells Jest how to handle imports.
+  You are mainly concerned here with mocking static file imports, which Jest can't
+  handle. A mock is a dummy module that is used instead of the real module inside
+  tests. It is good when you have something that you can't or don't want to test.
+  You can mock anything, and here you are mocking assets rather than code. For
+  stylesheets you need to use the package `identity-obj-proxy`. For all other assets
+  you need to use a manual mock called `fileMock.js`. You need to create this yourself.
+  The convention is to create a directory called `__mocks__` in the root directory
+  for this. Note the pair of double underscores in the name.
 
 ```js:title=__mocks__/fileMock.js
 module.exports = "test-file-stub"
 ```
 
-The next config setting is `transformIgnorePatterns`. This is very important,
-and is different from what you'll find in other Jest guides. The reason that you
-need this is because Gastby includes un-transpiled ES6 code. By default Jest
-doesn't try to transform code inside `node_modules`, so you will get an error
-like this:
+- The next config setting is `testPathIgnorePatterns`. You are telling Jest to ignore
+  any tests in the `node_modules` or `.cache` directories.
+
+- The next option is very important, and is different from what you'll find in other
+  Jest guides. The reason that you need `transformIgnorePatterns` is because Gatsby
+  includes un-transpiled ES6 code. By default Jest doesn't try to transform code
+  inside `node_modules`, so you will get an error like this:
 
 ```
 /my-blog/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
@@ -98,23 +101,27 @@ This is because `gatsby-browser-entry.js` isn't being transpiled before running
 in Jest. You can fix this by changing the default `transformIgnorePatterns` to
 exclude the `gatsby` module.
 
-The `globals` section sets `__PATH_PREFIX__`, which is usually set by Gatsby,
-and which some components need.
+- The `globals` section sets `__PATH_PREFIX__`, which is usually set by Gatsby,
+  and which some components need.
 
-You need to set `testURL` to a valid URL, because some DOM APIs such as
-`localStorage` are unhappy with the default (`about:blank`).
+- You need to set `testURL` to a valid URL, because some DOM APIs such as
+  `localStorage` are unhappy with the default (`about:blank`).
 
 > Note: if you're using Jest 23.5.0 or later, `testURL` will default to `http://localhost` so you can skip this setting.
 
-There's one more global that you need to set, but as it's a function you can't
-set it here in the JSON. The `setupFiles` array lets you list files that will be
-included before all tests are run, so it's perfect for this.
+- There's one more global that you need to set, but as it's a function you can't
+  set it here in the JSON. The `setupFiles` array lets you list files that will be
+  included before all tests are run, so it's perfect for this.
 
 ```js:title=loadershim.js
 global.___loader = {
   enqueue: jest.fn(),
 }
 ```
+
+### 3. Useful mocks to complete your testing environment
+
+#### Mocking `gatsby`
 
 Finally it's a good idea to mock the `gatsby` module itself. This may not be
 needed at first, but will make things a lot easier if you want to test
@@ -139,6 +146,8 @@ module.exports = {
 
 This mocks the `graphql()` function, `Link` component, and `StaticQuery` component.
 
+#### Mocking `location` from `Router`
+
 One more issue that you may encounter is that some components expect to be able
 to use the `location` prop that is passed in by `Router`. You can fix this by
 manually passing in the prop:
@@ -156,7 +165,7 @@ describe("BlogIndex", () => {
 
     const tree = renderer.create(<BlogIndex location={location} />).toJSON()
     expect(tree).toMatchSnapshot()
-  }))
+  })
 })
 ```
 
@@ -211,7 +220,7 @@ they are changed.
 
 Now, run `npm run test` and you should immediately get an error like this:
 
-```sh
+```shell
  @font-face {
     ^
 
@@ -246,33 +255,47 @@ by running `npm run test -- -u`.
 If you are using TypeScript, you need to make a couple of small changes to your
 config. First install `ts-jest`:
 
-```sh
+```shell
 npm install --save-dev ts-jest
 ```
 
 Then update the configuration in `jest.config.js`, like so:
 
-```json:title=jest.config.js
+```js:title=jest.config.js
 module.exports = {
-  "transform": {
+  transform: {
     "^.+\\.tsx?$": "ts-jest",
-    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
+    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js",
   },
-  "testRegex": "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
-  "moduleNameMapper": {
+  testRegex: "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
+  moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js",
   },
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
-  "testPathIgnorePatterns": ["node_modules", ".cache"],
-  "transformIgnorePatterns": ["node_modules/(?!(gatsby)/)"],
-  "globals": {
-    "__PATH_PREFIX__": ""
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  testPathIgnorePatterns: ["node_modules", ".cache"],
+  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
+  globals: {
+    __PATH_PREFIX__: "",
   },
-  "testURL": "http://localhost",
-  "setupFiles": ["<rootDir>/loadershim.js"]
+  testURL: "http://localhost",
+  setupFiles: ["<rootDir>/loadershim.js"],
 }
 ```
+
+You may notice that two other options, `testRegex` and `moduleFileExtensions`,
+have been added. Option `testRegex` is the pattern telling Jest which files
+contain tests. The pattern above matches any `.js`, `.jsx`, `.ts` or `.tsx`
+file inside a `__tests__` directory, or any file elsewhere with the extension
+`.test.js`, `.test.jsx`, `.test.ts`, `.test.tsx`, or `.spec.js`, `.spec.jsx`,
+`.spec.ts`, `.spec.tsx`.
+
+Option `moduleFileExtensions` is needed when working with TypeScript.
+The only thing it is doing is telling Jest which file extensions you can
+import in your files without making precise the file extension. By default,
+it works with `js`, `json`, `jsx`, `node` file extensions so we just need
+to add `ts` and `tsx`. You can read more about it in [Jest's documentation](https://jestjs.io/docs/en/configuration.html#modulefileextensions-array-string).
 
 ## Other resources
 

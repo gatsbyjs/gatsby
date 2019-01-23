@@ -66,7 +66,7 @@ individuals and companies.
 - [X-Team](https://x-team.com/)
 - [Contentful](https://www.contentful.com/)
 
-### Our open source hosting/testing infastructure providers
+### Our open source hosting/testing infrastructure providers
 
 It'd be impossible to write open source code without the generous support of
 these infrastructure providers.

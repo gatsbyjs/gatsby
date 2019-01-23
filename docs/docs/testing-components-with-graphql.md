@@ -227,7 +227,7 @@ test.
 Here is the example of a header component that queries the page data itself,
 rather than needing it to be passed from the layout:
 
-```js:title=src/components/Header.js
+```jsx:title=src/components/Header.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 
@@ -256,7 +256,7 @@ export default props => (
 This is almost ready: all you need to do is export the pure component that you
 are passing to StaticQuery. Rename it first to avoid confusion:
 
-```js:title=src/components/Header.js
+```jsx:title=src/components/Header.js
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
@@ -295,7 +295,7 @@ side-effects apart from their return value. This means we can be sure the tests
 are always reproducible and don't fail if, for example, the network is down or
 the data source changes. In this example, `Header` is impure as it makes a
 query, so the output depends on something apart from its props. `PureHeader` is
-pure because its return value is entirely dependent on the props passed it it.
+pure because its return value is entirely dependent on the props passed to it.
 This means it's very easy to test, and a snapshot should never change.
 
 Here's how:

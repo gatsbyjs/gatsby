@@ -75,6 +75,20 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
+    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "name": "webpack-theme-component-shadowing",
+    "nodeAPIs": Array [
+      "onCreateWebpackConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
@@ -169,6 +183,20 @@ Array [
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "name": "webpack-theme-component-shadowing",
+    "nodeAPIs": Array [
+      "onCreateWebpackConfig",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
