@@ -17,6 +17,7 @@ if (process.env.BUILD_STAGE === `develop`) {
     // Inject the CSS Styles
     typography.injectStyles()
 
+    // If "omitGoogleFont" is set to "true" the plugin shouldn't load Google CDN links
     const omit =
       typeof pluginOptions.omitGoogleFont !== `undefined`
         ? pluginOptions.omitGoogleFont
