@@ -260,8 +260,7 @@ function inferFromFieldName(
             .sort()
             .join(`, `)}]`,
           types: fields.map(f => f.nodeObjectType),
-          resolveType: node =>
-            fields.find(f => f.name == node.internal.type).nodeObjectType,
+          resolveType: node => node.internal.type,
         })
         unionTypes.set(typeName, type)
       }
