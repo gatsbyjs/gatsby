@@ -19,7 +19,7 @@ const Title = styled.h1`
 // Create an URL component that'll render an <a> tag with some styles
 const Url = styled.a`
   text-decoration: none;
-  color: #1E88E5;
+  color: #1e88e5;
 `
 
 // Create a Wrapper component that'll render a <section> tag with some styles
