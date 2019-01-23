@@ -92,6 +92,8 @@
         - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/
           items:
+            - title: Sourcing from ButterCMS
+              link: /docs/sourcing-from-buttercms/
             - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
