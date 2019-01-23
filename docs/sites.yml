@@ -6,17 +6,6 @@
   categories:
     - Web Development
     - Featured
-- title: Stitch Fix
-  main_url: "https://www.stitchfix.com/"
-  url: "https://www.stitchfix.com/"
-  description: >
-    Stitch Fix is an online styling service that delivers a truly personalized
-    shopping experience.
-  categories:
-    - eCommerce
-    - Fashion
-    - Featured
-  featured: true
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
@@ -3933,3 +3922,113 @@
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
+- title: Takumon blog
+  main_url: "https://takumon.com"
+  url: "https://takumon.com"
+  source_url: "https://github.com/Takumon/blog"
+  description: Java Engineer's tech blog.
+  featured: false
+  categories:
+    - Blog
+  built_by: Takumon
+  built_by_url: "https://twitter.com/inouetakumon"
+- title: DayThirty
+  main_url: "https://daythirty.com"
+  url: "https://daythirty.com"
+  description: DayThirty - ideas for the new year.
+  featured: false
+  categories:
+    - Health & Wellness
+  built_by: Jack Oliver
+  built_by_url: "https://twitter.com/mrjackolai"
+- title: Karen Hou's portfolio
+  main_url: https://www.karenhou.com/
+  url: https://www.karenhou.com/
+  categories:
+    - Portfolio
+  built_by: Karen H. Developer
+  built_by_url: https://github.com/karenhou
+  featured: false
+- title: Jean Luc Ponty
+  main_url: "https://ponty.com"
+  url: "https://ponty.com"
+  description: Official site for Jean Luc Ponty, French virtuoso violinist and jazz composer.
+  featured: false
+  categories:
+    - Music
+    - Entertainment
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
+- title: Rosewood Family Advisors
+  main_url: "https://www.rfallp.com/"
+  url: "https://www.rfallp.com/"
+  description: Rosewood Family Advisors LLP (Palo Alto) provides a diverse range of family office services customized for ultra high net worth individuals.
+  featured: false
+  categories:
+    - Finance
+    - Business
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
+- title: Cole Walker's Portfolio
+  main_url: "https://www.walkermakes.com"
+  url: "https://www.walkermakes.com"
+  source_url: "https://github.com/ColeWalker/portfolio"
+  description: The portfolio of web developer Cole Walker, built with the help of Gatsby v2, React-Spring, and SASS.
+  featured: false
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Cole Walker
+  built_by_url: "https://www.walkermakes.com"
+- title: Ashley Thouret
+  main_url: "https://www.ashleythouret.com"
+  url: "https://www.ashleythouret.com"
+  description: Official website of Canadian soprano Ashley Thouret.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: The AZOOR Society
+  main_url: "https://www.theazoorsociety.org"
+  url: "https://www.theazoorsociety.org"
+  description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research.
+  categories:
+    - Health & Wellness
+    - Community
+    - Nonprofit
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: Gábor Fűzy pianist
+  main_url: "https://pianobar.hu"
+  url: "https://pianobar.hu"
+  description: Gábor Fűzy pianist's offical website built with Gatsby v2.
+  categories:
+    - Music
+  built_by: Zoltán Bedi
+  built_by_url: "https://github.com/B3zo0"
+  featured: false
+- title: Logicwind
+  main_url: "https://logicwind.com"
+  url: "https://logicwind.com"
+  description: Website of Logicwind - Javascript experts, Technology development agency & consulting.
+  featured: false
+  categories:
+    - Portfolio
+    - Agency
+    - Web Development
+    - Consulting
+  built_by: Logicwind
+  built_by_url: "https://www.logicwind.com"
+- title: ContactBook.app
+  main_url: "https://contactbook.app"
+  url: "https://contactbook.app"
+  description: Seamlessly share Contacts with G Suite team members
+  featured: false
+  categories:
+    - Landing page
+    - Blog
+  built_by: Logicwind
+  built_by_url: "https://www.logicwind.com"
