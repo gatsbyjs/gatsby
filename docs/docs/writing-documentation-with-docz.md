@@ -2,9 +2,11 @@
 title: "Writing documentation with Docz"
 ---
 
-Writing good documentation is important for your project maintainers (and for your future self!). A very nice documentation generator is [Docz](https://www.docz.site). It supports `mdx` files, which is short for Markdown with JSX. That means you can render React components in these special Markdown files. It can generate Prop tables and even provide a coding playground for your components.
+Writing good documentation is important for your project maintainers (and for your future self!). A very nice documentation generator is [Docz](https://www.docz.site). It allows you to easily write interactive docs for your React components.
 
-If you're starting your Gatsby project from scratch and would like to have Docz support out of the box, you can use the starter mentioned in [Other Resources](#other-resources) below.
+Docz leverages `mdx` files -- short for Markdown with JSX-- which brings **React components** to Markdown files. From your PropTypes, or Flow types or TypeScript types, it can generate **property tables** to document properly how to use your components. In addition, you can provide a **coding playground** for your components, so that anyone can see them in action, modify the code and see the changes live, or copy the snippet to use it somewhere else.
+
+If you're starting your Gatsby project from scratch and would like to have great documentation, with Docz support out of the box, you can use the starter mentioned in [Other Resources](#other-resources) below.
 
 Alternatively, the following guide should help you to get Docz working within an existing Gatsby project.
 
@@ -152,10 +154,18 @@ import Header from './src/components/header'
 This is the start of an amazing Docz site
 
 //highlight-next-line
+
 <Header siteTitle="Hello from Gatsby" />
 ```
 
 Restart the Docz server and voilà!
+
+> Note: If your component relies on `StaticQuery` or `graphql`, consider splitting it into two smaller components:
+>
+> - one React component dealing only with the **UI layer**, and
+> - another dealing with the **data layer**.
+>
+> You could showcase the UI layer React component in your `mdx` files and your data layer component could use it to render the data it fetched thanks to `StaticQuery` and `graphql`.
 
 ## Other resources
 
