@@ -110,3 +110,7 @@
           link: /tutorial/part-eight/#add-page-metadata
         - title: Keep making it better
           link: /tutorial/part-eight/#keep-making-it-better
+    - title: Appendix. Sourcing from JSON or YAML
+      link: /tutorial/appendix/source-JSON-YAML
+      ui: steps
+      
