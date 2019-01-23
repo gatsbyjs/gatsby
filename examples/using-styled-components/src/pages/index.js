@@ -16,8 +16,16 @@ const Title = styled.h1`
   color: palevioletred;
 `
 
+// Create an URL component that'll render an <a> tag with some styles
+const Url = styled.a`
+  text-decoration: none;
+  color: #1E88E5;
+`
+
 // Create a Wrapper component that'll render a <section> tag with some styles
 const Wrapper = styled.section`
+  text-align: center;
+  border-radius: 10px;
   padding: 5.5rem;
   background: papayawhip;
   margin: 3rem auto 0 auto;
@@ -40,9 +48,9 @@ class IndexPage extends React.Component {
         <Wrapper>
           <Title>Hello World, this is my first styled component!</Title>
           <p>
-            <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
+            <Url href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
               gatsby-plugin-styled-component docs
-            </a>
+            </Url>
           </p>
         </Wrapper>
       </Fragment>
