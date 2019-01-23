@@ -58,7 +58,7 @@ class StarterLibraryPage extends Component {
         />
         <Unbird
           dataSetId="5c113a828240aa564734d954"
-          publicKey={process.env.UNBIRD_FEEDBACK_KEY_STARTERLIB}
+          publicKey={process.env.GATSBY_FEEDBACK_KEY_STARTERLIB}
           feedbackPrompt="Have feedback on the Starter Library?"
         />
       </Layout>
