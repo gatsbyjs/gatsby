@@ -40,7 +40,9 @@ class ScrollContext extends React.Component {
      * Gatsby can because it's awesome (ships SSR html) so we don't want to disable scrollRestoration
      * see #7454
      */
-    window.history.scrollRestoration = `auto`
+    if (`scrollRestoration` in window.history) {
+      window.history.scrollRestoration = `auto`
+    }
   }
 
   componentDidUpdate(prevProps) {
