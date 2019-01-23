@@ -1675,3 +1675,13 @@
   features:
     - Includes Contentstack Delivery API for any environment
     - Dynamic content from Contentstack CMS
+- url: https://gatsby-craftcms-barebones.netlify.com
+  repo: https://github.com/frankievalentine/gatsby-craftcms-barebones
+  description: Barebones setup for using Craft CMS and Gatsby locally.
+  tags:
+    - Craft CMS
+    - Headless CMS
+  features:
+    - Full setup instructions included
+    - Documented to get you set up with Craft CMS quickly
+    - Code referenced in repo
