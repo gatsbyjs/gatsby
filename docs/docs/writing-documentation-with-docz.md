@@ -2,9 +2,9 @@
 title: "Writing documentation with Docz"
 ---
 
-Writing good documentation is important for your project maintainers (and for your future self!). A very nice documentation generator is [Docz](https://www.docz.site). It supports `mdx` files, which is short for Markdown with JSX. That means you can render React components in these special Markdown files. It can generate Prop tables and even provide a coding playground for your components!
+Writing good documentation is important for your project maintainers (and for your future self!). A very nice documentation generator is [Docz](https://www.docz.site). It supports `mdx` files, which is short for Markdown with JSX. That means you can render React components in these special Markdown files. It can generate Prop tables and even provide a coding playground for your components.
 
-If you are starting your Gatsby project from scratch and would like to have Docz support out of the box, you can use the starter given in [Other Resources](#other-resources) below.
+If you're starting your Gatsby project from scratch and would like to have Docz support out of the box, you can use the starter mentioned in [Other Resources](#other-resources) below.
 
 Alternatively, the following guide should help you to get Docz working within an existing Gatsby project.
 
@@ -16,7 +16,7 @@ First, if you do not have a Gatsby project set up yet, use the Gatsby CLI to cre
 npx gatsby new my-gatsby-site-with-docz
 ```
 
-To set up Docz you need to install dependencies and do some custom configuration. Make sure you are in the root directory of your Gatsby project,
+To set up Docz you need to install dependencies and do some custom configuration. Make sure you are in the root directory of your Gatsby project:
 
 ```shell
 cd my-gatsby-site-with-docz
@@ -52,7 +52,7 @@ Create these two files:
 - `doczrc.js` to configure Docz,
 - `docz/wrapper.js` to inject some JavaScript in Docz pages, to ensure compatibility with Gatsby.
 
-Create a new folder `docz`, and inside that folder, a new file `wrapper.js`. Copy and paste there the following code:
+Create a new folder `docz`, and inside that folder, a new file `wrapper.js`. Add the following code to `wrapper.js`:
 
 ```js:title=docz/wrapper.js
 import * as React from "react"
@@ -113,7 +113,7 @@ export default {
 }
 ```
 
-Once you have this configured you should run Docz to ensure it can start up properly. You should see by default a _Page Not Found_ page: you haven't created any `mdx` file yet. To run Docz:
+Once you have this configured you should run Docz to ensure it can start up properly. You should see by default a _Page Not Found_ page, this is fine as you haven't created any `mdx` files yet. To run Docz:
 
 ```shell
 npm run docz:dev
@@ -159,6 +159,5 @@ Restart the Docz server and voilà!
 
 ## Other resources
 
-- For more information on Docz, visit
-  [the Docz site](https://docz.site/).
+- For more information on Docz visit [the Docz site](https://docz.site/)
 - Get started with a [Docz starter](https://github.com/RobinCsl/gatsby-starter-docz)
