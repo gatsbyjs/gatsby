@@ -46,6 +46,14 @@ const htmlAstCacheKey = node =>
   `transformer-remark-markdown-html-ast-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+const excerptCacheKey = (node, format) =>
+  `transformer-remark-markdown-excerpt-${format}-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+const excerptAstCacheKey = node =>
+  `transformer-remark-markdown-excerpt-ast-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const headingsCacheKey = node =>
   `transformer-remark-markdown-headings-${
     node.internal.contentDigest
@@ -363,6 +371,108 @@ module.exports = (
       }
     }
 
+    async function getExcerptAst(
+      markdownNode,
+      { pruneLength, truncate, excerptSeparator }
+    ) {
+      const cachedAst = await cache.get(excerptAstCacheKey(markdownNode))
+      if (cachedAst) {
+        return cachedAst
+      }
+
+      const fullAST = await getHTMLAst(markdownNode)
+      if (excerptSeparator) {
+        return cloneTreeUntil(
+          fullAST,
+          ({ nextNode }) =>
+            nextNode.type === `raw` && nextNode.value === excerptSeparator
+        )
+      }
+      if (!fullAST.children.length) {
+        cache.set(excerptAstCacheKey(markdownNode, fullAST))
+        return fullAST
+      }
+
+      const excerptAST = cloneTreeUntil(fullAST, ({ root }) => {
+        const totalExcerptSoFar = getConcatenatedValue(root)
+        return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
+      })
+      const unprunedExcerpt = getConcatenatedValue(excerptAST)
+      if (
+        !unprunedExcerpt ||
+        (pruneLength && unprunedExcerpt.length < pruneLength)
+      ) {
+        cache.set(excerptAstCacheKey(markdownNode, excerptAST))
+        return excerptAST
+      }
+
+      const lastTextNode = findLastTextNode(excerptAST)
+      const amountToPruneLastNode =
+        pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
+      if (!truncate) {
+        lastTextNode.value = prune(
+          lastTextNode.value,
+          amountToPruneLastNode,
+          `…`
+        )
+      } else {
+        lastTextNode.value = _.truncate(lastTextNode.value, {
+          length: pruneLength,
+          omission: `…`,
+        })
+      }
+      cache.set(excerptAstCacheKey(markdownNode, excerptAST))
+      return excerptAST
+    }
+
+    async function getExcerpt(
+      markdownNode,
+      { format, pruneLength, truncate, excerptSeparator }
+    ) {
+      const cachedExcerpt = await cache.get(
+        excerptCacheKey(markdownNode, format)
+      )
+      if (cachedExcerpt) {
+        return cachedExcerpt
+      }
+
+      if (format === `html`) {
+        const excerptAST = await getExcerptAst(markdownNode, {
+          pruneLength,
+          truncate,
+          excerptSeparator,
+        })
+        const html = hastToHTML(excerptAST, {
+          allowDangerousHTML: true,
+        })
+        cache.set(excerptCacheKey(markdownNode, format), html)
+        return html
+      }
+
+      if (markdownNode.excerpt) {
+        return markdownNode.excerpt
+      }
+
+      const text = getAST(markdownNode).then(ast => {
+        const excerptNodes = []
+        visit(ast, node => {
+          if (node.type === `text` || node.type === `inlineCode`) {
+            excerptNodes.push(node.value)
+          }
+          return
+        })
+        if (!truncate) {
+          return prune(excerptNodes.join(` `), pruneLength, `…`)
+        }
+        return _.truncate(excerptNodes.join(` `), {
+          length: pruneLength,
+          omission: `…`,
+        })
+      })
+      cache.set(excerptCacheKey(markdownNode, format), text)
+      return text
+    }
+
     const HeadingType = new GraphQLObjectType({
       name: `MarkdownHeading`,
       fields: {
@@ -433,77 +543,35 @@ module.exports = (
             defaultValue: `plain`,
           },
         },
-        async resolve(markdownNode, { format, pruneLength, truncate }) {
-          if (format === `html`) {
-            if (pluginOptions.excerpt_separator) {
-              const fullAST = await getHTMLAst(markdownNode)
-              const excerptAST = cloneTreeUntil(
-                fullAST,
-                ({ nextNode }) =>
-                  nextNode.type === `raw` &&
-                  nextNode.value === pluginOptions.excerpt_separator
-              )
-              return hastToHTML(excerptAST, {
-                allowDangerousHTML: true,
-              })
-            }
-            const fullAST = await getHTMLAst(markdownNode)
-            if (!fullAST.children.length) {
-              return ``
-            }
-
-            const excerptAST = cloneTreeUntil(fullAST, ({ root }) => {
-              const totalExcerptSoFar = getConcatenatedValue(root)
-              return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
-            })
-            const unprunedExcerpt = getConcatenatedValue(excerptAST)
-            if (!unprunedExcerpt) {
-              return ``
-            }
-
-            if (pruneLength && unprunedExcerpt.length < pruneLength) {
-              return hastToHTML(excerptAST, {
-                allowDangerousHTML: true,
-              })
-            }
-
-            const lastTextNode = findLastTextNode(excerptAST)
-            const amountToPruneLastNode =
-              pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
-            if (!truncate) {
-              lastTextNode.value = prune(
-                lastTextNode.value,
-                amountToPruneLastNode,
-                `…`
-              )
-            } else {
-              lastTextNode.value = _.truncate(lastTextNode.value, {
-                length: pruneLength,
-                omission: `…`,
-              })
-            }
-            return hastToHTML(excerptAST, {
-              allowDangerousHTML: true,
-            })
-          }
-          if (markdownNode.excerpt) {
-            return Promise.resolve(markdownNode.excerpt)
-          }
-          return getAST(markdownNode).then(ast => {
-            const excerptNodes = []
-            visit(ast, node => {
-              if (node.type === `text` || node.type === `inlineCode`) {
-                excerptNodes.push(node.value)
-              }
-              return
-            })
-            if (!truncate) {
-              return prune(excerptNodes.join(` `), pruneLength, `…`)
-            }
-            return _.truncate(excerptNodes.join(` `), {
-              length: pruneLength,
-              omission: `…`,
-            })
+        resolve(markdownNode, { format, pruneLength, truncate }) {
+          return getExcerpt(markdownNode, {
+            format,
+            pruneLength,
+            truncate,
+            excerptSeparator: pluginOptions.excerpt_separator,
+          })
+        },
+      },
+      excerptAst: {
+        type: GraphQLJSON,
+        args: {
+          pruneLength: {
+            type: GraphQLInt,
+            defaultValue: 140,
+          },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
+        },
+        resolve(markdownNode, { pruneLength, truncate }) {
+          return getExcerptAst(markdownNode, {
+            pruneLength,
+            truncate,
+            excerptSeparator: pluginOptions.excerpt_separator,
+          }).then(ast => {
+            const strippedAst = stripPosition(_.clone(ast), true)
+            return hastReparseRaw(strippedAst)
           })
         },
       },
