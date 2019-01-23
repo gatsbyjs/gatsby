@@ -16,8 +16,8 @@ const Title = styled.h1`
   color: palevioletred;
 `
 
-// Create an URL component that'll render an <a> tag with some styles
-const Url = styled.a`
+// Create an ExternalLink component that'll render an <a> tag with some styles
+const ExternalLink = styled.a`
   text-decoration: none;
   color: #1e88e5;
 `
@@ -48,9 +48,9 @@ class IndexPage extends React.Component {
         <Wrapper>
           <Title>Hello World, this is my first styled component!</Title>
           <p>
-            <Url href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
+            <ExternalLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
               gatsby-plugin-styled-component docs
-            </Url>
+            </ExternalLink>
           </p>
         </Wrapper>
       </Fragment>
