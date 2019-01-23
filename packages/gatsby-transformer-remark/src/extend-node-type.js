@@ -389,7 +389,7 @@ module.exports = (
         )
       }
       if (!fullAST.children.length) {
-        cache.set(excerptAstCacheKey(markdownNode, fullAST))
+        cache.set(excerptAstCacheKey(markdownNode), fullAST)
         return fullAST
       }
 
@@ -402,7 +402,7 @@ module.exports = (
         !unprunedExcerpt ||
         (pruneLength && unprunedExcerpt.length < pruneLength)
       ) {
-        cache.set(excerptAstCacheKey(markdownNode, excerptAST))
+        cache.set(excerptAstCacheKey(markdownNode), excerptAST)
         return excerptAST
       }
 
@@ -421,7 +421,7 @@ module.exports = (
           omission: `…`,
         })
       }
-      cache.set(excerptAstCacheKey(markdownNode, excerptAST))
+      cache.set(excerptAstCacheKey(markdownNode), excerptAST)
       return excerptAST
     }
 
