@@ -61,8 +61,8 @@ module.exports = (
     // 100% width highlighted code lines work
     node.type = `html`
     // prettier-ignore
-    let highlightClassName = 'gatsby-highlight'
-    if (highlightLines.length > 0) highlightClassName += ' gatsby-highlight-with-lines'
+    let highlightClassName = `gatsby-highlight`
+    if (highlightLines && highlightLines.length > 0) highlightClassName += ` gatsby-highlight-with-lines`
     node.value = ``
     + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
