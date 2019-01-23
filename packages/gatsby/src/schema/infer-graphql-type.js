@@ -192,7 +192,7 @@ function findLinkedNodeByField(linkedField, value) {
   return getNodes().find(n => n[linkedField] === value)
 }
 
-export function findLinkedNode(value, linkedField, path) {
+export function findLinkedNode(value, linkedField) {
   let linkedNode
   // If the field doesn't link to the id, use that for searching.
   if (linkedField) {
@@ -270,12 +270,10 @@ function inferFromFieldName(
 
     return {
       type: new GraphQLList(type),
-      resolve: pageDependencyResolver((node, args, context = {}) => {
+      resolve: pageDependencyResolver(node => {
         let fieldValue = node[key]
         if (fieldValue) {
-          return fieldValue.map(value =>
-            findLinkedNode(value, linkedField, context.path)
-          )
+          return fieldValue.map(value => findLinkedNode(value, linkedField))
         } else {
           return null
         }
