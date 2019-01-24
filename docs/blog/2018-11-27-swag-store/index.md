@@ -247,7 +247,7 @@ _And this is what’s happening in the background:_
 
 * Automated distribution list with information on how to continue contributing to Gatsby
 
-* Automated [Peril](https://github.com/danger/peril) integration that asks adds and manages the Gatsby Maintainer list
+* Automated [Peril](https://github.com/danger/peril) integration that invites new contributors to the Gatsby Maintainer group on GitHub
 
 ## Where We Ended Up
 
