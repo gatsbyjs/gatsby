@@ -159,7 +159,7 @@ We made things more repeatable by creating internal documentation, and sharing i
 
 We also documented all of our swag and invoicing in [Airtable](https://airtable.com/), so that it was easy to see what had been done and anyone on the team could get a snapshot of the current and past swag orders.
 
-By limiting the amount of tasks a person had to do and documenting those processes well, it meant that *anyone *could read the process and complete the tasks.
+By limiting the amount of tasks a person had to do and documenting those processes well, it meant that *anyone* could read the process and complete the tasks.
 
 We’re taking this one step further by revamping the project management workflow so that all internal processes are scalable, repeatable, and better automated!
 
