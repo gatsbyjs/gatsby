@@ -11,7 +11,7 @@ Sanity.io is a content management system with real-time at its very core. We bui
 
 Then we came across [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/), a general way to get real-time previews that doesn't involve custom code! When combining Sanity with Gatsby, we get the best of both worlds: A fully dynamic development experience where code and content is instantly reflected in preview.
 
-Our new [Sanity Gatsby Source](https://github.com/sanity-io/gatsby-source-sanity) Plugin uses the Sanity APIs to rebuild instantly as content changes. When developing this means a group of people can freely work together on both content models, UI design and the content itself. In real-time. Without rebuilds. This feels both a bit futuristic and pretty great. In the process we also to also make the static production builds themselves as fast as possible.
+In January 2019 we shipped our new [Sanity Gatsby Source](https://github.com/sanity-io/gatsby-source-sanity) Plugin that uses the Sanity APIs to rebuild instantly as content changes. When developing this means a group of people can freely work together on both content models, UI design and the content itself. In real-time. Without rebuilds. This feels both a bit futuristic and pretty great. In the process we also to also make the static production builds themselves as fast as possible.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/STtpXBvJmDA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
