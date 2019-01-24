@@ -33,18 +33,6 @@ class ScrollContext extends React.Component {
     }
   }
 
-  componentDidMount() {
-    /**
-     * scrollBehavior sets history.scrollRestoration to "manual" which means we have to take care of scrolling ourselves for pages.
-     * It works great in a client side SPA as the browser can't jump to the correct content because it's not there yet.
-     * Gatsby can because it's awesome (ships SSR html) so we don't want to disable scrollRestoration
-     * see #7454
-     */
-    if (`scrollRestoration` in window.history) {
-      window.history.scrollRestoration = `auto`
-    }
-  }
-
   componentDidUpdate(prevProps) {
     const { location } = this.props
     const prevLocation = prevProps.location
