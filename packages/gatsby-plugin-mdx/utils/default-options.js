@@ -15,7 +15,8 @@ module.exports = pluginOptions => {
       mdPlugins: [],
       root: process.cwd(),
       gatsbyRemarkPlugins: [],
-      globalScope: `export default {}`
+      globalScope: `export default {}`,
+      shouldBlockNodeFromTransformation: () => false,
     },
     pluginOptions
   );

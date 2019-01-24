@@ -32,6 +32,11 @@ module.exports = async (
   const { createNode, createParentChildLink } = actions;
   const options = defaultOptions(pluginOptions);
 
+  // options check to stop transformation of the node
+  if (options.shouldBlockNodeFromTransformation(node)) {
+    return;
+  }
+
   // if we shouldn't process this node, then return
   if (
     !(node.internal.type === "File" && options.extensions.includes(node.ext)) &&
