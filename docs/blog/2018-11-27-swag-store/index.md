@@ -1,6 +1,6 @@
 ---
 title: Gatsby Swag Store Case Study
-date: 2018-12-06
+date: 2019-01-24
 author: Marisa Morby
 tags:
   - swag
