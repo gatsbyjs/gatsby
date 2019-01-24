@@ -65,7 +65,7 @@ exports.onPostBuild = ({ cache, reporter }) =>
  * Build images on the fly when they are requested by the browser
  */
 exports.onCreateDevServer = async ({ app, cache, compiler }, pluginOptions) => {
-  compiler.hooks.done.tap(`Gatsby`, () => {
+  compiler.hooks.done.tap(`gatsby-plugin-sharp`, () => {
     saveQueueToCache(cache)
   })
 
