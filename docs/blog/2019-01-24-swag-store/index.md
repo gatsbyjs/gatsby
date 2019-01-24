@@ -207,7 +207,7 @@ Since we were going with an “automation first” framework, we had a lot to co
 
 - How robust is the tool, is it easily breakable?
 
-Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](http://www.whimsical). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
+Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](https://whimsical.co/). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
 
 ![Flow chart with the step by step swag process](images/1_tzPNjNB2Lf0w_7mu21JDTQ.png)
 _Flow chart with the step by step swag process_
