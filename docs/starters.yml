@@ -1685,3 +1685,15 @@
     - Full setup instructions included
     - Documented to get you set up with Craft CMS quickly
     - Code referenced in repo
+- url: https://master.d2f5ek3dnwfe9v.amplifyapp.com/
+  repo: https://github.com/dabit3/gatsby-auth-starter-aws-amplify
+  description: This Gatsby starter uses AWS Amplify to implement authentication flow for signing up/signing in users as well as protected client side routing.
+  tags:
+    - AWS
+    - Authentication
+  features:
+    - AWS Amplify
+    - Full authentication workflow
+    - Registration form
+    - Signup form
+    - User sign in
