@@ -117,16 +117,16 @@ module.exports = {
         // all routes that begin with `yoast` from fetch.
         // Whitelisted routes using glob patterns
         includedRoutes: [
-          "/*/*/categories",
-          "/*/*/posts",
-          "/*/*/pages",
-          "/*/*/media",
-          "/*/*/tags",
-          "/*/*/taxonomies",
-          "/*/*/users",
+          "**/*/*/categories",
+          "**/*/*/posts",
+          "**/*/*/pages",
+          "**/*/*/media",
+          "**/*/*/tags",
+          "**/*/*/taxonomies",
+          "**/*/*/users",
         ],
         // Blacklisted routes using glob patterns
-        excludedRoutes: ["/*/*/posts/1456"],
+        excludedRoutes: ["**/*/*/posts/1456"],
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
@@ -197,13 +197,13 @@ If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise
 
 ```javascript
 includedRoutes: [
-  "/*/*/posts",
-  "/*/*/pages",
-  "/*/*/media",
-  "/*/*/categories",
-  "/*/*/tags",
-  "/*/*/taxonomies",
-  "/*/*/users",
+  "**/*/*/posts",
+  "**/*/*/pages",
+  "**/*/*/media",
+  "**/*/*/categories",
+  "**/*/*/tags",
+  "**/*/*/taxonomies",
+  "**/*/*/users",
 ],
 ```
 

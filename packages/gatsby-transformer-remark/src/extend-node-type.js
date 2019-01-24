@@ -24,7 +24,6 @@ const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 const prune = require(`underscore.string/prune`)
-
 const {
   getConcatenatedValue,
   cloneTreeUntil,
@@ -59,6 +58,14 @@ const tableOfContentsCacheKey = node =>
 const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
+// TODO: remove this check with next major release
+const safeGetCache = ({ getCache, cache }) => id => {
+  if (!getCache) {
+    return cache
+  }
+  return getCache(id)
+}
+
 /**
  * Map that keeps track of generation of AST to not generate it multiple
  * times in parallel.
@@ -68,7 +75,16 @@ const withPathPrefix = (url, pathPrefix) =>
 const ASTPromiseMap = new Map()
 
 module.exports = (
-  { type, store, pathPrefix, getNode, getNodesByType, cache, reporter },
+  {
+    type,
+    pathPrefix,
+    getNode,
+    getNodesByType,
+    cache,
+    getCache: possibleGetCache,
+    reporter,
+    ...rest
+  },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -76,6 +92,8 @@ module.exports = (
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = pathPrefix || ``
+
+  const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
@@ -151,7 +169,9 @@ module.exports = (
               files: fileNodes,
               getNode,
               reporter,
-              cache,
+              cache: getCache(plugin.name),
+              getCache,
+              ...rest,
             },
             plugin.pluginOptions
           )
@@ -219,7 +239,9 @@ module.exports = (
               files: fileNodes,
               pathPrefix,
               reporter,
-              cache,
+              cache: getCache(plugin.name),
+              getCache,
+              ...rest,
             },
             plugin.pluginOptions
           )
@@ -403,7 +425,9 @@ module.exports = (
                   nextNode.type === `raw` &&
                   nextNode.value === pluginOptions.excerpt_separator
               )
-              return hastToHTML(excerptAST)
+              return hastToHTML(excerptAST, {
+                allowDangerousHTML: true,
+              })
             }
             const fullAST = await getHTMLAst(markdownNode)
             if (!fullAST.children.length) {
@@ -420,7 +444,9 @@ module.exports = (
             }
 
             if (pruneLength && unprunedExcerpt.length < pruneLength) {
-              return hastToHTML(excerptAST)
+              return hastToHTML(excerptAST, {
+                allowDangerousHTML: true,
+              })
             }
 
             const lastTextNode = findLastTextNode(excerptAST)
@@ -438,7 +464,9 @@ module.exports = (
                 omission: `…`,
               })
             }
-            return hastToHTML(excerptAST)
+            return hastToHTML(excerptAST, {
+              allowDangerousHTML: true,
+            })
           }
           if (markdownNode.excerpt) {
             return Promise.resolve(markdownNode.excerpt)

@@ -22,6 +22,8 @@
       items:
         - title: Preparing your site for deployment*
           link: /docs/preparing-for-deployment/
+        - title: Deploying to AWS Amplify
+          link: /docs/deploying-to-aws-amplify
         - title: Deploying to S3 and CloudFront
           link: /docs/deploying-to-s3-cloudfront
         - title: Deploying to Aerobatic
@@ -77,15 +79,15 @@
     - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
-        - title: Using unstructured data
-          link: /docs/using-unstructured-data/
+        - title: Using Gatsby without GraphQL
+          link: /docs/using-gatsby-without-graphql/
         - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
         - title: Sourcing from databases
           link: /docs/sourcing-from-databases/
         - title: Sourcing from SaaS services*
           link: /docs/sourcing-from-saas-services/
-        - title: Sourcing from private APIs*
+        - title: Sourcing from private APIs
           link: /docs/sourcing-from-private-apis/
         - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/

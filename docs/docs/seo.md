@@ -8,7 +8,13 @@ Gatsby helps your site place better in search engines. Some advantages come out 
 
 Because Gatsby pages are server-rendered, all the page content is available to Google and other search engines or crawlers.
 
-(You can see this by viewing the source for this page).
+You can see this by viewing the source for this page with `curl` (in your terminal):
+
+```shell
+curl https://www.gatsbyjs.org/docs/seo
+```
+
+`Right-Click => View source` won't show you the actual HTML (but the pages are still server-rendered!) as this site is using service workers. [Read these notes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#notes) to learn more.
 
 ### Speed boost
 
