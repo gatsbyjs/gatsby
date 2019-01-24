@@ -134,10 +134,12 @@ As mentioned above, `static-entry.js` generates HTML, but also loads the Gatsby 
 The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L164)). We [lookup assetsByChunkName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L195) by `app` to get its chunk asset files. Then we do the same for the component by looking up the same collection by `componentChunkName` (e.g. `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, we create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259).
 
 ```html
-<link as="script"
-      rel="preload"
-      key="app-2e49587d85e03a033f58.js"
-      href="/app-2e49587d85e03a033f58.js" />
+<link
+  as="script"
+  rel="preload"
+  key="app-2e49587d85e03a033f58.js"
+  href="/app-2e49587d85e03a033f58.js"
+/>
 ```
 
 `rel="preload"` tells the browser to start downloading this resource with a high priority as it will likely be referenced further down in the document. So hopefully by the time we get there, the resource will be returned from the server already.
@@ -145,16 +147,20 @@ The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](
 Then, at the [end of the body](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L331), we include the actual script tag that references the preloaded asset.
 
 ```html
-<script key="app-2e49587d85e03a033f58.js"
-        src="app-2e49587d85e03a033f58.js"
-        async />
+<script
+  key="app-2e49587d85e03a033f58.js"
+  src="app-2e49587d85e03a033f58.js"
+  async
+/>
 ```
 
 If the asset is CSS, we [inject it inline in the head](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L302).
 
 ```html
-<style data-href="/1.93002d5bafe5ca491b1a.css"
-       dangerouslySetInnerHTML="...contents of public/1.93002d5bafe5ca491b1a.css" />
+<style
+  data-href="/1.93002d5bafe5ca491b1a.css"
+  dangerouslySetInnerHTML="...contents of public/1.93002d5bafe5ca491b1a.css"
+/>
 ```
 
 ##### Prefetching chunks

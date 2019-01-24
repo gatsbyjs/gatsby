@@ -13,7 +13,7 @@ ButterCMS is different from a traditional CMS like Drupal or Wordpress in that t
 For example, if you wanted to enable a non-technical person to be able to add customer case study pages to your marketing site, you might create a Case Study Page Type to represent these pages. The non-technical person would be able to manage these pages from their dashboard and the JSON API output would look something like this:
 
 ```
-{  
+{
   "data": {
     "slug": "acme-co-case-study",
     "fields": {
@@ -29,16 +29,18 @@ For example, if you wanted to enable a non-technical person to be able to add cu
 # Setup
 
 ## Create a new Gatsby site with the [default starter](https://github.com/gatsbyjs/gatsby-starter-default)
+
 Run this in your terminal:
 
-```gatsby new butter-site```  
+`gatsby new butter-site`
 
 ## Install the source plugin
 
-```npm install gatsby-source-buttercms```
+`npm install gatsby-source-buttercms`
 
-## Adding Configuration 
-Here you'll specify the config  that will be needed to pull down data from butter.
+## Adding Configuration
+
+Here you'll specify the config that will be needed to pull down data from butter.
 make sure to add your **API_TOKEN** from your dashboard, in this guide we would be creating `faq_items`, `faq_headline`, `homepage` , `customer_case_study` as stated in the config below. Do well to change it if you named it something differently.
 
 `gatsby-config.js`
@@ -62,9 +64,9 @@ module.exports = {
       },
     },
 }
- ```
- More details [here](https://github.com/buttercms/gatsby-source-buttercms) 
- 
+```
+
+More details [here](https://github.com/buttercms/gatsby-source-buttercms)
 
 ## ButterCMS Starter Template
 
@@ -73,12 +75,14 @@ To see a fully complete Gatsby+ButterCMS project check out this [Gatsby ButterCM
 # Usage
 
 ## Webhooks
+
 Webhooks are a powerful feature that allow you to notify your internal systems whenever content in ButterCMS has changed.
 Your host platform need to be notified so that gatsby can create fresh pages from the new data. You can learn more about Webhooks in this [blog post](https://buttercms.com/blog/webhook-vs-api-whats-the-difference). Checkout your host platform form incoming webhooks so we can hit it anytime your content changes. Netlify lets you generate a build hook that will be triggered by butter on certain event e.g when we create or update a blog post more details here [here](https://buttercms.com/docs/api/#webhooks)
 
 ![Webhook](https://buttercms.com/static/images/docs/guides/OverviewWebhooks.caade716f770.png "Webhook")
 
 ## Image Transformation
+
 ButterCMS has integrated with a rich image transformation API called Filestack. This allows you to modify your uploaded images in dozens of ways. Everything from resizing, cropping, effects, filters, applying watermarks and more. Check out Filestack full documentation for more detail.
 
 After you upload an image to ButterCMS, it's stored on our CDN. To create a thumbnail, here's an example:
@@ -90,6 +94,7 @@ Thumbnail URL = https://fs.buttercms.com/resize=width:200,height:200/zjypya5tRny
 Resizing is just one of the many different transformations you can do to your images. Refer to the [Filestack docs](https://www.filestack.com/docs/) for full details.
 
 ## Localization
+
 ButterCMS has full support for localization of your content. Locale names and keys are completely customizable and there's no limit to the number of locales you can have. View their [API Reference](https://buttercms.com/docs/api/) to learn how to query by locale.
 
 ![locales](https://buttercms.com/static/images/docs/guides/Localization.54a005530001.png)
@@ -97,34 +102,41 @@ ButterCMS has full support for localization of your content. Locale names and ke
 # Creating pages
 
 ### Introduction
+
 Quickly launch a new marketing site or add CMS-powered pages to your existing site using our Pages.
 
 ## Creating a Single page(Home Page)
 
 ### Introduction
+
 Quickly launch a new marketing site or add [CMS-powered pages](https://buttercms.com/gatsbyjs-cms/) to your existing site using our Pages.
 
 ### Create a Single Page
+
 Adding a CMS-powered page to your app involves three easy steps:
 
 1. Create the Page structure
 1. Populate the content
-2. Integrate into your application
+1. Integrate into your application
 
 If you need help after reading this, contact us via email or livechat.
 
 #### Create the Page structure
+
 Create a new Page and define it's structure using our Page Builder. Let's create an example homepage.
 
 ![image](https://buttercms.com/static/images/docs/guides/PagesNewSinglePage.d6038e2b75a0.png)
 
 #### Populate the Content
+
 Then populate our new page with content. In the next step, we'll call the ButterCMS API to retrieve this content from our app.
 
 ![image](https://buttercms.com/static/images/docs/guides/PagesNewSinglePageContent.c582e2451f7f.png)
 
 ### Integrate into your application
+
 With your homepage defined, the ButterCMS our graphql query will return some data that looks like this:
+
 ```
 {
   "data": {
@@ -147,7 +159,7 @@ With your homepage defined, the ButterCMS our graphql query will return some dat
 }
 ```
 
-Now lets create the home page  `src/pages/index.js`
+Now lets create the home page `src/pages/index.js`
 
 ```
 import React from 'react'
@@ -244,14 +256,14 @@ export const query = graphql`
 
 export default IndexPage
 ```
-in your terminal, run 
-``` 
-> gatsby develop 
+
+in your terminal, run
+
+```
+> gatsby develop
 ```
 
 Now open up [localhost:8000/home](http://localhost:8000/home) to see the home page populated with the content you created on butter.
-
-
 
 ## Create multiple pages using Page Types
 
@@ -264,6 +276,7 @@ Let's say you want to add a set of customer case study pages to your marketing s
 If you need help after reading this, contact us via email or livechat.
 
 ## Create the Page Type structure
+
 Create a Page Type to represent your Customer Case Study pages:
 ![page structure](https://buttercms.com/static/images/docs/guides/PagesNewPageType1.18834db5cf0b.png)
 
@@ -275,19 +288,23 @@ Then click on Create Page Type and name it "Customer Case Study". This will allo
 ![saving](https://buttercms.com/static/images/docs/guides/PagesNewPageType3.70f0c287ae91.png)
 
 ## Populate the Content
+
 Then populate our new page with content. In the next step, we'll call the ButterCMS API to retrieve this content from our app.
 
 ![](https://buttercms.com/static/images/docs/guides/PagesNewPageTypeCreateContent.6164c9b9cf19.png)
 
-To Pull down content into gatsby run: 
+To Pull down content into gatsby run:
+
 ```
 > gatsby develop
 ```
 
 ### Testing with GrapiQl
-You can test out your Graphql queries with GrahiQl( A graphql debugger) fire up Graphiql on [http://localhost:8000/___graphql](http://localhost:8000/___graphql)
+
+You can test out your Graphql queries with GrahiQl( A graphql debugger) fire up Graphiql on [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql)
 
 Once graphiql is opened paste the query below :
+
 ```
 {
   allButterPage(filter: {page_type: {eq: "customer_case_study"}}) {
@@ -307,9 +324,11 @@ Once graphiql is opened paste the query below :
 ```
 
 ## Integrate into your application
+
 Now lets refactor our home page to display link(s) to each customer case study page
 
 `src/pages/index.js`
+
 ```
 import React from 'react'
 import { graphql, Link } from 'gatsby'
@@ -451,7 +470,7 @@ function CustomerCaseStudy({ data }) {
         <h1>{page.seo_title}</h1>
         <p>{page.headline}</p>
         <img alt="customer_logo" src={page.customer_logo} />
-        <p>{page.testimonial}</p> 
+        <p>{page.testimonial}</p>
       </div>
     </Layout>
   )
@@ -481,16 +500,17 @@ export default CustomerCaseStudy
 Now Let's programatically Create customer case study pages based on the template we defined in `src/template/customer-case-study.js`
 
 `gatsby-node.js`
+
 ```
 const path = require(`path`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  
- // Blog post template 
+
+ // Blog post template
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
-  
-  //customer case study template 
+
+  //customer case study template
   const customerCaseStudy = path.resolve(
     `./src/templates/customer-case-study.js`
   )
@@ -525,7 +545,7 @@ exports.createPages = async ({ graphql, actions }) => {
   } catch (error) {
     console.log(`Error Running Querying Posts`, error)
   }
-    
+
   posts = posts.data.allButterPost.edges;
 
   posts.forEach((post, index) => {
@@ -587,14 +607,14 @@ That's it! now stop the server and run:
 ```
 > gatsby develop
 ```
+
 Now the home page should contain links to customer case study pages, Click around
 you'll notice that the template we defined in `src/template/customer_case_study.js`
 was use by gatsby to create each case study page.
 
-
-
 ## Setup content fields
-Let's suppose we want to add a CMS to a static FAQ page with a title and a list of questions with answers. Most websites have a FAQ(Frequently Asked Question) Page. ButterCMS make it dead easy to create such content with Collections . Now we'll create a collection named `FAQs`having  a `question` and `answer` field.
+
+Let's suppose we want to add a CMS to a static FAQ page with a title and a list of questions with answers. Most websites have a FAQ(Frequently Asked Question) Page. ButterCMS make it dead easy to create such content with Collections . Now we'll create a collection named `FAQs`having a `question` and `answer` field.
 
 Making your content dynamic with Butter is a two-step process:
 
@@ -603,7 +623,6 @@ Making your content dynamic with Butter is a two-step process:
 3. **To setup custom content fields, first sign in to the Butter dashboard.**
 
 Create a new workspace or click on an existing one. Workspaces let you organize content fields in a friendly way for content editors and have no effect on development or the API. For example, a real-estate website might have a workspace called "Properties" and another called "About Page".
-
 
 ![create workspace](https://buttercms.com/static/images/docs/guides/FaqCreateWorkspace.png)
 
@@ -701,11 +720,15 @@ export const query = graphql`
 `
 export default Faq
 ```
+
 # Blog
+
 ## Introduction
+
 Butter CMS is also a great feat if you want to spin up a blog, it's pretty easy as they provide a [blog engine](https://buttercms.com/gatsbyjs-blog-engine/) that helps you manage content in one place. Gatsby then pulls down the data at build time and create static pages off that data.
 
 # Blog Home Page
+
 Now we would create a home page for our blog posts. It basically lists all blog posts.
 
 `src/pages/blog.js`
@@ -812,6 +835,7 @@ export const pageQuery = graphql`
 ```
 
 ## Creating a blog template
+
 Now we've listed our blog posts in `src/pages/blog.js`, using gatsby [createpages](https://www.gatsbyjs.org/docs/node-apis/#createPages) API we would generate blog post pages using a template:
 
 `src/pages/template/blog-post.js`
@@ -910,7 +934,9 @@ export const pageQuery = graphql`
   }
 `
 ```
+
 ## Generate Blog Pages
+
 Now we'll use the blog template defined in `src/templates/blog-post.js` to generate blog pages.
 
 `gatsby-node.js`
@@ -953,7 +979,7 @@ exports.createPages = async ({ graphql, actions }) => {
   } catch (error) {
     console.log(`Error Running Querying Posts`, error)
   }
-    
+
   posts = posts.data.allButterPost.edges;
 
   posts.forEach((post, index) => {
@@ -963,13 +989,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ```
 
-
-
 ## Categories, Tags, and Authors
 
 Use Butter's APIs for categories, tags, and authors to feature and filter content on your blog.
 See their [API reference](https://buttercms.com/docs/api/) for more information about these objects:
-
 
 ## Easy as Butter
 
@@ -978,4 +1001,4 @@ This was an example meant to help you understand how ButterCMS works with Gatsby
 - Create a ButterCMS repository and setting it up together with the Gatsby plugin
 - Query data from ButterCMS for single pages, multiple pages, blog posts, and custom content fields
 
-If you got stuck, you can compare your code to the [gatsby-starter-buttercms](https://github.com/ButterCMS/gatsby-starter-buttercms). To learn more about ButterCMS, check out their  [blog](https://buttercms.com/blog/). Their latest updates can be found [here](https://buttercms.com/blog/category/new-to-butter/).
+If you got stuck, you can compare your code to the [gatsby-starter-buttercms](https://github.com/ButterCMS/gatsby-starter-buttercms). To learn more about ButterCMS, check out their [blog](https://buttercms.com/blog/). Their latest updates can be found [here](https://buttercms.com/blog/category/new-to-butter/).

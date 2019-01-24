@@ -17,8 +17,8 @@ The guides in this section will walk through the process of setting up content s
 
 Other CMS systems you can connect to include:
 
-- [ButterCMS](https://www.gatsbyjs.org/packages/gatsby-source-buttercms)
 - [Cosmic JS](https://www.gatsbyjs.org/packages/gatsby-source-cosmicjs)
+- [ButterCMS](https://www.gatsbyjs.org/packages/gatsby-source-buttercms) ([guide](/docs/sourcing-from-buttercms/), [starter](https://github.com/ButterCMS/gatsby-starter-buttercms) )
 - [Shopify](https://www.gatsbyjs.org/packages/gatsby-source-shopify)
 - [Contentstack](https://www.gatsbyjs.org/packages/gatsby-source-contentstack)
 - [Ghost](https://www.gatsbyjs.org/packages/gatsby-source-ghost)
