@@ -17,15 +17,7 @@ const getQueueFromCache = async cache => {
   return new Map(rawQueue)
 }
 
-exports.onPreInit = async ({ actions }, pluginOptions) => {
-  setBoundActionCreators(actions)
-  setPluginOptions(pluginOptions)
-}
-
-/**
- * save queue to the cache
- */
-exports.onPostBootstrap = async ({ cache }) => {
+const saveQueueToCache = async cache => {
   const cachedQueue = await getQueueFromCache(cache)
 
   // merge both queues
@@ -36,6 +28,16 @@ exports.onPostBootstrap = async ({ cache }) => {
   // JSON.stringify doesn't work on an Map so we need to convert it to an array
   return cache.set(`queue`, Array.from(queue))
 }
+
+exports.onPreInit = async ({ actions }, pluginOptions) => {
+  setBoundActionCreators(actions)
+  setPluginOptions(pluginOptions)
+}
+
+/**
+ * save queue to the cache
+ */
+exports.onPostBootstrap = async ({ cache, store }) => saveQueueToCache(cache)
 
 /**
  * Execute all unprocessed images on gatsby build
@@ -62,7 +64,11 @@ exports.onPostBuild = ({ cache, reporter }) =>
 /**
  * Build images on the fly when they are requested by the browser
  */
-exports.onCreateDevServer = ({ app, cache }, pluginOptions) => {
+exports.onCreateDevServer = async ({ app, cache, compiler }, pluginOptions) => {
+  compiler.hooks.done.tap(`Gatsby`, () => {
+    saveQueueToCache(cache)
+  })
+
   app.use(async (req, res, next) => {
     const queue = await getQueueFromCache(cache)
     if (!queue.has(req.originalUrl)) {

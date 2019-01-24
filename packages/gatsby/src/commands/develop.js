@@ -182,7 +182,7 @@ async function startServer(program) {
     })
   }
 
-  await apiRunnerNode(`onCreateDevServer`, { app })
+  await apiRunnerNode(`onCreateDevServer`, { app, compiler })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
