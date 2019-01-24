@@ -161,5 +161,5 @@ folder is useful as a workaround for a number of less common cases:
 - You want to include a small script like
   [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the
   bundled code.
-- Some library may be incompatible with Webpack and you have no other option but
-  to include it as a `<script>` tag.
+- You are using a library that is incompatible with Webpack and need to
+  include it as a `<script>` tag.
