@@ -69,7 +69,7 @@ _And the three biggest strengths that we could use to combat our limitations:_
 
 * we have an amazing designer in Florian Kissling, and the development knowledge to build custom solutions
 
-* access to consultants (that’s me!) who specialize in identifying and designing scalable processes
+* access to a product manager (that’s me!) who specializes in identifying and designing scalable processes
 
 * a wealth of open source and SaaS tools that make automation much more feasible
 
