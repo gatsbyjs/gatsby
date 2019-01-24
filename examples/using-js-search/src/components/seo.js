@@ -19,9 +19,8 @@ function SEO({ description, lang, meta, keywords, title }) {
             titleTemplate={`%s | ${data.site.siteMetadata.title}`}
             link={[
               {
-                rel: 'stylesheet',
-                ref:
-                  'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.0/css/bootstrap.css',
+                rel: `stylesheet`,
+                ref: `https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.0/css/bootstrap.css`,
               },
             ]}
             meta={[

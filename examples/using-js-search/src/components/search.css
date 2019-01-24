@@ -22,18 +22,18 @@ th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
-label{
-  padding-right:10px;
+label {
+  padding-right: 10px;
 }
 
-input{
+input {
   margin-left: 10px;
 }
-.searchQuery{
+.searchQuery {
   margin: 0 auto;
   width: 400px;
 }
-.form-group{
+.form-group {
   margin: 1.2rem 1rem 1.2rem 1rem;
 }
 td {

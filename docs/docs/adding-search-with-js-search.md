@@ -4,19 +4,18 @@ title: "Adding search with js-search"
 
 ## Prerequisites
 
-Before we go through the steps needed for adding client side search to your Gatsby website, it would be advised 
- if the reader is not familiar on how Gatsby works and is set up to follow through the [tutorial](https://www.gatsbyjs.org/tutorial/) and brush up on the [documentation](https://www.gatsbyjs.org/docs/).
+Before we go through the steps needed for adding client side search to your Gatsby website, it would be advised
+if the reader is not familiar on how Gatsby works and is set up to follow through the [tutorial](https://www.gatsbyjs.org/tutorial/) and brush up on the [documentation](https://www.gatsbyjs.org/docs/).
 
 Otherwise just skip this part and move onto the next part.
-
 
 ## What is Js Search
 
 Js Search is a library created by Brian Vaughn, a member of the core team at Facebook.
 It provides a efficient way to search for data on the client with JavaScript and JSON objects.
-This plugin offers a rich ammount of options to customize the search, making it even faster. 
- 
-The full code and documentation for this library is hosted in [here](https://github.com/bvaughn/js-search). 
+This plugin offers a rich ammount of options to customize the search, making it even faster.
+
+The full code and documentation for this library is hosted in [here](https://github.com/bvaughn/js-search).
 
 The example that will be documented here is based on the one done by the creator.
 
@@ -33,6 +32,7 @@ Inside that folder, create a new Gatsby website using a starter template, using 
 ```bash
 npx gatsby new jsSearchExample https://github.com/gatsbyjs/gatsby-starter-default
 ```
+
 After the process is complete, some additional packages are needed.
 
 Navigate into the `jsSearchExample` folder and issue the following command:
@@ -40,11 +40,13 @@ Navigate into the `jsSearchExample` folder and issue the following command:
 ```bash
 npm install --save js-search axios
 ```
+
 Or if Yarn is being used:
 
 ```bash
 yarn add js-search axios
 ```
+
 Note:
 
 For this particular example [axios](https://github.com/axios/axios) will be used, to handle all of the promise based HTTP requests.
@@ -55,36 +57,36 @@ Both approaches documented here are fairly generalistic so that most of the opti
 
 ## First approach
 
-The approach documented bellow is a fairly simple one, by having the component fetch the data and create the search engine. 
+The approach documented bellow is a fairly simple one, by having the component fetch the data and create the search engine.
 
 Start by creating a file in the `components` folder, for this particular case the name will be `SearchContainer.js` and inside of it the following baseline code will be added to get started:
 
 ```javascript
-import React, { Component } from 'react'
-import Axios from 'axios'
-import * as JsSearch from 'js-search'
-import DataTable from './DataTable'
-import './search.css'
+import React, { Component } from "react"
+import Axios from "axios"
+import * as JsSearch from "js-search"
+import DataTable from "./DataTable"
+import "./search.css"
 class Search extends Component {
-    state = {
-        bookList: [], // the data that will be fetched
-        search: [], // the js-search engine
-        searchResults: [], // results of the search
-        isError: false, // property to notify the component that something bad happened and let the user know
-        indexByTitle: true, // one of the indexes used to search the data recieved
-        indexByAuthor: true,//  another of the indexes used to search the data recieved
-        termFrequency: true, // something something 
-        removeStopWords: false,
-        searchQuery: '', // the actual query text to be made
-        selectedStrategy: 'Prefix match', // the strategy used by js-search to speed up the process
-        selectedSanitizer: 'Lower Case', 
+  state = {
+    bookList: [], // the data that will be fetched
+    search: [], // the js-search engine
+    searchResults: [], // results of the search
+    isError: false, // property to notify the component that something bad happened and let the user know
+    indexByTitle: true, // one of the indexes used to search the data recieved
+    indexByAuthor: true, //  another of the indexes used to search the data recieved
+    termFrequency: true, // something something
+    removeStopWords: false,
+    searchQuery: "", // the actual query text to be made
+    selectedStrategy: "Prefix match", // the strategy used by js-search to speed up the process
+    selectedSanitizer: "Lower Case",
   }
-   /**
+  /**
    * React lifecycle method to fetch the data
    */
   async componentDidMount() {
     // fetches the data to be used changes the component state based on the result of the request and data
-    Axios.get('http://bvaughn.github.io/js-search/books.json')
+    Axios.get("http://bvaughn.github.io/js-search/books.json")
       .then(result => {
         const bookData = result.data
         this.setState({ bookList: bookData.books })
@@ -95,13 +97,13 @@ class Search extends Component {
       })
       .catch(err => {
         this.setState({ isError: true })
-        console.log('====================================')
+        console.log("====================================")
         console.log(`Something bad happened while fetching the data\n${err}`)
-        console.log('====================================')
+        console.log("====================================")
       })
   }
   /**
-   * es6 fat arrow function to instantiate the search engine 
+   * es6 fat arrow function to instantiate the search engine
    * according to the options defined in the component state
    * creates the  index and injects the data
    */
@@ -115,7 +117,7 @@ class Search extends Component {
       indexByTitle,
       indexByAuthor,
     } = this.state
-    const dataToSearch = new JsSearch.Search('isbn')
+    const dataToSearch = new JsSearch.Search("isbn")
 
     if (removeStopWords) {
       dataToSearch.tokenizer = new JsSearch.StopWordsTokenizer(
@@ -123,46 +125,46 @@ class Search extends Component {
       )
     }
     /**
-    *  defines a indexing strategy for the data
-    * more more about it in here https://github.com/bvaughn/js-search#configuring-the-index-strategy
-    */
-    if (selectedStrategy === 'All') {
+     *  defines a indexing strategy for the data
+     * more more about it in here https://github.com/bvaughn/js-search#configuring-the-index-strategy
+     */
+    if (selectedStrategy === "All") {
       dataToSearch.indexStrategy = new JsSearch.AllSubstringsIndexStrategy()
     }
-    if (selectedStrategy === 'Exact match') {
+    if (selectedStrategy === "Exact match") {
       dataToSearch.indexStrategy = new JsSearch.ExactWordIndexStrategy()
     }
-    if (selectedStrategy === 'Prefix match') {
+    if (selectedStrategy === "Prefix match") {
       dataToSearch.indexStrategy = new JsSearch.PrefixIndexStrategy()
     }
 
     /**
-    * defines the sanitizer for the search
-    * to prevent some of the words from being excluded
-    *  
-    */
-    selectedSanitizer === 'Case Sensitive'
+     * defines the sanitizer for the search
+     * to prevent some of the words from being excluded
+     *
+     */
+    selectedSanitizer === "Case Sensitive"
       ? (dataToSearch.sanitizer = new JsSearch.CaseSensitiveSanitizer())
       : (dataToSearch.sanitizer = new JsSearch.LowerCaseSanitizer())
 
     /**
-    * defines the search index
-    * read more in here https://github.com/bvaughn/js-search#configuring-the-search-index
-    */
+     * defines the search index
+     * read more in here https://github.com/bvaughn/js-search#configuring-the-search-index
+     */
     termFrequency === true
-      ? (dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex('isbn'))
+      ? (dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex("isbn"))
       : (dataToSearch.searchIndex = new JsSearch.UnorderedSearchIndex())
-    
+
     /**
-    * checks the values in the state and indexes the data revieved based on it
-    */
+     * checks the values in the state and indexes the data revieved based on it
+     */
     if (indexByTitle) {
-      dataToSearch.addIndex('title')
+      dataToSearch.addIndex("title")
     }
     if (indexByAuthor) {
-      dataToSearch.addIndex('author')
+      dataToSearch.addIndex("author")
     }
-    
+
     dataToSearch.addDocuments(bookList) // adds the data
     this.setState({ search: dataToSearch })
   }
@@ -177,12 +179,7 @@ class Search extends Component {
     this.setState({ searchQuery: e.target.value, searchResults: queryResult })
   }
   render() {
-    const {
-      bookList,
-      searchResults,
-      searchQuery,
-      indexByAuthor
-    } = this.state
+    const { bookList, searchResults, searchQuery, indexByAuthor } = this.state
     return (
       <div>
         <div>
@@ -203,8 +200,8 @@ class Search extends Component {
           </form>
           <div>
             Number of items:
-            {searchQuery === '' ? books.length : searchResults.length}
-            <DataTable data={searchQuery === '' ? books : searchResults} />
+            {searchQuery === "" ? books.length : searchResults.length}
+            <DataTable data={searchQuery === "" ? books : searchResults} />
           </div>
         </div>
       </div>
@@ -217,63 +214,63 @@ export default Search
 
 Breaking down the code into smaller parts:
 
-  1. When the component is mounted, the `componentDidMount()` lifecycle method is triggered and the data will be fetched.
-  2. If no errors occur, the data recieved is added to the state and the `rebuildIndex()` function is invoked. 
-  3. The search engine is then created and configured with the options provided in the component's state.
-  4. The data that was recieved is then added and indexed using js-search.
-  5. When the contents of the input is changed, the js-plugin starts the search process based on it and returns the contents, which is then presented to the user via the `DataTable` component.
+1. When the component is mounted, the `componentDidMount()` lifecycle method is triggered and the data will be fetched.
+2. If no errors occur, the data recieved is added to the state and the `rebuildIndex()` function is invoked.
+3. The search engine is then created and configured with the options provided in the component's state.
+4. The data that was recieved is then added and indexed using js-search.
+5. When the contents of the input is changed, the js-plugin starts the search process based on it and returns the contents, which is then presented to the user via the `DataTable` component.
 
 Note:
 
 For brevity purposes, most of the component implementation is ommited, with the exception of the es6 fat arrow function `searchData()`, as this one is responsible for making the search, also the implementation of the `DataTable` component and the page holding this component will not shown. The full code of this example is available in [here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search).
 
-
-
 ## Second approach
 
-This approach takes advantage of Gatsby's APIs to prefetch the data, process it if needed and generate the search engine options beforehand, all of this achieved during the build process. 
+This approach takes advantage of Gatsby's APIs to prefetch the data, process it if needed and generate the search engine options beforehand, all of this achieved during the build process.
 In order to accomplish this, some changes are required to the project.
 
 Starting by modifying the `gatsby-node.js` file by adding the following code:
 
 ```javascript
-const path = require('path')
-const axios= require('axios')
+const path = require("path")
+const axios = require("axios")
 
-exports.createPages=({actions})=>{
+exports.createPages = ({ actions }) => {
   const { createPage } = actions
-  return new Promise((resolve,reject)=>{
-    axios.get('https://bvaughn.github.io/js-search/books.json').then((result) => {
-      const {data}= result
-      /**
-       * creates a page dynamic page with the data recieved
-       * injects the data recived into the context object alongside with some options
-       * to configure js-search
-       */
-      createPage({
-        path:'/search',
-        component:path.resolve(`./src/templates/ClientSearchTemplate.js`),
-        context:{
-          bookData:{
-            allBooks:data.books,
-            options:{
-              indexStrategy:'Prefix match',
-              searchSanitizer:'Lower Case',
-              TitleIndex:true,
-              AuthorIndex:true,
-              SearchByTerm:true
-            }
-          }
-          
-        }
+  return new Promise((resolve, reject) => {
+    axios
+      .get("https://bvaughn.github.io/js-search/books.json")
+      .then(result => {
+        const { data } = result
+        /**
+         * creates a page dynamic page with the data recieved
+         * injects the data recived into the context object alongside with some options
+         * to configure js-search
+         */
+        createPage({
+          path: "/search",
+          component: path.resolve(`./src/templates/ClientSearchTemplate.js`),
+          context: {
+            bookData: {
+              allBooks: data.books,
+              options: {
+                indexStrategy: "Prefix match",
+                searchSanitizer: "Lower Case",
+                TitleIndex: true,
+                AuthorIndex: true,
+                SearchByTerm: true,
+              },
+            },
+          },
+        })
+        resolve()
       })
-      resolve()
-    }).catch((err) => {
-      console.log('====================================');
-      console.log(`error creating Page:${err}`);
-      console.log('====================================');
-      reject(new Error(`error on page creation:\n${err}`))
-    });
+      .catch(err => {
+        console.log("====================================")
+        console.log(`error creating Page:${err}`)
+        console.log("====================================")
+        reject(new Error(`error on page creation:\n${err}`))
+      })
   })
 }
 ```
@@ -287,9 +284,9 @@ The first one to be created will be the template to be used by the page itself.
 It will be created in the following location `/src/templates`, under the name `ClientSearchTemplate.js`, with the following code:
 
 ```javascript
-import React from 'react'
-import Layout from '../components/layout'
-import ClientSearch from '../components/ClientSearch'
+import React from "react"
+import Layout from "../components/layout"
+import ClientSearch from "../components/ClientSearch"
 
 const SearchTemplate = props => {
   const { pageContext } = props
@@ -297,10 +294,10 @@ const SearchTemplate = props => {
   const { allBooks, options } = bookData
   return (
     <Layout>
-      <h1 style={{ marginTop: '3em', textAlign: 'center' }}>
+      <h1 style={{ marginTop: "3em", textAlign: "center" }}>
         Search data using JS Search using Gatsby Api
       </h1>
-      <h3 style={{ marginTop: '2em', padding: '2em 0em', textAlign: 'center' }}>
+      <h3 style={{ marginTop: "2em", padding: "2em 0em", textAlign: "center" }}>
         Books Indexed by:
       </h3>
 
@@ -356,7 +353,6 @@ class ClientSearch extends Component {
   .....
 }
 export default ClientSearch
-
 ```
 
 The code used in here is almost identical to the one documented in the first approach and for the same reason stated in the first approach, here also the full implementation will not be shown.
@@ -366,9 +362,3 @@ But there is a slight diference although, it will be used the React `getDerivedS
 Hope that this rather extensive guide shed some insights on how to implement client search using js-search.
 
 Now go make something great.
-
-
-
-
-
-
