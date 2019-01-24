@@ -10,7 +10,7 @@ To show our appreciation, _**everyone who contributes to Gatsby is eligible to r
 
 ### How to claim your free swag
 
-If you contribute to the Gatsby org on GitHub, you can claim your swag by [logging into the Gatsby Maintainer Dashboard](https://store.gatsbyjs.org/login) and requesting a discount code.
+If you contribute to the Gatsby org on GitHub, you can claim your swag by [logging into the Gatsby Store](https://store.gatsbyjs.org/) and requesting a discount code.
 
 If you contribute five or more times, you can claim your _**Level 2**_ swag.
 
