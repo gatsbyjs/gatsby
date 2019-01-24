@@ -4050,3 +4050,15 @@
   built_by: cardiv
   built_by_url: https://github.com/cardiv/
   featured: false
+- title: Waterscapes
+  main_url: "https://waterscap.es"
+  url: "https://waterscap.es/lake-monteynard/"
+  source_url: "https://github.com/gaelbillon/Waterscapes-Gatsby-site"
+  description: Waterscap.es is a directory of bodies of water (creeks, ponds, waterfalls, lakes, etc) with information about each place such as how to get there, hike time, activities and photos and a map displayed with the Mapbox GL SJ npm package. It was developed with the goal of learning Gatsby. This website is based on the gatsby-contentful-starter and uses Contentful as CMS. It is hosted on Netlify. Hooks are setup with Bitbucket and Contentful to trigger a new build upon code or content changes. The data on Waterscap.es is a mix of original content and informations from the internets gathered and put together.
+  categories:
+    - Directory
+    - Photography
+    - Travel
+  built_by: Gaël Billon
+  built_by_url: "https://gaelbillon.com"
+  featured: false
