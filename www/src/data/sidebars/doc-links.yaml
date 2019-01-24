@@ -243,8 +243,8 @@
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)
           link: /docs/seo/
-        - title: Optimize Prefetching with Guess.js*
-          link: /docs/optimize-prefetching-with-guessjs/
+        - title: Optimizing Site Performance with Guess.js
+          link: /docs/optimizing-site-performance-with-guessjs/
 - title: Ecosystem
   link: /ecosystem/
   items:

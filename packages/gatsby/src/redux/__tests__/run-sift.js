@@ -25,6 +25,19 @@ const mockNodes = [
     id: `id_3`,
     string: `baz`,
   },
+  {
+    id: `id_4`,
+    string: `qux`,
+    first: {
+      willBeResolved: `willBeResolved`,
+      second: {
+        willBeResolved: `willBeResolved`,
+        third: {
+          foo: `foo`,
+        },
+      },
+    },
+  },
 ]
 
 jest.mock(`../../db/nodes`, () => {
@@ -40,8 +53,36 @@ describe(`run-sift`, () => {
     name: typeName,
     fields: () => {
       return {
-        id: new GraphQLNonNull(GraphQLID),
-        string: GraphQLString,
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        string: { type: GraphQLString },
+        first: {
+          type: new GraphQLObjectType({
+            name: `First`,
+            fields: {
+              willBeResolved: {
+                type: GraphQLString,
+                resolve: () => `resolvedValue`,
+              },
+              second: {
+                type: new GraphQLObjectType({
+                  name: `Second`,
+                  fields: {
+                    willBeResolved: {
+                      type: GraphQLString,
+                      resolve: () => `resolvedValue`,
+                    },
+                    third: new GraphQLObjectType({
+                      name: `Third`,
+                      fields: {
+                        foo: GraphQLString,
+                      },
+                    }),
+                  },
+                }),
+              },
+            },
+          }),
+        },
       }
     },
   })
@@ -91,7 +132,31 @@ describe(`run-sift`, () => {
       })
 
       expect(resultSingular).toEqual([nodes[0]])
-      expect(resultMany).toEqual([nodes[0], nodes[2]])
+      expect(resultMany).toEqual([nodes[0], nodes[2], nodes[3]])
     })
+  })
+
+  it(`resolves fields before querying`, async () => {
+    const queryArgs = {
+      filter: {
+        first: {
+          willBeResolved: { eq: `resolvedValue` },
+          second: {
+            willBeResolved: { eq: `resolvedValue` },
+            third: {
+              foo: { eq: `foo` },
+            },
+          },
+        },
+      },
+    }
+
+    const results = await runSift({
+      gqlType,
+      queryArgs,
+      firstOnly: true,
+    })
+
+    expect(results[0].id).toBe(`id_4`)
   })
 })
