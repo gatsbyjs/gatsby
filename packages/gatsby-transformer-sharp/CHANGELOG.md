@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.12"></a>
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.11...gatsby-transformer-sharp@2.1.12) (2019-01-24)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** Pick extension from file prop ([#11166](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/11166)) ([0a8b189](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/0a8b189))
+
 <a name="2.1.11"></a>
 
 ## [2.1.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.10...gatsby-transformer-sharp@2.1.11) (2019-01-23)

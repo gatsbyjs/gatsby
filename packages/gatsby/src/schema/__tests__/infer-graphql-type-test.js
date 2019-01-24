@@ -682,6 +682,35 @@ describe(`GraphQL type inferance`, () => {
       expect(result.data.listNode[0].linked[1].hair).toEqual(`blonde`)
     })
 
+    it(`Links nodes by field`, async () => {
+      let result = await queryResult(
+        [{ linked___NODE___hair: `brown` }],
+        `
+          linked {
+            hair
+          }
+        `,
+        { types }
+      )
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].linked.hair).toEqual(`brown`)
+    })
+
+    it(`Links an array of nodes by field`, async () => {
+      let result = await queryResult(
+        [{ linked___NODE___hair: [`brown`, `blonde`] }],
+        `
+          linked {
+            hair
+          }
+        `,
+        { types }
+      )
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
+      expect(result.data.listNode[0].linked[1].hair).toEqual(`blonde`)
+    })
+
     it(`Errors clearly when missing nodes`, async () => {
       expect(() => {
         inferObjectStructureFromNodes({
