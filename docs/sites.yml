@@ -4063,14 +4063,14 @@
   built_by_url: "https://gaelbillon.com"
   featured: false
 - title: Packrs
-  main_url: "https://www.packrs.co/"
   url: "https://www.packrs.co/"
-  description: Packrs is a local parcel delivery platform, A one spot destination for all your daily needs on a single click. Just pick the locations and get your deliveries packred!
+  main_url: "https://www.packrs.co/"
+  description: >
+    Packrs is a local delivery platform, one spot for all your daily requirements. On a single tap get everything you need at your doorstep.
   categories:
-    - Landing Page
-    - Mobile development
     - React Native
+    - Landing Page
     - Entrepreneurship
   built_by: Vipin Kumar Rawat
-  built_by_url: "https://github.com/aesthytik
+  built_by_url: "https://github.com/aesthytik"
   featured: false
