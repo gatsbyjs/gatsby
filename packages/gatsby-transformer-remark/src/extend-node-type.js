@@ -453,7 +453,7 @@ module.exports = (
         return markdownNode.excerpt
       }
 
-      const text = getAST(markdownNode).then(ast => {
+      const text = await getAST(markdownNode).then(ast => {
         const excerptNodes = []
         visit(ast, node => {
           if (node.type === `text` || node.type === `inlineCode`) {
