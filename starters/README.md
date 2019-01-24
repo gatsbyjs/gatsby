@@ -47,7 +47,7 @@
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://discord.gg/0ZcbPKXt5bVoxkfV">Discord</a>
+  <a href="https://gatsby.app/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites. This repository is our monorepo for managing all the great GatsbyJS starters for the community.
