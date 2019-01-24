@@ -1,14 +1,8 @@
 ---
 title: Blazing fast development with Gatsby and Sanity.io
-date: 2019-01-25T08:00:00+00:00
+date: 2019-01-25
 author: Knut Melvær
-tags:
-  - Sanity.io
-  - publishing platform
-  - structured content
-  - headless cms
-  - gatsby image
-  - portable text
+tags: ["headless-cms", "gatsby-image", "plugins"]
 image: "./images/gatsby-sanity.png"
 showImageInArticle: true
 ---
