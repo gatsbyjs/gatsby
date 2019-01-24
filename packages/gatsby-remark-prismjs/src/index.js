@@ -63,7 +63,7 @@ module.exports = (
 
     let highlightClassName = `gatsby-highlight`
     if (highlightLines && highlightLines.length > 0)
-      highlightClassName += ` gatsby-highlight-with-lines`
+      highlightClassName += ` has-highlighted-lines`
 
     // prettier-ignore
     node.value = ``
