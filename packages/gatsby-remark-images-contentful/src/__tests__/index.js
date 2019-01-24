@@ -13,6 +13,7 @@ jest.mock(`../utils/`, () => {
       base64: `data:image;`,
       aspectRatio: 1,
       srcSet: `srcSet`,
+      webpSrcSet: `webpSrcSet`,
       src: `imageUrl`,
       sizes: [`128px`, `250px`],
       density: 140,
@@ -193,4 +194,22 @@ test(`it leaves relative HTML img tags alone`, async () => {
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
   expect(nodes[0].value).toBe(content)
+})
+
+test(`it transforms images in markdown with webp srcSets if option is enabled`, async () => {
+  const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
+  const content = `
+![image](${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    withWebp: true,
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
 })

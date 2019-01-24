@@ -51,10 +51,17 @@ const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
     .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
     .join(`,\n`)
 
+  const webpSrcSet = filteredSizes
+    .map(
+      size => `${imageUrl}?fm=webp&w=${Math.round(size)} ${Math.round(size)}w`
+    )
+    .join(`,\n`)
+
   return {
     base64: base64Img,
     aspectRatio,
     srcSet,
+    webpSrcSet,
     src: imageUrl,
     sizes: options.sizes,
     density,
