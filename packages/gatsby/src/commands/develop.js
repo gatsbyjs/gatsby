@@ -96,12 +96,6 @@ async function startServer(program) {
   )
 
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
-    app.post(
-      `/___graphql`,
-      graphqlHTTP({
-        schema: store.getState().schema,
-      })
-    )
     app.get(
       `/___graphql`,
       graphqlPlayground({
@@ -109,15 +103,14 @@ async function startServer(program) {
       }),
       () => {}
     )
-  } else {
-    app.use(
-      `/___graphql`,
-      graphqlHTTP({
-        schema: store.getState().schema,
-        graphiql: true,
-      })
-    )
   }
+  app.use(
+    `/___graphql`,
+    graphqlHTTP({
+      schema: store.getState().schema,
+      graphiql: process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+    })
+  )
 
   // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
   app.use((req, res, next) => {
