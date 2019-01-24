@@ -6,8 +6,6 @@ tags:
   - swag
 ---
 
-# Gatsby Swag Store Case Study
-
 Gatsby is a React-based site generator that creates some of the fastest websites you’ve ever seen. Go ahead and blink—I dare you! It’s a framework that not only helps people create super fast websites, but it’s also a great equalizer of the web. Think about it: if you’re in an area that has 3G internet, many sites can take about 15 seconds to load, if they even load at all. Thanks to Gatsby’s performance-first architecture, the same site can be on-screen in less than 3 seconds. So Gatsby can really bring the information to everyone.
 
 Gatsby is also open source and currently has 1000+ contributors. For all the time, energy, and help they’ve given, we wanted to find a way to thank them properly.
