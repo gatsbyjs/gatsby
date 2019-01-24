@@ -15,7 +15,7 @@ We also automatically add polyfills as needed — no more shipping code which my
 breaks on older browsers!
 
 If you only target newer browsers, see the [Browser
-Support](/docs/browser-support/) docs page for how to instruct Gatsby on which
+Support](/docs/docs/browser-support.md) docs page for how to instruct Gatsby on which
 browsers you support and then Babel will start compiling for only these
 browsers.
 
