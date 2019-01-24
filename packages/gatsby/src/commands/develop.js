@@ -94,19 +94,30 @@ async function startServer(program) {
       heartbeat: 10 * 1000,
     })
   )
-  app.post(
-    `/___graphql`,
-    graphqlHTTP({
-      schema: store.getState().schema,
-    })
-  )
-  app.get(
-    `/___graphql`,
-    graphqlPlayground({
-      endpoint: `/___graphql`,
-    }),
-    () => {}
-  )
+
+  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
+    app.post(
+      `/___graphql`,
+      graphqlHTTP({
+        schema: store.getState().schema,
+      })
+    )
+    app.get(
+      `/___graphql`,
+      graphqlPlayground({
+        endpoint: `/___graphql`,
+      }),
+      () => {}
+    )
+  } else {
+    app.use(
+      `/___graphql`,
+      graphqlHTTP({
+        schema: store.getState().schema,
+        graphiql: true,
+      })
+    )
+  }
 
   // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
   app.use((req, res, next) => {
@@ -369,7 +380,11 @@ module.exports = async (program: any) => {
 
     console.log()
     console.log(
-      `View the GraphQL Playground, an in-browser IDE, to explore your site's data and schema`
+      `View ${
+        process.env.GATSBY_GRAPHQL_IDE === `playground`
+          ? `the GraphQL Playground`
+          : `GraphiQL`
+      }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
     console.log(`  ${urls.localUrlForTerminal}___graphql`)
