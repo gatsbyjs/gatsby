@@ -4,6 +4,7 @@ const {
   GraphQLNonNull,
   GraphQLID,
   GraphQLString,
+  GraphQLList,
 } = require(`graphql`)
 
 jest.mock(`../../db/node-tracking`, () => {
@@ -30,12 +31,14 @@ const mockNodes = [
     string: `qux`,
     first: {
       willBeResolved: `willBeResolved`,
-      second: {
-        willBeResolved: `willBeResolved`,
-        third: {
-          foo: `foo`,
+      second: [
+        {
+          willBeResolved: `willBeResolved`,
+          third: {
+            foo: `foo`,
+          },
         },
-      },
+      ],
     },
   },
 ]
@@ -64,21 +67,23 @@ describe(`run-sift`, () => {
                 resolve: () => `resolvedValue`,
               },
               second: {
-                type: new GraphQLObjectType({
-                  name: `Second`,
-                  fields: {
-                    willBeResolved: {
-                      type: GraphQLString,
-                      resolve: () => `resolvedValue`,
-                    },
-                    third: new GraphQLObjectType({
-                      name: `Third`,
-                      fields: {
-                        foo: GraphQLString,
+                type: new GraphQLList(
+                  new GraphQLObjectType({
+                    name: `Second`,
+                    fields: {
+                      willBeResolved: {
+                        type: GraphQLString,
+                        resolve: () => `resolvedValue`,
                       },
-                    }),
-                  },
-                }),
+                      third: new GraphQLObjectType({
+                        name: `Third`,
+                        fields: {
+                          foo: GraphQLString,
+                        },
+                      }),
+                    },
+                  })
+                ),
               },
             },
           }),
@@ -142,9 +147,11 @@ describe(`run-sift`, () => {
         first: {
           willBeResolved: { eq: `resolvedValue` },
           second: {
-            willBeResolved: { eq: `resolvedValue` },
-            third: {
-              foo: { eq: `foo` },
+            elemMatch: {
+              willBeResolved: { eq: `resolvedValue` },
+              third: {
+                foo: { eq: `foo` },
+              },
             },
           },
         },
