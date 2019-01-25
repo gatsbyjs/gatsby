@@ -574,4 +574,4 @@ The way the Gatsby community maintains docs and tutorials must meet the followin
 - version control
 - a way to get feedback on each doc
 
-GitHub meets this requirements.
+GitHub meets these requirements.
