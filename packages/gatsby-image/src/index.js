@@ -189,14 +189,15 @@ class Image extends React.Component {
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
+        const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
           typeof this.props.onStartLoad === `function`
         ) {
-          this.props.onStartLoad({ wasCached: inImageCache(this.props) })
+          this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        this.setState({ isVisible: true, imgLoaded: false })
+        this.setState({ isVisible: true, imgLoaded: imageInCache })
       })
     }
   }
