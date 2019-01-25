@@ -5,7 +5,8 @@ exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV !== `production`) return null
+  if (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
+    return null
 
   const gtagConfig = pluginOptions.gtagConfig || {}
 
@@ -31,6 +32,11 @@ exports.onRenderBody = (
     ? setHeadComponents
     : setPostBodyComponents
 
+  // TODO: remove pluginOptions.respectDNT in the next major release of this plugin.
+  // See issue https://github.com/gatsbyjs/gatsby/issues/11159 for the discussion.
+  const respectDNT =
+    pluginOptions.pluginConfig.respectDNT || pluginOptions.respectDNT
+
   const renderHtml = () => `
       ${
         excludeGtagPaths.length
@@ -44,8 +50,7 @@ exports.onRenderBody = (
           : ``
       }
       if(${
-        typeof pluginOptions.respectDNT !== `undefined` &&
-        pluginOptions.respectDNT === true
+        respectDNT
           ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
           : `true`
       }) {

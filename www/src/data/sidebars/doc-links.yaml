@@ -193,6 +193,13 @@
       items:
         - title: Adding search
           link: /docs/adding-search/
+          items:
+            - title: Adding search with Algolia*
+              link: /docs/adding-search-with-algolia/
+            - title: Adding search with elasticlunr*
+              link: /docs/adding-search-with-elasticlunr/
+            - title: Adding search with js-search*
+              link: /docs/adding-search-with-js-search/
         - title: Adding analytics
           link: /docs/adding-analytics/
         - title: Adding authentication
