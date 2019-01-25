@@ -58,7 +58,7 @@ module.exports = {
         projectId: "<yourProjectId>",
         dataset: "<yourDatasetName>",
         watchMode: true,
-        draftOverlay: true,
+        overlayDrafts: true,
         token: process.env.SANITY_READ_TOKEN,
       },
     },
@@ -66,7 +66,7 @@ module.exports = {
 }
 ```
 
-If you [add a token with read permissions](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo#enable-gatsby-watch-mode-for-drafts) and set `draftOverlay: true`, you will get _all_ editing changes live. This also makes it possible for a team to collaborate on design, code, and content at the same time, across multiple devices. It makes developing a site with Gatsby even more fun!
+If you [add a token with read permissions](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo#enable-gatsby-watch-mode-for-drafts) and set `overlayDrafts: true`, you will get _all_ editing changes live. This also makes it possible for a team to collaborate on design, code, and content at the same time, across multiple devices. It makes developing a site with Gatsby even more fun!
 
 ## Fast, frugal builds
 
