@@ -127,13 +127,12 @@ const EcosystemSection = ({
       {subTitle && <SubTitle>{subTitle}</SubTitle>}
     </Header>
 
-    {featuredItems &&
-      featuredItems.length > 0 && (
-        <EcosystemFeaturedItems
-          items={featuredItems}
-          itemComponent={EcosystemFeaturedItem}
-        />
-      )}
+    {featuredItems && featuredItems.length > 0 && (
+      <EcosystemFeaturedItems
+        items={featuredItems}
+        itemComponent={EcosystemFeaturedItem}
+      />
+    )}
   </EcosystemSectionRoot>
 )
 
