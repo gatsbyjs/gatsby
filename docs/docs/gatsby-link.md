@@ -121,7 +121,6 @@ const Photo = ({ location, photoId }) => {
 }
 ```
 
-
 ## Programmatic navigation
 
 For cases when you can only use event handlers for navigation, you can use `navigate`
