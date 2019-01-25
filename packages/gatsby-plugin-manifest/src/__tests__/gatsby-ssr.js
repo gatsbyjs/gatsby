@@ -45,12 +45,11 @@ describe(`gatsby-plugin-manifest`, () => {
     expect(headComponents).toMatchSnapshot()
   })
 
-  describe(`Creates legacy apple touch links if opted in`, () => {
+  describe(`Creates legacy apple touch links`, () => {
     it(`Using default set of icons`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
-        legacy: true,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -59,7 +58,38 @@ describe(`gatsby-plugin-manifest`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
-        legacy: true,
+        icons: [
+          {
+            src: `/favicons/android-chrome-48x48.png`,
+            sizes: `48x48`,
+            type: `image/png`,
+          },
+          {
+            src: `/favicons/android-chrome-512x512.png`,
+            sizes: `512x512`,
+            type: `image/png`,
+          },
+        ],
+      })
+      expect(headComponents).toMatchSnapshot()
+    })
+  })
+
+  describe(`Does not create legacy apple touch links`, () => {
+    it(`If "legacy" options is false and using default set of icons`, () => {
+      onRenderBody(ssrArgs, {
+        icon: true,
+        theme_color: `#000000`,
+        legacy: false,
+      })
+      expect(headComponents).toMatchSnapshot()
+    })
+
+    it(`If "legacy" options is false and using user specified list of icons`, () => {
+      onRenderBody(ssrArgs, {
+        icon: true,
+        theme_color: `#000000`,
+        legacy: false,
         icons: [
           {
             src: `/favicons/android-chrome-48x48.png`,
@@ -83,7 +113,6 @@ describe(`gatsby-plugin-manifest`, () => {
     onRenderBody(ssrArgs, {
       icon: true,
       theme_color: `#000000`,
-      legacy: true,
     })
 
     headComponents
