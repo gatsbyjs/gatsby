@@ -18,12 +18,12 @@ components.
 - [Usage](#usage)
   - [Configuration](#configuration)
     - [Extensions](#extensions)
-    - [Default layouts](#defaultlayouts)
-    - [Global scope](#globalscope)
-    - [Gatbsy remark plugins](#gatsbyremarkplugins)
-    - [Markdown plugins](#mdplugins)
-    - [HAST plugins](#hastplugins)
-    - [Media types](#mediatypes)
+    - [Default layouts](#default-layouts)
+    - [Global scope](#global-scope)
+    - [Gatbsy remark plugins](#gatsby-remark-plugins)
+    - [Markdown plugins](#md-plugins)
+    - [HAST plugins](#hast-plugins)
+    - [Media types](#media-types)
 
 ## Installation
 
@@ -56,15 +56,15 @@ with Markdown media types into MDX content.
 
 ### Configuration
 
-| Key                                                                                      | Default                                | Description                                                          |
-| ---------------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------- |
-| [`extensions`](#extensions)                                                              | `[".mdx"]`                             | Configure the file extensions that gatsby-mdx will process           |
-| [`defaultLayouts`](#defaultlayouts)                                                      | `{}`                                   | Set the layout components for MDX source types                       |
-| [`globalScope`](#globalscope)                                                            | `""`                                   | Define components and variables that are accessible to all MDX files |
-| [`gatsbyRemarkPlugins](#gatsbyremarkplugins) | `[]` | Use Gatsby-specific remark plugins |
-| [`mdPlugins`](#mdplugins)                                                                | `[]`                                   | Specify remark plugins                                               |
-| [`hastPlugins`](#hastplugins)                                                            | `[]`                                   | Specify rehype plugins                                               |
-| [`mediaTypes`](#mediatypes)                                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                     |
+| Key                                                                                        | Default                                | Description                                                          |
+| ------------------------------------------------------------------------------------------ | -------------------------------------- | -------------------------------------------------------------------- |
+| [`extensions`](#extensions)                                                                | `[".mdx"]`                             | Configure the file extensions that gatsby-mdx will process           |
+| [`defaultLayouts`](#default-layouts)                                                       | `{}`                                   | Set the layout components for MDX source types                       |
+| [`globalScope`](#global-scope)                                                             | `""`                                   | Define components and variables that are accessible to all MDX files |
+| [`gatsbyRemarkPlugins](#gatsby-remark-plugins) | `[]` | Use Gatsby-specific remark plugins |
+| [`mdPlugins`](#md-plugins)                                                                 | `[]`                                   | Specify remark plugins                                               |
+| [`hastPlugins`](#hast-plugins)                                                             | `[]`                                   | Specify rehype plugins                                               |
+| [`mediaTypes`](#media-types)                                                               | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                     |
 
 #### Extensions
 
