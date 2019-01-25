@@ -2,11 +2,8 @@
 title: Deploying to S3/Cloudfront
 ---
 
-In this guide, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io/).
-
-AWS Amplify is a combination of client library, CLI toolchain, and UI components. Amplify allow developers to get up & running with full-stack cloud-powered applications with features like authentication, GraphQL, storage, REST APIs, analytics, Lambda functions, hosting & more.
-
-Using the **Hosting** feature, you can deploy your application to AWS as well as set up your site with Amazon Cloudfront CDN. This is what we'll be doing in this tutorial. Let's begin!
+In this guide, we'll walk through how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
+Additionally - but very recommended - you can add CloudFront, a global CDN to make your site _even faster_.
 
 ## Getting Started - Gatsby
 
@@ -28,97 +25,107 @@ Finally, change into the new site directory:
 cd my-gatsby-site
 ```
 
-## Getting Started - AWS Amplify
+## Getting Started - AWS CLI
 
-Now that we have our Gatsby site up & running, let's add hosting & make the site live on AWS.
+Create a [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create a access id and secret for it.
+You'll need these in the next step.
 
-First, we'll install the AWS Amplify CLI:
-
-```shell
-npm i -g @aws-amplify/cli
-```
-
-With the AWS Amplify CLI installed, we now need to configure it with an IAM User:
+Install the AWS CLI and configure it (ensure python is installed before running these commands)
 
 ```shell
-amplify configure
+pip install aws
+aws configure
 ```
 
-> For a video walkthrough of how to configure the AWS Amplify CLI, click [here](https://www.youtube.com/watch?v=fWbM5DLh25U).
+The AWS CLI will now prompt you for the key & secret, add them.
 
-Now, we can create a new Amplify project in the root of our Gatsby project:
+## Setting up: S3
+
+Now that we have our Gatsby site up & running, and our AWS access sorted out: let's add hosting & make the site live on AWS.
+
+First, we'll install the Gatsby S3 plugin:
 
 ```shell
-amplify init
+npm i gatsby-plugin-s3
 ```
 
-- Choose your default editor: **(for me, this is Visual Studio Code)**
-- Please choose the type of app that you're building: **javascript**
-- What JavaScript framework are you using: **react**
-- Source Directory Path: **src**
-- Distribution Directory Path: **public**
-- Build Command: **npm run-script build**
-- Start Command: **npm run-script develop**
-- Do you want to use an AWS profile? **Y**
-- Please choose the profile you want to use: **default**
+Add it to your `gatsby-config.js`: (don't forget to change the bucket name)
 
-Now, the Amplify project has been created. You will see that you have a new amplify folder in your project directory as well as an .amplifyrc file. Both of these contain your AWS Amplify project configuration.
-
-Next, we can type amplify into our command line & see all of the options that we have:
-
-```shell
-amplify
+```
+plugins: [
+ {
+     resolve: `gatsby-plugin-s3`,
+     options: {
+         bucketName: 'my-website-bucket'
+     },
+ },
+]
 ```
 
-At the bottom, we can see the available categories available to us. Hosting is the category we would like to enable, so let's do so now:
+And finally, add the deployment script to your `package.json`:
 
-```shell
-amplify add hosting
+```js
+"scripts": {
+   ...
+   "deploy": "gatsby-plugin-s3 deploy"
+}
 ```
 
-Here, we'll be prompted for the following:
+That's it!
+Run `npm run build && npm run deploy` to do a build and have it immediately deployed to S3!
 
-- Select the environment setup: **DEV**
-- hosting bucket name: **gatsbyproj-20180808112129-hosting-bucket (or type whatever you'd like the bucket name to be)**
+## Setting up: CloudFront
 
-This will set up our local project with everything we need, now we can publish the app to AWS. To do so, we'll run the following command:
+CloudFront is a global CDN and can be used to make your blazing fast Gatsby site load _even faster_, particularly for first-time visitors. Additionally, CloudFront provides the easiest way to give your S3 bucket a custom domain name and HTTPS support.
 
-```shell
-amplify publish
+There are a couple of things that you need to consider when using gatsby-plugin-s3 to deploy a site which uses CloudFront.
+
+There are two ways that you can connect CloudFront to an S3 origin. The most obvious way, which the AWS Console will suggest, is to type the bucket name in the Origin Domain Name field. This sets up an S3 origin, and allows you to configure CloudFront to use IAM to access your bucket. Unfortunately, it also makes it impossible to perform serverside (301/302) redirects, and it also means that directory indexes (having index.html be served when someone tries to access a directory) will only work in the root directory. You might not initially notice these issues, because Gatsby's clientside JavaScript compensates for the latter and plugins such as `gatsby-plugin-meta-redirect` can compensate for the former. But just because you can't see these issues, doesn't mean they won't affect search engines.
+
+In order for all the features of your site to work correctly, you must instead use your S3 bucket's Static Website Hosting Endpoint as the CloudFront origin. This does (sadly) mean that your bucket will have to be configured for public-read, because when CloudFront is using an S3 Static Website Hosting Endpoint address as the Origin, it's incapable of authenticating via IAM.
+
+### gatsby-plugin-s3 configuration
+
+In the gatsby-plugin-s3 configuration file, there are a couple of optional parameters that you can usually leave blank, `protocol` and `hostname`. But when you're using CloudFront, these parameters are vital for ensuring redirects work correctly. If you omit these parameters, redirects will be performed relative to your S3 Static Website Hosting Endpoint. This means if a user visits your site via the CloudFront URL and hits a redirect, they will be redirected to your S3 Static Website Hosting Endpoint instead. This will disable HTTPS and (more importantly) will display an ugly and unprofessional URL in the user's address bar.
+
+By specifying the `protocol` and `hostname` parameters, you can cause redirects to be applied relative to a domain of your choosing.
+
+```javascript
+{
+    resolve: `gatsby-plugin-s3`,
+    options: {
+        bucketName: "my-example-bucket",
+        protocol: "https",
+        hostname: "www.example.com",
+    },
+}
 ```
 
-Here, we'll be prompted for the following:
+If you use your site's URL elsewhere in gatsby-config.js, I have a tip for you. You can define the URL once at the top of the config:
 
-- Are you sure you want to continue? **Y**
-
-Now, our resources will be pushed up to our account & our site will be published to a live url!
-
-What just happened? A few things:
-
-1. Amplify runs npm run build to build a new distribution of your app
-2. A new S3 bucket is created in your AWS account
-3. All code in the public directory is uploaded to the S3 bucket
-
-We should have also be given the URL that the site is hosted on. At any time that we would like to get the url for our site, we can run:
-
-```shell
-amplify status
+```javascript
+const siteAddress = new URL("https://www.example.com")
 ```
 
-This command should give us all of the info about our app including the url of our website.
+And then in the Gatsby config you can reference it like so:
 
-If we ever want to configure the hosting setup, including adding Cloudfront, we can run:
-
-```shell
-amplify configure hosting
+```javascript
+{
+    resolve: `gatsby-plugin-s3`,
+    options: {
+        bucketName: "my-example-bucket",
+        protocol: siteAddress.protocol.slice(0, -1),
+        hostname: siteAddress.hostname,
+    },
+}
 ```
 
-Here, we'll be prompted for what we would like to change about the project configuration.
-
-> To learn more about AWS Amplify, check out the [Getting Started](https://aws-amplify.github.io/media/get_started) page.
+If you need the full address elsewhere in your config, you can access it via `siteAddress.href`.
 
 ## References:
 
+- [Gatsby on AWS, the right way](https://blog.joshwalsh.me/aws-gatsby/)
+- [Using CloudFront with gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3/blob/master/recipes/with-cloudfront.md)
 - [Publishing Your Next Gatsby Site to AWS With AWS Amplify](https://www.gatsbyjs.org/blog/2018-08-24-gatsby-aws-hosting/)
 - [Escalade Sports: From $5000 to \$5/month in Hosting With Gatsby](https://www.gatsbyjs.org/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
 - [Deploy your Gatsby.js Site to AWS S3](https://benenewton.com/deploy-your-gatsby-js-site-to-aws-s-3)
