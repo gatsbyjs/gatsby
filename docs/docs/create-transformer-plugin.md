@@ -167,7 +167,7 @@ function transformObject(obj, id, type) {
 }
 ```
 
- Above, we create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/actions/#createNode).
+Above, we create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/actions/#createNode).
 
 We then create a link between the parent node (file) and the child node (yaml content).
 
