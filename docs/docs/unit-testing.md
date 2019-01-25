@@ -145,28 +145,6 @@ module.exports = {
 
 This mocks the `graphql()` function, `Link` component, and `StaticQuery` component.
 
-#### Mocking `location` from `Router`
-
-One more issue that you may encounter is that some components expect to be able
-to use the `location` prop that is passed in by `Router`. You can fix this by
-manually passing in the prop:
-
-```js:title=src/pages/__tests__/index.js
-import React from "react"
-import renderer from "react-test-renderer"
-import Index from "../index"
-
-describe("Index", () => {
-  it("renders correctly", () => {
-    const tree = renderer.create(<Index />).toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-})
-```
-
-For more information on testing page components, be sure to read the docs on
-[testing components with GraphQL](/docs/testing-components-with-graphql/)
-
 ## Writing tests
 
 A full guide to unit testing is beyond the scope of this guide, but you can
