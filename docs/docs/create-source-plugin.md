@@ -10,6 +10,8 @@ and "transformer" plugins.
 - **Transformer** plugins "transform" data provided by source plugins into new
   nodes and/or node fields.
 
+ This doc focuses on source plugins.
+
 For example:
 
 The [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin
