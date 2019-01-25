@@ -297,6 +297,7 @@ exports.createContentTypeNodes = ({
           const entryItemFieldValue = entryItemFields[entryItemFieldKey]
           if (Array.isArray(entryItemFieldValue)) {
             if (
+              entryItemFieldValue[0] &&
               entryItemFieldValue[0].sys &&
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id

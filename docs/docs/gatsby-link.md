@@ -54,6 +54,30 @@ class Page extends React.Component {
 }
 ```
 
+## Partial Link matching
+
+The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
+
+- We may want `/blog/hello-world` to match `<Link to="/blog">`
+- Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
+
+In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+// This link will get the active class when it partially matches the current URL
+const PartialNavLink = props => (
+  <Link
+    getProps={({ isPartiallyCurrent }) => {
+      return isPartiallyCurrent ? { className: "active" } : null
+    }}
+  />
+)
+```
+
+Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
+
 ## Replacing history entry
 
 You can pass boolean `replace` property to replace previous history entry.
