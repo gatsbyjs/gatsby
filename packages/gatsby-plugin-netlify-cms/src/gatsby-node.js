@@ -142,7 +142,13 @@ exports.onCreateWebpackConfig = (
        */
       mode: `none`,
       optimization: {},
+      devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
     }
-    webpack(config).run()
+
+    if (stage === `develop`) {
+      webpack(config).watch({}, () => {})
+    } else {
+      webpack(config).run()
+    }
   }
 }

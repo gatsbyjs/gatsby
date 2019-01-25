@@ -6,17 +6,6 @@
   categories:
     - Web Development
     - Featured
-- title: Stitch Fix
-  main_url: "https://www.stitchfix.com/"
-  url: "https://www.stitchfix.com/"
-  description: >
-    Stitch Fix is an online styling service that delivers a truly personalized
-    shopping experience.
-  categories:
-    - eCommerce
-    - Fashion
-    - Featured
-  featured: true
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
@@ -3991,3 +3980,73 @@
     - Web Development
   built_by: Cole Walker
   built_by_url: "https://www.walkermakes.com"
+- title: Ashley Thouret
+  main_url: "https://www.ashleythouret.com"
+  url: "https://www.ashleythouret.com"
+  description: Official website of Canadian soprano Ashley Thouret.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: The AZOOR Society
+  main_url: "https://www.theazoorsociety.org"
+  url: "https://www.theazoorsociety.org"
+  description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research.
+  categories:
+    - Health & Wellness
+    - Community
+    - Nonprofit
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+  featured: false
+- title: Gábor Fűzy pianist
+  main_url: "https://pianobar.hu"
+  url: "https://pianobar.hu"
+  description: Gábor Fűzy pianist's offical website built with Gatsby v2.
+  categories:
+    - Music
+  built_by: Zoltán Bedi
+  built_by_url: "https://github.com/B3zo0"
+  featured: false
+- title: Logicwind
+  main_url: "https://logicwind.com"
+  url: "https://logicwind.com"
+  description: Website of Logicwind - Javascript experts, Technology development agency & consulting.
+  featured: false
+  categories:
+    - Portfolio
+    - Agency
+    - Web Development
+    - Consulting
+  built_by: Logicwind
+  built_by_url: "https://www.logicwind.com"
+- title: ContactBook.app
+  main_url: "https://contactbook.app"
+  url: "https://contactbook.app"
+  description: Seamlessly share Contacts with G Suite team members
+  featured: false
+  categories:
+    - Landing page
+    - Blog
+  built_by: Logicwind
+  built_by_url: "https://www.logicwind.com"
+- title: npm.cardiv.de
+  url: https://npm.cardiv.de
+  main_url: https://npm.cardiv.de
+  source_url: https://github.com/cardiv/npm.cardiv.de
+  description: >
+    A site to collect personal favorites of NPM packages – sorted by downloads count with a tags filter and search by title. Fork it and bookmark your favorite packages!
+  categories:
+    - Directory
+    - JavaScript
+    - Library
+    - Open Source
+    - Programming
+    - Web Development
+    - Bookmarks
+    - Favorites
+  built_by: cardiv
+  built_by_url: https://github.com/cardiv/
+  featured: false
