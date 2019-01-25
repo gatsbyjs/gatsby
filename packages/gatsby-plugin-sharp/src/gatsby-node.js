@@ -68,7 +68,7 @@ exports.onPostBuild = ({ cache, reporter }) =>
  * Build images on the fly when they are requested by the browser
  */
 exports.onCreateDevServer = async ({ app, cache, emitter }, pluginOptions) => {
-  emitter(`QUERY_QUEUE_DRAINED`, () => saveQueueToCache(cache, jobQueue))
+  emitter.on(`QUERY_QUEUE_DRAINED`, () => saveQueueToCache(cache, jobQueue))
 
   app.use(async (req, res, next) => {
     const queue = await getQueueFromCache(cache)
