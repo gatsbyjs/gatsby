@@ -135,9 +135,7 @@ Si bien es un cambio aparentemente simple, esto tiene profundas implicaciones so
 Toma el ejemplo de crear un botón personalizado. En el pasado lo harías creando una clase de CSS (quizás `.primary-button`) con sus estilos personalizados y luego los aplicas a cada elemento que lo requiera.
 
 ```html
-<button class="primary-button">
-  Click
-</button>
+<button class="primary-button">Click</button>
 ```
 
 En el mundo de los componentes, en su lugar creas un componente `PrimaryButton` con los estilos de tus botones y lo usas de la siguiente manera:
