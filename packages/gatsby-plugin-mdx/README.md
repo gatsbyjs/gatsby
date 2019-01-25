@@ -25,6 +25,8 @@ components.
     - [HAST plugins](#hast-plugins)
     - [Media types](#media-types)
 
+---
+
 ## Installation
 
 Install with npm:
