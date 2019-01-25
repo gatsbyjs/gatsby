@@ -50,9 +50,9 @@ Here is how the `EnsureResources` component handles each of these scenarios:
 
 1. On non-initial renders, reload upon missing resources so that the browser can load the server's 404 page
 
-2. On non-initial renders, reload upon missing resources so that the browser can load the latest page
+2. On initial renders, flag the page as failed and throw an error to prevent rendering a blank page (static HTML will suffice), then reload it once the service worker updates
 
-   On initial renders, flag the page as failed and throw an error to prevent rendering a blank page (static HTML will suffice), then reload it once the service worker updates
+   On non-initial renders, reload upon missing resources so that the browser can load the latest page
 
 3. On initial renders, throw an error to prevent rendering a blank page (static HTML will suffice)
 
