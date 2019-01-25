@@ -1,3 +1,9 @@
+---
+title: Gatsby Inc's Product & Engineering Hiring Philosophy
+date: 2019-01-29
+author: Sam Bhagwat
+---
+
 > "A strong team is the most important element of a company’s ability to achieve success.
 >
 > Especially in startups, a company becomes the people it hires. The first few hires help the founders create the environment they will all work in and help drive the product development process. It is also the team that drives (and interviews) all future hires and their ideas and biases get incorporated in the team. 
