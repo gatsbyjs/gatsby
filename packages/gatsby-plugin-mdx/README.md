@@ -15,6 +15,7 @@ components.
 - [Why MDX?](https://www.gatsbyjs.org/docs/mdx/why/)
 - [Gatsby MDX guide](https://www.gatsbyjs.org/docs/mdx/)
 - [MDX language](https://mdxjs.com)
+- [MDX specification](https://github.com/mdx-js/specification)
 
 ---
 
