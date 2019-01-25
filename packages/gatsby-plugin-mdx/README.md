@@ -24,6 +24,9 @@ components.
     - [Markdown plugins](#md-plugins)
     - [HAST plugins](#hast-plugins)
     - [Media types](#media-types)
+  - [Components](#components)
+    - [MDXProvider](#mdxprovider)
+    - [MDXRenderer](#mdxrenderer)
 
 ---
 
@@ -349,3 +352,76 @@ Gatsby includes the media-type of the content on any given node. For
 `file` nodes, we choose whether to process the content with MDX or not
 by the file extension. For remote content or generated content, we
 choose which nodes to process by looking at the media type.
+
+### Components
+
+MDX and gatsby-mdx use components for different things like rendering
+and component mappings.
+
+#### MDXProvider
+
+`MDXProvider` is a React component that allows you to replace the
+rendering of tags in MDX content. It does this by providing a list of
+components via context to the internal `MDXTag` component that handles
+rendering of base tags like `p` and `h1`. There are two special tags
+that can be replaced too: `inlineCode` and `wrapper`. `inlineCode` is
+for inline `<code>` and `wrapper` is the special element that wraps
+all of the MDX content.
+
+```js
+import { MDXProvider } from "@mdx-js/tag";
+
+const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />;
+const MyParagraph = props => (
+  <p style={{ fontSize: "18px", lineHeight: 1.6 }} />
+);
+
+const components = {
+  h1: MyH1,
+  p: MyParagraph
+};
+
+export const wrapRootElement = ({ element }) => (
+  <MDXProvider components={components}>{element}</MDXProvider>
+);
+```
+
+The following components can be customized with the MDXProvider:
+
+| Tag             | Name                                                                 | Syntax                                              |
+| --------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
+| `p`             | [Paragraph](https://github.com/syntax-tree/mdast#paragraph)          |                                                     |
+| `h1`            | [Heading 1](https://github.com/syntax-tree/mdast#heading)            | `#`                                                 |
+| `h2`            | [Heading 2](https://github.com/syntax-tree/mdast#heading)            | `##`                                                |
+| `h3`            | [Heading 3](https://github.com/syntax-tree/mdast#heading)            | `###`                                               |
+| `h4`            | [Heading 4](https://github.com/syntax-tree/mdast#heading)            | `####`                                              |
+| `h5`            | [Heading 5](https://github.com/syntax-tree/mdast#heading)            | `#####`                                             |
+| `h6`            | [Heading 6](https://github.com/syntax-tree/mdast#heading)            | `######`                                            |
+| `thematicBreak` | [Thematic break](https://github.com/syntax-tree/mdast#thematicbreak) | `***`                                               |
+| `blockquote`    | [Blockquote](https://github.com/syntax-tree/mdast#blockquote)        | `>`                                                 |
+| `ul`            | [List](https://github.com/syntax-tree/mdast#list)                    | `-`                                                 |
+| `ol`            | [Ordered list](https://github.com/syntax-tree/mdast#list)            | `1.`                                                |
+| `li`            | [List item](https://github.com/syntax-tree/mdast#listitem)           |                                                     |
+| `table`         | [Table](https://github.com/syntax-tree/mdast#table)                  | `--- | --- | ---`                                   |
+| `tr`            | [Table row](https://github.com/syntax-tree/mdast#tablerow)           | `This | is | a | table row`                         |
+| `td`/`th`       | [Table cell](https://github.com/syntax-tree/mdast#tablecell)         |                                                     |
+| `pre`           | [Pre](https://github.com/syntax-tree/mdast#code)                     |                                                     |
+| `code`          | [Code](https://github.com/syntax-tree/mdast#code)                    |                                                     |
+| `em`            | [Emphasis](https://github.com/syntax-tree/mdast#emphasis)            | `_emphasis_`                                        |
+| `strong`        | [Strong](https://github.com/syntax-tree/mdast#strong)                | `**strong**`                                        |
+| `delete`        | [Delete](https://github.com/syntax-tree/mdast#delete)                | `~~strikethrough~~`                                 |
+| `code`          | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
+| `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
+| `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
+| `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
+
+It's important to define the `components` you pass in in a stable way
+so that the references don't change if you want to be able to navigate
+to a hash. That's why we defined `components` outside of any render
+functions in these examples.
+
+##### Related
+
+- [MDX components](https://mdxjs.com/getting-started/#mdxprovider)
+
+#### MDXRenderer
