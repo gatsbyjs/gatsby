@@ -100,5 +100,28 @@ describe(`remark prism plugin`, () => {
       plugin({ markdownAST })
       expect(markdownAST).toMatchSnapshot()
     })
+    it(`should not wrap keywords with <span class="token extensionTokenName"> if no extension given`, () => {
+      const code = `\`\`\`c\naRandomTypeKeyword var = 32\n\``
+      const markdownAST = remark.parse(code)
+
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+    it(`should wrap keywords with <span class="token extensionTokenName"> based on given extension`, () => {
+      const code = `\`\`\`c\naRandomTypeKeyword var = 32\n\``
+      const markdownAST = remark.parse(code)
+
+      const config = {
+        languageExtensions: {
+          extend: `c`,
+          definition: {
+            extended_keywords: /(aRandomTypeKeyword)/,
+          },
+        },
+      }
+
+      plugin({ markdownAST }, config)
+      expect(markdownAST).toMatchSnapshot()
+    })
   })
 })

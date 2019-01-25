@@ -1,6 +1,7 @@
+"use strict"
+
 const Prism = require(`prismjs`)
 const _ = require(`lodash`)
-
 const loadPrismLanguage = require(`./load-prism-language`)
 const handleDirectives = require(`./directives`)
 const unsupportedLanguages = new Set()
@@ -29,20 +30,16 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
   }
 
   const grammar = Prism.languages[language]
-
   const highlighted = Prism.highlight(code, grammar, language)
   const codeSplits = handleDirectives(highlighted, lineNumbersHighlight)
-
   let finalCode = ``
-
-  const lastIdx = codeSplits.length - 1
-  // Don't add back the new line character after highlighted lines
+  const lastIdx = codeSplits.length - 1 // Don't add back the new line character after highlighted lines
   // as they need to be display: block and full-width.
+
   codeSplits.forEach((split, idx) => {
     finalCode += split.highlight
       ? split.code
       : `${split.code}${idx == lastIdx ? `` : `\n`}`
   })
-
   return finalCode
 }
