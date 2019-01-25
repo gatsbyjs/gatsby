@@ -179,8 +179,8 @@ learn more about other tests that you can write.
 ## Running tests
 
 If you look inside `package.json` you will probably find that there is already a
-script for `test`, which just outputs an error message. Change this to simply
-`jest`:
+script for `test`, which just outputs an error message. Change this to use the
+`jest` executable that we now have available, like so:
 
 ```json:title=package.json
   "scripts": {
@@ -189,37 +189,15 @@ script for `test`, which just outputs an error message. Change this to simply
 ```
 
 This means you can now run tests by typing `npm test`. If you want you could
-also run with a flag that triggers watch mode `npm test -- --watch` to watch files and run tests when
-they are changed.
+also run with a flag that triggers watch mode to watch files and run tests when they are changed: `npm test -- --watch`.
 
-Now, run `npm test` and you should immediately get an error like this:
-
-```shell
- @font-face {
-    ^
-
-    SyntaxError: Invalid or unexpected token
-
-      2 |
-      3 | // Import typefaces
-    > 4 | import 'typeface-montserrat'
-```
-
-This is because the CSS mock doesn't recognize the `typeface-` modules. You can
-fix this easily by creating a new manual mock. Back in the `__mocks__`
-directory, create a file called `typeface-montserrat.js` and another called
-`typeface-merriweather.js`, each with the content `{}`. Any file in the mocks
-folder which has a name that matches that of a node_module is automatically used
-as a mock.
-
-Run the tests again now and it should all work! You should get a message about
+Run the tests again now and it should all work! You may get a message about
 the snapshot being written. This is created in a `__snapshots__` directory next
 to your tests. If you take a look at it, you will see that it is a JSON
-representation of the `<Bio />` component. You should check your snapshot files
+representation of the `<Header />` component. You should check your snapshot files
 into a source control system (for example, a GitHub repo) so that so that any changes are tracked in history.
 This is particularly important to remember if you are using a continuous
-integration system such as Travis to run tests, as these will fail if no
-snapshot is present.
+integration system such as Travis or CircleCI to run tests, as these will fail if the snapshot is not checked into source control.
 
 If you make changes that mean you need to update the snapshot, you can do this
 by running `npm test -- -u`.
