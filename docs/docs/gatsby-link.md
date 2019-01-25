@@ -101,6 +101,27 @@ render () {
 
 Using `replace` also won't scroll the page after navigation.
 
+## Passing props to Link targets
+
+Sometimes you'll want to pass data from the source page to the linked page. You can do this by passing a `state` prop to the `Link` component or on a call to the `navigate` function. The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
+
+```jsx
+const NewsFeed = () => (
+  <div>
+    <Link to="photos/123" state={{ fromFeed: true }} />
+  </div>
+)
+
+const Photo = ({ location, photoId }) => {
+  if (location.state.fromFeed) {
+    return <FromFeedPhoto id={photoId} />
+  } else {
+    return <Photo id={photoId} />
+  }
+}
+```
+
+
 ## Programmatic navigation
 
 For cases when you can only use event handlers for navigation, you can use `navigate`
