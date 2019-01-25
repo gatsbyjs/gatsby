@@ -3,11 +3,10 @@ const path = require(`path`)
 
 class GatsbyWebpackStatsExtractor {
   constructor(options) {
-    this.plugin = { name: "GatsbyWebpackStatsExtractor" }
+    this.plugin = { name: `GatsbyWebpackStatsExtractor` }
     this.options = options || {}
   }
   apply(compiler) {
-    const { options } = this
     compiler.hooks.done.tapAsync(this.plugin, (stats, done) => {
       let assets = {}
       let assetsMap = {}
