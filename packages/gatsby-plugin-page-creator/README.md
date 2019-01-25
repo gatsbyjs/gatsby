@@ -15,6 +15,8 @@ With this plugin, _any_ file that lives in the `src/pages` folder (or subfolders
 - `_*`
 - `.*`
 
+NOTE: also excludes `test.js` and `spec.js` (or .ts, .jsx, .tsx)
+
 To exclude custom patterns, see [Ignoring Specific Files](#ignoring-specific-files)
 
 ## Install
@@ -71,11 +73,11 @@ module.exports = {
           // You can also use any micromatch options
           // https://www.npmjs.com/package/micromatch#optionsnocase
           // Example: Match both `file.example.js` and `file.EXAMPLE.js`
-          options: { nocase: true }
-        }
-      }
+          options: { nocase: true },
+        },
+      },
     },
-    // Another use case might be for when you want to disable 
+    // Another use case might be for when you want to disable
     // an index page for your optional page sources
     // For example, this will disable the `/blog` index page
     {
@@ -89,8 +91,8 @@ module.exports = {
           // make a config.js which defines an `ignorePages` array
           // and then use those patterns in both this plugin
           // AND in your `createPages` function in gatsby-node.js
-        }
-      }
+        },
+      },
     },
   ],
 }
