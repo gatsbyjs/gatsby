@@ -15,9 +15,8 @@ import docsHierarchy from "../data/sidebars/doc-links.yaml"
 // Find the guides in the sidebar YAML.
 const guides = docsHierarchy.find(group => group.title === `Guides`).items
 
-// Search through the guides and their children to find the first item that
-// matches the given slug
-const findBySlug = (guides, slug) => {
+// Search through guides tree, which may be 2, 3 or more levels deep
+const childItemsBySlug = (guides, slug) => {
   let result
 
   const iter = a => {
@@ -29,28 +28,18 @@ const findBySlug = (guides, slug) => {
   }
 
   guides.some(iter)
-  return result
+  return result && result.items
 }
-
-// Finds child items for a given guide overview page using its slug.
-const getChildGuides = slug => {
-  const found = findBySlug(guides, slug)
-  return found ? found.items : []
-}
-
-// Create a table of contents from the child guides.
-const createGuideList = guides =>
-  guides
-    .map(guide => `<li><a href="${guide.link}">${guide.title}</a></li>`)
-    .join(``)
 
 const getPageHTML = page => {
   if (!page.frontmatter.overview) {
     return page.html
   }
 
-  const guidesForPage = getChildGuides(page.fields.slug)
-  const guideList = createGuideList(guidesForPage)
+  const guidesForPage = childItemsBySlug(guides, page.fields.slug) || []
+  const guideList = guidesForPage
+    .map(guide => `<li><a href="${guide.link}">${guide.title}</a></li>`)
+    .join(``)
   const toc = guideList
     ? `
     <h2>Guides in this section:</h2>
