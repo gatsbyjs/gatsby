@@ -49,7 +49,7 @@ exports.createPagesStatefully = async (
     )
   }
 
-  const pagesDirectory = systemPath.posix.join(pagesPath)
+  const pagesDirectory = slash(systemPath.posix.join(pagesPath))
   const pagesGlob = `${pagesDirectory}/**/*.{${exts}}`
 
   // Get initial list of files.
@@ -60,6 +60,7 @@ exports.createPagesStatefully = async (
   chokidar
     .watch(pagesGlob)
     .on(`add`, path => {
+      path = slash(path)
       if (!_.includes(files, path)) {
         _createPage(path, pagesDirectory, createPage, ignore)
         files.push(path)
