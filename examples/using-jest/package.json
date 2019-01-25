@@ -31,12 +31,10 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "babel-core": "^7.0.0-0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.0.0",
     "babel-preset-gatsby": "^0.1.2",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^23.6.0",
+    "jest": "^24.0.0",
     "jest-dom": "^2.1.0",
     "prettier": "^1.14.2",
     "react-test-renderer": "^16.6.0",

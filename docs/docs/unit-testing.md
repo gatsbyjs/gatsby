@@ -15,13 +15,12 @@ which was created by Facebook. While Jest is a general purpose JavaScript unit
 testing framework, it has lots of features that make it work particularly well
 with React.
 
-_Note: For this guide, you will be starting with `gatsby-starter-blog`, but the
+_Note: For this guide, you will be starting with `gatsby-starter-default`, but the
 concepts should be the same or very similar for your site._
 
 ### 1. Installing dependencies
 
-First you need to install Jest and some more required packages. You need to
-install Babel 7 as it's required by Jest.
+First you need to install Jest and some more required packages. We install babel-jest and babel-preset-gatsby to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
 
 ```shell
 npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy babel-preset-gatsby
@@ -152,18 +151,14 @@ One more issue that you may encounter is that some components expect to be able
 to use the `location` prop that is passed in by `Router`. You can fix this by
 manually passing in the prop:
 
-```js:title=src/__tests__/index.js
+```js:title=src/pages/__tests__/index.js
 import React from "react"
 import renderer from "react-test-renderer"
-import BlogIndex from "../pages/index"
+import Index from "../index"
 
-describe("BlogIndex", () => {
+describe("Index", () => {
   it("renders correctly", () => {
-    const location = {
-      pathname: "/",
-    }
-
-    const tree = renderer.create(<BlogIndex location={location} />).toJSON()
+    const tree = renderer.create(<Index />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 })
@@ -183,7 +178,7 @@ the extension `.spec.js` or `.test.js`. The decision comes down to your own
 taste. For this guide you will be testing the `<Bio />` component, so create a
 `Bio.test.js` file next to it in `src/components`:
 
-```js:title=src/components/Bio.test.js
+```js:title=src/components/__tests__/header.js
 import React from "react"
 import renderer from "react-test-renderer"
 import Bio from "./Bio"
