@@ -320,7 +320,6 @@ Once graphiql is opened paste the query below :
     }
   }
 }
-
 ```
 
 ## Integrate into your application
@@ -599,7 +598,6 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 }
-
 ```
 
 That's it! now stop the server and run:
@@ -831,7 +829,6 @@ export const pageQuery = graphql`
     }
   }
 `
-
 ```
 
 ## Creating a blog template
@@ -986,7 +983,6 @@ exports.createPages = async ({ graphql, actions }) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
     const next = index === 0 ? null : posts[index - 1].node
 }
-
 ```
 
 ## Categories, Tags, and Authors
