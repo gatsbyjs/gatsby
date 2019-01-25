@@ -3,8 +3,8 @@ describe(`Prefetching`, () => {
     it(`should not prefetch if on slow connection`, () => {
       cy.visit(`/`).waitForAPI(`onRouteUpdate`)
 
-      cy.window().then(win => {
-        const isPrefetching = win.___loader.enqueue(`/page-2`)
+      cy.window().then(async win => {
+        const isPrefetching = await win.___loader.enqueue(`/page-2`)
         expect(isPrefetching).to.equal(false)
       })
 
@@ -15,8 +15,8 @@ describe(`Prefetching`, () => {
     it(`should prefetch`, () => {
       cy.visit(`/`).waitForAPI(`onRouteUpdate`)
 
-      cy.window().then(win => {
-        const isPrefetching = win.___loader.enqueue(`/page-2`)
+      cy.window().then(async win => {
+        const isPrefetching = await win.___loader.enqueue(`/page-2`)
         expect(isPrefetching).to.equal(true)
       })
 

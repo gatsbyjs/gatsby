@@ -283,7 +283,7 @@ Of course, this is something developers do all the time. They push their fork to
 }
 ```
 
-Gatsby, however, uses a monorepo architecture, so pushing up a fork with a change to a specific package is not such a trivial manner; npm and yarn just don’t support it. (If you feel like being depressed, check out the npm thread about [supporting github paths to monorepo packages](https://github.com/npm/npm/issues/2974).)
+Gatsby, however, uses a monorepo architecture, so pushing up a fork with a change to a specific package is not such a trivial manner; npm and yarn just don’t support it. (If you feel like being depressed, check out the npm thread about [supporting GitHub paths to monorepo packages](https://github.com/npm/npm/issues/2974).)
 
 Our workaround was to create a new repo for the package in question and push the build directly to GitHub. Here’s how it would work if you were making an update to, say, `gatsby-source-contentful`:
 

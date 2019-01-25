@@ -4,6 +4,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-global-style`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

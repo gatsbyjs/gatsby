@@ -60,7 +60,7 @@ configure(loadStories, module)
 // highlight-end
 ```
 
-> You can remove the `stories` folder from the root of your project, or move it inside you `src` folder
+> You can remove the `stories` folder from the root of your project, or move it inside your `src` folder
 
 Next make some adjustments to Storybook's default `webpack` configuration so you can transpile Gatsby source files, and to ensure you have the necessary `babel` plugins to transpile Gatsby components.
 
@@ -84,6 +84,9 @@ module.exports = (baseConfig, env, defaultConfig) => {
   defaultConfig.module.rules[0].use[0].options.plugins = [
     require.resolve("@babel/plugin-proposal-class-properties"),
   ]
+
+  // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
+  defaultConfig.resolve.mainFields = ["browser", "module", "main"]
 
   return defaultConfig
 }

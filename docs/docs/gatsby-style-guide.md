@@ -36,15 +36,15 @@ The community plans, writes, and maintains these Docs on GitHub.
 - [Best practices](#best-practices)
   - [Support software versions](#software-versions)
   - [Share best practices whenever possible](#share-best-practices-whenever-possible)
-  - [The difference between tutorials and docs](#the-difference-between tutorials-and-docs)
+- [The difference between tutorials and docs](#the-difference-between-tutorials-and-docs)
   - [Tutorial](#tutorial)
-    - [Audience](#tutorial-audience)
-    - [Purpose](#tutorial-purpose)
-    - [Tone and style](#tutorial-tone-and-style)
+    - [Tutorial Audience](#tutorial-audience)
+    - [Tutorial Purpose](#tutorial-purpose)
+    - [Tutorial Tone and style](#tutorial-tone-and-style)
   - [Docs](#docs)
-    - [Audience](#docs-audience)
-    - [Purpose](#docs-purpose)
-    - [Tone and style](#docs-tone-and-style)
+    - [Docs Audience](#docs-audience)
+    - [Docs Purpose](#docs-purpose)
+    - [Docs Tone and style](#docs-tone-and-style)
 
 ## Welcome!
 
@@ -114,7 +114,7 @@ it in a clear, accurate, and objective manner. You'll likely go through several
 rounds of proofreading and editing before you're happy with your writing.
 
 Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
-[Discord chat room](https://discordapp.com/invite/0ZcbPKXt5bVoxkfV) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
+[Gatsby Discord](https://gatsby.app/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
 
 ## Word choice
 
@@ -563,7 +563,7 @@ Here is how we measure the quality of the tutorial and docs. We will use ([cohor
 - daily, weekly, monthly active users
 - weekly retention rate
 
-## Why we chose Github for writing and maintaining docs
+## Why we chose GitHub for writing and maintaining docs
 
 The way the Gatsby community maintains docs and tutorials must meet the following requirements:
 
@@ -574,4 +574,4 @@ The way the Gatsby community maintains docs and tutorials must meet the followin
 - version control
 - a way to get feedback on each doc
 
-Github meets this requirements.
+GitHub meets this requirements.
