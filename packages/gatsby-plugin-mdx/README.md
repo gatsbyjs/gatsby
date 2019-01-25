@@ -3,8 +3,6 @@
 > gatsby-mdx is _the_ official integration for using [MDX](https://mdxjs.com)
 > with [Gatsby](https://www.gatsbyjs.org/).
 
-[See the Gatsby MDX guide](https://www.gatsbyjs.org/docs/mdx/)
-
 # What’s MDX?
 
 MDX is markdown for the component era. It lets you write JSX embedded inside
@@ -12,7 +10,8 @@ markdown. It’s a great combination because it allows you to use markdown’s o
 terse syntax (such as `# heading`) for the little things and JSX for more advanced
 components.
 
-[Read more about MDX](https://mdxjs.com)
+[Read the Gatsby MDX guide](https://www.gatsbyjs.org/docs/mdx/) <br />
+[Read more about the MDX language](https://mdxjs.com)
 
 ---
 
