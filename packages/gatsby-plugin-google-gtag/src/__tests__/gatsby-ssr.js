@@ -1,5 +1,7 @@
 const { onRenderBody } = require(`../gatsby-ssr`)
 
+const DO_NOT_TRACK_STRING = `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
+
 describe(`respectDNT`, () => {
   it(`defaults respectDNT option to false`, () => {
     const mocks = {
@@ -14,7 +16,7 @@ describe(`respectDNT`, () => {
     const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
 
     expect(config.props.dangerouslySetInnerHTML.__html).not.toContain(
-      `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
+      DO_NOT_TRACK_STRING
     )
   })
 
@@ -33,7 +35,7 @@ describe(`respectDNT`, () => {
     const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
 
     expect(config.props.dangerouslySetInnerHTML.__html).toContain(
-      `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
+      DO_NOT_TRACK_STRING
     )
   })
 
@@ -51,7 +53,7 @@ describe(`respectDNT`, () => {
     const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
 
     expect(config.props.dangerouslySetInnerHTML.__html).toContain(
-      `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
+      DO_NOT_TRACK_STRING
     )
   })
 })
