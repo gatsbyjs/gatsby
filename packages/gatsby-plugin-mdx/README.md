@@ -1,9 +1,7 @@
-# gatsby-mdx
-
 ![Logo](../../img/gatsby-mdx.png)
 
-gatsby-mdx is _the_ official integration for using [MDX](https://mdxjs.com)
-with [Gatsby](https://www.gatsbyjs.org/).
+> gatsby-mdx is _the_ official integration for using [MDX](https://mdxjs.com)
+> with [Gatsby](https://www.gatsbyjs.org/).
 
 # What’s MDX?
 
@@ -13,6 +11,8 @@ terse syntax (such as `# heading`) for the little things and JSX for more advanc
 components.
 
 [Read more about MDX](https://mdxjs.com)
+
+---
 
 - [Installation](#installation)
 - [Usage](#usage)
