@@ -35,8 +35,7 @@ exports.onRenderBody = (
 
   // TODO: remove pluginOptions.respectDNT in the next major release of this plugin.
   // See issue https://github.com/gatsbyjs/gatsby/issues/11159 for the discussion.
-  const respectDNT =
-    pluginOptions.pluginConfig.respectDNT || pluginOptions.respectDNT
+  const respectDNT = pluginConfig.respectDNT || pluginOptions.respectDNT
 
   const renderHtml = () => `
       ${
