@@ -1,6 +1,6 @@
 import React from "react"
 import * as path from "path"
-import { existsSync, mkdirSync, writeFileSync, unlinkSync } from "fs"
+import { existsSync, mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs"
 
 const cacheDir = path.join(__dirname, `../.cache`)
 
@@ -25,7 +25,7 @@ describe(`gatsby-plugin-typography`, () => {
     process.env.BUILD_STAGE = `develop`
 
     unlinkSync(`${cacheDir}/typography.js`)
-    unlinkSync(cacheDir)
+    rmdirSync(cacheDir)
   })
 
   beforeEach(() => {
