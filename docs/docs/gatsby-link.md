@@ -20,7 +20,7 @@ Preloading is triggered by a link entering the viewport; Gatsby uses
 `Link`'s `innerRef` property to create a new IntersectionObserver (on
 supported browsers) to monitor visible links. This way, Gatsby only prefetches
 code/data chunks for pages the user is likely to navigate to. You can also get
-access to the link element by passing in a `innerRef` prop.
+access to the link element by passing in a `ref` prop, which will be forwarded to the `@reach/router` `Link` element directly.
 
 ## How to use
 
@@ -39,7 +39,7 @@ class Page extends React.Component {
           activeStyle={{
             color: "red",
           }}
-          innerRef={el => {
+          ref={el => {
             this.myLink = el
           }}
           state={{
@@ -53,6 +53,30 @@ class Page extends React.Component {
   }
 }
 ```
+
+## Partial Link matching
+
+The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
+
+- We may want `/blog/hello-world` to match `<Link to="/blog">`
+- Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
+
+In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+// This link will get the active class when it partially matches the current URL
+const PartialNavLink = props => (
+  <Link
+    getProps={({ isPartiallyCurrent }) => {
+      return isPartiallyCurrent ? { className: "active" } : null
+    }}
+  />
+)
+```
+
+Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
 
 ## Replacing history entry
 

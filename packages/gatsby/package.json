@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.0.90",
+  "version": "2.0.97",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -16,7 +16,6 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@babel/traverse": "^7.0.0",
-    "@moocar/lokijs": "^1.0.1",
     "@reach/router": "^1.1.1",
     "address": "1.0.3",
     "autoprefixer": "^8.6.5",
@@ -64,9 +63,9 @@
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^2.4.8",
-    "gatsby-link": "^2.0.7",
+    "gatsby-link": "^2.0.9",
     "gatsby-plugin-page-creator": "^2.0.5",
-    "gatsby-react-router-scroll": "^2.0.2",
+    "gatsby-react-router-scroll": "^2.0.3",
     "glob": "^7.1.1",
     "graphql": "^0.13.2",
     "graphql-relay": "^0.5.5",
@@ -83,6 +82,7 @@
     "json-stringify-safe": "^5.0.1",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.10",
+    "lokijs": "^1.5.6",
     "md5": "^2.2.1",
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
@@ -132,7 +132,6 @@
     "@babel/runtime": "^7.0.0",
     "babel-preset-gatsby-package": "^0.1.3",
     "cross-env": "^5.1.4",
-    "lerna": "^2.9.0",
     "rimraf": "^2.6.1"
   },
   "engines": {

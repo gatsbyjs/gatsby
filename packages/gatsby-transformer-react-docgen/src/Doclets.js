@@ -68,9 +68,8 @@ export const applyPropDoclets = prop => {
         value = value.substring(1, value.length - 1).split(`|`)
         const name = value.every(isLiteral) ? `enum` : `union`
         prop.type.name = name
-        prop.type.value = value.map(
-          value =>
-            name === `enum` ? { value, computed: false } : { name: value }
+        prop.type.value = value.map(value =>
+          name === `enum` ? { value, computed: false } : { name: value }
         )
       }
       return

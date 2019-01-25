@@ -180,10 +180,7 @@ const Navigation = ({ pathname }) => {
               [presets.Hd]: { display: `flex` },
             }}
           >
-            <SocialNavItem
-              href="https://discord.gg/0ZcbPKXt5bVoxkfV"
-              title="Discord"
-            >
+            <SocialNavItem href="https://gatsby.app/discord" title="Discord">
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
             <SocialNavItem

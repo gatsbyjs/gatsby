@@ -6,10 +6,19 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
+const ProgressBar = require(`progress`)
 
 const { createFileNode } = require(`./create-file-node`)
 const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
+
+const bar = new ProgressBar(
+  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
+  {
+    total: 0,
+    width: 30,
+  }
+)
 
 /********************
  * Type Definitions *
@@ -176,6 +185,7 @@ async function processRemoteNode({
   auth = {},
   createNodeId,
   ext,
+  name,
 }) {
   // Ensure our cache directory exists.
   const pluginCacheDir = path.join(
@@ -202,7 +212,9 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
-  const name = getRemoteFileName(url)
+  if (!name) {
+    name = getRemoteFileName(url)
+  }
   if (!ext) {
     ext = getRemoteFileExtension(url)
   }
@@ -278,6 +290,9 @@ const pushTask = task =>
       })
   })
 
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
+
 /***************
  * Entry Point *
  ***************/
@@ -301,6 +316,7 @@ module.exports = ({
   auth = {},
   createNodeId,
   ext = null,
+  name = null,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -332,7 +348,10 @@ module.exports = ({
     return Promise.resolve()
   }
 
-  return (processingCache[url] = pushTask({
+  totalJobs += 1
+  bar.total = totalJobs
+
+  const fileDownloadPromise = pushTask({
     url,
     store,
     cache,
@@ -340,5 +359,11 @@ module.exports = ({
     createNodeId,
     auth,
     ext,
-  }))
+    name,
+  })
+
+  fileDownloadPromise.then(() => bar.tick())
+
+  processingCache[url] = fileDownloadPromise
+  return fileDownloadPromise
 }
