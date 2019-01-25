@@ -13,9 +13,9 @@ components.
 ### Read more about MDX
 
 - [:grey_question: Why MDX?](https://www.gatsbyjs.org/docs/mdx/why/)
-- [:books: Gatsby MDX guide](https://www.gatsbyjs.org/docs/mdx/)
-- [:mega: MDX language](https://mdxjs.com)
-- [:woman_scientist: MDX specification](https://github.com/mdx-js/specification)
+- [:books: Gatsby guide](https://www.gatsbyjs.org/docs/mdx/)
+- [:mega: Language](https://mdxjs.com)
+- [:woman_scientist: Specification](https://github.com/mdx-js/specification)
 
 ## Table of contents
 
