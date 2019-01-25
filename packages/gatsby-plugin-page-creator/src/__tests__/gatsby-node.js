@@ -151,9 +151,7 @@ describe(`JavaScript page creator`, () => {
         { path: `dir/example.jsx` },
       ])
 
-      expect(testFiles.filter(file => ignorePath(file.path, null))).toEqual(
-        testFiles
-      )
+      expect(testFiles.filter(file => ignorePath(file.path, null))).toEqual([])
     })
 
     it(`does not filter files without any ignore patterns`, () => {
@@ -176,9 +174,7 @@ describe(`JavaScript page creator`, () => {
         { path: `dir/example.jsx` },
       ])
 
-      expect(testFiles.filter(file => ignorePath(file.path, {}))).toEqual(
-        testFiles
-      )
+      expect(testFiles.filter(file => ignorePath(file.path, {}))).toEqual([])
     })
 
     it(`filters out files matching ignore patterns`, () => {
