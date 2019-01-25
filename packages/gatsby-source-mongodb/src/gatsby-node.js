@@ -1,7 +1,7 @@
 const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
-const { sanitizeName } = require(`./utility`)
+const { sanitizeName } = require(`./sanitize-name`)
 const _ = require(`lodash`)
 const queryString = require(`query-string`)
 
