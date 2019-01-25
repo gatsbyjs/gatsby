@@ -26,8 +26,8 @@ Each OpenTracing library must be configured. For example, what is the URL of the
 
 The configuration file is a JavaScript file that exports two functions: `create` and `stop`.
 
-- **create**: Create and return an [OpenTracing compatible Tracer](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts). It is called at the start of the build
-- **stop**: Called at the end of the build. Any cleanup required by the tracer should be performed here. Such as clearing out any span queues and sending them to the tracing backend.
+- **create**: Create and return an [OpenTracing compatible Tracer](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts). It is called at the start of the build.
+- **stop**: Called at the end of the build. Any cleanup required by the tracer should be performed here, such as clearing out any span queues and sending them to the tracing backend.
 
 ### 3. Start Gatsby with tracing turned on
 
@@ -35,7 +35,7 @@ The above configuration file can be passed to Gatsby with the `--open-tracing-co
 
 ## Tracing backend examples
 
-There are many open tracing compatible backends available. Below is an example of how to hook zipkin into Gatsby
+There are many open tracing compatible backends available. Below is an example of how to hook Zipkin into Gatsby.
 
 ### local Jaeger with Docker
 
@@ -80,7 +80,7 @@ See [Jaeger Getting Started](https://www.jaegertracing.io/docs/1.8/getting-start
 
 ### local Zipkin with Docker
 
-[Zipkin](https://zipkin.io/) is an open source Tracing system that can be run locally using Docker.
+[Zipkin](https://zipkin.io/) is an open source tracing system that can be run locally using Docker.
 
 1.  Add following dependencies to your site's `package.json`
 
@@ -117,6 +117,6 @@ exports.sourceNodes = async ({ actions, tracing }) => {
 }
 ```
 
-With this span, you can perform any OpenTracing span operations such as [span.setTag](https://github.com/opentracing/opentracing-javascript/blob/master/src/span.ts#L89). Just make sure that the tracing backend supports these operations. You can provide an optional second span options argument to `startSpan` which will be passed to the underlying OpenTracing call.
+With this span, you can perform any OpenTracing span operation such as [span.setTag](https://github.com/opentracing/opentracing-javascript/blob/master/src/span.ts#L89). Just make sure that the tracing backend supports these operations. You can provide an optional second span options argument to `startSpan` which will be passed to the underlying OpenTracing call.
 
 For advanced use cases, the `tracing` object also provides `tracer` and `parentSpan` fields. You can use these to construct independent spans, or your own child spans (see the [OpenTracing project](https://github.com/opentracing/opentracing-javascript/tree/master/src) for more info).

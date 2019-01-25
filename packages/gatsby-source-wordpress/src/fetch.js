@@ -445,9 +445,9 @@ function getValidRoutes({
   if (_useACF) {
     let defaultAcfNamespace = `acf/v3`
     // Grab ACF Version from namespaces
-    const acfNamespace = allRoutes.data.namespaces.find(namespace =>
-      namespace.includes(`acf`)
-    )
+    const acfNamespace = allRoutes.data.namespaces
+      ? allRoutes.data.namespaces.find(namespace => namespace.includes(`acf`))
+      : null
     const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
     _includedRoutes.push(`/${acfRestNamespace}/**`)
 

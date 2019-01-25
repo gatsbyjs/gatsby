@@ -23,7 +23,7 @@ concepts should be the same or very similar for your site._
 First you need to install Jest and some more required packages. You need to
 install Babel 7 as it's required by Jest.
 
-```sh
+```shell
 npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy babel-core@^7.0.0-bridge.0 @babel/core babel-preset-gatsby
 ```
 
@@ -32,22 +32,23 @@ npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy ba
 Because Gatsby handles its own Babel configuration, you will need to manually
 tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.config.js`. You can set up some useful defaults at the same time:
 
-```json:title=jest.config.js
+```js:title=jest.config.js
 module.exports = {
-  "transform": {
-    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
+  transform: {
+    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js",
   },
-  "moduleNameMapper": {
+  moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js",
   },
-  "testPathIgnorePatterns": ["node_modules", ".cache"],
-  "transformIgnorePatterns": ["node_modules/(?!(gatsby)/)"],
-  "globals": {
-    "__PATH_PREFIX__": ""
+  testPathIgnorePatterns: ["node_modules", ".cache"],
+  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
+  globals: {
+    __PATH_PREFIX__: "",
   },
-  "testURL": "http://localhost",
-  "setupFiles": ["<rootDir>/loadershim.js"]
+  testURL: "http://localhost",
+  setupFiles: ["<rootDir>/loadershim.js"],
 }
 ```
 
@@ -219,7 +220,7 @@ they are changed.
 
 Now, run `npm run test` and you should immediately get an error like this:
 
-```sh
+```shell
  @font-face {
     ^
 
@@ -254,31 +255,32 @@ by running `npm run test -- -u`.
 If you are using TypeScript, you need to make a couple of small changes to your
 config. First install `ts-jest`:
 
-```sh
+```shell
 npm install --save-dev ts-jest
 ```
 
 Then update the configuration in `jest.config.js`, like so:
 
-```json:title=jest.config.js
+```js:title=jest.config.js
 module.exports = {
-  "transform": {
+  transform: {
     "^.+\\.tsx?$": "ts-jest",
-    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
+    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js",
   },
-  "testRegex": "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
-  "moduleNameMapper": {
+  testRegex: "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
+  moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js",
   },
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
-  "testPathIgnorePatterns": ["node_modules", ".cache"],
-  "transformIgnorePatterns": ["node_modules/(?!(gatsby)/)"],
-  "globals": {
-    "__PATH_PREFIX__": ""
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  testPathIgnorePatterns: ["node_modules", ".cache"],
+  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
+  globals: {
+    __PATH_PREFIX__: "",
   },
-  "testURL": "http://localhost",
-  "setupFiles": ["<rootDir>/loadershim.js"]
+  testURL: "http://localhost",
+  setupFiles: ["<rootDir>/loadershim.js"],
 }
 ```
 

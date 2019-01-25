@@ -1,0 +1,38 @@
+{
+  "name": "gatsby-graphql-reference",
+  "private": true,
+  "description": "A project for the GraphQL reference documentation",
+  "version": "0.1.0",
+  "author": "LekoArts <hello@lekoarts.de>",
+  "dependencies": {
+    "gatsby": "^2.0.85",
+    "gatsby-image": "^2.0.22",
+    "gatsby-plugin-react-helmet": "^3.0.0",
+    "gatsby-plugin-sharp": "^2.0.6",
+    "gatsby-plugin-typography": "^2.2.0",
+    "gatsby-remark-responsive-iframe": "^2.0.5",
+    "gatsby-source-filesystem": "^2.0.2",
+    "gatsby-transformer-remark": "^2.1.6",
+    "gatsby-transformer-sharp": "^2.1.3",
+    "gatsby-transformer-yaml": "^2.1.6",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-helmet": "^5.2.0",
+    "react-typography": "^0.16.13",
+    "typeface-merriweather": "0.0.43",
+    "typeface-montserrat": "0.0.43",
+    "typography": "^0.16.17",
+    "typography-theme-wordpress-2016": "^0.15.10"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "dev": "gatsby develop -o",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "build": "gatsby build"
+  }
+}

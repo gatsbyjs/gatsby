@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@reach/skip-nav": "^0.1.1",
+    "axios": "^0.18.0",
     "bluebird": "^3.5.1",
     "dotenv": "^6.0.0",
     "email-validator": "^1.1.1",
@@ -20,13 +21,14 @@
     "gatsby-plugin-google-analytics": "^2.0.5",
     "gatsby-plugin-google-tagmanager": "^2.0.5",
     "gatsby-plugin-guess-js": "^1.0.0",
+    "gatsby-plugin-layout": "^1.0.10",
     "gatsby-plugin-lodash": "^3.0.1",
     "gatsby-plugin-mailchimp": "^2.2.3",
     "gatsby-plugin-manifest": "^2.0.2",
     "gatsby-plugin-netlify": "^2.0.0",
     "gatsby-plugin-netlify-cache": "^0.1.0",
     "gatsby-plugin-nprogress": "^2.0.5",
-    "gatsby-plugin-offline": "^2.0.16",
+    "gatsby-plugin-offline": "^2.0.19",
     "gatsby-plugin-react-helmet": "^3.0.0",
     "gatsby-plugin-sharp": "^2.0.5",
     "gatsby-plugin-sitemap": "^2.0.1",
@@ -38,6 +40,7 @@
     "gatsby-remark-copy-linked-files": "^2.0.5",
     "gatsby-remark-graphviz": "^1.0.0",
     "gatsby-remark-images": "^2.0.1",
+    "gatsby-remark-normalize-paths": "^1.0.0",
     "gatsby-remark-prismjs": "^3.0.2",
     "gatsby-remark-responsive-iframe": "^2.0.5",
     "gatsby-remark-smartypants": "^2.0.5",
@@ -95,7 +98,8 @@
     "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1",
     "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js",
-    "stylelint": "stylelint './src/**/*.js'"
+    "stylelint": "stylelint './src/**/*.js'",
+    "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0"
   },
   "devDependencies": {
     "front-matter": "^2.3.0",

@@ -66,13 +66,15 @@ export default () => (
 
 3. Elimine el estilo de tamaño de fuente. Cambia el texto "¡Hola Gatsby!" A un encabezado de nivel uno. Agrega un párrafo debajo del encabezado.
 
-```jsx{4-6}
+```jsx
 import React from "react"
 
 export default () => (
+  // highlight-start
   <div style={{ color: `purple` }}>
     <h1>¡Hola Gatsby!</h1>
     <p>Increíble.</p>
+    {/* highlight-end */}
   </div>
 )
 ```
@@ -81,14 +83,15 @@ export default () => (
 
 4.  Añade una imagen. (En este caso, una imagen aleatoria desde unsplash).
 
-```jsx{7}
+```jsx
 import React from "react"
 
 export default () => (
   <div style={{ color: `purple` }}>
     <h1>¡Hola Gatsby!</h1>
     <p>Increíble.</p>
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
+    <img src="https://source.unsplash.com/random/400x200" alt="" />{" "}
+    {/* highlight-line */}
   </div>
 )
 ```
@@ -132,9 +135,7 @@ Si bien es un cambio aparentemente simple, esto tiene profundas implicaciones so
 Toma el ejemplo de crear un botón personalizado. En el pasado lo harías creando una clase de CSS (quizás `.primary-button`) con sus estilos personalizados y luego los aplicas a cada elemento que lo requiera.
 
 ```html
-<button class="primary-button">
-  Click
-</button>
+<button class="primary-button">Click</button>
 ```
 
 En el mundo de los componentes, en su lugar creas un componente `PrimaryButton` con los estilos de tus botones y lo usas de la siguiente manera:
@@ -189,13 +190,13 @@ export default () => <h1>Este es un encabezado.</h1>
 
 3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con `<Header />`:
 
-```jsx{2,6}
+```jsx
 import React from "react"
-import Header from "../components/header"
+import Header from "../components/header" // highlight-line
 
 export default () => (
   <div style={{ color: `teal` }}>
-    <Header />
+    <Header /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -207,21 +208,22 @@ En el navegador, el texto del encabezado "Acerca de Gatsby" ahora debería reemp
 
 4. Regrese a `/src/components/header.js`, y haga el siguiente cambio:
 
-```jsx{3}
+```jsx
 import React from "react"
 
+// highlight-next-line
 export default props => <h1>{props.headerText}</h1>
 ```
 
 5. Regresa a `/src/pages/about.js` y haz el siguiente cambio:
 
-```jsx{6}
+```jsx
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
-    <Header headerText="A cerca de Gatsby" />
+    <Header headerText="A cerca de Gatsby" /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -259,14 +261,14 @@ Si hubiéramos pasado otra propiedad a nuestro componente `<Header />`, como...
 
 6. Para enfatizar cómo esto hace que nuestros componentes sean reutilizables, agreguemos un componente adicional `<Header />` a la página de a cerca de. Agrega el siguiente código al archivo `/src/pages/about.js` y guárdalo.
 
-```jsx{7}
+```jsx
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
     <Header headerText="A cerca de Gatsby" />
-    <Header headerText="Es asombroso" />
+    <Header headerText="Es asombroso" /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -290,14 +292,14 @@ A menudo querrás vincular las páginas. Veamos el enrutamiento en un sitio de G
 
 1. Abre el componente de la página índice (`/src/pageindex.js`). Importe el componente `<Link />` de Gatsby. Agregue un componente `<Link />` debajo del encabezado y asígnele una propiedad `to`, con el valor de `"/contact/"`para el nombre de ruta:
 
-```jsx{2,7}
+```jsx
 import React from "react"
-import { Link } from "gatsby"
+import { Link } from "gatsby" // highlight-line
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contacto</Link>
+    <Link to="/contact/">Contacto</Link> {/* highlight-line */}
     <Header headerText="!Hola Gatsby!" />
     <p>Increible</p>
     <img src="https://source.unsplash.com/random/400x200" alt="" />

@@ -32,14 +32,14 @@ export default ({ children }) => (
 
 If you want to apply a layout to a page, you will need to include the `Layout` component and wrap your page in it. For example, here is how you would apply your layout to the front page:
 
-```jsx{2,5,7}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
-import Layout from "../components/layout"
+import Layout from "../components/layout" // highlight-line
 
 export default () => (
-  <Layout>
+  <Layout> {/* highlight-line */}
     <h1>I’m in a layout!</h1>
-  </Layout>
+  </Layout> {/* highlight-line */}
 )
 ```
 

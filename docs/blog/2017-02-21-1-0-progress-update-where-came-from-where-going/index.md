@@ -354,6 +354,6 @@ reactions and what kind of problems you face that you think Gatsby will help
 with.
 
 If you're interested in contributing, please join the
-[#gatsby channel](https://discord.gg/0ZcbPKXt5bVoxkfV) on Discord, check out the
+[Gatsby Discord](https://gatsby.app/discord), check out the
 [issues](https://github.com/gatsbyjs/gatsby/issues), and help bikeshed on names
 and APIs and other ideas.

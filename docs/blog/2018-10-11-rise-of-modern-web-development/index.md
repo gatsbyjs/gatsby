@@ -40,7 +40,7 @@ Modern frameworks offer built-in performance and testing patterns/tools, encoura
 
 Their _ubiquity_ adds stability to the landscape; React and Angular have become universal. With ubiquity comes an ecosystem of high-quality components -- tables, forms, date-pickers, whole design systems -- that are open-source and available for plugging into any site.
 
-Modern frameworks also represent a core _technology advance_ over previous solutions that make it much easier to create visually rich, low-defect front ends:
+Modern frameworks also represent a core _technology advance_ over previous solutions that make it much easier to create visually rich, low-defect frontends:
 
 - **Reusable UIs.** Key UI elements, such as headers, dropdowns, typeaheads, buttons, tables and so forth may be reused across the application, without copy-pasta.
 

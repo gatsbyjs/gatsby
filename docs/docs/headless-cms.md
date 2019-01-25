@@ -5,31 +5,36 @@ overview: true
 
 A core feature of Gatsby is its ability to **load data from anywhere**. This is what makes Gatsby more powerful than many other static site generators that are limited to only loading content from Markdown files.
 
-A core benefit of this “data from anywhere” approach is that it allows teams to manage their content in nearly any back-end they prefer.
+A core benefit of this “data from anywhere” approach is that it allows teams to manage their content in nearly any backend they prefer.
 
-Many content management systems (CMS) now support a “headless” mode, which is perfect for Gatsby sites. A headless CMS allows content creators to manage their content through a familiar admin interface, but allows developers to access the content via API endpoints, allowing for a fully customized front-end experience.
+Many content management systems (CMS) now support a “headless” mode, which is perfect for Gatsby sites. A headless CMS allows content creators to manage their content through a familiar admin interface, but allows developers to access the content via API endpoints, allowing for a fully customized frontend experience.
 
-Through use of [source plugins](/plugins/?=source), Gatsby has support for dozens of headless CMS options, allowing your content team the comfort and familiarity of its preferred admin interface, and your development team the improved developer experience and performance gains of using Gatsby, GraphQL, and React to build the front-end.
+Through use of [source plugins](/plugins/?=source), Gatsby has support for dozens of headless CMS options, allowing your content team the comfort and familiarity of its preferred admin interface, and your development team the improved developer experience and performance gains of using Gatsby, GraphQL, and React to build the frontend.
 
 The guides in this section will walk through the process of setting up content sourcing from some of the most popular headless CMSes in use today.
 
 [[guidelist]]
 
+<!--
+  Ordering in this section is driven by Gatsby plugin downloads (https://www.gatsbyjs.org/plugins/?=gatsby-source-) & CMS vendor size/adoption.
+-->
+
 Other CMS systems you can connect to include:
 
-- [ButterCMS](https://www.gatsbyjs.org/packages/gatsby-source-buttercms)
-- [Shopify](https://www.gatsbyjs.org/packages/gatsby-source-shopify)
-- [Contentstack](https://www.gatsbyjs.org/packages/gatsby-source-contentstack)
-- [Ghost](https://www.gatsbyjs.org/packages/gatsby-source-ghost)
-- [Prismic](https://www.gatsbyjs.org/packages/gatsby-source-prismic)
-- [Strapi](https://www.gatsbyjs.org/packages/gatsby-source-strapi)
-- [Directus](https://www.gatsbyjs.org/packages/gatsby-source-directus)
-- [Cockpit](https://www.gatsbyjs.org/packages/gatsby-plugin-cockpit)
-- [GraphCMS](https://www.gatsbyjs.org/packages/gatsby-source-graphcms-beta-patch)
-- [CraftCMS](https://www.gatsbyjs.org/packages/gatsby-source-craftcms)
-- [DatoCMS](https://www.gatsbyjs.org/packages/gatsby-source-datocms)
-- [Storyblok](https://www.gatsbyjs.org/packages/gatsby-source-storyblok)
-- [Kentico Cloud](https://www.gatsbyjs.org/packages/gatsby-source-kentico-cloud)
+- [Shopify](/packages/gatsby-source-shopify)
+- [Strapi](/packages/gatsby-source-strapi)
+- DatoCMS [docs](/packages/gatsby-source-datocms), [business case](https://www.gatsbyjs.com/guides/datocms/)
+- [Sanity](/packages/gatsby-source-sanity/)
+- Contentstack [docs](/packages/gatsby-source-contentstack), [guide](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack), [starter](/starters/contentstack/gatsby-starter-contentstack/)
+- [ButterCMS](/packages/gatsby-source-buttercms)
+- Ghost [docs[(/packages/gatsby-source-ghost), [guide[(/blog/2019-01-14-modern-publications-with-gatsby-ghost/), [starter](/starters/TryGhost/gatsby-starter-ghost/)
+- Kentico Cloud [docs](/packages/gatsby-source-kentico-cloud), [guide](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/), [starter](/starters/Kentico/gatsby-starter-kentico-cloud/)
+- [Directus](/packages/gatsby-source-directus)
+- [GraphCMS](/packages/gatsby-source-graphcms-beta-patch)
+- Cosmic JS [docs](/packages/gatsby-source-cosmicjs), [guide](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/)
+- [Cockpit](/packages/gatsby-plugin-cockpit)
+- [Storyblok](/packages/gatsby-source-storyblok)
+- [CraftCMS](/packages/gatsby-source-craftcms)
 
 ## How to add new guides to this section
 

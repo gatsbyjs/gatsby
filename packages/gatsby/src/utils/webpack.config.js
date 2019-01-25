@@ -107,11 +107,7 @@ module.exports = async (
           // Add /* filename */ comments to generated require()s in the output.
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
-          publicPath:
-            process.env.GATSBY_WEBPACK_PUBLICPATH ||
-            `${program.ssl ? `https` : `http`}://${
-              program.host
-            }:${webpackPort}/`,
+          publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
@@ -363,11 +359,6 @@ module.exports = async (
       // Use the program's extension list (generated via the
       // 'resolvableExtensions' API hook).
       extensions: [...program.extensions],
-      // Default to using the site's node_modules directory to look for
-      // modules. But also make it possible to install modules within the src
-      // directory if you need to install a specific version of a module for a
-      // part of your site.
-      modules: [directoryPath(path.join(`node_modules`)), `node_modules`],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
         // Using directories for module resolution is mandatory because

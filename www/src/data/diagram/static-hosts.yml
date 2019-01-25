@@ -1,0 +1,12 @@
+- title: Amazon S3
+  url: /docs/deploying-to-s3-cloudfront
+- title: Netlify
+  url: /docs/hosting-on-netlify
+- title: GitHub Pages
+  url: /docs/how-gatsby-works-with-github-pages/
+- title: Surge.sh
+  url: /tutorial/part-one/#deploying-a-gatsby-site
+- title: Aerobatic
+  url: /docs/deploying-to-aerobatic/
+- title: Now.sh
+  url: /docs/deploying-to-now/

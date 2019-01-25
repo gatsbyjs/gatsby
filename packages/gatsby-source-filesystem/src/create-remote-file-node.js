@@ -6,10 +6,19 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
+const ProgressBar = require(`progress`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension } = require(`./utils`)
+const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
+
+const bar = new ProgressBar(
+  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
+  {
+    total: 0,
+    width: 30,
+  }
+)
 
 /********************
  * Type Definitions *
@@ -75,7 +84,7 @@ const FS_PLUGIN_DIR = `gatsby-source-filesystem`
  * @return {String}
  */
 const createFilePath = (directory, filename, ext) =>
-  path.join(directory, CACHE_DIR, FS_PLUGIN_DIR, `${filename}${ext}`)
+  path.join(directory, `${filename}${ext}`)
 
 /********************
  * Queue Management *
@@ -176,10 +185,15 @@ async function processRemoteNode({
   auth = {},
   createNodeId,
   ext,
+  name,
 }) {
   // Ensure our cache directory exists.
-  const programDir = store.getState().program.directory
-  await fs.ensureDir(path.join(programDir, CACHE_DIR, FS_PLUGIN_DIR))
+  const pluginCacheDir = path.join(
+    store.getState().program.directory,
+    CACHE_DIR,
+    FS_PLUGIN_DIR
+  )
+  await fs.ensureDir(pluginCacheDir)
 
   // See if there's response headers for this url
   // from a previous request.
@@ -188,7 +202,7 @@ async function processRemoteNode({
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
-  if (auth && auth.htaccess_pass && auth.htaccess_user) {
+  if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
     headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
   }
 
@@ -198,11 +212,14 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
+  if (!name) {
+    name = getRemoteFileName(url)
+  }
   if (!ext) {
     ext = getRemoteFileExtension(url)
   }
 
-  const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
+  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
   try {
@@ -218,7 +235,12 @@ async function processRemoteNode({
         ext = `.${filetype.ext}`
       }
     }
-    const filename = createFilePath(programDir, digest, ext)
+
+    const filename = createFilePath(
+      path.join(pluginCacheDir, digest),
+      name,
+      ext
+    )
     // If the status code is 200, move the piped temp file to the real name.
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
@@ -268,6 +290,9 @@ const pushTask = task =>
       })
   })
 
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
+
 /***************
  * Entry Point *
  ***************/
@@ -291,6 +316,7 @@ module.exports = ({
   auth = {},
   createNodeId,
   ext = null,
+  name = null,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -322,7 +348,10 @@ module.exports = ({
     return Promise.resolve()
   }
 
-  return (processingCache[url] = pushTask({
+  totalJobs += 1
+  bar.total = totalJobs
+
+  const fileDownloadPromise = pushTask({
     url,
     store,
     cache,
@@ -330,5 +359,11 @@ module.exports = ({
     createNodeId,
     auth,
     ext,
-  }))
+    name,
+  })
+
+  fileDownloadPromise.then(() => bar.tick())
+
+  processingCache[url] = fileDownloadPromise
+  return fileDownloadPromise
 }
