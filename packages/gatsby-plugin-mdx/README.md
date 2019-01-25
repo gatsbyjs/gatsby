@@ -17,7 +17,7 @@ components.
 - [MDX language](https://mdxjs.com)
 - [MDX specification](https://github.com/mdx-js/specification)
 
----
+## Table of contents
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -32,8 +32,6 @@ components.
   - [Components](#components)
     - [MDXProvider](#mdxprovider)
     - [MDXRenderer](#mdxrenderer)
-
----
 
 ## Installation
 
