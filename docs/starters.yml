@@ -1685,6 +1685,19 @@
     - Full setup instructions included
     - Documented to get you set up with Craft CMS quickly
     - Code referenced in repo
+- url: https://gatsby-starter-buttercms.netlify.com/
+  repo: https://github.com/ButterCMS/gatsby-starter-buttercms
+  description: A starter template for spinning up a Gatsby+ ButterCMS site
+  tags:
+    - Blog
+    - SEO
+    - ButterCMS
+  features:
+    - Fully functioning blog
+    - Navigation between posts with a previous/next post button
+    - FAQ Knowledge Base
+    - CMS Powered Homepage
+    - Customer Case Study example marketing pages
 - url: https://master.d2f5ek3dnwfe9v.amplifyapp.com/
   repo: https://github.com/dabit3/gatsby-auth-starter-aws-amplify
   description: This Gatsby starter uses AWS Amplify to implement authentication flow for signing up/signing in users as well as protected client side routing.
