@@ -64,13 +64,12 @@ function siftifyArgs(object) {
 // this avoids including { eq: x } when resolving fields.
 const extractFieldsToSift = filter =>
   Object.keys(filter).reduce((acc, key) => {
-    const value = filter[key]
-    const k = Object.keys(value)[0]
-    const v = value[k]
-    if (key === `elemMatch`) {
-      acc[k] = extractFieldsToSift(v)
-    } else if (_.isPlainObject(value) && _.isPlainObject(v)) {
-      acc[key] = extractFieldsToSift(value)
+    let value = filter[key]
+    let k = Object.keys(value)[0]
+    let v = value[k]
+    if (_.isPlainObject(value) && _.isPlainObject(v)) {
+      acc[key] =
+        k === `elemMatch` ? extractFieldsToSift(v) : extractFieldsToSift(value)
     } else {
       acc[key] = true
     }
