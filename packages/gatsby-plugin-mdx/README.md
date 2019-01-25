@@ -10,8 +10,11 @@ markdown. It’s a great combination because it allows you to use markdown’s o
 terse syntax (such as `# heading`) for the little things and JSX for more advanced
 components.
 
-[Read the Gatsby MDX guide](https://www.gatsbyjs.org/docs/mdx/) <br />
-[Read more about the MDX language](https://mdxjs.com)
+### Read more about MDX
+
+- [Why MDX?](https://www.gatsbyjs.org/docs/mdx/why/)
+- [Gatsby MDX guide](https://www.gatsbyjs.org/docs/mdx/)
+- [MDX language](https://mdxjs.com)
 
 ---
 
