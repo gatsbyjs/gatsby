@@ -227,7 +227,8 @@ Here's a color picker
 
 > :warning: Note: globalScope is not working yet in any mdx file in `src/pages`, but there is an
 > issue to resolve this:
-> [ChristopherBiscardi/gatsby-mdx#239(https://github.com/ChristopherBiscardi/gatsby-mdx/issues/239)
+>
+> ChristopherBiscardi/gatsby-mdx#239
 
 #### Gatsby remark plugins
 
