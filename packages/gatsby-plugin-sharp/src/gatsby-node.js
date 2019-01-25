@@ -1,7 +1,7 @@
 const {
   setBoundActionCreators,
   setPluginOptions,
-  queue,
+  queue: jobQueue,
   reportError,
 } = require(`./index`)
 const processFile = require(`./processFile`)
@@ -17,12 +17,14 @@ const getQueueFromCache = async cache => {
   return new Map(rawQueue)
 }
 
-const saveQueueToCache = async cache => {
+const saveQueueToCache = async (cache, queue) => {
   const cachedQueue = await getQueueFromCache(cache)
 
   // merge both queues
   for (const [key, job] of cachedQueue) {
-    queue.set(key, job)
+    if (!queue.has(key)) {
+      queue.set(key, job)
+    }
   }
 
   // JSON.stringify doesn't work on an Map so we need to convert it to an array
@@ -37,7 +39,8 @@ exports.onPreInit = async ({ actions }, pluginOptions) => {
 /**
  * save queue to the cache
  */
-exports.onPostBootstrap = async ({ cache, store }) => saveQueueToCache(cache)
+exports.onPostBootstrap = async ({ cache, store }) =>
+  saveQueueToCache(cache, jobQueue)
 
 /**
  * Execute all unprocessed images on gatsby build
@@ -64,10 +67,8 @@ exports.onPostBuild = ({ cache, reporter }) =>
 /**
  * Build images on the fly when they are requested by the browser
  */
-exports.onCreateDevServer = async ({ app, cache, compiler }, pluginOptions) => {
-  compiler.hooks.done.tap(`gatsby-plugin-sharp`, () => {
-    saveQueueToCache(cache)
-  })
+exports.onCreateDevServer = async ({ app, cache, emitter }, pluginOptions) => {
+  emitter(`QUERY_QUEUE_DRAINED`, () => saveQueueToCache(cache, jobQueue))
 
   app.use(async (req, res, next) => {
     const queue = await getQueueFromCache(cache)
@@ -79,10 +80,10 @@ exports.onCreateDevServer = async ({ app, cache, compiler }, pluginOptions) => {
 
     // wait until the file has been processed and saved to disk
     await Promise.all(processFile(job.file.absolutePath, [job], pluginOptions))
+    // remove job from queue because it has been processed
     queue.delete(req.originalUrl)
 
-    // JSON.stringify doesn't work on an Map so we need to convert it to an array
-    cache.set(`queue`, Array.from(queue))
+    await saveQueueToCache(cache, queue)
 
     return res.sendFile(job.outputPath)
   })

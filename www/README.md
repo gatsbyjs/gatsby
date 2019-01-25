@@ -39,15 +39,3 @@ GATSBY_FEEDBACK_KEY_STARTERLIB=ADD_KEY
 ```
 
 If there's a problem with the feedback widgets, please open an issue in the repo.
-
-## Running slow build? (Screenshots placeholder)
-
-If you are not working on starter or site showcase, it might be beneficial to use a placeholder image instead of actual screenshots. It will skip downloading screenshots and generating responsive images for all screenshots and replace them with a placeholder image.
-
-Add the following env variable to your `.env.development` file to enable placeholder behaviour:
-
-```
-GATSBY_SCREENSHOT_PLACEHOLDER=true
-```
-
-For more information checkout [`gatsby-transformer-screenshot` docs](http://www.gatsbyjs.org/packages/gatsby-transformer-screenshot#placeholder-image).
