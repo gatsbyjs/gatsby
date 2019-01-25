@@ -56,6 +56,10 @@ with Markdown media types into MDX content.
 
 ### Configuration
 
+gatsby-mdx exposes a configuration API that can be used similarly to
+any other Gatsby plugin. You can define MDX extensions, layouts, global
+scope, and more.
+
 | Key                                                                                        | Default                                | Description                                                          |
 | ------------------------------------------------------------------------------------------ | -------------------------------------- | -------------------------------------------------------------------- |
 | [`extensions`](#extensions)                                                                | `[".mdx"]`                             | Configure the file extensions that gatsby-mdx will process           |
