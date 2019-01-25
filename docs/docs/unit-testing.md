@@ -23,7 +23,7 @@ concepts should be the same or very similar for your site._
 First you need to install Jest and some more required packages. We install babel-jest and babel-preset-gatsby to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
 
 ```shell
-npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy babel-preset-gatsby
+npm install --save-dev jest babel-jest react-test-renderer babel-preset-gatsby identity-obj-proxy
 ```
 
 ### 2. Creating a configuration file for Jest
@@ -153,11 +153,12 @@ start with a simple snapshot test to check that everything is working.
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
 the extension `.spec.js` or `.test.js`. The decision comes down to your own
-preference. In this guide, we will use the `__tests__` convention. Let's create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
+preference. In this guide, we will use the `__tests__` folder convention. Let's create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
 
 ```js:title=src/components/__tests__/header.js
 import React from "react"
 import renderer from "react-test-renderer"
+
 import Header from "../header"
 
 describe("Header", () => {
