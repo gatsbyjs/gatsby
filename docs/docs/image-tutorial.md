@@ -47,9 +47,9 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-        * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
-        */
+         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
+         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
         protocol: `http`,
@@ -87,16 +87,16 @@ module.exports = {
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
-    * Gatsby's data processing layer begins with “source”
-    * plugins. Here the site sources its data from WordPress.
-    */
+     * Gatsby's data processing layer begins with “source”
+     * plugins. Here the site sources its data from WordPress.
+     */
     {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-       * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
-       * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
-       */
+         * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
+         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
         protocol: `http`,

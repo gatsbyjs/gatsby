@@ -214,7 +214,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (noPageOrComponent) {
     report.panic(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
     )
   }
 

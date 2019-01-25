@@ -74,7 +74,7 @@ const fixedNodeType = ({
           resolve: ({ file, image, fieldArgs }) => {
             // If the file is already in webp format or should explicitly
             // be converted to webp, we do not create additional webp files
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
@@ -91,7 +91,7 @@ const fixedNodeType = ({
         srcSetWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
