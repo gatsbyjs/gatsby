@@ -65,6 +65,13 @@ const navigate = (to, options = {}) => {
     pathname = parsePath(to).pathname
   }
 
+  // If we had a service worker update, no matter the path, reload window and
+  // reset the pathname whitelist
+  if (window.___swUpdated) {
+    window.location = pathname
+    return
+  }
+
   // Start a timer to wait for a second before transitioning and showing a
   // loader in case resources aren't around yet.
   const timeoutId = setTimeout(() => {

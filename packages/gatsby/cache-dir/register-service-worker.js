@@ -23,6 +23,9 @@ if (
               if (navigator.serviceWorker.controller) {
                 // At this point, the old content will have been purged and the fresh content will
                 // have been added to the cache.
+
+                // We set a flag so Gatsby Link knows to refresh the page on next navigation attempt
+                window.___swUpdated = true
                 // We call the onServiceWorkerUpdateReady API so users can show update prompts.
                 apiRunner(`onServiceWorkerUpdateReady`, { serviceWorker: reg })
 
