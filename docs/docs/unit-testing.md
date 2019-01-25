@@ -34,20 +34,20 @@ tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.conf
 ```js:title=jest.config.js
 module.exports = {
   transform: {
-    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js",
+    "^.+\\.jsx?$": `<rootDir>/jest-preprocess.js`,
   },
   moduleNameMapper: {
-    ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-      "<rootDir>/__mocks__/fileMock.js",
+    ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/fileMock.js`,
   },
-  testPathIgnorePatterns: ["node_modules", ".cache"],
-  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
+  testPathIgnorePatterns: [`node_modules`, `.cache`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
   globals: {
-    __PATH_PREFIX__: "",
+    __PATH_PREFIX__: ``,
   },
-  testURL: "http://localhost",
-  setupFiles: ["<rootDir>/loadershim.js"],
+  testURL: `http://localhost`,
+  setupFilesAfterEnv: [`<rootDir>/jest.setup.js`],
+  setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```
 
@@ -90,7 +90,7 @@ module.exports = "test-file-stub"
   inside `node_modules`, so you will get an error like this:
 
 ```
-/my-blog/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
+/my-app/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
 ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,global,jest){import React from "react"
                                                                                             ^^^^^^
 SyntaxError: Unexpected token import
@@ -175,17 +175,18 @@ start with a simple snapshot test to check that everything is working.
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
 the extension `.spec.js` or `.test.js`. The decision comes down to your own
-taste. For this guide you will be testing the `<Bio />` component, so create a
-`Bio.test.js` file next to it in `src/components`:
+preference. In this guide, we will use the `__tests__` convention. Let's create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
 
 ```js:title=src/components/__tests__/header.js
 import React from "react"
 import renderer from "react-test-renderer"
-import Bio from "./Bio"
+import Header from "../header"
 
-describe("Bio", () => {
+describe("Header", () => {
   it("renders correctly", () => {
-    const tree = renderer.create(<Bio />).toJSON()
+    const tree = renderer
+      .create(<Header siteTitle="Default Starter" />)
+      .toJSON()
     expect(tree).toMatchSnapshot()
   })
 })
@@ -209,11 +210,11 @@ script for `test`, which just outputs an error message. Change this to simply
   }
 ```
 
-This means you can now run tests by typing `npm run test`. If you want you could
-also add a script that runs `jest --watchAll` to watch files and run tests when
+This means you can now run tests by typing `npm test`. If you want you could
+also run with a flag that triggers watch mode `npm test -- --watch` to watch files and run tests when
 they are changed.
 
-Now, run `npm run test` and you should immediately get an error like this:
+Now, run `npm test` and you should immediately get an error like this:
 
 ```shell
  @font-face {
@@ -243,7 +244,7 @@ integration system such as Travis to run tests, as these will fail if no
 snapshot is present.
 
 If you make changes that mean you need to update the snapshot, you can do this
-by running `npm run test -- -u`.
+by running `npm test -- -u`.
 
 ## Using TypeScript
 
