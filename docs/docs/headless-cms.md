@@ -26,7 +26,7 @@ Other CMS systems you can connect to include:
 - DatoCMS [docs](/packages/gatsby-source-datocms), [business case](https://www.gatsbyjs.com/guides/datocms/)
 - [Sanity](/packages/gatsby-source-sanity/)
 - Contentstack [docs](/packages/gatsby-source-contentstack), [guide](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack), [starter](/starters/contentstack/gatsby-starter-contentstack/)
-- [ButterCMS](/packages/gatsby-source-buttercms)
+- [ButterCMS](https://buttercms.com) [source plugin](/packages/gatsby-source-buttercms), [guide](https://www.gatsbyjs.org/docs/sourcing-from-buttercms/), [starter](https://github.com/ButterCMS/gatsby-starter-buttercms)
 - Ghost [docs[(/packages/gatsby-source-ghost), [guide[(/blog/2019-01-14-modern-publications-with-gatsby-ghost/), [starter](/starters/TryGhost/gatsby-starter-ghost/)
 - Kentico Cloud [docs](/packages/gatsby-source-kentico-cloud), [guide](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/), [starter](/starters/Kentico/gatsby-starter-kentico-cloud/)
 - [Directus](/packages/gatsby-source-directus)

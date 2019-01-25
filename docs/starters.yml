@@ -1690,10 +1690,8 @@
   description: A starter template for spinning up a Gatsby+ ButterCMS site
   tags:
     - Blog
-    - FAQ
     - SEO
-    - Marketing Pages
-    - Marketing Site
+    - ButterCMS
   features:
     - Fully functioning blog
     - Navigation between posts with a previous/next post button
