@@ -43,36 +43,36 @@ There are many open tracing compatible backends available. Below is an example o
 
 1.  Add [jaeger-client](https://www.npmjs.com/package/jaeger-client) to your site:
 
-```
-yarn add jaeger-client
-```
+    ```shell
+    yarn add jaeger-client
+    ```
 
-or
+    or
 
-```
-npm install jaeger-client
-```
+    ```shell
+    npm install jaeger-client
+    ```
 
 2.  Run Jaeger's all-in-one Docker instance with:
 
-```
-docker run -d --name jaeger \
-    -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
-    -p 5775:5775/udp \
-    -p 6831:6831/udp \
-    -p 6832:6832/udp \
-    -p 5778:5778 \
-    -p 16686:16686 \
-    -p 14268:14268 \
-    -p 9411:9411 \
-    jaegertracing/all-in-one:1.8
-```
+    ```shell
+    docker run -d --name jaeger \
+        -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
+        -p 5775:5775/udp \
+        -p 6831:6831/udp \
+        -p 6832:6832/udp \
+        -p 5778:5778 \
+        -p 16686:16686 \
+        -p 14268:14268 \
+        -p 9411:9411 \
+        jaegertracing/all-in-one:1.8
+    ```
 
-See [Jaeger Getting Started](https://www.jaegertracing.io/docs/1.8/getting-started/) for more information.
+    See [Jaeger Getting Started](https://www.jaegertracing.io/docs/1.8/getting-started/) for more information.
 
 3.  Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Jaeger configuration file. An example file is provided in the Gatsby project under [node_modules/gatsby/dist/utils/tracer/jaeger-local.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/tracer/jaeger-local.js) that will send tracing spans to your local Docker instance over HTTP. E.g
 
-    ```
+    ```shell
     gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/jaeger-local.js
     ```
 
@@ -92,7 +92,7 @@ See [Jaeger Getting Started](https://www.jaegertracing.io/docs/1.8/getting-start
 
 3.  Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Zipkin configuration file. An example file is provided in the Gatsby project under `node_modules/gatsby/dist/utils/tracer/zipkin-local.js` that will send tracing spans to your local Docker instance. E.g
 
-    ```
+    ```shell
     gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/zipkin-local.js
     ```
 
