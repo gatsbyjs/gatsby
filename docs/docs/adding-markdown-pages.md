@@ -126,7 +126,7 @@ Gatsby exposes a powerful Node.js API, which allows for functionality such as cr
 
 Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`. Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
 
-```javascript:title=gatsby-node.js
+```jsx:title=gatsby-node.js
 const path = require("path")
 
 exports.createPages = ({ actions, graphql }) => {
