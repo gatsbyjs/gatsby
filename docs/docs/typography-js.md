@@ -67,6 +67,16 @@ export default typography
 
 Font sizes of all elements in Typography.js grow and shrink in relation to the `baseFontSize` defined above. Try playing around with this value and see the visual difference it can make to your website.
 
+`Typography` allows you to specify different kinds of options:
+
+- **googleFonts**: An array specifying Google Fonts for this project.
+- **headerColor**: (string, default: inherit) A css color string to be set on headers.
+- **bodyColor**: (string, default: hsl(0,0%,0%,0.8))  A css color string to be set for body text.
+- **headerWeight**: (string, default: bold) Specify the font weight for headers.
+- **bodyWeight**: (string, default: normal) Specify the font weight for body text.
+- **boldWeight**: (string, default: bold) Specify the font weight for "bold" (b, strong, dt, th)
+  elements.
+
 A full list of options that can be specified when defining a new typography can be found at [Typography.js](https://kyleamathews.github.io/typography.js/).
 
 ## Installing Typography themes
