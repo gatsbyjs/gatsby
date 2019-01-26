@@ -222,10 +222,11 @@ describe(`JavaScript page creator`, () => {
 
       const ignoreFiles = [
         { path: `blog.js` },
-        { path: `post.tsx` },
+        { path: `POST.tsx` },
         { path: `file.example.jsx` },
-        { path: `file.example.tsx` },
+        { path: `file.EXAMPLE.tsx` },
         { path: `dir/file.example.js` },
+        { path: `dir/file.EXAMPLE.js` },
       ]
 
       const testFiles = ignoreFiles.concat([
