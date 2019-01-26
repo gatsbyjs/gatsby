@@ -44,7 +44,7 @@ Working with another developer, a photographer, and a graphic designer, he found
 
 Another unexpected benefit was the cost reduction of hosting static content, instead of running PHP servers. After migrating to Gatsby, Rose moved the cajunbowfishing.com website hosting over to [Netlify](https://www.netlify.com).
 
-“Our bill went from $5,000 a month to $5,” he says.
+“Our bill went from $5,000 a month to \$5,” he says.
 
 The most challenging piece of the move, Rose said, was helping others understand what the new technology stack looks like.
 

@@ -302,7 +302,7 @@ require("dotenv").config({
 })
 ```
 
-Lastly make sure that your `.gitignore` file excludes all of your `.env.*` files:
+Lastly, make sure that your `.gitignore` file excludes all of your `.env.*` files:
 
 ```text:title=.gitignore
 # dotenv environment variables files
@@ -313,7 +313,7 @@ Lastly make sure that your `.gitignore` file excludes all of your `.env.*` files
 
 ### Create a component that lists your SKUs
 
-In your components folder add a new `Products` folder. This folder will entail your components that interact with the Stripe SKUs. First you need a components that queries and lists your SKUs:
+In your components folder add a new `Products` folder. This folder will include the components that interact with the Stripe SKUs. First, you need a component that queries and lists your SKUs:
 
 ```jsx:title=src/components/Products/Skus.js
 import React from "react"
@@ -350,7 +350,7 @@ export default props => (
 
 You can validate your query and see what data is being returned in GraphiQL, which is available at http://localhost:8000/___graphql when running `gatsby develop`.
 
-Once you're happy with your query, create a new page where you can import the newly created Sku componenet:
+Once you're happy with your query, create a new page where you can import the newly created Sku component:
 
 ```jsx:title=src/pages/advanced.js
 import React from "react"
@@ -372,7 +372,7 @@ const AdvancedExamplePage = () => (
 export default AdvancedExamplePage
 ```
 
-When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your sku names.
+When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your SKU names.
 
 ### Create a component that presents a single SKU
 
