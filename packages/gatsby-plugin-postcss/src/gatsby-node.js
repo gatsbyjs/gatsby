@@ -58,7 +58,7 @@ exports.onCreateWebpackConfig = (
             modules: true,
             importLoaders: 1,
           },
-          pluginOptions.cssOptions || {}
+          pluginOptions.cssLoaderOptions || {}
         )
       ),
       postcssLoader,
