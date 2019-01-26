@@ -75,6 +75,9 @@ commands:
         default: "packages/*|.circleci/*"
       test_path:
         type: string
+      test_command:
+        type: string
+        default: # if unset, e2e-test.sh specifies the command
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
