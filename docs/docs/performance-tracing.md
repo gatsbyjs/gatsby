@@ -14,7 +14,7 @@ Gatsby allows a build to be traced, enabling you to find which plugins or parts 
 
 Gatsby code is instrumented with OpenTracing, which is a general tracing API that is implementation agnostic. Therefore, you'll need to include and configure an OpenTracing compatible library in your application, as well as a backend to collect the trace data.
 
-The steps required to add tracing are below, including an [example](/docs/performance-tracing/#local-zipkin-with-docker) of how to get tracing working with Zipkin locally using Docker.
+The steps required to add tracing are below. Or, you can skip ahead if you want specific instructions for [jaeger](/docs/performance-tracing/#local-jaeger-with-docker) or [zipkin](/docs/performance-tracing/#local-zipkin-with-docker).
 
 ### 1. Library dependency
 
@@ -37,6 +37,47 @@ The above configuration file can be passed to Gatsby with the `--open-tracing-co
 
 There are many open tracing compatible backends available. Below is an example of how to hook Zipkin into Gatsby.
 
+### local Jaeger with Docker
+
+[Jaeger](https://www.jaegertracing.io/) is an open source tracing system that can be run locally using Docker.
+
+1.  Add [jaeger-client](https://www.npmjs.com/package/jaeger-client) to your site:
+
+    ```shell
+    yarn add jaeger-client
+    ```
+
+    or
+
+    ```shell
+    npm install jaeger-client
+    ```
+
+2.  Run Jaeger's all-in-one Docker instance with:
+
+    ```shell
+    docker run -d --name jaeger \
+        -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
+        -p 5775:5775/udp \
+        -p 6831:6831/udp \
+        -p 6832:6832/udp \
+        -p 5778:5778 \
+        -p 16686:16686 \
+        -p 14268:14268 \
+        -p 9411:9411 \
+        jaegertracing/all-in-one:1.8
+    ```
+
+    See [Jaeger Getting Started](https://www.jaegertracing.io/docs/1.8/getting-started/) for more information.
+
+3.  Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Jaeger configuration file. An example file is provided in the Gatsby project under [node_modules/gatsby/dist/utils/tracer/jaeger-local.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/tracer/jaeger-local.js) that will send tracing spans to your local Docker instance over HTTP. E.g
+
+    ```shell
+    gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/jaeger-local.js
+    ```
+
+4.  Once the build is complete, view your tracing information at [http://localhost:16686](http://localhost:16686). On the left menu, select the `build` operation to see your build's root trace.
+
 ### local Zipkin with Docker
 
 [Zipkin](https://zipkin.io/) is an open source tracing system that can be run locally using Docker.
@@ -51,7 +92,7 @@ There are many open tracing compatible backends available. Below is an example o
 
 3.  Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Zipkin configuration file. An example file is provided in the Gatsby project under `node_modules/gatsby/dist/utils/tracer/zipkin-local.js` that will send tracing spans to your local Docker instance. E.g
 
-    ```
+    ```shell
     gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/zipkin-local.js
     ```
 
