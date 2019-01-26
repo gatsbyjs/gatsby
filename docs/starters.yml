@@ -1710,3 +1710,19 @@
     - Registration form
     - Signup form
     - User sign in
+- url: https://gatsby-ts-starter.netlify.com/
+  repo: https://github.com/Jared-Dev/gatsby-typescript-mdx-prismjs-emotion-starter
+  description: A TypeScript based Gatsby starter that includes mdx and prismjs support and uses emotion for styling! Us `gatsby new my-website https://github.com/Jared-Dev/gatsby-typescript-mdx-prismjs-emotion-starter` to get started!
+  tags:
+    - Styling:CSS-in-JS
+    - TypeScript
+    - Markdown
+    - Blog
+  features:
+    - Gatsby v2 + TypeScript
+    - Syntax highlighting with Prismjs
+    - MDX
+    - Jest
+    - react-testing-library
+    - emotion for CSS-in-JS
+    - Based on a similar starter by Tyler Greulich
