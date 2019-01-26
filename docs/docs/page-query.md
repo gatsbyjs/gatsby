@@ -39,7 +39,7 @@ export default HomePage
 
 The first thing to do is import `graphql` from Gatsby. At the top of `index.js` add:
 
-```diff:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from 'react'
 + import { graphql } from 'gatsby'
 
@@ -54,7 +54,7 @@ const HomePage = () => {
 
 Below our `HomePage` component declaration, export a new constant called `query`, and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks:
 
-```diff:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 const HomePage = () => {
   return (
     <div>
@@ -74,7 +74,7 @@ From [browsing GraphiQL](/tutorial/part-five/#introducing-graphiql/), you'll fin
 
 Putting this together, the completed query looks like:
 
-```diff:title=src/pages/index.js
+```js:title=src/pages/index.js
 export const query = graphql`
 - # query will go here
 +  query HomePageQuery {
@@ -93,7 +93,7 @@ To start, update the `HomePage` component to destructure `data` from props.
 
 The `data` prop contains the results of the GraphQL query, and matches the shape you would expect. With this in mind, the updated `HomePage` markup looks like:
 
-```diff:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from 'react'
 import { graphql } from 'gatsby'
 
