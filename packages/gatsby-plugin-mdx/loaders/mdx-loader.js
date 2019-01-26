@@ -162,22 +162,26 @@ ${contentWithoutFrontmatter}`;
     mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins),
     hastPlugins: options.hastPlugins
   });
-  const result = babel.transform(code, {
-    configFile: false,
-    plugins: [
-      require("@babel/plugin-syntax-jsx"),
-      require("@babel/plugin-syntax-object-rest-spread"),
-      require("../utils/babel-plugin-html-attr-to-jsx-attr")
-    ]
-  });
-  debugMore("transformed code", result.code);
-  return callback(
-    null,
-    `import React from 'react'
-import { MDXTag } from '@mdx-js/tag'
+  try {
+    const result = babel.transform(code, {
+      configFile: false,
+      plugins: [
+        require("@babel/plugin-syntax-jsx"),
+        require("@babel/plugin-syntax-object-rest-spread"),
+        require("../utils/babel-plugin-html-attr-to-jsx-attr")
+      ]
+    });
+    debugMore("transformed code", result.code);
+    return callback(
+      null,
+      `import React from 'react'
+  import { MDXTag } from '@mdx-js/tag'
 
 
-${result.code}
-    `
-  );
+  ${result.code}
+      `
+    );
+  } catch (e) {
+    callback(e);
+  }
 };
