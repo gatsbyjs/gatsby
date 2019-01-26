@@ -41,7 +41,7 @@ module.exports = {
 
 Let's create a little example test using the newly added library. If you haven't done already read the [unit testing guide](/docs/unit-testing) — essentially you'll use `react-testing-library` instead of `react-test-renderer` now. There are a lot of options when it comes to selectors, this example chooses `getByTestId` here. It also utilizes `toHaveTextContent` from `jest-dom`:
 
-```js
+```jsx
 import React from "react"
 import { render } from "react-testing-library"
 
