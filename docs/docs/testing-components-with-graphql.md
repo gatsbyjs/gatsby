@@ -300,7 +300,7 @@ This means it's very easy to test, and a snapshot should never change.
 
 Here's how:
 
-```js:title=src/components/Header.test.js
+```jsx:title=src/components/Header.test.js
 import React from "react"
 import renderer from "react-test-renderer"
 import { PureHeader as Header } from "./Header"
