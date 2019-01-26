@@ -26,7 +26,7 @@ For the sake of an example, a `module.css` file called `container.module.css` wi
 
 Now, a React component called `Container` (`container.js`) will be created in the same directory `src/components` with the following contents. Make note that the `module.css` file created earlier is imported.
 
-```javascript:title=src/components/container.js
+```jsx:title=src/components/container.js
 import React from "react"
 import containerStyles from "./container.module.css"
 
