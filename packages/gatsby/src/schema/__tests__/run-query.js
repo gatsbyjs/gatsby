@@ -463,8 +463,8 @@ describe(`collection fields`, () => {
     })
 
     expect(result.length).toEqual(3)
-    expect(result[0].id).toEqual(`1`) // blue = 10010, id = 1
-    expect(result[1].id).toEqual(`2`) // blue = 10010, id = 2
+    expect(result[0].id).toEqual(`2`) // blue = 10010, id = 2
+    expect(result[1].id).toEqual(`1`) // blue = 10010, id = 1
     expect(result[2].id).toEqual(`0`) // blue = 100, id = 0
   })
 })

@@ -273,9 +273,12 @@ function handleMany(siftArgs, nodes, sort) {
     // to be specified. However, multiple sort fields can be
     // provided. This is inconsistent. The API should allow the
     // setting of an order per field. Until the API can be changed
-    // (probably v3), we apply the sort order to the first field only,
-    // implying asc order for the remaining fields.
-    result = _.orderBy(result, convertedFields, [sort.order])
+    // (probably v3), we apply the specified sort order to all sort fields.
+    result = _.orderBy(
+      result,
+      convertedFields,
+      Array(sort.fields.length).fill(sort.order)
+    )
   }
   return result
 }
