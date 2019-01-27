@@ -23,7 +23,7 @@ Other CMS systems you can connect to include:
 
 - [Shopify](/packages/gatsby-source-shopify)
 - [Strapi](/packages/gatsby-source-strapi)
-- [DatoCMS](www.datocms.com) [docs](/packages/gatsby-source-datocms), [business case](https://www.gatsbyjs.com/guides/datocms/)
+- [DatoCMS](www.datocms.com): [docs](/packages/gatsby-source-datocms), [business case](https://www.gatsbyjs.com/guides/datocms/)
 - [Sanity](/packages/gatsby-source-sanity/)
 - [Contentstack](www.contentstack.com): [docs](/packages/gatsby-source-contentstack), [guide](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack), [starter](/starters/contentstack/gatsby-starter-contentstack/)
 - [ButterCMS](https://buttercms.com) [source plugin](/packages/gatsby-source-buttercms), [guide](https://www.gatsbyjs.org/docs/sourcing-from-buttercms/), [starter](https://github.com/ButterCMS/gatsby-starter-buttercms)
