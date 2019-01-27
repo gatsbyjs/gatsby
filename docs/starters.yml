@@ -1710,3 +1710,19 @@
     - Registration form
     - Signup form
     - User sign in
+- url: https://example-company-website-gatsby-sanity-combo.netlify.com/
+  repo: https://github.com/sanity-io/example-company-website-gatsby-sanity-combo
+  description: This examples combines Gatsby site generation with Sanity.io content management in a neat company website.
+  tags:
+    - sanity.io
+    - Headless CMS
+    - Company website
+    - Blog
+  features:
+    - Out-of-the-box headless CMS
+    - Real-time content preview in Development
+    - Fast & frugal builds
+    - No accidental missing fields/types
+    - Full Render Control with Portable Text
+    - gatsby-image support
+    - Content types for company info, pages, projects, people, and blog posts
