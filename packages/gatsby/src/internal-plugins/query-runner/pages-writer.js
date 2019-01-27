@@ -94,14 +94,14 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": () => import("${joinPath(
+        `  "${c.componentChunkName}": () => require("${joinPath(
           c.component
         )}" /* webpackChunkName: "${c.componentChunkName}" */)`
     )
     .join(`,\n`)}
 }\n\n`
 
-  asyncRequires += `exports.data = () => import(/* webpackChunkName: "pages-manifest" */ "${joinPath(
+  asyncRequires += `exports.data = () => require(/* webpackChunkName: "pages-manifest" */ "${joinPath(
     program.directory,
     `.cache`,
     `data.json`
