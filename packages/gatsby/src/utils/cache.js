@@ -40,13 +40,25 @@ class Cache {
 
   get(key) {
     return new Promise(resolve => {
-      this.cache.get(key, (_, res) => resolve(res))
+      this.cache.get(key, (err, res) => {
+        if (err) {
+          throw new Error(
+            `The value cached with key: ${key} could not be retrieved.`
+          )
+        }
+        resolve(res)
+      })
     })
   }
 
   set(key, value, args = {}) {
     return new Promise(resolve => {
-      this.cache.set(key, value, args, (_, res) => resolve(res))
+      this.cache.set(key, value, args, err => {
+        if (err) {
+          throw new Error(`Failed to cache ${value} with key: ${key}.`)
+        }
+        resolve(value)
+      })
     })
   }
 }
