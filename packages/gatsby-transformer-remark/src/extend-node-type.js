@@ -23,7 +23,6 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
-const prune = require(`underscore.string/prune`)
 const {
   getConcatenatedValue,
   cloneTreeUntil,
@@ -453,11 +452,11 @@ module.exports = (
             const amountToPruneLastNode =
               pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
             if (!truncate) {
-              lastTextNode.value = prune(
-                lastTextNode.value,
-                amountToPruneLastNode,
-                `…`
-              )
+              lastTextNode.value = _.truncate(lastTextNode.value, {
+                length: amountToPruneLastNode,
+                separator: /,?\.* +/,
+                omission: `…`,
+              })
             } else {
               lastTextNode.value = _.truncate(lastTextNode.value, {
                 length: pruneLength,
@@ -480,7 +479,11 @@ module.exports = (
               return
             })
             if (!truncate) {
-              return prune(excerptNodes.join(` `), pruneLength, `…`)
+              return _.truncate(excerptNodes.join(` `), {
+                length: pruneLength,
+                separator: /,?\.* +/,
+                omission: `…`,
+              })
             }
             return _.truncate(excerptNodes.join(` `), {
               length: pruneLength,
