@@ -154,6 +154,47 @@ Object {
 }
 `;
 
+exports[`remark prism plugin generates a <pre> tag with aliases that do not exist 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "foobar",
+      "position": Position {
+        "end": Object {
+          "column": 4,
+          "line": 3,
+          "offset": 21,
+        },
+        "indent": Array [
+          1,
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "html",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"foobar\\"><pre class=\\"language-foobar\\"><code class=\\"language-foobar\\">// Fake</code></pre></div>",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 4,
+      "line": 3,
+      "offset": 21,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
 exports[`remark prism plugin generates a <pre> tag with class="language-*" prefix by default 1`] = `
 Object {
   "children": Array [
