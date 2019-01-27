@@ -44,9 +44,8 @@ the [existing questions](http://stackoverflow.com/questions/tagged/gatsby)
 tagged with **gatsby** or
 [ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
 
-### Reactiflux Chat
+### Discord
 
 If you need an answer right away, check out the
-[Reactiflux Discord](https://discord.gg/0ZcbPKXt5bVoxkfV) #gatsby channel. There
-are usually a number of Gatsby experts there who can help out or point you to
+[Gatsby Discord](https://gatsby.app/discord). Community & team members are happy to help you out or point you to
 useful resources.

@@ -17,7 +17,9 @@ Why is that? Increased site complexity often distributes bottlenecks across mult
 
 As Gatsby's co-founder Kyle Mathews likes to say (paraphrasing Tolstoy):
 
-> "All fast websites are alike, but all slow websites are slow in different ways."
+<pullquote>
+All fast websites are alike, but all slow websites are slow in different ways.
+</pullquote>
 
 Ultimately, we’ll argue, performance must be solved _at the framework level_ -- that is, in the content mesh.
 

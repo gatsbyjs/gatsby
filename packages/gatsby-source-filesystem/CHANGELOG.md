@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.17"></a>
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.16...gatsby-source-filesystem@2.0.17) (2019-01-23)
+
+### Features
+
+- **gatsby-source-filesystem:** add optional name parameter to createRemoteFileNode ([#11054](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/11054)) ([8105be6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/8105be6)), closes [#11037](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/11037) [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/1234) [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/1234) [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/1234)
+
 <a name="2.0.16"></a>
 
 ## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.14...gatsby-source-filesystem@2.0.16) (2019-01-11)
