@@ -162,6 +162,8 @@
           link: /docs/component-css/
         - title: PostCSS
           link: /docs/post-css/
+        - title: TailwindCSS
+          link: /docs/tailwind-css/
     - title: Adding testing
       link: /docs/testing/
       items:
