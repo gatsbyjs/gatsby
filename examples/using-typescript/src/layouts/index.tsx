@@ -1,4 +1,5 @@
 import * as React from "react"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import { rhythm } from "../utils/typography"
 
@@ -13,6 +14,11 @@ const MainLayout: React.SFC = ({ children }) => (
       paddingRight: rhythm(3 / 4),
     }}
   >
+    <OutboundLink
+      onClick={e => {
+        e.preventDefault()
+      }}
+    />
     {children}
   </div>
 )
