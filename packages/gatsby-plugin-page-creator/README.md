@@ -70,7 +70,7 @@ module.exports = {
       resolve: `gatsby-plugin-page-creator`,
       options: {
         path: `${__dirname}/src/indexes/pages`,
-        ignore: `blog.(js|ts)?(x)`,
+        ignore: [`blog.(js|ts)?(x)`],
         // See pattern syntax recognized by micromatch
         // https://www.npmjs.com/package/micromatch#matching-features
       },
