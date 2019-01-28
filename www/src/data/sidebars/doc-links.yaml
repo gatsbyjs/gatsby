@@ -102,6 +102,8 @@
               link: /docs/sourcing-from-prismic/
             - title: Sourcing from Netlify CMS
               link: /docs/sourcing-from-netlify-cms/
+            - title: Sourcing from Ghost
+              link: /docs/sourcing-from-ghost/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
