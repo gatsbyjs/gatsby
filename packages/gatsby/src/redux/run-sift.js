@@ -18,20 +18,6 @@ const enhancedNodeCacheId = ({ node, args }) =>
       })
     : null
 
-const nodesCache = new Map()
-
-function loadNodes(type) {
-  let nodes
-  // this caching can be removed if we move to loki
-  if (process.env.NODE_ENV === `production` && nodesCache.has(type)) {
-    nodes = nodesCache.get(type)
-  } else {
-    nodes = getNodesByType(type)
-    nodesCache.set(type, nodes)
-  }
-  return nodes
-}
-
 /////////////////////////////////////////////////////////////////////
 // Parse filter
 /////////////////////////////////////////////////////////////////////
@@ -300,7 +286,7 @@ module.exports = (args: Object) => {
   const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
 
   // If nodes weren't provided, then load them from the DB
-  const nodes = args.nodes || loadNodes(gqlType.name)
+  const nodes = args.nodes || getNodesByType(gqlType.name)
 
   const { siftArgs, fieldsToSift } = parseFilter(clonedArgs.filter)
 
