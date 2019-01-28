@@ -96,14 +96,14 @@
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
               link: /docs/sourcing-from-drupal/
-            - title: Sourcing from Ghost
-              link: /docs/sourcing-from-ghost/
             - title: Sourcing from Contentful
               link: /docs/sourcing-from-contentful/
             - title: Sourcing from Prismic
               link: /docs/sourcing-from-prismic/
             - title: Sourcing from Netlify CMS
               link: /docs/sourcing-from-netlify-cms/
+            - title: Sourcing from Ghost
+              link: /docs/sourcing-from-ghost/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
