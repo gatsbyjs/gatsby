@@ -102,6 +102,8 @@
               link: /docs/sourcing-from-prismic/
             - title: Sourcing from Netlify CMS
               link: /docs/sourcing-from-netlify-cms/
+            - title: Sourcing from Ghost
+              link: /docs/sourcing-from-ghost/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
@@ -162,6 +164,8 @@
           link: /docs/component-css/
         - title: PostCSS
           link: /docs/post-css/
+        - title: TailwindCSS
+          link: /docs/tailwind-css/
     - title: Adding testing
       link: /docs/testing/
       items:

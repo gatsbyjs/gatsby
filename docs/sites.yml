@@ -241,6 +241,20 @@
     - Documentation
     - Web Development
     - Open Source
+- title: Ghost Documentation
+  main_url: https://docs.ghost.org/
+  url: https://docs.ghost.org/
+  source_url: "https://github.com/tryghost/docs"
+  featured: false
+  description: >-
+    Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
+  categories:
+    - Publishing
+    - Technology
+    - Documentation
+    - Open Source
+  built_by: Ghost Foundation
+  built_by_url: https://ghost.org/
 - title: Nike - Just Do It
   main_url: "https://justdoit.nike.com/"
   url: "https://justdoit.nike.com/"
@@ -3249,17 +3263,6 @@
     - Web Development
   built_by: Codedebug
   built_by_url: "https://codedebug.co/"
-- title: Ghost Documentation
-  main_url: https://docs.ghost.org/
-  url: https://docs.ghost.org/
-  description: >-
-    Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
-  categories:
-    - Publishing
-    - Documentation
-  built_by: Ghost Foundation
-  built_by_url: https://ghost.org/
-  featured: false
 - title: BELLHOPS
   main_url: https://www.getbellhops.com/
   url: https://www.getbellhops.com/
