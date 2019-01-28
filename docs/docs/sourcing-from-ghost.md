@@ -62,38 +62,43 @@ Once the source plugin is set up, you can use the `createPages` API in `gatsby-n
 There are several ways to structure queries depending on how you prefer to work, but here's a very minimal example:
 
 ```javascript:title=gatsby-node.js
-const createPosts = new Promise((resolve, reject) => {
-  const postTemplate = path.resolve(`./src/templates/post.js`)
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
+  const createPosts = new Promise((resolve, reject) => {
+    const postTemplate = path.resolve(`./src/templates/post.js`)
 
-  resolve(
-    graphql(`
-      {
-        allGhostPost(sort: { order: ASC, fields: published_at }) {
-          edges {
-            node {
-              slug
+    resolve(
+      graphql(`
+        {
+          allGhostPost(sort: { order: ASC, fields: published_at }) {
+            edges {
+              node {
+                slug
+              }
             }
           }
         }
-      }
-    `).then(result => {
-      const items = result.data.allGhostPost.edges
+      `).then(result => {
+        const items = result.data.allGhostPost.edges
 
-      _.forEach(items, ({ node }) => {
-        node.url = `/${node.slug}/`
-        createPage({
-          path: node.url,
-          component: path.resolve(postTemplate),
-          context: {
-            slug: node.slug,
-          },
+        _.forEach(items, ({ node }) => {
+          node.url = `/${node.slug}/`
+          createPage({
+            path: node.url,
+            component: path.resolve(postTemplate),
+            context: {
+              slug: node.slug,
+            },
+          })
         })
-      })
 
-      return resolve()
-    })
-  )
-})
+        return resolve()
+      })
+    )
+  })
+
+  return Promise.all(createPosts)
+}
 ```
 
 &nbsp;
