@@ -5,7 +5,7 @@ author: "Thibaut Remy"
 tags: ["case-study", "architecture", "i18n"]
 ---
 
-Around a year ago, we started discussing ways to improve performance on [Daniel Wellington](www.danielwellington.com)'s e-commerce website. Emerging markets like India require highly optimized web experience that we as web developers need to deliver on. We chose Gatsby as a tool to help us reach optimal performance.
+Around a year ago, we started discussing ways to improve performance on [Daniel Wellington](http://www.danielwellington.com)'s e-commerce website. Emerging markets like India require highly optimized web experience that we as web developers need to deliver on. We chose Gatsby as a tool to help us reach optimal performance.
 
 In this post I will take you through our journey with Gatsby at Daniel Wellington, the challenges that we faced when scaling it up and how we overcame them.
 
