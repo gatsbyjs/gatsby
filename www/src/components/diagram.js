@@ -278,7 +278,7 @@ const Diagram = () => (
             <SourceItem>
               <ItemTitle>CMSs</ItemTitle>
               <ItemDescription>
-                Contentful, Drupal, Ghost, WordPress, etc.
+                Contentful, Drupal, WordPress, etc.
               </ItemDescription>
             </SourceItem>
             <SourceItem>
