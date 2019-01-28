@@ -1,0 +1,107 @@
+---
+title: Emotion
+---
+
+In this guide, we'll walk through setting up a site with the CSS-in-JS library [Emotion](https://emotion.sh).
+
+Emotion is a performant and flexible CSS-in-JS library. Building on many other CSS-in-JS libraries, it allows you to style apps quickly with string or object styles. It has predictable composition to avoid specificity issues with CSS. With source maps and labels, Emotion has a great developer experience and great performance with heavy caching in production.
+
+First, open a new terminal window and run the following to create a new site:
+
+```shell
+gatsby new emotion-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
+
+Second, we'll install the Gatsby plugin for Emotion.
+
+```shell
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
+```
+
+And then add it to your site's `gatsby-config.js`:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-emotion`],
+}
+```
+
+Then in your terminal run `gatsby develop` to start the Gatsby development server.
+
+Now let's create a sample Emotion page at `src/pages/index.js`:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import styled from "@emotion/styled"
+
+const Container = styled.div`
+  margin: 3rem auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+const UserWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 auto 12px auto;
+  &:last-child {
+    margin-bottom: 0;
+  }
+`
+
+const Avatar = styled.img`
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
+  margin: 0;
+`
+
+const Description = styled.div`
+  flex: 1;
+  margin-left: 18px;
+  padding: 12px;
+`
+
+const Username = styled.h2`
+  margin: 0 0 12px 0;
+  padding: 0;
+`
+
+const Excerpt = styled.p`
+  margin: 0;
+`
+// Using css prop provides a concise and flexible API to style the components. //
+const underline = css`
+  text-decoration: underline;
+`
+
+const User = props => (
+  <UserWrapper>
+    <Avatar src={props.avatar} alt="" />
+    <Description>
+      <Username>{props.username}</Username>
+      <Excerpt>{props.excerpt}</Excerpt>
+    </Description>
+  </UserWrapper>
+)
+
+export default () => (
+  <Container>
+    <h1 css={underline}>About Emotion</h1>
+    <p>Emotion is uber cool</p>
+    <User
+      username="Jane Doe"
+      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+    />
+    <User
+      username="Bob Smith"
+      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+      excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+    />
+  </Container>
+)
+```

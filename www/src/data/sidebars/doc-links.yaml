@@ -158,6 +158,8 @@
           link: /docs/glamor/
         - title: Using CSS-in-JS library styled components
           link: /docs/styled-components/
+        - title: Using CSS-in-JS library Emotion
+          link: /docs/emotion/
         - title: Creating global styles
           link: /docs/creating-global-styles/
         - title: Component CSS
