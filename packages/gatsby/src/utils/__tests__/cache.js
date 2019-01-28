@@ -1,5 +1,5 @@
-const mockErrorValue = jest.fn(() => {})
-const mockResultValue = jest.fn(() => `result`)
+const mockErrorValue = jest.fn()
+const mockResultValue = jest.fn()
 
 jest.mock(`cache-manager`, () => {
   return {
@@ -116,7 +116,7 @@ describe(`cache`, () => {
     it(`rejects on caching error`, () => {
       const cache = getCache()
 
-      mockErrorValue.mockImplementationOnce(() => !undefined)
+      mockErrorValue.mockReturnValueOnce(!undefined)
 
       return expect(cache.set(`a`, `b`)).rejects.toThrow()
     })
@@ -126,13 +126,15 @@ describe(`cache`, () => {
     it(`resolves to the found value`, () => {
       const cache = getCache()
 
+      mockResultValue.mockReturnValueOnce(`result`)
+
       return expect(cache.get()).resolves.toBe(`result`)
     })
 
     it(`rejects on caching error`, () => {
       const cache = getCache()
 
-      mockErrorValue.mockImplementationOnce(() => !undefined)
+      mockErrorValue.mockReturnValueOnce(!undefined)
 
       return expect(cache.get()).rejects.toThrow()
     })
