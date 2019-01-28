@@ -1722,3 +1722,18 @@
     - Simple setup without opinionated setup
     - Fully instrumented for successful PROD deployments
     - Stylus for simple CSS
+- url: https://example-company-website-gatsby-sanity-combo.netlify.com/
+  repo: https://github.com/sanity-io/example-company-website-gatsby-sanity-combo
+  description: This examples combines Gatsby site generation with Sanity.io content management in a neat company website.
+  tags:
+    - sanity.io
+    - Headless CMS
+    - Blog
+  features:
+    - Out-of-the-box headless CMS
+    - Real-time content preview in Development
+    - Fast & frugal builds
+    - No accidental missing fields/types
+    - Full Render Control with Portable Text
+    - gatsby-image support
+    - Content types for company info, pages, projects, people, and blog posts
