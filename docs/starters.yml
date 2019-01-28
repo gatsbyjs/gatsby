@@ -1608,7 +1608,7 @@
     - Web App Manifest
 - url: https://gatsby.ghost.org/
   repo: https://github.com/TryGhost/gatsby-starter-ghost
-  description: A starter template to build amazing static websites with Ghost and Gatbsy
+  description: Build lightning-fast, modern publications with Ghost and Gatbsy
   tags:
     - Ghost
     - Headless CMS
@@ -1616,17 +1616,18 @@
     - Journalism
   features:
     - Ghost integration with ready to go placeholder content and webhooks support
-    - Netlify integration ready to deploy
     - Minimal responsive design
     - Pagination for posts, tags, and authors
-    - SEO Friendly Component
+    - SEO Friendly Meta
     - JSON-LD Schema
-    - OpenGraph sharing support
+    - OpenGraph structured data
+    - Twitter Cards meta
     - Sitemap Generation
-    - XML sitemaps
-    - Progressive Web app
+    - XML Sitemaps
+    - Progressive Web App
     - Offline Support
     - RSS Feed
+    - Netlify integration ready to deploy
 - url: https://traveler-blog.netlify.com/
   repo: https://github.com/QingpingMeng/gatsby-starter-traveler-blog
   description: A fork of the Official Gatsby Starter Blog to build a travler blog with images support
@@ -1710,3 +1711,30 @@
     - Registration form
     - Signup form
     - User sign in
+- url: https://bluepeter.github.io/gatsby-material-ui-business-starter/
+  repo: https://github.com/bluepeter/gatsby-material-ui-business-starter
+  description: Beautiful Gatsby Material Design Business Starter
+  tags:
+    - Styling:Material
+  features:
+    - Uses the popular, well-maintained Material UI React component library
+    - Material Design theme and icons
+    - Rotating home page carousel
+    - Simple setup without opinionated setup
+    - Fully instrumented for successful PROD deployments
+    - Stylus for simple CSS
+- url: https://example-company-website-gatsby-sanity-combo.netlify.com/
+  repo: https://github.com/sanity-io/example-company-website-gatsby-sanity-combo
+  description: This examples combines Gatsby site generation with Sanity.io content management in a neat company website.
+  tags:
+    - sanity.io
+    - Headless CMS
+    - Blog
+  features:
+    - Out-of-the-box headless CMS
+    - Real-time content preview in Development
+    - Fast & frugal builds
+    - No accidental missing fields/types
+    - Full Render Control with Portable Text
+    - gatsby-image support
+    - Content types for company info, pages, projects, people, and blog posts
