@@ -1608,7 +1608,7 @@
     - Web App Manifest
 - url: https://gatsby.ghost.org/
   repo: https://github.com/TryGhost/gatsby-starter-ghost
-  description: A starter template to build amazing static websites with Ghost and Gatbsy
+  description: Build lightning-fast, modern publications with Ghost and Gatbsy
   tags:
     - Ghost
     - Headless CMS
@@ -1616,17 +1616,18 @@
     - Journalism
   features:
     - Ghost integration with ready to go placeholder content and webhooks support
-    - Netlify integration ready to deploy
     - Minimal responsive design
     - Pagination for posts, tags, and authors
-    - SEO Friendly Component
+    - SEO Friendly Meta
     - JSON-LD Schema
-    - OpenGraph sharing support
+    - OpenGraph structured data
+    - Twitter Cards meta
     - Sitemap Generation
-    - XML sitemaps
-    - Progressive Web app
+    - XML Sitemaps
+    - Progressive Web App
     - Offline Support
     - RSS Feed
+    - Netlify integration ready to deploy
 - url: https://traveler-blog.netlify.com/
   repo: https://github.com/QingpingMeng/gatsby-starter-traveler-blog
   description: A fork of the Official Gatsby Starter Blog to build a travler blog with images support
