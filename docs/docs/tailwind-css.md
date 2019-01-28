@@ -9,6 +9,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 ### Overview
 
 There are two ways you can use Tailwind with Gatsby:
+
 1. Standard: Use PostCSS to generate Tailwind classes, then you can apply those classes using `className`.
 2. CSS-in-JS: Integrate Tailwind classes into Styled Components.
 
@@ -50,7 +51,7 @@ Create a postcss.config.js in your project's root folder with the following cont
 
 ```javascript:title=postcss.config.js
 module.exports = () => ({
-    plugins: [require('tailwindcss')('./tailwind.js')],
+  plugins: [require("tailwindcss")("./tailwind.js")],
 })
 ```
 
@@ -59,7 +60,6 @@ module.exports = () => ({
 You can now use the `@tailwind` directives to add Tailwind's utilites, preflight, and components into your CSS. You can also use `@apply` and all of Tailwind's other directives and functions!
 
 To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documentation](https://tailwindcss.com/docs/installation#3-use-tailwind-in-your-css)
-
 
 ## Option #2: CSS-in-JS
 
@@ -74,8 +74,8 @@ npm install --save tailwind.macro
 2. Use the Babel Macro (tailwind.macro) in your styled component
 
 ```javascript
-import styled from 'styled-components'
-import tw from 'tailwind.macro'
+import styled from "styled-components"
+import tw from "tailwind.macro"
 
 const Button = styled.button`
   ${tw`bg-blue hover:bg-blue-dark text-white p-2 rounded`};
