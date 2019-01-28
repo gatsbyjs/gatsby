@@ -1719,14 +1719,13 @@
     styling has been applied so that you can bring your own :)
   tags:
     - MDX
-    - NetlifyCMS
-    - netlify-cms-backend-fs
+    - Netlify CMS
     - TypeScript
-    - Rebass
-    - styled-components
+    - Styling:Rebass
+    - Styling:CSS-in-JS
   features:
     - MDX - Markdown + React
-    - NetlifyCMS (with MDX support)
+    - Netlify CMS (with MDX support)
     - Read and write to local file system via netlify-cms-backend-fs
     - TypeScript
     - Rebass
