@@ -11,7 +11,7 @@ about: Usage question or discussion about Gatsby.
 
   Gatsby has several community support channels, try asking your question on:
 
-  - Discord: https://discord.gg/0ZcbPKXt5bVoxkfV
+  - Discord: https://gatsby.app/discord
   - Spectrum: https://spectrum.chat/gatsby-js
   - Twitter: https://twitter.com/gatsbyjs
 

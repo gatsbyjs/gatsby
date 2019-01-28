@@ -48,7 +48,7 @@ export default () => (
 )
 ```
 
-Let's add css styles to `Container` and add a inline `User` component using Glamor's `css` prop.
+Let's add css styles to `Container` and add an inline `User` component using Glamor's `css` prop.
 
 ```jsx:title=src/pages/index.js
 import React from "react"

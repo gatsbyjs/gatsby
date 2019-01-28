@@ -4,7 +4,7 @@ title: How to label an issue
 
 ## What are issue labels?
 
-Issue labels are a tool in GitHub that that is used to group issues into one or more categories.
+Issue labels are a tool in GitHub that are used to group issues into one or more categories.
 
 [Check out Gatsby's labels (and their descriptions)](https://github.com/gatsbyjs/gatsby/issues/labels)
 

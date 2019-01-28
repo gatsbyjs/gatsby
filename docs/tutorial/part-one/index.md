@@ -136,9 +136,7 @@ Take the example of creating a custom button. In the past, you would
 create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
 
 ```html
-<button class="primary-button">
-  Click me
-</button>
+<button class="primary-button">Click me</button>
 ```
 
 In the world of components, you instead create a `PrimaryButton` component with your button styles and use it throughout your site like:
