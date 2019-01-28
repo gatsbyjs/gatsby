@@ -31,8 +31,9 @@ Then in your terminal run `gatsby develop` to start the Gatsby development serve
 Now let's create a sample Emotion page at `src/pages/index.js`:
 
 ```jsx:title=src/pages/index.js
-import React from "react"
-import styled from "@emotion/styled"
+import React from "react";
+import styled from "@emotion/styled";
+import { css } from "@emotion/core";
 
 const Container = styled.div`
   margin: 3rem auto;
