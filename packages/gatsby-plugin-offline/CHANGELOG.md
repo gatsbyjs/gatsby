@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.21...gatsby-plugin-offline@2.0.22) (2019-01-28)
+
+### Features
+
+- **gatsby-plugin-offline:** reload when missing resources and SW was updated + add "onServiceWorkerUpdateReady" API ([#10432](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10432)) ([4a01c6d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/4a01c6d))
+
 <a name="2.0.21"></a>
 
 ## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.20...gatsby-plugin-offline@2.0.21) (2019-01-06)

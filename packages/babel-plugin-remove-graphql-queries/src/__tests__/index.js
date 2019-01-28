@@ -1,4 +1,4 @@
-const babel = require(`babel-core`)
+const babel = require(`@babel/core`)
 const plugin = require(`../`)
 
 function matchesSnapshot(query) {
