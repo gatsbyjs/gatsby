@@ -2,9 +2,7 @@
 title: Building a large, internationalized e-commerce website with Gatsby at Daniel Wellington
 date: 2019-01-28
 author: "Thibaut Remy"
-# image: "images/danielwellington.png"
-imageTitle: Gatsby at Daniel Wellington
-tags: ["case study", "architecture", "i18n"]
+tags: ["case-study", "architecture", "i18n"]
 ---
 
 Around a year ago, we started discussing ways to improve performance on [Daniel Wellington](//danielwellington.com)'s e-commerce website. Emerging markets like India require highly optimized web experience that we as web developers need to deliver on. We chose Gatsby as a tool to help us reach optimal performance.
