@@ -53,44 +53,51 @@ module.exports = {
 
 ### Ignoring Specific Files
 
-```javascript
-// gatsby-config.js
+#### Shorthand
 
+```javascript
+// The following example will disable the `/blog` index page
+// Note: This will only stop the creation of the `/blog` page!
+// To disable both the `/blog` and `/blog/post-slug` pages,
+// make a config.js which defines an `ignorePages` array
+// and then use those patterns in both this plugin
+// AND in your `createPages` function in gatsby-node.js
+
+// gatsby-config.js
 module.exports = {
   plugins: [
-    // The following will ignore pages like `page.example.js`, `page.js.example`
-    // which match the given glob pattern `**/*.example?(.(js|ts)?(x))`
-    // while still accepting the other pages like `page.js`
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/indexes/pages`,
+        ignore: `blog.(js|ts)?(x)`,
+        // See pattern syntax recognized by micromatch
+        // https://www.npmjs.com/package/micromatch#matching-features
+      },
+    },
+  ],
+}
+```
+
+#### Ignore Options
+
+```javascript
+// The following example will ignore pages using case-insensitive matching
+
+// gatsby-config.js
+module.exports = {
+  plugins: [
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
         path: `${__dirname}/src/examples/pages`,
         ignore: {
-          // See pattern syntax recognized by micromatch
-          // https://www.npmjs.com/package/micromatch#matching-features
           // Example: Ignore `file.example.js`, `dir/s/file.example.tsx`
           patterns: [`**/*.example.(js|ts)?(x)`],
-          // You can also use any micromatch options
-          // https://www.npmjs.com/package/micromatch#optionsnocase
           // Example: Match both `file.example.js` and `file.EXAMPLE.js`
           options: { nocase: true },
-        },
-      },
-    },
-    // Another use case might be for when you want to disable
-    // an index page for your optional page sources
-    // For example, this will disable the `/blog` index page
-    {
-      resolve: `gatsby-plugin-page-creator`,
-      options: {
-        path: `${__dirname}/src/indexes/pages`,
-        ignore: {
-          patterns: [`blog.(js|ts)?(x)`],
-          // Note: This will only stop the creation of the `/blog` page!
-          // To disable both the `/blog` and `/blog/post-slug` pages,
-          // make a config.js which defines an `ignorePages` array
-          // and then use those patterns in both this plugin
-          // AND in your `createPages` function in gatsby-node.js
+          // See all available micromatch options
+          // https://www.npmjs.com/package/micromatch#optionsnocase
         },
       },
     },
