@@ -1,13 +1,12 @@
 const path = require(`path`)
-const report = require(`gatsby-cli/lib/reporter`)
-const debug = require("debug")("gatsby:component-shadowing")
-const fs = require("fs")
+const debug = require(`debug`)(`gatsby:component-shadowing`)
+const fs = require(`fs`)
 
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
 
   constructor({ projectRoot, themes }) {
-    debug("themes list", themes)
+    debug(`themes list`, themes)
     this.themes = themes
     this.projectRoot = projectRoot
   }
@@ -45,7 +44,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 
       if (!builtComponentPath) {
         return resolver.doResolve(
-          "describedRelative",
+          `describedRelative`,
           request,
           null,
           {},
@@ -74,7 +73,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     const themes = ogThemes.filter(t => t !== theme)
     if (!this.cache[`${theme}-${component}`]) {
       this.cache[`${theme}-${component}`] = [
-        path.join(path.resolve("."), `src`, theme),
+        path.join(path.resolve(`.`), `src`, theme),
       ]
         .concat(
           themes.map(aTheme =>
@@ -83,7 +82,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         )
         .map(dir => path.join(dir, component))
         .find(possibleComponentPath => {
-          debug("possibleComponentPath", possibleComponentPath)
+          debug(`possibleComponentPath`, possibleComponentPath)
           let dir
           try {
             // we use fs/path instead of require.resolve to work with
