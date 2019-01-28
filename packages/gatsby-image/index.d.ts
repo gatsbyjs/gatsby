@@ -40,6 +40,7 @@ interface GatsbyImageProps {
   onStartLoad?: (param: { wasCached: boolean }) => void
   onError?: (event: any) => void
   Tag?: string
+  itemProp?: string
 }
 
 export default class GatsbyImage extends React.Component<
