@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.11...gatsby-plugin-google-analytics@2.0.12) (2019-01-28)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** add TS typings for OutboundLink component ([#10215](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/10215)) ([7fee096](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/7fee096))
+
 ## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.10...gatsby-plugin-google-analytics@2.0.11) (2019-01-28)
 
 ### Features
