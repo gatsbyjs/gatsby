@@ -4,14 +4,14 @@ exports.onCreateWebpackConfig = (
   { store, stage, getConfig, rules, loaders, actions },
   pluginOptions
 ) => {
-  const { config, program } = store.getState()
+  const { program, themes } = store.getState()
 
-  if (config.__experimentalThemes) {
+  if (themes.themes) {
     actions.setWebpackConfig({
       resolve: {
         plugins: [
           new GatsbyThemeComponentShadowingResolverPlugin({
-            themes: config.__experimentalThemes.map(({ resolve }) => resolve),
+            themes: themes.themes.map(({ themeName }) => themeName),
             projectRoot: program.directory,
           }),
         ],
