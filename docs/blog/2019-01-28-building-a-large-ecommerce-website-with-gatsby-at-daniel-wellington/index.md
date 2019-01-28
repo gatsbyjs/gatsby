@@ -11,7 +11,7 @@ In this post I will take you through our journey with Gatsby at Daniel Wellingto
 
 ## A bit of context
 
-The Gatsby platform we are building is planned to support many markets and locales (currently around 40 and counting). Each market has around 1.000 pages, so we're in the ballpark of 10k to 50k pages.
+The Gatsby platform we are building is planned to support many markets and locales (currently around 40 and counting). Each market has around 1,000 pages, so we're in the ballpark of 10k to 50k pages.
 
 Our migration to Gatsby is also not a work from scratch: we rely on the existing backend structure to provide us with features such as inventory and cart management. The whole payment flow is also not part of this migration.
 
