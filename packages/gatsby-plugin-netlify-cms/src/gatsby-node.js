@@ -82,7 +82,7 @@ exports.onCreateWebpackConfig = (
          */
         ...gatsbyConfig.plugins.filter(
           plugin =>
-            ![`MiniCssExtractPlugin`].find(
+            ![`MiniCssExtractPlugin`, `GatsbyWebpackStatsExtractor`].find(
               pluginName =>
                 plugin.constructor && plugin.constructor.name === pluginName
             )

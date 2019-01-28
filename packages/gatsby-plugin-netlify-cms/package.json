@@ -34,7 +34,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0-beta.29",
+    "gatsby": "^2.0.101",
     "netlify-cms": "^2.0.6"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms",
