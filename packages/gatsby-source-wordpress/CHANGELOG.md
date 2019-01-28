@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.28...gatsby-source-wordpress@3.0.29) (2019-01-28)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** check response exists before accessing property ([#11349](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/11349)) ([3beb891](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/3beb891))
+
 ## [3.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.27...gatsby-source-wordpress@3.0.28) (2019-01-25)
 
 **Note:** Version bump only for package gatsby-source-wordpress
