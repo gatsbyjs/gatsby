@@ -1,5 +1,5 @@
 /* @flow weak */
-const openurl = require(`opn`)
+const openurl = require(`better-opn`)
 const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
@@ -40,7 +40,7 @@ module.exports = async program => {
     )
     if (open) {
       console.log(`${chalk.blue(`info`)} Opening browser...`)
-      openurl(openUrlString).catch(err =>
+      Promise.resolve(openurl(openUrlString)).catch(err =>
         console.log(
           `${chalk.yellow(
             `warn`

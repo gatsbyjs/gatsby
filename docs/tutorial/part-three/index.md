@@ -7,59 +7,75 @@ Welcome to part three!
 
 ## What's in this tutorial?
 
-In this part, you'll learn about creating "layout" components. Layout components are for
-sections of your site that you want to share across multiple pages. For example,
-Gatsby sites will commonly have a layout component with a shared header and
-footer. Other common things to add to layouts are a sidebar and/or navigation menu.
+In this part, you'll learn about Gatsby plugins, and creating "layout" components.
 
-On this page for example, the header at the top is part of gatsbyjs.org's layout component.
+Gatsby plugins are JavaScript packages that help add functionality to a Gatsby site. Gatsby is designed to be extensible, which means plugins are able to extend and modify just about everything Gatsby does.
 
-Let's dive in and explore creating layouts.
+Layout components are for sections of your site that you want to share across multiple pages. For example, sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts are a sidebar and/or navigation menu. On this page for example, the header at the top is part of gatsbyjs.org's layout component.
 
-## Install a starter
+Let's dive in to part three.
 
-As we mentioned in Part Two, at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
+## Using plugins
+
+You’re probably familiar with the idea of plugins. Many software systems support adding custom plugins to add new functionality or even modify the core workings of the software. Gatsby plugins work the same way.
+
+Community members (like you!) can contribute plugins (small amounts of JavaScript code) that others can then use when building Gatsby sites.
+
+> There are already hundreds of plugins! Explore the Gatsby [Plugin Library](/plugins/).
+
+Our goal with plugins is to make them straightforward to install and use. You will likely be using plugins in almost every Gatsby site you build. While working through the rest of the tutorial you’ll have many opportunities to practice installing and using plugins.
+
+For an initial introduction to using plugins, we'll install and implement the Gatsby plugin for Typography.js.
+
+[Typography.js](https://kyleamathews.github.io/typography.js/) is a JavaScript library which generates global base styles for your site's typography. The library has a [corresponding Gatsby plugin](/packages/gatsby-plugin-typography/) to streamline using it in a Gatsby site.
+
+### ✋ Create a new Gatsby site
+
+As we mentioned in [part two](/tutorial/part-two/), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-three
 ```
 
-Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see [Part Two](/tutorial/part-two/) of the tutorials. For
-the Typography.js theme, try the "Fairy Gates" typography theme this time:
+### ✋ Install and configure `gatsby-plugin-typography`
+
+There are two main steps to using a plugin: Installing and configuring.
+
+1. Install the `gatsby-plugin-typography` NPM package.
 
 ```shell
-npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
+npm install --save gatsby-plugin-typography react-typography typography
 ```
 
-Create a `src/utils` directory, and then create the typography config file at `src/utils/typography.js`:
+> Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
 
-```javascript:title=src/utils/typography.js
-import Typography from "typography"
-import fairyGateTheme from "typography-theme-fairy-gates"
-
-const typography = new Typography(fairyGateTheme)
-
-export default typography
-```
-
-Then create your site's `gatsby-config.js` at the root of the site, and add the following code to it:
+2. Create a new file in the root of your project called `gatsby-config.js`, and copy the following into the file:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography.js`,
-      },
-    },
-  ],
+  plugins: [`gatsby-plugin-typography`],
 }
 ```
 
-Now, you can add a few different pages: a front page, an about page, and a contact
-page.
+The `gatsby-config.js` is another special file that Gatsby will automatically recognize. This is where you add plugins and other site configuration.
+
+> Check out the [doc on `gatsby-config.js`](/docs/gatsby-config/) to read more, if you wish.
+
+3. Start the development server.
+
+```shell
+gatsby develop
+```
+
+Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:
+
+![typography-styles](typography-styles.png)
+
+### ✋ Make some content and style changes
+
+Copy the following into your `src/pages/index.js` so you can see the
+effect of the CSS generated by Typography.js better.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -74,6 +90,36 @@ export default () => (
   </div>
 )
 ```
+
+Your site should now look like this:
+
+![no-layout](no-layout.png)
+
+Let's make a quick improvement. Many sites have a single column of text centered in the middle of the page. To create this, add the following styles to the
+`<div>` in `src/pages/index.js`.
+
+```jsx:title=src/pages/index.js
+import React from "react"
+
+export default () => (
+  // highlight-next-line
+  <div style={{ margin: `3rem auto`, maxWidth: 600 }}>
+    <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
+    <p>
+      What do I like to do? Lots of course but definitely enjoy building
+      websites.
+    </p>
+  </div>
+)
+```
+
+![with-layout2](with-layout2.png)
+
+Sweet. You've installed and configured your very first Gatsby plugin!
+
+## Creating layout components
+
+Now let's move on to learning about layout components. To get ready for this part, add a couple new pages to your project: an about page, and a contact page.
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -99,83 +145,83 @@ export default () => (
 )
 ```
 
-![no-layout](no-layout.png)
+Let's see what the new about page looks like:
 
-You now have the start of a nice personal site!
+![about-uncentered](about-uncentered.png)
 
-But there are a few problems. First, it'd be nice if the page content was
-centered on the screen like in part two of the tutorial. And second, you should
-really have some sort of global navigation so it's easy for visitors to find and
-visit each of the sub-pages.
+Hmm. It would be nice if the content of the two new pages were centered like the index page. And it would be nice to have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
-You'll tackle these problems by creating your first layout component.
+You'll tackle these changes by creating your first layout component.
 
-## Your first layout component
+### ✋ Create your first layout component
 
-First, create a new directory at `src/components`.
+1. Create a new directory at `src/components`.
 
-Now create a very basic layout component at `src/components/layout.js`:
+2. Create a very basic layout component at `src/components/layout.js`:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
 
 export default ({ children }) => (
-  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
+  <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
     {children}
   </div>
 )
 ```
 
-Now you need to import this new layout component into your page components.
+3. Import this new layout component into your `src/pages/index.js` page component:
 
-Change `src/pages/index.js` to look like:
-
-```jsx{2,5,11}:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
-import Layout from "../components/layout"
+import Layout from "../components/layout" // highlight-line
 
 export default () => (
-  <Layout>
+  <Layout> {/* highlight-line */}
     <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
     <p>
       What do I like to do? Lots of course but definitely enjoy building
       websites.
     </p>
-  </Layout>
+  </Layout> {/* highlight-line */}
 )
 ```
 
 ![with-layout2](with-layout2.png)
 
-Sweet, the layout is working! Now, your text is centered and constrained to
-a column 650 pixels wide, as you specified.
+Sweet, the layout is working! The content of your index page is still centered.
 
-But try navigating to one of the other pages e.g. `/about/`. That page still
-isn't centered. Try now importing and adding the layout component to `about.js` and
-`contact.js`.
+But try navigating to `/about/`, or `/contact/`. The content on those pages still won't be centered.
 
-Now add your site title to the layout component:
+4. Import the layout component in `about.js` and `contact.js` (as you did for `index.js` in the previous step).
 
-```jsx{5}:title=src/components/layout.js
+The content of all three of your pages is centered, thanks to this single shared layout component!
+
+### ✋ Add a site title.
+
+1. Add the following line to your new layout component:
+
+```jsx:title=src/components/layout.js
 import React from "react"
 
 export default ({ children }) => (
-  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
-    <h3>MySweetSite</h3>
+  <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
+    <h3>MySweetSite</h3> {/* highlight-line */}
     {children}
   </div>
 )
 ```
 
-If you go to any of your three pages you'll see the same title added e.g. the
-`/about/` page:
+If you go to any of your three pages you'll see the same title added e.g. the `/about/` page:
 
 ![with-title](with-title.png)
 
-Add navigation links to each of your three pages:
+### ✋ Add navigation links between pages.
 
-```jsx{2-9,12-21}:title=src/components/layout.js
+1. Copy the following into your layout component file:
+
+```jsx:title=src/components/layout.js
 import React from "react"
+// highlight-start
 import { Link } from "gatsby"
 
 const ListLink = props => (
@@ -183,9 +229,11 @@ const ListLink = props => (
     <Link to={props.to}>{props.children}</Link>
   </li>
 )
+// highlight-end
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
+    {/* highlight-start */}
     <header style={{ marginBottom: `1.5rem` }}>
       <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
         <h3 style={{ display: `inline` }}>MySweetSite</h3>
@@ -196,19 +244,18 @@ export default ({ children }) => (
         <ListLink to="/contact/">Contact</ListLink>
       </ul>
     </header>
+    {/* highlight-end */}
     {children}
   </div>
 )
 ```
 
-![with-navigation](with-navigation.png)
+![with-navigation2](with-navigation2.png)
 
 And there you have it! A three page site with a basic global navigation.
 
-_Challenge:_ With your new "layout component" powers, trying adding headers, footers,
-global navigation, sidebars, etc. to your Gatsby sites!
+_Challenge:_ With your new "layout component" powers, trying adding headers, footers, global navigation, sidebars, etc. to your Gatsby sites!
 
 ## What's coming next?
 
-Continue on to
-[part four of the tutorial where you'll start learning about Gatsby's data layer and programmatic pages!](/tutorial/part-four/)
+Continue on to [part four of the tutorial](/tutorial/part-four/) where you'll start learning about Gatsby's data layer and programmatically creating pages!

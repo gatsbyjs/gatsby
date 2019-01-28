@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.2...gatsby-react-router-scroll@2.0.3) (2019-01-24)
+
+### Bug Fixes
+
+- **gatsby-react-router-scroll:** keep scroll positions in tact on reload ([#11224](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/issues/11224)) ([3cbaade](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/commit/3cbaade))
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.1...gatsby-react-router-scroll@2.0.2) (2018-11-29)

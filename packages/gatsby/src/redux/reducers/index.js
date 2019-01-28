@@ -23,6 +23,7 @@ function getNodesReducer() {
 module.exports = {
   program: require(`./program`),
   nodes: getNodesReducer(),
+  nodesByType: require(`./nodes-by-type`),
   nodesTouched: require(`./nodes-touched`),
   lastAction: require(`./last-action`),
   plugins: require(`./plugins`),

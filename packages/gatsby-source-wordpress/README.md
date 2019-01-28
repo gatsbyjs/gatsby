@@ -43,16 +43,16 @@ First, you need a way to pass environment variables to the build process, so sec
 module.exports = {
   plugins: [
     /*
-    * Gatsby's data processing layer begins with “source”
-    * plugins. Here the site sources its data from Wordpress.
-    */
+     * Gatsby's data processing layer begins with “source”
+     * plugins. Here the site sources its data from Wordpress.
+     */
     {
       resolve: "gatsby-source-wordpress",
       options: {
         /*
-        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
-        */
+         * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+         * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+         */
         baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
         // The protocol. This can be http or https.
         protocol: "http",
@@ -83,6 +83,8 @@ module.exports = {
           // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
           // then add your clientId, clientSecret, username, and password here
           // Learn about environment variables: https://www.gatsbyjs.org/docs/environment-variables
+          // If two-factor authentication is enabled then you need to create an Application-Specific Password,
+          // see https://en.support.wordpress.com/security/two-step-authentication/#application-specific-passwords
           wpcom_app_clientSecret: process.env.WORDPRESS_CLIENT_SECRET,
           wpcom_app_clientId: "54793",
           wpcom_user: "gatsbyjswpexample@gmail.com",
@@ -115,16 +117,16 @@ module.exports = {
         // all routes that begin with `yoast` from fetch.
         // Whitelisted routes using glob patterns
         includedRoutes: [
-          "/*/*/categories",
-          "/*/*/posts",
-          "/*/*/pages",
-          "/*/*/media",
-          "/*/*/tags",
-          "/*/*/taxonomies",
-          "/*/*/users",
+          "**/*/*/categories",
+          "**/*/*/posts",
+          "**/*/*/pages",
+          "**/*/*/media",
+          "**/*/*/tags",
+          "**/*/*/taxonomies",
+          "**/*/*/users",
         ],
         // Blacklisted routes using glob patterns
-        excludedRoutes: ["/*/*/posts/1456"],
+        excludedRoutes: ["**/*/*/posts/1456"],
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
@@ -152,7 +154,7 @@ plugins.
     [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in
     WordPress.
   - Will pull the `acf: { ... }` fields's contents from any entity which has it
-    attached (pages, posts, medias, ... you choose from in WordPress back-end
+    attached (pages, posts, medias, ... you choose from in WordPress backend
     while creating a Group of Fields).
   - [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF :
   - Will work with
@@ -195,13 +197,13 @@ If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise
 
 ```javascript
 includedRoutes: [
-  "/*/*/posts",
-  "/*/*/pages",
-  "/*/*/media",
-  "/*/*/categories",
-  "/*/*/tags",
-  "/*/*/taxonomies",
-  "/*/*/users",
+  "**/*/*/posts",
+  "**/*/*/pages",
+  "**/*/*/media",
+  "**/*/*/categories",
+  "**/*/*/tags",
+  "**/*/*/taxonomies",
+  "**/*/*/users",
 ],
 ```
 

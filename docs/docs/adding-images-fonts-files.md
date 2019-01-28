@@ -123,7 +123,7 @@ However, there is an **escape hatch** that you can use to add an asset outside o
 the module system.
 
 If you put a file into the `static` folder, it will **not** be processed by
-Webpack. Instead it will be copied into the public folder untouched. E.g. if you
+Webpack. Instead, it will be copied into the public folder untouched. E.g. if you
 add a file named `sun.jpg` to the static folder, it'll be copied to
 `public/sun.jpg`. To reference assets in the `static` folder, you'll need to
 [import a helper function from `gatsby` named `withPrefix`](/docs/gatsby-link/#prefixed-paths-helper).
@@ -152,7 +152,7 @@ Keep in mind the downsides of this approach:
 ### When to Use the `static` Folder
 
 Normally we recommend importing [stylesheets](#adding-a-stylesheet),
-[images, and fonts](#adding-images-and-fonts) from JavaScript. The `static`
+[images, and fonts](#adding-images-fonts-files) from JavaScript. The `static`
 folder is useful as a workaround for a number of less common cases:
 
 - You need a file with a specific name in the build output, such as
@@ -161,5 +161,5 @@ folder is useful as a workaround for a number of less common cases:
 - You want to include a small script like
   [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the
   bundled code.
-- Some library may be incompatible with Webpack and you have no other option but
-  to include it as a `<script>` tag.
+- You are using a library that is incompatible with Webpack and need to
+  include it as a `<script>` tag.

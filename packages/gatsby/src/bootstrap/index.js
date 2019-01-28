@@ -21,6 +21,7 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
+require(`../db`).startAutosave()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -282,10 +283,10 @@ module.exports = async (args: BootstrapArgs) => {
 
     const envAPIs = plugin[`${env}APIs`]
 
-    // Always include the site's gatsby-browser.js if it exists as it's
+    // Always include gatsby-browser.js files if they exists as they're
     // a handy place to include global styles and other global imports.
     try {
-      if (env === `browser` && plugin.name === `default-site-plugin`) {
+      if (env === `browser`) {
         return slash(
           require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
         )

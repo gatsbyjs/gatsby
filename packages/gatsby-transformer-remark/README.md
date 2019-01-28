@@ -10,8 +10,33 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-remark`]
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      // CommonMark mode (default: true)
+      commonmark: true,
+      // Footnotes mode (default: true)
+      footnotes: true,
+      // Pedantic mode (default: true)
+      pedantic: true,
+      // GitHub Flavored Markdown mode (default: true)
+      gfm: true,
+      // Plugins configs
+      plugins: [],
+    },
+  },
+],
 ```
+
+The following parts of `options` are passed down to Remark as options:
+
+- `options.commonmark`
+- `options.footnotes`
+- `options.pedantic`
+- `options.gfm`
+
+The details of the Remark options above could be found in [`remark-parse`'s documentation](https://github.com/remarkjs/remark/tree/master/packages/remark-parse#processoruseparse-options)
 
 A full explanation of how to use markdown in Gatsby can be found here:
 [Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
@@ -129,6 +154,25 @@ It's also possible to ask Gatsby to return excerpts formatted as HTML. You might
   }
 }
 ```
+
+## gray-matter options
+
+`gatsby-transformer-remark` uses [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse markdown frontmatter, so you can specify any of the options mentioned [here](https://github.com/jonschlinkert/gray-matter#options) in the `gatsby-config.js` file.
+
+### Example: Excerpts
+
+If you don't want to use `pruneLength` for excerpts but a custom seperator, you can specify an `excerpt_separator`:
+
+```javascript
+{
+  "resolve": `gatsby-transformer-remark`,
+  "options": {
+    "excerpt_separator": `<!-- end -->`
+  }
+}
+```
+
+Any file that does not have the given `excerpt_separator` will fall back to the default pruning method.
 
 ## Troubleshooting
 

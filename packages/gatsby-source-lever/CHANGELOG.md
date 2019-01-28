@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-lever/compare/gatsby-source-lever@2.0.2...gatsby-source-lever@2.0.3) (2019-01-25)
+
+**Note:** Version bump only for package gatsby-source-lever
+
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-lever/compare/gatsby-source-lever@2.0.1...gatsby-source-lever@2.0.2) (2018-11-29)

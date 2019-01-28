@@ -4,7 +4,7 @@ title: "Environment Variables"
 
 ## Environments and Environment Variables
 
-You can provide environment variables to your site to customise it's behaviour in different environments.
+You can provide environment variables to your site to customise its behaviour in different environments.
 
 Note that we need to distinguish in this discussion between variables which have been defined in
 special places in order to be used in different deployment environments, and true OS-level
@@ -47,6 +47,10 @@ In addition to these Project Environment Variables defined in `.env.*` files, yo
 OS Env Vars. OS Env Vars which are prefixed with `GATSBY_` will become available in
 browser JavaScript.
 
+```text:title=.env.*
+GATSBY_API_URL=https://dev.example.com/api
+```
+
 #### Server-side Node.js
 
 Gatsby runs several Node.js scripts at build time, notably `gatsby-config.js` and `gatsby-node.js`.
@@ -56,7 +60,7 @@ calling Gatsby on the command line.
 
 In Linux terminals this can be done with:
 
-```
+```shell
 MY_ENV_VAR=foo gatsby develop
 ```
 
@@ -77,28 +81,45 @@ Now the variables are available on `process.env` as usual.
 
 ## Example
 
-```shell
-# Example .env.development file
+Please note that you shouldn't commit `.env.*` files to your source control and rather use options given by your CD provider (e.g. Netlify with its [build environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables)).
 
-API_URL=https://dev.example.com/api
+```text:title=.env.development
+GATSBY_API_URL=https://dev.example.com/api
+API_KEY=927349872349798
 ```
 
-```shell
-# Example .env.production file
-
-API_URL=https://example.com/api
+```text:title=.env.production
+GATSBY_API_URL=https://example.com/api
+API_KEY=927349872349798
 ```
 
-These variables will be available to your site as `process.env.API_URL`:
+Note: since Gatsby uses the [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
+`GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`.:
 
 ```jsx
-// usage
+// In any frontend code
 render() {
   return (
     <div>
-      <img src={`${process.env.API_URL}/logo.png`} alt="Logo" />
+      <img src={`${process.env.GATSBY_API_URL}/logo.png`} alt="Logo" />
     </div>
   )
+}
+```
+
+`API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`. If you commit your `.env.*` file containing `API_KEY` to source control it would also be available on the client-side. However we strongly advise against that! You should prefix your variable with `GATSBY_` (as shown above) instead and Gatsby automatically makes it available in the browser context.
+
+```js
+// In any server-side code, e.g. gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-patronus`,
+      options: {
+        apiKey: process.env.API_KEY,
+      },
+    },
+  ],
 }
 ```
 
@@ -109,6 +130,14 @@ render() {
 
 - `NODE_ENV`
 - `PUBLIC_DIR`
+
+Gatsby also allows you to specify another environment variable when running the local development server (e.g. `gatsby develop`):
+
+- `ENABLE_GATSBY_REFRESH_ENDPOINT`
+
+If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
+
+You can trigger this endpoint locally for example on Unix-based operating systems (like Ubuntu and MacOS) you can use `curl -X POST http://localhost:8000/__refresh`.
 
 ## Additional Environments (Staging, Test, etc)
 
@@ -121,8 +150,7 @@ For instance. If you would like to add a `staging` environment with a custom Goo
 
 ### Example
 
-```shell
-# .env.staging
+```text:title=.env.staging
 GA_TRACKING_ID="UA-1234567890"
 API_URL="http://foo.bar"
 ```
@@ -164,6 +192,6 @@ Note that `ACTIVE_ENV` could be called anything - it's not used or known about b
 
 Local testing of the `staging` environment can be done with:
 
-```
+```shell
 ACTIVE_ENV=staging gatsby develop
 ```

@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const loki = require(`@moocar/lokijs`)
+const loki = require(`lokijs`)
 const uuidv4 = require(`uuid/v4`)
 const customComparators = require(`./custom-comparators`)
 
@@ -71,8 +71,6 @@ function startFileDb(saveFile) {
           resolve()
         }
       },
-      autosave: true,
-      autosaveInterval: 1000,
     }
     db = new loki(saveFile, dbOptions)
   })
@@ -109,6 +107,24 @@ async function start({ saveFile } = {}) {
   ensureNodeCollections(db)
 }
 
+// Saves the database to disk and returns a promise that will be
+// resolved once the save has finished
+function saveState() {
+  return new Promise((resolve, reject) => {
+    if (db) {
+      db.saveDatabase(err => {
+        if (err) {
+          console.log(`error saving loki DB`)
+          console.log(err)
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    }
+  })
+}
+
 /**
  * Returns a reference to the database. If undefined, the db has not been
  * initalized yet. Call `start()`
@@ -123,4 +139,5 @@ module.exports = {
   start,
   getDb,
   colls,
+  saveState,
 }

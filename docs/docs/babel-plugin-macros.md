@@ -13,7 +13,7 @@ the file you want to use them. This has two big advantages:
 - No configuration files. Macros are included directly in your code as needed.
 
 Like Babel plugins, macros run only at compile time. They are not included in
-the public JavaScript bundle. As such, macros have no effect on your code code
+the public JavaScript bundle. As such, macros have no effect on your code
 beyond the transformations they apply.
 
 ## Installing macros
@@ -24,7 +24,7 @@ they are named by their function, followed by `.macro`.
 For example, [`preval.macro`](https://www.npmjs.com/package/preval.macro) is a
 macro that pre-evaluates JavaScript code. You can install it by running:
 
-```bash
+```shell
 npm install --save-dev preval.macro
 ```
 
@@ -42,9 +42,9 @@ import preval from "preval.macro"
 You can then use the imported variable however the macro's documentation says.
 `preval.macro` is used as a template literal tag:
 
-```javascript{2}
+```javascript
 import preval from "preval.macro"
-const x = preval`module.exports = 1`
+const x = preval`module.exports = 1` // highlight-line
 ```
 
 When building your project with `gatsby develop` or `gatsby build`, this code

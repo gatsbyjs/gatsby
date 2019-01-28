@@ -4,6 +4,7 @@ function duplicateNode(node) {
     children: [],
     tagName: node.tagName,
     value: node.value,
+    properties: node.properties,
   }
 }
 

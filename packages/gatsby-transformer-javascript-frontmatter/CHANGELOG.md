@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter/compare/gatsby-transformer-javascript-frontmatter@2.0.5...gatsby-transformer-javascript-frontmatter@2.0.6) (2019-01-28)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
 <a name="2.0.5"></a>
 
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter/compare/gatsby-transformer-javascript-frontmatter@2.0.4...gatsby-transformer-javascript-frontmatter@2.0.5) (2018-11-29)

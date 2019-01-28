@@ -7,6 +7,8 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   let headComponents = []
 
   const icons = pluginOptions.icons || defaultIcons
+  const legacy =
+    typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 
   // If icons were generated, also add a favicon link.
   if (pluginOptions.icon) {
@@ -31,19 +33,26 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       href={withPrefix(`/manifest.webmanifest`)}
     />
   )
-
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (pluginOptions.theme_color) {
-    headComponents.push(
-      <meta
-        key={`gatsby-plugin-manifest-meta`}
-        name="theme-color"
-        content={pluginOptions.theme_color}
-      />
+    let insertMetaTag = Object.keys(pluginOptions).includes(
+      `theme_color_in_head`
     )
+      ? pluginOptions.theme_color_in_head
+      : true
+
+    if (insertMetaTag) {
+      headComponents.push(
+        <meta
+          key={`gatsby-plugin-manifest-meta`}
+          name="theme-color"
+          content={pluginOptions.theme_color}
+        />
+      )
+    }
   }
 
-  if (pluginOptions.legacy) {
+  if (legacy) {
     const iconLinkTags = icons.map(icon => (
       <link
         key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}

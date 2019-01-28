@@ -46,7 +46,9 @@ module.exports = {
         start_url: `/`,
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
-        display: `minimal-ui`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
@@ -118,7 +120,9 @@ module.exports = {
         start_url: `/`,
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
-        display: `minimal-ui`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
         icons: [
           {
@@ -155,7 +159,9 @@ module.exports = {
         start_url: `/`,
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
-        display: `minimal-ui`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
         icons: [
           {
             // Everything in /static will be copied to an equivalent
@@ -178,9 +184,9 @@ module.exports = {
 }
 ```
 
-## Legacy `apple-touch-icon` links
+## Legacy option
 
-iOS 11.3 added support for webmanifest spec, so this plugin doesn't add `apple-touch-icon` links to `<head>` by default. If you need or want to support older version of iOS you can set `legacy` option to `true` in plugin configuration:
+iOS 11.3 added support for service workers but not the complete webmanifest spec. Therefore iOS won't recognize the icons defined in the webmanifest and the creation of `apple-touch-icon` links in `<head>` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the `legacy` option to `false` in plugin configuration:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -193,9 +199,33 @@ module.exports = {
         start_url: `/`,
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
-        display: `minimal-ui`,
+        display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
-        legacy: true, // this will add apple-touch-icon links to <head>
+        legacy: false, // this will not add apple-touch-icon links to <head>
+      },
+    },
+  ],
+}
+```
+
+## Removing `theme-color` meta tag
+
+By default `gatsby-plugin-manifest` inserts `<meta content={theme_color} name="theme-color" />` tag to html output. This can be problematic if you want to programatically control that tag - for example when implementing light/dark themes in your project. You can set `theme_color_in_head` plugin option to `false` to opt-out of this behaviour.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
       },
     },
   ],

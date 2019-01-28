@@ -132,9 +132,8 @@ exports.normalizeEntities = normalizeEntities
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>
   entities.map(e =>
-    deepMapKeys(
-      e,
-      key => (key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }))
+    deepMapKeys(e, key =>
+      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key })
     )
   )
 
@@ -264,8 +263,11 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     // Where should api_menus stuff link to?
     if (e.taxonomy && e.__type !== `wordpress__wp_api_menus_menus`) {
       // Replace taxonomy with a link to the taxonomy node.
-      e.taxonomy___NODE = entities.find(t => t.wordpress_id === e.taxonomy).id
-      delete e.taxonomy
+      const taxonomyNode = entities.find(t => t.wordpress_id === e.taxonomy)
+      if (taxonomyNode) {
+        e.taxonomy___NODE = taxonomyNode.id
+        delete e.taxonomy
+      }
     }
     return e
   })

@@ -2,9 +2,7 @@ import { applyPropDoclets } from "../Doclets"
 
 describe(`transformer-react-doc-gen: Doclets`, () => {
   it(`should apply @required`, () => {
-    const doclets = {
-      required: true,
-    }
+    const doclets = [{ tag: `required`, value: true }]
     expect(applyPropDoclets({ doclets })).toEqual({
       doclets,
       required: true,
@@ -12,9 +10,13 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
   })
 
   it(`should apply @required`, () => {
-    const doclets = {
-      defaultValue: `() => {}`,
-    }
+    const doclets = [
+      {
+        tag: `defaultValue`,
+        value: `() => {}`,
+      },
+    ]
+
     expect(applyPropDoclets({ doclets })).toEqual({
       doclets,
       defaultValue: {
@@ -25,9 +27,13 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
   })
 
   it(`should handle inline enum types`, () => {
-    const doclets = {
-      type: `{(true|'foo'|40|"bar")}`,
-    }
+    const doclets = [
+      {
+        tag: `type`,
+        value: `{(true|'foo'|40|"bar")}`,
+      },
+    ]
+
     expect(applyPropDoclets({ doclets, type: {} })).toEqual({
       doclets,
       type: {
@@ -43,9 +49,13 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
   })
 
   it(`should create a union type for none-literals`, () => {
-    const doclets = {
-      type: `{(string|func|bool)}`,
-    }
+    const doclets = [
+      {
+        tag: `type`,
+        value: `{(string|func|bool)}`,
+      },
+    ]
+
     expect(applyPropDoclets({ doclets, type: {} })).toEqual({
       doclets,
       type: {

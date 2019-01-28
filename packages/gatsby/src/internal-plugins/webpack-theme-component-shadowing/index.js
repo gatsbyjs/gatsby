@@ -1,4 +1,5 @@
 const path = require(`path`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
@@ -34,14 +35,21 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         path.join(theme, `src`, `components`)
       )
 
-      const resolvedComponentPath = require.resolve(
-        this.resolveComponentPath({
-          theme,
-          component,
-          projectRoot: this.projectRoot,
-        })
-      )
-      // this callback ends the resolver fallthrough chain.
+      const builtComponentPath = this.resolveComponentPath({
+        theme,
+        component,
+        projectRoot: this.projectRoot,
+      })
+      if (!builtComponentPath) {
+        // if you mess up your component imports in a theme, resolveComponentPath will return undefined
+        report.panic(
+          `We can't find the component located at ${
+            request.path
+          } and imported in ${request.context.issuer}`
+        )
+      }
+      const resolvedComponentPath = require.resolve(builtComponentPath)
+      // this callbackends the resolver fallthrough chain.
       return callback(null, {
         directory: request.directory,
         path: resolvedComponentPath,
