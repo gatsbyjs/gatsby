@@ -17,7 +17,7 @@ Our migration to Gatsby is also not a work from scratch: we rely on the existing
 
 ## Optimizing build time
 
-As we started to migrate a few market to Gatsby, we quickly realized that the build time would easily skyrocket into the "absolutely unacceptable" range. Each market was taking around 5 minutes to build, so at 40 markets we would reach _hours_ of build time.
+As we started to migrate a few markets to Gatsby, we quickly realized that the build time would easily skyrocket into a range that wouldn't work for our team. Each market was taking around 5 minutes to build, so at 40 markets we would reach _hours_ of build time.
 
 We dug into the issue, and realized that our GraphQL queries were several orders of magnitude slower than the benchmarks (even the complex ones) provided by Gatsby.
 
@@ -25,7 +25,7 @@ One reason for this issue being our need for customization: every page (frontpag
 
 We started optimizing them by running them only when needed. For instance, our footer is the same on every single page (for a market), so it's better to run the query for that component in `gatsby-node`'s `createPages` and inject the result via the `context` of the page, rather than having the query for the footer in the page's GraphQL query.
 
-It was a good improvement, but that just brought us from "absolutely unacceptable" to "unacceptable".
+It was a good improvement, but even the resulting 30-minute build time was too slow, because it was bottlenecking our content editors.
 
 ## Improving the preview experience
 
