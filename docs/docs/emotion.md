@@ -6,6 +6,8 @@ In this guide, we'll walk through setting up a site with the CSS-in-JS library [
 
 Emotion is a performant and flexible CSS-in-JS library. Building on many other CSS-in-JS libraries, it allows you to style apps quickly with string or object styles. It has predictable composition to avoid specificity issues with CSS. With source maps and labels, Emotion has a great developer experience and great performance with heavy caching in production.
 
+Server side rendering works out of the box in Emotion. We can use React’s `renderToString` or `renderToNodeStream` methods directly without any extra configuration. `extractCritical` feature removes unused rules that were created with emotion and helps loading pages faster.
+
 First, open a new terminal window and run the following to create a new site:
 
 ```shell
@@ -31,9 +33,9 @@ Then in your terminal run `npm start` to start the Gatsby development server.
 Now let's create a sample Emotion page at `src/pages/index.js`:
 
 ```jsx:title=src/pages/index.js
-import React from "react";
-import styled from "@emotion/styled";
-import { css } from "@emotion/core";
+import React from "react"
+import styled from "@emotion/styled"
+import { css } from "@emotion/core"
 
 const Container = styled.div`
   margin: 3rem auto;
@@ -47,14 +49,19 @@ const Container = styled.div`
 const UserWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin: 0 auto 12px auto;
+  margin-top: 0;
+  margin-right: auto;
+  margin-bottom: 12px;
+  margin-left: auto;
   &:last-child {
     margin-bottom: 0;
   }
 `
 
 const Avatar = styled.img`
-  flex: 0 0 96px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 96px;
   width: 96px;
   height: 96px;
   margin: 0;
