@@ -24,10 +24,7 @@ First of all, you have to initialize a Gatsby project and start it in develop mo
 
 1. npx gatsby new gatsby-dark-mode
 1. cd gatsby-dark-mode
-1. gatsby develop
-1. gatsby new gatsby-dark-mode
-1. cd gatsby-dark-mode
-1. gatsby develop
+1. npm start
 
 Then, create a `context` folder within src and the `ThemeContext.js` file within it.
 
@@ -284,4 +281,4 @@ We covered the following in today’s article:
 - Adding the switch inside the header
 - Adding the styles relevant to the Dark mode
 
-Would you like to see the action for yourself? Head over to https://github.com/m-muhsin/gatsby-dark-mode and clone or fork my project.
+Interested in seeing this in action? Head over to https://github.com/m-muhsin/gatsby-dark-mode and clone or fork my project.
