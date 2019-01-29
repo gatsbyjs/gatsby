@@ -1,3 +1,5 @@
+require(`./src/index.css`)
+
 if (typeof window !== `undefined`) {
   window.___PageComponentLifecycleCallsLog = []
 }

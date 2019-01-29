@@ -13,7 +13,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Adding unit or functional tests
 - Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
 - [Reporting bugs or issues](/docs/how-to-file-an-issue/)
-- Searching for Gatsby on [Discord](https://discordapp.com/invite/jUFVxtB) or [Spectrum](https://spectrum.chat/gatsby-js) and helping someone else who needs help
+- Searching for Gatsby on [Discord](https://gatsby.app/discord) or [Spectrum](https://spectrum.chat/gatsby-js) and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
 As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
@@ -77,7 +77,7 @@ Check the GitHub repo for issues labeled with ["documentation" and "good first i
 1. If you want to add/modify any Gatsby documentation, go to the
    [docs folder on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
    use the file editor to edit and then preview your changes.
-2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria: make sure your contribution meets the standards outlined in the [Gatsby Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/). Also, if your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the the [Docs Decision Tree](https://www.gatsbyjs.org/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
+2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria: make sure your contribution meets the standards outlined in the [Gatsby Style Guide](https://www.gatsbyjs.org/docs/gatsby-style-guide/). Also, if your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the [Docs Decision Tree](https://www.gatsbyjs.org/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
    > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 

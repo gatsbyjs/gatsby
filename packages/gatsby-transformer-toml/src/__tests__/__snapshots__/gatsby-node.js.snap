@@ -97,7 +97,7 @@ Array [
           "contentDigest": "whatever",
         },
         "name": "test",
-        "parent": "SOURCE",
+        "parent": null,
       },
     },
   ],

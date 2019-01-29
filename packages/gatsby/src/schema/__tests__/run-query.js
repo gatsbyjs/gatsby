@@ -36,6 +36,9 @@ const makeNodes = () => [
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
     ],
     boolean: true,
+    nestedRegex: {
+      field: `har har`,
+    },
   },
   {
     id: `1`,
@@ -76,6 +79,9 @@ const makeNodes = () => [
           },
         },
       ],
+    },
+    nestedRegex: {
+      field: ``,
     },
   },
   {
@@ -235,6 +241,13 @@ describe(`Filter fields`, () => {
     let result = await runFilter({ name: { regex: `/^the.*wax/i` } })
     expect(result.length).toEqual(2)
     expect(result[0].name).toEqual(`The Mad Wax`)
+  })
+
+  it(`handles the nested regex operator`, async () => {
+    let result = await runFilter({ nestedRegex: { field: { regex: `/.*/` } } })
+    expect(result.length).toEqual(2)
+    expect(result[0].id).toEqual(`0`)
+    expect(result[1].id).toEqual(`1`)
   })
 
   it(`handles the in operator for strings`, async () => {
