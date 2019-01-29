@@ -30,6 +30,11 @@ describe(`Test plugin manifest options`, () => {
     fs.writeFileSync.mockReset()
   })
 
+  // the require of gatsby-node performs the invoking
+  it(`invokes sharp.simd for optimization`, () => {
+    expect(sharp.simd).toHaveBeenCalledTimes(1)
+  })
+
   it(`correctly works with default parameters`, async () => {
     await onPostBootstrap([], {
       name: `GatsbyJS`,
