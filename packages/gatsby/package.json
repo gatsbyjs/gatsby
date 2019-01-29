@@ -67,9 +67,9 @@
     "gatsby-plugin-page-creator": "^2.0.5",
     "gatsby-react-router-scroll": "^2.0.3",
     "glob": "^7.1.1",
-    "graphql": "^0.13.2",
+    "graphql": "^14.1.1",
     "graphql-playground-middleware-express": "^1.7.10",
-    "graphql-relay": "^0.5.5",
+    "graphql-relay": "^0.6.0",
     "graphql-skip-limit": "^2.0.4",
     "graphql-tools": "^3.0.4",
     "graphql-type-json": "^0.2.1",
@@ -104,7 +104,7 @@
     "react-error-overlay": "^3.0.0",
     "react-hot-loader": "^4.6.2",
     "redux": "^4.0.0",
-    "relay-compiler": "1.5.0",
+    "relay-compiler": "2.0.0",
     "request": "^2.85.0",
     "semver": "^5.6.0",
     "shallow-compare": "^1.2.2",
@@ -165,7 +165,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^0.13.2"
+    "graphql": "^14.1.1"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
