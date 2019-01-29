@@ -5,6 +5,10 @@ jest.mock(`fs`, () => {
     statSync: jest.fn(),
   }
 })
+/*
+ * We mock sharp because it depends on fs implementation (which is mocked)
+ * this causes test failures, so mock it to avoid
+ */
 jest.mock(`sharp`, () => {
   let sharp = jest.fn(
     () =>
