@@ -6,7 +6,7 @@ In this guide, we'll walk through setting up a site with the CSS-in-JS library [
 
 Emotion is a performant and flexible CSS-in-JS library. Building on many other CSS-in-JS libraries, it allows you to style apps quickly with string or object styles. It has predictable composition to avoid specificity issues with CSS. With source maps and labels, Emotion has a great developer experience and great performance with heavy caching in production.
 
-Server side rendering works out of the box in Emotion. We can use React’s `renderToString` or `renderToNodeStream` methods directly without any extra configuration. `extractCritical` feature removes unused rules that were created with emotion and helps loading pages faster.
+[Server side rendering](https://emotion.sh/docs/ssr) works out of the box in Emotion. We can use React’s `renderToString` or `renderToNodeStream` methods directly without any extra configuration. `extractCritical` feature removes unused rules that were created with emotion and helps loading pages faster.
 
 First, open a new terminal window and run the following to create a new site:
 
