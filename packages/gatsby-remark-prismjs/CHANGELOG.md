@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.2...gatsby-remark-prismjs@3.2.3) (2019-01-29)
+
+### Bug Fixes
+
+- **gatsby-remark-prismjs:** use aliased name for highlighters ([#11038](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/11038)) ([d2eba72](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/d2eba72))
+
 ## [3.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.1...gatsby-remark-prismjs@3.2.2) (2019-01-24)
 
 ### Features
