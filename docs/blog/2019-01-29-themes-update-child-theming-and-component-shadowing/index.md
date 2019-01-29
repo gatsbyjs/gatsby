@@ -16,7 +16,7 @@ tags: ["themes", "architecture"]
 # Child Theming
 
 We've merged [a PR](https://github.com/gatsbyjs/gatsby/pull/10787) into Gatsby
-core to support Child Theming. Child theming is an extension of the core theming
+core to support Child theming. Child theming is an extension of the core theming
 algorithm to support a "parent/child" style relationship where child themes can
 rely on parent themes in the same way sites rely on themes. This means you can
 now use the `__experimentalThemes` gatsby-config key in a theme as well as your
