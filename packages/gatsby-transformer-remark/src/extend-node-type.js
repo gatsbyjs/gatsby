@@ -73,6 +73,9 @@ const safeGetCache = ({ getCache, cache }) => id => {
  */
 const ASTPromiseMap = new Map()
 
+// separate by spaces, including preceding commas and periods
+const EXCERPT_SEPARATOR = /,?\.*\s+/
+
 module.exports = (
   {
     type,
@@ -454,7 +457,7 @@ module.exports = (
             if (!truncate) {
               lastTextNode.value = _.truncate(lastTextNode.value, {
                 length: amountToPruneLastNode,
-                separator: /,?\.* +/,
+                separator: EXCERPT_SEPARATOR,
                 omission: `…`,
               })
             } else {
@@ -481,7 +484,7 @@ module.exports = (
             if (!truncate) {
               return _.truncate(excerptNodes.join(` `), {
                 length: pruneLength,
-                separator: /,?\.* +/,
+                separator: EXCERPT_SEPARATOR,
                 omission: `…`,
               })
             }
