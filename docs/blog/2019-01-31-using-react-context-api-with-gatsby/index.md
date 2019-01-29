@@ -38,20 +38,6 @@ const defaultState = {
 
 const ThemeContext = React.createContext(defaultState)
 
-export default ThemeContext
-```
-
-[`React.createContext`](https://reactjs.org/docs/context.html#reactcreatecontext) is a new function in React 16.3 and allows you to create a Context object. It accepts a default state, the value which will be used when a component does not have a matching Provider above it in the tree.  The function returns an object with Provider and Consumer properties which we will be using later.
-
-## Modifying the Gatsby Browser file
-
-Next, write the following code within the `gatsby-browser.js` file, which is in the root folder in a Gatsby project:
-
-```jsx:title=gatsby-browser.js
-import React from "react"
-
-import ThemeContext from "./src/context/ThemeContext"
-
 // Getting dark mode information from OS!
 // You need macOS Mojave + Safari Technology Preview Release 68 to test this currently.
 const supportsDarkMode = () =>
@@ -93,15 +79,28 @@ class ThemeProvider extends React.Component {
     )
   }
 }
-{
-  /* highlight-start */
-}
+
+export default ThemeContext
+
+export { ThemeProvider }
+```
+
+[`React.createContext`](https://reactjs.org/docs/context.html#reactcreatecontext) is a new function in React 16.3 and allows you to create a Context object. It accepts a default state, the value which will be used when a component does not have a matching Provider above it in the tree.  The function returns an object with Provider and Consumer properties which we will be using later.
+
+## Modifying the Gatsby Browser file
+
+Next, write the following code within the `gatsby-browser.js` file, which is in the root folder in a Gatsby project:
+
+```jsx:title=gatsby-browser.js
+import React from "react"
+
+import { ThemeProvider } from "./src/context/ThemeContext"
+
+// highlight-start
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider>{element}</ThemeProvider>
 )
-{
-  /* highlight-end */
-}
+// highlight-end
 ```
 
 Create the `ThemeProvider` component which wraps its children with `ThemeContext.Provider`. This component then wraps the root element and is exported as `wrapRootElement`. This API is then invoked appropriately by the Gatsby API runner.
