@@ -1754,3 +1754,17 @@
     - Full Render Control with Portable Text
     - gatsby-image support
     - Content types for company info, pages, projects, people, and blog posts
+- url: https://gatsby-starter-under-construction.netlify.com/
+  repo: https://github.com/robinmetral/gatsby-starter-under-construction
+  description: Blazing fast "Under Construction" page with a blazing quick setup.
+  tags:
+    - Under Construction
+    - Onepage
+    - Styling:CSS-in-JS
+    - SEO
+    - PWA
+  features:
+    - Configure everything in gatsby-config.js
+    - Creative CSS3 background patterns by Lea Verou
+    - Built-in Google Fonts support
+    - Social icons with react-social-icons
