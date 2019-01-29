@@ -21,7 +21,7 @@
     "potrace": "^2.1.1",
     "probe-image-size": "^4.0.0",
     "progress": "^1.1.8",
-    "sharp": "^0.21.0",
+    "sharp": "^0.21.3",
     "svgo": "^0.7.2"
   },
   "devDependencies": {
