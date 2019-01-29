@@ -4,6 +4,8 @@ title: Glamor
 
 In this guide, we'll walk through setting up a site with the CSS-in-JS library [Glamor](https://github.com/threepointone/glamor).
 
+Glamor is not actively maintained, the maintainer recommends using [Emotion](/docs/emotion).
+
 Glamor lets you write _real_ CSS inline in your components using the same Object
 CSS syntax React supports for the `style` prop. Glamor is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 

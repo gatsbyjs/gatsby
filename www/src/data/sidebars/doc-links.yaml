@@ -155,6 +155,8 @@
           link: /docs/css-modules/
         - title: Typography.js
           link: /docs/typography-js/
+        - title: Using CSS-in-JS library Emotion
+          link: /docs/emotion/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
         - title: Using CSS-in-JS library styled components
