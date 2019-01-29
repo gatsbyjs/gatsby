@@ -12,16 +12,11 @@ exports.onRenderBody = (
     gtmPreview,
   }
 ) => {
-  if (
-    process.env.NODE_ENV === `production` ||
-    includeInDevelopment
-  ) {
+  if (process.env.NODE_ENV === `production` || includeInDevelopment) {
     const environmentParamStr =
       gtmAuth && gtmPreview
         ? oneLine`
-      &gtm_auth=${gtmAuth}&gtm_preview=${
-            gtmPreview
-          }&gtm_cookies_win=x
+      &gtm_auth=${gtmAuth}&gtm_preview=${gtmPreview}&gtm_cookies_win=x
     `
         : ``
 
@@ -51,9 +46,7 @@ exports.onRenderBody = (
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
           __html: stripIndent`
-            <iframe src="https://www.googletagmanager.com/ns.html?id=${
-              id
-            }${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`,
+            <iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`,
         }}
       />,
     ])
