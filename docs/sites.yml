@@ -4077,3 +4077,16 @@
   built_by: Vipin Kumar Rawat
   built_by_url: "https://github.com/aesthytik"
   featured: false
+- title: HyakuninIsshu
+  main_url: "https://hyakuninanki.net"
+  url: "https://hyakuninanki.net"
+  source_url: "https://github.com/rei-m/web_hyakuninisshu"
+  description: >
+    HyakuninIsshu is a traditional Japanese card game.
+  categories:
+    - Education
+    - Gallery
+    - Entertainment
+  built_by: Rei Matsushita
+  built_by_url: "https://github.com/rei-m/"
+  featured: false
