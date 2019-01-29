@@ -6,16 +6,16 @@ tags:
   - "React"
 ---
 
-You often feel the unsettling flash of a bright phone screen while relaxing in a dimly lit room. The "dark mode" ends it, by switching background and foreground colors to reduce eye strain. I decided to add this to my boutique web agency [Laccadive IO's](https://laccadive.io/) new Gatsby-based site.
+You often feel the unsettling flash of a bright phone screen while relaxing in a dimly lit room. This is alleviated by introducing a "dark mode" which switches background and foreground colors to reduce eye strain. I decided to add this to my boutique web agency [Laccadive IO's](https://laccadive.io/) new Gatsby-based site.
 
 >
 > One of the few types of alternative theme that adds real value to users is a low light intensity “night mode” theme. Not only is it easier on the eyes when reading in the dark, but it also reduces the likelihood of migraine and the irritation of other light sensitivity disorders. As a migraine sufferer, I’m interested!
 >
 > [Heydon Pickering](https://inclusive-components.design/a-theme-switcher/)
 
-While discussing the different ways to implement this, I came up with React’s new Context API as a possible implementation strategy. Having worked with Context API before, I set to code. However, I soon realized you will not see a ‘root’ in a Gatsby app like an app built with Create React App.
+In considering the different ways to implement this a natural fit become apparent: React’s new Context API. Having worked with Context API before, this seemed like a particularly well suited use for this API. However, I soon realized I would need to do a little set-up work to get this up and running.
 
-After Googling a bit, I came across the Gatsby Browser APIs. Specifically, the [wrapRootElement](https://www.gatsbyjs.org/docs/browser-apis/#wrapRootElement) API was what I was looking for. This essentially allows you to wrap your root element with a Provider from Redux or Context for instance. Using this, I managed to achieve dark mode for Laccadive IO.
+After a brief search, I came across just what I was looking for, the Gatsby Browser APIs. Specifically, the [`wrapRootElement`](https://www.gatsbyjs.org/docs/browser-apis/#wrapRootElement) API was a perfect fit for this use case. This API allows you to wrap your root element with a wrapping component, e.g. a `Provider` from Redux or... a ThemeProvider from React Context. Using this, I managed to achieve dark mode for my use case.
 
 The following is a detailed instruction on how you too can achieve a similar result with Gatsby and React Context!
 
@@ -23,7 +23,9 @@ The following is a detailed instruction on how you too can achieve a similar res
 
 First of all, you have to initialize a Gatsby project and start it in develop mode.
 
-1.   npm install –global gatsby-cli
+1. npx gatsby new gatsby-dark-mode
+1. cd gatsby-dark-mode
+1. gatsby develop
 2.  gatsby new gatsby-dark-mode
 3.  cd gatsby-dark-mode
 4.  gatsby develop
@@ -89,7 +91,7 @@ Next, write the following code within the `gatsby-browser.js` file, which is in 
     )
 // highlight-end
 ```
-Create the `ThemeProvider` component which wraps its' children with `TemeContext.Provider`. This component then wraps the root element and is exported as `wrapRootElement`.
+Create the `ThemeProvider` component which wraps its children with `ThemeContext.Provider`. This component then wraps the root element and is exported as `wrapRootElement`. This API is then invoked appropriately by the Gatsby API runner.
 
 The `toggleDark` function gets the current `state.dark` value and switches the value to the opposite. It then stores the new value in `localStorage` before setting it back to state using the `setState` function, so that it persists over page refreshes. The dark value from `state` and the `togglDark` function are passed to the Provider.
 
@@ -152,11 +154,11 @@ The default `layout.js` uses a `<staticQuery>` and renderProp to render the layo
     export default Layout
 ```
 
-Basically the class of the wrapper div will change based on the context value of the dark variable, which we set as state in the `ThemeContext.js` file.
+The class of the wrapper div will change based on the context value of the dark variable, which we set as state in the `ThemeContext.js` file.
 
 ## Adding the switch in the Header
 
-Having done the configuration, let’s add the actual switch to turn on/off the dark mode. Please modify the `header.js` code to look like this:
+With this configuration completed, we can now add the actual switch to toggle dark mode. Modify the `header.js` component, like so:
 ```jsx:title=src/components/header.js
     import { Link } from 'gatsby'
     import PropTypes from 'prop-types'
@@ -218,7 +220,7 @@ Having done the configuration, let’s add the actual switch to turn on/off the 
 
 ## Adding styles
 
-All of this will not work if the styles are not in place. Therefore, add the following styles in the `layout.css` file:
+At this point, we've set up a dark mode toggle and conditionally render a `className` if dark mode is enabled. However, we still need to actually _style_ based upon this conditional `className`. As such, we need to add the following styles in the `layout.css` file:
 
 ```css:title=src/components/layout.css
     /* Dark mode styles */
@@ -257,7 +259,7 @@ All of this will not work if the styles are not in place. Therefore, add the fol
 
 ## Conclusion
 
-That was it for adding dark mode using React’s Context API in Gatsby. Now if you visit `http://localhost:8000/` you can see the code in action.
+In just a few, simple steps we've enabled a conditional dark mode that our users will certainly appreciate. We've leveraged APIs like `Context` in React, as well as internal Gatsby APIs to wrap our code with a provider. Now if you visit `http://localhost:8000/` you can see all of our work pay off!
 
 We covered the following in today’s article:
 
