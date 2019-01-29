@@ -14,7 +14,7 @@ First, open a new terminal window and run the following to create a new site:
 npx gatsby new emotion-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Second, we'll install the Gatsby plugin for Emotion.
+Second, we'll install the necessary dependencies for Emotion and Gatsby.
 
 ```shell
 npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
