@@ -109,6 +109,8 @@ function toMongoArgs(gqlFilter, lastFieldType) {
     } else {
       if (k === `regex`) {
         const re = prepareRegex(v)
+        // To ensure that false is returned if a field doesn't
+        // exist. E.g `{nested.field: {$regex: /.*/}}`
         mongoArgs[`$where`] = obj => !_.isUndefined(obj) && re.test(obj)
       } else if (k === `glob`) {
         const Minimatch = require(`minimatch`).Minimatch
