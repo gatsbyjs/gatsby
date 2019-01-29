@@ -15,7 +15,7 @@ The Playground is a way for you to interact with the data your sources and plugi
 As this is an experimental feature, you need to access it by adding an environmental variable, you need to add `GATSBY_GRAPHQL_IDE` to your start script, like this:
 
 ```
-"start": "GATSBY_GRAPHQL_IDE=playground npm run develop",
+"develop": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
 ```
 
 You can then access it, when the development server is running on `https://localhost:8000/___graphql`
