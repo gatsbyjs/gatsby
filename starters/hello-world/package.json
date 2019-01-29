@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "gatsby": "^2.0.104",
+    "gatsby-plugin-offline": "^2.0.22",
     "react": "^16.5.1",
     "react-dom": "^16.5.1"
   },
