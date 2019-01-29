@@ -124,7 +124,7 @@ const bootstrapTest = (
         actions,
         createNodeId,
       },
-      { ...additionalParameters }
+      { ...additionalParameters, ...pluginOptions }
     )
   })
 }
@@ -230,7 +230,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
         type: `root`,
       })
     },
-    { additionalParameters: { excerpt_separator: `<!-- end -->` } }
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 
   const content = `---
