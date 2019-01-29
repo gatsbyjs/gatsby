@@ -559,7 +559,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
                   totalCount
                 }
                 createdAt
-                updatedAt
+                pushedAt
                 owner {
                   login
                 }
@@ -572,7 +572,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           const [pkgjson, githubData] = results
           const {
             stargazers: { totalCount: stars },
-            updatedAt: lastUpdated,
+            pushedAt: lastUpdated,
             owner: { login: owner },
             name,
             nameWithOwner: githubFullName,
