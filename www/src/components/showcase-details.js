@@ -106,7 +106,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
           filter: {
             featured: { eq: true }
             main_url: { ne: null }
-            fields: { hasScrenshoot: { eq: true } }
+            fields: { hasScreenshot: { eq: true } }
           }
         ) {
           edges {

@@ -210,7 +210,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
               main_url
               fields {
                 slug
-                hasScrenshoot
+                hasScreenshot
               }
             }
           }
@@ -379,7 +379,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       result.data.allSitesYaml.edges.forEach(edge => {
         if (!edge.node.fields) return
         if (!edge.node.fields.slug) return
-        if (!edge.node.fields.hasScrenshoot) {
+        if (!edge.node.fields.hasScreenshot) {
           reporter.warn(
             `Site showcase entry "${
               edge.node.main_url
@@ -536,7 +536,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       .map(childID => getNode(childID))
       .find(node => node.internal.type === `Screenshot`)
 
-    createNodeField({ node, name: `hasScrenshoot`, value: !!screenshotNode })
+    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
   } else if (node.internal.type === `StartersYaml` && node.repo) {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.

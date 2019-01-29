@@ -19,7 +19,7 @@ export const showcaseQuery = graphql`
     featured: allSitesYaml(
       filter: {
         featured: { eq: true }
-        fields: { hasScrenshoot: { eq: true } }
+        fields: { hasScreenshot: { eq: true } }
       }
     ) {
       edges {
@@ -46,7 +46,7 @@ export const showcaseQuery = graphql`
     allSitesYaml(
       filter: {
         main_url: { ne: null }
-        fields: { hasScrenshoot: { eq: true } }
+        fields: { hasScreenshot: { eq: true } }
       }
     ) {
       edges {
