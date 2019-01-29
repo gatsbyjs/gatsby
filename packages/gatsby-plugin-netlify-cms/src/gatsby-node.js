@@ -82,7 +82,7 @@ exports.onCreateWebpackConfig = (
          */
         ...gatsbyConfig.plugins.filter(
           plugin =>
-            ![`MiniCssExtractPlugin`].find(
+            ![`MiniCssExtractPlugin`, `GatsbyWebpackStatsExtractor`].find(
               pluginName =>
                 plugin.constructor && plugin.constructor.name === pluginName
             )
@@ -142,7 +142,13 @@ exports.onCreateWebpackConfig = (
        */
       mode: `none`,
       optimization: {},
+      devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
     }
-    webpack(config).run()
+
+    if (stage === `develop`) {
+      webpack(config).watch({}, () => {})
+    } else {
+      webpack(config).run()
+    }
   }
 }

@@ -58,6 +58,14 @@ const tableOfContentsCacheKey = node =>
 const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
+// TODO: remove this check with next major release
+const safeGetCache = ({ getCache, cache }) => id => {
+  if (!getCache) {
+    return cache
+  }
+  return getCache(id)
+}
+
 /**
  * Map that keeps track of generation of AST to not generate it multiple
  * times in parallel.
@@ -67,7 +75,16 @@ const withPathPrefix = (url, pathPrefix) =>
 const ASTPromiseMap = new Map()
 
 module.exports = (
-  { type, store, pathPrefix, getNode, getNodesByType, cache, reporter },
+  {
+    type,
+    pathPrefix,
+    getNode,
+    getNodesByType,
+    cache,
+    getCache: possibleGetCache,
+    reporter,
+    ...rest
+  },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -75,6 +92,8 @@ module.exports = (
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = pathPrefix || ``
+
+  const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
@@ -150,7 +169,9 @@ module.exports = (
               files: fileNodes,
               getNode,
               reporter,
-              cache,
+              cache: getCache(plugin.name),
+              getCache,
+              ...rest,
             },
             plugin.pluginOptions
           )
@@ -218,7 +239,9 @@ module.exports = (
               files: fileNodes,
               pathPrefix,
               reporter,
-              cache,
+              cache: getCache(plugin.name),
+              getCache,
+              ...rest,
             },
             plugin.pluginOptions
           )

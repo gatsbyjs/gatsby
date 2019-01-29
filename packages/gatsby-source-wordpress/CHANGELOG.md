@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.28...gatsby-source-wordpress@3.0.29) (2019-01-28)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** check response exists before accessing property ([#11349](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/11349)) ([3beb891](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/3beb891))
+
+## [3.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.27...gatsby-source-wordpress@3.0.28) (2019-01-25)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.27"></a>
+
+## [3.0.27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.26...gatsby-source-wordpress@3.0.27) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.26"></a>
+
+## [3.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.25...gatsby-source-wordpress@3.0.26) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.25"></a>
+
+## [3.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.23...gatsby-source-wordpress@3.0.25) (2019-01-11)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.23"></a>
+
+## [3.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.22...gatsby-source-wordpress@3.0.23) (2019-01-11)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+<a name="3.0.22"></a>
+
+## [3.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.21...gatsby-source-wordpress@3.0.22) (2019-01-08)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** add a check for namespaces in response from wp ([#10891](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/10891)) ([d96016c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/d96016c))
+- **gatsby-source-wordpress:** use correct glob pattern paths for routes ([#10887](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/10887)) ([c793419](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/c793419))
+
 <a name="3.0.21"></a>
 
 ## [3.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.20...gatsby-source-wordpress@3.0.21) (2018-12-18)

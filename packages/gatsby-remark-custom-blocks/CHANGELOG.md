@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-custom-blocks/compare/gatsby-remark-custom-blocks@2.0.3...gatsby-remark-custom-blocks@2.0.4) (2019-01-25)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
 <a name="2.0.3"></a>
 
 ## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-custom-blocks/compare/gatsby-remark-custom-blocks@2.0.2...gatsby-remark-custom-blocks@2.0.3) (2018-12-27)
