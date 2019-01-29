@@ -25,23 +25,23 @@ First of all, you have to initialize a Gatsby project and start it in develop mo
 1. npx gatsby new gatsby-dark-mode
 1. cd gatsby-dark-mode
 1. gatsby develop
-2.  gatsby new gatsby-dark-mode
-3.  cd gatsby-dark-mode
-4.  gatsby develop
+1. gatsby new gatsby-dark-mode
+1. cd gatsby-dark-mode
+1. gatsby develop
 
 Then, create a `context` folder within src and the `ThemeContext.js` file within it.
 
 ```js:title=src/contex/ThemeContext.js
-    import React from 'react'
+import React from "react"
 
-    const defaultState = {
-      dark: false,
-      toggleDark: () => {},
-    }
+const defaultState = {
+  dark: false,
+  toggleDark: () => {},
+}
 
-    const ThemeContext = React.createContext(defaultState)
+const ThemeContext = React.createContext(defaultState)
 
-    export default ThemeContext
+export default ThemeContext
 ```
 
 [`React.createContext`](https://reactjs.org/docs/context.html#reactcreatecontext) is a new function in React 16.3 and allows you to create a Context object. It accepts a default state, the value which will be used when a component does not have a matching Provider above it in the tree.  The function returns an object with Provider and Consumer properties which we will be using later.
@@ -49,15 +49,16 @@ Then, create a `context` folder within src and the `ThemeContext.js` file within
 ## Modifying the Gatsby Browser file
 
 Next, write the following code within the `gatsby-browser.js` file, which is in the root folder in a Gatsby project:
-```jsx:title=gatsby-browser.js
-import React from 'react'
 
-import ThemeContext from './src/context/ThemeContext'
+```jsx:title=gatsby-browser.js
+import React from "react"
+
+import ThemeContext from "./src/context/ThemeContext"
 
 // Getting dark mode information from OS!
 // You need macOS Mojave + Safari Technology Preview Release 68 to test this currently.
 const supportsDarkMode = () =>
-  window.matchMedia('(prefers-color-scheme: dark)').matches === true
+  window.matchMedia("(prefers-color-scheme: dark)").matches === true
 
 class ThemeProvider extends React.Component {
   state = {
@@ -66,13 +67,13 @@ class ThemeProvider extends React.Component {
 
   toggleDark = () => {
     let dark = !this.state.dark
-    localStorage.setItem('dark', JSON.stringify(dark))
+    localStorage.setItem("dark", JSON.stringify(dark))
     this.setState({ dark })
   }
 
   componentDidMount() {
     // Getting dark mode value from localStorage!
-    const lsDark = JSON.parse(localStorage.getItem('dark'))
+    const lsDark = JSON.parse(localStorage.getItem("dark"))
     if (lsDark) {
       this.setState({ dark: lsDark })
     } else if (supportsDarkMode()) {
@@ -95,12 +96,17 @@ class ThemeProvider extends React.Component {
     )
   }
 }
-{/* highlight-start */}
+{
+  /* highlight-start */
+}
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider>{element}</ThemeProvider>
 )
-{/* highlight-end */}
+{
+  /* highlight-end */
+}
 ```
+
 Create the `ThemeProvider` component which wraps its children with `ThemeContext.Provider`. This component then wraps the root element and is exported as `wrapRootElement`. This API is then invoked appropriately by the Gatsby API runner.
 
 The `toggleDark` function gets the current `state.dark` value and switches the value to the opposite. It then stores the new value in `localStorage` before setting it back to state using the `setState` function, so that it persists over page refreshes. The dark value from `state` and the `togglDark` function are passed to the Provider.
@@ -108,6 +114,7 @@ The `toggleDark` function gets the current `state.dark` value and switches the 
 ## Editing the Layout file
 
 The default `layout.js` uses a `<staticQuery>` and renderProp to render the layout, which is wrapped by a Fragment `<>`. Modify it to look like this:
+
 ```jsx:title=src/components/layout.js
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -169,12 +176,13 @@ The class of the wrapper div will change based on the context value of the dark 
 ## Adding the switch in the Header
 
 With this configuration completed, we can now add the actual switch to toggle dark mode. Modify the `header.js` component, like so:
-```jsx:title=src/components/header.js
-import { Link } from 'gatsby'
-import PropTypes from 'prop-types'
-import React from 'react'
 
-import ThemeContext from '../context/ThemeContext'
+```jsx:title=src/components/header.js
+import { Link } from "gatsby"
+import PropTypes from "prop-types"
+import React from "react"
+
+import ThemeContext from "../context/ThemeContext"
 
 const Header = ({ siteTitle }) => (
   <ThemeContext.Consumer>
@@ -221,7 +229,6 @@ Header.defaultProps = {
 }
 
 export default Header
-
 ```
 
 ## Adding styles
@@ -269,13 +276,12 @@ In just a few, simple steps we've enabled a conditional dark mode that our users
 
 We covered the following in today’s article:
 
-*   Introduction to dark mode in web development
-*   Initializing a Gatsby project
-*   Initializing the context object with `createContext`
-*   Using the Gatsby Browser API and returning `wrapRootElement` from `gatsby-browser.js`
-*   Wrapping the JSX within `layout.js` with a Context Consumer and a div with class referring to the dark mode state
-*   Adding the switch inside the header
-*   Adding the styles relevant to the Dark mode
+- Introduction to dark mode in web development
+- Initializing a Gatsby project
+- Initializing the context object with `createContext`
+- Using the Gatsby Browser API and returning `wrapRootElement` from `gatsby-browser.js`
+- Wrapping the JSX within `layout.js` with a Context Consumer and a div with class referring to the dark mode state
+- Adding the switch inside the header
+- Adding the styles relevant to the Dark mode
 
-Would you like to see the action for yourself? Head over to https://github.com/m-muhsin/gatsby-dark-mode and clone or fork my project. 
-
+Would you like to see the action for yourself? Head over to https://github.com/m-muhsin/gatsby-dark-mode and clone or fork my project.
