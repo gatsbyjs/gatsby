@@ -33,6 +33,9 @@
   <a href="https://gatsbyjs.org/docs/how-to-contribute">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
+  <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
+    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
+  </a>
 </p>
 
 <h3 align="center">
@@ -50,7 +53,7 @@
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://discord.gg/0ZcbPKXt5bVoxkfV">Discord</a>
+  <a href="https://gatsby.app/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites.
@@ -161,4 +164,4 @@ Licensed under the [MIT License](./LICENSE).
 ## 💜 Thanks to Our Contributors and Sponsors
 
 Thanks to our many contributors and sponsors as well as the companies sponsoring
-our testing and hosting infrastructure: [Travis CI](https://travis-ci.com/), [Appveyor](https://www.appveyor.com/), and [Netlify](https://www.netlify.com/).
+our testing and hosting infrastructure: [Circle CI](https://circleci.com/), [Appveyor](https://www.appveyor.com/), and [Netlify](https://www.netlify.com/).

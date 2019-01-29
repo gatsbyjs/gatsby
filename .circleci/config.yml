@@ -167,6 +167,13 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/production-runtime
 
+  starters_validate:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - run: sh ./scripts/clone-and-validate.sh starters
+
   starters_publish:
     executor: node
     steps:
@@ -178,7 +185,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-folder.sh starters
+      - run: sh ./scripts/clone-and-validate.sh starters true
 
 workflows:
   version: 2
@@ -210,6 +217,8 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
       - starters_publish:
           filters:
             branches:

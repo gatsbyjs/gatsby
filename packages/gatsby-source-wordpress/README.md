@@ -43,16 +43,16 @@ First, you need a way to pass environment variables to the build process, so sec
 module.exports = {
   plugins: [
     /*
-    * Gatsby's data processing layer begins with “source”
-    * plugins. Here the site sources its data from Wordpress.
-    */
+     * Gatsby's data processing layer begins with “source”
+     * plugins. Here the site sources its data from Wordpress.
+     */
     {
       resolve: "gatsby-source-wordpress",
       options: {
         /*
-        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
-        */
+         * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+         * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+         */
         baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
         // The protocol. This can be http or https.
         protocol: "http",
@@ -117,16 +117,16 @@ module.exports = {
         // all routes that begin with `yoast` from fetch.
         // Whitelisted routes using glob patterns
         includedRoutes: [
-          "/*/*/categories",
-          "/*/*/posts",
-          "/*/*/pages",
-          "/*/*/media",
-          "/*/*/tags",
-          "/*/*/taxonomies",
-          "/*/*/users",
+          "**/*/*/categories",
+          "**/*/*/posts",
+          "**/*/*/pages",
+          "**/*/*/media",
+          "**/*/*/tags",
+          "**/*/*/taxonomies",
+          "**/*/*/users",
         ],
         // Blacklisted routes using glob patterns
-        excludedRoutes: ["/*/*/posts/1456"],
+        excludedRoutes: ["**/*/*/posts/1456"],
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
@@ -197,13 +197,13 @@ If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise
 
 ```javascript
 includedRoutes: [
-  "/*/*/posts",
-  "/*/*/pages",
-  "/*/*/media",
-  "/*/*/categories",
-  "/*/*/tags",
-  "/*/*/taxonomies",
-  "/*/*/users",
+  "**/*/*/posts",
+  "**/*/*/pages",
+  "**/*/*/media",
+  "**/*/*/categories",
+  "**/*/*/tags",
+  "**/*/*/taxonomies",
+  "**/*/*/users",
 ],
 ```
 

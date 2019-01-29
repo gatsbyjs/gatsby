@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.18"></a>
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.17...gatsby-plugin-sharp@2.0.18) (2019-01-23)
+
+### Features
+
+- **gatsby-plugin-sharp:** Add support for pngquant speed option ([#9563](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/9563)) ([b789689](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/b789689))
+
 <a name="2.0.17"></a>
 
 ## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.16...gatsby-plugin-sharp@2.0.17) (2018-12-27)

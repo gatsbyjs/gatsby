@@ -53,20 +53,24 @@ const RecipeTemplate = ({ data }) => (
           </div>
         </div>
         <div css={{ background: `white`, padding: rhythm(1.5) }}>
-          <h2>What you'll need and how to make this dish</h2>
+          <h2>What {`you'll`} need and how to make this dish</h2>
           <div css={{ display: `flex`, justifyContent: `space-between` }}>
             <div css={{ width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(1.5)})` }}>
               <h3>Ingredients</h3>
               <ul>
                 {data.recipes.ingredients &&
-                  data.recipes.ingredients.map(ing => <li>{ing}</li>)}
+                  data.recipes.ingredients.map((ing, index) => (
+                    <li key={index}>{ing}</li>
+                  ))}
               </ul>
             </div>
             <div css={{ width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(1.5)})` }}>
               <h3>Method</h3>
               <ul>
                 {data.recipes.instructions &&
-                  data.recipes.instructions.split(`,`).map(i => <li>{i}</li>)}
+                  data.recipes.instructions
+                    .split(`,`)
+                    .map(i => <li key={i}>{i}</li>)}
               </ul>
             </div>
           </div>
