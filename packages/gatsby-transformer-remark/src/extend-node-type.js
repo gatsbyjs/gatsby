@@ -50,10 +50,6 @@ const excerptCacheKey = (node, format) =>
   `transformer-remark-markdown-excerpt-${format}-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const excerptAstCacheKey = node =>
-  `transformer-remark-markdown-excerpt-ast-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const headingsCacheKey = node =>
   `transformer-remark-markdown-headings-${
     node.internal.contentDigest
@@ -375,7 +371,8 @@ module.exports = (
       markdownNode,
       { pruneLength, truncate, excerptSeparator }
     ) {
-      const cachedAst = await cache.get(excerptAstCacheKey(markdownNode))
+      const format = `ast`
+      const cachedAst = await cache.get(excerptCacheKey(markdownNode, format))
       if (cachedAst) {
         return cachedAst
       }
@@ -389,7 +386,7 @@ module.exports = (
         )
       }
       if (!fullAST.children.length) {
-        cache.set(excerptAstCacheKey(markdownNode), fullAST)
+        cache.set(excerptCacheKey(markdownNode, format), fullAST)
         return fullAST
       }
 
@@ -402,7 +399,7 @@ module.exports = (
         !unprunedExcerpt ||
         (pruneLength && unprunedExcerpt.length < pruneLength)
       ) {
-        cache.set(excerptAstCacheKey(markdownNode), excerptAST)
+        cache.set(excerptCacheKey(markdownNode, format), excerptAST)
         return excerptAST
       }
 
@@ -421,7 +418,7 @@ module.exports = (
           omission: `…`,
         })
       }
-      cache.set(excerptAstCacheKey(markdownNode), excerptAST)
+      cache.set(excerptCacheKey(markdownNode, format), excerptAST)
       return excerptAST
     }
 
