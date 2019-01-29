@@ -3,17 +3,24 @@ import { oneLine, stripIndent } from "common-tags"
 
 exports.onRenderBody = (
   { setHeadComponents, setPreBodyComponents },
-  pluginOptions
+  {
+    id,
+    includeInDevelopment = false,
+    gdpr = false,
+    gdprConsent = `gdprConsent`,
+    gtmAuth,
+    gtmPreview,
+  }
 ) => {
   if (
     process.env.NODE_ENV === `production` ||
-    pluginOptions.includeInDevelopment
+    includeInDevelopment
   ) {
     const environmentParamStr =
-      pluginOptions.gtmAuth && pluginOptions.gtmPreview
+      gtmAuth && gtmPreview
         ? oneLine`
-      &gtm_auth=${pluginOptions.gtmAuth}&gtm_preview=${
-            pluginOptions.gtmPreview
+      &gtm_auth=${gtmAuth}&gtm_preview=${
+            gtmPreview
           }&gtm_cookies_win=x
     `
         : ``
@@ -23,11 +30,17 @@ exports.onRenderBody = (
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
           __html: stripIndent`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer', '${pluginOptions.id}');`,
+            if (window['${gdprConsent}'] || !${gdpr}) {
+              gtmCode();
+            }
+
+            function gtmCode() {
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer', '${id}');
+            }`,
         }}
       />,
     ])
@@ -39,7 +52,7 @@ exports.onRenderBody = (
         dangerouslySetInnerHTML={{
           __html: stripIndent`
             <iframe src="https://www.googletagmanager.com/ns.html?id=${
-              pluginOptions.id
+              id
             }${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`,
         }}
       />,
