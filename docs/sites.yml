@@ -4090,3 +4090,13 @@
   built_by: Rei Matsushita
   built_by_url: "https://github.com/rei-m/"
   featured: false
+- title: WQU Partners
+  main_url: "https://partners.wqu.org/"
+  url: "https://partners.wqu.org/"
+  featured: false
+  categories:
+    - Marketing
+    - Education
+    - Landing Page
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
