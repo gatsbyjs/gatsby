@@ -72,7 +72,7 @@ Then we have another theme that handles applying a UI layer using to the core
 data model, `gatsby-theme-blog`. This theme is a child theme of
 `gatsby-theme-blog-core` and shadows the core theme's modules to render
 beautiful posts on each blog using any styling technology we want, like
-[Emotion](https://emotion.sh/) or [SASS](https://sass-lang.com/). Again, since
+[Emotion](https://emotion.sh/) or [Sass](https://sass-lang.com/). Again, since
 this is a post on child theming itself we'll skip looking at how shadowing is
 applied to the parent and focus on one possible child theme `gatsby-config.js`.
 
