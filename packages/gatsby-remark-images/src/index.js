@@ -69,7 +69,12 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function(node, resolve, inLink) {
+  const generateImagesAndUpdateNode = async function(
+    node,
+    resolve,
+    inLink,
+    overWrites = {}
+  ) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the image isn't hosted locally.
     const parentNode = getNode(markdownNode.parent)
@@ -113,6 +118,14 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
+    const alt = overWrites.alt
+      ? overWrites.alt
+      : node.alt
+        ? node.alt
+        : defaultAlt
+
+    const title = node.title ? node.title : ``
+
     const imageStyle = `
       width: 100%;
       height: 100%;
@@ -131,8 +144,8 @@ module.exports = (
       <img
         class="${imageClass}"
         style="${imageStyle}"
-        alt="${node.alt ? node.alt : defaultAlt}"
-        title="${node.title ? node.title : ``}"
+        alt="${alt}"
+        title="${title}"
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
@@ -173,8 +186,8 @@ module.exports = (
           class="${imageClass}"
           style="${imageStyle}"
           src="${fallbackSrc}"
-          alt="${node.alt ? node.alt : defaultAlt}"
-          title="${node.title ? node.title : ``}"
+          alt="${alt}"
+          title="${title}"
         />
       </picture>
       `.trim()
@@ -234,6 +247,7 @@ module.exports = (
     markdownImageNodes.map(
       ({ node, inLink }) =>
         new Promise(async (resolve, reject) => {
+          const overWrites = {}
           let refNode
           if (
             !node.hasOwnProperty(`url`) &&
@@ -242,6 +256,8 @@ module.exports = (
             //consider as imageReference node
             refNode = node
             node = definitions(refNode.identifier)
+            // pass original alt from referencing node
+            overWrites.alt = refNode.alt
             if (!node) {
               // no definition found for image reference,
               // so there's nothing for us to do.
@@ -260,7 +276,8 @@ module.exports = (
             const rawHTML = await generateImagesAndUpdateNode(
               node,
               resolve,
-              inLink
+              inLink,
+              overWrites
             )
 
             if (rawHTML) {

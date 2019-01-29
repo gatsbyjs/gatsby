@@ -123,7 +123,7 @@ test(`it transforms image references in markdown`, async () => {
   const imagePath = `images/my-image.jpeg`
   const content = `
 [refImage1]: ./${imagePath} "Ref Image Title"
-![image][refImage1]
+![alt text][refImage1]
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
