@@ -68,6 +68,7 @@
     "gatsby-react-router-scroll": "^2.0.3",
     "glob": "^7.1.1",
     "graphql": "^0.13.2",
+    "graphql-playground-middleware-express": "^1.7.10",
     "graphql-relay": "^0.5.5",
     "graphql-skip-limit": "^2.0.4",
     "graphql-tools": "^3.0.4",
