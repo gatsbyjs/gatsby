@@ -226,7 +226,7 @@ function convertArgs(gqlArgs, gqlType) {
 //
 // {
 //   fields: [ `frontmatter___date`, `id` ],
-//   order: `desc`
+//   order: [`desc`]
 // }
 //
 // would return
@@ -242,7 +242,7 @@ function toSortFields(sortArgs) {
   const lokiSortFields = []
   for (let i = 0; i < fields.length; i++) {
     const dottedField = fields[i].replace(/___/g, `.`)
-    const isDesc = i === 0 ? _.lowerCase(order) === `desc` : false
+    const isDesc = order[i] === `desc`
     lokiSortFields.push([dottedField, isDesc])
   }
   return lokiSortFields
