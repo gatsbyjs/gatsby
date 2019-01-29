@@ -108,7 +108,7 @@ expert can craft custom data models for their specific use cases to compose with
 other models. Each link in the chain supports the next allowing us to develop a
 progressive disclosure of complexity for people with different skillsets.
 
-# Component Shadowing
+## Component Shadowing
 
 The other major change that has landed is the only breaking change to themes so
 far. Based on feedback from the early adopters who have been authoring themes,
