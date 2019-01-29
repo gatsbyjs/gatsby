@@ -26,7 +26,7 @@ module.exports = {
 }
 ```
 
-Then in your terminal run `gatsby develop` to start the Gatsby development server.
+Then in your terminal run `npm start` to start the Gatsby development server.
 
 Now let's create a sample Emotion page at `src/pages/index.js`:
 
