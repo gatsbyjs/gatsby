@@ -8,16 +8,15 @@ tags:
 
 You often feel the unsettling flash of a bright phone screen while relaxing in a dimly lit room. This is alleviated by introducing a "dark mode" which switches background and foreground colors to reduce eye strain. I decided to add this to my boutique web agency [Laccadive IO's](https://laccadive.io/) new Gatsby-based site.
 
->
-> One of the few types of alternative theme that adds real value to users is a low light intensity “night mode” theme. Not only is it easier on the eyes when reading in the dark, but it also reduces the likelihood of migraine and the irritation of other light sensitivity disorders. As a migraine sufferer, I’m interested!
->
-> [Heydon Pickering](https://inclusive-components.design/a-theme-switcher/)
+<pullquote citation="Heydon Pickering">
+One of the few types of alternative theme that adds real value to users is a low light intensity “night mode” theme. Not only is it easier on the eyes when reading in the dark, but it also reduces the likelihood of migraine and the irritation of other light sensitivity disorders. As a migraine sufferer, I’m interested!
+</pullquote>
 
 In considering the different ways to implement this a natural fit become apparent: React’s new Context API. Having worked with Context API before, this seemed like a particularly well suited use for this API. However, I soon realized I would need to do a little set-up work to get this up and running.
 
 After a brief search, I came across just what I was looking for, the Gatsby Browser APIs. Specifically, the [`wrapRootElement`](https://www.gatsbyjs.org/docs/browser-apis/#wrapRootElement) API was a perfect fit for this use case. This API allows you to wrap your root element with a wrapping component, e.g. a `Provider` from Redux or... a ThemeProvider from React Context. Using this, I managed to achieve dark mode for my use case.
 
-The following is a detailed instruction on how you too can achieve a similar result with Gatsby and React Context!
+Let's do a deep dive into how this feature was actually implemented step by step using React Context, Gatsby, and a Theme Provider to implement a dark mode UI!
 
 ## Creating the Context file in a new Gatsby project
 
@@ -45,51 +44,61 @@ Then, create a `context` folder within src and the `ThemeContext.js` file within
     export default ThemeContext
 ```
 
-`React.createContext` is a new function in React 16.3 and allows you to create a Context object. It accepts a default state, the value which will be used when a component does not have a matching Provider above it in the tree.  The function returns an object with Provider and Consumer properties which we will be using later.
+[`React.createContext`](https://reactjs.org/docs/context.html#reactcreatecontext) is a new function in React 16.3 and allows you to create a Context object. It accepts a default state, the value which will be used when a component does not have a matching Provider above it in the tree.  The function returns an object with Provider and Consumer properties which we will be using later.
 
 ## Modifying the Gatsby Browser file
 
 Next, write the following code within the `gatsby-browser.js` file, which is in the root folder in a Gatsby project:
 ```jsx:title=gatsby-browser.js
-    import React from 'react'
+import React from 'react'
 
-    import ThemeContext from './src/context/ThemeContext'
+import ThemeContext from './src/context/ThemeContext'
 
-    class ThemeProvider extends React.Component {
-      state = {
-        dark: false,
-      }
+// Getting dark mode information from OS!
+const supportsDarkMode = () =>
+  window.matchMedia('(prefers-color-scheme: dark)').matches === true
 
-      toggleDark = () => {
-        let dark = !this.state.dark
-        localStorage.setItem('dark', JSON.stringify(dark))
-        this.setState({ dark })
-      }
+class ThemeProvider extends React.Component {
+  state = {
+    dark: false,
+  }
 
-      componentDidMount() {
-        this.setState({ dark: JSON.parse(localStorage.getItem('dark')) })
-      }
+  toggleDark = () => {
+    let dark = !this.state.dark
+    localStorage.setItem('dark', JSON.stringify(dark))
+    this.setState({ dark })
+  }
 
-      render() {
-        const { children } = this.props
-        const { dark } = this.state
-        return (
-          <ThemeContext.Provider
-            value={{
-              dark,
-              toggleDark: this.toggleDark,
-            }}
-          >
-            {children}
-          </ThemeContext.Provider>
-        )
-      }
+  componentDidMount() {
+    // Getting dark mode value from localStorage!
+    const lsDark = JSON.parse(localStorage.getItem('dark'))
+    if (lsDark) {
+      this.setState({ dark: lsDark })
+    } else if (supportsDarkMode()) {
+      this.setState({ dark: true })
     }
-// highlight-start
-    export const wrapRootElement = ({ element }) => (
-      <ThemeProvider>{element}</ThemeProvider>
+  }
+
+  render() {
+    const { children } = this.props
+    const { dark } = this.state
+    return (
+      <ThemeContext.Provider
+        value={{
+          dark,
+          toggleDark: this.toggleDark,
+        }}
+      >
+        {children}
+      </ThemeContext.Provider>
     )
-// highlight-end
+  }
+}
+{/* highlight-start */}
+export const wrapRootElement = ({ element }) => (
+  <ThemeProvider>{element}</ThemeProvider>
+)
+{/* highlight-end */}
 ```
 Create the `ThemeProvider` component which wraps its children with `ThemeContext.Provider`. This component then wraps the root element and is exported as `wrapRootElement`. This API is then invoked appropriately by the Gatsby API runner.
 
@@ -99,59 +108,59 @@ The `toggleDark` function gets the current `state.dark` value and switches the 
 
 The default `layout.js` uses a `<staticQuery>` and renderProp to render the layout, which is wrapped by a Fragment `<>`. Modify it to look like this:
 ```jsx:title=src/components/layout.js
-    import React from 'react'
-    import PropTypes from 'prop-types'
-    import { StaticQuery, graphql } from 'gatsby'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { StaticQuery, graphql } from 'gatsby'
 
-    import ThemeContext from '../context/ThemeContext'
-    import Header from './header'
-    import './layout.css'
+import ThemeContext from '../context/ThemeContext'
+import Header from './header'
+import './layout.css'
 
-    const Layout = ({ children }) => (
-      <StaticQuery
-        query={graphql`
-          query SiteTitleQuery {
-            site {
-              siteMetadata {
-                title
-              }
-            }
+const Layout = ({ children }) => (
+  <StaticQuery
+    query={graphql`
+      query SiteTitleQuery {
+        site {
+          siteMetadata {
+            title
           }
-        `}
-        render={data => (
-          // highlight-start
-          <ThemeContext.Consumer>
-            {theme => (
-              <div className={theme.dark ? 'dark' : 'light'}>
-          // highlight-end
-                <Header siteTitle={data.site.siteMetadata.title} />
-                <div
-                  style={{
-                    margin: `0 auto`,
-                    maxWidth: 960,
-                    padding: `0px 1.0875rem 1.45rem`,
-                    paddingTop: 0,
-                  }}
-                >
-                  {children}
-                  <footer>
-                    © {new Date().getFullYear()}, Built with
-                    {` `}
-                    <a href="https://www.gatsbyjs.org">Gatsby</a>
-                  </footer>
-                </div>
-              </div>
-            )}
-          </ThemeContext.Consumer>
+        }
+      }
+    `}
+    render={data => (
+      {/* highlight-start */}
+      <ThemeContext.Consumer>
+        {theme => (
+          <div className={theme.dark ? 'dark' : 'light'}>
+      {/* highlight-end */}
+            <Header siteTitle={data.site.siteMetadata.title} />
+            <div
+              style={{
+                margin: `0 auto`,
+                maxWidth: 960,
+                padding: `0px 1.0875rem 1.45rem`,
+                paddingTop: 0,
+              }}
+            >
+              {children}
+              <footer>
+                © {new Date().getFullYear()}, Built with
+                {` `}
+                <a href="https://www.gatsbyjs.org">Gatsby</a>
+              </footer>
+            </div>
+          </div>
         )}
-      />
-    )
+      </ThemeContext.Consumer>
+    )}
+  />
+)
 
-    Layout.propTypes = {
-      children: PropTypes.node.isRequired,
-    }
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+}
 
-    export default Layout
+export default Layout
 ```
 
 The class of the wrapper div will change based on the context value of the dark variable, which we set as state in the `ThemeContext.js` file.
@@ -160,61 +169,57 @@ The class of the wrapper div will change based on the context value of the dark 
 
 With this configuration completed, we can now add the actual switch to toggle dark mode. Modify the `header.js` component, like so:
 ```jsx:title=src/components/header.js
-    import { Link } from 'gatsby'
-    import PropTypes from 'prop-types'
-    import React from 'react'
+import { Link } from 'gatsby'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-    import ThemeContext from '../context/ThemeContext'
+import ThemeContext from '../context/ThemeContext'
 
-    const Header = ({ siteTitle }) => (
-      <ThemeContext.Consumer>
-        {theme => (
-          <div
-            style={{
-              background: `rebeccapurple`,
-              marginBottom: `1.45rem`,
-            }}
-          >
-            <div
+const Header = ({ siteTitle }) => (
+  <ThemeContext.Consumer>
+    {theme => (
+      <div
+        style={{
+          background: `rebeccapurple`,
+          marginBottom: `1.45rem`,
+        }}
+      >
+        <div
+          style={{
+            margin: `0 auto`,
+            maxWidth: 960,
+            padding: `1.45rem 1.0875rem`,
+          }}
+        >
+          <h1 style={{ margin: 0 }}>
+            <Link
+              to="/"
               style={{
-                margin: `0 auto`,
-                maxWidth: 960,
-                padding: `1.45rem 1.0875rem`,
+                color: `white`,
+                textDecoration: `none`,
               }}
             >
-              <h1 style={{ margin: 0 }}>
-                <Link
-                  to="/"
-                  style={{
-                    color: `white`,
-                    textDecoration: `none`,
-                  }}
-                >
-                  {siteTitle}
-                </Link>
-              </h1>
-              <button className="dark-switcher" onClick={theme.toggleDark}>
-                {theme.dark ? (
-                  <span>Light mode &#9728;</span>
-                ) : (
-                  <span>Dark mode &#9790;</span>
-                )}
-              </button>
-            </div>
-          </div>
-        )}
-      </ThemeContext.Consumer>
-    )
+              {siteTitle}
+            </Link>
+          </h1>
+          <button className="dark-switcher" onClick={theme.toggleDark}>
+            {theme.dark ? <span>Light mode ☀</span> : <span>Dark mode ☾</span>}
+          </button>
+        </div>
+      </div>
+    )}
+  </ThemeContext.Consumer>
+)
 
-    Header.propTypes = {
-      siteTitle: PropTypes.string,
-    }
+Header.propTypes = {
+  siteTitle: PropTypes.string,
+}
 
-    Header.defaultProps = {
-      siteTitle: ``,
-    }
+Header.defaultProps = {
+  siteTitle: ``,
+}
 
-    export default Header
+export default Header
 
 ```
 
@@ -223,38 +228,38 @@ With this configuration completed, we can now add the actual switch to toggle da
 At this point, we've set up a dark mode toggle and conditionally render a `className` if dark mode is enabled. However, we still need to actually _style_ based upon this conditional `className`. As such, we need to add the following styles in the `layout.css` file:
 
 ```css:title=src/components/layout.css
-    /* Dark mode styles */
-    .dark-switcher {
-      color: #fff;
-      margin-top: 5px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-    }
+/* Dark mode styles */
+.dark-switcher {
+  color: #fff;
+  margin-top: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
 
-    @media (min-width: 992px) {
-      .dark-switcher {
-        position: absolute;
-        right: 15px;
-        top: 10px;
-      }
-    }
+@media (min-width: 992px) {
+  .dark-switcher {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+  }
+}
 
-    .dark {
-      background-color: #2a2b2d;
-      color: #fff;
-      transition: all 0.6s ease;
-    }
+.dark {
+  background-color: #2a2b2d;
+  color: #fff;
+  transition: all 0.6s ease;
+}
 
-    .light {
-      transition: all 0.6s ease;
-      background-color: #fefefe;
-    }
+.light {
+  transition: all 0.6s ease;
+  background-color: #fefefe;
+}
 
-    .dark a,
-    .dark a:visited {
-      color: #fff;
-    }
+.dark a,
+.dark a:visited {
+  color: #fff;
+}
 ```
 
 ## Conclusion
