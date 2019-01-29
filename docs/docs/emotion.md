@@ -20,7 +20,7 @@ Second, we'll install the Gatsby plugin for Emotion.
 npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
-And then add it to your site's `gatsby-config.js`:
+And then add the plugin to your site's `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
