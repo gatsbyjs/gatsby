@@ -1,6 +1,5 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
-const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId, reporter },
@@ -19,18 +18,7 @@ module.exports = async function onCreateNode(
   const content = await loadNodeContent(node)
 
   try {
-    let data = grayMatter(content, pluginOptions)
-    // Convert date objects to string. Otherwise there's type mismatches
-    // during inference as some dates are strings and others date objects.
-    if (data.data) {
-      data.data = _.mapValues(data.data, v => {
-        if (_.isDate(v)) {
-          return v.toJSON()
-        } else {
-          return v
-        }
-      })
-    }
+    const data = grayMatter(content, pluginOptions)
 
     const markdownNode = {
       id: createNodeId(`${node.id} >>> MarkdownRemark`),

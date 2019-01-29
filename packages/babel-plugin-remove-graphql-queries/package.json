@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-remove-graphql-queries",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "devDependencies": {
     "@babel/cli": "^7.0.0",
