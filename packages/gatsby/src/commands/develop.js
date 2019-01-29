@@ -9,7 +9,6 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
-const parsePath = require(`parse-filepath`)
 const request = require(`request`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
