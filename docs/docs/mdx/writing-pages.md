@@ -2,7 +2,7 @@
 title: Writing pages in MDX
 ---
 
-After [installing](/docs/mdx-getting-started) the plugin, MDX files
+After [installing](/docs/mdx/getting-started) the plugin, MDX files
 written in `src/pages` will turn into pages. This happens because
 `gatsby-mdx` looks for MDX files and automatically transpiles them
 so that Gatsby internals can render them.
@@ -13,6 +13,38 @@ result in a page being rendered at `mysite.com/awesome`.
 
 By default, gatsby-mdx supports frontmatter so you can define things
 like titles and paths to use in your GraphQL queries.
+
+## Frontmatter
+
+You can declare frontmatter at the beginning of your MDX document:
+
+```mdx
+---
+title: Hello, world!
+path: /hello-world
+date: 2019-01-29
+---
+
+# Hello, world!
+```
+
+Which can then be [queried with GraphQL](/docs/querying-with-graphql/):
+
+```graphql
+query {
+  allMdx {
+    edges {
+      node {
+        frontmatter {
+          path
+          title
+          date(formatString: "MMMM DD, YYYY")
+        }
+      }
+    }
+  }
+}
+```
 
 ## Importing components
 

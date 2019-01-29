@@ -55,5 +55,5 @@ can follow these steps:
 
 ## What's next?
 
-Go check out the [writing MDX guide](/docs/mdx-writing-pages) to find out what else you can do
+Go check out the [writing MDX guide](/docs/mdx/writing-pages) to find out what else you can do
 with Gatsby and MDX.
