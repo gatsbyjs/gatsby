@@ -9,7 +9,7 @@ Emotion is a performant and flexible CSS-in-JS library. Building on many other C
 First, open a new terminal window and run the following to create a new site:
 
 ```shell
-gatsby new emotion-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new emotion-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Second, we'll install the Gatsby plugin for Emotion.
