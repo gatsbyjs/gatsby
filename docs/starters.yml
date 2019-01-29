@@ -1711,6 +1711,27 @@
     - Registration form
     - Signup form
     - User sign in
+- url: https://frosty-ride-4ff3b9.netlify.com/
+  repo: https://github.com/damassi/gatsby-starter-typescript-rebass-netlifycms
+  description:
+    A Gatsby starter built on top of MDX (React + Markdown), NetlifyCMS (with
+    MDX and netlify-cms-backend-fs support -- no need to deploy), TypeScript,
+    Rebass for UI, Styled Components, and Jest for testing. Very little visual
+    styling has been applied so that you can bring your own :)
+  tags:
+    - MDX
+    - Netlify CMS
+    - TypeScript
+    - Styling:Rebass
+    - Styling:CSS-in-JS
+  features:
+    - MDX - Markdown + React
+    - Netlify CMS (with MDX support)
+    - Read and write to local file system via netlify-cms-backend-fs
+    - TypeScript
+    - Rebass
+    - Styled Components
+    - Jest
 - url: https://bluepeter.github.io/gatsby-material-ui-business-starter/
   repo: https://github.com/bluepeter/gatsby-material-ui-business-starter
   description: Beautiful Gatsby Material Design Business Starter
