@@ -93,11 +93,11 @@ class ThemeProvider extends React.Component {
     )
   }
 }
-{/* highlight-start */}
+// highlight-start
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider>{element}</ThemeProvider>
 )
-{/* highlight-end */}
+// highlight-end
 ```
 
 Create the `ThemeProvider` component which wraps its children with `ThemeContext.Provider`. This component then wraps the root element and is exported as `wrapRootElement`. This API is then invoked appropriately by the Gatsby API runner.
