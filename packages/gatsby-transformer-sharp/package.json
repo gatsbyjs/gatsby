@@ -12,7 +12,7 @@
     "fs-extra": "^4.0.2",
     "potrace": "^2.1.1",
     "probe-image-size": "^4.0.0",
-    "sharp": "^0.21.0"
+    "sharp": "^0.21.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
