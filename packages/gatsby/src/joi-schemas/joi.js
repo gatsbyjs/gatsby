@@ -22,7 +22,7 @@ export const pageSchema = Joi.object()
     componentChunkName: Joi.string().required(),
     context: Joi.object(),
     pluginCreator___NODE: Joi.string(),
-    pluginCreatorName: Joi.string(),
+    pluginCreatorId: Joi.string(),
   })
   .unknown()
 
