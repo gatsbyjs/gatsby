@@ -85,6 +85,22 @@ commands:
       - <<: *attach_to_bootstrap
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>"
 
+  compare-loki-sift:
+    parameters:
+      trigger_pattern:
+        type: string
+        default: "packages/*|.circleci/*"
+      test_path:
+        type: string
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/compare-loki-sift.sh "<< parameters.test_path >>"
+
 version: 2.1
 
 jobs:
