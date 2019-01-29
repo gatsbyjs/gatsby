@@ -900,9 +900,6 @@
   tags:
     - Styling:CSS-in-JS
     - i18n
-    - Formik
-    - Yup
-    - Netlify Form
   features:
     - Based on default starter
     - i18n with rtl text
@@ -1288,7 +1285,6 @@
   description: Machine learning ready and scientific blog starter
   tags:
     - Blog
-    - Katex
     - Tensorflow
     - CSV
     - Charts
@@ -1613,7 +1609,6 @@
     - Ghost
     - Headless CMS
     - Blog
-    - Journalism
   features:
     - Ghost integration with ready to go placeholder content and webhooks support
     - Minimal responsive design
