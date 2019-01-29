@@ -124,7 +124,7 @@ because of two key points of feedback.
 The fix for any currently existing theme users is to move any shadowed
 components from `src/components/<theme-name>` to `src/<theme-name>/components`.
 
-# What's next?
+## What's next?
 
 I'm working on a roadmap post for themes which will give more insight into the
 future of theming, how we're approaching stability, and what we're working on
