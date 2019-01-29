@@ -296,7 +296,7 @@ export const pageQuery = graphql`
         slug
       }
     }
-    allSitesYaml {
+    allSitesYaml(filter: { fields: { hasScrenshoot: { eq: true } } }) {
       edges {
         node {
           built_by
