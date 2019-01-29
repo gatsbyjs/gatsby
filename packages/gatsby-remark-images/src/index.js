@@ -121,8 +121,8 @@ module.exports = (
     const alt = overWrites.alt
       ? overWrites.alt
       : node.alt
-        ? node.alt
-        : defaultAlt
+      ? node.alt
+      : defaultAlt
 
     const title = node.title ? node.title : ``
 
