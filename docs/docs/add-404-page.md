@@ -14,4 +14,3 @@ errors.
 When developing, Gatsby adds a default 404 page that overrides your custom 404
 page. But you can still preview your 404 page by clicking "Preview custom 404
 page" to verify that it's working as expected.
-
