@@ -258,7 +258,7 @@
           items:
             - title: Adding page transitions with transition-link
               link: /docs/adding-page-transitions-with-plugin-transition-link/
-            - title: Adding page transitions with page-transitions
+            - title: Adding page transitions with page-transitions*
               link: /docs/adding-page-transitions-with-plugin-page-transitions/
         - title: Making Your Site Accessible
           link: /docs/making-your-site-accessible
