@@ -7,10 +7,9 @@ author: Linda Watkins
 tags:
   - ecommerce
   - case study
+image: "./images/flamingo.png"
 showImageInArticle: true
 ---
-
-![](/src/uploads/Screen Shot 2019-01-29 at 5.27.12 PM.png)
 
 Since [Harry's](https://www.harrys.com/en/us) launch in 2013, it has lit up the ecommerce market for men's care products. The next logical step was taking that idea to another market – shaving products for women – with the launch of [Flamingo](https://www.shopflamingo.com/). The site went live in October 2018 with thousands of users visiting the new website and hundreds of thousands of page views in the first week. The launch triggered the need for an optimized website with performance built-in, which was delivered seamlessly by Gatsby. It also carried a surprising internal reward – Harry’s and Flamingo developers are re-engaged about learning, charging into the future of modern website development and performance on the edge.
 
@@ -62,7 +61,7 @@ Flamingo was able to achieve their sales and brand awareness goals with the new 
 
 **1) Exceptional Performance:** The website had noticeably great performance when launched and even non-technical users remarked on this in early customer conversations. Fast loading enables users to purchase more reliably and gives them a positive perception of the website. The Flamingo team also saw a big improvement to the [lighthouse performance scores](https://developers.google.com/web/tools/lighthouse/) (Google’s developer tool for measuring website performance). SEO, performance, and page speed are all in the 90s without any additional work from the development team. Due to the positive results on performance from day one, a few days after implementing basic SEO data on the site, marketing noted their Google search ranking improved and they were quickly the top result for all of their branded terms with no outside consulting.
 
-![Lighthouse performance scores](/src/uploads/lighthouse.png "Lighthouse Performance Scores")
+![Lighthouse performance scores](./images/lighthouse.png)
 
 **2) High Reliability:** The team spent minimal time on site maintenance and the support team rarely hears about site issues from the users. This reliability has enabled them to focus on driving value and customer delight from the beginning instead of worrying whether an individual press event will take down the site.
 
