@@ -107,9 +107,11 @@ function toMongoArgs(gqlFilter, lastFieldType) {
         mongoArgs[k] = toMongoArgs(v, gqlFieldType)
       }
     } else {
-      // Compile regex first.
       if (k === `regex`) {
-        mongoArgs[`$regex`] = prepareRegex(v)
+        const re = prepareRegex(v)
+        // To ensure that false is returned if a field doesn't
+        // exist. E.g `{nested.field: {$regex: /.*/}}`
+        mongoArgs[`$where`] = obj => !_.isUndefined(obj) && re.test(obj)
       } else if (k === `glob`) {
         const Minimatch = require(`minimatch`).Minimatch
         const mm = new Minimatch(v)

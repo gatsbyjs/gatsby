@@ -8,6 +8,7 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const workerResolvers = require(`../schema/worker-resolvers`)
 const { copyStaticDir } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
+const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
 
 function reportFailure(msg, err: Error) {
@@ -63,7 +64,7 @@ module.exports = async function build(program: BuildArgs) {
   await buildHTML(program, activity).catch(err => {
     reportFailure(
       report.stripIndent`
-        Building static HTML for pages failed
+        Building static HTML failed for path "${chalk.bold(err.context.path)}"
 
         See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
       `,
