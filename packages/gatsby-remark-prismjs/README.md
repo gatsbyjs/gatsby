@@ -50,30 +50,10 @@ plugins: [
             // If setting this to true, the parser won't handle and highlight inline
             // code used in markdown i.e. single backtick code like `this`.
             noInlineHighlight: false,
-            // The below setting lets you add new Prism language definitions and
-            // extend current definitions.
-            // 'language' - (optional) The name of the new language.
-            // 'extend' - (optional) The language you wish to extend.
-            // 'definition' - (mandatory) This is the Prism language definition. More
-            //  information of the format can be found here:
-            //  https://prismjs.com/extending.html.
-            //
-            // One of the parameters 'language' and 'extend' is needed. If only 'language'
-            // is given, a new language will be defined from scratch. If only 'extend' is
-            // given, an extension will be made to the given language. If both 'language'
-            // and 'extend' is given, a new language that extends the 'extend' language will
-            // be defined.
-            //
-            // In case a language is extended, note that the definitions will not be merged.
-            // If the extended language defintion and the given definition contains the same
-            // token, the original pattern will be overwritten.
-            //
-            // In addition to this extension parameters the css also needs to be updated to
-            // get a style for the new tokens. Prism will wrap the matched tokens with a
-            // 'span' element and give it the classes 'token' and the token name you defined.
-            // In the example below we would match 'superif' and 'superelse'. In the html
-            // it would result in the following when a match is found:
-            // <span class='token superscript_keywords'>superif</span>
+            // This adds a new language definition to Prism or extend an already
+            // existing language definition. More details on this option can be
+            // found under the header "Add new language definition or extend an
+            // existing language" below.
             languageExtensions: [
               {
                 language: "superscript",
@@ -373,6 +353,51 @@ highlighted) text of `.some-class { background-color: red }`
 
 If you need to prevent any escaping or highlighting, you can use the `none`
 language; the inner contents will not be changed at all.
+
+### Add new language definition or extend an existing language
+
+You can provide a language extension by giving a single object or an array of
+language extension objects as the 'languageExtensions' option.
+
+A language extension object looks like this:
+
+```javascript
+languageExtensions: [
+  {
+    language: "superscript",
+    extend: "javascript",
+    definition: {
+      superscript_keywords: /(superif|superelse)/,
+    },
+  },
+]
+```
+
+'language' - (optional) The name of the new language.
+'extend' - (optional) The language you wish to extend.
+'definition' - (mandatory) This is the Prism language definition. More
+information of the format can be found here:
+https://prismjs.com/extending.html
+
+One of the parameters 'language' and 'extend' is needed. If only 'language'
+is given, a new language will be defined from scratch. If only 'extend' is
+given, an extension will be made to the given language. If both 'language'
+and 'extend' is given, a new language that extends the 'extend' language will
+be defined.
+
+In case a language is extended, note that the definitions will not be merged.
+If the extended language defintion and the given definition contains the same
+token, the original pattern will be overwritten.
+
+In addition to this extension parameters the css also needs to be updated to
+get a style for the new tokens. Prism will wrap the matched tokens with a
+'span' element and give it the classes 'token' and the token name you defined.
+In the example above we would match 'superif' and 'superelse'. In the html
+it would result in the following when a match is found:
+
+```html
+<span class="token superscript_keywords">superif</span>
+```
 
 ## Implementation notes
 
