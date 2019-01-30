@@ -10,7 +10,7 @@ title: MDX plugins
 ## Gatsby remark plugins
 
 gatsby-mdx is compatible with all of the [gatsby-remark
-plugins](https://next.gatsbyjs.org/packages/gatsby-remark-images/?=gatsby-remark),
+plugins](/packages/gatsby-remark-images/?=gatsby-remark),
 including
 [gatsby-remark-images](https://next.gatsbyjs.org/packages/gatsby-remark-images/?=gatsby-remark).
 
