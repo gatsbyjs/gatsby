@@ -71,10 +71,10 @@ about a given document. gatsby-mdx will automatically add it to the
 GraphQL schema so you can use the exported data in your queries and
 rendering.
 
-```md
+```mdx
 export const metadata = {
-name: "World",
-path: "/world",
+  name: "World",
+  path: "/world",
 }
 
 # Hello, <span>{props.metadata.name}</span>
@@ -102,7 +102,7 @@ in the same way you would for a `.js` page. The queried data is passed
 as a prop, and can be accessed inside any JSX block when writing in
 MDX:
 
-```md
+```mdx
 import { graphql } from "gatsby"
 
 # My Awesome Page
@@ -111,5 +111,11 @@ Here's a paragraph, followed by a paragraph with data!
 
 <p>{props.data.site.siteMetadata.description}</p>
 
-export const pageQuery = graphql`site { siteMetadata { description } }`
+export const pageQuery = graphql`
+  site {
+    siteMetadata {
+      description
+    }
+  }
+`
 ```
