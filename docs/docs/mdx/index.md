@@ -9,7 +9,7 @@ syntax (such as `# heading`) for your content and JSX for more advanced
 components.
 
 This is useful in content-driven sites where you want the ability
-to introduce components like charts or notifs without having to
+to introduce components like charts or alerts without having to
 configure a plugin. It emphasizes composition over configuration
 and really shines with interactive blog posts, documenting design
 systems, or long form articles with ambitious layouts.

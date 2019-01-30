@@ -37,7 +37,7 @@ can follow these steps for configuring the [gatsby-mdx](/packages/gatsby-mdx/) p
 1. **Add `gatsby-mdx`** and MDX as dependencies
 
    ```sh
-   yarn add gasby-mdx @mdx-js/mdx @mdx-js/tag
+   yarn add gatsby-mdx @mdx-js/mdx @mdx-js/tag
    ```
 
 1. **Update your `gatsby-config.js`** to use the `gatsby-mdx` plugin

@@ -3,7 +3,7 @@ title: Programmatically Creating Pages
 ---
 
 Sometimes you want to be able to programmatically access data from
-files in `src/pages` or create pages using MDX content lives at
+files in `src/pages` or create pages using MDX content that lives at
 arbitrary locations outside of `src/pages/` or in remote CMSes.
 
 For instance, let's say you have a Gatsby website, and you want to add
@@ -125,7 +125,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: "slug",
       // Individual MDX node
       node,
-      // Generated value based on filepath with "blog" prefix
+      // Generated value based on filepath with "blog" prefix. We
+      // don't need a separating "/" before the value because
+      // createFilePath returns a path with the leading "/".
       value: `/blog${value}`,
     })
   }
@@ -154,7 +156,7 @@ In order to create pages from the sourced MDX files, you need
 to construct a query that finds all MDX nodes and pulls out
 the `slug` field added earlier.
 
-> \_NOTE: you can open up a GrahpiQL console for query testing
+> \_NOTE: you can open up a GraphiQL console for query testing
 > in your browser at <https://localhost:8000/\_\_\_graphql>
 
 ```graphql
