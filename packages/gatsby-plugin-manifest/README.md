@@ -233,9 +233,9 @@ module.exports = {
 }
 ```
 
-## Include `favicon` link tag
+## Exclude `favicon` link tag
 
-Inserts `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `true` to opt-in of this behaviour.
+Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behaviour.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -251,7 +251,7 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
         theme_color_in_head: false, // This will avoid adding theme-color meta tag.
-        include_favicon: true, // Include favicon
+        include_favicon: false, // This will exclude favicon link tag
       },
     },
   ],
