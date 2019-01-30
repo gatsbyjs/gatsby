@@ -12,8 +12,8 @@ module.exports = () => {
           `const scope_${i} = require('${slash(path.join(abs, file))}').default;`
       )
       .join("\n") +
-    `export default {
-  ${files.map((_, i) => "...scope_" + i).join(",\n")}
-}`
+      `export default 
+        Object.assign({}, ${files.map((_, i) => 'scope_' + i).join(',\n')} )
+    `
   );
 };
