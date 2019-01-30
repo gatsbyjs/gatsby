@@ -38,7 +38,7 @@ export const nodeSchema = Joi.object()
         mediaType: Joi.string(),
         type: Joi.string().required(),
         owner: Joi.string().required(),
-        fieldOwners: Joi.array(),
+        fieldOwners: Joi.object(),
         content: Joi.string().allow(``),
         description: Joi.string(),
         ignoreType: Joi.boolean(),
