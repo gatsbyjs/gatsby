@@ -236,7 +236,7 @@
   portfolio: true
 - name: Origen Studio
   type: agency
-    description: >-
+  description: >-
     We are a dev agency who specializes in JS. We have built different projects with GatsbyJS and we love working on it. 
   location: Barcelona, Spain
   website: "https://origen.studio"
