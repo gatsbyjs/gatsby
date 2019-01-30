@@ -230,7 +230,10 @@ Use the following as reference when creating and editing docs:
 
 - [formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
 - [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
-  If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself. A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. Then you can right click the image and copy its image source.
+  If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself. 
+  A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. 
+  Then you can right click the image and copy its image source. And don't forget image alt text for accessibility! 
+  For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
 - [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
 #### Code formatting: Type tab
