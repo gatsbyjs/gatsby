@@ -34,7 +34,7 @@ module.exports = {
 ];
 ```
 
-Finally, import the TransitionLink component wherever you want to use it:
+Finally, import the `TransitionLink` component wherever you want to use it:
 
 ```javascript
 import TransitionLink from "gatsby-plugin-transition-link"
@@ -75,13 +75,13 @@ Options like transition duration, direction, and more are customizable with prop
 You have two main methods of creating page transitions:
 
 1. Use the `trigger` function defined in your `exit`/`entry` prop. More details in the '[Using the `trigger` function](#using-the-trigger-function)' subsection.
-2. Use the props passed by TransitionLink to define your transitions. More details in the '[Using passed props](#using-passed-props)' subsection.
+2. Use the props passed by `TransitionLink` to define your transitions. More details in the '[Using passed props](#using-passed-props)' subsection.
 
 Additionally, you can specify a number of props and options on the `TransitionLink` component, like `length`, `delay`, and more. For more options and details, see [the documentation of TransitionLink](https://transitionlink.tylerbarnes.ca/docs/transitionlink/). For further examples of usage, visit the [plugin's Github repository.](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
 
 #### Using the trigger function
 
-You can specify a `trigger` function that will handle the animation. This is useful for _imperative_ animation libaries like animejs or GSAP that specify animations with function calls.
+You can specify a `trigger` function that will handle the animation. This is useful for _imperative_ animation libaries like [animejs](https://animejs.com/) or [GSAP](https://greensock.com/gsap) that specify animations with function calls.
 
 ```javascript
 <TransitionLink
@@ -105,7 +105,7 @@ You can specify a `trigger` function that will handle the animation. This is use
 
 #### Using passed props
 
-The exiting and entering pages/templates involved in the transition will receive props indicating the current transition status, as well as the `exit` or `enter` props defined on the TransitionLink.
+The exiting and entering pages/templates involved in the transition will receive props indicating the current transition status, as well as the `exit` or `enter` props defined on the `TransitionLink`.
 
 ```javascript
 const PageOrTemplate = ({ children, transitionStatus, entry, exit }) => {
@@ -114,11 +114,11 @@ const PageOrTemplate = ({ children, transitionStatus, entry, exit }) => {
 }
 ```
 
-You can combine these props with a _declarative_ state-based animation libraries like `react-pose` or `react-spring` to specify transitions for exiting and entering a page.
+You can combine these props with a _declarative_ state-based animation libraries like [react-pose](https://popmotion.io/pose/) or [react-spring](http://react-spring.surge.sh/) to specify transitions for exiting and entering a page.
 
 If you want to access these props in one of your components instead of a page/template, you should wrap your component in the `TransitionState` component. This component takes a function that will have access to the same props as above, which you can then use in your component.
 
-Here's an example using `TransitionState` and `react-pose` to trigger enter/exit transitions for a Box component.
+Here's an example using `TransitionState` and `react-pose` to trigger enter/exit transitions for a `Box` component.
 
 ```javascript
 import { TransitionLink } from "gatsby-plugin-transition-link"
@@ -147,11 +147,11 @@ const Box = posed.div({
 </TransitionState>
 ```
 
-Now, the Box component will be aware of the transition status of the page it's a child of, and it will fade in/out accordingly.
+Now, the `Box` component will be aware of the transition status of the page it's a child of, and it will fade in/out accordingly.
 
 ## Excluding elements from page transitions
 
-You may want to have elements on a page that persist throughout the page transition (ex. a site-wide header). This can be accomplished by wrapping elements in the `TransitionPortal` component.
+You may want to have elements on a page that persist throughout the page transition (_ex. a site-wide header_). This can be accomplished by wrapping elements in the `TransitionPortal` component.
 
 ```javascript
 import { TransitionPortal } from "gatsby-plugin-transition-link"
