@@ -28,7 +28,7 @@ First of all, you have to initialize a Gatsby project and start it in develop mo
 
 Then, create a `context` folder within src and the `ThemeContext.js` file within it.
 
-```js:title=src/contex/ThemeContext.js
+```jsx:title=src/contex/ThemeContext.js
 import React from "react"
 
 const defaultState = {
@@ -87,6 +87,10 @@ export { ThemeProvider }
 
 [`React.createContext`](https://reactjs.org/docs/context.html#reactcreatecontext) is a new function in React 16.3 and allows you to create a Context object. It accepts a default state, the value which will be used when a component does not have a matching Provider above it in the tree.  The function returns an object with Provider and Consumer properties which we will be using later.
 
+Create the `ThemeProvider` component which wraps its children with `ThemeContext.Provider`. This component is exported as a named export from the file.
+
+The `toggleDark` function gets the current `state.dark` value and switches the value to the opposite. It then stores the new value in `localStorage` before setting it back to state using the `setState` function, so that it persists over page refreshes. The dark value from `state` and the `togglDark` function are passed to the Provider.
+
 ## Modifying the Gatsby Browser file
 
 Next, write the following code within the `gatsby-browser.js` file, which is in the root folder in a Gatsby project:
@@ -103,9 +107,7 @@ export const wrapRootElement = ({ element }) => (
 // highlight-end
 ```
 
-Create the `ThemeProvider` component which wraps its children with `ThemeContext.Provider`. This component then wraps the root element and is exported as `wrapRootElement`. This API is then invoked appropriately by the Gatsby API runner.
-
-The `toggleDark` function gets the current `state.dark` value and switches the value to the opposite. It then stores the new value in `localStorage` before setting it back to state using the `setState` function, so that it persists over page refreshes. The dark value from `state` and the `togglDark` function are passed to the Provider.
+The `ThemeProvider` component exported from the `ThemeContext.js` file wraps the root element and is exported as `wrapRootElement`. This API is then invoked appropriately by the Gatsby API runner.
 
 ## Editing the Layout file
 
