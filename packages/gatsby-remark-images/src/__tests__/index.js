@@ -119,6 +119,67 @@ test(`it transforms multiple images in markdown`, async () => {
   expect(nodes.length).toBe(imagePaths.length)
 })
 
+test(`it transforms image references in markdown`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+[refImage1]: ./${imagePath} "Ref Image Title"
+![alt text][refImage1]
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it leaves orphan image references alone`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+[refImage1]: ./${imagePath} "Ref Image Title"
+![image][refImage2]
+  `.trim()
+
+  const result = await plugin(createPluginOptions(content, imagePath))
+
+  expect(result).toEqual([])
+})
+
+test(`it transforms multiple image references in markdown`, async () => {
+  const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
+
+  const content = `
+[refImage1]: ./${imagePaths[0]} "Ref1 Image Title"
+[refImage2]: ./${imagePaths[1]} "Ref2 Image Title"
+![image 1][refImage1]
+![image 2][refImage2]
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePaths))
+
+  expect(nodes.length).toBe(imagePaths.length)
+})
+
+test(`it transforms multiple image links and image references in markdown`, async () => {
+  const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
+
+  const content = `
+[refImage1]: ./${imagePaths[0]} "Ref1 Image Title"
+[refImage2]: ./${imagePaths[1]} "Ref2 Image Title"
+![image 1][refImage1]
+![image 2][refImage2]
+![image 1](./${imagePaths[0]})
+![image 2](./${imagePaths[1]})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePaths))
+
+  expect(nodes.length).toBe(imagePaths.length * 2)
+})
+
 test(`it transforms HTML img tags`, async () => {
   const imagePath = `image/my-image.jpeg`
 
