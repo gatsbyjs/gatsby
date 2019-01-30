@@ -46,7 +46,7 @@ MDX and import other MDX files as plain components.
 🔧 **Customizable**: Decide which component is rendered for each Markdown
 element (`{ h1: MyHeading }`).
 
-📚 **Markdown-based**: The simplicity and elegance of markdown remains,
+📚 **Markdown-based**: The simplicity and elegance of markdown remains;
 you interleave JSX only when you want to.
 
 🔥 **Blazingly blazing fast**: MDX has no runtime, all compilation occurs
