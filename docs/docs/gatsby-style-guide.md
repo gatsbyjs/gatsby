@@ -378,6 +378,8 @@ A full-stack developer (adjective form with a dash) works on the full stack
 Use frontend for both adjective and noun forms as it's [more common and easier to maintain](https://github.com/gatsbyjs/gatsby/pull/8873#issuecomment-444255465). For example,
 a frontend developer works on the frontend. The same goes for backend.
 
+End users are spelled out with two words, rather than hyphenating with a dash.
+
 ### Use active voice
 
 Use active voice instead of passive voice. Generally, it's a more concise and
