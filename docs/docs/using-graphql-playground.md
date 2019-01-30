@@ -1,10 +1,10 @@
 ---
-title: Using the GraphQl Playground
+title: Using the GraphQL Playground
 ---
 
 ## Intro
 
-In this page we want to introduce you to an alternative to the current IDE for your GraphQl queries: The [Prisma Playground](https://github.com/prisma/graphql-playground).
+In this page we want to introduce you to an alternative to the current IDE for your GraphQL queries: The [Prisma Playground](https://github.com/prisma/graphql-playground).
 
 ## What is The Prisma Playground?
 
