@@ -154,6 +154,11 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn test:integration
 
+  compare_loki_sift-gatsbygram:
+    steps:
+      - compare-loki-sift:
+          test_path: examples/gatsbygram
+
   e2e_tests_gatsbygram:
     <<: *e2e-executor
     steps:
