@@ -212,6 +212,14 @@ exports.onServiceWorkerInstalled = true
 exports.onServiceWorkerUpdateFound = true
 
 /**
+ * Inform plugins when a service worker has been updated in the background
+ * and the page is ready to reload to apply changes.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerUpdateReady = true
+
+/**
  * Inform plugins when a service worker has become active.
  * @param {object} $0
  * @param {object} $0.serviceWorker The service worker instance.

@@ -20,7 +20,7 @@ First, open a new terminal window and run the following to create a new site:
 gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Second, we'll install the Gatsby plugin for Styled Components.
+Next, we'll install the necessary dependencies for `styled-components`, including the Gatsby plugin.
 
 ```shell
 npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components

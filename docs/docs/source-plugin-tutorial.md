@@ -20,6 +20,8 @@ Source plugins convert data from any source into a format that can be processed 
 
 If you can't find a plugin for your data source you can create your own.
 
+_**NOTE:** if your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/packages/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml/) to make queryable data from files._
+
 ## How to create a source plugin
 
 ### Overview
