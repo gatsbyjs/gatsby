@@ -29,13 +29,13 @@ With that in mind, they also needed it to tick off some major development points
 
 If the team didn’t find a solution to meet these needs, they’d have to build it themselves and being responsible for performance optimizations, build processes, image optimizations, and edge hosting would have taken them easily another year to build. That definitely was NOT an option as they only had a few months to build and deploy the new Flamingo site.
 
-<pullquote>We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later</pullquote>
+<pullquote>We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later.</pullquote>
 
 ## Going Gatsby
 
 The manual process required to make the Harry’s website perform was what they were looking to improve for the Flamingo site. And Gatsby made building a high-performing website easy because it leverages modern website tools and is built with performance already an integral part of the technology.
 
-> “As an ecommerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us."
+<pullquote>As an ecommerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us.</pullquote>
 
 Since Gatsby simply serves html files that are hosted on the edge (CDN: Content Delivery Network), this dramatically improves SEO. The developers can focus on other things because Gatsby just takes care of the performance. The team was excited about the image support from Gatsby that is “out-of-the-box.” They didn’t have to write code in-house, which was game changing for a team looking to lead in mobile-optimized shopping.
 
