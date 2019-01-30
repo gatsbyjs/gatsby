@@ -173,15 +173,15 @@
       link: /docs/mdx/
       items:
         - title: Getting started
-          link: /docs/mdx/getting-started
+          link: /docs/mdx/getting-started/
         - title: Writing pages
-          link: /docs/mdx/writing-pages
+          link: /docs/mdx/writing-pages/
         - title: Customizing components
-          link: /docs/mdx/customizing-components
+          link: /docs/mdx/customizing-components/
         - title: Programmatically creating pages
-          link: /docs/mdx/programmatically-creating-pages
+          link: /docs/mdx/programmatically-creating-pages/
         - title: Using plugins
-          link: /docs/mdx/plugins
+          link: /docs/mdx/plugins/
     - title: Adding testing
       link: /docs/testing/
       items:
