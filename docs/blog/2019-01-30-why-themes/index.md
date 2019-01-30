@@ -7,7 +7,7 @@ tags: ["themes"]
 
 > _A site as a function of your data_
 
-As some of you might have heard (or hoped), we're working on adding theme support to Gatsby. This blog posts is a short intro into how we're thinking about themes in Gatsby.
+As some of you might have heard (or hoped), we're working on adding theme support to Gatsby. This blog post is a short intro into how we're thinking about themes for Gatsby.
 
 This post is short on examples and concrete details. See [our other theme blog posts by Chris Biscardi](/blog/tags/themes) and his recent [talk at Gatsby Days on themes](https://youtu.be/wX84vXBpMR8).
 
