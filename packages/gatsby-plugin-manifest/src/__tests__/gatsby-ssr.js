@@ -36,12 +36,26 @@ describe(`gatsby-plugin-manifest`, () => {
   })
 
   it(`Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head`, () => {
-    onRenderBody(ssrArgs, { icon: true, theme_color: `#000000` })
+    onRenderBody(ssrArgs, {
+      icon: true,
+      theme_color: `#000000`,
+      include_favicon: true,
+    })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Does not add a link favicon if include_favicon option as is not provided `, () => {
+    onRenderBody(ssrArgs, { icon: true })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Does not add a link favicon if include_favicon option as false`, () => {
+    onRenderBody(ssrArgs, { icon: true, include_favicon: false })
     expect(headComponents).toMatchSnapshot()
   })
 
   it(`Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string`, () => {
-    onRenderBody(ssrArgs, { icon: true })
+    onRenderBody(ssrArgs, { icon: true, include_favicon: true })
     expect(headComponents).toMatchSnapshot()
   })
 
@@ -50,6 +64,7 @@ describe(`gatsby-plugin-manifest`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
+        include_favicon: true,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -58,6 +73,7 @@ describe(`gatsby-plugin-manifest`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
+        include_favicon: true,
         icons: [
           {
             src: `/favicons/android-chrome-48x48.png`,
@@ -81,6 +97,7 @@ describe(`gatsby-plugin-manifest`, () => {
         icon: true,
         theme_color: `#000000`,
         legacy: false,
+        include_favicon: true,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -90,6 +107,7 @@ describe(`gatsby-plugin-manifest`, () => {
         icon: true,
         theme_color: `#000000`,
         legacy: false,
+        include_favicon: true,
         icons: [
           {
             src: `/favicons/android-chrome-48x48.png`,
