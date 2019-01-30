@@ -30,7 +30,7 @@ With that in mind, they also needed it to tick off some major development points
 
 If the team didn’t find a solution to meet these needs, they’d have to build it themselves and being responsible for performance optimizations, build processes, image optimizations, and edge hosting would have taken them easily another year to build. That definitely was NOT an option as they only had a few months to build and deploy the new Flamingo site.
 
-> "We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later."
+<pullquote>We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later</pullquote>
 
 ## Going Gatsby
 
