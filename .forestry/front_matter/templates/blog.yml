@@ -33,3 +33,5 @@ fields:
   type: boolean
   hidden: false
   default: ''
+pages:
+- docs/blog/2019-01-30-Flamingo-Case-Study/index-md.md
