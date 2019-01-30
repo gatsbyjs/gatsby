@@ -11,10 +11,16 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 
   // The user has an option to opt out of the favicon link tag being inserted into the head.
-  if (pluginOptions.icon && pluginOptions.include_favicon) {
+  if (pluginOptions.icon) {
     let favicon = icons && icons.length ? icons[0].src : null
 
-    if (favicon) {
+    let insertFaviconLinkTag = Object.keys(pluginOptions).includes(
+      `include_favicon`
+    )
+      ? pluginOptions.include_favicon
+      : true
+
+    if (favicon && insertFaviconLinkTag) {
       headComponents.push(
         <link
           key={`gatsby-plugin-manifest-icon-link`}
