@@ -9,7 +9,7 @@ tags: ["themes"]
 
 As some of you might have heard (or hoped), we're working on adding theme support to Gatsby. This blog posts is a short intro into how we're thinking about themes in Gatsby.
 
-This post is short on examples and concrete details. See [Chris Biscardi's theme blog posts](/blog/tags/themes) and recent [talk at Gatsby Days on themes](https://youtu.be/wX84vXBpMR8).
+This post is short on examples and concrete details. See [our other theme blog posts by Chris Biscardi](/blog/tags/themes) and his recent [talk at Gatsby Days on themes](https://youtu.be/wX84vXBpMR8).
 
 ## Introduction & Goal
 
