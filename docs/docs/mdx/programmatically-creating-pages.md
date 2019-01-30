@@ -1,5 +1,5 @@
 ---
-title: Programmatically creating pages
+title: Programmatically Creating Pages
 ---
 
 Sometimes you want to be able to programmatically access data from

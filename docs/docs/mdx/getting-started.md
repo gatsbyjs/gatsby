@@ -1,5 +1,5 @@
 ---
-title: Getting started
+title: Getting Started
 ---
 
 The fastest way to get started with Gatsby + MDX is to use the [MDX

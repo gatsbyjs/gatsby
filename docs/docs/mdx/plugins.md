@@ -1,5 +1,5 @@
 ---
-title: MDX plugins
+title: MDX Plugins
 ---
 
 ## Table of contents

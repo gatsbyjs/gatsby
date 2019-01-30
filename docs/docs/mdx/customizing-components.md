@@ -1,5 +1,5 @@
 ---
-title: "Customizing components"
+title: Customizing Components
 ---
 
 Using MDX, you can replace every HTML element that Markdown renders with a

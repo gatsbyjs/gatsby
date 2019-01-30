@@ -1,5 +1,5 @@
 ---
-title: Writing pages in MDX
+title: Writing Pages in MDX
 ---
 
 After [installing](/docs/mdx/getting-started) the plugin, MDX files
@@ -119,7 +119,6 @@ export const pageQuery = graphql`
       description
     }
   }
-
 `
 ```
 
