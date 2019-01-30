@@ -10,8 +10,8 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const legacy =
     typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 
-  // If icons were generated, also add a favicon link.
-  if (pluginOptions.icon) {
+  // The user has an option to opt out of the favicon link tag being inserted into the head.
+  if (pluginOptions.icon && pluginOptions.include_favicon) {
     let favicon = icons && icons.length ? icons[0].src : null
 
     if (favicon) {
