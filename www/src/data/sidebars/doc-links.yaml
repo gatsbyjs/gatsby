@@ -253,6 +253,13 @@
           link: /docs/adding-an-rss-feed/
         - title: Linking Between Pages
           link: /docs/linking-between-pages/
+        - title: Adding Page Transitions
+          link: /docs/adding-page-transitions/
+          items:
+            - title: Adding page transitions with transition-link
+              link: /docs/adding-page-transitions-with-plugin-transition-link/
+            - title: Adding page transitions with page-transitions
+              link: /docs/adding-page-transitions-with-plugin-page-transitions/
         - title: Making Your Site Accessible
           link: /docs/making-your-site-accessible
         - title: Routing
