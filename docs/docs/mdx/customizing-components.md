@@ -6,9 +6,7 @@ Using MDX, you can replace every HTML element that Markdown renders with a
 custom implementation. This allows you to use a set of design system components
 when rendering.
 
-```js
-// src/components/layout.js
-
+```javascript:title=src/components/layout.js
 import { MDXProvider } from "@mdx-js/tag"
 import * as DesignSystem from "your-design-system"
 

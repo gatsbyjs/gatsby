@@ -28,7 +28,7 @@ pointed at wherever you have your images on disk,
 `gatsby-remark-images` needs to be a sub-plugin of `gatsby-mdx`, and
 `gatsby-plugin-sharp` can be included on it's own.
 
-```js
+```javascript=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-sharp`,
@@ -70,7 +70,7 @@ directly if there are transformations you'd like to make on your
 MDX documents. This can do anything from adding emoji support to
 enforcing a particular title capitalization format.
 
-```js
+```javascript=gatsby-config.js
 const capitalize = require(`remark-capitalize`)
 const emoji = require(`remark-emoji`)
 

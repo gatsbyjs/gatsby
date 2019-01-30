@@ -42,7 +42,7 @@ can follow these steps for configuring the [gatsby-mdx](/packages/gatsby-mdx/) p
 
 1. **Update your `gatsby-config.js`** to use the `gatsby-mdx` plugin
 
-   ```js
+   ```javascript:title=gatsby-config.js
    module.exports = {
      plugins: [
        // ....

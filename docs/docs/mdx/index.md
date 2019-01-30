@@ -25,7 +25,7 @@ after working with it for a few minutes. Importing and JSX
 syntax works just like in your components. This results in a
 seamless experience for developers and content authors alike.
 
-```js
+```md
 import { Chart } from '../components/chart'
 
 # Here’s a chart

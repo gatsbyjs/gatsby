@@ -18,7 +18,7 @@ like titles and paths to use in your GraphQL queries.
 
 You can declare frontmatter at the beginning of your MDX document:
 
-```mdx
+```md
 ---
 title: Hello, world!
 path: /hello-world
@@ -51,7 +51,7 @@ query {
 Similarly to what you'd do in JSX, you can import and render components
 with JSX. You can also import other MDX documents.
 
-```mdx
+```md
 import { Chart } from "../components/chart"
 import FAQ from "../content/faq.mdx"
 
@@ -69,17 +69,17 @@ The chart is rendered inside our MDX document.
 MDX supports `export` syntax as well which allows you to export metadata
 about a given document. gatsby-mdx will automatically add it to the
 GraphQL schema so you can use the exported data in your queries and
-rendering
+rendering.
 
-```mdx
+```md
 export const metadata = {
-  name: "World",
-  path: "/world",
+name: "World",
+path: "/world",
 }
 
-# Hello, <span>{props.metadata.name}</span>!
+# Hello, <span>{props.metadata.name}</span>
 
-The heading above will say "Hello, world!".
+The heading above will say "Hello, World".
 ```
 
 ### Defining a layout
@@ -87,14 +87,12 @@ The heading above will say "Hello, world!".
 You can specify the layout that will wrap your component using the
 default export.
 
-```mdx
+```md
 import PurpleBorder from "../components/purple-border"
 
 # This will have a purple border
 
-export default PurpleBorde
-
-r
+export default PurpleBorder
 ```
 
 ## GraphQL Queries
@@ -104,7 +102,7 @@ in the same way you would for a `.js` page. The queried data is passed
 as a prop, and can be accessed inside any JSX block when writing in
 MDX:
 
-```mdx
+```md
 import { graphql } from "gatsby"
 
 # My Awesome Page
@@ -113,14 +111,5 @@ Here's a paragraph, followed by a paragraph with data!
 
 <p>{props.data.site.siteMetadata.description}</p>
 
-export const pageQuery = graphql`
-  site {
-    siteMetadata {
-      description
-    }
-  }
-
-`
+export const pageQuery = graphql`site { siteMetadata { description } }`
 ```
-
-[page-creator plugin]: https://www.npmjs.com/package/gatsby-plugin-page-creator
