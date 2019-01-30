@@ -1,7 +1,5 @@
 ---
-title:
-  "Flamingo by Harry’s chooses Gatsby for critical ecommerce launch, 5X faster
-  page loads"
+title: "Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical ecommerce launch, 5X faster page loads"
 date: 2019-01-30
 author: Linda Watkins
 tags:
