@@ -47,8 +47,34 @@ The duo also praised the ease of getting up to speed on Gatsby, which gave them 
 ##   
 No server. No problem.
 
-The Flamingo launch was big. They had a lot of marketing investment and press coverage lined up to support it. But the first day of the launch, there was not a worry about the site going down. “We didn’t have to manage a server – all the traffic was going to the CDN so there was less surface area for things to go wrong,” said Tim. 
+The Flamingo launch was big. They had a lot of marketing investment and press coverage lined up to support it. But the first day of the launch, there was not a worry about the site going down. 
+
+> “We didn’t have to manage a server – all the traffic was going to the CDN so there was less surface area for things to go wrong,” said Tim. 
 
 And since the site was compiled by Gatsby ahead of time, it was all ready to go and hosted on the CDN before a web visitor even typed in the URL or did a search. “Instead of us hosting a web server, Gatsby builds the site ahead of time and stores it on the CDN. We don’t need to compute anything when the customers come to the website,” Tim explained. “We've had thousands of concurrent users on the site at once with no scaling concerns and zero performance impact.”
 
 Imagine- no servers to manage! This was a game changer for the Flamingo development team. It let them focus on building a beautiful site rather than on optimizing the performance because Gatsby took care of that for them. And since the majority of the site is accessed through mobile devices, performance becomes that much more important. Having Gatsby build the site before it was deployed made it easier to get visibility and troubleshoot any errors that might pop up before it was mission critical. Ultimately, the team quickly realized “if the Gatsby build succeeds, then the site will work.”
+
+## Everyone Wins!
+
+Flamingo was able to achieve their sales and brand awareness goals with the new website because it met their goals in three key areas:
+
+**1) Exceptional Performance:** The website had noticeably great performance when launched and even non-technical users remarked on this in early customer conversations. Fast loading enables users to purchase more reliably and gives them a positive perception of the website. The Flamingo team also saw a big improvement to the [lighthouse performance scores](https://developers.google.com/web/tools/lighthouse/) (Google’s developer tool for measuring website performance). SEO, performance, and page speed are all in the 90s without any additional work from the development team. Due to the positive results on performance from day one, a few days after implementing basic SEO data on the site, marketing noted their Google search ranking improved and they were quickly the top result for all of their branded terms with no outside consulting.
+
+![Lighthouse performance scores](/src/uploads/lighthouse.png "Lighthouse Performance Scores")
+
+**2) High Reliability:** The team spent minimal time on site maintenance and the support team rarely hears about site issues from the users. This reliability has enabled them to focus on driving value and customer delight from the beginning instead of worrying whether an individual press event will take down the site.
+
+**3) Seamless Integration with the CMS (Contentful):** The marketing leads and content creators are able to update most branded content (copy and images) on the site with zero developer involvement. This enables the team to work without interruption while giving their brand team the flexibility to make quick updates based on customer feedback.
+
+## Inspiring a New Frontier of Ecommerce
+
+Harry’s had a website that was working, but the web team knew it could do better for Flamingo – it could move to the edge and head for a new frontier in ecommerce.
+
+Reflecting on it post-launch, the team says that Gatsby allowed them to focus on what they weren’t able to in the past – building a beautiful site that was inherently fast. But there’s been a surprise added value of Gatsby - the enthusiasm it has generated for the development team to push and learn. 
+
+> “The team has gotten excited about learning – excited about hosting at the edge and optimizing for performance, because Gatsby makes it easy,” says Tim. 
+
+Front-end engineers are going beyond JS and tools and focusing on edge hosting, the modern web technology stack and optimizing for speed. The team is using this as a blueprint for how they’ll build websites in the future. 
+
+Gatsby delivered a performance-optimized website for Flamingo, hosted on the edge. It made it easy to onboard new developers and create engaging experiences. It improved the website visitor’s experience with speed and design and it inspired the Flamingo team in a new age of ecommerce design.
