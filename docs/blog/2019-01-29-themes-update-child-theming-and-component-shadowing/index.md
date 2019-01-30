@@ -28,8 +28,8 @@ to consume and modify those themes. Theme authors will benefit from the ability
 to abstract logic, UI elements, and other Gatsby idioms into multiple packages
 which can be consumed as a single theme. Child themes (and themes as a whole)
 will improve the ability of people with different skill sets to create
-performant, beautiful sites. A few that I had in mind while building out child
-theming are:
+accessible, performant, beautiful sites. A few that I had in mind while building
+out child theming are:
 
 - A designer who wants to change a set of design tokens to create a whole new
   look for a theme
@@ -105,16 +105,16 @@ this theme stack. The designer uses the child theme to make their own site
 (passing tokens into the theme config), the person proficient in HTML and CSS
 can shadow components from the core theme (using minimal React), and the Gatsby
 expert can craft custom data models for their specific use cases to compose with
-other models. Each link in the chain supports the next allowing us to develop a
-progressive disclosure of complexity for people with different skillsets.
+other models. Each link in the chain supports the next, allowing us to reveal
+complexity for people with different skillsets when they need it and not before.
 
 ## Component Shadowing
 
 The other major change that has landed is the only breaking change to themes so
 far. Based on feedback from the early adopters who have been authoring themes,
-we've changed Component Shadowing so that it now applies to the entire src/
-directory instead of just the src/components directory. This change was made
-because of two key points of feedback.
+we've changed Component Shadowing so that it now applies to the entire `src/`
+directory instead of just the `src/components` directory. This change was made
+because of two key points of feedback:
 
 1. people had trouble remembering which folders got shadowed
 2. people who did remember, also wanted shadowing on templates and other, new
@@ -128,4 +128,4 @@ components from `src/components/<theme-name>` to `src/<theme-name>/components`.
 
 I'm working on a roadmap post for themes which will give more insight into the
 future of theming, how we're approaching stability, and what we're working on
-next.
+next. Check back on the Gatsby blog to know when that is published.
