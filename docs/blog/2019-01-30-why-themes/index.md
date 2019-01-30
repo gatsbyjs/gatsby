@@ -55,7 +55,7 @@ To do this, we need to make building sites with Gatsby a lot easier so they’re
 
 Many users really love Gatsby because it lets them accomplish complex tasks with ease.
 
-But for many other users that want easy solutions to a common problems, they find Gatsby too difficult.
+But for many other users, that want easy solutions to a common problems, they find Gatsby too difficult.
 
 Some tweets to that effect:
 
