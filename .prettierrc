@@ -3,5 +3,13 @@
   "semi": false,
   "singleQuote": false,
   "tabWidth": 2,
-  "trailingComma": "es5"
+  "trailingComma": "es5",
+  "overrides": [
+    {
+      "files": ["**/api-node-helpers-docs.js"],
+      "options": {
+        "semi": true
+      }
+    }
+  ]
 }
