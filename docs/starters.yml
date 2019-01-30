@@ -1768,3 +1768,12 @@
     - Creative CSS3 background patterns by Lea Verou
     - Built-in Google Fonts support
     - Social icons with react-social-icons
+- url: https://gatsby-starter-docz.netlify.com/
+  repo: https://github.com/RobinCsl/gatsby-starter-docz
+  description: Simple starter where building your own documentation with Docz is possible
+  tags:
+    - Docz
+    - Documentation
+  features:
+    - Generate nice documentation with Docz, in addition to generating your normal Gatsby site
+    - Document your React components in .mdx files

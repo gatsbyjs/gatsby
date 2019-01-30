@@ -378,6 +378,8 @@
       link: /docs/wordpress-source-plugin-tutorial/
     - title: Adding images to a WordPress site
       link: /docs/image-tutorial/
+    - title: Writing documentation with Docz
+      link: /docs/writing-documentation-with-docz/
 - title: Contributing
   items:
     - title: Community
