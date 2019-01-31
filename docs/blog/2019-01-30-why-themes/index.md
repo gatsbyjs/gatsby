@@ -37,7 +37,7 @@ The level of a given abstraction should be matched to the granularity of a devel
 
 Plugins have been a very successful lower-level abstraction for Gatsby. Themes is our new higher-level abstraction on the [ladder of website abstractions](http://worrydream.com/LadderOfAbstraction/) that will enable a new wave of innovation and usage as people use the abstraction to develop website "products" based on Gatsby they can open source or sell.
 
-## Who’s it for?
+## Who are themes for?
 
 - People new to Gatsby that want to get started quickly without a difficult learning curve
 
