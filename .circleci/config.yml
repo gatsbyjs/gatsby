@@ -247,3 +247,4 @@ workflows:
             branches:
               only:
                 - master
+      - compare_loki_sift-gatsbygram
