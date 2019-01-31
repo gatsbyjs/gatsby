@@ -61,7 +61,7 @@ function compareResults() {
 }
 
 function runRedux() {
-  const cmd = `rm -rf .cache && gatsby build`
+  const cmd = `rm -rf .cache && ./node_modules/.bin/gatsby build`
   console.log(`
 Build with redux nodes:
   > ${cmd}
@@ -78,7 +78,7 @@ Build with redux nodes:
 }
 
 function runLoki() {
-  const cmd = `rm -rf .cache && GATSBY_DB_NODES=loki gatsby build`
+  const cmd = `rm -rf .cache && GATSBY_DB_NODES=loki ./node_modules/.bin/gatsby build`
   console.log(`
 Build with loki nodes:
   > ${cmd}
