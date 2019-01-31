@@ -8,7 +8,7 @@ Usage: compare-loki-sift.sh path/to/gatsby/site"
     exit 1
 fi
 
-npm install -g gatsby-dev-cli &&
+sudo npm install -g gatsby-dev-cli &&
 
 # setting up child integration test link to gatsby packages
 cd "$SRC_PATH" &&
