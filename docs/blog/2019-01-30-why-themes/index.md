@@ -25,11 +25,11 @@ Good systems for creating abstractions help people collaborate on shared solutio
 
 Great abstractions make developers and teams far more powerful and productive as they can leverage the intelligence and experience of many other people. This is why Open Source is so powerful.
 
-Good APIs and systems for creating and sharing abstractions allow individuals, teams, and ecosystems to identify common problems and create and share common solutions to these problems.
+Good APIs and systems for creating and sharing abstractions allow individuals, teams, and ecosystems to identify common problems and create common solutions.
 
 Gatsby is uniquely valuable because our APIs, plugin system, and ecosystem design are uniquely good at enabling the creation and sharing of abstractions.
 
-A great example of this is a little-understood reason for Gatsby’s popularity: Gatsby’s data layer has the highly novel feature of enabling people to build and share data processing primitives that automatically work together and are exposed and controlled through a consistent GraphQL API. In most other frameworks, you’d need to build much of this yourself in a one-off, brittle fashion. Gatsby’s data layer enables simple snapping together of data sourcing and transformation primitives. This saves a ton of time and greatly contributes to Gatsby’s power and ease of use.
+A great example of this is a little-understood reason for Gatsby’s popularity: Gatsby’s data layer has the highly novel feature of enabling people to build and share data processing primitives that automatically work together and are exposed and controlled through a consistent GraphQL API. In most other frameworks, you’d need to build much of this yourself in a one-off, brittle fashion. Gatsby’s data layer enables simple snapping together of data sourcing and transformation primitives enabling the [content mesh](/blog/2018-10-18-creating-compelling-content-experiences/). This saves a ton of time and greatly contributes to Gatsby’s power and ease of use.
 
 The weakness of our abstractions to date, however, is that plugins are all at the same level of abstraction — meaning plugins can’t compose other plugins — which means there’s no way to ship a group of plugins and configuration designed to solve more complex requirements (e.g. a blog which needs Markdown processing, pagination, RSS feed, manifest, etc.).
 
