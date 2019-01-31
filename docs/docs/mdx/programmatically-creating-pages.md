@@ -9,7 +9,7 @@ arbitrary locations outside of `src/pages/` or in remote CMSes.
 For instance, let's say you have a Gatsby website, and you want to add
 support for MDX so you can start your blog. The posts will live in
 `content/posts/`. You can do this with the help of
-`gatsby-source-filesystem`, and some calls to `createPages` in
+`gatsby-source-filesystem` and [`createPages`](/docs/node-apis/#createPages) in
 `gatsby-node.js`.
 
 ## Table of contents
