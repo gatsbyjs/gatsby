@@ -232,8 +232,8 @@ const ListLink = props => (
 // highlight-end
 
 export default ({ children }) => (
+  {/* highlight-start */}
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
-    {/* highlight-start */}
     <header style={{ marginBottom: `1.5rem` }}>
       <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
         <h3 style={{ display: `inline` }}>MySweetSite</h3>
@@ -244,7 +244,7 @@ export default ({ children }) => (
         <ListLink to="/contact/">Contact</ListLink>
       </ul>
     </header>
-    {/* highlight-end */}
+  {/* highlight-end */}
     {children}
   </div>
 )
