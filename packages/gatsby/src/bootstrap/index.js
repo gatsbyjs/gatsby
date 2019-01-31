@@ -175,7 +175,7 @@ module.exports = async (args: BootstrapArgs) => {
       data
     `)
   }
-  const cacheDirectory = `cacheDirectory`
+  const cacheDirectory = `${program.directory}/.cache`
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       // Attempt to empty dir if remove fails,
