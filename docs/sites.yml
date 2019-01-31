@@ -4108,3 +4108,15 @@
     - Landing Page
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: Federico Giacone
+  url: "https://federico.giac.one/"
+  main_url: "https://federico.giac.one"
+  source_url: "https://github.com/leopuleo/federico.giac.one"
+  description: >
+    Digital portfolio for Italian Architect Federico Giacone.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Leonardo Giacone
+  built_by_url: "https://github.com/leopuleo"
+  featured: false
