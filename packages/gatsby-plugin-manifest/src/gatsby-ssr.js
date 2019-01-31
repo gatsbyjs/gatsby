@@ -14,11 +14,10 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   if (pluginOptions.icon) {
     let favicon = icons && icons.length ? icons[0].src : null
 
-    const insertFaviconLinkTag = typeof pluginOptions.include_favicon !== `undefined` ? pluginOptions.include_favicon : true
-      `include_favicon`
-    )
-      ? pluginOptions.include_favicon
-      : true
+    const insertFaviconLinkTag =
+      typeof pluginOptions.include_favicon !== `undefined`
+        ? pluginOptions.include_favicon
+        : true
 
     if (favicon && insertFaviconLinkTag) {
       headComponents.push(
