@@ -19,7 +19,7 @@ First, open a new terminal window and run the following to create a new site:
 gatsby new glamor-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Second, install the Gatsby plugin for Glamor.
+Second, we’ll install the necessary dependencies for Glamor and Gatsby.
 
 ```shell
 npm install --save gatsby-plugin-glamor glamor
