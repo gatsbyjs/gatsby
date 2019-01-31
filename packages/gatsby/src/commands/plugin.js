@@ -1,6 +1,7 @@
 const inquirer = require(`inquirer`)
 const report = require(`gatsby-cli/lib/reporter`)
 const execa = require(`execa`)
+const apiRunner = require(`../utils/api-runner-node`)
 
 const spawn = cmd => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -139,15 +140,33 @@ const addRemove = async (action, plugins) => {
   }
 }
 
+const configurePlugins = async plugins => {
+  report.info(`running api`)
+  plugins.forEach(plugin => {
+    apiRunner(
+      `onConfigurePlugin`,
+      {
+        inquirer: inquirer,
+        existingConfig: {
+          config: `my config here`,
+        },
+      },
+      plugin
+    )
+  })
+}
+
 module.exports = async program => {
   let action = getVerbs(program.action)
   let plugins = program.plugins
 
   switch (action.present) {
     case `add`:
+      // await addRemove(action, plugins)
+      await configurePlugins(plugins)
+      break
     case `remove`:
-      report.info(`add/remove cases`)
-      await addRemove(action, plugins)
+      // await addRemove(action, plugins)
       break
     case `config`:
       report.info(`Code Config Command Here: ${plugins}`)

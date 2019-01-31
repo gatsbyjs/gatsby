@@ -278,8 +278,9 @@ exports.generateSideEffects = true
 /**
  * Lets plugins configure themselves when the `add` or `config` commands are run using the `gatsby plugin` CLI.
  * @param {Object} $0
- * @param {function} $0.prompt - Takes Array of questions to promt Dev to answer. Function from Inquirer.js to prompt user for answers.
+ * @param {function} $0.prompt - Takes Array of questions to prompt Dev to answer. Function from Inquirer.js to prompt user for answers.
  * @param {Object} existingConfig - The current config from the project's `gatsby-config.js`
+ * @returns {Object} Containing an updated or default configuration.
  * @example
  * exports.onConfigurePlugin = ({ prompt }, existingConfig) => {
  *    // Define the information that’s needed.
