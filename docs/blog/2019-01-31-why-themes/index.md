@@ -1,6 +1,6 @@
 ---
 title: "Why Themes?"
-date: "2019-01-30"
+date: "2019-01-31"
 author: "Kyle Mathews"
 tags: ["themes"]
 ---
