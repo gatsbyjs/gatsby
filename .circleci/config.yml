@@ -155,6 +155,7 @@ jobs:
       - run: yarn test:integration
 
   compare_loki_sift-gatsbygram:
+    executor: node
     steps:
       - compare-loki-sift:
           test_path: examples/gatsbygram
