@@ -9,25 +9,21 @@ if the reader is not familiar on how Gatsby works and is set up to follow throug
 
 Otherwise just skip this part and move onto the next part.
 
-## What is Js Search
+## What is JS Search
 
-Js Search is a library created by Brian Vaughn, a member of the core team at Facebook.
-It provides a efficient way to search for data on the client with JavaScript and JSON objects.
-This plugin offers a rich ammount of options to customize the search, making it even faster.
+[JS Search](https://github.com/bvaughn/js-search) is a library created by Brian Vaughn, a member of the core team at Facebook. It provides an efficient way to search for data on the client using JavaScript and JSON objects. It also has extensive customisation options, check out their docs for more details.
 
-The full code and documentation for this library is hosted in [here](https://github.com/bvaughn/js-search).
-
-The example that will be documented here is based on the one done by the creator.
+The full code and documentation for this library is [available on GitHub](https://github.com/bvaughn/js-search). This guide is based on the official js-search example but has been adapted to work with your Gatsby site. 
 
 ## Setup
 
-Open up a terminal and create a new folder that will be used for the project:
+Let's start by creating a new Gatsby site to work with. Open up a terminal and create the folder that you'll use for this project:
 
 ```bash
 mkdir client-search-with-gatsby
 ```
 
-Inside that folder, create a new Gatsby website using a starter template, using the command bellow.
+Inside that folder, create a new Gatsby website using a starter template, using the command below:
 
 ```bash
 npx gatsby new jsSearchExample https://github.com/gatsbyjs/gatsby-starter-default
@@ -57,7 +53,7 @@ Both approaches documented here are fairly generalistic so that most of the opti
 
 ## First approach
 
-The approach documented bellow is a fairly simple one, by having the component fetch the data and create the search engine.
+The approach documented below is a fairly simple one, by having the component fetch the data and create the search engine.
 
 Start by creating a file in the `components` folder, for this particular case the name will be `SearchContainer.js` and inside of it the following baseline code will be added to get started:
 
@@ -215,19 +211,18 @@ export default Search
 Breaking down the code into smaller parts:
 
 1. When the component is mounted, the `componentDidMount()` lifecycle method is triggered and the data will be fetched.
-2. If no errors occur, the data recieved is added to the state and the `rebuildIndex()` function is invoked.
+2. If no errors occur, the data received is added to the state and the `rebuildIndex()` function is invoked.
 3. The search engine is then created and configured with the options provided in the component's state.
-4. The data that was recieved is then added and indexed using js-search.
-5. When the contents of the input is changed, the js-plugin starts the search process based on it and returns the contents, which is then presented to the user via the `DataTable` component.
+4. The data that was received is then added and indexed using js-search.
+5. When the contents of the input change, `js-search` starts the search process based on the updated input and returns the contents, which is then presented to the user via the `DataTable` component.
 
 Note:
 
-For brevity purposes, most of the component implementation is ommited, with the exception of the es6 fat arrow function `searchData()`, as this one is responsible for making the search, also the implementation of the `DataTable` component and the page holding this component will not shown. The full code of this example is available in [here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search).
+For brevity purposes, most of the component implementation is omited, with the exception of the `searchData()` function, as this one is responsible for making the search, also the implementation of the `DataTable` component and the page holding this component is not shown. The full code of this example is available [in the js-search repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search).
 
 ## Second approach
 
-This approach takes advantage of Gatsby's APIs to prefetch the data, process it if needed and generate the search engine options beforehand, all of this achieved during the build process.
-In order to accomplish this, some changes are required to the project.
+This approach takes advantage of Gatsby's APIs to prefetch the data, process it if needed and generate the search engine options beforehand, all of this achieved during the build process. In order to accomplish this, some changes are required to the project.
 
 Starting by modifying the `gatsby-node.js` file by adding the following code:
 
@@ -275,11 +270,9 @@ exports.createPages = ({ actions }) => {
 }
 ```
 
-As contrary of what happened with the first approach documented, instead of letting the component do all of the work, it's Gatsby's job to do the work and pass all the data to a page defined by the path object, via [pageContext](https://www.gatsbyjs.org/docs/behind-the-scenes-terminology/#pagecontext).
+Contrary to our earlier approach, instead of letting the component do all of the work, it's Gatsby's job to do the work and pass all the data to a page defined by the path object, via [pageContext](https://www.gatsbyjs.org/docs/behind-the-scenes-terminology/#pagecontext).
 
-With that, a couple of new components are needed to reflect this changes.
-
-The first one to be created will be the template to be used by the page itself.
+Let's do this by adding a couple of new components. The first will be your page template component.
 
 It will be created in the following location `/src/templates`, under the name `ClientSearchTemplate.js`, with the following code:
 
@@ -311,7 +304,7 @@ const SearchTemplate = props => {
 export default SearchTemplate
 ```
 
-And the second one, created in the `components` folder, called `ClientSearch.js`, with the following code as a baseline:
+Now add the second component. Add a file called `ClientSearch.js` to the `components` folder, with the following code as a baseline:
 
 ```javascript
 import React, { Component } from 'react'
@@ -359,6 +352,6 @@ The code used in here is almost identical to the one documented in the first app
 
 But there is a slight diference although, it will be used the React `getDerivedStateFromProps()` lifecycle method to adjust the component state accordingly and then `componentDidMount()` to instatiate the client side search, based on the options defined by the state. With this, all of the data will be already available as soon as the specified endpoint is reached, and searching can be made almost instantly.
 
-Hope that this rather extensive guide shed some insights on how to implement client search using js-search.
+Hopefully this guide has shed some insights on how you can implement client search using js-search.
 
-Now go make something great.
+Now go and make something great!
