@@ -287,11 +287,15 @@ module.exports = (args: Object) => {
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
   if (isEqId(firstOnly, fieldsToSift, siftArgs)) {
-    return resolveRecursive(
-      getNode(siftArgs[0].id[`$eq`]),
-      fieldsToSift,
-      gqlType.getFields()
-    ).then(node => (node ? [node] : []))
+    const node = getNode(siftArgs[0].id[`$eq`])
+
+    if (!node || (node.internal && node.internal.type !== gqlType.name)) {
+      return []
+    }
+
+    return resolveRecursive(node, fieldsToSift, gqlType.getFields()).then(
+      node => (node ? [node] : [])
+    )
   }
 
   return resolveNodes(
