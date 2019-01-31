@@ -54,6 +54,30 @@ class Page extends React.Component {
 }
 ```
 
+## Partial Link matching
+
+The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
+
+- We may want `/blog/hello-world` to match `<Link to="/blog">`
+- Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
+
+In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+// This link will get the active class when it partially matches the current URL
+const PartialNavLink = props => (
+  <Link
+    getProps={({ isPartiallyCurrent }) => {
+      return isPartiallyCurrent ? { className: "active" } : null
+    }}
+  />
+)
+```
+
+Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
+
 ## Replacing history entry
 
 You can pass boolean `replace` property to replace previous history entry.
@@ -76,6 +100,26 @@ render () {
 ```
 
 Using `replace` also won't scroll the page after navigation.
+
+## Passing props to Link targets
+
+Sometimes you'll want to pass data from the source page to the linked page. You can do this by passing a `state` prop to the `Link` component or on a call to the `navigate` function. The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
+
+```jsx
+const NewsFeed = () => (
+  <div>
+    <Link to="photos/123" state={{ fromFeed: true }} />
+  </div>
+)
+
+const Photo = ({ location, photoId }) => {
+  if (location.state.fromFeed) {
+    return <FromFeedPhoto id={photoId} />
+  } else {
+    return <Photo id={photoId} />
+  }
+}
+```
 
 ## Programmatic navigation
 

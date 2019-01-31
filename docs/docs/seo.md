@@ -24,7 +24,7 @@ Starting in January 2018, Google [rewards faster sites with a bump in search ran
 
 ### Page metadata
 
-Add metadata to pages, such as page title and description, helps search engines understand your content and when to show your pages in search results.
+Adding metadata to pages, such as page title and description, helps search engines understand your content and when to show your pages in search results.
 
 A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/packages/gatsby-plugin-react-helmet) for SSR support) to your page components.
 

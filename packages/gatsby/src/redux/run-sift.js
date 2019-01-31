@@ -18,20 +18,6 @@ const enhancedNodeCacheId = ({ node, args }) =>
       })
     : null
 
-const nodesCache = new Map()
-
-function loadNodes(type) {
-  let nodes
-  // this caching can be removed if we move to loki
-  if (process.env.NODE_ENV === `production` && nodesCache.has(type)) {
-    nodes = nodesCache.get(type)
-  } else {
-    nodes = getNodesByType(type)
-    nodesCache.set(type, nodes)
-  }
-  return nodes
-}
-
 /////////////////////////////////////////////////////////////////////
 // Parse filter
 /////////////////////////////////////////////////////////////////////
@@ -62,22 +48,19 @@ function siftifyArgs(object) {
 
 // Build an object that excludes the innermost leafs,
 // this avoids including { eq: x } when resolving fields.
-function extractFieldsToSift(prekey, key, preobj, obj, val) {
-  if (_.isPlainObject(val)) {
-    _.forEach((val: any), (v, k) => {
-      if (k === `elemMatch`) {
-        // elemMatch is operator for arrays and not field we want to prepare
-        // so we need to skip it
-        extractFieldsToSift(prekey, key, preobj, obj, v)
-        return
-      }
-      preobj[prekey] = obj
-      extractFieldsToSift(key, k, obj, {}, v)
-    })
-  } else {
-    preobj[prekey] = true
-  }
-}
+const extractFieldsToSift = filter =>
+  Object.keys(filter).reduce((acc, key) => {
+    let value = filter[key]
+    let k = Object.keys(value)[0]
+    let v = value[k]
+    if (_.isPlainObject(value) && _.isPlainObject(v)) {
+      acc[key] =
+        k === `elemMatch` ? extractFieldsToSift(v) : extractFieldsToSift(value)
+    } else {
+      acc[key] = true
+    }
+    return acc
+  }, {})
 
 /**
  * Parse filter and returns an object with two fields:
@@ -87,19 +70,16 @@ function extractFieldsToSift(prekey, key, preobj, obj, val) {
  */
 function parseFilter(filter) {
   const siftArgs = []
-  const fieldsToSift = {}
+  let fieldsToSift = {}
   if (filter) {
     _.each(filter, (v, k) => {
-      // Ignore connection and sorting args.
-      if (_.includes([`skip`, `limit`, `sort`], k)) return
-
       siftArgs.push(
         siftifyArgs({
           [k]: v,
         })
       )
-      extractFieldsToSift(``, k, {}, fieldsToSift, v)
     })
+    fieldsToSift = extractFieldsToSift(filter)
   }
   return { siftArgs, fieldsToSift }
 }
@@ -275,13 +255,7 @@ function handleMany(siftArgs, nodes, sort) {
       .map(field => field.replace(/___/g, `.`))
       .map(field => v => _.get(v, field))
 
-    // Gatsby's sort interface only allows one sort order (e.g `desc`)
-    // to be specified. However, multiple sort fields can be
-    // provided. This is inconsistent. The API should allow the
-    // setting of an order per field. Until the API can be changed
-    // (probably v3), we apply the sort order to the first field only,
-    // implying asc order for the remaining fields.
-    result = _.orderBy(result, convertedFields, [sort.order])
+    result = _.orderBy(result, convertedFields, sort.order)
   }
   return result
 }
@@ -306,18 +280,22 @@ module.exports = (args: Object) => {
   const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
 
   // If nodes weren't provided, then load them from the DB
-  const nodes = args.nodes || loadNodes(gqlType.name)
+  const nodes = args.nodes || getNodesByType(gqlType.name)
 
   const { siftArgs, fieldsToSift } = parseFilter(clonedArgs.filter)
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
   if (isEqId(firstOnly, fieldsToSift, siftArgs)) {
-    return resolveRecursive(
-      getNode(siftArgs[0].id[`$eq`]),
-      fieldsToSift,
-      gqlType.getFields()
-    ).then(node => (node ? [node] : []))
+    const node = getNode(siftArgs[0].id[`$eq`])
+
+    if (!node || (node.internal && node.internal.type !== gqlType.name)) {
+      return []
+    }
+
+    return resolveRecursive(node, fieldsToSift, gqlType.getFields()).then(
+      node => (node ? [node] : [])
+    )
   }
 
   return resolveNodes(
