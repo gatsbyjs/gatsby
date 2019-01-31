@@ -2,7 +2,7 @@
 title: Glamor
 ---
 
-In this guide, we'll walk through setting up a site with the CSS-in-JS library [Glamor](https://github.com/threepointone/glamor).
+In this guide, you will learn setting up a site with the CSS-in-JS library [Glamor](https://github.com/threepointone/glamor).
 
 Glamor is not actively maintained, the maintainer recommends using [Emotion](/docs/emotion).
 
@@ -19,7 +19,7 @@ First, open a new terminal window and run the following to create a new site:
 gatsby new glamor-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Second, we’ll install the necessary dependencies for Glamor and Gatsby.
+Second, install the necessary dependencies for Glamor and Gatsby.
 
 ```shell
 npm install --save gatsby-plugin-glamor glamor
