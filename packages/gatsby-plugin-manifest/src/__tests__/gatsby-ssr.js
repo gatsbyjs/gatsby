@@ -47,7 +47,7 @@ describe(`gatsby-plugin-manifest`, () => {
     expect(headComponents).toMatchSnapshot()
   })
 
-  it(`Adds link favicon if "include_favicon" option as is not provided `, () => {
+  it(`Adds link favicon if "include_favicon" option is not provided`, () => {
     onRenderBody(ssrArgs, { icon: true })
     expect(headComponents).toMatchSnapshot()
   })
