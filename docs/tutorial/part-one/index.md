@@ -136,9 +136,7 @@ Take the example of creating a custom button. In the past, you would
 create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
 
 ```html
-<button class="primary-button">
-  Click me
-</button>
+<button class="primary-button">Click me</button>
 ```
 
 In the world of components, you instead create a `PrimaryButton` component with your button styles and use it throughout your site like:
@@ -333,7 +331,7 @@ export default () => (
 )
 ```
 
-After you save the file, you should be see the contact page, and be able to link between it and the homepage.
+After you save the file, you should see the contact page and be able to link between it and the homepage.
 
 <video controls="controls" loop="true">
   <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>

@@ -20,7 +20,7 @@ plugins: [`gatsby-plugin-postcss`],
 
 3.  Write your stylesheets using PostCSS (.css files) and require or import them as normal.
 
-If you need to pass options to PostCSS use the plugins options; see postcss-loader for all available options.
+If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader) for all available options.
 
 #### Syntax example
 

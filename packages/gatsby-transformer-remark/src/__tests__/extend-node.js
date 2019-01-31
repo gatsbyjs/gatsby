@@ -186,7 +186,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    { additionalParameters: { excerpt_separator: `<!-- end -->` } }
   )
 
   const content = `---

@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.27...gatsby-source-contentful@2.0.28) (2019-01-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.27"></a>
+
+## [2.0.27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.26...gatsby-source-contentful@2.0.27) (2019-01-23)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** checking if entryItemFieldValue[0] exists ([#11087](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/11087)) ([a11f79a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/a11f79a))
+
+<a name="2.0.26"></a>
+
+## [2.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.24...gatsby-source-contentful@2.0.26) (2019-01-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+<a name="2.0.24"></a>
+
+## [2.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.23...gatsby-source-contentful@2.0.24) (2019-01-11)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Fix check for fluid and fixed size fliters ([#11009](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/11009)) ([aeb2bbd](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/aeb2bbd))
+
 <a name="2.0.23"></a>
 
 ## [2.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.22...gatsby-source-contentful@2.0.23) (2019-01-09)

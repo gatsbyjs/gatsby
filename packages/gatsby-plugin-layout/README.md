@@ -101,7 +101,7 @@ import React from "react"
 const defaultContextValue = {
   data: {
     // set your initial data shape here
-    showMenu: false,
+    menuOpen: false,
   },
   set: () => {},
 }
