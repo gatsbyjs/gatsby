@@ -175,10 +175,10 @@ module.exports = async (args: BootstrapArgs) => {
       data
     `)
   }
-
+  const cacheDirectory = `cacheDirectory`
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
-      await fs.remove(`${program.directory}/.cache`)
+      await fs.remove(cacheDirectory)
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
     }
@@ -197,7 +197,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Now that we know the .cache directory is safe, initialize the cache
   // directory.
-  await fs.ensureDir(`${program.directory}/.cache`)
+  await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)
@@ -213,7 +213,7 @@ module.exports = async (args: BootstrapArgs) => {
       parentSpan: bootstrapSpan,
     })
     activity.start()
-    const dbSaveFile = `${program.directory}/.cache/loki/loki.db`
+    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
     try {
       await loki.start({
         saveFile: dbSaveFile,
@@ -236,7 +236,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
-  const siteDir = `${program.directory}/.cache`
+  const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
     await fs.copy(srcDir, siteDir, {
@@ -245,12 +245,12 @@ module.exports = async (args: BootstrapArgs) => {
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
       clobber: true,
     })
-    await fs.ensureDirSync(`${program.directory}/.cache/json`)
+    await fs.ensureDirSync(`${cacheDirectory}/json`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
     // the data used to create the schema they're dependent on is available.
-    await fs.emptyDir(`${program.directory}/.cache/fragments`)
+    await fs.emptyDir(`${cacheDirectory}/fragments`)
   } catch (err) {
     report.panic(`Unable to copy site files to .cache`, err)
   }
