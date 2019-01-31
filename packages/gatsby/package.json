@@ -96,7 +96,6 @@
     "null-loader": "^0.1.1",
     "opentracing": "^0.14.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "parse-filepath": "^1.0.1",
     "physical-cpu-count": "^2.0.0",
     "postcss-flexbugs-fixes": "^3.0.0",
     "postcss-loader": "^2.1.3",
