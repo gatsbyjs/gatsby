@@ -14,7 +14,7 @@ plugins](/packages/gatsby-remark-images/?=gatsby-remark),
 including
 [`gatsby-remark-images`](https://next.gatsbyjs.org/packages/gatsby-remark-images/?=gatsby-remark).
 
-To enable gatsby-remark-images, you first need to install the relevant
+To enable `gatsby-remark-images`, you first need to install the relevant
 image plugins:
 
 ```shell
