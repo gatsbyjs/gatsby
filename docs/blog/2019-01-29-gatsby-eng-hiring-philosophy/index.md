@@ -1,6 +1,6 @@
 ---
 title: Gatsby Inc's Product & Engineering Hiring Philosophy
-date: 2019-01-29
+date: 2019-02-07
 author: Sam Bhagwat
 ---
 
