@@ -25,15 +25,15 @@ Good systems for creating abstractions help people collaborate on shared solutio
 
 Great abstractions make developers and teams far more powerful and productive as they can leverage the intelligence and experience of many other people. This is why Open Source is so powerful.
 
-Good APIs and systems for creating and sharing abstractions allows individuals, teams, ecosystems to identify common problems and create and share common solutions to these problems.
+Good APIs and systems for creating and sharing abstractions allow individuals, teams, and ecosystems to identify common problems and create and share common solutions to these problems.
 
 Gatsby is uniquely valuable because our APIs, plugin system, and ecosystem design are uniquely good at enabling the creation and sharing of abstractions.
 
-A great example of this is a little-understood reason for Gatsby’s popularity. Gatsby’s data layer has the highly novel feature of enabling people to build and share data processing primitives that automatically work together and are exposed and controlled through a consistent GraphQL API. In most other frameworks, you’d need to build much of this yourself in a one-off brittle fashion. Gatsby’s data layer enables simple snapping together of data sourcing and transformation primitives. This saves a ton of time and greatly contributes to Gatsby’s power and ease of use.
+A great example of this is a little-understood reason for Gatsby’s popularity: Gatsby’s data layer has the highly novel feature of enabling people to build and share data processing primitives that automatically work together and are exposed and controlled through a consistent GraphQL API. In most other frameworks, you’d need to build much of this yourself in a one-off, brittle fashion. Gatsby’s data layer enables simple snapping together of data sourcing and transformation primitives. This saves a ton of time and greatly contributes to Gatsby’s power and ease of use.
 
-The weakness of our abstractions to date, however, is that plugins are all at the same level of abstraction meaning plugins can’t compose other plugins. Which means there’s no way to ship a group of plugins and configuration designed to solve more complex requirements e.g. a blog which needs markdown processing, pagination, RSS feed, manifest, etc.
+The weakness of our abstractions to date, however, is that plugins are all at the same level of abstraction — meaning plugins can’t compose other plugins — which means there’s no way to ship a group of plugins and configuration designed to solve more complex requirements (e.g. a blog which needs Markdown processing, pagination, RSS feed, manifest, etc.).
 
-The level of a given abstraction should be matched to the granularity of a developer’s intent. Many developers _do_ want fine-grained control over how they build their sites. They’re happy to dig into how Gatsby’s data layer works, learn GraphQL, play around with plugins, etc. Especially if Gatsby is a tool they’ll be using extensively to build many types of sites. But for many people, they just want a blog and are frustrated that Gatsby makes it difficult to get that.
+The level of a given abstraction should be matched to the granularity of a developer’s intent. Many developers _do_ want fine-grained control over how they build their sites. They’re happy to dig into how Gatsby’s data layer works, learn GraphQL, play around with plugins, etc., especially if Gatsby is a tool they’ll be using extensively to build many types of sites. But for many people, they just want a blog and are frustrated that Gatsby requires jumping through extra hoops to get there.
 
 Plugins have been a very successful lower-level abstraction for Gatsby. Themes is our new higher-level abstraction on the [ladder of website abstractions](http://worrydream.com/LadderOfAbstraction/) that will enable a new wave of innovation and usage as people use the abstraction to develop website "products" based on Gatsby they can open source or sell.
 
@@ -47,11 +47,11 @@ Plugins have been a very successful lower-level abstraction for Gatsby. Themes i
 
 - Designers who want to create unique/beautiful website designs to share with others
 
-## Why build it?
+## Why build themes?
 
-We want everyone in the world using Gatsby.
+We want everyone in the world to use Gatsby.
 
-To do this, we need to make building sites with Gatsby a lot easier so they’re accessible to far more people and use cases.
+To make this possible, we need to make building sites with Gatsby a lot easier so they’re accessible to far more people and use cases.
 
 Many users really love Gatsby because it lets them accomplish complex tasks with ease.
 
