@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "gatsby": "^2.0.104",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1"
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
   },
   "repository": {
     "type": "git",
