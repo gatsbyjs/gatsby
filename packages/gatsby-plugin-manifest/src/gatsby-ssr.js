@@ -1,10 +1,11 @@
 import React from "react"
 import { withPrefix } from "gatsby"
-import { defaultIcons } from "./common.js"
+import { defaultIcons, createContentDigest, addDigestToPath } from "./common.js"
 import fs from "fs-extra"
-let cacheId = null
 
-exports.onRenderBody = ({ createContentDigest, setHeadComponents }, pluginOptions) => {
+let iconDigest = null
+
+exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
@@ -12,9 +13,18 @@ exports.onRenderBody = ({ createContentDigest, setHeadComponents }, pluginOption
   const legacy =
     typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 
-  // The user has an option to opt out of the favicon link tag being inserted into the head.
+  const cacheBusting =
+    typeof pluginOptions.cache_busting_mode !== `undefined`
+      ? pluginOptions.cache_busting_mode
+      : `query`
+
+  // If icons were generated, also add a favicon link.
   if (pluginOptions.icon) {
     let favicon = icons && icons.length ? icons[0].src : null
+
+    if (!iconDigest && cacheBusting !== `none`) {
+      iconDigest = createContentDigest(fs.readFileSync(pluginOptions.icon))
+    }
 
     const insertFaviconLinkTag =
       typeof pluginOptions.include_favicon !== `undefined`
@@ -26,22 +36,10 @@ exports.onRenderBody = ({ createContentDigest, setHeadComponents }, pluginOption
         <link
           key={`gatsby-plugin-manifest-icon-link`}
           rel="shortcut icon"
-          href={withPrefix(favicon)}
+          href={withPrefix(addDigestToPath(favicon, iconDigest, cacheBusting))}
         />
       )
     }
-
-    if (!cacheId) {
-      cacheId = createContentDigest(fs.readFileSync(`public${favicon}`))
-    }
-
-    setHeadComponents([
-      <link
-        key={`gatsby-plugin-manifest-icon-link`}
-        rel="shortcut icon"
-        href={[withPrefix(favicon), cacheId].join(`?`)}
-      />,
-    ])
   }
 
   // Add manifest link tag.
@@ -77,7 +75,7 @@ exports.onRenderBody = ({ createContentDigest, setHeadComponents }, pluginOption
         key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
         rel="apple-touch-icon"
         sizes={icon.sizes}
-        href={withPrefix(`${icon.src}`)}
+        href={withPrefix(addDigestToPath(icon.src, iconDigest, cacheBusting))}
       />
     ))
 
