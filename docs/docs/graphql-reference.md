@@ -90,6 +90,8 @@ You can also sort on multiple fields but the `sort` keyword can only be used onc
 
 `Children's Anthology of Monsters` and `Break with Banshee` both have the same date (`1992-01-02`) but in the first query (only one sort field) the latter comes after the first. The additional sorting on the `title` puts `Break with Banshee` in the right order.
 
+By default, sort `fields` will be sorted in ascending order. Optionally, you can specify a sort `order` per field by providing an array of `ASC` (for ascending) or `DESC` (for descending) values. For example, to sort by `frontmatter.date` in ascending order, and additionally by `frontmatter.title` in descending order, you would use `sort: { fields: [frontmatter___date, frontmatter___title], order: [ASC, DESC] }`. Note that if you only provide a single sort `order` value, this will affect the first sort field only, the rest will be sorted in default ascending order.
+
 ## Format
 
 ### Dates
