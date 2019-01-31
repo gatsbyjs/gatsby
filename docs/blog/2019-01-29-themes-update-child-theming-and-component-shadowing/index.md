@@ -38,7 +38,7 @@ out child theming are:
 - Someone familiar with GraphQL wants to enable new functionality by writing
   their own queries for page templates
 
-I also want child themes to enable an ecosystem to build on top of and compose
+We also want child themes to enable an ecosystem to build on top of and compose
 with each other. The 80% use case for a blog should be capable of being built on
 a similar data model encapsulated in a parent theme so that users can swap out
 child themes to try out new sites or new looks. This will take some more effort
@@ -95,7 +95,7 @@ module.exports = {
 
 The end result from a theme's composition view is that we apply the parent, then
 the child, then the user's site. This opens up a whole host of additional
-possiblities as child themes can have multiple parents or compose with each
+possibilities as child themes can have multiple parents or compose with each
 other. Data models for blogging and ecommerce can be combined into a usable
 child theme and distributed as a single npm package. Users don't need to know
 your theme is made up of multiple parents.
@@ -126,6 +126,6 @@ components from `src/components/<theme-name>` to `src/<theme-name>/components`.
 
 ## What's next?
 
-I'm working on a roadmap post for themes which will give more insight into the
-future of theming, how we're approaching stability, and what we're working on
-next. Check back on the Gatsby blog to know when that is published.
+We are working on a roadmap post for themes which will give more insight into
+the future of theming, how we're approaching stability, and what we're working
+on next. Check back on the Gatsby blog to know when that is published.
