@@ -33,8 +33,8 @@ out child theming are:
 
 - A designer who wants to change a set of design tokens to create a whole new
   look for a theme
-- Someone who is more familiar with HTML and CSS than React and GraphQL wants to
-  create a set of child blog themes
+- Someone who is more familiar with HTML and CSS than React and GraphQL and
+  wants to create a set of child blog themes
 - Someone familiar with GraphQL wants to enable new functionality by writing
   their own queries for page templates
 
@@ -62,7 +62,7 @@ encapsulate the data model. We'll skip going over page creation logic in
 `gatsby-node.js` and instead focus on the following possible `gatsby-config.js`
 for the core theme.
 
-```js
+```js:title=gatsby-theme-blog-core/gatsby-config.js
 module.exports = {
   plugins: [`gatsby-mdx`],
 }
@@ -76,7 +76,7 @@ beautiful posts on each blog using any styling technology we want, like
 this is a post on child theming itself we'll skip looking at how shadowing is
 applied to the parent and focus on one possible child theme `gatsby-config.js`.
 
-```js
+```js:title=gatsby-theme-blog/gatsby-config.js
 module.exports = {
   __experimentalThemes: [`gatsby-theme-blog-core`],
   plugins: [`gatsby-plugin-emotion`],
@@ -87,7 +87,7 @@ Now that we've composed the original data model (with page creation logic) with
 the plugins and shadowed components to build the UI, any user can use our theme
 by specifying only the child in their `gatsby-config.js`.
 
-```js
+```js:title=my-site/gatsby-config.js
 module.exports = {
   __experimentalThemes: [`gatsby-theme-blog`],
 }
