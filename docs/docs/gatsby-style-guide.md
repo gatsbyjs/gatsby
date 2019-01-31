@@ -450,7 +450,7 @@ Attributes:
 - new to React and interested in it
 - new to Gatsby and interested in it
 - new to JavaScript ecosystem and interested in it
-- proficient with browsers and operating systems
+- proficient with browsers and operating system basics
 
 Looking for:
 
@@ -470,8 +470,8 @@ By following the steps in the tutorial, a user should:
 - Know how to and actually start and deploy a site as quickly as possible.
 - Be able to share their site.
 - Know how to and actually find more advanced tutorials and docs.
-- Have fun!
 - Use enough React to do basic tasks like creating pages, links, styles.
+- Have fun!
 
 ### Tutorial tone and style
 
@@ -532,7 +532,7 @@ By referencing the docs, a user should:
   - blogs
   - portfolio
   - e-commerce
-  - authentication
+  - authenticated
 
 ### Docs tone and style
 
@@ -546,7 +546,7 @@ The docs use the personal “you” to address the user.
 
 Because the audience of the docs is people who have intermediate to expert level of mastery with React, it's important to provide the information needed to complete tasks in addition to all relevant and helpful context, references, and alternatives. The goal: give people the information necessary to get tasks done as quickly and effectively as possible.
 
-In practice, you can reach this goal by two rules of thumb:
+In practice, you can reach this goal by two general rules:
 
 - Include an "additional information" section at the bottom of each guide with hyperlinks to relevant external blogposts, tutorials, and other Gatsby resources and docs.
 - When there are multiple ways to complete a task, [follow these instructions](#share-best-practices-whenever-possible).
