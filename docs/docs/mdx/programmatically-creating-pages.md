@@ -3,7 +3,7 @@ title: Programmatically Creating Pages
 ---
 
 Sometimes you want to be able to programmatically access data from
-files in `src/pages` or create pages using MDX content that lives at
+files in `src/pages/` or create pages using MDX content that lives at
 arbitrary locations outside of `src/pages/` or in remote CMSes.
 
 For instance, let's say you have a Gatsby website, and you want to add
