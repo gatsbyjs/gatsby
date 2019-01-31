@@ -3944,6 +3944,14 @@
     - Health & Wellness
   built_by: Jack Oliver
   built_by_url: "https://twitter.com/mrjackolai"
+- title: TheAgencyProject
+  main_url: "https://theagencyproject.co"
+  url: "https://theagencyproject.co"
+  description: Agency model, without agency overhead.
+  categories:
+    - agency
+  built_by: JV-LA
+  built_by_url: https://jv-la.com
 - title: Karen Hou's portfolio
   main_url: https://www.karenhou.com/
   url: https://www.karenhou.com/
