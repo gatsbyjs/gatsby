@@ -100,7 +100,7 @@ Possible sources of great research materials:
 - docs (on gatsbyjs.org and other sites)
 - video tutorials
 - Discord, Spectrum, or Twitter conversations
-- Google search results
+- search engine results
 - presentations you or others have given
 - textbooks
 - dreams
@@ -171,9 +171,9 @@ abstract syntax tree (AST) is ..."
 
 ### Use SEO optimized titles
 
-This explains how to create a doc that shows up in Google searches.
+This explains how to create a doc that shows up in search engines like Google or Bing.
 
-When you create the new guide or tutorial under /docs/, you’ll either create a file or a folder if there will be images pulled into the doc.
+When you create the new guide or tutorial under `/docs/`, you’ll either create a file or a folder if there will be images pulled into the doc.
 
 File:
 `querying-data-with-graphql.md`
@@ -187,7 +187,7 @@ Folder:
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
-Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use Google to search for things like "gatsby graphql", so the article title should ideally reflect what people might search for on Google.
+Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use a search engine to find topics like "gatsby graphql", so the article title should ideally reflect common search terms.
 
 Here are some title examples:
 
@@ -504,7 +504,7 @@ Attributes:
 
 - intermediate to advanced at React
 - front-end developer
-- prefer using google search and/or `ctrl + f` to find things on the gatsbyjs.org site
+- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
 
 Looking for:
 
