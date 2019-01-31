@@ -26,7 +26,7 @@ If you don't have `gatsby-source-filesystem` installed, also install that.
 Then configure the plugins. `gatsby-source-filesystem` needs to be
 pointed at wherever you have your images on disk,
 `gatsby-remark-images` needs to be a sub-plugin of `gatsby-mdx`, and
-`gatsby-plugin-sharp` can be included on it's own.
+`gatsby-plugin-sharp` can be included on its own.
 
 ```javascript=gatsby-config.js
 module.exports = {
