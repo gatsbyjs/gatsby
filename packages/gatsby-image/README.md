@@ -162,7 +162,7 @@ you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include
 [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/),
-[gatsby-source-contentful](/packages/gatsby-source-contentful/) and [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms).
+[gatsby-source-contentful](/packages/gatsby-source-contentful/), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity).
 
 Their fragments are:
 
@@ -200,6 +200,13 @@ Their fragments are:
 - `GatsbyDatoCmsFixed_noBase64`
 - `GatsbyDatoCmsFluid`
 - `GatsbyDatoCmsFluid_noBase64`
+
+### gatsby-source-sanity
+
+- `GatsbySanityImageFixed`
+- `GatsbySanityImageFixed_noBase64`
+- `GatsbySanityImageFluid`
+- `GatsbySanityImageFluid_noBase64`
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment

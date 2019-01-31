@@ -15,6 +15,7 @@ const queue = require(`./query-queue`)
 const { store, emitter } = require(`../../redux`)
 
 let queuedDirtyActions = []
+
 let active = false
 let running = false
 
@@ -63,6 +64,12 @@ emitter.on(`CREATE_NODE`, action => {
 
 emitter.on(`DELETE_NODE`, action => {
   queuedDirtyActions.push({ payload: action.payload })
+})
+
+emitter.on(`CREATE_PAGE`, action => {
+  if (action.contextModified) {
+    exports.queueQueryForPathname(action.payload.path)
+  }
 })
 
 const runQueuedActions = async () => {

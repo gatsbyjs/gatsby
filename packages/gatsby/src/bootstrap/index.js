@@ -11,11 +11,11 @@ const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const mergeGatsbyConfig = require(`../utils/merge-gatsby-config`)
 const getBrowserslist = require(`../utils/browserslist`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
+const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
@@ -84,32 +84,13 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    const themesConfig = await Promise.mapSeries(
-      config.__experimentalThemes,
-      async plugin => {
-        const themeName = plugin.resolve || plugin
-        const themeConfig = plugin.options || {}
-        const theme = await preferDefault(
-          getConfigFile(themeName, `gatsby-config`)
-        )
-        // if theme is a function, call it with the themeConfig
-        let themeConfigObj = theme
-        if (_.isFunction(theme)) {
-          themeConfigObj = theme(themeConfig)
-        }
-        // themes function as plugins too (gatsby-node, etc)
-        return {
-          ...themeConfigObj,
-          plugins: [
-            ...(themeConfigObj.plugins || []),
-            // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-            { resolve: themeName, options: themeConfig },
-          ],
-        }
-      }
-    ).reduce(mergeGatsbyConfig, {})
+    const themes = await loadThemes(config)
+    config = themes.config
 
-    config = mergeGatsbyConfig(themesConfig, config)
+    store.dispatch({
+      type: `SET_RESOLVED_THEMES`,
+      payload: themes.themes,
+    })
   }
 
   if (config && config.polyfill) {

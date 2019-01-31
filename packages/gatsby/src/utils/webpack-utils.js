@@ -6,6 +6,8 @@ const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
 
+const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
+
 const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
 
@@ -91,6 +93,7 @@ export type PluginUtils = BuiltinPlugins & {
   extractText: PluginFactory,
   uglify: PluginFactory,
   moment: PluginFactory,
+  extractStats: PluginFactory,
 }
 
 /**
@@ -477,6 +480,8 @@ module.exports = async ({
     })
 
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
+
+  plugins.extractStats = options => new GatsbyWebpackStatsExtractor(options)
 
   return {
     loaders,
