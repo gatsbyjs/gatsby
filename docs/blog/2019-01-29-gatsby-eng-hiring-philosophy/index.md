@@ -212,4 +212,4 @@ Ex-PayPal-ers attribute this unusual outcome to two things.
 
 At Gatsby, we’re building the future of the content web. 
 
-In five years, we believe 7% of the web will be running on Gatsby. All of us at Gatsby will be shaping how that happens. Over the next 10 to 20 years, the content web -- how we compose and curate content, design, build, and deploy our sites, and interact with readers will be shaped by your work here, and if you’ve moved on to the next step on your journey, the work you do next. 
+In five years, we believe 7% of the web will be running on Gatsby. All of us at Gatsby will be shaping how that happens. Over the next 10 to 20 years, the content web -- how we compose and curate content, design, develop, and deploy our sites, and interact with readers will be shaped by your work.
