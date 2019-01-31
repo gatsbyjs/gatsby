@@ -291,7 +291,7 @@ alert(s)
 
 #### Code formatting: Line highlighting
 
-You may also choose in include line highlighting in your code snippets, using the following keywords inline in the snippet:
+You may also choose to include line highlighting in your code snippets, using the following keywords inline in the snippet:
 
 ##### `highlight-line`: highlights the current line
 
@@ -496,14 +496,14 @@ In practice, you can reach this goal by two rules of thumb:
 
 ### Docs audience
 
-Through research, it's clear that developers of all skill levels read the docs and find them useful.
+Developers of all skill levels read the docs and find them useful.
 
-The tutorial should focus on helping users with the following attributes and goals.
+The docs should focus on helping users with the following attributes and goals.
 
 Attributes:
 
 - intermediate to advanced at React
-- front-end developer
+- frontend developer
 - prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
 
 Looking for:
@@ -544,7 +544,7 @@ The docs use the personal “you” to address the user.
 
 #### Give experts as much relevant info to get the task done as quickly as possible
 
-Because the audience of the docs is people who have intermediate to expert level of mastery with React, it's important to provide the information needed to complete tasks in addition to all relevant and helpful context, references,and alternatives. The goal: give people the information necessary to get tasks done as quickly and effectively as possible.
+Because the audience of the docs is people who have intermediate to expert level of mastery with React, it's important to provide the information needed to complete tasks in addition to all relevant and helpful context, references, and alternatives. The goal: give people the information necessary to get tasks done as quickly and effectively as possible.
 
 In practice, you can reach this goal by two rules of thumb:
 
@@ -559,7 +559,7 @@ Here is how we measure the quality of the tutorial and docs. We will use ([cohor
 
 - time to value: how quickly, effectively, and painlessly can users experience the value of Gatsby?
 - daily, weekly, monthly active users
-- daily, weekly, monthly “finishers” of the tutorial (finisher = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
+- daily, weekly, monthly “finishers” of the tutorial (finishers = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
 - weekly retention rate
 
 ### Docs
