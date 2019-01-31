@@ -13,7 +13,7 @@ Otherwise just skip this part and move onto the next part.
 
 [JS Search](https://github.com/bvaughn/js-search) is a library created by Brian Vaughn, a member of the core team at Facebook. It provides an efficient way to search for data on the client using JavaScript and JSON objects. It also has extensive customisation options, check out their docs for more details.
 
-The full code and documentation for this library is [available on GitHub](https://github.com/bvaughn/js-search). This guide is based on the official js-search example but has been adapted to work with your Gatsby site. 
+The full code and documentation for this library is [available on GitHub](https://github.com/bvaughn/js-search). This guide is based on the official js-search example but has been adapted to work with your Gatsby site.
 
 ## Setup
 
