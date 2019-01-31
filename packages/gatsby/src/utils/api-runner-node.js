@@ -207,9 +207,13 @@ module.exports = async (api, args = {}, pluginSource) =>
     } else if (api === `onCreatePage`) {
       id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
     } else {
+      // When tracing is turned on, the `args` object will have a
+      // `parentSpan` field that can be quite large. So we omit it
+      // before calling stringify
+      const argsJson = JSON.stringify(_.omit(args, `parentSpan`))
       id = `${api}|${apiRunInstance.startTime}|${
         apiRunInstance.traceId
-      }|${JSON.stringify(args)}`
+      }|${argsJson}`
     }
     apiRunInstance.id = id
 

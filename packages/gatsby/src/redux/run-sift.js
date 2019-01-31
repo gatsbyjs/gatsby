@@ -18,20 +18,6 @@ const enhancedNodeCacheId = ({ node, args }) =>
       })
     : null
 
-const nodesCache = new Map()
-
-function loadNodes(type) {
-  let nodes
-  // this caching can be removed if we move to loki
-  if (process.env.NODE_ENV === `production` && nodesCache.has(type)) {
-    nodes = nodesCache.get(type)
-  } else {
-    nodes = getNodesByType(type)
-    nodesCache.set(type, nodes)
-  }
-  return nodes
-}
-
 /////////////////////////////////////////////////////////////////////
 // Parse filter
 /////////////////////////////////////////////////////////////////////
@@ -269,13 +255,7 @@ function handleMany(siftArgs, nodes, sort) {
       .map(field => field.replace(/___/g, `.`))
       .map(field => v => _.get(v, field))
 
-    // Gatsby's sort interface only allows one sort order (e.g `desc`)
-    // to be specified. However, multiple sort fields can be
-    // provided. This is inconsistent. The API should allow the
-    // setting of an order per field. Until the API can be changed
-    // (probably v3), we apply the sort order to the first field only,
-    // implying asc order for the remaining fields.
-    result = _.orderBy(result, convertedFields, [sort.order])
+    result = _.orderBy(result, convertedFields, sort.order)
   }
   return result
 }
@@ -300,7 +280,7 @@ module.exports = (args: Object) => {
   const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
 
   // If nodes weren't provided, then load them from the DB
-  const nodes = args.nodes || loadNodes(gqlType.name)
+  const nodes = args.nodes || getNodesByType(gqlType.name)
 
   const { siftArgs, fieldsToSift } = parseFilter(clonedArgs.filter)
 
