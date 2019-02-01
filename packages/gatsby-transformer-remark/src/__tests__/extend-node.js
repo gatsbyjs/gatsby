@@ -457,7 +457,7 @@ final text
   )
 
   bootstrapTest(
-    `table of contents is generated with correct depth`,
+    `table of contents is generated with correct depth (graphql option)`,
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -477,6 +477,37 @@ some other text`,
       expect(node.tableOfContents).toBe(`<ul>
 <li><a href="/my%20little%20pony/#first-title">first title</a></li>
 </ul>`)
+    }
+  )
+
+  bootstrapTest(
+    `table of contents is generated with correct depth (plugin option)`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title")
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#first-title">first title</a></li>
+</ul>`)
+    },
+    {
+      pluginOptions: {
+        tableOfContents: {
+          maxDepth: 1,
+        },
+      },
     }
   )
 
