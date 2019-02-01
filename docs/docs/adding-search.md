@@ -41,9 +41,9 @@ Using an open source search engine is always free and allows you to enable offli
 
 Open source libraries like [`elasticlunr`](https://www.npmjs.com/package/elasticlunr) or [`js-search`](https://github.com/bvaughn/js-search) can be used to enable search for your site.
 
-Doing so will require you to create a search index when your site is built. For `elesticlunr`, there is a plugin called [`gatsby-plugin-elasticlunr-search`](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search) that creates a search index automatically.
+Doing so will require you to create a search index when your site is built. For `elesticlunr`, there is a plugin called [`gatsby-plugin-elasticlunr-search`](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search) that creates a search index automatically.
 
-For other libraries, you can use a combination of [`onCreateNode`](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode), [`setFieldsOnGraphQLNodeType`](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType) and [`sourceNodes`](https://www.gatsbyjs.org/docs/node-apis/#sourceNodes) from the Gatsby node API to create the search index and make it available in GraphQL. For more info on how to do this check out [`gatsby-plugin-elasticlunr-search`'s source code](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search/blob/master/src/gatsby-node.js#L88-L126).
+For other libraries, you can use a combination of [`onCreateNode`](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode), [`setFieldsOnGraphQLNodeType`](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType) and [`sourceNodes`](https://www.gatsbyjs.org/docs/node-apis/#sourceNodes) from the Gatsby node API to create the search index and make it available in GraphQL. For more info on how to do this check out [`gatsby-plugin-elasticlunr-search`'s source code](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search/blob/master/src/gatsby-node.js#L96-L131).
 
 Another option is to generate the search index at the end of the build using the [`onPostBuild`](https://www.gatsbyjs.org/docs/node-apis/#onPostBuild) node API. This approach is used by [`gatsby-plugin-lunr`](https://github.com/humanseelabs/gatsby-plugin-lunr) to build a multilanguage index.
 

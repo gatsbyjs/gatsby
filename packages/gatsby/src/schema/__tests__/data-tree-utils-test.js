@@ -170,11 +170,11 @@ describe(`Gatsby data tree utils`, () => {
 
   it(`skips unsupported types`, () => {
     // Skips functions
-    let example = getExampleValues([{ foo: () => {} }])
+    let example = getExampleValues({ nodes: [{ foo: () => {} }] })
     expect(example.foo).not.toBeDefined()
 
     // Skips array of functions
-    example = getExampleValues([{ foo: [() => {}] }])
+    example = getExampleValues({ nodes: [{ foo: [() => {}] }] })
     expect(example.foo).not.toBeDefined()
   })
 

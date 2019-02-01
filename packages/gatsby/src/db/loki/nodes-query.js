@@ -107,9 +107,11 @@ function toMongoArgs(gqlFilter, lastFieldType) {
         mongoArgs[k] = toMongoArgs(v, gqlFieldType)
       }
     } else {
-      // Compile regex first.
       if (k === `regex`) {
-        mongoArgs[`$regex`] = prepareRegex(v)
+        const re = prepareRegex(v)
+        // To ensure that false is returned if a field doesn't
+        // exist. E.g `{nested.field: {$regex: /.*/}}`
+        mongoArgs[`$where`] = obj => !_.isUndefined(obj) && re.test(obj)
       } else if (k === `glob`) {
         const Minimatch = require(`minimatch`).Minimatch
         const mm = new Minimatch(v)
@@ -224,23 +226,19 @@ function convertArgs(gqlArgs, gqlType) {
 //
 // {
 //   fields: [ `frontmatter___date`, `id` ],
-//   order: `desc`
+//   order: [`desc`]
 // }
 //
 // would return
 //
 // [ [ `frontmatter.date`, true ], [ `id`, false ] ]
 //
-// Note that the GraphQL Sort API provided by Gatsby doesn't allow the
-// order to be specified per field. The sift implementation uses
-// lodash `orderBy`, but only applies the sort order to the first
-// field. So we do the same here
 function toSortFields(sortArgs) {
   const { fields, order } = sortArgs
   const lokiSortFields = []
   for (let i = 0; i < fields.length; i++) {
     const dottedField = fields[i].replace(/___/g, `.`)
-    const isDesc = i === 0 ? _.lowerCase(order) === `desc` : false
+    const isDesc = order[i] === `desc`
     lokiSortFields.push([dottedField, isDesc])
   }
   return lokiSortFields

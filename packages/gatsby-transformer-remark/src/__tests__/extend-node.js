@@ -186,7 +186,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    { additionalParameters: { excerpt_separator: `<!-- end -->` } }
   )
 
   const content = `---
@@ -453,6 +453,89 @@ final text
     }`,
     node => {
       expect(node).toMatchSnapshot()
+    }
+  )
+
+  bootstrapTest(
+    `table of contents is generated with correct depth (graphql option)`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1)
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#first-title">first title</a></li>
+</ul>`)
+    }
+  )
+
+  bootstrapTest(
+    `table of contents is generated with correct depth (plugin option)`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title")
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#first-title">first title</a></li>
+</ul>`)
+    },
+    {
+      pluginOptions: {
+        tableOfContents: {
+          maxDepth: 1,
+        },
+      },
+    }
+  )
+
+  bootstrapTest(
+    `table of contents is generated from given heading onwards`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+
+# third title
+
+final text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title")
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#third-title">third title</a></li>
+</ul>`)
     }
   )
 })

@@ -1,5 +1,5 @@
-- title: Amazon S3
-  url: /docs/deploying-to-s3-cloudfront
+- title: AWS Amplify
+  url: /docs/deploying-to-aws-amplify
 - title: Netlify
   url: /docs/hosting-on-netlify
 - title: GitHub Pages
