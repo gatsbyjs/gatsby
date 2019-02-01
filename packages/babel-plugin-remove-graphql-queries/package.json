@@ -10,7 +10,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "graphql": "^0.13.2"
+    "graphql": "^14.1.1"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
