@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 SRC_PATH="$1"
-GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}"
+GATSBY_PATH=${CIRCLE_WORKING_DIRECTORY:-../../}
 
 if [ -z $SRC_PATH ]; then
     echo "No SRC_PATH passed to compare-loki.sift.sh.
