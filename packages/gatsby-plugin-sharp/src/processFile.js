@@ -7,17 +7,6 @@ const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 
-const writeFileAsync = (file, buffer) =>
-  new Promise((resovle, reject) => {
-    fs.writeFile(file, buffer, err => {
-      if (err) {
-        return reject(err)
-      }
-
-      return resovle()
-    })
-  })
-
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
 // default as there's been problems with segfaulting in the past but we'll be
@@ -126,7 +115,7 @@ module.exports = (file, transforms, options = {}) => {
     }
 
     if (
-      (file.extension === `webp` && args.toFormat === ``) ||
+      (transformFile.extension === `webp` && args.toFormat === ``) ||
       args.toFormat === `webp`
     ) {
       await compressWebP(clonedPipeline, outputPath, args)
@@ -155,7 +144,7 @@ const compressPng = (pipeline, outputPath, options) =>
           }),
         ],
       })
-      .then(imageminBuffer => writeFileAsync(outputPath, imageminBuffer))
+      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
 
 const compressJpg = (pipeline, outputPath, options) =>
@@ -169,7 +158,7 @@ const compressJpg = (pipeline, outputPath, options) =>
           }),
         ],
       })
-      .then(imageminBuffer => writeFileAsync(outputPath, imageminBuffer))
+      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
 
 const compressWebP = (pipeline, outputPath, options) =>
@@ -178,5 +167,5 @@ const compressWebP = (pipeline, outputPath, options) =>
       .buffer(sharpBuffer, {
         plugins: [imageminWebp({ quality: options.quality })],
       })
-      .then(imageminBuffer => writeFileAsync(outputPath, imageminBuffer))
+      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
