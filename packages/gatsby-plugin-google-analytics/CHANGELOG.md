@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.11...gatsby-plugin-google-analytics@2.0.12) (2019-01-28)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** add TS typings for OutboundLink component ([#10215](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/10215)) ([7fee096](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/7fee096))
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.10...gatsby-plugin-google-analytics@2.0.11) (2019-01-28)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** Pass event object to the user's onClick callback in OutboundLink ([#11340](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/11340)) ([e81b246](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/e81b246))
+
+<a name="2.0.10"></a>
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.9...gatsby-plugin-google-analytics@2.0.10) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.8...gatsby-plugin-google-analytics@2.0.9) (2019-01-08)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** add support for google optimize experiment and variation id ([#10903](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/10903)) ([45ec012](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/45ec012))
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.7...gatsby-plugin-google-analytics@2.0.8) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
 <a name="2.0.7"></a>
 
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.6...gatsby-plugin-google-analytics@2.0.7) (2018-10-29)

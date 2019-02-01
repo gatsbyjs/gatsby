@@ -24,13 +24,21 @@
     "jest": true
   },
   "globals": {
-    "spyOn": true
+    "before": true,
+    "spyOn": true,
+    "__PATH_PREFIX__": true
   },
   "rules": {
     "arrow-body-style": [
       "error",
       "as-needed",
       { "requireReturnForObjectLiteral": true }
+    ],
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowTaggedTemplates": true
+      }
     ],
     "consistent-return": ["error"],
     "no-console": "off",
@@ -59,7 +67,7 @@
       }
     },
     {
-      "files": ["**/cypress/integration/**/*"],
+      "files": ["**/cypress/integration/**/*", "**/cypress/support/**/*"],
       "globals": {
         "cy": false,
         "Cypress": false

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-xml/compare/gatsby-transformer-xml@2.0.5...gatsby-transformer-xml@2.0.6) (2019-01-08)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-xml/compare/gatsby-transformer-xml@2.0.4...gatsby-transformer-xml@2.0.5) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
 <a name="2.0.4"></a>
 
 ## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-xml/compare/gatsby-transformer-xml@2.0.3...gatsby-transformer-xml@2.0.4) (2018-11-08)

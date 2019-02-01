@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.3...gatsby-remark-code-repls@2.0.4) (2019-01-25)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.2...gatsby-remark-code-repls@2.0.3) (2018-12-11)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.1...gatsby-remark-code-repls@2.0.2) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
 <a name="2.0.1"></a>
 
 ## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.0...gatsby-remark-code-repls@2.0.1) (2018-10-29)

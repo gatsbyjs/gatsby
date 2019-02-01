@@ -15,42 +15,47 @@ which was created by Facebook. While Jest is a general purpose JavaScript unit
 testing framework, it has lots of features that make it work particularly well
 with React.
 
-For this guide, you will be starting with `gatsby-starter-blog`, but the
-concepts should be the same or very similar for your site.
+_Note: For this guide, you will be starting with `gatsby-starter-default`, but the
+concepts should be the same or very similar for your site._
 
-First you need to install Jest and some more required packages. You need to
-install Babel 7 as it's required by Jest.
+### 1. Installing dependencies
 
-```sh
-npm install --save-dev jest babel-jest react-test-renderer identity-obj-proxy 'babel-core@^7.0.0-0' @babel/core babel-preset-gatsby
+First you need to install Jest and some more required packages. We install babel-jest and babel-preset-gatsby to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
+
+```shell
+npm install --save-dev jest babel-jest react-test-renderer babel-preset-gatsby identity-obj-proxy
 ```
+
+### 2. Creating a configuration file for Jest
 
 Because Gatsby handles its own Babel configuration, you will need to manually
 tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.config.js`. You can set up some useful defaults at the same time:
 
-```json:title=jest.config.js
+```js:title=jest.config.js
 module.exports = {
-  "transform": {
-    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
+  transform: {
+    "^.+\\.jsx?$": `<rootDir>/jest-preprocess.js`,
   },
-  "moduleNameMapper": {
-    ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+  moduleNameMapper: {
+    ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/fileMock.js`,
   },
-  "testPathIgnorePatterns": ["node_modules", ".cache"],
-  "transformIgnorePatterns": ["node_modules/(?!(gatsby)/)"],
-  "globals": {
-    "__PATH_PREFIX__": ""
+  testPathIgnorePatterns: [`node_modules`, `.cache`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
+  globals: {
+    __PATH_PREFIX__: ``,
   },
-  "testURL": "http://localhost",
-  "setupFiles": ["<rootDir>/loadershim.js"]
+  testURL: `http://localhost`,
+  setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```
 
-The `transform` section tells Jest that all `js` or `jsx` files need to be
-transformed using a `jest-preprocess.js` file in the project root. Go ahead and
-create this file now. This is where you set up your Babel config. You can start
-with a minimal config.
+Let's go over the content of this configuration file:
+
+- The `transform` section tells Jest that all `js` or `jsx` files need to be
+  transformed using a `jest-preprocess.js` file in the project root. Go ahead and
+  create this file now. This is where you set up your Babel config. You can start
+  with the following minimal config:
 
 ```js:title=jest-preprocess.js
 const babelOptions = {
@@ -60,31 +65,31 @@ const babelOptions = {
 module.exports = require("babel-jest").createTransformer(babelOptions)
 ```
 
-Back to the Jest config, you can see the next option is `moduleNameMapper`. This
-section works a bit like webpack rules, and tells Jest how to handle imports.
-You are mainly concerned here with mocking static file imports, which Jest can't
-handle. A mock is a dummy module that is used instead of the real module inside
-tests. It is good when you have something that you can't or don't want to test.
-You can mock anything, and here you are mocking assets rather than code. For
-stylesheets you need to use the package `identity-obj-proxy`. For all other assets
-you need to use a manual mock called `fileMock.js`. You need to create this yourself.
-The convention is to create a directory called `__mocks__` in the root directory
-for this. Note the pair of double underscores in the name.
+- The next option is `moduleNameMapper`. This
+  section works a bit like webpack rules, and tells Jest how to handle imports.
+  You are mainly concerned here with mocking static file imports, which Jest can't
+  handle. A mock is a dummy module that is used instead of the real module inside
+  tests. It is good when you have something that you can't or don't want to test.
+  You can mock anything, and here you are mocking assets rather than code. For
+  stylesheets you need to use the package `identity-obj-proxy`. For all other assets
+  you need to use a manual mock called `fileMock.js`. You need to create this yourself.
+  The convention is to create a directory called `__mocks__` in the root directory
+  for this. Note the pair of double underscores in the name.
 
 ```js:title=__mocks__/fileMock.js
 module.exports = "test-file-stub"
 ```
 
-The next config setting is `testPathIgnorePatterns`. You are telling Jest to ignore
-any tests in the `node_modules` or `.cache` directories.
+- The next config setting is `testPathIgnorePatterns`. You are telling Jest to ignore
+  any tests in the `node_modules` or `.cache` directories.
 
-The next option is very important, and is different from what you'll find in other
-Jest guides. The reason that you need `transformIgnorePatterns` is because Gastby
-includes un-transpiled ES6 code. By default Jest doesn't try to transform code
-inside `node_modules`, so you will get an error like this:
+- The next option is very important, and is different from what you'll find in other
+  Jest guides. The reason that you need `transformIgnorePatterns` is because Gatsby
+  includes un-transpiled ES6 code. By default Jest doesn't try to transform code
+  inside `node_modules`, so you will get an error like this:
 
 ```
-/my-blog/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
+/my-app/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
 ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,global,jest){import React from "react"
                                                                                             ^^^^^^
 SyntaxError: Unexpected token import
@@ -94,23 +99,27 @@ This is because `gatsby-browser-entry.js` isn't being transpiled before running
 in Jest. You can fix this by changing the default `transformIgnorePatterns` to
 exclude the `gatsby` module.
 
-The `globals` section sets `__PATH_PREFIX__`, which is usually set by Gatsby,
-and which some components need.
+- The `globals` section sets `__PATH_PREFIX__`, which is usually set by Gatsby,
+  and which some components need.
 
-You need to set `testURL` to a valid URL, because some DOM APIs such as
-`localStorage` are unhappy with the default (`about:blank`).
+- You need to set `testURL` to a valid URL, because some DOM APIs such as
+  `localStorage` are unhappy with the default (`about:blank`).
 
 > Note: if you're using Jest 23.5.0 or later, `testURL` will default to `http://localhost` so you can skip this setting.
 
-There's one more global that you need to set, but as it's a function you can't
-set it here in the JSON. The `setupFiles` array lets you list files that will be
-included before all tests are run, so it's perfect for this.
+- There's one more global that you need to set, but as it's a function you can't
+  set it here in the JSON. The `setupFiles` array lets you list files that will be
+  included before all tests are run, so it's perfect for this.
 
 ```js:title=loadershim.js
 global.___loader = {
   enqueue: jest.fn(),
 }
 ```
+
+### 3. Useful mocks to complete your testing environment
+
+#### Mocking `gatsby`
 
 Finally it's a good idea to mock the `gatsby` module itself. This may not be
 needed at first, but will make things a lot easier if you want to test
@@ -135,30 +144,6 @@ module.exports = {
 
 This mocks the `graphql()` function, `Link` component, and `StaticQuery` component.
 
-One more issue that you may encounter is that some components expect to be able
-to use the `location` prop that is passed in by `Router`. You can fix this by
-manually passing in the prop:
-
-```js:title=src/__tests__/index.js
-import React from "react"
-import renderer from "react-test-renderer"
-import BlogIndex from "../pages/index"
-
-describe("BlogIndex", () => {
-  it("renders correctly", () => {
-    const location = {
-      pathname: "/",
-    }
-
-    const tree = renderer.create(<BlogIndex location={location} />).toJSON()
-    expect(tree).toMatchSnapshot()
-  }))
-})
-```
-
-For more information on testing page components, be sure to read the docs on
-[testing components with GraphQL](/docs/testing-components-with-graphql/)
-
 ## Writing tests
 
 A full guide to unit testing is beyond the scope of this guide, but you can
@@ -167,17 +152,19 @@ start with a simple snapshot test to check that everything is working.
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
 the extension `.spec.js` or `.test.js`. The decision comes down to your own
-taste. For this guide you will be testing the `<Bio />` component, so create a
-`Bio.test.js` file next to it in `src/components`:
+preference. In this guide, we will use the `__tests__` folder convention. Let's create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
 
-```js:title=src/components/Bio.test.js
+```js:title=src/components/__tests__/header.js
 import React from "react"
 import renderer from "react-test-renderer"
-import Bio from "./Bio"
 
-describe("Bio", () => {
+import Header from "../header"
+
+describe("Header", () => {
   it("renders correctly", () => {
-    const tree = renderer.create(<Bio />).toJSON()
+    const tree = renderer
+      .create(<Header siteTitle="Default Starter" />)
+      .toJSON()
     expect(tree).toMatchSnapshot()
   })
 })
@@ -192,8 +179,8 @@ learn more about other tests that you can write.
 ## Running tests
 
 If you look inside `package.json` you will probably find that there is already a
-script for `test`, which just outputs an error message. Change this to simply
-`jest`:
+script for `test`, which just outputs an error message. Change this to use the
+`jest` executable that we now have available, like so:
 
 ```json:title=package.json
   "scripts": {
@@ -201,72 +188,51 @@ script for `test`, which just outputs an error message. Change this to simply
   }
 ```
 
-This means you can now run tests by typing `npm run test`. If you want you could
-also add a script that runs `jest --watchAll` to watch files and run tests when
-they are changed.
+This means you can now run tests by typing `npm test`. If you want you could
+also run with a flag that triggers watch mode to watch files and run tests when they are changed: `npm test -- --watch`.
 
-Now, run `npm run test` and you should immediately get an error like this:
-
-```sh
- @font-face {
-    ^
-
-    SyntaxError: Invalid or unexpected token
-
-      2 |
-      3 | // Import typefaces
-    > 4 | import 'typeface-montserrat'
-```
-
-This is because the CSS mock doesn't recognize the `typeface-` modules. You can
-fix this easily by creating a new manual mock. Back in the `__mocks__`
-directory, create a file called `typeface-montserrat.js` and another called
-`typeface-merriweather.js`, each with the content `{}`. Any file in the mocks
-folder which has a name that matches that of a node_module is automatically used
-as a mock.
-
-Run the tests again now and it should all work! You should get a message about
+Run the tests again now and it should all work! You may get a message about
 the snapshot being written. This is created in a `__snapshots__` directory next
 to your tests. If you take a look at it, you will see that it is a JSON
-representation of the `<Bio />` component. You should check your snapshot files
+representation of the `<Header />` component. You should check your snapshot files
 into a source control system (for example, a GitHub repo) so that so that any changes are tracked in history.
 This is particularly important to remember if you are using a continuous
-integration system such as Travis to run tests, as these will fail if no
-snapshot is present.
+integration system such as Travis or CircleCI to run tests, as these will fail if the snapshot is not checked into source control.
 
 If you make changes that mean you need to update the snapshot, you can do this
-by running `npm run test -- -u`.
+by running `npm test -- -u`.
 
 ## Using TypeScript
 
 If you are using TypeScript, you need to make a couple of small changes to your
 config. First install `ts-jest`:
 
-```sh
+```shell
 npm install --save-dev ts-jest
 ```
 
 Then update the configuration in `jest.config.js`, like so:
 
-```json:title=jest.config.js
+```js:title=jest.config.js
 module.exports = {
-  "transform": {
+  transform: {
     "^.+\\.tsx?$": "ts-jest",
-    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js"
+    "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js",
   },
-  "testRegex": "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
-  "moduleNameMapper": {
+  testRegex: "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
+  moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js",
   },
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
-  "testPathIgnorePatterns": ["node_modules", ".cache"],
-  "transformIgnorePatterns": ["node_modules/(?!(gatsby)/)"],
-  "globals": {
-    "__PATH_PREFIX__": ""
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  testPathIgnorePatterns: ["node_modules", ".cache"],
+  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
+  globals: {
+    __PATH_PREFIX__: "",
   },
-  "testURL": "http://localhost",
-  "setupFiles": ["<rootDir>/loadershim.js"]
+  testURL: "http://localhost",
+  setupFiles: ["<rootDir>/loadershim.js"],
 }
 ```
 

@@ -55,7 +55,9 @@ Structure of the class:
 2.  _Taught them NextJS._ They liked how routing was removed from the equation and they could just drop stuff into the pages directory and they would magically work.
 3.  _Taught them Gatsby._ Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
 
-> “Once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.”
+<pullquote>
+Once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
+</pullquote>
 
 ### What do your students like about Gatsby?
 

@@ -5,6 +5,10 @@ import styled from "react-emotion"
 import EcosystemSection from "./ecosystem-section"
 
 import presets from "../../utils/presets"
+import {
+  setupScrollersObserver,
+  unobserveScrollers,
+} from "../../utils/scrollers-observer"
 
 const EcosystemBoardRoot = styled(`div`)`
   display: flex;
@@ -21,68 +25,12 @@ const EcosystemBoardRoot = styled(`div`)`
 `
 
 class EcosystemBoard extends Component {
-  observer
-  observerTargets = []
-
   componentDidMount() {
-    if (typeof window.IntersectionObserver !== `undefined`) {
-      this.setupObserver()
-    }
+    setupScrollersObserver()
   }
 
   componentWillUnmount() {
-    if (typeof window.IntersectionObserver !== `undefined`) {
-      this.observerTargets.forEach(target => this.observer.unobserve(target))
-    }
-  }
-
-  setupObserver = () => {
-    const options = { rootMargin: `0px`, threshold: [1] }
-    this.observer = new IntersectionObserver(this.handleIntersect, options)
-    this.observerTargets = Array.from(
-      document.querySelectorAll(`.featuredItems`)
-    )
-
-    this.observerTargets.forEach(target => this.observer.observe(target))
-  }
-
-  handleIntersect = (entries, observer) => {
-    entries.forEach(entry => {
-      const target = entry.target
-
-      if (entry.intersectionRatio > 0) {
-        setTimeout(
-          () => this.turnOnLeadScroll({ target, duration: 1000, distance: 20 }),
-          250
-        )
-        this.observer.unobserve(target)
-      }
-    })
-  }
-
-  turnOnLeadScroll = ({ target, duration, distance }) => {
-    let startTime = null
-
-    function animation(currentTime) {
-      if (startTime === null) {
-        startTime = currentTime
-      }
-
-      const timeElapsed = currentTime - startTime
-      const getDistanceToScroll = ease(timeElapsed, 0, distance, duration)
-
-      target.scroll({ top: 0, left: getDistanceToScroll })
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation)
-      }
-    }
-
-    function ease(t, b, c, d) {
-      return -c * (t /= d) * (t - 2) + b
-    }
-
-    requestAnimationFrame(animation)
+    unobserveScrollers()
   }
 
   render() {
@@ -102,11 +50,11 @@ class EcosystemBoard extends Component {
           links={[
             { label: `Browse Plugins`, to: `/plugins/` },
             {
-              label: `Plugin Authoring`,
+              label: `Creating Plugins`,
               to: `/docs/plugin-authoring/`,
               secondary: true,
             },
-            { label: `Plugin Docs`, to: `/docs/plugins/`, secondary: true },
+            { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },
           ]}
           featuredItems={plugins}
         />
@@ -117,7 +65,7 @@ class EcosystemBoard extends Component {
           icon={StartersIcon}
           links={[
             { label: `Browse Starters`, to: `/starters/` },
-            { label: `Starter Docs`, to: `/docs/starters/`, secondary: true },
+            { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
           ]}
           featuredItems={starters}
         />

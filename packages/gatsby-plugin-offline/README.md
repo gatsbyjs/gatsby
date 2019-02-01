@@ -24,8 +24,8 @@ plugins: [`gatsby-plugin-offline`]
 When adding this plugin to your `gatsby-config.js`, you can pass in options to
 override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
 
-The default config is as follows. Warning, you can break the offline support
-and AppCache setup by changing these options so tread carefully.
+The default config is as follows. Warning: you can break the offline support by
+changing these options, so tread carefully.
 
 ```javascript
 const options = {
@@ -33,29 +33,29 @@ const options = {
   globDirectory: rootDir,
   globPatterns,
   modifyUrlPrefix: {
-    rootDir: ``,
     // If `pathPrefix` is configured by user, we should replace
     // the default prefix with `pathPrefix`.
-    "": args.pathPrefix || ``,
+    "/": `${pathPrefix}/`,
   },
-  navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
-  // Only match URLs without extensions or the query `no-cache=1`.
-  // So example.com/about/ will pass but
-  // example.com/about/?no-cache=1 and
-  // example.com/cheeseburger.jpg will not.
-  // We only want the service worker to handle our "clean"
-  // URLs and not any files hosted on the site.
-  //
-  // Regex based on http://stackoverflow.com/a/18017805
-  navigateFallbackWhitelist: [/^[^?]*([^.?]{5}|\.html)(\?.*)?$/],
-  navigateFallbackBlacklist: [/\?(.+&)?no-cache=1$/],
   cacheId: `gatsby-plugin-offline`,
-  // Don't cache-bust JS files and anything in the static directory
-  dontCacheBustUrlsMatching: /(.*js$|\/static\/)/,
+  // Don't cache-bust JS or CSS files, and anything in the static directory,
+  // since these files have unique URLs and their contents will never change
+  dontCacheBustUrlsMatching: /(\.js$|\.css$|static\/)/,
   runtimeCaching: [
     {
-      // Add runtime caching of various page resources.
-      urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+      // Use cacheFirst since these don't need to be revalidated (same RegExp
+      // and same reason as above)
+      urlPattern: /(\.js$|\.css$|static\/)/,
+      handler: `cacheFirst`,
+    },
+    {
+      // Add runtime caching of various other page resources
+      urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+      handler: `staleWhileRevalidate`,
+    },
+    {
+      // Google Fonts CSS (doesn't end in .css so we need to specify it)
+      urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
       handler: `staleWhileRevalidate`,
     },
   ],
@@ -63,3 +63,31 @@ const options = {
   clientsClaim: true,
 }
 ```
+
+## Remove
+
+If you want to remove `gatsby-plugin-offline` from your site at a later point,
+substitute it with [`gatsby-plugin-remove-serviceworker`](https://www.npmjs.com/package/gatsby-plugin-remove-serviceworker)
+to safely remove the service worker:
+
+```diff:title=gatsby-config.js
+ plugins: [
+-  `gatsby-plugin-offline`,
++  `gatsby-plugin-remove-serviceworker`,
+ ]
+```
+
+This will ensure that the worker is properly unregistered, instead of leaving an
+outdated version registered in users' browsers.
+
+## Notes
+
+Gatsby offers great SEO capabilities and that is no different with `gatsby-plugin-offline`. However, you shouldn't think that Gatsby doesn't serve HTML tags anymore when looking at your source code in the browser (with `Right click` => `View source`). `View source` doesn't represent the actual HTML data since `gatsby-plugin-offline` registers and loads a service worker that will cache and handle this differently. Your site is loaded from the service worker, not from its actual source (check your `Network` tab in the DevTools for that).
+
+To see the HTML data that crawlers will receive, run this in your terminal:
+
+```bash
+curl https://www.yourdomain.tld
+```
+
+Alternatively you can have a look at the `/public/index.html` file in your project folder.

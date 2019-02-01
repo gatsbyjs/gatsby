@@ -5,7 +5,16 @@ exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV !== `production`) return null
+  if (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
+    return null
+
+  const gtagConfig = pluginOptions.gtagConfig || {}
+  const pluginConfig = pluginOptions.pluginConfig || {}
+
+  // Prevent duplicate or excluded pageview events being emitted on initial load of page by the `config` command
+  // https://developers.google.com/analytics/devguides/collection/gtagjs/#disable_pageview_tracking
+
+  gtagConfig.send_page_view = false
 
   const firstTrackingId =
     pluginOptions.trackingIds && pluginOptions.trackingIds.length
@@ -13,16 +22,20 @@ exports.onRenderBody = (
       : ``
 
   const excludeGtagPaths = []
-  if (typeof pluginOptions.pluginConfig.exclude !== `undefined`) {
-    pluginOptions.pluginConfig.exclude.map(exclude => {
+  if (typeof pluginConfig.exclude !== `undefined`) {
+    pluginConfig.exclude.map(exclude => {
       const mm = new Minimatch(exclude)
       excludeGtagPaths.push(mm.makeRe())
     })
   }
 
-  const setComponents = pluginOptions.pluginConfig.head
+  const setComponents = pluginConfig.head
     ? setHeadComponents
     : setPostBodyComponents
+
+  // TODO: remove pluginOptions.respectDNT in the next major release of this plugin.
+  // See issue https://github.com/gatsbyjs/gatsby/issues/11159 for the discussion.
+  const respectDNT = pluginConfig.respectDNT || pluginOptions.respectDNT
 
   const renderHtml = () => `
       ${
@@ -31,14 +44,13 @@ exports.onRenderBody = (
           : ``
       }
       ${
-        typeof pluginOptions.gtagConfig.anonymize_ip !== `undefined` &&
-        pluginOptions.gtagConfig.anonymize_ip === true
+        typeof gtagConfig.anonymize_ip !== `undefined` &&
+        gtagConfig.anonymize_ip === true
           ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${firstTrackingId}',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
           : ``
       }
       if(${
-        typeof pluginOptions.respectDNT !== `undefined` &&
-        pluginOptions.respectDNT === true
+        respectDNT
           ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
           : `true`
       }) {
@@ -49,9 +61,7 @@ exports.onRenderBody = (
         ${pluginOptions.trackingIds
           .map(
             trackingId =>
-              `gtag('config', '${trackingId}', ${JSON.stringify(
-                pluginOptions.gtagConfig || {}
-              )});`
+              `gtag('config', '${trackingId}', ${JSON.stringify(gtagConfig)});`
           )
           .join(``)}
       }

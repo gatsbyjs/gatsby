@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.7...gatsby-plugin-sass@2.0.8) (2019-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.6...gatsby-plugin-sass@2.0.7) (2018-12-06)
+
+### Features
+
+- **gatsby-plugin-sass:** Support Dart SASS ([#10159](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/issues/10159)) ([a48843e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/commit/a48843e))
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.5...gatsby-plugin-sass@2.0.6) (2018-12-05)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.4...gatsby-plugin-sass@2.0.5) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
 <a name="2.0.4"></a>
 
 ## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.3...gatsby-plugin-sass@2.0.4) (2018-11-08)

@@ -18,6 +18,7 @@ const Button = ({
   small,
   tiny,
   secondary,
+  ondark,
   ...rest
 }) => {
   const Tag = components[tag || `link`]
@@ -36,6 +37,7 @@ const Button = ({
       ...(large && buttonStyles.large),
       ...(small && buttonStyles.small),
       ...(tiny && buttonStyles.tiny),
+      ...(ondark && buttonStyles.ondark),
     },
   }
 

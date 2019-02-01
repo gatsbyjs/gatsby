@@ -53,7 +53,9 @@ describe(`Production build tests`, () => {
       .location(`pathname`)
       .should(`equal`, `/page-2/`)
 
-    cy.reload().go(`back`)
+    cy.reload()
+      .waitForAPI(`onRouteUpdate`)
+      .go(`back`)
 
     cy.waitForAPI(`onRouteUpdate`)
       .getTestElement(`page2`)
@@ -70,5 +72,13 @@ describe(`Production build tests`, () => {
       .should(`equal`, `/page-3/`)
       .getTestElement(`404`)
       .should(`exist`)
+  })
+
+  it(`Uses env vars`, () => {
+    cy.visit(`/env-vars`).waitForAPI(`onRouteUpdate`)
+
+    cy.getTestElement(`process.env`).contains(`{}`)
+    cy.getTestElement(`process.env.EXISTING_VAR`).contains(`"foo bar"`)
+    cy.getTestElement(`process.env.NOT_EXISTING_VAR`).should(`be.empty`)
   })
 })

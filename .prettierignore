@@ -26,3 +26,9 @@ packages/gatsby/cache-dir/commonjs/**/*.js
 **/__tests__/fixtures/**
 
 infrastructure
+
+# coverage
+coverage
+
+# forestry files
+.forestry/**/*
