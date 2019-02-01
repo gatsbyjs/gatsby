@@ -33,17 +33,19 @@ cd kentico-cloud-guide
 ```
 
 Next, install the Kentico Cloud source plugin:
+
 ```shell
 npm install --save gatsby-source-kentico-cloud
 ```
 
-Once that's done, you need to add the plugin to `gatsby-config.js`
+Once that's done, you need to add the plugin to `gatsby-config.js`:
+
 ```javascript
 module.exports = {
   siteMetadata: {
    ...
   },
-  plugins: [    
+  plugins: [
     {
       resolve: `gatsby-source-kentico-cloud`,
         options: {
@@ -107,13 +109,14 @@ exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
     createNodeField({
       node,
       name: `slug`,
-      value: node.elements.url_pattern.value
-    });
+      value: node.elements.url_pattern.value,
+    })
   }
-};
+}
 ```
 
 Now that you have a pretty way to define the path for your pages, you can create the pages programmatically:
+
 ```javascript:title=gatsby-node.js
 const path = require(`path`);
 
@@ -121,7 +124,7 @@ exports.onCreateNode ... // As above
 
 exports.createPages = ({ graphql, actions }) => {
     const { createPage } = actions;
-  
+
     return new Promise((resolve, reject) => {
       graphql(`
       {
@@ -145,7 +148,7 @@ exports.createPages = ({ graphql, actions }) => {
                     slug: node.fields.slug,
                 }
             })
-        }); 
+        });
         resolve();
     });
   });
@@ -153,28 +156,29 @@ exports.createPages = ({ graphql, actions }) => {
 ```
 
 Now create a basic template to display each article with a title and the body that you pull with a GraphQL query:
-```javascript:title=src/templates/article.js
-import React from 'react'
-import { graphql } from 'gatsby'
 
-import Layout from '../components/layout'
+````javascript:title=src/templates/article.js
+import React from "react"
+import { graphql } from "gatsby"
 
-const Article = ({data}) => {
-  const item = data.kenticoCloudItemArticle.elements;
-  
+import Layout from "../components/layout"
+
+const Article = ({ data }) => {
+  const item = data.kenticoCloudItemArticle.elements
+
   return (
     <Layout>
       <h1>{item.title.value}</h1>
-      <div dangerouslySetInnerHTML={{__html: item.body_copy.value}} />
+      <div dangerouslySetInnerHTML={{ __html: item.body_copy.value }} />
     </Layout>
-  );
-};
-  
-export default Article;
+  )
+}
+
+export default Article
 
 export const query = graphql`
-  query articleQuery ($slug: String!) {
-    kenticoCloudItemArticle(fields: { slug: { eq: $slug }}) {
+  query articleQuery($slug: String!) {
+    kenticoCloudItemArticle(fields: { slug: { eq: $slug } }) {
       fields {
         slug
       }
@@ -188,7 +192,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 When you run `gatsby develop`, you'll be able to see each article as a page with content pulled from Kentico Cloud. To see a list of all pages, visit `http://localhost:8000/asdf` (or any other url that generates a 404).
@@ -207,7 +211,7 @@ Now that your site's up and running, you need to set up automatic builds when pu
 
 You've seen how to set up a simple Gatsby site that sources content from Kentico Cloud and is automatically redeployed on any change to the content. Kentico Cloud is capable of creating many other kinds of relationships, including taxonomies for categorization, multiple languages, and linking items together. Want to do more?
 
-* See [more about what the Kentico Cloud source plugin can do](https://github.com/Kentico/gatsby-source-kentico-cloud#features).
-* Read the [Kentico Cloud documentation](https://developer.kenticocloud.com/docs) to see what's possible.
-* Explore the [Kentico Cloud Gatsby starter](https://github.com/Kentico/gatsby-starter-kentico-cloud) to see a more complete example.
-* Read a [blog post about using Kentico Cloud and Gatsby](https://www.gatsbyjs.org/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).
+- See [more about what the Kentico Cloud source plugin can do](https://github.com/Kentico/gatsby-source-kentico-cloud#features).
+- Read the [Kentico Cloud documentation](https://developer.kenticocloud.com/docs) to see what's possible.
+- Explore the [Kentico Cloud Gatsby starter](https://github.com/Kentico/gatsby-starter-kentico-cloud) to see a more complete example.
+- Read a [blog post about using Kentico Cloud and Gatsby](https://www.gatsbyjs.org/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).
