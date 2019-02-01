@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Mikhail Novikov",
+    "email": "m@example.com",
+    "picture": "../images/gatsby-astronaut.png"
+  },
+  {
+    "name": "Stefan Probst",
+    "email": "s@example.com",
+    "picture": "../images/gatsby-astronaut.png"
+  }
+]

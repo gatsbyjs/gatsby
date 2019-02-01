@@ -1,45 +1,65 @@
 /* @flow */
-const _ = require(`lodash`)
-const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
-const { mergeSchemas } = require(`graphql-tools`)
 
-const nodeTypes = require(`./build-node-types`)
-const nodeConnections = require(`./build-node-connections`)
+const tracer = require(`opentracing`).globalTracer()
+const { SchemaComposer } = require(`graphql-compose`)
 const { store } = require(`../redux`)
-const invariant = require(`invariant`)
-const { clearUnionTypes } = require(`./infer-graphql-type`)
-
-function buildNodesSchema(fields) {
-  return new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields,
-    }),
-  })
-}
-module.exports.buildNodesSchema = buildNodesSchema
+const nodeStore = require(`../db/nodes`)
+const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 
 module.exports.build = async ({ parentSpan }) => {
-  clearUnionTypes()
-  const typesGQL = await nodeTypes.buildAll({ parentSpan })
-  const connections = nodeConnections.buildAll(_.values(typesGQL))
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const span = tracer.startSpan(`build schema`, spanArgs)
 
-  // Pull off just the graphql node from each type object.
-  const nodes = _.mapValues(typesGQL, `node`)
+  let { thirdPartySchemas } = store.getState()
 
-  invariant(!_.isEmpty(nodes), `There are no available GQL nodes`)
-  invariant(!_.isEmpty(connections), `There are no available GQL connections`)
-
-  const thirdPartySchemas = store.getState().thirdPartySchemas || []
-
-  const gatsbySchema = buildNodesSchema({ ...connections, ...nodes })
-
-  const schema = mergeSchemas({
-    schemas: [gatsbySchema, ...thirdPartySchemas],
+  const schemaComposer = new SchemaComposer()
+  const schema = await buildSchema({
+    schemaComposer,
+    nodeStore,
+    // typeDefs,
+    // resolvers,
+    thirdPartySchemas,
+    // directives,
+    parentSpan,
   })
 
+  store.dispatch({
+    type: `SET_SCHEMA_COMPOSER`,
+    payload: schemaComposer,
+  })
   store.dispatch({
     type: `SET_SCHEMA`,
     payload: schema,
   })
+
+  span.finish()
+}
+
+module.exports.rebuildWithSitePage = async ({ parentSpan }) => {
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const span = tracer.startSpan(
+    `rebuild schema with SitePage context`,
+    spanArgs
+  )
+  let {
+    schemaComposer: { composer: schemaComposer },
+  } = store.getState()
+
+  const schema = await rebuildSchemaWithSitePage({
+    schemaComposer,
+    nodeStore,
+    // directives,
+    parentSpan,
+  })
+
+  store.dispatch({
+    type: `SET_SCHEMA_COMPOSER`,
+    payload: schemaComposer,
+  })
+  store.dispatch({
+    type: `SET_SCHEMA`,
+    payload: schema,
+  })
+
+  span.finish()
 }
