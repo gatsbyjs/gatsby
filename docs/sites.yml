@@ -4141,3 +4141,31 @@
     - Productivity
     - Entrepreneurship
   featured: false
+- title: Alex Xie - Portfolio
+  url: https://alexieyizhe.me/
+  main_url: https://alexieyizhe.me/
+  source_url: https://github.com/alexieyizhe/alexieyizhe.github.io
+  description: >
+    Personal website of Alex Yizhe Xie, a University of Waterloo Computer Science student and coding enthusiast.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  featured: false
+- title: Equithon
+  url: https://equithon.org/
+  main_url: https://equithon.org/
+  source_url: https://github.com/equithon/site-main/
+  built_by: Alex Xie
+  built_by_url: https://alexieyizhe.me/
+  description: >
+    Equithon is the largest social innovation hackathon in Waterloo, Canada. It was founded in 2016 to tackle social equity issues and create change.
+  categories:
+    - Education
+    - Event
+    - Hackathon
+    - Learning
+    - Open Source
+    - Nonprofit
+    - Technology
+  featured: false
