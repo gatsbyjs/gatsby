@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.0.6...gatsby-remark-images-contentful@2.0.7) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.0.5...gatsby-remark-images-contentful@2.0.6) (2019-01-29)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful
