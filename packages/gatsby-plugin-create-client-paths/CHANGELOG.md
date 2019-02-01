@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths/compare/gatsby-plugin-create-client-paths@2.0.3...gatsby-plugin-create-client-paths@2.0.4) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-create-client-paths
+
 <a name="2.0.3"></a>
 
 ## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths/compare/gatsby-plugin-create-client-paths@2.0.2...gatsby-plugin-create-client-paths@2.0.3) (2018-11-29)

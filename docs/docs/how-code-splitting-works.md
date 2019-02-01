@@ -89,7 +89,7 @@ To do this, we need to be able to create `<link>` and `<script>` tags in the HTM
 
 #### webpack.stats.json
 
-It turns out that webpack provides a way to record the mapping. It provides a compilation hook called [done](https://webpack.js.org/api/compiler-hooks/#done) that you can register for. It provides a [stats](https://webpack.js.org/api/stats/) data structure that contains all the `chunkGroups` (remember that the chunk Group is the `componentChunkName`). Each chunk group contains a list of the chunks it depends on. Gatsby provides a custom webpack plugin called [gatsby-webpack-stats-extractor](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L201) that implements this hook and writes the chunk information to `/public/webpack.stats.json` (under the `assetsByChunkName` key). E.g
+It turns out that webpack provides a way to record the mapping. It provides a compilation hook called [done](https://webpack.js.org/api/compiler-hooks/#done) that you can register for. It provides a [stats](https://webpack.js.org/api/stats/) data structure that contains all the `chunkGroups` (remember that the chunk Group is the `componentChunkName`). Each chunk group contains a list of the chunks it depends on. Gatsby provides a custom webpack plugin called [GatsbyWebpackStatsExtractor](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/gatsby-webpack-stats-extractor.js) that implements this hook and writes the chunk information to `/public/webpack.stats.json` (under the `assetsByChunkName` key). E.g
 
 ```javascript
 {

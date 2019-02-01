@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.28...gatsby-image@2.0.29) (2019-01-28)
+
+### Bug Fixes
+
+- **gatsby-image:** use the cache to tell if the image was already loaded ([#11303](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/11303)) ([1d5ccff](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/1d5ccff))
+
+### Features
+
+- **gatsby-image:** add itemProp prop ([#11296](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/11296)) ([76b9827](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/76b9827))
+
 ## [2.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.27...gatsby-image@2.0.28) (2019-01-25)
 
 **Note:** Version bump only for package gatsby-image

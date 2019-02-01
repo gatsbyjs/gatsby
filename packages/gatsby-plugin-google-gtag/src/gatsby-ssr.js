@@ -9,6 +9,7 @@ exports.onRenderBody = (
     return null
 
   const gtagConfig = pluginOptions.gtagConfig || {}
+  const pluginConfig = pluginOptions.pluginConfig || {}
 
   // Prevent duplicate or excluded pageview events being emitted on initial load of page by the `config` command
   // https://developers.google.com/analytics/devguides/collection/gtagjs/#disable_pageview_tracking
@@ -21,21 +22,20 @@ exports.onRenderBody = (
       : ``
 
   const excludeGtagPaths = []
-  if (typeof pluginOptions.pluginConfig.exclude !== `undefined`) {
-    pluginOptions.pluginConfig.exclude.map(exclude => {
+  if (typeof pluginConfig.exclude !== `undefined`) {
+    pluginConfig.exclude.map(exclude => {
       const mm = new Minimatch(exclude)
       excludeGtagPaths.push(mm.makeRe())
     })
   }
 
-  const setComponents = pluginOptions.pluginConfig.head
+  const setComponents = pluginConfig.head
     ? setHeadComponents
     : setPostBodyComponents
 
   // TODO: remove pluginOptions.respectDNT in the next major release of this plugin.
   // See issue https://github.com/gatsbyjs/gatsby/issues/11159 for the discussion.
-  const respectDNT =
-    pluginOptions.pluginConfig.respectDNT || pluginOptions.respectDNT
+  const respectDNT = pluginConfig.respectDNT || pluginOptions.respectDNT
 
   const renderHtml = () => `
       ${
