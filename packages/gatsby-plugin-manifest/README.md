@@ -250,8 +250,41 @@ module.exports = {
         theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
-        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
         include_favicon: false, // This will exclude favicon link tag
+      },
+    },
+  ],
+}
+```
+
+## Disabling or changing "[Cache Busting](https://www.keycdn.com/support/what-is-cache-busting)" Mode
+
+Cache Busting allows your updated icon to be quickly/easily visible to your sites visitors. HTTP caches could otherwise keep an old Icon around for days and weeks. Cache busting is only done in 'automatic' and 'hybrid' modes.
+
+Cache busting works by calculating a unique "digest" or "hash" of the provided icon and modifying links and file names of generated images with that unique digest. If you ever update your icon, the digest will change and caches will be busted.
+
+**Options:**
+
+- **\`query\`** - This is the default mode. File names are unmodified but a URL query is appended to all links. e.g. `icons/icon-48x48.png?digest=abc123`
+
+- **\`name\`** - Changes the cache busting mode to be done by file name. File names and links are modified with the icon digest. e.g. `icons/icon-48x48-abc123.png` (only needed if your CDN does not support URL query based cache busting)
+
+- **\`none\`** - Disables cache busting. File names and links remain unmodified.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        cache_busting_mode: `none`, // [`none`, `name`, `query`]
       },
     },
   ],
