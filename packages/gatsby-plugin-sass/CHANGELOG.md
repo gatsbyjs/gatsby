@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.9...gatsby-plugin-sass@2.0.10) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
 ## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.8...gatsby-plugin-sass@2.0.9) (2019-02-01)
 
 ### Bug Fixes
