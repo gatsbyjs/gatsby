@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss/compare/gatsby-plugin-postcss@2.0.3...gatsby-plugin-postcss@2.0.4) (2019-02-01)
+
+### Bug Fixes
+
+- **core:** Disable HMR for CSS modules ([#11032](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss/issues/11032)) ([97c98e9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss/commit/97c98e9))
+
 ## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss/compare/gatsby-plugin-postcss@2.0.2...gatsby-plugin-postcss@2.0.3) (2019-01-28)
 
 **Note:** Version bump only for package gatsby-plugin-postcss

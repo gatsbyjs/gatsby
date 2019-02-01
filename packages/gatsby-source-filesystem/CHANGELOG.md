@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.18...gatsby-source-filesystem@2.0.19) (2019-01-31)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** report when downloading fails ([#10980](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/10980)) ([eff2cf4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/eff2cf4))
+
 ## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.17...gatsby-source-filesystem@2.0.18) (2019-01-28)
 
 **Note:** Version bump only for package gatsby-source-filesystem

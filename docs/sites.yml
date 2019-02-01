@@ -3944,6 +3944,14 @@
     - Health & Wellness
   built_by: Jack Oliver
   built_by_url: "https://twitter.com/mrjackolai"
+- title: TheAgencyProject
+  main_url: "https://theagencyproject.co"
+  url: "https://theagencyproject.co"
+  description: Agency model, without agency overhead.
+  categories:
+    - agency
+  built_by: JV-LA
+  built_by_url: https://jv-la.com
 - title: Karen Hou's portfolio
   main_url: https://www.karenhou.com/
   url: https://www.karenhou.com/
@@ -4089,4 +4097,35 @@
     - Entertainment
   built_by: Rei Matsushita
   built_by_url: "https://github.com/rei-m/"
+  featured: false
+- title: WQU Partners
+  main_url: "https://partners.wqu.org/"
+  url: "https://partners.wqu.org/"
+  featured: false
+  categories:
+    - Marketing
+    - Education
+    - Landing Page
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: Federico Giacone
+  url: "https://federico.giac.one/"
+  main_url: "https://federico.giac.one"
+  source_url: "https://github.com/leopuleo/federico.giac.one"
+  description: >
+    Digital portfolio for Italian Architect Federico Giacone.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Leonardo Giacone
+  built_by_url: "https://github.com/leopuleo"
+  featured: false
+- title: Station
+  url: "https://getstation.com/"
+  main_url: "https://getstation.com/"
+  description: Station is the first smart browser for busy people. A single place for all of your web applications.
+  categories:
+    - Technology
+    - Web Development
+    - Productivity
   featured: false

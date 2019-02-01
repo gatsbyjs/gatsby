@@ -40,7 +40,7 @@ The following fields are used by the page object and should be avoided.
   * \\"component\\"
   * \\"componentChunkName\\"
   * \\"pluginCreator___NODE\\"
-  * \\"pluginCreatorName\\"
+  * \\"pluginCreatorId\\"
 
             "
 `;
