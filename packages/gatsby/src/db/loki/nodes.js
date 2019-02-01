@@ -338,7 +338,6 @@ module.exports = {
   getTypes,
   hasNodeChanged,
   getNodeAndSavePathDependency,
-  getTypes,
 
   createNode,
   updateNode,
