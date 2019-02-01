@@ -6,7 +6,7 @@ exports[`gatsby-plugin-manifest addDigestToPath returns query modified path 1`] 
 
 exports[`gatsby-plugin-manifest addDigestToPath returns unmodified path 1`] = `"icons/icon-48x48.png"`;
 
-exports[`gatsby-plugin-manifest createContentDigest returns valid digest 1`] = `"e550b54e9e375a7909aea0991f25715fb4bf51dd"`;
+exports[`gatsby-plugin-manifest createContentDigest returns valid digest 1`] = `"24ac9308d3adace282339005aff676bd1576f061"`;
 
 exports[`gatsby-plugin-manifest defaultIcons includes all icon sizes 1`] = `
 Array [

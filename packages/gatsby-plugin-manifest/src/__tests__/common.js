@@ -27,7 +27,7 @@ describe(`gatsby-plugin-manifest`, () => {
 
   describe(`createContentDigest`, () => {
     it(`returns valid digest`, () => {
-      const iconSrc = path.resolve(__dirname, `./images/gatsby-logo.png`)
+      const iconSrc = `thisIsSomethingToHash`
       expect(createContentDigest(iconSrc)).toMatchSnapshot()
     })
   })
