@@ -16,4 +16,4 @@ yarn &&
 gatsby-dev --set-path-to-repo "$GATSBY_PATH" &&
 gatsby-dev --scan-once --copy-all --quiet && # copies _all_ files in gatsby/packages
 chmod +x ./node_modules/.bin/gatsby && # this is sometimes necessary to ensure executable
-node $GATSBY_PATH/scripts/compare-loki-sift.js
+node ../../scripts/compare-loki-sift.js
