@@ -437,6 +437,7 @@ template components_ where you query for data for each page.
 
 Now that you've built a Gatsby site, where do you go next?
 
+- [Prepare your site to go live](https://www.gatsbyjs.org/tutorial/part-eight/) in the final tutorial
 - Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet, and include the hashtag #gatsbytutorial :)
 - You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
 - Explore more [plugins](/docs/plugins/)
