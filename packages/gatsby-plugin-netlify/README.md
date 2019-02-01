@@ -123,6 +123,7 @@ An example:
 ```javascript
 createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true })
 createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" })
+createRedirect({ fromPath: "/url_that_is/not_pretty", toPath: "/pretty/url", statusCode: 200 })
 ```
 
 You can also create a `_redirects` file in the `static` folder for the same effect. Any programmatically created redirects will be appended to the file.
