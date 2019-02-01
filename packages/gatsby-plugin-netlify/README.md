@@ -111,14 +111,20 @@ You can validate the `_headers` config through the
 
 You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/actions/#createRedirect) action.
 
+In addition to the options provided by the Gatsby API, you can pass these options specific to this plugin:
+
+| Attribute | Description                                                                                                                                                                                                        |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `force`   | Overrides existing content in the path. This is particularly useful for domain alias redirects. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#structured-configuration). |
+
+| `statusCode` | Overrides the HTTP status code whih is `302` by default, or `301` when [`isPermanent`](https://www.gatsbyjs.org/docs/actions/#createRedirect) is `true`. Since Netlify supports more status codes, this allows you to set a different status code. Like `200` for a rewrite, or `404` for a custom error page. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#http-status-codes). |
+
 An example:
 
 ```javascript
 createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true })
 createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" })
 ```
-
-> NOTE: You can pass the `force` option to override existing content in the path. This is particularly useful for domain alias redirects. See the Netlify documentation on this option [here](https://www.netlify.com/docs/redirects/#structured-configuration).
 
 You can also create a `_redirects` file in the `static` folder for the same effect. Any programmatically created redirects will be appended to the file.
 
