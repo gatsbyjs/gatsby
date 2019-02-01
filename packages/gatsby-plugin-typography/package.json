@@ -27,7 +27,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha",
+    "gatsby": "^2.0.0",
     "react-typography": "^0.16.1 || ^1.0.0-alpha.0",
     "typography": "^0.16.0 || ^1.0.0-alpha.0"
   },
