@@ -23,11 +23,7 @@ import {
 } from "./queries"
 
 export const sourceNodes = async (
-  {
-    boundActionCreators: { createNode, touchNode, createNodeId },
-    store,
-    cache,
-  },
+  { actions: { createNode, touchNode }, createNodeId, store, cache },
   { shopName, accessToken, verbose = true }
 ) => {
   const client = createClient(shopName, accessToken)

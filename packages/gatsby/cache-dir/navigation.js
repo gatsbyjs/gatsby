@@ -34,15 +34,15 @@ function maybeRedirect(pathname) {
   }
 }
 
-const onPreRouteUpdate = location => {
+const onPreRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
-    apiRunner(`onPreRouteUpdate`, { location })
+    apiRunner(`onPreRouteUpdate`, { location, prevLocation })
   }
 }
 
-const onRouteUpdate = location => {
+const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
-    apiRunner(`onRouteUpdate`, { location })
+    apiRunner(`onRouteUpdate`, { location, prevLocation })
 
     // Temp hack while awaiting https://github.com/reach/router/issues/119
     window.__navigatingToLink = false
@@ -67,10 +67,7 @@ const navigate = (to, options = {}) => {
 
   // If we had a service worker update, no matter the path, reload window and
   // reset the pathname whitelist
-  if (window.GATSBY_SW_UPDATED) {
-    const { controller } = navigator.serviceWorker
-    controller.postMessage({ gatsbyApi: `resetWhitelist` })
-
+  if (window.___swUpdated) {
     window.location = pathname
     return
   }
@@ -133,22 +130,22 @@ function init() {
 class RouteUpdates extends React.Component {
   constructor(props) {
     super(props)
-    onPreRouteUpdate(props.location)
+    onPreRouteUpdate(props.location, null)
   }
 
   componentDidMount() {
-    onRouteUpdate(this.props.location)
+    onRouteUpdate(this.props.location, null)
   }
 
   componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
     if (shouldFireRouteUpdate) {
-      onRouteUpdate(this.props.location)
+      onRouteUpdate(this.props.location, prevProps.location)
     }
   }
 
   getSnapshotBeforeUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      onPreRouteUpdate(this.props.location)
+      onPreRouteUpdate(this.props.location, prevProps.location)
       return true
     }
 

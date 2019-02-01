@@ -28,6 +28,7 @@ exports[`<Img /> should render fixed size images 1`] = `
       <img
         alt="Alt text for the image"
         height="100"
+        itemprop="item-prop-for-the-image"
         src="test_image.jpg"
         style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 0;"
         title="Title for the image"
@@ -73,6 +74,7 @@ exports[`<Img /> should render fluid images 1`] = `
       />
       <img
         alt="Alt text for the image"
+        itemprop="item-prop-for-the-image"
         src="test_image.jpg"
         style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 0;"
         title="Title for the image"

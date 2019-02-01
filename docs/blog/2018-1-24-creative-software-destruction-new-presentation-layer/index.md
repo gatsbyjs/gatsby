@@ -5,7 +5,9 @@ author: "Robin Vasan"
 tags: ["architecture", "serverless", "cdn"]
 ---
 
-> “To improve is to change, so to be perfect is to have changed often.” — Winston Churchill
+<pullquote citation="Winston Churchill">
+To improve is to change, so to be perfect is to have changed often.
+</pullquote>
 
 And so it is that about every decade the technology industry rethinks the application architecture in light of new systems, capabilities, and desired outcomes. Right now we are in the early phases of another platform shift which will have massive ripple effects throughout the technology landscape. Current incumbents will fade in significance and new entrants will take their place within new categories. Hundreds of billions in market capitalization is at stake.
 
@@ -52,4 +54,6 @@ Based on these new technologies, it seems that we can move to a new serverless p
 
 There are lots of pieces to this puzzle to still work out, but the shapes are starting to come into focus. The end result should be a streamlined process to design, build, test, and deploy new user experiences. And the resulting applications should be much faster, simpler to operate, cheaper to run, and more secure.
 
-> “Some people don’t like change, but you need to embrace change if the alternative is disaster” — Elon Musk.
+<pullquote citation="Elon Musk">
+Some people don’t like change, but you need to embrace change if the alternative is disaster.
+</pullquote>

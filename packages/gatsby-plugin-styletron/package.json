@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-styletron",
   "description": "A Gatsby plugin for styletron with built-in server-side rendering support",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -26,7 +26,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": "^2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron",
   "scripts": {

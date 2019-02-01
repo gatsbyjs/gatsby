@@ -23,7 +23,7 @@ GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
 ## Data in Gatsby
 
 A website has four parts, HTML, CSS, JS, and data. The first half of the
-tutorial focused on the first three. Let's learn now how to use data in Gatsby
+tutorial focused on the first three. Now let’s learn how to use data in Gatsby
 sites.
 
 What is data?

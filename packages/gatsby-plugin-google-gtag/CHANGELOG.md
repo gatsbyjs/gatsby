@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.11...gatsby-plugin-google-gtag@1.0.12) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-gtag
+
+## [1.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.10...gatsby-plugin-google-gtag@1.0.11) (2019-02-01)
+
+### Bug Fixes
+
+- **plugin-google-gtag:** make pluginConfig optional ([#11112](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/11112)) ([fa8b1b7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/commit/fa8b1b7)), closes [#11217](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/11217)
+
+## [1.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.9...gatsby-plugin-google-gtag@1.0.10) (2019-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-google-gtag
+
+## [1.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.8...gatsby-plugin-google-gtag@1.0.9) (2019-01-28)
+
+### Bug Fixes
+
+- **plugin-google-gtag:** make respectDNT option use the right path ([#11217](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/11217)) ([a0eb2dd](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/commit/a0eb2dd))
+
 <a name="1.0.8"></a>
 
 ## [1.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.7...gatsby-plugin-google-gtag@1.0.8) (2018-11-29)

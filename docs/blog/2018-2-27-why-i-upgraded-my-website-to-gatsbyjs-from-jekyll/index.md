@@ -36,7 +36,7 @@ As I had some free time on my hands, why not rewrite everything again and keep m
 
 ## Final Form — Gatsby
 
-[Gatsby](https://www.gatsbyjs.org/) is a static site generator that can render sites from markup documents using templates defined as React components. It functions similarly to Jekyll, where you can pick a [starter project](https://github.com/gatsbyjs/gatsby-starter-blog), [drop in](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/src/pages/hello-world/index.md) some markdown documents for articles, and [be rewarded](https://gatsbyjs.github.io/gatsby-starter-blog/) with a website with minimal effort.
+[Gatsby](https://www.gatsbyjs.org/) is a static site generator that can render sites from markup documents using templates defined as React components. It functions similarly to Jekyll, where you can pick a [starter project](https://github.com/gatsbyjs/gatsby-starter-blog), [drop in](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/content/blog/hello-world/index.md) some markdown documents for articles, and [be rewarded](https://gatsbyjs.github.io/gatsby-starter-blog/) with a website with minimal effort.
 
 It offers much much more, however. Gatsby lets me leverage all the modern tools for building web applications and to add interactive experiences for visitors like a fully fledged [React](https://reactjs.org/) application. Not only that, it is unlike traditional single page applications, and works _without_ JavaScript! Things would certainly be more complicated if I were to add a JavaScript compilation pipeline to a Jekyll site, and a JavaScript framework would be a better fit.
 

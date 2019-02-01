@@ -100,7 +100,7 @@ Possible sources of great research materials:
 - docs (on gatsbyjs.org and other sites)
 - video tutorials
 - Discord, Spectrum, or Twitter conversations
-- Google search results
+- search engine results
 - presentations you or others have given
 - textbooks
 - dreams
@@ -114,7 +114,7 @@ it in a clear, accurate, and objective manner. You'll likely go through several
 rounds of proofreading and editing before you're happy with your writing.
 
 Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
-[Discord chat room](https://discordapp.com/invite/0ZcbPKXt5bVoxkfV) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
+[Gatsby Discord](https://gatsby.app/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
 
 ## Word choice
 
@@ -171,9 +171,9 @@ abstract syntax tree (AST) is ..."
 
 ### Use SEO optimized titles
 
-This explains how to create a doc that shows up in Google searches.
+This explains how to create a doc that shows up in search engines like Google or Bing.
 
-When you create the new guide or tutorial under /docs/, you’ll either create a file or a folder if there will be images pulled into the doc.
+When you create the new guide or tutorial under `/docs/`, you’ll either create a file or a folder if there will be images pulled into the doc.
 
 File:
 `querying-data-with-graphql.md`
@@ -187,7 +187,7 @@ Folder:
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
-Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use Google to search for things like "gatsby graphql", so the article title should ideally reflect what people might search for on Google.
+Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use a search engine to find topics like "gatsby graphql", so the article title should ideally reflect common search terms.
 
 Here are some title examples:
 
@@ -230,7 +230,10 @@ Use the following as reference when creating and editing docs:
 
 - [formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
 - [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
-  If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself. A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. Then you can right click the image and copy its image source.
+  If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself.
+  A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub.
+  Then you can right click the image and copy its image source. And don't forget image alt text for accessibility!
+  For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
 - [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
 #### Code formatting: Type tab
@@ -288,7 +291,7 @@ alert(s)
 
 #### Code formatting: Line highlighting
 
-You may also choose in include line highlighting in your code snippets, using the following keywords inline in the snippet:
+You may also choose to include line highlighting in your code snippets, using the following keywords inline in the snippet:
 
 ##### `highlight-line`: highlights the current line
 
@@ -375,6 +378,8 @@ A full-stack developer (adjective form with a dash) works on the full stack
 Use frontend for both adjective and noun forms as it's [more common and easier to maintain](https://github.com/gatsbyjs/gatsby/pull/8873#issuecomment-444255465). For example,
 a frontend developer works on the frontend. The same goes for backend.
 
+End users are spelled out with two words, rather than hyphenating with a dash.
+
 ### Use active voice
 
 Use active voice instead of passive voice. Generally, it's a more concise and
@@ -410,11 +415,11 @@ wording.
 
 ### Support software versions
 
-When Gatsby commits to support a specific version of software (e.g. Node 6 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced command or practice as side notes.
+When Gatsby commits to support a specific version of software (e.g. Node 8 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced command or practice as side notes.
 
-For example, npm 5.2.0 (which comes with Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby supports Node 6 and up, documentation should only introduce `npx` as an optional command in a note like so:
+For example, npm 5.2.0 (which comes with Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby recommends Node 8 and up but still technically supports Node 6 until the next major release, documentation should point out the requirements for `npx`:
 
-> npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby supports Node 6 and up, so we introduce `npx` here as an optional command for users of npm 5.2.0 or greater.
+> npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby recommends Node 8 and up, so we introduce `npx` here as limited to users of npm 5.2.0 or greater.
 
 ### Share best practices whenever possible
 
@@ -445,7 +450,7 @@ Attributes:
 - new to React and interested in it
 - new to Gatsby and interested in it
 - new to JavaScript ecosystem and interested in it
-- proficient with browsers and operating systems
+- proficient with browsers and operating system basics
 
 Looking for:
 
@@ -465,8 +470,8 @@ By following the steps in the tutorial, a user should:
 - Know how to and actually start and deploy a site as quickly as possible.
 - Be able to share their site.
 - Know how to and actually find more advanced tutorials and docs.
-- Have fun!
 - Use enough React to do basic tasks like creating pages, links, styles.
+- Have fun!
 
 ### Tutorial tone and style
 
@@ -491,15 +496,15 @@ In practice, you can reach this goal by two rules of thumb:
 
 ### Docs audience
 
-Through research, it's clear that developers of all skill levels read the docs and find them useful.
+Developers of all skill levels read the docs and find them useful.
 
-The tutorial should focus on helping users with the following attributes and goals.
+The docs should focus on helping users with the following attributes and goals.
 
 Attributes:
 
 - intermediate to advanced at React
-- front-end developer
-- prefer using google search and/or `ctrl + f` to find things on the gatsbyjs.org site
+- frontend developer
+- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
 
 Looking for:
 
@@ -527,7 +532,7 @@ By referencing the docs, a user should:
   - blogs
   - portfolio
   - e-commerce
-  - authentication
+  - authenticated
 
 ### Docs tone and style
 
@@ -539,9 +544,9 @@ The docs use the personal “you” to address the user.
 
 #### Give experts as much relevant info to get the task done as quickly as possible
 
-Because the audience of the docs is people who have intermediate to expert level of mastery with React, it's important to provide the information needed to complete tasks in addition to all relevant and helpful context, references,and alternatives. The goal: give people the information necessary to get tasks done as quickly and effectively as possible.
+Because the audience of the docs is people who have intermediate to expert level of mastery with React, it's important to provide the information needed to complete tasks in addition to all relevant and helpful context, references, and alternatives. The goal: give people the information necessary to get tasks done as quickly and effectively as possible.
 
-In practice, you can reach this goal by two rules of thumb:
+In practice, you can reach this goal by two general rules:
 
 - Include an "additional information" section at the bottom of each guide with hyperlinks to relevant external blogposts, tutorials, and other Gatsby resources and docs.
 - When there are multiple ways to complete a task, [follow these instructions](#share-best-practices-whenever-possible).
@@ -554,7 +559,7 @@ Here is how we measure the quality of the tutorial and docs. We will use ([cohor
 
 - time to value: how quickly, effectively, and painlessly can users experience the value of Gatsby?
 - daily, weekly, monthly active users
-- daily, weekly, monthly “finishers” of the tutorial (finisher = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
+- daily, weekly, monthly “finishers” of the tutorial (finishers = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
 - weekly retention rate
 
 ### Docs
@@ -574,4 +579,4 @@ The way the Gatsby community maintains docs and tutorials must meet the followin
 - version control
 - a way to get feedback on each doc
 
-GitHub meets this requirements.
+GitHub meets these requirements.
