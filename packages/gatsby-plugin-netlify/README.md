@@ -116,7 +116,7 @@ In addition to the options provided by the Gatsby API, you can pass these option
 | Attribute | Description |
 | --------- | ----------- |
 | `force`   | Overrides existing content in the path. This is particularly useful for domain alias redirects. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#structured-configuration). |
-| `statusCode` | Overrides the HTTP status code whih is `302` by default, or `301` when [`isPermanent`](https://www.gatsbyjs.org/docs/actions/#createRedirect) is `true`. Since Netlify supports more status codes, this allows you to set a different status code. Like `200` for a rewrite, or `404` for a custom error page. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#http-status-codes). |
+| `statusCode` | Overrides the HTTP status code which is set to `302`  by default or `301` when [`isPermanent`](https://www.gatsbyjs.org/docs/actions/#createRedirect) is `true`. Since Netlify supports custom status codes, you can set one here. For example, `200` for rewrites, or `404` for a custom error page. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#http-status-codes). |
 
 An example:
 
