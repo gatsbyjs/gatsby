@@ -34,8 +34,11 @@ for folder in $FOLDER/*; do
   else
     # validate
     cd $folder
-    npm audit
-    npm install
+    npm audit &&
+    npm install &&
+    # check both npm and yarn, sometimes yarn registry lags behind
+    rm -rf node_modules &&
+    yarn &&
     npm run build
   fi
 
