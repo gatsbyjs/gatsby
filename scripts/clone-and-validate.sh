@@ -39,7 +39,8 @@ for folder in $FOLDER/*; do
     # check both npm and yarn, sometimes yarn registry lags behind
     rm -rf node_modules &&
     yarn &&
-    npm run build
+    npm run build ||
+    exit 1
   fi
 
   cd $BASE
