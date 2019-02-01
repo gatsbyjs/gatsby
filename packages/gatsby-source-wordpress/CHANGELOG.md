@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.31...gatsby-source-wordpress@3.0.32) (2019-02-01)
+
+### Features
+
+- **gatsby-source-wordpress:** add jwt_base_path option ([#11425](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/11425)) ([8bcd19b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/8bcd19b))
+
 ## [3.0.31](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.30...gatsby-source-wordpress@3.0.31) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-source-wordpress
