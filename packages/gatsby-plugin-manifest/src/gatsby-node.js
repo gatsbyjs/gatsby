@@ -59,7 +59,7 @@ exports.onPostBootstrap = async (args, pluginOptions) => {
         ? pluginOptions.cache_busting_mode
         : `query`
 
-    //if cacheBusting is being done via url query icons must be generated before cachebusting runs
+    //if cacheBusting is being done via url query icons must be generated before cache busting runs
     if (cacheMode === `query`) {
       await generateIcons(manifest.icons, icon)
     }
@@ -72,8 +72,8 @@ exports.onPostBootstrap = async (args, pluginOptions) => {
       })
     }
 
-    //if file names are being modified by cacheBusting icons must be generated after cachebusting runs
-    if (cacheMode === `name`) {
+    //if file names are being modified by cacheBusting icons must be generated after cache busting runs
+    if (cacheMode !== `query`) {
       await generateIcons(manifest.icons, icon)
     }
   }
