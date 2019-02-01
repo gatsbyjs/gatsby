@@ -41,12 +41,7 @@ class Cache {
   get(key) {
     return new Promise(resolve => {
       this.cache.get(key, (err, res) => {
-        if (err) {
-          throw new Error(
-            `The value cached with key: ${key} could not be retrieved.`
-          )
-        }
-        resolve(res)
+        resolve(err ? undefined : res)
       })
     })
   }
@@ -54,10 +49,7 @@ class Cache {
   set(key, value, args = {}) {
     return new Promise(resolve => {
       this.cache.set(key, value, args, err => {
-        if (err) {
-          throw new Error(`Failed to cache ${value} with key: ${key}.`)
-        }
-        resolve(value)
+        resolve(err ? undefined : value)
       })
     })
   }

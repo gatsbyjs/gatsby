@@ -113,12 +113,12 @@ describe(`cache`, () => {
       return expect(cache.set(`a`, `b`)).resolves.toBe(`b`)
     })
 
-    it(`rejects on caching error`, () => {
+    it(`resolves to undefined on caching error`, () => {
       const cache = getCache()
 
-      mockErrorValue.mockReturnValueOnce(!undefined)
+      mockErrorValue.mockReturnValueOnce(true)
 
-      return expect(cache.set(`a`, `b`)).rejects.toThrow()
+      return expect(cache.set(`a`, `b`)).resolves.toBeUndefined()
     })
   })
 
@@ -131,12 +131,12 @@ describe(`cache`, () => {
       return expect(cache.get()).resolves.toBe(`result`)
     })
 
-    it(`rejects on caching error`, () => {
+    it(`resolves to undefined on caching error`, () => {
       const cache = getCache()
 
-      mockErrorValue.mockReturnValueOnce(!undefined)
+      mockErrorValue.mockReturnValueOnce(true)
 
-      return expect(cache.get()).rejects.toThrow()
+      return expect(cache.get()).resolves.toBeUndefined()
     })
   })
 })
