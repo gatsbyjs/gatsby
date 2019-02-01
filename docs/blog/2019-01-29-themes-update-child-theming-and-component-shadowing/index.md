@@ -1,5 +1,5 @@
 ---
-title: Themes Update: Child Theming and Component Shadowing
+title: "Themes Update: Child Theming and Component Shadowing"
 date: 2018-01-26
 author: Chris Biscardi
 excerpt: "Making it easier to abstract themes into reusable modules"
