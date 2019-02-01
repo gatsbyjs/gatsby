@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.10...gatsby-plugin-google-gtag@1.0.11) (2019-02-01)
+
+### Bug Fixes
+
+- **plugin-google-gtag:** make pluginConfig optional ([#11112](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/11112)) ([fa8b1b7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/commit/fa8b1b7)), closes [#11217](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/11217)
+
 ## [1.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.9...gatsby-plugin-google-gtag@1.0.10) (2019-01-28)
 
 **Note:** Version bump only for package gatsby-plugin-google-gtag
