@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.2...gatsby-transformer-remark@2.2.3) (2019-02-01)
+
+### Features
+
+- **gatsby-transformer-remark:** add options for tableOfContents ([#9814](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/9814)) ([8290dfe](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/8290dfe))
+
+## [2.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.1...gatsby-transformer-remark@2.2.2) (2019-01-29)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.2.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.0...gatsby-transformer-remark@2.2.1) (2019-01-28)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** don't convert Date objects ([#10924](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/10924)) ([4463f52](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/4463f52))
+
 <a name="2.2.0"></a>
 
 # [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.1.20...gatsby-transformer-remark@2.2.0) (2019-01-08)

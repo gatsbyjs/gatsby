@@ -9,11 +9,11 @@
         - title: Overview of core technologies
           link: /tutorial/part-zero/#overview-of-core-technologies
         - title: Familiarize with the command line
-          link: /tutorial/part-zero/#familiarize-with-the-command-line
+          link: /tutorial/part-zero/#familiarize-yourself-with-the-command-line
         - title: Install Node.js
           link: /tutorial/part-zero/#install-nodejs
         - title: Familiarize with npm
-          link: /tutorial/part-zero/#familiarize-with-npm
+          link: /tutorial/part-zero/#familiarize-yourself-with-npm
         - title: Install Git
           link: /tutorial/part-zero/#install-git
         - title: Install Gatsby CLI
@@ -45,7 +45,7 @@
         - title: Creating global styles with standard css files
           link: /tutorial/part-two/#creating-global-styles-with-standard-css-files
         - title: Using component-scoped CSS
-          link: /tutorial/part-two/#using-component-css
+          link: /tutorial/part-two/#using-component-scoped-css
         - title: Styling using CSS Modules
           link: /tutorial/part-two/#css-modules
         - title: Styling using CSS-in-JS
@@ -101,7 +101,7 @@
       ui: steps
       items:
         - title: Audit with Lighthouse
-          link: /tutorial/part-eight/#auditing-with-lighthouse
+          link: /tutorial/part-eight/#audit-with-lighthouse
         - title: Add a manifest file
           link: /tutorial/part-eight/#add-a-manifest-file
         - title: Add offline support

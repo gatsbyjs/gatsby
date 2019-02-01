@@ -11,7 +11,7 @@ on the back burner btw until after v1 comes out).
 
 ## Prerequisites
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/gatsby-lifecycle-apis/).
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
 
 ## Plugins
 

@@ -28,7 +28,6 @@ const { printTransforms } = IRTransforms
 
 const {
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -51,7 +50,6 @@ type Queries = Map<string, RootQuery>
 
 const validationRules = [
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,

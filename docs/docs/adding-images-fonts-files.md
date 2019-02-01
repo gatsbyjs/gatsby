@@ -152,7 +152,7 @@ Keep in mind the downsides of this approach:
 ### When to Use the `static` Folder
 
 Normally we recommend importing [stylesheets](#adding-a-stylesheet),
-[images, and fonts](#adding-images-and-fonts) from JavaScript. The `static`
+[images, and fonts](#adding-images-fonts-files) from JavaScript. The `static`
 folder is useful as a workaround for a number of less common cases:
 
 - You need a file with a specific name in the build output, such as
@@ -161,5 +161,5 @@ folder is useful as a workaround for a number of less common cases:
 - You want to include a small script like
   [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the
   bundled code.
-- Some library may be incompatible with Webpack and you have no other option but
-  to include it as a `<script>` tag.
+- You are using a library that is incompatible with Webpack and need to
+  include it as a `<script>` tag.
