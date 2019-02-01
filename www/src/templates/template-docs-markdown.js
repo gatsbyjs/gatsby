@@ -87,6 +87,15 @@ class DocsTemplate extends React.Component {
                   __html: html,
                 }}
               />
+              {page.frontmatter.issue && (
+                <a
+                  href={page.frontmatter.issue}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See The Issue realting to this stub On Github
+                </a>
+              )}
               <MarkdownPageFooter page={page} />
             </Container>
           </DocSearchContent>
