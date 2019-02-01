@@ -113,17 +113,21 @@ You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/d
 
 In addition to the options provided by the Gatsby API, you can pass these options specific to this plugin:
 
-| Attribute | Description |
-| --------- | ----------- |
-| `force`   | Overrides existing content in the path. This is particularly useful for domain alias redirects. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#structured-configuration). |
-| `statusCode` | Overrides the HTTP status code which is set to `302`  by default or `301` when [`isPermanent`](https://www.gatsbyjs.org/docs/actions/#createRedirect) is `true`. Since Netlify supports custom status codes, you can set one here. For example, `200` for rewrites, or `404` for a custom error page. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#http-status-codes). |
+| Attribute    | Description                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `force`      | Overrides existing content in the path. This is particularly useful for domain alias redirects. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#structured-configuration).                                                                                                                                                                                               |
+| `statusCode` | Overrides the HTTP status code which is set to `302` by default or `301` when [`isPermanent`](https://www.gatsbyjs.org/docs/actions/#createRedirect) is `true`. Since Netlify supports custom status codes, you can set one here. For example, `200` for rewrites, or `404` for a custom error page. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#http-status-codes). |
 
 An example:
 
 ```javascript
 createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true })
 createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" })
-createRedirect({ fromPath: "/url_that_is/not_pretty", toPath: "/pretty/url", statusCode: 200 })
+createRedirect({
+  fromPath: "/url_that_is/not_pretty",
+  toPath: "/pretty/url",
+  statusCode: 200,
+})
 ```
 
 You can also create a `_redirects` file in the `static` folder for the same effect. Any programmatically created redirects will be appended to the file.
