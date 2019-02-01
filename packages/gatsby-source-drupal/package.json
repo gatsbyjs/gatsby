@@ -27,7 +27,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": "^2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal",
   "scripts": {

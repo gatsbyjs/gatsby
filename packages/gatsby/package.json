@@ -135,7 +135,7 @@
     "rimraf": "^2.6.1"
   },
   "engines": {
-    "node": ">6.0.0"
+    "node": ">=6.0.0"
   },
   "files": [
     "cache-dir",

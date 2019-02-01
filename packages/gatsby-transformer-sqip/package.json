@@ -23,9 +23,9 @@
     "debug": "^3.1.0"
   },
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha",
-    "gatsby-source-contentful": ">2.0.0-alpha",
-    "gatsby-transformer-sharp": ">2.0.0-alpha"
+    "gatsby": "^2.0.0",
+    "gatsby-source-contentful": "^2.0.0",
+    "gatsby-transformer-sharp": "^2.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip#readme",
   "keywords": [

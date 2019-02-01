@@ -31,7 +31,7 @@
   "author": "Khaled Garbaya <khaledgarbaya@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": "^2.0.0"
   },
   "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
 }

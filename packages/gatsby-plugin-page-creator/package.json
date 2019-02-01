@@ -35,6 +35,6 @@
     "cross-env": "^5.0.5"
   },
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": "^2.0.0"
   }
 }
