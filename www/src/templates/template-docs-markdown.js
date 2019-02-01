@@ -93,7 +93,7 @@ class DocsTemplate extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  See The Issue realting to this stub On Github
+                  See the issue relating to this stub on GitHub
                 </a>
               )}
               <MarkdownPageFooter page={page} />
@@ -120,6 +120,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         overview
+        issue
       }
       ...MarkdownPageFooter
     }
