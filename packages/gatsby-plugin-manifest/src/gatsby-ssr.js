@@ -1,7 +1,7 @@
 import React from "react"
 import { withPrefix } from "gatsby"
 import { defaultIcons, createContentDigest, addDigestToPath } from "./common.js"
-import fs from "fs-extra"
+import fs from "fs"
 
 let iconDigest = null
 
@@ -22,7 +22,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   if (pluginOptions.icon) {
     let favicon = icons && icons.length ? icons[0].src : null
 
-    if (!iconDigest && cacheBusting !== `none`) {
+    if (cacheBusting !== `none`) {
       iconDigest = createContentDigest(fs.readFileSync(pluginOptions.icon))
     }
 
@@ -50,13 +50,13 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       href={withPrefix(`/manifest.webmanifest`)}
     />
   )
+
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (pluginOptions.theme_color) {
-    let insertMetaTag = Object.keys(pluginOptions).includes(
-      `theme_color_in_head`
-    )
-      ? pluginOptions.theme_color_in_head
-      : true
+    let insertMetaTag =
+      typeof pluginOptions.theme_color_in_head !== `undefined`
+        ? pluginOptions.theme_color_in_head
+        : true
 
     if (insertMetaTag) {
       headComponents.push(

@@ -2,6 +2,7 @@ jest.mock(`fs`, () => {
   return {
     existsSync: jest.fn().mockImplementation(() => true),
     writeFileSync: jest.fn(),
+    readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
     statSync: jest.fn(),
   }
 })
@@ -24,6 +25,7 @@ jest.mock(`sharp`, () => {
   sharp.simd = jest.fn()
   return sharp
 })
+
 const fs = require(`fs`)
 const path = require(`path`)
 const sharp = require(`sharp`)
@@ -122,6 +124,71 @@ describe(`Test plugin manifest options`, () => {
       legacy: true,
       plugins: [],
       theme_color_in_head: false,
+      cache_busting_mode: `name`,
+    }
+    await onPostBootstrap([], {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
+    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    expect(content).toEqual(manifestOptions)
+  })
+
+  it(`does file name based cache busting`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const manifestOptions = {
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `standalone`,
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `48x48`,
+          type: `image/png`,
+        },
+      ],
+    }
+    const pluginSpecificOptions = {
+      icon: `images/gatsby-logo.png`,
+      legacy: true,
+      cache_busting_mode: `name`,
+    }
+    await onPostBootstrap([], {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
+    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    expect(content).toMatchSnapshot()
+  })
+
+  it(`does not do cache cache busting`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const manifestOptions = {
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `standalone`,
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `48x48`,
+          type: `image/png`,
+        },
+      ],
+    }
+    const pluginSpecificOptions = {
+      icon: `images/gatsby-logo.png`,
+      legacy: true,
+      cache_busting_mode: `none`,
     }
     await onPostBootstrap([], {
       ...manifestOptions,

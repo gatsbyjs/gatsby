@@ -2,7 +2,12 @@ const fs = require(`fs`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
 const sharp = require(`sharp`)
-const { defaultIcons, doesIconExist, addDigestToPath } = require(`./common.js`)
+const {
+  defaultIcons,
+  doesIconExist,
+  addDigestToPath,
+  createContentDigest,
+} = require(`./common.js`)
 
 sharp.simd(true)
 
@@ -18,7 +23,7 @@ function generateIcons(icons, srcIcon) {
   })
 }
 
-exports.onPostBootstrap = async ({ createContentDigest }, pluginOptions) => {
+exports.onPostBootstrap = async (args, pluginOptions) => {
   const { icon, ...manifest } = pluginOptions
 
   // Delete options we won't pass to the manifest.webmanifest.
