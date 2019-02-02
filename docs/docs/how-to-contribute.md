@@ -81,7 +81,7 @@ Check the GitHub repo for issues labeled with ["documentation" and "good first i
    > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
-If you wrote a new document that was previously a stub, there is two things you need to update.
+If you wrote a new document that was previously a stub, there are two things you need to update.
 
 1. Remove the frontmatter that links to the issue
 
