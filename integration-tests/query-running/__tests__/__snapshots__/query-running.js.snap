@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Query running basic connection Using redux matches snapshot 1`] = `
+Object {
+  "data": Object {
+    "allEntry": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "id": "entry_1",
+            "string": "a",
+          },
+        },
+        Object {
+          "node": Object {
+            "id": "entry_2",
+            "string": "n",
+          },
+        },
+        Object {
+          "node": Object {
+            "id": "entry_3",
+            "string": "c",
+          },
+        },
+        Object {
+          "node": Object {
+            "id": "entry_4",
+            "string": "d",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`Query running basic sort Using redux matches snapshot 1`] = `
+Object {
+  "data": Object {
+    "allEntry": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "id": "entry_1",
+            "sortField": "a",
+            "string": "a",
+          },
+        },
+        Object {
+          "node": Object {
+            "id": "entry_4",
+            "sortField": "a",
+            "string": "d",
+          },
+        },
+        Object {
+          "node": Object {
+            "id": "entry_2",
+            "sortField": null,
+            "string": "n",
+          },
+        },
+        Object {
+          "node": Object {
+            "id": "entry_3",
+            "sortField": null,
+            "string": "c",
+          },
+        },
+      ],
+    },
+  },
+}
+`;

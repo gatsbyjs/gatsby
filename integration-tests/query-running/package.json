@@ -1,0 +1,16 @@
+{
+  "name": "query-running-test",
+  "license": "MIT",
+  "scripts": {
+    "clean-and-build": "rm -rf .cache && gatsby build"
+  },
+  "dependencies": {
+    "gatsby": "^2.0.107",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "execa": "^1.0.0",
+    "fs-extra": "^7.0.1"
+  }
+}

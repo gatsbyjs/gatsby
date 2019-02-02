@@ -5,6 +5,7 @@ module.exports = {
     `/examples/`,
     `/www/`,
     `/dist/`,
+    `/.cache/`,
     `/node_modules/`,
     `__tests__/fixtures`,
   ],
