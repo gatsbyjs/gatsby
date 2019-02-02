@@ -23,7 +23,7 @@ describe(`Query running`, () => {
   })
 
   // install gatsby-dev
-  execa.shellSync(`npm install -g gatsby-dev-cli`, {
+  execa.shellSync(`sudo npm install -g gatsby-dev-cli`, {
     stdio: `inherit`,
   })
 
