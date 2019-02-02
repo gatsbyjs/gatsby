@@ -54,9 +54,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/gatsby-browser.js"
-      ],
+      "files": ["**/gatsby-browser.js"],
       "env": {
         "browser": true
       }
