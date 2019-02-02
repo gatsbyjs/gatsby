@@ -1,0 +1,70 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "google",
+    "eslint:recommended",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
+  ],
+  "plugins": ["flowtype", "prettier", "react"],
+  "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": false,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "globals": {
+    "before": true,
+    "spyOn": true,
+    "__PATH_PREFIX__": true
+  },
+  "rules": {
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      { "requireReturnForObjectLiteral": true }
+    ],
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowTaggedTemplates": true
+      }
+    ],
+    "consistent-return": ["error"],
+    "no-console": "off",
+    "no-inner-declarations": "off",
+    "prettier/prettier": "error",
+    "quotes": ["error", "backtick"],
+    "react/display-name": "off",
+    "react/jsx-key": "warn",
+    "react/no-unescaped-entities": "warn",
+    "react/prop-types": "off",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/gatsby-browser.js"
+      ],
+      "env": {
+        "browser": true
+      }
+    }
+  ],
+  "settings": {
+    "react": {
+      "version": "16.4.2"
+    }
+  }
+}
