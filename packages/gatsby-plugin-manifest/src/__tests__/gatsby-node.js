@@ -34,6 +34,7 @@ const { onPostBootstrap } = require(`../gatsby-node`)
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
     fs.writeFileSync.mockReset()
+    sharp.mockClear()
   })
 
   // the require of gatsby-node performs the invoking
@@ -52,6 +53,7 @@ describe(`Test plugin manifest options`, () => {
     })
     const [filePath, contents] = fs.writeFileSync.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
+    expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
   })
 
@@ -78,11 +80,12 @@ describe(`Test plugin manifest options`, () => {
     })
 
     expect(sharp).toHaveBeenCalledWith(icon)
+    expect(sharp).toHaveBeenCalledTimes(1)
   })
 
-  it(`fails on non existing icon`, done => {
+  it(`fails on non existing icon`, async done => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
-    onPostBootstrap([], {
+    await onPostBootstrap([], {
       name: `GatsbyJS`,
       short_name: `GatsbyJS`,
       start_url: `/`,
@@ -98,6 +101,7 @@ describe(`Test plugin manifest options`, () => {
         },
       ],
     }).catch(err => {
+      expect(sharp).toHaveBeenCalledTimes(0)
       expect(err).toMatchSnapshot()
       done()
     })
@@ -130,7 +134,7 @@ describe(`Test plugin manifest options`, () => {
       ...manifestOptions,
       ...pluginSpecificOptions,
     })
-
+    expect(sharp).toHaveBeenCalledTimes(0)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
   })
@@ -163,6 +167,7 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
+    expect(sharp).toHaveBeenCalledTimes(1)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toMatchSnapshot()
   })
@@ -195,6 +200,7 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
+    expect(sharp).toHaveBeenCalledTimes(1)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
   })
