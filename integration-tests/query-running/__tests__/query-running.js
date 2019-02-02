@@ -38,6 +38,12 @@ describe(`Query running`, () => {
     stdio: `inherit`,
   })
 
+  // chmod +x
+  execa.shellSync(`chmod +x ./node_modules/.bin/gatsby`, {
+    cwd: projectPath,
+    stdio: `inherit`,
+  })
+
   // do both builds first
   dbEngines.forEach(dbEngine => {
     execa.shellSync(`npm run clean-and-build`, {
