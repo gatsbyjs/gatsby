@@ -21,7 +21,7 @@ export default async function writeRedirectsFile(
       redirectInBrowser, // eslint-disable-line no-unused-vars
       force,
       toPath,
-      statusCode, // eslint-disable-line no-unused-vars
+      statusCode,
       ...rest
     } = redirect
 
