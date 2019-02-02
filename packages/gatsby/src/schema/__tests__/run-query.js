@@ -51,6 +51,7 @@ const makeNodes = () => [
     anArray: [1, 2, 5, 4],
     waxOnly: {
       foo: true,
+      bar: { baz: true },
     },
     anotherKey: {
       withANested: {
@@ -199,8 +200,22 @@ describe(`Filter fields`, () => {
     expect(result[0].hair).toEqual(1)
   })
 
+  it(`handles ne: true operator`, async () => {
+    let result = await runFilter({ boolean: { ne: true } })
+
+    expect(result.length).toEqual(2)
+  })
+
   it(`handles nested ne: true operator`, async () => {
     let result = await runFilter({ waxOnly: { foo: { ne: true } } })
+
+    expect(result.length).toEqual(2)
+  })
+
+  it(`handles deeply nested ne: true operator`, async () => {
+    let result = await runFilter({
+      waxOnly: { bar: { baz: { ne: true } } },
+    })
 
     expect(result.length).toEqual(2)
   })
