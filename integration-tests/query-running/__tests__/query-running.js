@@ -17,7 +17,7 @@ describe(`Query running`, () => {
   const testInputs = getTestInputs()
 
   // install dependencies of the project
-  execa.shellSync(`yarn`, {
+  execa.shellSync(`npm install`, {
     cwd: projectPath,
     stdio: `inherit`,
   })
@@ -40,7 +40,7 @@ describe(`Query running`, () => {
 
   // do both builds first
   dbEngines.forEach(dbEngine => {
-    execa.shellSync(`yarn clean-and-build`, {
+    execa.shellSync(`npm run clean-and-build`, {
       cwd: projectPath,
       env: { GATSBY_DB_NODES: dbEngine },
       stdio: `inherit`,
