@@ -1777,3 +1777,30 @@
   features:
     - Generate nice documentation with Docz, in addition to generating your normal Gatsby site
     - Document your React components in .mdx files
+- url: https://lgcolella.github.io/gatsby-starter-developer-blog/
+  repo: https://github.com/lgcolella/gatsby-starter-developer-blog
+  description: A starter to create SEO-friendly, fast, multilanguage, responsive and highly customizable technical blogs/ portofolios with the most common features out of the box.
+  tags:
+    - Blog
+    - Multilanguage
+    - Portfolio
+    - Technology
+    - SEO
+    - Web Development
+  features:
+    - Multilanguage posts
+    - Image preview for posts
+    - Tags (image + description for each tag) and Tags index page
+    - Archive
+    - SEO optimization for OpenGraph Tags, Twitter Tags, HTML attributes title, alt and hreflang
+    - Social share buttons
+    - Disqus for comments
+    - Markdown syntax for posts
+    - Highlighting for code syntax in posts
+    - Dark and light themes available
+    - Various available icon sets: Material Design, Font Awesome, Ionicons, Typicons, Github Octicons, Feather
+    - Responsive design
+    - Sitemap
+    - FeedRSS
+    - Roboto.txt
+    - Web app manifest (manifest.json)
