@@ -199,19 +199,12 @@ module.exports = (
     const showCaptions = options.showCaptions && node.title
     let rawHTML = `
   <span
-    class="${imageWrapperClass}"
-    style="position: relative; display: block; ${
-      showCaptions ? `` : options.wrapperStyle
-    } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="${imageBackgroundClass}"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
+    class="${imageBackgroundClass}"
+    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
       fluidResult.base64
     }'); background-size: cover; display: block;"
-    ></span>
-    ${imageTag}
-  </span>
+  ></span>
+  ${imageTag}
   `.trim()
 
     // Make linking to original image optional.
@@ -228,6 +221,17 @@ module.exports = (
   </a>
     `.trim()
     }
+
+    rawHTML = `
+    <span
+      class="${imageWrapperClass}"
+      style="position: relative; display: block; ${
+        showCaptions ? `` : options.wrapperStyle
+      } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+    >
+      ${rawHTML}
+    </span>
+    `.trim()
 
     // Wrap in figure and use title as caption
     if (showCaptions) {
