@@ -3,6 +3,9 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
+const { publishPackageLocally, registryUrl } = require(`./verdaccio`)
+const { promisifiedSpawn } = require(`./utils`)
+
 let numCopied = 0
 
 const quit = () => {
@@ -25,6 +28,21 @@ const copyPath = (oldPath, newPath, quiet) =>
       return resolve()
     })
   })
+
+const installFromVerdaccio = async args => {
+  await publishPackageLocally(args)
+
+  const installCmd = [
+    `yarn`,
+    [`add`, args.packageName, `--registry=${registryUrl}`],
+  ]
+
+  console.log(`Installing '${args.packageName}' locally`)
+
+  await promisifiedSpawn(installCmd)
+
+  console.log(`Installed '${args.packageName}' locally`)
+}
 
 /*
  * non-existant packages break on('ready')
@@ -61,10 +79,57 @@ function watch(root, packages, { scanOnce, quiet }) {
           return
         }
 
+        const relativePackageFile = path.relative(prefix, filePath)
+
         const newPath = path.join(
           `./node_modules/${packageName}`,
-          path.relative(prefix, filePath)
+          relativePackageFile
         )
+
+        if (relativePackageFile === `package.json`) {
+          // compare dependencies with local version
+
+          try {
+            // Delete require cache so we can reload the module.
+            delete require.cache[require.resolve(filePath)]
+            // eslint-disable-next-line
+          } catch {}
+          try {
+            // Delete require cache so we can reload the module.
+            delete require.cache[
+              require.resolve(path.join(process.cwd(), newPath))
+            ]
+            // eslint-disable-next-line
+          } catch {}
+
+          const monorepoPKGjson = require(filePath)
+
+          let localPKGjson
+          try {
+            localPKGjson = require(path.join(process.cwd(), newPath))
+          } catch {
+            localPKGjson = {
+              dependencies: {},
+            }
+          }
+
+          const areDepsEqual = _.isEqual(
+            monorepoPKGjson.dependencies,
+            localPKGjson.dependencies
+          )
+
+          if (!areDepsEqual) {
+            allCopies.push(
+              installFromVerdaccio({
+                pathToPackage: prefix,
+                packageName,
+                version: monorepoPKGjson.version,
+              })
+            )
+          }
+
+          return
+        }
 
         let localCopies = [copyPath(filePath, newPath, quiet)]
 
