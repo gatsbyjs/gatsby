@@ -78,9 +78,12 @@ if (argv.copyAll) {
   const { dependencies } = JSON.parse(
     fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`))
   )
-  packages = packages
-    .concat(Object.keys(dependencies))
-    .filter(p => p.startsWith(`gatsby`))
+
+  // get list of packages from monorepo
+  const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
+
+  // intersect dependencies with monoRepoPackags to get list of packages to watch
+  packages = _.intersection(monoRepoPackages, Object.keys(dependencies))
 }
 
 if (!argv.packages && _.isEmpty(packages)) {
