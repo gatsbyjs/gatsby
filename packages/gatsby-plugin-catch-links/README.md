@@ -30,4 +30,4 @@ plugins: [`gatsby-plugin-catch-links`]
 
 ## Examples
 
-Check out the [_Using Remark_ example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark) to see this plugin in action.
+- Check out this live example [_Using Remark_](https://using-remark.gatsbyjs.org/copy-linked-files-intercepting-local-links/#intercepting-local-links) to see this plugin in action. The full source code for this example can be found here [here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark).
