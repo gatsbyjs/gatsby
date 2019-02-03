@@ -165,7 +165,8 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^14.1.1"
+    "graphql": "^14.1.1",
+    "terser": "3.14.1"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
