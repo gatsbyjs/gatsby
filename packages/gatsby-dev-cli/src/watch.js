@@ -123,6 +123,8 @@ function watch(root, packages, { scanOnce, quiet }) {
             filePath,
             localPackage: path.join(process.cwd(), newPath),
             areDepsEqual,
+            mDeps: monorepoPKGjson.dependencies,
+            lDeps: localPKGjson.dependencies,
           })
 
           if (!areDepsEqual) {
