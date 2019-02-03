@@ -415,10 +415,7 @@ describe(`Filter fields`, () => {
     let result = await runFilter({ boolean: { nin: [true, null] } })
 
     expect(result.length).toEqual(1)
-    result.forEach(edge => {
-      expect(edge.boolean).not.toEqual(null)
-      expect(edge.boolean).not.toEqual(true)
-    })
+    expect(result[0].boolean).toBe(false)
   })
 
   it(`handles the glob operator`, async () => {
@@ -434,6 +431,20 @@ describe(`Filter fields`, () => {
     expect(result.length).toEqual(2)
     expect(result[0].index).toEqual(0)
     expect(result[1].index).toEqual(2)
+  })
+
+  it(`handles the eq operator for array field values`, async () => {
+    const result = await runFilter({ anArray: { eq: 5 } })
+
+    expect(result.length).toBe(1)
+    expect(result[0].index).toBe(1)
+  })
+
+  it(`handles the ne operator for array field values`, async () => {
+    const result = await runFilter({ anArray: { ne: 1 } })
+
+    expect(result.length).toBe(1)
+    expect(result[0].index).toBe(2)
   })
 })
 

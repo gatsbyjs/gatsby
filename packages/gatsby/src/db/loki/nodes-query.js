@@ -117,6 +117,18 @@ function toMongoArgs(gqlFilter, lastFieldType) {
         const mm = new Minimatch(v)
         mongoArgs[`$regex`] = mm.makeRe()
       } else if (
+        k === `eq` &&
+        lastFieldType &&
+        lastFieldType.constructor.name === `GraphQLList`
+      ) {
+        mongoArgs[`$contains`] = v
+      } else if (
+        k === `ne` &&
+        lastFieldType &&
+        lastFieldType.constructor.name === `GraphQLList`
+      ) {
+        mongoArgs[`$containsNone`] = v
+      } else if (
         k === `in` &&
         lastFieldType &&
         lastFieldType.constructor.name === `GraphQLList`
@@ -124,13 +136,14 @@ function toMongoArgs(gqlFilter, lastFieldType) {
         mongoArgs[`$containsAny`] = v
       } else if (
         k === `nin` &&
+        lastFieldType &&
         lastFieldType.constructor.name === `GraphQLList`
       ) {
         mongoArgs[`$containsNone`] = v
       } else if (k === `ne` && v === null) {
         mongoArgs[`$ne`] = undefined
       } else if (k === `nin` && lastFieldType.name === `Boolean`) {
-        mongoArgs[`$nin`] = v.concat([false])
+        mongoArgs[`$nin`] = v.concat([undefined])
       } else {
         mongoArgs[`$${k}`] = v
       }
@@ -277,16 +290,13 @@ function ensureFieldIndexes(coll, lokiArgs) {
  * a collection of matching objects (even if `firstOnly` is true)
  */
 async function runQuery({ gqlType, queryArgs, context = {}, firstOnly }) {
-  // Clone args as for some reason graphql-js removes the constructor
-  // from nested objects which breaks a check in sift.js.
-  const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
-  const lokiArgs = convertArgs(gqlArgs, gqlType)
+  const lokiArgs = convertArgs(queryArgs, gqlType)
   const coll = getNodeTypeCollection(gqlType.name)
   ensureFieldIndexes(coll, lokiArgs)
   let chain = coll.chain().find(lokiArgs, firstOnly)
 
-  if (gqlArgs.sort) {
-    const sortFields = toSortFields(gqlArgs.sort)
+  if (queryArgs.sort) {
+    const sortFields = toSortFields(queryArgs.sort)
 
     // Create an index for each sort field. Indexing requires sorting
     // so we lose nothing by ensuring an index is added for each sort
