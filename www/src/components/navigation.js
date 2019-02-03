@@ -186,10 +186,7 @@ const Navigation = ({ pathname }) => {
             >
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
-            <SocialNavItem
-              href="https://twitter.com/gatsbyjs"
-              title="@gatsbyjs"
-            >
+            <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
           </div>
