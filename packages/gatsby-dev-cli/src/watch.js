@@ -118,6 +118,13 @@ function watch(root, packages, { scanOnce, quiet }) {
             localPKGjson.dependencies
           )
 
+          console.log({
+            packageName,
+            filePath,
+            localPackage: path.join(process.cwd(), newPath),
+            areDepsEqual,
+          })
+
           if (!areDepsEqual) {
             allCopies.push(
               installFromVerdaccio({
