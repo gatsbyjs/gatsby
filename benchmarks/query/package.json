@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "faker": "^4.1.0",
-    "gatsby": "next",
+    "gatsby": "latest",
     "lodash": "^4.17.11",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
