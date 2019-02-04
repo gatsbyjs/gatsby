@@ -1,6 +1,6 @@
 ---
 title: "Pragmatic Lessons from Converting to React Hooks"
-date: 2019-02-04
+date: 2019-02-07
 author: Daniel Lemay
 tags:
   - react
