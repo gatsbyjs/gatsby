@@ -54,7 +54,7 @@ module.exports = {
 ```
 
 You can read about
-[gatsby-source-filesystem](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme)
+[`gatsby-source-filesystem`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme)
 if you'd like to learn more.
 
 ## Add MDX Files
