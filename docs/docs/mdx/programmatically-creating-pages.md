@@ -59,7 +59,7 @@ if you'd like to learn more.
 
 ## Add MDX Files
 
-Before you can write any GraphQL queries, and programmatically create
+Before you can write any GraphQL queries and programmatically create
 pages, you need to add some content.
 
 Make a folder called `content/posts` and create two files in it called
