@@ -184,13 +184,10 @@ export default function({ types: t }) {
           templatePath.replaceWith(t.StringLiteral(queryHash))
 
           // modify StaticQuery elements and import data only if query is inside StaticQuery
-          templatePath.parentPath.parentPath.parentPath.traverse(
-            nestedJSXVistor,
-            {
-              queryHash,
-              query,
-            }
-          )
+          path.traverse(nestedJSXVistor, {
+            queryHash,
+            query,
+          })
 
           return null
         }
