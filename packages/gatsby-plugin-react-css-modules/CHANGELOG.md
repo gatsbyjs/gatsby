@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/compare/gatsby-plugin-react-css-modules@2.0.6...gatsby-plugin-react-css-modules@2.0.7) (2019-02-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-react-css-modules:** fix generateScopedName in production ([#11483](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/issues/11483)) ([1d9f02f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/commit/1d9f02f))
+
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/compare/gatsby-plugin-react-css-modules@2.0.5...gatsby-plugin-react-css-modules@2.0.6) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-react-css-modules
