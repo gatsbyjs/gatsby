@@ -1,20 +1,18 @@
 ---
-title: 'Beyond Static: Hapticmedia Uses Gatsby to a Build Dynamic Web App'
-date: 2019-02-04T08:00:00+00:00
+title: "Beyond Static: Hapticmedia Uses Gatsby to a Build Dynamic Web App"
+date: 2019-02-05
 author: Linda Watkins
 tags:
-- case study
-- hapticmedia
-- dynamic apps
-- dynamic web apps
-- ecommerce
-image: "/src/uploads/Screen Shot 2019-02-04 at 10.23.12 AM.png"
+  - case study
+  - hapticmedia
+  - dynamic apps
+  - dynamic web apps
+  - ecommerce
+image: "images/hapticmedia.jpg"
 showImageInArticle: true
-
 ---
-[Hapticmedia](https://hapticmedia.fr/en/ "Hapticmedia"), a creator of 3D product configurators, has been at the cutting edge of retail and e-commerce for four years. But their existing website wasn’t the best showcase of their technological prowess. When the company started, they built their website with Wordpress because that was easiest, and they had bigger things to worry about. But over time, the WordPress site became slow, difficult to update, and prone to breaking down. And as the company grew, they needed a site that could expand with them. Using Gatsby for their website rebuild meant greater stability, faster load times, and more scalability. They had initial concerns over whether a static site generator could successfully incorporate dynamic elements, but this proved not to be a problem.
 
-![](/src/uploads/Screen Shot 2019-02-04 at 10.23.12 AM.png)
+[Hapticmedia](https://hapticmedia.fr/en/ "Hapticmedia"), a creator of 3D product configurators, has been at the cutting edge of retail and e-commerce for four years. But their existing website wasn’t the best showcase of their technological prowess. When the company started, they built their website with Wordpress because that was easiest, and they had bigger things to worry about. But over time, the WordPress site became slow, difficult to update, and prone to breaking down. And as the company grew, they needed a site that could expand with them. Using Gatsby for their website rebuild meant greater stability, faster load times, and more scalability. They had initial concerns over whether a static site generator could successfully incorporate dynamic elements, but this proved not to be a problem.
 
 ## The Trouble with Troubleshooting
 
@@ -36,7 +34,7 @@ According to Bonnet, “the 3D app integrated very well. And another dynamic ele
 
 The day they launched, the Hapticmedia team was immediately impressed by the fast page load times of the new site and the seamless page transitions due to Gatsby’s pre-fetching (which comes in Gatsby out-of-the-box). As the team scrolled down the page, they watched in Chrome Dev Tools as the subsequent pages loaded in the background. This pre-loading of pages meant there were no hiccups in page transitions and moving between pages was almost instantaneous.
 
-“Every page loads before we click. It’s magic! No page transitions!"
+<pullquote>Every page loads before we click. It’s magic! No page transitions!</pullquote>
 
 The interactive 3D rendering of a watch, showcasing Hapticmedia’s 3D configurator tools, also worked seamlessly. The user could interact with the image by rotating it 360 degrees, change the band style and color, and even push the buttons on the watch to see how the minute and second hands responded. It was exactly what Hapticmedia needed to showcase their 3D product configurator.
 
