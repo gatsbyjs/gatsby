@@ -2,6 +2,8 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const slash = require(`slash`)
 const mime = require(`mime`)
+const isRelative = require(`is-relative`)
+const isRelativeUrl = require(`is-relative-url`)
 
 const isFile = (nodeStore, field, relativePath) => {
   const filePath = getFilePath(nodeStore, field, relativePath)
@@ -29,8 +31,6 @@ const getFilePath = (nodeStore, field, relativePath) => {
 
   if (typeName === `File`) return null
 
-  const isRelative = require(`is-relative`)
-  const isRelativeUrl = require(`is-relative-url`)
   const looksLikeFile =
     !path.isAbsolute(relativePath) &&
     mime.getType(relativePath) !== null &&

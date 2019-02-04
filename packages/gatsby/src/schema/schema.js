@@ -1,6 +1,7 @@
+const _ = require(`lodash`)
 const { toInputObjectType } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
-const Date = require(`./types/Date`)
+const GraphQLDate = require(`./types/Date`)
 const {
   addNodeInterfaceFields,
   hasNodeInterface,
@@ -66,7 +67,7 @@ const updateSchemaComposer = async ({
   thirdPartySchemas,
   parentSpan,
 }) => {
-  schemaComposer.add(Date)
+  schemaComposer.add(GraphQLDate)
   // await addTypeDefs({ schemaComposer, parentSpan, typeDefs })
   await addInferredTypes({ schemaComposer, nodeStore, parentSpan })
   await addSetFieldsOnGraphQLNodeTypeFields({
@@ -306,8 +307,9 @@ const addConvenienceChildrenFields = ({
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
-  const queryName = typeName.charAt(0).toLowerCase() + typeName.slice(1)
-  const queryNamePlural = `all` + typeName
+  // not strictly correctly, result is `npmPackage` and `allNpmPackage` from type `NPMPackage`
+  const queryName = _.camelCase(typeName)
+  const queryNamePlural = _.camelCase(`all` + typeName)
   schemaComposer.Query.addFields({
     [queryName]: typeComposer.getResolver(`findOne`),
     [queryNamePlural]: typeComposer.getResolver(`findManyPaginated`),

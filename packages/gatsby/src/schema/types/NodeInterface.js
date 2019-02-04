@@ -1,5 +1,3 @@
-const { findById, findByIds } = require(`../resolvers`)
-
 const getOrCreateNodeInterface = schemaComposer => {
   // TODO: why is `mediaType` on Internal? Applies only to File!?
   // Is `fieldOwners` actually set anywhere? And is it supposed to be an array,
@@ -25,12 +23,12 @@ const getOrCreateNodeInterface = schemaComposer => {
       parent: {
         type: `Node`,
         resolve: async (source, args, context, info) =>
-          findById({ source, args: { id: source.parent }, context, info }),
+          context.nodeModel.getNode(source.parent),
       },
       children: {
         type: `[Node]!`,
         resolve: async (source, args, context, info) =>
-          findByIds({ source, args: { ids: source.children }, context, info }),
+          context.nodeModel.getNodes(source.children),
       },
       internal: `Internal`,
     })
@@ -45,7 +43,7 @@ const addNodeInterface = ({ schemaComposer, typeComposer }) => {
   typeComposer.addInterface(NodeInterfaceTC)
   NodeInterfaceTC.addTypeResolver(
     typeComposer,
-    node => node.internal.type === typeComposer.name
+    node => node.internal.type === typeComposer.getTypeName()
   )
   addNodeInterfaceFields({ schemaComposer, typeComposer })
 }
@@ -53,6 +51,10 @@ const addNodeInterface = ({ schemaComposer, typeComposer }) => {
 const addNodeInterfaceFields = ({ schemaComposer, typeComposer }) => {
   const NodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
   typeComposer.addFields(NodeInterfaceTC.getFields())
+  NodeInterfaceTC.addTypeResolver(
+    typeComposer,
+    node => node.internal.type === typeComposer.getTypeName()
+  )
   // FIXME: UPSTREAM: addSchemaMustHaveType adds to an array,
   // should be Set/Map to avoid duplicates?
   schemaComposer.addSchemaMustHaveType(typeComposer)

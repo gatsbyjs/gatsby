@@ -30,7 +30,7 @@ const getExampleObject = ({ nodes, prefix, ignoreFields = [] }) => {
       })
       .filter(Boolean)
 
-    const selector = `${prefix}.${key}`
+    const selector = prefix ? `${prefix}.${key}` : key
 
     const entriesByType = _.uniqBy(entries, entry => entry.type)
     if (!entriesByType.length) return acc
@@ -67,7 +67,12 @@ const getExampleObject = ({ nodes, prefix, ignoreFields = [] }) => {
     }
 
     let exampleFieldValue
-    if (_.isObject(value)) {
+    if (
+      _.isObject(value) &&
+      !_.isArray(value) &&
+      !_.isString(value) &&
+      !_.isDate(value)
+    ) {
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
         let arrays = arrayWrappers - 1

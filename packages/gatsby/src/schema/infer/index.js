@@ -27,14 +27,27 @@ const addInferredType = ({
 
 const addInferredTypes = ({ schemaComposer, nodeStore, parentSpan }) => {
   const typeNames = nodeStore.getTypes()
-  // TODO: Filter out ignoreType
-  typeNames.forEach(typeName => {
+
+  // Infer File first so all the links to it would work
+  if (typeNames.includes(`File`)) {
     addInferredType({
       schemaComposer,
       nodeStore,
-      typeName,
+      typeName: `File`,
       parentSpan,
     })
+  }
+
+  // TODO: Filter out ignoreType
+  typeNames.forEach(typeName => {
+    if (typeName !== `File`) {
+      addInferredType({
+        schemaComposer,
+        nodeStore,
+        typeName,
+        parentSpan,
+      })
+    }
   })
 }
 

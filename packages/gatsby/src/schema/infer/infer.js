@@ -4,7 +4,6 @@ const {
   GraphQLObjectType,
   defaultFieldResolver,
   getNamedType,
-  assertValidName,
 } = require(`graphql`)
 const invariant = require(`invariant`)
 
@@ -79,10 +78,6 @@ const addInferredFieldsImpl = ({
       )
     }
 
-    if (fieldConfig === `Date`) {
-      fieldConfig = dateResolver
-    }
-
     fieldConfig = fieldConfig.type ? fieldConfig : { type: fieldConfig }
 
     while (arrays--) {
@@ -92,19 +87,14 @@ const addInferredFieldsImpl = ({
     // Proxy resolver to unsanitized fieldName in case it contained invalid characters
     if (key !== unsanitizedKey) {
       // Don't create a field with the sanitized key if a field with that name already exists
-      invariant(
-        exampleObject[key] == null && !typeComposer.hasField(key),
-        `Invalid key ${unsanitizedKey} on ${prefix}. GraphQL field names must ` +
-          `only contain characters matching /^[a-zA-Z][_a-zA-Z0-9]*$/. and ` +
-          `must not start with a double underscore.`
-      )
-
-      const resolver = fieldConfig.resolve || defaultFieldResolver
-      fieldConfig.resolve = (source, args, context, info) =>
-        resolver(source, args, context, {
-          ...info,
-          fieldName: unsanitizedKey,
-        })
+      if (!(exampleObject[key] == null && !typeComposer.hasField(key))) {
+        const resolver = fieldConfig.resolve || defaultFieldResolver
+        fieldConfig.resolve = (source, args, context, info) =>
+          resolver(source, args, context, {
+            ...info,
+            fieldName: unsanitizedKey,
+          })
+      }
     }
 
     if (typeComposer.hasField(key)) {
@@ -149,9 +139,9 @@ const addInferredFieldsImpl = ({
     }
   })
 
-  Object.keys(fields).forEach(fieldName =>
+  Object.keys(fields).forEach(fieldName => {
     typeComposer.setField(fieldName, fields[fieldName])
-  )
+  })
   return typeComposer
 }
 
@@ -237,7 +227,7 @@ const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
       return is32BitInteger(value) ? `Int` : `Float`
     case `string`:
       if (isDate(value)) {
-        return `Date`
+        return dateResolver
       }
       // FIXME: The weird thing is that we are trying to infer a File,
       // but cannot assume that a source plugin for File nodes is actually present.
@@ -251,7 +241,7 @@ const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
       return `String`
     case `object`:
       if (value instanceof Date) {
-        return `Date`
+        return dateResolver
       }
       if (value instanceof String) {
         return `String`
@@ -282,9 +272,31 @@ const createTypeName = selector => {
   return key
 }
 
-const createFieldName = str => {
-  const name = str.replace(/^\d|[^\w]/g, `_`)
-  assertValidName(name)
+const NON_ALPHA_NUMERIC_EXPR = new RegExp(`[^a-zA-Z0-9_]`, `g`)
 
-  return name
+/**
+ * GraphQL field names must be a string and cannot contain anything other than
+ * alphanumeric characters and `_`. They also can't start with `__` which is
+ * reserved for internal fields (`___foo` doesn't work either).
+ */
+const createFieldName = key => {
+  // Check if the key is really a string otherwise GraphQL will throw.
+  invariant(
+    typeof key === `string`,
+    `Graphql field name (key) is not a string -> ${key}`
+  )
+
+  const replaced = key.replace(NON_ALPHA_NUMERIC_EXPR, `_`)
+
+  // key is invalid; normalize with leading underscore and rest with x
+  if (replaced.match(/^__/)) {
+    return replaced.replace(/_/g, (char, index) => (index === 0 ? `_` : `x`))
+  }
+
+  // key is invalid (starts with numeric); normalize with leading underscore
+  if (replaced.match(/^[0-9]/)) {
+    return `_` + replaced
+  }
+
+  return replaced
 }

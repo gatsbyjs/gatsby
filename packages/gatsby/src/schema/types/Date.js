@@ -40,7 +40,7 @@ const ISO_8601_FORMAT = [
   `YYYYDDDD`,
 ]
 
-const Date = new GraphQLScalarType({
+const GraphQLDate = new GraphQLScalarType({
   name: `Date`,
   description: oneLine`
     A date string, such as 2007-12-03, compliant with the ISO 8601 standard
@@ -52,7 +52,7 @@ const Date = new GraphQLScalarType({
   },
 })
 
-export default Date
+export default GraphQLDate
 
 // Check if this is a date.
 // All the allowed ISO 8601 date-time formats used.
@@ -62,7 +62,7 @@ export function isDate(value) {
 }
 
 export const dateResolver = Object.freeze({
-  type: Date,
+  type: GraphQLDate,
   args: {
     formatString: {
       type: GraphQLString,
