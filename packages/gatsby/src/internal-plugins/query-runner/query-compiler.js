@@ -28,7 +28,6 @@ const { printTransforms } = IRTransforms
 
 const {
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -51,7 +50,6 @@ type Queries = Map<string, RootQuery>
 
 const validationRules = [
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -66,7 +64,7 @@ const overlayErrorID = `graphql-compiler`
 
 const resolveThemes = (plugins = []) =>
   plugins.reduce((merged, plugin) => {
-    if (plugin.resolve.includes(`gatsby-theme-`)) {
+    if (plugin.name.includes(`gatsby-theme-`)) {
       merged.push(plugin.resolve)
     }
     return merged

@@ -85,6 +85,8 @@ const generalArgs = {
   quality: 50,
   jpegProgressive: true,
   pngCompressionLevel: 9,
+  // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
+  pngCompressionSpeed: 4,
   base64: false,
   grayscale: false,
   duotone: false,
@@ -97,6 +99,7 @@ const healOptions = (args, defaultArgs) => {
   let options = _.defaults({}, args, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
+  options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
   options.toFormat = options.toFormat.toLowerCase()
 
   // only set width to 400 if neither width nor height is passed
@@ -230,7 +233,6 @@ const processFile = (file, jobs, cb, reporter) => {
         job.outsideResolve()
       }
     }
-
     if (
       (job.file.extension === `png` && args.toFormat === ``) ||
       args.toFormat === `png`
@@ -245,7 +247,10 @@ const processFile = (file, jobs, cb, reporter) => {
                   quality: `${args.quality}-${Math.min(
                     args.quality + 25,
                     100
-                  )}`, // e.g. 40-65
+                  )}`,
+                  speed: args.pngCompressionSpeed
+                    ? args.pngCompressionSpeed
+                    : undefined,
                   strip: !!pluginOptions.stripMetadata, // Must be a bool
                 }),
               ],
@@ -554,7 +559,6 @@ async function base64(arg) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
-
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata

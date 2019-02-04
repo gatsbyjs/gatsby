@@ -68,7 +68,12 @@ describe(`resolveThemes`, () => {
   it(`returns empty array if zero themes detected`, () => {
     ;[
       [],
-      [{ resolve: path.join(base, `gatsby-plugin-whatever`) }],
+      [
+        {
+          name: `gatsby-plugin-whatever`,
+          resolve: path.join(base, `gatsby-plugin-whatever`),
+        },
+      ],
       undefined,
     ].forEach(testRun => {
       expect(resolveThemes(testRun)).toEqual([])
@@ -80,6 +85,7 @@ describe(`resolveThemes`, () => {
     expect(
       resolveThemes([
         {
+          name: theme,
           resolve: path.join(base, `gatsby-theme-example`),
         },
       ])
@@ -92,6 +98,7 @@ describe(`resolveThemes`, () => {
     expect(
       resolveThemes([
         {
+          name: theme,
           resolve: path.join(base, theme),
         },
       ])
