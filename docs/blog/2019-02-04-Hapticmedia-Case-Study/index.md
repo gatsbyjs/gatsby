@@ -7,6 +7,7 @@ tags:
 - hapticmedia
 - dynamic apps
 - dynamic web apps
+- ecommerce
 image: "/src/uploads/Screen Shot 2019-02-04 at 10.23.12 AM.png"
 showImageInArticle: true
 
