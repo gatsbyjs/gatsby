@@ -33,3 +33,5 @@ fields:
   type: boolean
   hidden: false
   default: ''
+pages:
+- docs/blog/beyond-static-hapticmedia-uses-gatsby-to-a-build-dynamic-web-app.md
