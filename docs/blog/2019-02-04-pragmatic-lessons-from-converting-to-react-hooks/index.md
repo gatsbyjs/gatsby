@@ -32,7 +32,7 @@ export const PureRandomQuote = ({
       </div>
     )}
   </Slideshow>
-);
+)
 ```
 
 Several components on the site used a Slideshow render prop component. This exposed functionality to play/pause, pass down the current index, go to the previous/next slide, or go to a specific slide in the array. This component accepted an array of slides as a prop and provided an object as the argument in the returned function. Children components used these fields for data rendering or functionality. This is a common approach to the render prop pattern.
@@ -44,7 +44,8 @@ This previous implementation had several downsides. The component tracked the ti
 const updateStateBad = () => this.setState({ count: this.state.count + 1 })
 
 // Preferred way to reference current state in setState call
-const updateStateGood = () => this.setState(state => ({ count: state.count + 1 }))
+const updateStateGood = () =>
+  this.setState(state => ({ count: state.count + 1 }))
 ```
 
 The custom `useSlideshow` hook utilizes two different hooks to replace the functionality of the render props component: `useState` and `useEffect`. The current index and playing states are both set with their own calls to useState. The `useEffect` hook checks if the isPlaying state is true and then sets the timeout to advance the slide to the next index. It resets to the first slide after it reaches the last index. The hook clears the timeout when the current index or isPlaying state changes. The hook includes a function to update the the slide. The necessary state and functions are return in an object.
