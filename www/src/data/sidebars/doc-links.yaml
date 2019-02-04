@@ -201,7 +201,7 @@
         - title: Adding search
           link: /docs/adding-search/
           items:
-            - title: Adding search with Algolia*
+            - title: Adding search with Algolia
               link: /docs/adding-search-with-algolia/
             - title: Adding search with elasticlunr*
               link: /docs/adding-search-with-elasticlunr/
