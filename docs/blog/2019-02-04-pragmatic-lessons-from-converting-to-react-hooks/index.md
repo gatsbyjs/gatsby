@@ -16,11 +16,36 @@ Last week I decided to install the React 16.8 alpha on a branch and experiment w
 
 The [Hooks documentation](https://reactjs.org/docs/hooks-intro.html) is well presented and an excellent resource to getting started with hooks. I previously championed the render props pattern for reusable logic and composability. However, the extra syntax often comes with tradeoffs in clarity. These concerns include: "wrapper hell" and more mental overhead to parse nested JSX structure within the component. Adding a second render prop component or ternary operator further compounds these concerns. These additional wrappers also display in the React devTools and can get out of hand. The possibility of cleaning up this syntax and providing clearer code is alluring.
 
-![Example of React Component Wrapper Hell](./images/react-wrapper-hell.jpg)
+```javascript
+export const PureRandomQuote = ({
+  data: {
+    contentfulSlideshow: { slides },
+  },
+}) => (
+  <Slideshow slides={slides}>
+    {({ slideData: quote }) => (
+      <div className={gridStyles} data-testid="random-quote">
+        <QuoteCard>
+          <div>{quote.quote}</div>
+          <div className={attribution}>{`~${quote.attribution}`}</div>
+        </QuoteCard>
+      </div>
+    )}
+  </Slideshow>
+);
+```
 
 Several components on the site used a Slideshow render prop component. This exposed functionality to play/pause, pass down the current index, go to the previous/next slide, or go to a specific slide in the array. This component accepted an array of slides as a prop and provided an object as the argument in the returned function. Children components used these fields for data rendering or functionality. This is a common approach to the render prop pattern.
 
-This previous implementation had several downsides. The component tracked the timer's ID as an instance variable to clear the timeout. The slide updater function accepted a second argument, to determine if it should clear the stored timeout and create a new one. This resolves the issue of stacking timeouts. A further source of additional code was the need for a state updater function. This is a requirement when accessing the current state in the setState call to ensure that the updates are applied correctly. This particular function was complex enough that it was pulled out into it's own side-loaded module. Migrating to a custom hook alleviated these concerns and others.
+This previous implementation had several downsides. The component tracked the timer's ID as an instance variable to clear the timeout. The slide updater function accepted a second argument, to determine if it should clear the stored timeout and create a new one. This resolves the issue of stacking timeouts. A further source of additional code was the need for a state updater function. This is a requirement when accessing the current state in the setState call to ensure that the [updates are applied correctly](https://reactjs.org/docs/react-component.html#setstate). This particular function was complex enough that it was pulled out into it's own side-loaded module. Migrating to a custom hook alleviated these concerns and others.
+
+```javascript
+// Can result in state batching issues and is an anti-pattern
+const updateStateBad = () => this.setState({ count: this.state.count + 1 })
+
+// Preferred way to reference current state in setState call
+const updateStateGood = () => this.setState(state => ({ count: state.count + 1 }))
+```
 
 The custom `useSlideshow` hook utilizes two different hooks to replace the functionality of the render props component: `useState` and `useEffect`. The current index and playing states are both set with their own calls to useState. The `useEffect` hook checks if the isPlaying state is true and then sets the timeout to advance the slide to the next index. It resets to the first slide after it reaches the last index. The hook clears the timeout when the current index or isPlaying state changes. The hook includes a function to update the the slide. The necessary state and functions are return in an object.
 
