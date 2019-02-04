@@ -6,13 +6,7 @@ const {
   hasNodeInterface,
 } = require(`./types/NodeInterface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
-const {
-  findById,
-  findByIds,
-  findOne,
-  findMany,
-  findManyPaginated,
-} = require(`./resolvers`)
+const { findOne, findMany, findManyPaginated } = require(`./resolvers`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
