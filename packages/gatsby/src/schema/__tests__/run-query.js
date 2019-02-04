@@ -428,7 +428,7 @@ describe(`collection fields`, () => {
       limit: 10,
       sort: {
         fields: [`frontmatter___blue`],
-        order: `desc`,
+        order: [`desc`],
       },
     })
 
@@ -441,7 +441,7 @@ describe(`collection fields`, () => {
       limit: 10,
       sort: {
         fields: [`waxOnly`],
-        order: `desc`,
+        order: [`desc`],
       },
     })
 
@@ -456,7 +456,7 @@ describe(`collection fields`, () => {
       limit: 10,
       sort: {
         fields: [`waxOnly`],
-        order: `asc`,
+        order: [`asc`],
       },
     })
 
@@ -466,18 +466,33 @@ describe(`collection fields`, () => {
     expect(result[2].id).toEqual(`0`)
   })
 
-  it(`applies order (asc/desc) to all sort fields`, async () => {
+  it(`applies specified sort order, and sorts asc by default`, async () => {
     let result = await runQuery({
       limit: 10,
       sort: {
         fields: [`frontmatter___blue`, `id`],
-        order: `desc`,
+        order: [`desc`], // `id` field will be sorted asc
       },
     })
 
     expect(result.length).toEqual(3)
     expect(result[0].id).toEqual(`1`) // blue = 10010, id = 1
     expect(result[1].id).toEqual(`2`) // blue = 10010, id = 2
+    expect(result[2].id).toEqual(`0`) // blue = 100, id = 0
+  })
+
+  it(`applies specified sort order per field`, async () => {
+    let result = await runQuery({
+      limit: 10,
+      sort: {
+        fields: [`frontmatter___blue`, `id`],
+        order: [`desc`, `desc`], // `id` field will be sorted desc
+      },
+    })
+
+    expect(result.length).toEqual(3)
+    expect(result[0].id).toEqual(`2`) // blue = 10010, id = 2
+    expect(result[1].id).toEqual(`1`) // blue = 10010, id = 1
     expect(result[2].id).toEqual(`0`) // blue = 100, id = 0
   })
 })

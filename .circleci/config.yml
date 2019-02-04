@@ -75,6 +75,9 @@ commands:
         default: "packages/*|.circleci/*"
       test_path:
         type: string
+      test_command:
+        type: string
+        default: "" # if unset, e2e-test.sh specifies the command
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
@@ -82,7 +85,7 @@ commands:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>"
+      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
 
@@ -166,6 +169,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
+          test_command: yarn test && yarn test:offline
 
   starters_validate:
     executor: node

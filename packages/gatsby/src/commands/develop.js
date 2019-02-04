@@ -9,7 +9,6 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
-const parsePath = require(`parse-filepath`)
 const request = require(`request`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
@@ -187,20 +186,11 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    const parsedPath = parsePath(req.path)
-    if (
-      parsedPath.extname === `` ||
-      parsedPath.extname.startsWith(`.html`) ||
-      parsedPath.path.endsWith(`/`)
-    ) {
-      res.sendFile(directoryPath(`public/index.html`), err => {
-        if (err) {
-          res.status(500).end()
-        }
-      })
-    } else {
-      next()
-    }
+    res.sendFile(directoryPath(`public/index.html`), err => {
+      if (err) {
+        res.status(500).end()
+      }
+    })
   })
 
   /**
