@@ -6,10 +6,10 @@ const {
   GraphQLList,
 } = require(`graphql`)
 
-const convert = ({ schemaComposer, inputTypeComposer }, cache = new Map()) => {
-  const inputType = inputTypeComposer.getType()
-  if (cache.has(inputType)) {
-    return cache.get(inputType)
+const convert = ({ schemaComposer, inputTypeComposer }) => {
+  const inputTypeName = inputTypeComposer.getTypeName()
+  if (schemaComposer.has(inputTypeName)) {
+    return schemaComposer.get(inputTypeName)
   }
 
   const convertedITC = new schemaComposer.InputTypeComposer(
@@ -19,7 +19,7 @@ const convert = ({ schemaComposer, inputTypeComposer }, cache = new Map()) => {
     })
   )
 
-  cache.set(inputType, convertedITC)
+  schemaComposer.add(convertedITC)
 
   const fieldNames = inputTypeComposer.getFieldNames()
   const convertedFields = {}
@@ -30,13 +30,10 @@ const convert = ({ schemaComposer, inputTypeComposer }, cache = new Map()) => {
     if (type instanceof GraphQLInputObjectType) {
       const itc = new schemaComposer.InputTypeComposer(type)
 
-      const OperatorsInputTC = convert(
-        {
-          schemaComposer,
-          inputTypeComposer: itc,
-        },
-        cache
-      )
+      const OperatorsInputTC = convert({
+        schemaComposer,
+        inputTypeComposer: itc,
+      })
 
       // TODO: array of arrays?
       const isListType =
@@ -108,7 +105,7 @@ const getFilterInput = ({ schemaComposer, inputTypeComposer }) => {
   return removeEmptyFields({ schemaComposer, inputTypeComposer: FilterInputTC })
 }
 
-module.exports = getFilterInput
+module.exports = { getFilterInput }
 
 const EQ = `eq`
 const NE = `ne`

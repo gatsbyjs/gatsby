@@ -40,13 +40,13 @@ module.exports = { getSortInput, getFieldsEnum, getSortOrderEnum }
 const MAX_SORT_DEPTH = 3
 const SORT_FIELD_DELIMITER = `___`
 
-const convert = (fields, prefix = ``, depth = 0) => {
+const convert = (fields, prefix = null, depth = 0) => {
   const sortFields = {}
 
   Object.keys(fields).forEach(fieldName => {
     const fieldConfig = fields[fieldName]
     const type = getNamedType(fieldConfig.type)
-    const sortKey = `${prefix}.${fieldName}`
+    const sortKey = prefix ? `${prefix}.${fieldName}` : fieldName
 
     if (type instanceof GraphQLInputObjectType) {
       if (depth < MAX_SORT_DEPTH) {

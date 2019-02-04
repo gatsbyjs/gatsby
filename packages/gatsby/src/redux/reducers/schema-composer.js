@@ -7,8 +7,8 @@ module.exports = (
   switch (action.type) {
     case `SET_SCHEMA_COMPOSER`:
       return {
-        composer: action.payload,
         ...state,
+        composer: action.payload,
       }
     default:
       return state

@@ -4,7 +4,6 @@ const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
-const { getNode, getNodesByType } = require(`../db/nodes`)
 
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
@@ -274,6 +273,8 @@ function handleMany(siftArgs, nodes, sort) {
  *   if `firstOnly` is true
  */
 module.exports = (args: Object) => {
+  const { getNode, getNodesByType } = require(`../db/nodes`)
+
   const { queryArgs, gqlType, firstOnly = false } = args
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.

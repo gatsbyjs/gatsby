@@ -30,7 +30,7 @@ const withPageDependencies = resolve => type => async (rp, firstResultOnly) => {
 }
 
 const findById = typeName => ({ args, context }) => {
-  const result = context.nodeModel.getById(args.id)
+  const result = context.nodeModel.getNode(args.id)
   if (typeName && result && result.internal.type === typeName) {
     return result
   } else if (!typeName && result != null) {
@@ -42,7 +42,7 @@ const findById = typeName => ({ args, context }) => {
 
 const findByIds = typeName => ({ args, context }) => {
   if (Array.isArray(args.ids)) {
-    return args.ids.map(context.nodeModel.getById).filter(node => {
+    return args.ids.map(context.nodeModel.getNode).filter(node => {
       if (typeName && node && node.internal.type === typeName) {
         return true
       } else {
@@ -61,12 +61,18 @@ const findMany = typeName => async ({ args, context, info }) =>
     gqlType: info.schema.getType(typeName),
   })
 
-const findOne = typeName => ({ args, context, info }) =>
-  context.nodeModel.runQuery({
+const findOne = typeName => async ({ args, context, info }) => {
+  const result = await context.nodeModel.runQuery({
     queryArgs: { filter: args },
     firstOnly: true,
     gqlType: info.schema.getType(typeName),
   })
+  if (result.length > 0) {
+    return result[0]
+  } else {
+    return null
+  }
+}
 
 const findManyPaginated = typeName => async rp => {
   const result = await withPageDependencies(findMany)(typeName)(rp)

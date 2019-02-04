@@ -34,9 +34,12 @@ const buildSchema = async ({
     thirdPartySchemas,
     parentSpan,
   })
-  return schemaComposer.buildSchema({
+  const { printSchema } = require(`graphql`)
+  const schema = schemaComposer.buildSchema({
     directives,
   })
+  console.log(printSchema(schema))
+  return schema
 }
 
 const rebuildSchemaWithSitePage = ({
@@ -66,6 +69,7 @@ const updateSchemaComposer = async ({
   nodeStore,
   typeDefs,
   resolvers,
+  thirdPartySchemas,
   parentSpan,
 }) => {
   schemaComposer.add(Date)
@@ -86,7 +90,7 @@ const updateSchemaComposer = async ({
       })
     )
   )
-  await addThirdPartySchemas({ schemaComposer, parentSpan })
+  await addThirdPartySchemas({ schemaComposer, thirdPartySchemas, parentSpan })
   // await addCustomResolveFunctions({ schemaComposer, parentSpan, resolvers })
 }
 
@@ -264,7 +268,7 @@ const addConvenienceChildrenFields = ({
   const nodes = nodeStore.getNodesByType(typeName)
 
   const hasChildrenByType = nodes.reduce((acc, node) => {
-    const children = node.children.map(nodeStore.getById)
+    const children = node.children.map(nodeStore.getNode)
     const childrenCountByType = children.reduce((acc, child) => {
       const { type } = child.internal
       acc[type] = acc[type] + 1 || 1
@@ -276,33 +280,30 @@ const addConvenienceChildrenFields = ({
     return acc
   }, {})
 
-  Object.entries(hasChildrenByType).forEach(([typeName, hasChildren]) => {
+  Object.keys(hasChildrenByType).forEach(typeName => {
+    const hasChildren = hasChildrenByType[typeName]
     const fieldName = (hasChildren ? `children` : `child`) + typeName
-    let type
     let resolver
-    let arg
     if (hasChildren) {
-      type = [typeName]
-      resolver = findByIds
-      arg = `ids`
+      resolver = (source, args, context, info) => {
+        const result = context.nodeModel.getNodes(source.children)
+        return result.filter(node => node && node.internal.type === typeName)
+      }
     } else {
-      type = typeName
-      resolver = findById
-      arg = `id`
+      resolver = (source, args, context, info) => {
+        const result = context.nodeModel.getNode(source.children[0])
+        if (result && result.internal.type === typeName) {
+          return result
+        } else {
+          return null
+        }
+      }
     }
 
     const field = {
       [fieldName]: {
-        type,
-        resolve: (source, args, context, info) =>
-          resolver(typeName)({
-            source,
-            args: {
-              [arg]: source.children,
-            },
-            context,
-            info,
-          }),
+        type: hasChildren ? [typeName] : typeName,
+        resolve: resolver,
       },
     }
     typeComposer.addFields(field)

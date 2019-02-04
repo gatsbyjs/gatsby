@@ -184,7 +184,7 @@ const getFieldConfigFromFieldNameConvention = (
   const getNodeBy = value =>
     foreignKey
       ? nodeStore.getNodes().find(node => _.get(node, foreignKey) === value)
-      : nodeStore.getById(value)
+      : nodeStore.getNode(value)
 
   const linkedNodes = Array.isArray(value)
     ? value.map(getNodeBy)
@@ -276,7 +276,7 @@ const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
 const createTypeName = selector => {
   const key = selector
     .split(`.`)
-    .map(_.capitalize)
+    .map(_.upperFirst)
     .join(``)
 
   return key
