@@ -3,7 +3,11 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-const { publishPackageLocally, registryUrl } = require(`./verdaccio`)
+const {
+  publishPackageLocally,
+  registryUrl,
+  startVerdaccio,
+} = require(`./verdaccio`)
 const { promisifiedSpawn } = require(`./utils`)
 
 let numCopied = 0
@@ -123,6 +127,8 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     }
     return state
   }, {})
+
+  startVerdaccio()
 
   // const publishToVerdaccio = packages => {
 

@@ -89,6 +89,8 @@ const startServer = () => {
   return VerdaccioInitPromise
 }
 
+exports.startVerdaccio = startServer
+
 exports.publishPackageLocally = async ({
   pathToPackage,
   packageName,
