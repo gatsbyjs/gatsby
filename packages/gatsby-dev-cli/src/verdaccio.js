@@ -19,6 +19,7 @@ const verdaccioConfig = {
       max_users: 1000,
     },
   },
+  // logs: [{ type: `stdout`, format: `pretty-timestamped`, level: `warn` }],
   packages: {
     "**": {
       access: `$all`,
@@ -56,6 +57,7 @@ const startServer = () => {
       `1.0.0`,
       `gatsby-dev`,
       (webServer, addr, pkgName, pkgVersion) => {
+        // console.log(webServer)
         webServer.listen(addr.port || addr.path, addr.host, () => {
           console.log(`Started local verdaccio server`)
 
@@ -130,8 +132,11 @@ exports.publishPackageLocally = async ({
   ]
 
   console.log(`Publishing ${packageName}@${version} to local registry`)
+  try {
+    await promisifiedSpawn(publishCmd)
 
-  await promisifiedSpawn(publishCmd)
-
-  console.log(`Published ${packageName}@${version} to local registry`)
+    console.log(`Published ${packageName}@${version} to local registry`)
+  } catch {
+    console.error(`Failed to publish ${packageName}@${version}`)
+  }
 }

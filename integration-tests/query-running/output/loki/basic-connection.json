@@ -1,0 +1,32 @@
+{
+  "data": {
+    "allEntry": {
+      "edges": [
+        {
+          "node": {
+            "id": "entry_1",
+            "string": "a"
+          }
+        },
+        {
+          "node": {
+            "id": "entry_2",
+            "string": "n"
+          }
+        },
+        {
+          "node": {
+            "id": "entry_3",
+            "string": "c"
+          }
+        },
+        {
+          "node": {
+            "id": "entry_4",
+            "string": "d"
+          }
+        }
+      ]
+    }
+  }
+}

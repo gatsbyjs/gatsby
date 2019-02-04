@@ -1,0 +1,36 @@
+{
+  "data": {
+    "allEntry": {
+      "edges": [
+        {
+          "node": {
+            "id": "entry_1",
+            "string": "a",
+            "sortField": "a"
+          }
+        },
+        {
+          "node": {
+            "id": "entry_4",
+            "string": "d",
+            "sortField": "a"
+          }
+        },
+        {
+          "node": {
+            "id": "entry_2",
+            "string": "n",
+            "sortField": null
+          }
+        },
+        {
+          "node": {
+            "id": "entry_3",
+            "string": "c",
+            "sortField": null
+          }
+        }
+      ]
+    }
+  }
+}
