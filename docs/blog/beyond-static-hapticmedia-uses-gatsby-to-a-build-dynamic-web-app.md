@@ -7,11 +7,13 @@ tags:
 - Hapticmedia
 - dynamic web apps
 - dynamic apps
-image: ''
-showImageInArticle: false
+image: "/src/uploads/Screen Shot 2019-02-04 at 10.23.12 AM.png"
+showImageInArticle: true
 
 ---
 [Hapticmedia](https://hapticmedia.fr/en/ "Hapticmedia"), a creator of 3D product configurators, has been at the cutting edge of retail and e-commerce for four years. But their existing website wasn’t the best showcase of their technological prowess. When the company started, they built their website with Wordpress because that was easiest, and they had bigger things to worry about. But over time the WordPress site became slow, difficult to update, and prone to breaking down. And as the company grew, they needed a site that could expand with them. Using Gatsby for their website rebuild meant greater stability, faster load times, and more scalability. They had initial concerns over whether a static site generator could successfully incorporate dynamic elements, but this proved not to be a problem.
+
+![](/src/uploads/Screen Shot 2019-02-04 at 10.23.12 AM.png)
 
 ## The Trouble with Troubleshooting 
 
