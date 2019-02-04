@@ -8,7 +8,7 @@ const validatePrefixEntry = prefix => {
 }
 
 exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
-  const { createPage } = actions
+  const { createPage, deletePage } = actions
   const re = {}
   prefixes.forEach(validatePrefixEntry)
 
@@ -29,6 +29,7 @@ exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
       const path = page.path.match(/\/$/) ? page.path : `${page.path}/`
 
       if (path.match(re[prefix])) {
+        deletePage(page)
         page.matchPath = prefix.replace(/\*$/, `*`)
         createPage(page)
         return true
