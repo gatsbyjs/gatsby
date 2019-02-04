@@ -1,5 +1,6 @@
 ---
 title: Importing single files
+issue: https://github.com/gatsbyjs/gatsby/issues/8103
 ---
 
 This is a stub. Help our community expand it.
