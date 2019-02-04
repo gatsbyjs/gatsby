@@ -12,6 +12,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
+    "gatsby": "^2.0.112",
     "graphql": "^14.1.1"
   },
   "scripts": {
