@@ -19,6 +19,14 @@ module.exports = (state = new Map(), action) => {
       action.payload.pluginCreator___NODE = action.plugin.id
       action.payload.pluginCreatorId = action.plugin.id
 
+      if (state.has(action.payload.path)) {
+        console.warn(
+          `Path ${
+            action.payload.path
+          } already exists. You should use deletePage first, if you overwrote the path on purpose, if not fix your path`
+        )
+      }
+
       state.set(action.payload.path, action.payload)
       return state
     }

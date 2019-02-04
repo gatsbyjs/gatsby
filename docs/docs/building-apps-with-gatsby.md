@@ -36,11 +36,14 @@ To create client-only routes, add the following code to your site’s `gatsby-no
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = async ({ page, actions }) => {
-  const { createPage } = actions
+  const { createPage, deletePage } = actions
 
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
   if (page.path.match(/^\/app/)) {
+    // Delete the page, because we are overriding it's path.
+    deletePage(page)
+
     page.matchPath = "/app/*"
 
     // Update the page.
