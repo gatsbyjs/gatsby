@@ -67,6 +67,13 @@ function removeImport(tag) {
   const identifier = isExpression ? tag.get(`object`) : tag
   const importPath = getTagImport(identifier)
 
+  const removeVariableDeclaration = statement => {
+    let declaration = statement.findParent(p => p.isVariableDeclaration())
+    if (declaration) {
+      declaration.remove()
+    }
+  }
+
   if (!importPath) return
 
   const parent = importPath.parentPath
@@ -76,12 +83,12 @@ function removeImport(tag) {
     else importPath.remove()
   }
   if (importPath.isObjectProperty()) {
-    if (parent.node.properties.length === 1)
-      importPath.findParent(p => p.isVariableDeclaration())?.remove()
-    else importPath.remove()
+    if (parent.node.properties.length === 1) {
+      removeVariableDeclaration(importPath)
+    } else importPath.remove()
   }
   if (importPath.isIdentifier()) {
-    importPath.findParent(p => p.isVariableDeclaration())?.remove()
+    removeVariableDeclaration(importPath)
   }
 }
 
@@ -183,14 +190,18 @@ export default function({ types: t }) {
           // Replace the query with the hash of the query.
           templatePath.replaceWith(t.StringLiteral(queryHash))
 
+          let parent = templatePath.parentPath.parentPath.parentPath
+
+          // Use top-level parent (e.g. entire React component) if query is exported
+          if (parent.node.type === `ExportNamedDeclaration`) {
+            parent = parent.parentPath
+          }
+
           // modify StaticQuery elements and import data only if query is inside StaticQuery
-          templatePath.parentPath.parentPath.parentPath.traverse(
-            nestedJSXVistor,
-            {
-              queryHash,
-              query,
-            }
-          )
+          parent.traverse(nestedJSXVistor, {
+            queryHash,
+            query,
+          })
 
           return null
         }
