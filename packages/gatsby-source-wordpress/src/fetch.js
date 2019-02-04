@@ -151,6 +151,7 @@ Mama Route URL: ${url}
       _verbose,
       _useACF,
       _acfOptionPageIds,
+      _allRoutes,
       _includedRoutes,
       _excludedRoutes,
       typePrefix,
@@ -461,6 +462,7 @@ function getValidRoutes({
   _useACF,
   _acfOptionPageIds,
   _hostingWPCOM,
+  _allRoutes,
   _includedRoutes,
   _excludedRoutes,
   typePrefix,
@@ -529,7 +531,7 @@ function getValidRoutes({
 
     // A valid route exposes its _links (for now)
     if (route._links) {
-      const entityType = getRawEntityType(route)
+      const entityType = getRawEntityType(route, _allRoutes)
 
       // Excluding the "technical" API Routes
       const excludedTypes = [
@@ -621,9 +623,17 @@ function getValidRoutes({
  *
  * @param {any} route
  */
-const getRawEntityType = route => {
+const getRawEntityType = (route, _allRoutes) => {
   let link = route._links.self
   let entityType = link.substring(link.lastIndexOf(`/`) + 1, link.length)
+  let customRoute = _.filter(_allRoutes, route =>
+    route.endpoint.endsWith(entityType)
+  )
+
+  // Override custom route type.
+  if (customRoute.length !== 0 && customRoute[0].hasOwnProperty(`type`)) {
+    entityType = customRoute[0].type
+  }
 
   // Respect link parameters.
   if (entityType.startsWith(`?`)) {
