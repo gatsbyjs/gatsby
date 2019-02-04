@@ -35,3 +35,4 @@ fields:
   default: ''
 pages:
 - docs/blog/beyond-static-hapticmedia-uses-gatsby-to-a-build-dynamic-web-app.md
+- docs/blog/2019-01-30-Flamingo-Case-Study/index.md
