@@ -1,9 +1,9 @@
-import { Link } from 'gatsby'
-import PropTypes from 'prop-types'
-import React from 'react'
+import { Link } from "gatsby"
+import PropTypes from "prop-types"
+import React from "react"
 
 const Header = ({ siteTitle }) => (
-  <div
+  <header
     style={{
       background: `rebeccapurple`,
       marginBottom: `1.45rem`,
@@ -28,7 +28,7 @@ const Header = ({ siteTitle }) => (
         </Link>
       </h1>
     </div>
-  </div>
+  </header>
 )
 
 Header.propTypes = {

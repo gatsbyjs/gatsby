@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-toml",
   "description": "Gatsby transformer plugin for toml",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "author": "Ruben Harutyunyan <vagr9k@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -25,7 +25,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": "^2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-toml",
   "scripts": {

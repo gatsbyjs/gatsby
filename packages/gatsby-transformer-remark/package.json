@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-remark",
   "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
-  "version": "2.2.0",
+  "version": "2.2.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -21,7 +21,7 @@
     "remark-stringify": "^5.0.0",
     "retext-english": "^3.0.0",
     "sanitize-html": "^1.18.2",
-    "underscore.string": "^3.3.4",
+    "underscore.string": "^3.3.5",
     "unified": "^6.1.5",
     "unist-util-remove-position": "^1.1.2",
     "unist-util-select": "^1.5.0",

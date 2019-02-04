@@ -87,11 +87,14 @@
           link: /docs/sourcing-from-databases/
         - title: Sourcing from SaaS services*
           link: /docs/sourcing-from-saas-services/
-        - title: Sourcing from private APIs*
+        - title: Sourcing from private APIs
           link: /docs/sourcing-from-private-apis/
         - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/
           items:
+            # This list should only include the top 5 CMSs by Gatsby plugin usage.
+            # Please do not add your headless CMS here.
+            # Instead, please add links on the /docs/headless-cms/ page
             - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
@@ -152,6 +155,8 @@
           link: /docs/css-modules/
         - title: Typography.js
           link: /docs/typography-js/
+        - title: Using CSS-in-JS library Emotion
+          link: /docs/emotion/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
         - title: Using CSS-in-JS library styled components
@@ -162,6 +167,8 @@
           link: /docs/component-css/
         - title: PostCSS
           link: /docs/post-css/
+        - title: TailwindCSS
+          link: /docs/tailwind-css/
     - title: Adding testing
       link: /docs/testing/
       items:
@@ -193,6 +200,13 @@
       items:
         - title: Adding search
           link: /docs/adding-search/
+          items:
+            - title: Adding search with Algolia*
+              link: /docs/adding-search-with-algolia/
+            - title: Adding search with elasticlunr*
+              link: /docs/adding-search-with-elasticlunr/
+            - title: Adding search with js-search*
+              link: /docs/adding-search-with-js-search/
         - title: Adding analytics
           link: /docs/adding-analytics/
         - title: Adding authentication
@@ -243,8 +257,8 @@
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)
           link: /docs/seo/
-        - title: Optimize Prefetching with Guess.js*
-          link: /docs/optimize-prefetching-with-guessjs/
+        - title: Optimizing Site Performance with Guess.js
+          link: /docs/optimizing-site-performance-with-guessjs/
 - title: Ecosystem
   link: /ecosystem/
   items:
@@ -344,6 +358,8 @@
           link: /docs/html-generation/
         - title: Code Splitting and Prefetching
           link: /docs/how-code-splitting-works/
+    - title: Resource Handling & Service Workers
+      link: /docs/resource-handling-and-service-workers/
     - title: Data Storage (Redux)*
       link: /docs/data-storage-redux/
     - title: Build Caching*
@@ -362,6 +378,8 @@
       link: /docs/wordpress-source-plugin-tutorial/
     - title: Adding images to a WordPress site
       link: /docs/image-tutorial/
+    - title: Writing documentation with Docz
+      link: /docs/writing-documentation-with-docz/
 - title: Contributing
   items:
     - title: Community

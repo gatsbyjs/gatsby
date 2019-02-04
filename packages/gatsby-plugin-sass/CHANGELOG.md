@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.9...gatsby-plugin-sass@2.0.10) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.8...gatsby-plugin-sass@2.0.9) (2019-02-01)
+
+### Bug Fixes
+
+- **core:** Disable HMR for CSS modules ([#11032](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/issues/11032)) ([97c98e9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/commit/97c98e9))
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.7...gatsby-plugin-sass@2.0.8) (2019-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
 <a name="2.0.7"></a>
 
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass/compare/gatsby-plugin-sass@2.0.6...gatsby-plugin-sass@2.0.7) (2018-12-06)

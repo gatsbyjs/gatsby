@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.0.91",
+  "version": "2.0.111",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -16,7 +16,6 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@babel/traverse": "^7.0.0",
-    "@moocar/lokijs": "^1.0.1",
     "@reach/router": "^1.1.1",
     "address": "1.0.3",
     "autoprefixer": "^8.6.5",
@@ -25,7 +24,7 @@
     "babel-loader": "^8.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-dynamic-import-node": "^1.2.0",
-    "babel-plugin-remove-graphql-queries": "^2.5.2",
+    "babel-plugin-remove-graphql-queries": "^2.5.4",
     "babel-preset-gatsby": "^0.1.6",
     "better-opn": "0.1.4",
     "better-queue": "^3.8.6",
@@ -64,13 +63,14 @@
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^2.4.8",
-    "gatsby-link": "^2.0.8",
-    "gatsby-plugin-page-creator": "^2.0.5",
-    "gatsby-react-router-scroll": "^2.0.2",
+    "gatsby-link": "^2.0.10",
+    "gatsby-plugin-page-creator": "^2.0.6",
+    "gatsby-react-router-scroll": "^2.0.4",
     "glob": "^7.1.1",
-    "graphql": "^0.13.2",
-    "graphql-relay": "^0.5.5",
-    "graphql-skip-limit": "^2.0.4",
+    "graphql": "^14.1.1",
+    "graphql-playground-middleware-express": "^1.7.10",
+    "graphql-relay": "^0.6.0",
+    "graphql-skip-limit": "^2.0.5",
     "graphql-tools": "^3.0.4",
     "graphql-type-json": "^0.2.1",
     "hash-mod": "^0.0.5",
@@ -83,6 +83,7 @@
     "json-stringify-safe": "^5.0.1",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.10",
+    "lokijs": "^1.5.6",
     "md5": "^2.2.1",
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
@@ -95,7 +96,6 @@
     "null-loader": "^0.1.1",
     "opentracing": "^0.14.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "parse-filepath": "^1.0.1",
     "physical-cpu-count": "^2.0.0",
     "postcss-flexbugs-fixes": "^3.0.0",
     "postcss-loader": "^2.1.3",
@@ -104,7 +104,7 @@
     "react-error-overlay": "^3.0.0",
     "react-hot-loader": "^4.6.2",
     "redux": "^4.0.0",
-    "relay-compiler": "1.5.0",
+    "relay-compiler": "2.0.0",
     "request": "^2.85.0",
     "semver": "^5.6.0",
     "shallow-compare": "^1.2.2",
@@ -132,11 +132,10 @@
     "@babel/runtime": "^7.0.0",
     "babel-preset-gatsby-package": "^0.1.3",
     "cross-env": "^5.1.4",
-    "lerna": "^2.9.0",
     "rimraf": "^2.6.1"
   },
   "engines": {
-    "node": ">6.0.0"
+    "node": ">=6.0.0"
   },
   "files": [
     "cache-dir",
@@ -166,7 +165,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^0.13.2"
+    "graphql": "^14.1.1"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",

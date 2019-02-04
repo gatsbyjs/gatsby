@@ -29,7 +29,7 @@
     "serve": "gatsby serve",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "npm run start-server-and-test || (npm run reset && exit 1)",
+    "test": "CYPRESS_SUPPORT=y npm run start-server-and-test || (npm run reset && exit 1)",
     "posttest": "npm run reset",
     "reset": "node scripts/reset.js",
     "update": "node scripts/update.js",

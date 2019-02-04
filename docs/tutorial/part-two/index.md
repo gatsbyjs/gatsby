@@ -191,7 +191,7 @@ export default () => (
 )
 ```
 
-Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look like something like this:
+Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look something like this:
 
 ![css-modules-basic](css-modules-basic.png)
 
@@ -296,7 +296,7 @@ export default () => (
     <User
       username="Bob Smith"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-      excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
     {/* highlight-end */}
   </Container>

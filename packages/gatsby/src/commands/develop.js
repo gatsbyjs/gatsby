@@ -7,7 +7,8 @@ const openurl = require(`better-opn`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
-const parsePath = require(`parse-filepath`)
+const graphqlPlayground = require(`graphql-playground-middleware-express`)
+  .default
 const request = require(`request`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
@@ -92,11 +93,21 @@ async function startServer(program) {
       heartbeat: 10 * 1000,
     })
   )
+
+  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
+    app.get(
+      `/___graphql`,
+      graphqlPlayground({
+        endpoint: `/___graphql`,
+      }),
+      () => {}
+    )
+  }
   app.use(
     `/___graphql`,
     graphqlHTTP({
       schema: store.getState().schema,
-      graphiql: true,
+      graphiql: process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
     })
   )
 
@@ -175,20 +186,11 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    const parsedPath = parsePath(req.path)
-    if (
-      parsedPath.extname === `` ||
-      parsedPath.extname.startsWith(`.html`) ||
-      parsedPath.path.endsWith(`/`)
-    ) {
-      res.sendFile(directoryPath(`public/index.html`), err => {
-        if (err) {
-          res.status(500).end()
-        }
-      })
-    } else {
-      next()
-    }
+    res.sendFile(directoryPath(`public/index.html`), err => {
+      if (err) {
+        res.status(500).end()
+      }
+    })
   })
 
   /**
@@ -361,7 +363,11 @@ module.exports = async (program: any) => {
 
     console.log()
     console.log(
-      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+      `View ${
+        process.env.GATSBY_GRAPHQL_IDE === `playground`
+          ? `the GraphQL Playground`
+          : `GraphiQL`
+      }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
     console.log(`  ${urls.localUrlForTerminal}___graphql`)

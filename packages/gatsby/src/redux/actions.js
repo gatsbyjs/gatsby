@@ -137,7 +137,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorName`,
+      `pluginCreatorId`,
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -214,7 +214,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (noPageOrComponent) {
     report.panic(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
     )
   }
 
@@ -294,9 +294,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     fileOkCache[internalPage.component] = true
   }
 
+  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const contextModified =
+    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
+    contextModified,
     plugin,
     payload: internalPage,
   }
