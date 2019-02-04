@@ -190,10 +190,13 @@ export default function({ types: t }) {
           // Replace the query with the hash of the query.
           templatePath.replaceWith(t.StringLiteral(queryHash))
 
-          let parent = templatePath.parentPath.parentPath.parentPath
-
-          // Use top-level parent (e.g. entire React component) if query is exported
-          if (parent.node.type === `ExportNamedDeclaration`) {
+          // traverse upwards until we find top-level JSXOpeningElement or Program
+          // this handles exported queries and variable queries
+          let parent = templatePath
+          while (
+            parent &&
+            ![`Program`, `JSXOpeningElement`].includes(parent.node.type)
+          ) {
             parent = parent.parentPath
           }
 
