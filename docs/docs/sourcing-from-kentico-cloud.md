@@ -50,7 +50,7 @@ module.exports = {
       resolve: `gatsby-source-kentico-cloud`,
         options: {
           deliveryClientConfig: {
-            projectId: `<YourProjectID` // Fill in your Project ID
+            projectId: `<YourProjectID>` // Fill in your Project ID
           },
           languageCodenames: [
                     `en-US` // Or whatever languages you have installed in your project
