@@ -15,7 +15,7 @@
 	{"name":"@ptb/gatsby-1-config-css-modules","blacklist":false,"notified":false},
 	{"name":"@ptb/gatsby-plugin-pug","blacklist":false,"notified":false},
 	{"name":"@ptb/gatsby-plugin-react-helmet","blacklist":false,"notified":false},
-	{"name":"@sb-konzept/gatsby-source-storyblok","blacklist":false,"notified":false},
+	{"name":"@storyblok/gatsby-source-storyblok","blacklist":false,"notified":false},
 	{"name":"@scion-scxml/sciblog","blacklist":false,"notified":false},
 	{"name":"@spraoi/gatsby-plugin","blacklist":false,"notified":false},
 	{"name":"@theplayerstribune/gatsby-source-wordpress-plus","blacklist":false,"notified":false},

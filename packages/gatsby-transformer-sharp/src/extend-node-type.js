@@ -21,6 +21,8 @@ const fsExtra = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 
+const DEFAULT_PNG_COMPRESSION_SPEED = 4
+
 const {
   ImageFormatType,
   ImageCropFocusType,
@@ -65,7 +67,7 @@ const fixedNodeType = ({ getNodeAndSavePathDependency, name, ...rest }) => {
           resolve: ({ file, image, fieldArgs }) => {
             // If the file is already in webp format or should explicitly
             // be converted to webp, we do not create additional webp files
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, toFormat: `webp` }
@@ -81,7 +83,7 @@ const fixedNodeType = ({ getNodeAndSavePathDependency, name, ...rest }) => {
         srcSetWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, toFormat: `webp` }
@@ -107,6 +109,10 @@ const fixedNodeType = ({ getNodeAndSavePathDependency, name, ...rest }) => {
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
+      },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
       },
       grayscale: {
         type: GraphQLBoolean,
@@ -222,6 +228,10 @@ const fluidNodeType = ({ getNodeAndSavePathDependency, name, ...rest }) => {
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
+      },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
       },
       duotone: {
         type: DuotoneGradientType,
@@ -390,6 +400,10 @@ module.exports = ({ type, getNodeAndSavePathDependency, ...rest }) => {
         pngCompressionLevel: {
           type: GraphQLInt,
           defaultValue: 9,
+        },
+        pngCompressionSpeed: {
+          type: GraphQLInt,
+          defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
         },
         grayscale: {
           type: GraphQLBoolean,

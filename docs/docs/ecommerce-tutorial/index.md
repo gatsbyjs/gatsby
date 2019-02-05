@@ -40,7 +40,7 @@ Stripe is a payment processing service that allows you to securely collect and p
 
 There are alternatives to Stripe, like Square and Braintree, and their setup is very similar to Stripe.
 
-Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve all SKUs at build time. If you want your Gastby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or SKU is added.
+Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or SKU is added.
 
 > **NOTE**: Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you might need to set up a simple function that your Gatsby project can POST to in order to handle the payment. See the ["custom example"](#custom-fully-custom-checkout-flow-requires-backend-component) section below for more details.
 
@@ -302,7 +302,7 @@ require("dotenv").config({
 })
 ```
 
-Lastly make sure that your `.gitignore` file excludes all of your `.env.*` files:
+Lastly, make sure that your `.gitignore` file excludes all of your `.env.*` files:
 
 ```text:title=.gitignore
 # dotenv environment variables files
@@ -313,7 +313,7 @@ Lastly make sure that your `.gitignore` file excludes all of your `.env.*` files
 
 ### Create a component that lists your SKUs
 
-In your components folder add a new `Products` folder. This folder will entail your components that interact with the Stripe SKUs. First you need a components that queries and lists your SKUs:
+In your components folder add a new `Products` folder. This folder will include the components that interact with the Stripe SKUs. First, you need a component that queries and lists your SKUs:
 
 ```jsx:title=src/components/Products/Skus.js
 import React from "react"
@@ -350,7 +350,7 @@ export default props => (
 
 You can validate your query and see what data is being returned in GraphiQL, which is available at http://localhost:8000/___graphql when running `gatsby develop`.
 
-Once you're happy with your query, create a new page where you can import the newly created Sku componenet:
+Once you're happy with your query, create a new page where you can import the newly created Sku component:
 
 ```jsx:title=src/pages/advanced.js
 import React from "react"
@@ -372,7 +372,7 @@ const AdvancedExamplePage = () => (
 export default AdvancedExamplePage
 ```
 
-When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your sku names.
+When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your SKU names.
 
 ### Create a component that presents a single SKU
 

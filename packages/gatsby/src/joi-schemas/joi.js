@@ -24,7 +24,7 @@ export const pageSchema = Joi.object()
     componentChunkName: Joi.string().required(),
     context: Joi.object(),
     pluginCreator___NODE: Joi.string(),
-    pluginCreatorName: Joi.string(),
+    pluginCreatorId: Joi.string(),
   })
   .unknown()
 
@@ -40,7 +40,7 @@ export const nodeSchema = Joi.object()
         mediaType: Joi.string(),
         type: Joi.string().required(),
         owner: Joi.string().required(),
-        fieldOwners: Joi.array(),
+        fieldOwners: Joi.object(),
         content: Joi.string().allow(``),
         description: Joi.string(),
         ignoreType: Joi.boolean(),

@@ -19,7 +19,7 @@ For the first step, we use webpack to build an optimized Node.js bundle. The ent
 [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) exports a function that takes a path and returns rendered HTML. Here's what it does to create that HTML:
 
 1. [Require page, json, and webpack chunk data sources](/docs/html-generation/#1-require-page-json-and-webpack-chunk-data-sources)
-2. [Create HTML React container](/docs/html-generation/#2-create-html-react-container)
+2. [Create HTML React Container](/docs/html-generation/#2-create-html-react-container)
 3. [Load Page and Data](/docs/html-generation/#3-load-page-and-data)
 4. [Create Page Component](/docs/html-generation/#4-create-page-component)
 5. [Add Preload Link and Script Tags](/docs/html-generation/#5-add-preload-link-and-script-tags)
@@ -58,13 +58,13 @@ The only input to `static-entry.js` is a path. So we must look up the page for t
 
 Now we're ready to create a React component for the page (inside the Html container). This is handled by [RouteHandler](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L123). Its render will create an element from the component in `sync-requires.js`.
 
-#### 5. Add preload Link and Script Tags
+#### 5. Add Preload Link and Script Tags
 
 This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON.
 
 #### 6. Inject Page Info to CDATA
 
-The [production-app.js](/docs/production-app/#first-load) needs to know the page that it's rendering. The way we pass this information is by setting it in CDATA during HTML generation. Since we know that page at this point. So we add the following to the [top of the HTML document](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L325):
+The [production-app.js](/docs/production-app/#first-load) needs to know the page that it's rendering. The way we pass this information is by setting it in CDATA during HTML generation, since we know that page at this point. So we add the following to the [top of the HTML document](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L325):
 
 ```html
 /*
@@ -81,7 +81,7 @@ The [production-app.js](/docs/production-app/#first-load) needs to know the page
 */
 ```
 
-##### 7. Render Final HTML Document
+#### 7. Render Final HTML Document
 
 Finally, we call [react-dom](https://reactjs.org/docs/react-dom.html) and render our top level Html component to a string and return it.
 

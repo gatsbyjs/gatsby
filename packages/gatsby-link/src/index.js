@@ -66,7 +66,9 @@ class GatsbyLink extends React.Component {
   }
 
   handleRef(ref) {
-    this.props.innerRef && this.props.innerRef(ref)
+    if (this.props.innerRef) {
+      this.props.innerRef(ref)
+    }
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
@@ -104,6 +106,13 @@ class GatsbyLink extends React.Component {
       ...rest
     } = this.props
 
+    const LOCAL_URL = /^\/(?!\/)/
+    if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
+      console.warn(
+        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.app/internal-links`
+      )
+    }
+
     const prefixedTo = withPrefix(to)
 
     return (
@@ -113,13 +122,15 @@ class GatsbyLink extends React.Component {
         getProps={getProps}
         innerRef={this.handleRef}
         onMouseEnter={e => {
-          // eslint-disable-line
-          onMouseEnter && onMouseEnter(e)
+          if (onMouseEnter) {
+            onMouseEnter(e)
+          }
           ___loader.hovering(parsePath(to).pathname)
         }}
         onClick={e => {
-          // eslint-disable-line
-          onClick && onClick(e)
+          if (onClick) {
+            onClick(e)
+          }
 
           if (
             e.button === 0 && // ignore right clicks

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-offline",
   "description": "Gatsby plugin which sets up a site to be able to run offline",
-  "version": "2.0.21",
+  "version": "2.0.22",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "cheerio": "^1.0.0-rc.2",
+    "cpx": "^1.5.0",
     "idb-keyval": "^3.1.0",
     "lodash": "^4.17.10",
     "workbox-build": "^3.6.3"
@@ -30,12 +31,14 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">=2.0.53"
+    "gatsby": "^2.0.100"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "npm run build:src && npm run build:sw-append",
+    "build:src": "babel src --out-dir . --ignore **/__tests__,src/sw-append.js",
+    "build:sw-append": "cpx -v src/sw-append.js .",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "npm run build:sw-append -- --watch & npm run build:src -- --watch"
   }
 }

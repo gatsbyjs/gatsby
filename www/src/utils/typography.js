@@ -93,7 +93,7 @@ const _options = {
         lineHeight: `inherit`,
       },
       "tt, code, kbd": {
-        background: colors.code.bg,
+        background: colors.code.bgInline,
         paddingTop: `0.2em`,
         paddingBottom: `0.2em`,
       },
