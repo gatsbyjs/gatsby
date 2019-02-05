@@ -147,9 +147,10 @@ describe(`withAssetPrefix`, () => {
       [`some`, `nested`, `route`],
     ]
 
-    const assetPaths = routes.map(route =>
-      boundWithAssetPrefix(...[].concat(route))
-    )
+    const assetPaths = routes.map(route => {
+      const prefixed = boundWithAssetPrefix(...[].concat(route))
+      return prefixed.split(withTrailingSlash(prefix)).pop()
+    })
 
     const assets = await getAssets(__dirname)
     expect(Array.from(assets)).toEqual(assetPaths)
@@ -159,5 +160,9 @@ describe(`withAssetPrefix`, () => {
 describe(`withTrailingSlash`, () => {
   it(`adds a trailing slash`, () => {
     expect(withTrailingSlash(`/blog`)).toBe(`/blog/`)
+  })
+
+  it(`does not add a trailing slash if already exists`, () => {
+    expect(withTrailingSlash(`/blog/`)).toBe(`/blog/`)
   })
 })
