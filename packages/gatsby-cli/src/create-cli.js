@@ -2,6 +2,7 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 
 const handlerP = fn => (...args) => {
@@ -90,7 +91,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, useYarn, report }
+      let args = { ...argv, ...siteInfo, useYarn }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -253,22 +254,6 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
     }),
-  })
-
-  cli.command({
-    command: `clean`,
-    desc: `Wipe the local gatsby environment when something has gone wrong`,
-    builder: _ =>
-      _.option(`env-info`, {
-        type: `boolean`,
-        default: false,
-        describe: `Log environment information (e.g. system info, package info, etc.) to console`,
-      }).option(`no-install`, {
-        type: `boolean`,
-        default: false,
-        describe: `Do not run yarn or npm install after cleaning directories`,
-      }),
-    handler: getCommandHandler(`clean`),
   })
 }
 
