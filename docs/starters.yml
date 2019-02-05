@@ -1777,3 +1777,20 @@
   features:
     - Generate nice documentation with Docz, in addition to generating your normal Gatsby site
     - Document your React components in .mdx files
+- url: https://gatsby-hello-friend.now.sh
+  repo: https://github.com/panr/gatsby-starter-hello-friend
+  description: A simple starter for Gatsby. That's it.
+  tags:
+    - responsive
+    - Inter font
+    - dark mode
+    - blog
+    - personal site
+    - syntax highlighting
+  features:
+    - dark/light mode, depending on your preferences
+    - great reading experience thanks to Inter, made by Rasmus Andersson
+    - nice code highlighting thanks to PrismJS
+    - responsive youtube/vimeo etc. videos
+    - elastic menu
+    - fully responsive site
