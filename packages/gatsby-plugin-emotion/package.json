@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-emotion",
   "description": "Gatsby plugin to add support for Emotion",
-  "version": "4.0.0",
+  "version": "4.0.3",
   "author": "Tegan Churchill <churchill.tegan@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -18,15 +18,16 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
   "keywords": [
-    "emotion",
     "gatsby",
-    "gatsby-plugin"
+    "gatsby-plugin",
+    "emotion",
+    "css-in-js"
   ],
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
     "@emotion/core": "^10.0.5",
-    "gatsby": ">2.0.0"
+    "gatsby": "^2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion",
   "scripts": {

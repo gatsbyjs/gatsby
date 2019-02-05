@@ -28,6 +28,7 @@ class EvaluationTable extends Component {
               background: colors.ui.bright,
             },
           }}
+          key={`info-icon-${words[words.length - 1]}`}
         >
           {` `}
           {`${words[words.length - 1]} `}
@@ -114,8 +115,11 @@ class EvaluationTable extends Component {
           {flatten(
             sections.map((section, s) =>
               [
-                <SectionTitle text={sectionHeaders[s]} />,
-                <SectionHeaderTop />,
+                <SectionTitle
+                  text={sectionHeaders[s]}
+                  key={`section-title-${s}`}
+                />,
+                <SectionHeaderTop key={`section-header-${s}`} />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
@@ -123,8 +127,9 @@ class EvaluationTable extends Component {
                       <SectionHeaderBottom
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
+                        key={`section-header-bottom-${i}`}
                       />,
-                      <tr>
+                      <tr key={`first-row-${i}`}>
                         {headers.map((header, j) => (
                           <td
                             key={j}
@@ -165,6 +170,7 @@ class EvaluationTable extends Component {
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,
                         }}
+                        key={`second-row-${i}`}
                       >
                         <td
                           css={{

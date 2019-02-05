@@ -22,6 +22,8 @@
       items:
         - title: Preparing your site for deployment*
           link: /docs/preparing-for-deployment/
+        - title: Deploying to AWS Amplify
+          link: /docs/deploying-to-aws-amplify
         - title: Deploying to S3 and CloudFront
           link: /docs/deploying-to-s3-cloudfront
         - title: Deploying to Aerobatic
@@ -77,21 +79,22 @@
     - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
-        - title: Using unstructured data
-          link: /docs/using-unstructured-data/
+        - title: Using Gatsby without GraphQL
+          link: /docs/using-gatsby-without-graphql/
         - title: Sourcing from the filesystem
           link: /docs/sourcing-from-the-filesystem/
-        - title: Sourcing from databases*
+        - title: Sourcing from databases
           link: /docs/sourcing-from-databases/
         - title: Sourcing from SaaS services*
           link: /docs/sourcing-from-saas-services/
-        - title: Sourcing from private APIs*
+        - title: Sourcing from private APIs
           link: /docs/sourcing-from-private-apis/
-        - title: Headless CMS
+        - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/
           items:
-            - title: Sourcing from Netlify CMS
-              link: /docs/sourcing-from-netlify-cms/
+            # This list should only include the top 5 CMSs by Gatsby plugin usage.
+            # Please do not add your headless CMS here.
+            # Instead, please add links on the /docs/headless-cms/ page
             - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
@@ -100,6 +103,8 @@
               link: /docs/sourcing-from-contentful/
             - title: Sourcing from Prismic
               link: /docs/sourcing-from-prismic/
+            - title: Sourcing from Netlify CMS
+              link: /docs/sourcing-from-netlify-cms/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
@@ -141,7 +146,7 @@
       items:
         - title: Create a Starter*
           link: /docs/create-a-starter/
-    - title: Styling
+    - title: Styling your site
       link: /docs/styling/
       items:
         - title: Layout Components
@@ -150,6 +155,8 @@
           link: /docs/css-modules/
         - title: Typography.js
           link: /docs/typography-js/
+        - title: Using CSS-in-JS library Emotion
+          link: /docs/emotion/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
         - title: Using CSS-in-JS library styled components
@@ -160,7 +167,9 @@
           link: /docs/component-css/
         - title: PostCSS
           link: /docs/post-css/
-    - title: Testing
+        - title: TailwindCSS
+          link: /docs/tailwind-css/
+    - title: Adding testing
       link: /docs/testing/
       items:
         - title: Unit testing
@@ -175,7 +184,7 @@
           link: /docs/testing-react-components/
         - title: Visual testing with Storybook
           link: /docs/visual-testing-with-storybook/
-    - title: Debugging
+    - title: Debugging Gatsby
       link: /docs/debugging/
       items:
         - title: Debugging HTML builds
@@ -186,18 +195,22 @@
           link: /docs/debugging-the-build-process/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
-    - title: Use cases with Gatsby (including apps)
-      link: /docs/building-apps-with-gatsby/
-      items:
-        - title: Building a site with authentication
-          link: /docs/building-a-site-with-authentication/
     - title: Adding website functionality
       link: /docs/adding-website-functionality/
       items:
         - title: Adding search
           link: /docs/adding-search/
+          items:
+            - title: Adding search with Algolia*
+              link: /docs/adding-search-with-algolia/
+            - title: Adding search with elasticlunr*
+              link: /docs/adding-search-with-elasticlunr/
+            - title: Adding search with js-search*
+              link: /docs/adding-search-with-js-search/
         - title: Adding analytics
           link: /docs/adding-analytics/
+        - title: Adding authentication
+          link: /docs/building-a-site-with-authentication/
         - title: Adding forms
           link: /docs/adding-forms/
         - title: Adding a 404 Page
@@ -225,7 +238,7 @@
               link: /docs/centralizing-your-sites-navigation/
             - title: Rendering sidebar navigation dynamically*
               link: /docs/rendering-sidebar-navigation-dynamically/
-    - title: Performance
+    - title: Improving performance
       link: /docs/performance/
       items:
         - title: Progressive web app (PWA)
@@ -244,8 +257,8 @@
           link: /docs/add-page-metadata/
         - title: Search Engine Optimization (SEO)
           link: /docs/seo/
-        - title: Optimize Prefetching with Guess.js*
-          link: /docs/optimize-prefetching-with-guessjs/
+        - title: Optimizing Site Performance with Guess.js
+          link: /docs/optimizing-site-performance-with-guessjs/
 - title: Ecosystem
   link: /ecosystem/
   items:
@@ -345,6 +358,8 @@
           link: /docs/html-generation/
         - title: Code Splitting and Prefetching
           link: /docs/how-code-splitting-works/
+    - title: Resource Handling & Service Workers
+      link: /docs/resource-handling-and-service-workers/
     - title: Data Storage (Redux)*
       link: /docs/data-storage-redux/
     - title: Build Caching*
@@ -363,6 +378,8 @@
       link: /docs/wordpress-source-plugin-tutorial/
     - title: Adding images to a WordPress site
       link: /docs/image-tutorial/
+    - title: Writing documentation with Docz
+      link: /docs/writing-documentation-with-docz/
 - title: Contributing
   items:
     - title: Community

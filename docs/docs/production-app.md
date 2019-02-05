@@ -36,16 +36,8 @@ The config is quite large, but here are some of the important values in the fina
     splitChunks: false
   }
   plugins: [
-    {
-      apply: function(compiler) {
-        compiler.hooks.done.tapAsync(
-          `gatsby-webpack-stats-extractor`,
-          (stats, done) => {
-            // logic to write out chunk-map.json and webpack.stats.json
-          }
-        )
-      },
-    }
+    // A custom webpack plugin that implements logic to write out chunk-map.json and webpack.stats.json
+    plugins.extractStats(),
   ]
 }
 ```
@@ -60,7 +52,7 @@ This is bundle produced from [production-app.js](https://github.com/gatsbyjs/gat
 
 ##### webpack-runtime-[contenthash].js
 
-This contains the small [webpack-runtime](https://webpack.js.org/concepts/manifest/#runtime) as a separate bundle (configured in `optimization` section). In practise, the app and webpack-runtime are always needed together.
+This contains the small [webpack-runtime](https://webpack.js.org/concepts/manifest/#runtime) as a separate bundle (configured in `optimization` section). In practice, the app and webpack-runtime are always needed together.
 
 ##### component---[name]-[contenthash].js
 
@@ -113,7 +105,7 @@ PageRenderer's constructor [loads the page resources](/docs/production-app/#load
 
 Before hydration occurs, we kick off the loading of resources in the background. As mentioned above, the current page's resources will have already been requested by `link` tags in the HTML. So, technically, there's nothing more required for this page load. But we can start loading resources required to navigate to other pages.
 
-This occurs in [loader.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js). The main function here is [getResourcesForPathname()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L268). Given a path, it will find its page, and import its component module json query results. But to do this, it needs access to that information. This is provided by [async-requires.js](/docs/write-pages/#async-requiresjs) which contains the list of all pages in the site, and all their dataPathss. [fetchPageResourcesMap()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L33) takes care of requesting that file, which occurs the [first time](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L292) `getResourcesForPathname()` is called.
+This occurs in [loader.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js). The main function here is [getResourcesForPathname()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L268). Given a path, it will find its page, and import its component module json query results. But to do this, it needs access to that information. This is provided by [async-requires.js](/docs/write-pages/#async-requiresjs) which contains the list of all pages in the site, and all their dataPaths. [fetchPageResourcesMap()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L33) takes care of requesting that file, which occurs the [first time](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L292) `getResourcesForPathname()` is called.
 
 ### window variables
 

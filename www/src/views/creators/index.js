@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import typography, { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import CreatorsHeader from "./creators-header"

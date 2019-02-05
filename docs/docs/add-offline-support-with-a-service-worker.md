@@ -45,10 +45,10 @@ Note: Service worker registers only in production builds (`gatsby build`).
 
 ### Displaying a message when a service worker updates
 
-To display a custom message once your service worker finds an update, you can use the [`onServiceWorkerUpdateFound`](/docs/browser-apis/#onServiceWorkerUpdateFound) browser API in your `gatsby-browser.js` file. The following code will display a confirm prompt asking the user whether they would like to refresh the page when an update is found:
+To display a custom message once your service worker finds an update, you can use the [`onServiceWorkerUpdateReady`](/docs/browser-apis/#onServiceWorkerUpdateReady) browser API in your `gatsby-browser.js` file. The following code will display a confirm prompt asking the user whether they would like to refresh the page when an update is found:
 
 ```javascript:title=gatsby-browser.js
-exports.onServiceWorkerUpdateFound = () => {
+exports.onServiceWorkerUpdateReady = () => {
   const answer = window.confirm(
     `This application has been updated. ` +
       `Reload to display the latest version?`
@@ -59,6 +59,20 @@ exports.onServiceWorkerUpdateFound = () => {
   }
 }
 ```
+
+### Using a custom service worker in Gatsby
+
+You can add a custom service worker if your use case requires something that `gatsby-plugin-offline` doesn't support.
+
+Add a file called `sw.js` in the `static` folder.
+
+Use the [`registerServiceWorker`](/docs/browser-apis/#registerServiceWorker) browser API in your `gatsby-browser.js` file.
+
+```javascript:title=gatsby-browser.js
+exports.registerServiceWorker = () => true
+```
+
+That's all! Gatsby will register your custom service worker.
 
 ## References
 

@@ -64,6 +64,6 @@ where the static files are kept. `only:` and `master` tells the CI to only run t
 
 Add that configuration, and with the next master branch push, your site should have been built correctly. This can be checked by going to your repository on GitLab, and selecting CI/CD in the sidebar. This will then show you a log of all jobs that have either succeeded or failed. You can click on the failed status, and then select the job to get more information about why your build may have failed.
 
-If all went well, you should now be able to access your site. It will be hosted under gitlab.io - for example if you have have a repository under your namespace, the url will be yourname.gitlab.io/examplerepository.
+If all went well, you should now be able to access your site. It will be hosted under gitlab.io - for example if you have a repository under your namespace, the url will be yourname.gitlab.io/examplerepository.
 
 Visit the [GitLab Pages](https://gitlab.com/help/user/project/pages/getting_started_part_one.md) to learn how to setup custom domains and find out about advanced configurations.
