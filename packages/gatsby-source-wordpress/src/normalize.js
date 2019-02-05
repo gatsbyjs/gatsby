@@ -165,13 +165,14 @@ exports.liftRenderedField = entities =>
 
 // Exclude entities of unknown shape
 // Assume all entities contain a wordpress_id,
-// except for whitelisted type wp_settings and the site_metadata
+// except for whitelisted type wp_settings, the site_metadata and yoast_redirects
 exports.excludeUnknownEntities = entities =>
   entities.filter(
     e =>
       e.wordpress_id ||
       e.__type === `wordpress__wp_settings` ||
-      e.__type === `wordpress__site_metadata`
+      e.__type === `wordpress__site_metadata` ||
+      e.__type === `wordpress__yoast_redirects`
   )
 // Excluding entities without ID, or WP Settings
 
