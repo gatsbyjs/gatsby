@@ -54,7 +54,7 @@ Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) tha
 
 # Setting up a Gatsby site
 
-Create a new Gatsby project by running the `npx gatsby new` command in the terminal and change directories into the new project you just started:
+Create a new Gatsby project by running the `gatsby new` command in the terminal and change directories into the new project you just started:
 
 ```shell
 npx gatsby new ecommerce-gatsby-tutorial
