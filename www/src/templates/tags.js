@@ -1,7 +1,9 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
+import TagsIcon from "react-icons/lib/ti/tags"
 
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
+import Button from "../components/button"
 import Container from "../components/container"
 import Layout from "../components/layout"
 import { rhythm } from "../utils/typography"
@@ -17,6 +19,9 @@ const Tags = ({ pageContext, data, location }) => {
     <Layout location={location}>
       <Container>
         <h1>{tagHeader}</h1>
+        <Button tiny key="blog-post-view-all-tags-button" to="/blog/tags">
+          View All Tags <TagsIcon />
+        </Button>
         {edges.map(({ node }) => (
           <BlogPostPreviewItem
             post={node}
@@ -24,7 +29,6 @@ const Tags = ({ pageContext, data, location }) => {
             css={{ marginBottom: rhythm(2) }}
           />
         ))}
-        <Link to="/blog/tags">All tags</Link>
       </Container>
     </Layout>
   )
