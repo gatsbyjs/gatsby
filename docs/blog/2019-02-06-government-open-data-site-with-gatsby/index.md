@@ -186,7 +186,7 @@ Fortunately, Gatsby provides a hook into the entire lifecycle of its build proce
 
 Developers tout Gatsby's speed, and [prefetching](/docs/how-code-splitting-works/) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
 
-Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gastby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby.
+Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gastby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/dev/gatsby-site/gatsby-browser.js).)
 
 ```javascript
 exports.onClientEntry = () => {
