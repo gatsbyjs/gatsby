@@ -371,8 +371,8 @@ const queueJob = (job, reporter) => {
   }
 }
 
-function queueImageResizing({ file, args = {}, reporter, ...rest }) {
-  const options = healOptions(args, rest)
+function queueImageResizing({ file, args = {}, reporter }) {
+  const options = healOptions(args, {})
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
   const pairedArgs = _.toPairs(args)
@@ -457,15 +457,12 @@ function queueImageResizing({ file, args = {}, reporter, ...rest }) {
   queueJob(job, reporter)
 
   // encode the file name for URL
-  const encodedImgSrc = `${encodeURIComponent(file.name)}.${fileExtension}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
 
   // Prefix the image src.
-  const prefixedSrc = options.withAssetPrefix(
-    `static`,
-    file.internal.contentDigest,
-    argsDigestShort,
-    encodedImgSrc
-  )
+  const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
+  const prefixedSrc =
+    options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
 
   return {
     src: prefixedSrc,
@@ -478,7 +475,7 @@ function queueImageResizing({ file, args = {}, reporter, ...rest }) {
   }
 }
 
-async function generateBase64({ file, args, reporter, ...rest }) {
+async function generateBase64({ file, args, reporter }) {
   const options = healOptions(args, { width: 20 })
   let pipeline
   try {
@@ -560,7 +557,7 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
-async function fluid({ file, args = {}, reporter, cache, ...rest }) {
+async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
@@ -672,7 +669,6 @@ async function fluid({ file, args = {}, reporter, cache, ...rest }) {
       file,
       args: arrrgs, // matey
       reporter,
-      ...rest,
     })
   })
 
@@ -736,7 +732,7 @@ async function fluid({ file, args = {}, reporter, cache, ...rest }) {
   }
 }
 
-async function fixed({ file, args = {}, reporter, cache, ...rest }) {
+async function fixed({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
 
   // if no width is passed, we need to resize the image based on the passed height
@@ -787,7 +783,6 @@ async function fixed({ file, args = {}, reporter, cache, ...rest }) {
       file,
       args: arrrgs,
       reporter,
-      ...rest,
     })
   })
 
