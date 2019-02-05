@@ -216,7 +216,7 @@ const getFieldConfigFromFieldNameConvention = (
     type = linkedTypes[0]
   }
 
-  return { type, resolve: link({ by: foreignKey || `id` }) }
+  return { type, resolve: link({ by: foreignKey || `id`, from: key }) }
 }
 
 const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {

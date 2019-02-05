@@ -259,50 +259,60 @@ const addConvenienceChildrenFields = ({
   typeComposer,
   nodeStore,
 }) => {
-  const typeName = typeComposer.getTypeName()
-  const nodes = nodeStore.getNodesByType(typeName)
+  const nodes = nodeStore.getNodesByType(typeComposer.getTypeName())
 
-  const hasChildrenByType = nodes.reduce((acc, node) => {
-    const children = node.children.map(nodeStore.getNode)
-    const childrenCountByType = children.reduce((acc, child) => {
-      const { type } = child.internal
-      acc[type] = acc[type] + 1 || 1
-      return acc
-    }, {})
-    Object.entries(childrenCountByType).forEach(([type, count]) => {
-      acc[type] = Boolean(acc[type]) || count > 1
-    })
-    return acc
-  }, {})
+  const childNodesByType = groupChildNodesByType({ nodeStore, nodes })
 
-  Object.keys(hasChildrenByType).forEach(typeName => {
-    const hasChildren = hasChildrenByType[typeName]
-    const fieldName = (hasChildren ? `children` : `child`) + typeName
-    let resolver
-    if (hasChildren) {
-      resolver = (source, args, context, info) => {
-        const result = context.nodeModel.getNodes(source.children)
-        return result.filter(node => node && node.internal.type === typeName)
-      }
+  Object.keys(childNodesByType).forEach(typeName => {
+    const typeChildren = childNodesByType[typeName]
+    const maxChildCount = _.maxBy(
+      _.values(_.groupBy(typeChildren, c => c.parent)),
+      g => g.length
+    ).length
+
+    if (maxChildCount > 1) {
+      typeComposer.addFields(createChildrenField(typeName))
     } else {
-      resolver = (source, args, context, info) => {
-        const result = context.nodeModel.getNode(source.children[0])
-        if (result && result.internal.type === typeName) {
-          return result
-        } else {
-          return null
-        }
-      }
+      typeComposer.addFields(createChildField(typeName))
     }
-
-    const field = {
-      [fieldName]: {
-        type: hasChildren ? [typeName] : typeName,
-        resolve: resolver,
-      },
-    }
-    typeComposer.addFields(field)
   })
+}
+
+function createChildrenField(typeName) {
+  return {
+    [_.camelCase(`children ${typeName}`)]: {
+      type: () => [typeName],
+      resolve(source, args, context) {
+        return source.children
+          .map(context.nodeModel.getNode)
+          .filter(nodeIsOfType(typeName))
+      },
+    },
+  }
+}
+
+function createChildField(typeName) {
+  return {
+    [_.camelCase(`child ${typeName}`)]: {
+      type: () => typeName,
+      resolve(source, args, context) {
+        return source.children
+          .map(context.nodeModel.getNode)
+          .find(nodeIsOfType(typeName))
+      },
+    },
+  }
+}
+
+function groupChildNodesByType({ nodeStore, nodes }) {
+  return _(nodes)
+    .flatMap(node => node.children.map(nodeStore.getNode))
+    .groupBy(node => (node.internal ? node.internal.type : undefined))
+    .value()
+}
+
+function nodeIsOfType(typeName) {
+  return node => node.internal.type === typeName
 }
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {

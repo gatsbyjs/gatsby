@@ -7,8 +7,8 @@ const {
 } = require(`graphql`)
 const createPageDependency = require(`../redux/actions/add-page-dependency`)
 
-const withPageDependencies = resolve => type => async (rp, firstResultOnly) => {
-  const result = await resolve(type)(rp, firstResultOnly)
+const withPageDependencies = resolve => type => async rp => {
+  const result = await resolve(type)(rp)
   const { path } = rp.context || {}
   if (!path || result == null) return result
 
@@ -218,15 +218,16 @@ const link = ({ by, from }) => async (source, args, context, info) => {
   } else {
     let result
     for (const type of possibleTypes) {
-      result = await findOne(type.name)({
-        source,
-        args: args.filter,
-        context,
-        info,
+      result = await context.nodeModel.runQuery({
+        queryArgs: args,
+        firstOnly: true,
+        gqlType: type,
       })
-      if (result != null) break
+      if (result && result.length > 0) {
+        return result[0]
+      }
     }
-    return result
+    return null
   }
 }
 

@@ -28,7 +28,7 @@ const getOrCreateNodeInterface = schemaComposer => {
       children: {
         type: `[Node]!`,
         resolve: async (source, args, context, info) =>
-          context.nodeModel.getNodes(source.children),
+          source.children.map(context.nodeModel.getNode),
       },
       internal: `Internal`,
     })
