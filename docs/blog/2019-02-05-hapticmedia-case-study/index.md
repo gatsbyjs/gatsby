@@ -1,5 +1,5 @@
 ---
-title: "Beyond Static: Hapticmedia Uses Gatsby to a Build Dynamic Web App"
+title: "Beyond Static: Hapticmedia Uses Gatsby to Build a Dynamic Web App"
 date: 2019-02-05
 author: Linda Watkins
 tags:
