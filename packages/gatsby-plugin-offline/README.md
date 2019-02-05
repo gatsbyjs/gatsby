@@ -71,8 +71,8 @@ substitute it with [`gatsby-plugin-remove-serviceworker`](https://www.npmjs.com/
 to safely remove the service worker. First, install the new package:
 
 ```bash
-yarn add gatsby-plugin-remove-serviceworker
-yarn remove gatsby-plugin-offline
+npm install gatsby-plugin-remove-serviceworker
+npm uninstall gatsby-plugin-offline
 ```
 
 Then, update your `gatsby-config.js`:
