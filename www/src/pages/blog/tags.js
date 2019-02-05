@@ -10,7 +10,9 @@ import { Helmet } from "react-helmet"
 import { Link } from "gatsby"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import presets, { colors } from "../../utils/presets"
+import SearchIcon from "../../components/search-icon"
+import styles from "../../views/shared/styles"
+import { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 
 let currentLetter = ``
@@ -58,6 +60,9 @@ class TagsPage extends React.Component {
       }
       return lookup
     }, {})
+    const results = Object.keys(uniqGroup)
+      .sort((tagA, tagB) => tagA.localeCompare(tagB))
+      .filter(key => uniqGroup[key].fieldValue.includes(filterQuery))
 
     return (
       <Layout location={location}>
@@ -75,36 +80,38 @@ class TagsPage extends React.Component {
                 borderBottom: `1px solid ${colors.ui.border}`,
               }}
             >
-              <h1 css={{ margin: 0 }}>Tags</h1>
-              <input
-                id="tagsFilter"
-                name="filterQuery"
-                css={{
-                  appearance: `none`,
-                  backgroundColor: `#ffffff`,
-                  border: `1px solid ${colors.lilac}`,
-                  borderRadius: presets.radius,
-                  color: colors.lilac,
-                  paddingTop: rhythm(1 / 8),
-                  paddingRight: rhythm(1 / 4),
-                  paddingBottom: rhythm(1 / 8),
-                  paddingLeft: rhythm(5 / 4),
-                  overflow: `hidden`,
-                  width: `60%`,
-                  height: `45px`,
-                  marginLeft: `25px`,
-                  ":focus": {
-                    color: colors.gatsby,
-                    outline: 0,
-                  },
-                }}
-                type="search"
-                placeholder="Search tags"
-                aria-label="Tag Search"
-                title="Filter tag list"
-                value={filterQuery}
-                onChange={this.handleChange}
-              />
+              <h1 css={{ margin: 0 }}>
+                Tags ({Object.keys(uniqGroup).length || 0})
+              </h1>
+              <div>
+                <label css={{ position: `relative` }}>
+                  <input
+                    css={{
+                      ...styles.searchInput,
+                    }}
+                    id="tagsFilter"
+                    name="filterQuery"
+                    type="search"
+                    placeholder="Search tags"
+                    aria-label="Tag Search"
+                    title="Filter tag list"
+                    value={filterQuery}
+                    onChange={this.handleChange}
+                  />
+                  <SearchIcon
+                    overrideCSS={{
+                      fill: colors.lilac,
+                      position: `absolute`,
+                      left: `5px`,
+                      top: `50%`,
+                      width: `16px`,
+                      height: `16px`,
+                      pointerEvents: `none`,
+                      transform: `translateY(-50%)`,
+                    }}
+                  />
+                </label>
+              </div>
             </div>
             <ul
               css={{
@@ -115,10 +122,8 @@ class TagsPage extends React.Component {
                 margin: 0,
               }}
             >
-              {Object.keys(uniqGroup)
-                .sort((tagA, tagB) => tagA.localeCompare(tagB))
-                .filter(key => uniqGroup[key].fieldValue.includes(filterQuery))
-                .map(key => {
+              {results.length > 0 ? (
+                results.map(key => {
                   const tag = uniqGroup[key]
                   const firstLetter = tag.fieldValue.charAt(0).toLowerCase()
                   const buildTag = (
@@ -148,7 +153,14 @@ class TagsPage extends React.Component {
                     )
                   }
                   return buildTag
-                })}
+                })
+              ) : (
+                <h4>
+                  No tags found for &quot;
+                  {filterQuery}
+                  &quot; 😔
+                </h4>
+              )}
             </ul>
           </div>
         </Container>
