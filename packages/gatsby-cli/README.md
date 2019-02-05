@@ -77,10 +77,9 @@ At the root of a Gatsby site run `gatsby clean` to wipe out `node_modules`, cach
 
 #### Options
 
-|     Option     | Description                                                                    | Default |
-| :------------: | ------------------------------------------------------------------------------ | :-----: |
-|  `--env-info`  | Log environment information (e.g. system info, package info, etc.) to console. | `false` |
-| `--no-install` | Do not run yarn or npm install after cleaning directories                      | `false` |
+|     Option     | Description                                               | Default |
+| :------------: | --------------------------------------------------------- | :-----: |
+| `--no-install` | Do not run yarn or npm install after cleaning directories | `false` |
 
 ### `info`
 
