@@ -156,14 +156,10 @@ exports.onCreatePage = ({ page, actions }) => {
 On your pages and templates, you can access your context via the prop `pageContext` like this:
 
 ```jsx
-import React from 'react'
+import React from "react"
 
 const Page = ({ pageContext }) => {
-  return (
-    <div>
-      {pageContext.house}
-    </div>
-  )
+  return <div>{pageContext.house}</div>
 }
 
 export default Page
