@@ -93,7 +93,7 @@
   "scripts": {
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
-    "develop": "gatsby develop",
+    "develop": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1",
