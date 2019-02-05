@@ -33,7 +33,7 @@ const bootstrapTest = async (node, pluginOptions = {}) => {
 describe(`Process JSON nodes correctly`, () => {
   const baseNode = {
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       contentDigest: `whatever`,

@@ -17,19 +17,19 @@ continuous deployment from public or private repos and more.
 
 First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
 
-```sh
+```shell
 npm install --global gatsby-cli
 ```
 
 Next, we'll create a new Gatsby site:
 
-```sh
+```shell
 gatsby new my-gatsby-site
 ```
 
 Finally, change into the new site directory:
 
-```sh
+```shell
 cd my-gatsby-site
 ```
 
@@ -55,6 +55,6 @@ Now that your site is connected to your repository, Netlify will deploy the site
 ## References
 
 - [Introduction to Gatsby](https://www.gatsbyjs.org/blog/2017-05-31-introduction-to-gatsby/#deployment)
-- [Escalade Sports: From $5000 to $5/month in Hosting With Gatsby](https://www.gatsbyjs.org/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
+- [Escalade Sports: From $5000 to \$5/month in Hosting With Gatsby](https://www.gatsbyjs.org/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
 - [Why I created my blog with Gatsby and Contentful](https://www.gatsbyjs.org/blog/2017-11-09-why-i-created-my-blog-with-gatsby-and-contentful/#hosting-with-netlify)
 - [Gatsby + Contentful + Netlify (and Algolia)](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby)

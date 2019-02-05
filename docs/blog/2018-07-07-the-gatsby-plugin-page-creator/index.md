@@ -3,7 +3,6 @@ title: Automatically create pages from components in any directory
 date: "2018-07-07"
 image: "gatsbymanor.jpg" # change this to the npm package stats
 author: "Steven Natera"
-tags: ["themes", "starters", "gatsby-manor"]
 ---
 
 ![Gatsby plugin page creator in the plugin library](plugin-library-page-creator.png)

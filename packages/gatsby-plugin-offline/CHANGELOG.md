@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.21...gatsby-plugin-offline@2.0.22) (2019-01-28)
+
+### Features
+
+- **gatsby-plugin-offline:** reload when missing resources and SW was updated + add "onServiceWorkerUpdateReady" API ([#10432](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10432)) ([4a01c6d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/4a01c6d))
+
+<a name="2.0.21"></a>
+
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.20...gatsby-plugin-offline@2.0.21) (2019-01-06)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+<a name="2.0.20"></a>
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.19...gatsby-plugin-offline@2.0.20) (2018-12-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** prevent incorrect revisioning of static file by workbox ([#10416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10416)) ([008b5db](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/008b5db))
+
 <a name="2.0.19"></a>
 
 ## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.18...gatsby-plugin-offline@2.0.19) (2018-12-07)

@@ -35,6 +35,7 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
       {...!fluid && { fixed: fixedShapeMock }}
       onLoad={onLoad}
       onError={onError}
+      itemProp={`item-prop-for-the-image`}
       placeholderStyle={{ color: `red` }}
       placeholderClassName={`placeholder`}
     />

@@ -42,7 +42,7 @@ explore how it works.
 
 First install the plugin at the root of the project:
 
-```sh
+```shell
 npm install --save gatsby-source-filesystem
 ```
 

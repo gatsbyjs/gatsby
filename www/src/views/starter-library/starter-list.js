@@ -18,8 +18,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       urlState.s !== ``
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `matching` // if no search term or single dependency
+        ? urlState.d // if theres a single dependency
+        : `matching` // if no search term or single dependency
     return (
       <div
         css={{
@@ -60,8 +60,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             githubFullName,
             lastUpdated,
             owner,
+            slug,
             stars,
-            stub,
           } = starter.fields.starterShowcase
           const { url: demoUrl } = starter
 
@@ -75,9 +75,9 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 }}
               >
                 <ThumbnailLink
-                  slug={`/starters/${stub}`}
+                  slug={`/starters${slug}`}
                   image={starter.childScreenshot}
-                  title={starter.name}
+                  title={`${owner}/${name}`}
                 />
                 <div
                   css={{
@@ -108,7 +108,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                     </span>
                   </div>
                   <div>
-                    <Link to={`/starters/${stub}`}>
+                    <Link to={`/starters${slug}`}>
                       <h5 css={{ margin: 0 }}>
                         <strong className="title">{name}</strong>
                       </h5>

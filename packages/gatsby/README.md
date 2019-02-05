@@ -47,7 +47,7 @@
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://discord.gg/0ZcbPKXt5bVoxkfV">Discord</a>
+  <a href="https://gatsby.app/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites.
@@ -58,7 +58,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
-  whether the data is coming from the same back-end.
+  whether the data is coming from the same backend.
 
 - **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
   files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins

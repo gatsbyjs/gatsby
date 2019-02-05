@@ -1,5 +1,5 @@
 /* @flow weak */
-const openurl = require(`opn`)
+const openurl = require(`better-opn`)
 const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
@@ -8,7 +8,7 @@ const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
 
 module.exports = async program => {
-  let { prefixPaths, port, open } = program
+  let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
   const config = await preferDefault(
@@ -31,8 +31,8 @@ module.exports = async program => {
   })
   app.use(pathPrefix, router)
 
-  const server = app.listen(port, () => {
-    let openUrlString = `http://localhost:${port}${pathPrefix}`
+  const server = app.listen(port, host, () => {
+    let openUrlString = `http://${host}:${port}${pathPrefix}`
     console.log(
       `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
         openUrlString
@@ -40,7 +40,7 @@ module.exports = async program => {
     )
     if (open) {
       console.log(`${chalk.blue(`info`)} Opening browser...`)
-      openurl(openUrlString).catch(err =>
+      Promise.resolve(openurl(openUrlString)).catch(err =>
         console.log(
           `${chalk.yellow(
             `warn`

@@ -14,7 +14,7 @@ You may be looking to build a plugin that doesn't exist yet, or you may just be 
 
 - Each Gatsby plugin can be created as an npm package or as a [local plugin](#local-plugins)
 - A `package.json` is required
-- Plugin implement the Gatsby APIs for [Node](/docs/node-apis/), [server-side rendering](/docs/ssr-apis/), and the [browser](/docs/browser-apis/)
+- Plugins implement the Gatsby APIs for [Node](/docs/node-apis/), [server-side rendering](/docs/ssr-apis/), and the [browser](/docs/browser-apis/)
 
 ## Plugin naming conventions
 
@@ -62,7 +62,7 @@ plugins
 
 **NOTE:** For the plugin to be discovered, the plugin's root folder name is the value that needs to be referenced in order to load it (_not_ its _name_ in its package.json file). For example, in the above structure, the correct way to load the plugin is:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: ["my-own-plugin"],
 }

@@ -16,10 +16,10 @@ interface FluidObject {
   src: string
   srcSet: string
   sizes: string
-  base64: string
-  tracedSVG: string
-  srcWebp: string
-  srcSetWebp: string
+  base64?: string
+  tracedSVG?: string
+  srcWebp?: string
+  srcSetWebp?: string
 }
 
 interface GatsbyImageProps {
@@ -34,12 +34,13 @@ interface GatsbyImageProps {
   critical?: boolean
   style?: object
   imgStyle?: object
-  placeholderStyle: object
+  placeholderStyle?: object
   backgroundColor?: string | boolean
   onLoad?: () => void
   onStartLoad?: (param: { wasCached: boolean }) => void
   onError?: (event: any) => void
   Tag?: string
+  itemProp?: string
 }
 
 export default class GatsbyImage extends React.Component<
