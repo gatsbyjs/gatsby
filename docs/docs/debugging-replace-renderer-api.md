@@ -8,15 +8,15 @@ If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lif
 
 ## What is the `replaceRenderer` API?
 
-The `replaceRenderer` API is one of [Gatsby's Server Side Rendering (SSR) extension APIs](/docs/ssr-apis/#replaceRenderer). This API is called when you run `gatsby build` and is used to customise how Gatsby renders your static content. It can be implemented by any Gatsby plugin or your `gatsby-ssr.js` file - adding support for Redux, CSS-in-JS libraries or any code that needs to change Gatsby's default HTML output.
+The `replaceRenderer` API is one of [Gatsby's Server Side Rendering (SSR) extension APIs](/docs/ssr-apis/#replaceRenderer). This API is called when you run `npm run build` and is used to customise how Gatsby renders your static content. It can be implemented by any Gatsby plugin or your `gatsby-ssr.js` file - adding support for Redux, CSS-in-JS libraries or any code that needs to change Gatsby's default HTML output.
 
 ## Why does it cause build errors?
 
 If multiple plugins implement `replaceRenderer` in your project, only the last plugin implementing the API can be called - which will break your site builds.
 
-Note that `replaceRenderer` is only used during `gatsby build`. It won't cause problems as you work on your site with `gatsby develop`.
+Note that `replaceRenderer` is only used during `npm run build`. It won't cause problems as you work on your site with `npm run develop`.
 
-If multiple plugins implement `replaceRenderer`, `gatsby build` will warn you:
+If multiple plugins implement `replaceRenderer`, `npm run build` will warn you:
 
 ```
 warning replaceRenderer API found in these plugins:
@@ -109,6 +109,6 @@ exports.replaceRenderer = ({
 }
 ```
 
-Now `gatsby-ssr.js` implements the Styled Components and Redux functionality using one `replaceRenderer` instance. Run `gatsby build` and the site will build correctly.
+Now `gatsby-ssr.js` implements the Styled Components and Redux functionality using one `replaceRenderer` instance. Run `npm run build` and the site will build correctly.
 
 All the code from this example is [available on GitHub](https://github.com/m-allanson/gatsby-replace-renderer-example/commits/master).

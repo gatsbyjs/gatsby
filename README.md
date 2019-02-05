@@ -82,12 +82,16 @@ Gatsby is a modern framework for blazing fast websites.
 
 ## What’s In This Document
 
-- [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
-- [Learning Gatsby](#-learning-gatsby)
-- [Migration Guides](#-migration-guides)
-- [How to Contribute](#-how-to-contribute)
-- [License](#memo-license)
-- [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
+- [What’s In This Document](#whats-in-this-document)
+- [🚀 Get Up and Running in 5 Minutes](#%F0%9F%9A%80-get-up-and-running-in-5-minutes)
+- [🎓 Learning Gatsby](#%F0%9F%8E%93-learning-gatsby)
+- [💼 Migration Guides](#%F0%9F%92%BC-migration-guides)
+- [🤝 How to Contribute](#%F0%9F%A4%9D-how-to-contribute)
+  - [Code of Conduct](#code-of-conduct)
+  - [A note on how this repository is organized](#a-note-on-how-this-repository-is-organized)
+  - [Contributing to Gatsby v1](#contributing-to-gatsby-v1)
+- [:memo: License](#memo-license)
+- [💜 Thanks to Our Contributors and Sponsors](#%F0%9F%92%9C-thanks-to-our-contributors-and-sponsors)
 
 ## 🚀 Get Up and Running in 5 Minutes
 
@@ -98,11 +102,8 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     Get your Gatsby blog set up in a single command:
 
     ```sh
-    # install the Gatsby CLI globally
-    npm install -g gatsby-cli
-
     # create a new Gatsby site using the default starter
-    gatsby new my-blazing-fast-site
+    npx gatsby new my-blazing-fast-site
     ```
 
 2.  **Start the site in `develop` mode.**

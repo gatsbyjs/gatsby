@@ -23,6 +23,6 @@ explorer({
   host,
   directory,
   sitePackageJson,
-  // make Gatsby think this is a normal `gatsby build` command
+  // make Gatsby think this is a normal `npm run build` command
   _: [`build`],
 })

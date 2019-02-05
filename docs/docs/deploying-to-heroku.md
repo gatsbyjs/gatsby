@@ -31,7 +31,7 @@ Add a `heroku-postbuild` script in your `package.json`:
 }
 ```
 
-It is worth noting that, by default, creating a new project with `gatsby new <your-project-name>` creates a `package.json` with a `start` script as `npm run develop`. Without creating a Procfile to specify your commands to run for your process types, Heroku will run the web process via the `npm start` command by default. Since we've compiled our production-optimized build with `gatsby build`, the command we want to run is actually `gatsby serve`. To do this, either add the following script to your `package.json`:
+It is worth noting that, by default, creating a new project with `npx gatsby new <your-project-name>` creates a `package.json` with a `start` script as `gatsby develop`. Without creating a Procfile to specify your commands to run for your process types, Heroku will run the web process via the `npm start` command by default. Since we've compiled our production-optimized build with `npm run build`, the command we want to run is actually `npm run serve`. To do this, either add the following script to your `package.json`:
 
 ```json:package.json
 {

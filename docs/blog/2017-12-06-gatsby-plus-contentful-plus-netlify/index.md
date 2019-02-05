@@ -286,7 +286,7 @@ And back to using it with Gatsby.
 
 After you link your Netlify site to a specific code repository, Netlify’s build
 bots take care of the rest. From that point on, when you push a change to your
-repo, the build bot says, “Hey look! a change! I need to run the `gatsby build`
+repo, the build bot says, “Hey look! a change! I need to run the `npm run build`
 command...”, then it follows the package.json (or yarn file) in the repo and
 downloads the necessary dependencies if they aren’t already cached, and then
 builds out the static site.

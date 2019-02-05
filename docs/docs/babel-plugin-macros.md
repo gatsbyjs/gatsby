@@ -47,7 +47,7 @@ import preval from "preval.macro"
 const x = preval`module.exports = 1` // highlight-line
 ```
 
-When building your project with `gatsby develop` or `gatsby build`, this code
+When building your project with `npm run develop` or `npm run build`, this code
 will be transformed into:
 
 ```javascript

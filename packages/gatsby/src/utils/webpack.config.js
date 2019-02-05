@@ -15,7 +15,7 @@ const createUtils = require(`./webpack-utils`)
 const hasLocalEslint = require(`./local-eslint-config-finder`)
 
 // Four stages or modes:
-//   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
+//   1) develop: for `npm run develop` command, hot reload and CSS injection into page
 //   2) develop-html: same as develop without react-hmre in the babel config for html renderer
 //   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files

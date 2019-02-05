@@ -71,7 +71,7 @@ propia instancia del sitio web Gatsby y hacer/previsualizar sus cambios antes de
 
 - Copie su repositorio y diríjase a `/www`
 - Utilice `yarn` para instalar todas las dependencias del sitio web.
-- Utilice `gatsby develop` para obtener una vista previa del sitio web en `http://localhost:8000`
+- Utilice `npm run develop` para obtener una vista previa del sitio web en `http://localhost:8000`
 - El archivo _Markdown_ para la documentación _live_ en la `/docs` carpeta. Haga
   adiciones o modificaciones aquí.
 - Asegúrese de verificar que tu gramática sea la más apropiada.

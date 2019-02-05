@@ -93,9 +93,9 @@ Ahora usemos la herramienta gatsby-cli para crear tu primer sitio de Gatsby. Con
 ### ✋ Crear un sitio de Gatsby
 
 1. Abre tu terminal.
-2. Ejecuta `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`. (_Nota: Dependiendo de la velocidad de descarga, la cantidad de tiempo que esto tomará variará. En aras de la brevedad, el gif siguiente se pausó durante parte de la instalación_).
+2. Ejecuta `npx gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`. (_Nota: Dependiendo de la velocidad de descarga, la cantidad de tiempo que esto tomará variará. En aras de la brevedad, el gif siguiente se pausó durante parte de la instalación_).
 3. Ejecuta `cd hello-world`.
-4. Ejecuta `gatsby develop`.
+4. Ejecuta `npm run develop`.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="../../../../../docs/tutorial/part-zero/03-create-site.mp4"></source>
@@ -105,7 +105,7 @@ Ahora usemos la herramienta gatsby-cli para crear tu primer sitio de Gatsby. Con
 Que acaba de pasar?
 
 ```bash
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 - Comenzando con `gatsby` decimos, '¡oye, quiero usar la herramienta gatsby-cli!'
@@ -133,7 +133,7 @@ abre una nueva tab en tu navegador y dirígete a [**http://localhost:8000**](htt
 
 Felicidades! ¡Este es el comienzo de tu primer sitio de Gatsby! 🎉
 
-Podrás visitar el sitio localmente en [**_http://localhost:8000_**](http://localhost:8000/) mientras tu servidor de desarrollo se esté ejecutando. (Ese es el proceso que comenzó ejecutando el comando `gatsby develop`). Para detener la ejecución de ese proceso (o "dejar de ejecutar el servidor de desarrollo"), regresa a la ventana de tu terminal, manten presionada la tecla "control" y luego presiona "c" (ctrl-c). Para comenzar de nuevo, ejecuta `gatsby develop` otra vez!
+Podrás visitar el sitio localmente en [**_http://localhost:8000_**](http://localhost:8000/) mientras tu servidor de desarrollo se esté ejecutando. (Ese es el proceso que comenzó ejecutando el comando `npm run develop`). Para detener la ejecución de ese proceso (o "dejar de ejecutar el servidor de desarrollo"), regresa a la ventana de tu terminal, manten presionada la tecla "control" y luego presiona "c" (ctrl-c). Para comenzar de nuevo, ejecuta `npm run develop` otra vez!
 
 ## Configura un editor de código
 

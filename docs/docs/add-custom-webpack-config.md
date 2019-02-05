@@ -19,7 +19,7 @@ you to modify the default webpack config using
 Gatsby does multiple webpack builds with somewhat different configuration. We
 call each build type a "stage". The following stages exist:
 
-1.  develop: when running the `gatsby develop` command. Has configuration for hot
+1.  develop: when running the `npm run develop` command. Has configuration for hot
     reloading and CSS injection into page
 2.  develop-html: same as develop but without react-hmre in the babel config for
     rendering the HTML component.

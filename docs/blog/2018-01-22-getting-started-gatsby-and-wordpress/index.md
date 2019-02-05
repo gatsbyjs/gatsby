@@ -15,7 +15,7 @@ I recently decided to tackle a redo of my blog. I wanted to do something differ
 
 I generated a new site using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and read through what it gave me. Assuming you have the [Gatsby CLI](/docs/) installed, run:
 
-`gatsby new gatsby-example-site`
+`npx gatsby new gatsby-example-site`
 
 That gets us a new site directory with a couple (mostly) empty "gatsby"-prefixed files and a src directory with some basic scaffolding. The configuration and lifecycle hooks for Gatsby get put in those "gatsby"-prefixed files, `gatsby-config.js`, `gatsby-node.js` and `gatsby-browser.js`.
 
@@ -132,7 +132,7 @@ If you include the "optional GraphQL query" noted above, the result of that quer
 
 ##Onward
 
-While this isn't a tutorial -- more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup -- if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `gatsby develop`!
+While this isn't a tutorial -- more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup -- if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `npm run develop`!
 
 ##Sidenotes
 

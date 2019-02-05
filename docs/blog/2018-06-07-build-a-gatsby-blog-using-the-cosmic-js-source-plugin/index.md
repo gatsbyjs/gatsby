@@ -39,7 +39,7 @@ npm install --global gatsby-cli
 Create a new site based on the Gatsby Cosmic JS starter:
 
 ```bash
-gatsby new gatsby-blog-cosmicjs
+npx gatsby new gatsby-blog-cosmicjs
 ```
 
 Enter in your project's folder:
@@ -51,7 +51,7 @@ cd gatsby-blog-cosmicjs
 Start the server:
 
 ```bash
-gatsby develop
+npm run develop
 ```
 
 At this point, you can access your Gatsby website by visiting [http://localhost:8000](http://localhost:8000).

@@ -120,7 +120,7 @@ export const query = graphql`
 export default HomePage
 ```
 
-After restarting `gatsby develop`, your home page will now display "This is where I write my thoughts." from the description set in `gatsby-config.js`!
+After restarting `npm run develop`, your home page will now display "This is where I write my thoughts." from the description set in `gatsby-config.js`!
 
 ## How does the `graphql` tag work?
 

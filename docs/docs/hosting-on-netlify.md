@@ -29,7 +29,7 @@ Note that the development build is not optimized.
 To create a production build, use Gatsby build
 ```
 
-For the production build, we will need to run `gatsby build` command and Gatsby will generate our production site under `public` folder, it will contain css, js, images and html files.
+For the production build, we will need to run `npm run build` command and Gatsby will generate our production site under `public` folder, it will contain css, js, images and html files.
 
 ```shell
 gatsby build

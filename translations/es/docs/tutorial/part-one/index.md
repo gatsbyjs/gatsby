@@ -10,13 +10,13 @@ En la [**sección previa**](/tutorial/part-zero/), preparaste tu entorno de desa
 En el [**tutorial parte cero**](/tutorial/part-zero/), creaste un nuevo sitio basado en el inicio "hello world" utilizando el siguiente comando:
 
 ```bash
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Al crear un nuevo sitio de Gatsby, puedes usar la siguiente estructura de comando para crear un nuevo sitio basado en cualquier iniciador de Gatsby existente:
 
 ```bash
-gatsby new [NOMBRE_DEL_DIRECTORIO] [URL_DEL_REPO_INICIADOR]
+npx gatsby new [NOMBRE_DEL_DIRECTORIO] [URL_DEL_REPO_INICIADOR]
 ```
 
 > 💡 Ver una lista de los [**iniciadores oficiales y comunitarios**](/docs/gatsby-starters/)!
@@ -33,7 +33,7 @@ _Nota: Nuevamente, el editor que se muestra aquí es Visual Studio Code. Si usas
 
 Echemos un vistazo al código que impulsa la página de inicio.
 
-> 💡 Si detuvo su servidor de desarrollo después de ejecutar `gatsby develop` en la sección anterior, vuelva a iniciarlo ahora - ¡hora de realizar algunos cambios en el sitio de hello-world!
+> 💡 Si detuvo su servidor de desarrollo después de ejecutar `npm run develop` en la sección anterior, vuelva a iniciarlo ahora - ¡hora de realizar algunos cambios en el sitio de hello-world!
 
 ## Familiarizándose con las páginas de Gatsby
 
@@ -357,13 +357,13 @@ npm install --global surge
 surge
 ```
 
-A continuación, crea tu sitio ejecutando el siguiente comando en la terminal en la raíz de tu sitio (consejo: asegúrate de ejecutar este comando en la raíz de tu sitio, en este caso en la carpeta tutorial-part-one, puedes hacerlo abriendo una nueva pestaña en la misma ventana que usaste para ejecutar `gatsby develop`):
+A continuación, crea tu sitio ejecutando el siguiente comando en la terminal en la raíz de tu sitio (consejo: asegúrate de ejecutar este comando en la raíz de tu sitio, en este caso en la carpeta tutorial-part-one, puedes hacerlo abriendo una nueva pestaña en la misma ventana que usaste para ejecutar `npm run develop`):
 
 ```bash
 gatsby build
 ```
 
-La construcción debería tomar de 15 a 30 segundos. Una vez que la construcción finaliza, es interesante echar un vistazo a los archivos que el comando `gatsby build` acaba de preparar para implementar.
+La construcción debería tomar de 15 a 30 segundos. Una vez que la construcción finaliza, es interesante echar un vistazo a los archivos que el comando `npm run build` acaba de preparar para implementar.
 
 Echa un vistazo a la lista de archivos generados escribiendo el siguiente comando de terminal en la raíz de tu sitio, que te permitirá ver el directorio `public`:
 

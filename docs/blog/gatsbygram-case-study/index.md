@@ -554,7 +554,7 @@ node scrape.js INSTAGRAM_USERNAME
 # Start the Gatsby development server. The initial
 # run will take extra time as it processes
 # images the first time.
-gatsby develop
+npm run develop
 ```
 
 While writing this post I scraped a few accounts and published their resulting
