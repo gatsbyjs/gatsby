@@ -18,7 +18,7 @@ By default gatsby supports only 2 environments:
 - If you run `gatsby develop`, then you will be in the 'development' environment.
 - If you run `gatsby build` or `gatsby serve`, then you will be in the 'production' environment.
 
-If you want to define other environments then you'll need to do a little more work. See["Additional Environments" below](#additional-environments-staging-test-etc). You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
+If you want to define other environments then you'll need to do a little more work. See[ "Additional Environments" below](#additional-environments-staging-test-etc). You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
 ## Accessing Environment Variables in JavaScript
 
@@ -156,7 +156,8 @@ API_URL="http://foo.bar"
 ```
 
 ```javascript:title=gatsby-config.js
-let activeEnv = process.env.ACTIVE_ENV || process.env.NODE_ENV || "development"
+let activeEnv =
+  process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
 
 console.log(`Using environment config: '${activeEnv}'`)
 
@@ -191,5 +192,5 @@ This will then load the values from the relevant environment's `.env.*` file and
 Local testing of the `staging` environment can be done with:
 
 ```shell
-ACTIVE_ENV=staging gatsby develop
+GATSBY_ACTIVE_ENV=staging npm run develop
 ```
