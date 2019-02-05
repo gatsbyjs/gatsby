@@ -1,3 +1,4 @@
+const { execFileSync } = require(`child_process`)
 const execa = require(`execa`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
@@ -46,9 +47,11 @@ const cleanDirs = () =>
   ])
 
 describe(`Lazy images`, () => {
-  beforeAll(() =>
-    Promise.all([cleanDirs(), execa(`yarn`, [], { cwd: basePath })])
-  )
+  beforeAll(async () => {
+    await cleanDirs()
+
+    execFileSync(`yarn`, [], { cwd: basePath })
+  })
 
   test(`should process images on demand`, async () => {
     const { process: devProcess } = await bootDevelop()
