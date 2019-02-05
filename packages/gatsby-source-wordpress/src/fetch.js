@@ -625,7 +625,7 @@ function getValidRoutes({
  */
 const getRawEntityType = (route, _allRoutes) => {
   let link = route._links.self
-  let entityType;
+  let entityType
   let customRoute = _.filter(_allRoutes, r =>
     link.includes(r.namespace + r.endpoint)
   )
