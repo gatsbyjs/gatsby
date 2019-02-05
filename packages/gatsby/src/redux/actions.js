@@ -7,9 +7,10 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
-const { hasNodeChanged, getNode } = require(`./index`)
-const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
+const { hasNodeChanged, getNode } = require(`../db/nodes`)
+const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
@@ -86,7 +87,7 @@ const fileOkCache = {}
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
- * for detailed documenation about creating pages.
+ * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
@@ -136,7 +137,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorName`,
+      `pluginCreatorId`,
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -212,12 +213,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (noPageOrComponent) {
-    console.log(``)
-    console.log(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+    report.panic(
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
     )
-    console.log(``)
-    process.exit(1)
   }
 
   let jsonName
@@ -268,7 +266,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     if (
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
-      !fileContent.includes(`exports.default`)
+      !fileContent.includes(`exports.default`) &&
+      // this check only applies to js and ts, not mdx
+      /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
       includesDefaultExport = false
     }
@@ -279,33 +279,29 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
         )
-        console.log(``)
-        // TODO actually do die during builds.
-        // process.exit(1)
       }
 
       if (!includesDefaultExport) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `[${fileName}] The page component must export a React component for it to be valid`
         )
-        console.log(``)
       }
-
-      // TODO actually do die during builds.
-      // process.exit(1)
     }
 
     fileOkCache[internalPage.component] = true
   }
 
+  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const contextModified =
+    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
+    contextModified,
     plugin,
     payload: internalPage,
   }
@@ -493,13 +489,12 @@ actions.createNode = (
 
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
-    console.log(JSON.stringify(node, null, 4))
-    console.log(
+    report.error(JSON.stringify(node, null, 4))
+    report.panic(
       chalk.bold.red(
         `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
-    process.exit(1)
   }
 
   // Add the plugin name to the internal object.
@@ -611,6 +606,7 @@ actions.createNode = (
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
+      oldNode,
       ...actionOptions,
       payload: node,
     }
@@ -890,7 +886,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
- * @param {Object} config An options object in the shape of a normal babelrc javascript object
+ * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
  * @example
  * setBabelOptions({
  *   options: {
@@ -1099,13 +1095,20 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
+  // Parse urls to get their protocols
+  // url.parse will not cover protocol-relative urls so do a separate check for those
+  const parsed = url.parse(toPath)
+  const isRelativeProtocol = toPath.startsWith(`//`)
+  const toPathPrefix =
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+
   return {
     type: `CREATE_REDIRECT`,
     payload: {
       fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
       redirectInBrowser,
-      toPath: `${pathPrefix}${toPath}`,
+      toPath: `${toPathPrefix}${toPath}`,
       ...rest,
     },
   }

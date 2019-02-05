@@ -1,5 +1,5 @@
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
@@ -15,38 +15,37 @@ import docsHierarchy from "../data/sidebars/doc-links.yaml"
 // Find the guides in the sidebar YAML.
 const guides = docsHierarchy.find(group => group.title === `Guides`).items
 
-// Finds child items for a given guide overview page using its slug.
-const getChildGuides = slug => guides.find(guide => guide.link === slug).items
+// Search through guides tree, which may be 2, 3 or more levels deep
+const childItemsBySlug = (guides, slug) => {
+  let result
 
-// Create a table of contents from the child guides.
-const createGuideList = guides =>
-  guides
-    .map(guide => `<li><a href="${guide.link}">${guide.title}</a></li>`)
-    .join(``)
+  const iter = a => {
+    if (a.link === slug) {
+      result = a
+      return true
+    }
+    return Array.isArray(a.items) && a.items.some(iter)
+  }
+
+  guides.some(iter)
+  return result && result.items
+}
 
 const getPageHTML = page => {
   if (!page.frontmatter.overview) {
     return page.html
   }
 
-  // Ugh. This is gross and I want to make it less gross.
-  let guides
-  if (page.fields.slug !== `/docs/headless-cms/`) {
-    // Normally, we’re pulling from the top level of guides.
-    guides = getChildGuides(page.fields.slug)
-  } else {
-    // For the Headless CMS section, we need to dig into sub-items.
-    // This is hard-coded and fragile and I hate it and I’m sorry.
-    guides = getChildGuides(`/docs/content-and-data/`).find(
-      guide => guide.link === page.fields.slug
-    ).items
-  }
-
-  const guideList = createGuideList(guides)
-  const toc = `
+  const guidesForPage = childItemsBySlug(guides, page.fields.slug) || []
+  const guideList = guidesForPage
+    .map(guide => `<li><a href="${guide.link}">${guide.title}</a></li>`)
+    .join(``)
+  const toc = guideList
+    ? `
     <h2>Guides in this section:</h2>
     <ul>${guideList}</ul>
   `
+    : ``
 
   // This is probably a capital offense in Reactland. 😱😱😱
   return page.html.replace(`[[guidelist]]`, toc)
@@ -63,10 +62,10 @@ class DocsTemplate extends React.Component {
         <Helmet>
           <title>{page.frontmatter.title}</title>
           <meta name="description" content={page.excerpt} />
-          <meta name="og:description" content={page.excerpt} />
+          <meta property="og:description" content={page.excerpt} />
+          <meta property="og:title" content={page.frontmatter.title} />
+          <meta property="og:type" content="article" />
           <meta name="twitter:description" content={page.excerpt} />
-          <meta name="og:title" content={page.frontmatter.title} />
-          <meta name="og:type" content="article" />
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
         </Helmet>
@@ -88,6 +87,15 @@ class DocsTemplate extends React.Component {
                   __html: html,
                 }}
               />
+              {page.frontmatter.issue && (
+                <a
+                  href={page.frontmatter.issue}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See the issue relating to this stub on GitHub
+                </a>
+              )}
               <MarkdownPageFooter page={page} />
             </Container>
           </DocSearchContent>
@@ -112,6 +120,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         overview
+        issue
       }
       ...MarkdownPageFooter
     }

@@ -57,9 +57,7 @@ const Navigation = ({ pathname }) => {
   )
 
   return (
-    <div
-      role="navigation"
-      className="navigation"
+    <header
       css={{
         backgroundColor: isHomepage ? `transparent` : `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : `relative`,
@@ -73,7 +71,7 @@ const Navigation = ({ pathname }) => {
           : presets.bannerHeight,
         zIndex: 2,
         "&:after": {
-          content: ` `,
+          content: `''`,
           position: `absolute`,
           bottom: 0,
           left: 0,
@@ -86,7 +84,7 @@ const Navigation = ({ pathname }) => {
         // use this to test if the header items are properly aligned to the logo
         // wordmark
         // "&:before": {
-        //   content: ` `,
+        //   content: `''`,
         //   position: `absolute`,
         //   bottom: `1.25rem`,
         //   left: 0,
@@ -100,6 +98,8 @@ const Navigation = ({ pathname }) => {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.ui.whisper : false,
         },
+        paddingLeft: `env(safe-area-inset-left)`,
+        paddingRight: `env(safe-area-inset-right)`,
       }}
     >
       <div
@@ -125,28 +125,41 @@ const Navigation = ({ pathname }) => {
             : {}),
         }}
       >
-        <Link to="/" css={styles.logoLink} aria-label="Go to homepage">
-          <img src={logo} css={styles.logo} alt="Gatsby logo" />
+        <Link
+          to="/"
+          css={styles.logoLink}
+          aria-label="Gatsby, Back to homepage"
+        >
+          <img
+            src={logo}
+            css={styles.logo}
+            alt="Gatsby Logo"
+            aria-hidden="true"
+          />
         </Link>
-        <ul css={styles.navContainer}>
-          <NavItem linkTo="/docs/">Docs</NavItem>
-          <NavItem linkTo="/tutorial/">Tutorial</NavItem>
-          <NavItem linkTo="/plugins/">Plugins</NavItem>
-          <NavItem linkTo="/features/">Features</NavItem>
-          <NavItem linkTo="/blog/">Blog</NavItem>
-          <NavItem linkTo="/showcase/">Showcase</NavItem>
-          {false ? (
-            <li css={styles.li}>
-              <Link
-                to="/community/"
-                css={styles.navItem}
-                state={{ filter: `` }}
-              >
-                Community
-              </Link>
-            </li>
-          ) : null}
-        </ul>
+        <nav
+          className="navigation"
+          aria-label="Primary Navigation"
+          css={styles.navContainer}
+        >
+          <ul css={styles.ulContainer}>
+            <NavItem linkTo="/docs/">Docs</NavItem>
+            <NavItem linkTo="/tutorial/">Tutorial</NavItem>
+            <NavItem linkTo="/plugins/">Plugins</NavItem>
+            <NavItem linkTo="/features/">Features</NavItem>
+            <NavItem linkTo="/blog/">Blog</NavItem>
+            <NavItem linkTo="/showcase/">Showcase</NavItem>
+            {/* <li css={styles.li}>
+                <Link
+                  to="/community/"
+                  css={styles.navItem}
+                  state={{ filter: `` }}
+                >
+                  Community
+                </Link>
+              </li> */}
+          </ul>
+        </nav>
         <div css={styles.searchAndSocialContainer}>
           <SearchForm
             key="SearchForm"
@@ -167,10 +180,7 @@ const Navigation = ({ pathname }) => {
               [presets.Hd]: { display: `flex` },
             }}
           >
-            <SocialNavItem
-              href="https://discord.gg/0ZcbPKXt5bVoxkfV"
-              title="Discord"
-            >
+            <SocialNavItem href="https://gatsby.app/discord" title="Discord">
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
             <SocialNavItem
@@ -189,7 +199,7 @@ const Navigation = ({ pathname }) => {
           </SocialNavItem>
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 
@@ -201,6 +211,13 @@ const styles = {
     marginRight: navItemHorizontalSpacing,
   },
   navContainer: {
+    display: `none`,
+    [presets.Tablet]: {
+      alignSelf: `flex-end`,
+      display: `flex`,
+    },
+  },
+  ulContainer: {
     display: `none`,
     [presets.Tablet]: {
       alignSelf: `flex-end`,
@@ -231,6 +248,7 @@ const styles = {
     color: `inherit`,
     display: `block`,
     letterSpacing: `0.03em`,
+    WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,

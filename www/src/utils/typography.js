@@ -22,7 +22,6 @@ const _options = {
   headerFontFamily,
   bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
   monospaceFontFamily: [
-    `Space Mono`,
     `SFMono-Regular`,
     `Menlo`,
     `Monaco`,
@@ -88,22 +87,26 @@ const _options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
+      "tt, code, kbd, samp": {
+        // reset line-height: 1.4rem set by
+        // https://github.com/KyleAMathews/typography.js/blob/3c99e905414d19cda124a7baabeb7a99295fec79/packages/typography/src/utils/createStyles.js#L198
+        lineHeight: `inherit`,
+      },
       "tt, code, kbd": {
-        background: colors.code.bg,
-        paddingTop: `0.1em`,
-        paddingBottom: `0.1em`,
+        background: colors.code.bgInline,
+        paddingTop: `0.2em`,
+        paddingBottom: `0.2em`,
       },
       "tt, code, kbd, .gatsby-code-title": {
         fontFamily: options.monospaceFontFamily.join(`,`),
         fontSize: `80%`,
-        // Disable ligatures as they look funny w/ Space Mono as code.
+        // Disable ligatures as they look funny as code.
         fontVariant: `none`,
         WebkitFontFeatureSettings: `"clig" 0, "calt" 0`,
         fontFeatureSettings: `"clig" 0, "calt" 0`,
       },
       ".gatsby-highlight": {
         background: colors.code.bg,
-        boxShadow: `inset 0 0 0 1px ${colors.code.border}`,
         borderRadius: `${presets.radius}px`,
         padding: rhythm(options.blockMarginBottom),
         marginBottom: rhythm(options.blockMarginBottom),
@@ -121,10 +124,88 @@ const _options = {
         minWidth: `100%`,
         overflow: `initial`,
       },
+      ".gatsby-highlight pre[class*='language-']::before": {
+        position: `absolute`,
+        top: `0px`,
+        right: `20px`,
+        padding: `3px 10px`,
+        fontSize: `12px`,
+        textAlign: `right`,
+        color: `#444`,
+        fontWeight: `700`,
+        letterSpacing: `0.8px`,
+        textTransform: `uppercase`,
+        borderRadius: `0 0 5px 5px`,
+        background: `#ddd`,
+      },
+      ".gatsby-highlight pre[class='language-javascript']::before": {
+        content: `'js'`,
+        background: `#f7df1e`,
+      },
+      ".gatsby-highlight pre[class='language-js']::before": {
+        content: `'js'`,
+        background: `#f7df1e`,
+      },
+      ".gatsby-highlight pre[class='language-jsx']::before": {
+        content: `'jsx'`,
+        background: `#61dafb`,
+      },
+      ".gatsby-highlight pre[class='language-graphql']::before": {
+        content: `'GraphQL'`,
+        background: `#E10098`,
+        color: `#fff`,
+        fontWeight: `400`,
+      },
+      ".gatsby-highlight pre[class='language-html']::before": {
+        content: `'html'`,
+        background: `#005A9C`,
+        color: `#fff`,
+        fontWeight: `400`,
+      },
+      ".gatsby-highlight pre[class='language-css']::before": {
+        content: `'css'`,
+        background: `#ff9800`,
+        color: `#fff`,
+        fontWeight: `400`,
+      },
+      ".gatsby-highlight pre[class='language-shell']::before": {
+        content: `'shell'`,
+      },
+      ".gatsby-highlight pre[class='language-sh']::before": {
+        content: `'sh'`,
+      },
+      ".gatsby-highlight pre[class='language-bash']::before": {
+        content: `'bash'`,
+      },
+      ".gatsby-highlight pre[class='language-yaml']::before": {
+        content: `'yaml'`,
+        background: `#ffa8df`,
+      },
+      ".gatsby-highlight pre[class='language-markdown']::before": {
+        content: `'md'`,
+      },
+      ".gatsby-highlight pre[class='language-json']::before, .gatsby-highlight pre[class='language-json5']::before": {
+        content: `'json'`,
+        background: `linen`,
+      },
+      ".gatsby-highlight pre[class='language-diff']::before": {
+        content: `'diff'`,
+        background: `#e6ffed`,
+      },
+      ".gatsby-highlight pre[class='language-text']::before": {
+        content: `'text'`,
+        background: `#fff`,
+      },
+      ".gatsby-highlight pre[class='language-flow']::before": {
+        content: `'flow'`,
+        background: `#E8BD36`,
+      },
       ".gatsby-highlight pre code": {
         display: `block`,
-        fontSize: `95%`,
-        lineHeight: options.baseLineHeight,
+        fontSize: `94%`,
+        lineHeight: 1.5,
+        // reset code vertical padding declared earlier
+        padding: 0,
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
@@ -225,25 +306,20 @@ const _options = {
       },
       ".gatsby-code-title": {
         background: colors.code.bg,
-        border: `1px solid ${colors.code.border}`,
-        borderBottomWidth: 0,
+        borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
         marginLeft: rhythm(-options.blockMarginBottom),
         marginRight: rhythm(-options.blockMarginBottom),
-        padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
+        padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
           options.blockMarginBottom
-        )}`,
+        )} ${rhythm(options.blockMarginBottom / 2)}`,
+        fontSize: `74%`,
       },
       "@media (max-width:634px)": {
         ".gatsby-highlight, .gatsby-resp-image-link": {
           borderRadius: 0,
           borderLeft: 0,
           borderRight: 0,
-        },
-        ".gatsby-highlight": {
-          boxShadow: `inset 0 1px 0 0 ${colors.code.border}, inset 0 -1px 0 0 ${
-            colors.code.border
-          }`,
         },
       },
       video: {
@@ -287,9 +363,9 @@ const _options = {
           )}`,
         },
         ".gatsby-code-title": {
-          padding: `${rhythm(options.blockMarginBottom / 2)} ${rhythm(
+          padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
             options.blockMarginBottom * 1.5
-          )}`,
+          )} ${rhythm(options.blockMarginBottom / 2)}`,
         },
       },
       [presets.VVHd]: {

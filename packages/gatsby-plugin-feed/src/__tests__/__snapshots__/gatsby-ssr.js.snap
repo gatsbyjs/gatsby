@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Adds <Link> for feed to head creates Link href with path prefix when __PATH_PREFIX__ sets 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/hogwarts/gryffindor/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+        <link
+          href="/hogwarts/ravenclaw/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Adds <Link> for feed to head creates Link if feeds does exist 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Adds <Link> for feed to head creates Link with a title if it does exist 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/gryffindor/feed.xml"
+          rel="alternate"
+          title="Gryffindor's RSS Feed"
+          type="application/rss+xml"
+        />,
+        <link
+          href="/ravenclaw/feed.xml"
+          rel="alternate"
+          title="Ravenclaw's RSS Feed"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Adds <Link> for feed to head creates multiple Link if feeds are several 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/gryffindor/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+        <link
+          href="/ravenclaw/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

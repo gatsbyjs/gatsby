@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.9...gatsby-plugin-canonical-urls@2.0.10) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.8...gatsby-plugin-canonical-urls@2.0.9) (2019-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.7...gatsby-plugin-canonical-urls@2.0.8) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.6...gatsby-plugin-canonical-urls@2.0.7) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.5...gatsby-plugin-canonical-urls@2.0.6) (2018-10-01)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
 <a name="2.0.5"></a>
 
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.0-rc.2...gatsby-plugin-canonical-urls@2.0.5) (2018-09-17)

@@ -30,7 +30,7 @@ const ShowcaseItemCategories = ({ categories, onClickHandler, showcase }) => {
       <LinkComponent
         css={{
           "&&": {
-            color: colors.gray.bright,
+            color: colors.gray.calm,
             fontWeight: `normal`,
             borderBottom: `none`,
             boxShadow: `none`,

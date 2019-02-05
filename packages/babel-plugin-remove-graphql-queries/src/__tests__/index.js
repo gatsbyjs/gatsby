@@ -1,4 +1,4 @@
-const babel = require(`babel-core`)
+const babel = require(`@babel/core`)
 const plugin = require(`../`)
 
 function matchesSnapshot(query) {
@@ -29,6 +29,22 @@ it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
   import { graphql, StaticQuery } from 'gatsby'
 
   const query = graphql\`{site { siteMetadata { title }}}\`
+
+  export default () => (
+    <StaticQuery
+      query={query}
+      render={data => <div>{data.site.siteMetadata.title}</div>}
+    />
+  )
+  `)
+})
+
+it(`transforms exported variable queries in <StaticQuery>`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, StaticQuery } from 'gatsby'
+
+  export const query = graphql\`{site { siteMetadata { title }}}\`
 
   export default () => (
     <StaticQuery

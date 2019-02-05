@@ -8,9 +8,13 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-transformer-remark": "^2.1.1-beta.2",
+    "gatsby": "^2.0.9",
+    "gatsby-transformer-remark": "^2.1.4",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "gray-matter": "^4.0.1"
   }
 }

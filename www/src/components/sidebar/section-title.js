@@ -191,7 +191,7 @@ const styles = {
   ulHorizontalDivider: {
     background: colors.ui.border,
     top: 0,
-    content: ` `,
+    content: `''`,
     height: 1,
     position: `absolute`,
     right: 0,

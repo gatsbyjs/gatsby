@@ -32,7 +32,7 @@ class StickyResponsiveSidebar extends Component {
     } = this.props
     const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
 
-    const iconOffset = open ? 8 : -4
+    const iconOffset = open ? 5 : -5
     const menuOpacity = open ? 1 : 0
     const menuOffset = open ? 0 : rhythm(10)
 
@@ -69,20 +69,24 @@ class StickyResponsiveSidebar extends Component {
           css={{ ...styles.sidebarToggleButton }}
           onClick={this._openSidebar}
           role="button"
+          aria-label="Show Secondary Navigation"
+          aria-controls="SecondaryNavigation"
+          aria-expanded={open ? `true` : `false`}
           tabIndex={0}
         >
           <div css={{ ...styles.sidebarToggleButtonInner }}>
             <ChevronSvg
               size={15}
               cssProps={{
-                transform: `translate(2px, ${iconOffset}px) rotate(180deg)`,
+                transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
                 transition: `transform 0.2s ease`,
               }}
             />
             <ChevronSvg
               size={15}
               cssProps={{
-                transform: `translate(2px, ${0 - iconOffset}px)`,
+                transform: `translate(${5 -
+                  iconOffset}px, -5px) rotate(270deg)`,
                 transition: `transform 0.2s ease`,
               }}
             />

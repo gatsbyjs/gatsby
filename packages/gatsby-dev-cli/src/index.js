@@ -4,6 +4,7 @@ const Configstore = require(`configstore`)
 const pkg = require(`../package.json`)
 const _ = require(`lodash`)
 const path = require(`path`)
+const os = require(`os`)
 const watch = require(`./watch`)
 
 const argv = require(`yargs`)
@@ -23,12 +24,14 @@ You typically only need to configure this once.`
   )
   .alias(`C`, `copy-all`)
   .nargs(`C`, 0)
-  .describe(`C`, `Copy all contents in packages/ instead of just gatsby packages`)
+  .describe(
+    `C`,
+    `Copy all contents in packages/ instead of just gatsby packages`
+  )
   .array(`packages`)
   .describe(`packages`, `Explicitly specify packages to copy`)
   .help(`h`)
-  .alias(`h`, `help`)
-  .argv
+  .alias(`h`, `help`).argv
 
 const conf = new Configstore(pkg.name)
 
@@ -40,9 +43,12 @@ if (!havePackageJsonFile) {
   process.exit()
 }
 
-const pathToRepo = argv.setPathToRepo
+let pathToRepo = argv.setPathToRepo
+
 if (pathToRepo) {
-  console.log(`Saving path to your Gatsby repo`)
+  if (pathToRepo.includes(`~`)) {
+    pathToRepo = path.join(os.homedir(), pathToRepo.split(`~`).pop())
+  }
   conf.set(`gatsby-location`, path.resolve(pathToRepo))
   process.exit()
 }
@@ -69,8 +75,12 @@ let packages = Object.keys(
 if (argv.copyAll) {
   packages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
 } else {
-  const { dependencies } = JSON.parse(fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`)))
-  packages = packages.concat(Object.keys(dependencies)).filter(p => p.startsWith(`gatsby`))
+  const { dependencies } = JSON.parse(
+    fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`))
+  )
+  packages = packages
+    .concat(Object.keys(dependencies))
+    .filter(p => p.startsWith(`gatsby`))
 }
 
 if (!argv.packages && _.isEmpty(packages)) {

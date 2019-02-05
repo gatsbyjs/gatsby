@@ -3,7 +3,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
-import CtaButton from "./cta-button"
+import Button from "./button"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import Slider from "./slider"
 
@@ -98,15 +98,11 @@ const MastheadContent = () => (
             color={colors.lilac}
           />
         </span>
-        websites with React
+        apps and websites with React
       </h1>
-      <CtaButton to="/docs/">
-        <span css={{ verticalAlign: `middle` }}>Get Started</span>
-        {` `}
-        <ArrowForwardIcon
-          css={{ verticalAlign: `baseline`, marginLeft: `.2em` }}
-        />
-      </CtaButton>
+      <Button large to="/docs/" icon={<ArrowForwardIcon />}>
+        Get Started
+      </Button>
     </div>
   </div>
 )

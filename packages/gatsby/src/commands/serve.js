@@ -1,10 +1,11 @@
 /* @flow weak */
-const openurl = require(`opn`)
+const openurl = require(`better-opn`)
 const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
+const chalk = require(`chalk`)
 
 module.exports = async program => {
   let { prefixPaths, port, open } = program
@@ -32,10 +33,20 @@ module.exports = async program => {
 
   const server = app.listen(port, () => {
     let openUrlString = `http://localhost:${port}${pathPrefix}`
-    console.log(`gatsby serve running at:`, openUrlString)
+    console.log(
+      `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
+        openUrlString
+      )}`
+    )
     if (open) {
-      console.log(`Opening browser...`)
-      openurl(openUrlString)
+      console.log(`${chalk.blue(`info`)} Opening browser...`)
+      Promise.resolve(openurl(openUrlString)).catch(err =>
+        console.log(
+          `${chalk.yellow(
+            `warn`
+          )} Browser not opened because no browser was found`
+        )
+      )
     }
   })
 

@@ -1,8 +1,13 @@
+require(`dotenv`).config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby`,
+    title: `GatsbyJS`,
     siteUrl: `https://www.gatsbyjs.org`,
     description: `Blazing fast modern site generator for React`,
+    twitter: `@gatsbyjs`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -31,16 +36,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `StarterShowcaseImages`,
-        path: `${__dirname}/src/data/StarterShowcase/generatedScreenshots`,
-      },
-    },
-    //   need to have the img processing first? https://github.com/gatsbyjs/gatsby/issues/5196
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `StarterShowcaseData`,
-        path: `${__dirname}/src/data/StarterShowcase/startersData`,
+        name: `ecosystem`,
+        path: `${__dirname}/src/data/ecosystem/`,
       },
     },
     {
@@ -51,6 +48,12 @@ module.exports = {
     },
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/data/diagram`,
+      },
+    },
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -84,10 +87,11 @@ module.exports = {
         showSpinner: false,
       },
     },
-    `gatsby-plugin-glamor`,
+    `gatsby-plugin-emotion`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
+    `gatsby-plugin-layout`,
     `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
@@ -183,7 +187,12 @@ module.exports = {
         endpoint: `https://gatsbyjs.us17.list-manage.com/subscribe/post?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`,
       },
     },
-    `gatsby-transformer-screenshot`,
+    {
+      resolve: `gatsby-transformer-screenshot`,
+      options: {
+        nodeTypes: [`StartersYaml`],
+      },
+    },
     `gatsby-plugin-subfont`,
     // {
     // resolve: `gatsby-plugin-guess-js`,

@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.11...gatsby-plugin-netlify-cms@3.0.12) (2019-01-31)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [3.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.10...gatsby-plugin-netlify-cms@3.0.11) (2019-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** exclude gatsby-webpack-stats-extractor from being called ([#11288](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/11288)) ([658e6d5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/658e6d5))
+
+<a name="3.0.10"></a>
+
+## [3.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.9...gatsby-plugin-netlify-cms@3.0.10) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.9"></a>
+
+## [3.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.8...gatsby-plugin-netlify-cms@3.0.9) (2018-11-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** dynamically import netlify-identity-widget ([#9565](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/9565)) ([49100e9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/49100e9))
+
+<a name="3.0.8"></a>
+
+## [3.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.7...gatsby-plugin-netlify-cms@3.0.8) (2018-11-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** fix uglify webpack plugin check ([#10150](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/10150)) ([b1101f5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/b1101f5)), closes [#10067](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/10067) [#10149](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/10149)
+
+<a name="3.0.7"></a>
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.6...gatsby-plugin-netlify-cms@3.0.7) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.6"></a>
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.5...gatsby-plugin-netlify-cms@3.0.6) (2018-11-06)
+
+### Bug Fixes
+
+- revert admin redirect ([#9728](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/9728)) ([88a671a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/88a671a))
+
+<a name="3.0.5"></a>
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.4...gatsby-plugin-netlify-cms@3.0.5) (2018-10-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** automatic redirect ([#9269](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/9269)) ([c6dce1c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/c6dce1c))
+
+<a name="3.0.4"></a>
+
+## [3.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.3...gatsby-plugin-netlify-cms@3.0.4) (2018-10-18)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+<a name="3.0.3"></a>
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.2...gatsby-plugin-netlify-cms@3.0.3) (2018-09-24)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** ensure login listener is added after logout ([9b1a2e7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/9b1a2e7))
+
 <a name="3.0.2"></a>
 
 ## [3.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.1...gatsby-plugin-netlify-cms@3.0.2) (2018-09-18)

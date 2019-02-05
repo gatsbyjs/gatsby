@@ -31,9 +31,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
     ...pluginOptions,
   }
 
-  if (`query` in options) {
-    options.query = await runQuery(graphql, options.query)
-  }
+  options.query = await runQuery(graphql, options.query)
 
   for (let f of options.feeds) {
     if (f.query) {

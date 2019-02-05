@@ -1,10 +1,10 @@
-const crypto = require(`crypto`)
 const axios = require(`axios`)
 const Queue = require(`better-queue`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
 const LAMBDA_CONCURRENCY_LIMIT = 50
+const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
 
 const screenshotQueue = new Queue(
   (input, cb) => {
@@ -12,23 +12,15 @@ const screenshotQueue = new Queue(
       .then(r => cb(null, r))
       .catch(e => cb(e))
   },
-  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 10, retryDelay: 1000 }
+  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 }
 )
 
-const createContentDigest = obj =>
-  crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(obj))
-    .digest(`hex`)
-
 exports.onPreBootstrap = (
-  { store, cache, actions, createNodeId, getNodes },
+  { store, cache, actions, createNodeId, getNodesByType, createContentDigest },
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions
-  const screenshotNodes = getNodes().filter(
-    n => n.internal.type === `Screenshot`
-  )
+  const screenshotNodes = getNodesByType(`Screenshot`)
 
   if (screenshotNodes.length === 0) {
     return null
@@ -36,10 +28,13 @@ exports.onPreBootstrap = (
 
   let anyQueued = false
 
-  // Check for updated screenshots
+  // Check for updated screenshots and placeholder flag
   // and prevent Gatsby from garbage collecting remote file nodes
   screenshotNodes.forEach(n => {
-    if (n.expires && new Date() >= new Date(n.expires)) {
+    if (
+      (n.expires && new Date() >= new Date(n.expires)) ||
+      USE_PLACEHOLDER_IMAGE !== n.usingPlaceholder
+    ) {
       anyQueued = true
       // Screenshot expired, re-run Lambda
       screenshotQueue.push({
@@ -49,6 +44,7 @@ exports.onPreBootstrap = (
         cache,
         createNode,
         createNodeId,
+        createContentDigest,
       })
     } else {
       // Screenshot hasn't yet expired, touch the image node
@@ -69,7 +65,7 @@ exports.onPreBootstrap = (
 }
 
 exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId },
+  { node, actions, store, cache, createNodeId, createContentDigest },
   pluginOptions
 ) => {
   const { createNode, createParentChildLink } = actions
@@ -83,28 +79,33 @@ exports.onCreateNode = async (
     return
   }
 
-  const screenshotNode = await new Promise((resolve, reject) => {
-    screenshotQueue
-      .push({
-        url: node.url,
-        parent: node.id,
-        store,
-        cache,
-        createNode,
-        createNodeId,
-      })
-      .on(`finish`, r => {
-        resolve(r)
-      })
-      .on(`failed`, e => {
-        reject(e)
-      })
-  })
+  try {
+    const screenshotNode = await new Promise((resolve, reject) => {
+      screenshotQueue
+        .push({
+          url: node.url,
+          parent: node.id,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+          createContentDigest,
+        })
+        .on(`finish`, r => {
+          resolve(r)
+        })
+        .on(`failed`, e => {
+          reject(e)
+        })
+    })
 
-  createParentChildLink({
-    parent: node,
-    child: screenshotNode,
-  })
+    createParentChildLink({
+      parent: node,
+      child: screenshotNode,
+    })
+  } catch (e) {
+    return
+  }
 }
 
 const createScreenshotNode = async ({
@@ -114,32 +115,45 @@ const createScreenshotNode = async ({
   cache,
   createNode,
   createNodeId,
+  createContentDigest,
 }) => {
   try {
-    const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
+    let fileNode, expires
+    if (USE_PLACEHOLDER_IMAGE) {
+      const getPlaceholderFileNode = require(`./placeholder-file-node`)
+      fileNode = await getPlaceholderFileNode({
+        createNode,
+        createNodeId,
+      })
+      expires = new Date(2999, 1, 1).getTime()
+    } else {
+      const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
 
-    const fileNode = await createRemoteFileNode({
-      url: screenshotResponse.data.url,
-      store,
-      cache,
-      createNode,
-      createNodeId,
-    })
+      fileNode = await createRemoteFileNode({
+        url: screenshotResponse.data.url,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+      })
+      expires = screenshotResponse.data.expires
 
-    if (!fileNode) {
-      throw new Error(`Remote file node is null`, screenshotResponse.data.url)
+      if (!fileNode) {
+        throw new Error(`Remote file node is null`, screenshotResponse.data.url)
+      }
     }
 
     const screenshotNode = {
       id: createNodeId(`${parent} >>> Screenshot`),
       url,
-      expires: screenshotResponse.data.expires,
+      expires,
       parent,
       children: [],
       internal: {
         type: `Screenshot`,
       },
       screenshotFile___NODE: fileNode.id,
+      usingPlaceholder: USE_PLACEHOLDER_IMAGE,
     }
 
     screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)

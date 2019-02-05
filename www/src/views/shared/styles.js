@@ -1,12 +1,11 @@
 import typography, { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
-import { style } from "glamor"
 import hex2rgba from "hex2rgba"
 
 const { curveDefault, speedDefault } = presets.animation
 
 const styles = {
-  featuredSitesCard: style({
+  featuredSitesCard: {
     display: `flex`,
     flexDirection: `column`,
     flexGrow: 0,
@@ -21,7 +20,7 @@ const styles = {
     [presets.VHd]: {
       width: 400,
     },
-  }),
+  },
   showcaseList: {
     display: `flex`,
     flexWrap: `wrap`,
@@ -65,7 +64,7 @@ const styles = {
     margin: `0 auto`,
     display: `block`,
   },
-  withTitleHover: style({
+  withTitleHover: {
     "& .title": {
       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
       boxShadow: `inset 0 0px 0px 0px ${colors.ui.whisper}`,
@@ -73,31 +72,12 @@ const styles = {
     "&:hover .title": {
       boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
     },
-  }),
-  button: {
-    border: 0,
-    borderRadius: presets.radius,
-    cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
-    fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-    WebkitFontSmoothing: `antialiased`,
-    "&&": {
-      backgroundColor: colors.gatsby,
-      borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
-    },
   },
   loadMoreButton: {
     alignItems: `center`,
     display: `flex`,
     flexFlow: `row wrap`,
     margin: `0 auto ${rhythm(3)}`,
-    padding: `${rhythm(1 / 3)} ${rhythm(3)}`,
     [presets.Desktop]: {
       margin: `0 auto ${rhythm(2 / 2)}`,
     },
@@ -127,7 +107,7 @@ const styles = {
       background: colors.ui.bright,
     },
     "&::-webkit-scrollbar-track": {
-      background: colors.ui.light,
+      background: colors.ui.whisper,
     },
   },
   screenshot: {
@@ -160,7 +140,7 @@ const styles = {
     },
   },
   meta: {
-    ...scale(-1 / 5),
+    ...scale(-1 / 4),
     alignItems: `baseline`,
     "&&": {
       color: colors.gray.bright,
@@ -189,6 +169,101 @@ const styles = {
       background: colors.ui.light,
     },
   },
+  filterButton: {
+    ...scale(-2 / 10),
+    [presets.Tablet]: {
+      ...scale(-4 / 10),
+    },
+    margin: 0,
+    alignItems: `flex-start`,
+    background: `none`,
+    border: `none`,
+    color: colors.gray.text,
+    cursor: `pointer`,
+    display: `flex`,
+    fontFamily: options.systemFontFamily.join(`,`),
+    justifyContent: `space-between`,
+    outline: `none`,
+    padding: 0,
+    paddingRight: rhythm(1),
+    paddingBottom: rhythm(options.blockMarginBottom / 8),
+    paddingTop: rhythm(options.blockMarginBottom / 8),
+    width: `100%`,
+    textAlign: `left`,
+    ":hover": {
+      color: colors.gatsby,
+    },
+  },
+  filterCount: {
+    color: colors.gray.bright,
+  },
+  sidebarHeader: {
+    margin: 0,
+    [presets.Desktop]: {
+      ...scale(1 / 8),
+      // display: `flex`,
+      display: `none`,
+      borderBottom: `1px solid ${colors.ui.light}`,
+      color: colors.gray.calm,
+      fontWeight: `normal`,
+      flexShrink: 0,
+      lineHeight: 1,
+      height: presets.headerHeight,
+      margin: 0,
+      paddingLeft: rhythm(3 / 4),
+      paddingRight: rhythm(3 / 4),
+      paddingTop: rhythm(options.blockMarginBottom),
+      paddingBottom: rhythm(options.blockMarginBottom),
+    },
+  },
+  sidebarBody: {
+    paddingLeft: rhythm(3 / 4),
+    height: `calc(100vh - ((${presets.headerHeight}) + ${
+      presets.bannerHeight
+    }))`,
+    display: `flex`,
+    flexDirection: `column`,
+  },
+  sidebarContainer: {
+    display: `none`,
+    [presets.Desktop]: {
+      // background: colors.ui.whisper,
+      display: `block`,
+      flexBasis: `15rem`,
+      minWidth: `15rem`,
+      paddingTop: 0,
+      borderRight: `1px solid ${colors.ui.light}`,
+      height: `calc(100vh - (${presets.headerHeight} + ${
+        presets.bannerHeight
+      }))`,
+    },
+  },
+  contentHeader: {
+    alignItems: `center`,
+    background: `rgba(255,255,255,0.98)`,
+    // background: colors.ui.whisper,
+    borderBottom: `1px solid ${colors.ui.light}`,
+    display: `flex`,
+    flexDirection: `row`,
+    flexWrap: `wrap`,
+    height: presets.headerHeight,
+    justifyContent: `space-between`,
+    paddingLeft: `${rhythm(3 / 4)}`,
+    paddingRight: `${rhythm(3 / 4)}`,
+    zIndex: 1,
+  },
+  contentTitle: {
+    color: colors.gatsby,
+    margin: 0,
+    ...scale(1 / 5),
+    lineHeight: 1,
+  },
+  resultCount: {
+    color: colors.lilac,
+    fontWeight: `normal`,
+  },
+  gutter: rhythm(3 / 4),
+  gutterDesktop: rhythm(6 / 4),
 }
 
 export default styles

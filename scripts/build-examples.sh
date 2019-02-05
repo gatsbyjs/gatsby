@@ -2,8 +2,7 @@
 
 status=""
 
-yarn boostrap &&
-cd examples &&
+yarn bootstrap && cd examples &&
 
 for example in *; do
   if [ -d "$example" ]; then

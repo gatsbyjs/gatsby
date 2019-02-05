@@ -1,93 +1,230 @@
-workflows:
-  version: 2
-  main:
-    jobs:
-      - unit-node6
-      - unit-node8
-      - unit-node10
-      - lint
-      - integration
-      - ui
-      - prod_ui
+executors:
+  node:
+    parameters:
+      image:
+        type: string
+        default: "10"
+    docker:
+      - image: circleci/node:<< parameters.image >>
 
+aliases:
+  e2e-executor: &e2e-executor
+    docker:
+      - image: cypress/browsers:chrome69
 
-version: 2
+  restore_cache: &restore_cache
+    restore_cache:
+      name: Restore node_modules cache
+      keys:
+        - yarn-cypress-cache-{{ checksum "yarn.lock" }}
+
+  install_node_modules: &install_node_modules
+    run:
+      name: Install node modules
+      command: yarn --frozen-lockfile
+
+  persist_cache: &persist_cache
+    save_cache:
+      name: Save node modules cache
+      key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
+      paths:
+        - ~/.cache
+
+  attach_to_bootstrap: &attach_to_bootstrap
+    attach_workspace:
+      at: packages
+
+  ignore_master: &ignore_master
+    filters:
+      branches:
+        ignore:
+          - master
+
+  ignore_docs: &ignore_docs
+    filters:
+      branches:
+        ignore:
+          - /docs.+/
+          - /blog.+/
+
+  test_template: &test_template
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: yarn jest -w 1
+
+  e2e-test-workflow: &e2e-test-workflow
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+          - /blog.+/
+    requires:
+      - bootstrap
+
+commands:
+  e2e-test:
+    parameters:
+      trigger_pattern:
+        type: string
+        default: "packages/*|.circleci/*"
+      test_path:
+        type: string
+      test_command:
+        type: string
+        default: "" # if unset, e2e-test.sh specifies the command
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+
+version: 2.1
+
 jobs:
-  unit-node6:
-    docker:
-      - image: circleci/node:6
+  bootstrap:
+    executor: node
     steps:
       - checkout
-      - run:
-          name: "Unit test with Node.js 6"
-          command: |
-            yarn run bootstrap
-            yarn jest -w 1
-
-  unit-node8:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - run:
-          name: "Unit test with Node.js 8"
-          command: |
-            yarn run bootstrap
-            yarn jest -w 1
-
-  unit-node10:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - run:
-          name: "Unit test with Node.js 10"
-          command: |
-            yarn run bootstrap
-            yarn jest -w 1
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: yarn bootstrap
+      - persist_to_workspace:
+          root: packages
+          paths:
+            - "*"
 
   lint:
-    docker:
-      - image: circleci/node:8
+    executor: node
     steps:
       - checkout
-      - run:
-          name: "Lint Code"
-          command: |
-            yarn install
-            yarn lint
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: yarn lint
 
-  integration:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - run:
-          name: "Integration Tests"
-          command: |
-            yarn install
-            yarn test:integration
+  unit_tests_node6:
+    executor:
+      name: node
+      image: "6"
+    <<: *test_template
 
-  ui:
-    docker:
-      - image: circleci/node:8-browsers
-    steps:
-      - checkout
-      - run:
-          name: "UI Tests"
-          command: |
-            cd examples/gatsbygram
-            yarn install
-            yarn test
+  unit_tests_node8:
+    executor:
+      name: node
+      image: "8"
+    <<: *test_template
 
-  prod_ui:
-    docker:
-      - image: circleci/node:8-browsers
+  unit_tests_node10:
+    executor: node
+    <<: *test_template
+
+  integration_tests:
+    executor: node
     steps:
       - checkout
-      - run:
-          name: "UI Tests"
-          command: |
-            cd integration-tests/production-runtime
-            yarn install
-            yarn test
+      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|.circleci/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
+      - run: yarn test:integration
+
+  e2e_tests_gatsbygram:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: examples/gatsbygram
+
+  e2e_tests_path-prefix:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/path-prefix
+
+  e2e_tests_gatsby-image:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-image
+
+  e2e_tests_development_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+
+  e2e_tests_production_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: yarn test && yarn test:offline
+
+  starters_validate:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - run: sh ./scripts/clone-and-validate.sh starters
+
+  starters_publish:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: yarn markdown
+      - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "admin@gatsbyjs.com"
+      - run: sh ./scripts/clone-and-validate.sh starters true
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - bootstrap
+      - lint
+      - unit_tests_node6:
+          <<: *ignore_docs
+          requires:
+            - bootstrap
+      - unit_tests_node8:
+          <<: *ignore_docs
+          requires:
+            - bootstrap
+      - unit_tests_node10:
+          <<: *ignore_docs
+          requires:
+            - bootstrap
+      - integration_tests:
+          <<: *ignore_docs
+      - e2e_tests_gatsbygram:
+          <<: *e2e-test-workflow
+      - e2e_tests_path-prefix:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
+      - starters_publish:
+          filters:
+            branches:
+              only:
+                - master

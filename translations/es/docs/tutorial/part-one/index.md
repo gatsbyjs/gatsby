@@ -66,13 +66,15 @@ export default () => (
 
 3. Elimine el estilo de tamaño de fuente. Cambia el texto "¡Hola Gatsby!" A un encabezado de nivel uno. Agrega un párrafo debajo del encabezado.
 
-```jsx{4-6}
+```jsx
 import React from "react"
 
 export default () => (
+  // highlight-start
   <div style={{ color: `purple` }}>
     <h1>¡Hola Gatsby!</h1>
     <p>Increíble.</p>
+    {/* highlight-end */}
   </div>
 )
 ```
@@ -81,14 +83,15 @@ export default () => (
 
 4.  Añade una imagen. (En este caso, una imagen aleatoria desde unsplash).
 
-```jsx{7}
+```jsx
 import React from "react"
 
 export default () => (
   <div style={{ color: `purple` }}>
     <h1>¡Hola Gatsby!</h1>
     <p>Increíble.</p>
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
+    <img src="https://source.unsplash.com/random/400x200" alt="" />{" "}
+    {/* highlight-line */}
   </div>
 )
 ```
@@ -132,9 +135,7 @@ Si bien es un cambio aparentemente simple, esto tiene profundas implicaciones so
 Toma el ejemplo de crear un botón personalizado. En el pasado lo harías creando una clase de CSS (quizás `.primary-button`) con sus estilos personalizados y luego los aplicas a cada elemento que lo requiera.
 
 ```html
-<button class="primary-button">
-  Click
-</button>
+<button class="primary-button">Click</button>
 ```
 
 En el mundo de los componentes, en su lugar creas un componente `PrimaryButton` con los estilos de tus botones y lo usas de la siguiente manera:
@@ -145,7 +146,7 @@ En el mundo de los componentes, en su lugar creas un componente `PrimaryButton` 
 ```
 
 Los componentes se convierten en los bloques de construcción básicos de tu sitio. En vez de ser
-limitado a los bloques de construcción que el navegador proporciona, ejemplo: `<button/>`, puedes crear fácilmente nuevos bloques de construcción que satisfagan elegantemente las necesidades de tus proyectos.
+limitado a los bloques de construcción que el navegador proporciona, ejemplo: `<button />`, puedes crear fácilmente nuevos bloques de construcción que satisfagan elegantemente las necesidades de tus proyectos.
 
 > 💡 Consulta la página [Building with Components](/docs/building-with-components/) para obtener más información sobre componentes en Gatsby y enlaces a otros recursos.
 
@@ -187,15 +188,15 @@ import React from "react"
 export default () => <h1>Este es un encabezado.</h1>
 ```
 
-3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con `<Header/>`:
+3. Modifica el archivo `about.js` para importar el componente `Header`. Reemplace el marcado `h1` con `<Header />`:
 
-```jsx{2,6}
+```jsx
 import React from "react"
-import Header from "../components/header"
+import Header from "../components/header" // highlight-line
 
 export default () => (
   <div style={{ color: `teal` }}>
-    <Header />
+    <Header /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -207,21 +208,22 @@ En el navegador, el texto del encabezado "Acerca de Gatsby" ahora debería reemp
 
 4. Regrese a `/src/components/header.js`, y haga el siguiente cambio:
 
-```jsx{3}
+```jsx
 import React from "react"
 
+// highlight-next-line
 export default props => <h1>{props.headerText}</h1>
 ```
 
 5. Regresa a `/src/pages/about.js` y haz el siguiente cambio:
 
-```jsx{6}
+```jsx
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
-    <Header headerText="A cerca de Gatsby" />
+    <Header headerText="A cerca de Gatsby" /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -249,7 +251,7 @@ En "header.js", el componente del encabezado espera recibir la propiedad `header
 
 > 💡 En JSX, puedes incrustar cualquier expresión de JavaScript envolviéndola con `{}`. Así es como podemos acceder a la propiedad `headerText` (o" prop! ") Desde el objeto "props".
 
-Si hubiéramos pasado otra propiedad a nuestro componente `<Header/>`, como...
+Si hubiéramos pasado otra propiedad a nuestro componente `<Header />`, como...
 
 ```jsx
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
@@ -259,14 +261,14 @@ Si hubiéramos pasado otra propiedad a nuestro componente `<Header/>`, como...
 
 6. Para enfatizar cómo esto hace que nuestros componentes sean reutilizables, agreguemos un componente adicional `<Header />` a la página de a cerca de. Agrega el siguiente código al archivo `/src/pages/about.js` y guárdalo.
 
-```jsx{7}
+```jsx
 import React from "react"
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `teal` }}>
     <Header headerText="A cerca de Gatsby" />
-    <Header headerText="Es asombroso" />
+    <Header headerText="Es asombroso" /> {/* highlight-line */}
     <p>Es fácil usar react en Gatsby.</p>
   </div>
 )
@@ -286,18 +288,18 @@ Exploraremos los componentes de layout en la [parte tres](/tutorial/part-three).
 
 A menudo querrás vincular las páginas. Veamos el enrutamiento en un sitio de Gatsby.
 
-### ✋ Usando el componente `<Link/>`
+### ✋ Usando el componente `<Link />`
 
-1. Abre el componente de la página índice (`/src/pageindex.js`). Importe el componente `<Link/>` de Gatsby. Agregue un componente `<Link/>` debajo del encabezado y asígnele una propiedad `to`, con el valor de `"/contact/"`para el nombre de ruta:
+1. Abre el componente de la página índice (`/src/pageindex.js`). Importe el componente `<Link />` de Gatsby. Agregue un componente `<Link />` debajo del encabezado y asígnele una propiedad `to`, con el valor de `"/contact/"`para el nombre de ruta:
 
-```jsx{2,7}
+```jsx
 import React from "react"
-import { Link } from "gatsby"
+import { Link } from "gatsby" // highlight-line
 import Header from "../components/header"
 
 export default () => (
   <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contacto</Link>
+    <Link to="/contact/">Contacto</Link> {/* highlight-line */}
     <Header headerText="!Hola Gatsby!" />
     <p>Increible</p>
     <img src="https://source.unsplash.com/random/400x200" alt="" />
@@ -333,10 +335,10 @@ Después de guardar el archivo, deberías ver la página de contacto y poder est
 
 <video controls="controls" loop="true">
   <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
-  <p>Sorry! You browser doesn't support this video.</p>
+  <p>Disculpa! Tu navegador no apoya Este video.</p>
 </video>
 
-El componente `<Link/>` de Gatsby es para vincular las páginas de tu sitio. Para enlaces externos a páginas que no maneja tu sitio Gatsby, usa la etiqueta de HTML `<a>`.
+El componente `<Link />` de Gatsby es para vincular las páginas de tu sitio. Para enlaces externos a páginas que no maneja tu sitio Gatsby, usa la etiqueta de HTML `<a>`.
 
 > 💡 Ve más detalles sobre el enrutamiento en Gatsby en [API docs para Gatsby Link](/docs/gatsby-link/).
 

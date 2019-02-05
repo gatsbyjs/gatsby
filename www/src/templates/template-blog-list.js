@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout"
 import Container from "../components/container"
@@ -18,7 +18,8 @@ class BlogPostsIndex extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <div
+        <main
+          id={`reach-skip-nav`}
           css={{
             [presets.Tablet]: {
               background: colors.ui.whisper,
@@ -100,7 +101,7 @@ class BlogPostsIndex extends React.Component {
             <Pagination context={this.props.pageContext} />
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
           </Container>
-        </div>
+        </main>
       </Layout>
     )
   }
@@ -111,10 +112,11 @@ export default BlogPostsIndex
 export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
+      sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/docs.blog/" }
+        fields: { released: { eq: true } }
       }
       limit: $limit
       skip: $skip

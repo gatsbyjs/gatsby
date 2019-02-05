@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
-import presets, { colors } from "../../utils/presets"
+import { colors } from "../../utils/presets"
 
 const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
 
@@ -165,7 +165,7 @@ const styles = {
     "&:after": {
       background: colors.ui.bright,
       bottom: `1.5rem`,
-      content: ` `,
+      content: `''`,
       left: 0,
       position: `absolute`,
       top: `1.5rem`,
@@ -174,7 +174,7 @@ const styles = {
     "&:before": {
       borderLeft: `1px dashed ${colors.ui.bright}`,
       bottom: 0,
-      content: ` `,
+      content: `''`,
       height: `100%`,
       left: 0,
       position: `absolute`,

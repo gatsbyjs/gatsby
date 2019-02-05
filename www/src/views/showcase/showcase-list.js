@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
+import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
@@ -12,15 +13,11 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
 import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
 
-const ShowcaseList = ({ items, count }) => {
+const ShowcaseList = ({ items, count, filters }) => {
   if (count) items = items.slice(0, count)
 
   return (
-    <div
-      css={{
-        ...styles.showcaseList,
-      }}
-    >
+    <main id={`reach-skip-nav`} css={{ ...styles.showcaseList }}>
       {items.map(
         ({ node }) =>
           node.fields &&
@@ -35,6 +32,7 @@ const ShowcaseList = ({ items, count }) => {
                 slug={node.fields.slug}
                 image={node.childScreenshot}
                 title={node.title}
+                state={{ filters }}
               >
                 <strong className="title">{node.title}</strong>
               </ThumbnailLink>
@@ -79,11 +77,7 @@ const ShowcaseList = ({ items, count }) => {
                 </div>
                 {node.featured && (
                   <Link
-                    css={{
-                      "&&": {
-                        ...styles.featuredItem,
-                      },
-                    }}
+                    css={{ "&&": { ...styles.featuredItem } }}
                     to={`/showcase?${qs.stringify({
                       filters: `Featured`,
                     })}`}
@@ -92,9 +86,7 @@ const ShowcaseList = ({ items, count }) => {
                     <img
                       src={FeaturedIcon}
                       alt="icon"
-                      css={{
-                        ...styles.featuredIcon,
-                      }}
+                      css={{ ...styles.featuredIcon }}
                     />
                   </Link>
                 )}
@@ -102,32 +94,8 @@ const ShowcaseList = ({ items, count }) => {
             </div>
           )
       )}
-      {/* makes last row items equal width and aligned left */}
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-      <div
-        aria-hidden="true"
-        css={{ ...styles.showcaseItem, marginTop: 0, marginBottom: 0 }}
-      />
-    </div>
+      {items.length && <EmptyGridItems styles={styles.showcaseItem} />}
+    </main>
   )
 }
 

@@ -1,20 +1,20 @@
 ---
-title: "Awesome Gatsby"
+title: "Awesome Gatsby Resources"
 ---
 
 A curated list of interesting Gatsby community projects and learning resources.
 
 ## Site showcase
 
-See the [site showcase on the Gatsby v2 website.](https://next.gatsbyjs.org/showcase/)
+See the [site showcase](/showcase/)
 
 ## Starters
 
-See the [list of official and community starters](/docs/gatsby-starters/)
+See the [library of official and community starters](/starters/)
 
 ## Plugins
 
-See the [list of official and community plugins](/docs/plugins/)
+See the [library of official and community plugins](/plugins/)
 
 ## Tools
 
@@ -23,15 +23,18 @@ See the [list of official and community plugins](/docs/plugins/)
 
 ## Podcasts
 
-- [2018-07-18 The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
-- [2018-04-17 Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
-- [2018-02-28 syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
-- [2017-09-21 Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
-- [2017-07-21 Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
-- [2017-08-17 Kyle Mathews on Software Engineering Daily](https://softwareengineeringdaily.com/2017/08/17/gatsbyjs-with-kyle-mathews/)
+- [2018-11-30: Kyle Mathews on Founders Talk #59](https://changelog.com/founderstalk/59)
+- [2018-11-14: Jason Lengstorf on React Podcast](https://reactpodcast.simplecast.fm/28)
+- [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
+- [2018-04-17: Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
+- [2018-02-28: syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
+- [2017-09-21: Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
+- [2017-07-21: Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
+- [2017-08-17: Kyle Mathews on Software Engineering Daily](https://softwareengineeringdaily.com/2017/08/17/gatsbyjs-with-kyle-mathews/)
 
 ## Videos
 
+- [Gatsby Days Bay Area December 2018 - Kyle Mathews & Guest Speakers](https://www.youtube.com/playlist?list=PLCU2qJekvcN1wzgVKymbjbGtZ3VgAWOdj)
 - [Static Site Generation with Gatsby.js v0 — Scott Nonnenberg](https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/)
 - [React.js Conf 2016 - Lightning Talks - Kyle Mathews](https://www.youtube.com/watch?v=RFkNRKL6ZoE)
 - [Developing with React and Gatsby.js — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
@@ -52,14 +55,17 @@ See the [list of official and community plugins](/docs/plugins/)
 - [ReactJS E-Commerce With No Backend Using Snipcart & Gatsby](https://snipcart.com/blog/snipcart-reactjs-static-ecommerce-gatsby)
 - [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
 - [Gatsby – Static Site Generator For React](https://codingthesmartway.com/gatsby-static-site-generater-for-react-introduction/)
-- [Construye y Publica Tu Blog Personal con Gatsby y Netlify](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
-- [Ultra-schnellen Blog mit React und Gatsby erstellen](https://www.lekoarts.de/blog/ultra-schnellen-blog-mit-react-und-gatsby-erstellen)
-- [styled-components in Gatsby nutzen](https://www.lekoarts.de/blog/styled-components-in-gatsby-nutzen)
+- [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
+- [Ultra-schnellen Blog mit React und Gatsby erstellen (German)](https://www.lekoarts.de/blog/ultra-schnellen-blog-mit-react-und-gatsby-erstellen)
+- [styled-components in Gatsby nutzen (German)](https://www.lekoarts.de/blog/styled-components-in-gatsby-nutzen)
 - [Build your own blog CMS with Gatsby and Airtable](https://blog.airtable.com/build-your-own-custom-blog-cms-with-airtable-and-gatsbyjs/)
 - [Gatsby JS Crash Course](https://www.youtube.com/watch?v=6YhqQ2ZW1sc)
-- [Kategorien & Tags zu Gatsby hinzufügen](https://www.lekoarts.de/blog/kategorien-tags-zu-gatsby-hinzufugen/)
-- [Erstelle dein Design System mit Gatsby](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
+- [Kategorien & Tags zu Gatsby hinzufügen (German)](https://www.lekoarts.de/blog/kategorien-tags-zu-gatsby-hinzufugen/)
+- [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
+- [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
+- [JAMstack Basics: How to Create a Gatsby Starter with Contentful and Deploy to Netlify](https://itnext.io/jamstack-basics-how-to-create-a-gatsby-starter-with-contentful-and-deploy-to-netlify-846354cc74bc)
+- [How to deploy a static Gatsby app to Heroku](https://medium.freecodecamp.org/how-to-deploy-a-static-gatsby-app-to-heroku-3362e3ecda0f)
 
 ## Other resources
 
@@ -69,4 +75,4 @@ See the [list of official and community plugins](/docs/plugins/)
 
 ### Hashnode Community
 
-[Gatsby community on Hashnode](https://hashnode.com/n/gatsby) is a place where you can read discussions about Gatsby projects, read articles and tutorials and ask the rest of the Hashnode community Gatsby-related questions. 
+[Gatsby community on Hashnode](https://hashnode.com/n/gatsby) is a place where you can read discussions about Gatsby projects, read articles and tutorials and ask the rest of the Hashnode community Gatsby-related questions.
