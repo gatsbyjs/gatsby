@@ -1,6 +1,6 @@
 ---
 title: "How we're migrating a government open data site to Gatsby"
-date: 2019-02-06
+date: 2019-02-05
 authors:
   - Ryan Johnson
   - Jeff Keene
