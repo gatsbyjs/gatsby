@@ -1781,15 +1781,15 @@
   repo: https://github.com/panr/gatsby-starter-hello-friend
   description: A simple starter for Gatsby. That's it.
   tags:
-    - Responsive
-    - Inter font
-    - Dark mode
+    - Pagination
+    - Markdown
     - Blog
-    - Personal site
+    - Portfolio
+    - Styling:PostCSS
     - Syntax highlighting
   features:
     - Dark/light mode, depending on your preferences
-    - Great reading experience thanks to Inter, made by Rasmus Andersson
+    - Great reading experience thanks to Inter font, made by Rasmus Andersson
     - Nice code highlighting thanks to PrismJS
     - Responsive youtube/vimeo etc. videos
     - Elastic menu
