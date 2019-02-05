@@ -5,7 +5,9 @@ author: "Robin Vasan"
 tags: ["architecture", "serverless", "cdn"]
 ---
 
-> “To improve is to change, so to be perfect is to have changed often.” — Winston Churchill
+<pullquote citation="Winston Churchill">
+To improve is to change, so to be perfect is to have changed often.
+</pullquote>
 
 And so it is that about every decade the technology industry rethinks the application architecture in light of new systems, capabilities, and desired outcomes. Right now we are in the early phases of another platform shift which will have massive ripple effects throughout the technology landscape. Current incumbents will fade in significance and new entrants will take their place within new categories. Hundreds of billions in market capitalization is at stake.
 
@@ -35,9 +37,9 @@ These aspects all address the architecture for the backend application services 
 
 ## What’s Next?
 
-It is trite but true to say that every company is becoming a software company. This focus on digital transformation means that businesses are using apps and experiences as the primary interface to the customer. Most of the emphasis to date has been solving the backend services for digital transformation. But as an industry, we haven’t rethought the front-end presentation layer architecture which is a vital part of that new customer interface.
+It is trite but true to say that every company is becoming a software company. This focus on digital transformation means that businesses are using apps and experiences as the primary interface to the customer. Most of the emphasis to date has been solving the backend services for digital transformation. But as an industry, we haven’t rethought the frontend presentation layer architecture which is a vital part of that new customer interface.
 
-We now live in a world of cheap compute and storage, cloud/edge capabilities, and generally fast and pervasive network coverage. So it seems the time has come to dramatically improve the presentation layer. In this world, for instance, running traditional web servers and web content management systems may not make sense anymore. It is incredibly inefficient to have a web server talking to a content management system to pull information, create a response page and send it back to the user. Serverless is gaining interest in terms of the back end architecture, so why not apply a similar approach to the presentation layer?
+We now live in a world of cheap compute and storage, cloud/edge capabilities, and generally fast and pervasive network coverage. So it seems the time has come to dramatically improve the presentation layer. In this world, for instance, running traditional web servers and web content management systems may not make sense anymore. It is incredibly inefficient to have a web server talking to a content management system to pull information, create a response page and send it back to the user. Serverless is gaining interest in terms of the backend architecture, so why not apply a similar approach to the presentation layer?
 
 For developers, there has always been rapid evolution in the area of presentation layer languages and frameworks. With the backing of Facebook (and fixing the open source licensing!), React may finally unify mobile and web client development. Developers have also been actively adopting API-driven headless CMS solutions. Another Facebook technology called GraphQL could provide a unified abstraction to backend data and services.
 
@@ -52,4 +54,6 @@ Based on these new technologies, it seems that we can move to a new serverless p
 
 There are lots of pieces to this puzzle to still work out, but the shapes are starting to come into focus. The end result should be a streamlined process to design, build, test, and deploy new user experiences. And the resulting applications should be much faster, simpler to operate, cheaper to run, and more secure.
 
-> “Some people don’t like change, but you need to embrace change if the alternative is disaster” — Elon Musk.
+<pullquote citation="Elon Musk">
+Some people don’t like change, but you need to embrace change if the alternative is disaster.
+</pullquote>

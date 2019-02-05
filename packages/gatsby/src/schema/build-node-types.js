@@ -17,11 +17,15 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
-const { getNodes, getNode } = require(`../db/nodes`)
+const { getNodesByType, getTypes, getNode } = require(`../db/nodes`)
 const pageDependencyResolver = require(`./page-dependency-resolver`)
 const { setFileNodeRootType } = require(`./types/type-file`)
-const { clearTypeExampleValues } = require(`./data-tree-utils`)
-const { runQuery } = require(`../db/nodes`)
+const {
+  getExampleValues,
+  clearTypeExampleValues,
+} = require(`./data-tree-utils`)
+const { run: runQuery } = require(`../db/nodes-query`)
+const lazyFields = require(`./lazy-fields`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
@@ -49,8 +53,8 @@ const defaultNodeFields = {
 function groupChildNodesByType(nodes) {
   return _(nodes)
     .flatMap(node => node.children.map(getNode))
-    .groupBy(
-      node => (node.internal ? _.camelCase(node.internal.type) : undefined)
+    .groupBy(node =>
+      node.internal ? _.camelCase(node.internal.type) : undefined
     )
     .value()
 }
@@ -171,7 +175,7 @@ function buildNodeObjectType({
   })
 }
 
-async function buildProcessedType(nodes, typeName, processedTypes, span) {
+async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
   const intermediateType = {}
 
   intermediateType.name = typeName
@@ -188,6 +192,9 @@ async function buildProcessedType(nodes, typeName, processedTypes, span) {
   const pluginInputFields = inferInputObjectStructureFromFields({
     fields: mergedFieldsFromPlugins,
   })
+  _.each(pluginInputFields.inferredFields, (fieldConfig, fieldName) => {
+    lazyFields.add(typeName, fieldName)
+  })
 
   const gqlType = buildNodeObjectType({
     typeName,
@@ -196,9 +203,16 @@ async function buildProcessedType(nodes, typeName, processedTypes, span) {
     processedTypes,
   })
 
+  const exampleValue = getExampleValues({
+    nodes,
+    typeName,
+    ignoreFields: Object.keys(mergedFieldsFromPlugins),
+  })
+
   const nodeInputFields = inferInputObjectStructureFromNodes({
     nodes,
     typeName,
+    exampleValue,
   })
 
   const filterFields = _.merge(
@@ -220,18 +234,11 @@ async function buildProcessedType(nodes, typeName, processedTypes, span) {
   }
 }
 
-function groupNodesByType(nodes) {
-  return _.groupBy(
-    nodes.filter(node => node.internal && !node.internal.ignoreType),
-    node => node.internal.type
-  )
-}
-
-module.exports = async ({ parentSpan }) => {
+async function buildAll({ parentSpan }) {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
-  const types = groupNodesByType(getNodes())
+  const types = getTypes()
   const processedTypes: TypeMap = {}
 
   clearTypeExampleValues()
@@ -241,14 +248,19 @@ module.exports = async ({ parentSpan }) => {
 
   // Create node types and node fields for nodes that have a resolve function.
   await Promise.all(
-    _.map(types, async (nodes, typeName) => {
+    _.map(types, async typeName => {
+      const nodes = getNodesByType(typeName).filter(
+        node => node.internal && !node.internal.ignoreType
+      )
+      if (!nodes.length) return
+
       const fieldName = _.camelCase(typeName)
-      const processedType = await buildProcessedType(
+      const processedType = await buildProcessedType({
         nodes,
         typeName,
         processedTypes,
-        span
-      )
+        span,
+      })
       processedTypes[fieldName] = processedType
       // Special case to construct linked file type used by type inferring
       if (typeName === `File`) {
@@ -261,4 +273,10 @@ module.exports = async ({ parentSpan }) => {
   span.finish()
 
   return processedTypes
+}
+
+module.exports = {
+  buildProcessedType,
+  buildNodeObjectType,
+  buildAll,
 }

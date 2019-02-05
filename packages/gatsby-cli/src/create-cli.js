@@ -219,7 +219,31 @@ function buildLocalCommands(cli, isLocalSite) {
         default: false,
         describe: `Automagically copy environment information to clipboard`,
       }),
-    handler: getCommandHandler(`info`),
+    handler: args => {
+      try {
+        envinfo.run(
+          {
+            System: [`OS`, `CPU`, `Shell`],
+            Binaries: [`Node`, `npm`, `Yarn`],
+            Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
+            Languages: [`Python`],
+            npmPackages: `gatsby*`,
+            npmGlobalPackages: `gatsby*`,
+          },
+          {
+            console: true,
+            // Clipboard is not accessible when on a linux tty
+            clipboard:
+              process.platform === `linux` && !process.env.DISPLAY
+                ? false
+                : args.clipboard,
+          }
+        )
+      } catch (err) {
+        console.log(`Error: unable to print environment info`)
+        console.log(err)
+      }
+    },
   })
 
   cli.command({
@@ -263,7 +287,7 @@ function isLocalGatsbySite() {
   return inGatsbySite
 }
 
-module.exports = (argv, handlers) => {
+module.exports = argv => {
   let cli = yargs()
   let isLocalSite = isLocalGatsbySite()
 

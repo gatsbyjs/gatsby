@@ -58,7 +58,8 @@ to HTML links that open the embedded code examples in a REPL. For example:
 </a>
 
 <!-- before -->
-[Try it on CodeSandbox](codesandbox://components-and-props/rendering-a-component.js)
+[Try it on
+CodeSandbox](codesandbox://components-and-props/rendering-a-component.js)
 
 <!-- after -->
 <a href="https://codesandbox.io/api/v1/sandboxes/define?parameters=...">
@@ -80,7 +81,8 @@ Sometimes a larger code example would require more than a single file, with vari
 CodeSandbox supports code example with multiple files. With this plugin, you can do:
 
 ```html
-[Try it on CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
+[Try it on
+CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
 ```
 
 > Caveat
@@ -155,7 +157,7 @@ specified examples directory. (This will avoid broken links at runtime.)
     // Optional path to a custom redirect template.
     // The redirect page is only shown briefly,
     // But you can use this setting to override its CSS styling.
-    redirectTemplate: `${__dirname}/src/redirect-template.js`),
+    redirectTemplate: `${__dirname}/src/redirect-template.js`,
 
     // Optional link target.
     // Note that if a target is specified, "noreferrer" will also be added.

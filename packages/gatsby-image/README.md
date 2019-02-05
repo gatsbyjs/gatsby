@@ -100,6 +100,7 @@ This is what a component using `gatsby-image` looks like:
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 
 export default ({ data }) => (
@@ -161,7 +162,7 @@ you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include
 [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/),
-[gatsby-source-contentful](/packages/gatsby-source-contentful/) and [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms).
+[gatsby-source-contentful](/packages/gatsby-source-contentful/), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity).
 
 Their fragments are:
 
@@ -199,6 +200,13 @@ Their fragments are:
 - `GatsbyDatoCmsFixed_noBase64`
 - `GatsbyDatoCmsFluid`
 - `GatsbyDatoCmsFluid_noBase64`
+
+### gatsby-source-sanity
+
+- `GatsbySanityImageFixed`
+- `GatsbySanityImageFixed_noBase64`
+- `GatsbySanityImageFluid`
+- `GatsbySanityImageFluid_noBase64`
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
@@ -259,6 +267,45 @@ prop. e.g. `<Img fluid={fluid} />`
 }
 ```
 
+### Avoiding stretched images using the fluid type
+
+As mentioned previously, images using the _fluid_ type are stretched to
+match the container's width. In the case where the image's width is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
+
+To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
+
+```jsx
+const NonStretchedImage = props => {
+  let normalizedProps = props
+  if (props.fluid && props.fluid.presentationWidth) {
+    normalizedProps = {
+      ...props,
+      style: {
+        ...(props.style || {}),
+        maxWidth: props.fluid.presentationWidth,
+        margin: "0 auto", // Used to center the image
+      },
+    }
+  }
+
+  return <Img {...normalizedProps} />
+}
+```
+
+**Note:** The `GatsbyImageSharpFluid` fragment does not include `presentationWidth`.
+You will need to add it in your graphql query as is shown in the following snippet:
+
+```graphql
+{
+  childImageSharp {
+    fluid(maxWidth: 500, quality: 100) {
+      ...GatsbyImageSharpFluid
+      presentationWidth
+    }
+  }
+}
+```
+
 ## `gatsby-image` props
 
 | Name                   | Type                | Description                                                                                                                 |
@@ -275,6 +322,7 @@ prop. e.g. `<Img fluid={fluid} />`
 | `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                     |
 | `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 | `onLoad`               | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onStartLoad`          | `func`              | A callback that is called when the full-size image starts loading, it gets the parameter { wasCached: boolean } provided.   |
 | `onError`              | `func`              | A callback that is called when the image fails to load.                                                                     |
 | `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |

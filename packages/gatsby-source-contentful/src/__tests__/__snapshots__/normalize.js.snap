@@ -362,9 +362,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "phone": Object {
-          "en-US": Array [
-            "+1 212 260 2269",
-          ],
+          "en-US": Array [],
         },
         "website": Object {
           "en-US": "http://www.lemnos.jp/en/",
@@ -2945,15 +2943,13 @@ Array [
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6f4e1ac05fd8ddf9416fd6817495171a",
+        "contentDigest": "519b0291d3d4f6b873db1e7041f8a8c6",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
       "node_locale": "en-US",
       "parent": "Brand",
-      "phone": Array [
-        "+1 212 260 2269",
-      ],
+      "phone": Array [],
       "product___NODE": Array [
         "uuid-from-gatsby",
       ],
@@ -3148,15 +3144,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "b06eff771a044bee1ef9ed561dc4e655",
+        "contentDigest": "8e519d7f8faaffd4950e0ac610f60faf",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
       "node_locale": "de",
       "parent": "Brand",
-      "phone": Array [
-        "+1 212 260 2269",
-      ],
+      "phone": Array [],
       "product___NODE": Array [
         "uuid-from-gatsby",
       ],

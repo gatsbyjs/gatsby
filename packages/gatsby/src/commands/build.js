@@ -5,8 +5,9 @@ const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const { copyStaticDir } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
+const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
 
 function reportFailure(msg, err: Error) {
@@ -17,7 +18,6 @@ function reportFailure(msg, err: Error) {
 type BuildArgs = {
   directory: string,
   sitePackageJson: object,
-  browserslist: string[],
   prefixPaths: boolean,
   noUglify: boolean,
   openTracingConfigFile: string,
@@ -41,7 +41,7 @@ module.exports = async function build(program: BuildArgs) {
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
-  copyStaticDirectory()
+  copyStaticDir()
 
   let activity
   activity = report.activityTimer(
@@ -61,9 +61,9 @@ module.exports = async function build(program: BuildArgs) {
   await buildHTML(program, activity).catch(err => {
     reportFailure(
       report.stripIndent`
-        Building static HTML for pages failed
+        Building static HTML failed for path "${chalk.bold(err.context.path)}"
 
-        See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+        See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
       `,
       err
     )
