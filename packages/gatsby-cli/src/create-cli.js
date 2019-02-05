@@ -248,6 +248,22 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
+    command: `clean`,
+    desc: `Wipe the local gatsby environment when something has gone wrong`,
+    builder: _ =>
+      _.option(`env-info`, {
+        type: `boolean`,
+        default: false,
+        describe: `Log environment information (e.g. system info, package info, etc.) to console`,
+      }).option(`no-install`, {
+        type: `boolean`,
+        default: false,
+        describe: `Do not run yarn or npm install after cleaning directories`,
+      }),
+    handler: getCommandHandler(`clean`),
+  })
+
+  cli.command({
     command: `repl`,
     desc: `Get a node repl with context of Gatsby environment, see (add docs link here)`,
     handler: getCommandHandler(`repl`, (args, cmd) => {
