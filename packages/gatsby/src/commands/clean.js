@@ -4,7 +4,6 @@ const path = require(`path`)
 
 const YARN_COMMAND = `yarnpkg`
 
-// Executes `npm install` or `yarn install` in rootPath.
 const install = async ({ directory: rootPath, report, useYarn }) => {
   const prevDir = process.cwd()
 
@@ -13,6 +12,9 @@ const install = async ({ directory: rootPath, report, useYarn }) => {
 
   try {
     let cmd = useYarn ? execa(YARN_COMMAND) : execa(`npm`, [`install`])
+    const { stdout, stderr } = cmd
+    stdout.pipe(process.stdout)
+    stderr.pipe(process.stderr)
     await cmd
   } finally {
     process.chdir(prevDir)
