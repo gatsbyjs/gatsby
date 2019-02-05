@@ -1,9 +1,8 @@
 ---
 title: "How we're migrating a government open data site to Gatsby"
-date: 2019-02-05
+date: 2019-02-08
 authors:
   - Ryan Johnson
-  - Jeff Keene
 tags:
   - open data
   - government
@@ -18,7 +17,7 @@ _This post was originally published at [Open data design at the U.S. Department 
 
 A few months ago, our small team at the Office of Natural Resources Revenue (ONRR) decided we needed to refactor our [open-data website](https://revenuedata.doi.gov/). We knew we were in for a massive undertaking, as the site was originally built with the static-site generator [Jekyll](https://jekyllrb.com/), with significant custom coding to furnish bespoke features, automate data updates, and compile and deploy the site with [18F's](https://18f.gsa.gov/) fantastic static-site hosting service, [Federalist](https://federalist.18f.gov/).
 
-As covered in our [first post in this series](/homepage-revamp/), we were simultaneously scoping a redesign of our homepage. Rebuilding the homepage would allow us to test some of our assumptions about how to address obstacles in our existing workflow.
+As covered in our [first post in this series](https://revenuedata.doi.gov/homepage-revamp/), we were simultaneously scoping a redesign of our homepage. Rebuilding the homepage would allow us to test some of our assumptions about how to address obstacles in our existing workflow.
 
 ## Transition obstacles
 
@@ -78,7 +77,7 @@ GraphQL has been a game changer for us. Our open data is largely comprised of fl
 
 Where before our data-update scripts would generate multiple `.yml` files – structured for the specific context in which the data would appear – we can now query the data with GraphQL and reference it in whatever context we need. Importantly, we maintain just one canonical data file and structure our query to fetch what we need.
 
-We use the [`gatsby-transformer-excel` plugin](https://www.gatsbyjs.org/packages/gatsby-transformer-excel/) to parse our Excel data and convert it into `JSON` arrays accessible to both GraphQL and [D3.js](https://d3js.org/), our data visualization library.
+We use the [`gatsby-transformer-excel` plugin](/packages/gatsby-transformer-excel/) to parse our Excel data and convert it into `JSON` arrays accessible to both GraphQL and [D3.js](https://d3js.org/), our data visualization library.
 
 Here's a sample GraphQL query from the homepage to fetch revenue data:
 
@@ -181,13 +180,13 @@ Related to redundancy, providing a seamless user experience between the Gatsby a
 
 When Gatsby builds the site, it creates a `public` directory for all required site assets. We copied this directory to a `gatsby-public` folder for the Jekyll build to use. However, we didn't want our URLs to include `gatsby-public`, so we needed to add a permalink attribute to our pages' front matter to override the default path.
 
-Fortunately, Gatsby provides a hook into the entire lifecycle of its build process, including an [`onPostBuild` API](https://www.gatsbyjs.org/docs/node-apis/#onPostBuild). We use this hook to add the front matter to our pages and copy the `public` directory to the `gatsby-public` directory.
+Fortunately, Gatsby provides a hook into the entire lifecycle of its build process, including an [`onPostBuild` API](/docs/node-apis/#onPostBuild). We use this hook to add the front matter to our pages and copy the `public` directory to the `gatsby-public` directory.
 
 #### Gatsby prefetch error
 
-Developers tout Gatsby's speed, and [prefetching](https://www.gatsbyjs.org/docs/how-code-splitting-works/) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
+Developers tout Gatsby's speed, and [prefetching](/docs/how-code-splitting-works/) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
 
-Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](https://www.gatsbyjs.org/docs/browser-apis/#onClientEntry). Using `gastby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby.
+Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gastby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby.
 
 ```javascript
 exports.onClientEntry = () => {
