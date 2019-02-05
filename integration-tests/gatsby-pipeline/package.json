@@ -21,8 +21,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build --prefix-paths",
-    "develop": "gatsby develop",
-    "format": "prettier --write '**/*.js'"
+    "develop": "gatsby develop"
   },
   "devDependencies": {
     "execa": "^1.0.0",

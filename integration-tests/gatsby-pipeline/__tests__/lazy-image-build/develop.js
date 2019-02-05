@@ -4,8 +4,8 @@ const fs = require(`fs-extra`)
 const basePath = path.resolve(__dirname, `../../`)
 const request = require(`request-promise-native`)
 
-// 1 min
-jest.setTimeout(1000 * 60)
+// 2 min
+jest.setTimeout(2000 * 60)
 
 const bootDevelop = () =>
   new Promise(resolve => {
@@ -46,7 +46,9 @@ const cleanDirs = () =>
   ])
 
 describe(`Lazy images`, () => {
-  beforeAll(() => cleanDirs())
+  beforeAll(() =>
+    Promise.all([cleanDirs(), execa(`yarn`, [], { cwd: basePath })])
+  )
 
   test(`should process images on demand`, async () => {
     const { process: devProcess } = await bootDevelop()
