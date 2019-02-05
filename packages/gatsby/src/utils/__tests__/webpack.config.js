@@ -60,7 +60,7 @@ describe(`basic functionality`, () => {
 
 describe(`environment variables`, () => {
   afterEach(() => {
-    delete process.env.ACTIVE_ENV
+    delete process.env.GATSBY_ACTIVE_ENV
   })
 
   it(`sanitizes process.env variables`, async () => {
@@ -93,8 +93,8 @@ describe(`environment variables`, () => {
   })
 
   describe(`env var overriding`, () => {
-    it(`allows for ACTIVE_ENV override`, async () => {
-      process.env.ACTIVE_ENV = `staging`
+    it(`allows for GATSBY_ACTIVE_ENV override`, async () => {
+      process.env.GATSBY_ACTIVE_ENV = `staging`
       await getConfig()
 
       expect(readFileSync).toHaveBeenCalledWith(
