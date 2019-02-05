@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"

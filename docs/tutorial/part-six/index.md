@@ -53,7 +53,7 @@ npm install --save gatsby-transformer-remark
 
 Then add it to the `gatsby-config.js` like normal:
 
-```javascript{13}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -66,7 +66,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-transformer-remark`,
+    `gatsby-transformer-remark`, // highlight-line
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -107,7 +107,7 @@ the following to add a GraphQL query with some initial HTML and styling.
 ```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
-import { css } from "react-emotion"
+import { css } from "@emotion/core"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
@@ -117,7 +117,7 @@ export default ({ data }) => {
     <Layout>
       <div>
         <h1
-          className={css`
+          css={css`
             display: inline-block;
             border-bottom: 1px solid;
           `}
@@ -128,13 +128,13 @@ export default ({ data }) => {
         {data.allMarkdownRemark.edges.map(({ node }) => (
           <div key={node.id}>
             <h3
-              className={css`
+              css={css`
                 margin-bottom: ${rhythm(1 / 4)};
               `}
             >
               {node.frontmatter.title}{" "}
               <span
-                className={css`
+                css={css`
                   color: #bbb;
                 `}
               >
@@ -198,7 +198,7 @@ this powerful set of operators, you can select any data you want—in the format
 need.
 
 In your index page's GraphQL query, change `allMarkdownRemark` to
-`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. Save
+`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. _Note: There are 3 underscores between `frontmatter` and `date`._ Save
 this and the sort order should be fixed.
 
 Try opening Graph_i_QL and playing with different sort options. You can sort the

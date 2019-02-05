@@ -194,7 +194,7 @@ function prepareTextNode(node, key, text, createNodeId) {
 }
 
 function prepareStructuredTextNode(node, key, content, createNodeId) {
-  const str = JSON.stringify(content)
+  const str = stringify(content)
   const structuredTextNode = {
     ...content,
     id: createNodeId(`${node.id}${key}RichTextNode`),
@@ -297,6 +297,7 @@ exports.createContentTypeNodes = ({
           const entryItemFieldValue = entryItemFields[entryItemFieldKey]
           if (Array.isArray(entryItemFieldValue)) {
             if (
+              entryItemFieldValue[0] &&
               entryItemFieldValue[0].sys &&
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
@@ -402,7 +403,6 @@ exports.createContentTypeNodes = ({
           delete entryItemFields[entryItemFieldKey]
         } else if (
           fieldType === `RichText` &&
-          process.env.GATSBY_CONTENTFUL_RICH_TEXT === `enabled` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
           const richTextNode = prepareStructuredTextNode(

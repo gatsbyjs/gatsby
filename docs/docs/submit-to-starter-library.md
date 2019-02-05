@@ -37,7 +37,7 @@ Use the following template to ensure required fields are filled:
   tags:
     - (required)
   features:
-    - (optional, but encouraged)
+    - (required)
 ```
 
 Check out the [`starters.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/starters.yml) file for examples.

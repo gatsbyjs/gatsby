@@ -10,8 +10,33 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-remark`]
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      // CommonMark mode (default: true)
+      commonmark: true,
+      // Footnotes mode (default: true)
+      footnotes: true,
+      // Pedantic mode (default: true)
+      pedantic: true,
+      // GitHub Flavored Markdown mode (default: true)
+      gfm: true,
+      // Plugins configs
+      plugins: [],
+    },
+  },
+],
 ```
+
+The following parts of `options` are passed down to Remark as options:
+
+- `options.commonmark`
+- `options.footnotes`
+- `options.pedantic`
+- `options.gfm`
+
+The details of the Remark options above could be found in [`remark-parse`'s documentation](https://github.com/remarkjs/remark/tree/master/packages/remark-parse#processoruseparse-options)
 
 A full explanation of how to use markdown in Gatsby can be found here:
 [Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
@@ -68,7 +93,28 @@ Using the following GraphQL query you'll be able to get the table of contents
     edges {
       node {
         html
-        tableOfContents(pathToSlugField: "frontmatter.path")
+        tableOfContents
+      }
+    }
+  }
+}
+```
+
+### Configuring the tableOfContents
+
+By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null. To alter the default values for tableOfContents generation, include values for `heading` (string) and/or `maxDepth` (number 1 to 6) in graphQL query. If a value for `heading` is given, the first heading that matches will be ommitted and the toc is generated from the next heading of the same depth onwards. Value for `maxDepth` sets the maximum depth of the toc (i.e. if a maxDepth of 3 is set, only h1 to h3 headings will appear in the toc).
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        html
+        tableOfContents(
+          pathToSlugField: "frontmatter.path"
+          heading: "only show toc from this heading onwards"
+          maxDepth: 2
+        )
         frontmatter {
           # Assumes you're using path in your frontmatter.
           path
@@ -79,9 +125,26 @@ Using the following GraphQL query you'll be able to get the table of contents
 }
 ```
 
-By default the tableOfContents is using the field `slug` to generate URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null.
+To pass default options to the plugin generating the tableOfContents, configure it in gatsby-config.js as shown below. The options shown below are the defaults used by the plugin.
 
-### Excerpt length
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      tableOfContents: {
+        heading: null,
+        maxDepth: 6,
+      },
+    },
+  },
+]
+```
+
+### Excerpts
+
+#### Length
 
 By default, excerpts have a maximum length of 140 characters. You can change the default using the `pruneLength` argument. For example, if you need 500 characters, you can specify:
 
@@ -97,6 +160,55 @@ By default, excerpts have a maximum length of 140 characters. You can change the
   }
 }
 ```
+
+#### Format
+
+By default, Gatsby will return excerpts as plain text. This might be useful for populating [opengraph](https://en.wikipedia.org/wiki/Facebook_Platform#Open_Graph_protocol) HTML tags for SEO reasons. You can also explicitly specify a `PLAIN` format like so:
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: PLAIN)
+      }
+    }
+  }
+}
+```
+
+It's also possible to ask Gatsby to return excerpts formatted as HTML. You might use this if you have a blog post whose an excerpt contains markdown content--e.g. header, link, etc.--and you want these links to render as HTML.
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: HTML)
+      }
+    }
+  }
+}
+```
+
+## gray-matter options
+
+`gatsby-transformer-remark` uses [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse markdown frontmatter, so you can specify any of the options mentioned [here](https://github.com/jonschlinkert/gray-matter#options) in the `gatsby-config.js` file.
+
+### Example: Excerpts
+
+If you don't want to use `pruneLength` for excerpts but a custom seperator, you can specify an `excerpt_separator`:
+
+```javascript
+{
+  "resolve": `gatsby-transformer-remark`,
+  "options": {
+    "excerpt_separator": `<!-- end -->`
+  }
+}
+```
+
+Any file that does not have the given `excerpt_separator` will fall back to the default pruning method.
 
 ## Troubleshooting
 

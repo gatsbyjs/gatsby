@@ -14,7 +14,7 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
 - Out With Gatsby Layout Components, In With StaticQuery
 
-  Gatby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our [Life After Layouts post](/blog/2018-06-08-life-after-layouts/).
+  Gatsby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our [Life After Layouts post](/blog/2018-06-08-life-after-layouts/).
 
 - Improve APIs
 

@@ -6,7 +6,7 @@ Defaults to building a site with 5k pages. Set the `NUM_PAGES` environment varia
 
 # Running the benchmark
 
-First install node modules required by package.json. This is needed only one time. Then run the build
+First, install node modules required by package.json. This is needed only one time. Then run the build
 
 ```bash
 npm install

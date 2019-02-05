@@ -2,7 +2,13 @@
 title: "Proxying API Requests in Development"
 ---
 
-People often serve the front-end React app from the same host and port as their
+## Resources
+
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+
+## Proxying API requests in development
+
+People often serve the frontend React app from the same host and port as their
 backend implementation.
 
 To tell the development server to proxy any unknown requests to your API server
@@ -26,8 +32,8 @@ the right place in production.
 
 ## Advanced proxying
 
-Sometimes you need more granular/flexible access to the develop server.
-Gatsby exposes the [Express.js](https://expressjs.com/) develop server to your site's `gatsby-config.js` where you
+Sometimes you need more granular/flexible access to the development server.
+Gatsby exposes the [Express.js](https://expressjs.com/) development server to your site's `gatsby-config.js` where you
 can add Express middleware as needed.
 
 ```javascript:title=gatsby-config.js
@@ -49,3 +55,25 @@ module.exports = {
 ```
 
 Keep in mind that middleware only has effect in development (with `gatsby develop`).
+
+### Self-signed certificates
+
+If you proxy to local APIs with self-signed certificates, set the option `secure` to `false`.
+
+```javascript:title=gatsby-config.js
+var proxy = require("http-proxy-middleware")
+module.exports = {
+  developMiddleware: app => {
+    app.use(
+      "/.netlify/functions/",
+      proxy({
+        target: "http://localhost:9000",
+        secure: false, // Do not reject self-signed certificates.
+        pathRewrite: {
+          "/.netlify/functions/": "",
+        },
+      })
+    )
+  },
+}
+```

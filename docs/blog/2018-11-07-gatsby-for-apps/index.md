@@ -8,6 +8,7 @@ tags:
   - applications
   - beyond static
 excerpt: Gatsby is great for not only static sites but also traditional web applications. Using Gatsby enables the benefits of both static and web applications so you don't have to sacrifice the advantages of one approach to reap the benefits of the other.
+cover: images/what-if-i-told-you.jpg
 ---
 
 Gatsby is great for static sites. You probably know this! It’s equally great for web applications. You may not know this. Gatsby is great for building web experiences that leverage the benefits of both so called static sites and web applications -- simultaneously. You don't have to sacrifice the advantages of one approach to reap the benefits of the other.
@@ -76,7 +77,7 @@ What if I told you... that building a Gatsby website enables all of these tradit
 
 Every Gatsby application isn't merely static. It's _as much_ static HTML rendered up-front, as possible. Client-side JavaScript (via React!) takes over as the enginge for dynamic application functionality. A quick overview of Gatsby's general build process is effective to illustrate the concept.
 
-1. Inject pages with data (from [GraphQL][gatsby-graphql] or even [unstructured data outside of GraphQL][gatsby-unstructured])
+1. Inject pages with data (from [GraphQL][gatsby-graphql] or even [without using GraphQL][gatsby-without-graphql])
 1. Use the [ReactDOMServer.renderToString][react-dom-render-to-string] API to invoke server-side APIs to render React components to _HTML_ files
 1. Inject a runtime and helpers (like a router!) to enable app functionality
    - Gatsby _produces_ a [create-react-app][create-react-app] like experience once this runtime takes over
@@ -219,7 +220,7 @@ and even a light/dark theme, because why not! You can see all of these concepts 
 
 ![App Shell with Gatsby Mail](./images/gatsby-mail-app-shell.gif)
 
-Check out the [Github repo][gatsby-mail-repo] to learn more about how it was built and adopt some of the techniques as you build your next great Gatsby web **application**.
+Check out the [GitHub repo][gatsby-mail-repo] to learn more about how it was built and adopt some of the techniques as you build your next great Gatsby web **application**.
 
 We can't wait to see what you build.
 
@@ -231,7 +232,7 @@ We can't wait to see what you build.
 [app-shell]: https://developers.google.com/web/fundamentals/architecture/app-shell
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
 [gatsby-graphql]: /docs/querying-with-graphql/
-[gatsby-unstructured-data]: /docs/using-unstructured-data/
+[gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
 [authentication-data]: /docs/authentication-tutorial/
 [client-only-routes]: /docs/building-apps-with-gatsby/#client-only-routes--user-authentication
 [create-react-app]: https://facebook.github.io/create-react-app/

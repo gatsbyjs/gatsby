@@ -20,7 +20,7 @@ Preloading is triggered by a link entering the viewport; Gatsby uses
 `Link`'s `innerRef` property to create a new IntersectionObserver (on
 supported browsers) to monitor visible links. This way, Gatsby only prefetches
 code/data chunks for pages the user is likely to navigate to. You can also get
-access to the link element by passing in a `innerRef` prop.
+access to the link element by passing in a `ref` prop, which will be forwarded to the `@reach/router` `Link` element directly.
 
 ## How to use
 
@@ -39,7 +39,7 @@ class Page extends React.Component {
           activeStyle={{
             color: "red",
           }}
-          innerRef={el => {
+          ref={el => {
             this.myLink = el
           }}
           state={{
@@ -53,6 +53,30 @@ class Page extends React.Component {
   }
 }
 ```
+
+## Partial Link matching
+
+The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
+
+- We may want `/blog/hello-world` to match `<Link to="/blog">`
+- Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
+
+In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+// This link will get the active class when it partially matches the current URL
+const PartialNavLink = props => (
+  <Link
+    getProps={({ isPartiallyCurrent }) => {
+      return isPartiallyCurrent ? { className: "active" } : null
+    }}
+  />
+)
+```
+
+Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
 
 ## Replacing history entry
 
@@ -77,6 +101,26 @@ render () {
 
 Using `replace` also won't scroll the page after navigation.
 
+## Passing props to Link targets
+
+Sometimes you'll want to pass data from the source page to the linked page. You can do this by passing a `state` prop to the `Link` component or on a call to the `navigate` function. The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
+
+```jsx
+const NewsFeed = () => (
+  <div>
+    <Link to="photos/123" state={{ fromFeed: true }} />
+  </div>
+)
+
+const Photo = ({ location, photoId }) => {
+  if (location.state.fromFeed) {
+    return <FromFeedPhoto id={photoId} />
+  } else {
+    return <Photo id={photoId} />
+  }
+}
+```
+
 ## Programmatic navigation
 
 For cases when you can only use event handlers for navigation, you can use `navigate`
@@ -93,9 +137,40 @@ render () {
 }
 ```
 
-You can also pass state to pages when you navigate e.g. `navigate("/a-path/", { state: { pleasant: "reasonably" }}`
-
 Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2.
+
+## Passing state through Link and Navigate
+
+You can pass state to pages when you navigate, such as:
+
+```javascript
+navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
+```
+
+You can also pass state to pages when you use `Link`:
+
+```jsx
+<Link
+  to="/another-page/"
+  activeStyle={{
+    color: "red",
+  }}
+  state={{
+    pleasant: "reasonably",
+  }}
+>
+```
+
+This is accessible from the `location` object on the new page:
+
+```javascript
+componentDidMount() {
+  const pleasant = this.props.location.state.pleasant
+  this.setState({
+    pleasant: pleasant
+  })
+}
+```
 
 ## Prefixed paths helper
 
@@ -136,7 +211,9 @@ following may be a good starting point:
 ```jsx
 import { Link as GatsbyLink } from "gatsby"
 
-const Link = ({ children, to, ...other }) => {
+// Since DOM elements <a> cannot receive activeClassName,
+// destructure the prop here and pass it only to GatsbyLink
+const Link = ({ children, to, activeClassName, ...other }) => {
   // Tailor the following test to your environment.
   // This example assumes that any internal link (intended for Gatsby)
   // will start with exactly one slash, and that anything else is external.
@@ -145,7 +222,7 @@ const Link = ({ children, to, ...other }) => {
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
-      <GatsbyLink to={to} {...other}>
+      <GatsbyLink to={to} activeClassName={activeClassName} {...other}>
         {children}
       </GatsbyLink>
     )
@@ -164,7 +241,7 @@ export default Link
 
 You can similarly check for file downloads:
 
-```
+```jsx
   const file = /\.[0-9a-z]+$/i.test(to)
 
   ...
