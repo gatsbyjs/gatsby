@@ -625,14 +625,16 @@ function getValidRoutes({
  */
 const getRawEntityType = (route, _allRoutes) => {
   let link = route._links.self
-  let entityType = link.substring(link.lastIndexOf(`/`) + 1, link.length)
-  let customRoute = _.filter(_allRoutes, route =>
-    route.endpoint.endsWith(entityType)
+  let entityType;
+  let customRoute = _.filter(_allRoutes, r =>
+    link.includes(r.namespace + r.endpoint)
   )
 
   // Override custom route type.
   if (customRoute.length !== 0 && customRoute[0].hasOwnProperty(`type`)) {
     entityType = customRoute[0].type
+  } else {
+    entityType = link.substring(link.lastIndexOf(`/`) + 1, link.length)
   }
 
   // Respect link parameters.
