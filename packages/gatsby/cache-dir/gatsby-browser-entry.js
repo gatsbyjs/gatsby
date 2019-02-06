@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import PropTypes from "prop-types"
 import Link, {
   withPrefix,
@@ -29,6 +29,15 @@ const StaticQuery = props => (
   </StaticQueryContext.Consumer>
 )
 
+const useStaticQuery = query => {
+  const context = useContext(StaticQueryContext)
+  if (context[query] && context[query].data) {
+    return context[query].data
+  } else {
+    return null
+  }
+}
+
 StaticQuery.propTypes = {
   data: PropTypes.object,
   query: PropTypes.string.isRequired,
@@ -57,4 +66,5 @@ export {
   StaticQueryContext,
   StaticQuery,
   PageRenderer,
+  useStaticQuery,
 }
