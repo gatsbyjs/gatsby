@@ -9,6 +9,37 @@ function matchesSnapshot(query) {
   expect(code).toMatchSnapshot()
 }
 
+it(`Transforms queries in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
+    
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transforms queries defined in own variable in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    const siteTitle = useStaticQuery(query)
+    
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
 it(`Transforms queries in <StaticQuery>`, () => {
   matchesSnapshot(`
   import React from 'react'
