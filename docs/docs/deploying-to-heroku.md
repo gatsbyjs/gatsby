@@ -26,8 +26,6 @@ $ heroku buildpacks:set heroku/node
 $ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-static.git
 ```
 
-
-
 Add a `heroku-postbuild` script in your `package.json`:
 
 ```json:title=package.json
