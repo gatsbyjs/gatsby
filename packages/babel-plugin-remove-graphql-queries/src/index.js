@@ -255,6 +255,43 @@ export default function({ types: t }) {
           },
         })
 
+        // Traverse once again for useStaticQuery instances
+        path.traverse({
+          CallExpression(hookPath) {
+            if (hookPath.node.callee.name !== `useStaticQuery`) {
+              return
+            }
+
+            hookPath.traverse({
+              // Assume the query is inline in the component and extract that.
+              TaggedTemplateExpression(templatePath) {
+                setImportForStaticQuery(templatePath)
+              },
+              // // Also see if it's a variable that's passed in as a prop
+              // // and if it is, go find it.
+              Identifier(identifierPath) {
+                if (identifierPath.node.name !== `graphql`) {
+                  const varName = identifierPath.node.name
+                  path.traverse({
+                    VariableDeclarator(varPath) {
+                      if (
+                        varPath.node.id.name === varName &&
+                        varPath.node.init.type === `TaggedTemplateExpression`
+                      ) {
+                        varPath.traverse({
+                          TaggedTemplateExpression(templatePath) {
+                            setImportForStaticQuery(templatePath)
+                          },
+                        })
+                      }
+                    },
+                  })
+                }
+              },
+            })
+          },
+        })
+
         path.traverse({
           // Run it again to remove non-staticquery versions
           TaggedTemplateExpression(path2, state) {
