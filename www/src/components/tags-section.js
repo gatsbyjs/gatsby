@@ -32,7 +32,7 @@ const TagsSection = ({ tags }) => {
           display: `block`,
           marginBottom: rhythm(1),
           marginRight: rhythm(2),
-          flexBasis: "60%",
+          flexBasis: `60%`,
           flexGrow: 1,
         }}
       >
