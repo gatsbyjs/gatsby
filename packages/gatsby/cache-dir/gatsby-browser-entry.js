@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import Link, {
   withPrefix,
@@ -30,11 +30,18 @@ const StaticQuery = props => (
 )
 
 const useStaticQuery = query => {
-  const context = useContext(StaticQueryContext)
+  if (
+    typeof React.useContext !== `function` &&
+    process.env.NODE_ENV === `development`
+  ) {
+    throw new Error(
+      `You're likely using a version of React that doesn't support Hooks` +
+        `Please update to React 16.8 or later. `
+    )
+  }
+  const context = React.useContext(StaticQueryContext)
   if (context[query] && context[query].data) {
     return context[query].data
-  } else {
-    return null
   }
 }
 
