@@ -9,8 +9,8 @@
     "gatsby-plugin-manifest": "latest",
     "gatsby-plugin-offline": "latest",
     "gatsby-plugin-react-helmet": "latest",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
     "react-helmet": "^5.2.0"
   },
   "keywords": [

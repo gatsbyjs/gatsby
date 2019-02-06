@@ -7,7 +7,7 @@ import * as UseStaticQuery from '../components/static-query/use-static-query'
 const StaticQueryPage = () => (
   <Layout>
     <h1>
-      <code>StaticQuery</code> Examples
+      <code>StaticQuery</code>
     </h1>
     <StaticQuery.ExportedVariable data-testid="exported" />
     <StaticQuery.Variable data-testid="variable" />
