@@ -69,7 +69,7 @@ import React from 'react';
 import { useStaticQuery } from 'gatsby';
 export default (() => {
   const query = \\"2626356014\\";
-  const siteTitle = staticQueryData;
+  const siteTitle = staticQueryData.data;
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 });"
 `;
@@ -92,7 +92,7 @@ exports[`Transforms queries in useStaticQuery 1`] = `
 import React from 'react';
 import { useStaticQuery } from 'gatsby';
 export default (() => {
-  const siteTitle = staticQueryData;
+  const siteTitle = staticQueryData.data;
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 });"
 `;
