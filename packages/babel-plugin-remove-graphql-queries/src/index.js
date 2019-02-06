@@ -224,7 +224,7 @@ export default function({ types: t }) {
                 }
                 jsxPath.traverse({
                   TaggedTemplateExpression(templatePath, state) {
-                    setImportForStaticQuery(templatePath, jsxElementPath)
+                    setImportForStaticQuery(templatePath)
                   },
                   Identifier(identifierPath) {
                     if (identifierPath.node.name !== `graphql`) {
@@ -238,10 +238,7 @@ export default function({ types: t }) {
                           ) {
                             varPath.traverse({
                               TaggedTemplateExpression(templatePath) {
-                                setImportForStaticQuery(
-                                  templatePath,
-                                  jsxElementPath
-                                )
+                                setImportForStaticQuery(templatePath)
                               },
                             })
                           }
