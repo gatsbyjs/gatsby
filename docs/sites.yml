@@ -4129,6 +4129,18 @@
     - Web Development
     - Productivity
   featured: false
+- title: Vyron Vasileiadis
+  url: "https://fedonman.com/"
+  main_url: "https://fedonman.com"
+  source_url: "https://github.com/fedonman/fedonman-website"
+  description: Personal space of Vyron Vasileiadis aka fedonman, a Web & IoT Developer, Educator and Entrepreneur based in Athens, Greece.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+    - Education
+  built_by: Vyron Vasileiadis
+  built_by_url: "https://github.com/fedonman"
 - title: Fabien Champigny
   url: "https://www.champigny.name/"
   main_url: "https://www.champigny.name/"
@@ -4168,4 +4180,26 @@
     - Open Source
     - Nonprofit
     - Technology
+  featured: false
+- title: Dale Blackburn - Portfolio
+  url: https://dakebl.co.uk/
+  main_url: https://dakebl.co.uk/
+  source_url: https://github.com/dakebl/dakebl.co.uk
+  description: >
+    Dale Blackburn's personal website and blog.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  featured: false
+- title: Portfolio of Anthony Wiktor
+  url: https://www.anthonydesigner.com/
+  main_url: https://www.anthonydesigner.com/
+  description: >
+    Anthony Wiktor is a Webby Award-Winning Creative Director and Digital Designer twice named Hot 100 by WebDesigner Magazine. Anthony has over a decade of award-winning experience in design and has worked on projects across a diverse set of industries — from entertainment to consumer products to hospitality to technology. Anthony is a frequent lecturer at USC’s Annenberg School for Communication & Journalism and serves on the board of AIGA Los Angeles.
+  categories:
+    - Portfolio
+    - Marketing
+  built_by: Maciej Leszczyński
+  built_by_url: http://twitter.com/_maciej
   featured: false
