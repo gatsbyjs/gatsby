@@ -1,4 +1,7 @@
+const systemPath = require(`path`)
+const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
+const { findRootNodeAncestor } = require(`../db/node-tracking`)
 const {
   GraphQLList,
   getNullableType,
@@ -231,6 +234,42 @@ const link = ({ by, from }) => async (source, args, context, info) => {
   }
 }
 
+const fileByPath = (source, args, context, info) => {
+  let fieldValue = source[info.fieldName]
+
+  const isArray = getNullableType(info.returnType) instanceof GraphQLList
+
+  if (!fieldValue) {
+    return null
+  }
+
+  const findLinkedFileNode = relativePath => {
+    // Use the parent File node to create the absolute path to
+    // the linked file.
+    const fileLinkPath = normalize(
+      systemPath.resolve(parentFileNode.dir, relativePath)
+    )
+
+    // Use that path to find the linked File node.
+    const linkedFileNode = _.find(
+      context.nodeModel.getNodesByType(`File`),
+      n => n.absolutePath === fileLinkPath
+    )
+    return linkedFileNode
+  }
+
+  // Find the File node for this node (we assume the node is something
+  // like markdown which would be a child node of a File node).
+  const parentFileNode = findRootNodeAncestor(source)
+
+  // Find the linked File node(s)
+  if (isArray) {
+    return fieldValue.map(findLinkedFileNode)
+  } else {
+    return findLinkedFileNode(fieldValue)
+  }
+}
+
 module.exports = {
   findById: withPageDependencies(findById),
   findByIds: withPageDependencies(findByIds),
@@ -239,6 +278,7 @@ module.exports = {
   findMany: withPageDependencies(findMany),
   findManyPaginated: findManyPaginated,
   findOne: withPageDependencies(findOne),
+  fileByPath: fileByPath,
   link,
   distinct,
   group,

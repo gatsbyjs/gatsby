@@ -8,7 +8,7 @@ const {
 const invariant = require(`invariant`)
 
 const { isFile } = require(`./is-file`)
-const { link } = require(`../resolvers`)
+const { link, fileByPath } = require(`../resolvers`)
 const { isDate, dateResolver } = require(`../types/Date`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
@@ -77,8 +77,6 @@ const addInferredFieldsImpl = ({
         depth
       )
     }
-
-    fieldConfig = fieldConfig.type ? fieldConfig : { type: fieldConfig }
 
     while (arrays--) {
       fieldConfig = { ...fieldConfig, type: [fieldConfig.type] }
@@ -222,9 +220,9 @@ const getFieldConfigFromFieldNameConvention = (
 const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
   switch (typeof value) {
     case `boolean`:
-      return `Boolean`
+      return { type: `Boolean` }
     case `number`:
-      return is32BitInteger(value) ? `Int` : `Float`
+      return { type: is32BitInteger(value) ? `Int` : `Float` }
     case `string`:
       if (isDate(value)) {
         return dateResolver
@@ -236,31 +234,32 @@ const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
         // a File node in the db, it is semi-random if the field is
         // inferred as File or String, since the exampleValue only has
         // the first entry (which could point to an existing file or not).
-        return { type: `File`, resolve: link({ by: `relativePath` }) }
+        return { type: `File`, resolve: fileByPath }
       }
-      return `String`
+      return { type: `String` }
     case `object`:
       if (value instanceof Date) {
         return dateResolver
       }
       if (value instanceof String) {
-        return `String`
+        return { type: `String` }
       }
       if (value /* && depth < MAX_DEPTH*/) {
-        return addInferredFieldsImpl({
-          schemaComposer,
-          typeComposer: schemaComposer.getOrCreateTC(createTypeName(selector)),
-          nodeStore,
-          exampleObject: value,
-          prefix: selector,
-          depth: depth + 1,
-        })
+        return {
+          type: addInferredFieldsImpl({
+            schemaComposer,
+            typeComposer: schemaComposer.getOrCreateTC(
+              createTypeName(selector)
+            ),
+            nodeStore,
+            exampleObject: value,
+            prefix: selector,
+            depth: depth + 1,
+          }),
+        }
       }
-      return `JSON`
-    default:
-      // null
-      return `JSON`
   }
+  throw new Error(`Can't determine type for \`${value}\` in \`${selector}\`.`)
 }
 
 const createTypeName = selector => {
