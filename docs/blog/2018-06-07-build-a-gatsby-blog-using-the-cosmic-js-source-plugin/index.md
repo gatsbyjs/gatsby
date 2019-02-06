@@ -124,7 +124,7 @@ import { Link } from "gatsby"
 import get from "lodash/get"
 import { Helmet } from "react-helmet"
 
-import Bio from "../components/Bio"
+import Bio from "../components/bio"
 import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
@@ -215,7 +215,7 @@ import { Helmet } from "react-helmet"
 import { Link } from "gatsby"
 import get from "lodash/get"
 
-import Bio from "../components/Bio"
+import Bio from "../components/bio"
 import { rhythm, scale } from "../utils/typography"
 import { relative } from "path"
 
@@ -427,7 +427,7 @@ Restart the Gatsby server, then visit the detail page by clicking on URLs displa
 
 ### Extra Stuff!
 
-In addition to the code covered in this tutorial, we also implemented `src/components/Bio.js` to display author information & `src/layouts/index.js` to [create a generic layout](/tutorial/part-three/#our-first-layout-component) for the blog.
+In addition to the code covered in this tutorial, we also implemented `src/components/bio.js` to display author information & `src/layouts/index.js` to [create a generic layout](/tutorial/part-three/#our-first-layout-component) for the blog.
 
 The source code for this tutorial is available [on GitHub](https://github.com/cosmicjs/gatsby-blog-cosmicjs). To see it live, clone the repository, and run (`cd gatsby-blog-cosmicjs && npm i && npm run develop`) or check out the [demo on Netlify](https://gatsby-blog-cosmicjs.netlify.com/).
 
