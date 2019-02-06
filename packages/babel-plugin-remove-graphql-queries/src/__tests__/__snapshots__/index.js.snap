@@ -57,7 +57,9 @@ export default (() => React.createElement(StaticQuery, {
 exports[`Transforms queries defined in own variable in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
+import { useStaticQuery } from 'gatsby';
 export default (() => {
+  const query = \\"2626356014\\";
   const siteTitle = staticQueryData;
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 });"
@@ -79,6 +81,7 @@ exports[`Transforms queries in page components 1`] = `"export const query = \\"3
 exports[`Transforms queries in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
+import { useStaticQuery } from 'gatsby';
 export default (() => {
   const siteTitle = staticQueryData;
   return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
