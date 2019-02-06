@@ -38,11 +38,7 @@ development server.
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
 
-For example `gatsby develop --port 4000`.
-
 When running Gatsby CLI commands with options using NPM scripts you need to include `--` to forward the options.
-
-For example `npm run develop -- --port 4000`
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.

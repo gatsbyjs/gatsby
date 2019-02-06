@@ -2,31 +2,6 @@
 title: "Gatsby E-Commerce Tutorial"
 ---
 
-# Table of Contents
-
-- [Table of Contents](#table-of-contents)
-- [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
-- [Prerequisites](#prerequisites)
-  - [How does Gatsby work with Stripe?](#how-does-gatsby-work-with-stripe)
-- [Setting up a Gatsby site](#setting-up-a-gatsby-site)
-- [Installing the StripeJS plugin](#installing-the-stripejs-plugin)
-  - [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
-  - [How does the StripeJS plugin work?](#how-does-the-stripejs-plugin-work)
-  - [Getting your Stripe test keys](#getting-your-stripe-test-keys)
-- [Examples](#examples)
-  - [Easy: One Button](#easy-one-button)
-    - [Create a product and SKU](#create-a-product-and-sku)
-    - [Create a checkout component that loads StripeJS and redirects to the checkout](#create-a-checkout-component-that-loads-stripejs-and-redirects-to-the-checkout)
-    - [What did you just do?](#what-did-you-just-do)
-    - [Importing the checkout component into the homepage](#importing-the-checkout-component-into-the-homepage)
-  - [Advanced: Import SKUs via source plugin](#advanced-import-skus-via-source-plugin)
-    - [Add the Stripe source plugin](#add-the-stripe-source-plugin)
-    - [Create a component that lists your SKUs](#create-a-component-that-lists-your-skus)
-    - [Create a component that presents a single SKU](#create-a-component-that-presents-a-single-sku)
-    - [Adding a cart component](#adding-a-cart-component)
-  - [Custom: Fully custom checkout flow (requires backend component)](#custom-fully-custom-checkout-flow-requires-backend-component)
-- [Testing Payments](#testing-payments)
-
 # Why use Gatsby for an e-commerce site?
 
 In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
