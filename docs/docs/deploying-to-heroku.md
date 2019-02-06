@@ -36,8 +36,6 @@ Add a `heroku-postbuild` script in your `package.json`:
 }
 ```
 
-
-
 Finally, add a `static.json` file in the root of your project to define the directory where your static assets will be. You can check all the options for this file in the [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static#configuration) configuration.
 
 ```json:title=static.json
