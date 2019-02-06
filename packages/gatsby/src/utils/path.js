@@ -40,7 +40,7 @@ function withPrefix(prefix, callback) {
 }
 
 function withTrailingSlash(filePath) {
-  if (filePath.match(/\/$/)) {
+  if (filePath.endsWith(`/`)) {
     return filePath
   }
   return `${filePath}/`

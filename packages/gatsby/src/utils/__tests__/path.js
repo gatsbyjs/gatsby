@@ -1,5 +1,4 @@
 const os = require(`os`)
-const path = require(`path`)
 
 const {
   joinPath,
@@ -12,10 +11,11 @@ const {
 const { clear, getAssets } = require(`../asset-path-registry`)
 
 const join = (...parts) => parts.join(`/`)
+const IS_WINDOWS = os.platform() === `win32`
 
 describe(`paths`, () => {
   describe(`joinPath`, () => {
-    if (os.platform() !== `win32`) {
+    if (!IS_WINDOWS) {
       it(`joins paths like path.join on Unix-type platforms.`, () => {
         const paths = [`/foo`, `bar`, `baz`]
         const expected = paths.join(`/`)
@@ -24,7 +24,7 @@ describe(`paths`, () => {
       })
     }
 
-    if (os.platform() === `win32`) {
+    if (IS_WINDOWS) {
       it(`replaces '\\' with '\\\\' on Windows.`, () => {
         const paths = [`foo`, `bar`, `baz`]
         const expected = paths.join(`\\\\`)
@@ -42,7 +42,7 @@ describe(`paths`, () => {
       expect(actual).toBe(expected)
     })
 
-    if (os.platform() !== `win32`) {
+    if (!IS_WINDOWS) {
       it(`behaves like joinPath() on Unix-type platforms, but prepends a basePath`, () => {
         const basePath = `/foo`
         const subPath = `bar`
@@ -53,7 +53,7 @@ describe(`paths`, () => {
       })
     }
 
-    if (os.platform() === `win32`) {
+    if (IS_WINDOWS) {
       it(`behaves like joinPath() on Windows, but prepends a basePath`, () => {
         const basePath = `foo`
         const subPath = `bar`
@@ -99,14 +99,14 @@ describe(`withPathPrefix`, () => {
     const route = [`page-one`]
     const filePath = boundWithPathPrefix(...route)
 
-    expect(filePath).toBe(path.join(prefix, ...route))
+    expect(filePath).toBe(join(prefix, ...route))
   })
 
   it(`works with multiple part pieces`, () => {
     const routes = [`page-one`, `sample`, `index.html`]
     const filePath = boundWithPathPrefix(...routes)
 
-    expect(filePath).toBe(path.join(prefix, ...routes))
+    expect(filePath).toBe(join(prefix, ...routes))
   })
 })
 

@@ -3,15 +3,17 @@ const fs = require(`fs-extra`)
 
 let assets = new Set()
 
+const normalize = filePath => filePath.split(`/`).join(path.sep)
+
 exports.register = function register(file) {
   if (file) {
-    assets.add(file)
+    assets.add(normalize(file))
   }
   return assets
 }
 
 exports.remove = function remove(file) {
-  assets.delete(file)
+  assets.delete(normalize(file))
   return assets
 }
 
