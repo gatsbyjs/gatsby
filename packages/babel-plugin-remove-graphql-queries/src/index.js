@@ -170,6 +170,43 @@ export default function({ types: t }) {
           },
         }
 
+        const nestedHookVisitor = {
+          CallExpression(path2) {
+            if (
+              [`production`, `test`].includes(process.env.NODE_ENV) &&
+              path2.node.callee.name === `useStaticQuery`
+            ) {
+              const identifier = t.identifier(`staticQueryData`)
+              const filename = state.file.opts.filename
+              const shortResultPath = `public/static/d/${this.queryHash}.json`
+              const resultPath = nodePath.join(process.cwd(), shortResultPath)
+              // Add query
+              path2.parentPath.parentPath.replaceWith(
+                t.variableDeclaration(`const`, [
+                  t.variableDeclarator(path2.parent.id, identifier),
+                ])
+              )
+
+              // Add import
+              const importDefaultSpecifier = t.importDefaultSpecifier(
+                identifier
+              )
+              const importDeclaration = t.importDeclaration(
+                [importDefaultSpecifier],
+                t.stringLiteral(
+                  filename
+                    ? nodePath.relative(
+                        nodePath.parse(filename).dir,
+                        resultPath
+                      )
+                    : shortResultPath
+                )
+              )
+              path.unshiftContainer(`body`, importDeclaration)
+            }
+          },
+        }
+
         const tagsToRemoveImportsFrom = new Set()
 
         const setImportForStaticQuery = templatePath => {
@@ -202,6 +239,12 @@ export default function({ types: t }) {
 
           // modify StaticQuery elements and import data only if query is inside StaticQuery
           parent.traverse(nestedJSXVistor, {
+            queryHash,
+            query,
+          })
+
+          // modify useStaticQuery elements and import data only if query is inside useStaticQuery
+          parent.traverse(nestedHookVisitor, {
             queryHash,
             query,
           })
