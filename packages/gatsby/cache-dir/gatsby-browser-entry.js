@@ -36,7 +36,7 @@ const useStaticQuery = query => {
   ) {
     throw new Error(
       `You're likely using a version of React that doesn't support Hooks` +
-        `Please update to React 16.8.0 or later.`
+        `Please update to React 16.8.0 or later to use useStaticQuery.`
     )
   }
   const context = React.useContext(StaticQueryContext)
