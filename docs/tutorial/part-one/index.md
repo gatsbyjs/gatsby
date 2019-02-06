@@ -315,7 +315,7 @@ When you click the new "Contact" link on the homepage, you should see...
 
 > 💡 Want to know more about 404 pages in Gatsby? Check out [the docs](/docs/add-404-page/).
 
-2.  Now you'll have to create a page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage:
+2.  Now you'll have to create a page component for our new "Contact" page at `src/pages/contact.js`, and have it link back to the homepage:
 
 ```jsx:title=src/pages/contact.js
 import React from "react"
