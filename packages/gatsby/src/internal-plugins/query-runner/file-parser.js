@@ -201,7 +201,6 @@ Also note that we are currently unable to use queries defined in files other tha
               Identifier(identifierPath) {
                 if (identifierPath.node.name !== `graphql`) {
                   const varName = identifierPath.node.name
-                  let found = false
                   traverse(ast, {
                     VariableDeclarator(varPath) {
                       if (
@@ -210,7 +209,6 @@ Also note that we are currently unable to use queries defined in files other tha
                       ) {
                         varPath.traverse({
                           TaggedTemplateExpression(templatePath) {
-                            found = true
                             extractStaticQuery(templatePath)
                           },
                         })
