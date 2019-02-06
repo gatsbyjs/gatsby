@@ -129,13 +129,13 @@ jobs:
     executor: node
     <<: *test_template
 
-  integration_tests_longtermcaching:
+  integration_tests_long_term_caching:
     executor: node
     steps:
       - e2e-test:
           test_path: integration-tests/long-term-caching
 
-  integration_tests_gatsbypipeline:
+  integration_tests_gatsby_pipeline:
     executor: node
     steps:
       - e2e-test:
@@ -210,7 +210,9 @@ workflows:
           <<: *ignore_docs
           requires:
             - bootstrap
-      - integration_tests:
+      - integration_tests_long_term_caching:
+          <<: *ignore_docs
+      - integration_tests_gatsby_pipeline:
           <<: *ignore_docs
       - e2e_tests_gatsbygram:
           <<: *e2e-test-workflow
