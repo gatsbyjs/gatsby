@@ -144,7 +144,7 @@ class TagsPage extends React.Component {
                   if (currentLetter !== firstLetter) {
                     currentLetter = firstLetter
                     return (
-                      <React.Fragment>
+                      <React.Fragment key={`letterheader-${currentLetter}`}>
                         <h4 css={{ width: `100%`, flexBasis: `100%` }}>
                           {currentLetter.toUpperCase()}
                         </h4>
