@@ -21,7 +21,7 @@ const TagsSection = ({ tags }) => {
     <div
       css={{
         display: `flex`,
-        flexFlow: `row nowrap`,
+        flexFlow: `row wrap`,
         justifyContent: `space-between`,
         alignItems: `baseline`,
       }}
@@ -31,11 +31,19 @@ const TagsSection = ({ tags }) => {
           ...scale(-1 / 5),
           display: `block`,
           marginBottom: rhythm(1),
+          marginRight: rhythm(2),
+          flexBasis: "60%",
+          flexGrow: 1,
         }}
       >
         Tagged with {tagLinks}
       </em>
-      <Button tiny key="blog-post-view-all-tags-button" to="/blog/tags">
+      <Button
+        css={{ flexShrink: 0 }}
+        tiny
+        key="blog-post-view-all-tags-button"
+        to="/blog/tags"
+      >
         View All Tags <TagsIcon />
       </Button>
     </div>
