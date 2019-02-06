@@ -1799,10 +1799,10 @@
   description: A starter to create SEO-friendly, fast, multilanguage, responsive and highly customizable technical blogs/ portfolios with the most common features out of the box.
   tags:
     - Blog
-    - Multilanguage
     - Portfolio
+    - Web development
+    - Multilanguage
     - Technology
-    - SEO
   features:
     - Multilanguage posts
     - Pagination and image preview for posts
