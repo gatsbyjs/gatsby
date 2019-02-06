@@ -191,7 +191,7 @@ export default function({ types: t }) {
 
               // Add query
               path2.parentPath.parentPath.replaceWith(
-                t.variableDeclaration(`const`, [
+                t.variableDeclaration(path2.parentPath.parent.kind, [
                   t.variableDeclarator(
                     path2.parent.id,
                     t.memberExpression(identifier, t.identifier(`data`))
