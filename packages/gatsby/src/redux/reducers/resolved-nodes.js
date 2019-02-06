@@ -8,7 +8,8 @@ module.exports = (state = new Map(), action) => {
 
     case `SET_RESOLVED_NODES`: {
       const { key, nodes } = action.payload
-      return state.set(key, nodes)
+      state.set(key, nodes)
+      return state
     }
 
     default:
