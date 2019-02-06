@@ -2,7 +2,7 @@ import React from 'react'
 
 import Layout from '../components/layout'
 import * as StaticQuery from '../components/static-query'
-import * as UseVariableQuery from '../components/static-query/use-static-query'
+import * as UseStaticQuery from '../components/static-query/use-static-query'
 
 const StaticQueryPage = () => (
   <Layout>
@@ -15,10 +15,10 @@ const StaticQueryPage = () => (
     <h2>
       <code>useStaticQuery</code>
     </h2>
-    <UseVariableQuery.Inline data-testid="use-static-query-inline" />
-    <UseVariableQuery.Variable data-testid="use-static-query-variable" />
-    <UseVariableQuery.ExportedVariable data-testid="use-static-query-exported" />
-    <UseVariableQuery.Destructuring data-testid="use-static-query-destructuring" />
+    <UseStaticQuery.Inline data-testid="use-static-query-inline" />
+    <UseStaticQuery.Variable data-testid="use-static-query-variable" />
+    <UseStaticQuery.ExportedVariable data-testid="use-static-query-exported" />
+    <UseStaticQuery.Destructuring data-testid="use-static-query-destructuring" />
   </Layout>
 )
 
