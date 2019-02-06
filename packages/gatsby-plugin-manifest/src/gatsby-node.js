@@ -11,7 +11,10 @@ function generateIcons(icons, srcIcon) {
     const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
     const imgPath = path.join(`public`, icon.src)
 
-    return sharp(srcIcon)
+    // For vector graphics, instruct sharp to use a pixel density
+    // suitable for the resolution we're rasterizing to.
+    // For pixel graphics sources this has no effect.
+    return sharp(srcIcon, { density: size })
       .resize(size)
       .toFile(imgPath)
       .then(() => {})
