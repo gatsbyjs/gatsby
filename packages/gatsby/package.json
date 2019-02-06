@@ -56,6 +56,7 @@
     "eslint-plugin-react": "^7.8.2",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
+    "express-history-api-fallback": "^2.2.1",
     "fast-levenshtein": "~2.0.4",
     "file-loader": "^1.1.11",
     "flat": "^4.0.0",
