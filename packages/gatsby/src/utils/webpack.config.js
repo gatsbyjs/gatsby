@@ -149,7 +149,7 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
-            "event-source-polyfill",
+            `event-source-polyfill`,
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
