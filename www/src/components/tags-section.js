@@ -27,7 +27,7 @@ const TagsSection = ({ tags }) => {
       }}
     >
       <em
-        style={{
+        css={{
           ...scale(-1 / 5),
           display: `block`,
           marginBottom: rhythm(1),
