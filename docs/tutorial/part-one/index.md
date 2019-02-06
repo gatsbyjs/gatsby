@@ -362,7 +362,7 @@ surge
 Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `npm run develop`):
 
 ```shell
-gatsby build
+npm run build
 ```
 
 The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `npm run build` command just prepared to deploy.
