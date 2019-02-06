@@ -181,6 +181,14 @@ export default function({ types: t }) {
               const filename = state.file.opts.filename
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
+
+              // Remove imports to useStaticQuery
+              const importPath = path2.scope.getBinding(`useStaticQuery`).path
+              const parent = importPath.parentPath
+              if (importPath.isImportSpecifier())
+                if (parent.node.specifiers.length === 1) parent.remove()
+                else importPath.remove()
+
               // Add query
               path2.parentPath.parentPath.replaceWith(
                 t.variableDeclaration(`const`, [
