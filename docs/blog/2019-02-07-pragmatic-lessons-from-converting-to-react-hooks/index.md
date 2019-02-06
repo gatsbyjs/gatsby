@@ -7,10 +7,10 @@ tags:
   - react hooks
 image: "./images/hooks-diff.jpg"
 showImageInArticle: true
-canonicalLink: "https://dslemay.com/blog/2019/02/04/pragmatic-lessons-from-converting-to-react-hooks"
+canonicalLink: "https://www.dslemay.com/blog/2019/02/06/pragmatic-lessons-from-converting-to-react-hooks"
 ---
 
-Last week I decided to install the React 16.8 alpha on a branch and experiment with React Hooks in preparation for their release on February 4, 2018. The site utilized a [render prop](https://reactjs.org/docs/render-props.html) based Slideshow component in several places as well as a handful of other class based components. Through this process, I was able to consolidate the application code and eliminate all class based components from the site's code base. The React team does not recommend refactoring your entire codebase to Hooks on their release. I did this primarily as a means to engage with the Hooks API in a relatively small codebase. You can find the code conversion to Hooks discussed in this post at the [related PR](https://github.com/dslemay/Portfolio-Site/pull/10).
+Last week I decided to install the React 16.8 alpha on a branch and experiment with React Hooks in preparation for their release on February 6, 2018. The site utilized a [render prop](https://reactjs.org/docs/render-props.html) based Slideshow component in several places as well as a handful of other class based components. Through this process, I was able to consolidate the application code and eliminate all class based components from the site's code base. The React team does not recommend refactoring your entire codebase to Hooks on their release. I did this primarily as a means to engage with the Hooks API in a relatively small codebase. You can find the code conversion to Hooks discussed in this post at the [related PR](https://github.com/dslemay/Portfolio-Site/pull/10).
 
 ## Converting to Hooks and lessons learned
 
@@ -99,17 +99,19 @@ Currently I am structuring all my custom hooks in a top level folder so that oth
 
 ```javascript
 function useMediaQuery() {
-  if (typeof window === "undefined") return { isMobile: false }
-
-  const mql = window.matchMedia("(max-width: 650px)")
-  const [isMobile, setIsMobile] = useState(mql.matches)
+  const [isMobile, setIsMobile] = useState(false)
 
   const handleSizeChange = ({ matches }) => setIsMobile(matches)
 
   useEffect(() => {
-    mql.addListener(handleSizeChange)
+    // Window does not exist on SSR
+    if (typeof window !== "undefined") {
+      const mql = window.matchMedia("(max-width: 650px)")
+      mql.addListener(handleSizeChange)
+      setIsMobile(mql.matches) // Set initial state in DOM
 
-    return () => mql.removeListener(handleSizeChange)
+      return () => mql.removeListener(handleSizeChange)
+    }
   }, [])
 
   return { isMobile }
