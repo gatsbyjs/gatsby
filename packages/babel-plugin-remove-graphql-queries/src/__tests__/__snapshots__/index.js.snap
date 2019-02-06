@@ -51,6 +51,16 @@ export const siteMetaQuery = \\"2673797374\\";
 export const query = \\"2589775908\\";"
 `;
 
+exports[`Transforms exported queries in useStaticQuery 1`] = `
+"import staticQueryData from \\"public/static/d/2626356014.json\\";
+import React from 'react';
+export default (() => {
+  const data = staticQueryData.data;
+  return React.createElement(React.Fragment, null, React.createElement(\\"h1\\", null, data.site.siteMetadata.title), React.createElement(\\"p\\", null, data.site.siteMetadata.description));
+});
+export const query = \\"2626356014\\";"
+`;
+
 exports[`Transforms queries defined in own variable in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
