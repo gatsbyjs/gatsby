@@ -101,8 +101,7 @@ Currently I am structuring all my custom hooks in a top level folder so that oth
 function useMediaQuery() {
   const [isMobile, setIsMobile] = useState(false)
 
-  const handleSizeChange = () =>
-    setIsMobile(matches)
+  const handleSizeChange = ({ matches }) => setIsMobile(matches)
 
   useEffect(() => {
     // Window does not exist on SSR
