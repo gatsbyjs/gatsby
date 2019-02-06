@@ -42,6 +42,8 @@ const useStaticQuery = query => {
   const context = React.useContext(StaticQueryContext)
   if (context[query] && context[query].data) {
     return context[query].data
+  } else {
+    return null
   }
 }
 
