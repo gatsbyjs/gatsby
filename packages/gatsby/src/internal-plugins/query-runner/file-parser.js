@@ -187,7 +187,10 @@ Also note that we are currently unable to use queries defined in files other tha
         // Look for queries in useStaticQuery hooks.
         traverse(ast, {
           CallExpression(hookPath) {
-            if (hookPath.node.callee.name !== `useStaticQuery`) {
+            if (
+              hookPath.node.callee.name !== `useStaticQuery` ||
+              !hookPath.get(`callee`).referencesImport(`gatsby`)
+            ) {
               return
             }
 

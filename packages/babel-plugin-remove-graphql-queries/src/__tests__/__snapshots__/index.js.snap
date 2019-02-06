@@ -36,6 +36,15 @@ export const query = graphql\`
   \`;"
 `;
 
+exports[`Only runs transforms if useStaticQuery is imported from gatsby 1`] = `
+"import React from 'react';
+export default (() => {
+  const query = \\"2626356014\\";
+  const siteTitle = useStaticQuery(query);
+  return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+});"
+`;
+
 exports[`Removes all gatsby queries 1`] = `
 "export default (() => React.createElement(\\"div\\", null, data.site.siteMetadata.title));
 export const siteMetaQuery = \\"2673797374\\";

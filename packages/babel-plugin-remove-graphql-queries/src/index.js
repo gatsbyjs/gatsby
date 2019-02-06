@@ -174,7 +174,8 @@ export default function({ types: t }) {
           CallExpression(path2) {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV) &&
-              path2.node.callee.name === `useStaticQuery`
+              path2.node.callee.name === `useStaticQuery` &&
+              path2.get(`callee`).referencesImport(`gatsby`)
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
@@ -298,7 +299,10 @@ export default function({ types: t }) {
         // Traverse once again for useStaticQuery instances
         path.traverse({
           CallExpression(hookPath) {
-            if (hookPath.node.callee.name !== `useStaticQuery`) {
+            if (
+              hookPath.node.callee.name !== `useStaticQuery` ||
+              !hookPath.get(`callee`).referencesImport(`gatsby`)
+            ) {
               return
             }
 
