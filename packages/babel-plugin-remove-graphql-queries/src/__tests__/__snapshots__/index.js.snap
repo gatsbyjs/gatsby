@@ -61,6 +61,18 @@ export default (() => {
 export const query = \\"2626356014\\";"
 `;
 
+exports[`Transforms queries and preserves destructuring in useStaticQuery 1`] = `
+"import staticQueryData from \\"public/static/d/2626356014.json\\";
+import React from 'react';
+export default (() => {
+  const query = \\"2626356014\\";
+  const {
+    site
+  } = staticQueryData.data;
+  return React.createElement(\\"h1\\", null, site.siteMetadata.title);
+});"
+`;
+
 exports[`Transforms queries defined in own variable in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
