@@ -21,14 +21,14 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build --prefix-paths",
-    "develop": "gatsby develop"
+    "develop": "gatsby develop",
+    "test": "jest --config=../jest.config.js gatsby-pipeline/"
   },
   "devDependencies": {
     "execa": "^1.0.0",
     "fs-extra": "^7.0.1",
-    "jest": "^23.5.0",
-    "jest-cli": "^23.5.0",
-    "prettier": "^1.14.3",
+    "jest": "^24.0.0",
+    "jest-cli": "^24.0.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
   },

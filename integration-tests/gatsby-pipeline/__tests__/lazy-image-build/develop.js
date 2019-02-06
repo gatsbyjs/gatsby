@@ -1,44 +1,13 @@
-const { execFileSync } = require(`child_process`)
 const execa = require(`execa`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const basePath = path.resolve(__dirname, `../../`)
+const glob = require(`glob`)
 const request = require(`request-promise-native`)
+const createDevServer = require(`../../utils/createDevServer`)
+const basePath = path.resolve(__dirname, `../../`)
 
 // 2 min
 jest.setTimeout(2000 * 60)
-
-const bootDevelop = () =>
-  new Promise(resolve => {
-    const devProcess = execa(`yarn`, [`develop`], {
-      cwd: basePath,
-      env: { NODE_ENV: `development` },
-      detached: true,
-    })
-
-    devProcess.stdout.on(`data`, chunk => {
-      if (chunk.toString().includes(`You can now view`)) {
-        // resolving the devProcess wans't seem to resolve the promise so it's wrapped in an object.
-        resolve({ process: devProcess })
-      }
-    })
-  })
-
-const killDevelop = devProcess =>
-  new Promise(resolve => {
-    if (!devProcess) {
-      return resolve()
-    }
-
-    devProcess.on(`exit`, code => {
-      // give it some time to exit
-      setTimeout(() => {
-        resolve()
-      }, 0)
-    })
-
-    return process.kill(-devProcess.pid)
-  })
 
 const cleanDirs = () =>
   Promise.all([
@@ -49,12 +18,10 @@ const cleanDirs = () =>
 describe(`Lazy images`, () => {
   beforeAll(async () => {
     await cleanDirs()
-
-    execFileSync(`yarn`, [], { cwd: basePath })
   })
 
   test(`should process images on demand`, async () => {
-    const { process: devProcess } = await bootDevelop()
+    const { kill } = await createDevServer()
 
     const response = await request(
       `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/a2541/gatsby-astronaut.png`,
@@ -63,34 +30,12 @@ describe(`Lazy images`, () => {
       }
     )
 
-    await killDevelop(devProcess)
+    await kill()
 
     expect(response.statusCode).toBe(200)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/5c9de/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/7e26c/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/360b8/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/893cf/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/a2541/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
+
+    const images = glob.sync(`${basePath}/public/**/*.png`)
+    expect(images.length).toBe(6)
   })
 
   test(`should process the rest of images on build`, async () => {
@@ -99,31 +44,8 @@ describe(`Lazy images`, () => {
       env: { NODE_ENV: `production` },
     })
 
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/5c9de/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/7e26c/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/360b8/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/893cf/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/a2541/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
+    const images = glob.sync(`${basePath}/public/**/*.png`)
+    expect(images.length).toBe(6)
   })
 
   test(`should process all images from a clean build`, async () => {
