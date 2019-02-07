@@ -86,6 +86,7 @@
     "lokijs": "^1.5.6",
     "md5": "^2.2.1",
     "md5-file": "^3.1.1",
+    "micromatch": "^3.1.10",
     "mime": "^2.2.0",
     "mini-css-extract-plugin": "^0.4.0",
     "mitt": "^1.1.2",

@@ -1,11 +1,39 @@
 /* @flow weak */
+const path = require(`path`)
 const openurl = require(`better-opn`)
+const fs = require(`fs-extra`)
 const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
+const mm = require(`micromatch`)
+
+const getPages = directory =>
+  fs
+    .readFile(path.join(directory, `.cache`, `pages.json`))
+    .then(contents => JSON.parse(contents))
+    .catch(() => [])
+
+const historyRouter = (pages, options) => {
+  const clientOnlyRoutes = pages
+    .filter(page => page.matchPath)
+    .map(page => page.matchPath)
+  return (req, res, next) => {
+    const { url } = req
+    if (clientOnlyRoutes.some(route => mm.isMatch(url, route))) {
+      if (req.accepts(`html`)) {
+        return res.sendFile(`index.html`, options, err => {
+          if (err) {
+            next()
+          }
+        })
+      }
+    }
+    return next()
+  }
+}
 
 module.exports = async program => {
   let { prefixPaths, port, open, host } = program
@@ -18,13 +46,17 @@ module.exports = async program => {
   let pathPrefix = config && config.pathPrefix
   pathPrefix = prefixPaths && pathPrefix ? pathPrefix : `/`
 
+  const root = path.join(program.directory, `public`)
+  const pages = await getPages(program.directory)
+
   const app = express()
   const router = express.Router()
   router.use(compression())
   router.use(express.static(`public`))
+  router.use(historyRouter(pages, { root }))
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
-      res.status(404).sendFile(`404.html`, { root: `public` })
+      res.status(404).sendFile(`404.html`, { root })
     } else {
       next()
     }
@@ -50,7 +82,5 @@ module.exports = async program => {
     }
   })
 
-  signalExit((code, signal) => {
-    server.close()
-  })
+  signalExit(() => server.close())
 }
