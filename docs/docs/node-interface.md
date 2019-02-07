@@ -14,6 +14,10 @@ parent: String,
 // Reserved for plugins who wish to extend other nodes.
 fields: Object,
 internal: {
+  // Digest "Hash" (for example `md5sum`) of the content of this node.
+  // The digest should be unique to the content of this node since it's used for cacheing.
+  // If the content changes, this digest should also change.
+  // Helper function to create an `md5` digest: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/create-content-digest.js
   contentDigest: String,
   // Optional media type (https://en.wikipedia.org/wiki/Media_type) to indicate
   // to transformer plugins this node has data they can further process.
