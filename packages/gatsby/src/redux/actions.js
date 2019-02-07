@@ -1138,6 +1138,14 @@ actions.addThirdPartySchema = (
   }
 }
 
+actions.addTypeDefs = (typeDefs: string, plugin: Plugin, traceId?: string) => {
+  return {
+    type: `ADD_TYPE_DEFS`,
+    plugin,
+    traceId,
+    payload: typeDefs,
+  }
+}
 /**
  * All action creators wrapped with a dispatch.
  */

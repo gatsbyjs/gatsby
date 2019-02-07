@@ -8,6 +8,7 @@ const {
 } = require(`./types/NodeInterface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findMany, findManyPaginated } = require(`./resolvers`)
+const { InferDirective, DontInferDirective } = require(`./types/directives`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
@@ -68,7 +69,9 @@ const updateSchemaComposer = async ({
   parentSpan,
 }) => {
   schemaComposer.add(GraphQLDate)
-  // await addTypeDefs({ schemaComposer, parentSpan, typeDefs })
+  schemaComposer.addDirective(InferDirective)
+  schemaComposer.addDirective(DontInferDirective)
+  await addTypeDefs({ schemaComposer, parentSpan, typeDefs })
   await addInferredTypes({ schemaComposer, nodeStore, parentSpan })
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
@@ -111,11 +114,11 @@ const processTypeComposer = async ({
   }
 }
 
-// const addTypeDefs = ({ schemaComposer, typeDefs, parentSpan }) => {
-//   typeDefs.forEach(typeDef => {
-//     schemaComposer.addTypeDefs(typeDef)
-//   })
-// }
+const addTypeDefs = ({ schemaComposer, typeDefs, parentSpan }) => {
+  typeDefs.forEach(typeDef => {
+    schemaComposer.addTypeDefs(typeDef)
+  })
+}
 
 const addSetFieldsOnGraphQLNodeTypeFields = ({
   schemaComposer,

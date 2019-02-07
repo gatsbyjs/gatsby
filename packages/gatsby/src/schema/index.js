@@ -10,16 +10,16 @@ module.exports.build = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
-  let { thirdPartySchemas } = store.getState()
+  let {
+    schemaCustomization: { thirdPartySchemas, typeDefs },
+  } = store.getState()
 
   const schemaComposer = new SchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
     nodeStore,
-    // typeDefs,
-    // resolvers,
+    typeDefs,
     thirdPartySchemas,
-    // directives,
     parentSpan,
   })
 
@@ -42,13 +42,12 @@ module.exports.rebuildWithSitePage = async ({ parentSpan }) => {
     spanArgs
   )
   let {
-    schemaComposer: { composer: schemaComposer },
+    schemaCustomization: { composer: schemaComposer },
   } = store.getState()
 
   const schema = await rebuildSchemaWithSitePage({
     schemaComposer,
     nodeStore,
-    // directives,
     parentSpan,
   })
 

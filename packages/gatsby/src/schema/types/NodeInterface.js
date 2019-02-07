@@ -65,7 +65,10 @@ const getNodeInterface = ({ schemaComposer }) =>
 
 const hasNodeInterface = ({ schemaComposer, typeComposer }) => {
   const NodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
-  return typeComposer.hasInterface(NodeInterfaceTC)
+  return (
+    typeComposer.hasInterface(NodeInterfaceTC) ||
+    typeComposer.hasInterface(NodeInterfaceTC.getType())
+  )
 }
 
 module.exports = {
