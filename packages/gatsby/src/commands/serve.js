@@ -1,5 +1,4 @@
 /* @flow weak */
-const path = require(`path`)
 const openurl = require(`better-opn`)
 const fs = require(`fs-extra`)
 const signalExit = require(`signal-exit`)
