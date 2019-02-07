@@ -1,5 +1,567 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`transformer-react-doc-gen: onCreateNode Complex example should handle members should handle type unions 1`] = `
+Object {
+  "elements": Array [
+    Object {
+      "name": "ObjectType",
+      "type": "NameExpression",
+      "typeDef___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]",
+    },
+    Object {
+      "name": "Object",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  ],
+  "type": "UnionType",
+}
+`;
+
+exports[`transformer-react-doc-gen: onCreateNode Complex example should handle typedefs should handle type applications 1`] = `
+Object {
+  "children": Array [
+    "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+  ],
+  "commentNumber": null,
+  "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+  "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+  "internal": Object {
+    "contentDigest": "content-digest",
+    "type": "DocumentationJs",
+  },
+  "level": 1,
+  "name": "ready",
+  "optional": false,
+  "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]",
+  "type": Object {
+    "applications": Array [
+      Object {
+        "name": "any",
+        "type": "NameExpression",
+        "typeDef___NODE": null,
+      },
+    ],
+    "expression": Object {
+      "name": "Promise",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+    "type": "TypeApplication",
+  },
+}
+`;
+
+exports[`transformer-react-doc-gen: onCreateNode Simple example creates doc json apple node 1`] = `
+Array [
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+      "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]",
+    ],
+    "commentNumber": 0,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+    "examples": Array [
+      Object {
+        "highlighted": "<span class=\\"token keyword\\">const</span> apple <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'apple'</span><span class=\\"token punctuation\\">)</span>
+<span class=\\"token function\\">apple</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span>",
+        "raw": "const apple = require('apple')
+apple()",
+      },
+    ],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "kind": "function",
+    "level": 0,
+    "memberof": "code",
+    "members": Object {},
+    "name": "apple",
+    "optional": false,
+    "params___NODE": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]",
+    ],
+    "parent": "node_1",
+    "scope": "static",
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "A pretty cool jsdoc example
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 1,
+    "name": "paramName",
+    "optional": false,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"}]",
+    "type": Object {
+      "name": "string",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "A nice crispy apple
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"apple\\",\\"kind\\":\\"function\\",\\"scope\\":\\"static\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+      "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"},{\\"name\\":\\"object\\",\\"scope\\":\\"static\\"}]",
+    ],
+    "commentNumber": 1,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+    "examples": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 0,
+    "memberof": "code",
+    "members": Object {
+      "static___NODE": Array [
+        "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"},{\\"name\\":\\"object\\",\\"scope\\":\\"static\\"}]",
+      ],
+    },
+    "name": "complex",
+    "optional": false,
+    "parent": "node_1",
+    "scope": "static",
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "More complex example
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"},{\\"name\\":\\"object\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"},{\\"name\\":\\"object\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+    "examples": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"},{\\"name\\":\\"object\\",\\"scope\\":\\"static\\"}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 1,
+    "memberof": "code.complex",
+    "members": Object {},
+    "name": "object",
+    "optional": false,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"}]",
+    "scope": "static",
+    "type": Object {
+      "elements": Array [
+        Object {
+          "name": "ObjectType",
+          "type": "NameExpression",
+          "typeDef___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]",
+        },
+        Object {
+          "name": "Object",
+          "type": "NameExpression",
+          "typeDef___NODE": null,
+        },
+      ],
+      "type": "UnionType",
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"},{\\"name\\":\\"object\\",\\"scope\\":\\"static\\"}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "Description of function
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"complex\\",\\"scope\\":\\"static\\"},{\\"name\\":\\"object\\",\\"scope\\":\\"static\\"}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"}]--DocumentationJSComponentDescription--comment.description",
+      "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]",
+      "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"returns\\",\\"fieldIndex\\":0}]",
+    ],
+    "commentNumber": 2,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"}]--DocumentationJSComponentDescription--comment.description",
+    "examples": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "kind": "typedef",
+    "level": 0,
+    "members": Object {},
+    "name": "CallbackType",
+    "optional": false,
+    "params___NODE": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]",
+    ],
+    "parent": "node_1",
+    "returns___NODE": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"returns\\",\\"fieldIndex\\":0}]",
+    ],
+    "type": Object {
+      "name": "Function",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "Description of callback type
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 1,
+    "name": "message",
+    "optional": false,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"}]",
+    "type": Object {
+      "name": "string",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "A message to split
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"params\\",\\"fieldIndex\\":0}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"returns\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"returns\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"returns\\",\\"fieldIndex\\":0}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 1,
+    "optional": false,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"}]",
+    "type": Object {
+      "applications": Array [
+        Object {
+          "name": "string",
+          "type": "NameExpression",
+          "typeDef___NODE": null,
+        },
+      ],
+      "expression": Object {
+        "name": "Array",
+        "type": "NameExpression",
+        "typeDef___NODE": null,
+      },
+      "type": "TypeApplication",
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"returns\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "Splitted message
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"returns\\",\\"fieldIndex\\":0}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]--DocumentationJSComponentDescription--comment.description",
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+    ],
+    "commentNumber": 3,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]--DocumentationJSComponentDescription--comment.description",
+    "examples": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "kind": "typedef",
+    "level": 0,
+    "members": Object {},
+    "name": "ObjectType",
+    "optional": false,
+    "parent": "node_1",
+    "properties___NODE": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+    ],
+    "type": Object {
+      "name": "Object",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "Description of object type
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 1,
+    "name": "ready",
+    "optional": false,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]",
+    "type": Object {
+      "applications": Array [
+        Object {
+          "name": "any",
+          "type": "NameExpression",
+          "typeDef___NODE": null,
+        },
+      ],
+      "expression": Object {
+        "name": "Promise",
+        "type": "NameExpression",
+        "typeDef___NODE": null,
+      },
+      "type": "TypeApplication",
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "Returns promise that resolves when instance is ready to use
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]--DocumentationJSComponentDescription--comment.description",
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":2}]",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]--DocumentationJSComponentDescription--comment.description",
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 1,
+    "name": "nested",
+    "optional": false,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}]",
+    "properties___NODE": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":2}]",
+    ],
+    "type": Object {
+      "name": "Object",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "This is nested object
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 2,
+    "name": "foo",
+    "optional": false,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+    "type": Object {
+      "name": "string",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "This is field in nested object
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]--DocumentationJSComponentDescription--comment.description",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]--DocumentationJSComponentDescription--comment.description",
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 2,
+    "name": "optional",
+    "optional": true,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+    "type": Object {
+      "name": "number",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "This is optional field in nested object
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+  },
+  Object {
+    "children": Array [
+      "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":2}]--DocumentationJSComponentDescription--comment.description",
+    ],
+    "commentNumber": null,
+    "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":2}]--DocumentationJSComponentDescription--comment.description",
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":2}]",
+    "internal": Object {
+      "contentDigest": "content-digest",
+      "type": "DocumentationJs",
+    },
+    "level": 2,
+    "name": "callback",
+    "optional": false,
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1}]",
+    "type": Object {
+      "name": "CallbackType",
+      "type": "NameExpression",
+      "typeDef___NODE": "documentationJS node_1 path #[{\\"name\\":\\"CallbackType\\",\\"kind\\":\\"typedef\\"}]",
+    },
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":2}]--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "This is function in nested object
+",
+      "contentDigest": "content-digest",
+      "mediaType": "text/markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":1},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":2}]",
+  },
+]
+`;
+
 exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: description content 1`] = `
 "A pretty cool jsdoc example
 "
