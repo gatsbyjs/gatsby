@@ -4,7 +4,7 @@ title: Gatsby Link & navigate
 
 For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function.
 
-These are what enable Gatsby's powerful per-route code splitting and page pre-loading. Preloading is triggered by a `<Link>` component entering the viewport-- normal HTML links will not be pre-loaded.
+ Gatsby's `<Link>` component enables linking to internal pages as well as a powerful performance feature called preloading. Preloading is used to prefetch resources so that they're ready incredibly fast when a user performs a navigation.
 
 Gatsby's `<Link>` is a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link) that adds enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
 
