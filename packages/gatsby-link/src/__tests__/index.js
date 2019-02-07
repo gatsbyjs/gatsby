@@ -159,6 +159,15 @@ describe(`navigate`, () => {
       undefined
     )
   })
+
+  it(`will ignore pathPrefix is asked to`, () => {
+    const to = `#some-id`
+    const options = { withoutPrefix: true }
+    global.__PATH_PREFIX__ = `/blog`
+    getNavigate()(to)
+
+    expect(global.___navigate).toHaveBeenCalledWith(`${to}`, options)
+  })
 })
 
 describe(`ref forwarding`, () => {
