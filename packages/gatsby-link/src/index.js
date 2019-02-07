@@ -5,6 +5,8 @@ import { Link } from "@reach/router"
 
 import { parsePath } from "./parse-path"
 
+export { parsePath }
+
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
 }
