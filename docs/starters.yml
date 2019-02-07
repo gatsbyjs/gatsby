@@ -1818,7 +1818,7 @@
     - no-more-noodels: Say good-bye to spaghetti code!
     - hot-and-spicy: This starter will always use the most recent version of magicsoup.io/stock.
     - ready-to-serve: Zero config, ready to serve in production. Choose your favorite gatsby deployment.
-    - Uses MagigSoup.io to create awesome UIs
+    - Uses MagicSoup.io to create awesome UIs
     - Uses styled-system and styled-components with working SSR
     - Maps markdown to styled-components
     - JSON data for specific page data
