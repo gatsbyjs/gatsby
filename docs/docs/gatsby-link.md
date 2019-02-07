@@ -2,7 +2,7 @@
 title: Gatsby Link & navigate
 ---
 
-For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function.
+ For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function, for dynamic navigation.
 
  Gatsby's `<Link>` component enables linking to internal pages as well as a powerful performance feature called preloading. Preloading is used to prefetch resources so that they're ready incredibly fast when a user performs a navigation.
 
