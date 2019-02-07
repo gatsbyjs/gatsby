@@ -105,11 +105,10 @@ exports.onPostBuild = (args, pluginOptions) => {
     clientsClaim: true,
   }
 
-  // pluginOptions.plugins is assigned automatically when the user hasn't
-  // specified custom options - Workbox throws an error with unsupported
-  // parameters, so delete it.
-  delete pluginOptions.plugins
-  const combinedOptions = _.defaults(pluginOptions, options)
+  const combinedOptions = {
+    ...options,
+    ...pluginOptions.workboxConfig,
+  }
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
@@ -125,8 +124,13 @@ exports.onPostBuild = (args, pluginOptions) => {
       const swAppend = fs
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
         .replace(/%pathPrefix%/g, pathPrefix)
-
       fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
+
+      if (pluginOptions.injectScript) {
+        const userAppend = fs.readFileSync(pluginOptions.injectScript, `utf8`)
+        fs.appendFileSync(`public/sw.js`, `\n` + userAppend)
+      }
+
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )

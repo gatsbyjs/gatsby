@@ -19,13 +19,66 @@ in the service worker.
 plugins: [`gatsby-plugin-offline`]
 ```
 
-## Overriding options
+## Available options
 
-When adding this plugin to your `gatsby-config.js`, you can pass in options to
-override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
+As of `gatsby-plugin-offline` 2.1.0, the following options are available:
 
-The default config is as follows. Warning: you can break the offline support by
-changing these options, so tread carefully.
+- `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration)
+- `injectScript` lets you specify a file to be injected into the end of the generated service worker (`sw.js`)
+
+For example:
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      workboxConfig: {
+        importWorkboxFrom: `cdn`,
+      },
+      injectScript: `src/custom-sw-code.js`,
+    },
+  },
+]
+```
+
+## Upgrading from 2.0.x
+
+To upgrade from 2.0.x to 2.1.x, move any existing options into the `workboxConfig` option. If you haven't specified any options, you have nothing to do.
+
+For example, here is a 2.0.x config:
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      importWorkboxFrom: `cdn`,
+    },
+  },
+]
+```
+
+Here is the equivalent 2.1.x config:
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      workboxConfig: {
+        importWorkboxFrom: `cdn`,
+      },
+    },
+  },
+]
+```
+
+## Overriding Workbox configuration
+
+When adding this plugin to your `gatsby-config.js`, you can use the option `workboxConfig` to override the default Workbox config. To see the full list of options, see [this article on Google Developers](https://developers.google.com/web/tools/workbox/modules/workbox-build#full_generatesw_config).
+
+The default `workboxConfig` is as follows. Note that some of these options are configured automatically, e.g. `globPatterns`. If you're not sure about what all of these options mean, it's best to leave them as-is - otherwise, you may end up causing errors on your site, causing old files to be remain cached, or even breaking offline support.
 
 ```javascript
 const options = {
