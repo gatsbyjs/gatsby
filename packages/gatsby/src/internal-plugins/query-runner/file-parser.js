@@ -204,6 +204,7 @@ Also note that we are currently unable to use queries defined in files other tha
               Identifier(identifierPath) {
                 if (identifierPath.node.name !== `graphql`) {
                   const varName = identifierPath.node.name
+                  let found = false
                   traverse(ast, {
                     VariableDeclarator(varPath) {
                       if (
@@ -212,12 +213,22 @@ Also note that we are currently unable to use queries defined in files other tha
                       ) {
                         varPath.traverse({
                           TaggedTemplateExpression(templatePath) {
+                            found = true
                             extractStaticQuery(templatePath)
                           },
                         })
                       }
                     },
                   })
+                  if (!found) {
+                    report.warn(
+                      `\nWe were unable to find the declaration of variable "${varName}", which you passed as the "query" prop into useStaticQuery in "${file}".
+
+Perhaps the variable name has a typo?
+
+Also note that we are currently unable to use queries defined in files other than the file where useStaticQuery is used. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
+                    )
+                  }
                 }
               },
             })
