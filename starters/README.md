@@ -75,7 +75,7 @@ A starter is a simplified example to get up and running with Gatsby quickly and 
 npx gatsby new my-blazing-fast-site
 ```
 
-e.g. `npx gatsby new blog my-blazing-fast-site` or `npx gatsby new hello-world my-blazing-fast-site` to use a specific starter!
+e.g. `npx gatsby new my-blazing-fast-site blog` or `npx gatsby new my-blazing-fast-site hello-world` to use a specific starter!
 
 This will clone the starter of specified name into the folder `my-blazing-fast-site` and get you up and running in under 5 minutes with Gatsby and a fantastic starter. We can't wait to see what you build!
 
