@@ -50,8 +50,6 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
   describe(`Simple example`, () => {
     it(`creates doc json apple node`, () => {
-      expect(createdNodes).toMatchSnapshot()
-
       const appleNode = createdNodes.find(node => node.name === `apple`)
       expect(appleNode).toBeDefined()
     })
