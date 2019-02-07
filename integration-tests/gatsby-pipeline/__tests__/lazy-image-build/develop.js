@@ -55,30 +55,7 @@ describe(`Lazy images`, () => {
       env: { NODE_ENV: `production` },
     })
 
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/5c9de/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/7e26c/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/360b8/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/893cf/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
-    await expect(
-      fs.pathExists(
-        `${basePath}/public/static/6d91c86c0fde632ba4cd01062fd9ccfa/a2541/gatsby-astronaut.png`
-      )
-    ).resolves.toBe(true)
+    const images = glob.sync(`${basePath}/public/**/*.png`)
+    expect(images.length).toBe(6)
   })
 })
