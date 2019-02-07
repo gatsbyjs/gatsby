@@ -30,7 +30,7 @@ exports.sourceNodes = (
   return MongoClient.connect(connectionURL)
     .then(db => {
       let collection = pluginOptions.collection || [`documents`]
-      if (!_.isArray(collection)) {
+      if (!Array.isArray(collection)) {
         collection = [collection]
       }
 

@@ -49,3 +49,10 @@ tagged with **gatsby** or
 If you need an answer right away, check out the
 [Gatsby Discord](https://gatsby.app/discord). Community & team members are happy to help you out or point you to
 useful resources.
+
+### Hashnode
+
+Many members of the community also use Hashnode to ask questions and share their tips. Read through
+the [existing questions and posts](https://hashnode.com/n/gatsby)
+tagged with **gatsby** or
+[ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.

@@ -241,6 +241,20 @@
     - Documentation
     - Web Development
     - Open Source
+- title: Ghost Documentation
+  main_url: https://docs.ghost.org/
+  url: https://docs.ghost.org/
+  source_url: "https://github.com/tryghost/docs"
+  featured: false
+  description: >-
+    Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
+  categories:
+    - Publishing
+    - Technology
+    - Documentation
+    - Open Source
+  built_by: Ghost Foundation
+  built_by_url: https://ghost.org/
 - title: Nike - Just Do It
   main_url: "https://justdoit.nike.com/"
   url: "https://justdoit.nike.com/"
@@ -3249,17 +3263,6 @@
     - Web Development
   built_by: Codedebug
   built_by_url: "https://codedebug.co/"
-- title: Ghost Documentation
-  main_url: https://docs.ghost.org/
-  url: https://docs.ghost.org/
-  description: >-
-    Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
-  categories:
-    - Publishing
-    - Documentation
-  built_by: Ghost Foundation
-  built_by_url: https://ghost.org/
-  featured: false
 - title: BELLHOPS
   main_url: https://www.getbellhops.com/
   url: https://www.getbellhops.com/
@@ -3941,6 +3944,14 @@
     - Health & Wellness
   built_by: Jack Oliver
   built_by_url: "https://twitter.com/mrjackolai"
+- title: TheAgencyProject
+  main_url: "https://theagencyproject.co"
+  url: "https://theagencyproject.co"
+  description: Agency model, without agency overhead.
+  categories:
+    - agency
+  built_by: JV-LA
+  built_by_url: https://jv-la.com
 - title: Karen Hou's portfolio
   main_url: https://www.karenhou.com/
   url: https://www.karenhou.com/
@@ -4073,4 +4084,122 @@
     - Entrepreneurship
   built_by: Vipin Kumar Rawat
   built_by_url: "https://github.com/aesthytik"
+  featured: false
+- title: HyakuninIsshu
+  main_url: "https://hyakuninanki.net"
+  url: "https://hyakuninanki.net"
+  source_url: "https://github.com/rei-m/web_hyakuninisshu"
+  description: >
+    HyakuninIsshu is a traditional Japanese card game.
+  categories:
+    - Education
+    - Gallery
+    - Entertainment
+  built_by: Rei Matsushita
+  built_by_url: "https://github.com/rei-m/"
+  featured: false
+- title: WQU Partners
+  main_url: "https://partners.wqu.org/"
+  url: "https://partners.wqu.org/"
+  featured: false
+  categories:
+    - Marketing
+    - Education
+    - Landing Page
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: Federico Giacone
+  url: "https://federico.giac.one/"
+  main_url: "https://federico.giac.one"
+  source_url: "https://github.com/leopuleo/federico.giac.one"
+  description: >
+    Digital portfolio for Italian Architect Federico Giacone.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Leonardo Giacone
+  built_by_url: "https://github.com/leopuleo"
+  featured: false
+- title: Station
+  url: "https://getstation.com/"
+  main_url: "https://getstation.com/"
+  description: Station is the first smart browser for busy people. A single place for all of your web applications.
+  categories:
+    - Technology
+    - Web Development
+    - Productivity
+  featured: false
+- title: Vyron Vasileiadis
+  url: "https://fedonman.com/"
+  main_url: "https://fedonman.com"
+  source_url: "https://github.com/fedonman/fedonman-website"
+  description: Personal space of Vyron Vasileiadis aka fedonman, a Web & IoT Developer, Educator and Entrepreneur based in Athens, Greece.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+    - Education
+  built_by: Vyron Vasileiadis
+  built_by_url: "https://github.com/fedonman"
+- title: Fabien Champigny
+  url: "https://www.champigny.name/"
+  main_url: "https://www.champigny.name/"
+  built_by_url: "https://www.champigny.name/"
+  description: Fabien Champigny's personal blog. Entrepreneur, hacker and loves street photo.
+  categories:
+    - Blog
+    - Gallery
+    - Photography
+    - Productivity
+    - Entrepreneurship
+  featured: false
+- title: Alex Xie - Portfolio
+  url: https://alexieyizhe.me/
+  main_url: https://alexieyizhe.me/
+  source_url: https://github.com/alexieyizhe/alexieyizhe.github.io
+  description: >
+    Personal website of Alex Yizhe Xie, a University of Waterloo Computer Science student and coding enthusiast.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  featured: false
+- title: Equithon
+  url: https://equithon.org/
+  main_url: https://equithon.org/
+  source_url: https://github.com/equithon/site-main/
+  built_by: Alex Xie
+  built_by_url: https://alexieyizhe.me/
+  description: >
+    Equithon is the largest social innovation hackathon in Waterloo, Canada. It was founded in 2016 to tackle social equity issues and create change.
+  categories:
+    - Education
+    - Event
+    - Hackathon
+    - Learning
+    - Open Source
+    - Nonprofit
+    - Technology
+  featured: false
+- title: Dale Blackburn - Portfolio
+  url: https://dakebl.co.uk/
+  main_url: https://dakebl.co.uk/
+  source_url: https://github.com/dakebl/dakebl.co.uk
+  description: >
+    Dale Blackburn's personal website and blog.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  featured: false
+- title: Portfolio of Anthony Wiktor
+  url: https://www.anthonydesigner.com/
+  main_url: https://www.anthonydesigner.com/
+  description: >
+    Anthony Wiktor is a Webby Award-Winning Creative Director and Digital Designer twice named Hot 100 by WebDesigner Magazine. Anthony has over a decade of award-winning experience in design and has worked on projects across a diverse set of industries — from entertainment to consumer products to hospitality to technology. Anthony is a frequent lecturer at USC’s Annenberg School for Communication & Journalism and serves on the board of AIGA Los Angeles.
+  categories:
+    - Portfolio
+    - Marketing
+  built_by: Maciej Leszczyński
+  built_by_url: http://twitter.com/_maciej
   featured: false

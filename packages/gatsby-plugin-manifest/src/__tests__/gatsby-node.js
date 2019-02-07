@@ -5,13 +5,38 @@ jest.mock(`fs`, () => {
     statSync: jest.fn(),
   }
 })
+/*
+ * We mock sharp because it depends on fs implementation (which is mocked)
+ * this causes test failures, so mock it to avoid
+ */
+jest.mock(`sharp`, () => {
+  let sharp = jest.fn(
+    () =>
+      new class {
+        resize() {
+          return this
+        }
+        toFile() {
+          return Promise.resolve()
+        }
+      }()
+  )
+  sharp.simd = jest.fn()
+  return sharp
+})
 const fs = require(`fs`)
 const path = require(`path`)
+const sharp = require(`sharp`)
 const { onPostBootstrap } = require(`../gatsby-node`)
 
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
     fs.writeFileSync.mockReset()
+  })
+
+  // the require of gatsby-node performs the invoking
+  it(`invokes sharp.simd for optimization`, () => {
+    expect(sharp.simd).toHaveBeenCalledTimes(1)
   })
 
   it(`correctly works with default parameters`, async () => {
@@ -26,6 +51,31 @@ describe(`Test plugin manifest options`, () => {
     const [filePath, contents] = fs.writeFileSync.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
     expect(contents).toMatchSnapshot()
+  })
+
+  it(`invokes sharp if icon argument specified`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const icon = `pretend/this/exists.png`
+
+    await onPostBootstrap([], {
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `standalone`,
+      icon,
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `48x48`,
+          type: `image/png`,
+        },
+      ],
+    })
+
+    expect(sharp).toHaveBeenCalledWith(icon)
   })
 
   it(`fails on non existing icon`, done => {

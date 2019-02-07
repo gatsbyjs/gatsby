@@ -50,6 +50,7 @@ module.exports = {
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        include_favicon: true, // Include favicon
       },
     },
   ],
@@ -226,6 +227,31 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
         theme_color_in_head: false, // This will avoid adding theme-color meta tag.
+      },
+    },
+  ],
+}
+```
+
+## Exclude `favicon` link tag
+
+Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behaviour.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
+        include_favicon: false, // This will exclude favicon link tag
       },
     },
   ],
