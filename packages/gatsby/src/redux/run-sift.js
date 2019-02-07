@@ -279,14 +279,11 @@ function handleMany(siftArgs, nodes, sort) {
  */
 module.exports = (args: Object) => {
   const { queryArgs, gqlType, firstOnly = false } = args
-  // Clone args as for some reason graphql-js removes the constructor
-  // from nested objects which breaks a check in sift.js.
-  const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
 
   // If nodes weren't provided, then load them from the DB
   const nodes = args.nodes || getNodesByType(gqlType.name)
 
-  const { siftArgs, fieldsToSift } = parseFilter(clonedArgs.filter)
+  const { siftArgs, fieldsToSift } = parseFilter(queryArgs.filter)
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
@@ -312,7 +309,7 @@ module.exports = (args: Object) => {
     if (firstOnly) {
       return handleFirst(siftArgs, resolvedNodes)
     } else {
-      return handleMany(siftArgs, resolvedNodes, clonedArgs.sort)
+      return handleMany(siftArgs, resolvedNodes, queryArgs.sort)
     }
   })
 }
