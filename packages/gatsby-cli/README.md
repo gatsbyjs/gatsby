@@ -74,6 +74,7 @@ At the root of a Gatsby app run `gatsby clean` to wipe out the cache (`.cache` f
 - Stale data, e.g. this file/resource/etc. isn't appearing
 - GraphQL error, e.g. this GraphQL resource _should_ be present but is not
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
+- Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
 
 ### `info`
 
