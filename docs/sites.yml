@@ -4203,3 +4203,14 @@
   built_by: Maciej Leszczyński
   built_by_url: http://twitter.com/_maciej
   featured: false
+- title: Frame.io Workflow Guide
+  main_url: https://workflow.frame.io
+  url: https://workflow.frame.io
+  description: >
+    The web’s most comprehensive post-production resource, written by pro filmmakers, for pro filmmakers. Always expanding, always free.
+  categories:
+    - Education
+    - Cinema
+  built_by: Frame.io
+  built_by_url: https://frame.io
+  featured: false
