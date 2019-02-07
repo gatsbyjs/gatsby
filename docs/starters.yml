@@ -1805,3 +1805,24 @@
     - Responsive youtube/vimeo etc. videos
     - Elastic menu
     - Fully responsive site
+- url: https://gatsby.magicsoup.io/
+  repo: https://github.com/magicsoup-io/gatsby-starter-magicsoup
+  description: A production ready gatsby starter using MagicSoup.io
+  tags:
+    - SEO
+    - Markdown
+    - Testing
+    - Styling:MagicSoup.io
+  features:
+    - instant-soup: This starter is based on the GatsbyJS default starter, but has our magicsoup.io/stock module included! So you can use it in your templates and components.
+    - no-more-noodels: Say good-bye to spaghetti code!
+    - hot-and-spicy: This starter will always use the most recent version of magicsoup.io/stock.
+    - ready-to-serve: Zero config, ready to serve in production. Choose your favorite gatsby deployment.
+    - Uses MagigSoup.io to create awesome UIs
+    - Uses styled-system and styled-components with working SSR
+    - Maps markdown to styled-components
+    - JSON data for specific page data
+    - Webfont loader
+    - Sitemap Generator
+    - Basic-UI
+    - Testsetup with Jest and working examples
