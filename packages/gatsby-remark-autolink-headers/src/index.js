@@ -29,7 +29,7 @@ module.exports = (
     patch(data.hProperties, `id`, id)
 
     if (icon !== false) {
-      const label = id.split('-').join(' ')
+      const label = id.split(`-`).join(` `)
       node.children.unshift({
         type: `link`,
         url: `#${id}`,
