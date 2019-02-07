@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-images-contentful",
-  "version": "2.0.5",
+  "version": "2.0.7",
   "description": "Process Images in Contentful markdown so they can use the images API.",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "cheerio": "^1.0.0-rc.2",
     "is-relative-url": "^2.0.0",
     "lodash": "^4.17.10",
-    "sharp": "^0.21.0",
+    "sharp": "^0.21.3",
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
   "author": "Khaled Garbaya <khaledgarbaya@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": "^2.0.0"
   },
   "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
 }

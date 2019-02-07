@@ -13,7 +13,17 @@ The best part of open source is the community, and every community is stronger w
 
 ### What we expect in pair programming sessions
 
-- Open community pair programming sessions are _only_ for Gatsby and/or open source projects
+These sessions are intended for people who:
+
+- would like to get started with Gatsby, or
+- would like to get started with contributing to open source software, or
+- would like to work on an issue or pull request related to Gatsby, or
+- are using Gatsby for a personal, open source, charity or education project
+
+If you're interested in support for a commercial Gatsby project, please [get in touch via the support page](https://www.gatsbyjs.com/support/).
+
+We also expect the following from pair programming participants:
+
 - If you have a specific goal for the session, that’s helpful, but we can also choose an open issue to tackle if you’re not sure where to start
 - All participants are expected to adhere to [Gatsby’s code of conduct](/docs/code-of-conduct/)
 - We will ask if it’s okay to record our session; you are _not_ required to let us record

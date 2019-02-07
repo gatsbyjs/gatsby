@@ -4,7 +4,7 @@ title: How to label an issue
 
 ## What are issue labels?
 
-Issue labels are a tool in GitHub that that is used to group issues into one or more categories.
+Issue labels are a tool in GitHub that are used to group issues into one or more categories.
 
 [Check out Gatsby's labels (and their descriptions)](https://github.com/gatsbyjs/gatsby/issues/labels)
 
@@ -24,7 +24,7 @@ Anyone who's a member of the [Gatsby Maintainers team](https://github.com/orgs/g
 
 You can get an invite to the team by having a Pull Request merged into the Gatsby project. Check out the list of [`help wanted`](https://github.com/gatsbyjs/gatsby/labels/%F0%9F%93%8D%20status%3A%20help%20wanted) issues and the [How To Contribute Guide](/docs/how-to-contribute/) to get started.
 
-**NOTE:** If you’ve already had a pull request merged and you have _not_ been invited to the maintainers team, please go to [the dashboard](https://store.gatsbyjs.org/account/dashboard) and request a discount code. You should get an invite to the team — _and you get free Gatsby swag!_ If that doesn’t work, please email team@gatsbyjs.com and we'll get you invited.
+**NOTE:** If you’ve already had a pull request merged and you have _not_ been invited to the maintainers team, please go to [the dashboard](https://store.gatsbyjs.org/) and request a discount code. You should get an invite to the team — _and you get free Gatsby swag!_ If that doesn’t work, please email team@gatsbyjs.com and we'll get you invited.
 
 ## How to label an issue
 

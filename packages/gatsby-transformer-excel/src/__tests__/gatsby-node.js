@@ -6,7 +6,7 @@ const { onCreateNode } = require(`../gatsby-node`)
 describe(`Process nodes correctly`, () => {
   const node = {
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     extension: `csv`,
     internal: {

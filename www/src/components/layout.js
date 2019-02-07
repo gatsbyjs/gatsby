@@ -153,17 +153,12 @@ class DefaultLayout extends React.Component {
         <Banner background={isHomepage ? `#402060` : false}>
           {/* !!! If you change the children of Banner remember to do the same in layout/layout-with-heading.js */}
           <OutboundLink
-            href="https://www.gatsbyjs.com/content-mesh-contentful"
-            css={{
-              color: `#fff`,
-              "&:hover": {
-                color: `#fff`,
-              },
-            }}
+            href="https://www.gatsbyjs.com/behind-the-scenes/"
+            css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
           >
-            Watch
+            Register now
           </OutboundLink>
-          {`: “Rise of the Content Mesh: Webcast with Contentful and Gatsby”.`}
+          {`: “Behind the Scenes: What makes Gatsby Great”.`}
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div

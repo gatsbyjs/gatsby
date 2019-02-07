@@ -56,6 +56,7 @@ aliases:
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - run: yarn jest -w 1
+      - run: GATSBY_DB_NODES=loki yarn jest -w 1
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -75,6 +76,9 @@ commands:
         default: "packages/*|.circleci/*"
       test_path:
         type: string
+      test_command:
+        type: string
+        default: "" # if unset, e2e-test.sh specifies the command
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
@@ -82,7 +86,7 @@ commands:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>"
+      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
 
@@ -166,6 +170,14 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
+          test_command: yarn test && yarn test:offline
+
+  starters_validate:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - run: sh ./scripts/clone-and-validate.sh starters
 
   starters_publish:
     executor: node
@@ -178,7 +190,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-folder.sh starters
+      - run: sh ./scripts/clone-and-validate.sh starters true
 
 workflows:
   version: 2
@@ -210,6 +222,8 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
       - starters_publish:
           filters:
             branches:

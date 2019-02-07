@@ -10,14 +10,21 @@ if (process.env.BUILD_STAGE === `develop`) {
   React = require(`react`)
   GoogleFont = require(`react-typography`).GoogleFont
   // typography links to the file set in "pathToConfigModule"
-  typography = require(`./.cache/typography.js`).default
+  const typographyConfig = require(`./.cache/typography.js`)
+  typography = typographyConfig.default || typographyConfig
 
-  exports.onClientEntry = () => {
+  exports.onClientEntry = (a, pluginOptions) => {
     // Inject the CSS Styles
     typography.injectStyles()
 
+    // If "omitGoogleFont" is set to "true" the plugin shouldn't load Google CDN links
+    const omit =
+      typeof pluginOptions.omitGoogleFont !== `undefined`
+        ? pluginOptions.omitGoogleFont
+        : false
+
     // Hot reload Google CDN links
-    if (typography.options.googleFonts.length > 0) {
+    if (typography.options.googleFonts.length > 0 && !omit) {
       if (typeof document !== `undefined`) {
         // Construct the <link /> tag
         const googleFonts = ReactDOMServer.renderToStaticMarkup(

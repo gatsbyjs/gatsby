@@ -3,10 +3,12 @@
 const url = require(`url`)
 const glob = require(`glob`)
 const fs = require(`fs`)
+const openurl = require(`better-opn`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
-const parsePath = require(`parse-filepath`)
+const graphqlPlayground = require(`graphql-playground-middleware-express`)
+  .default
 const request = require(`request`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
@@ -91,11 +93,21 @@ async function startServer(program) {
       heartbeat: 10 * 1000,
     })
   )
+
+  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
+    app.get(
+      `/___graphql`,
+      graphqlPlayground({
+        endpoint: `/___graphql`,
+      }),
+      () => {}
+    )
+  }
   app.use(
     `/___graphql`,
     graphqlHTTP({
       schema: store.getState().schema,
-      graphiql: true,
+      graphiql: process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
     })
   )
 
@@ -174,20 +186,11 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    const parsedPath = parsePath(req.path)
-    if (
-      parsedPath.extname === `` ||
-      parsedPath.extname.startsWith(`.html`) ||
-      parsedPath.path.endsWith(`/`)
-    ) {
-      res.sendFile(directoryPath(`public/index.html`), err => {
-        if (err) {
-          res.status(500).end()
-        }
-      })
-    } else {
-      next()
-    }
+    res.sendFile(directoryPath(`public/index.html`), err => {
+      if (err) {
+        res.status(500).end()
+      }
+    })
   })
 
   /**
@@ -248,9 +251,10 @@ module.exports = async (program: any) => {
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
+  // Scoped names are converted from @npm/package-name to npm--package-name
   if (program.https) {
     program.ssl = await getSslCert({
-      name: program.sitePackageJson.name,
+      name: program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`),
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
@@ -359,7 +363,11 @@ module.exports = async (program: any) => {
 
     console.log()
     console.log(
-      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+      `View ${
+        process.env.GATSBY_GRAPHQL_IDE === `playground`
+          ? `the GraphQL Playground`
+          : `GraphiQL`
+      }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
     console.log(`  ${urls.localUrlForTerminal}___graphql`)
@@ -439,7 +447,7 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        require(`opn`)(urls.localUrlForBrowser).catch(err =>
+        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
           console.log(
             `${chalk.yellow(
               `warn`

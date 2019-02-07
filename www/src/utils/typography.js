@@ -93,13 +93,17 @@ const _options = {
         lineHeight: `inherit`,
       },
       "tt, code, kbd": {
-        background: colors.code.bg,
+        background: colors.code.bgInline,
         paddingTop: `0.2em`,
         paddingBottom: `0.2em`,
       },
       "tt, code, kbd, .gatsby-code-title": {
         fontFamily: options.monospaceFontFamily.join(`,`),
         fontSize: `80%`,
+        // Disable ligatures as they look funny as code.
+        fontVariant: `none`,
+        WebkitFontFeatureSettings: `"clig" 0, "calt" 0`,
+        fontFeatureSettings: `"clig" 0, "calt" 0`,
       },
       ".gatsby-highlight": {
         background: colors.code.bg,

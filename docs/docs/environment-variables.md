@@ -18,7 +18,7 @@ By default gatsby supports only 2 environments:
 - If you run `gatsby develop`, then you will be in the 'development' environment.
 - If you run `gatsby build` + `gatsby serve`, then you will be in the 'production' environment.
 
-If you want to define other environments then you'll need to do a little more work. See 'Additional Environments' below.
+If you want to define other environments then you'll need to do a little more work. See 'Additional Environments' below. You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
 ## Accessing Environment Variables in JavaScript
 
@@ -130,6 +130,14 @@ module.exports = {
 
 - `NODE_ENV`
 - `PUBLIC_DIR`
+
+Gatsby also allows you to specify another environment variable when running the local development server (e.g. `gatsby develop`):
+
+- `ENABLE_GATSBY_REFRESH_ENDPOINT`
+
+If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
+
+You can trigger this endpoint locally for example on Unix-based operating systems (like Ubuntu and MacOS) you can use `curl -X POST http://localhost:8000/__refresh`.
 
 ## Additional Environments (Staging, Test, etc)
 

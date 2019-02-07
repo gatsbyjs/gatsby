@@ -189,10 +189,10 @@ function inferFromMapping(
 }
 
 function findLinkedNodeByField(linkedField, value) {
-  getNodes().find(n => n[linkedField] === value)
+  return getNodes().find(n => n[linkedField] === value)
 }
 
-export function findLinkedNode(value, linkedField, path) {
+export function findLinkedNode(value, linkedField) {
   let linkedNode
   // If the field doesn't link to the id, use that for searching.
   if (linkedField) {
@@ -204,16 +204,13 @@ export function findLinkedNode(value, linkedField, path) {
   return linkedNode
 }
 
-function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
-  let isArray = false
-  if (_.isArray(value)) {
-    isArray = true
-    // Reduce values to nodes with unique types.
-    value = _.uniqBy(value, v => getNode(v).internal.type)
-  }
-
-  const key = selector.split(`.`).pop()
-  const [, , linkedField] = key.split(`___`)
+function inferFromFieldName(
+  value,
+  key,
+  selector,
+  types
+): GraphQLFieldConfig<*, *> {
+  const linkedField = key.split(`___NODE___`)[1]
 
   const validateLinkedNode = linkedNode => {
     invariant(
@@ -238,22 +235,19 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     )
   }
 
-  const findNodeType = node =>
-    types.find(type => type.name === node.internal.type)
+  const findType = typeName => types.find(type => type.name === typeName)
 
-  if (isArray) {
-    const linkedNodes = value.map(getNode)
+  if (Array.isArray(value)) {
+    const linkedNodes = value.map(v => findLinkedNode(v, linkedField))
     linkedNodes.forEach(node => validateLinkedNode(node))
-    const fields = linkedNodes.map(node => findNodeType(node))
+    const linkedTypes = [...new Set(linkedNodes.map(n => n.internal.type))]
+    const fields = linkedTypes.map(findType)
     fields.forEach((field, i) => validateField(linkedNodes[i], field))
 
     let type
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
-      const typeName = `Union_${key}_${fields
-        .map(f => f.name)
-        .sort()
-        .join(`__`)}`
+      const typeName = `Union_${key}_${linkedTypes.sort().join(`__`)}`
 
       if (unionTypes.has(typeName)) {
         type = unionTypes.get(typeName)
@@ -262,13 +256,11 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
       if (!type) {
         type = new GraphQLUnionType({
           name: createTypeName(`Union_${key}`),
-          description: `Union interface for the field "${key}" for types [${fields
-            .map(f => f.name)
+          description: `Union interface for the field "${key}" for types [${linkedTypes
             .sort()
             .join(`, `)}]`,
           types: fields.map(f => f.nodeObjectType),
-          resolveType: data =>
-            fields.find(f => f.name == data.internal.type).nodeObjectType,
+          resolveType: node => node.internal.type,
         })
         unionTypes.set(typeName, type)
       }
@@ -278,22 +270,20 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
 
     return {
       type: new GraphQLList(type),
-      resolve: (node, a, b = {}) => {
+      resolve: pageDependencyResolver(node => {
         let fieldValue = node[key]
         if (fieldValue) {
-          return fieldValue.map(value =>
-            findLinkedNode(value, linkedField, b.path)
-          )
+          return fieldValue.map(value => findLinkedNode(value, linkedField))
         } else {
           return null
         }
-      },
+      }),
     }
   }
 
   const linkedNode = findLinkedNode(value, linkedField)
   validateLinkedNode(linkedNode)
-  const field = findNodeType(linkedNode)
+  const field = findType(linkedNode.internal.type)
   validateField(linkedNode, field)
   return {
     type: field.nodeObjectType,
@@ -360,11 +350,12 @@ function _inferObjectStructureFromNodes(
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       inferredField = inferFromMapping(value, mapping, fieldSelector, types)
 
-      // Second if the field has a suffix of ___node. We use then the value
-      // (a node id) to find the node and use that node's type as the field
+      // Second if the field has a suffix of `___NODE`, we use the field value
+      // to find the linked node. By default we use the `id` as foreign key,
+      // but a foreign key can be specified with `___NODE___fieldName`.
     } else if (key.includes(`___NODE`)) {
+      inferredField = inferFromFieldName(value, key, nextSelector, types)
       ;[fieldName] = key.split(`___`)
-      inferredField = inferFromFieldName(value, nextSelector, types)
       lazyFields.add(typeName, fieldName)
     }
 

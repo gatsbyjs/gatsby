@@ -4,12 +4,10 @@ const _ = require(`lodash`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
-const Cache = require(`./cache`)
+const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
-
-let caches = new Map()
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -94,11 +92,7 @@ const runAPI = (plugin, api, args) => {
 
     const tracing = initAPICallTracing(pluginSpan)
 
-    let cache = caches.get(plugin.name)
-    if (!cache) {
-      cache = new Cache({ name: plugin.name }).init()
-      caches.set(plugin.name, cache)
-    }
+    const cache = getCache(plugin.name)
 
     const apiCallArgs = [
       {
@@ -109,6 +103,7 @@ const runAPI = (plugin, api, args) => {
         loadNodeContent,
         store,
         emitter,
+        getCache,
         getNodes,
         getNode,
         getNodesByType,
@@ -212,9 +207,13 @@ module.exports = async (api, args = {}, pluginSource) =>
     } else if (api === `onCreatePage`) {
       id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
     } else {
+      // When tracing is turned on, the `args` object will have a
+      // `parentSpan` field that can be quite large. So we omit it
+      // before calling stringify
+      const argsJson = JSON.stringify(_.omit(args, `parentSpan`))
       id = `${api}|${apiRunInstance.startTime}|${
         apiRunInstance.traceId
-      }|${JSON.stringify(args)}`
+      }|${argsJson}`
     }
     apiRunInstance.id = id
 
