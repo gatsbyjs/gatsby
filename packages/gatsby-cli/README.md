@@ -2,7 +2,7 @@
 
 Gatsby command line tool.
 
-Let's you create new Gatsby sites using
+Let's you create new Gatsby apps using
 [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/).
 
 It also let's you run commands on sites. The tool runs code from the `gatsby`
@@ -25,7 +25,7 @@ for more.
 
 ### `develop`
 
-At the root of a Gatsby site run `gatsby develop` to start the Gatsby
+At the root of a Gatsby app run `gatsby develop` to start the Gatsby
 development server.
 
 #### Options
@@ -42,7 +42,7 @@ to find out how you can set up an HTTPS development server using Gatsby.
 
 ### `build`
 
-At the root of a Gatsby site run `gatsby build` to do a production build of a
+At the root of a Gatsby app run `gatsby build` to do a production build of a
 site.
 
 #### Options
@@ -55,7 +55,7 @@ site.
 
 ### `serve`
 
-At the root of a Gatsby site run `gatsby serve` to serve the production build of
+At the root of a Gatsby app run `gatsby serve` to serve the production build of
 the site for testing.
 
 #### Options
@@ -69,21 +69,15 @@ the site for testing.
 
 ### `clean`
 
-At the root of a Gatsby site run `gatsby clean` to wipe out `node_modules`, cache, and the `public` directory. This is useful as a last resort when your local project seems to have many issues. Issues this may fix commonly include:
+At the root of a Gatsby app run `gatsby clean` to wipe out the cache (`.cache` folder) and `public` directories. This is useful **as a last resort** when your local project seems to have issues or content does not seem to be refreshing. Issues this may fix commonly include:
 
 - Stale data, e.g. this file/resource/etc. isn't appearing
 - GraphQL error, e.g. this GraphQL resource _should_ be present but is not
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 
-#### Options
-
-|     Option     | Description                                               | Default |
-| :------------: | --------------------------------------------------------- | :-----: |
-| `--no-install` | Do not run yarn or npm install after cleaning directories | `false` |
-
 ### `info`
 
-At the root of a Gatsby site run `gatsby info` to get helpful environment information which will be required when reporting a bug.
+At the root of a Gatsby app run `gatsby info` to get helpful environment information which will be required when reporting a bug.
 
 #### Options
 

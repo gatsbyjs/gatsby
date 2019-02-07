@@ -250,12 +250,6 @@ function buildLocalCommands(cli, isLocalSite) {
   cli.command({
     command: `clean`,
     desc: `Wipe the local gatsby environment when something has gone wrong`,
-    builder: _ =>
-      _.option(`no-install`, {
-        type: `boolean`,
-        default: false,
-        describe: `Do not run yarn or npm install after cleaning directories`,
-      }),
     handler: getCommandHandler(`clean`),
   })
 
