@@ -8,7 +8,7 @@ const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
-const mm = require(`micromatch`)
+const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
 const getPages = directory =>
   fs
@@ -22,7 +22,7 @@ const historyRouter = (pages, options) => {
     .map(page => page.matchPath)
   return (req, res, next) => {
     const { url } = req
-    if (clientOnlyRoutes.some(route => mm.isMatch(url, route))) {
+    if (clientOnlyRoutes.some(route => reachMatch(route, url) !== null)) {
       if (req.accepts(`html`)) {
         return res.sendFile(`index.html`, options, err => {
           if (err) {
@@ -56,10 +56,9 @@ module.exports = async program => {
   router.use(historyRouter(pages, { root }))
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
-      res.status(404).sendFile(`404.html`, { root })
-    } else {
-      next()
+      return res.status(404).sendFile(`404.html`, { root })
     }
+    return next()
   })
   app.use(pathPrefix, router)
 
