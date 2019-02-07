@@ -1,5 +1,5 @@
 ---
-title: Creating prefixed 404 pages for different languages
+title: Creating Prefixed 404 Pages for Different Languages
 ---
 
 Using the [`onCreatePage`](/docs/node-apis/#onCreatePage) API in your project's `gatsby-node.js` file, it's possible to create different 404 pages for different URL prefixes, such as `/en/`).
