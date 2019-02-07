@@ -826,13 +826,16 @@
     - Styling:Grommet
     - TypeScript
     - Linting
+    - Redux
   features:
     - Grommet v2 UI
     - Easily configurable - see site-config.js in the root
+    - Switch between grommet themes
+    - Change between light and dark themes (with Redux)
     - Blog posts previews in card style
     - Responsive Design, optimized for Mobile devices
     - styled-components
-    - TypeScript and TSLint
+    - TypeScript and ESLint (typescript-eslint)
     - lint-staged and husky - for linting before commit
 - url: https://happy-pare-dff451.netlify.com/
   repo: https://github.com/fhavrlent/gatsby-contentful-typescript-starter
