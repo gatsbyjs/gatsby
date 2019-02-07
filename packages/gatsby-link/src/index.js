@@ -169,7 +169,10 @@ export default React.forwardRef((props, ref) => (
 ))
 
 export const navigate = (to, options) => {
-  window.___navigate(options.withoutPrefix ? to : withPrefix(to), options)
+  window.___navigate(
+    options && options.withoutPrefix ? to : withPrefix(to),
+    options
+  )
 }
 
 export const push = to => {

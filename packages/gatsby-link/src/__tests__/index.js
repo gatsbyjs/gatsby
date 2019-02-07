@@ -160,11 +160,11 @@ describe(`navigate`, () => {
     )
   })
 
-  it(`will ignore pathPrefix is asked to`, () => {
+  it(`will ignore pathPrefix if asked to`, () => {
     const to = `#some-id`
     const options = { withoutPrefix: true }
     global.__PATH_PREFIX__ = `/blog`
-    getNavigate()(to)
+    getNavigate()(to, options)
 
     expect(global.___navigate).toHaveBeenCalledWith(`${to}`, options)
   })
