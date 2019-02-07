@@ -120,8 +120,6 @@ describe(`long term caching`, () => {
     srcPath = resolve(`${basePath}/src`)
     pagesPath = resolve(`${srcPath}/pages`)
 
-    execFileSync(`yarn`, [], { cwd: basePath })
-
     await createPublic0()
     await createPublic1()
     await createPublic2()
