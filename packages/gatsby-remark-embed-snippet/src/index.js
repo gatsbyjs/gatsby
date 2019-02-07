@@ -45,9 +45,10 @@ module.exports = (
     }
 
     filePathResolve = file => normalizePath(`${directory}${file}`)
-  } else {
-    //its function
+  } else if (typeof directory === `function`) {
     filePathResolve = file => directory(markdownNode.fileAbsolutePath, file)
+  } else {
+    throw Error(`Invalid directory specified "${directory}": unsupported type "${typeof directory}"`)
   }
 
   visit(markdownAST, `inlineCode`, node => {
