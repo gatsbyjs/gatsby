@@ -1,7 +1,6 @@
 import groupBy from "lodash/groupBy"
 import path from "path"
 import gatsbyNode from "../gatsby-node"
-import { param } from "change-case"
 
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let createdNodes, updatedNodes
