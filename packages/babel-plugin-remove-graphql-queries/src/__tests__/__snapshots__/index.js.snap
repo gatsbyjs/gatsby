@@ -51,6 +51,21 @@ export const siteMetaQuery = \\"2673797374\\";
 export const query = \\"2589775908\\";"
 `;
 
+exports[`Transformation does not break custom hooks 1`] = `
+"import staticQueryData from \\"public/static/d/2626356014.json\\";
+import React from \\"react\\";
+
+const useSiteMetadata = () => {
+  const data = staticQueryData.data;
+  return data.site.siteMetadata;
+};
+
+export default (() => {
+  const siteMetadata = useSiteMetadata();
+  return React.createElement(\\"h1\\", null, site.siteMetadata.title);
+});"
+`;
+
 exports[`Transforms exported queries in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/2626356014.json\\";
 import React from 'react';
