@@ -182,6 +182,11 @@ export default function({ types: t }) {
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
 
+              // Remove query variable since it is useless now
+              if (this.templatePath.parentPath.isVariableDeclarator()) {
+                this.templatePath.parentPath.remove()
+              }
+
               // Remove imports to useStaticQuery
               const importPath = path2.scope.getBinding(`useStaticQuery`).path
               const parent = importPath.parentPath
@@ -259,6 +264,7 @@ export default function({ types: t }) {
           parent.traverse(nestedHookVisitor, {
             queryHash,
             query,
+            templatePath,
           })
 
           return null
