@@ -25,14 +25,14 @@ For this guide, you don't have to worry about most of the features. You'll just 
 
 #### Adding content to existing pages
 
-Now that you have some content to pull, you can create a basic Gatsby site to display the content. Assuming you have the Gatsby CLI installed, create a new site and navigate to it in your terminal:
+Now that you have some content to pull, you can create a basic Gatsby site to display the content. Assuming you have the [Gatsby CLI installed](https://www.gatsbyjs.org/docs/quick-start/#install-gatsbys-command-line-tool), create a new site and navigate to it in your terminal:
 
 ```shell
 gatsby new kentico-cloud-guide
 cd kentico-cloud-guide
 ```
 
-Next, install the Kentico Cloud source plugin:
+Next, install the [Kentico Cloud source plugin](https://github.com/Kentico/gatsby-source-kentico-cloud):
 
 ```shell
 npm install --save gatsby-source-kentico-cloud
@@ -70,7 +70,7 @@ To see all the content that's available from Kentico Cloud, you can test out Gra
 
 To see how to put that data into your site, first go to `http://localhost:8000/`. Notice that the default title for the site is "Gatsby Default Starter". You can change that by pulling the title for your site from Kentico Cloud. 
 
-The title here is generated in the layout from the site metadata. By default, the Kentico CLoud Sample Project has a single item named "Home" that is the only item of the Home type. So you can change the layout component to query the metadata of that item and then use that data to populate your title.
+The title here is generated in the layout from the site metadata. By default, the Kentico Cloud Sample Project has a single item named "Home" that is the only item of the Home type. So you can change the layout component to query the metadata of that item and then use that data to populate your title.
 
 ```javascript:title=src/components/layout.js
 ...
@@ -203,7 +203,7 @@ Now you know how to create pages programmatically and pull their content from Ke
 
 To keep your site static but always up to date with the latest content from Kentico Cloud, it helps to set up automatic deployment whenever your published content changes. Here, you can see how to set that up using [Netlify](https://www.netlify.com/docs/continuous-deployment/), but the principle is similar using other services like [Travis CI](https://travis-ci.org/), as with another [site sourced from Kentico Cloud](https://github.com/Kentico/kentico.github.io/wiki/How-the-automatic-deployment-works).
 
-For simple automatic deployment from Netlify, first store your site's source code in a Git provider such as GitHub. Then log in to Netlify (e.g., through the same Git provider), create a new site from Git, and choose your site's source code. Netlify should automatically detect that you're using Gatsby ad include the `gatsby build` command. If so, go ahead and deploy your site. Your site will now automatically build whenever you push changes to the source code in the Git respository.
+For simple automatic deployment from Netlify, first store your site's source code in a Git provider such as GitHub. Then log in to Netlify (e.g., through the same Git provider), create a new site from Git, and choose your site's source code. Netlify should automatically detect that you're using Gatsby and include the `gatsby build` command. If so, go ahead and deploy your site. Your site will now automatically build whenever you push changes to the source code in the Git respository.
 
 Now that your site's up and running, you need to set up automatic builds when published content in Kentico Cloud changes. First, in Netlify [create a new build hook](https://www.netlify.com/docs/webhooks/) with a name like "Change in Kentico Cloud content" and copy the URL. Then go to Kentico Cloud. Under _Project settings_, choose _Webhooks_ and create a new webhook. Give it a name like "Netlify build" and paste the URL into the _URL address_ field. And that's it. Now whenever published content changes ([see what actions call a webhook](https://developer.kenticocloud.com/docs/webhooks#section-when-webhooks-are-called)), your webhook will trigger a build in Netlify to ensure your static content is updated to the latest version.
 
