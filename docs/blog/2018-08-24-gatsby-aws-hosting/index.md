@@ -7,13 +7,13 @@ excerpt: "In this post, we'll walk through how to host & publish your next Gatsb
 canonicalLink: "https://aws-amplify.github.io/amplify-js/media/hosting_guide"
 ---
 
-![Publishing Your Next Gatsby Site to AWS With AWS Amplify](gatsbyaws.jpeg)
+![Publishing Your Next Gatsby Site to AWS With AWS Amplify](images/gatsbyaws.jpeg)
 
 In this post, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io/).
 
-AWS Amplify is a combination of client library, CLI toolchain, and UI components. Amplify allow developers to get up & running with full-stack cloud-powered applications with features like authentication, GraphQL, storage, REST APIs, analytics, Lambda functions, hosting & more.
+AWS Amplify is a combination of client library, CLI toolchain, UI components & CI / CD hosting platform. Amplify allows developers to get up & running with full-stack cloud-powered applications with features like authentication, GraphQL, storage, REST APIs, analytics, Lambda functions, hosting & more.
 
-Using the **Hosting** feature, you can deploy your application to AWS as well as set up your site with Amazon Cloudfront CDN. This is what we'll be doing in this tutorial. Let's begin!
+Using the Amplify console, you can now easily deploy your application to AWS with built in CI / CD & atomic deployments.
 
 ## Getting Started - Gatsby
 
@@ -39,87 +39,92 @@ cd my-gatsby-site
 
 Now that we have our Gatsby site up & running, let's add hosting & make the site live on AWS.
 
-First, we'll install the AWS Amplify CLI:
+To do so, create a new GitHub repo & push the project to the repo.
 
 ```sh
-npm i -g @aws-amplify/cli
+git init
+
+git remote add origin git@github.com:<username>/<projectname>.git
+
+git add .
+
+git commit -m 'initial commit'
+
+git push origin master
 ```
 
-With the AWS Amplify CLI installed, we now need to configure it with an IAM User:
+Now that the GitHub project has been created we can log into the [Amplify Console](https://console.aws.amazon.com/amplify/home).
+
+From here, under Deploy we can click GET STARTED:
+
+![Amplify Console](images/amplify1.png)
+
+Next, we'll choose GitHub as our repository & click **Next**.
+
+![Choosing repo](images/amplify2.png)
+
+Then connect the mater branch of the new repo we just created & click **Next**:
+
+![Choosing branch](images/amplify3.png)
+
+In this view, we can review the default build settings & click **Next** to continue:
+
+![Build settings](images/amplify4.png)
+
+Finally, we can review the deployment & click **Save & Deploy** when we're ready to deploy our app:
+
+![Deploying](images/amplify5.png)
+
+Once the deployment is successful, you should see this:
+
+![Successful deployment](images/amplify6.png)
+
+To view details of the deployment, click on the name of the branch (in our case, **master**).
+
+In this view, you can see details about the deployment including a link to view the app & screenshots of the app on different devices.
+
+![Deployment details](images/amplify7.png)
+
+## Kicking off a new build
+
+Now that our app is deployed, let's take it one step further. The Amplify Console will automatically watch your master branch & kick off a new build whenever new code is merged. Let's test this out.
+
+Open `src/pages/index.js` & replace the following line:
+
+```jsx
+<h1>Hi people</h1>
+```
+
+with this:
+
+```jsx
+<h1>Hello from Amplify</h1>
+```
+
+Save the file & push the changes to your master branch:
 
 ```sh
-amplify configure
+git add .
+
+git commit -m 'updated heading'
+
+git push origin master
 ```
 
-> For a video walkthrough of how to configure the AWS Amplify CLI, click [here](https://www.youtube.com/watch?v=fWbM5DLh25U).
+Now, when we go back into the Amplify console we'll see that a new build has been started:
 
-Now, we can create a new Amplify project in the root of our Gatsby project:
+![New build](images/amplify8.png)
 
-```sh
-amplify init
-```
+When the build is completed & we launch the app, we should now see our new heading:
 
-- Choose your default editor: **(for me, this is Visual Studio Code)**
-- Please choose the type of app that you're building: **javascript**
-- What JavaScript framework are you using: **react**
-- Source Directory Path: **src**
-- Distribution Directory Path: **public**
-- Build Command: **npm run-script build**
-- Start Command: **npm run-script develop**
-- Do you want to use an AWS profile? **Y**
-- Please choose the profile you want to use: **default**
+![New build completed](images/amplify9.png)
 
-Now, the Amplify project has been created. You will see that you have a new amplify folder in your project directory as well as an .amplifyrc file. Both of these contain your AWS Amplify project configuration.
+## Next Steps
 
-Next, we can type amplify into our command line & see all of the options that we have:
+Now that you've gotten the hang of working with the Amplify Console, what are some next steps?
 
-```sh
-amplify
-```
+If you're interested in adding authentication to your Gatsby app, check out [this](https://github.com/dabit3/gatsby-auth-starter-aws-amplify) Gatsby Auth Starter I published.
 
-At the bottom, we can see the available categories available to us. Hosting is the category we would like to enable, so let's do so now:
+If you're interested in adding new features to your Gatsby app (like authentication or a GraphQL API), check out the [Amplify CLI & Amplify Client libraries](https://aws-amplify.github.io/).
 
-```sh
-amplify add hosting
-```
-
-Here, we'll be prompted for the following:
-
-- Select the environment setup: **DEV**
-- hosting bucket name: **gatsbyproj-20180808112129-hosting-bucket (or type whatever you'd like the bucket name to be)**
-
-This will set up our local project with everything we need, now we can publish the app to AWS. To do so, we'll run the following command:
-
-```sh
-amplify publish
-```
-
-Here, we'll be prompted for the following:
-
-- Are you sure you want to continue? **Y**
-
-Now, our resources will be pushed up to our account & our site will be published to a live url!
-
-What just happened? A few things:
-
-1. Amplify runs npm run build to build a new distribution of your app
-2. A new S3 bucket is created in your AWS account
-3. All code in the public directory is uploaded to the S3 bucket
-
-We should have also be given the URL that the site is hosted on. At any time that we would like to get the url for our site, we can run:
-
-```sh
-amplify status
-```
-
-This command should give us all of the info about our app including the url of our website.
-
-If we ever want to configure the hosting setup, including adding Cloudfront, we can run:
-
-```sh
-amplify configure hosting
-```
-
-Here, we'll be prompted for what we would like to change about the project configuration.
-
-> To learn more about AWS Amplify, check out the [Getting Started](https://aws-amplify.github.io/media/get_started) page.
+You may also be interested in working with multiple environments or teams. If so, check out [the documentation](https://aws-amplify.github.io/docs/cli/multienv?sdk=js) on how to get up & running with teams or have a look at [this post](https://read.acloud.guru/multiple-serverless-environments-with-aws-amplify-344759e1be08) that I wrote.

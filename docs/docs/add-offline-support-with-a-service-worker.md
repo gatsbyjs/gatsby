@@ -74,6 +74,10 @@ exports.registerServiceWorker = () => true
 
 That's all! Gatsby will register your custom service worker.
 
+### Removing the service worker
+
+If you would like to fully remove the service worker from your site, you can use the plugin `gatsby-plugin-remove-serviceworker` in place of `gatsby-plugin-offline`. See [the README for `gatsby-plugin-offline`](/packages/gatsby-plugin-offline/#remove) for instructions how to do this.
+
 ## References
 
 - [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)

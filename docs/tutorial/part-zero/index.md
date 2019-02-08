@@ -29,6 +29,8 @@ Take a moment to locate and open up the command line interface (CLI) for your co
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
+_Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
+
 ### ⌚ Download Node.js
 
 Visit the [**Node.js site**](https://nodejs.org/) and follow the instructions to download and install the recommended version for your operating system. Once you have followed the installation steps, make sure everything was installed properly:

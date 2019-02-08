@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.8...gatsby-plugin-netlify@2.0.9) (2019-02-06)
+
+### Features
+
+- **gatsby-plugin-netlify:** Allow status codes in redirects ([#11255](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/issues/11255)) ([#11484](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/issues/11484)) ([024f6f4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/commit/024f6f4))
+
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify/compare/gatsby-plugin-netlify@2.0.7...gatsby-plugin-netlify@2.0.8) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-netlify
