@@ -27,7 +27,7 @@ class Collapsible extends Component {
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
           minHeight: fixed ? `${fixed}px` : `initial`,
-          maxHeight: fixed ? `${fixed}px` : `initial`,
+          maxHeight: fixed ? `${fixed}px` : `100%`,
           flexBasis: 0,
           // paddingBottom: collapsed ? 0 : rhythm(options.blockMarginBottom),
         }}
