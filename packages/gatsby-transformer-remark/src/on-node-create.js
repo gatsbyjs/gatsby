@@ -12,7 +12,7 @@ module.exports = async function onCreateNode(
     node.internal.mediaType !== `text/markdown` &&
     node.internal.mediaType !== `text/x-markdown`
   ) {
-    return
+    return {}
   }
 
   const content = await loadNodeContent(node)
@@ -20,7 +20,7 @@ module.exports = async function onCreateNode(
   try {
     const data = grayMatter(content, pluginOptions)
 
-    const markdownNode = {
+    let markdownNode = {
       id: createNodeId(`${node.id} >>> MarkdownRemark`),
       children: [],
       parent: node.id,
@@ -51,7 +51,7 @@ module.exports = async function onCreateNode(
     createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
 
-    return markdownNode // for unit testing
+    return markdownNode
   } catch (err) {
     reporter.panicOnBuild(
       `Error processing Markdown ${
@@ -59,5 +59,7 @@ module.exports = async function onCreateNode(
       }:\n
       ${err.message}`
     )
+
+    return {} // eslint
   }
 }
