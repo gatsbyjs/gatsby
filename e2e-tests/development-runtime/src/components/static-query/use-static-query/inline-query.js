@@ -11,7 +11,11 @@ function InlineQuery(props) {
       }
     }
   `)
-  return <p {...props}>{data.sitePage.pluginCreator.name}</p>
+  if (data) {
+    return <p {...props}>{data.sitePage.pluginCreator.name}</p>
+  }
+
+  return `Error`
 }
 
 export default InlineQuery

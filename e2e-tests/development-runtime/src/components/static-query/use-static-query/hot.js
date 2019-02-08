@@ -12,11 +12,16 @@ function SupaHotFire(props) {
       }
     }
   `)
-  return (
-    <p {...props}>
-      {data.site.siteMetadata.title}: {data.site.siteMetadata.author}
-    </p>
-  )
+
+  if (data) {
+    return (
+      <p {...props}>
+        {data.site.siteMetadata.title}: {data.site.siteMetadata.author}
+      </p>
+    )
+  }
+
+  return `Error`
 }
 
 export default SupaHotFire

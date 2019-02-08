@@ -3,7 +3,12 @@ import { useStaticQuery, graphql } from "gatsby"
 
 function VariableQuery(props) {
   const data = useStaticQuery(variableQuery)
-  return <p {...props}>{data.sitePage.pluginCreator.version}</p>
+
+  if (data) {
+    return <p {...props}>{data.sitePage.pluginCreator.version}</p>
+  }
+
+  return `Error`
 }
 
 const variableQuery = graphql`
