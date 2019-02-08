@@ -38,7 +38,7 @@ tags: ["animals", "Chicago", "zoos"]
 I went to the zoo today. It was terrible.
 ```
 
-If `npm run develop` is running, restart it so Gatsby can pick up the new fields.
+If `gatsby develop` is running, restart it so Gatsby can pick up the new fields.
 
 ## Write a query to get all tags for your posts
 

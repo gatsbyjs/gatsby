@@ -4,6 +4,12 @@ title: Creating global styles
 
 In nearly every site, there will be some global styles, such as a reset or typography defaults. This guide will walk through how to add global styles to your site, whether you use standard `.css` files (or with preprocessors like Sass/Less) or a CSS-in-JS solution.
 
+## Table of Contents
+
+- [How to add global styles in Gatsby with standard CSS files](#how-to-add-global-styles-in-gatsby-with-standard-css-files)
+- [How to add global styles in Gatsby using CSS-in-JS](#how-to-add-global-styles-in-gatsby-using-css-in-js)
+- [Add global styles with CSS files and no layout component](#add-global-styles-with-css-files-and-no-layout-component)
+
 ## How to add global styles in Gatsby with standard CSS files
 
 The best way to add global styles is with a [shared layout component](/tutorial/part-three/#your-first-layout-component). This layout component is used for things that are shared throughout the site, including styles, header components, and other common items.

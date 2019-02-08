@@ -47,7 +47,7 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 1.  Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
     ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
 
-2.  Using VS Code's integrated terminal run `node --inspect node_modules/.bin/gatsby develop` instead of `npm run develop`
+2.  Using VS Code's integrated terminal run `node --inspect node_modules/.bin/gatsby develop` instead of `gatsby develop`
 
 3.  Set breakpoints and debug!
 

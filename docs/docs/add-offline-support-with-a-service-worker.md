@@ -41,7 +41,7 @@ Add this plugin to your `gatsby-config.js`
 
 That's all you need to add offline support to your Gatsby site.
 
-Note: Service worker registers only in production builds (`npm run build`).
+Note: Service worker registers only in production builds (`gatsby build`).
 
 ### Displaying a message when a service worker updates
 

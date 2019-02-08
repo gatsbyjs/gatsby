@@ -15,8 +15,8 @@ we're in.
 
 By default gatsby supports only 2 environments:
 
-- If you run `npm run develop`, then you will be in the 'development' environment.
-- If you run `npm run build` + `npm run serve`, then you will be in the 'production' environment.
+- If you run the develop script then you will be in the `development` environment.
+- If you run the build or serve scripts, then you will be in the `production` environment.
 
 If you want to define other environments then you'll need to do a little more work. See 'Additional Environments' below. You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
