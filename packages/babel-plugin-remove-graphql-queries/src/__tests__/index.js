@@ -138,6 +138,25 @@ it(`Transformation does not break custom hooks`, () => {
   `)
 })
 
+it(`Transforms only the call expression in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from "react"
+  import { graphql, useStaticQuery } from "gatsby"
+  
+  const useSiteMetadata = () => {
+    return useStaticQuery(
+      graphql\`{site { siteMetadata { title }}}\`
+    ).site.siteMetadata
+  }
+  
+  export default () => {
+    const siteMetadata = useSiteMetadata()
+  
+    return <h1>{siteMetadata.title}</h1>
+  }    
+  `)
+})
+
 it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
   matchesSnapshot(`
   import React from 'react'
