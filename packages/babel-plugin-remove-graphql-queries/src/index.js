@@ -265,6 +265,7 @@ export default function({ types: t }) {
           return null
         }
 
+        // Traverse for <StaticQuery/> instances
         path.traverse({
           JSXElement(jsxElementPath) {
             if (
@@ -348,8 +349,8 @@ export default function({ types: t }) {
           },
         })
 
+        // Run it again to remove non-staticquery versions
         path.traverse({
-          // Run it again to remove non-staticquery versions
           TaggedTemplateExpression(path2, state) {
             const { ast, hash, isGlobal } = getGraphQLTag(path2)
 
