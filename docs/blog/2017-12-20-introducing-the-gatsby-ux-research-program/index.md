@@ -1,6 +1,6 @@
 ---
 title: Introducing the Gatsby UX Research Program
-date: "2017-12-20"
+date: 2017-12-20
 author: "Shannon Soper"
 tags: ["ux"]
 ---

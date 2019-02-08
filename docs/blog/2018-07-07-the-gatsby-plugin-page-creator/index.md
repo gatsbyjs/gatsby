@@ -1,6 +1,6 @@
 ---
 title: Automatically create pages from components in any directory
-date: "2018-07-07"
+date: 2018-07-07
 image: "gatsbymanor.jpg" # change this to the npm package stats
 author: "Steven Natera"
 ---
