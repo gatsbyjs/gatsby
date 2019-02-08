@@ -16,7 +16,7 @@ const getPages = directory =>
     .then(contents => JSON.parse(contents))
     .catch(() => [])
 
-const historyRouter = (pages, options) => {
+const clientOnlyPathsRouter = (pages, options) => {
   const clientOnlyRoutes = pages
     .filter(page => page.matchPath)
     .map(page => page.matchPath)
@@ -53,7 +53,7 @@ module.exports = async program => {
   const router = express.Router()
   router.use(compression())
   router.use(express.static(`public`))
-  router.use(historyRouter(pages, { root }))
+  router.use(clientOnlyPathsRouter(pages, { root }))
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })
