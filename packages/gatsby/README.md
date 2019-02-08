@@ -76,11 +76,11 @@ Gatsby is a modern framework for blazing fast websites.
 
 ## What’s In This Document
 
-- [Get Up and Running in 5 Minutes](#%F0%9F%9A%80-get-up-and-running-in-5-minutes)
-- [Learning Gatsby](#%F0%9F%8E%93-learning-gatsby)
-- [Migration Guides](#%F0%9F%92%BC-migration-guides)
-- [How to Contribute](#%F0%9F%A4%9D-how-to-contribute)
-- [Thanks to Our Contributors and Sponsors](#%F0%9F%92%9C-thanks-to-our-contributors-and-sponsors)
+- [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
+- [Learning Gatsby](#-learning-gatsby)
+- [Migration Guides](#-migration-guides)
+- [How to Contribute](#-how-to-contribute)
+- [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
 
 ## 🚀 Get Up and Running in 5 Minutes
 
@@ -101,7 +101,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     ```sh
     cd my-blazing-fast-site/
-    gatsby develop
+    npm run develop
     ```
 
 3.  **Open the source code and start editing!**

@@ -71,7 +71,7 @@ The steps to download and install Git depend on your operating system. Follow th
 
 ## Using the Gatsby CLI
 
-The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites. It is a published npm package. Rather than installing the Gatsby CLI tool locally you can run it using [npx](https://www.npmjs.com/package/npx)
+The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites. It is a published npm package. Rather than installing the Gatsby CLI tool locally you can run it using [npx](https://www.npmjs.com/package/npx).
 
 To see the commands available to run `npx gatsby --help`.
 
