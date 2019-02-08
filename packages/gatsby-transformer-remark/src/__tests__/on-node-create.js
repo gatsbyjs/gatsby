@@ -1,7 +1,7 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 
-const { onCreateNode } = require(`../gatsby-node`)
+const onCreateNode = require(`../on-node-create`)
 
 const {
   graphql,
@@ -11,7 +11,11 @@ const {
 } = require(`gatsby/graphql`)
 const {
   inferObjectStructureFromNodes,
-} = require(`../../../gatsby/src/schema/infer-graphql-type`)
+} = require(`gatsby/src/schema/infer-graphql-type`)
+
+describe(`date formatting`, () => {
+  it(`parses a toml string into a date object`)
+})
 
 describe(`Process markdown content correctly`, () => {
   const node = {

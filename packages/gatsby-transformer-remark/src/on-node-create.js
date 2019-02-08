@@ -50,6 +50,8 @@ module.exports = async function onCreateNode(
 
     createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
+
+    return markdownNode // for unit testing
   } catch (err) {
     reporter.panicOnBuild(
       `Error processing Markdown ${
