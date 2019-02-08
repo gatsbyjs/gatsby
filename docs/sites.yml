@@ -4214,3 +4214,18 @@
   built_by: Frame.io
   built_by_url: https://frame.io
   featured: false
+- title: MarcySutton.com
+  main_url: https://marcysutton.com
+  url: https://marcysutton.com
+  description: >
+    The personal website of web developer and accessibility advocate Marcy Sutton.
+  categories:
+    - Blog
+    - Accessibility
+    - Video
+    - Photography
+    - Images
+    - CSS Grid
+  built_by: Marcy Sutton
+  built_by_url: https://marcysutton.com
+  featured: true
