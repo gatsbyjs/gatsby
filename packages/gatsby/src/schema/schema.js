@@ -3,6 +3,7 @@ const { toInputObjectType } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
 const GraphQLDate = require(`./types/Date`)
 const {
+  addNodeInterface,
   addNodeInterfaceFields,
   hasNodeInterface,
 } = require(`./types/NodeInterface`)
@@ -72,12 +73,17 @@ const updateSchemaComposer = async ({
   schemaComposer.addDirective(InferDirective)
   schemaComposer.addDirective(DontInferDirective)
   await addTypeDefs({ schemaComposer, parentSpan, typeDefs })
-  await addInferredTypes({ schemaComposer, nodeStore, parentSpan })
-  await addSetFieldsOnGraphQLNodeTypeFields({
+  nodeStore.getTypes().forEach(typeName => {
+    schemaComposer.getOrCreateTC(typeName, tc => {
+      addNodeInterface({ schemaComposer, typeComposer: tc })
+    })
+  })
+  await await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     nodeStore,
     parentSpan,
   })
+  await addInferredTypes({ schemaComposer, nodeStore, parentSpan })
   await Promise.all(
     Array.from(schemaComposer.values()).map(typeComposer =>
       processTypeComposer({
@@ -89,7 +95,7 @@ const updateSchemaComposer = async ({
     )
   )
   await addThirdPartySchemas({ schemaComposer, thirdPartySchemas, parentSpan })
-  // await addCustomResolveFunctions({ schemaComposer, parentSpan, resolvers })
+  await addCustomResolveFunctions({ schemaComposer, parentSpan, resolvers })
 }
 
 const processTypeComposer = async ({
@@ -176,28 +182,35 @@ const addThirdPartySchemas = ({
   })
 }
 
-// const addCustomResolveFunctions = ({
-//   schemaComposer,
-//   resolvers,
-//   parentSpan,
-// }) => {
-//   Object.entries(resolvers).forEach(([typeName, fields]) => {
-//     if (schemaComposer.has(typeName)) {
-//       const tc = schemaComposer.getTC(typeName)
-//       Object.entries(fields).forEach(([fieldName, resolve]) => {
-//         if (tc.hasField(fieldName)) {
-//           const resolver = tc.getField(fieldName).resolve
-//           tc.extendField(fieldName, {
-//             resolve,
-//           })
-//         } else {
-//           const fieldConfig = resolve
-//           tc.addFields({ [fieldName]: fieldConfig })
-//         }
-//       })
-//     }
-//   })
-// }
+const addCustomResolveFunctions = async ({
+  schemaComposer,
+  resolvers,
+  parentSpan,
+}) => {
+  const intermediateSchema = schemaComposer.buildSchema()
+  const addResolvers = resolvers => {
+    Object.keys(resolvers).forEach(typeName => {
+      const fields = resolvers[typeName]
+      if (schemaComposer.has(typeName)) {
+        const tc = schemaComposer.getTC(typeName)
+        Object.keys(fields).forEach(fieldName => {
+          const fieldConfig = fields[fieldName]
+          if (tc.hasField(fieldName)) {
+            tc.extendField(fieldName, fieldConfig)
+          } else {
+            tc.addFields({ [fieldName]: fieldConfig })
+          }
+        })
+      }
+    })
+  }
+  await apiRunner(`addResolvers`, {
+    schema: intermediateSchema,
+    addResolvers,
+    traceId: `initial-addResolvers`,
+    parentSpan: parentSpan,
+  })
+}
 
 const addResolvers = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()

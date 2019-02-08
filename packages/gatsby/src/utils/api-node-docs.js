@@ -195,6 +195,39 @@ exports.onCreatePage = true
 exports.setFieldsOnGraphQLNodeType = true
 
 /**
+ * Adds custom resolvers to the GraphQLSchema after all schema processing happened.
+ * *
+ * @param {object} $0
+ * @param {GraphQLSchema}: $0.schema Current GraphQL schema
+ * @param {function} $0.addResolvers Add custom resolvers to GraphQL field configs
+ * @param {object} $1
+ * @param {string} resolvers Resolvers from plugin options in `gatsby-config.js`.
+ * @example
+ * ```js
+ * exports.addResolvers = ({ addResolvers }) => {
+ *   const resolvers = {
+ *     Author: {
+ *       fullName: {
+ *         resolve: (source, args, context, info) => {
+ *           // const { findById } = context.resolvers
+ *           return source.firstName + source.lastName
+ *         }
+ *       },
+ *       helloWorld: {
+ *         type: `String`,
+ *         resolve: (source, args, context, info) => {
+ *           return `Hello World`
+ *         }
+ *       }
+ *     }
+ *   }
+ *   addResolvers(resolvers)
+ * }
+ * ```
+ */
+exports.addResolvers = true
+
+/**
  * Ask compile-to-js plugins to process source to JavaScript so the query
  * runner can extract out GraphQL queries for running.
  */
