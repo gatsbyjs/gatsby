@@ -78,7 +78,7 @@ npm install -g gatsby-cli
 gatsby new my-blazing-fast-site
 ```
 
-e.g. `gatsby new blog my-blazing-fast-site` or `gatsby new hello-world my-blazing-fast-site` to use a specific starter!
+e.g. `gatsby new my-blazing-fast-site gatsbyjs/gatsby-starter-blog` or `gatsby new my-blazing-fast-site gatsbyjs/gatsby-starter-hello-world` to use a specific starter!
 
 This will clone the starter of specified name into the folder `my-blazing-fast-site` and get you up and running in under 5 minutes with Gatsby and a fantastic starter. We can't wait to see what you build!
 
