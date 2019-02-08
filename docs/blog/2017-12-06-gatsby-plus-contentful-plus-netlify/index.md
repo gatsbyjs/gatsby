@@ -1,6 +1,6 @@
 ---
 title: Gatsby + Contentful + Netlify (and Algolia)
-date: "2017-12-06"
+date: 2017-12-06
 author: "Josh Weaver"
 image: "gatsby-contentful-netlify-algolia.jpg"
 excerpt: "Gatsby has been getting a lot of recognition and adoption lately, and for good reason. It’s so flexible and it works well with nearly everything."

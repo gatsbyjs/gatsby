@@ -1,6 +1,6 @@
 ---
 title: "Modern static site generation with Gatsby"
-date: "2017-09-18"
+date: 2017-09-18
 image: "code-image.jpg"
 author: "Kostas Bariotis"
 excerpt: "In this post, I will talk about static site generators -- how they have evolved and why I switched from a Ghost powered site to Gatsby.js, a modern static site generator."

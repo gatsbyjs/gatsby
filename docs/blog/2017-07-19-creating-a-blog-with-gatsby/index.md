@@ -1,6 +1,6 @@
 ---
 title: Creating a Blog with Gatsby
-date: "2017-07-19"
+date: 2017-07-19
 author: "Dustin Schau"
 image: "../images/15009741473_9ced5e3209_o.jpg"
 imageAuthor: Daniel Go
@@ -226,7 +226,7 @@ The content of this Markdown file will be our blog post, authored in Markdown
 ```markdown:title=src/pages/07-12-2017-getting-started/index.md
 ---
 path: "/hello-world"
-date: "2017-07-12T17:12:33.962Z"
+date: 2017-07-12T17:12:33.962Z
 title: "My First Gatsby Post"
 ---
 
