@@ -121,7 +121,7 @@ exports.replaceComponentRenderer = true
  * @param {object} $0.props Props object used by page.
  * @example
  * import React from "react"
- * import Layout from "./src/components/Layout"
+ * import Layout from "./src/components/layout"
  *
  * export const wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get

@@ -826,13 +826,16 @@
     - Styling:Grommet
     - TypeScript
     - Linting
+    - Redux
   features:
     - Grommet v2 UI
     - Easily configurable - see site-config.js in the root
+    - Switch between grommet themes
+    - Change between light and dark themes (with Redux)
     - Blog posts previews in card style
     - Responsive Design, optimized for Mobile devices
     - styled-components
-    - TypeScript and TSLint
+    - TypeScript and ESLint (typescript-eslint)
     - lint-staged and husky - for linting before commit
 - url: https://happy-pare-dff451.netlify.com/
   repo: https://github.com/fhavrlent/gatsby-contentful-typescript-starter
@@ -1777,3 +1780,31 @@
   features:
     - Generate nice documentation with Docz, in addition to generating your normal Gatsby site
     - Document your React components in .mdx files
+- url: https://gatsby-starter-santa-fe.netlify.com/
+  repo: https://github.com/osogrizz/gatsby-starter-santa-fe
+  description: A place for artist or designers to display their creations
+  tags:
+    - Styled-Components
+    - Web Font Loader
+  features:
+    - SEO friendly
+    - Built-in Google Fonts support
+    - Contact Form
+    - Customizable Design Template
+- url: https://gatsby-hello-friend.now.sh
+  repo: https://github.com/panr/gatsby-starter-hello-friend
+  description: A simple starter for Gatsby. That's it.
+  tags:
+    - Pagination
+    - Markdown
+    - Blog
+    - Portfolio
+    - Styling:PostCSS
+    - Syntax highlighting
+  features:
+    - Dark/light mode, depending on your preferences
+    - Great reading experience thanks to Inter font, made by Rasmus Andersson
+    - Nice code highlighting thanks to PrismJS
+    - Responsive youtube/vimeo etc. videos
+    - Elastic menu
+    - Fully responsive site

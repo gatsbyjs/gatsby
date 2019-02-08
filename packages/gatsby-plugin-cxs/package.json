@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-cxs",
   "description": "Gatsby plugin to add SSR support for ctx",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "author": "Chen-Tai Hou <ctxhou@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -24,7 +24,7 @@
   "main": "index.js",
   "peerDependencies": {
     "cxs": ">=5.0.0",
-    "gatsby": ">=2.0.0"
+    "gatsby": "^2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-cxs",
   "scripts": {

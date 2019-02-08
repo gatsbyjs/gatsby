@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-typography",
   "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -27,7 +27,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha",
+    "gatsby": "^2.0.0",
     "react-typography": "^0.16.1 || ^1.0.0-alpha.0",
     "typography": "^0.16.0 || ^1.0.0-alpha.0"
   },

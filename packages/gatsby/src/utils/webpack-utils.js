@@ -389,7 +389,7 @@ module.exports = async ({
         loaders.css({ ...options, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
-      if (!isSSR) use.unshift(loaders.miniCssExtract())
+      if (!isSSR) use.unshift(loaders.miniCssExtract({ hmr: !options.modules }))
 
       return {
         use,

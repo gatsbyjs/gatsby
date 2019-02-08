@@ -87,6 +87,15 @@ class DocsTemplate extends React.Component {
                   __html: html,
                 }}
               />
+              {page.frontmatter.issue && (
+                <a
+                  href={page.frontmatter.issue}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See the issue relating to this stub on GitHub
+                </a>
+              )}
               <MarkdownPageFooter page={page} />
             </Container>
           </DocSearchContent>
@@ -111,6 +120,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         overview
+        issue
       }
       ...MarkdownPageFooter
     }

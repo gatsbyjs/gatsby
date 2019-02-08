@@ -232,7 +232,7 @@ const ListLink = props => (
 // highlight-end
 
 export default ({ children }) => (
-  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
+  <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
     {/* highlight-start */}
     <header style={{ marginBottom: `1.5rem` }}>
       <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
