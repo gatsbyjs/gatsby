@@ -3,7 +3,7 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const glob = require(`glob`)
 const request = require(`request-promise-native`)
-const createDevServer = require(`../../utils/createDevServer`)
+const createDevServer = require(`../../utils/create-devserver`)
 const basePath = path.resolve(__dirname, `../../`)
 
 // 2 min
