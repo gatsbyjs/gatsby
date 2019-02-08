@@ -2,16 +2,19 @@
 title: Adding search with Algolia
 ---
 
-Once you've added some content to your site, you'll want to make it's easy for your visitor to find what they're looking for. This guide will run you through the process of setting up a custom search experience powered by [Algolia](https://www.algolia.com).
+Once you've added some content to your site, you'll want to make it easy for your visitors to find what they're looking for. This guide will run you through the process of setting up a custom search experience on any Gatsby site powered by [Algolia](https://www.algolia.com).
 
-Before, we begin I should mention that if you're looking to add search to a documentation site, then you can let Algolia handle most of the steps outlined below for you by using their excellent [Docsearch](https://community.algolia.com/docsearch) functionality. For other types of sites and more fine-grained control over exactly what data should be indexed, read on.
+Two things before we begin:
+
+1. Beyond this guide, you may also want to checkout Algolia's extensive [docs on how to get started in React](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react).
+2. If you're looking to add search to a documentation site, you can let Algolia handle most of the steps outlined below for you by using their excellent [Docsearch](https://community.algolia.com/docsearch) functionality. For other types of sites and more fine-grained control over exactly what data should be indexed, read on.
 
 ## Backend
 
-First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia) and [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) to your project. With `react-instantsearch` Algolia provides an extensive library of off-the-shelf React components that we can simply import to save ourselves a lot of work. If you're not using it already, also install [`dotenv`](https://github.com/motdotla/dotenv) while you're at it. We're going to need it to specify your Algolia app ID and both the search and admin API keys without commiting them to version control.
+First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia), [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) and [`algoliasearch`](https://github.com/algolia/algoliasearch-client-javascript) to your project. With `react-instantsearch` Algolia provides an extensive library of off-the-shelf React components that we can import to save ourselves a lot of work. `algoliasearch` provides the actual search client which we'll simply pass into `react-instantsearch`. If you're not using it already, also install [`dotenv`](https://github.com/motdotla/dotenv) while you're at it. We're going to need it to specify your Algolia app ID and both the search and admin API keys without commiting them to version control.
 
 ```sh
-yarn add gatsby-plugin-algolia react-instantsearch-dom dotenv
+yarn add gatsby-plugin-algolia react-instantsearch-dom algoliasearch dotenv
 ```
 
 Next, add `gatsby-plugin-algolia` to your `gatsby-config.js`.
@@ -150,6 +153,7 @@ The first step is to create the main component file.
 ```jsx
 // src/components/Search/index.js
 import React, { Component, createRef } from 'react'
+import algoliasearch from 'algoliasearch/lite'
 import {
   InstantSearch,
   Index,
@@ -176,6 +180,10 @@ const Stats = connectStateResults(
 
 export default class Search extends Component {
   state = { query: ``, focussed: false, ref: createRef() }
+  searchClient = algoliasearch(
+    process.env.GATSBY_ALGOLIA_APP_ID,
+    process.env.GATSBY_ALGOLIA_SEARCH_KEY
+  )
 
   updateState = state => this.setState(state)
 
@@ -210,8 +218,7 @@ export default class Search extends Component {
     const { indices, collapse, hitsAsGrid } = this.props
     return (
       <InstantSearch
-        appId={process.env.GATSBY_ALGOLIA_APP_ID}
-        apiKey={process.env.GATSBY_ALGOLIA_SEARCH_KEY}
+        searchClient={this.searchClient}
         indexName={indices[0].name}
         onSearchStateChange={this.updateState}
         root={{ Root, props: { ref } }}
@@ -267,7 +274,6 @@ import { Root, SearchBox, HitsWrapper, By } from './styles'
 
 Notice that we're importing the Algolia logo from `styled-icons`. That's because if you're using Algolia's generous free tier, they ask you to acknowledge them with a little `Powered by Algolia` link below the search results. `react-instantsearch-dom` provides a [`PoweredBy` component](https://community.algolia.com/react-instantsearch/widgets/PoweredBy.html) for that but you can of course build and style your own (as done here).
 
-
 We'll get back to those styled components once we're done with `index.js`. For now, let's move on.
 
 ```js
@@ -297,7 +303,7 @@ export default connectSearchBox(({ refine, ...rest }) => (
 ))
 ```
 
-Let's again worry about the styled components ` Loupe`, `Form`, `Input` later.
+Let's again worry about the styled components `Loupe`, `Form`, `Input` later.
 
 The next line imports hit components for every type of result we want to display to the user. The hit component determines how attributes of matching results such as author and title in the case of a blog post are displayed to the user.
 
