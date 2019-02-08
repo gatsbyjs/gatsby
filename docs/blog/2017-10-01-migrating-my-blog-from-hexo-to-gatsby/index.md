@@ -1,6 +1,6 @@
 ---
 title: "Migrating My Blog From Hexo To Gatsby"
-date: "2017-10-01"
+date: 2017-10-01
 image: "hexo-to-gatsby.png"
 author: "Ian Sinnott"
 excerpt: "How I migrated my blog to Gatsby and how you can do the same."

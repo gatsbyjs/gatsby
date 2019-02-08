@@ -1,6 +1,6 @@
 ---
 title: "Embracing GraphQL — How I migrated React FAQ to Gatsby v1"
-date: "2017-09-26"
+date: 2017-09-26
 image: "toa-heftiba-274947.jpg"
 author: "Tim Arney"
 excerpt: "Moving to Gatsby 1.x and embracing the new GraphQL setup can be daunting but the effort is going to payoff"

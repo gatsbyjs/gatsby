@@ -84,7 +84,7 @@ And now that you have all the data you need, it is just a matter of creating a f
   file.on('open', function () {
     file.write('---\n');
     file.write('title: "' + row.title + '"\n');
-    file.write('date: "' + date.toISOString() + '"\n');
+    file.write('date: ' + date.toISOString() + '\n');
     file.write('aliases: ' + JSON.stringify(aliases) + '\n');
     file.write('tags: ' + JSON.stringify(tags) + '\n');
     file.write('---\n\n');
