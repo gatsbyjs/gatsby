@@ -104,7 +104,10 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
          */
         const documentLocations = new WeakMap()
 
-        const extractStaticQuery = taggedTemplateExpressPath => {
+        const extractStaticQuery = (
+          taggedTemplateExpressPath,
+          isHook = false
+        ) => {
           const { ast: gqlAst, text, hash, isGlobal } = getGraphQLTag(
             taggedTemplateExpressPath
           )
@@ -126,6 +129,7 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
 
           const definitions = [...gqlAst.definitions].map(d => {
             d.isStaticQuery = true
+            d.isHook = isHook
             d.text = text
             d.hash = hash
             return d
@@ -204,7 +208,7 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
             hookPath.traverse({
               // Assume the query is inline in the component and extract that.
               TaggedTemplateExpression(templatePath) {
-                extractStaticQuery(templatePath)
+                extractStaticQuery(templatePath, true)
               },
               // // Also see if it's a variable that's passed in as a prop
               // // and if it is, go find it.
@@ -224,7 +228,7 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
                         varPath.traverse({
                           TaggedTemplateExpression(templatePath) {
                             found = true
-                            extractStaticQuery(templatePath)
+                            extractStaticQuery(templatePath, true)
                           },
                         })
                       }
