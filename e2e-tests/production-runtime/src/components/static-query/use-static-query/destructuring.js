@@ -3,6 +3,11 @@ import { useStaticQuery, graphql } from 'gatsby'
 
 function DestructuringQuery(props) {
   let { allSitePlugin } = useStaticQuery(variableQuery)
+
+  if (!allSitePlugin) {
+    return `Error`
+  }
+
   const plugins = allSitePlugin.edges
     .map(({ node }) => node)
     .filter(node => !node.pluginFilepath.includes(`gatsby/dist`))

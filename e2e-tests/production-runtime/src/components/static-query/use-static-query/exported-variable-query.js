@@ -3,7 +3,12 @@ import { useStaticQuery, graphql } from 'gatsby'
 
 function ExportedVariableQuery(props) {
   const data = useStaticQuery(exportedVariableQuery)
-  return <p {...props}>{data.sitePage.path}</p>
+
+  if (data) {
+    return <p {...props}>{data.sitePage.path}</p>
+  }
+
+  return `Error`
 }
 
 export const exportedVariableQuery = graphql`
