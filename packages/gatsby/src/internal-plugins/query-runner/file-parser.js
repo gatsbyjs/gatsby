@@ -27,6 +27,15 @@ const generateQueryName = ({ def, hash, file }) => {
   return def
 }
 
+const warnForUnknownQueryVariable = (varName, file, usageFunction) =>
+  report.warn(
+    `\nWe were unable to find the declaration of variable "${varName}", which you passed as the "query" prop into the ${usageFunction} declaration in "${file}".
+
+Perhaps the variable name has a typo?
+
+Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
+  )
+
 async function parseToAst(filePath, fileStr) {
   let ast
 
@@ -167,12 +176,10 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
                         },
                       })
                       if (!found) {
-                        report.warn(
-                          `\nWe were unable to find the declaration of variable "${varName}", which you passed as the "query" prop into the <StaticQuery> declaration in "${file}".
-
-Perhaps the variable name has a typo?
-
-Also note that we are currently unable to use queries defined in files other than the file where the <StaticQuery> is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
+                        warnForUnknownQueryVariable(
+                          varName,
+                          file,
+                          `<StaticQuery />`
                         )
                       }
                     }
@@ -202,7 +209,10 @@ Also note that we are currently unable to use queries defined in files other tha
               // // Also see if it's a variable that's passed in as a prop
               // // and if it is, go find it.
               Identifier(identifierPath) {
-                if (identifierPath.node.name !== `graphql`) {
+                if (
+                  identifierPath.node.name !== `graphql` &&
+                  identifierPath.node.name !== `useStaticQuery`
+                ) {
                   const varName = identifierPath.node.name
                   let found = false
                   traverse(ast, {
@@ -221,13 +231,7 @@ Also note that we are currently unable to use queries defined in files other tha
                     },
                   })
                   if (!found) {
-                    report.warn(
-                      `\nWe were unable to find the declaration of variable "${varName}", which you passed as the "query" prop into useStaticQuery in "${file}".
-
-Perhaps the variable name has a typo?
-
-Also note that we are currently unable to use queries defined in files other than the file where useStaticQuery is used. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
-                    )
+                    warnForUnknownQueryVariable(varName, file, `useStaticQuery`)
                   }
                 }
               },
