@@ -25,7 +25,7 @@ If you’d like to look at the growing number source plugins available to you, s
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-gatsby new wordpress-tutorial-site
+npx gatsby new wordpress-tutorial-site
 cd wordpress-tutorial-site
 ```
 
