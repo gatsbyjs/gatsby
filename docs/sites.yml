@@ -1249,14 +1249,14 @@
   categories:
     - Portfolio
     - Web Development
-- title: Philipp Czernitzki - Blog/Website
-  main_url: "http://philippczernitzki.me/"
-  url: "http://philippczernitzki.me/"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
+# - title: Philipp Czernitzki - Blog/Website
+#   main_url: "http://philippczernitzki.me/"
+#   url: "http://philippczernitzki.me/"
+#   featured: false
+#   categories:
+#     - Portfolio
+#     - Web Development
+#     - Blog
 - title: WebGazer
   main_url: "https://www.webgazer.io/"
   url: "https://www.webgazer.io/"
