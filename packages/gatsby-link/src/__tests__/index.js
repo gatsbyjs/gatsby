@@ -105,6 +105,13 @@ describe(`<Link />`, () => {
       expect(console.warn).not.toBeCalled()
     })
 
+    it(`does not warn when internal with anchor`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `/#local`
+      setup({ linkProps: { to } })
+      expect(console.warn).not.toBeCalled()
+    })
+
     it(`warns when not internal`, () => {
       jest.spyOn(global.console, `warn`)
       const to = `https://gatsby.org`
