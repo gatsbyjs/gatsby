@@ -183,7 +183,7 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
                         warnForUnknownQueryVariable(
                           varName,
                           file,
-                          `<StaticQuery />`
+                          `<StaticQuery>`
                         )
                       }
                     }
