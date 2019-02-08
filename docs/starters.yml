@@ -1,3 +1,13 @@
+- url: https://graphcms.github.io/gatsby-graphcms-tailwindcss-example/
+  repo: https://github.com/GraphCMS/gatsby-graphcms-tailwindcss-example
+  description: The default Gatsby starter blog with the addition of the gatsby-source-graphql and tailwind dependencies.
+  tags:
+    - Styling:Tailwind
+    - GraphCMS
+  features:
+    - Tailwind style library
+    - GraphQL source plugin
+    - Very simple boilerplate
 - url: https://wonism.github.io/
   repo: https://github.com/wonism/gatsby-advanced-blog
   description: n/a
