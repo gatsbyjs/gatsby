@@ -39,6 +39,8 @@ const makeNodes = () => [
     nestedRegex: {
       field: `har har`,
     },
+    dateMix: new Date(2018, 0, 1),
+    link___NODE: `1`,
   },
   {
     id: `1`,
@@ -84,6 +86,8 @@ const makeNodes = () => [
     nestedRegex: {
       field: ``,
     },
+    dateMix: `2017-01-01`,
+    link___NODE: `2`,
   },
   {
     id: `2`,
@@ -133,6 +137,8 @@ const makeNodes = () => [
         },
       ],
     },
+    dateMix: `2019-01-01`,
+    link___NODE: `0`,
   },
 ]
 
@@ -496,7 +502,7 @@ describe(`collection fields`, () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`, `id`],
+        fields: [`frontmatter___blue`, `index`],
         order: [`desc`], // `id` field will be sorted asc
       },
     })
@@ -511,7 +517,7 @@ describe(`collection fields`, () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`, `id`],
+        fields: [`frontmatter___blue`, `index`],
         order: [`desc`, `desc`], // `id` field will be sorted desc
       },
     })
@@ -520,5 +526,31 @@ describe(`collection fields`, () => {
     expect(result[0].id).toEqual(`2`) // blue = 10010, id = 2
     expect(result[1].id).toEqual(`1`) // blue = 10010, id = 1
     expect(result[2].id).toEqual(`0`) // blue = 100, id = 0
+  })
+
+  it(`sorts mix of Date objects and date strings`, async () => {
+    let result = await runQuery({
+      sort: {
+        fields: [`dateMix`],
+        order: [`desc`],
+      },
+    })
+
+    expect(result[0].index).toBe(2)
+    expect(result[1].index).toBe(0)
+    expect(result[2].index).toBe(1)
+  })
+
+  it(`sorts on linked fields`, async () => {
+    let result = await runQuery({
+      sort: {
+        fields: [`link___index`],
+        order: [`desc`],
+      },
+    })
+
+    expect(result[0].index).toBe(1)
+    expect(result[1].index).toBe(0)
+    expect(result[2].index).toBe(2)
   })
 })

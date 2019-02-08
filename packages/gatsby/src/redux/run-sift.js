@@ -6,6 +6,7 @@ const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { getNode, getNodesByType } = require(`../db/nodes`)
 const { store } = require(`.`)
+const deepmerge = require(`deepmerge`)
 
 const enhancedNodeCache = new Map()
 const enhancedNodePromiseCache = new Map()
@@ -257,11 +258,31 @@ function handleMany(siftArgs, nodes, sort) {
     // uses _.get so nested fields can be retrieved
     const convertedFields = sort.fields
       .map(field => field.replace(/___/g, `.`))
-      .map(field => v => _.get(v, field))
+      .map(field => v => {
+        const fieldValue = _.get(v, field)
+        // Stringify Dates for sorting, because we can have a mix
+        // of Date objects and date strings.
+        return fieldValue instanceof Date
+          ? fieldValue.toISOString()
+          : fieldValue
+      })
 
     result = _.orderBy(result, convertedFields, sort.order)
   }
   return result
+}
+
+/**
+ * Convert a dot-separated path like `foo.bar.baz` into
+ * an object `{ foo: { bar: { baz: true } } }`.
+ */
+const pathToObject = path => {
+  if (path && typeof path === `string`) {
+    return path.split(`.`).reduceRight((acc, key) => {
+      return { [key]: acc }
+    }, true)
+  }
+  return {}
 }
 
 /**
@@ -283,7 +304,14 @@ module.exports = (args: Object) => {
   // If nodes weren't provided, then load them from the DB
   const nodes = args.nodes || getNodesByType(gqlType.name)
 
-  const { siftArgs, fieldsToSift } = parseFilter(queryArgs.filter)
+  let { siftArgs, fieldsToSift } = parseFilter(queryArgs.filter)
+
+  if (queryArgs.sort && queryArgs.sort.fields) {
+    fieldsToSift = queryArgs.sort.fields.reduce((acc, field) => {
+      const sortField = pathToObject(field.replace(/___/g, `.`))
+      return deepmerge(acc, sortField)
+    }, fieldsToSift)
+  }
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
