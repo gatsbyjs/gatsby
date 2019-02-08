@@ -1,7 +1,7 @@
 ---
 title: "How we're migrating a government open data site to Gatsby"
 date: 2019-02-08
-authors:
+author:
   - Ryan Johnson
 tags:
   - open data
