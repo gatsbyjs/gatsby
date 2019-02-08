@@ -4,26 +4,17 @@ title: Adding search with js-search
 
 ## Prerequisites
 
-Before we go through the steps needed for adding client side search to your Gatsby website, it would be advised
-if you're not familiar on how Gatsby works and is set up to follow through the [tutorial](https://www.gatsbyjs.org/tutorial/) and brush up on the [documentation](https://www.gatsbyjs.org/docs/).
+Before we go through the steps needed for adding client side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](https://www.gatsbyjs.org/tutorial/) and brush up on the [documentation](https://www.gatsbyjs.org/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
 
-Also some knowledge of ES6 syntax, before diving into the implementation.
+## What is JS Search
 
-Otherwise just skip this part and move onto the next part.
+[JS Search](https://github.com/bvaughn/js-search) is a library created by Brian Vaughn, a member of the core team at Facebook. It provides an efficient way to search for data on the client with JavaScript and JSON objects. It also has extensive customization options, check out their docs for more details.
 
-## What is Js Search
-
-Js Search is a library created by Brian Vaughn, a member of the core team at Facebook.
-It provides a efficient way to search for data on the client with JavaScript and JSON objects.
-This plugin offers a rich ammount of options to customize the search, making it even faster.
-
-The full code and documentation for this library is hosted in [here](https://github.com/bvaughn/js-search).
-
-The example documented here is based on the one done by the creator of the said plugin.
+The full code and documentation for this library is [available on GitHub](https://github.com/bvaughn/js-search). This guide is based on the official `js-search` example but has been adapted to work with your Gatsby site.
 
 ## Setup
 
-Open up a terminal and create a new Gatsby website using a starter template, using the command below.
+You'll start by creating a new Gatsby site based on the official _hello world_ starter. Open up a terminal and run the following command:
 
 ```bash
 npx gatsby new js-search-example https://github.com/gatsbyjs/gatsby-starter-default
@@ -45,18 +36,17 @@ yarn add js-search axios
 
 __Note__:
 
-For this particular example [axios](https://github.com/axios/axios) will be used, to handle all of the promise based HTTP requests.
-Also both ways documented are fairly generalistic, they were implemented using the default options for the library, so that it can be experimented without going through into the specifics of the library.
-And finally as you go through the code, be mindfull it does not adhere to the best practices, it's just for demonstrational purposes, in a real site, it would have been implemented in a different way.
+For this particular example [axios](https://github.com/axios/axios) will be used to handle all of the promise-based HTTP requests.
 
 ## Strategy selection
 
-Before diving into the code below, it would be best to take a step back and think about the ammount of items on which the search will be performed.
+In the next sections you'll learn about two approaches to implementing `js-search` in your site. Which one you choose will depend on the number of items you want to search. For a small to medium dataset, the first strategy documented should work out nicely.
 
-If we're talking about a small to medium dataset, the first strategy documented should work out nice for you, without any issues whatsoever.
+For larger datasets you could use the second approach, as most of the work is done beforehand through the use of Gatsby's internal API.
 
-Otherwise, the second one should be best suited, as most of the work is done beforehand through the use of Gatsby's internal API.
+Both ways are fairly generalistic, they were implemented using the default options for the library, so that it can be experimented without going through into the specifics of the library.
 
+And finally as you go through the code, be mindful it does not adhere to the best practices, it's just for demonstration purposes, in a real site it would have been implemented in a different way.
 
 ## JS-Search with a small to medium dataset
 
@@ -258,7 +248,7 @@ export default Search
 Breaking down the code into smaller parts:
 
 1. When the component is mounted, the `componentDidMount()` lifecycle method is triggered and the data will be fetched.
-2. If no errors occur, the data recieved is added to the state and the `rebuildIndex()` function is invoked.
+2. If no errors occur, the data received is added to the state and the `rebuildIndex()` function is invoked.
 3. The search engine is then created and configured with the default options.
 4. The data is then indexed using js-search.
 5. When the contents of the input changes, js-search starts the search process based on the `input`'s value and returns the search results if any, which is then presented to the user via the `table` element.
@@ -267,16 +257,16 @@ Breaking down the code into smaller parts:
 ### Joining all the pieces
 
 In order to get it working in your site, you would only need to import the newly created component to a page. 
-As you can see [here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/pages/index.js).
+As you can see [in the example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/pages/index.js).
 
-Issuing `gatsby develop` and if all went without any issues, opening your browser of choice and entering the url `http://localhost:8000`, you'll have a fully functional search at your disposal.
+Run `gatsby develop` and if all went well, open your browser of choice and enter the url `http://localhost:8000` - you'll have a fully functional search at your disposal.
 
 
 ## JS-Search with a big dataset
 
-As contrary to what was demonstrated above, instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](https://www.gatsbyjs.org/docs/behind-the-scenes-terminology/#pagecontext).
+Now let's try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](https://www.gatsbyjs.org/docs/behind-the-scenes-terminology/#pagecontext).
 
-With that, some changes are required.
+To do this, some changes are required.
 
 Start by modifying the `gatsby-node.js` file by adding the following code:
 
@@ -411,8 +401,8 @@ class ClientSearch extends Component {
       )
     }
     /**
-     *  defines a indexing strategy for the data
-     * more more about it in here https://github.com/bvaughn/js-search#configuring-the-index-strategy
+     * defines an indexing strategy for the data
+     * read more about it here https://github.com/bvaughn/js-search#configuring-the-index-strategy
      */
     if (selectedStrategy === 'All') {
       dataToSearch.indexStrategy = new JsSearch.AllSubstringsIndexStrategy()
@@ -427,7 +417,6 @@ class ClientSearch extends Component {
      /**
      * defines the sanitizer for the search
      * to prevent some of the words from being excluded
-     *
      */
     selectedSanitizer === 'Case Sensitive'
       ? (dataToSearch.sanitizer = new JsSearch.CaseSensitiveSanitizer())
@@ -582,17 +571,17 @@ Breaking down the code into smaller parts:
 2. Then the `componentDidMount()` lifecycle method will be triggered and the `rebuildIndex()` function is invoked.
 3. The search engine is then created and configured with the options defined.
 4. The data is then indexed using js-search.
-5. When the contents of the input changes, js-search starts the search process based on the `input`'s value and returns the search results if any, which is then presented to the via the `table` element.
+5. When the contents of the input changes, js-search starts the search process based on the `input`'s value and returns the search results if any, which is then presented to the user via the `table` element.
 
 
 ### Joining all the pieces
 
-Once again to get it to work on your site you would only need to copy over the `gatsby-node.js` file is located [here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/gatsby-node.js).
+Once again to get it to work on your site you would only need to copy over [the `gatsby-node.js` file located here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/gatsby-node.js).
 
 And both the [template](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/templates/ClientSearchTemplate.js) and the [search component](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/components/ClientSearch.js).
 
-Issuing `gatsby develop` again, and if all went without any issues one more time, opening your browser of choice and entering the url `http://localhost:8000/search`, you'll have a fully functional search at your disposal coupled with Gatsby API.
+Issuing `gatsby develop` again, and if all went without any issues one more time, open your browser of choice and enter the url `http://localhost:8000/search`, you'll have a fully functional search at your disposal coupled with Gatsby API.
 
-Hope that this rather extensive guide shed some insights on how to implement client search using js-search.
+Hopefully this rather extensive guide has shed some insights on how to implement client search using js-search.
 
-Now go make something great.
+Now go make something great!
