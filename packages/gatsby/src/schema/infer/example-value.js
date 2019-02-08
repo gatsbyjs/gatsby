@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const { reportConflict } = require(`./type-conflict-reporter`)
+const { TypeConflictReporter } = require(`./type-conflict-reporter`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 const { isDate } = require(`../types/Date`)
 
@@ -58,7 +58,7 @@ const getExampleObject = ({ nodes, prefix, ignoreFields = [] }) => {
         // InvalidValue.
         value = `String`
       } else {
-        reportConflict(
+        TypeConflictReporter.addConflict(
           selector,
           Object.keys(entriesByType).map(k => entriesByType[k])
         )
@@ -67,12 +67,7 @@ const getExampleObject = ({ nodes, prefix, ignoreFields = [] }) => {
     }
 
     let exampleFieldValue
-    if (
-      _.isObject(value) &&
-      !_.isArray(value) &&
-      !_.isString(value) &&
-      !_.isDate(value)
-    ) {
+    if (_.isPlainObject(value)) {
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
         let arrays = arrayWrappers - 1

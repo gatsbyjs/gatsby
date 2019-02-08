@@ -97,7 +97,7 @@ const addInferredFieldsImpl = ({
 
     if (typeComposer.hasField(key)) {
       let fieldType = typeComposer.getFieldType(key)
-      if (_.isObject(value) /* && depth < MAX_DEPTH */) {
+      if (_.isPlainObject(value) /* && depth < MAX_DEPTH */) {
         // TODO: Use helper (similar to dropTypeModifiers)
         let lists = 0
         while (fieldType.ofType) {
@@ -198,17 +198,12 @@ const getFieldConfigFromFieldNameConvention = (
   // (ii) hinders reusing types.
   if (linkedTypes.length > 1) {
     const typeName = linkedTypes.sort().join(``) + `Union`
-    schemaComposer.getOrCreateUTC(typeName, utc => {
+    type = schemaComposer.getOrCreateUTC(typeName, utc => {
       const types = linkedTypes.map(typeName =>
         schemaComposer.getOrCreateTC(typeName)
       )
       utc.setTypes(types)
-      types.forEach(type => {
-        utc.addTypeResolver(
-          type,
-          obj => obj.internal.type === type.getTypeName()
-        )
-      })
+      utc.setResolveType(node => node.internal.type)
     })
   } else {
     type = linkedTypes[0]

@@ -21,7 +21,7 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
-const nodeStore = require(`../db/nodes`)
+const withResolverContext = require(`../schema/context`)
 require(`../db`).startAutosave()
 
 // Show stack trace on unhandled promises.
@@ -390,10 +390,7 @@ module.exports = async (args: BootstrapArgs) => {
       schema,
       query,
       context,
-      {
-        ...context,
-        nodeModel: nodeStore,
-      },
+      withResolverContext(context),
       context
     )
   }

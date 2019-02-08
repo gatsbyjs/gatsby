@@ -2,12 +2,9 @@ const _ = require(`lodash`)
 const { toInputObjectType } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
 const GraphQLDate = require(`./types/Date`)
-const {
-  addNodeInterfaceFields,
-  hasNodeInterface,
-} = require(`./types/NodeInterface`)
+const { addNodeInterfaceFields } = require(`./types/NodeInterface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
-const { findOne, findMany, findManyPaginated } = require(`./resolvers`)
+const { findOne, findManyPaginated } = require(`./resolvers`)
 const { InferDirective, DontInferDirective } = require(`./types/directives`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
@@ -100,7 +97,7 @@ const processTypeComposer = async ({
 }) => {
   if (
     typeComposer instanceof schemaComposer.TypeComposer &&
-    hasNodeInterface({ schemaComposer, typeComposer })
+    typeComposer.hasInterface(`Node`)
   ) {
     await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
     await addResolvers({ schemaComposer, typeComposer, parentSpan })
@@ -129,7 +126,7 @@ const addSetFieldsOnGraphQLNodeTypeFields = ({
     Array.from(schemaComposer.values()).map(async tc => {
       if (
         tc instanceof schemaComposer.TypeComposer &&
-        hasNodeInterface({ schemaComposer, typeComposer: tc })
+        tc.hasInterface(`Node`)
       ) {
         const typeName = tc.getTypeName()
         const [fields] = await apiRunner(`setFieldsOnGraphQLNodeType`, {
@@ -167,12 +164,13 @@ const addThirdPartySchemas = ({
 
     // Explicitly add the third-party schema's types, so they can be targeted
     // in `addResolvers` API.
-    const rootTypeName = Object.values(fields)[0].type.name
+    const rootTypeName = fields[Object.keys(fields)[0]].type.name
     const types = schema.getTypeMap()
-    Object.entries(types).forEach(
-      ([typeName, type]) =>
-        typeName.startsWith(rootTypeName) && schemaComposer.add(type)
-    )
+    Object.keys(types).forEach(typeName => {
+      if (typeName.startsWith(rootTypeName)) {
+        schemaComposer.add(types[typeName])
+      }
+    })
   })
 }
 
@@ -232,17 +230,6 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
     resolve: findOne(typeName),
   })
   typeComposer.addResolver({
-    name: `findMany`,
-    type: [typeComposer],
-    args: {
-      filter: FilterInputTC,
-      sort: SortInputTC,
-      skip: `Int`,
-      limit: `Int`,
-    },
-    resolve: findMany(typeName),
-  })
-  typeComposer.addResolver({
     name: `findManyPaginated`,
     type: PaginationTC,
     args: {
@@ -286,9 +273,12 @@ function createChildrenField(typeName) {
     [_.camelCase(`children ${typeName}`)]: {
       type: () => [typeName],
       resolve(source, args, context) {
+        const { path } = context
         return source.children
-          .map(context.nodeModel.getNode)
-          .filter(nodeIsOfType(typeName))
+          .map(id =>
+            context.nodeModel.getNodeByType({ id, type: typeName }, { path })
+          )
+          .filter(Boolean)
       },
     },
   }
@@ -299,9 +289,12 @@ function createChildField(typeName) {
     [_.camelCase(`child ${typeName}`)]: {
       type: () => typeName,
       resolve(source, args, context) {
+        const { path } = context
         return source.children
-          .map(context.nodeModel.getNode)
-          .find(nodeIsOfType(typeName))
+          .map(id =>
+            context.nodeModel.getNodeByType({ id, type: typeName }, { path })
+          )
+          .find(Boolean)
       },
     },
   }
@@ -312,10 +305,6 @@ function groupChildNodesByType({ nodeStore, nodes }) {
     .flatMap(node => node.children.map(nodeStore.getNode))
     .groupBy(node => (node.internal ? node.internal.type : undefined))
     .value()
-}
-
-function nodeIsOfType(typeName) {
-  return node => node.internal.type === typeName
 }
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {

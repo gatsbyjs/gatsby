@@ -7,7 +7,7 @@ const websocketManager = require(`../../utils/websocket-manager`)
 
 const path = require(`path`)
 const { store } = require(`../../redux`)
-const nodeStore = require(`../../db/nodes`)
+const withResolverContext = require(`../../schema/context`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
 const mod = require(`hash-mod`)(999)
@@ -33,10 +33,7 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
       schema,
       query,
       context,
-      {
-        ...context,
-        nodeModel: nodeStore,
-      },
+      withResolverContext(context),
       context
     )
 
