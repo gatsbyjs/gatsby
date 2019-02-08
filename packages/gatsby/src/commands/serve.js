@@ -22,8 +22,8 @@ const historyRouter = (pages, options) => {
     .map(page => page.matchPath)
   return (req, res, next) => {
     const { url } = req
-    if (clientOnlyRoutes.some(route => reachMatch(route, url) !== null)) {
-      if (req.accepts(`html`)) {
+    if (req.accepts(`html`)) {
+      if (clientOnlyRoutes.some(route => reachMatch(route, url) !== null)) {
         return res.sendFile(`index.html`, options, err => {
           if (err) {
             next()
