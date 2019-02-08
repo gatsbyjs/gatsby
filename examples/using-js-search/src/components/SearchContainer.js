@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import Axios from 'axios'
-import * as JsSearch from 'js-search'
+import React, { Component } from "react"
+import Axios from "axios"
+import * as JsSearch from "js-search"
 
 class Search extends Component {
   state = {
@@ -9,13 +9,13 @@ class Search extends Component {
     searchResults: [],
     isLoading: true,
     isError: false,
-    searchQuery: '',
+    searchQuery: ``,
   }
   /**
    * React lifecycle method to fetch the data
    */
   async componentDidMount() {
-    Axios.get('https://bvaughn.github.io/js-search/books.json')
+    Axios.get(`https://bvaughn.github.io/js-search/books.json`)
       .then(result => {
         const bookData = result.data
         this.setState({ bookList: bookData.books })
@@ -23,9 +23,9 @@ class Search extends Component {
       })
       .catch(err => {
         this.setState({ isError: true })
-        console.log('====================================')
+        console.log(`====================================`)
         console.log(`Something bad happened while fetching the data\n${err}`)
-        console.log('====================================')
+        console.log(`====================================`)
       })
   }
 
@@ -35,7 +35,7 @@ class Search extends Component {
   rebuildIndex = () => {
     const { bookList } = this.state
 
-    const dataToSearch = new JsSearch.Search('isbn')
+    const dataToSearch = new JsSearch.Search(`isbn`)
 
     /**
      *  defines a indexing strategy for the data
@@ -54,10 +54,10 @@ class Search extends Component {
      * defines the search index
      * read more in here https://github.com/bvaughn/js-search#configuring-the-search-index
      */
-    dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex('isbn')
+    dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex(`isbn`)
 
-    dataToSearch.addIndex('title') // sets the index attribute for the data
-    dataToSearch.addIndex('author') // sets the index attribute for the data
+    dataToSearch.addIndex(`title`) // sets the index attribute for the data
+    dataToSearch.addIndex(`author`) // sets the index attribute for the data
 
     dataToSearch.addDocuments(bookList) // adds the data to be searched
     this.setState({ search: dataToSearch, isLoading: false })
@@ -84,12 +84,12 @@ class Search extends Component {
       searchResults,
       searchQuery,
     } = this.state
-    const queryResults = searchQuery === '' ? bookList : searchResults
+    const queryResults = searchQuery === `` ? bookList : searchResults
 
     if (isLoading) {
       return (
-        <div style={{ margin: '1.2rem 1rem 1.2rem 1rem' }}>
-          <h1 style={{ marginTop: '3em', textAlign: 'center' }}>
+        <div style={{ margin: `1.2rem 1rem 1.2rem 1rem` }}>
+          <h1 style={{ marginTop: `3em`, textAlign: `center` }}>
             Getting the search all setup
           </h1>
         </div>
@@ -97,13 +97,13 @@ class Search extends Component {
     }
     if (isError) {
       return (
-        <div style={{ margin: '1.2rem 1rem 1.2rem 1rem' }}>
-          <h1 style={{ marginTop: '3em', textAlign: 'center' }}>Ohh no!!!!!</h1>
+        <div style={{ margin: `1.2rem 1rem 1.2rem 1rem` }}>
+          <h1 style={{ marginTop: `3em`, textAlign: `center` }}>Ohh no!!!!!</h1>
           <h3
             style={{
-              marginTop: '2em',
-              padding: '2em 0em',
-              textAlign: 'center',
+              marginTop: `2em`,
+              padding: `2em 0em`,
+              textAlign: `center`,
             }}
           >
             Something really bad happened
@@ -113,10 +113,10 @@ class Search extends Component {
     }
     return (
       <div>
-        <div style={{ margin: '0 auto' }}>
+        <div style={{ margin: `0 auto` }}>
           <form onSubmit={this.handleSubmit}>
-            <div style={{ margin: '0 auto' }}>
-              <label htmlFor="Search" style={{ paddingRight: '10px' }}>
+            <div style={{ margin: `0 auto` }}>
+              <label htmlFor="Search" style={{ paddingRight: `10px` }}>
                 Enter your search here
               </label>
               <input
@@ -124,7 +124,7 @@ class Search extends Component {
                 value={searchQuery}
                 onChange={this.searchData}
                 placeholder="Enter your search here"
-                style={{ margin: '0 auto', width: '400px' }}
+                style={{ margin: `0 auto`, width: `400px` }}
               />
             </div>
           </form>
@@ -133,46 +133,46 @@ class Search extends Component {
             {queryResults.length}
             <table
               style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                borderRadius: '4px',
-                border: '1px solid #d3d3d3',
+                width: `100%`,
+                borderCollapse: `collapse`,
+                borderRadius: `4px`,
+                border: `1px solid #d3d3d3`,
               }}
             >
-              <thead style={{ border: '1px solid #808080' }}>
+              <thead style={{ border: `1px solid #808080` }}>
                 <tr>
                   <th
                     style={{
-                      textAlign: 'left',
-                      padding: '5px',
-                      fontSize: '14px',
+                      textAlign: `left`,
+                      padding: `5px`,
+                      fontSize: `14px`,
                       fontWeight: 600,
-                      borderBottom: '2px solid #d3d3d3',
-                      cursor: 'pointer',
+                      borderBottom: `2px solid #d3d3d3`,
+                      cursor: `pointer`,
                     }}
                   >
                     Book ISBN
                   </th>
                   <th
                     style={{
-                      textAlign: 'left',
-                      padding: '5px',
-                      fontSize: '14px',
+                      textAlign: `left`,
+                      padding: `5px`,
+                      fontSize: `14px`,
                       fontWeight: 600,
-                      borderBottom: '2px solid #d3d3d3',
-                      cursor: 'pointer',
+                      borderBottom: `2px solid #d3d3d3`,
+                      cursor: `pointer`,
                     }}
                   >
                     Book Title
                   </th>
                   <th
                     style={{
-                      textAlign: 'left',
-                      padding: '5px',
-                      fontSize: '14px',
+                      textAlign: `left`,
+                      padding: `5px`,
+                      fontSize: `14px`,
                       fontWeight: 600,
-                      borderBottom: '2px solid #d3d3d3',
-                      cursor: 'pointer',
+                      borderBottom: `2px solid #d3d3d3`,
+                      cursor: `pointer`,
                     }}
                   >
                     Book Author
@@ -180,29 +180,30 @@ class Search extends Component {
                 </tr>
               </thead>
               <tbody>
+                {/* eslint-disable */}
                 {queryResults.map(item => {
                   return (
                     <tr key={`row_${item.isbn}`}>
                       <td
                         style={{
-                          fontSize: '14px',
-                          border: '1px solid #d3d3d3',
+                          fontSize: `14px`,
+                          border: `1px solid #d3d3d3`,
                         }}
                       >
                         {item.isbn}
                       </td>
                       <td
                         style={{
-                          fontSize: '14px',
-                          border: '1px solid #d3d3d3',
+                          fontSize: `14px`,
+                          border: `1px solid #d3d3d3`,
                         }}
                       >
                         {item.title}
                       </td>
                       <td
                         style={{
-                          fontSize: '14px',
-                          border: '1px solid #d3d3d3',
+                          fontSize: `14px`,
+                          border: `1px solid #d3d3d3`,
                         }}
                       >
                         {item.author}
@@ -210,6 +211,7 @@ class Search extends Component {
                     </tr>
                   )
                 })}
+                 {/* eslint-enable */}
               </tbody>
             </table>
           </div>

@@ -1,5 +1,5 @@
-import React from 'react'
-import ClientSearch from '../components/ClientSearch'
+import React from "react"
+import ClientSearch from "../components/ClientSearch"
 
 const SearchTemplate = props => {
   const { pageContext } = props
