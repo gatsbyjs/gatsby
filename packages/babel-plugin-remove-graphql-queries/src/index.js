@@ -195,13 +195,8 @@ export default function({ types: t }) {
                 else importPath.remove()
 
               // Add query
-              path2.parentPath.parentPath.replaceWith(
-                t.variableDeclaration(path2.parentPath.parent.kind, [
-                  t.variableDeclarator(
-                    path2.parent.id,
-                    t.memberExpression(identifier, t.identifier(`data`))
-                  ),
-                ])
+              path2.replaceWith(
+                t.memberExpression(identifier, t.identifier(`data`))
               )
 
               // Add import
