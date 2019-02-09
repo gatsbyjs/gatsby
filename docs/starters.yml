@@ -1829,3 +1829,20 @@
     - Various available icon sets
     - RSS Feed
     - Web app manifest
+  - url: https://gatsby-saas.magicsoup.io/
+    repo: https://github.com/magicsoup-io/gatsby-starter-saas
+    description: A starter for Saas products. Login, Demo-User, Pricing plans, SEO-friendly, responsive, uses MagicSoup.io for themable and extensible UIs. 
+    tags:
+      - Saas
+      - Authentication
+      - Styled-Components
+      - SEO
+      - Markdown
+      - Styled-Components
+      - Styling:MagicSoup.io
+    features:
+      - This starter implements a basic authentication handling and routes to start an Saas prototype pretty fast.
+      - This starter is combining those benefits with GatsbyJS’ automatic slug and page creation via gatsby-transform-remark and page or SEO globals via gatsby-transform-json.
+      - This starter combines the two best things in the world: Writing your content with markdown and render it with styled-components. The great marksy library enables you to set components for compiled markdown pages.
+      - This starter uses gatsby-plugin-web-font-loader to load whatever font is needed for your page. Look at the gatsby-config.js to see configuration options.
+      - This starter includes everything you need to start testing with jest. Just run npm test to see results for already implements specs.
