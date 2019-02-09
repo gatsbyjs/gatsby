@@ -151,7 +151,7 @@ export default IndexPage
 
 With this code, you have:
 
-1. Added the "StaticQuery" component to a page that allows you to fetch content from the GraphQL API.
+1. Added the `StaticQuery` component to a page that allows you to fetch content from the GraphQL API.
 2. Fetched some simplified data from the Mountain API, namely the title and elevation.
 3. Rendered the list in the StaticQuery's RenderProp called "render".
 
