@@ -1830,7 +1830,7 @@
     - RSS Feed
     - Web app manifest
 - url: https://gatsby.magicsoup.io/
-  repo: https://github.com/magicsoup-io/gatsby-starter-magicsoup/
+  repo: https://github.com/magicsoup-io/gatsby-starter-magicsoup
   description: A production ready gatsby starter using magicsoup.io
   tags:
     - SEO
