@@ -22,7 +22,8 @@ const dropQueryOperators = filter =>
 
 const hasResolvers = (type, filterFields) => {
   const fields = type.getFields()
-  return Object.entries(filterFields).some(([fieldName, filterValue]) => {
+  return Object.keys(filterFields).some(fieldName => {
+    const filterValue = filterFields[fieldName]
     const field = fields[fieldName]
     return (
       Boolean(field.resolve) ||
