@@ -12,8 +12,8 @@ const createPageDependency = require(`../redux/actions/add-page-dependency`)
 const { store } = require(`../redux`)
 const { isAbstractType } = require(`graphql`)
 
-const withPageDependencies = fn => (args, pageDependencies) => {
-  const result = fn(args)
+const withPageDependencies = fn => async (args, pageDependencies) => {
+  const result = await fn(args)
 
   const { path, connectionType } = pageDependencies || {}
   if (path) {

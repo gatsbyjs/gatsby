@@ -96,7 +96,7 @@ const getValueAtSelector = (obj, selector) => {
   }, obj)
 }
 
-const link = ({ by, from }) => (source, args, context, info) => {
+const link = ({ by, from }) => async (source, args, context, info) => {
   const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
@@ -112,14 +112,15 @@ const link = ({ by, from }) => (source, args, context, info) => {
 
   if (by === `id`) {
     if (Array.isArray(fieldValue)) {
-      return fieldValue
-        .map(id =>
+      const result = await Promise.all(
+        fieldValue.map(id =>
           context.nodeModel.getNodeByType(
             { id, type: type.name },
             { path: context.path }
           )
         )
-        .filter(Boolean)
+      )
+      return result.filter(Boolean)
     } else {
       return context.nodeModel.getNodeByType(
         { id: fieldValue, type: type.name },

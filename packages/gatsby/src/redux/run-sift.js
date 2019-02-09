@@ -4,6 +4,8 @@ const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
+const { store } = require(`../redux`)
+const { getNullableType, getNamedType } = require(`graphql`)
 
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
@@ -100,14 +102,13 @@ function isEqId(firstOnly, fieldsToSift, siftArgs) {
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    return field.resolve(
-      node,
-      {},
-      {},
-      {
-        fieldName: k,
-      }
-    )
+    const withResolverContext = require(`../schema/context`)
+    const { schema } = store.getState()
+    return field.resolve(node, {}, withResolverContext(), {
+      fieldName: k,
+      schema,
+      returnType: field.type,
+    })
   } else if (node[k] !== undefined) {
     return node[k]
   }
@@ -123,32 +124,19 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
         .then(v => {
           const innerSift = siftFieldsObj[k]
           const innerGqConfig = gqFields[k]
-          if (
-            _.isObject(innerSift) &&
-            v != null &&
-            innerGqConfig &&
-            innerGqConfig.type
-          ) {
-            if (_.isFunction(innerGqConfig.type.getFields)) {
+
+          const innerType = getNullableType(innerGqConfig.type)
+          const innerListType = getNamedType(innerType)
+
+          if (_.isObject(innerSift) && v != null && innerType) {
+            if (_.isFunction(innerType.getFields)) {
               // this is single object
-              return resolveRecursive(
-                v,
-                innerSift,
-                innerGqConfig.type.getFields()
-              )
-            } else if (
-              _.isArray(v) &&
-              innerGqConfig.type.ofType &&
-              _.isFunction(innerGqConfig.type.ofType.getFields)
-            ) {
+              return resolveRecursive(v, innerSift, innerType.getFields())
+            } else if (_.isArray(v) && _.isFunction(innerListType.getFields)) {
               // this is array
               return Promise.all(
                 v.map(item =>
-                  resolveRecursive(
-                    item,
-                    innerSift,
-                    innerGqConfig.type.ofType.getFields()
-                  )
+                  resolveRecursive(item, innerSift, innerListType.getFields())
                 )
               )
             }

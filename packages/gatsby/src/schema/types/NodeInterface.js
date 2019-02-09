@@ -21,14 +21,14 @@ const getOrCreateNodeInterface = schemaComposer => {
       id: `String!`,
       parent: {
         type: `Node`,
-        resolve: async (source, args, context, info) => {
+        resolve: (source, args, context, info) => {
           const { path } = context
           return context.nodeModel.getNode(source.parent, { path })
         },
       },
       children: {
         type: `[Node]!`,
-        resolve: async (source, args, context, info) => {
+        resolve: (source, args, context, info) => {
           const { path } = context
           return source.children.map(id =>
             context.nodeModel.getNode(id, { path })

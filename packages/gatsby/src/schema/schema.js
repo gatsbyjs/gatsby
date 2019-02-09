@@ -272,13 +272,14 @@ function createChildrenField(typeName) {
   return {
     [_.camelCase(`children ${typeName}`)]: {
       type: () => [typeName],
-      resolve(source, args, context) {
+      async resolve(source, args, context) {
         const { path } = context
-        return source.children
-          .map(id =>
+        const result = await Promise.all(
+          source.children.map(id =>
             context.nodeModel.getNodeByType({ id, type: typeName }, { path })
           )
-          .filter(Boolean)
+        )
+        return result.filter(Boolean)
       },
     },
   }
@@ -288,13 +289,14 @@ function createChildField(typeName) {
   return {
     [_.camelCase(`child ${typeName}`)]: {
       type: () => typeName,
-      resolve(source, args, context) {
+      async resolve(source, args, context) {
         const { path } = context
-        return source.children
-          .map(id =>
+        const result = await Promise.all(
+          source.children.map(id =>
             context.nodeModel.getNodeByType({ id, type: typeName }, { path })
           )
-          .find(Boolean)
+        )
+        return result.find(Boolean)
       },
     },
   }
