@@ -19,7 +19,7 @@ First you’ll need to install the `gatsby-source-wordpress` plugin that has ima
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-gatsby new images-tutorial-site
+npx gatsby new images-tutorial-site
 cd images-tutorial-site
 ```
 
@@ -126,7 +126,7 @@ Now you are ready to create a GraphQL query to pull in some images from the Word
 Run:
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 Open localhost:8000 and localhost:8000/\_\_\_graphql.

@@ -45,7 +45,7 @@ Next you will create the blog from the handy [Gatsby Starter Blog](https://githu
 From your terminal run
 
 ```bash
-$ gatsby new azure-blog https://github.com/gatsbyjs/gatsby-starter-blog
+$ npx gatsby new azure-blog https://github.com/gatsbyjs/gatsby-starter-blog
 
 info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git
 Cloning into 'azure-blog'...
@@ -63,7 +63,7 @@ You can now view your website by running
 
 ```bash
 $ cd azure-blog
-$ gatsby develop
+$ npm run develop
 ```
 
 You should now see your blog in the flesh!

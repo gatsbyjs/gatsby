@@ -4,18 +4,12 @@ title: "Quick Start"
 
 This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/tutorial/)!
 
-## Install Gatsby's command line tool
-
-```shell
-npm install --global gatsby-cli
-```
-
 ## Use the Gatsby CLI
 
 ### Create a new site.
 
 ```shell
-gatsby new gatsby-site
+npx gatsby new gatsby-site
 ```
 
 ### Change directories into site folder.
@@ -27,7 +21,7 @@ cd gatsby-site
 ### Start development server.
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 Gatsby will start a hot-reloading development environment accessible by default at `localhost:8000`.
@@ -37,7 +31,7 @@ Try editing the JavaScript pages in `src/pages`. Saved changes will live reload 
 ### Create a production build.
 
 ```shell
-gatsby build
+npm run build
 ```
 
 Gatsby will perform an optimized production build for your site, generating static HTML and per-route JavaScript code bundles.
@@ -45,13 +39,13 @@ Gatsby will perform an optimized production build for your site, generating stat
 ### Serve the production build locally.
 
 ```shell
-gatsby serve
+npm run serve
 ```
 
 Gatsby starts a local HTML server for testing your built site.
 
 ### Access documentation for CLI commands.
 
-To see detailed documentation for the CLI commands, run `gatsby --help` in the terminal.
+To see detailed documentation for the CLI commands, run `npx gatsby --help` in the terminal.
 
-For specific commands, run `gatsby COMMAND_NAME --help` e.g. `gatsby develop --help`.
+For specific commands, run `npx gatsby COMMAND_NAME --help` e.g. `npx gatsby new --help`.

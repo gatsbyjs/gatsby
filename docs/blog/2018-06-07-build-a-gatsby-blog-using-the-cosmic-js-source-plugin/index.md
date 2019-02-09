@@ -1,6 +1,6 @@
 ---
 title: Build a Gatsby Blog using the Cosmic JS source plugin
-date: "2018-06-07"
+date: 2018-06-07
 author: "Tony Spiro"
 canonicalLink: https://cosmicjs.com/articles/build-a-gatsby-blog-using-the-cosmic-js-source-plugin-jhzwvr45
 publishedAt: "Cosmic JS"
@@ -39,7 +39,7 @@ npm install --global gatsby-cli
 Create a new site based on the Gatsby Cosmic JS starter:
 
 ```bash
-gatsby new gatsby-blog-cosmicjs
+npx gatsby new gatsby-blog-cosmicjs
 ```
 
 Enter in your project's folder:
@@ -51,7 +51,7 @@ cd gatsby-blog-cosmicjs
 Start the server:
 
 ```bash
-gatsby develop
+npm run develop
 ```
 
 At this point, you can access your Gatsby website by visiting [http://localhost:8000](http://localhost:8000).
