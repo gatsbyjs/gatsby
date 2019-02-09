@@ -1829,3 +1829,21 @@
     - Various available icon sets
     - RSS Feed
     - Web app manifest
+- url: https://gatsby.magicsoup.io/
+  repo: https://github.com/magicsoup-io/gatsby-starter-magicsoup/
+  description: A production ready gatsby starter using magicsoup.io
+  tags:
+    - SEO
+    - Markdown
+    - Testing
+    - Styling:MagicSoup.io
+  features:
+    - Optimized images - No more large, unoptimized images which dramatically slow down your site. The starter uses gatsby-image for optimized image loading.
+    - SEO friendly - The starter uses react-helmet and gatsby-plugin-sitemap to make search engines happy.
+    - Google Webmaster Tools - Define your google webmaster key to confirm the ownership in Google Webmaster Tools.
+    - Responsive UIs - This starter uses the base component library magicsoup.io/stock. magicsoup.io gives you are rapid start to create wonderful UIs with styled-components and styled-system.
+    - Static content with JSON and Markdown - This starter is combining those benefits with GatsbyJS’ automatic slug and page creation via gatsby-transform-remark or setting static page data with gatsby-transform-json.
+    - Convert Markdown to StyledComponents - When you love styled-components and styled-system we have good news. Map your styled-components to markdown or other HTML output from a file system or any other external API. The starter uses marksy to map the generated HTML to custom defined styled-components.
+    - Webfonts - Every modern website or web app has a custom font. The starter uses gatsby-plugin-web-font-loader to load fonts from any server. Load from Fontdeck, Fonts.com, Google, Typekit or custom hosting.
+    - SSR - The starter is SSR ready. Make npm run build to create the production resources. Choose your favorite deployment method and prepare your app for production.
+    - Testing - The starter includes everything you need to test your components with jest.
