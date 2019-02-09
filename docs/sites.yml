@@ -4215,8 +4215,8 @@
   built_by_url: https://frame.io
   featured: false
 - title: Altstadtdomizil Idstein - A real estate one pager
-  main_url: https://www.altstadtdomizil-idstein.com
-  url: https://www.altstadtdomizil-idstein.com
+  main_url: https://www.altstadtdomizil-idstein.de/
+  url: https://www.altstadtdomizil-idstein.de/
   description: >
     This is a shiny new landingpage presenting a holiday flat in an old town in Germany. It uses the latest technologies like styled-components, styled-system and magicsoup.io. 
   categories:
