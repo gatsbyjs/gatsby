@@ -1807,7 +1807,7 @@
     - Fully responsive site
 - url: https://gatsby.magicsoup.io/
   repo: https://github.com/magicsoup-io/gatsby-starter-magicsoup
-  description: A production ready gatsby starter using MagicSoup.io
+  description: A production ready gatsby starter using magicsoup.io
   tags:
     - SEO
     - Markdown
