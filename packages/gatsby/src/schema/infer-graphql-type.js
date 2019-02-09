@@ -26,7 +26,6 @@ const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
 const unionTypes = new Map()
-const lazyFields = require(`./lazy-fields`)
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -356,7 +355,6 @@ function _inferObjectStructureFromNodes(
     } else if (key.includes(`___NODE`)) {
       inferredField = inferFromFieldName(value, key, nextSelector, types)
       ;[fieldName] = key.split(`___`)
-      lazyFields.add(typeName, fieldName)
     }
 
     // Replace unsupported values

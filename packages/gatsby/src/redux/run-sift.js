@@ -6,7 +6,7 @@ const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { getNode, getNodesByType } = require(`../db/nodes`)
 const { store } = require(`.`)
-const deepmerge = require(`deepmerge`)
+const withSortFields = require(`../utils/with-sort-fields`)
 
 const enhancedNodeCache = new Map()
 const enhancedNodePromiseCache = new Map()
@@ -273,19 +273,6 @@ function handleMany(siftArgs, nodes, sort) {
 }
 
 /**
- * Convert a dot-separated path like `foo.bar.baz` into
- * an object `{ foo: { bar: { baz: true } } }`.
- */
-const pathToObject = path => {
-  if (path && typeof path === `string`) {
-    return path.split(`.`).reduceRight((acc, key) => {
-      return { [key]: acc }
-    }, true)
-  }
-  return {}
-}
-
-/**
  * Filters a list of nodes using mongodb-like syntax.
  *
  * @param args raw graphql query filter as an object
@@ -306,11 +293,8 @@ module.exports = (args: Object) => {
 
   let { siftArgs, fieldsToSift } = parseFilter(queryArgs.filter)
 
-  if (queryArgs.sort && queryArgs.sort.fields) {
-    fieldsToSift = queryArgs.sort.fields.reduce((acc, field) => {
-      const sortField = pathToObject(field.replace(/___/g, `.`))
-      return deepmerge(acc, sortField)
-    }, fieldsToSift)
+  if (queryArgs.sort) {
+    fieldsToSift = withSortFields(fieldsToSift, queryArgs.sort.fields)
   }
 
   // If the the query for single node only has a filter for an "id"

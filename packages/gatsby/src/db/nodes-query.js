@@ -1,12 +1,43 @@
+const _ = require(`lodash`)
 const backend = process.env.GATSBY_DB_NODES || `redux`
 const lokiRunQuery = require(`./loki/nodes-query`)
 const siftRunQuery = require(`../redux/run-sift`)
-const lazyFields = require(`../schema/lazy-fields`)
+const withSortFields = require(`../utils/with-sort-fields`)
+const { getNamedType } = require(`graphql`)
+
+// FIXME: This is duplicate code
+const dropQueryOperators = filter =>
+  Object.keys(filter).reduce((acc, key) => {
+    let value = filter[key]
+    let k = Object.keys(value)[0]
+    let v = value[k]
+    if (_.isPlainObject(value) && _.isPlainObject(v)) {
+      acc[key] =
+        k === `elemMatch` ? dropQueryOperators(v) : dropQueryOperators(value)
+    } else {
+      acc[key] = true
+    }
+    return acc
+  }, {})
+
+const hasResolvers = (type, filterFields) => {
+  const fields = type.getFields()
+  return Object.entries(filterFields).some(([fieldName, filterValue]) => {
+    const field = fields[fieldName]
+    return (
+      Boolean(field.resolve) ||
+      (filterValue !== true &&
+        hasResolvers(getNamedType(field.type), filterValue))
+    )
+  })
+}
 
 function chooseQueryEngine(args) {
   const { queryArgs, gqlType } = args
-  const { filter } = queryArgs
-  if (backend === `loki` && !lazyFields.contains(filter, gqlType)) {
+  const { filter, sort } = queryArgs
+  const filterFields = filter ? dropQueryOperators(filter) : {}
+  const fields = sort ? withSortFields(filterFields, sort.fields) : filterFields
+  if (backend === `loki` && !hasResolvers(gqlType, fields)) {
     return lokiRunQuery
   } else {
     return siftRunQuery
