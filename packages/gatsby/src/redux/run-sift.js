@@ -272,6 +272,8 @@ module.exports = (args: Object) => {
   const nodes = args.nodes || getNodesByType(gqlType.name)
 
   const { siftArgs, fieldsToSift } = parseFilter(clonedArgs.filter)
+  // FIXME: fieldsToSift must include `sort.fields` as well as the
+  // `field` arg on `group` and `distinct`
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.

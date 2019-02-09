@@ -1,4 +1,6 @@
 const _ = require(`lodash`)
+const { isAbstractType } = require(`graphql`)
+
 const {
   getNodes,
   getNode,
@@ -6,12 +8,12 @@ const {
   getTypes,
   // hasNodeChanged,
   // getNodeAndSavePathDependency,
+  // TODO: Rethink the signature of runQuery!
   runQuery,
 } = require(`../db/nodes`)
 const { findRootNodeAncestor } = require(`../db/node-tracking`)
 const createPageDependency = require(`../redux/actions/add-page-dependency`)
 const { store } = require(`../redux`)
-const { isAbstractType } = require(`graphql`)
 
 const withPageDependencies = fn => async (args, pageDependencies) => {
   const result = await fn(args)

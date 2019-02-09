@@ -142,7 +142,7 @@ function getNodesByType(typeName) {
  */
 function getNodes() {
   const nodeTypes = getTypes()
-  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType.type))
+  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType))
 }
 
 /**

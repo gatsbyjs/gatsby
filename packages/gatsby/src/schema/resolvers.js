@@ -11,7 +11,7 @@ const findMany = typeName => ({ args, context, info }) =>
       firstOnly: false,
       gqlType: info.schema.getType(typeName),
     },
-    { path: context.path, connection: typeName }
+    { path: context.path, connectionType: typeName }
   )
 
 const findOne = typeName => ({ args, context, info }) =>
@@ -172,7 +172,7 @@ const fileByPath = (source, args, context, info) => {
     return null
   }
 
-  const findLinkedFileNode = relativePath => {
+  const findLinkedFileNode = async relativePath => {
     // Use the parent File node to create the absolute path to
     // the linked file.
     const fileLinkPath = normalize(
@@ -181,7 +181,7 @@ const fileByPath = (source, args, context, info) => {
 
     // Use that path to find the linked File node.
     const linkedFileNode = _.find(
-      context.nodeModel.getNodesByType(`File`),
+      await context.nodeModel.getNodesByType(`File`),
       n => n.absolutePath === fileLinkPath
     )
     return linkedFileNode
@@ -193,7 +193,7 @@ const fileByPath = (source, args, context, info) => {
 
   // Find the linked File node(s)
   if (isArray) {
-    return fieldValue.map(findLinkedFileNode)
+    return Promise.all(fieldValue.map(findLinkedFileNode))
   } else {
     return findLinkedFileNode(fieldValue)
   }
