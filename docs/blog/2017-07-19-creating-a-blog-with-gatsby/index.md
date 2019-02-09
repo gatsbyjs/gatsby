@@ -1,6 +1,6 @@
 ---
 title: Creating a Blog with Gatsby
-date: "2017-07-19"
+date: 2017-07-19
 author: "Dustin Schau"
 image: "../images/15009741473_9ced5e3209_o.jpg"
 imageAuthor: Daniel Go
@@ -33,25 +33,22 @@ these new features by creating a static blog. Let's get on it!
 
 ## Getting started
 
-### Installing the CLI
-
-`npm install -g gatsby-cli`
+### Using the CLI
 
 Gatsby ships with a great CLI (command line interface) that contains the
 functionality of scaffolding out a working site, as well as commands to help
 develop the site once created.
 
-`gatsby new personal-blog && cd $_`
+`npx gatsby new personal-blog && cd $_`
 
 This command will create the folder `personal-blog` and then change into that
 directory. A working `gatsby` statically generated application can now be
-developed upon. The Gatsby CLI includes many common development features such as
-`gatsby build` (build a production, statically generated version of the
-project), `gatsby develop` (launch a hot-reload enabled web development server),
+developed upon. The CLI generates common development scripts to help you get started.
+For example you can run `npm run build` (build a production, statically generated version of the project) or `npm run develop` (launch a hot-reload enabled web development server),
 etc.
 
 We can now begin the exciting task of _actually_ developing on the site, and
-creating a functional, modern blog. You'll generally want to use `gatsby develop` to launch the local development server to validate functionality as we
+creating a functional, modern blog. You'll generally want to use `npm run develop` to launch the local development server to validate functionality as we
 progress through the steps.
 
 ## Adding necessary plugins
@@ -229,7 +226,7 @@ The content of this Markdown file will be our blog post, authored in Markdown
 ```markdown:title=src/pages/07-12-2017-getting-started/index.md
 ---
 path: "/hello-world"
-date: "2017-07-12T17:12:33.962Z"
+date: 2017-07-12T17:12:33.962Z
 title: "My First Gatsby Post"
 ---
 

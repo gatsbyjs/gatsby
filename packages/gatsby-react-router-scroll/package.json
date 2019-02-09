@@ -1,7 +1,7 @@
 {
   "name": "gatsby-react-router-scroll",
   "description": "React Router scroll management forked from https://github.com/ytase/react-router-scroll for Gatsby",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "author": "Jimmy Jia",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -26,7 +26,7 @@
   "main": "index.js",
   "peerDependencies": {
     "@reach/router": "^1.0",
-    "gatsby": ">2.0.0-alpha",
+    "gatsby": "^2.0.0",
     "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
     "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
   },

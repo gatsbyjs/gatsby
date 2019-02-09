@@ -47,7 +47,8 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "excerpt": "Where oh where is my little pony?
+",
   "frontmatter": Object {
     "title": "my little pony",
   },

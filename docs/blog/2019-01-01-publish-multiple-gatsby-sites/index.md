@@ -267,7 +267,7 @@ package.json- Add the following to the `package.json` file:
     styled-components: "^3.3.3"
   },
   license: "MIT",
-    scripts: {
+  scripts: {
     start: "serve public/",
     build: "gatsby build",
     develop: "gatsby develop"

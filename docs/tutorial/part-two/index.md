@@ -36,7 +36,7 @@ Start by creating a new Gatsby site. It may be best (especially if you're new to
 Open a new terminal window, create a new "hello world" gatsby site, and start the development server:
 
 ```shell
-gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-two
 ```
 
@@ -191,7 +191,7 @@ export default () => (
 )
 ```
 
-Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look like something like this:
+Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look something like this:
 
 ![css-modules-basic](css-modules-basic.png)
 
