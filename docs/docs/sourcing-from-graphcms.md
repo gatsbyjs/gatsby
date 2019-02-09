@@ -61,7 +61,7 @@ From the root of your project, run the development environment with `yarn run de
 
 http://localhost:8000/___graphql
 
-This will show you a "Graphiql" playground where you can test your new content API.
+This will show you an interface where you can test your new content API.
 
 Try running this query:
 
