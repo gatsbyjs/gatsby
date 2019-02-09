@@ -1,3 +1,4 @@
+const _ = require(`lodash`)
 const {
   getNodes,
   getNode,
@@ -46,8 +47,18 @@ const toNodeTypeNames = gqlTypeName => {
     .map(type => type.name)
 }
 
+const getNodeById = id => {
+  // This is for cases when the `id` has already been resolved
+  // to a full Node for the input filter, and is also in the selection
+  // set. E.g. `{ foo(parent: { id: { eq: 1 } } ) { parent { id }} }`.
+  if (_.isPlainObject(id) && id.id) {
+    return id
+  }
+  return id != null && getNode(id)
+}
+
 const getNodeByGQLTypeName = ({ id, type }) => {
-  const node = getNode(id)
+  const node = getNodeById(id)
   const nodeTypeNames = toNodeTypeNames(type)
   return node && nodeTypeNames.includes(node.internal.type) ? node : null
 }
@@ -74,7 +85,7 @@ const runQueryForGQLType = async args => {
 
 const nodeModel = {
   findRootNodeAncestor,
-  getNode: withPageDependencies(getNode),
+  getNode: withPageDependencies(getNodeById),
   getNodeByType: withPageDependencies(getNodeByGQLTypeName),
   getNodes: withPageDependencies(getNodes),
   getNodesByType: withPageDependencies(getNodesByGQLTypeName),
