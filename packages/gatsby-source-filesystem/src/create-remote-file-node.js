@@ -186,6 +186,7 @@ async function processRemoteNode({
   createNode,
   parentNodeId,
   auth = {},
+  headers = {},
   createNodeId,
   ext,
   name,
@@ -314,6 +315,7 @@ module.exports = ({
   createNode,
   parentNodeId = null,
   auth = {},
+  headers = {},
   createNodeId,
   ext = null,
   name = null,
@@ -359,6 +361,7 @@ module.exports = ({
     parentNodeId,
     createNodeId,
     auth,
+    headers,
     ext,
     name,
   })
