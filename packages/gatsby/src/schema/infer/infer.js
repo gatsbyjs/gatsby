@@ -85,13 +85,16 @@ const addInferredFieldsImpl = ({
     // Proxy resolver to unsanitized fieldName in case it contained invalid characters
     if (key !== unsanitizedKey) {
       // Don't create a field with the sanitized key if a field with that name already exists
-      if (!(exampleObject[key] == null && !typeComposer.hasField(key))) {
+      if (exampleObject[key] == null && !typeComposer.hasField(key)) {
         const resolver = fieldConfig.resolve || defaultFieldResolver
-        fieldConfig.resolve = (source, args, context, info) =>
-          resolver(source, args, context, {
-            ...info,
-            fieldName: unsanitizedKey,
-          })
+        fieldConfig = {
+          ...fieldConfig,
+          resolve: (source, args, context, info) =>
+            resolver(source, args, context, {
+              ...info,
+              fieldName: unsanitizedKey,
+            }),
+        }
       }
     }
 
