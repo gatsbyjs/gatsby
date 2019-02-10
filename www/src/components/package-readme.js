@@ -39,13 +39,10 @@ const PackageReadMe = props => {
             },
           }}
           href={githubUrl}
-          aria-label={`Github source code for ${packageName}`}
+          aria-label={`${packageName} source`}
+          title={`View source on GitHub`}
         >
-          <GithubIcon
-            focusable="false"
-            title={`Github source code for ${packageName}`}
-            style={{ verticalAlign: `text-top` }}
-          />
+          <GithubIcon focusable="false" style={{ verticalAlign: `text-top` }} />
         </a>
         {githubUrl && (
           <Link to={`/starters?d=${packageName}`}>
