@@ -280,7 +280,7 @@ function ensureFieldIndexes(coll, lokiArgs) {
  * @returns {promise} A promise that will eventually be resolved with
  * a collection of matching objects (even if `firstOnly` is true)
  */
-async function runQuery({ gqlType, queryArgs, context = {}, firstOnly }) {
+async function runQuery({ gqlType, queryArgs, firstOnly }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))

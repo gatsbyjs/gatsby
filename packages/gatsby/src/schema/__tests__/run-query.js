@@ -1,6 +1,4 @@
-const { GraphQLObjectType } = require(`graphql`)
 const nodesQuery = require(`../../db/nodes-query`)
-const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 const { store } = require(`../../redux`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -136,13 +134,19 @@ const makeNodes = () => [
 ]
 
 function makeGqlType(nodes) {
-  return new GraphQLObjectType({
-    name: `Test`,
-    fields: inferObjectStructureFromNodes({
-      nodes,
-      types: [{ name: `Test` }],
-    }),
+  const { SchemaComposer } = require(`graphql-compose`)
+  const { addInferredFields } = require(`../infer/infer`)
+  const { getExampleValue } = require(`../infer/example-value`)
+
+  const sc = new SchemaComposer()
+  const typeName = `Test`
+  const tc = sc.createTC(typeName)
+  addInferredFields({
+    schemaComposer: sc,
+    typeComposer: tc,
+    exampleValue: getExampleValue({ nodes, typeName }),
   })
+  return tc.getType()
 }
 
 function resetDb(nodes) {
@@ -156,10 +160,8 @@ async function runQuery(queryArgs) {
   const nodes = makeNodes()
   resetDb(nodes)
   const gqlType = makeGqlType(nodes)
-  const context = {}
   const args = {
     gqlType,
-    context,
     firstOnly: false,
     queryArgs,
   }
