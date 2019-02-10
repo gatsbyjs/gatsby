@@ -15,12 +15,6 @@ Example use cases:
 npm install --save gatsby-plugin-catch-links
 ```
 
-or
-
-```
-yarn add gatsby-plugin-catch-links
-```
-
 ## How to use
 
 ```javascript
