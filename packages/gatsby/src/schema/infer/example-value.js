@@ -3,8 +3,14 @@ const { TypeConflictReporter } = require(`./type-conflict-reporter`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 const { isDate } = require(`../types/Date`)
 
+const typeConflictReporter = new TypeConflictReporter()
+
 const getExampleValue = ({ nodes, typeName, ignoreFields }) => {
-  const exampleValue = getExampleObject({ nodes, typeName, ignoreFields })
+  const exampleValue = getExampleObject({
+    nodes,
+    prefix: typeName,
+    ignoreFields,
+  })
   return exampleValue
 }
 
@@ -58,10 +64,7 @@ const getExampleObject = ({ nodes, prefix, ignoreFields = [] }) => {
         // InvalidValue.
         value = `String`
       } else {
-        TypeConflictReporter.addConflict(
-          selector,
-          Object.keys(entriesByType).map(k => entriesByType[k])
-        )
+        typeConflictReporter.addConflict(selector, entriesByType)
         return acc
       }
     }
