@@ -120,7 +120,7 @@ class TypeConflictReporter {
   addConflict(selector: string, examples: TypeConflictExample[]) {
     if (selector.substring(0, 11) === `SitePlugin.`) {
       // Don't store and print out type conflicts in plugins.
-      // This is out of user control so he can't do anything
+      // This is out of user control so he/she can't do anything
       // to hide those.
       return
     }
