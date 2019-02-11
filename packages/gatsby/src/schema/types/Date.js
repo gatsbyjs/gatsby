@@ -59,7 +59,34 @@ function isDate(value) {
   return momentDate.isValid() && typeof value !== `number`
 }
 
-export const dateResolver = Object.freeze({
+const formatDate = ({
+  date,
+  fromNow,
+  difference,
+  formatString,
+  locale = `en`,
+}) => {
+  const normalizedDate = JSON.parse(JSON.stringify(date))
+  if (formatString) {
+    return moment
+      .utc(normalizedDate, ISO_8601_FORMAT, true)
+      .locale(locale)
+      .format(formatString)
+  } else if (fromNow) {
+    return moment
+      .utc(normalizedDate, ISO_8601_FORMAT, true)
+      .locale(locale)
+      .fromNow()
+  } else if (difference) {
+    return moment().diff(
+      moment.utc(normalizedDate, ISO_8601_FORMAT, true).locale(locale),
+      difference
+    )
+  }
+  return normalizedDate
+}
+
+export const dateResolver = {
   type: GraphQLDate,
   args: {
     formatString: {
@@ -90,35 +117,13 @@ export const dateResolver = Object.freeze({
     },
   },
   resolve(source, args, context, { fieldName }) {
-    let date
-    if (source[fieldName]) {
-      date = JSON.parse(JSON.stringify(source[fieldName]))
-    } else {
-      return null
-    }
+    const date = source[fieldName]
+    if (date == null) return null
 
-    if (_.isPlainObject(args)) {
-      const { fromNow, difference, formatString, locale = `en` } = args
-      if (formatString) {
-        return moment
-          .utc(date, ISO_8601_FORMAT, true)
-          .locale(locale)
-          .format(formatString)
-      } else if (fromNow) {
-        return moment
-          .utc(date, ISO_8601_FORMAT, true)
-          .locale(locale)
-          .fromNow()
-      } else if (difference) {
-        return moment().diff(
-          moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
-          difference
-        )
-      }
-    }
-
-    return date
+    return Array.isArray(date)
+      ? date.map(d => formatDate({ date: d, ...args }))
+      : formatDate({ date, ...args })
   },
-})
+}
 
 module.exports = { GraphQLDate, dateResolver, isDate }

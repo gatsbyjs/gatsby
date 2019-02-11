@@ -72,21 +72,13 @@ const getExampleObject = ({
         // InvalidValue.
         value = `String`
       } else {
-        typeConflictReporter.addConflict(
-          selector,
-          Object.keys(entriesByType).map(k => entriesByType[k])
-        )
+        typeConflictReporter.addConflict(selector, entriesByType)
         return acc
       }
     }
 
     let exampleFieldValue
-    if (
-      _.isObject(value) &&
-      !_.isArray(value) &&
-      !_.isString(value) &&
-      !_.isDate(value)
-    ) {
+    if (_.isPlainObject(value)) {
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
         let arrays = arrayWrappers - 1

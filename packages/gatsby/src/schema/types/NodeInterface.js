@@ -1,7 +1,6 @@
 const getOrCreateNodeInterface = schemaComposer => {
   // TODO: why is `mediaType` on Internal? Applies only to File!?
-  // Is `fieldOwners` actually set anywhere? And is it supposed to be an array,
-  // as the Joi schema claims, or an object, which is the default in `redux/actions.js`
+  // `fieldOwners` is an object
   const InternalTC = schemaComposer.getOrCreateTC(`Internal`, tc => {
     tc.addFields({
       content: `String`,
@@ -22,13 +21,19 @@ const getOrCreateNodeInterface = schemaComposer => {
       id: `String!`,
       parent: {
         type: `Node`,
-        resolve: async (source, args, context, info) =>
-          context.nodeModel.getNode(source.parent),
+        resolve: (source, args, context, info) => {
+          const { path } = context
+          return context.nodeModel.getNode(source.parent, { path })
+        },
       },
       children: {
         type: `[Node]!`,
-        resolve: async (source, args, context, info) =>
-          source.children.map(context.nodeModel.getNode),
+        resolve: (source, args, context, info) => {
+          const { path } = context
+          return source.children.map(id =>
+            context.nodeModel.getNode(id, { path })
+          )
+        },
       },
       internal: `Internal`,
     })
@@ -41,39 +46,21 @@ const getOrCreateNodeInterface = schemaComposer => {
 const addNodeInterface = ({ schemaComposer, typeComposer }) => {
   const NodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
   typeComposer.addInterface(NodeInterfaceTC)
-  NodeInterfaceTC.addTypeResolver(
-    typeComposer,
-    node => node.internal.type === typeComposer.getTypeName()
-  )
   addNodeInterfaceFields({ schemaComposer, typeComposer })
 }
 
 const addNodeInterfaceFields = ({ schemaComposer, typeComposer }) => {
   const NodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
   typeComposer.addFields(NodeInterfaceTC.getFields())
-  NodeInterfaceTC.addTypeResolver(
-    typeComposer,
-    node => node.internal.type === typeComposer.getTypeName()
-  )
-  // FIXME: UPSTREAM: addSchemaMustHaveType adds to an array,
-  // should be Set/Map to avoid duplicates?
+  NodeInterfaceTC.setResolveType(node => node.internal.type)
   schemaComposer.addSchemaMustHaveType(typeComposer)
 }
 
 const getNodeInterface = ({ schemaComposer }) =>
   getOrCreateNodeInterface(schemaComposer)
 
-const hasNodeInterface = ({ schemaComposer, typeComposer }) => {
-  const NodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
-  return (
-    typeComposer.hasInterface(NodeInterfaceTC) ||
-    typeComposer.hasInterface(NodeInterfaceTC.getType())
-  )
-}
-
 module.exports = {
   addNodeInterface,
   addNodeInterfaceFields,
   getNodeInterface,
-  hasNodeInterface,
 }

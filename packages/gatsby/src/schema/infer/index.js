@@ -1,10 +1,6 @@
 const report = require(`gatsby-cli/lib/reporter`)
 const { getExampleValue } = require(`./example-value`)
-const {
-  addNodeInterface,
-  getNodeInterface,
-  hasNodeInterface,
-} = require(`../types/NodeInterface`)
+const { addNodeInterface, getNodeInterface } = require(`../types/NodeInterface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
 const getInferConfig = require(`./get-infer-config`)
 
@@ -32,7 +28,7 @@ const addInferredType = ({
     typeComposer = schemaComposer.get(typeName)
     inferConfig = getInferConfig(typeComposer)
     if (inferConfig.infer) {
-      if (!hasNodeInterface({ schemaComposer, typeComposer })) {
+      if (!typeComposer.hasInterface(`Node`)) {
         noNodeInterfaceTypes.push(typeComposer.getType())
       }
     }

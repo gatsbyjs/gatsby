@@ -1,17 +1,7 @@
-const Promise = require(`bluebird`)
 const _ = require(`lodash`)
+const { graphql } = require(`gatsby/graphql`)
 
 const { onCreateNode } = require(`../gatsby-node`)
-
-const {
-  graphql,
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLSchema,
-} = require(`gatsby/graphql`)
-const {
-  inferObjectStructureFromNodes,
-} = require(`../../../gatsby/src/schema/infer-graphql-type`)
 
 describe(`Process markdown content correctly`, () => {
   const node = {
@@ -105,31 +95,27 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
 
   describe(`process graphql correctly`, () => {
     // given a set of nodes and a query, return the result of the query
-    async function queryResult(nodes, fragment, { types = [] } = {}) {
-      const schema = new GraphQLSchema({
-        query: new GraphQLObjectType({
-          name: `RootQueryType`,
-          fields: () => {
-            return {
-              listNode: {
-                name: `LISTNODE`,
-                type: new GraphQLList(
-                  new GraphQLObjectType({
-                    name: `MarkdownRemark`,
-                    fields: inferObjectStructureFromNodes({
-                      nodes,
-                      types: [...types],
-                    }),
-                  })
-                ),
-                resolve() {
-                  return nodes
-                },
-              },
-            }
-          },
-        }),
+    async function queryResult(nodes, fragment) {
+      const { SchemaComposer } = require(`graphql-compose`)
+      const {
+        addInferredFields,
+      } = require(`../../../gatsby/src/schema/infer/infer`)
+      const {
+        getExampleValue,
+      } = require(`../../../gatsby/src/schema/infer/example-value`)
+
+      const sc = new SchemaComposer()
+      const typeName = `MarkdownRemark`
+      const tc = sc.createTC(typeName)
+      addInferredFields({
+        schemaComposer: sc,
+        typeComposer: tc,
+        exampleValue: getExampleValue({ nodes, typeName }),
       })
+      sc.Query.addFields({
+        listNode: { type: [tc], resolve: () => nodes },
+      })
+      const schema = sc.buildSchema()
 
       const result = await graphql(
         schema,
@@ -172,8 +158,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
                     frontmatter {
                         title
                     }
-                `,
-          { types: [{ name: `MarkdownRemark` }] }
+                `
         ).then(result => {
           try {
             createdNode = result.data.listNode[0]
@@ -233,8 +218,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
                     frontmatter {
                         title
                     }
-                `,
-          { types: [{ name: `MarkdownRemark` }] }
+                `
         ).then(result => {
           try {
             createdNode = result.data.listNode[0]

@@ -18,6 +18,7 @@
     "gatsby-transformer-json": "^2.1.1",
     "gatsby-transformer-sharp": "^2.1.1",
     "glamor": "^2.20.40",
+    "graphql-compose": "^5.10.1",
     "instagram-screen-scrape": "^2.0.0",
     "lodash": "^4.17.10",
     "mkdirp": "^0.5.1",

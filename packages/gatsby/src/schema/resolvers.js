@@ -2,83 +2,30 @@ const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
 const { findRootNodeAncestor } = require(`../db/node-tracking`)
-const {
-  GraphQLList,
-  getNullableType,
-  getNamedType,
-  isAbstractType,
-} = require(`graphql`)
-const createPageDependency = require(`../redux/actions/add-page-dependency`)
+const { GraphQLList, getNullableType, getNamedType } = require(`graphql`)
 
-const withPageDependencies = resolve => type => async rp => {
-  const result = await resolve(type)(rp)
-  const { path } = rp.context || {}
-  if (!path || result == null) return result
+const findMany = typeName => ({ args, context, info }) =>
+  context.nodeModel.runQuery(
+    {
+      queryArgs: args,
+      firstOnly: false,
+      gqlType: info.schema.getType(typeName),
+    },
+    { path: context.path, connectionType: typeName }
+  )
 
-  if (Array.isArray(result)) {
-    const isConnection =
-      rp.info.parentType && rp.info.parentType.name === `Query`
-    if (isConnection) {
-      createPageDependency({ path, connection: type })
-    } else {
-      result
-        .filter(node => node != null)
-        .map(node => createPageDependency({ path, nodeId: node.id }))
-    }
-  } else {
-    createPageDependency({ path, nodeId: result.id })
-  }
-
-  return result
-}
-
-const findById = typeName => ({ args, context }) => {
-  const result = context.nodeModel.getNode(args.id)
-  if (typeName && result && result.internal.type === typeName) {
-    return result
-  } else if (!typeName && result != null) {
-    return result
-  } else {
-    return null
-  }
-}
-
-const findByIds = typeName => ({ args, context }) => {
-  if (Array.isArray(args.ids)) {
-    return args.ids.map(context.nodeModel.getNode).filter(node => {
-      if (typeName && node && node.internal.type === typeName) {
-        return true
-      } else {
-        return node != null
-      }
-    })
-  } else {
-    return []
-  }
-}
-
-const findMany = typeName => async ({ args, context, info }) =>
-  context.nodeModel.runQuery({
-    queryArgs: args,
-    firstOnly: false,
-    gqlType: info.schema.getType(typeName),
-  })
-
-const findOne = typeName => async ({ args, context, info }) => {
-  const result = await context.nodeModel.runQuery({
-    queryArgs: { filter: args },
-    firstOnly: true,
-    gqlType: info.schema.getType(typeName),
-  })
-  if (result.length > 0) {
-    return result[0]
-  } else {
-    return null
-  }
-}
+const findOne = typeName => ({ args, context, info }) =>
+  context.nodeModel.runQuery(
+    {
+      queryArgs: { filter: args },
+      firstOnly: true,
+      gqlType: info.schema.getType(typeName),
+    },
+    { path: context.path }
+  )
 
 const findManyPaginated = typeName => async rp => {
-  const result = await withPageDependencies(findMany)(typeName)(rp)
+  const result = await findMany(typeName)(rp)
   return paginate(result, { skip: rp.args.skip, limit: rp.args.limit })
 }
 
@@ -119,14 +66,7 @@ const paginate = (results, { skip = 0, limit }) => {
   const count = results.length
   const items = results.slice(skip, limit && skip + limit)
 
-  // const pageCount = limit
-  //   ? Math.ceil(skip / limit) + Math.ceil((count - skip) / limit)
-  //   : skip
-  //   ? 2
-  //   : 1
-  // const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1 // Math.min(currentPage, pageCount)
-  // // const hasPreviousPage = currentPage > 1
-  const hasNextPage = skip + limit < count // currentPage < pageCount
+  const hasNextPage = skip + limit < count
 
   return {
     totalCount: items.length,
@@ -139,11 +79,6 @@ const paginate = (results, { skip = 0, limit }) => {
     }),
     pageInfo: {
       hasNextPage,
-      // currentPage,
-      // hasPreviousPage,
-      // itemCount: count,
-      // pageCount,
-      // perPage: limit,
     },
   }
 }
@@ -161,30 +96,37 @@ const getValueAtSelector = (obj, selector) => {
   }, obj)
 }
 
-// FIXME: Handle array of arrays
-// Maybe TODO: should we check fieldValue *and* info.returnType?
 const link = ({ by, from }) => async (source, args, context, info) => {
   const fieldValue = source && source[from || info.fieldName]
 
-  if (fieldValue == null || _.isObject(fieldValue)) return fieldValue
+  if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
     Array.isArray(fieldValue) &&
-    // TODO: Do we have to look with fieldValue.some(v => isObject(v))?
-    (fieldValue[0] == null || _.isObject(fieldValue[0]))
+    (fieldValue[0] == null || _.isPlainObject(fieldValue[0]))
   ) {
     return fieldValue
   }
 
+  const returnType = getNullableType(info.returnType)
+  const type = getNamedType(returnType)
+
   if (by === `id`) {
-    const [resolve, key] = Array.isArray(fieldValue)
-      ? [withPageDependencies(findByIds), `ids`]
-      : [withPageDependencies(findById), `id`]
-    return resolve()({
-      source,
-      args: { [key]: fieldValue },
-      context,
-      info,
-    })
+    if (Array.isArray(fieldValue)) {
+      const result = await Promise.all(
+        fieldValue.map(id =>
+          context.nodeModel.getNodeByType(
+            { id, type: type.name },
+            { path: context.path }
+          )
+        )
+      )
+      return result.filter(Boolean)
+    } else {
+      return context.nodeModel.getNodeByType(
+        { id: fieldValue, type: type.name },
+        { path: context.path }
+      )
+    }
   }
 
   const equals = value => {
@@ -200,37 +142,24 @@ const link = ({ by, from }) => async (source, args, context, info) => {
     }
   }, fieldValue)
 
-  const returnType = getNullableType(info.returnType)
-  const type = getNamedType(returnType)
-  const possibleTypes = isAbstractType(type)
-    ? info.schema.getPossibleTypes(type)
-    : [type]
-
   if (returnType instanceof GraphQLList) {
-    const results = await Promise.all(
-      possibleTypes.map(type =>
-        findMany(type.name)({
-          source,
-          args,
-          context,
-          info,
-        })
-      )
-    )
-    return results.reduce((acc, r) => acc.concat(r))
-  } else {
-    let result
-    for (const type of possibleTypes) {
-      result = await context.nodeModel.runQuery({
+    return context.nodeModel.runQuery(
+      {
         queryArgs: args,
+        firstOnly: false,
+        gqlType: type,
+      },
+      { path: context.path }
+    )
+  } else {
+    return context.nodeModel.runQuery(
+      {
+        queryArgs: { filter: args },
         firstOnly: true,
         gqlType: type,
-      })
-      if (result && result.length > 0) {
-        return result[0]
-      }
-    }
-    return null
+      },
+      { path: context.path }
+    )
   }
 }
 
@@ -243,7 +172,7 @@ const fileByPath = (source, args, context, info) => {
     return null
   }
 
-  const findLinkedFileNode = relativePath => {
+  const findLinkedFileNode = async relativePath => {
     // Use the parent File node to create the absolute path to
     // the linked file.
     const fileLinkPath = normalize(
@@ -252,7 +181,7 @@ const fileByPath = (source, args, context, info) => {
 
     // Use that path to find the linked File node.
     const linkedFileNode = _.find(
-      context.nodeModel.getNodesByType(`File`),
+      await context.nodeModel.getNodesByType(`File`),
       n => n.absolutePath === fileLinkPath
     )
     return linkedFileNode
@@ -264,21 +193,16 @@ const fileByPath = (source, args, context, info) => {
 
   // Find the linked File node(s)
   if (isArray) {
-    return fieldValue.map(findLinkedFileNode)
+    return Promise.all(fieldValue.map(findLinkedFileNode))
   } else {
     return findLinkedFileNode(fieldValue)
   }
 }
 
 module.exports = {
-  findById: withPageDependencies(findById),
-  findByIds: withPageDependencies(findByIds),
-  findByIdAndType: withPageDependencies(findById),
-  findByIdsAndType: withPageDependencies(findByIds),
-  findMany: withPageDependencies(findMany),
-  findManyPaginated: findManyPaginated,
-  findOne: withPageDependencies(findOne),
-  fileByPath: fileByPath,
+  findManyPaginated,
+  findOne,
+  fileByPath,
   link,
   distinct,
   group,
