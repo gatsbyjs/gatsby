@@ -7,6 +7,7 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const glob = require(`glob`)
 const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`../db/nodes`)
@@ -82,8 +83,11 @@ const pascalCase = _.flow(
   _.camelCase,
   _.upperFirst
 )
-const hasWarnedForPageComponent = new Set()
+const hasWarnedForPageComponentInvalidContext = new Set()
+const hasWarnedForPageComponentInvalidCasing = new Set()
 const fileOkCache = {}
+
+const memoizedGlobSyncNoCase = _.memoize(glob.sync)
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
@@ -177,9 +181,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       } else if (invalidFields.some(f => page.context[f] !== page[f])) {
         report.panic(error)
       } else {
-        if (!hasWarnedForPageComponent.has(page.component)) {
+        if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
           report.warn(error)
-          hasWarnedForPageComponent.add(page.component)
+          hasWarnedForPageComponentInvalidContext.add(page.component)
         }
       }
     }
@@ -195,6 +199,37 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       console.log(``)
       console.log(page)
       noPageOrComponent = true
+    } else {
+      // check if path uses correct casing - incorrect casing will
+      // casue issues in query compiler and incosistencies when
+      // developing on Mac or Windows and trying to deploy from
+      // linux CI/CD pipeline
+      const globTest = memoizedGlobSyncNoCase(page.component, { nocase: true })
+      if (globTest.length === 1 && globTest[0] !== page.component) {
+        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+          const markers = page.component
+            .split(``)
+            .map((letter, index) => {
+              if (letter !== globTest[0][index]) {
+                return `^`
+              }
+              return ` `
+            })
+            .join(``)
+
+          report.warn(
+            stripIndent`
+          ${name} created a page with a component path that doesn't match casing of file. This will work locally, but will break on Linux (on most CI/CD pipelines).
+
+          page.component:     "${page.component}"
+          path in filesystem: "${globTest[0]}"
+                               ${markers}
+        `
+          )
+          hasWarnedForPageComponentInvalidCasing.add(page.component)
+        }
+        page.component = globTest[0]
+      }
     }
   }
 
