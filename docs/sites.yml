@@ -4245,3 +4245,13 @@
   built_by: WPGraphQL
   built_by_url: https://wpgraphql.com
   featured: false
+- title: Shine Lawyers
+  main_url: https://www.shine.com.au
+  url: https://www.shine.com.au
+  description: >
+    Shine Lawyers is an Australian legal services website built with Gatsby v2, Elasticsearch, Isso, and Geolocation services.
+  categories:
+    - Legal
+    - Business
+    - Blog
+  featured: false
