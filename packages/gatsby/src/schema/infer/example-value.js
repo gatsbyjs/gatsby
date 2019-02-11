@@ -1,10 +1,19 @@
 const _ = require(`lodash`)
-const { reportConflict } = require(`./type-conflict-reporter`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 const { isDate } = require(`../types/Date`)
 
-const getExampleValue = ({ nodes, typeName, ignoreFields }) => {
-  const exampleValue = getExampleObject({ nodes, typeName, ignoreFields })
+const getExampleValue = ({
+  nodes,
+  typeName,
+  typeConflictReporter,
+  ignoreFields,
+}) => {
+  const exampleValue = getExampleObject({
+    nodes,
+    prefix: typeName,
+    typeConflictReporter,
+    ignoreFields,
+  })
   return exampleValue
 }
 
@@ -12,7 +21,12 @@ module.exports = {
   getExampleValue,
 }
 
-const getExampleObject = ({ nodes, prefix, ignoreFields = [] }) => {
+const getExampleObject = ({
+  nodes,
+  prefix,
+  typeConflictReporter,
+  ignoreFields = [],
+}) => {
   const allKeys = nodes.reduce(
     (acc, node) =>
       Object.keys(node).forEach(
@@ -58,7 +72,7 @@ const getExampleObject = ({ nodes, prefix, ignoreFields = [] }) => {
         // InvalidValue.
         value = `String`
       } else {
-        reportConflict(
+        typeConflictReporter.addConflict(
           selector,
           Object.keys(entriesByType).map(k => entriesByType[k])
         )

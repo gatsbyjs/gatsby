@@ -442,8 +442,6 @@ module.exports = async (args: BootstrapArgs) => {
   await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
   activity.end()
 
-  require(`../schema/type-conflict-reporter`).printConflicts()
-
   // Extract queries
   activity = report.activityTimer(`extract queries from components`, {
     parentSpan: bootstrapSpan,

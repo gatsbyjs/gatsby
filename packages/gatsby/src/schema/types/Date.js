@@ -52,11 +52,9 @@ const GraphQLDate = new GraphQLScalarType({
   },
 })
 
-export default GraphQLDate
-
 // Check if this is a date.
 // All the allowed ISO 8601 date-time formats used.
-export function isDate(value) {
+function isDate(value) {
   const momentDate = moment.utc(value, ISO_8601_FORMAT, true)
   return momentDate.isValid() && typeof value !== `number`
 }
@@ -122,3 +120,5 @@ export const dateResolver = Object.freeze({
     return date
   },
 })
+
+module.exports = { GraphQLDate, dateResolver, isDate }

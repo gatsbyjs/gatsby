@@ -5,6 +5,7 @@ const { SchemaComposer } = require(`graphql-compose`)
 const { store } = require(`../redux`)
 const nodeStore = require(`../db/nodes`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
+const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 
 module.exports.build = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -14,14 +15,19 @@ module.exports.build = async ({ parentSpan }) => {
     schemaCustomization: { thirdPartySchemas, typeDefs },
   } = store.getState()
 
+  const typeConflictReporter = new TypeConflictReporter()
+
   const schemaComposer = new SchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
     nodeStore,
     typeDefs,
     thirdPartySchemas,
+    typeConflictReporter,
     parentSpan,
   })
+
+  typeConflictReporter.printConflicts()
 
   store.dispatch({
     type: `SET_SCHEMA_COMPOSER`,

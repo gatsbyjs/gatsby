@@ -19,16 +19,21 @@ const addInferredFields = ({
   typeComposer,
   exampleValue,
   nodeStore,
+  inferConfig,
   parentSpan,
-}) =>
-  addInferredFieldsImpl({
-    schemaComposer,
-    typeComposer,
-    nodeStore,
-    exampleObject: exampleValue,
-    prefix: typeComposer.getTypeName(),
-    depth: 0,
-  })
+}) => {
+  if (inferConfig.infer) {
+    addInferredFieldsImpl({
+      schemaComposer,
+      typeComposer,
+      nodeStore,
+      exampleObject: exampleValue,
+      prefix: typeComposer.getTypeName(),
+      addDefaultResolvers: inferConfig.addDefaultResolvers,
+      depth: 0,
+    })
+  }
+}
 
 module.exports = {
   addInferredFields,
@@ -41,6 +46,7 @@ const addInferredFieldsImpl = ({
   exampleObject,
   prefix,
   depth,
+  addDefaultResolvers,
 }) => {
   const fields = {}
   Object.keys(exampleObject).forEach(unsanitizedKey => {
@@ -113,11 +119,15 @@ const addInferredFieldsImpl = ({
             nodeStore,
             prefix: selector,
             depth: depth + 1,
+            addDefaultResolvers: true,
           })
         }
       }
       let field = typeComposer.getField(key)
-      if (getNamedType(fieldType).name === fieldConfig.type) {
+      if (
+        addDefaultResolvers &&
+        getNamedType(fieldType).name === fieldConfig.type
+      ) {
         if (!field.type) {
           field = {
             type: field,

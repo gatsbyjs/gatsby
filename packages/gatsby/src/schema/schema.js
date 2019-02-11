@@ -1,7 +1,8 @@
 const _ = require(`lodash`)
 const { toInputObjectType } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
-const GraphQLDate = require(`./types/Date`)
+const report = require(`gatsby-cli/lib/reporter`)
+const { GraphQLDate } = require(`./types/Date`)
 const {
   addNodeInterface,
   addNodeInterfaceFields,
@@ -20,7 +21,7 @@ const buildSchema = async ({
   typeDefs,
   resolvers,
   thirdPartySchemas,
-  directives,
+  typeConflictReporter,
   parentSpan,
 }) => {
   await updateSchemaComposer({
@@ -29,13 +30,12 @@ const buildSchema = async ({
     typeDefs,
     resolvers,
     thirdPartySchemas,
+    typeConflictReporter,
     parentSpan,
   })
-  const { printSchema } = require(`graphql`)
-  const schema = schemaComposer.buildSchema({
-    directives,
-  })
-  console.log(printSchema(schema))
+  // const { printSchema } = require(`graphql`)
+  const schema = schemaComposer.buildSchema()
+  // console.log(printSchema(schema))
   return schema
 }
 
@@ -67,6 +67,7 @@ const updateSchemaComposer = async ({
   typeDefs,
   resolvers,
   thirdPartySchemas,
+  typeConflictReporter,
   parentSpan,
 }) => {
   schemaComposer.add(GraphQLDate)
@@ -78,12 +79,17 @@ const updateSchemaComposer = async ({
       addNodeInterface({ schemaComposer, typeComposer: tc })
     })
   })
-  await await addSetFieldsOnGraphQLNodeTypeFields({
+  await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     nodeStore,
     parentSpan,
   })
-  await addInferredTypes({ schemaComposer, nodeStore, parentSpan })
+  await addInferredTypes({
+    schemaComposer,
+    nodeStore,
+    typeConflictReporter,
+    parentSpan,
+  })
   await Promise.all(
     Array.from(schemaComposer.values()).map(typeComposer =>
       processTypeComposer({
@@ -201,6 +207,10 @@ const addCustomResolveFunctions = async ({
             tc.addFields({ [fieldName]: fieldConfig })
           }
         })
+      } else {
+        report.warn(
+          `\`addResolvers\` passed resolvers for type \`${typeName}\` that doesn't exist in the schema. Use \`addTypeDefs\` to add the type before adding resolvers.`
+        )
       }
     })
   }
