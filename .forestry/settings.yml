@@ -36,6 +36,6 @@ use_front_matter_path: false
 file_template: ":filename:"
 build:
   preview_command: npm run forestry:preview
-  preview_env:
-  - BUILD_DIR=www/
+  publish_command: gatsby build
+  preview_output_directory: www/public
   output_directory: www/public

@@ -34,4 +34,4 @@ fields:
   hidden: false
   default: ''
 pages:
-- docs/blog/gatsby-days-talks-are-here.md
+- docs/blog/2001-01-01/this-is-a-test.md
