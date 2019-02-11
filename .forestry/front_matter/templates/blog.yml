@@ -33,5 +33,3 @@ fields:
   type: boolean
   hidden: false
   default: ''
-pages:
-- docs/blog/2019-02-04-Hapticmedia-Case-Study/index.md
