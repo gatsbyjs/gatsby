@@ -459,7 +459,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
 }
 
 exports.extendNodeType = ({ type, store }) => {
-  if (type.name.endsWith(`RichTextNode`)) {
+  if (type.name.match(/contentful.*RichTextNode/)) {
     return {
       json: {
         type: GraphQLJSON,
