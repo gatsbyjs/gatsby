@@ -26,7 +26,7 @@ module.exports = () =>
 
     devProcess.stdout.on(`data`, chunk => {
       if (chunk.toString().includes(`You can now view`)) {
-        // resolving the devProcess didn't seem to resolve the promise so it's wrapped in an object.
+        // We only need to expose a kill function, the rest is not needed
         resolve({ kill: () => killProcess(devProcess) })
       }
     })
