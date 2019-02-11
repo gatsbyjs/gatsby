@@ -44,11 +44,11 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/livestr
 
 ### Additional Links and Resources
 
-- Post: [Introducing Gatsby Themes](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/)
-- Post: [Why Themes](http://localhost:8000/blog/2019-01-31-why-themes/)
-- [`gatsby-plugin-page-creator`](https://www.gatsbyjs.org/packages/gatsby-plugin-page-creator/)
+- Post: [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/)
+- Post: [Why Themes](/blog/2019-01-31-why-themes/)
+- [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/)
 - [`gatsby-mdx` getting started docs](https://gatsby-mdx.netlify.com/getting-started)
-- [`gatsby-source-filesystem`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/)
+- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 - [John Otander on Twitter](https://twitter.com/4lpine)
 - [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)
 
