@@ -29,7 +29,7 @@ module.exports = (file, transforms, options = {}) => {
   }
 
   return transforms.map(async transform => {
-    const { file: transformFile, outputPath, args } = transform
+    const { outputPath, args } = transform
     debug(`Start processing ${outputPath}`)
 
     let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
@@ -87,16 +87,13 @@ module.exports = (file, transforms, options = {}) => {
     if (args.duotone) {
       clonedPipeline = await duotone(
         args.duotone,
-        args.toFormat || transformFile.extension,
+        args.toFormat,
         clonedPipeline
       )
     }
 
     // lets decide how we want to save this transform
-    if (
-      (transformFile.extension === `png` && args.toFormat === ``) ||
-      args.toFormat === `png`
-    ) {
+    if (args.toFormat === `png`) {
       await compressPng(clonedPipeline, outputPath, {
         ...args,
         stripMetadata: options.stripMetadata,
@@ -104,20 +101,12 @@ module.exports = (file, transforms, options = {}) => {
       return transform
     }
 
-    if (
-      options.useMozJpeg &&
-      ((transformFile.extension === `jpg` && args.toFormat === ``) ||
-        (transformFile.extension === `jpeg` && args.toFormat === ``) ||
-        args.toFormat === `jpg`)
-    ) {
+    if (options.useMozJpeg && args.toFormat === `jpg`) {
       await compressJpg(clonedPipeline, outputPath, args)
       return transform
     }
 
-    if (
-      (transformFile.extension === `webp` && args.toFormat === ``) ||
-      args.toFormat === `webp`
-    ) {
+    if (args.toFormat === `webp`) {
       await compressWebP(clonedPipeline, outputPath, args)
       return transform
     }

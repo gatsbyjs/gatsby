@@ -75,12 +75,21 @@ const generalArgs = {
   sizeByPixelDensity: false,
 }
 
-const healOptions = (args, defaultArgs) => {
+const healOptions = (args, fileExtension, defaultArgs = {}) => {
   let options = _.defaults({}, args, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
   options.toFormat = options.toFormat.toLowerCase()
+
+  // when toFormat is not set we set it based on fileExtension
+  if (options.toFormat === ``) {
+    options.toFormat = fileExtension.toLowerCase()
+
+    if (fileExtension === `jpeg`) {
+      options.toFormat = `jpg`
+    }
+  }
 
   // only set width to 400 if neither width nor height is passed
   if (options.width === undefined && options.height === undefined) {
@@ -104,7 +113,7 @@ const healOptions = (args, defaultArgs) => {
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
-  const options = healOptions(args, {})
+  const options = healOptions(args, file.extension)
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
   const pairedArgs = _.toPairs(args)
@@ -178,7 +187,9 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const job = {
-    file,
+    file: {
+      absolutePath: file.absolutePath,
+    },
     args: options,
     inputPath: file.absolutePath,
     outputPath: filePath,
@@ -204,7 +215,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 async function generateBase64({ file, args, reporter }) {
-  const options = healOptions(args, { width: 20 })
+  const options = healOptions(args, file.extension, { width: 20 })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -240,11 +251,7 @@ async function generateBase64({ file, args, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(
-      options.duotone,
-      args.toFormat || file.extension,
-      pipeline
-    )
+    pipeline = await duotone(options.duotone, args.toFormat, pipeline)
   }
   const { data: buffer, info } = await pipeline.toBuffer({
     resolveWithObject: true,
@@ -288,7 +295,7 @@ async function base64(arg) {
 }
 
 async function fluid({ file, args = {}, reporter, cache }) {
-  const options = healOptions(args, {})
+  const options = healOptions(args, file.extension)
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
@@ -463,7 +470,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 }
 
 async function fixed({ file, args = {}, reporter, cache }) {
-  const options = healOptions(args, {})
+  const options = healOptions(args, file.extension)
 
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
@@ -573,7 +580,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
     turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
   }
   const optionsSVG = _.defaults(args, defaultArgs)
-  const options = healOptions(fileArgs, {})
+  const options = healOptions(fileArgs, file.extension)
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
