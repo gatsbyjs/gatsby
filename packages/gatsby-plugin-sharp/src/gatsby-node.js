@@ -31,7 +31,7 @@ const saveQueueToCache = async (cache, queue) => {
   return cache.set(`queue`, Array.from(queue))
 }
 
-exports.onPreBootstrap = async ({ actions }, pluginOptions) => {
+exports.onPreBootstrap = ({ actions }, pluginOptions) => {
   setBoundActionCreators(actions)
   setPluginOptions(pluginOptions)
 }
