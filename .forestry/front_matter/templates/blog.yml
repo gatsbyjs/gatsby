@@ -34,5 +34,5 @@ fields:
   hidden: false
   default: ''
 pages:
-- docs/blog/2019-02-11-behind-scenes-qanda.md
+- docs/blog/index.md
 - docs/blog/2019-02-11-Behind-Scenes-QandA/behind-the-scenes-test.md
