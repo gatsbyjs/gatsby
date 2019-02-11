@@ -8,9 +8,9 @@ const report = require(`./reporter`)
 const url = require(`url`)
 const existsSync = require(`fs-exists-cached`).sync
 
-const spawn = (cmd: string) => {
+const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
-  return execa(file, args, { stdio: `inherit` })
+  return execa(file, args, { stdio: `inherit`, ...options })
 }
 
 // Checks the existence of yarn package
@@ -29,16 +29,9 @@ const shouldUseYarn = () => {
 
 // Initialize newly cloned directory as a git repo
 const gitInit = async rootPath => {
-  const prevDir = process.cwd()
-
   report.info(`Initialising git in ${rootPath}`)
-  process.chdir(rootPath)
 
-  try {
-    await spawn(`git init`)
-  } finally {
-    process.chdir(prevDir)
-  }
+  return await spawn(`git init`, { cwd: rootPath })
 }
 
 // Create a .gitignore file if it is missing in the new directory
@@ -56,19 +49,14 @@ const maybeCreateGitIgnore = async rootPath => {
 
 // Create an initial git commit in the new directory
 const createInitialGitCommit = async (rootPath, starterUrl) => {
-  const prevDir = process.cwd()
-
   report.info(`Create initial git commit in ${rootPath}`)
-  process.chdir(rootPath)
 
-  try {
-    await spawn(`git add -A`)
-    // use execSync instead of spawn to handle git clients using
-    // pgp signatures (with password)
-    execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`)
-  } finally {
-    process.chdir(prevDir)
-  }
+  await spawn(`git add -A`, { cwd: rootPath })
+  // use execSync instead of spawn to handle git clients using
+  // pgp signatures (with password)
+  execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`, {
+    cwd: rootPath,
+  })
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
