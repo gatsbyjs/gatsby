@@ -5,7 +5,6 @@ const {
   GraphQLScalarType,
   Kind,
 } = require(`graphql`)
-const _ = require(`lodash`)
 const { oneLine } = require(`common-tags`)
 
 const ISO_8601_FORMAT = [
