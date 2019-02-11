@@ -461,6 +461,10 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
 exports.extendNodeType = ({ type, store }) => {
   if (type.name.match(/contentful.*RichTextNode/)) {
     return {
+      nodeType: {
+        type: GraphQLString,
+        deprecationReason: `This field is deprecated, please use 'json' instead.`,
+      },
       json: {
         type: GraphQLJSON,
         resolve: (source, fieldArgs) => {
