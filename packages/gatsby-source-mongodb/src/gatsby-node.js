@@ -21,12 +21,15 @@ exports.sourceNodes = (
   let connectionExtraParams = getConnectionExtraParams(
     pluginOptions.extraParams
   )
-  const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
-    serverOptions.port
-  }/${dbName}${connectionExtraParams}`
+  const connectionURL = pluginOptions.connectionString
+    ? `${pluginOptions.connectionString}/${dbName}${connectionExtraParams}`
+    : `mongodb://${authUrlPart}${serverOptions.address}:${
+        serverOptions.port
+      }/${dbName}${connectionExtraParams}`
 
   return MongoClient.connect(connectionURL)
-    .then(db => {
+    .then(client => {
+      let db = client.db(dbName)
       let collection = pluginOptions.collection || [`documents`]
       if (!Array.isArray(collection)) {
         collection = [collection]
