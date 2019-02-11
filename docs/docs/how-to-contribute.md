@@ -13,7 +13,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Adding unit or functional tests
 - Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible
 - [Reporting bugs or issues](/docs/how-to-file-an-issue/)
-- Searching for Gatsby on [Discord](https://discordapp.com/invite/jUFVxtB) or [Spectrum](https://spectrum.chat/gatsby-js) and helping someone else who needs help
+- Searching for Gatsby on [Discord](https://gatsby.app/discord) or [Spectrum](https://spectrum.chat/gatsby-js) and helping someone else who needs help
 - Teaching others how to contribute to Gatsby's repo!
 
 As our way of saying “thank you” to our contributors, **_all contributors_ are eligible for [free Gatsby swag](/docs/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors.](/docs/contributor-swag/)
@@ -81,7 +81,19 @@ Check the GitHub repo for issues labeled with ["documentation" and "good first i
    > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
-If you wrote a new document that was previously a stub, update `www/src/data/sidebars/doc-links.yaml` accordingly by removing the asterisk behind the document's title:
+If you wrote a new document that was previously a stub, there are two things you need to update.
+
+1. Remove the frontmatter that links to the issue
+
+```diff:title=docs/docs/example-doc.md
+  ...
+    title: Example Document
+- - issue: https://github.com/gatsbyjs/gatsby/issues/00000
++ -
+  ...
+```
+
+2. Edit `www/src/data/sidebars/doc-links.yaml` by removing the asterisk behind the document's title:
 
 ```diff:title=www/src/data/sidebars/doc-links.yaml
   ...

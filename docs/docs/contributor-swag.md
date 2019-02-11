@@ -10,15 +10,15 @@ To show our appreciation, _**everyone who contributes to Gatsby is eligible to r
 
 ### How to claim your free swag
 
-If you contribute to the Gatsby org on GitHub, you can claim your swag by [logging into the Gatsby Maintainer Dashboard](https://store.gatsbyjs.org/login) and requesting a discount code.
+If you contribute to the Gatsby org on GitHub, you can claim your swag by [logging into the Gatsby Store](https://store.gatsbyjs.org/) and requesting a discount code. With five or more contributions, you can claim your _**Level 2**_ swag.
 
 If you’ve contributed in other ways, such as giving talks about Gatsby, teaching others to use it, writing Gatsby articles/tutorials, participating in a Gatsby research project, or any other way, please email <mailto:jason@gatsbyjs.com> or [tweet at Gatsby on Twitter](https://twitter.com/gatsbyjs) to claim your swag.
 
 ### Details about free swag
 
-- We will send one item from our [swag store](https://store.gatsbyjs.org/) to each Gatsby contributor.
+- We will send one item from our [swag store](https://store.gatsbyjs.org/) per swag tier
 - Not all items are eligible due to high cost to create the swag. We’ll make it clear which items are not eligible.
-- There’s a limit of one free swag item per contributor.
+- There’s a limit of one free swag item per swag tier.
 - Shipping is free worldwide.
 
 > **NOTE:** Worldwide free shipping is a pilot program. If shipping costs get out of control, we may need to adjust this policy in the future.

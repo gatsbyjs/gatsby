@@ -42,7 +42,7 @@
   "main": "n/a",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
-    "test": "start-server-and-test develop http://localhost:8000 cy:run",
+    "test": "CYPRESS_SUPPORT=y start-server-and-test develop http://localhost:8000 cy:run",
     "develop": "gatsby develop",
     "dev": "gatsby develop",
     "build": "gatsby build",

@@ -1,14 +1,16 @@
 /* @flow weak */
+const path = require(`path`)
 const openurl = require(`better-opn`)
 const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
+const historyFallback = require(`express-history-api-fallback`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
 
 module.exports = async program => {
-  let { prefixPaths, port, open } = program
+  let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
   const config = await preferDefault(
@@ -18,21 +20,24 @@ module.exports = async program => {
   let pathPrefix = config && config.pathPrefix
   pathPrefix = prefixPaths && pathPrefix ? pathPrefix : `/`
 
+  const root = path.join(program.directory, `public`)
+
   const app = express()
   const router = express.Router()
   router.use(compression())
   router.use(express.static(`public`))
+  router.use(historyFallback(`index.html`, { root }))
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
-      res.status(404).sendFile(`404.html`, { root: `public` })
+      res.status(404).sendFile(`404.html`, { root })
     } else {
       next()
     }
   })
   app.use(pathPrefix, router)
 
-  const server = app.listen(port, () => {
-    let openUrlString = `http://localhost:${port}${pathPrefix}`
+  const server = app.listen(port, host, () => {
+    let openUrlString = `http://${host}:${port}${pathPrefix}`
     console.log(
       `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
         openUrlString
