@@ -24,7 +24,8 @@ describe(`Lazy images`, () => {
     const { kill } = await createDevServer()
 
     const response = await request(
-      `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/a2541/gatsby-astronaut.png`,
+      `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/a484e/gatsby-astronaut.png`,
+      // `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/a2541/gatsby-astronaut.png`,
       {
         resolveWithFullResponse: true,
       }
@@ -33,18 +34,22 @@ describe(`Lazy images`, () => {
     await kill()
 
     expect(response.statusCode).toBe(200)
+    expect(response.headers[`content-type`]).toBe(`image/png`)
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
-    expect(images.length).toBe(6)
+    expect(images.length).toBe(1)
   })
 
   test(`should process the rest of images on build`, async () => {
+    let images = glob.sync(`${basePath}/public/**/*.png`)
+    expect(images.length).toBe(1)
+
     await execa(`yarn`, [`build`], {
       cwd: basePath,
       env: { NODE_ENV: `production` },
     })
 
-    const images = glob.sync(`${basePath}/public/**/*.png`)
+    images = glob.sync(`${basePath}/public/**/*.png`)
     expect(images.length).toBe(6)
   })
 

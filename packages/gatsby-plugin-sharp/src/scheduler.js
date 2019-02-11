@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 const ProgressBar = require(`progress`)
 const existsSync = require(`fs-exists-cached`).sync
 const queue = require(`async/queue`)
-const processFile = require(`./processFile`)
+const processFile = require(`./process-file`)
 
 const toProcess = {}
 let totalJobs = 0
