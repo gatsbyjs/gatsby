@@ -117,7 +117,7 @@ This is a reference to the [loader.js](https://github.com/gatsbyjs/gatsby/blob/m
 
 ##### `___emitter`
 
-only used during `gatsby develop`.
+Only used during `gatsby develop` lifecycle
 
 ##### `___chunkMapping`
 

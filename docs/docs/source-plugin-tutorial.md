@@ -53,7 +53,7 @@ Your plugin will have the following behavior:
 Create a new Gatsby project and change directories into the new project you just created.
 
 ```shell
-gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default
+npx gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default
 cd source-tutorial-site
 ```
 
@@ -249,7 +249,7 @@ exports.sourceNodes = (
 }
 ```
 
-You've added code that fetches photo data from the Pixabay API. For now, your plugin logs that data but doesn't do anything else. Check that you can see the logged photo data by restarting `gatsby develop`. This time you should see a series of results like:
+You've added code that fetches photo data from the Pixabay API. For now, your plugin logs that data but doesn't do anything else. Check that you can see the logged photo data by restarting `npm run develop`. This time you should see a series of results like:
 
 ```shell
 success onPreBootstrap — 0.035 s
@@ -337,7 +337,7 @@ exports.sourceNodes = (
 
 ### Query for results
 
-Your plugin is ready. Restart `gatsby develop` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
+Your plugin is ready. Restart `npm run develop` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
 
 ```graphql
 {
