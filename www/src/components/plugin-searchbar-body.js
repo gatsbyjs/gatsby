@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import {
   InstantSearch,
+  Configure,
   SearchBox,
   Stats,
   RefinementList,
