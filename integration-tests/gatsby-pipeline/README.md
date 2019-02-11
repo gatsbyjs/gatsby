@@ -2,29 +2,10 @@
 
 It's a default gatsby starter to test our build & develop pipeline.
 
-For an overview of the project structure please refer to the [Gatsby documentation - Building with Components](https://www.gatsbyjs.org/docs/building-with-components/).
-
 ## Install
 
-Make sure that you have the Gatsby CLI program installed:
+You can install all dependencies by running `yarn` or `npm install`.
 
-```sh
-npm install --global gatsby-cli
-```
+## Tests
 
-And run from your CLI:
-
-```sh
-gatsby new gatsby-example-site
-```
-
-Then you can run it by:
-
-```sh
-cd gatsby-example-site
-gatsby develop
-```
-
-## Deploy
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
+To run our test suite you can simply run `yarn test`. If you want to test with the latest sources from the packages directory. You can use the [e2e-test.sh](https://github.com/gatsbyjs/gatsby/blob/master/scripts/e2e-test.sh) helper script that we use for CI. You can run it as `sh scripts/e2e-test.sh integration-tests/gatsby-pipeline` from the root directory.

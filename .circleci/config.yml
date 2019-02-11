@@ -85,8 +85,6 @@ commands:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      # cypress docker does not support sudo and do not need it but the default node executor does
-      - run: command -v sudo && sudo npm install -g gatsby-dev-cli || npm install -g gatsby-dev-cli
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
