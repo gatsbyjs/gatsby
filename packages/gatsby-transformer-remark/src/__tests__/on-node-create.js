@@ -107,8 +107,10 @@ date: ${date}
 
 yadda yadda
       `
-    it(`coerces a date a date object`, async () => {
-      node.content = getContent(`2019-01-01`)
+
+    it(`coerces a date object into a date string`, async () => {
+      const date = `2019-01-01`
+      node.content = getContent(date)
       const parsed = await onCreateNode({
         node,
         actions,
@@ -116,44 +118,7 @@ yadda yadda
         loadNodeContent,
       })
 
-      expect(parsed.frontmatter.date).toEqual(expect.any(Date))
-    })
-
-    it.skip(`coerces a date string into a date object`, async () => {
-      node.content = getContent(JSON.stringify(`2019-01-01`))
-      const parsed = await onCreateNode({
-        node,
-        actions,
-        createNodeId,
-        loadNodeContent,
-      })
-
-      expect(parsed.frontmatter.date).toEqual(expect.any(Date))
-    })
-
-    it.skip(`parses date fields and date strings into the same date`, async () => {
-      const [uno, dos] = await Promise.all([
-        onCreateNode({
-          node: {
-            ...node,
-            content: getContent(`2019-01-01`),
-          },
-          actions,
-          createNodeId,
-          loadNodeContent,
-        }),
-        onCreateNode({
-          node: {
-            ...node,
-            content: getContent(JSON.stringify(`2019-01-01`)),
-          },
-          actions,
-          createNodeId,
-          loadNodeContent,
-        }),
-      ])
-
-      expect(uno.frontmatter.date).toEqual(dos.frontmatter.date)
+      expect(parsed.frontmatter.date).toEqual(new Date(date).toJSON())
     })
   })
 
