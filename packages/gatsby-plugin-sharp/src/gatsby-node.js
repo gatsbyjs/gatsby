@@ -4,7 +4,6 @@ const {
   queue: jobQueue,
   reportError,
 } = require(`./index`)
-const processFile = require(`./process-file`)
 const { scheduleJob } = require(`./scheduler`)
 
 const getQueueFromCache = async cache => {
