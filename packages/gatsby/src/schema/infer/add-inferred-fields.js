@@ -136,7 +136,7 @@ const addInferredFieldsImpl = ({
             type: field,
           }
         }
-        if (!field.args && fieldConfig.args) {
+        if (_.isEmpty(field.args) && fieldConfig.args) {
           field.args = fieldConfig.args
         }
         if (!field.resolve && fieldConfig.resolve) {
