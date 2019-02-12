@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.0.117",
+  "version": "2.0.119",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -56,14 +56,13 @@
     "eslint-plugin-react": "^7.8.2",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
-    "express-history-api-fallback": "^2.2.1",
     "fast-levenshtein": "~2.0.4",
     "file-loader": "^1.1.11",
     "flat": "^4.0.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^5.0.0",
-    "gatsby-cli": "^2.4.9",
+    "gatsby-cli": "^2.4.10",
     "gatsby-link": "^2.0.10",
     "gatsby-plugin-page-creator": "^2.0.6",
     "gatsby-react-router-scroll": "^2.0.4",
@@ -120,7 +119,7 @@
     "url-loader": "^1.0.1",
     "uuid": "^3.1.0",
     "v8-compile-cache": "^1.1.0",
-    "webpack": "^4.12.0",
+    "webpack": "~4.28.4",
     "webpack-dev-middleware": "^3.0.1",
     "webpack-dev-server": "^3.1.14",
     "webpack-hot-middleware": "^2.21.0",
