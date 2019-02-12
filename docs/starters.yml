@@ -1838,7 +1838,6 @@
     - Testing
     - Styling:Styled-Components
   features:
-    - Optimized images! No more large, unoptimized images which dramatically slow down your site. The starter uses gatsby-image for optimized image loading.
     - SEO friendly! The starter uses react-helmet and gatsby-plugin-sitemap to make search engines happy.
     - Google Webmaster Tools! Define your google webmaster key to confirm the ownership in Google Webmaster Tools.
     - Responsive UIs! This starter uses the base component library magicsoup.io/stock. magicsoup.io gives you are rapid start to create wonderful UIs with styled-components and styled-system.
