@@ -11,7 +11,7 @@ const {
 } = require(`gatsby/graphql`)
 const {
   inferObjectStructureFromNodes,
-} = require(`gatsby/src/schema/infer-graphql-type`)
+} = require(`../../../gatsby/src/schema/infer-graphql-type`)
 
 let node
 let actions
