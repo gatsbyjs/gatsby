@@ -1945,20 +1945,6 @@
   built_by: Novatics
   built_by_url: "https://github.com/Novatics"
   featured: false
-- title: I migliori by Vivigratis
-  description: >
-    Product review website
-  main_url: "https://imigliori.vivigratis.com/"
-  url: "https://imigliori.vivigratis.com/"
-  categories:
-    - Blog
-    - Travel
-    - Technology
-    - Health & Wellness
-    - Fashion
-  built_by: Kframe Interactive SA
-  built_by_url: http://kframeinteractive.com
-  featured: false
 - title: Max McKinney
   description: >
     I’m a developer and designer with a focus in web technologies. I build cars
@@ -4257,5 +4243,31 @@
     - Technology
     - Blockchain
   built_by: Roman Vesely
-  built_by_url: https://romanvesely.com
+  built_by_url: https://romanvesely.
+  featured: false
+- title: BIGBrave
+  main_url: https://bigbrave.digital
+  url: https://bigbrave.digital
+  description: >
+    BIGBrave is a strategic design firm. We partner with our clients, big and small, to design & create human-centered brands, products, services and systems that are simple, beautiful and easy to use.
+  categories:
+    - Agency
+    - Web Development
+    - Marketing
+    - Technology
+    - WordPress
+  built_by: Francois Brill
+  built_by_url: https://bigbrave.digital
+  featured: false
+- title: KegTracker
+  main_url: https://www.kegtracker.co.za
+  url: https://www.kegtracker.co.za
+  description: >
+    Keg Tracker is part of the Beverage Insights family and its sole aim is to provide you with the right data about your kegs to make better decisions. In today’s business landscape having the right information at your finger tips is crucial to the agility of your business.
+  categories:
+    - Food
+    - Business
+    - Technology
+  built_by: Francois Brill
+  built_by_url: https://bigbrave.digital
   featured: false
