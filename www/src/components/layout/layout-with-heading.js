@@ -84,7 +84,7 @@ const LayoutWithHeading = props => {
           href="https://www.gatsbyjs.com/behind-the-scenes/"
           css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
         >
-          Register now
+          Watch now
         </OutboundLink>
         {`: “Behind the Scenes: What makes Gatsby Great”.`}
       </Banner>

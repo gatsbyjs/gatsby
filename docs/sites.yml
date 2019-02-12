@@ -1249,14 +1249,14 @@
   categories:
     - Portfolio
     - Web Development
-- title: Philipp Czernitzki - Blog/Website
-  main_url: "http://philippczernitzki.me/"
-  url: "http://philippczernitzki.me/"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
+# - title: Philipp Czernitzki - Blog/Website
+#   main_url: "http://philippczernitzki.me/"
+#   url: "http://philippczernitzki.me/"
+#   featured: false
+#   categories:
+#     - Portfolio
+#     - Web Development
+#     - Blog
 - title: WebGazer
   main_url: "https://www.webgazer.io/"
   url: "https://www.webgazer.io/"
@@ -1944,20 +1944,6 @@
     - Web Development
   built_by: Novatics
   built_by_url: "https://github.com/Novatics"
-  featured: false
-- title: I migliori by Vivigratis
-  description: >
-    Product review website
-  main_url: "https://imigliori.vivigratis.com/"
-  url: "https://imigliori.vivigratis.com/"
-  categories:
-    - Blog
-    - Travel
-    - Technology
-    - Health & Wellness
-    - Fashion
-  built_by: Kframe Interactive SA
-  built_by_url: http://kframeinteractive.com
   featured: false
 - title: Max McKinney
   description: >
@@ -3949,7 +3935,7 @@
   url: "https://theagencyproject.co"
   description: Agency model, without agency overhead.
   categories:
-    - agency
+    - Agency
   built_by: JV-LA
   built_by_url: https://jv-la.com
 - title: Karen Hou's portfolio
@@ -4129,6 +4115,18 @@
     - Web Development
     - Productivity
   featured: false
+- title: Vyron Vasileiadis
+  url: "https://fedonman.com/"
+  main_url: "https://fedonman.com"
+  source_url: "https://github.com/fedonman/fedonman-website"
+  description: Personal space of Vyron Vasileiadis aka fedonman, a Web & IoT Developer, Educator and Entrepreneur based in Athens, Greece.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+    - Education
+  built_by: Vyron Vasileiadis
+  built_by_url: "https://github.com/fedonman"
 - title: Fabien Champigny
   url: "https://www.champigny.name/"
   main_url: "https://www.champigny.name/"
@@ -4168,4 +4166,130 @@
     - Open Source
     - Nonprofit
     - Technology
+  featured: false
+- title: Dale Blackburn - Portfolio
+  url: https://dakebl.co.uk/
+  main_url: https://dakebl.co.uk/
+  source_url: https://github.com/dakebl/dakebl.co.uk
+  description: >
+    Dale Blackburn's personal website and blog.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  featured: false
+- title: Portfolio of Anthony Wiktor
+  url: https://www.anthonydesigner.com/
+  main_url: https://www.anthonydesigner.com/
+  description: >
+    Anthony Wiktor is a Webby Award-Winning Creative Director and Digital Designer twice named Hot 100 by WebDesigner Magazine. Anthony has over a decade of award-winning experience in design and has worked on projects across a diverse set of industries — from entertainment to consumer products to hospitality to technology. Anthony is a frequent lecturer at USC’s Annenberg School for Communication & Journalism and serves on the board of AIGA Los Angeles.
+  categories:
+    - Portfolio
+    - Marketing
+  built_by: Maciej Leszczyński
+  built_by_url: http://twitter.com/_maciej
+  featured: false
+- title: Frame.io Workflow Guide
+  main_url: https://workflow.frame.io
+  url: https://workflow.frame.io
+  description: >
+    The web’s most comprehensive post-production resource, written by pro filmmakers, for pro filmmakers. Always expanding, always free.
+  categories:
+    - Education
+    - Cinema
+  built_by: Frame.io
+  built_by_url: https://frame.io
+  featured: false
+- title: MarcySutton.com
+  main_url: https://marcysutton.com
+  url: https://marcysutton.com
+  description: >
+    The personal website of web developer and accessibility advocate Marcy Sutton.
+  categories:
+    - Blog
+    - Accessibility
+    - Video
+    - Photography
+    - Images
+    - CSS Grid
+  built_by: Marcy Sutton
+  built_by_url: https://marcysutton.com
+  featured: true
+- title: Kepinski.me
+  main_url: https://kepinski.me
+  url: https://kepinski.me
+  description: >
+    The personal site of Antoni Kepinski, Node.js Developer.
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Antoni Kepinski
+  built_by_url: https://kepinski.me
+  featured: false
+- title: WPGraphQL Docs
+  main_url: https://docs.wpgraphql.com
+  url: https://docs.wpgraphql.com
+  description: >
+    Documentation for WPGraphQL, a free open-source WordPress plugin that provides an extendable GraphQL schema and API for any WordPress site.
+  categories:
+    - API
+    - CMS
+    - Documentation
+    - GraphQL
+    - Technology
+    - Web Development
+    - WordPress
+  built_by: WPGraphQL
+  built_by_url: https://wpgraphql.com
+  featured: false
+- title: Parallel Polis Kosice
+  url: https://www.paralelnapoliskosice.sk/
+  main_url: https://www.paralelnapoliskosice.sk/
+  source_url: https://github.com/ParalelnaPolisKE/paralelnapoliskosice.sk
+  description: >
+    Parallel Polis is a collective of people who want to live in a more opened world. We look for possibilities and technologies (Bitcoin, the blockchain, reputation systems and decentralized technologies in general) that open new ways, make processes easier and remove unnecessary barriers. We want to create an environment that aims at education, discovering and creating better systems for everybody who is interested in freedom and independence.
+  categories:
+    - Blog
+    - Education
+    - Technology
+    - Blockchain
+  built_by: Roman Vesely
+  built_by_url: https://romanvesely.
+  featured: false
+- title: Unda Solutions
+  url: https://unda.com.au
+  main_url: https://unda.com.au
+  description: >
+    A custom web application development company in Perth, WA
+  categories:
+    - Business
+    - Freelance
+    - Web Development
+    - Technology
+  featured: false
+- title: BIGBrave
+  main_url: https://bigbrave.digital
+  url: https://bigbrave.digital
+  description: >
+    BIGBrave is a strategic design firm. We partner with our clients, big and small, to design & create human-centered brands, products, services and systems that are simple, beautiful and easy to use.
+  categories:
+    - Agency
+    - Web Development
+    - Marketing
+    - Technology
+    - WordPress
+  built_by: Francois Brill
+  built_by_url: https://bigbrave.digital
+  featured: false
+- title: KegTracker
+  main_url: https://www.kegtracker.co.za
+  url: https://www.kegtracker.co.za
+  description: >
+    Keg Tracker is part of the Beverage Insights family and its sole aim is to provide you with the right data about your kegs to make better decisions. In today’s business landscape having the right information at your finger tips is crucial to the agility of your business.
+  categories:
+    - Food
+    - Business
+    - Technology
+  built_by: Francois Brill
+  built_by_url: https://bigbrave.digital
   featured: false

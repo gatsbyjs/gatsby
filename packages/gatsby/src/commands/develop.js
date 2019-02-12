@@ -375,7 +375,7 @@ module.exports = async (program: any) => {
     console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
-      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
+      `To create a production build, use ` + `${chalk.cyan(`npm run build`)}`
     )
     console.log()
   }
