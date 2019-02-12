@@ -67,7 +67,10 @@ exports.onPostBuild = ({ cache, reporter }) =>
 /**
  * Build images on the fly when they are requested by the browser
  */
-exports.onCreateDevServer = async ({ app, cache, emitter }, pluginOptions) => {
+exports.onCreateDevServer = async (
+  { app, cache, emitter, boundActionCreators },
+  pluginOptions
+) => {
   emitter.on(`QUERY_QUEUE_DRAINED`, () => saveQueueToCache(cache, jobQueue))
 
   app.use(async (req, res, next) => {
@@ -79,7 +82,7 @@ exports.onCreateDevServer = async ({ app, cache, emitter }, pluginOptions) => {
     const job = queue.get(req.originalUrl)
 
     // wait until the file has been processed and saved to disk
-    await Promise.all(processFile(job.inputPath, [job], pluginOptions))
+    await scheduleJob(job, boundActionCreators, pluginOptions)
     // remove job from queue because it has been processed
     queue.delete(req.originalUrl)
 
