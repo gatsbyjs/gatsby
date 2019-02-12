@@ -16,7 +16,7 @@ npm install --global gatsby-cli
 Next, we'll create a new Gatsby site:
 
 ```shell
-gatsby new my-gatsby-site
+npx gatsby new my-gatsby-site
 ```
 
 Finally, change into the new site directory:
@@ -33,7 +33,7 @@ You'll need these in the next step.
 Install the AWS CLI and configure it (ensure python is installed before running these commands)
 
 ```shell
-pip install aws
+pip install awscli
 aws configure
 ```
 

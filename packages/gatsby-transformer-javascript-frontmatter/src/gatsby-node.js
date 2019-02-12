@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const babylon = require(`@babel/parser`)
-const traverse = require(`babel-traverse`).default
+const traverse = require(`@babel/traverse`).default
 
 async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
   const { createNode, createParentChildLink } = actions

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
-import PostIcons from "../components/PostIcons"
+import PostIcons from "../components/post-icons"
 import Img from "gatsby-image"
 import Layout from "../layouts"
 

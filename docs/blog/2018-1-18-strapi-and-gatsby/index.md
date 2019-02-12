@@ -1,6 +1,6 @@
 ---
 title: "Building a static blog using Gatsby and Strapi"
-date: "2018-01-18"
+date: 2018-01-18
 author: "Pierre Burgy"
 tags: ["strapi"]
 ---
@@ -144,7 +144,7 @@ $ npm install --global gatsby-cli
 In the folder `gatsby-strapi-tutorial` that you previously created, generate your brand new blog:
 
 ```bash
-$ gatsby new blog
+$ npx gatsby new blog
 ```
 
 ### Start in development mode
@@ -158,7 +158,7 @@ $ cd blog
 Start the server:
 
 ```bash
-$ gatsby develop
+$ npm run develop
 ```
 
 At this point, you should already be able to get access to your Gatsby website at this address: http://localhost:8000.
