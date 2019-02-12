@@ -1713,8 +1713,7 @@
   repo: https://github.com/anna-morawska/gatsby-material-design-for-bootstrap
   description: A simple starter which lets you quickly start developing with Gastby and Material Design For Bootstrap
   tags:
-    - MDB
-    - React Bootstrap with Material Design
+    - Styling:Material
   features:
     - React Bootstrap with Material Design css framework.
     - Free for personal and commercial use
@@ -1794,8 +1793,7 @@
   repo: https://github.com/osogrizz/gatsby-starter-santa-fe
   description: A place for artist or designers to display their creations
   tags:
-    - Styled-Components
-    - Web Font Loader
+    - Styling:CSS-in-JS
   features:
     - SEO friendly
     - Built-in Google Fonts support
@@ -1810,7 +1808,6 @@
     - Blog
     - Portfolio
     - Styling:PostCSS
-    - Syntax highlighting
   features:
     - Dark/light mode, depending on your preferences
     - Great reading experience thanks to Inter font, made by Rasmus Andersson
@@ -1824,9 +1821,7 @@
   tags:
     - Blog
     - Portfolio
-    - Web development
-    - Multilanguage
-    - Technology
+    - i18n
   features:
     - Multilanguage posts
     - Pagination and image preview for posts
