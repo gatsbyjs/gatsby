@@ -19,7 +19,7 @@ const bar = new ProgressBar(
 )
 
 exports.scheduleJob = async (job, boundActionCreators, pluginOptions) => {
-  const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
+  const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
   const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
   const jobPath = `${inputFileKey}.${outputFileKey}`
 
@@ -71,7 +71,7 @@ function runJobs(inputFileKey, boundActionCreators, pluginOptions, cb) {
   delete toProcess[inputFileKey]
   boundActionCreators.createJob(
     {
-      id: `processing image ${job.file.absolutePath}`,
+      id: `processing image ${job.inputPath}`,
       imagesCount: _.values(toProcess[inputFileKey]).length,
     },
     { name: `gatsby-plugin-sharp` }
@@ -83,7 +83,7 @@ function runJobs(inputFileKey, boundActionCreators, pluginOptions, cb) {
 
   try {
     const promises = processFile(
-      job.file.absolutePath,
+      job.inputPath,
       jobs.map(job => job.job),
       pluginOptions
     ).map(promise =>
@@ -94,7 +94,7 @@ function runJobs(inputFileKey, boundActionCreators, pluginOptions, cb) {
         .catch(err => {
           findDeferred(job).reject({
             err,
-            message: `Failed to process image ${job.file.absolutePath}`,
+            message: `Failed to process image ${job.inputPath}`,
           })
         })
         .then(() => {
@@ -102,7 +102,7 @@ function runJobs(inputFileKey, boundActionCreators, pluginOptions, cb) {
           bar.tick()
           boundActionCreators.setJob(
             {
-              id: `processing image ${job.file.absolutePath}`,
+              id: `processing image ${job.inputPath}`,
               imagesFinished,
             },
             { name: `gatsby-plugin-sharp` }
@@ -112,7 +112,7 @@ function runJobs(inputFileKey, boundActionCreators, pluginOptions, cb) {
 
     Promise.all(promises).then(() => {
       boundActionCreators.endJob(
-        { id: `processing image ${job.file.absolutePath}` },
+        { id: `processing image ${job.inputPath}` },
         { name: `gatsby-plugin-sharp` }
       )
       cb()

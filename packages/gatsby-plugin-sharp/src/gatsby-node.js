@@ -79,7 +79,7 @@ exports.onCreateDevServer = async ({ app, cache, emitter }, pluginOptions) => {
     const job = queue.get(req.originalUrl)
 
     // wait until the file has been processed and saved to disk
-    await Promise.all(processFile(job.file.absolutePath, [job], pluginOptions))
+    await Promise.all(processFile(job.inputPath, [job], pluginOptions))
     // remove job from queue because it has been processed
     queue.delete(req.originalUrl)
 

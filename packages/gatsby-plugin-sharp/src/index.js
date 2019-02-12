@@ -187,9 +187,6 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const job = {
-    file: {
-      absolutePath: file.absolutePath,
-    },
     args: options,
     inputPath: file.absolutePath,
     outputPath: filePath,
