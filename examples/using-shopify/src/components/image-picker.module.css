@@ -10,15 +10,16 @@
 .thumbnails {
   display: flex;
   flex-direction: row;
-  justify-content: center;
 
-  margin: 2rem;
+  padding: 1rem;
   overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .thumbnail {
   outline: none;
   margin: 0.5rem;
+  background-color: white;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.125);
@@ -36,6 +37,9 @@
 
   .thumbnails {
     flex-direction: column;
+    justify-content: center;
+    overflow-x: auto;
+    overflow-y: scroll;
   }
 }
 
