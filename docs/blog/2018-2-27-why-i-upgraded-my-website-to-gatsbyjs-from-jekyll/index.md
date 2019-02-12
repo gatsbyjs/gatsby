@@ -1,6 +1,6 @@
 ---
 title: Why I Upgraded My Website to GatsbyJS from Jekyll
-date: "2018-02-27"
+date: 2018-02-27
 author: "Jia Hao Goh"
 excerpt: My thought process during the long overdue rewrite of this website
 tags: ["jekyll", "plugins", "getting-started", "gatsby-apis"]

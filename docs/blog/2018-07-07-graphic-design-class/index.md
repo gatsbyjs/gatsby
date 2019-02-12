@@ -1,6 +1,6 @@
 ---
 title: Learning how to code with Gatsby
-date: "2018-07-07"
+date: 2018-07-07
 author: "Shannon Soper"
 tags: ["college", "case study", "design", "getting-started"]
 ---
