@@ -1709,6 +1709,16 @@
     - Registration form
     - Signup form
     - User sign in
+- url: https://gatsby-starter.mdbootstrap.com/
+  repo: https://github.com/anna-morawska/gatsby-material-design-for-bootstrap
+  description: A simple starter which lets you quickly start developing with Gastby and Material Design For Bootstrap
+  tags:
+    - MDB
+    - React Bootstrap with Material Design
+  features:
+    - React Bootstrap with Material Design css framework.
+    - Free for personal and commercial use
+    - Fully responsive
 - url: https://frosty-ride-4ff3b9.netlify.com/
   repo: https://github.com/damassi/gatsby-starter-typescript-rebass-netlifycms
   description:
@@ -1844,5 +1854,14 @@
     - Static content with JSON and Markdown! This starter is combining those benefits with GatsbyJS automatic slug and page creation via gatsby-transform-remark or setting static page data with gatsby-transform-json.
     - Convert Markdown to StyledComponents! When you love styled-components and styled-system we have good news. Map your styled-components to markdown or other HTML output from a file system or any other external API.
     - Webfonts! Every modern website or web app has a custom font. The starter uses gatsby-plugin-web-font-loader to load fonts from any server. Load from Fontdeck, Fonts.com, Google, Typekit or custom hosting.
-    - SSR! The starter is SSR ready. Make npm run build to create the production resources. Choose your favorite deployment method and prepare your app for production.
     - Testing! The starter includes everything you need to test your components with jest.
+- url: https://foxandgeese.github.io/tiny-agency/
+  repo: https://github.com/foxandgeese/tiny-agency
+  description: Simple Gatsby.js starter that uses material design and that's perfect for tiny agencies.
+  tags:
+    - Styling:Material
+  features:
+    - Uses the popular, well-maintained Material UI React component library
+    - Material Design theme and icons
+    - Simple setup without opinionated setup
+    - Fully instrumented for successful PROD deployments
