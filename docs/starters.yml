@@ -1709,6 +1709,16 @@
     - Registration form
     - Signup form
     - User sign in
+- url: https://gatsby-starter.mdbootstrap.com/
+  repo: https://github.com/anna-morawska/gatsby-material-design-for-bootstrap
+  description: A simple starter which lets you quickly start developing with Gastby and Material Design For Bootstrap
+  tags:
+    - MDB
+    - React Bootstrap with Material Design
+  features:
+    - React Bootstrap with Material Design css framework.
+    - Free for personal and commercial use
+    - Fully responsive
 - url: https://frosty-ride-4ff3b9.netlify.com/
   repo: https://github.com/damassi/gatsby-starter-typescript-rebass-netlifycms
   description:

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.4...gatsby-transformer-remark@2.2.5) (2019-02-12)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** restore behavior of serializing date-like fields to string ([#11716](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/11716)) ([29dee3f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/29dee3f))
+
 ## [2.2.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.3...gatsby-transformer-remark@2.2.4) (2019-02-04)
 
 **Note:** Version bump only for package gatsby-transformer-remark
