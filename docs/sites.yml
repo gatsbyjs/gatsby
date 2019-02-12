@@ -4231,6 +4231,20 @@
   built_by: WPGraphQL
   built_by_url: https://wpgraphql.com
   featured: false
+- title: Parallel Polis Kosice
+  url: https://www.paralelnapoliskosice.sk/
+  main_url: https://www.paralelnapoliskosice.sk/
+  source_url: https://github.com/ParalelnaPolisKE/paralelnapoliskosice.sk
+  description: >
+    Parallel Polis is a collective of people who want to live in a more opened world. We look for possibilities and technologies (Bitcoin, the blockchain, reputation systems and decentralized technologies in general) that open new ways, make processes easier and remove unnecessary barriers. We want to create an environment that aims at education, discovering and creating better systems for everybody who is interested in freedom and independence.
+  categories:
+    - Blog
+    - Education
+    - Technology
+    - Blockchain
+  built_by: Roman Vesely
+  built_by_url: https://romanvesely.
+  featured: false
 - title: Unda Solutions
   url: https://unda.com.au
   main_url: https://unda.com.au
