@@ -1,9 +1,10 @@
+// NOTE: Previously `data-tree-utils-test.js`
+
 const { getExampleValue } = require(`../example-value`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 
 const INVALID_VALUE = undefined
 
-// NOTE: Previously `data-tree-utils-test.js`
 describe(`Get example value for type inference`, () => {
   const typeConflictReporter = new TypeConflictReporter()
 

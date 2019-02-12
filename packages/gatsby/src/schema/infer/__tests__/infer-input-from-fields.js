@@ -1,0 +1,376 @@
+// NOTE: Previously `infer-graphql-input-from-fields-test.js`
+
+const { SchemaComposer } = require(`graphql-compose`)
+const { getFilterInput } = require(`../../types/filter`)
+const { getSortInput } = require(`../../types/sort`)
+
+const {
+  GraphQLBoolean,
+  GraphQLFloat,
+  GraphQLInt,
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLString,
+  GraphQLObjectType,
+  GraphQLScalarType,
+  GraphQLList,
+  GraphQLInputObjectType,
+  Kind,
+} = require(`graphql`)
+
+const getInferredFields = fields => {
+  const schemaComposer = new SchemaComposer()
+  const tc = schemaComposer.createTC({ name: `Test`, fields })
+  const itc = tc.getITC()
+  return getFilterInput({ schemaComposer, inputTypeComposer: itc })
+    .getType()
+    .getFields()
+}
+
+function isIntInput(type) {
+  expect(type.name).toBe(`IntQueryOperatorInput`)
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLInt },
+    ne: { name: `ne`, type: GraphQLInt },
+    lt: { name: `lt`, type: GraphQLInt },
+    lte: { name: `lte`, type: GraphQLInt },
+    gt: { name: `gt`, type: GraphQLInt },
+    gte: { name: `gte`, type: GraphQLInt },
+    in: { name: `in`, type: new GraphQLList(GraphQLInt) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLInt) },
+  })
+}
+
+function isIdInput(type) {
+  expect(type.name).toBe(`IDQueryOperatorInput`)
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLID },
+    ne: { name: `ne`, type: GraphQLID },
+    in: { name: `in`, type: new GraphQLList(GraphQLID) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLID) },
+  })
+}
+
+function isStringInput(type) {
+  expect(type.name).toBe(`StringQueryOperatorInput`)
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLString },
+    ne: { name: `ne`, type: GraphQLString },
+    regex: { name: `regex`, type: GraphQLString },
+    glob: { name: `glob`, type: GraphQLString },
+    in: { name: `in`, type: new GraphQLList(GraphQLString) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLString) },
+  })
+}
+
+function isFloatInput(type) {
+  expect(type.name).toBe(`FloatQueryOperatorInput`)
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLFloat },
+    ne: { name: `ne`, type: GraphQLFloat },
+    lt: { name: `lt`, type: GraphQLFloat },
+    lte: { name: `lte`, type: GraphQLFloat },
+    gt: { name: `gt`, type: GraphQLFloat },
+    gte: { name: `gte`, type: GraphQLFloat },
+    in: { name: `in`, type: new GraphQLList(GraphQLFloat) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLFloat) },
+  })
+}
+
+function isBoolInput(type) {
+  expect(type.name).toBe(`BooleanQueryOperatorInput`)
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLBoolean },
+    ne: { name: `ne`, type: GraphQLBoolean },
+    in: { name: `in`, type: new GraphQLList(GraphQLBoolean) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLBoolean) },
+  })
+}
+
+describe(`GraphQL Input args from fields, test-only`, () => {
+  function oddValue(value) {
+    return value % 2 === 1 ? value : null
+  }
+
+  const OddType = new GraphQLScalarType({
+    name: `Odd`,
+    serialize: oddValue,
+    parseValue: oddValue,
+    parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return oddValue(parseInt(ast.value, 10))
+      }
+      return null
+    },
+  })
+
+  it(`handles all known scalars`, async () => {
+    const fields = {
+      scal_int: `Int`,
+      scal_float: `Float`,
+      scal_string: `String`,
+      scal_bool: `Boolean`,
+      scal_odd_unknown: { type: OddType },
+    }
+
+    const inferredFields = getInferredFields(fields)
+
+    const int = inferredFields.scal_int.type
+    isIntInput(int)
+
+    const float = inferredFields.scal_float.type
+    isFloatInput(float)
+
+    const string = inferredFields.scal_string.type
+    isStringInput(string)
+
+    const bool = inferredFields.scal_bool.type
+    isBoolInput(bool)
+
+    expect(inferredFields).not.toHaveProperty(`scal_odd_unknown`)
+  })
+
+  it(`recursively converts object types`, async () => {
+    const fields = {
+      obj: {
+        type: new GraphQLObjectType({
+          name: `Obj`,
+          fields: {
+            foo: { type: GraphQLInt },
+            bar: {
+              type: new GraphQLObjectType({
+                name: `Jbo`,
+                fields: {
+                  foo: { type: GraphQLString },
+                },
+              }),
+            },
+          },
+        }),
+      },
+    }
+
+    const inferredFields = getInferredFields(fields)
+
+    const obj = inferredFields.obj.type
+    const objFields = obj.getFields()
+
+    expect(obj instanceof GraphQLInputObjectType).toBeTruthy()
+    isIntInput(objFields.foo.type)
+
+    const innerObj = objFields.bar.type
+    const innerObjFields = innerObj.getFields()
+    isStringInput(innerObjFields.foo.type)
+  })
+
+  it(`handles lists within lists`, async () => {
+    const Row = new GraphQLObjectType({
+      name: `Row`,
+      fields: () => {
+        return {
+          cells: { type: new GraphQLList(Cell) },
+        }
+      },
+    })
+
+    const Cell = new GraphQLObjectType({
+      name: `Cell`,
+      fields: () => {
+        return {
+          value: { type: GraphQLInt },
+        }
+      },
+    })
+
+    const fields = {
+      rows: { type: new GraphQLList(Row) },
+    }
+
+    expect(() => {
+      getInferredFields(fields)
+    }).not.toThrow()
+  })
+
+  it(`protects against infinite recursion on circular definitions`, async () => {
+    const TypeA = new GraphQLObjectType({
+      name: `TypeA`,
+      fields: () => {
+        return {
+          typeb: { type: TypeB },
+        }
+      },
+    })
+
+    const TypeB = new GraphQLObjectType({
+      name: `TypeB`,
+      fields: () => {
+        return {
+          bar: { type: GraphQLID },
+          typea: { type: TypeA },
+        }
+      },
+    })
+
+    const fields = {
+      entryPointA: { type: TypeA },
+      entryPointB: { type: TypeB },
+    }
+
+    let inferredFields
+
+    expect(() => {
+      inferredFields = getInferredFields(fields)
+    }).not.toThrow()
+
+    const entryPointA = inferredFields.entryPointA.type
+    const entryPointAFields = entryPointA.getFields()
+    const entryPointB = inferredFields.entryPointB.type
+    const entryPointBFields = entryPointB.getFields()
+
+    expect(entryPointA instanceof GraphQLInputObjectType).toBeTruthy()
+    expect(entryPointB instanceof GraphQLInputObjectType).toBeTruthy()
+    isIdInput(entryPointBFields.bar.type)
+
+    const childAB = entryPointAFields.typeb.type
+    const childABFields = childAB.getFields()
+    expect(childAB instanceof GraphQLInputObjectType).toBeTruthy()
+    isIdInput(childABFields.bar.type)
+
+    expect(childABFields.typea.type.name).toBe(`TestTypeAInput`)
+
+    expect(entryPointBFields.typea.type.name).toBe(`TestTypeAInput`)
+  })
+
+  it(`recovers from unknown output types`, async () => {
+    const fields = {
+      obj: {
+        type: new GraphQLObjectType({
+          name: `Obj`,
+          fields: {
+            aa: { type: OddType },
+            foo: { type: GraphQLInt },
+            bar: {
+              type: new GraphQLObjectType({
+                name: `Jbo`,
+                fields: {
+                  aa: { type: OddType },
+                  foo: { type: GraphQLString },
+                  ba: { type: OddType },
+                  bar: { type: GraphQLInt },
+                },
+              }),
+            },
+            baz: {
+              type: new GraphQLObjectType({
+                name: `Jbo2`,
+                fields: {
+                  aa: { type: OddType },
+                },
+              }),
+            },
+          },
+        }),
+      },
+      odd: { type: OddType },
+    }
+
+    const inferredFields = getInferredFields(fields)
+
+    expect(inferredFields.odd).toBeUndefined()
+
+    const obj = inferredFields.obj.type
+    const objFields = obj.getFields()
+
+    expect(obj instanceof GraphQLInputObjectType).toBeTruthy()
+    isIntInput(objFields.foo.type)
+    expect(objFields.aa).toBeUndefined()
+
+    const innerObj = objFields.bar.type
+    const innerObjFields = innerObj.getFields()
+    expect(innerObjFields.aa).toBeUndefined()
+    isStringInput(innerObjFields.foo.type)
+    expect(innerObjFields.ba).toBeUndefined()
+    isIntInput(innerObjFields.bar.type)
+
+    // innerObj.baz is object containing only unsupported types
+    // so it should not be defined
+    expect(innerObj.baz).toBeUndefined()
+  })
+
+  it(`includes the filters of list elements`, async () => {
+    const fields = {
+      list: { type: new GraphQLList(GraphQLFloat) },
+    }
+
+    const inferredFields = getInferredFields(fields)
+
+    const list = inferredFields.list.type
+
+    expect(list instanceof GraphQLInputObjectType).toBeTruthy()
+    expect(list.getFields()).toEqual({
+      eq: { name: `eq`, type: GraphQLFloat },
+      ne: { name: `ne`, type: GraphQLFloat },
+      gt: { name: `gt`, type: GraphQLFloat },
+      gte: { name: `gte`, type: GraphQLFloat },
+      lt: { name: `lt`, type: GraphQLFloat },
+      lte: { name: `lte`, type: GraphQLFloat },
+      in: { name: `in`, type: new GraphQLList(GraphQLFloat) },
+      nin: { name: `nin`, type: new GraphQLList(GraphQLFloat) },
+    })
+  })
+
+  it(`strips away NonNull`, async () => {
+    const fields = {
+      nonNull: { type: new GraphQLNonNull(GraphQLInt) },
+    }
+
+    const inferredFields = getInferredFields(fields)
+
+    isIntInput(inferredFields.nonNull.type)
+  })
+
+  it(`extracts the fields you can sort on`, async () => {
+    const fields = {
+      foo: { type: GraphQLString },
+      bar: { type: GraphQLFloat },
+      baz: {
+        type: new GraphQLObjectType({
+          name: `Baz`,
+          fields: {
+            ka: { type: GraphQLFloat },
+            ma: {
+              type: new GraphQLList(
+                new GraphQLObjectType({
+                  name: `Hol`,
+                  fields: {
+                    go: { type: GraphQLFloat },
+                  },
+                })
+              ),
+            },
+          },
+        }),
+      },
+    }
+
+    const schemaComposer = new SchemaComposer()
+    const tc = schemaComposer.createTC({ name: `Test`, fields })
+    const itc = tc.getITC()
+    const sort = getSortInput({
+      schemaComposer,
+      inputTypeComposer: itc,
+      typeComposer: tc,
+    })
+      .getType()
+      .getFields()
+      .fields.type.ofType.getValues()
+      .map(({ name }) => name)
+
+    expect(sort.sort()).toEqual([`bar`, `baz___ka`, `baz___ma`, `foo`])
+  })
+})
