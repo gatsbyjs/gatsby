@@ -36,16 +36,8 @@ The config is quite large, but here are some of the important values in the fina
     splitChunks: false
   }
   plugins: [
-    {
-      apply: function(compiler) {
-        compiler.hooks.done.tapAsync(
-          `gatsby-webpack-stats-extractor`,
-          (stats, done) => {
-            // logic to write out chunk-map.json and webpack.stats.json
-          }
-        )
-      },
-    }
+    // A custom webpack plugin that implements logic to write out chunk-map.json and webpack.stats.json
+    plugins.extractStats(),
   ]
 }
 ```
@@ -125,7 +117,7 @@ This is a reference to the [loader.js](https://github.com/gatsbyjs/gatsby/blob/m
 
 ##### `___emitter`
 
-only used during `gatsby develop`.
+Only used during `gatsby develop` lifecycle
 
 ##### `___chunkMapping`
 

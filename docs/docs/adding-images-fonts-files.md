@@ -151,8 +151,8 @@ Keep in mind the downsides of this approach:
 
 ### When to Use the `static` Folder
 
-Normally we recommend importing [stylesheets](#adding-a-stylesheet),
-[images, and fonts](#adding-images-and-fonts) from JavaScript. The `static`
+Normally we recommend importing stylesheets,
+[images, and fonts](#adding-images-fonts-files) from JavaScript. The `static`
 folder is useful as a workaround for a number of less common cases:
 
 - You need a file with a specific name in the build output, such as

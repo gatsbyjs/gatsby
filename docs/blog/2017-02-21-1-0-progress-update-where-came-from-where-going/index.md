@@ -1,6 +1,6 @@
 ---
 title: What's coming in Gatsby 1.0
-date: "2017-02-23"
+date: 2017-02-23
 author: "Kyle Mathews"
 image: "ui-and-code.png"
 draft: true
@@ -270,7 +270,7 @@ Say we had a markdown file that looked like:
 ```markdown
 ---
 title: A sweet post
-date: "2017-02-23"
+date: 2017-02-23
 ---
 
 This is my sweet blog post. **Cool!**
@@ -354,6 +354,6 @@ reactions and what kind of problems you face that you think Gatsby will help
 with.
 
 If you're interested in contributing, please join the
-[#gatsby channel](https://discord.gg/0ZcbPKXt5bVoxkfV) on Discord, check out the
+[Gatsby Discord](https://gatsby.app/discord), check out the
 [issues](https://github.com/gatsbyjs/gatsby/issues), and help bikeshed on names
 and APIs and other ideas.

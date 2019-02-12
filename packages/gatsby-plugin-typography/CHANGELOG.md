@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.6...gatsby-plugin-typography@2.2.7) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [2.2.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.5...gatsby-plugin-typography@2.2.6) (2019-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-typography:** omitGoogleFont in "develop" ([#11226](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/issues/11226)) ([7dc7c5f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/commit/7dc7c5f))
+
 <a name="2.2.5"></a>
 
 ## [2.2.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.4...gatsby-plugin-typography@2.2.5) (2019-01-06)

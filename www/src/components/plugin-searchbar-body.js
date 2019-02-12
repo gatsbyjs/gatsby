@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import {
   InstantSearch,
+  Configure,
   SearchBox,
   Stats,
   RefinementList,
@@ -195,6 +196,7 @@ class Search extends Component {
           <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
 
           <div css={{ display: `none` }}>
+            <Configure analyticsTags={[`gatsby-plugins`]} />
             <RefinementList
               attributeName="keywords"
               defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
@@ -303,9 +305,9 @@ class Search extends Component {
 // the result component is fed into the InfiniteHits component
 const Result = ({ hit, pathname, query }) => {
   // Example:
-  // pathname = `/plugins/gatsby-link/` || `/plugins/@comsoc/gatsby-mdast-copy-linked-files`
+  // pathname = `/packages/gatsby-link/` || `/packages/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
-  const selected = pathname.includes(hit.name)
+  const selected = new RegExp(`^/packages/${hit.name}/?$`).test(pathname)
   return (
     <Link
       to={`/packages/${hit.name}/?=${query}`}
