@@ -115,7 +115,6 @@ _Note: There's also a plugin that will remove all trailing slashes from pages au
 
 _Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
 
-
 ```javascript:title=gatsby-node.js
 // Replacing '/' would result in empty string which is invalid
 const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
@@ -123,7 +122,7 @@ const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
-  
+
   const oldPage = Object.assign({}, page)
   // Remove trailing slash unless page is /
   page.path = replacePath(page.path)
