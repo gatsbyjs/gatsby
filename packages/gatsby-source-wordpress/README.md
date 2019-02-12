@@ -692,7 +692,7 @@ function mapMoviesToGenres({ entities }) {
 
   return entities.map(e => {
     if (e.__type === `wordpress__wp_movie`) {
-      let hasGenres = e.genres && Array.isArray(e.genres) && e.categories.length
+      let hasGenres = e.genres && Array.isArray(e.genres) && e.genres.length
       // Replace genres with links to their nodes.
       if (hasGenres) {
         e.genres___NODE = e.genres.map(
@@ -703,8 +703,6 @@ function mapMoviesToGenres({ entities }) {
     }
     return e
   })
-
-  return entities
 }
 ```
 
