@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.8...gatsby-dev-cli@2.4.9) (2019-02-06)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** move package.json file check after pathToRepo handling ([#11565](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/11565)) ([da0cbab](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/da0cbab))
+
 <a name="2.4.8"></a>
 
 ## [2.4.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.7...gatsby-dev-cli@2.4.8) (2018-11-29)

@@ -36,7 +36,7 @@ Start by creating a new Gatsby site. It may be best (especially if you're new to
 Open a new terminal window, create a new "hello world" gatsby site, and start the development server:
 
 ```shell
-gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-two
 ```
 
@@ -254,7 +254,7 @@ The `console.log(styles)` code will log the resulting import so you can see the 
 ![css-modules-console](css-modules-console.png)
 
 If you compare that to your CSS file, you'll see that each class is now a key in the imported object pointing to a long string e.g. `avatar` points to
-`about-css-modules-module---avatar----hYcv`. These are the class names CSS
+`src-pages----about-css-modules-module---avatar---2lRF7`. These are the class names CSS
 Modules generates. They're guaranteed to be unique across your site. And because
 you have to import them to use the classes, there's never any question about
 where some CSS is being used.

@@ -17,7 +17,7 @@ npm install --global gatsby-cli
 Then generate a project with the following command:
 
 ```shell
-gatsby new <your project name>
+npx gatsby new <your project name>
 ```
 
 ## Step 2: Getting Now
