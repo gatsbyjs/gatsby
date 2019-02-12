@@ -4293,3 +4293,14 @@
   built_by: Francois Brill
   built_by_url: https://bigbrave.digital
   featured: false
+- title: Mike Nichols
+  url: https://www.mikenichols.me
+  main_url: https://www.mikenichols.me
+  description: >
+    Portfolio site of Mike Nichols, a UX designer and product development lead.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: Mike Nichols
+  featured: false
