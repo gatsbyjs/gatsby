@@ -109,7 +109,7 @@ Again, if everything is working properly, you should see a successful response i
 
 ### Getting Content on the Page
 
-For the purpose of this tutorial I've removed all the layout, SEO, link or other special components that comprise a page in the Gatsby starter. Open the index file located at `src/pages/index.js` and replace the content with this code:
+For the purpose of this tutorial I've removed all the layout, SEO, link or other components that comprise a page in the Gatsby starter. The components are still there and 99% of users will likely want to put them back in once they understand what's happenig in the code. You are just looking at the nails for right now, but the hammers, saws and other tools are still in the toolbox. Open the index file located at `src/pages/index.js` and replace the content with this code:
 
 ```js
 import React from "react"
