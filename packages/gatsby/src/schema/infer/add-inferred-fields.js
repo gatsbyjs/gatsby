@@ -7,6 +7,7 @@ const {
 } = require(`graphql`)
 const invariant = require(`invariant`)
 
+const { addNodeInterface } = require(`../types/NodeInterface`)
 const { isFile } = require(`./is-file`)
 const { link, fileByPath } = require(`../resolvers`)
 const { isDate, dateResolver } = require(`../types/Date`)
@@ -212,7 +213,9 @@ const getFieldConfigFromFieldNameConvention = (
     const typeName = linkedTypes.sort().join(``) + `Union`
     type = schemaComposer.getOrCreateUTC(typeName, utc => {
       const types = linkedTypes.map(typeName =>
-        schemaComposer.getOrCreateTC(typeName)
+        schemaComposer.getOrCreateTC(typeName, tc => {
+          addNodeInterface({ schemaComposer, typeComposer: tc })
+        })
       )
       utc.setTypes(types)
       utc.setResolveType(node => node.internal.type)
@@ -221,7 +224,7 @@ const getFieldConfigFromFieldNameConvention = (
     type = linkedTypes[0]
   }
 
-  return { type, resolve: link({ by: foreignKey || `id`, from: key }) }
+  return { type, resolve: link({ by: foreignKey || `id` }) }
 }
 
 const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {

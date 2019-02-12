@@ -8,7 +8,6 @@ const {
   getTypes,
   // hasNodeChanged,
   // getNodeAndSavePathDependency,
-  // TODO: Rethink the signature of runQuery!
   runQuery,
 } = require(`../db/nodes`)
 const { findRootNodeAncestor } = require(`../db/node-tracking`)
@@ -56,26 +55,44 @@ const getNodeById = id => {
   if (_.isPlainObject(id) && id.id) {
     return id
   }
-  return id != null && getNode(id)
+  return id != null ? getNode(id) : null
 }
 
 const getNodeByGQLTypeName = ({ id, type }) => {
   const node = getNodeById(id)
+  if (!node) return null
+  if (!type) return node
   const nodeTypeNames = toNodeTypeNames(type)
-  return node && nodeTypeNames.includes(node.internal.type) ? node : null
+  return nodeTypeNames.includes(node.internal.type) ? node : null
 }
 
 const getNodesByGQLTypeName = type => {
   const nodeTypeNames = toNodeTypeNames(type)
-  return nodeTypeNames.reduce(
+  const nodes = nodeTypeNames.reduce(
     (acc, typeName) => acc.concat(getNodesByType(typeName)),
     []
   )
+  return nodes.filter(Boolean)
+}
+
+const getNodesByIds = ({ ids, type }) => {
+  if (!ids) {
+    return type ? getNodesByGQLTypeName(type) : getNodes()
+  }
+  const nodes = ids.map(getNodeById).filter(Boolean)
+  if (!type) return nodes
+  const nodeTypeNames = toNodeTypeNames(type)
+  return nodes.filter(node => nodeTypeNames.includes(node.internal.type))
 }
 
 const runQueryForGQLType = async args => {
-  // TODO: should runQuery handle abstract types by itself?
-  const result = await runQuery(args)
+  const { query, firstOnly, type } = args || {}
+  const { schema } = store.getState()
+  const result = await runQuery({
+    queryArgs: query,
+    firstOnly,
+    gqlType: typeof type === `string` ? schema.getType(type) : type,
+  })
   if (args.firstOnly) {
     if (result && result.length > 0) {
       return result[0]
@@ -87,12 +104,9 @@ const runQueryForGQLType = async args => {
 
 const nodeModel = {
   findRootNodeAncestor,
-  getNode: withPageDependencies(getNodeById),
-  getNodeByType: withPageDependencies(getNodeByGQLTypeName),
-  getNodes: withPageDependencies(getNodes),
-  getNodesByType: withPageDependencies(getNodesByGQLTypeName),
-  // TODO: What should this return? Schema types? Types in the store?
-  getTypes: getTypes,
+  getNode: withPageDependencies(getNodeByGQLTypeName),
+  getNodes: withPageDependencies(getNodesByIds),
+  getTypes,
   runQuery: withPageDependencies(runQueryForGQLType),
 }
 

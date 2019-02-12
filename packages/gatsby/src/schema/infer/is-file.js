@@ -34,7 +34,6 @@ const getFilePath = (nodeStore, field, relativePath) => {
   const looksLikeFile =
     !path.isAbsolute(relativePath) &&
     mime.getType(relativePath) !== null &&
-    // FIXME: Do we need all of this?
     mime.getType(relativePath) !== `application/x-msdownload` &&
     isRelative(relativePath) &&
     isRelativeUrl(relativePath)
@@ -46,6 +45,7 @@ const getFilePath = (nodeStore, field, relativePath) => {
     .getNodesByType(typeName)
     .find(node => getFirstValueAt(node, selector) === normalizedPath)
 
+  // FIXME: Now that we use the old node-tracking impl, we can just use findRootNodeAncestor
   return node ? getAbsolutePath(nodeStore, node, normalizedPath) : null
 }
 

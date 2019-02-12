@@ -4,22 +4,22 @@ const _ = require(`lodash`)
 const { findRootNodeAncestor } = require(`../db/node-tracking`)
 const { GraphQLList, getNullableType, getNamedType } = require(`graphql`)
 
-const findMany = typeName => ({ args, context, info }) =>
+const findMany = typeName => ({ args, context }) =>
   context.nodeModel.runQuery(
     {
-      queryArgs: args,
+      query: args,
       firstOnly: false,
-      gqlType: info.schema.getType(typeName),
+      type: typeName,
     },
     { path: context.path, connectionType: typeName }
   )
 
-const findOne = typeName => ({ args, context, info }) =>
+const findOne = typeName => ({ args, context }) =>
   context.nodeModel.runQuery(
     {
-      queryArgs: { filter: args },
+      query: { filter: args },
       firstOnly: true,
-      gqlType: info.schema.getType(typeName),
+      type: typeName,
     },
     { path: context.path }
   )
@@ -112,18 +112,13 @@ const link = ({ by, from }) => async (source, args, context, info) => {
 
   if (by === `id`) {
     if (Array.isArray(fieldValue)) {
-      const result = await Promise.all(
-        fieldValue.map(id =>
-          context.nodeModel.getNodeByType(
-            { id, type: type.name },
-            { path: context.path }
-          )
-        )
+      return context.nodeModel.getNodes(
+        { ids: fieldValue, type },
+        { path: context.path }
       )
-      return result.filter(Boolean)
     } else {
-      return context.nodeModel.getNodeByType(
-        { id: fieldValue, type: type.name },
+      return context.nodeModel.getNode(
+        { id: fieldValue, type },
         { path: context.path }
       )
     }
@@ -142,25 +137,14 @@ const link = ({ by, from }) => async (source, args, context, info) => {
     }
   }, fieldValue)
 
-  if (returnType instanceof GraphQLList) {
-    return context.nodeModel.runQuery(
-      {
-        queryArgs: args,
-        firstOnly: false,
-        gqlType: type,
-      },
-      { path: context.path }
-    )
-  } else {
-    return context.nodeModel.runQuery(
-      {
-        queryArgs: { filter: args },
-        firstOnly: true,
-        gqlType: type,
-      },
-      { path: context.path }
-    )
-  }
+  return context.nodeModel.runQuery(
+    {
+      query: args,
+      firstOnly: !(returnType instanceof GraphQLList),
+      type,
+    },
+    { path: context.path }
+  )
 }
 
 const fileByPath = (source, args, context, info) => {
@@ -180,8 +164,9 @@ const fileByPath = (source, args, context, info) => {
     )
 
     // Use that path to find the linked File node.
+    const fileNodes = await context.nodeModel.getNodes({ type: `File` })
     const linkedFileNode = _.find(
-      await context.nodeModel.getNodesByType(`File`),
+      fileNodes,
       n => n.absolutePath === fileLinkPath
     )
     return linkedFileNode
