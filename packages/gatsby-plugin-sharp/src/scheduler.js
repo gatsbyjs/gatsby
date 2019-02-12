@@ -18,7 +18,12 @@ const bar = new ProgressBar(
   }
 )
 
-exports.scheduleJob = async (job, boundActionCreators, pluginOptions) => {
+exports.scheduleJob = async (
+  job,
+  boundActionCreators,
+  pluginOptions,
+  reportStatus = true
+) => {
   const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
   const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
   const jobPath = `${inputFileKey}.${outputFileKey}`
@@ -55,14 +60,26 @@ exports.scheduleJob = async (job, boundActionCreators, pluginOptions) => {
 
   if (!isQueued) {
     q.push(cb => {
-      runJobs(inputFileKey, boundActionCreators, pluginOptions, cb)
+      runJobs(
+        inputFileKey,
+        boundActionCreators,
+        pluginOptions,
+        reportStatus,
+        cb
+      )
     })
   }
 
   return deferred.promise
 }
 
-function runJobs(inputFileKey, boundActionCreators, pluginOptions, cb) {
+function runJobs(
+  inputFileKey,
+  boundActionCreators,
+  pluginOptions,
+  reportStatus,
+  cb
+) {
   const jobs = _.values(toProcess[inputFileKey])
   const findDeferred = job => jobs.find(j => j.job === job).deferred
   const { job } = jobs[0]
@@ -99,7 +116,12 @@ function runJobs(inputFileKey, boundActionCreators, pluginOptions, cb) {
         })
         .then(() => {
           imagesFinished += 1
-          bar.tick()
+
+          // only show progress on build
+          if (reportStatus) {
+            bar.tick()
+          }
+
           boundActionCreators.setJob(
             {
               id: `processing image ${job.inputPath}`,

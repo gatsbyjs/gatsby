@@ -81,7 +81,7 @@ exports.onCreateDevServer = async (
     const job = queue.get(req.originalUrl)
 
     // wait until the file has been processed and saved to disk
-    await scheduleJob(job, boundActionCreators, pluginOptions)
+    await scheduleJob(job, boundActionCreators, pluginOptions, false)
     // remove job from queue because it has been processed
     queue.delete(req.originalUrl)
 
