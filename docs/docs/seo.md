@@ -31,4 +31,7 @@ A common way to add metadata to pages is to add [react-helmet](https://github.co
 Some examples using react-helmet:
 
 - [Official GatsbyJS.org site](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/package-readme.js)
+- [Official GatsbyJS default starter](https://github.com/gatsbyjs/gatsby/blob/master/starters/default/src/components/seo.js)
 - [Gatsby Mail](https://github.com/DSchau/gatsby-mail/blob/master/src/components/meta.js)
+- [Jason Lengstorf’s personal blog](https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/master/src/components/SEO/SEO.js)
+
