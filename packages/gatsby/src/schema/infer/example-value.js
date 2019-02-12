@@ -17,8 +17,11 @@ const getExampleValue = ({
   return exampleValue
 }
 
+const INVALID_VALUE = Symbol(`INVALID_VALUE`)
+
 module.exports = {
   getExampleValue,
+  INVALID_VALUE,
 }
 
 const getExampleObject = ({

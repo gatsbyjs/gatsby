@@ -202,7 +202,26 @@ const addCustomResolveFunctions = async ({
         Object.keys(fields).forEach(fieldName => {
           const fieldConfig = fields[fieldName]
           if (tc.hasField(fieldName)) {
-            tc.extendField(fieldName, fieldConfig)
+            const originalTypeName = tc.getFieldType(fieldName).toString()
+            const fieldTypeName =
+              fieldConfig.type && fieldConfig.type.toString()
+            if (
+              !fieldTypeName ||
+              tc.getFieldType(fieldName) === fieldConfig.type.toString()
+            ) {
+              const newConfig = {}
+              if (fieldConfig.args) {
+                newConfig.args = fieldConfig.args
+              }
+              if (fieldConfig.resolve) {
+                newConfig.resolve = fieldConfig.resolve
+              }
+              tc.extendField(fieldName, newConfig)
+            } else if (fieldTypeName) {
+              report.warn(
+                `\`addResolvers\` passed resolvers for field \`${typeName}.${fieldName}\` with type ${fieldTypeName}. Such field with type ${originalTypeName} already exists on the type. Use \`addTypeDefs\` to override type fields.`
+              )
+            }
           } else {
             tc.addFields({ [fieldName]: fieldConfig })
           }

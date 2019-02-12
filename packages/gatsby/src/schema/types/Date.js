@@ -86,7 +86,7 @@ const formatDate = ({
 }
 
 export const dateResolver = {
-  type: GraphQLDate,
+  type: `Date`,
   args: {
     formatString: {
       type: GraphQLString,
