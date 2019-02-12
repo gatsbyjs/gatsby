@@ -1,18 +1,17 @@
 const _ = require(`lodash`)
 const { isAbstractType } = require(`graphql`)
 
-const {
-  getNodes,
-  getNode,
-  getNodesByType,
-  getTypes,
-  // hasNodeChanged,
-  // getNodeAndSavePathDependency,
-  runQuery,
-} = require(`../db/nodes`)
-const { findRootNodeAncestor } = require(`../db/node-tracking`)
 const createPageDependency = require(`../redux/actions/add-page-dependency`)
-const { store } = require(`../redux`)
+
+let nodeStore
+let schema
+
+const _setSchema = gqSchema => {
+  schema = gqSchema
+}
+const _setNodeStore = store => {
+  nodeStore = store
+}
 
 const withPageDependencies = fn => async (args, pageDependencies) => {
   const result = await fn(args)
@@ -33,7 +32,6 @@ const withPageDependencies = fn => async (args, pageDependencies) => {
 }
 
 const toNodeTypeNames = gqlTypeName => {
-  const { schema } = store.getState()
   const gqlType =
     typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
 
@@ -55,7 +53,7 @@ const getNodeById = id => {
   if (_.isPlainObject(id) && id.id) {
     return id
   }
-  return id != null ? getNode(id) : null
+  return id != null ? nodeStore.getNode(id) : null
 }
 
 const getNodeByGQLTypeName = ({ id, type }) => {
@@ -69,7 +67,7 @@ const getNodeByGQLTypeName = ({ id, type }) => {
 const getNodesByGQLTypeName = type => {
   const nodeTypeNames = toNodeTypeNames(type)
   const nodes = nodeTypeNames.reduce(
-    (acc, typeName) => acc.concat(getNodesByType(typeName)),
+    (acc, typeName) => acc.concat(nodeStore.getNodesByType(typeName)),
     []
   )
   return nodes.filter(Boolean)
@@ -77,7 +75,7 @@ const getNodesByGQLTypeName = type => {
 
 const getNodesByIds = ({ ids, type }) => {
   if (!ids) {
-    return type ? getNodesByGQLTypeName(type) : getNodes()
+    return type ? getNodesByGQLTypeName(type) : nodeStore.getNodes()
   }
   const nodes = ids.map(getNodeById).filter(Boolean)
   if (!type) return nodes
@@ -87,8 +85,7 @@ const getNodesByIds = ({ ids, type }) => {
 
 const runQueryForGQLType = async args => {
   const { query, firstOnly, type } = args || {}
-  const { schema } = store.getState()
-  const result = await runQuery({
+  const result = await nodeStore.runQuery({
     queryArgs: query,
     firstOnly,
     gqlType: typeof type === `string` ? schema.getType(type) : type,
@@ -102,12 +99,18 @@ const runQueryForGQLType = async args => {
   return result
 }
 
+const getNodeTypes = () => nodeStore.getTypes()
+
+const findRootNode = () => nodeStore.findRootNodeAncestor
+
 const nodeModel = {
-  findRootNodeAncestor,
+  findRootNodeAncestor: findRootNode,
   getNode: withPageDependencies(getNodeByGQLTypeName),
   getNodes: withPageDependencies(getNodesByIds),
-  getTypes,
+  getTypes: getNodeTypes,
   runQuery: withPageDependencies(runQueryForGQLType),
+  _setSchema,
+  _setNodeStore,
 }
 
 module.exports = nodeModel

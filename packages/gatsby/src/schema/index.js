@@ -4,6 +4,8 @@ const tracer = require(`opentracing`).globalTracer()
 const { SchemaComposer } = require(`graphql-compose`)
 const { store } = require(`../redux`)
 const nodeStore = require(`../db/nodes`)
+const { findRootNodeAncestor } = require(`../db/node-tracking`)
+const nodeModel = require(`./node-model`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 
@@ -26,6 +28,9 @@ module.exports.build = async ({ parentSpan }) => {
     typeConflictReporter,
     parentSpan,
   })
+
+  nodeModel._setSchema(schema)
+  nodeModel._setNodeStore({ ...nodeStore, findRootNodeAncestor })
 
   typeConflictReporter.printConflicts()
 
