@@ -25,7 +25,6 @@ describe(`Lazy images`, () => {
 
     const response = await request(
       `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/a484e/gatsby-astronaut.png`,
-      // `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/a2541/gatsby-astronaut.png`,
       {
         resolveWithFullResponse: true,
       }
