@@ -99,7 +99,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
       const { SchemaComposer } = require(`graphql-compose`)
       const {
         addInferredFields,
-      } = require(`../../../gatsby/src/schema/infer/infer`)
+      } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
       const {
         getExampleValue,
       } = require(`../../../gatsby/src/schema/infer/example-value`)

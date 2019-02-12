@@ -139,6 +139,10 @@ class TypeConflictReporter {
       this.entries.forEach(entry => entry.printEntry())
     }
   }
+
+  getConflicts() {
+    return Array.from(this.entries.values())
+  }
 }
 
 module.exports = { TypeConflictReporter, TypeConflictEntry }

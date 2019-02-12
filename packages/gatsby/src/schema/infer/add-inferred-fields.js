@@ -22,14 +22,14 @@ const addInferredFields = ({
   inferConfig,
   parentSpan,
 }) => {
-  if (inferConfig.infer) {
+  if (!inferConfig || inferConfig.infer) {
     addInferredFieldsImpl({
       schemaComposer,
       typeComposer,
       nodeStore,
       exampleObject: exampleValue,
       prefix: typeComposer.getTypeName(),
-      addDefaultResolvers: inferConfig.addDefaultResolvers,
+      addDefaultResolvers: inferConfig ? inferConfig.addDefaultResolvers : true,
       depth: 0,
     })
   }

@@ -89,7 +89,9 @@ describe(`track root nodes`, () => {
 
     beforeAll(async () => {
       const { SchemaComposer } = require(`graphql-compose`)
-      const { addInferredFields } = require(`../../schema/infer/infer`)
+      const {
+        addInferredFields,
+      } = require(`../../schema/infer/add-inferred-fields`)
       const { getExampleValue } = require(`../../schema/infer/example-value`)
 
       const sc = new SchemaComposer()

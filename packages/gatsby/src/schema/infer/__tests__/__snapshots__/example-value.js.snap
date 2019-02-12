@@ -6,34 +6,34 @@ Object {
     "field": "anArray",
   },
   "context___nestedObject___name": Object {
-    "field": "context___nestedObject___name",
+    "field": "context.nestedObject.name",
   },
   "context___nestedObject___someOtherProperty": Object {
-    "field": "context___nestedObject___someOtherProperty",
+    "field": "context.nestedObject.someOtherProperty",
   },
   "date": Object {
     "field": "date",
   },
   "frontmatter___blue": Object {
-    "field": "frontmatter___blue",
+    "field": "frontmatter.blue",
   },
   "frontmatter___circle": Object {
-    "field": "frontmatter___circle",
+    "field": "frontmatter.circle",
   },
   "frontmatter___date": Object {
-    "field": "frontmatter___date",
+    "field": "frontmatter.date",
   },
   "frontmatter___draft": Object {
-    "field": "frontmatter___draft",
+    "field": "frontmatter.draft",
   },
   "frontmatter___title": Object {
-    "field": "frontmatter___title",
+    "field": "frontmatter.title",
   },
   "hair": Object {
     "field": "hair",
   },
   "key_with__unsupported_values": Object {
-    "field": "key-with..unsupported-values",
+    "field": "key_with__unsupported_values",
   },
   "name": Object {
     "field": "name",
@@ -41,8 +41,14 @@ Object {
   "nestedArrays": Object {
     "field": "nestedArrays",
   },
-  "objectsInArray": Object {
-    "field": "objectsInArray",
+  "objectsInArray___field1": Object {
+    "field": "objectsInArray.field1",
+  },
+  "objectsInArray___field2": Object {
+    "field": "objectsInArray.field2",
+  },
+  "objectsInArray___field3": Object {
+    "field": "objectsInArray.field3",
   },
 }
 `;
@@ -82,4 +88,59 @@ Object {
     },
   ],
 }
+`;
+
+exports[`Type conflicts Doesn't report ignored fields 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_3.other",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1,
+      },
+      "string" => Object {
+        "description": "",
+        "value": "foo",
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts Report conflict when array has mixed types and its origin 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_2.arrayOfMixedType",
+    "types": Map {
+      "[string,number,boolean]" => Object {
+        "description": "",
+        "value": Array [
+          "string1",
+          5,
+          "string2",
+          true,
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts Report type conflicts and its origin 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_1.stringOrNumber",
+    "types": Map {
+      "string" => Object {
+        "description": "",
+        "value": "string",
+      },
+      "number" => Object {
+        "description": "",
+        "value": 5,
+      },
+    },
+  },
+]
 `;

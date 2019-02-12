@@ -135,7 +135,7 @@ const makeNodes = () => [
 
 function makeGqlType(nodes) {
   const { SchemaComposer } = require(`graphql-compose`)
-  const { addInferredFields } = require(`../infer/infer`)
+  const { addInferredFields } = require(`../infer/add-inferred-fields`)
   const { getExampleValue } = require(`../infer/example-value`)
 
   const sc = new SchemaComposer()

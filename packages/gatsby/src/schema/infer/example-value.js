@@ -62,22 +62,8 @@ const getExampleObject = ({
     }
 
     if (entriesByType.length > 1 || type.includes(`,`)) {
-      if (
-        isMixOfDatesAndStrings(
-          entriesByType.map(entry => entry.type),
-          arrayWrappers
-        )
-      ) {
-        // FIXME: is a mix of date *objects* and strings problematic?
-        // I.e. when date objects will be treated as strings,
-        // are they automatically stringified? Probably yes, because
-        // `Date` has `toString` method. In current master, we return
-        // InvalidValue.
-        value = `String`
-      } else {
-        typeConflictReporter.addConflict(selector, entriesByType)
-        return acc
-      }
+      typeConflictReporter.addConflict(selector, entriesByType)
+      return acc
     }
 
     let exampleFieldValue
@@ -118,23 +104,6 @@ const getExampleObject = ({
   }, {})
 
   return exampleValue
-}
-
-const isMixOfDatesAndStrings = (types, arrayWrappers) => {
-  const acc = new Set()
-  types.every(type => {
-    let arrays = arrayWrappers
-    while (arrays--) {
-      if (type.startsWith(`[`)) {
-        type = type.slice(1, -1)
-      } else {
-        return false
-      }
-    }
-    type.split(`,`).forEach(t => acc.add(t))
-    return true
-  })
-  return acc.size === 2 && acc.has(`date`) && acc.has(`string`)
 }
 
 const findFloat = entries => {
