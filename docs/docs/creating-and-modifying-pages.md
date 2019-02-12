@@ -113,6 +113,8 @@ To do this, in your site's `gatsby-node.js` add code similar to the following:
 _Note: There's also a plugin that will remove all trailing slashes from pages automatically:
 [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
 
+_Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
+
 ```javascript:title=gatsby-node.js
 // Replacing '/' would result in empty string which is invalid
 const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
@@ -120,17 +122,15 @@ const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
-  return new Promise(resolve => {
-    const oldPage = Object.assign({}, page)
-    // Remove trailing slash unless page is /
-    page.path = replacePath(page.path)
-    if (page.path !== oldPage.path) {
-      // Replace new page with old page
-      deletePage(oldPage)
-      createPage(page)
-    }
-    resolve()
-  })
+
+  const oldPage = Object.assign({}, page)
+  // Remove trailing slash unless page is /
+  page.path = replacePath(page.path)
+  if (page.path !== oldPage.path) {
+    // Replace new page with old page
+    deletePage(oldPage)
+    createPage(page)
+  }
 }
 ```
 
