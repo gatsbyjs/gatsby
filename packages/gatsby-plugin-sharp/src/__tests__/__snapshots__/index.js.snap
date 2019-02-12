@@ -90,8 +90,8 @@ exports[`gatsby-plugin-sharp queueImageResizing should process immediately when 
           "toFormat": "png",
           "width": 3,
         },
-        "inputPath": "/home/ward/projects/os/gatsby/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
-        "outputPath": "/home/ward/projects/os/gatsby/public/static/1234/39ca0/test.png",
+        "inputPath": "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+        "outputPath": "<PROJECT_ROOT>/public/static/1234/39ca0/test.png",
         "src": "/static/1234/39ca0/test.png",
       },
       Object {
