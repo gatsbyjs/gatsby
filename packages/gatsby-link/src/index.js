@@ -66,7 +66,9 @@ class GatsbyLink extends React.Component {
   }
 
   handleRef(ref) {
-    this.props.innerRef && this.props.innerRef(ref)
+    if (this.props.innerRef) {
+      this.props.innerRef(ref)
+    }
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
@@ -120,13 +122,15 @@ class GatsbyLink extends React.Component {
         getProps={getProps}
         innerRef={this.handleRef}
         onMouseEnter={e => {
-          // eslint-disable-line
-          onMouseEnter && onMouseEnter(e)
+          if (onMouseEnter) {
+            onMouseEnter(e)
+          }
           ___loader.hovering(parsePath(to).pathname)
         }}
         onClick={e => {
-          // eslint-disable-line
-          onClick && onClick(e)
+          if (onClick) {
+            onClick(e)
+          }
 
           if (
             e.button === 0 && // ignore right clicks

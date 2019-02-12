@@ -50,6 +50,7 @@ module.exports = {
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        include_favicon: true, // Include favicon
       },
     },
   ],
@@ -184,9 +185,9 @@ module.exports = {
 }
 ```
 
-## Legacy `apple-touch-icon` links
+## Legacy option
 
-iOS 11.3 added support for webmanifest spec, so this plugin doesn't add `apple-touch-icon` links to `<head>` by default. If you need or want to support older version of iOS you can set `legacy` option to `true` in plugin configuration:
+iOS 11.3 added support for service workers but not the complete webmanifest spec. Therefore iOS won't recognize the icons defined in the webmanifest and the creation of `apple-touch-icon` links in `<head>` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the `legacy` option to `false` in plugin configuration:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -201,7 +202,7 @@ module.exports = {
         theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
-        legacy: true, // this will add apple-touch-icon links to <head>
+        legacy: false, // this will not add apple-touch-icon links to <head>
       },
     },
   ],
@@ -226,6 +227,31 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
         theme_color_in_head: false, // This will avoid adding theme-color meta tag.
+      },
+    },
+  ],
+}
+```
+
+## Exclude `favicon` link tag
+
+Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behaviour.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
+        include_favicon: false, // This will exclude favicon link tag
       },
     },
   ],

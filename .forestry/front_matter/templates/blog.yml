@@ -34,4 +34,4 @@ fields:
   hidden: false
   default: ''
 pages:
-- docs/blog/modern-publications-with-gatsby-ghost.md
+- docs/blog/2019-02-04-Hapticmedia-Case-Study/index.md

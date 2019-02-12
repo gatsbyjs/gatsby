@@ -68,7 +68,14 @@ const options = {
 
 If you want to remove `gatsby-plugin-offline` from your site at a later point,
 substitute it with [`gatsby-plugin-remove-serviceworker`](https://www.npmjs.com/package/gatsby-plugin-remove-serviceworker)
-to safely remove the service worker:
+to safely remove the service worker. First, install the new package:
+
+```bash
+npm install gatsby-plugin-remove-serviceworker
+npm uninstall gatsby-plugin-offline
+```
+
+Then, update your `gatsby-config.js`:
 
 ```diff:title=gatsby-config.js
  plugins: [

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.6...gatsby-plugin-jss@2.0.7) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-jss
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.5...gatsby-plugin-jss@2.0.6) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-plugin-jss
+
 <a name="2.0.5"></a>
 
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss/compare/gatsby-plugin-jss@2.0.4...gatsby-plugin-jss@2.0.5) (2018-11-29)

@@ -189,14 +189,15 @@ class Image extends React.Component {
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
+        const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
           typeof this.props.onStartLoad === `function`
         ) {
-          this.props.onStartLoad({ wasCached: inImageCache(this.props) })
+          this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        this.setState({ isVisible: true, imgLoaded: false })
+        this.setState({ isVisible: true, imgLoaded: imageInCache })
       })
     }
   }
@@ -208,7 +209,10 @@ class Image extends React.Component {
     if (this.state.seenBefore) {
       this.setState({ fadeIn: false })
     }
-    this.props.onLoad && this.props.onLoad()
+
+    if (this.props.onLoad) {
+      this.props.onLoad()
+    }
   }
 
   render() {
@@ -224,6 +228,7 @@ class Image extends React.Component {
       fixed,
       backgroundColor,
       Tag,
+      itemProp,
     } = convertProps(this.props)
 
     const bgColor =
@@ -320,6 +325,7 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
+                itemProp={itemProp}
               />
             </picture>
           )}
@@ -405,6 +411,7 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
+                itemProp={itemProp}
               />
             </picture>
           )}
@@ -479,6 +486,7 @@ Image.propTypes = {
   onError: PropTypes.func,
   onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
+  itemProp: PropTypes.string,
 }
 
 export default Image

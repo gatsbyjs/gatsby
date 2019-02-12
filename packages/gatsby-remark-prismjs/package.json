@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-prismjs",
   "description": "Adds syntax highlighting to code blocks at build time using PrismJS",
-  "version": "3.2.0",
+  "version": "3.2.4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -20,7 +20,7 @@
     "remark": "^9.0.0"
   },
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha",
+    "gatsby": "^2.0.0",
     "prismjs": "^1.15.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs#readme",

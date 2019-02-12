@@ -103,3 +103,15 @@ exports[`handles require 1`] = `"export const query = \\"3687030656\\";"`;
 exports[`handles require alias 1`] = `"export const query = \\"3687030656\\";"`;
 
 exports[`handles require namespace 1`] = `"export const query = \\"3687030656\\";"`;
+
+exports[`transforms exported variable queries in <StaticQuery> 1`] = `
+"import staticQueryData from \\"public/static/d/2626356014.json\\";
+import React from 'react';
+import { StaticQuery } from 'gatsby';
+export const query = \\"2626356014\\";
+export default (() => React.createElement(StaticQuery, {
+  query: query,
+  render: data => React.createElement(\\"div\\", null, data.site.siteMetadata.title),
+  data: staticQueryData
+}));"
+`;
