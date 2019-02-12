@@ -4215,6 +4215,17 @@
   built_by: Marcy Sutton
   built_by_url: https://marcysutton.com
   featured: true
+- title: Kepinski.me
+  main_url: https://kepinski.me
+  url: https://kepinski.me
+  description: >
+    The personal site of Antoni Kepinski, Node.js Developer.
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Antoni Kepinski
+  built_by_url: https://kepinski.me
+  featured: false
 - title: WPGraphQL Docs
   main_url: https://docs.wpgraphql.com
   url: https://docs.wpgraphql.com
