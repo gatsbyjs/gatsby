@@ -14,8 +14,6 @@ The component is a wrapper around [@reach/router's Link component](https://reach
 
 Video hosted on [egghead.io][egghead].
 
-[egghead]: https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component
-
 ### Replace `a` tags with the `Link` tag for local links
 
 In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag.
@@ -44,8 +42,6 @@ const Page = () => (
 <iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
-
-[egghead]: https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component
 
 It’s often a good idea to show which page is currently being viewed by visually changing the link matching the current page.
 
@@ -88,8 +84,6 @@ const SiteNavigation = () => (
 
 Video hosted on [egghead.io][egghead].
 
-[egghead]: https://egghead.io/lessons/egghead-customize-styles-for-partially-matched-urls-with-gatsby-s-link-component
-
 The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
 
 - We may want `/blog/hello-world` to match `<Link to="/blog">`
@@ -122,8 +116,6 @@ Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working 
 <iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
-
-[egghead]: https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component
 
 Sometimes you'll want to pass data from the source page to the linked page. You can do this by passing a `state` prop to the `Link` component or on a call to the `navigate` function. The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
 
@@ -158,8 +150,6 @@ const Photo = ({ location, photoId }) => {
 
 Video hosted on [egghead.io][egghead].
 
-[egghead]: https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component
-
 There are a few cases where it might make sense to modify the “back” button’s behavior. For example, if you build a page where you choose something, then see an “are you sure?” page to make sure it’s what you really wanted, and finally see a confirmation page, it may be desirable to skip the “are you sure?” page if the “back” button is clicked.
 
 In those cases, use the `replace` prop to replace the current URL in history with the target of the `Link`.
@@ -184,8 +174,6 @@ const AreYouSureLink = () => (
 <iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
 
 Video hosted on [egghead.io][egghead].
-
-[egghead]: https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby
 
 Sometimes you need to navigate to pages programatically, such as during form submissions. In these cases, `Link` won’t work.
 
@@ -366,3 +354,5 @@ You can similarly check for file downloads:
     )
   }
 ```
+
+[egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
