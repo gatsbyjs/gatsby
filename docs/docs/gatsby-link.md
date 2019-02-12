@@ -10,7 +10,7 @@ The component is a wrapper around [@reach/router's Link component](https://reach
 
 ## How to use Gatsby Link
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to use a Gatsby Link" class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -39,7 +39,7 @@ const Page = () => (
 
 ### Add custom styles for the currently active link
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to style the currently active link in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -80,7 +80,7 @@ const SiteNavigation = () => (
 
 ### Show active styles for partially matched and parent links
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-customize-styles-for-partially-matched-urls-with-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to style partially matched links in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-customize-styles-for-partially-matched-urls-with-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -113,7 +113,7 @@ Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working 
 
 ### Pass state as props to the linked page
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to pass state as props using Gatsby’s Link component." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -146,7 +146,7 @@ const Photo = ({ location, photoId }) => {
 
 ### Replace history to change “back” button behavior
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to replace history on navigation." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -171,7 +171,7 @@ const AreYouSureLink = () => (
 
 ## How to use the `navigate` helper function
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
+<iframe title="Screencast on egghead of how to navigate programmatically in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
 
 Video hosted on [egghead.io][egghead].
 
