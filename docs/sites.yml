@@ -4231,3 +4231,29 @@
   built_by: WPGraphQL
   built_by_url: https://wpgraphql.com
   featured: false
+- title: BIGBrave
+  main_url: https://bigbrave.digital
+  url: https://bigbrave.digital
+  description: >
+    BIGBrave is a strategic design firm. We partner with our clients, big and small, to design & create human-centered brands, products, services and systems that are simple, beautiful and easy to use.
+  categories:
+    - Agency
+    - Web Development
+    - Marketing
+    - Technology
+    - WordPress
+  built_by: Francois Brill
+  built_by_url: https://bigbrave.digital
+  featured: false
+- title: KegTracker
+  main_url: https://www.kegtracker.co.za
+  url: https://www.kegtracker.co.za
+  description: >
+    Keg Tracker is part of the Beverage Insights family and its sole aim is to provide you with the right data about your kegs to make better decisions. In today’s business landscape having the right information at your finger tips is crucial to the agility of your business.
+  categories:
+    - Food
+    - Business
+    - Technology
+  built_by: Francois Brill
+  built_by_url: https://bigbrave.digital
+  featured: false
