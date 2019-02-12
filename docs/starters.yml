@@ -826,13 +826,16 @@
     - Styling:Grommet
     - TypeScript
     - Linting
+    - Redux
   features:
     - Grommet v2 UI
     - Easily configurable - see site-config.js in the root
+    - Switch between grommet themes
+    - Change between light and dark themes (with Redux)
     - Blog posts previews in card style
     - Responsive Design, optimized for Mobile devices
     - styled-components
-    - TypeScript and TSLint
+    - TypeScript and ESLint (typescript-eslint)
     - lint-staged and husky - for linting before commit
 - url: https://happy-pare-dff451.netlify.com/
   repo: https://github.com/fhavrlent/gatsby-contentful-typescript-starter
@@ -1706,6 +1709,15 @@
     - Registration form
     - Signup form
     - User sign in
+- url: https://gatsby-starter.mdbootstrap.com/
+  repo: https://github.com/anna-morawska/gatsby-material-design-for-bootstrap
+  description: A simple starter which lets you quickly start developing with Gastby and Material Design For Bootstrap
+  tags:
+    - Styling:Material
+  features:
+    - React Bootstrap with Material Design css framework.
+    - Free for personal and commercial use
+    - Fully responsive
 - url: https://frosty-ride-4ff3b9.netlify.com/
   repo: https://github.com/damassi/gatsby-starter-typescript-rebass-netlifycms
   description:
@@ -1777,3 +1789,58 @@
   features:
     - Generate nice documentation with Docz, in addition to generating your normal Gatsby site
     - Document your React components in .mdx files
+- url: https://gatsby-starter-santa-fe.netlify.com/
+  repo: https://github.com/osogrizz/gatsby-starter-santa-fe
+  description: A place for artist or designers to display their creations
+  tags:
+    - Styling:CSS-in-JS
+  features:
+    - SEO friendly
+    - Built-in Google Fonts support
+    - Contact Form
+    - Customizable Design Template
+- url: https://gatsby-hello-friend.now.sh
+  repo: https://github.com/panr/gatsby-starter-hello-friend
+  description: A simple starter for Gatsby. That's it.
+  tags:
+    - Pagination
+    - Markdown
+    - Blog
+    - Portfolio
+    - Styling:PostCSS
+  features:
+    - Dark/light mode, depending on your preferences
+    - Great reading experience thanks to Inter font, made by Rasmus Andersson
+    - Nice code highlighting thanks to PrismJS
+    - Responsive youtube/vimeo etc. videos
+    - Elastic menu
+    - Fully responsive site
+- url: https://lgcolella.github.io/gatsby-starter-developer-blog/
+  repo: https://github.com/lgcolella/gatsby-starter-developer-blog
+  description: A starter to create SEO-friendly, fast, multilanguage, responsive and highly customizable technical blogs/portfolios with the most common features out of the box.
+  tags:
+    - Blog
+    - Portfolio
+    - i18n
+  features:
+    - Multilanguage posts
+    - Pagination and image preview for posts
+    - Tags
+    - SEO
+    - Social share buttons
+    - Disqus for comments
+    - Highlighting for code syntax in posts
+    - Dark and light themes available
+    - Various available icon sets
+    - RSS Feed
+    - Web app manifest
+- url: https://foxandgeese.github.io/tiny-agency/
+  repo: https://github.com/foxandgeese/tiny-agency
+  description: Simple Gatsby.js starter that uses material design and that's perfect for tiny agencies.
+  tags:
+    - Styling:Material
+  features:
+    - Uses the popular, well-maintained Material UI React component library
+    - Material Design theme and icons
+    - Simple setup without opinionated setup
+    - Fully instrumented for successful PROD deployments

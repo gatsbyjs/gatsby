@@ -71,7 +71,7 @@ digraph {
 
 #### Figuring out which queries need to be executed
 
-The first thing this query does is figure out what queries even need to be run. You would think this would simply be a matter of running the Queries that were enqueued in [Extract Queries](/docs/query-extraction/), but matters are complicated by support for `gatsby develop`. Below is the logic for figuring out which queries need to be executed (code is in [runQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L36)).
+The first thing this query does is figure out what queries even need to be run. You would think this would simply be a matter of running the Queries that were enqueued in [Extract Queries](/docs/query-extraction/), but matters are complicated by support for `develop`. Below is the logic for figuring out which queries need to be executed (code is in [runQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L36)).
 
 ##### Already queued queries
 
@@ -83,7 +83,7 @@ All queries whose component path isn't listed in `componentDataDependencies`. As
 
 ##### Pages that depend on dirty nodes
 
-In `gatsby develop` mode, every time a node is created, or is updated (e.g via editing a markdown file), we add that node to the [enqueuedDirtyActions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L61) collection. When we execute our queries, we can lookup all nodes in this collection and map them to pages that depend on them (as described above). These pages' queries must also be executed. In addition, this step also handles dirty `connections` (see [Schema Connections](/docs/schema-connections/)). Connections depend on a node's type. So if a node is dirty, we mark all connection nodes of that type dirty as well. The code for this step is in [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171). _Note: dirty ids is really talking about dirty paths_.
+In `develop` mode, every time a node is created, or is updated (e.g via editing a markdown file), we add that node to the [enqueuedDirtyActions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L61) collection. When we execute our queries, we can lookup all nodes in this collection and map them to pages that depend on them (as described above). These pages' queries must also be executed. In addition, this step also handles dirty `connections` (see [Schema Connections](/docs/schema-connections/)). Connections depend on a node's type. So if a node is dirty, we mark all connection nodes of that type dirty as well. The code for this step is in [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171). _Note: dirty ids is really talking about dirty paths_.
 
 #### Queue Queries for Execution
 

@@ -64,7 +64,11 @@ module.exports = async function build(program: BuildArgs) {
   await buildHTML(program, activity).catch(err => {
     reportFailure(
       report.stripIndent`
-        Building static HTML failed for path "${chalk.bold(err.context.path)}"
+        Building static HTML failed${
+          err.context && err.context.path
+            ? ` for path "${chalk.bold(err.context.path)}"`
+            : ``
+        }
 
         See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
       `,

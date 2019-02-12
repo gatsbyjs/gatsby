@@ -227,3 +227,10 @@
   bio: Product manager solving problems with research and process. Aspiring gardener and baker of delicious treats.
   avatar: avatars/marisa-morby.jpg
   twitter: "@marisamorby"
+- id: Ryan Johnson
+  bio: Content strategist at the U.S. Department of the Interior
+  avatar: avatars/ryan-johnson.jpg
+- id: Daniel Lemay
+  bio: React and GraphQL enthusiast. Meetup organizer. Mentor. Blogs at dslemay.com
+  avatar: avatars/daniel-lemay.jpg
+  twitter: "@dslemay"
