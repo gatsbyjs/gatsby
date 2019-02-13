@@ -23,7 +23,7 @@
       link: /contributing/how-to-contribute/
       items:
         - title: Filing and managing issues
-          link: /contributing/filing-managing-issues/
+          link: /contributing/how-to-file-an-issue/
         - title: Managing pull requests
           link: /contributing/managing-pull-requests/
         - title: Setting up your local dev environment
