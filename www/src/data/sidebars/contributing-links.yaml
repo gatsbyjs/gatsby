@@ -1,0 +1,49 @@
+- title: Contributing
+  items:
+    - title: Community
+      link: /contributing/community/
+      items:
+        - title: Why contribute to Gatsby?
+          link: /contributing/why-contribute-to-gatsby/
+        - title: Pair Programming Sessions
+          link: /contributing/pair-programming/
+        - title: Free swag for contributors
+          link: /contrbuting/contributor-swag/
+        - title: Where to participate in the community
+          link: /contributing/where-to-participate/
+        - title: How to run a Gatsby workshop*
+          link: /contributing/how-to-run-a-gatsby-workshop/
+        - title: How to pitch Gatsby*
+          link: /contributing/how-to-pitch-gatsby/
+    - title: Code of Conduct
+      link: /contributing/code-of-conduct/
+    - title: Gatsby Style Guide
+      link: /contributing/gatsby-style-guide/
+    - title: How to contribute
+      link: /contributing/how-to-contribute/
+      items:
+        - title: Filing and managing issues
+          link: /contributing/filing-managing-issues/
+        - title: Managing pull requests
+          link: /contributing/managing-pull-requests/
+        - title: Setting up your local dev environment
+          link: /contributing/setting-up-your-local-dev-environment/
+        - title: Docs contributions
+          link: /contributing/docs-contributions/
+          items:
+            - title: Docs templates
+              link: /contributing/docs-templates/
+        - title: Code contributions
+          link: /contributing/code-contributions/
+        - title: Community contributions
+          link: /contributing/community-contributions/
+        - title: Submit to Site Showcase
+          link: /contributing/site-showcase-submissions/
+        - title: Submit to Creator Showcase
+          link: /contributing/submit-to-creator-showcase/
+        - title: Submit to Starter Library
+          link: /contributing/submit-to-starter-library/
+        - title: Submit to Plugin Library
+          link: /contributing/submit-to-plugin-library/
+    - title: RFC process
+      link: /contributing/rfc-process/
