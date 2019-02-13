@@ -1,11 +1,11 @@
 ---
 title: 2019-02-11-Behind-Scenes-QandA
-date: 2019-02-11T08:00:00+00:00
+date: 2019-02-14T08:00:00+00:00
 author: Linda Watkins
 tags:
 - webinar
-- image optimization
-- website performance
+- q&a
+- performance
 image: ''
 showImageInArticle: false
 
