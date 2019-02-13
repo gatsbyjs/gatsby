@@ -3,10 +3,11 @@
 const { graphql } = require(`graphql`)
 const { addInferredTypes } = require(`..`)
 const nodeStore = require(`../../../db/nodes`)
-const nodeModel = require(`../../node-model`)
+const { LocalNodeModel } = require(`../../node-model`)
 const path = require(`path`)
 const slash = require(`slash`)
 const { store } = require(`../../../redux`)
+const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { addNodeInterface } = require(`../../types/NodeInterface`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
@@ -116,7 +117,14 @@ describe(`GraphQL type inference`, () => {
       }
       `,
       undefined,
-      { path: `/`, nodeModel }
+      {
+        path: `/`,
+        nodeModel: new LocalNodeModel({
+          schema,
+          nodeStore,
+          createPageDependency,
+        }),
+      }
     )
   }
 

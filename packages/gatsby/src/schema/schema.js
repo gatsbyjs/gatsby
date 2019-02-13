@@ -315,7 +315,7 @@ function createChildrenField(typeName) {
         const { path } = context
         const result = await Promise.all(
           source.children.map(id =>
-            context.nodeModel.getNodeByType({ id, type: typeName }, { path })
+            context.nodeModel.getNodesByIds({ id, type: typeName }, { path })
           )
         )
         return result.filter(Boolean)
@@ -332,7 +332,7 @@ function createChildField(typeName) {
         const { path } = context
         const result = await Promise.all(
           source.children.map(id =>
-            context.nodeModel.getNodeByType({ id, type: typeName }, { path })
+            context.nodeModel.getNodesByIds({ id, type: typeName }, { path })
           )
         )
         return result.find(Boolean)

@@ -106,10 +106,14 @@ async function startServer(program) {
   }
   app.use(
     `/___graphql`,
-    graphqlHTTP({
-      schema: store.getState().schema,
-      graphiql: process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
-      context: withResolverContext(),
+    graphqlHTTP(() => {
+      const schema = store.getState().schema
+      return {
+        schema,
+        graphiql:
+          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+        context: withResolverContext({}, schema),
+      }
     })
   )
 

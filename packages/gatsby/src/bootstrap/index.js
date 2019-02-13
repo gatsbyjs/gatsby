@@ -390,7 +390,7 @@ module.exports = async (args: BootstrapArgs) => {
       schema,
       query,
       context,
-      withResolverContext(context),
+      withResolverContext(context, schema),
       context
     )
   }

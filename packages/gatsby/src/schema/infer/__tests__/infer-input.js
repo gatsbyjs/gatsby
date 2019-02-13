@@ -3,9 +3,10 @@
 const { graphql } = require(`graphql`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildSchema } = require(`../../schema`)
-const nodeModel = require(`../../node-model`)
+const { LocalNodeModel } = require(`../../node-model`)
 const nodeStore = require(`../../../db/nodes`)
 const { store } = require(`../../../redux`)
+const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const buildTestSchema = async nodes => {
@@ -24,7 +25,9 @@ const buildTestSchema = async nodes => {
 }
 const queryResult = async (nodes, query) => {
   const schema = await buildTestSchema(nodes)
-  return graphql(schema, query, undefined, { nodeModel })
+  return graphql(schema, query, undefined, {
+    nodeModel: new LocalNodeModel({ schema, nodeStore, createPageDependency }),
+  })
 }
 
 describe(`GraphQL Input args`, () => {

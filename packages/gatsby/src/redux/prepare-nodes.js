@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`../redux`)
 const { getNullableType, getNamedType } = require(`graphql`)
+const withResolverContext = require(`../schema/context`)
 
 const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
@@ -22,9 +23,8 @@ const enhancedNodeCacheId = ({ node, args }) =>
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    const withResolverContext = require(`../schema/context`)
     const { schema } = store.getState()
-    return field.resolve(node, {}, withResolverContext(), {
+    return field.resolve(node, {}, withResolverContext({}, schema), {
       fieldName: k,
       schema,
       returnType: field.type,
