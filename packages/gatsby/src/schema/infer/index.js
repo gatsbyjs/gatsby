@@ -6,11 +6,13 @@ const getInferConfig = require(`./get-infer-config`)
 
 const addInferredType = ({
   schemaComposer,
+  typeComposer,
   nodeStore,
-  typeName,
   typeConflictReporter,
+  typeMapping,
   parentSpan,
 }) => {
+  const typeName = typeComposer.getTypeName()
   const exampleValue = getExampleValue({
     nodes: nodeStore.getNodesByType(typeName),
     typeName,
@@ -21,43 +23,14 @@ const addInferredType = ({
     ],
   })
 
-  let typeComposer
-  let inferConfig
-  const noNodeInterfaceTypes = []
-  if (schemaComposer.has(typeName)) {
-    typeComposer = schemaComposer.get(typeName)
-    inferConfig = getInferConfig(typeComposer)
-    if (inferConfig.infer) {
-      if (!typeComposer.hasInterface(`Node`)) {
-        noNodeInterfaceTypes.push(typeComposer.getType())
-      }
-    }
-  } else {
-    typeComposer = schemaComposer.createTC(typeName)
-    addNodeInterface({ schemaComposer, typeComposer })
-    inferConfig = getInferConfig(typeComposer)
-  }
-
-  if (noNodeInterfaceTypes.length > 0) {
-    noNodeInterfaceTypes.forEach(type => {
-      report.warn(`Type \`${type}\` declared in typeDefs looks like a node, but doesn't implement a \`Node\` interface. It's likely that you should add the \`Node\` interface to you type def:
-
-type ${type} implements Node {
-
-If you know that you don't want it to be a node (which would mean no root queries to retrieve it), you can explicitly disable inferrence for it:
-
-type ${type} @dontInfer {
- `)
-    })
-    report.panic(`Building schema failed`)
-  }
-
   addInferredFields({
     schemaComposer,
     typeComposer,
     nodeStore,
     exampleValue,
-    inferConfig,
+    inferConfig: getInferConfig(typeComposer),
+    typeMapping,
+    parentSpan,
   })
   return typeComposer
 }
@@ -66,33 +39,66 @@ const addInferredTypes = ({
   schemaComposer,
   nodeStore,
   typeConflictReporter,
+  typeMapping,
   parentSpan,
 }) => {
-  const typeNames = nodeStore.getTypes()
-
+  // XXX(freiksenet): Won't be needed after plugins set typedefs
   // Infer File first so all the links to it would work
-  if (typeNames.includes(`File`)) {
+  const typeNames = putFileFirst(nodeStore.getTypes())
+  const noNodeInterfaceTypes = []
+
+  typeNames.forEach(typeName => {
+    let typeComposer
+    let inferConfig
+    if (schemaComposer.has(typeName)) {
+      typeComposer = schemaComposer.get(typeName)
+      inferConfig = getInferConfig(typeComposer)
+      if (inferConfig.infer) {
+        if (!typeComposer.hasInterface(`Node`)) {
+          noNodeInterfaceTypes.push(typeComposer.getType())
+        }
+      }
+    } else {
+      typeComposer = schemaComposer.createTC(typeName)
+      addNodeInterface({ schemaComposer, typeComposer })
+      inferConfig = getInferConfig(typeComposer)
+    }
+  })
+
+  // XXX(freiksenet): We iterate twice to pre-create all types
+  typeNames.forEach(typeName => {
     addInferredType({
       schemaComposer,
       nodeStore,
-      typeName: `File`,
       typeConflictReporter,
+      typeComposer: schemaComposer.get(typeName),
+      typeMapping,
       parentSpan,
     })
-  }
-
-  // TODO: Filter out ignoreType
-  typeNames.forEach(typeName => {
-    if (typeName !== `File`) {
-      addInferredType({
-        schemaComposer,
-        nodeStore,
-        typeConflictReporter,
-        typeName,
-        parentSpan,
-      })
-    }
   })
+
+  if (noNodeInterfaceTypes.length > 0) {
+    noNodeInterfaceTypes.forEach(type => {
+      report.warn(`Type \`${type}\` declared in typeDefs looks like a node, but doesn't implement a \`Node\` interface. It's likely that you should add the \`Node\` interface to you type def:
+
+  type ${type} implements Node {
+
+  If you know that you don't want it to be a node (which would mean no root queries to retrieve it), you can explicitly disable inferrence for it:
+
+  type ${type} @dontInfer {
+   `)
+    })
+    report.panic(`Building schema failed`)
+  }
+}
+
+const putFileFirst = typeNames => {
+  const index = typeNames.indexOf(`File`)
+  if (index !== -1) {
+    return [`File`, ...typeNames.slice(0, index), ...typeNames.slice(index + 1)]
+  } else {
+    return typeNames
+  }
 }
 
 module.exports = {

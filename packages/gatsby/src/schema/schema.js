@@ -2,10 +2,7 @@ const _ = require(`lodash`)
 const { toInputObjectType } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
-const {
-  addNodeInterface,
-  addNodeInterfaceFields,
-} = require(`./types/NodeInterface`)
+const { addNodeInterfaceFields } = require(`./types/NodeInterface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
 const { getPagination } = require(`./types/pagination`)
@@ -16,8 +13,8 @@ const buildSchema = async ({
   schemaComposer,
   nodeStore,
   typeDefs,
-  resolvers,
   thirdPartySchemas,
+  typeMapping,
   typeConflictReporter,
   parentSpan,
 }) => {
@@ -25,8 +22,8 @@ const buildSchema = async ({
     schemaComposer,
     nodeStore,
     typeDefs,
-    resolvers,
     thirdPartySchemas,
+    typeMapping,
     typeConflictReporter,
     parentSpan,
   })
@@ -39,18 +36,20 @@ const buildSchema = async ({
 const rebuildSchemaWithSitePage = ({
   schemaComposer,
   nodeStore,
-  directives,
+  typeMapping,
+  typeConflictReporter,
   parentSpan,
 }) => {
   const typeComposer = addInferredType({
     schemaComposer,
+    typeComposer: schemaComposer.getTypeComposer(`SitePage`),
     nodeStore,
-    typeName: `SitePage`,
+    typeConflictReporter,
+    typeMapping,
+    parentSpan,
   })
   processTypeComposer({ schemaComposer, typeComposer, nodeStore, parentSpan })
-  return schemaComposer.buildSchema({
-    directives,
-  })
+  return schemaComposer.buildSchema()
 }
 
 module.exports = {
@@ -62,26 +61,22 @@ const updateSchemaComposer = async ({
   schemaComposer,
   nodeStore,
   typeDefs,
-  resolvers,
+  typeMapping,
   thirdPartySchemas,
   typeConflictReporter,
   parentSpan,
 }) => {
   await addTypeDefs({ schemaComposer, parentSpan, typeDefs })
-  nodeStore.getTypes().forEach(typeName => {
-    schemaComposer.getOrCreateTC(typeName, tc => {
-      addNodeInterface({ schemaComposer, typeComposer: tc })
-    })
-  })
-  await addSetFieldsOnGraphQLNodeTypeFields({
-    schemaComposer,
-    nodeStore,
-    parentSpan,
-  })
   await addInferredTypes({
     schemaComposer,
     nodeStore,
     typeConflictReporter,
+    typeMapping,
+    parentSpan,
+  })
+  await addSetFieldsOnGraphQLNodeTypeFields({
+    schemaComposer,
+    nodeStore,
     parentSpan,
   })
   await Promise.all(
@@ -95,7 +90,7 @@ const updateSchemaComposer = async ({
     )
   )
   await addThirdPartySchemas({ schemaComposer, thirdPartySchemas, parentSpan })
-  await addCustomResolveFunctions({ schemaComposer, parentSpan, resolvers })
+  await addCustomResolveFunctions({ schemaComposer, parentSpan })
 }
 
 const processTypeComposer = async ({
@@ -183,11 +178,7 @@ const addThirdPartySchemas = ({
   })
 }
 
-const addCustomResolveFunctions = async ({
-  schemaComposer,
-  resolvers,
-  parentSpan,
-}) => {
+const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
   const intermediateSchema = schemaComposer.buildSchema()
   const addResolvers = resolvers => {
     Object.keys(resolvers).forEach(typeName => {
@@ -343,7 +334,7 @@ function createChildField(typeName) {
 
 function groupChildNodesByType({ nodeStore, nodes }) {
   return _(nodes)
-    .flatMap(node => node.children.map(nodeStore.getNode))
+    .flatMap(node => (node.children || []).map(nodeStore.getNode))
     .groupBy(node => (node.internal ? node.internal.type : undefined))
     .value()
 }

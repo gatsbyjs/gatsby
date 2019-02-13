@@ -1,15 +1,14 @@
 // NOTE: Previously `infer-graphql-type-test.js`
 
 const { graphql } = require(`graphql`)
-const { addInferredTypes } = require(`..`)
 const nodeStore = require(`../../../db/nodes`)
 const { LocalNodeModel } = require(`../../node-model`)
 const path = require(`path`)
 const slash = require(`slash`)
 const { store } = require(`../../../redux`)
 const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
+const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
-const { addNodeInterface } = require(`../../types/NodeInterface`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -78,41 +77,37 @@ const makeNodes = () => [
 describe(`GraphQL type inference`, () => {
   const typeConflictReporter = new TypeConflictReporter()
 
-  const buildTestSchema = nodes => {
+  const buildTestSchema = async (nodes, buildSchemaArgs) => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
 
     const schemaComposer = createSchemaComposer()
-    nodeStore.getTypes().forEach(typeName => {
-      schemaComposer.getOrCreateTC(typeName, tc => {
-        addNodeInterface({ schemaComposer, typeComposer: tc })
-      })
-    })
-    addInferredTypes({
+    const schema = await buildSchema({
       schemaComposer,
-      typeConflictReporter,
       nodeStore,
+      typeDefs: [],
+      thirdPartySchemas: [],
+      typeMapping: [],
+      typeConflictReporter,
+      ...(buildSchemaArgs || {}),
     })
-    schemaComposer.Query.addFields({
-      listNode: {
-        type: [schemaComposer.getTC(`Test`)],
-        resolve: () => nodes.filter(node => node.internal.type === `Test`),
-      },
-    })
-    const schema = schemaComposer.buildSchema()
     return schema
   }
 
-  const getQueryResult = (nodes, fragment, params) => {
-    const schema = buildTestSchema(nodes, params)
+  const getQueryResult = async (nodes, fragment, buildSchemaArgs) => {
+    const schema = await buildTestSchema(nodes, buildSchemaArgs)
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
     return graphql(
       schema,
       `query {
-        listNode {
-          ${fragment}
+        allTest {
+          edges {
+            node {
+              ${fragment}
+            }
+          }
         }
       }
       `,
@@ -128,8 +123,8 @@ describe(`GraphQL type inference`, () => {
     )
   }
 
-  const getInferredFields = nodes => {
-    const schema = buildTestSchema(nodes)
+  const getInferredFields = async (nodes, buildSchemaArgs) => {
+    const schema = await buildTestSchema(nodes, buildSchemaArgs)
     return schema.getType(`Test`).getFields()
   }
 
@@ -176,7 +171,7 @@ describe(`GraphQL type inference`, () => {
         number
       `
     )
-    expect(result.data.listNode[0].number).toEqual(1.1)
+    expect(result.data.allTest.edges[0].node.number).toEqual(1.1)
   })
 
   it(`filters out empty objects`, async () => {
@@ -267,7 +262,7 @@ describe(`GraphQL type inference`, () => {
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
   })
 
-  it(`infers number types`, () => {
+  it(`infers number types`, async () => {
     const nodes = [
       {
         int32: 42,
@@ -277,7 +272,7 @@ describe(`GraphQL type inference`, () => {
         id: `1`,
       },
     ]
-    const fields = getInferredFields(nodes)
+    const fields = await getInferredFields(nodes)
 
     expect(fields.int32.type.name).toEqual(`Int`)
     expect(fields.float.type.name).toEqual(`Float`)
@@ -298,16 +293,20 @@ describe(`GraphQL type inference`, () => {
         }
       `
     )
+
+    console.log(JSON.stringify(result))
     expect(result.errors).not.toBeDefined()
-    expect(result.data.listNode.length).toEqual(2)
-    expect(result.data.listNode[0].with_space).toEqual(1)
-    expect(result.data.listNode[0].with_hyphen).toEqual(2)
-    expect(result.data.listNode[1].with_space).toEqual(3)
-    expect(result.data.listNode[1].with_hyphen).toEqual(4)
-    expect(result.data.listNode[0].with_resolver).toEqual(`01.11.1012`)
-    expect(result.data.listNode[0]._123).toEqual(42)
-    expect(result.data.listNode[1]._123).toEqual(24)
-    expect(result.data.listNode[0]._456).toEqual(nodes[0][`456`])
+    expect(result.data.allTest.edges.length).toEqual(2)
+    expect(result.data.allTest.edges[0].node.with_space).toEqual(1)
+    expect(result.data.allTest.edges[0].node.with_hyphen).toEqual(2)
+    expect(result.data.allTest.edges[1].node.with_space).toEqual(3)
+    expect(result.data.allTest.edges[1].node.with_hyphen).toEqual(4)
+    expect(result.data.allTest.edges[0].node.with_resolver).toEqual(
+      `01.11.1012`
+    )
+    expect(result.data.allTest.edges[0].node._123).toEqual(42)
+    expect(result.data.allTest.edges[1].node._123).toEqual(24)
+    expect(result.data.allTest.edges[0].node._456).toEqual(nodes[0][`456`])
   })
 
   describe(`Handles dates`, () => {
@@ -322,7 +321,7 @@ describe(`GraphQL type inference`, () => {
           number
         `
       )
-      expect(result.data.listNode[0].number).toEqual(2018)
+      expect(result.data.allTest.edges[0].node.number).toEqual(2018)
     })
 
     it(`Infers from Date objects`, async () => {
@@ -383,7 +382,7 @@ describe(`GraphQL type inference`, () => {
         `
       )
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].date).toEqual(`01.11.1012`)
+      expect(result.data.allTest.edges[0].node.date).toEqual(`01.11.1012`)
     })
 
     it(`Infers from arrays of date strings`, async () => {
@@ -401,9 +400,9 @@ describe(`GraphQL type inference`, () => {
         `
       )
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].date.length).toEqual(2)
-      expect(result.data.listNode[0].date[0]).toEqual(`01.11.1012`)
-      expect(result.data.listNode[0].date[1]).toEqual(`03.02.1039`)
+      expect(result.data.allTest.edges[0].node.date.length).toEqual(2)
+      expect(result.data.allTest.edges[0].node.date[0]).toEqual(`01.11.1012`)
+      expect(result.data.allTest.edges[0].node.date[1]).toEqual(`03.02.1039`)
     })
   })
 
@@ -435,34 +434,15 @@ describe(`GraphQL type inference`, () => {
       },
     ]
 
-    beforeEach(() => {
-      store.dispatch({
-        type: `SET_SITE_CONFIG`,
-        payload: {
-          mapping: {
-            "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
-          },
-        },
-      })
-    })
-
-    afterEach(() => {
-      store.dispatch({
-        type: `SET_SITE_CONFIG`,
-        payload: {
-          mapping: {},
-        },
-      })
-    })
-
     it(`Links to single node by id`, async () => {
       const nodes = [
         {
+          id: `1`,
           linkedOnID: `node1`,
           internal: { type: `Test` },
         },
         {
+          id: `2`,
           linkedOnID: `not_existing`,
           internal: { type: `Test` },
         },
@@ -473,14 +453,22 @@ describe(`GraphQL type inference`, () => {
           linkedOnID {
             label
           }
-        `
+        `,
+        {
+          typeMapping: {
+            "Test.linkedOnID": `MappingTest`,
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
+        }
       )
 
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode.length).toEqual(2)
-      expect(result.data.listNode[0].linkedOnID).toBeDefined()
-      expect(result.data.listNode[1].linkedOnID).toEqual(null)
-      expect(result.data.listNode[0].linkedOnID.label).toEqual(`First node`)
+      expect(result.data.allTest.edges.length).toEqual(2)
+      expect(result.data.allTest.edges[0].node.linkedOnID).toBeDefined()
+      expect(result.data.allTest.edges[1].node.linkedOnID).toEqual(null)
+      expect(result.data.allTest.edges[0].node.linkedOnID.label).toEqual(
+        `First node`
+      )
     })
 
     it(`Links to array of nodes by id`, async () => {
@@ -496,24 +484,36 @@ describe(`GraphQL type inference`, () => {
           linkedOnID {
             label
           }
-        `
+        `,
+        {
+          typeMapping: {
+            "Test.linkedOnID": `MappingTest`,
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
+        }
       )
 
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode.length).toEqual(1)
-      expect(result.data.listNode[0].linkedOnID).toBeDefined()
-      expect(result.data.listNode[0].linkedOnID.length).toEqual(2)
-      expect(result.data.listNode[0].linkedOnID[0].label).toEqual(`First node`)
-      expect(result.data.listNode[0].linkedOnID[1].label).toEqual(`Second node`)
+      expect(result.data.allTest.edges.length).toEqual(1)
+      expect(result.data.allTest.edges[0].node.linkedOnID).toBeDefined()
+      expect(result.data.allTest.edges[0].node.linkedOnID.length).toEqual(2)
+      expect(result.data.allTest.edges[0].node.linkedOnID[0].label).toEqual(
+        `First node`
+      )
+      expect(result.data.allTest.edges[0].node.linkedOnID[1].label).toEqual(
+        `Second node`
+      )
     })
 
     it(`Links to single node by custom field`, async () => {
       const nodes = [
         {
+          id: `1`,
           linkedOnCustomField: `test2`,
           internal: { type: `Test` },
         },
         {
+          id: `2`,
           linkedOnCustomField: `not_existing`,
           internal: { type: `Test` },
         },
@@ -524,16 +524,26 @@ describe(`GraphQL type inference`, () => {
           linkedOnCustomField {
             label
           }
-        `
+        `,
+        {
+          typeMapping: {
+            "Test.linkedOnID": `MappingTest`,
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
+        }
       )
 
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode.length).toEqual(2)
-      expect(result.data.listNode[0].linkedOnCustomField).toBeDefined()
-      expect(result.data.listNode[1].linkedOnCustomField).toEqual(null)
-      expect(result.data.listNode[0].linkedOnCustomField.label).toEqual(
-        `Second node`
+      expect(result.data.allTest.edges.length).toEqual(2)
+      expect(
+        result.data.allTest.edges[0].node.linkedOnCustomField
+      ).toBeDefined()
+      expect(result.data.allTest.edges[1].node.linkedOnCustomField).toEqual(
+        null
       )
+      expect(
+        result.data.allTest.edges[0].node.linkedOnCustomField.label
+      ).toEqual(`Second node`)
     })
 
     it(`Links to array of nodes by custom field`, async () => {
@@ -549,19 +559,29 @@ describe(`GraphQL type inference`, () => {
           linkedOnCustomField {
             label
           }
-        `
+        `,
+        {
+          typeMapping: {
+            "Test.linkedOnID": `MappingTest`,
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
+        }
       )
 
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode.length).toEqual(1)
-      expect(result.data.listNode[0].linkedOnCustomField).toBeDefined()
-      expect(result.data.listNode[0].linkedOnCustomField.length).toEqual(2)
-      expect(result.data.listNode[0].linkedOnCustomField[0].label).toEqual(
-        `First node`
-      )
-      expect(result.data.listNode[0].linkedOnCustomField[1].label).toEqual(
-        `Third node`
-      )
+      expect(result.data.allTest.edges.length).toEqual(1)
+      expect(
+        result.data.allTest.edges[0].node.linkedOnCustomField
+      ).toBeDefined()
+      expect(
+        result.data.allTest.edges[0].node.linkedOnCustomField.length
+      ).toEqual(2)
+      expect(
+        result.data.allTest.edges[0].node.linkedOnCustomField[0].label
+      ).toEqual(`First node`)
+      expect(
+        result.data.allTest.edges[0].node.linkedOnCustomField[1].label
+      ).toEqual(`Third node`)
     })
   })
 
@@ -607,7 +627,7 @@ describe(`GraphQL type inference`, () => {
       )
 
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].file.absolutePath).toEqual(
+      expect(result.data.allTest.edges[0].node.file.absolutePath).toEqual(
         slash(path.resolve(dir, `file_1.jpg`))
       )
     })
@@ -631,11 +651,11 @@ describe(`GraphQL type inference`, () => {
       )
 
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].files.length).toEqual(2)
-      expect(result.data.listNode[0].files[0].absolutePath).toEqual(
+      expect(result.data.allTest.edges[0].node.files.length).toEqual(2)
+      expect(result.data.allTest.edges[0].node.files[0].absolutePath).toEqual(
         slash(path.resolve(dir, `file_1.jpg`))
       )
-      expect(result.data.listNode[0].files[1].absolutePath).toEqual(
+      expect(result.data.allTest.edges[0].node.files[1].absolutePath).toEqual(
         slash(path.resolve(dir, `file_2.txt`))
       )
     })
@@ -661,7 +681,7 @@ describe(`GraphQL type inference`, () => {
         `
       )
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].linked.hair).toEqual(`brown`)
+      expect(result.data.allTest.edges[0].node.linked.hair).toEqual(`brown`)
     })
 
     it(`Links an array of nodes`, async () => {
@@ -681,8 +701,8 @@ describe(`GraphQL type inference`, () => {
         `
       )
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
-      expect(result.data.listNode[0].linked[1].hair).toEqual(`blonde`)
+      expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(`brown`)
+      expect(result.data.allTest.edges[0].node.linked[1].hair).toEqual(`blonde`)
     })
 
     it(`Links nodes by field`, async () => {
@@ -698,7 +718,7 @@ describe(`GraphQL type inference`, () => {
         `
       )
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].linked.hair).toEqual(`brown`)
+      expect(result.data.allTest.edges[0].node.linked.hair).toEqual(`brown`)
     })
 
     it(`Links an array of nodes by field`, async () => {
@@ -718,26 +738,29 @@ describe(`GraphQL type inference`, () => {
         `
       )
       expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
-      expect(result.data.listNode[0].linked[1].hair).toEqual(`blonde`)
+      expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(`brown`)
+      expect(result.data.allTest.edges[0].node.linked[1].hair).toEqual(`blonde`)
     })
 
     it(`Errors clearly when missing nodes`, async () => {
-      expect(() => {
-        getInferredFields([
+      expect.assertions(1)
+      try {
+        await getInferredFields([
           { linked___NODE: `baz`, internal: { type: `Test` }, id: `1` },
         ])
-      }).toThrow(
-        `Encountered an error trying to infer a GraphQL type ` +
-          `for: "linked___NODE". There is no corresponding node with the id ` +
-          `field matching: "baz"`
-      )
+      } catch (e) {
+        expect(e.message).toEqual(
+          `Encountered an error trying to infer a GraphQL type ` +
+            `for: "linked___NODE". There is no corresponding node with the id ` +
+            `field matching: "baz".`
+        )
+      }
     })
 
     // We can't miss types anymore
     it.skip(`Errors clearly when missing types`, async () => {
-      expect(() => {
-        getInferredFields([
+      expect(async () => {
+        await getInferredFields([
           { id: `baz`, internal: { type: `Bar` } },
           { linked___NODE: `baz`, internal: { type: `Test` }, id: `1` },
         ])
@@ -772,13 +795,21 @@ describe(`GraphQL type inference`, () => {
           `
         )
         expect(result.errors).not.toBeDefined()
-        expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
-        expect(result.data.listNode[0].linked[0].__typename).toEqual(`Child`)
-        expect(result.data.listNode[0].linked[1].species).toEqual(`dog`)
-        expect(result.data.listNode[0].linked[1].__typename).toEqual(`Pet`)
+        expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(
+          `brown`
+        )
+        expect(result.data.allTest.edges[0].node.linked[0].__typename).toEqual(
+          `Child`
+        )
+        expect(result.data.allTest.edges[0].node.linked[1].species).toEqual(
+          `dog`
+        )
+        expect(result.data.allTest.edges[0].node.linked[1].__typename).toEqual(
+          `Pet`
+        )
       })
 
-      it(`Uses same union type for same child node types and key`, () => {
+      it(`Uses same union type for same child node types and key`, async () => {
         const nodes = [
           {
             test___NODE: [`pet_1`, `child_1`],
@@ -791,7 +822,7 @@ describe(`GraphQL type inference`, () => {
             id: `2`,
           },
         ].concat(linkedNodes)
-        const schema = buildTestSchema(nodes)
+        const schema = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
 
@@ -808,7 +839,7 @@ describe(`GraphQL type inference`, () => {
         // NOTE: We don't do that anymore
       })
 
-      it(`Uses a different type for different child node types with the same key`, () => {
+      it(`Uses a different type for different child node types with the same key`, async () => {
         const nodes = [
           { id: `toy_1`, internal: { type: `Toy` } },
           {
@@ -822,7 +853,7 @@ describe(`GraphQL type inference`, () => {
             id: `2`,
           },
         ].concat(linkedNodes)
-        const schema = buildTestSchema(nodes)
+        const schema = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
 

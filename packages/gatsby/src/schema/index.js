@@ -13,6 +13,7 @@ module.exports.build = async ({ parentSpan }) => {
 
   let {
     schemaCustomization: { thirdPartySchemas, typeDefs },
+    config: { mapping: typeMapping },
   } = store.getState()
 
   const typeConflictReporter = new TypeConflictReporter()
@@ -23,6 +24,7 @@ module.exports.build = async ({ parentSpan }) => {
     nodeStore,
     typeDefs,
     thirdPartySchemas,
+    typeMapping,
     typeConflictReporter,
     parentSpan,
   })
@@ -49,13 +51,20 @@ module.exports.rebuildWithSitePage = async ({ parentSpan }) => {
   )
   let {
     schemaCustomization: { composer: schemaComposer },
+    config: { mapping: typeMapping },
   } = store.getState()
+
+  const typeConflictReporter = new TypeConflictReporter()
 
   const schema = await rebuildSchemaWithSitePage({
     schemaComposer,
     nodeStore,
+    typeMapping,
+    typeConflictReporter,
     parentSpan,
   })
+
+  typeConflictReporter.printConflicts()
 
   store.dispatch({
     type: `SET_SCHEMA_COMPOSER`,

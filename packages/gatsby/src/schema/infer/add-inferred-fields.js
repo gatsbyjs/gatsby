@@ -12,14 +12,13 @@ const { link, fileByPath } = require(`../resolvers`)
 const { isDate, dateResolver } = require(`../types/Date`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
-const { store } = require(`../../redux`)
-
 const addInferredFields = ({
   schemaComposer,
   typeComposer,
   exampleValue,
   nodeStore,
   inferConfig,
+  typeMapping,
   parentSpan,
 }) => {
   if (!inferConfig || inferConfig.infer) {
@@ -29,6 +28,7 @@ const addInferredFields = ({
       nodeStore,
       exampleObject: exampleValue,
       prefix: typeComposer.getTypeName(),
+      typeMapping: typeMapping,
       addDefaultResolvers: inferConfig ? inferConfig.addDefaultResolvers : true,
       depth: 0,
     })
@@ -44,6 +44,7 @@ const addInferredFieldsImpl = ({
   typeComposer,
   nodeStore,
   exampleObject,
+  typeMapping,
   prefix,
   depth,
   addDefaultResolvers,
@@ -62,10 +63,10 @@ const addInferredFieldsImpl = ({
     }
 
     let fieldConfig
-    if (hasMapping(selector)) {
+    if (hasMapping(typeMapping, selector)) {
       // TODO: Use `prefix` instead of `selector` in hasMapping and getFromMapping?
       // i.e. does the config contain sanitized field names?
-      fieldConfig = getFieldConfigFromMapping(selector)
+      fieldConfig = getFieldConfigFromMapping(typeMapping, selector)
     } else if (key.includes(`___NODE`)) {
       fieldConfig = getFieldConfigFromFieldNameConvention(
         schemaComposer,
@@ -159,13 +160,10 @@ const addInferredFieldsImpl = ({
 // Deeper nested levels should be inferred as JSON.
 // const MAX_DEPTH = 5
 
-const hasMapping = selector => {
-  const { mapping } = store.getState().config
-  return mapping && Object.keys(mapping).includes(selector)
-}
+const hasMapping = (mapping, selector) =>
+  mapping && Object.keys(mapping).includes(selector)
 
-const getFieldConfigFromMapping = selector => {
-  const { mapping } = store.getState().config
+const getFieldConfigFromMapping = (mapping, selector) => {
   const [type, ...path] = mapping[selector].split(`.`)
   return { type, resolve: link({ by: path.join(`.`) || `id` }) }
 }
