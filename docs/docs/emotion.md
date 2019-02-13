@@ -2,7 +2,7 @@
 title: Emotion
 ---
 
-In this guide, you will learn setting up a site with the CSS-in-JS library [Emotion](https://emotion.sh).
+In this guide, you will learn how to set up a site with the CSS-in-JS library [Emotion](https://emotion.sh).
 
 Emotion is a performant and flexible CSS-in-JS library. Building on many other CSS-in-JS libraries, it allows you to style apps quickly with string or object styles. It has predictable composition to avoid specificity issues with CSS. With source maps and labels, Emotion has a great developer experience and great performance with heavy caching in production.
 
