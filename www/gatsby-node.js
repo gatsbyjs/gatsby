@@ -181,6 +181,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                 draft
                 canonicalLink
                 publishedAt
+                issue
                 tags
               }
             }

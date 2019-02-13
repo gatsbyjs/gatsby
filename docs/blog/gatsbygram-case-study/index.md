@@ -1,6 +1,6 @@
 ---
 title: Gatsbygram Case Study
-date: "2017-03-09"
+date: 2017-03-09
 author: "Kyle Mathews"
 image: "ui-and-code.png"
 imageTitle: Gatsbygram
@@ -554,7 +554,7 @@ node scrape.js INSTAGRAM_USERNAME
 # Start the Gatsby development server. The initial
 # run will take extra time as it processes
 # images the first time.
-gatsby develop
+npm run develop
 ```
 
 While writing this post I scraped a few accounts and published their resulting
