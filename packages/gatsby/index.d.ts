@@ -20,6 +20,6 @@ export interface StaticQueryProps {
 
 export class StaticQuery extends React.Component<StaticQueryProps> {}
 
-export const useStaticQuery: (query: any) => null | object
+export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const graphql: (query: TemplateStringsArray) => void
