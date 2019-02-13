@@ -191,50 +191,71 @@ We don't think so :)
 Does Gatsby provide a polyfill for IntersectionObserver (for older browser which don't support it)?  
 Not by default as it's rather heavy. There's docs on how to do this though if you want to support it. It's a progressive enhancement so things will all still work in older browsers. They just won't as efficient.
 
-Have you implemented a rich text field from Contentful? If so, were you able to get gatsby-image working with embedded images in the rich text field? 
-
+Have you implemented a rich text field from Contentful? If so, were you able to get gatsby-image working with embedded images in the rich text field?   
 Gatsby works with Contentful rich text in beta right now. If you have specific Qs about the status, you can raise as a GH issue
 
-Hi, I have a site built on Drupal 7. How easy would it be to migrate to Gatsby with say Netlify as a CDN?
-
+Hi, I have a site built on Drupal 7. How easy would it be to migrate to Gatsby with say Netlify as a CDN?  
 gatsby-source-drupal only supports Drupal 8 atm I believe https://www.gatsbyjs.org/packages/gatsby-source-drupal/?=drupal
 
-Does Gatsby also have a solution for optimizing the experience of videos out of the box? Like gatsby-image for videos?
-
+Does Gatsby also have a solution for optimizing the experience of videos out of the box? Like gatsby-image for videos?  
 Not atm. Video is harder to work with than images as video processing is very CPU intensive. We'd love to find a solution that works with video providers like YouTube, Vimeo, etc.
 
-Dustin mentioned a recording on building dynamic apps with Gatsby. Is that available?
-
+Dustin mentioned a recording on building dynamic apps with Gatsby. Is that available?  
 Yes- you find that recording here: https://www.gatsbyjs.com/build-web-apps-webinar
 
-Gatsby transformers support Markdown and asciidoc.  Possible support for Sphinx reStructuredText?
-
+Gatsby transformers support Markdown and asciidoc.  Possible support for Sphinx reStructuredText?  
 Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just need to write a plugin! https://www.gatsbyjs.org/docs/create-source-plugin/
 
-Would it be a good idea to manage several blogs or sites from one wordpress install as back office, and build all the sites on Gatsby
-
+Would it be a good idea to manage several blogs or sites from one wordpress install as back office, and build all the sites on Gatsby  
 That would be a great idea! We've talked to some folks doing this.
 
-Do you think there will be a market for Gatsby premium themes (like for wordpress)?
-
+Do you think there will be a market for Gatsby premium themes (like for wordpress)?  
 Yep :) it's on the roadmap!
 
-Is Gatsby production ready? It's fantastic!
-
+Is Gatsby production ready? It's fantastic!  
 Yep! Here are some sites using Gatsby in production: https://www.gatsbyjs.org/showcase/ (includes the Flamingo e-commerce site which will be presenting about their experience in about 10m)
 
-Is there a good write up of how Gatsby compares to other static site generators (e.g. NextJS)? If so, where is it?
-
+Is there a good write up of how Gatsby compares to other static site generators (e.g. NextJS)? If so, where is it?  
 Here's a good overview, although doesn't tackle Next specifically: https://www.gatsbyjs.org/features/
 
-From an SSR perspective, how is Gatsby different from Next.js?
-
+From an SSR perspective, how is Gatsby different from Next.js?  
 Gatsby does SSR at "build-time" — which means all the SSRing is done _before_ a user requests a page which means your app loads really fast and it's easy to run and scale. Next.js does SSR at runtime which means that you need running servers to handle traffic and have to handle caching and scaling of servers in response to traffic.
 
-Beyond blogs and ecommerce websites, what other use cases are you seeing people building with Gatsby?
-
+Beyond blogs and ecommerce websites, what other use cases are you seeing people building with Gatsby?  
 We see all use cases....dynamic apps, ecommerce, financial services, docs sites, etc. Docs sites, portfolios, company marketing sites, are all very common!
 
-Is it possible to have the gatsby-*.js files be rewritten in TypeScript?
-
+Is it possible to have the gatsby-*.js files be rewritten in TypeScript?  
 gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for gatsby-node.js but you could require the typescript interpreter and then require another typescript file and re-export its code from gatsby-node.js
+
+Hi, can we access to previous recorded webinars  
+https://www.gatsbyjs.com/resources/webinars/,Yes- they're all posted on our website here: https://www.gatsbyjs.com/resources/webinars/
+
+I'm new to GraphQL and probably haven't dug deep enough yet, but it's not clear to me how to add new properties and surface them in GraphQL., so my components can consume it.  
+You can start with https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/ and go from there!
+
+Is it possible to dictate code splitting manually, e.g. component level code splitting?  
+Yup! React.Lazy is great + standard async imports
+
+Why is it called Gatsby? Maybe I missed the introduction to that.  
+Kyle chose that name as he's a big fan of literature and The Great Gatsby gave him some inspiration :)
+
+Can we pre-fetch video thumbnail image without pre-fetching entire videos until clicked on?  
+That was just an example--we don't actually pre-fetch any video content! In general, prefetching is a great performance optimization technique that you _want_ to use and your users will thank you!
+
+How can I use gatsby-image for images in the content body like a wordpress post?  
+That's a bit tricky as the content body is a HTML string. There's issues talking about how to make this happen so jump into the discussion and help out!
+
+How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?  
+Check out https://www.gatsbyjs.org/docs/environment-variables/ for env variables
+
+How do you automate testing for performance regression  
+Build Lighthouse into your CI pipeline
+
+Would you briefly overview Continuous Integration (CI) and the process when a test fails?  
+Sure! So CI is oftentimes used as a sanity check. We can run unit tests, e2e tests, and/or a linter. We can use these checks to give us some degree of confidence that we aren't introducing a regression, whether that regression is failing tests, performance regression, etc. I'll take a note of this and perhaps write a post on this--I think we have a great setup for our GatsbyJS repo!
+
+Is there any way to only build new or updated contents instead of the full site?  
+Not currently - but this is on our road map. We're calling it "incremental re-builds," and we're super excited to begin working on this!
+
+Is it necessary to use GraphQL for work with Gatsby ?  
+Nope! https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/
