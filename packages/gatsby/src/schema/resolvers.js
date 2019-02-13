@@ -154,7 +154,7 @@ const link = ({ by, from }) => async (source, args, context, info) => {
   } else {
     return context.nodeModel.runQuery(
       {
-        queryArgs: { filter: args },
+        queryArgs: args,
         firstOnly: true,
         gqlType: type,
       },

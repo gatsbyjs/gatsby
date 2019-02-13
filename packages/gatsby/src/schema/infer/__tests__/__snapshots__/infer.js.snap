@@ -89,7 +89,7 @@ Object {
             ],
           },
         ],
-        "date": null,
+        "date": "1012",
         "deepObject": Object {
           "deepObject": Object {
             "deepObject": Object {
@@ -102,7 +102,7 @@ Object {
         "domain": "pizza.com",
         "externalUrl": "https://example.com/awesome.jpg",
         "frontmatter": Object {
-          "date": null,
+          "date": "1012",
           "title": "The world of dash and adventure",
         },
         "hair": 1,
@@ -136,24 +136,18 @@ Object {
             ],
           },
         ],
-        "date": null,
+        "date": "1984",
         "deepObject": null,
         "domain": null,
         "externalUrl": null,
         "frontmatter": Object {
-          "date": null,
+          "date": "1984",
           "title": "The world of slash and adventure",
         },
         "hair": 2,
       },
     ],
   },
-  "errors": Array [
-    [GraphQLError: Field error: value is not an instance of Date],
-    [GraphQLError: Field error: value is not an instance of Date],
-    [GraphQLError: Field error: value is not an instance of Date],
-    [GraphQLError: Field error: value is not an instance of Date],
-  ],
 }
 `;
 

@@ -196,7 +196,7 @@ const getFieldConfigFromFieldNameConvention = (
 
   invariant(
     linkedTypes.length,
-    `Could not infer a GraphQL type for the field "${key}".`
+    `Encountered an error trying to infer a GraphQL type for: "${key}". There is no corresponding node with the id field matching: "${value}".`
   )
 
   let type

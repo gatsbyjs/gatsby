@@ -427,14 +427,25 @@ describe(`GraphQL type inference`, () => {
       },
     ]
 
-    store.dispatch({
-      type: `SET_SITE_CONFIG`,
-      payload: {
-        mapping: {
-          "Test.linkedOnID": `MappingTest`,
-          "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+    beforeEach(() => {
+      store.dispatch({
+        type: `SET_SITE_CONFIG`,
+        payload: {
+          mapping: {
+            "Test.linkedOnID": `MappingTest`,
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
         },
-      },
+      })
+    })
+
+    afterEach(() => {
+      store.dispatch({
+        type: `SET_SITE_CONFIG`,
+        payload: {
+          mapping: {},
+        },
+      })
     })
 
     it(`Links to single node by id`, async () => {
@@ -715,7 +726,8 @@ describe(`GraphQL type inference`, () => {
       )
     })
 
-    it(`Errors clearly when missing types`, async () => {
+    // We can't miss types anymore
+    it.skip(`Errors clearly when missing types`, async () => {
       expect(() => {
         getInferredFields([
           { id: `baz`, internal: { type: `Bar` } },

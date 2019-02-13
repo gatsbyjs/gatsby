@@ -119,7 +119,7 @@ const REGEX = `regex`
 const GLOB = `glob`
 
 const ALLOWED_OPERATORS = {
-  Boolean: [EQ, NE], // TODO: IN?, NIN? @see #11197
+  Boolean: [EQ, NE, IN, NIN],
   Date: [EQ, NE, GT, GTE, LT, LTE, IN, NIN],
   Float: [EQ, NE, GT, GTE, LT, LTE, IN, NIN],
   ID: [EQ, NE, IN, NIN],
