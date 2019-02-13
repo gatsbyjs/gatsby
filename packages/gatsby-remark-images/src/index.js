@@ -6,6 +6,7 @@ const {
 const visitWithParents = require(`unist-util-visit-parents`)
 const getDefinitions = require(`mdast-util-definitions`)
 const path = require(`path`)
+const queryString = require(`query-string`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
 const { fluid } = require(`gatsby-plugin-sharp`)
@@ -80,7 +81,9 @@ module.exports = (
     const parentNode = getNode(markdownNode.parent)
     let imagePath
     if (parentNode && parentNode.dir) {
-      imagePath = slash(path.join(parentNode.dir, node.url))
+      imagePath = slash(
+        path.join(parentNode.dir, queryString.parseUrl(node.url).url)
+      )
     } else {
       return null
     }
@@ -113,7 +116,7 @@ module.exports = (
     const presentationWidth = fluidResult.presentationWidth
 
     // Generate default alt tag
-    const srcSplit = node.url.split(`/`)
+    const srcSplit = queryString.parseUrl(node.url).url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
@@ -264,7 +267,7 @@ module.exports = (
               return resolve()
             }
           }
-          const fileType = node.url.slice(-3)
+          const fileType = queryString.parseUrl(node.url).url.slice(-3)
 
           // Ignore gifs as we can't process them,
           // svgs as they are already responsive by definition
@@ -328,7 +331,9 @@ module.exports = (
                 return resolve()
               }
 
-              const fileType = formattedImgTag.url.slice(-3)
+              const fileType = queryString
+                .parseUrl(formattedImgTag.url)
+                .url.slice(-3)
 
               // Ignore gifs as we can't process them,
               // svgs as they are already responsive by definition
