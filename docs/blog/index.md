@@ -155,32 +155,32 @@ Prefetching starts when a link appears on the screen so it works on mobile very 
 Would it makes sense to still use Gatsby for a more "dynamic" type of app?  
 Yes! You can learn more about what types of dynamic apps you can build with Gatsby here: https://www.gatsbyjs.com/build-web-apps-webinar
 
-Can I use Gatsby Image with images from external sources? Like Cloudinary or an AWS bucket? And if it's indeed possible, will this impact my build time if I have thousands of images?  
-yes, build-times do go up with image processing as it's very CPU intensive.
+Can I use Gatsby Image with images from external sources like Cloudinary or an AWS bucket? And if it's indeed possible, will this impact my build time if I have thousands of images?  
+Yes, build-times do go up with image processing as it's very CPU intensive.
 
 Is there a 3rd party CMS that you recommend that works particular well with Gatsby?  
 Lots of CMS-s! Here's a list: https://www.gatsbyjs.org/docs/headless-cms/
 
-What CI system did you use (Harry’s)?  
+What CI system did you use for the (Harry’s shopflamingo.com) website?  
 CircleCI. it's incredible, definitely check it out.
 
-What is the recommended approach for sites that have integrations like a oauth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to may a separate bundle to be lazy loaded only when loaded in the browser?  
+What is the recommended approach for sites that have integrations like a oauth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to have a separate bundle lazy loaded only when loaded in the browser?  
 Check out https://www.gatsbyjs.org/docs/building-a-site-with-authentication/
 
 How can you trigger a content refresh on the Gatsby site (frontend) when using gatsby-source-wordpress with a Wordpress CMS?  
-You create a webhook on your CMS, and point the webhook at your CI system (eg Netlify)
+You create a webhook on your CMS, and point the webhook at your CI system (eg Netlify).
 
-to use gatsby for a blog - is this overengineering ?  
+To use gatsby for a blog - is this overengineering?  
 Definitely not! Here are some blogs built with Gatsby: https://www.gatsbyjs.org/showcase/?filters%5B0%5D=Blog. One notable one is Dan Abramov — https://overreacted.io/
 
-It was mentioned gatsby has an upper limit at 50K is that before you need to increase nodes memory or an upper limit written into gatsby's build process  
+It was mentioned Gatsby has an upper limit of 50K pages, is that before you need to increase nodes memory or an upper limit written into Gatsby's build process?  
 Not a strict upper limit, more of a rough one that we've seen in the wild.
 
 What are some best practices around aligning (dynamic) CMS content schema with code changes in Gatsby?  
-Great question - and we have some thoughts here! We're launching cloud services to tackle this very problem in 2019. In the interim--most CMSes have some type of webhook content, so you can trigger a re-build (static content is cheap, and so are changes!) when content changes.
+Great question - and we have some thoughts here. We're launching cloud services to tackle this very problem in 2019. In the interim--most CMSs have some type of webhook content, so you can trigger a re-build (static content is cheap, and so are changes!) when content changes.
 
 You mention not having to worry about the web server, but what about the APIs that handle the order flow? Are those just separate API servers?  
-Exactly, yep. You'll almost certainly have to worry about some servers, but it's incredibly freeing to not have to worry about your UI going down! Nice thing of going static/build-time SSR is that you're isolated from your API going down if you are able to generate static content from your API!
+Exactly, yep. You'll almost certainly have to worry about some servers, but it's incredibly freeing to not have to worry about your UI going down! Nice thing of going static/build-time SSR is that you're isolated from your API going down if you are able to generate static content from your API.
 
 Is it overkill to build every site with Gatsby.js?  
 We don't think so :)
