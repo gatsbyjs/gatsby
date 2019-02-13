@@ -18,7 +18,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Check out [https://www.gatsbyjs.org/docs/building-a-site-with-authentication/](https://www.gatsbyjs.org/docs/building-a-site-with-authentication/ "https://www.gatsbyjs.org/docs/building-a-site-with-authentication/") and [https://www.gatsbyjs.org/docs/building-apps-with-gatsby/](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/ "https://www.gatsbyjs.org/docs/building-apps-with-gatsby/")
 
 **Question:** Can I serialize an api to be stored and accessed client-side only?  
-**Answer:** Yup (with a source plugin!). If it's a GraphQL API you can even use [https://www.gatsbyjs.org/packages/gatsby-source-graphql/](https://www.gatsbyjs.org/packages/gatsby-source-graphql/ "https://www.gatsbyjs.org/packages/gatsby-source-graphql/") to invoke that API at *build time*
+**Answer:** Yup (with a source plugin!). If it's a GraphQL API you can even use [https://www.gatsbyjs.org/packages/gatsby-source-graphql/](https://www.gatsbyjs.org/packages/gatsby-source-graphql/ "https://www.gatsbyjs.org/packages/gatsby-source-graphql/") to invoke that API at _build time_
 
 How about best practices with Styles and Web Fonts?  
 Re: styles, I'd recommend using something like CSS Modules (enabled by default!) or a CSS in JS solution if you're into that. We're not opinionated and want to enable everyone to build performant sites, by default!  As far as web fonts, depends! You could use gatsby-plugin-typography and load google fonts if that's your thing. [https://github.com/kyleamathews/typefaces](https://github.com/kyleamathews/typefaces "https://github.com/kyleamathews/typefaces") lets you add open source fonts from NPM packages.
@@ -53,7 +53,7 @@ It's not a 100% replacement yet — best to start experimenting with things and 
 How are static assets handled with Gatsby? What is the best approach when using larger amount of SVG icons (think emojis) which may increase the bundle size by more then 100kb's?  
 There's a few ways you can handle it. See this docs page which talks about the various options [https://www.gatsbyjs.org/docs/adding-images-fonts-files/](https://www.gatsbyjs.org/docs/adding-images-fonts-files/ "https://www.gatsbyjs.org/docs/adding-images-fonts-files/")
 
-I have a page template that can render different components(50+) according to the page query response. Will those components be then bundled in every page that uses that template?    
+I have a page template that can render different components(50+) according to the page query response. Will those components be then bundled in every page that uses that template?  
 Yes — if possible, you can lazy load components as that'll move the code into their own bundle which will only be loaded on demand.
 
 How do content managers preview their changes?  
@@ -62,13 +62,13 @@ We have some tooling planned for this :) Stay tuned! [https://www.gatsbyjs.org/b
 How do you keep on top of things like price changes and stock availability with a static generated site?  
 We actually do this on the GatsbyJS store. Check out the code, and hope it's helpful! https://github.com/gatsbyjs/store.gatsbyjs.org
 
-Is there a good upgrade path for new versions of Gatsby?   
+Is there a good upgrade path for new versions of Gatsby?  
 Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2: https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/.
 
-Following up on upgrade path question—how would you upgrade between version of 2.\~?   
+Following up on upgrade path question—how would you upgrade between version of 2.\~?  
 You can bump the version # in your package.json and then you're done
 
-The question asked about search—how would you implement a site search in Gatsby?   
+The question asked about search—how would you implement a site search in Gatsby?  
 One of the best things about Gatsby is that it's pretty agnostic on tech stack(s). So.. you're free to use what you want. I've used Algolia in the past and loved it, but you're free to implement this however you'd like! https://www.gatsbyjs.org/docs/adding-search/
 
 What is a 'route'?  
@@ -104,7 +104,7 @@ Yes. Builds are fast and automatic though so doesn't take any extra work or ment
 How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our ssr generated html to match the final rendered DOM.  
 Check out this docs page [https://www.gatsbyjs.org/docs/environment-variables/#environment-variables](https://www.gatsbyjs.org/docs/environment-variables/#environment-variables "https://www.gatsbyjs.org/docs/environment-variables/#environment-variables")
 
-is there any \`lighthouse.test.js\` out there, to use while building/customizing gatsby to keep an eye on performance? (similar to the one that was shown at the very beginning of the presentation).   
+is there any \`lighthouse.test.js\` out there, to use while building/customizing gatsby to keep an eye on performance? (similar to the one that was shown at the very beginning of the presentation).  
 You can just re-use mine--or could be worth building some tooling! We'll be sure to link to those resources soon!
 
 Any advice for running automated performance tests for sites that are hidden behind a login page?  
@@ -119,12 +119,11 @@ Dustin) We don't really have an official opinion--we want you to build apps howe
 no concern of the additional request for the SVG??  
 SVGs previews are inlined
 
-no concerns of excessive prefetching in the bg?   
+no concerns of excessive prefetching in the bg?  
 This is turned off on low-power devices as per the Dan Abramov comment
 
-Re content updates: But is a new build triggered on *every* co_tent nge?  
-_ou can configure it that way -- send webhooks to have your CI server rebuild
+Re content updates: But is a new build triggered on _every_ content change?  
+You can configure it that way -- send webhooks to have your CI server rebuild
 
-Can you talk more about Themes & how to create custom themes for V2?
-
+Can you talk more about Themes & how to create custom themes for V2?  
 Look at [https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/ "https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/") and [https://www.gatsbyjs.com/gatsby-days-themes-chris/](https://www.gatsbyjs.com/gatsby-days-themes-chris/ "https://www.gatsbyjs.com/gatsby-days-themes-chris/") and stay tuned for more posts in next week!
