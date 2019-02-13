@@ -8,39 +8,81 @@ Gatsby's `<Link>` component enables linking to internal pages as well as a power
 
 The component is a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link) that adds useful enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
 
-## How to use
+## How to use Gatsby Link
 
-In JavaScript:
+<iframe title="Screencast on egghead of how to use a Gatsby Link" class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
+
+Video hosted on [egghead.io][egghead].
+
+### Replace `a` tags with the `Link` tag for local links
+
+In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag.
+
+```jsx
+import React from "react"
+// highlight-next-line
+import { Link } from "gatsby"
+
+const Page = () => (
+  <div>
+    <p>
+      {/* highlight-next-line */}
+      Check out my <Link to="/blog">blog</Link>!
+    </p>
+    <p>
+      {/* Note that external links still use `a` tags. */}
+      Follow me on <a href="https://twitter.com/gatsbyjs">Twitter</a>!
+    </p>
+  </div>
+)
+```
+
+### Add custom styles for the currently active link
+
+<iframe title="Screencast on egghead of how to style the currently active link in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
+
+Video hosted on [egghead.io][egghead].
+
+It’s often a good idea to show which page is currently being viewed by visually changing the link matching the current page.
+
+`Link` provides two options for adding styles to the active link:
+
+- `activeStyle` — a style object that will only be applied when the current item is active
+- `activeClassName` — a class name that will only be added to the `Link` when the current item is active
+
+For example, to turn the active link red, either of the following approaches is valid:
 
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
 
-class Page extends React.Component {
-  render() {
-    return (
-      <div>
-        <Link
-          to="/another-page/"
-          activeStyle={{
-            color: "red",
-          }}
-          ref={el => {
-            this.myLink = el
-          }}
-          state={{
-            pleasant: "reasonably",
-          }}
-        >
-          Another page
-        </Link>
-      </div>
-    )
-  }
-}
+const SiteNavigation = () => (
+  <nav>
+    <Link
+      to="/"
+      {/* highlight-start */}
+      {/* This assumes the `active` class is defined in your CSS */}
+      activeClassName="active"
+      {/* highlight-end */}
+    >
+      Home
+    </Link>
+    <Link
+      to="/about/"
+      {/* highlight-next-line */}
+      activeStyle={{ color: red }}
+    >
+      About
+    </Link>
+  </nav>
+)
 ```
 
-### Partial Link matching
+### Show active styles for partially matched and parent links
+
+<iframe title="Screencast on egghead of how to style partially matched links in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-customize-styles-for-partially-matched-urls-with-gatsby-s-link-component/embed" />
+
+Video hosted on [egghead.io][egghead].
 
 The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
 
@@ -52,31 +94,49 @@ In instances like these, we can use [@reach/router's](https://reach.tech/router/
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
-// This link will get the active class when it partially matches the current URL
-const PartialNavLink = props => (
+
+const PartialNavLink = () => (
   <Link
-    getProps={({ isPartiallyCurrent }) => {
-      return isPartiallyCurrent ? { className: "active" } : null
-    }}
-  />
+    to="/blog/"
+    {/* highlight-start */}
+    getProps={({ isPartiallyCurrent }) =>
+      isPartiallyCurrent ? { className: "active" } : null
+    }
+    {/* highlight-end */}
+  >
+    Blog
+  </Link>
 )
 ```
 
 Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
 
-### Passing props to Link targets
+### Pass state as props to the linked page
+
+<iframe title="Screencast on egghead of how to pass state as props using Gatsby’s Link component." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
+
+Video hosted on [egghead.io][egghead].
 
 Sometimes you'll want to pass data from the source page to the linked page. You can do this by passing a `state` prop to the `Link` component or on a call to the `navigate` function. The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
 
 ```jsx
-const NewsFeed = () => (
+const PhotoFeedItem = ({ id }) => (
   <div>
-    <Link to="photos/123" state={{ fromFeed: true }} />
+    {/* (skip the feed item markup for brevity) */}
+    <Link
+      to={`/photos/${id}`}
+      {/* highlight-next-line */}
+      state={{ fromFeed: true }}
+    >
+      View Photo
+    </Link>
   </div>
 )
 
+// highlight-start
 const Photo = ({ location, photoId }) => {
   if (location.state.fromFeed) {
+    // highlight-end
     return <FromFeedPhoto id={photoId} />
   } else {
     return <Photo id={photoId} />
@@ -84,99 +144,128 @@ const Photo = ({ location, photoId }) => {
 }
 ```
 
-### Using navigate()
+### Replace history to change “back” button behavior
 
-Sometimes you need to navigate to pages programatically:
+<iframe title="Screencast on egghead of how to replace history on navigation." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component/embed" />
 
-#### Replacing history entry
+Video hosted on [egghead.io][egghead].
 
-You can pass boolean `replace` property to replace previous history entry.
-Therefore clicking the back button after navigation to such Link would redirect
-to page before, _skipping_ the page the link was on.
+There are a few cases where it might make sense to modify the “back” button’s behavior. For example, if you build a page where you choose something, then see an “are you sure?” page to make sure it’s what you really wanted, and finally see a confirmation page, it may be desirable to skip the “are you sure?” page if the “back” button is clicked.
+
+In those cases, use the `replace` prop to replace the current URL in history with the target of the `Link`.
 
 ```jsx
+import React from "react"
+import { Link } from "gatsby"
+
+const AreYouSureLink = () => (
+  <Link
+    to="/confirmation/"
+    {/* highlight-next-line */}
+    replace
+  >
+    Yes, I’m sure
+  </Link>
+)
+```
+
+## How to use the `navigate` helper function
+
+<iframe title="Screencast on egghead of how to navigate programmatically in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
+
+Video hosted on [egghead.io][egghead].
+
+Sometimes you need to navigate to pages programatically, such as during form submissions. In these cases, `Link` won’t work.
+
+_**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2 and will be removed in the next major release._
+
+Instead, Gatsby exports a `navigate` helper function that accepts `to` and `options` arguments.
+
+| Argument          | Required | Description                                                                                      |
+| ----------------- | -------- | ------------------------------------------------------------------------------------------------ |
+| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                         |
+| `options.state`   | no       | An object. Values passed here will be available in `locations.state` in the target page’s props. |
+| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                   |
+
+By default, `navigate` operates the same way as a clicked `Link` component.
+
+```jsx
+import React from "react"
+import { navigate } from "gatsby" // highlight-line
+
+const Form = () => (
+  <form
+    onSubmit={event => {
+      event.preventDefault()
+
+      // TODO: do something with form values
+      // highlight-next-line
+      navigate("/form-submitted/")
+    }}
+  >
+    {/* (skip form inputs for brevity) */}
+  </form>
+)
+```
+
+### Add state to programmatic navigation
+
+To include state information, add an `options` object and include a `state` prop with the desired state.
+
+```jsx
+import React from "react"
 import { navigate } from "gatsby"
 
-render () {
-  return (
-    <div onClick={ () => navigate('/example')} role="link" tabIndex="0" onKeyUp={this.handleKeyUp}>
-      <p>Example</p>
-    </div>
-  )
-}
+const Form = () => (
+  <form
+    onSubmit={event => {
+      event.preventDefault()
+
+      // Implementation of this function is an exercise for the reader.
+      const formValues = getFormValues()
+
+      navigate(
+        "/form-submitted/",
+        // highlight-start
+        {
+          state: { formValues },
+        }
+        // highlight-end
+      )
+    }}
+  >
+    {/* (skip form inputs for brevity) */}
+  </form>
+)
 ```
 
-The `navigate` function accepts two parameters (see following sections):
+### Replace history during programmatic navigation
 
-- a string representing the destination
-- optional settings object. The settings object can include two optional properties: `state (object)`, and `replace (bool, default false)`.
-
-_Note that `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2 and will be removed in the next major release_
-
-#### Pushing versus Replacing history entry
-
-By default, both `<Link>` and `navigate` will _push_ a new entry to the history stack.
-
-This can be changed by passing a `replace` prop to the Link component, or by passing `replace: true` to the `navigate` settings object.
-
-When replace is enabled, clicking the browser back button will return the user to the page _preceeding the page from which they navigated_.
+If the navigation should replace history instead of pushing a new entry into the navigation history, add the `replace` prop with a value of `true` to the `options` argument of `navigate`.
 
 ```jsx
-import { Link } from 'gatsby'
+import React from "react"
+import { navigate } from "gatsby"
 
-render () {
-  return (
-    <Link
-      to="/another-page/"
-      replace
-    >
-      Go and prevent back to bring you back here
-    </Link>
-  )
-}
+const Form = () => (
+  <form
+    onSubmit={event => {
+      event.preventDefault()
+
+      // TODO: do something with form values
+      navigate(
+        "/form-submitted/",
+        // highlight-next-line
+        { replace: true }
+      )
+    }}
+  >
+    {/* (skip form inputs for brevity) */}
+  </form>
+)
 ```
 
-Using `replace` also won't scroll the page after navigation.
-
-### Passing state through Link and Navigate
-
-You can pass state to pages when you navigate, such as:
-
-```javascript
-navigate(`/a-path/`, { state: { pleasant: `reasonably` }}
-```
-
-You can also pass state to pages when you use `Link`:
-
-```jsx
-<Link
-  to="/another-page/"
-  activeStyle={{
-    color: "red",
-  }}
-  state={{
-    pleasant: "reasonably",
-  }}
->
-```
-
-This is accessible from the `location` object on the new page:
-
-```javascript
-componentDidMount() {
-  const pleasant = this.props.location.state.pleasant
-  this.setState({
-    pleasant: pleasant
-  })
-}
-```
-
-### Styling
-
-You can set the `activeStyle` or `activeClassName` prop to add styling
-attributes to the rendered element when it matches the current URL.
-
-### Prefixed paths helper
+## Add the path prefix to paths using `withPrefix`
 
 It is common to host sites in a sub-directory of a site. Gatsby lets you [set
 the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
@@ -198,7 +287,7 @@ const IndexLayout = ({ children, location }) => {
 }
 ```
 
-## Use `<Link>` only for internal links!
+## Reminder: use `<Link>` only for internal links!
 
 This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
 
@@ -265,3 +354,5 @@ You can similarly check for file downloads:
     )
   }
 ```
+
+[egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
