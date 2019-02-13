@@ -4304,3 +4304,15 @@
     - Web Development
   built_by: Mike Nichols
   featured: false
+- title: Incremental - Loyalty, Rewards and Incentive Programs
+  main_url: https://www.incremental.com.au
+  url: https://www.incremental.com.au
+  description: >
+    Sydney-based digital agency specialising in loyalty, rewards and incentive programs. WordPress backend; Cloudinary, YouTube and Hubspot form integration; query data displayed as animated SVG graphs; video background in the header.
+  categories:
+    - Agency
+    - Portfolio
+    - WordPress
+  built_by: Incremental
+  built_by_url: https://www.incremental.com.au
+  featured: false
