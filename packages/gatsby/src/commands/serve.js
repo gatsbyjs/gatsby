@@ -22,7 +22,7 @@ const clientOnlyPathsRouter = (pages, options) => {
     const { url } = req
     if (req.accepts(`html`)) {
       const route = clientOnlyRoutes.find(
-        route => reachMatch(route.matchPath, url) !== null
+        clientRoute => reachMatch(clientRoute.matchPath, url) !== null
       )
       if (route && route.path) {
         return res.sendFile(
