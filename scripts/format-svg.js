@@ -5,8 +5,13 @@ const glob = require(`glob`)
 const execa = require(`execa`)
 const path = require(`path`)
 
+// list of ignored files because they don't get optimized correctly
+const ignoreList = [
+  `./docs/blog/2017-11-08-migrate-from-jekyll-to-gatsby/diagram-ci.svg`,
+]
+
 const files = glob.sync(`./**/*.svg`, {
-  ignore: `./node_modules/**`,
+  ignore: [`./node_modules/**`].concat(ignoreList),
 })
 
 const proc = execa(
