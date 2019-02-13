@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "gatsby-example-using-shopify",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "An example of using Gatsby + Shopify together seamlessly",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
     "gatsby": "^2.0.119",
     "gatsby-image": "^2.0.29",
