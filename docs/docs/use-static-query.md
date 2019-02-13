@@ -12,7 +12,7 @@ In this guide, we'll walk through an example using `useStaticQuery`. If you're n
 
 `useStaticQuery` is a React Hook. All the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html) apply.
 
-It takes your `query` and returns your data. That's it!
+It takes your GraphQL query and returns the requested data. That's it!
 
 ### Basic example
 
