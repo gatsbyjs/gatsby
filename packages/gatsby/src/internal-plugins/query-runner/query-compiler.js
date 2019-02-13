@@ -225,8 +225,8 @@ class Runner {
         typeof require(`react`).useContext !== `function`
       ) {
         report.panicOnBuild(
-          `You're likely using a version of React that doesn't support Hooks.
-Please update to React 16.8.0 or later to use the useStaticQuery hook.`
+          `You're likely using a version of React that doesn't support Hooks` +
+            `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
         )
       }
 
