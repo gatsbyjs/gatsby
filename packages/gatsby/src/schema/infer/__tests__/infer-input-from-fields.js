@@ -1,6 +1,6 @@
 // NOTE: Previously `infer-graphql-input-from-fields-test.js`
 
-const { SchemaComposer } = require(`graphql-compose`)
+const { createSchemaComposer } = require(`../../schema-composer`)
 const { getFilterInput } = require(`../../types/filter`)
 const { getSortInput } = require(`../../types/sort`)
 
@@ -19,7 +19,7 @@ const {
 } = require(`graphql`)
 
 const getInferredFields = fields => {
-  const schemaComposer = new SchemaComposer()
+  const schemaComposer = createSchemaComposer()
   const tc = schemaComposer.createTC({ name: `Test`, fields })
   const itc = tc.getITC()
   return getFilterInput({ schemaComposer, inputTypeComposer: itc })
@@ -358,7 +358,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
       },
     }
 
-    const schemaComposer = new SchemaComposer()
+    const schemaComposer = createSchemaComposer()
     const tc = schemaComposer.createTC({ name: `Test`, fields })
     const itc = tc.getITC()
     const sort = getSortInput({

@@ -24,7 +24,10 @@ async function queryResult(
     }
   )
 
-  const { SchemaComposer } = require(`graphql-compose`)
+  const {
+    createSchemaComposer,
+  } = require(`../../../gatsby/src/schema/schema-composer`)
+
   const {
     addInferredFields,
   } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
@@ -32,7 +35,7 @@ async function queryResult(
     getExampleValue,
   } = require(`../../../gatsby/src/schema/infer/example-value`)
 
-  const sc = new SchemaComposer()
+  const sc = createSchemaComposer()
   const typeName = `MarkdownRemark`
   const tc = sc.createTC(typeName)
   addInferredFields({

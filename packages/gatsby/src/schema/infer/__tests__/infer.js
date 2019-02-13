@@ -1,13 +1,13 @@
 // NOTE: Previously `infer-graphql-type-test.js`
 
 const { graphql } = require(`graphql`)
-const { SchemaComposer } = require(`graphql-compose`)
 const { addInferredTypes } = require(`..`)
 const nodeStore = require(`../../../db/nodes`)
 const nodeModel = require(`../../node-model`)
 const path = require(`path`)
 const slash = require(`slash`)
 const { store } = require(`../../../redux`)
+const { createSchemaComposer } = require(`../../schema-composer`)
 const { addNodeInterface } = require(`../../types/NodeInterface`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
@@ -83,7 +83,7 @@ describe(`GraphQL type inference`, () => {
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
 
-    const schemaComposer = new SchemaComposer()
+    const schemaComposer = createSchemaComposer()
     nodeStore.getTypes().forEach(typeName => {
       schemaComposer.getOrCreateTC(typeName, tc => {
         addNodeInterface({ schemaComposer, typeComposer: tc })
@@ -243,7 +243,7 @@ describe(`GraphQL type inference`, () => {
         },
       },
     ]
-    const schemaComposer = new SchemaComposer()
+    const schemaComposer = createSchemaComposer()
     const typeComposer = schemaComposer.createTC(`Test`)
     addInferredFields({
       schemaComposer,

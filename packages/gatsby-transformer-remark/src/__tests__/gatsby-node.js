@@ -96,7 +96,9 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
   describe(`process graphql correctly`, () => {
     // given a set of nodes and a query, return the result of the query
     async function queryResult(nodes, fragment) {
-      const { SchemaComposer } = require(`graphql-compose`)
+      const {
+        createSchemaComposer,
+      } = require(`../../../gatsby/src/schema/schema-composer`)
       const {
         addInferredFields,
       } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
@@ -104,7 +106,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
         getExampleValue,
       } = require(`../../../gatsby/src/schema/infer/example-value`)
 
-      const sc = new SchemaComposer()
+      const sc = createSchemaComposer()
       const typeName = `MarkdownRemark`
       const tc = sc.createTC(typeName)
       addInferredFields({

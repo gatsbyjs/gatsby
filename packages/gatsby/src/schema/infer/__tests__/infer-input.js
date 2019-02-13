@@ -1,7 +1,7 @@
 // NOTE: Previously `infer-graphql-input-type-test.js`
 
 const { graphql } = require(`graphql`)
-const { SchemaComposer } = require(`graphql-compose`)
+const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildSchema } = require(`../../schema`)
 const nodeModel = require(`../../node-model`)
 const nodeStore = require(`../../../db/nodes`)
@@ -13,7 +13,7 @@ const buildTestSchema = async nodes => {
   for (const node of nodes) {
     store.dispatch({ type: `CREATE_NODE`, payload: node })
   }
-  const schemaComposer = new SchemaComposer()
+  const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
     nodeStore,

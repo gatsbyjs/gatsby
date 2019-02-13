@@ -141,11 +141,11 @@ describe(`Get example value for type inference`, () => {
 
   it(`build enum values for fields from array on nodes`, () => {
     // TODO: Should be moved to `types/__tests__/sort.js`
-    const { SchemaComposer } = require(`graphql-compose`)
+    const { createSchemaComposer } = require(`../../schema-composer`)
     const { addInferredFields } = require(`../add-inferred-fields`)
     const { getFieldsEnum } = require(`../../types/sort`)
 
-    const sc = new SchemaComposer()
+    const sc = createSchemaComposer()
     const tc = sc.createTC(`Fields`)
     addInferredFields({
       schemaComposer: sc,

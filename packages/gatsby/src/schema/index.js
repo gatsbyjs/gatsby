@@ -1,9 +1,9 @@
 /* @flow */
 
 const tracer = require(`opentracing`).globalTracer()
-const { SchemaComposer } = require(`graphql-compose`)
 const { store } = require(`../redux`)
 const nodeStore = require(`../db/nodes`)
+const { createSchemaComposer } = require(`./schema-composer`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 
@@ -17,7 +17,7 @@ module.exports.build = async ({ parentSpan }) => {
 
   const typeConflictReporter = new TypeConflictReporter()
 
-  const schemaComposer = new SchemaComposer()
+  const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
     nodeStore,

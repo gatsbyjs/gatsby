@@ -2,14 +2,12 @@ const _ = require(`lodash`)
 const { toInputObjectType } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { GraphQLDate } = require(`./types/Date`)
 const {
   addNodeInterface,
   addNodeInterfaceFields,
 } = require(`./types/NodeInterface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
-const { InferDirective, DontInferDirective } = require(`./types/directives`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
@@ -69,9 +67,6 @@ const updateSchemaComposer = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  schemaComposer.add(GraphQLDate)
-  schemaComposer.addDirective(InferDirective)
-  schemaComposer.addDirective(DontInferDirective)
   await addTypeDefs({ schemaComposer, parentSpan, typeDefs })
   nodeStore.getTypes().forEach(typeName => {
     schemaComposer.getOrCreateTC(typeName, tc => {
