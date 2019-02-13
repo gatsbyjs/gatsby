@@ -60,22 +60,22 @@ How do content managers preview their changes?
 We have some tooling planned for this :) Stay tuned! [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/ "https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/")
 
 How do you keep on top of things like price changes and stock availability with a static generated site?  
-We actually do this on the GatsbyJS store. Check out the code, and hope it's helpful: https://github.com/gatsbyjs/store.gatsbyjs.org
+We actually do this on the GatsbyJS store. Check out the code, and hope it's helpful: [https://github.com/gatsbyjs/store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org "Gatsby Swag Store")
 
 Is there a good upgrade path for new versions of Gatsby?  
-Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2: https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/.
+Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2: [https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/ "https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/").
 
 Following up on upgrade path question—how would you upgrade between version of 2.\~?  
 You can bump the version # in your package.json and then you're done.
 
 The question asked about search—how would you implement a site search in Gatsby?  
-One of the best things about Gatsby is that it's pretty agnostic on tech stack(s). So you're free to use what you want. I've used Algolia in the past and loved it, but you're free to implement this however you'd like! https://www.gatsbyjs.org/docs/adding-search/
+One of the best things about Gatsby is that it's pretty agnostic on tech stack(s). So you're free to use what you want. I've used Algolia in the past and loved it, but you're free to implement this however you'd like! [https://www.gatsbyjs.org/docs/adding-search/](https://www.gatsbyjs.org/docs/adding-search/ "Gatsby Docs")
 
 What is a 'route'?  
 Basically a URL, eg /blog/\[post-name\]
 
 Should i know React before starting to learn Gatsby?  
-You don't need to! Gatsby is a great playground for learning React. Check out this post: https://www.gatsbyjs.org/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/
+You don't need to! Gatsby is a great playground for learning React. Check out this post: [https://www.gatsbyjs.org/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/](https://www.gatsbyjs.org/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/ "https://www.gatsbyjs.org/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/")
 
 If my .htaccess file is configured to read  .html files without the extension in the url, can Gatsby compile the links to pages without the .html ending?  
 We haven't added support for this yet.
@@ -84,13 +84,13 @@ Follow up to the .htaccess question, how do you manage to hide .html from your u
 Many servers can do this. Generally the feature is called "clean urls".
 
 Is there a good starting point to compare building sites with Gatsby that developers would have built on platforms like WordPress or Craft, etc previously?  
-There are blog posts people have written about their experience on our blog at https://www.gatsbyjs.org/blog/tags/wordpress
+There are blog posts people have written about their experience on our blog at [https://www.gatsbyjs.org/blog/tags/wordpress](https://www.gatsbyjs.org/blog/tags/wordpress "Gatsby Blog")
 
 Regarding Environment Variables and security- how do we keep secure endpoints using env vars like process.env to handle authorization keys and secrets? Does this mean Node would be required in prod environment?  
-Yes, process.env is recommended for secret management. https://www.gatsbyjs.org/docs/environment-variables/, Generally you'd add these to gatsby-config.js — so would be used for the build but wouldn't be sent to users, so the keys wouldn't leak.
+Yes, process.env is recommended for secret management. [https://www.gatsbyjs.org/docs/environment-variables/](https://www.gatsbyjs.org/docs/environment-variables/ "https://www.gatsbyjs.org/docs/environment-variables/"), Generally you'd add these to gatsby-config.js — so would be used for the build but wouldn't be sent to users, so the keys wouldn't leak.
 
 What are best practices for making a Gatsby site dynamic by posting/fetching to/from a DB, like MongoDB, MySql, etc..  
-You can use a DB as your backend -- https://www.gatsbyjs.org/docs/sourcing-from-databases/. Posting to a database can be done with AJAX requests.
+You can use a DB as your backend -- [https://www.gatsbyjs.org/docs/sourcing-from-databases/](https://www.gatsbyjs.org/docs/sourcing-from-databases/ "Gatsby Docs"). Posting to a database can be done with AJAX requests.
 
 As a follow up to DB question, the tutorials give an example of building pages from markdown files. Would that same approach be possible from DB queries?  
 Yep!
@@ -126,10 +126,10 @@ Can you talk more about Themes & how to create custom themes for V2?
 Look at [https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/ "https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/") and [https://www.gatsbyjs.com/gatsby-days-themes-chris/](https://www.gatsbyjs.com/gatsby-days-themes-chris/ "https://www.gatsbyjs.com/gatsby-days-themes-chris/") and stay tuned for more posts in next week!
 
 What's the best way to get involved with contributing to Gatsby? Do you have regular calls for contributors or a preferred async channel e.g. Slack / Discord?  
-We do have Discord, and highly recommend it! Check out our Community page -> https://www.gatsbyjs.org/docs/community/
+We do have Discord, and highly recommend it! Check out our Community page -> [https://www.gatsbyjs.org/docs/community/](https://www.gatsbyjs.org/docs/community/ "Gatsby Community")
 
 How did you implement the Github PR test for lighthouse scoring?  
-All available in this repo. I run Lighthouse from a CI container, and then parse the response: https://github.com/dschau/gatsby-perf-audit
+All available in this repo. I run Lighthouse from a CI container, and then parse the response: [https://github.com/dschau/gatsby-perf-audit](https://github.com/dschau/gatsby-perf-audit "https://github.com/dschau/gatsby-perf-audit")
 
 Who does the Gatsby team consider its users? Content creators? Engineers? Other?  
 All of the above!
