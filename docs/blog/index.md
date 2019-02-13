@@ -58,3 +58,73 @@ Yes — if possible, you can lazy load components as that'll move the code into 
 
 How do content managers preview their changes?  
 We have some tooling planned for this :) Stay tuned! [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/ "https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/")
+
+How do you keep on top of things like price changes and stock availability with a static generated site?  
+We actually do this on the GatsbyJS store. Check out the code, and hope it's helpful! https://github.com/gatsbyjs/store.gatsbyjs.org
+
+Is there a good upgrade path for new versions of Gatsby?   
+Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2: https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/.
+
+Following up on upgrade path question—how would you upgrade between version of 2.\~?   
+You can bump the version # in your package.json and then you're done
+
+The question asked about search—how would you implement a site search in Gatsby?   
+One of the best things about Gatsby is that it's pretty agnostic on tech stack(s). So.. you're free to use what you want. I've used Algolia in the past and loved it, but you're free to implement this however you'd like! https://www.gatsbyjs.org/docs/adding-search/
+
+What is a 'route'?  
+Basically a URL, eg /blog/\[post-name\]
+
+Should i know React before starting to learn Gatsby?  
+You don't need to! Gatsby is a great playground for learning React. Check out this post: https://www.gatsbyjs.org/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/
+
+If my .htaccess file is configured to read  .html files without the extension in the url, can gatsby compile the links to pages without the .html ending?  
+We haven't added support for this
+
+Follow up to the .htaccess question, how do you manage to hide .html from your url on gatsby.com?  
+Many servers can do this. Generally the feature is called "clean urls"
+
+Is there a good starting point to compare building sites with Gatsby that developers would have built on platforms like WordPress or Craft, etc previously?  
+There are blog posts people have written about their experience on our blog at https://www.gatsbyjs.org/blog/tags/wordpress
+
+Regarding Environment Variables and security. How do we keep secure endpoints using env vars like process.env to handle authorization keys and secrets? Does this mean Node would be required in prod environment?  
+Yes, process.env is recommended for secret management. https://www.gatsbyjs.org/docs/environment-variables/, Generally you'd add these to gatsby-config.js — so would be used for the build but wouldn't be sent to users. So the keys wouldn't leak.
+
+What are best practices for making a gatsby site dynamic by posting/fetching to/from a DB, like MongoDB, MySql, etc..  
+You can use a DB as your backend -- https://www.gatsbyjs.org/docs/sourcing-from-databases/. Posting to a database can be doing with AJAX requests.
+
+As a follow up to DB question, the tutorials give an example of building pages from markdown files. Would that same approach be possible from DB queries?  
+Yep!
+
+If a company had numerous content managers (let's say 30), and they all needed to be able to create and publish content to a blog (which could be multiple on the same site) or a page, each update would require a new build? Is that an accurate understanding?  
+We're building a service for Preview that'll instantly update a staging version of the site and that can handle as many content updaters as you throw at it [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/#reach-skip-nav](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/#reach-skip-nav "https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/#reach-skip-nav")
+
+The Preview feature is awesome. But I'm thinking like a 24 hours news channel, which our company has, and a manager needing to post content at 2 am, or even more, stories being posted multiple times an hour at all hours. Will each update require a new build?  
+Yes. Builds are fast and automatic though so doesn't take any extra work or mental overhead.
+
+How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our ssr generated html to match the final rendered DOM.  
+Check out this docs page [https://www.gatsbyjs.org/docs/environment-variables/#environment-variables](https://www.gatsbyjs.org/docs/environment-variables/#environment-variables "https://www.gatsbyjs.org/docs/environment-variables/#environment-variables")
+
+is there any \`lighthouse.test.js\` out there, to use while building/customizing gatsby to keep an eye on performance? (similar to the one that was shown at the very beginning of the presentation).   
+You can just re-use mine--or could be worth building some tooling! We'll be sure to link to those resources soon!
+
+Any advice for running automated performance tests for sites that are hidden behind a login page?  
+A CI can do a build and then run the lighthouse test on the built site
+
+What are your thoughts on sanity.io  
+Seems great :) Check out this blog post for more info -> [https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/](https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/ "https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/")
+
+What is your opinion on using CSS, ie Styled Components, Emotion or BEM?  
+Dustin) We don't really have an official opinion--we want you to build apps however you prefer! That being said, I quite like CSS in JS (particularly emotion). I did a little podcast with Chris Coyier if you're interested--[https://css-tricks.com/video-screencasts/168-css-in-js/](https://css-tricks.com/video-screencasts/168-css-in-js/ "https://css-tricks.com/video-screencasts/168-css-in-js/")
+
+no concern of the additional request for the SVG??  
+SVGs previews are inlined
+
+no concerns of excessive prefetching in the bg?   
+This is turned off on low-power devices as per the Dan Abramov comment
+
+Re content updates: But is a new build triggered on *every* co_tent nge?  
+_ou can configure it that way -- send webhooks to have your CI server rebuild
+
+Can you talk more about Themes & how to create custom themes for V2?
+
+Look at [https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/ "https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/") and [https://www.gatsbyjs.com/gatsby-days-themes-chris/](https://www.gatsbyjs.com/gatsby-days-themes-chris/ "https://www.gatsbyjs.com/gatsby-days-themes-chris/") and stay tuned for more posts in next week!
