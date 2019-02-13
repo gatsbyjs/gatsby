@@ -1845,8 +1845,7 @@
   tags:
     - SEO
     - Markdown
-    - Testing
-    - Styling:Styled-Components
+    - Styling:CSS-in-JS
   features:
     - Optimized images with gatsby-image.
     - SEO friendly with react-helmet, gatsby-plugin-sitemap and Google Webmaster Tools!
