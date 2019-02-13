@@ -51,6 +51,10 @@
     "*.{md,css,scss,yaml,yml}": [
       "prettier --write",
       "git add"
+    ],
+    "*.svg": [
+      "svgo --pretty --indent=2 --config=svgo.yml --multipass",
+      "git add"
     ]
   },
   "husky": {
@@ -61,10 +65,10 @@
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions lerna-prepare",
     "check-versions": "babel-node scripts/check-versions.js",
-    "format": "npm run format:code && npm run format:other",
+    "format": "npm run format:code && npm run format:other && npm run format:svg",
     "format:other": "npm run prettier -- --write",
     "format:code": "npm run lint:code -- --fix",
-    "format-svg": "find www examples packages | grep '\\.svg$' | xargs -Iz -n 1 svgo --pretty --indent=2 --config=svgo.yml z",
+    "format:svg": "node scripts/format-svg.js",
     "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
     "hooks:install": "node node_modules/husky/husky.js install",
     "jest": "jest",
