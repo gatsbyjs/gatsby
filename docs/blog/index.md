@@ -225,34 +225,34 @@ Is it possible to have the gatsby-*.js files be rewritten in TypeScript?
 gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for gatsby-node.js but you could require the typescript interpreter and then require another typescript file and re-export its code from gatsby-node.js.
 
 Can we access previously recorded webinars?  
-Yes- they're all posted on our website here: https://www.gatsbyjs.com/resources/webinars/
+Yes- they're all posted on our website here: [https://www.gatsbyjs.com/resources/webinars/](https://www.gatsbyjs.com/resources/webinars/ "Gatsby Webinars")
 
-I'm new to GraphQL and probably haven't dug deep enough yet, but it's not clear to me how to add new properties and surface them in GraphQL., so my components can consume it.  
+I'm new to GraphQL and probably haven't dug deep enough yet, but it's not clear to me how to add new properties and surface them in GraphQL, so my components can consume it.  
 You can start with https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/ and go from there!
 
 Is it possible to dictate code splitting manually, e.g. component level code splitting?  
-Yup! React.Lazy is great + standard async imports
+Yup! React. Lazy is great + standard async imports.
 
 Why is it called Gatsby? Maybe I missed the introduction to that.  
-Kyle chose that name as he's a big fan of literature and The Great Gatsby gave him some inspiration :)
+Kyle chose that name as he's a big fan of literature and 'The Great Gatsby' gave him some inspiration :)
 
-Can we pre-fetch video thumbnail image without pre-fetching entire videos until clicked on?  
-That was just an example--we don't actually pre-fetch any video content! In general, prefetching is a great performance optimization technique that you _want_ to use and your users will thank you!
+Can we pre-fetch video thumbnail images without pre-fetching entire videos until clicked on?  
+That was just an example--we don't actually pre-fetch any video content! In general, prefetching is a great performance optimization technique that you _want_ to use and your users will thank you.
 
-How can I use gatsby-image for images in the content body like a wordpress post?  
-That's a bit tricky as the content body is a HTML string. There's issues talking about how to make this happen so jump into the discussion and help out!
+How can I use gatsby-image for images in the content body like a Wordpress post?  
+That's a bit tricky as the content body is a HTML string. There's issues talking about how to make this happen so jump into the discussion and help out.
 
 How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?  
-Check out https://www.gatsbyjs.org/docs/environment-variables/ for env variables
+Check out https://www.gatsbyjs.org/docs/environment-variables/ for env variables.
 
-How do you automate testing for performance regression  
-Build Lighthouse into your CI pipeline
+How do you automate testing for performance regression?  
+Build Lighthouse into your CI pipeline.
 
 Would you briefly overview Continuous Integration (CI) and the process when a test fails?  
-Sure! So CI is oftentimes used as a sanity check. We can run unit tests, e2e tests, and/or a linter. We can use these checks to give us some degree of confidence that we aren't introducing a regression, whether that regression is failing tests, performance regression, etc. I'll take a note of this and perhaps write a post on this--I think we have a great setup for our GatsbyJS repo!
+Sure! So CI is oftentimes used as a sanity check. We can run unit tests, e2e tests, and/or a linter. We can use these checks to give us some degree of confidence that we aren't introducing a regression, whether that regression is failing tests, performance regression, etc. I'll take a note of this and perhaps write a post on this--I think we have a great setup for our GatsbyJS repo.
 
-Is there any way to only build new or updated contents instead of the full site?  
-Not currently - but this is on our road map. We're calling it "incremental re-builds," and we're super excited to begin working on this!
+Is there any way to only build new or updated content instead of the full site?  
+Not currently - but this is on our roadmap. We're calling it "incremental re-builds," and we're super excited to begin working on this!
 
-Is it necessary to use GraphQL for work with Gatsby ?  
+Is it necessary to use GraphQL for work with Gatsby?  
 Nope! https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/
