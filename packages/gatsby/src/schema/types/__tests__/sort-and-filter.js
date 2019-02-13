@@ -371,6 +371,12 @@ describe(`GraphQL Input args from fields, test-only`, () => {
       .fields.type.ofType.getValues()
       .map(({ name }) => name)
 
-    expect(sort.sort()).toEqual([`bar`, `baz___ka`, `baz___ma`, `foo`])
+    expect(sort.sort()).toEqual([
+      `bar`,
+      `baz___ka`,
+      `baz___ma`,
+      `baz___ma___go`,
+      `foo`,
+    ])
   })
 })

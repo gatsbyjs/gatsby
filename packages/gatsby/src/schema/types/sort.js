@@ -1,6 +1,11 @@
 // @flow
 
-const { getNamedType, GraphQLInputObjectType } = require(`graphql`)
+const {
+  getNamedType,
+  getNullableType,
+  GraphQLInputObjectType,
+  GraphQLList,
+} = require(`graphql`)
 
 const getSortOrderEnum = ({ schemaComposer }) =>
   schemaComposer.getOrCreateETC(`SortOrderEnum`, etc => {
@@ -45,16 +50,24 @@ const convert = (fields, prefix = null, depth = 0) => {
 
   Object.keys(fields).forEach(fieldName => {
     const fieldConfig = fields[fieldName]
-    const type = getNamedType(fieldConfig.type)
     const sortKey = prefix ? `${prefix}.${fieldName}` : fieldName
+    const sortKeyFieldName = sortKey.split(`.`).join(SORT_FIELD_DELIMITER)
 
+    // XXX(freiksenet): this is to preserve legacy behaviour, this probably doesn't actually sort
+    if (getNullableType(fieldConfig.type) instanceof GraphQLList) {
+      sortFields[sortKeyFieldName] = {
+        value: sortKey,
+      }
+    }
+
+    const type = getNamedType(fieldConfig.type)
     if (type instanceof GraphQLInputObjectType) {
       if (depth < MAX_SORT_DEPTH) {
         Object.assign(sortFields, convert(type.getFields(), sortKey, depth + 1))
       }
     } else {
       // GraphQLScalarType || GraphQLEnumType
-      sortFields[sortKey.split(`.`).join(SORT_FIELD_DELIMITER)] = {
+      sortFields[sortKeyFieldName] = {
         value: sortKey,
       }
     }

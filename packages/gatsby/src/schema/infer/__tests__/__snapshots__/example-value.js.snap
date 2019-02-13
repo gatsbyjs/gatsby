@@ -41,6 +41,9 @@ Object {
   "nestedArrays": Object {
     "field": "nestedArrays",
   },
+  "objectsInArray": Object {
+    "field": "objectsInArray",
+  },
   "objectsInArray___field1": Object {
     "field": "objectsInArray.field1",
   },
