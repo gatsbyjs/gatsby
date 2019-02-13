@@ -14,7 +14,7 @@ We recently held a [webinar](https://www.gatsbyjs.com/behind-the-scenes/ "Behind
 
 To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/behind-the-scenes/ "Behind the Scenes Webinar").
 
-Are there data fetching hooks that we can use for client-side loading of authenticated content that isn't serialized at build-time?  
+**Question:** Are there data fetching hooks that we can use for client-side loading of authenticated content that isn't serialized at build-time?  
 **Answer:** Check out [https://www.gatsbyjs.org/docs/building-a-site-with-authentication/](https://www.gatsbyjs.org/docs/building-a-site-with-authentication/ "https://www.gatsbyjs.org/docs/building-a-site-with-authentication/") and [https://www.gatsbyjs.org/docs/building-apps-with-gatsby/](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/ "https://www.gatsbyjs.org/docs/building-apps-with-gatsby/")
 
 **Question:** Can I serialize an api to be stored and accessed client-side only?  
