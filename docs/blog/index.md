@@ -104,26 +104,23 @@ Yes. Builds are fast and automatic though so doesn't take any extra work or ment
 How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our ssr generated html to match the final rendered DOM.  
 Check out this docs page [https://www.gatsbyjs.org/docs/environment-variables/#environment-variables](https://www.gatsbyjs.org/docs/environment-variables/#environment-variables "https://www.gatsbyjs.org/docs/environment-variables/#environment-variables")
 
-is there any \`lighthouse.test.js\` out there, to use while building/customizing gatsby to keep an eye on performance? (similar to the one that was shown at the very beginning of the presentation).  
-You can just re-use mine--or could be worth building some tooling! We'll `e sure to link to ose resources soon`
-
 Any advice for running automated performance tests for sites that are hidden behind a login page?  
-A CI can do a build and then run the lighthouse test on the built site
+A CI can do a build and then run the lighthouse test on the built site.
 
-What are your thoughts on sanity.io  
+What are your thoughts on sanity.io?  
 Seems great :) Check out this blog post for more info -> [https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/](https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/ "https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/")
 
 What is your opinion on using CSS, ie Styled Components, Emotion or BEM?  
-Dustin) We don't really have an official opinion--we want you to build apps however you prefer! That being said, I quite like CSS in JS (particularly emotion). I did a little podcast with Chris Coyier if you're interested--[https://css-tricks.com/video-screencasts/168-css-in-js/](https://css-tricks.com/video-screencasts/168-css-in-js/ "https://css-tricks.com/video-screencasts/168-css-in-js/")
+We don't really have an official opinion--we want you to build apps however you prefer! That being said, I quite like CSS in JS (particularly emotion). I did a little podcast with Chris Coyier if you're interested--[https://css-tricks.com/video-screencasts/168-css-in-js/](https://css-tricks.com/video-screencasts/168-css-in-js/ "https://css-tricks.com/video-screencasts/168-css-in-js/")
 
-no concern of the additional request for the SVG??  
-SVGs previews are inlined
+No concern of the additional request for the SVG??  
+SVGs previews are inlined.
 
-no concerns of excessive prefetching in the bg?  
-This is turned off on low-power devices as per the Dan Abramov comment
+No concerns of excessive prefetching in the bg?  
+This is turned off on low-power devices.
 
 Re content updates: But is a new build triggered on _every_ content change?  
-You can configure it that way -- send webhooks to have your CI server rebuild
+You can configure it that way -- send webhooks to have your CI server rebuild.
 
 Can you talk more about Themes & how to create custom themes for V2?  
 Look at [https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/ "https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/") and [https://www.gatsbyjs.com/gatsby-days-themes-chris/](https://www.gatsbyjs.com/gatsby-days-themes-chris/ "https://www.gatsbyjs.com/gatsby-days-themes-chris/") and stay tuned for more posts in next week!
@@ -131,29 +128,29 @@ Look at [https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/](ht
 What's the best way to get involved with contributing to Gatsby? Do you have regular calls for contributors or a preferred async channel e.g. Slack / Discord?  
 We do have Discord, and highly recommend it! Check out our Community page -> https://www.gatsbyjs.org/docs/community/
 
-How did you implement the Github PR test for lighthouse scoring?   
-All available in this repo. I run Lighthouse from a CI container, and then parse the response! https://github.com/dschau/gatsby-perf-audit
+How did you implement the Github PR test for lighthouse scoring?  
+All available in this repo. I run Lighthouse from a CI container, and then parse the response: https://github.com/dschau/gatsby-perf-audit
 
-Who does the Gatsby team consider its users? content creators? Engineers? Other?  
+Who does the Gatsby team consider its users? Content creators? Engineers? Other?  
 All of the above!
 
-What is the main difference between gatsby and react-static?  
-react-static is a subset of Gatsby — it lets you programmatically create pages like Gatsby and has a limited plugin system but doesn't have a data layer for connecting to 3rd party APIs or transforming markdown and images.
+What is the main difference between Gatsby and react-static?  
+React-static is a subset of Gatsby — it lets you programmatically create pages like Gatsby and has a limited plugin system but doesn't have a data layer for connecting to 3rd party APIs or transforming markdown and images.
 
-How does Gatsby handle builds of a thousand pages? Let's say I've already run gatsby build before to build it and then only one page has been changed, does Gatsby knows how to build only the pages that were changed?  
+How does Gatsby handle builds of a thousand pages? Let's say I've already run Gatsby build before to build it and then only one page has been changed, does Gatsby knows how to build only the pages that were changed?  
 We don't yet have incremental builds, but 1000 page sites should build relatively quickly (a couple of minutes). Stay tuned on incremental builds!
 
-is there a way to enable SSR on run time to things like a post preview?  
-If you mean a screenshot of the built site, you could deploy to a staged URL, and then use a plugin like https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot and then query for your page preview (we do this on gatsbyjs.org!). Additionally, something like using a screenshot service (https://screenshot-v2.now.sh/blog.dustinschau.com?type=png) would work, as well! Hopefully I understand the question!,We're working on a service for this! https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/
+Is there a way to enable SSR on run time to things like a post preview?  
+If you mean a screenshot of the built site, you could deploy to a staged URL, and then use a plugin like https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot and then query for your page preview (we do this on gatsbyjs.org!). Additionally, something like using a screenshot service (https://screenshot-v2.now.sh/blog.dustinschau.com?type=png) would work, as well. We're working on a service for this: https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/
 
 You mentioned 'Incremental builds' on another question, can you point me to where I can read more about the ideas and status?  
-Some prior art here: https://github.com/gatsbyjs/gatsby/issues/5002 and https://github.com/gatsbyjs/gatsby/issues/9083 Once we're ready to start implementing, we'll most likely create an RFC and solicit community feedback for the functionality! We haven't talked too much about it publically but you can read a general overview in our company launch post which talks about our long-term vision https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing
+Some prior art here: https://github.com/gatsbyjs/gatsby/issues/5002 and https://github.com/gatsbyjs/gatsby/issues/9083 Once we're ready to start implementing, we'll most likely create an RFC and solicit community feedback for the functionality. We haven't talked too much about it publicly, but you can read a general overview in our company launch post which talks about our long-term vision https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing
 
-Does the lazy-loading technique applies to images hosted on a cloud based management service such as cloudinary?  
-There would need to be support added for Cloudinary. There's been talk about this but nobody has built it yet. Some CMSs like Contentful, datocms, and sanity.io have added support gatsby-image.
+Does the lazy-loading technique apply to images hosted on a cloud based management service such as Cloudinary?  
+There would need to be support added for Cloudinary. There's been talk about this but nobody has built it yet. Some CMSs like Contentful, Datocms, and sanity.io have added support gatsby-image.
 
 On mobile, where a user is not able to hover, how does this prefetching method differ?  
-prefetching starts when a link appears on the screen so it works on mobile very well!
+Prefetching starts when a link appears on the screen so it works on mobile very well.
 
 Would it makes sense to still use Gatsby for a more "dynamic" type of app?  
 Yes! You can learn more about what types of dynamic apps you can build with Gatsby here: https://www.gatsbyjs.com/build-web-apps-webinar
@@ -191,7 +188,7 @@ We don't think so :)
 Does Gatsby provide a polyfill for IntersectionObserver (for older browser which don't support it)?  
 Not by default as it's rather heavy. There's docs on how to do this though if you want to support it. It's a progressive enhancement so things will all still work in older browsers. They just won't as efficient.
 
-Have you implemented a rich text field from Contentful? If so, were you able to get gatsby-image working with embedded images in the rich text field?   
+Have you implemented a rich text field from Contentful? If so, were you able to get gatsby-image working with embedded images in the rich text field?  
 Gatsby works with Contentful rich text in beta right now. If you have specific Qs about the status, you can raise as a GH issue
 
 Hi, I have a site built on Drupal 7. How easy would it be to migrate to Gatsby with say Netlify as a CDN?  
