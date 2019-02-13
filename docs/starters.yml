@@ -1834,6 +1834,22 @@
     - Various available icon sets
     - RSS Feed
     - Web app manifest
+- url: https://gatsby.magicsoup.io/
+  repo: https://github.com/magicsoup-io/gatsby-starter-magicsoup
+  description: A production ready gatsby starter using magicsoup.io
+  tags:
+    - SEO
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Optimized images with gatsby-image.
+    - SEO friendly with react-helmet, gatsby-plugin-sitemap and Google Webmaster Tools!
+    - Responsive UIs with magicsoup.io/stock.
+    - Static content with gatsby-transform-remark or gatsby-transform-json.
+    - Convert Markdown to StyledComponents!
+    - Webfonts with gatsby-plugin-web-font-loader.
+    - SSR ready!
+    - Testing with Jest!
 - url: https://foxandgeese.github.io/tiny-agency/
   repo: https://github.com/foxandgeese/tiny-agency
   description: Simple Gatsby.js starter that uses material design and that's perfect for tiny agencies.
