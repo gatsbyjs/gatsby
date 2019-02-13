@@ -18,7 +18,7 @@ It takes your GraphQL query and returns the requested data. That's it!
 
 ### Basic example
 
-Let's create our familiar `Header` component:
+Let's create a `Header` component that queries for the site title from `gatsby-config.js`:
 
 ```jsx:title=src/components/header.js
 import React from "react"
