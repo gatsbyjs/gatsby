@@ -141,10 +141,10 @@ How does Gatsby handle builds of a thousand pages? Let's say I've already run Ga
 We don't yet have incremental builds, but 1000 page sites should build relatively quickly (a couple of minutes). Stay tuned on incremental builds!
 
 Is there a way to enable SSR on run time to things like a post preview?  
-If you mean a screenshot of the built site, you could deploy to a staged URL, and then use a plugin like https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot and then query for your page preview (we do this on gatsbyjs.org!). Additionally, something like using a screenshot service (https://screenshot-v2.now.sh/blog.dustinschau.com?type=png) would work, as well. We're working on a service for this: https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/
+If you mean a screenshot of the built site, you could deploy to a staged URL, and then use a plugin like [https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot") and then query for your page preview (we do this on gatsbyjs.org!). Additionally, something like using a screenshot service ([https://screenshot-v2.now.sh/blog.dustinschau.com?type=png](https://screenshot-v2.now.sh/blog.dustinschau.com?type=png "Screenshot")) would work, as well. We're working on a service for this: [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/ "Gatsby Preview")
 
 You mentioned 'Incremental builds' on another question, can you point me to where I can read more about the ideas and status?  
-Some prior art here: https://github.com/gatsbyjs/gatsby/issues/5002 and https://github.com/gatsbyjs/gatsby/issues/9083 Once we're ready to start implementing, we'll most likely create an RFC and solicit community feedback for the functionality. We haven't talked too much about it publicly, but you can read a general overview in our company launch post which talks about our long-term vision https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing
+Some prior art here: [https://github.com/gatsbyjs/gatsby/issues/5002](https://github.com/gatsbyjs/gatsby/issues/5002 "https://github.com/gatsbyjs/gatsby/issues/5002") and [https://github.com/gatsbyjs/gatsby/issues/9083](https://github.com/gatsbyjs/gatsby/issues/9083 "https://github.com/gatsbyjs/gatsby/issues/9083") Once we're ready to start implementing, we'll most likely create an RFC and solicit community feedback for the functionality. We haven't talked too much about it publicly, but you can read a general overview in our company launch post which talks about our long-term vision [https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing](https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing "https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing")
 
 Does the lazy-loading technique apply to images hosted on a cloud based management service such as Cloudinary?  
 There would need to be support added for Cloudinary. There's been talk about this but nobody has built it yet. Some CMSs like Contentful, Datocms, and sanity.io have added support gatsby-image.
@@ -153,25 +153,25 @@ On mobile, where a user is not able to hover, how does this prefetching method d
 Prefetching starts when a link appears on the screen so it works on mobile very well.
 
 Would it makes sense to still use Gatsby for a more "dynamic" type of app?  
-Yes! You can learn more about what types of dynamic apps you can build with Gatsby here: https://www.gatsbyjs.com/build-web-apps-webinar
+Yes! You can learn more about what types of dynamic apps you can build with Gatsby here: [https://www.gatsbyjs.com/build-web-apps-webinar](https://www.gatsbyjs.com/build-web-apps-webinar "Dynamic Apps Webinar")
 
 Can I use Gatsby Image with images from external sources like Cloudinary or an AWS bucket? And if it's indeed possible, will this impact my build time if I have thousands of images?  
 Yes, build-times do go up with image processing as it's very CPU intensive.
 
 Is there a 3rd party CMS that you recommend that works particular well with Gatsby?  
-Lots of CMS-s! Here's a list: https://www.gatsbyjs.org/docs/headless-cms/
+Lots of CMS-s! Here's a list: [https://www.gatsbyjs.org/docs/headless-cms/](https://www.gatsbyjs.org/docs/headless-cms/ "Gatsby Docs")
 
-What CI system did you use for the (Harry’s shopflamingo.com) website?  
+What CI system did you use for the (Harry’s [shopflamingo.com](https://www.shopflamingo.com/ "Flamingo")) website?  
 CircleCI. it's incredible, definitely check it out.
 
 What is the recommended approach for sites that have integrations like a oauth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to have a separate bundle lazy loaded only when loaded in the browser?  
-Check out https://www.gatsbyjs.org/docs/building-a-site-with-authentication/
+Check out [https://www.gatsbyjs.org/docs/building-a-site-with-authentication/](https://www.gatsbyjs.org/docs/building-a-site-with-authentication/ "Gatsby docs")
 
 How can you trigger a content refresh on the Gatsby site (frontend) when using gatsby-source-wordpress with a Wordpress CMS?  
 You create a webhook on your CMS, and point the webhook at your CI system (eg Netlify).
 
 To use gatsby for a blog - is this overengineering?  
-Definitely not! Here are some blogs built with Gatsby: https://www.gatsbyjs.org/showcase/?filters%5B0%5D=Blog. One notable one is Dan Abramov — https://overreacted.io/
+Definitely not! Here are some blogs built with Gatsby: [https://www.gatsbyjs.org/showcase/?filters%5B0%5D=Blog](https://www.gatsbyjs.org/showcase/?filters%5B0%5D=Blog "Gatsby Showcase"). One notable one is Dan Abramov — [https://overreacted.io/](https://overreacted.io/ "https://overreacted.io/")
 
 It was mentioned Gatsby has an upper limit of 50K pages, is that before you need to increase nodes memory or an upper limit written into Gatsby's build process?  
 Not a strict upper limit, more of a rough one that we've seen in the wild.
@@ -192,16 +192,16 @@ Have you implemented a rich text field from Contentful? If so, were you able to 
 Gatsby works with Contentful rich text in beta right now. If you have specific Qs about the status, you can raise as a GH issue.
 
 I have a site built on Drupal 7. How easy would it be to migrate to Gatsby with say Netlify as a CDN?  
-gatsby-source-drupal only supports Drupal 8 at the moment, I believe. https://www.gatsbyjs.org/packages/gatsby-source-drupal/?=drupal
+gatsby-source-drupal only supports Drupal 8 at the moment, I believe. [https://www.gatsbyjs.org/packages/gatsby-source-drupal/?=drupal](https://www.gatsbyjs.org/packages/gatsby-source-drupal/?=drupal "Gatsby and Drupal")
 
 Does Gatsby also have a solution for optimizing the experience of videos out of the box? Like gatsby-image for videos?  
 Not at the moment. Video is harder to work with than images as video processing is very CPU intensive. We'd love to find a solution that works with video providers like YouTube, Vimeo, etc.
 
 Dustin mentioned a recording on building dynamic apps with Gatsby. Is that available?  
-Yes- you find that recording here: https://www.gatsbyjs.com/build-web-apps-webinar
+Yes- you find that recording here: [https://www.gatsbyjs.com/build-web-apps-webinar](https://www.gatsbyjs.com/build-web-apps-webinar "Gatsby Building Apps Webinar")
 
 Gatsby transformers support Markdown and asciidoc.  Possible support for Sphinx reStructuredText?  
-Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! https://www.gatsbyjs.org/docs/create-source-plugin/
+Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! [https://www.gatsbyjs.org/docs/create-source-plugin/](https://www.gatsbyjs.org/docs/create-source-plugin/ "Gatsby plugins")
 
 Would it be a good idea to manage several blogs or sites from one Wordpress install as back office, and build all the sites on Gatsby?  
 That would be a great idea! We've talked to some folks doing this.
@@ -210,10 +210,10 @@ Do you think there will be a market for Gatsby premium themes (like for Wordpres
 Yep :) it's on the roadmap!
 
 Is Gatsby production ready? It's fantastic!  
-Yep! Here are some sites using Gatsby in production: https://www.gatsbyjs.org/showcase/ (includes the Flamingo e-commerce site).
+Yep! Here are some sites using Gatsby in production: [https://www.gatsbyjs.org/showcase/ ](https://www.gatsbyjs.org/showcase/ "Gatsby Showcase")(includes the Flamingo e-commerce site).
 
 Is there a good write up of how Gatsby compares to other static site generators (e.g. NextJS)? If so, where is it?  
-Here's a good overview, although doesn't tackle Next specifically: https://www.gatsbyjs.org/features/
+Here's a good overview, although doesn't tackle Next specifically: [https://www.gatsbyjs.org/features/](https://www.gatsbyjs.org/features/ "Gatsby features")
 
 From an SSR perspective, how is Gatsby different from Next.js?  
 Gatsby does SSR at "build-time" — which means all the SSRing is done _before_ a user requests a page which means your app loads really fast and it's easy to run and scale. Next.js does SSR at runtime which means that you need running servers to handle traffic and have to handle caching and scaling of servers in response to traffic.
@@ -228,7 +228,7 @@ Can we access previously recorded webinars?
 Yes- they're all posted on our website here: [https://www.gatsbyjs.com/resources/webinars/](https://www.gatsbyjs.com/resources/webinars/ "Gatsby Webinars")
 
 I'm new to GraphQL and probably haven't dug deep enough yet, but it's not clear to me how to add new properties and surface them in GraphQL, so my components can consume it.  
-You can start with https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/ and go from there!
+You can start with [https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/](https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/ "https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/") and go from there!
 
 Is it possible to dictate code splitting manually, e.g. component level code splitting?  
 Yup! React. Lazy is great + standard async imports.
@@ -243,7 +243,7 @@ How can I use gatsby-image for images in the content body like a Wordpress post?
 That's a bit tricky as the content body is a HTML string. There's issues talking about how to make this happen so jump into the discussion and help out.
 
 How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?  
-Check out https://www.gatsbyjs.org/docs/environment-variables/ for env variables.
+Check out [https://www.gatsbyjs.org/docs/environment-variables/](https://www.gatsbyjs.org/docs/environment-variables/ "https://www.gatsbyjs.org/docs/environment-variables/") for env variables.
 
 How do you automate testing for performance regression?  
 Build Lighthouse into your CI pipeline.
@@ -255,4 +255,4 @@ Is there any way to only build new or updated content instead of the full site?
 Not currently - but this is on our roadmap. We're calling it "incremental re-builds," and we're super excited to begin working on this!
 
 Is it necessary to use GraphQL for work with Gatsby?  
-Nope! https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/
+Nope! [https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/](https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/ "GraphQL")
