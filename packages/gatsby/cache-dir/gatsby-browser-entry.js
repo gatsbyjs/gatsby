@@ -35,7 +35,7 @@ const useStaticQuery = query => {
     process.env.NODE_ENV === `development`
   ) {
     throw new Error(
-      `You're likely using a version of React that doesn't support Hooks` +
+      `You're likely using a version of React that doesn't support Hooks\n` +
         `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
     )
   }
@@ -44,8 +44,8 @@ const useStaticQuery = query => {
     return context[query].data
   } else {
     throw new Error(
-      `The result of this StaticQuery could not be fetched.` +
-        `This is likely a bug in Gatsby and if refreshing the page does not fix it,` +
+      `The result of this StaticQuery could not be fetched.\n\n` +
+        `This is likely a bug in Gatsby and if refreshing the page does not fix it, ` +
         `please open an issue in https://github.com/gatsbyjs/gatsby/issues`
     )
   }
