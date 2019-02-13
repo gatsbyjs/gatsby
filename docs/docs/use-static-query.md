@@ -2,7 +2,7 @@
 title: Querying data in components with the useStaticQuery hook
 ---
 
-Gatsby v2.1.0 introduces `useStaticQuery`, a new [React Hook](https://reactjs.org/docs/hooks-intro.html) that. Just like the `StaticQuery` component, it allows your React components to retrieve data via a GraphQL query. But with the simplicity, shareability and elegance of Hooks.
+Gatsby v2.1.0 introduces `useStaticQuery`, a new Gatsby feature that provides the ability to use a [React Hook](https://reactjs.org/docs/hooks-intro.html) to query with GraphQL at _build time_. Just like the `StaticQuery` component, it allows your React components to retrieve data via a GraphQL query that will be parsed, evaluated, and the resulting data will be injected into the component. However--`useStaticQuery` uses a hook rather than a render prop!
 
 In this guide, we'll walk through an example using `useStaticQuery`. If you're not familiar with static queries in Gatsby, you might want to check out [the difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query).
 
