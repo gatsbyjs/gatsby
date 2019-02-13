@@ -14,9 +14,9 @@ The `replaceRenderer` API is one of [Gatsby's Server Side Rendering (SSR) extens
 
 If multiple plugins implement `replaceRenderer` in your project, only the last plugin implementing the API can be called - which will break your site builds.
 
-Note that `replaceRenderer` is only used during `gatsby build`. It won't cause problems as you work on your site with `gatsby develop`.
+Note that `replaceRenderer` is only used during the build lifecycle. It won't cause problems as you work on your site with the develop script.
 
-If multiple plugins implement `replaceRenderer`, `gatsby build` will warn you:
+If multiple plugins implement `replaceRenderer`, the build script will warn you:
 
 ```
 warning replaceRenderer API found in these plugins:
@@ -109,6 +109,6 @@ exports.replaceRenderer = ({
 }
 ```
 
-Now `gatsby-ssr.js` implements the Styled Components and Redux functionality using one `replaceRenderer` instance. Run `gatsby build` and the site will build correctly.
+Now `gatsby-ssr.js` implements the Styled Components and Redux functionality using one `replaceRenderer` instance. Run `npm run build` and the site will build correctly.
 
 All the code from this example is [available on GitHub](https://github.com/m-allanson/gatsby-replace-renderer-example/commits/master).
