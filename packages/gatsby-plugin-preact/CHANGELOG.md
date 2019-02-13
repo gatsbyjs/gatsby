@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preact/compare/gatsby-plugin-preact@2.0.8...gatsby-plugin-preact@2.0.9) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
 <a name="2.0.8"></a>
 
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preact/compare/gatsby-plugin-preact@2.0.7...gatsby-plugin-preact@2.0.8) (2018-11-29)

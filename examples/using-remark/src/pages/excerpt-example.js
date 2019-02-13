@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import Layout from "../layouts"
 import styles from "../styles"
 import presets from "../utils/presets"
 import { rhythm, scale } from "../utils/typography"
@@ -9,7 +10,7 @@ class Index extends React.Component {
     const posts = this.props.data.allMarkdownRemark.edges
 
     return (
-      <div>
+      <Layout location={this.props.location}>
         <div>
           <h1
             css={{
@@ -51,7 +52,7 @@ class Index extends React.Component {
             ))}
           </ul>
         </div>
-      </div>
+      </Layout>
     )
   }
 }

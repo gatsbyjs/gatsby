@@ -173,4 +173,4 @@ Check out tutorials listed on the [Awesome Gatsby](/docs/awesome-gatsby/#gatsby-
 
 ## Gatsby markdown starters
 
-There are a number of [Gatsby starters](/docs/gatsby-starters/) that come preconfigured to work with markdown.
+There are a number of [Gatsby starters](/starters?c=Markdown) that come preconfigured to work with markdown.

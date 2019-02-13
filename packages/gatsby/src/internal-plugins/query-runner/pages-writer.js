@@ -101,7 +101,7 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  asyncRequires += `exports.data = () => import("${joinPath(
+  asyncRequires += `exports.data = () => import(/* webpackChunkName: "pages-manifest" */ "${joinPath(
     program.directory,
     `.cache`,
     `data.json`

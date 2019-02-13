@@ -8,6 +8,7 @@
 /packages/gatsby-link/                          @gatsbyjs/core
 /packages/gatsby-dev-cli/                       @gatsbyjs/core
 /packages/gatsby-cli/                           @gatsbyjs/core
+/starters/                                      @gatsbyjs/core
 
 # We also need to be careful with CI/CD and repo config files.
 .circleci/                                      @gatsbyjs/core
