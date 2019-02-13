@@ -40,10 +40,7 @@ const useStaticQuery = query => {
     )
   }
   const context = React.useContext(StaticQueryContext)
-  if (context[query] && context[query].data) {
-    return context[query].data
-  }
-  return null
+  return context[query].data
 }
 
 StaticQuery.propTypes = {
