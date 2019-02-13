@@ -1,8 +1,8 @@
 // NOTE: Previously `infer-graphql-input-from-fields-test.js`
 
 const { createSchemaComposer } = require(`../../schema-composer`)
-const { getFilterInput } = require(`../../types/filter`)
-const { getSortInput } = require(`../../types/sort`)
+const { getFilterInput } = require(`../filter`)
+const { getSortInput } = require(`../sort`)
 
 const {
   GraphQLBoolean,
