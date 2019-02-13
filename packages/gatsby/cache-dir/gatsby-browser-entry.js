@@ -40,7 +40,15 @@ const useStaticQuery = query => {
     )
   }
   const context = React.useContext(StaticQueryContext)
-  return context[query].data
+  if (context[query] && context[query].data) {
+    return context[query].data
+  } else {
+    throw new Error(
+      `The result of this StaticQuery could not be fetched.` +
+        `This is likely a bug in Gatsby and if refreshing the page does not fix it,` +
+        `please open an issue in https://github.com/gatsbyjs/gatsby/issues`
+    )
+  }
 }
 
 StaticQuery.propTypes = {
