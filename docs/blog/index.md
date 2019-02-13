@@ -6,13 +6,15 @@ tags:
 - webinar
 - q&a
 - performance
-image: ''
-showImageInArticle: false
+image: "/src/uploads/Screen Shot 2019-02-13 at 2.23.00 PM.png"
+showImageInArticle: true
 
 ---
 We recently held a [webinar](https://www.gatsbyjs.com/behind-the-scenes/ "Behind the Scenes Webinar") on what makes Gatsby so fast, with performance optimization out of the box. During the live event, we got over 100 questions that we want to share with you here. There’s a mix of topics from how we do image optimization, route-based code splitting, prefetching of routes with intersection observers, and more. Read on to get the answers to all the webinar questions as well as links to learn more.
 
 To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/behind-the-scenes/ "Behind the Scenes Webinar").
+
+![](/src/uploads/Screen Shot 2019-02-13 at 2.23.00 PM.png)
 
 **Question:** Are there data fetching hooks that we can use for client-side loading of authenticated content that isn't serialized at build-time?  
 **Answer:** Check out [https://www.gatsbyjs.org/docs/building-a-site-with-authentication/](https://www.gatsbyjs.org/docs/building-a-site-with-authentication/ "https://www.gatsbyjs.org/docs/building-a-site-with-authentication/") and [https://www.gatsbyjs.org/docs/building-apps-with-gatsby/](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/ "https://www.gatsbyjs.org/docs/building-apps-with-gatsby/")
