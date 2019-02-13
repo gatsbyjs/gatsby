@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.5.5...babel-plugin-remove-graphql-queries@2.6.0) (2019-02-13)
+
+### Features
+
+- **gatsby:** add useStaticQuery hook ([#11588](https://github.com/gatsbyjs/gatsby/issues/11588)) ([f149c4c](https://github.com/gatsbyjs/gatsby/commit/f149c4c))
+
 ## [2.5.5](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.5.4...babel-plugin-remove-graphql-queries@2.5.5) (2019-02-04)
 
 ### Bug Fixes
