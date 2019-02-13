@@ -9,6 +9,8 @@ In this guide, we'll walk through an example using `useStaticQuery`. If you're n
 ## How to use `useStaticQuery` in components
 
 > 💡 You'll need React and ReactDOM 16.8.0 or later to use `useStaticQuery`.
+>
+> 📦 `npm install react@^16.8.0 react-dom@16.8.0`
 
 `useStaticQuery` is a React Hook. All the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html) apply.
 
