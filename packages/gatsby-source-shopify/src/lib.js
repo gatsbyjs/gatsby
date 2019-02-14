@@ -52,7 +52,7 @@ export const queryAll = async (
     : nodes
 
   if (get([...path, `pageInfo`, `hasNextPage`], data)) {
-    return await queryAll(
+    return queryAll(
       client,
       path,
       query,
