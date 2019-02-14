@@ -52,8 +52,8 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
 
       onRenderBody(mocks, pluginOptions)
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
-      // eslint-disable-next-line no-useless-escape
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+        // eslint-disable-next-line no-useless-escape
         `dataLayer = [{\"pageCategory\":\"home\"}]`
       )
     })
