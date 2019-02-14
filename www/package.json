@@ -4,6 +4,8 @@
   "version": "2.0.0-beta",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@emotion/core": "^10.0.7",
+    "@emotion/styled": "^10.0.7",
     "@reach/skip-nav": "^0.1.1",
     "@reach/visually-hidden": "^0.1.2",
     "axios": "^0.18.0",
@@ -17,7 +19,7 @@
     "gatsby-image": "^2.0.5",
     "gatsby-plugin-canonical-urls": "^2.0.5",
     "gatsby-plugin-catch-links": "^2.0.2",
-    "gatsby-plugin-emotion": "^2.0.5",
+    "gatsby-plugin-emotion": "^4.0.3",
     "gatsby-plugin-feed": "^2.0.5",
     "gatsby-plugin-google-analytics": "^2.0.5",
     "gatsby-plugin-google-tagmanager": "^2.0.5",

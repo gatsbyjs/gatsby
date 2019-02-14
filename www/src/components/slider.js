@@ -1,5 +1,5 @@
 import React from "react"
-import { keyframes } from "react-emotion"
+import { keyframes } from "@emotion/core"
 
 export default ({ items, color }) => (
   <div

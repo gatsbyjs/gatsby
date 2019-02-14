@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { css } from "react-emotion"
+import { css } from "@emotion/core"
 import SvgDefs from "../assets/svg-defs"
 import {
   BlogIcon,
