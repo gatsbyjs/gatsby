@@ -36,12 +36,6 @@ You typically only need to configure this once.`
 const conf = new Configstore(pkg.name)
 
 const fs = require(`fs-extra`)
-const havePackageJsonFile = fs.existsSync(`package.json`)
-
-if (!havePackageJsonFile) {
-  console.error(`Current folder must have a package.json file!`)
-  process.exit()
-}
 
 let pathToRepo = argv.setPathToRepo
 
@@ -50,6 +44,13 @@ if (pathToRepo) {
     pathToRepo = path.join(os.homedir(), pathToRepo.split(`~`).pop())
   }
   conf.set(`gatsby-location`, path.resolve(pathToRepo))
+  process.exit()
+}
+
+const havePackageJsonFile = fs.existsSync(`package.json`)
+
+if (!havePackageJsonFile) {
+  console.error(`Current folder must have a package.json file!`)
   process.exit()
 }
 

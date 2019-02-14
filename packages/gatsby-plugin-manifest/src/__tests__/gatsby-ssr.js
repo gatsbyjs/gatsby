@@ -1,4 +1,3 @@
-// const { shallow } = require(`enzyme`)
 const { onRenderBody } = require(`../gatsby-ssr`)
 
 let headComponents
@@ -36,7 +35,25 @@ describe(`gatsby-plugin-manifest`, () => {
   })
 
   it(`Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head`, () => {
-    onRenderBody(ssrArgs, { icon: true, theme_color: `#000000` })
+    onRenderBody(ssrArgs, {
+      icon: true,
+      theme_color: `#000000`,
+    })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Adds link favicon tag if "include_favicon" is set to true`, () => {
+    onRenderBody(ssrArgs, { icon: true, include_favicon: true })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Adds link favicon if "include_favicon" option is not provided`, () => {
+    onRenderBody(ssrArgs, { icon: true })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Does not add a link favicon if "include_favicon" option is set to false`, () => {
+    onRenderBody(ssrArgs, { icon: true, include_favicon: false })
     expect(headComponents).toMatchSnapshot()
   })
 

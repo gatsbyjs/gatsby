@@ -92,6 +92,9 @@
         - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/
           items:
+            # This list should only include the top 5 CMSs by Gatsby plugin usage.
+            # Please do not add your headless CMS here.
+            # Instead, please add links on the /docs/headless-cms/ page
             - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
@@ -102,8 +105,6 @@
               link: /docs/sourcing-from-prismic/
             - title: Sourcing from Netlify CMS
               link: /docs/sourcing-from-netlify-cms/
-            - title: Sourcing from Ghost
-              link: /docs/sourcing-from-ghost/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
@@ -117,6 +118,8 @@
           link: /docs/page-query/
         - title: Querying data in components with StaticQuery
           link: /docs/static-query/
+        - title: Querying data in components with the useStaticQuery hook
+          link: /docs/use-static-query/
         - title: Using GraphQL fragments
           link: /docs/using-fragments/
         - title: Creating slugs for pages
@@ -154,6 +157,8 @@
           link: /docs/css-modules/
         - title: Typography.js
           link: /docs/typography-js/
+        - title: Using CSS-in-JS library Emotion
+          link: /docs/emotion/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
         - title: Using CSS-in-JS library styled components
@@ -256,6 +261,11 @@
           link: /docs/seo/
         - title: Optimizing Site Performance with Guess.js
           link: /docs/optimizing-site-performance-with-guessjs/
+    - title: Localizing your site*
+      link: /docs/localization-i18n/
+      items:
+        - title: Creating Prefixed 404 Pages for Different Languages
+          link: /docs/creating-prefixed-404-pages-for-different-languages/
 - title: Ecosystem
   link: /ecosystem/
   items:
@@ -355,6 +365,8 @@
           link: /docs/html-generation/
         - title: Code Splitting and Prefetching
           link: /docs/how-code-splitting-works/
+    - title: Resource Handling & Service Workers
+      link: /docs/resource-handling-and-service-workers/
     - title: Data Storage (Redux)*
       link: /docs/data-storage-redux/
     - title: Build Caching*
@@ -373,6 +385,8 @@
       link: /docs/wordpress-source-plugin-tutorial/
     - title: Adding images to a WordPress site
       link: /docs/image-tutorial/
+    - title: Writing documentation with Docz
+      link: /docs/writing-documentation-with-docz/
 - title: Contributing
   items:
     - title: Community

@@ -145,6 +145,7 @@ exports.onCreateNode = async ({
               actions,
               createNodeId
             )
+            delete ret.description
           }
 
           return ret

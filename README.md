@@ -98,11 +98,8 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     Get your Gatsby blog set up in a single command:
 
     ```sh
-    # install the Gatsby CLI globally
-    npm install -g gatsby-cli
-
     # create a new Gatsby site using the default starter
-    gatsby new my-blazing-fast-site
+    npx gatsby new my-blazing-fast-site
     ```
 
 2.  **Start the site in `develop` mode.**
