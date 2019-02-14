@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-source-nojs",
+  "version": "0.0.1",
+  "description": "gatsby plugin for removing js",
+  "author": "Jordan Overbye <jordanoverbye@gmail.com>",
+  "respository": {
+    "type": "git",
+    "url": "gatsby/gatsby-source-nojs"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}
