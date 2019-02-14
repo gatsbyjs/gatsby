@@ -12,6 +12,10 @@ const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
       const offlineShell = `%pathPrefix%/offline-plugin-app-shell-fallback/index.html`
       const cacheName = workbox.core.cacheNames.precache
 
+      if (navigator.onLine) {
+        return fetch(event.request)
+      }
+
       return caches.match(offlineShell, { cacheName }).then(cachedResponse => {
         if (cachedResponse) return cachedResponse
 
