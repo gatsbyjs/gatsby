@@ -1,5 +1,5 @@
 ---
-title: "Behind the Scenes Q & A: Gatsby Is Great Webinar"
+title: "Behind the Scenes Q & A: What Makes Gatsby Great Webinar"
 date: 2019-02-14
 author: Linda Watkins
 tags:
