@@ -387,9 +387,9 @@
       link: /docs/image-tutorial/
     - title: Writing documentation with Docz
       link: /docs/writing-documentation-with-docz/
-- title: Contributing
-  link: /contributing/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/
+- title: Contributing
+  link: /contributing/
