@@ -19,7 +19,7 @@ First you’ll need to install the `gatsby-source-wordpress` plugin that has ima
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-gatsby new images-tutorial-site
+npx gatsby new images-tutorial-site
 cd images-tutorial-site
 ```
 
@@ -47,9 +47,9 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-        * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
-        */
+         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
+         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
         protocol: `http`,
@@ -87,16 +87,16 @@ module.exports = {
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
-    * Gatsby's data processing layer begins with “source”
-    * plugins. Here the site sources its data from WordPress.
-    */
+     * Gatsby's data processing layer begins with “source”
+     * plugins. Here the site sources its data from WordPress.
+     */
     {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-       * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
-       * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
-       */
+         * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
+         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
         protocol: `http`,
@@ -126,7 +126,7 @@ Now you are ready to create a GraphQL query to pull in some images from the Word
 Run:
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 Open localhost:8000 and localhost:8000/\_\_\_graphql.

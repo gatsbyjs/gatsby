@@ -28,7 +28,6 @@ const { printTransforms } = IRTransforms
 
 const {
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -51,7 +50,6 @@ type Queries = Map<string, RootQuery>
 
 const validationRules = [
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -66,7 +64,7 @@ const overlayErrorID = `graphql-compiler`
 
 const resolveThemes = (plugins = []) =>
   plugins.reduce((merged, plugin) => {
-    if (plugin.resolve.includes(`gatsby-theme-`)) {
+    if (plugin.name.includes(`gatsby-theme-`)) {
       merged.push(plugin.resolve)
     }
     return merged
@@ -208,6 +206,7 @@ class Runner {
         text,
         originalText: nameDefMap.get(name).text,
         path: filePath,
+        isHook: nameDefMap.get(name).isHook,
         isStaticQuery: nameDefMap.get(name).isStaticQuery,
         hash: nameDefMap.get(name).hash,
       }
@@ -219,6 +218,18 @@ class Runner {
             `${path.relative(store.getState().program.directory, filePath)}`
           )
       }
+
+      if (
+        query.isHook &&
+        process.env.NODE_ENV === `production` &&
+        typeof require(`react`).useContext !== `function`
+      ) {
+        report.panicOnBuild(
+          `You're likely using a version of React that doesn't support Hooks\n` +
+            `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
+        )
+      }
+
       compiledNodes.set(filePath, query)
     })
 

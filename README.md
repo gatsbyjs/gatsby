@@ -53,7 +53,7 @@
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://discord.gg/0ZcbPKXt5bVoxkfV">Discord</a>
+  <a href="https://gatsby.app/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites.
@@ -98,11 +98,8 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     Get your Gatsby blog set up in a single command:
 
     ```sh
-    # install the Gatsby CLI globally
-    npm install -g gatsby-cli
-
     # create a new Gatsby site using the default starter
-    gatsby new my-blazing-fast-site
+    npx gatsby new my-blazing-fast-site
     ```
 
 2.  **Start the site in `develop` mode.**
@@ -164,4 +161,4 @@ Licensed under the [MIT License](./LICENSE).
 ## 💜 Thanks to Our Contributors and Sponsors
 
 Thanks to our many contributors and sponsors as well as the companies sponsoring
-our testing and hosting infrastructure: [Travis CI](https://travis-ci.com/), [Appveyor](https://www.appveyor.com/), and [Netlify](https://www.netlify.com/).
+our testing and hosting infrastructure: [Circle CI](https://circleci.com/), [Appveyor](https://www.appveyor.com/), and [Netlify](https://www.netlify.com/).

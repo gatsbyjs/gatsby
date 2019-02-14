@@ -63,6 +63,6 @@ So this is all very nice and it’s far better to be able to use this from NPM v
 - [Plugin READme file](/packages/gatsby-image/)
 - [Source code for an example site using gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
 - [Blog articles about gatsby-image](/blog/tags/gatsby-image/)
-- [Starters that use gatsby-image](/starter-showcase/?d=gatsby-image)
+- [Starters that use gatsby-image](/starters/?d=gatsby-image&v=2)
 - [Other image plugins](/plugins/?=image)
 - ["Ridiculously easy image optimization with gatsby-image" by Kyle Gill](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)

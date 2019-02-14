@@ -5,7 +5,7 @@ The main Gatsby site at gatsbyjs.org
 Run locally with:
 
 - `yarn install`
-- `gatsby develop`
+- `npm run develop`
 
 See the full contributing instructions at https://www.gatsbyjs.org/docs/how-to-contribute/.
 
@@ -34,8 +34,8 @@ Several areas of the site include feedback widgets (currently starter library an
 If you have access to the keys, add them like so:
 
 ```
-UNBIRD_FEEDBACK_KEY_PLUGINLIB=ADD_KEY
-UNBIRD_FEEDBACK_KEY_STARTERLIB=ADD_KEY
+GATSBY_FEEDBACK_KEY_PLUGINLIB=ADD_KEY
+GATSBY_FEEDBACK_KEY_STARTERLIB=ADD_KEY
 ```
 
 If there's a problem with the feedback widgets, please open an issue in the repo.

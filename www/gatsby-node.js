@@ -44,7 +44,7 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
@@ -181,6 +181,7 @@ exports.createPages = ({ graphql, actions }) => {
                 draft
                 canonicalLink
                 publishedAt
+                issue
                 tags
               }
             }
@@ -207,8 +208,10 @@ exports.createPages = ({ graphql, actions }) => {
         allSitesYaml(filter: { main_url: { ne: null } }) {
           edges {
             node {
+              main_url
               fields {
                 slug
+                hasScreenshot
               }
             }
           }
@@ -377,6 +380,14 @@ exports.createPages = ({ graphql, actions }) => {
       result.data.allSitesYaml.edges.forEach(edge => {
         if (!edge.node.fields) return
         if (!edge.node.fields.slug) return
+        if (!edge.node.fields.hasScreenshot) {
+          reporter.warn(
+            `Site showcase entry "${
+              edge.node.main_url
+            }" seems offline. Skipping.`
+          )
+          return
+        }
         createPage({
           path: `${edge.node.fields.slug}`,
           component: slash(showcaseTemplate),
@@ -414,6 +425,7 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
+              layout: `plugins`,
             },
           })
         } else {
@@ -423,6 +435,7 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
+              layout: `plugins`,
             },
           })
         }
@@ -470,7 +483,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         slug = `/${parsedFilePath.dir}/`
       }
 
-      // Set released status for blog posts.
+      // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
         let released = false
         const date = _.get(node, `frontmatter.date`)
@@ -478,6 +491,17 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           released = moment().isSameOrAfter(moment.utc(date))
         }
         createNodeField({ node, name: `released`, value: released })
+
+        const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
+        const publishedAt = _.get(node, `frontmatter.publishedAt`)
+
+        createNodeField({
+          node,
+          name: `publishedAt`,
+          value: canonicalLink
+            ? publishedAt || url.parse(canonicalLink).hostname
+            : null,
+        })
       }
     }
     // Add slugs for package READMEs.
@@ -507,6 +531,13 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     const cleaned = parsed.hostname + parsed.pathname
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
+
+    // determine if screenshot is available
+    const screenshotNode = node.children
+      .map(childID => getNode(childID))
+      .find(node => node.internal.type === `Screenshot`)
+
+    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
   } else if (node.internal.type === `StartersYaml` && node.repo) {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.
@@ -546,7 +577,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
                   totalCount
                 }
                 createdAt
-                updatedAt
+                pushedAt
                 owner {
                   login
                 }
@@ -559,7 +590,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           const [pkgjson, githubData] = results
           const {
             stargazers: { totalCount: stars },
-            updatedAt: lastUpdated,
+            pushedAt: lastUpdated,
             owner: { login: owner },
             name,
             nameWithOwner: githubFullName,
@@ -650,6 +681,15 @@ exports.onCreatePage = ({ page, actions }) => {
     page.context.featuredStarters = ecosystemFeaturedItems.starters
     page.context.featuredPlugins = ecosystemFeaturedItems.plugins
 
+    deletePage(oldPage)
+    createPage(page)
+  }
+
+  if (page.path === `/plugins/`) {
+    const { createPage, deletePage } = actions
+    const oldPage = Object.assign({}, page)
+
+    page.context.layout = `plugins`
     deletePage(oldPage)
     createPage(page)
   }

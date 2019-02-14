@@ -19,7 +19,7 @@ $ npm install --global gatsby-cli
 Then, still in your Terminal, head over to a folder you'd want to get started in and type in:
 
 ```terminal
-$ gatsby new GatsbyLightbox https://github.com/gatsbyjs/gatsby-starter-default
+$ npx gatsby new GatsbyLightbox https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 Once it's done scaffolding the starter application, type in:

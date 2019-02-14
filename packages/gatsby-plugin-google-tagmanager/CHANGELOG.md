@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.8...gatsby-plugin-google-tagmanager@2.0.9) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.7...gatsby-plugin-google-tagmanager@2.0.8) (2019-01-24)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-tagmanager:** handle line breaks ([#11169](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/issues/11169)) ([d974f80](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/commit/d974f80))
+
 <a name="2.0.7"></a>
 
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.6...gatsby-plugin-google-tagmanager@2.0.7) (2018-11-29)
