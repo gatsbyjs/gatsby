@@ -13,6 +13,7 @@ import { colors } from "../utils/presets"
 import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/md/file-download"
 import AlgoliaLogo from "../assets/algolia.svg"
+import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
@@ -364,9 +365,25 @@ const Result = ({ hit, pathname, query }) => {
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
             lineHeight: 1.2,
+            display: `flex`,
+            alignItems: `center`,
           }}
         >
           {hit.name}
+          {hit.repository &&
+            hit.repository.url.startsWith(
+              `https://github.com/gatsbyjs/gatsby`
+            ) && (
+              <img
+                src={GatsbyIcon}
+                css={{
+                  width: 20,
+                  marginBottom: 0,
+                  marginLeft: 5,
+                }}
+                alt={`Official Gatsby Plugin`}
+              />
+            )}
         </div>
         <div
           css={{

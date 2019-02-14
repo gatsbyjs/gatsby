@@ -7,6 +7,7 @@ import { colors } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import GithubIcon from "react-icons/lib/go/mark-github"
+import GatsbyIcon from "../monogram.svg"
 
 const PackageReadMe = props => {
   const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
@@ -49,6 +50,26 @@ const PackageReadMe = props => {
             See starters that use this
           </Link>
         )}
+      </div>
+
+      <div
+        css={{
+          background: colors.lilac,
+          fontWeight: 600,
+          color: `white`,
+          padding: `10px`,
+          display: `inline-flex`,
+          margin: `10px 0`,
+          borderRadius: 10,
+          alignItems: `center`,
+        }}
+      >
+        <img
+          src={GatsbyIcon}
+          css={{ width: 25, marginBottom: 0, marginRight: 5 }}
+          alt={`Official Gatsby Plugin`}
+        />
+        Official Plugin
       </div>
 
       <div
