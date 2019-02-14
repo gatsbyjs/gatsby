@@ -34,7 +34,7 @@ const widthLarge = rhythm(16)
 const styles = {
   sidebar: {
     height: `calc(100vh - ${presets.headerHeight})`,
-    width: `100vw`,
+    width: `100%`,
     zIndex: 1,
     top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     ...scrollbarStyles,
