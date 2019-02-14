@@ -15,8 +15,8 @@ we're in.
 
 By default gatsby supports only 2 environments:
 
-- If you run `gatsby develop`, then you will be in the 'development' environment.
-- If you run `gatsby build` + `gatsby serve`, then you will be in the 'production' environment.
+- If you run the develop script then you will be in the `development` environment.
+- If you run the build or serve scripts, then you will be in the `production` environment.
 
 If you want to define other environments then you'll need to do a little more work. See 'Additional Environments' below. You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
@@ -61,7 +61,7 @@ calling Gatsby on the command line.
 In Linux terminals this can be done with:
 
 ```shell
-MY_ENV_VAR=foo gatsby develop
+MY_ENV_VAR=foo npm run develop
 ```
 
 In Windows it's a little more complex. [Check out this Stack Overflow article for some options](https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only)
@@ -131,7 +131,7 @@ module.exports = {
 - `NODE_ENV`
 - `PUBLIC_DIR`
 
-Gatsby also allows you to specify another environment variable when running the local development server (e.g. `gatsby develop`):
+Gatsby also allows you to specify another environment variable when running the local development server (e.g. `npm run develop`):
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
@@ -193,5 +193,5 @@ Note that `ACTIVE_ENV` could be called anything - it's not used or known about b
 Local testing of the `staging` environment can be done with:
 
 ```shell
-ACTIVE_ENV=staging gatsby develop
+ACTIVE_ENV=staging npm run develop
 ```

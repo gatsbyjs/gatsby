@@ -10,13 +10,13 @@ In the [**previous section**](/tutorial/part-zero/), you prepared your local dev
 In [**tutorial part zero**](/tutorial/part-zero/), you created a new site based on the “hello world” starter using the following command:
 
 ```shell
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 When creating a new Gatsby site, you can use the following command structure to create a new site based on any existing Gatsby starter:
 
 ```shell
-gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
+npx gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 ```
 
 > 💡 See a list of the existing [**official and community starters**](/starters/)!
@@ -33,7 +33,7 @@ _Note: Again, the editor shown here is Visual Studio Code. If you’re using a d
 
 Let’s take a look at the code that powers the homepage.
 
-> 💡 If you stopped your development server after running `gatsby develop` in the previous section, start it up again now — time to make some changes to the hello-world site!
+> 💡 If you stopped your development server after running `npm run develop` in the previous section, start it up again now — time to make some changes to the hello-world site!
 
 ## Familiarizing with Gatsby pages
 
@@ -359,13 +359,13 @@ npm install --global surge
 surge
 ```
 
-Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
+Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `npm run develop`):
 
 ```shell
-gatsby build
+npm run build
 ```
 
-The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
+The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `npm run build` command just prepared to deploy.
 
 Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 

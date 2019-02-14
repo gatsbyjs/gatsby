@@ -32,7 +32,7 @@ For example, if you wanted to enable a non-technical person to be able to add cu
 
 Run this in your terminal:
 
-`gatsby new butter-site`
+`npx gatsby new butter-site`
 
 ## Install the source plugin
 
