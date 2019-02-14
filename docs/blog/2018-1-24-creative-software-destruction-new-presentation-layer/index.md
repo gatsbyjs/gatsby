@@ -1,6 +1,6 @@
 ---
 title: "Creative Software Destruction and the New Presentation Layer"
-date: "2018-01-24"
+date: 2018-01-24
 author: "Robin Vasan"
 tags: ["architecture", "serverless", "cdn"]
 ---

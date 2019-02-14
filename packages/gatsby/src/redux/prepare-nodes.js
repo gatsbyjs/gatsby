@@ -4,7 +4,6 @@ const { store } = require(`../redux`)
 const { getNullableType, getNamedType } = require(`graphql`)
 const withResolverContext = require(`../schema/context`)
 
-const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
 const enhancedNodePromiseCache = new Map()
 const enhancedNodeCacheId = ({ node, args }) =>
@@ -47,7 +46,6 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
 
           const innerType = getNullableType(innerGqConfig.type)
           const innerListType = getNamedType(innerType)
-
           if (_.isObject(innerSift) && v != null && innerType) {
             if (_.isFunction(innerType.getFields)) {
               // this is single object
@@ -76,6 +74,7 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
 }
 
 function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
+  const { resolvedNodesCache } = store.getState()
   const nodesCacheKey = JSON.stringify({
     // typeName + count being the same is a pretty good
     // indication that the nodes are the same.
@@ -84,10 +83,7 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
     nodesLength: nodes.length,
     ...fieldsToSift,
   })
-  if (
-    process.env.NODE_ENV === `production` &&
-    resolvedNodesCache.has(nodesCacheKey)
-  ) {
+  if (resolvedNodesCache.has(nodesCacheKey)) {
     return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
   } else {
     return Promise.all(
@@ -115,7 +111,13 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
         return enhancedNodeGenerationPromise
       })
     ).then(resolvedNodes => {
-      resolvedNodesCache.set(nodesCacheKey, resolvedNodes)
+      store.dispatch({
+        type: `SET_RESOLVED_NODES`,
+        payload: {
+          key: nodesCacheKey,
+          nodes: resolvedNodes,
+        },
+      })
       return resolvedNodes
     })
   }

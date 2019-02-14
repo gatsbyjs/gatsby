@@ -8,7 +8,7 @@ type TypeOrTypeName = string | GraphQLOutputType
 
 interface ConnectionArgs {
   path: string;
-  connectionType?: GraphQLOutputType;
+  connectionType?: string;
 }
 
 export interface NodeModel {

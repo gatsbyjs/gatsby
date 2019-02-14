@@ -143,14 +143,11 @@ module.exports = (args: Object) => {
   const { getNode, getNodesByType } = require(`../db/nodes`)
 
   const { queryArgs, gqlType, firstOnly = false } = args
-  // Clone args as for some reason graphql-js removes the constructor
-  // from nested objects which breaks a check in sift.js.
-  const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
 
   // If nodes weren't provided, then load them from the DB
   const nodes = args.nodes || getNodesByType(gqlType.name)
 
-  const { siftArgs, fieldsToSift } = parseFilter(clonedArgs.filter)
+  const { siftArgs, fieldsToSift } = parseFilter(queryArgs.filter)
   // FIXME: fieldsToSift must include `sort.fields` as well as the
   // `field` arg on `group` and `distinct`
 
@@ -178,7 +175,7 @@ module.exports = (args: Object) => {
     if (firstOnly) {
       return handleFirst(siftArgs, resolvedNodes)
     } else {
-      return handleMany(siftArgs, resolvedNodes, clonedArgs.sort)
+      return handleMany(siftArgs, resolvedNodes, queryArgs.sort)
     }
   })
 }

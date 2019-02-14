@@ -42,7 +42,7 @@ const rebuildSchemaWithSitePage = ({
 }) => {
   const typeComposer = addInferredType({
     schemaComposer,
-    typeComposer: schemaComposer.getTypeComposer(`SitePage`),
+    typeComposer: schemaComposer.getTC(`SitePage`),
     nodeStore,
     typeConflictReporter,
     typeMapping,
@@ -323,7 +323,11 @@ function createChildField(typeName) {
           { ids: source.children, type: typeName },
           { path }
         )
-        return result[0]
+        if (result && result.length > 0) {
+          return result[0]
+        } else {
+          return null
+        }
       },
     },
   }
