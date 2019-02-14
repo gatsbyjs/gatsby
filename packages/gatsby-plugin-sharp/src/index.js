@@ -41,6 +41,16 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
+/// Plugin options are loaded onPreInit in gatsby-node
+const pluginDefaults = {
+  useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
+  stripMetadata: true,
+}
+let pluginOptions = Object.assign({}, pluginDefaults)
+exports.setPluginOptions = opts => {
+  pluginOptions = Object.assign({}, pluginOptions, opts)
+}
+
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
 Promise.promisifyAll(sharp.prototype, { multiArgs: true })
@@ -75,6 +85,8 @@ const generalArgs = {
   quality: 50,
   jpegProgressive: true,
   pngCompressionLevel: 9,
+  // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
+  pngCompressionSpeed: 4,
   base64: false,
   grayscale: false,
   duotone: false,
@@ -87,6 +99,7 @@ const healOptions = (args, defaultArgs) => {
   let options = _.defaults({}, args, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
+  options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
   options.toFormat = options.toFormat.toLowerCase()
 
   // only set width to 400 if neither width nor height is passed
@@ -110,8 +123,6 @@ const healOptions = (args, defaultArgs) => {
   return options
 }
 
-const useMozjpeg = process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`
-
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
   // console.log("totalJobs", totalJobs)
@@ -124,7 +135,14 @@ const processFile = (file, jobs, cb, reporter) => {
 
   let pipeline
   try {
-    pipeline = sharp(file).rotate()
+    pipeline = sharp(file)
+
+    // Keep Metadata
+    if (!pluginOptions.stripMetadata) {
+      pipeline = pipeline.withMetadata()
+    }
+
+    pipeline = pipeline.rotate()
   } catch (err) {
     reportError(`Failed to process image ${file}`, err, reporter)
     jobs.forEach(job => job.outsideReject(err))
@@ -170,7 +188,7 @@ const processFile = (file, jobs, cb, reporter) => {
       })
 
     // jpeg
-    if (!useMozjpeg) {
+    if (!pluginOptions.useMozJpeg) {
       clonedPipeline = clonedPipeline.jpeg({
         quality: args.quality,
         progressive: args.jpegProgressive,
@@ -215,7 +233,6 @@ const processFile = (file, jobs, cb, reporter) => {
         job.outsideResolve()
       }
     }
-
     if (
       (job.file.extension === `png` && args.toFormat === ``) ||
       args.toFormat === `png`
@@ -230,7 +247,11 @@ const processFile = (file, jobs, cb, reporter) => {
                   quality: `${args.quality}-${Math.min(
                     args.quality + 25,
                     100
-                  )}`, // e.g. 40-65
+                  )}`,
+                  speed: args.pngCompressionSpeed
+                    ? args.pngCompressionSpeed
+                    : undefined,
+                  strip: !!pluginOptions.stripMetadata, // Must be a bool
                 }),
               ],
             })
@@ -242,7 +263,7 @@ const processFile = (file, jobs, cb, reporter) => {
         .catch(onFinish)
       // Compress jpeg
     } else if (
-      useMozjpeg &&
+      pluginOptions.useMozJpeg &&
       ((job.file.extension === `jpg` && args.toFormat === ``) ||
         (job.file.extension === `jpeg` && args.toFormat === ``) ||
         args.toFormat === `jpg`)
@@ -435,9 +456,13 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   queueJob(job, reporter)
 
+  // encode the file name for URL
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
+
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
-  const prefixedSrc = options.pathPrefix + `/static/${digestDirPrefix}` + imgSrc
+  const prefixedSrc =
+    options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
 
   return {
     src: prefixedSrc,
@@ -534,7 +559,6 @@ async function base64(arg) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
-
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata

@@ -26,12 +26,17 @@ const inImageCache = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  if (imageCache[src]) {
-    return true
-  } else {
-    imageCache[src] = true
-    return false
-  }
+  return imageCache[src] || false
+}
+
+const activateCacheForImage = props => {
+  const convertedProps = convertProps(props)
+  // Find src
+  const src = convertedProps.fluid
+    ? convertedProps.fluid.src
+    : convertedProps.fixed.src
+
+  imageCache[src] = true
 }
 
 let io
@@ -122,10 +127,9 @@ class Image extends React.Component {
   constructor(props) {
     super(props)
 
-    // If this browser doesn't support the IntersectionObserver API
-    // we default to start downloading the image right away.
+    // default settings for browser without Intersection Observer available
     let isVisible = true
-    let imgLoaded = true
+    let imgLoaded = false
     let IOSupported = false
     let fadeIn = props.fadeIn
 
@@ -133,25 +137,24 @@ class Image extends React.Component {
     // already in the browser cache so it's cheap to just show directly.
     const seenBefore = inImageCache(props)
 
+    // browser with Intersection Observer available
     if (
       !seenBefore &&
       typeof window !== `undefined` &&
       window.IntersectionObserver
     ) {
       isVisible = false
-      imgLoaded = false
       IOSupported = true
     }
 
-    // Always don't render image while server rendering
+    // Never render image during SSR
     if (typeof window === `undefined`) {
       isVisible = false
-      imgLoaded = false
     }
 
+    // Force render for critical images
     if (props.critical) {
       isVisible = true
-      imgLoaded = false
       IOSupported = false
     }
 
@@ -172,6 +175,9 @@ class Image extends React.Component {
   }
 
   componentDidMount() {
+    if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
+      this.props.onStartLoad({ wasCached: inImageCache(this.props) })
+    }
     if (this.props.critical) {
       const img = this.imageRef.current
       if (img && img.complete) {
@@ -183,17 +189,30 @@ class Image extends React.Component {
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
-        this.setState({ isVisible: true })
+        const imageInCache = inImageCache(this.props)
+        if (
+          !this.state.isVisible &&
+          typeof this.props.onStartLoad === `function`
+        ) {
+          this.props.onStartLoad({ wasCached: imageInCache })
+        }
+
+        this.setState({ isVisible: true, imgLoaded: imageInCache })
       })
     }
   }
 
   handleImageLoaded() {
+    activateCacheForImage(this.props)
+
     this.setState({ imgLoaded: true })
     if (this.state.seenBefore) {
       this.setState({ fadeIn: false })
     }
-    this.props.onLoad && this.props.onLoad()
+
+    if (this.props.onLoad) {
+      this.props.onLoad()
+    }
   }
 
   render() {
@@ -209,6 +228,7 @@ class Image extends React.Component {
       fixed,
       backgroundColor,
       Tag,
+      itemProp,
     } = convertProps(this.props)
 
     const bgColor =
@@ -305,6 +325,7 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
+                itemProp={itemProp}
               />
             </picture>
           )}
@@ -390,6 +411,7 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
+                itemProp={itemProp}
               />
             </picture>
           )}
@@ -462,7 +484,9 @@ Image.propTypes = {
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
+  onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
+  itemProp: PropTypes.string,
 }
 
 export default Image

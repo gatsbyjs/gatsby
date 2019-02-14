@@ -1,6 +1,6 @@
 ---
 title: Creating a Blog with Gatsby
-date: "2017-07-19"
+date: 2017-07-19
 author: "Dustin Schau"
 image: "../images/15009741473_9ced5e3209_o.jpg"
 imageAuthor: Daniel Go
@@ -33,25 +33,22 @@ these new features by creating a static blog. Let's get on it!
 
 ## Getting started
 
-### Installing the CLI
-
-`npm install -g gatsby-cli`
+### Using the CLI
 
 Gatsby ships with a great CLI (command line interface) that contains the
 functionality of scaffolding out a working site, as well as commands to help
 develop the site once created.
 
-`gatsby new personal-blog && cd $_`
+`npx gatsby new personal-blog && cd $_`
 
 This command will create the folder `personal-blog` and then change into that
 directory. A working `gatsby` statically generated application can now be
-developed upon. The Gatsby CLI includes many common development features such as
-`gatsby build` (build a production, statically generated version of the
-project), `gatsby develop` (launch a hot-reload enabled web development server),
+developed upon. The CLI generates common development scripts to help you get started.
+For example you can run `npm run build` (build a production, statically generated version of the project) or `npm run develop` (launch a hot-reload enabled web development server),
 etc.
 
 We can now begin the exciting task of _actually_ developing on the site, and
-creating a functional, modern blog. You'll generally want to use `gatsby develop` to launch the local development server to validate functionality as we
+creating a functional, modern blog. You'll generally want to use `npm run develop` to launch the local development server to validate functionality as we
 progress through the steps.
 
 ## Adding necessary plugins
@@ -93,14 +90,16 @@ After installing each of these functional plugins, we'll edit
 `gatsby-config.js`, which Gatsby loads at build-time to implement the exposed
 functionality of the specified plugins.
 
-```javascript{6-9}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Your Name - Blog`,
     author: `Your Name`,
   },
+  // highlight-start
   plugins: ["gatsby-plugin-catch-links", "gatsby-plugin-react-helmet"],
 }
+// highlight-end
 ```
 
 Without any additional work besides a `yarn install` and editing a config file,
@@ -127,12 +126,13 @@ into our `gatsby-config.js`, like so:
 yarn add gatsby-source-filesystem
 ```
 
-```javascript{6-12}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   // previous configuration
   plugins: [
     "gatsby-plugin-catch-links",
     "gatsby-plugin-react-helmet",
+    // highlight-start
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -140,6 +140,7 @@ module.exports = {
         name: "pages",
       },
     },
+    // highlight-end
   ],
 }
 ```
@@ -178,7 +179,7 @@ yarn add gatsby-transformer-remark
 
 and editing `gatsby-config.js`
 
-```javascript{13-18}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   // previous setup
   plugins: [
@@ -191,12 +192,14 @@ module.exports = {
         name: "pages",
       },
     },
+    // highlight-start
     {
       resolve: "gatsby-transformer-remark",
       options: {
         plugins: [], // just in case those previously mentioned remark plugins sound cool :)
       },
     },
+    // highlight-end
   ],
 }
 ```
@@ -223,7 +226,7 @@ The content of this Markdown file will be our blog post, authored in Markdown
 ```markdown:title=src/pages/07-12-2017-getting-started/index.md
 ---
 path: "/hello-world"
-date: "2017-07-12T17:12:33.962Z"
+date: 2017-07-12T17:12:33.962Z
 title: "My First Gatsby Post"
 ---
 
@@ -254,7 +257,7 @@ We'll want to create the file `src/templates/blog-post.js` (please create the
 
 ```javascript:title=src/templates/blog-post.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 // import '../css/blog-post.css'; // make it pretty!
 
@@ -294,9 +297,9 @@ very simply the pieces of data that we want to display for our blog post. Each
 piece of data our query selects will be injected via the `data` property we
 specified earlier.
 
-```javascript{23-32}:title=src/templates/blog-post.js
+```javascript:title=src/templates/blog-post.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 // import '../css/blog-post.css';
@@ -317,6 +320,7 @@ export default function Template({ data }) {
   )
 }
 
+// highlight-start
 export const pageQuery = graphql`
   query BlogPostByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
@@ -329,6 +333,7 @@ export const pageQuery = graphql`
     }
   }
 `
+// highlight-end
 ```
 
 If you're not familiar with GraphQL, this may seem slightly confusing, but we can
@@ -398,7 +403,7 @@ query, which will fetch all of our Markdown posts.
 
 ### Querying for posts
 
-```javascript{8-31}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const path = require("path")
 
 exports.createPages = ({ actions, graphql }) => {
@@ -406,6 +411,7 @@ exports.createPages = ({ actions, graphql }) => {
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
+  // highlight-start
   return graphql(`
     {
       allMarkdownRemark(
@@ -427,6 +433,7 @@ exports.createPages = ({ actions, graphql }) => {
     }
   })
 }
+// highlight-end
 ```
 
 We're using GraphQL to get all Markdown nodes and making them available under
@@ -447,7 +454,7 @@ pages (with the `createPage` action creator). Let's do that!
 
 ### Creating the pages
 
-```javascript{28-34}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const path = require("path")
 
 exports.createPages = ({ actions, graphql }) => {
@@ -475,6 +482,7 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors)
     }
 
+    // highlight-start
     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
       createPage({
         path: node.frontmatter.path,
@@ -482,6 +490,7 @@ exports.createPages = ({ actions, graphql }) => {
         context: {}, // additional data can be passed via context
       })
     })
+    // highlight-end
   })
 }
 ```
@@ -534,7 +543,7 @@ available within the browser and the statically generated site.
 ```javascript:title=src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 // import '../css/index.css'; // add some style if you want!
 

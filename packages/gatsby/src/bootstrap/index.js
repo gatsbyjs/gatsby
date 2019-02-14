@@ -11,16 +11,17 @@ const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const mergeGatsbyConfig = require(`../utils/merge-gatsby-config`)
 const getBrowserslist = require(`../utils/browserslist`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
+const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
+require(`../db`).startAutosave()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -83,32 +84,13 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    const themesConfig = await Promise.mapSeries(
-      config.__experimentalThemes,
-      async plugin => {
-        const themeName = plugin.resolve || plugin
-        const themeConfig = plugin.options || {}
-        const theme = await preferDefault(
-          getConfigFile(themeName, `gatsby-config`)
-        )
-        // if theme is a function, call it with the themeConfig
-        let themeConfigObj = theme
-        if (_.isFunction(theme)) {
-          themeConfigObj = theme(themeConfig)
-        }
-        // themes function as plugins too (gatsby-node, etc)
-        return {
-          ...themeConfigObj,
-          plugins: [
-            ...(themeConfigObj.plugins || []),
-            // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-            { resolve: themeName, options: themeConfig },
-          ],
-        }
-      }
-    ).reduce(mergeGatsbyConfig, {})
+    const themes = await loadThemes(config)
+    config = themes.config
 
-    config = mergeGatsbyConfig(themesConfig, config)
+    store.dispatch({
+      type: `SET_RESOLVED_THEMES`,
+      payload: themes.themes,
+    })
   }
 
   if (config && config.polyfill) {
@@ -193,10 +175,12 @@ module.exports = async (args: BootstrapArgs) => {
       data
     `)
   }
-
+  const cacheDirectory = `${program.directory}/.cache`
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
-      await fs.remove(`${program.directory}/.cache`)
+      // Attempt to empty dir if remove fails,
+      // like when directory is mount point
+      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
     }
@@ -215,7 +199,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Now that we know the .cache directory is safe, initialize the cache
   // directory.
-  await fs.ensureDir(`${program.directory}/.cache`)
+  await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)
@@ -231,7 +215,7 @@ module.exports = async (args: BootstrapArgs) => {
       parentSpan: bootstrapSpan,
     })
     activity.start()
-    const dbSaveFile = `${program.directory}/.cache/loki/loki.db`
+    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
     try {
       await loki.start({
         saveFile: dbSaveFile,
@@ -254,7 +238,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
-  const siteDir = `${program.directory}/.cache`
+  const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
     await fs.copy(srcDir, siteDir, {
@@ -263,12 +247,12 @@ module.exports = async (args: BootstrapArgs) => {
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
       clobber: true,
     })
-    await fs.ensureDirSync(`${program.directory}/.cache/json`)
+    await fs.ensureDirSync(`${cacheDirectory}/json`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
     // the data used to create the schema they're dependent on is available.
-    await fs.emptyDir(`${program.directory}/.cache/fragments`)
+    await fs.emptyDir(`${cacheDirectory}/fragments`)
   } catch (err) {
     report.panic(`Unable to copy site files to .cache`, err)
   }
@@ -282,10 +266,10 @@ module.exports = async (args: BootstrapArgs) => {
 
     const envAPIs = plugin[`${env}APIs`]
 
-    // Always include the site's gatsby-browser.js if it exists as it's
+    // Always include gatsby-browser.js files if they exists as they're
     // a handy place to include global styles and other global imports.
     try {
-      if (env === `browser` && plugin.name === `default-site-plugin`) {
+      if (env === `browser`) {
         return slash(
           require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
         )

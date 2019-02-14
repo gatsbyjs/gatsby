@@ -47,7 +47,7 @@
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://discord.gg/0ZcbPKXt5bVoxkfV">Discord</a>
+  <a href="https://gatsby.app/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites.
@@ -58,7 +58,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
-  whether the data is coming from the same back-end.
+  whether the data is coming from the same backend.
 
 - **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
   files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
@@ -91,11 +91,8 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     Get your Gatsby blog set up in a single command:
 
     ```sh
-    # install the Gatsby CLI globally
-    npm install -g gatsby-cli
-
     # create a new Gatsby site using the default starter
-    gatsby new my-blazing-fast-site
+    npx gatsby new my-blazing-fast-site
     ```
 
 2.  **Start the site in `develop` mode.**
@@ -104,7 +101,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     ```sh
     cd my-blazing-fast-site/
-    gatsby develop
+    npm run develop
     ```
 
 3.  **Open the source code and start editing!**

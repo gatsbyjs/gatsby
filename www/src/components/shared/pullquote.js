@@ -18,6 +18,7 @@ const PullquoteRoot = styled(`blockquote`)`
   padding: 2rem 3rem;
   position: relative;
   text-indent: 2rem;
+  margin: 2.5rem 0;
 
   /* needed for overriding typography.js style "p *:last-child {"" */
   p > & {
@@ -26,6 +27,7 @@ const PullquoteRoot = styled(`blockquote`)`
 
   ${presets.Desktop} {
     line-height: 1.7;
+    margin: 2.5rem -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
 
@@ -33,6 +35,14 @@ const PullquoteRoot = styled(`blockquote`)`
       margin: 2.5rem -3.5rem;
     }
   }
+`
+
+const Citation = styled(`cite`)`
+  display: block;
+  font-style: italic;
+  font-weight: normal;
+  margin-top: 1rem;
+  text-align: right;
 `
 
 const QuotationMark = styled(`span`)`
@@ -153,13 +163,14 @@ const Star = styled(`span`)`
 const variants = [`A`, `B`, `C`]
 let instancesCounter = -1
 
-const Pullquote = ({ children }) => {
+const Pullquote = ({ citation, children }) => {
   instancesCounter += 1
   const className = `variant${variants[instancesCounter % variants.length]}`
 
   return (
     <PullquoteRoot className={className}>
       {children}
+      {citation && <Citation>&mdash; {citation}</Citation>}
       <QuotationMark
         dangerouslySetInnerHTML={{ __html: QuotationMarkOrnament }}
       />

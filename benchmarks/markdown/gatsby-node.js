@@ -26,7 +26,7 @@ exports.createPages = ({ actions: { createPage } }) => {
       path: `/path/${step}/`,
       component: require.resolve(`./src/templates/blank.js`),
       context: {
-        id: step,
+        id: step.toString(),
       },
     })
   }

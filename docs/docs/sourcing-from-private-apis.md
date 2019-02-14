@@ -9,7 +9,7 @@ From the Gatsby perspective, there is no difference between sourcing from a publ
 There are 3 approaches that you can use to source data from your private API:
 
 1. If your private API is a GraphQL API, you can use [`gatsby-source-graphql`](https://www.gatsbyjs.org/packages/gatsby-source-graphql/).
-2. If your private API is not a GraphQL API and you are new to GraphQL, treat the data as unstructured data and fetch it during build time, as described by the guide "[Using unstructured data](/docs/using-unstructured-data/)". However, as highlighted in the guide, this approach comes with some tradeoffs.
+2. If your private API is not a GraphQL API and you are new to GraphQL, treat the data as unstructured data and fetch it during build time, as described by the guide "[Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)". However, as highlighted in the guide, this approach comes with some tradeoffs.
 3. Create a source plugin, as described in the tutorial "[Source plugin tutorial](/docs/source-plugin-tutorial/)".
 
 ### Other considerations

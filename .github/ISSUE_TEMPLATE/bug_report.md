@@ -31,4 +31,4 @@ What happened.
 
 ### Environment
 
-Run `gatsby info --clipboard` in your project directory and paste the output here. Not working? You may need to update your global gatsby-cli - `npm install -g gatsby-cli`
+Run `npx gatsby info --clipboard` in your project directory and paste the output here.

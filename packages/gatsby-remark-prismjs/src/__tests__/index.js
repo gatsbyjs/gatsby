@@ -23,6 +23,20 @@ describe(`remark prism plugin`, () => {
       plugin({ markdownAST }, { aliases: { foobar: `javascript` } })
       expect(markdownAST).toMatchSnapshot()
     })
+
+    it(`with aliases that do not exist`, () => {
+      const code = `\`\`\`foobar\n// Fake\n\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { aliases: { baz: `javascript` } })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`with highlighted lines`, () => {
+      const code = `\`\`\`js{2}\n// 1\n// 2\n// 3\n\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
   })
 
   describe(`generates an inline <code> tag`, () => {
@@ -76,7 +90,7 @@ describe(`remark prism plugin`, () => {
     it(`adds line-number markup when configured globally`, () => {
       const code = `\`\`\`js\n//.foo { \ncolor: red;\n }\``
       const markdownAST = remark.parse(code)
-      plugin({ markdownAST }, { showLineNumbersGlobal: true })
+      plugin({ markdownAST }, { showLineNumbers: true })
       expect(markdownAST).toMatchSnapshot()
     })
 

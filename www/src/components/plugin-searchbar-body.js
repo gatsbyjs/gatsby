@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import {
   InstantSearch,
+  Configure,
   SearchBox,
   Stats,
   RefinementList,
@@ -174,10 +175,6 @@ injectGlobal`
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
-  constructor(props, context) {
-    super(props)
-  }
-
   render() {
     return (
       <div
@@ -199,6 +196,7 @@ class Search extends Component {
           <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
 
           <div css={{ display: `none` }}>
+            <Configure analyticsTags={[`gatsby-plugins`]} />
             <RefinementList
               attributeName="keywords"
               defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
@@ -253,7 +251,7 @@ class Search extends Component {
                 <Result
                   hit={result.hit}
                   pathname={this.props.pathname}
-                  search={this.props.searchState}
+                  query={this.props.query}
                 />
               )}
             />
@@ -305,14 +303,14 @@ class Search extends Component {
 }
 
 // the result component is fed into the InfiniteHits component
-const Result = ({ hit, pathname, search }) => {
+const Result = ({ hit, pathname, query }) => {
   // Example:
-  // pathname = `/plugins/gatsby-link/` || `/plugins/@comsoc/gatsby-mdast-copy-linked-files`
+  // pathname = `/packages/gatsby-link/` || `/packages/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
-  const selected = pathname.includes(hit.name)
+  const selected = new RegExp(`^/packages/${hit.name}/?$`).test(pathname)
   return (
     <Link
-      to={`/packages/${hit.name}/?=${search}`}
+      to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
           boxShadow: `none`,
@@ -415,7 +413,8 @@ class PluginSearchBar extends Component {
 
   urlToSearch = () => {
     if (this.props.location.search) {
-      return this.props.location.search.slice(2)
+      // ignore this automatically added query parameter
+      return this.props.location.search.replace(`no-cache=1`, ``).slice(2)
     }
     return ``
   }
@@ -426,7 +425,7 @@ class PluginSearchBar extends Component {
     })
   }
 
-  onSearchStateChange(searchState) {
+  onSearchStateChange = searchState => {
     this.updateHistory(searchState)
     this.setState({ searchState })
   }
@@ -439,11 +438,11 @@ class PluginSearchBar extends Component {
           appId="OFCNCOG2CU"
           indexName="npm-search"
           searchState={this.state.searchState}
-          onSearchStateChange={this.onSearchStateChange.bind(this)}
+          onSearchStateChange={this.onSearchStateChange}
         >
           <Search
             pathname={this.props.location.pathname}
-            searchState={this.state.searchState.query}
+            query={this.state.searchState.query}
           />
         </InstantSearch>
       </div>

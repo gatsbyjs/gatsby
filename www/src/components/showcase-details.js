@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
@@ -103,7 +103,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
     query={graphql`
       query {
         allSitesYaml(
-          filter: { featured: { eq: true }, main_url: { ne: null } }
+          filter: {
+            featured: { eq: true }
+            main_url: { ne: null }
+            fields: { hasScreenshot: { eq: true } }
+          }
         ) {
           edges {
             node {
@@ -132,12 +136,13 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
       const nextSite = parent.getNext(allSitesYaml)
       const previousSite = parent.getPrevious(allSitesYaml)
       const shouldShowVisitButtonOnMobile = !!data.sitesYaml.source_url
+      const { filters } = parent.props.location.state || {}
 
       return (
         <Layout
           location={parent.props.location}
           isModal={isModal}
-          modalBackgroundPath="/showcase"
+          modalBackgroundPath={parent.getExitLocation()}
           modalNext={() => parent.next(allSitesYaml)}
           modalPrevious={() => parent.previous(allSitesYaml)}
           modalNextLink={
@@ -145,6 +150,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               to={nextSite.fields.slug}
               state={{
                 isModal: true,
+                filters,
               }}
               css={{
                 display: `block`,
@@ -197,6 +203,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               to={previousSite.fields.slug}
               state={{
                 isModal: true,
+                filters,
               }}
               css={{
                 display: `block`,
