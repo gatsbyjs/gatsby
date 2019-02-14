@@ -1,6 +1,4 @@
 const { graphql } = require(`graphql`)
-const _ = require(`lodash`)
-
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)

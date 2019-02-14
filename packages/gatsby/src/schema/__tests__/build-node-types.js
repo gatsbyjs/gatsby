@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const { graphql, GraphQLString } = require(`graphql`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 

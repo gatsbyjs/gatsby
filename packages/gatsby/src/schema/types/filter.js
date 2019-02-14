@@ -72,20 +72,18 @@ const removeEmptyFields = (
     }
     cache.add(itc)
     const fields = itc.getFields()
-    const nonEmptyFields = Object.entries(fields).reduce(
-      (acc, [fieldName, fieldITC]) => {
-        if (fieldITC instanceof schemaComposer.InputTypeComposer) {
-          const convertedITC = convert(fieldITC)
-          if (convertedITC.getFieldNames().length) {
-            acc[fieldName] = convertedITC
-          }
-        } else {
-          acc[fieldName] = fieldITC
+    const nonEmptyFields = {}
+    Object.keys(fields).forEach(fieldName => {
+      const fieldITC = fields[fieldName]
+      if (fieldITC instanceof schemaComposer.InputTypeComposer) {
+        const convertedITC = convert(fieldITC)
+        if (convertedITC.getFieldNames().length) {
+          nonEmptyFields[fieldName] = convertedITC
         }
-        return acc
-      },
-      {}
-    )
+      } else {
+        nonEmptyFields[fieldName] = fieldITC
+      }
+    })
     itc.setFields(nonEmptyFields)
     return itc
   }
