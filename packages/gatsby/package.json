@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -16,6 +16,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@babel/traverse": "^7.0.0",
+    "@gatsbyjs/relay-compiler": "2.0.0-printer-fix",
     "@reach/router": "^1.1.1",
     "address": "1.0.3",
     "autoprefixer": "^9.4.3",
@@ -105,7 +106,6 @@
     "react-error-overlay": "^3.0.0",
     "react-hot-loader": "^4.6.2",
     "redux": "^4.0.0",
-    "@gatsbyjs/relay-compiler": "2.0.0-printer-fix",
     "request": "^2.85.0",
     "semver": "^5.6.0",
     "shallow-compare": "^1.2.2",
