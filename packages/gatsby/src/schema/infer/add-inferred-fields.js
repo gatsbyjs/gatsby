@@ -120,6 +120,7 @@ const addInferredFieldsImpl = ({
             schemaComposer,
             typeComposer: typeComposer.getFieldTC(key),
             exampleObject: value,
+            typeMapping,
             nodeStore,
             prefix: selector,
             depth: depth + 1,
