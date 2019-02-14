@@ -68,6 +68,15 @@ module.exports = (
     }
   )
 
+  const getImageInfo = uri => {
+    const { url, query } = queryString.parseUrl(uri)
+    return {
+      ext: path.extname(url),
+      url,
+      query,
+    }
+  }
+
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = async function(
@@ -81,9 +90,7 @@ module.exports = (
     const parentNode = getNode(markdownNode.parent)
     let imagePath
     if (parentNode && parentNode.dir) {
-      imagePath = slash(
-        path.join(parentNode.dir, queryString.parseUrl(node.url).url)
-      )
+      imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
     } else {
       return null
     }
@@ -116,7 +123,7 @@ module.exports = (
     const presentationWidth = fluidResult.presentationWidth
 
     // Generate default alt tag
-    const srcSplit = queryString.parseUrl(node.url).url.split(`/`)
+    const srcSplit = getImageInfo(node.url).url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
@@ -267,7 +274,7 @@ module.exports = (
               return resolve()
             }
           }
-          const fileType = queryString.parseUrl(node.url).url.slice(-3)
+          const fileType = getImageInfo(node.url).ext
 
           // Ignore gifs as we can't process them,
           // svgs as they are already responsive by definition
@@ -331,9 +338,7 @@ module.exports = (
                 return resolve()
               }
 
-              const fileType = queryString
-                .parseUrl(formattedImgTag.url)
-                .url.slice(-3)
+              const fileType = getImageInfo(formattedImgTag.url).ext
 
               // Ignore gifs as we can't process them,
               // svgs as they are already responsive by definition
