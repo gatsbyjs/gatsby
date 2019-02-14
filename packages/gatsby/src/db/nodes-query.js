@@ -1,24 +1,8 @@
 const _ = require(`lodash`)
 const { getNamedType } = require(`graphql`)
-const deepmerge = require(`deepmerge`)
 
 const lokiRunQuery = require(`./loki/nodes-query`)
 const siftRunQuery = require(`../redux/run-sift`)
-
-const pathToObject = path => {
-  if (path && typeof path === `string`) {
-    return path.split(`.`).reduceRight((acc, key) => {
-      return { [key]: acc }
-    }, true)
-  }
-  return {}
-}
-
-const withSortFields = (fields, sortFields = []) =>
-  sortFields.reduce((acc, field) => {
-    const sortField = pathToObject(field.replace(/___/g, `.`))
-    return deepmerge(acc, sortField)
-  }, fields)
 
 // FIXME: This is duplicate code (`extractFieldsToSift`)
 const dropQueryOperators = filter =>
@@ -53,12 +37,10 @@ function chooseQueryEngine(args) {
 
   const { queryArgs, gqlType } = args
   // FIXME: Need to get group and distinct `field` arg from projection
-  const { filter, sort } = queryArgs
-  const filterFields = filter ? dropQueryOperators(filter) : {}
-  const fields = sort ? withSortFields(filterFields, sort.fields) : filterFields
+  const { filter } = queryArgs
+  const fields = filter ? dropQueryOperators(filter) : {}
 
-  // TODO: Where to handle abstract types? This is related to refactoring
-  // all of the query/resolving nodes stuff
+  // TODO: Currently, we don't handle querying abstract types
   // TODO: `hasFieldResolvers` is also true for Date fields
   if (backend === `loki` && !hasFieldResolvers(gqlType, fields)) {
     return lokiRunQuery

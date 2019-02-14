@@ -23,14 +23,17 @@ const getOrCreateNodeInterface = schemaComposer => {
         type: `Node`,
         resolve: (source, args, context, info) => {
           const { path } = context
-          return context.nodeModel.getNodeById(source.parent, { path })
+          return context.nodeModel.getNodeById({ id: source.parent }, { path })
         },
       },
       children: {
         type: `[Node]!`,
         resolve: (source, args, context, info) => {
           const { path } = context
-          return context.nodeModel.getNodesByIds(source.children, { path })
+          return context.nodeModel.getNodesByIds(
+            { ids: source.children },
+            { path }
+          )
         },
       },
       internal: `Internal`,

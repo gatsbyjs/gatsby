@@ -112,7 +112,7 @@ const link = ({ by, from }) => async (source, args, context, info) => {
 
   if (by === `id`) {
     if (Array.isArray(fieldValue)) {
-      return context.nodeModel.getNodesById(
+      return context.nodeModel.getNodesByIds(
         { ids: fieldValue, type: type },
         { path: context.path }
       )
