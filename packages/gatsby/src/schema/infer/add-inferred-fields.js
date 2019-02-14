@@ -81,7 +81,8 @@ const addInferredFieldsImpl = ({
         nodeStore,
         value,
         selector,
-        depth
+        depth,
+        typeMapping
       )
     }
 
@@ -223,7 +224,14 @@ const getFieldConfigFromFieldNameConvention = (
   return { type, resolve: link({ by: foreignKey || `id`, from: key }) }
 }
 
-const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
+const getFieldConfig = (
+  schemaComposer,
+  nodeStore,
+  value,
+  selector,
+  depth,
+  typeMapping
+) => {
   switch (typeof value) {
     case `boolean`:
       return { type: `Boolean` }
@@ -259,6 +267,7 @@ const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
             ),
             nodeStore,
             exampleObject: value,
+            typeMapping,
             prefix: selector,
             depth: depth + 1,
           }),
