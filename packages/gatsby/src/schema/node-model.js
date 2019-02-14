@@ -50,7 +50,7 @@ class LocalNodeModel {
     )
   }
 
-  getNodesById({ ids, type }, pageDependencies) {
+  getNodesByIds({ ids, type }, pageDependencies) {
     const nodes = ids.map(id => getNodeById(this.nodeStore, id)).filter(Boolean)
     let result
     if (!type) {
