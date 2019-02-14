@@ -17,7 +17,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ## Question Categories
 
 - [Functional Questions](#functional-questions-how-do-i-do-x-with-gatsby)
-- [GraphQL / Data Layer](#graphql-data-layer)
+- [GraphQL / Data Layer](#graphql--data-layer)
 - [Best Practices with Gatsby](#best-practices-with-gatsby)
 - [Content Management Systems (CMS)](#content-management-systems-cms)
 - [Gatsby for Dynamic Web Apps](#gatsby-for-dynamic-web-apps)
@@ -283,3 +283,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 **Question:** What's the best way to get involved with contributing to Gatsby? Do you have regular calls for contributors or a preferred async channel e.g. Slack / Discord?  
 **Answer:** We do have Discord, and highly recommend it! Check out our Community page -> [https://www.gatsbyjs.org/docs/community/](https://www.gatsbyjs.org/docs/community/ "Gatsby Community")
+
+---
+
+Reminder that if you want to watch the full recorded webinar, [register here](https://www.gatsbyjs.com/behind-the-scenes/ "Behind the Scenes Webinar"). Thanks for stopping by!
