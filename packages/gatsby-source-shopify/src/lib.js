@@ -39,8 +39,8 @@ export const queryAll = async (
   path,
   query,
   first = 250,
-  after,
-  aggregatedResponse
+  after = null,
+  aggregatedResponse = null
 ) => {
   const data = await queryOnce(client, query, first, after)
 
@@ -51,8 +51,8 @@ export const queryAll = async (
     ? aggregatedResponse.concat(nodes)
     : nodes
 
-  if (get([...path, `pageInfo`, `hasNextPage`], false, data))
-    return queryAll(
+  if (get([...path, `pageInfo`, `hasNextPage`], data)) {
+    return await queryAll(
       client,
       path,
       query,
@@ -60,6 +60,7 @@ export const queryAll = async (
       last(edges).cursor,
       aggregatedResponse
     )
+  }
 
   return aggregatedResponse
 }
