@@ -81,7 +81,19 @@ Check the GitHub repo for issues labeled with ["documentation" and "good first i
    > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
-If you wrote a new document that was previously a stub, update `www/src/data/sidebars/doc-links.yaml` accordingly by removing the asterisk behind the document's title:
+If you wrote a new document that was previously a stub, there are two things you need to update.
+
+1. Remove the frontmatter that links to the issue
+
+```diff:title=docs/docs/example-doc.md
+  ...
+    title: Example Document
+- - issue: https://github.com/gatsbyjs/gatsby/issues/00000
++ -
+  ...
+```
+
+2. Edit `www/src/data/sidebars/doc-links.yaml` by removing the asterisk behind the document's title:
 
 ```diff:title=www/src/data/sidebars/doc-links.yaml
   ...
@@ -120,7 +132,7 @@ To add a new blog post to the gatsbyjs.org blog:
 
 - Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
-- Run `gatsby develop` to preview the blog at `http://localhost:8000/blog`.
+- Run `npm run develop` to preview the blog at `http://localhost:8000/blog`.
 - The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
 - Add your avatar image to `/docs/blog/avatars`
 - Add your name to `/docs/blog/author.yaml`

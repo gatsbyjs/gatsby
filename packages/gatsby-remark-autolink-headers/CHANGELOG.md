@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.13...gatsby-remark-autolink-headers@2.0.14) (2019-02-07)
+
+### Bug Fixes
+
+- **gatsby-remark-autolink-headers:** improve accessibility of generated links ([#11635](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/issues/11635)) ([2059424](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/commit/2059424))
+
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers/compare/gatsby-remark-autolink-headers@2.0.12...gatsby-remark-autolink-headers@2.0.13) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-remark-autolink-headers

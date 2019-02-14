@@ -417,10 +417,6 @@ wording.
 
 When Gatsby commits to support a specific version of software (e.g. Node 8 and up), this is reflected in documentation. Gatsby documentation should be usable by all people on supported software, which means we don't introduce any commands or practices that can't be used by people on versions we've committed to support. In rare circumstances, we'll consider mentioning a newly introduced command or practice as side notes.
 
-For example, npm 5.2.0 (which comes with Node 8) introduced a command called `npx` that is not available for versions of Node below 8. Since Gatsby recommends Node 8 and up but still technically supports Node 6 until the next major release, documentation should point out the requirements for `npx`:
-
-> npm 5.2.0--bundled with Node 8--introduced a command called `npx`. Gatsby recommends Node 8 and up, so we introduce `npx` here as limited to users of npm 5.2.0 or greater.
-
 ### Share best practices whenever possible
 
 When there are multiple ways to complete a task, the docs should explain the following:

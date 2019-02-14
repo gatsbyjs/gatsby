@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.12...gatsby-plugin-google-gtag@1.0.13) (2019-02-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-grag:** add additional check to prevent crash in Safari ([#11431](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/11431)) ([#11503](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/11503)) ([c79bc6d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/commit/c79bc6d))
+
 ## [1.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.11...gatsby-plugin-google-gtag@1.0.12) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-google-gtag

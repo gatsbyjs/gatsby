@@ -4,7 +4,6 @@ const { store } = require(`../redux`)
 const { getNullableType, getNamedType } = require(`graphql`)
 const withResolverContext = require(`../schema/context`)
 
-const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
 const enhancedNodePromiseCache = new Map()
 const enhancedNodeCacheId = ({ node, args }) =>
@@ -23,12 +22,14 @@ const enhancedNodeCacheId = ({ node, args }) =>
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    const { schema } = store.getState()
-    return field.resolve(node, {}, withResolverContext({}, schema), {
-      fieldName: k,
-      schema,
-      returnType: field.type,
-    })
+    return field.resolve(
+      node,
+      {},
+      {},
+      {
+        fieldName: k,
+      }
+    )
   } else if (node[k] !== undefined) {
     return node[k]
   }
@@ -44,19 +45,32 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
         .then(v => {
           const innerSift = siftFieldsObj[k]
           const innerGqConfig = gqFields[k]
-
-          const innerType = getNullableType(innerGqConfig.type)
-          const innerListType = getNamedType(innerType)
-
-          if (_.isObject(innerSift) && v != null && innerType) {
-            if (_.isFunction(innerType.getFields)) {
+          if (
+            _.isObject(innerSift) &&
+            v != null &&
+            innerGqConfig &&
+            innerGqConfig.type
+          ) {
+            if (_.isFunction(innerGqConfig.type.getFields)) {
               // this is single object
-              return resolveRecursive(v, innerSift, innerType.getFields())
-            } else if (_.isArray(v) && _.isFunction(innerListType.getFields)) {
+              return resolveRecursive(
+                v,
+                innerSift,
+                innerGqConfig.type.getFields()
+              )
+            } else if (
+              _.isArray(v) &&
+              innerGqConfig.type.ofType &&
+              _.isFunction(innerGqConfig.type.ofType.getFields)
+            ) {
               // this is array
               return Promise.all(
                 v.map(item =>
-                  resolveRecursive(item, innerSift, innerListType.getFields())
+                  resolveRecursive(
+                    item,
+                    innerSift,
+                    innerGqConfig.type.ofType.getFields()
+                  )
                 )
               )
             }
@@ -76,6 +90,7 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
 }
 
 function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
+  const { resolvedNodesCache } = store.getState()
   const nodesCacheKey = JSON.stringify({
     // typeName + count being the same is a pretty good
     // indication that the nodes are the same.
@@ -84,10 +99,7 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
     nodesLength: nodes.length,
     ...fieldsToSift,
   })
-  if (
-    process.env.NODE_ENV === `production` &&
-    resolvedNodesCache.has(nodesCacheKey)
-  ) {
+  if (resolvedNodesCache.has(nodesCacheKey)) {
     return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
   } else {
     return Promise.all(
@@ -115,7 +127,13 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
         return enhancedNodeGenerationPromise
       })
     ).then(resolvedNodes => {
-      resolvedNodesCache.set(nodesCacheKey, resolvedNodes)
+      store.dispatch({
+        type: `SET_RESOLVED_NODES`,
+        payload: {
+          key: nodesCacheKey,
+          nodes: resolvedNodes,
+        },
+      })
       return resolvedNodes
     })
   }
