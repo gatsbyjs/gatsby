@@ -1,7 +1,7 @@
 {
   "name": "gatsbyjs.org",
   "description": "Gatsby's Website",
-  "version": "2.0.0-beta",
+  "version": "2.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@emotion/core": "^10.0.7",
