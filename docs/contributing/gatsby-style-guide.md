@@ -53,7 +53,7 @@ topic to write about it--this entire website is open source, so even if you make
 
 If you’d like to help by writing an article, find a stub article in the Gatsby
 Docs (with a grey instead of black title in the sidebar of the Docs), write the article, then
-[open a pull request (PR)](/docs/how-to-contribute/#contributing-to-the-documentation) in the Gatsby GitHub repo to replace the stub with your article.
+[open a pull request (PR)](/contributing/how-to-contribute/#contributing-to-the-documentation) in the Gatsby GitHub repo to replace the stub with your article.
 
 If you can't find a stub about the topic you'd like to write about, you can open a PR in GitHub that creates the stub and includes your draft article. Feel free to ask questions in the PR comments if you're not sure where to put a new article in the directory structure.
 
@@ -70,7 +70,7 @@ examples:
 - [plugin READme](/packages/gatsby-source-filesystem/)
 - [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/docs/templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/how-to-contribute/docs-templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 

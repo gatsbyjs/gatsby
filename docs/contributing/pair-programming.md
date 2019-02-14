@@ -25,7 +25,7 @@ If you're interested in support for a commercial Gatsby project, please [get in 
 We also expect the following from pair programming participants:
 
 - If you have a specific goal for the session, that’s helpful, but we can also choose an open issue to tackle if you’re not sure where to start
-- All participants are expected to adhere to [Gatsby’s code of conduct](/docs/code-of-conduct/)
+- All participants are expected to adhere to [Gatsby’s code of conduct](/contributing/code-of-conduct/)
 - We will ask if it’s okay to record our session; you are _not_ required to let us record
 - If the session is recorded, we may post the recording on [Gatsby’s YouTube channel](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w)
 

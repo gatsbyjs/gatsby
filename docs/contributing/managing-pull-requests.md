@@ -1,3 +1,0 @@
----
-title: Managing Pull Requests
----

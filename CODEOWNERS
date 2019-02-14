@@ -18,6 +18,7 @@ appveyor.yml                                    @gatsbyjs/core
 
 # The ecosystem files are error-prone, so we require an extra set of eyes on them.
 /docs/*                                         @gatsbyjs/ecosystem
+/contributing/*                                 @gatsbyjs/ecosystem
 /docs/creators/*                                @gatsbyjs/ecosystem
 /docs/creators/images/*                         @gatsbyjs/ecosystem
 

@@ -36,7 +36,10 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             <small>
               Maybe you should write one and
               {` `}
-              <Link to="/docs/submit-to-starter-library/">submit it</Link>?
+              <Link to="/contributing/submit-to-starter-library/">
+                submit it
+              </Link>
+              ?
             </small>
           </div>
         </h1>
