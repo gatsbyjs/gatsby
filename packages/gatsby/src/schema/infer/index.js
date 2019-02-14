@@ -66,7 +66,7 @@ const addInferredTypes = ({
   })
 
   // XXX(freiksenet): We iterate twice to pre-create all types
-  typeNames.forEach(typeName => {
+  const typeComposers = typeNames.map(typeName => {
     addInferredType({
       schemaComposer,
       nodeStore,
@@ -90,6 +90,8 @@ const addInferredTypes = ({
     })
     report.panic(`Building schema failed`)
   }
+
+  return typeComposers
 }
 
 const putFileFirst = typeNames => {

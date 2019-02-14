@@ -43,7 +43,8 @@ const getGroup = ({ schemaComposer, typeComposer }) => {
   return createPagination({ schemaComposer, typeComposer, fields, typeName })
 }
 
-const getPagination = ({ schemaComposer, typeComposer, inputTypeComposer }) => {
+const getPagination = ({ schemaComposer, typeComposer }) => {
+  const inputTypeComposer = typeComposer.getInputTypeComposer()
   const typeName = typeComposer.getTypeName() + `Connection`
   const FieldsEnumTC = getFieldsEnum({
     schemaComposer,

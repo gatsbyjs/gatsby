@@ -3,16 +3,6 @@ const { graphql } = require(`gatsby/graphql`)
 
 const onCreateNode = require(`../on-node-create`)
 
-const {
-  graphql,
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLSchema,
-} = require(`gatsby/graphql`)
-const {
-  inferObjectStructureFromNodes,
-} = require(`../../../gatsby/src/schema/infer-graphql-type`)
-
 let node
 let actions
 let createNodeId

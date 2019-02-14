@@ -21,8 +21,7 @@ const {
 const getInferredFields = fields => {
   const schemaComposer = createSchemaComposer()
   const tc = schemaComposer.createTC({ name: `Test`, fields })
-  const itc = tc.getITC()
-  return getFilterInput({ schemaComposer, inputTypeComposer: itc })
+  return getFilterInput({ schemaComposer, typeComposer: tc })
     .getType()
     .getFields()
 }
@@ -241,9 +240,9 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     expect(childAB instanceof GraphQLInputObjectType).toBeTruthy()
     isIdInput(childABFields.bar.type)
 
-    expect(childABFields.typea.type.name).toBe(`TestTypeAInput`)
+    expect(childABFields.typea.type.name).toBe(`TestTypeAFilterInput`)
 
-    expect(entryPointBFields.typea.type.name).toBe(`TestTypeAInput`)
+    expect(entryPointBFields.typea.type.name).toBe(`TestTypeAFilterInput`)
   })
 
   it(`recovers from unknown output types`, async () => {
@@ -360,10 +359,8 @@ describe(`GraphQL Input args from fields, test-only`, () => {
 
     const schemaComposer = createSchemaComposer()
     const tc = schemaComposer.createTC({ name: `Test`, fields })
-    const itc = tc.getITC()
     const sort = getSortInput({
       schemaComposer,
-      inputTypeComposer: itc,
       typeComposer: tc,
     })
       .getType()

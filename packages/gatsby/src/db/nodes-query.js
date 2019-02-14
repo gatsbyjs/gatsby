@@ -36,13 +36,17 @@ function chooseQueryEngine(args) {
   const { backend } = require(`./nodes`)
 
   const { queryArgs, gqlType } = args
-  // FIXME: Need to get group and distinct `field` arg from projection
+  // TODO: Resolve nodes on sort fields
+  // TODO: Need to get group and distinct `field` arg from projection
   const { filter } = queryArgs
   const fields = filter ? dropQueryOperators(filter) : {}
 
-  // TODO: Currently, we don't handle querying abstract types
-  // TODO: `hasFieldResolvers` is also true for Date fields
-  if (backend === `loki` && !hasFieldResolvers(gqlType, fields)) {
+  // NOTE: `hasFieldResolvers` is also true for Date fields
+  if (
+    backend === `loki` &&
+    !args.nodes &&
+    !hasFieldResolvers(gqlType, fields)
+  ) {
     return lokiRunQuery
   } else {
     return siftRunQuery
