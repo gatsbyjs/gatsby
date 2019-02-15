@@ -6,18 +6,18 @@ const {
 } = require(`./index`)
 const { scheduleJob } = require(`./scheduler`)
 
-const getQueueFromCache = async cache => {
-  const rawQueue = await cache.get(`queue`)
+const getQueueFromCache = store => {
+  const pluginStatus = store.getState().status.plugins[`gatsby-plugin-sharp`]
 
-  if (!rawQueue) {
+  if (!pluginStatus || !pluginStatus.queue) {
     return new Map()
   }
 
-  return new Map(rawQueue)
+  return new Map(pluginStatus.queue)
 }
 
-const saveQueueToCache = async (cache, queue) => {
-  const cachedQueue = await getQueueFromCache(cache)
+const saveQueueToCache = async (store, setPluginStatus, queue) => {
+  const cachedQueue = getQueueFromCache(store)
 
   // merge both queues
   for (const [key, job] of cachedQueue) {
@@ -27,7 +27,7 @@ const saveQueueToCache = async (cache, queue) => {
   }
 
   // JSON.stringify doesn't work on an Map so we need to convert it to an array
-  return cache.set(`queue`, Array.from(queue))
+  setPluginStatus({ queue: Array.from(queue) })
 }
 
 exports.onPreBootstrap = ({ actions }, pluginOptions) => {
@@ -38,15 +38,15 @@ exports.onPreBootstrap = ({ actions }, pluginOptions) => {
 /**
  * save queue to the cache
  */
-exports.onPostBootstrap = async ({ cache, store }) =>
-  saveQueueToCache(cache, jobQueue)
+exports.onPostBootstrap = ({ actions: { setPluginStatus }, store }) =>
+  saveQueueToCache(store, setPluginStatus, jobQueue)
 
 /**
  * Execute all unprocessed images on gatsby build
  */
 let promises = []
-exports.onPreBuild = async ({ cache, boundActionCreators }, pluginOptions) => {
-  const cachedQueue = await getQueueFromCache(cache)
+exports.onPreBuild = ({ store, boundActionCreators }, pluginOptions) => {
+  const cachedQueue = getQueueFromCache(store)
 
   for (const [, job] of cachedQueue) {
     promises.push(scheduleJob(job, boundActionCreators, pluginOptions))
@@ -56,9 +56,9 @@ exports.onPreBuild = async ({ cache, boundActionCreators }, pluginOptions) => {
 /**
  * wait for all images to be processed
  */
-exports.onPostBuild = ({ cache, reporter }) =>
+exports.onPostBuild = ({ actions: { setPluginStatus }, store, reporter }) =>
   Promise.all(promises)
-    .then(() => cache.set(`queue`, []))
+    .then(() => setPluginStatus({ queue: [] }))
     .catch(({ err, message }) => {
       reportError(message || err.message, err, reporter)
     })
@@ -67,13 +67,15 @@ exports.onPostBuild = ({ cache, reporter }) =>
  * Build images on the fly when they are requested by the browser
  */
 exports.onCreateDevServer = async (
-  { app, cache, emitter, boundActionCreators },
+  { app, emitter, boundActionCreators, actions: { setPluginStatus }, store },
   pluginOptions
 ) => {
-  emitter.on(`QUERY_QUEUE_DRAINED`, () => saveQueueToCache(cache, jobQueue))
+  emitter.on(`QUERY_QUEUE_DRAINED`, () =>
+    saveQueueToCache(store, setPluginStatus, jobQueue)
+  )
 
   app.use(async (req, res, next) => {
-    const queue = await getQueueFromCache(cache)
+    const queue = getQueueFromCache(store)
     if (!queue.has(req.originalUrl)) {
       return next()
     }
@@ -85,7 +87,7 @@ exports.onCreateDevServer = async (
     // remove job from queue because it has been processed
     queue.delete(req.originalUrl)
 
-    await saveQueueToCache(cache, queue)
+    saveQueueToCache(store, setPluginStatus, queue)
 
     return res.sendFile(job.outputPath)
   })
