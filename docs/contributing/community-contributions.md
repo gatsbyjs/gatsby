@@ -7,7 +7,6 @@ A big part of what makes Gatsby great is each and every one of you in the commun
 We welcome all contributions from you in the community, and would be thrilled to amplify your voice. Contributions are not limited to code, and can take all shapes and forms:
 
 - Your wonderful Gatsby.js website!
-- Your wonderful persona as a Gatsby contributor!
 - Gatsby starters
 - Gatsby plugins
 - Blog posts and case studies
@@ -15,10 +14,9 @@ We welcome all contributions from you in the community, and would be thrilled to
 - Workshop materials
 - Github issues and pull requests
 
-...and anything else you can think of. Our showcase contribution docs are a great place to learn more:
+...and anything else you can think of. Our showcase and library contribution docs are a great place to start:
 
 - [Submit to Site Showcase](/contributing/submit-to-site-showcase/)
-- [Submit to Creator Showcase](/contributing/submit-to-creator-showcase/)
 - [Submit to Starter Library](/contributing/submit-to-starter-library/)
 - [Submit to Plugin Library](/contributing/submit-to-plugin-library/)
 
