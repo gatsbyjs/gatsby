@@ -13,6 +13,7 @@ module.exports = pluginOptions => {
       mediaTypes: ["text/markdown", "text/x-markdown"],
       hastPlugins: [],
       mdPlugins: [],
+      plugins: [],
       root: process.cwd(),
       gatsbyRemarkPlugins: [],
       globalScope: `export default {}`,
