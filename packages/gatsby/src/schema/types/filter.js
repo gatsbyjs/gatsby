@@ -7,14 +7,16 @@ const {
 } = require(`graphql`)
 
 const convert = ({ schemaComposer, inputTypeComposer }) => {
-  const inputTypeName = inputTypeComposer.getTypeName()
+  const inputTypeName = inputTypeComposer
+    .getTypeName()
+    .replace(/Input$/, `FilterInput`)
   if (schemaComposer.has(inputTypeName)) {
     return schemaComposer.get(inputTypeName)
   }
 
   const convertedITC = new schemaComposer.InputTypeComposer(
     new GraphQLInputObjectType({
-      name: inputTypeComposer.getTypeName(),
+      name: inputTypeName,
       fields: {},
     })
   )
@@ -70,27 +72,26 @@ const removeEmptyFields = (
     }
     cache.add(itc)
     const fields = itc.getFields()
-    const nonEmptyFields = Object.entries(fields).reduce(
-      (acc, [fieldName, fieldITC]) => {
-        if (fieldITC instanceof schemaComposer.InputTypeComposer) {
-          const convertedITC = convert(fieldITC)
-          if (convertedITC.getFieldNames().length) {
-            acc[fieldName] = convertedITC
-          }
-        } else {
-          acc[fieldName] = fieldITC
+    const nonEmptyFields = {}
+    Object.keys(fields).forEach(fieldName => {
+      const fieldITC = fields[fieldName]
+      if (fieldITC instanceof schemaComposer.InputTypeComposer) {
+        const convertedITC = convert(fieldITC)
+        if (convertedITC.getFieldNames().length) {
+          nonEmptyFields[fieldName] = convertedITC
         }
-        return acc
-      },
-      {}
-    )
+      } else {
+        nonEmptyFields[fieldName] = fieldITC
+      }
+    })
     itc.setFields(nonEmptyFields)
     return itc
   }
   return convert(inputTypeComposer)
 }
 
-const getFilterInput = ({ schemaComposer, inputTypeComposer }) => {
+const getFilterInput = ({ schemaComposer, typeComposer }) => {
+  const inputTypeComposer = typeComposer.getInputTypeComposer()
   const FilterInputTC = convert({
     schemaComposer,
     inputTypeComposer,

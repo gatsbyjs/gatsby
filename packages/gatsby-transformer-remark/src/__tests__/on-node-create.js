@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const onCreateNode = require(`../on-node-create`)
-
 const { graphql } = require(`gatsby/graphql`)
+
 let node
 let actions
 let createNodeId

@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const { toInputObjectType } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/NodeInterface`)
@@ -229,27 +228,18 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
 
 const addResolvers = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
-  const inputTypeComposer = toInputObjectType(
-    typeComposer,
-    {
-      postfix: `FilterInput`,
-    },
-    new Map()
-  )
+  typeComposer.removeInputTypeComposer()
   const SortInputTC = getSortInput({
     schemaComposer,
     typeComposer,
-    inputTypeComposer,
   })
   const FilterInputTC = getFilterInput({
     schemaComposer,
     typeComposer,
-    inputTypeComposer,
   })
   const PaginationTC = getPagination({
     schemaComposer,
     typeComposer,
-    inputTypeComposer,
   })
   typeComposer.addResolver({
     name: `findOne`,

@@ -23,7 +23,8 @@ const getFieldsEnum = ({ schemaComposer, typeComposer, inputTypeComposer }) => {
   })
 }
 
-const getSortInput = ({ schemaComposer, typeComposer, inputTypeComposer }) => {
+const getSortInput = ({ schemaComposer, typeComposer }) => {
+  const inputTypeComposer = typeComposer.getInputTypeComposer()
   const SortOrderEnumTC = getSortOrderEnum({ schemaComposer })
   const FieldsEnumTC = getFieldsEnum({
     schemaComposer,

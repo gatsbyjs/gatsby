@@ -294,7 +294,6 @@ describe(`GraphQL type inference`, () => {
       `
     )
 
-    console.log(JSON.stringify(result))
     expect(result.errors).not.toBeDefined()
     expect(result.data.allTest.edges.length).toEqual(2)
     expect(result.data.allTest.edges[0].node.with_space).toEqual(1)
@@ -407,7 +406,7 @@ describe(`GraphQL type inference`, () => {
   })
 
   describe(`Linked inference from config mappings`, () => {
-    const mappingNodes = [
+    const getMappingNodes = () => [
       {
         id: `node1`,
         label: `First node`,
@@ -446,7 +445,7 @@ describe(`GraphQL type inference`, () => {
           linkedOnID: `not_existing`,
           internal: { type: `Test` },
         },
-      ].concat(mappingNodes)
+      ].concat(getMappingNodes())
       const result = await getQueryResult(
         nodes,
         `
@@ -474,10 +473,11 @@ describe(`GraphQL type inference`, () => {
     it(`Links to array of nodes by id`, async () => {
       const nodes = [
         {
+          id: `3`,
           linkedOnID: [`node1`, `node2`],
           internal: { type: `Test` },
         },
-      ].concat(mappingNodes)
+      ].concat(getMappingNodes())
       const result = await getQueryResult(
         nodes,
         `
@@ -517,7 +517,7 @@ describe(`GraphQL type inference`, () => {
           linkedOnCustomField: `not_existing`,
           internal: { type: `Test` },
         },
-      ].concat(mappingNodes)
+      ].concat(getMappingNodes())
       const result = await getQueryResult(
         nodes,
         `
@@ -549,10 +549,11 @@ describe(`GraphQL type inference`, () => {
     it(`Links to array of nodes by custom field`, async () => {
       const nodes = [
         {
+          id: `1`,
           linkedOnCustomField: [`test1`, `test3`],
           internal: { type: `Test` },
         },
-      ].concat(mappingNodes)
+      ].concat(getMappingNodes())
       const result = await getQueryResult(
         nodes,
         `
@@ -587,7 +588,7 @@ describe(`GraphQL type inference`, () => {
 
   describe(`Linked inference from file URIs`, () => {
     const dir = slash(path.resolve(`/path/`))
-    const fileNodes = [
+    const getFileNodes = () => [
       {
         id: `parent`,
         internal: { type: `File` },
@@ -611,11 +612,12 @@ describe(`GraphQL type inference`, () => {
     it(`Links to file node`, async () => {
       const nodes = [
         {
+          id: `1`,
           file: `./file_1.jpg`,
           parent: `parent`,
           internal: { type: `Test` },
         },
-      ].concat(fileNodes)
+      ].concat(getFileNodes())
 
       let result = await getQueryResult(
         nodes,
@@ -635,11 +637,12 @@ describe(`GraphQL type inference`, () => {
     it(`Links to array of file nodes`, async () => {
       const nodes = [
         {
+          id: `1`,
           files: [`./file_1.jpg`, `./file_2.txt`],
           parent: `parent`,
           internal: { type: `Test` },
         },
-      ].concat(fileNodes)
+      ].concat(getFileNodes())
 
       let result = await getQueryResult(
         nodes,
@@ -662,7 +665,7 @@ describe(`GraphQL type inference`, () => {
   })
 
   describe(`Linked inference by __NODE convention`, () => {
-    const linkedNodes = [
+    const getLinkedNodes = () => [
       { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
       { id: `child_2`, internal: { type: `Child` }, hair: `blonde` },
       { id: `pet_1`, internal: { type: `Pet` }, species: `dog` },
@@ -671,7 +674,7 @@ describe(`GraphQL type inference`, () => {
     it(`Links nodes`, async () => {
       const nodes = [
         { linked___NODE: `child_1`, internal: { type: `Test` }, id: `1` },
-      ].concat(linkedNodes)
+      ].concat(getLinkedNodes())
       const result = await getQueryResult(
         nodes,
         `
@@ -691,7 +694,7 @@ describe(`GraphQL type inference`, () => {
           internal: { type: `Test` },
           id: `1`,
         },
-      ].concat(linkedNodes)
+      ].concat(getLinkedNodes())
       const result = await getQueryResult(
         nodes,
         `
@@ -708,7 +711,7 @@ describe(`GraphQL type inference`, () => {
     it(`Links nodes by field`, async () => {
       const nodes = [
         { linked___NODE___hair: `brown`, internal: { type: `Test` }, id: `1` },
-      ].concat(linkedNodes)
+      ].concat(getLinkedNodes())
       const result = await getQueryResult(
         nodes,
         `
@@ -728,7 +731,7 @@ describe(`GraphQL type inference`, () => {
           internal: { type: `Test` },
           id: `1`,
         },
-      ].concat(linkedNodes)
+      ].concat(getLinkedNodes())
       const result = await getQueryResult(
         nodes,
         `
@@ -779,7 +782,7 @@ describe(`GraphQL type inference`, () => {
             internal: { type: `Test` },
             id: `1`,
           },
-        ].concat(linkedNodes)
+        ].concat(getLinkedNodes())
         const result = await getQueryResult(
           nodes,
           `
@@ -821,7 +824,7 @@ describe(`GraphQL type inference`, () => {
             internal: { type: `OtherType` },
             id: `2`,
           },
-        ].concat(linkedNodes)
+        ].concat(getLinkedNodes())
         const schema = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
@@ -852,7 +855,7 @@ describe(`GraphQL type inference`, () => {
             internal: { type: `OtherType` },
             id: `2`,
           },
-        ].concat(linkedNodes)
+        ].concat(getLinkedNodes())
         const schema = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()

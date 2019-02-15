@@ -88,10 +88,21 @@ class LocalNodeModel {
 
   async runQuery(args, pageDependencies) {
     const { query, firstOnly, type } = args || {}
+
+    let nodes
+    const nodeTypeNames = toNodeTypeNames(this.schema, type)
+    if (nodeTypeNames.length > 1) {
+      nodes = nodeTypeNames.reduce(
+        (acc, typeName) => acc.concat(this.nodeStore.getNodesByType(typeName)),
+        []
+      )
+    }
+
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
       gqlType: typeof type === `string` ? this.schema.getType(type) : type,
+      nodes,
     })
     let result = queryResult
     if (args.firstOnly) {

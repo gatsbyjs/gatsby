@@ -81,7 +81,8 @@ const addInferredFieldsImpl = ({
         nodeStore,
         value,
         selector,
-        depth
+        depth,
+        typeMapping
       )
     }
 
@@ -91,17 +92,22 @@ const addInferredFieldsImpl = ({
 
     // Proxy resolver to unsanitized fieldName in case it contained invalid characters
     if (key !== unsanitizedKey) {
-      // Don't create a field with the sanitized key if a field with that name already exists
-      if (exampleObject[key] == null && !typeComposer.hasField(key)) {
-        const resolver = fieldConfig.resolve || defaultFieldResolver
-        fieldConfig = {
-          ...fieldConfig,
-          resolve: (source, args, context, info) =>
-            resolver(source, args, context, {
-              ...info,
-              fieldName: unsanitizedKey,
-            }),
-        }
+      // Don't create a field with the sanitized key if a field with that name already exists.
+      invariant(
+        exampleObject[key] == null && !typeComposer.hasField(key),
+        `Invalid key ${unsanitizedKey} on ${prefix}. GraphQL field names must ` +
+          `only contain characters matching /^[a-zA-Z][_a-zA-Z0-9]*$/. and ` +
+          `must not start with a double underscore.`
+      )
+
+      const resolver = fieldConfig.resolve || defaultFieldResolver
+      fieldConfig = {
+        ...fieldConfig,
+        resolve: (source, args, context, info) =>
+          resolver(source, args, context, {
+            ...info,
+            fieldName: unsanitizedKey,
+          }),
       }
     }
 
@@ -120,6 +126,7 @@ const addInferredFieldsImpl = ({
             schemaComposer,
             typeComposer: typeComposer.getFieldTC(key),
             exampleObject: value,
+            typeMapping,
             nodeStore,
             prefix: selector,
             depth: depth + 1,
@@ -222,7 +229,14 @@ const getFieldConfigFromFieldNameConvention = (
   return { type, resolve: link({ by: foreignKey || `id`, from: key }) }
 }
 
-const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
+const getFieldConfig = (
+  schemaComposer,
+  nodeStore,
+  value,
+  selector,
+  depth,
+  typeMapping
+) => {
   switch (typeof value) {
     case `boolean`:
       return { type: `Boolean` }
@@ -258,6 +272,7 @@ const getFieldConfig = (schemaComposer, nodeStore, value, selector, depth) => {
             ),
             nodeStore,
             exampleObject: value,
+            typeMapping,
             prefix: selector,
             depth: depth + 1,
           }),

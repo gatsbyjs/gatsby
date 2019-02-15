@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const { graphql } = require(`graphql`)
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
