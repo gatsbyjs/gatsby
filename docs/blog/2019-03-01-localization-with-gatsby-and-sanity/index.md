@@ -155,10 +155,10 @@ export const createLocaleTextGetter = languageCode => {
 
 You could use render props for this but I decided on a higher-order component (HOC).
 
-```JSX:title=src/components/localize.jsx
-import React from "react";
-import Proptypes from "prop-types";
-import { createLocaleTextGetter } from '../../util'; // Or wherever you stashed it
+```jsx:title=src/components/localize.jsx
+import React from "react"
+import Proptypes from "prop-types"
+import { createLocaleTextGetter } from "../../util" // Or wherever you stashed it
 
 function localize(Component) {
   return class Localize extends React.Component {
@@ -167,13 +167,13 @@ function localize(Component) {
       pageContext: Proptypes.shape({
         locale: Proptypes.string,
       }),
-    };
+    }
     constructor(props) {
-      super(props);
+      super(props)
 
       this.getLocalizedContent = createLocaleTextGetter(
         this.props.pageContext.locale
-      );
+      )
     }
 
     render() {
@@ -182,12 +182,12 @@ function localize(Component) {
           {...this.props}
           data={this.getLocalizedContent(this.props.data)}
         />
-      );
+      )
     }
-  };
+  }
 }
 
-export default localize;
+export default localize
 ```
 
 ## Wrap Page Components With the Localize HOC
