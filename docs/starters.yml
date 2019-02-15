@@ -1860,3 +1860,18 @@
     - Material Design theme and icons
     - Simple setup without opinionated setup
     - Fully instrumented for successful PROD deployments
+- url: https://gatsby-shopify.alexander-productions.de/
+  repo: https://github.com/AlexanderProd/gatsby-shopify-starter
+  description: Kick off your next, ecommerce experience with this Gatsby starter. It is based on the default Gatsby starter to be easily modifiable.
+  tags:
+    - Headless CMS
+    - SEO
+    - eCommerce
+  features:
+    - Shopping Cart
+    - Shopify Integration
+    - Product Grid
+    - Easily modifiable
+    - Shopify Store Credentials included
+    - Quick and simple start
+    - SEO
