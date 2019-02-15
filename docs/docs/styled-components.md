@@ -2,7 +2,7 @@
 title: Styled Components
 ---
 
-In this guide, we'll walk through setting up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
+In this guide, you will learn setting up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
 
 Styled Components lets you use actual CSS syntax inside your components. Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
@@ -20,7 +20,7 @@ First, open a new terminal window and run the following to create a new site:
 npx gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Next, we'll install the necessary dependencies for `styled-components`, including the Gatsby plugin.
+Second, install the necessary dependencies for `styled-components`, including the Gatsby plugin.
 
 ```shell
 npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components
