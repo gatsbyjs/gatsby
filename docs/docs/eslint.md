@@ -8,20 +8,18 @@ Gatsby ships with Prettier, which is a simple, opinionated code _formatter_. [ES
 
 ## How to use ESLint
 
-Here we will explore an ESLint configuration that acts like Prettier by adhering to [Standard.js](https://standardjs.com) rules. ESLint might seem intimidating at first, however it is aimed at providing a number of configurable options to make your code format fit your style. Run the following commands to remove Prettier and install ESLint.
+Here we will explore an ESLint configuration that will still use Prettier for formatting, but also provide linting rules recommended by the plugins. ESLint might seem intimidating at first, however it is aimed at providing a number of configurable options to make your code format fit your style. Run the following commands to install ESLint and the packages necessary for Prettier integration.
 
 ```shell
-# Remove the Prettier package
-npm rm prettier
-
 # Install ESLint and its packages
 npm install --save-dev eslint babel-eslint \
-  eslint-config-standard eslint-plugin-node \
-  eslint-plugin-standard eslint-plugin-react \
-  eslint-plugin-import eslint-plugin-promise
+  eslint-plugin-prettier eslint-config-prettier \
+  eslint-plugin-react eslint-plugin-jsx-a11y \
+  eslint-plugin-import eslint-plugin-promise \
+  eslint-plugin-node
 ```
 
-Now that we have our packages installed, remove `.prettierrc` from the root of your new Gatsby project and create a new file named `.eslintrc.js` using the commands below.
+Now that we have our packages installed, in the root of your project create a new file named `.eslintrc.js` using the commands below.
 
 ```shell
 # Remove the Prettier config file
@@ -31,59 +29,67 @@ rm .prettierrc
 touch .eslintrc.js
 ```
 
-### Configuring ESLint
+## Configuring ESLint
 
-We recommend copying our default .eslintrc.js content below to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options.
+We recommend copying our default ESLint content below to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options. Sample rules from the plugins are also provided to demonstrate their capabilities.
 
 ```js:title=.eslintrc.js
 module.exports = {
-  extends: ["standard"],
-  plugins: ["standard", "react"],
-  rules: {
-    "no-var": "error", // optional, recommended when using es6+
-    "no-unused-vars": 1, // recommended
-    "arrow-spacing": ["error", { before: true, after: true }], // recommended
-    indent: ["error", 2],
-    "comma-dangle": [
-      "error",
-      {
-        objects: "only-multiline",
-        arrays: "only-multiline",
-        imports: "never",
-        exports: "never",
-        functions: "never",
-      },
-    ],
-
-    // options to emulate prettier setup
-    semi: ["error", "never"],
-    "max-len": ["error", { code: 80 }],
-    "template-curly-spacing": ["error", "always"],
-    "arrow-parens": ["error", "as-needed"],
-
-    // standard.js
-    "space-before-function-paren": [
-      "error",
-      {
-        named: "always",
-        anonymous: "always",
-        asyncArrow: "always",
-      },
-    ],
-
-    // standard plugin - options
-    "standard/object-curly-even-spacing": ["error", "either"],
-    "standard/array-bracket-even-spacing": ["error", "either"],
-    "standard/computed-property-even-spacing": ["error", "even"],
-    "standard/no-callback-literal": ["error", ["cb", "callback"]],
-
-    // react plugin - options
-    "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error",
-  },
+  extends: [
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier",
+    "prettier/react",
+  ],
+  plugins: [
+    "prettier",
+    "react",
+    "jsx-a11y",
+  ],
   parser: "babel-eslint",
   parserOptions: {
-    ecmaVersion: 8, // optional, recommended 6+
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "classes": true,
+      "jsx": true
+    }
   },
-}
+  env: {
+    "browser": true,
+    "es6": true
+  },
+  settings: {
+    react: {
+      "version": "latest"
+    },
+  },
+  rules: {
+    // https://github.com/yannickcr/eslint-plugin-react#configuration
+    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
+    "react/jsx-uses-react": "error",
+    "react/react-in-jsx-scope": "error",
+    "react/no-deprecated": "error",
+    "react/prefer-stateless-function": "warn",
+
+    // https://www.npmjs.com/package/eslint-plugin-jsx-a11y#supported-rules
+    "jsx-a11y/accessible-emoji": "warn",
+    "jsx-a11y/anchor-is-valid": "warn",
+    "jsx-a11y/alt-text": "warn",
+
+    // prettier - default options
+    "prettier/prettier": ["error", {
+      "printWidth": 80,
+      "tabWidth": "error",
+      "useTabs": false,
+      "semi": true,
+      "singleQuote": false,
+      "jsxSingleQuote": false,
+      "trailingComma": "none",
+      "bracketSpacing": true,
+      "jsxBracketSameLine": false,
+      "arrowParens": "avoid"
+    }]
+  }
+};
 ```
