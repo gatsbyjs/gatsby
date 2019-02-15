@@ -65,42 +65,14 @@ describe(`Process WordPress data`, () => {
   })
 
   describe(`createUrlPathsFromLinks`, () => {
-    it(`creates URL paths from links`, () => {
+    it(`should create URL paths from links`, () => {
       entities = normalize.createUrlPathsFromLinks(entities)
       expect(entities).toMatchSnapshot()
     })
 
-    it(`targets pages`, () => {
-      const link = `https://www.gatsbyjs.org/packages/gatsby-source-wordpress/`
-      entities = normalize.createUrlPathsFromLinks([
-        { link, __type: `wordpress__PAGE` },
-      ])
-      expect(entities).toEqual([
-        {
-          link,
-          __type: `wordpress__PAGE`,
-          path: `/packages/gatsby-source-wordpress/`,
-        },
-      ])
-    })
-
-    it(`targets posts`, () => {
-      const link = `https://www.gatsbyjs.org/packages/gatsby-source-wordpress/`
-      entities = normalize.createUrlPathsFromLinks([
-        { link, __type: `wordpress__POST` },
-      ])
-      expect(entities).toEqual([
-        {
-          link,
-          __type: `wordpress__POST`,
-          path: `/packages/gatsby-source-wordpress/`,
-        },
-      ])
-    })
-
     // Some WordPress plugins (like https://wordpress.org/plugins/relative-url/)
     // convert URLS to relative links
-    it(`does work if links are already relative`, () => {
+    it(`should work if links are already relative`, () => {
       const link = `/packages/gatsby-source-wordpress/`
       entities = normalize.createUrlPathsFromLinks([
         { link, __type: `wordpress__PAGE` },
@@ -110,6 +82,22 @@ describe(`Process WordPress data`, () => {
           link,
           __type: `wordpress__PAGE`,
           path: link,
+        },
+      ])
+    })
+
+    // Someone or some plugin could have already enriched the
+    // REST endpoint on WordPress side with a "path" field
+    it(`should not touch already present "path" fields`, () => {
+      const link = `/packages/gatsby-source-wordpress/`
+      entities = normalize.createUrlPathsFromLinks([
+        { link, __type: `wordpress__PAGE`, path: `already-set` },
+      ])
+      expect(entities).toEqual([
+        {
+          link,
+          __type: `wordpress__PAGE`,
+          path: `already-set`,
         },
       ])
     })

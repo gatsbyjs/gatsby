@@ -621,7 +621,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
 
 exports.createUrlPathsFromLinks = entities =>
   entities.map(e => {
-    if (e.__type === `wordpress__PAGE` || e.__type === `wordpress__POST`) {
+    if (e.link && !e.path) {
       try {
         const link = new URL(e.link)
         e.path = link.pathname

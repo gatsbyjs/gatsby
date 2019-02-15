@@ -12817,7 +12817,7 @@ Array [
 ]
 `;
 
-exports[`Process WordPress data createUrlPathsFromLinks creates URL paths from links 1`] = `
+exports[`Process WordPress data createUrlPathsFromLinks should create URL paths from links 1`] = `
 Array [
   Object {
     "__type": "wordpress__POST",
@@ -13234,6 +13234,7 @@ Array [
     "meta": Array [],
     "mime_type": "image/jpeg",
     "modified": "2017-09-02T10:52:39.000Z",
+    "path": "/sample-post-1/pexels-photo-534327/",
     "ping_status": "closed",
     "post": 26,
     "slug": "pexels-photo-534327",
@@ -13346,6 +13347,7 @@ Array [
     "meta": Array [],
     "mime_type": "image/jpeg",
     "modified": "2017-09-02T10:52:23.000Z",
+    "path": "/gatsby-sample-home-page/pexels-photo-534351/",
     "ping_status": "closed",
     "post": 5,
     "slug": "pexels-photo-534351",
@@ -13397,6 +13399,7 @@ Array [
     "id": "uuid-from-gatsby",
     "link": "http://dev-gatbsyjswp.pantheonsite.io/gatsby/fifth/",
     "modified": "2017-09-02T10:57:32.000Z",
+    "path": "/gatsby/fifth/",
     "slug": "fifth",
     "status": "publish",
     "template": "",
@@ -13446,6 +13449,7 @@ Array [
     "id": "uuid-from-gatsby",
     "link": "http://dev-gatbsyjswp.pantheonsite.io/gatsby/forth/",
     "modified": "2017-09-02T10:57:18.000Z",
+    "path": "/gatsby/forth/",
     "slug": "forth",
     "status": "publish",
     "template": "",
@@ -13494,6 +13498,7 @@ Array [
     "id": "uuid-from-gatsby",
     "link": "http://dev-gatbsyjswp.pantheonsite.io/gatsby/third/",
     "modified": "2017-09-02T10:57:00.000Z",
+    "path": "/gatsby/third/",
     "slug": "third",
     "status": "publish",
     "template": "",
@@ -13542,6 +13547,7 @@ Array [
     "id": "uuid-from-gatsby",
     "link": "http://dev-gatbsyjswp.pantheonsite.io/gatsby/second/",
     "modified": "2017-09-02T10:56:47.000Z",
+    "path": "/gatsby/second/",
     "slug": "second",
     "status": "publish",
     "template": "",
@@ -13590,6 +13596,7 @@ Array [
     "id": "uuid-from-gatsby",
     "link": "http://dev-gatbsyjswp.pantheonsite.io/gatsby/first/",
     "modified": "2017-09-02T10:56:32.000Z",
+    "path": "/gatsby/first/",
     "slug": "first",
     "status": "publish",
     "template": "",
@@ -13853,6 +13860,7 @@ Array [
     "link": "http://dev-gatbsyjswp.pantheonsite.io/category/sample-category-1/",
     "meta": Array [],
     "name": "Sample category 1",
+    "path": "/category/sample-category-1/",
     "slug": "sample-category-1",
     "taxonomy___NODE": "uuid-from-gatsby",
     "wordpress_id": 2,
@@ -13895,6 +13903,7 @@ Array [
     "link": "http://dev-gatbsyjswp.pantheonsite.io/category/sample-category-2/",
     "meta": Array [],
     "name": "Sample category 2",
+    "path": "/category/sample-category-2/",
     "slug": "sample-category-2",
     "taxonomy___NODE": "uuid-from-gatsby",
     "wordpress_id": 3,
@@ -13937,6 +13946,7 @@ Array [
     "link": "http://dev-gatbsyjswp.pantheonsite.io/category/uncategorized/",
     "meta": Array [],
     "name": "Uncategorized",
+    "path": "/category/uncategorized/",
     "slug": "uncategorized",
     "taxonomy___NODE": "uuid-from-gatsby",
     "wordpress_id": 1,
@@ -13979,6 +13989,7 @@ Array [
     "link": "http://dev-gatbsyjswp.pantheonsite.io/tag/sample-tag-1/",
     "meta": Array [],
     "name": "Sample tag 1",
+    "path": "/tag/sample-tag-1/",
     "slug": "sample-tag-1",
     "taxonomy___NODE": "uuid-from-gatsby",
     "wordpress_id": 4,
@@ -14020,6 +14031,7 @@ Array [
     "link": "http://dev-gatbsyjswp.pantheonsite.io/tag/sample-tag-2/",
     "meta": Array [],
     "name": "Sample tag 2",
+    "path": "/tag/sample-tag-2/",
     "slug": "sample-tag-2",
     "taxonomy___NODE": "uuid-from-gatsby",
     "wordpress_id": 5,
@@ -14067,6 +14079,7 @@ Array [
     "link": "http://dev-gatbsyjswp.pantheonsite.io/author/gatsby/",
     "meta": Array [],
     "name": "gatsby",
+    "path": "/author/gatsby/",
     "slug": "gatsby",
     "url": "",
     "wordpress_id": 1,
@@ -15681,12 +15694,12 @@ Array [
     Object {
       "children": Array [],
       "internal": Object {
-        "contentDigest": "9d52ba42b90e47e64144ddb17d503252",
+        "contentDigest": "14d9a406858cbf66499eb9f810894428",
         "type": "wordpress__PAGE",
       },
       "link": "/packages/gatsby-source-wordpress/",
       "parent": null,
-      "path": "/packages/gatsby-source-wordpress/",
+      "path": "already-set",
     },
   ],
   Array [
