@@ -179,7 +179,7 @@ To overcome these limitations, Gatsby introduces GraphQL as a data management la
 
 ## Create pages using GraphQL
 
-There’s a bit more up-front setup required to get data into GraphQL, but the benefits often far outweigh the cost.
+There’s a bit more up-front setup required to get data into GraphQL, but the benefits far outweigh the cost.
 
 Using `data/products.json` as an example, by using GraphQL we’re able to solve all of the limitations from the previous section:
 
