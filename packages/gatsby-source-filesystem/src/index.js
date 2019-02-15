@@ -6,5 +6,6 @@ function loadNodeContent(fileNode) {
 
 exports.createFilePath = require(`./create-file-path`)
 exports.createRemoteFileNode = require(`./create-remote-file-node`)
+exports.createRemoteFileNodeFactory = require(`./create-remote-file-node-factory`)
 
 exports.loadNodeContent = loadNodeContent
