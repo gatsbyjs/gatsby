@@ -3,6 +3,18 @@
 exports[`Kichen sink schema test passes kitchen sink query 1`] = `
 Object {
   "data": Object {
+    "addResolvers": Array [
+      Object {
+        "code": "BdiU-TTFP4h",
+        "id": "1685001452849004065",
+        "likes": 33,
+      },
+      Object {
+        "code": "BdIpEzalAJx",
+        "id": "1677771511187112561",
+        "likes": 29,
+      },
+    ],
     "filter": Object {
       "edges": Array [
         Object {

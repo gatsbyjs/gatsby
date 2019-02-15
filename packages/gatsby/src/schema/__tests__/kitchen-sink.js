@@ -90,6 +90,11 @@ describe(`Kichen sink schema test`, () => {
             idWithDecoration
             likes
           }
+          addResolvers: likedEnough {
+            id
+            likes
+            code
+          }
         }
     `)
     ).toMatchSnapshot()
@@ -113,4 +118,18 @@ const mockSetFieldsOnGraphQLNodeType = async ({ type: { name } }) => {
   }
 }
 
-const mockAddResolvers = ({ addResolvers }) => {}
+const mockAddResolvers = ({ addResolvers }) => {
+  addResolvers({
+    Query: {
+      likedEnough: {
+        type: `[PostsJson]`,
+        resolve(parent, args, context) {
+          return context.nodeModel
+            .getAllNodes({ type: `PostsJson` })
+            .filter(post => post.likes != null && post.likes > 5)
+            .slice(0, 2)
+        },
+      },
+    },
+  })
+}
