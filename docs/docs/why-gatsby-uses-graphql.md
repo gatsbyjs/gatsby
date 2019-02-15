@@ -86,7 +86,7 @@ Start the development server with `gatsby develop` and visit `localhost:8000/pag
 
 ![Screenshot of a page with hard-coded context.](./images/why-gql-with-context.png)
 
-In some cases, this approach may be enough. However, it’s often necessary to add create pages from data that’s not hard-coded.
+In some cases, this approach may be enough. However, it’s often necessary to create pages from data that can't be hard-coded.
 
 ## Create pages from JSON with images
 
