@@ -14,11 +14,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    {
-      resolve: `gatsby-plugin-sharp`,
-      options: {
-        lazyImageGeneration: false,
-      },
-    },
+    `gatsby-plugin-sharp`,
   ],
 }

@@ -42,10 +42,13 @@ exports.queue = queue
 const pluginDefaults = {
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
+  lazyImageGeneration: true,
 }
 let pluginOptions = Object.assign({}, pluginDefaults)
 exports.setPluginOptions = opts => {
   pluginOptions = Object.assign({}, pluginOptions, opts)
+
+  return pluginOptions
 }
 
 const reportError = (message, err, reporter) => {

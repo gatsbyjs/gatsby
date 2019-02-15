@@ -15,9 +15,19 @@ const cleanDirs = () =>
     fs.emptyDir(`${basePath}/.cache`),
   ])
 
+const configFiles = {
+  gatsby: path.join(__dirname, `../../gatsby-config.js`),
+  default: path.join(__dirname, `../../gatsby-config-default.js`),
+  nolazy: path.join(__dirname, `../../gatsby-config-nolazy.js`),
+}
+
 describe(`Lazy images`, () => {
   beforeAll(async () => {
     await cleanDirs()
+  })
+
+  beforeEach(async () => {
+    await fs.copy(configFiles.default, configFiles.gatsby)
   })
 
   test(`should process images on demand`, async () => {
@@ -58,6 +68,18 @@ describe(`Lazy images`, () => {
       cwd: basePath,
       env: { NODE_ENV: `production` },
     })
+
+    const images = glob.sync(`${basePath}/public/**/*.png`)
+    expect(images.length).toBe(6)
+  })
+
+  test(`should process all images on develop when lazyImageGeneration is false`, async () => {
+    await fs.copy(configFiles.nolazy, configFiles.gatsby)
+
+    await cleanDirs()
+    const { kill } = await createDevServer()
+
+    await kill()
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
     expect(images.length).toBe(6)

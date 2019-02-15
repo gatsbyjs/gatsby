@@ -16,6 +16,14 @@ const killProcess = devProcess =>
     process.kill(-devProcess.pid)
   })
 
+// messages that tell us to stop proceeding and should resolve the process to be "done"
+// so we can stop the test sooner rather than to wait for a timeout
+const readyMessages = [
+  `You can now view`,
+  `Failed to compile`,
+  `Something is already running at`,
+]
+
 module.exports = () =>
   new Promise(resolve => {
     const devProcess = execa(`yarn`, [`develop`], {
@@ -25,7 +33,8 @@ module.exports = () =>
     })
 
     devProcess.stdout.on(`data`, chunk => {
-      if (chunk.toString().includes(`You can now view`)) {
+      const matches = readyMessages.some(msg => chunk.toString().includes(msg))
+      if (matches) {
         // We only need to expose a kill function, the rest is not needed
         resolve({ kill: () => killProcess(devProcess) })
       }
