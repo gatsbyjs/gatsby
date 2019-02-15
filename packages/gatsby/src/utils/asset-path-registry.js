@@ -5,6 +5,8 @@ let assets = new Set()
 
 const normalize = filePath => filePath.split(`/`).join(path.sep)
 
+exports.normalize = normalize
+
 exports.register = function register(file) {
   if (file) {
     assets.add(normalize(file))
@@ -52,5 +54,9 @@ exports.getAssets = async function getAssets(
     webpackAssets = new Set()
   }
 
-  return new Set([...assets, ...webpackAssets])
+  return new Set(
+    [...assets, ...webpackAssets].map(assetPath =>
+      path.join(assetsDirectory, normalize(assetPath))
+    )
+  )
 }

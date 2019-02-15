@@ -1,4 +1,5 @@
 const os = require(`os`)
+const path = require(`path`)
 
 const {
   joinPath,
@@ -8,7 +9,9 @@ const {
   withAssetPrefix,
   withTrailingSlash,
 } = require(`../path`)
-const { clear, getAssets } = require(`../asset-path-registry`)
+const { clear, normalize, getAssets } = require(`../asset-path-registry`)
+
+const assetDirectory = `public`
 
 const join = (...parts) => parts.join(`/`)
 const IS_WINDOWS = os.platform() === `win32`
@@ -149,7 +152,10 @@ describe(`withAssetPrefix`, () => {
 
     const assetPaths = routes.map(route => {
       const prefixed = boundWithAssetPrefix(...[].concat(route))
-      return prefixed.split(withTrailingSlash(prefix)).pop()
+      return path.join(
+        assetDirectory,
+        normalize(prefixed.split(withTrailingSlash(prefix)).pop())
+      )
     })
 
     const assets = await getAssets(__dirname)

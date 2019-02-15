@@ -1,6 +1,8 @@
 import path from "path"
 import { register, clear, remove, getAssets } from "../asset-path-registry"
 
+const assetPath = `public`
+
 beforeEach(clear)
 
 describe(`general registry behavior`, () => {
@@ -36,7 +38,9 @@ describe(`getAssets`, () => {
     files.forEach(file => register(file))
     const assets = await getAssets(path.join(__dirname, `__not_a_real_path__`))
 
-    expect(Array.from(assets)).toEqual(files)
+    expect(Array.from(assets)).toEqual(
+      files.map(file => path.join(assetPath, file))
+    )
   })
 
   it(`returns webpack assets`, async () => {
@@ -51,7 +55,7 @@ describe(`getAssets`, () => {
 
     const assets = await getAssets(path.join(__dirname, `fixtures`))
     files.forEach(file => {
-      expect(assets.has(file)).toBe(true)
+      expect(assets.has(path.join(assetPath, file))).toBe(true)
     })
 
     expect(assets.size - files.length).not.toBe(0)
