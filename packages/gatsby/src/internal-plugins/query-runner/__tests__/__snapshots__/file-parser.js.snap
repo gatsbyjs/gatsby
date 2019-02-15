@@ -105,6 +105,7 @@ Map {
       Object {
         "directives": Array [],
         "hash": 407706182,
+        "isHook": false,
         "isStaticQuery": true,
         "kind": "OperationDefinition",
         "loc": Object {
@@ -159,6 +160,7 @@ Map {
       Object {
         "directives": Array [],
         "hash": 2605331189,
+        "isHook": false,
         "isStaticQuery": true,
         "kind": "OperationDefinition",
         "loc": Object {
@@ -209,6 +211,7 @@ Map {
       Object {
         "directives": Array [],
         "hash": 407706182,
+        "isHook": false,
         "isStaticQuery": true,
         "kind": "OperationDefinition",
         "loc": Object {
@@ -263,6 +266,7 @@ Map {
       Object {
         "directives": Array [],
         "hash": 2605331189,
+        "isHook": false,
         "isStaticQuery": true,
         "kind": "OperationDefinition",
         "loc": Object {
@@ -313,6 +317,7 @@ Map {
       Object {
         "directives": Array [],
         "hash": 407706182,
+        "isHook": false,
         "isStaticQuery": true,
         "kind": "OperationDefinition",
         "loc": Object {
@@ -595,6 +600,7 @@ Map {
       Object {
         "directives": Array [],
         "hash": 1097489062,
+        "isHook": false,
         "isStaticQuery": true,
         "kind": "OperationDefinition",
         "loc": Object {
@@ -707,6 +713,7 @@ Map {
       Object {
         "directives": Array [],
         "hash": 3748317405,
+        "isHook": false,
         "isStaticQuery": true,
         "kind": "OperationDefinition",
         "loc": Object {
@@ -838,6 +845,7 @@ Map {
       Object {
         "directives": Array [],
         "hash": 1352988887,
+        "isHook": false,
         "isStaticQuery": true,
         "kind": "OperationDefinition",
         "loc": Object {
