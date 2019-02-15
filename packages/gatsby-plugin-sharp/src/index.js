@@ -190,7 +190,6 @@ function queueImageResizing({ file, args = {}, reporter }) {
     args: options,
     inputPath: file.absolutePath,
     outputPath: filePath,
-    src: prefixedSrc,
   }
 
   queue.set(prefixedSrc, job)
