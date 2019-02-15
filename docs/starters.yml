@@ -1864,11 +1864,9 @@
   repo: https://github.com/AlexanderProd/gatsby-shopify-starter
   description: Kick off your next, ecommerce experience with this Gatsby starter. It is based on the default Gatsby starter to be easily modifiable.
   tags:
-    - Shopify
-    - Ecommerce
-    - Shop
-    - Store
+    - Headless CMS
     - Under Construction
+    - SEO
   features:
     - Shopping Cart
     - Shopify Integration
