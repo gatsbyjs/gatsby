@@ -135,6 +135,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
       const allSitesYaml = staticData.allSitesYaml
       const nextSite = parent.getNext(allSitesYaml)
       const previousSite = parent.getPrevious(allSitesYaml)
+      const shouldShowVisitButtonOnMobile = !!data.sitesYaml.source_url
       const { filters } = parent.props.location.state || {}
 
       return (
@@ -432,63 +433,71 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     <a href={data.sitesYaml.source_url}> Case Study </a>
                   </div>
                 )}
+                <div
+                  css={{
+                    alignSelf: `center`,
+                    marginLeft: `auto`,
+                  }}
+                >
+                  <div
+                    css={{
+                      position: `relative`,
+                      zIndex: 1,
+                      display: `flex`,
+                    }}
+                  >
+                    <a
+                      href={data.sitesYaml.main_url}
+                      css={{
+                        border: 0,
+                        borderRadius: presets.radius,
+                        color: colors.gatsby,
+                        display: shouldShowVisitButtonOnMobile ? `none` : null,
+                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontWeight: `bold`,
+                        marginRight: rhythm(1.5 / 4),
+                        padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+                        textDecoration: `none`,
+                        WebkitFontSmoothing: `antialiased`,
+                        "&&": {
+                          backgroundColor: colors.gatsby,
+                          borderBottom: `none`,
+                          boxShadow: `none`,
+                          color: `white`,
+                          "&:hover": {
+                            backgroundColor: colors.gatsby,
+                          },
+                        },
+                        [shouldShowVisitButtonOnMobile && presets.Phablet]: {
+                          display: `block`,
+                        },
+                      }}
+                    >
+                      <MdLaunch
+                        style={{
+                          verticalAlign: `sub`,
+                        }}
+                      />
+                      Visit site
+                      {` `}
+                    </a>
+                    <ShareMenu
+                      css={{ display: `flex`, minWidth: 32, minHeight: 32 }}
+                      url={data.sitesYaml.main_url}
+                      title={data.sitesYaml.title}
+                      image={`https://www.gatsbyjs.org${
+                        data.sitesYaml.childScreenshot.screenshotFile
+                          .childImageSharp.resize.src
+                      }`}
+                    />
+                  </div>
+                </div>
               </div>
               <div
                 css={{
                   borderTop: `1px solid ${colors.ui.light}`,
-                  position: `relative`,
                 }}
               >
-                <div
-                  css={{
-                    position: `absolute`,
-                    right: rhythm(3 / 4),
-                    top: rhythm(-15 / 8),
-                    left: `auto`,
-                    zIndex: 1,
-                    display: `flex`,
-                  }}
-                >
-                  <a
-                    href={data.sitesYaml.main_url}
-                    css={{
-                      border: 0,
-                      borderRadius: presets.radius,
-                      color: colors.gatsby,
-                      fontFamily: options.headerFontFamily.join(`,`),
-                      fontWeight: `bold`,
-                      marginRight: rhythm(1.5 / 4),
-                      padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-                      textDecoration: `none`,
-                      WebkitFontSmoothing: `antialiased`,
-                      "&&": {
-                        backgroundColor: colors.gatsby,
-                        borderBottom: `none`,
-                        boxShadow: `none`,
-                        color: `white`,
-                        "&:hover": {
-                          backgroundColor: colors.gatsby,
-                        },
-                      },
-                    }}
-                  >
-                    <MdLaunch
-                      style={{
-                        verticalAlign: `sub`,
-                      }}
-                    />
-                    Visit site
-                    {` `}
-                  </a>
-                  <ShareMenu
-                    url={data.sitesYaml.main_url}
-                    title={data.sitesYaml.title}
-                    image={`https://www.gatsbyjs.org${
-                      data.sitesYaml.childScreenshot.screenshotFile
-                        .childImageSharp.resize.src
-                    }`}
-                  />
-                </div>
                 <Img
                   key={data.sitesYaml.id}
                   fluid={
