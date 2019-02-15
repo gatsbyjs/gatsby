@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require(`./cli`)
+require(`./cli`)(process.argv)
