@@ -82,10 +82,10 @@ module.exports = {
       "printWidth": 80,
       "tabWidth": "error",
       "useTabs": false,
-      "semi": true,
+      "semi": false,
       "singleQuote": false,
       "jsxSingleQuote": false,
-      "trailingComma": "none",
+      "trailingComma": "es5",
       "bracketSpacing": true,
       "jsxBracketSameLine": false,
       "arrowParens": "avoid"
