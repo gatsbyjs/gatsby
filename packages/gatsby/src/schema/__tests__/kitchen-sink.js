@@ -42,6 +42,16 @@ describe(`Kichen sink schema test`, () => {
     nodes.forEach(node =>
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
+    store.dispatch({
+      type: `ADD_TYPE_DEFS`,
+      payload: `
+        type PostsJson implements Node {
+          id: String!
+          time: Date
+          code: String
+        }
+      `,
+    })
     await build({})
     schema = store.getState().schema
   })
@@ -50,22 +60,35 @@ describe(`Kichen sink schema test`, () => {
     expect(
       await runQuery(`
         {
-          allPostsJson(sort: { fields: likes, order:DESC}) {
+          sort: allPostsJson(sort: { fields: likes, order:DESC}, limit: 2) {
             edges {
               node {
                 id
-                time
+                idWithDecoration
+                time(formatString: "DD.MM.YYYY")
                 code
                 likes
                 comment
                 image {
                   childImageSharp {
                     id
-
         					}
                 }
         			}
             }
+          }
+          filter: allPostsJson(filter: { likes: { eq: null } }, limit: 2) {
+            edges {
+              node {
+                id
+                comment
+              }
+            }
+          }
+          resolveFilter: postsJson(idWithDecoration: { eq: "decoration-1601601194425654597"}) {
+            id
+            idWithDecoration
+            likes
           }
         }
     `)
@@ -73,6 +96,21 @@ describe(`Kichen sink schema test`, () => {
   })
 })
 
-const mockSetFieldsOnGraphQLNodeType = ({ type: { name } }) => []
+const mockSetFieldsOnGraphQLNodeType = async ({ type: { name } }) => {
+  if (name === `PostsJson`) {
+    return [
+      {
+        idWithDecoration: {
+          type: `String`,
+          resolve(parent) {
+            return `decoration-${parent.id}`
+          },
+        },
+      },
+    ]
+  } else {
+    return []
+  }
+}
 
 const mockAddResolvers = ({ addResolvers }) => {}
