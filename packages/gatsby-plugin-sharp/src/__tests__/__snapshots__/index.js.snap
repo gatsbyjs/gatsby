@@ -92,7 +92,6 @@ exports[`gatsby-plugin-sharp queueImageResizing should process immediately when 
         },
         "inputPath": "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
         "outputPath": "<PROJECT_ROOT>/public/static/1234/39ca0/test.png",
-        "src": "/static/1234/39ca0/test.png",
       },
       Object {
         "addThirdPartySchema": [Function],
@@ -120,6 +119,7 @@ exports[`gatsby-plugin-sharp queueImageResizing should process immediately when 
         "touchNode": [Function],
       },
       Object {
+        "lazyImageGeneration": true,
         "stripMetadata": true,
         "useMozJpeg": false,
       },
