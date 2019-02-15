@@ -90,7 +90,7 @@ In some cases, this approach may be enough. However, it’s often necessary to c
 
 ## Create pages from JSON with images
 
-In many cases, the data for pages won’t be hard-coded into `gatsby-node.js`. More likely it will come from an external source, such as a JSON file or third-party API.
+In many cases, the data for pages can't feasibly be hard-coded into `gatsby-node.js`. More likely it will come from an external source, such as a third-party API, local Markdown, or JSON files.
 
 For example, you might have a JSON file with post data:
 
