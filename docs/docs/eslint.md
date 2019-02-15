@@ -77,7 +77,7 @@ module.exports = {
     "jsx-a11y/anchor-is-valid": "warn",
     "jsx-a11y/alt-text": "warn",
 
-    // prettier - default options
+    // prettier - gatsby-starter-default options
     "prettier/prettier": ["error", {
       "printWidth": 80,
       "tabWidth": "error",
