@@ -1,6 +1,6 @@
 ---
 title: Localization with Gatsby and Sanity.io
-date: 2019-02-08
+date: 2019-03-01
 author: Travis Stanley
 tags: ["sanity", "localization", "l10n"]
 image: "./images/gatsby-sanity-l10n.png"
@@ -19,7 +19,7 @@ Sanity.io has some good documentation which has great examples to help you achie
 
 Create a new contentType schema called `localeText` to use with the schemas in your project.
 
-```js:title=/contentTypes/localeText.js
+```js:title=contentTypes/localeText.js
 const supportedLanguages = [
   { id: "en", title: "English", isDefault: true },
   { id: "es", title: "Spanish" },
@@ -50,7 +50,7 @@ This will allow you to add `localeText` as a type in your schemas and renders a 
 
 In your schema:
 
-```js:title=/schemas/article.js
+```js:title=schemas/article.js
 export default {
   name: "someDataType",
   title: "Data Title",
@@ -72,7 +72,7 @@ export default {
 
 Now that you have your Sanity schemas set up for adding translations you need to set up your Gatsby project to handle them. You're going to update the queries to handle the new shape of your data.
 
-```js:title=/pages/index.js
+```js:title=src/pages/index.js
 export const query = graphql`
   query MyPageQuery {
     sanitySomeDataType {
@@ -127,9 +127,9 @@ It is preferable to reference only the title key and get the correct text. No ne
 
 So lets make _that_ work.
 
-Once again, your can use the example from the Sanity.io documentation for [function](https://www.sanity.io/docs/localization#code-snippet-deeply-localizing-an-entire-document) to localize the text from a given Sanity document. I've modified the example below to always default to English. This suits my use case and it's a good starting point if your use case differs. The function walks through a given document and updates any object with `_type: 'locale<TEXT_TYPE>'` ( for example `_type: 'localeText'`, or `_type: 'localeString'` ) and returns only the correct translation text.
+Once again, you can use the example from the Sanity.io documentation for [a function](https://www.sanity.io/docs/localization#code-snippet-deeply-localizing-an-entire-document) to localize the text from a given Sanity document. I've modified the example below to always default to English. This suits my use case and it's a good starting point if your use case differs. The function walks through a given document and updates any object with `_type: 'locale<TEXT_TYPE>'` ( for example `_type: 'localeText'`, or `_type: 'localeString'` ) and returns only the correct translation text.
 
-```js:title=/src/util/index.js
+```js:title=src/util/index.js
 export const createLocaleTextGetter = languageCode => {
   const languages = [languageCode, "en"] // last language in array is default;
   const localize = value => {
@@ -155,7 +155,7 @@ export const createLocaleTextGetter = languageCode => {
 
 You could use render props for this but I decided on a higher-order component (HOC).
 
-```JSX:title=/src/components/localize.jsx
+```JSX:title=src/components/localize.jsx
 import React from "react";
 import Proptypes from "prop-types";
 import { createLocaleTextGetter } from '../../util'; // Or wherever you stashed it
@@ -194,7 +194,7 @@ export default localize;
 
 For each page or template that needs to be localized add your HOC.
 
-```jsx:title=/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import Layout from "../components/Layout"
 import localize from "../components/localize"
@@ -228,13 +228,13 @@ In the `gatsby-node.js` file you need to add a function that generates pages for
 // Get your list of languages from somewhere, env file, config.json, etc
 // for sake of this snippet I am putting it here
 
-const extraLanguages = ["es"]; // English is currently the default so it isn't needed here.
+const extraLanguages = ["es"] // English is currently the default so it isn't needed here.
 
 exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions;
+  const { createPage, deletePage } = actions
 
-  deletePage(page);
-  const {context, ...rest}
+  deletePage(page)
+  const { context, ...rest } = page
 
   createPage({
     ...rest,
@@ -242,11 +242,11 @@ exports.onCreatePage = ({ page, actions }) => {
       ...context,
       locale: process.env.LOCALE,
     },
-  });
+  })
 
   if (extraLanguages.length) {
     extraLanguages.forEach(code => {
-      const { path, context, ...rest } = page;
+      const { path, context, ...rest } = page
 
       createPage({
         ...rest,
@@ -257,10 +257,10 @@ exports.onCreatePage = ({ page, actions }) => {
           ...context,
           locale: code,
         },
-      });
-    });
+      })
+    })
   }
-};
+}
 ```
 
 ## Sanity.io + Gatsby.js + Easy Localization = Win
