@@ -357,4 +357,4 @@ The image is now optimized and lazy loaded.
 
 After the initial setup, loading data with GraphQL is fairly similar to directly loading JSON, but it provides extra benefits like automatically optimizing images and keeping the data loading in the same place where it’s used.
 
-It’s certainly not required, and in simple use cases it might not be worth the effort, but in many sites and apps, GraphQL will vastly simplify the process of building and optimizing your pages.
+GraphQL is certainly not required, but the benefits of adopting GraphQL are significant. GraphQL will simplify the process of building and optimizing your pages, so it’s considered a best practice for structuring and writing Gatsby applications.
