@@ -71,7 +71,10 @@ module.exports = (
   const getImageInfo = uri => {
     const { url, query } = queryString.parseUrl(uri)
     return {
-      ext: path.extname(url),
+      ext: path
+        .extname(url)
+        .split(`.`)
+        .pop(),
       url,
       query,
     }
