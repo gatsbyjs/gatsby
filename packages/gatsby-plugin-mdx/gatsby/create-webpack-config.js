@@ -24,6 +24,20 @@ module.exports = (
           include: path.dirname(require.resolve("gatsby-mdx")),
           use: [loaders.js()]
         },
+
+        {
+          test: /loaders\/mdx-components\.js$/,
+          include: path.dirname(require.resolve("gatsby-mdx")),
+          use: [
+            loaders.js(),
+            {
+              loader: "gatsby-mdx/loaders/mdx-components",
+              options: {
+                plugins: options.mdxPlugins
+              }
+            }
+          ]
+        },
         {
           test: testPattern,
           use: [
