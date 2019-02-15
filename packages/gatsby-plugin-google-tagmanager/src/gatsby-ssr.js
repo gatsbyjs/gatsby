@@ -1,25 +1,37 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
 
-const convertDataLayer = datalayer => {
-  if (typeof datalayer === `string`) {
-    return datalayer
+const generateGTM = ({ id, environmentParamStr }) => stripIndent`
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer', '${id}');`
+
+const generateGTMIframe = ({ id, environmentParamStr }) =>
+  oneLine`<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
+
+const generateDefaultDataLayer = (dataLayer, reporter) => {
+  let result = `window.dataLayer = window.dataLayer || [];`
+
+  if (typeof dataLayer === `function`) {
+    result += `window.dataLayer.push((${dataLayer})()));`
+  } else {
+    if (typeof dataLayer !== `object` || dataLayer.constructor !== Object) {
+      reporter.panic(
+        `Oops the plugin option "defaultDataLayer" should be a plain object. "${dataLayer}" is not valid.`
+      )
+    }
+
+    result += `window.dataLayer.push(${JSON.stringify(dataLayer)});`
   }
 
-  return JSON.stringify(datalayer)
+  return stripIndent`${result}`
 }
 
 exports.onRenderBody = (
-  { setHeadComponents, setPreBodyComponents },
-  {
-    id,
-    includeInDevelopment = false,
-    gdpr = false,
-    gdprConsent = `gdprConsent`,
-    gtmAuth,
-    gtmPreview,
-    defaultDataLayer,
-  }
+  { setHeadComponents, setPreBodyComponents, reporter },
+  { id, includeInDevelopment = false, gtmAuth, gtmPreview, defaultDataLayer }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
     const environmentParamStr =
@@ -31,33 +43,28 @@ exports.onRenderBody = (
 
     let defaultDataLayerCode
     if (defaultDataLayer) {
-      defaultDataLayerCode = `dataLayer = [${convertDataLayer(
-        defaultDataLayer
-      )}];`
+      defaultDataLayerCode = generateDefaultDataLayer(
+        defaultDataLayer,
+        reporter
+      )
     }
 
     setHeadComponents([
       <script
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
-          __html: stripIndent`
+          __html: oneLine`
             ${defaultDataLayerCode}
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer', '${id}');`,
+            ${generateGTM({ id, environmentParamStr })}`,
         }}
       />,
     ])
 
-    // TODO: add a test to verify iframe contains no line breaks. Ref: https://github.com/gatsbyjs/gatsby/issues/11014
     setPreBodyComponents([
       <noscript
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
-          __html: stripIndent`
-            <iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`,
+          __html: generateGTMIframe({ id, environmentParamStr }),
         }}
       />,
     ])

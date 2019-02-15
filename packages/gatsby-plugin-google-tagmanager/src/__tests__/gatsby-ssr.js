@@ -14,16 +14,16 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
     const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
     const [preBodyConfig] = mocks.setPreBodyComponents.mock.calls[0][0]
 
-    expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
-      `https://www.googletagmanager.com/gtm.js`
-    )
-    expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).toContain(
-      `<iframe src="https://www.googletagmanager.com/ns.html`
+    expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
+    expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
+    // check if no newlines were added
+    expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).not.toContain(
+      `\n`
     )
   })
 
   describe(`defaultDatalayer`, () => {
-    it(`should add nothing by default`, () => {
+    it(`should add no dataLayer by default`, () => {
       const mocks = {
         setHeadComponents: jest.fn(),
         setPreBodyComponents: jest.fn(),
@@ -36,11 +36,11 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
       // eslint-disable-next-line no-useless-escape
       expect(headConfig.props.dangerouslySetInnerHTML.__html).not.toContain(
-        `dataLayer = [`
+        `window.dataLayer`
       )
     })
 
-    it(`should add defaultDatalayer with static object`, () => {
+    it(`should add a static object as defaultDatalayer`, () => {
       const mocks = {
         setHeadComponents: jest.fn(),
         setPreBodyComponents: jest.fn(),
@@ -52,27 +52,56 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
 
       onRenderBody(mocks, pluginOptions)
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
-        // eslint-disable-next-line no-useless-escape
-        `dataLayer = [{\"pageCategory\":\"home\"}]`
+        `window.dataLayer`
       )
     })
 
-    it(`should add defaultDatalayer with stringified object`, () => {
+    it(`should add a function as defaultDatalayer`, () => {
       const mocks = {
         setHeadComponents: jest.fn(),
         setPreBodyComponents: jest.fn(),
       }
       const pluginOptions = {
         includeInDevelopment: true,
-        defaultDataLayer: `{"pageCategory": window.pageCategory}`,
+        defaultDataLayer: () => {
+          return { pageCategory: window.pageType }
+        },
       }
 
       onRenderBody(mocks, pluginOptions)
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
-        `dataLayer = [${pluginOptions.defaultDataLayer}]`
+        `window.dataLayer`
       )
+    })
+
+    it(`should report an error when data is not valid`, () => {
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+        reporter: {
+          panic: msg => {
+            throw new Error(msg)
+          },
+        },
+      }
+      let pluginOptions = {
+        includeInDevelopment: true,
+        defaultDataLayer: 5,
+      }
+
+      expect(() => onRenderBody(mocks, pluginOptions)).toThrow()
+
+      class Test {}
+      pluginOptions = {
+        includeInDevelopment: true,
+        defaultDataLayer: new Test(),
+      }
+
+      expect(() => onRenderBody(mocks, pluginOptions)).toThrow()
     })
   })
 })

@@ -23,12 +23,30 @@ plugins: [
       // datalayer to be set before GTM is loaded
       // should be a stringified object or object
       // Defaults to null
-      // defaultDataLayer: { platform: "gatsby" },
-      defaultDataLayer: "{pageCategory: window.pageCategory}",
+      defaultDataLayer: { platform: "gatsby" },
 
       // Specify optional GTM environment details.
       gtmAuth: "YOUR_GOOGLE_TAGMANAGER_ENVIROMENT_AUTH_STRING",
       gtmPreview: "YOUR_GOOGLE_TAGMANAGER_ENVIROMENT_PREVIEW_NAME",
+    },
+  },
+]
+```
+
+If you like to use data at runtime for your defaultDataLayer you can do that by defining it as a function.
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-google-tagmanager`,
+    options: {
+      // datalayer to be set before GTM is loaded
+      // should be a stringified object or object
+      // Defaults to null
+      defaultDataLayer: () => ({
+        pageType: window.pageType,
+      }),
     },
   },
 ]
