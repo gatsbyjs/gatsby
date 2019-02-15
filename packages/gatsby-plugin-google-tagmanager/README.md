@@ -12,7 +12,7 @@ Easily add Google Tagmanager to your Gatsby site.
 // In your gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-google-tagmanager`,
+    resolve: "gatsby-plugin-google-tagmanager",
     options: {
       id: "YOUR_GOOGLE_TAGMANAGER_ID",
 
@@ -39,14 +39,16 @@ If you like to use data at runtime for your defaultDataLayer you can do that by 
 // In your gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-google-tagmanager`,
+    resolve: "gatsby-plugin-google-tagmanager",
     options: {
       // datalayer to be set before GTM is loaded
       // should be a stringified object or object
       // Defaults to null
-      defaultDataLayer: () => ({
-        pageType: window.pageType,
-      }),
+      defaultDataLayer: function() {
+        return {
+          pageType: window.pageType,
+        }
+      },
     },
   },
 ]
