@@ -46,7 +46,9 @@ describe(`getAssets`, () => {
   it(`returns webpack assets`, async () => {
     const assets = await getAssets(path.join(__dirname, `fixtures`))
 
-    expect(assets).toMatchSnapshot()
+    expect(
+      Array.from(assets).map(assetPath => path.basename(assetPath))
+    ).toMatchSnapshot()
   })
 
   it(`returns webpack and in-memory assets`, async () => {
