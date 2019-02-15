@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const is32BitInteger = require(`./is-32-bit-integer`)
-const { isDate } = require(`../types/Date`)
+const { isDate } = require(`../types/date`)
 
 const getExampleValue = ({
   nodes,

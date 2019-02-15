@@ -1,6 +1,9 @@
 const report = require(`gatsby-cli/lib/reporter`)
 const { getExampleValue } = require(`./example-value`)
-const { addNodeInterface, getNodeInterface } = require(`../types/NodeInterface`)
+const {
+  addNodeInterface,
+  getNodeInterface,
+} = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
 const getInferConfig = require(`./get-infer-config`)
 

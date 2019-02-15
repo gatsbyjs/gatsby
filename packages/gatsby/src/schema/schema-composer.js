@@ -1,5 +1,5 @@
 const { SchemaComposer } = require(`graphql-compose`)
-const { GraphQLDate } = require(`./types/Date`)
+const { GraphQLDate } = require(`./types/date`)
 const { InferDirective, DontInferDirective } = require(`./types/directives`)
 
 const createSchemaComposer = () => {

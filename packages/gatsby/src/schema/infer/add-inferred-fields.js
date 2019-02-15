@@ -9,7 +9,7 @@ const invariant = require(`invariant`)
 
 const { isFile } = require(`./is-file`)
 const { link, fileByPath } = require(`../resolvers`)
-const { isDate, dateResolver } = require(`../types/Date`)
+const { isDate, dateResolver } = require(`../types/date`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
 const addInferredFields = ({

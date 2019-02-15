@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { addNodeInterfaceFields } = require(`./types/NodeInterface`)
+const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
 const { getPagination } = require(`./types/pagination`)

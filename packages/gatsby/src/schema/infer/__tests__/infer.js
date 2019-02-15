@@ -230,7 +230,7 @@ describe(`GraphQL type inference`, () => {
   it.skip(`Removes specific root fields`, () => {
     const { addInferredFields } = require(`../infer`)
     const { getExampleValue } = require(`../example-value`)
-    const { getNodeInterface } = require(`../../types/NodeInterface`)
+    const { getNodeInterface } = require(`../../types/node-interface`)
     const nodes = [
       {
         type: `Test`,
