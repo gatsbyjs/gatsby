@@ -1945,20 +1945,6 @@
   built_by: Novatics
   built_by_url: "https://github.com/Novatics"
   featured: false
-- title: I migliori by Vivigratis
-  description: >
-    Product review website
-  main_url: "https://imigliori.vivigratis.com/"
-  url: "https://imigliori.vivigratis.com/"
-  categories:
-    - Blog
-    - Travel
-    - Technology
-    - Health & Wellness
-    - Fashion
-  built_by: Kframe Interactive SA
-  built_by_url: http://kframeinteractive.com
-  featured: false
 - title: Max McKinney
   description: >
     I’m a developer and designer with a focus in web technologies. I build cars
@@ -4229,3 +4215,123 @@
   built_by: Marcy Sutton
   built_by_url: https://marcysutton.com
   featured: true
+- title: Kepinski.me
+  main_url: https://kepinski.me
+  url: https://kepinski.me
+  description: >
+    The personal site of Antoni Kepinski, Node.js Developer.
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Antoni Kepinski
+  built_by_url: https://kepinski.me
+  featured: false
+- title: WPGraphQL Docs
+  main_url: https://docs.wpgraphql.com
+  url: https://docs.wpgraphql.com
+  description: >
+    Documentation for WPGraphQL, a free open-source WordPress plugin that provides an extendable GraphQL schema and API for any WordPress site.
+  categories:
+    - API
+    - CMS
+    - Documentation
+    - GraphQL
+    - Technology
+    - Web Development
+    - WordPress
+  built_by: WPGraphQL
+  built_by_url: https://wpgraphql.com
+  featured: false
+- title: Shine Lawyers
+  main_url: https://www.shine.com.au
+  url: https://www.shine.com.au
+  description: >
+    Shine Lawyers is an Australian legal services website built with Gatsby v2, Elasticsearch, Isso, and Geolocation services.
+  categories:
+    - Legal
+    - Business
+    - Blog
+- title: Parallel Polis Kosice
+  url: https://www.paralelnapoliskosice.sk/
+  main_url: https://www.paralelnapoliskosice.sk/
+  source_url: https://github.com/ParalelnaPolisKE/paralelnapoliskosice.sk
+  description: >
+    Parallel Polis is a collective of people who want to live in a more opened world. We look for possibilities and technologies (Bitcoin, the blockchain, reputation systems and decentralized technologies in general) that open new ways, make processes easier and remove unnecessary barriers. We want to create an environment that aims at education, discovering and creating better systems for everybody who is interested in freedom and independence.
+  categories:
+    - Blog
+    - Education
+    - Technology
+    - Blockchain
+  built_by: Roman Vesely
+  built_by_url: https://romanvesely.
+  featured: false
+- title: Unda Solutions
+  url: https://unda.com.au
+  main_url: https://unda.com.au
+  description: >
+    A custom web application development company in Perth, WA
+  categories:
+    - Business
+    - Freelance
+    - Web Development
+    - Technology
+  featured: false
+- title: BIGBrave
+  main_url: https://bigbrave.digital
+  url: https://bigbrave.digital
+  description: >
+    BIGBrave is a strategic design firm. We partner with our clients, big and small, to design & create human-centered brands, products, services and systems that are simple, beautiful and easy to use.
+  categories:
+    - Agency
+    - Web Development
+    - Marketing
+    - Technology
+    - WordPress
+  built_by: Francois Brill
+  built_by_url: https://bigbrave.digital
+  featured: false
+- title: KegTracker
+  main_url: https://www.kegtracker.co.za
+  url: https://www.kegtracker.co.za
+  description: >
+    Keg Tracker is part of the Beverage Insights family and its sole aim is to provide you with the right data about your kegs to make better decisions. In today’s business landscape having the right information at your finger tips is crucial to the agility of your business.
+  categories:
+    - Food
+    - Business
+    - Technology
+  built_by: Francois Brill
+  built_by_url: https://bigbrave.digital
+  featured: false
+- title: Mike Nichols
+  url: https://www.mikenichols.me
+  main_url: https://www.mikenichols.me
+  description: >
+    Portfolio site of Mike Nichols, a UX designer and product development lead.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: Mike Nichols
+  featured: false
+- title: Steve Haid
+  url: https://www.stevehaid.com
+  main_url: https://www.stevehaid.com
+  description: >
+    Steve Haid is a real estate agent and Professional Financial Planner (PFP) who has been helping clients achieve their investment goals since 2006.
+  categories:
+    - Marketing
+    - Real Estate
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+- title: Incremental - Loyalty, Rewards and Incentive Programs
+  main_url: https://www.incremental.com.au
+  url: https://www.incremental.com.au
+  description: >
+    Sydney-based digital agency specialising in loyalty, rewards and incentive programs. WordPress backend; Cloudinary, YouTube and Hubspot form integration; query data displayed as animated SVG graphs; video background in the header.
+  categories:
+    - Agency
+    - Portfolio
+    - WordPress
+  built_by: Incremental
+  built_by_url: https://www.incremental.com.au
+  featured: false

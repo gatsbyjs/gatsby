@@ -1,7 +1,7 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 
-const { onCreateNode } = require(`../gatsby-node`)
+const onCreateNode = require(`../on-node-create`)
 
 const {
   graphql,
@@ -13,8 +13,11 @@ const {
   inferObjectStructureFromNodes,
 } = require(`../../../gatsby/src/schema/infer-graphql-type`)
 
-describe(`Process markdown content correctly`, () => {
-  const node = {
+let node
+let actions
+let createNodeId
+beforeEach(() => {
+  node = {
     id: `whatever`,
     children: [],
     internal: {
@@ -23,9 +26,13 @@ describe(`Process markdown content correctly`, () => {
     },
   }
 
-  // Make some fake functions its expecting.
-  const loadNodeContent = node => Promise.resolve(node.content)
+  actions = { createNode: jest.fn(), createParentChildLink: jest.fn() }
+  createNodeId = jest.fn().mockReturnValue(`uuid-from-gatsby`)
+})
 
+const loadNodeContent = mdNode => Promise.resolve(mdNode.content)
+
+describe(`Process markdown content correctly`, () => {
   describe(`Process generated markdown node correctly`, () => {
     it(`Correctly creates a new MarkdownRemark node`, async () => {
       const content = `---
@@ -36,25 +43,19 @@ Where oh where is my little pony?
             `
       node.content = content
 
-      const createNode = jest.fn()
-      const createParentChildLink = jest.fn()
-      const actions = { createNode, createParentChildLink }
-      const createNodeId = jest.fn()
-      createNodeId.mockReturnValue(`uuid-from-gatsby`)
-
       await onCreateNode({
         node,
         loadNodeContent,
         actions,
         createNodeId,
       }).then(() => {
-        expect(createNode.mock.calls).toMatchSnapshot()
+        expect(actions.createNode.mock.calls).toMatchSnapshot()
         expect(
-          _.isString(createNode.mock.calls[0][0].frontmatter.date)
+          _.isString(actions.createNode.mock.calls[0][0].frontmatter.date)
         ).toBeTruthy()
-        expect(createParentChildLink.mock.calls).toMatchSnapshot()
-        expect(createNode).toHaveBeenCalledTimes(1)
-        expect(createParentChildLink).toHaveBeenCalledTimes(1)
+        expect(actions.createParentChildLink.mock.calls).toMatchSnapshot()
+        expect(actions.createNode).toHaveBeenCalledTimes(1)
+        expect(actions.createParentChildLink).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -78,12 +79,6 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
 
       node.content = content
 
-      const createNode = jest.fn()
-      const createParentChildLink = jest.fn()
-      const actions = { createNode, createParentChildLink }
-      const createNodeId = jest.fn()
-      createNodeId.mockReturnValue(`uuid-from-gatsby`)
-
       await onCreateNode(
         {
           node,
@@ -93,13 +88,37 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
         },
         { excerpt_separator: `<!-- end -->` }
       ).then(() => {
-        expect(createNode.mock.calls).toMatchSnapshot()
-        expect(_.isString(createNode.mock.calls[0][0].excerpt)).toBeTruthy()
-        expect(createNode.mock.calls[0][0].excerpt).not.toEqual(0)
-        expect(createParentChildLink.mock.calls).toMatchSnapshot()
-        expect(createNode).toHaveBeenCalledTimes(1)
-        expect(createParentChildLink).toHaveBeenCalledTimes(1)
+        expect(actions.createNode.mock.calls).toMatchSnapshot()
+        expect(
+          _.isString(actions.createNode.mock.calls[0][0].excerpt)
+        ).toBeTruthy()
+        expect(actions.createNode.mock.calls[0][0].excerpt).not.toEqual(0)
+        expect(actions.createParentChildLink.mock.calls).toMatchSnapshot()
+        expect(actions.createNode).toHaveBeenCalledTimes(1)
+        expect(actions.createParentChildLink).toHaveBeenCalledTimes(1)
       })
+    })
+  })
+
+  describe(`date formatting`, () => {
+    const getContent = date => `---
+date: ${date}
+---
+
+yadda yadda
+      `
+
+    it(`coerces a date object into a date string`, async () => {
+      const date = `2019-01-01`
+      node.content = getContent(date)
+      const parsed = await onCreateNode({
+        node,
+        actions,
+        createNodeId,
+        loadNodeContent,
+      })
+
+      expect(parsed.frontmatter.date).toEqual(new Date(date).toJSON())
     })
   })
 

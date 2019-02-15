@@ -1709,6 +1709,15 @@
     - Registration form
     - Signup form
     - User sign in
+- url: https://gatsby-starter.mdbootstrap.com/
+  repo: https://github.com/anna-morawska/gatsby-material-design-for-bootstrap
+  description: A simple starter which lets you quickly start developing with Gastby and Material Design For Bootstrap
+  tags:
+    - Styling:Material
+  features:
+    - React Bootstrap with Material Design css framework.
+    - Free for personal and commercial use
+    - Fully responsive
 - url: https://frosty-ride-4ff3b9.netlify.com/
   repo: https://github.com/damassi/gatsby-starter-typescript-rebass-netlifycms
   description:
@@ -1784,8 +1793,7 @@
   repo: https://github.com/osogrizz/gatsby-starter-santa-fe
   description: A place for artist or designers to display their creations
   tags:
-    - Styled-Components
-    - Web Font Loader
+    - Styling:CSS-in-JS
   features:
     - SEO friendly
     - Built-in Google Fonts support
@@ -1800,7 +1808,6 @@
     - Blog
     - Portfolio
     - Styling:PostCSS
-    - Syntax highlighting
   features:
     - Dark/light mode, depending on your preferences
     - Great reading experience thanks to Inter font, made by Rasmus Andersson
@@ -1814,9 +1821,7 @@
   tags:
     - Blog
     - Portfolio
-    - Web development
-    - Multilanguage
-    - Technology
+    - i18n
   features:
     - Multilanguage posts
     - Pagination and image preview for posts
@@ -1829,3 +1834,44 @@
     - Various available icon sets
     - RSS Feed
     - Web app manifest
+- url: https://gatsby.magicsoup.io/
+  repo: https://github.com/magicsoup-io/gatsby-starter-magicsoup
+  description: A production ready gatsby starter using magicsoup.io
+  tags:
+    - SEO
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Optimized images with gatsby-image.
+    - SEO friendly with react-helmet, gatsby-plugin-sitemap and Google Webmaster Tools!
+    - Responsive UIs with magicsoup.io/stock.
+    - Static content with gatsby-transform-remark or gatsby-transform-json.
+    - Convert Markdown to StyledComponents!
+    - Webfonts with gatsby-plugin-web-font-loader.
+    - SSR ready!
+    - Testing with Jest!
+- url: https://foxandgeese.github.io/tiny-agency/
+  repo: https://github.com/foxandgeese/tiny-agency
+  description: Simple Gatsby.js starter that uses material design and that's perfect for tiny agencies.
+  tags:
+    - Styling:Material
+  features:
+    - Uses the popular, well-maintained Material UI React component library
+    - Material Design theme and icons
+    - Simple setup without opinionated setup
+    - Fully instrumented for successful PROD deployments
+- url: https://gatsby-shopify.alexander-productions.de/
+  repo: https://github.com/AlexanderProd/gatsby-shopify-starter
+  description: Kick off your next, ecommerce experience with this Gatsby starter. It is based on the default Gatsby starter to be easily modifiable.
+  tags:
+    - Headless CMS
+    - SEO
+    - eCommerce
+  features:
+    - Shopping Cart
+    - Shopify Integration
+    - Product Grid
+    - Easily modifiable
+    - Shopify Store Credentials included
+    - Quick and simple start
+    - SEO
