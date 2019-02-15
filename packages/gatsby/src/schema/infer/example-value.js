@@ -60,7 +60,16 @@ const getExampleObject = ({
 
     if (entriesByType.length > 1 || type.includes(`,`)) {
       typeConflictReporter.addConflict(selector, entriesByType)
-      return acc
+      if (
+        isMixOfDatesAndStrings(
+          entriesByType.map(entry => entry.type),
+          arrayWrappers
+        )
+      ) {
+        value = `String`
+      } else {
+        return acc
+      }
     }
 
     let exampleFieldValue
@@ -102,6 +111,23 @@ const getExampleObject = ({
   }, {})
 
   return exampleValue
+}
+
+const isMixOfDatesAndStrings = (types, arrayWrappers) => {
+  const acc = new Set()
+  types.every(type => {
+    let arrays = arrayWrappers
+    while (arrays--) {
+      if (type.startsWith(`[`)) {
+        type = type.slice(1, -1)
+      } else {
+        return false
+      }
+    }
+    type.split(`,`).forEach(t => acc.add(t))
+    return true
+  })
+  return acc.size === 2 && acc.has(`date`) && acc.has(`string`)
 }
 
 const findFloat = entries => {

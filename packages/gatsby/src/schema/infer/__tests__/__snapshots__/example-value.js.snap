@@ -93,7 +93,7 @@ Object {
 }
 `;
 
-exports[`Type conflicts Doesn't report ignored fields 1`] = `
+exports[`Type conflicts doesn't report ignored fields 1`] = `
 Array [
   TypeConflictEntry {
     "selector": "Conflict_3.other",
@@ -111,7 +111,7 @@ Array [
 ]
 `;
 
-exports[`Type conflicts Report conflict when array has mixed types and its origin 1`] = `
+exports[`Type conflicts reports conflict when array has mixed types and its origin 1`] = `
 Array [
   TypeConflictEntry {
     "selector": "Conflict_2.arrayOfMixedType",
@@ -130,7 +130,25 @@ Array [
 ]
 `;
 
-exports[`Type conflicts Report type conflicts and its origin 1`] = `
+exports[`Type conflicts reports date and string conflicts 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_1.date",
+    "types": Map {
+      "date" => Object {
+        "description": "",
+        "value": "2019-01-01",
+      },
+      "string" => Object {
+        "description": "",
+        "value": "Totally not a date",
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports type conflicts and its origin 1`] = `
 Array [
   TypeConflictEntry {
     "selector": "Conflict_1.stringOrNumber",

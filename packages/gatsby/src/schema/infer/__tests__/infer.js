@@ -403,6 +403,33 @@ describe(`GraphQL type inference`, () => {
       expect(result.data.allTest.edges[0].node.date[0]).toEqual(`01.11.1012`)
       expect(result.data.allTest.edges[0].node.date[1]).toEqual(`03.02.1039`)
     })
+
+    it(`infers mixes of non-dates and dates as string`, async () => {
+      const nodes = [
+        {
+          date: `1012-11-01`,
+          internal: { type: `Test` },
+          id: `1`,
+        },
+        {
+          date: `totally-not-a-date`,
+          internal: { type: `Test` },
+          id: `2`,
+        },
+      ]
+      const result = await getQueryResult(
+        nodes,
+        `
+          date
+        `
+      )
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.allTest.edges.length).toEqual(2)
+      expect(result.data.allTest.edges[0].node.date).toEqual(`1012-11-01`)
+      expect(result.data.allTest.edges[1].node.date).toEqual(
+        `totally-not-a-date`
+      )
+    })
   })
 
   describe(`Linked inference from config mappings`, () => {
