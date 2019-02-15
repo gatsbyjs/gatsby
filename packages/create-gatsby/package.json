@@ -12,6 +12,7 @@
     "gatsby-cli": "^2.4.10"
   },
   "files": [
+    "cli.js",
     "index.js"
   ],
   "engines": {

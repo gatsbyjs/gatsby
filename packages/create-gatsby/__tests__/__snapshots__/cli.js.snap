@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it throws if new command not specified 1`] = `
+"create-gatsby can only be used with the new command, e.g. \`npm init gatsby new your-gatsby-app\`
+See gatsby.app/cli for more info."
+`;
