@@ -14,4 +14,4 @@ npm init gatsby new my-great-app
 
 See: [`npm init`](https://docs.npmjs.com/cli/init) documentation for more info.
 
-[gatsby-cli]: (https://www.gatsbyjs.org/docs/gatsby-cli/)
+[gatsby-cli]: https://www.gatsbyjs.org/docs/gatsby-cli/

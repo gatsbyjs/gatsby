@@ -1,6 +1,6 @@
 {
   "name": "create-gatsby",
-  "description": "A CLI to invoke gatsby-cli, primarily from npm init command",
+  "description": "A CLI to invoke gatsby-cli solely from the npm init command",
   "version": "0.0.0",
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "license": "MIT",
@@ -8,13 +8,14 @@
     "create-gatsby": "index.js"
   },
   "dependencies": {
+    "common-tags": "^1.8.0",
     "gatsby-cli": "^2.4.10"
   },
   "files": [
     "index.js"
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/create-gatsby#readme",
   "keywords": [
