@@ -1,5 +1,6 @@
 # All docs must be reviewed by the docs team.
 /docs/                                          @gatsbyjs/docs
+/contributing/                                  @gatsbyjs/docs
 
 # These files have the highest likelihood to cause chaos, so we require an
 # admin to review and approve pull requests that affect these.
@@ -18,7 +19,6 @@ appveyor.yml                                    @gatsbyjs/core
 
 # The ecosystem files are error-prone, so we require an extra set of eyes on them.
 /docs/*                                         @gatsbyjs/ecosystem
-/contributing/*                                 @gatsbyjs/ecosystem
 /docs/creators/*                                @gatsbyjs/ecosystem
 /docs/creators/images/*                         @gatsbyjs/ecosystem
 

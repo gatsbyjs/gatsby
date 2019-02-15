@@ -28,7 +28,7 @@ class IndexRoute extends React.Component {
               <li>
                 <Link to="/contributing/community/">Community</Link>: Learn why
                 you should contribute to Gatsby.js, the most effective ways to
-                do so, and all about the benefits (did we mention there's free
+                do so, and all about the benefits (did we mention the free
                 swag?)
               </li>
               <li>
