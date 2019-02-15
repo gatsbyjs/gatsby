@@ -156,6 +156,7 @@ You can copy and paste the markdown text below and fill it in with your own info
 ```markdown
 ---
 title: Testing
+overview: true
 ---
 
 ## title: Testing
@@ -172,9 +173,7 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Guides in this section
 
-- Link to guide 1
-- Link to guide 2
-- Link to guide 3
+[[guidelist]]
 
 ## Other resources
 
