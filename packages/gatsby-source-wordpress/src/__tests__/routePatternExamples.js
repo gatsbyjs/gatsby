@@ -1,6 +1,6 @@
 const minimatch = require(`minimatch`)
 
-describe.only(`Glob patterns in the README`, () => {
+describe(`Glob patterns in the README`, () => {
   const pattern = `**/pages`
   it(`should work on self hosted WordPress API instances`, () => {
     // API is located at /wp/v2/
