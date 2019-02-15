@@ -42,7 +42,7 @@ const itemListTutorial = extenditemList(tutorialSidebar).map(item => {
 })
 
 const itemListContributing = extenditemList(contributingSidebar).map(item => {
-  return { ...item, key: `contributing` }
+  return { ...item, key: `contributing`, disableAccordions: true }
 })
 
 export {
