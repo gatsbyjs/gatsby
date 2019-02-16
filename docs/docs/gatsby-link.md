@@ -70,7 +70,7 @@ const SiteNavigation = () => (
     <Link
       to="/about/"
       {/* highlight-next-line */}
-      activeStyle={{ color: red }}
+      activeStyle={{ color: "red" }}
     >
       About
     </Link>
