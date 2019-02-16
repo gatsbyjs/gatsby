@@ -63,7 +63,7 @@ class ShareMenu extends React.Component {
   }
 
   render() {
-    const { url, title, image, theme = `gatsby` } = this.props
+    const { url, title, image, className, theme = `gatsby` } = this.props
     const { open } = this.state
     return (
       <Fragment>
@@ -76,6 +76,7 @@ class ShareMenu extends React.Component {
             color: styles[theme].textColor,
             cursor: `pointer`,
           }}
+          className={className}
           ref={this.setShareBtnRef}
         >
           <MdShare />
