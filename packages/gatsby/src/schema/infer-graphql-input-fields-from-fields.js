@@ -129,7 +129,7 @@ function convertToInputFilter(
   type: GraphQLInputType
 ): ?GraphQLInputObjectType {
   if (type instanceof GraphQLScalarType) {
-    const name = type.name
+    const name = type.name === `Date` ? `String` : type.name
     const fields = scalarFilterMap[name]
 
     if (fields == null) return null
