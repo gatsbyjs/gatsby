@@ -1,12 +1,10 @@
 const _ = require(`lodash`)
-// const report = require(`gatsby-cli/lib/reporter`)
-const report = require(`./create-reporter`)
-
 const apiRunner = require(`./api-runner-node`)
 const { store } = require(`../redux`)
 const { getNode, getNodes } = require(`../db/nodes`)
-const { boundActionCreators } = require(`../redux/actions`)
-const { deleteNode } = boundActionCreators
+const { actions } = require(`../redux/actions`)
+
+const { deleteNode, log } = actions
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
@@ -39,11 +37,10 @@ module.exports = async ({ parentSpan } = {}) => {
 
   // Warn about plugins that should have created nodes but didn't.
   const pluginsWithNoNodes = discoverPluginsWithoutNodes(state)
-  pluginsWithNoNodes.map(name =>
-    report.warn(
-      `The ${name} plugin has generated no Gatsby nodes. Do you need it?`
-    )
-  )
+  pluginsWithNoNodes.forEach(name => {
+    const message = `The ${name} plugin has generated no Gatsby nodes. Do you need it?`
+    store.dispatch(log({ message, level: `warn` }))
+  })
 
   // Garbage collect stale data nodes
   const touchedNodes = Object.keys(state.nodesTouched)
@@ -59,10 +56,10 @@ module.exports = async ({ parentSpan } = {}) => {
       rootNode = getNode(rootNode.parent)
       whileCount += 1
       if (whileCount > 100) {
-        console.log(
-          `It looks like you have a node that's set its parent as itself`,
+        const message =
+          `It looks like you have a node that's set its parent as itself: ` +
           rootNode
-        )
+        store.dispatch(log({ message, level: `warn` }))
       }
     }
 
@@ -70,6 +67,6 @@ module.exports = async ({ parentSpan } = {}) => {
   })
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(node => deleteNode({ node }))
+    staleNodes.forEach(node => store.dispatch(deleteNode({ node })))
   }
 }

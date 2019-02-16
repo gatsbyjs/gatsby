@@ -53,18 +53,9 @@ type BootstrapArgs = {
 }
 
 module.exports = async (args: BootstrapArgs) => {
-  emitter.on(`LOG_MESSAGE`, ({ payload }) => {
-    // here we could configure different kinds of output - to stdout, to a
-    // file or remote server etc. For now just use the gatsby-cli reporter
+  const logger = ({ message, level = `info` }) => report[level](message)
+  store.dispatch({ type: `SET_LOGGER`, payload: logger })
 
-    if (report[payload.type]) {
-      report[payload.type](payload.message)
-    } else {
-      const id = `` || payload.id
-      report.info(`${payload.type} ${payload.message} ${id}`)
-    }
-    // report.info(`GOT MESSAGE: ${payload}`)
-  })
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 

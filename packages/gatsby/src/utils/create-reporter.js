@@ -1,32 +1,38 @@
 const uuid = require(`uuid/v4`)
-const { boundActionCreators } = require(`../redux/actions`)
-const logAction = boundActionCreators.log
+const { store } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
+
+const { log } = actions
+const { dispatch } = store
 
 // Create a proxy for the existing reporter that sends messages into the redux
 // store
 
 const reporter = {
-  success: msg => logAction({ message: msg, type: `success` }),
-  info: msg => logAction({ message: msg, type: `info` }),
-  log: msg => logAction({ message: msg, type: `log` }),
-  error: msg => logAction({ message: msg, type: `error` }),
-  warn: msg => logAction({ message: msg, type: `warn` }),
-  panic: msg => logAction({ message: msg, type: `panic` }),
-  panicOnBuild: msg => logAction({ message: msg, type: `panicOnBuild` }),
-  activityTimer: msg => {
+  success: message => dispatch(log({ message, level: `success` })),
+  info: message => dispatch(log({ message, level: `info` })),
+  log: message => dispatch(log({ message, level: `log` })),
+  error: message => dispatch(log({ message, level: `error` })),
+  warn: message => dispatch(log({ message, level: `warn` })),
+  panic: message => dispatch(log({ message, level: `panic` })),
+  panicOnBuild: message => dispatch(log({ message, level: `panicOnBuild` })),
+  activityTimer: message => {
     let id = null
     // I haven't tried this. It probably doesn't work!
     return {
       start: () => {
-        id = uuid()
-        logAction({
-          message: msg,
-          type: `activityTimerStart`,
-          id,
-        })
+        id = uuid()(
+          dispatch(
+            log({
+              message,
+              level: `activityTimerStart`,
+              id,
+            })
+          )
+        )
       },
       end: () => {
-        logAction({ message: msg, type: `activityTimerEnd`, id })
+        dispatch(log({ message, level: `activityTimerEnd`, id }))
       },
     }
   },

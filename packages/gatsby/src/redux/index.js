@@ -1,14 +1,13 @@
-const Redux = require(`redux`)
+const { createStore, combineReducers, applyMiddleware } = require(`redux`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
+const reducers = require(`./reducers`)
+const middleware = require(`./middleware`)
 
 // Create event emitter for actions
 const emitter = mitt()
-
-// Reducers
-const reducers = require(`./reducers`)
 
 const objectToMap = obj => {
   let map = new Map()
@@ -60,16 +59,14 @@ try {
   // ignore errors.
 }
 
-const store = Redux.createStore(
-  Redux.combineReducers({ ...reducers }),
-  initialState,
-  Redux.applyMiddleware(function multi({ dispatch }) {
-    return next => action =>
-      Array.isArray(action)
-        ? action.filter(Boolean).map(dispatch)
-        : next(action)
-  })
-)
+const configureStore = initialState =>
+  createStore(
+    combineReducers({ ...reducers }),
+    initialState,
+    applyMiddleware(...middleware)
+  )
+
+const store = configureStore(initialState)
 
 // Persist state.
 function saveState() {
@@ -92,15 +89,16 @@ function saveState() {
   return fs.writeFile(`${process.cwd()}/.cache/redux-state.json`, stringified)
 }
 
-exports.saveState = saveState
-
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
   emitter.emit(lastAction.type, lastAction)
 })
 
-/** Event emitter */
-exports.emitter = emitter
-
-/** Redux store */
-exports.store = store
+module.exports = {
+  /** Event emitter */
+  emitter,
+  /** Redux store */
+  store,
+  configureStore,
+  saveState,
+}

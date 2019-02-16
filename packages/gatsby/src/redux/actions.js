@@ -1308,14 +1308,29 @@ actions.createTypes = (
 /**
  * Add a message to log queue
  *
- * @param {LogItem} $0
+ * @param {LogItem} logItem
  */
 actions.log = (logItem: LogItem, plugin: Plugin, traceId?: string) => {
   return {
     type: `LOG_MESSAGE`,
     plugin,
     traceId,
-    payload: { ...logItem },
+    payload: logItem,
+  }
+}
+
+/**
+ * Set the logger
+ *
+ * @param {Object} logger
+ * @private
+ */
+actions.log = (logger: Object, plugin: Plugin, traceId?: string) => {
+  return {
+    type: `SET_LOGGER`,
+    plugin,
+    traceId,
+    payload: logger,
   }
 }
 
