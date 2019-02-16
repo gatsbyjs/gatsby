@@ -1,12 +1,12 @@
 ---
-title: Using transition-link for Page Transitions
+title: Adding Page Transitions with gatsby-plugin-transition-link
 ---
 
 This guide will cover how to use `gatsby-plugin-transition-link` to animate transitions between pages on your Gatsby site.
 
 ## Overview
 
-The `TransitionLink` component is a simple way of describing a page transition via props on a Link component. It works with many animation libraries, like [react-pose](https://popmotion.io/pose/), [gsap](https://greensock.com/), [animejs](https://animejs.com/), and many others.
+The `TransitionLink` component provides a way of describing a page transition via props on a Link component. It works with many animation libraries, like [react-pose](https://popmotion.io/pose/), [gsap](https://greensock.com/), [animejs](https://animejs.com/), and many others.
 
 Note that currently, as the plugin is based on link navigation, transitions when navigating with the browser buttons are not supported.
 
@@ -15,10 +15,6 @@ For other page transition options, see the [overview on adding page animations](
 ## Getting started
 
 First, install the plugin:
-
-```shell
-yarn add gatsby-plugin-transition-link
-```
 
 ```shell
 npm install --save gatsby-plugin-transition-link
@@ -42,13 +38,9 @@ import TransitionLink from "gatsby-plugin-transition-link"
 
 ## Predefined transitions
 
-The simplest way to start animating page transitions is using the `AniLink` component. It's a wrapper around `TransitionLink` that provides 4 predefined transitions: `fade`, `swipe`, `cover`, and `paintDrip`. You can preview them at [this demo site](https://gatsby-plugin-transition-link.netlify.com/).
+You can use the `AniLink` component to add page transitions without having to define your own custom transitions. It's a wrapper around `TransitionLink` that provides 4 predefined transitions: `fade`, `swipe`, `cover`, and `paintDrip`. You can preview them at [this demo site](https://gatsby-plugin-transition-link.netlify.com/).
 
 To use AniLink, you will need to install the `gsap` animation library:
-
-```shell
-yarn add gsap
-```
 
 ```shell
 npm install --save gsap
@@ -166,7 +158,7 @@ import { TransitionPortal } from "gatsby-plugin-transition-link"
 </TransitionPortal>
 ```
 
-As always, check out [the docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information about `TransitionPortal`.
+As always, check out [the `TransitionPortal` docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information about `TransitionPortal`.
 
 ## Further reading
 

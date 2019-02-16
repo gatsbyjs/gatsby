@@ -1,5 +1,5 @@
 ---
-title: Adding Page Transitions with page-transitions
+title: Adding Page Transitions with gatsby-plugin-page-transitions
 ---
 
 This is a stub. Help our community expand it.

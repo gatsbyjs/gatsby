@@ -256,9 +256,9 @@
         - title: Adding Page Transitions
           link: /docs/adding-page-transitions/
           items:
-            - title: Adding page transitions with transition-link
+            - title: Adding Page Transitions with gatsby-plugin-transition-link
               link: /docs/adding-page-transitions-with-plugin-transition-link/
-            - title: Adding page transitions with page-transitions*
+            - title: Adding Page Transitions with gatsby-plugin-page-transitions*
               link: /docs/adding-page-transitions-with-plugin-page-transitions/
         - title: Making Your Site Accessible
           link: /docs/making-your-site-accessible
