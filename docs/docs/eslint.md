@@ -114,7 +114,7 @@ Now we will begin by adding a two `lint` scripts in your project's `package.json
 }
 ```
 
-After the scripts are set up, you can try them out!
+After the scripts are set up, you can try them out! It is optional to remove the `format` script, now that Prettier will be run with ESLint.
 
 - `lint` - ESLint will identify warnings and errors
 - `lint:fix`
