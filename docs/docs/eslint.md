@@ -19,7 +19,7 @@ npm install --save-dev eslint babel-eslint \
   eslint-plugin-node
 ```
 
-Now that we have our packages installed, in the root of your project create a new file named `.eslintrc.js` using the commands below.
+Now that we have our packages installed, in the root of your project remove the existing Prettier configuration and create a new file named `.eslintrc.js` using the commands below.
 
 ```shell
 # Remove the Prettier config file
@@ -31,7 +31,7 @@ touch .eslintrc.js
 
 ## Configuring ESLint
 
-We recommend copying our default ESLint content below to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options. Sample rules from the plugins are also provided to demonstrate their capabilities.
+To get started configuring ESLint we recommend copying our default ESLint content below to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options. Sample rules from the plugins are also provided to demonstrate their capabilities.
 
 ```js:title=.eslintrc.js
 module.exports = {
@@ -84,6 +84,7 @@ module.exports = {
       "useTabs": false,
       "semi": false,
       "singleQuote": false,
+      "endOfLine": "lf",
       "jsxSingleQuote": false,
       "trailingComma": "es5",
       "bracketSpacing": true,
@@ -93,3 +94,80 @@ module.exports = {
   }
 };
 ```
+
+### Running ESLint with a Script
+
+Now we will begin by adding a two `lint` scripts in your project's `package.json` file as shown below:
+
+```json:title=package.json
+{
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "lint": "eslint --config .eslintrc.js src",
+    "lint:fix": "eslint --config .eslintrc.js --fix src"
+  },
+}
+```
+
+After the scripts are set up, you can try them out!
+
+- `lint` - ESLint will identify warnings and errors
+- `lint:fix`
+  - Prettier will format your code
+  - ESLint will format any fixable warnings or errors, along with custom rules outside of Prettier
+
+Rules in our new ESLint configuration have been set to `warn` or `error`, which can be very helpful for ensuring quality code adding [gatsby-plugin-eslint](https://www.gatsbyjs.org/packages/gatsby-plugin-eslint/?=eslint). This package will add ESLint capabilities to the Gatsby development process, thus providing all of the linting capabilities described in the scripts above while your building your new project.
+
+### Integrating ESLint with VS Code
+
+Adding ESLint to VS Code needs a little more configuring unlike the Prettier extension [as described in the Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/#set-up-a-code-editor). Refer to the following steps to add and configure ESLint:
+
+1. Open the extensions view on VS Code (View => Extensions).
+2. Search for “ESLint”.
+3. Click “Install”
+4. Open your VS Code settings as JSON (CMD/Ctrl+Shift+P => "Preferences: Open Settings (JSON)")
+5. Input the following, we will cover:
+  1. Disabling VS Code's built-in formatting
+  2. Enabling ESLint validation
+  3. Enabling ESLint auto-fix on save
+
+```json:title=settings.json
+{
+  // ...
+  "editor.formatOnSave": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+  ],
+  // ...
+}
+```
+
+It is important to note that by disabling VS Code's built-in formatting, HTML files and alike will not be formatted. But not to worry, you can re-enable settings per language:
+
+```json:title=settings.json
+{
+  // ...
+  "[html]": {
+    "editor.formatOnSave": true,
+  },
+  // ...
+}
+```
+
+## Conclusion
+
+Now you have a powerful environment formatting and highlighting mistakes as you go! To summarize, in this section we learned to:
+
+- Install ESLint and integrate with Prettier
+- Configure ESLint
+- Use scripts to run linting and fixing/formatting
+- Integrate with VS Code and format on save
+- Disable VS Code's built-in formatting
+- Enabling VS Code's built-in formatting per language
