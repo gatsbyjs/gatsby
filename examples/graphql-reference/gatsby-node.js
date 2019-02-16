@@ -1,8 +1,8 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
+exports.createPages = ({ graphql, actions, reporter }) => {
+  const { createPage, log } = actions
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   return graphql(
@@ -33,11 +33,16 @@ exports.createPages = ({ graphql, actions }) => {
 
     // Create blog posts pages.
     const posts = result.data.allMarkdownRemark.edges
-
+    let activity = reporter.activityTimer(`testing the proxied activity timer`)
+    activity.start()
+    log({
+      message: `Posted an info message with the redux logger`,
+      type: `info`,
+    })
+    reporter.info(`back-compat info message`)
     posts.forEach((post, index) => {
       const previous = index === posts.length - 1 ? null : posts[index + 1].node
       const next = index === 0 ? null : posts[index - 1].node
-
       createPage({
         path: post.node.fields.slug,
         component: blogPost,
@@ -48,6 +53,15 @@ exports.createPages = ({ graphql, actions }) => {
         },
       })
     })
+    log({
+      message: `Posted a success message with the redux logger`,
+      type: `success`,
+    })
+    reporter.info(`back-compat success message`)
+    activity.end()
+    activity = reporter.activityTimer(`do activities get new ids?`)
+    activity.start()
+    activity.end()
   })
 }
 
