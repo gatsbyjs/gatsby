@@ -1867,6 +1867,7 @@
     - Headless CMS
     - SEO
     - eCommerce
+    - Styling:CSS-in-JS
   features:
     - Shopping Cart
     - Shopify Integration
@@ -1875,3 +1876,4 @@
     - Shopify Store Credentials included
     - Quick and simple start
     - SEO
+    - EmotionJS
