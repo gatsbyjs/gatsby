@@ -16,7 +16,7 @@ emitter.on(`CREATE_NODE`, action => {
 emitter.on(`DELETE_NODE`, action => {
   if (action.payload.internal.type !== `SitePage`) {
     pagesDirty = true
-    apiRunnerNode(`I_AM_SO_FAKE`)
+    apiRunnerNode(`FAKE_API_CALL`)
   }
 })
 
