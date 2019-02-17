@@ -22,6 +22,8 @@ import { scrollbarStyles } from "../utils/styles"
 import { injectGlobal } from "react-emotion"
 import removeMD from "remove-markdown"
 import VisuallyHidden from "@reach/visually-hidden"
+import styled from "react-emotion"
+import { SkipNavLink } from "@reach/skip-nav"
 
 // This is for the urlSync
 const updateAfter = 700
@@ -179,6 +181,30 @@ injectGlobal`
 `
 /* stylelint-enable */
 
+const StyledSkipNavLink = styled(SkipNavLink)`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 100;
+  font-size: 0.85rem;
+
+  :focus {
+    padding: 0.9rem;
+    top: 10px;
+    left: 10px;
+    background: white;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    clip: auto;
+  }
+`
+
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
   render() {
@@ -237,6 +263,7 @@ class Search extends Component {
                 },
               }}
             />
+            <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
           </div>
         </div>
 
