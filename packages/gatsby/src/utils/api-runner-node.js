@@ -157,7 +157,7 @@ module.exports = async (api, args = {}, pluginSource) =>
     })
 
     // Check that the API is documented.
-    if (!apiList[api]) {
+    if (!apiList[api] && api !== `I_AM_SO_FAKE`) {
       reporter.panic(`api: "${api}" is not a valid Gatsby api`)
     }
 
