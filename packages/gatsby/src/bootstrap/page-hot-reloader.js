@@ -20,7 +20,12 @@ emitter.on(`DELETE_NODE`, action => {
     // there often isn't API calls associated with deleting nodes
     // (especially with stateful source plugins like gatsby-source-filesystem)
     // so API_RUNNING_QUEUE_EMPTY won't be invoked.
-    debouncedRunCreatePages()
+    //
+    // This is pretty hacky and we need a smarter heuristic to decide
+    // whether we need to call runCreatePages() or not ourselves.
+    if (action.payload.internal.type === `File`) {
+      runCreatePages()
+    }
   }
 })
 
@@ -71,7 +76,6 @@ const runCreatePages = async () => {
 
   emitter.emit(`CREATE_PAGE_END`)
 }
-const debouncedRunCreatePages = _.debounce(runCreatePages, 150)
 
 module.exports = graphqlRunner => {
   graphql = graphqlRunner
