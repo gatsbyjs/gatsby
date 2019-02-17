@@ -181,11 +181,11 @@ _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is depreca
 
 Instead, Gatsby exports a `navigate` helper function that accepts `to` and `options` arguments.
 
-| Argument          | Required | Description                                                                                      |
-| ----------------- | -------- | ------------------------------------------------------------------------------------------------ |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                         |
+| Argument          | Required | Description                                                                                     |
+| ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
+| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
 | `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
-| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                   |
+| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
 
 By default, `navigate` operates the same way as a clicked `Link` component.
 
