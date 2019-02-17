@@ -16,6 +16,11 @@ emitter.on(`CREATE_NODE`, action => {
 emitter.on(`DELETE_NODE`, action => {
   if (action.payload.internal.type !== `SitePage`) {
     pagesDirty = true
+    // We call runCreatePages directly as
+    // there often isn't API calls associated with deleting nodes
+    // (especially with stateful source plugins like gatsby-source-filesystem)
+    // so API_RUNNING_QUEUE_EMPTY won't be invoked.
+    debouncedRunCreatePages()
   }
 })
 
@@ -66,6 +71,7 @@ const runCreatePages = async () => {
 
   emitter.emit(`CREATE_PAGE_END`)
 }
+const debouncedRunCreatePages = _.debounce(runCreatePages, 150)
 
 module.exports = graphqlRunner => {
   graphql = graphqlRunner
