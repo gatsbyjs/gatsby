@@ -2,7 +2,7 @@
 title: Blog and Website Contributions
 ---
 
-We wholeheartedly welcome contributions to the Gatsby blog and website! Instructions this page:
+We wholeheartedly welcome contributions to the Gatsby blog and website! Instructions on this page:
 
 - [Contributing to the blog](#contributing-to-the-blog)
   - [Blog post format](#blog-post-format)
