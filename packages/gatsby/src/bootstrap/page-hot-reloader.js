@@ -46,7 +46,7 @@ const runCreatePages = async () => {
     })
     .map(p => p.id)
 
-  const timestamp = new Date().toJSON()
+  const timestamp = Date.now()
 
   await apiRunnerNode(`createPages`, {
     graphql,
