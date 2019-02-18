@@ -4,6 +4,13 @@ title: Docs Contributions
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of February 2019, over 800 people have contributed. It's people like you that make this community great!
 
+On this page:
+
+- [Top priorities](#top-priorities)
+- [Options for contributing to the Gatsby docs](#options-for-contributing-to-the-gatsby-docs)
+- [Modifying markdown files](#modifying-markdown-docs)
+- [Docs site setup instructions](#docs-site-setup-instructions)
+
 ## Top priorities
 
 Check the GitHub repo for issues labeled with ["documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or ["documentation" and "status: help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22status%3A+help+wanted%22) to see all documentation issues that are ready for community help. Once you start a PR to address one of these issues, you can remove the "help wanted" label.
@@ -15,7 +22,7 @@ When working on the Gatsby.js documentation, you can choose between two major st
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
 - Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content and infrastructure changes. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
 
-### Modifying markdown files
+## Modifying markdown files
 
 1. If you want to add/modify any Gatsby documentation, go to the
    [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/contributing) on GitHub and
@@ -26,7 +33,7 @@ When working on the Gatsby.js documentation, you can choose between two major st
      > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
-#### Converting a document from a stub
+### Converting a document from a stub
 
 If you wrote a new document that was [previously a stub](/contributing/how-to-write-a-stub/), there are two things you need to update.
 
@@ -64,11 +71,11 @@ After going through the development setup instructions above, there are a few ad
 - View the changes in your browser at `http://localhost:8000`.
 - Commit your changes and submit a pull request!
 
-### Claim your swag
+## Claim your swag
 
 After your first code contribution to the Gatsby repo (including documentation) you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag/) for more details!
 
-### Want more?
+## Want more?
 
 Check out our additional pages on docs contributions:
 

@@ -2,6 +2,12 @@
 title: Blog and Website Contributions
 ---
 
+We wholeheartedly welcome contributions to the Gatsby blog and website! Instructions this page:
+
+- [Contributing to the blog](#contributing-to-the-blog)
+  - [Blog post format](#blog-post-format)
+- [Making changes to the website](#making-changes-to-the-website)
+
 ## Contributing to the blog
 
 Note: Before adding a blog post ensure you have approval from a member of the Gatsby team. You can do this by [opening an issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) or contacting [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs).
@@ -40,18 +46,15 @@ tags:
 
 Your next great blog post awaits!
 
-Include images by creating a folder for your post and including both Markdown and image files for easy linking.
+Include images by creating a folder for your post and including
+Markdown and image files for easy linking.
 
 ![awesome example](./image.jpg)
 ```
 
-Clone the Gatsby repo and navigate to /www
-Run yarn to install all of the website's dependencies.
-Run npm run develop to preview the blog at http://localhost:8000/blog.
-
 ## Making changes to the website
 
-If you want to make changes, improvements, or add new functionality to the website, you don't have to set up the full Gatsby repo. You can spin up your own instance of the Gatsby website with these steps:
+If you want to make changes, improvements, or add new functionality to the website: like with the blog, you don't have to set up the full Gatsby repo to contribute. You can spin up your own instance of the Gatsby website with these steps:
 
 - Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
