@@ -50,15 +50,15 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           {},
           callback
         )
+      } else {
+        return resolver.doResolve(
+          `describedRelative`,
+          { ...request, path: builtComponentPath },
+          null,
+          {},
+          callback
+        )
       }
-      const resolvedComponentPath = require.resolve(builtComponentPath)
-      // this callbackends the resolver fallthrough chain.
-      return callback(null, {
-        directory: request.directory,
-        path: resolvedComponentPath,
-        query: request.query,
-        request: ``,
-      })
     })
   }
 
