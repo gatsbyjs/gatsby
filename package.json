@@ -5,7 +5,7 @@
     "@babel/runtime": "^7.0.0",
     "babel-eslint": "^10.0.0",
     "babel-jest": "^24.0.0",
-    "chokidar": "^1.7.0",
+    "chokidar": "^2.1.1",
     "cross-env": "^5.1.4",
     "eslint": "^5.13.0",
     "eslint-config-google": "^0.10.0",

@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "chokidar": "^1.7.0",
+    "chokidar": "^2.1.1",
     "configstore": "^3.1.0",
     "fs-extra": "^4.0.1",
     "is-absolute": "^0.2.6",
