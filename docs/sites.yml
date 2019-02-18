@@ -4347,3 +4347,16 @@
   built_by: Tenon.io
   built_by_url: https://tenon.io
   featured: false
+- title: Tenon-UI Documentation
+  main_url: https://www.tenon-ui.info
+  url: https://www.tenon-ui.info
+  description: >
+    Documentation site for Tenon-UI: Tenon.io's accessible components library.
+  categories:
+    - Accessibility
+    - Documentation
+    - Library
+    - Web Development
+  built_by: Tenon.io
+  built_by_url: https://tenon.io
+  featured: false
