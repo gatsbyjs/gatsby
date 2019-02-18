@@ -3,9 +3,10 @@ const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
+const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
@@ -29,7 +30,26 @@ const getImageSize = file => {
 }
 
 const duotone = require(`./duotone`)
-const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+
+// Bound action creators should be set when passed to onPreInit in gatsby-node.
+// ** It is NOT safe to just directly require the gatsby module **.
+// There is no guarantee that the module resolved is the module executing!
+// This can occur in mono repos depending on how dependencies have been hoisted.
+// The direct require has been left only to avoid breaking changes.
+let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+exports.setBoundActionCreators = actions => {
+  boundActionCreators = actions
+}
+
+/// Plugin options are loaded onPreInit in gatsby-node
+const pluginDefaults = {
+  useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
+  stripMetadata: true,
+}
+let pluginOptions = Object.assign({}, pluginDefaults)
+exports.setPluginOptions = opts => {
+  pluginOptions = Object.assign({}, pluginOptions, opts)
+}
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -65,6 +85,8 @@ const generalArgs = {
   quality: 50,
   jpegProgressive: true,
   pngCompressionLevel: 9,
+  // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
+  pngCompressionSpeed: 4,
   base64: false,
   grayscale: false,
   duotone: false,
@@ -77,6 +99,7 @@ const healOptions = (args, defaultArgs) => {
   let options = _.defaults({}, args, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
+  options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
   options.toFormat = options.toFormat.toLowerCase()
 
   // only set width to 400 if neither width nor height is passed
@@ -112,7 +135,14 @@ const processFile = (file, jobs, cb, reporter) => {
 
   let pipeline
   try {
-    pipeline = sharp(file).rotate()
+    pipeline = sharp(file)
+
+    // Keep Metadata
+    if (!pluginOptions.stripMetadata) {
+      pipeline = pipeline.withMetadata()
+    }
+
+    pipeline = pipeline.rotate()
   } catch (err) {
     reportError(`Failed to process image ${file}`, err, reporter)
     jobs.forEach(job => job.outsideReject(err))
@@ -140,17 +170,13 @@ const processFile = (file, jobs, cb, reporter) => {
     }
 
     clonedPipeline
-      .resize(roundedWidth, roundedHeight)
-      .crop(args.cropFocus)
+      .resize(roundedWidth, roundedHeight, {
+        position: args.cropFocus,
+      })
       .png({
         compressionLevel: args.pngCompressionLevel,
         adaptiveFiltering: false,
         force: args.toFormat === `png`,
-      })
-      .jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
-        force: args.toFormat === `jpg`,
       })
       .webp({
         quality: args.quality,
@@ -160,6 +186,15 @@ const processFile = (file, jobs, cb, reporter) => {
         quality: args.quality,
         force: args.toFormat === `tiff`,
       })
+
+    // jpeg
+    if (!pluginOptions.useMozJpeg) {
+      clonedPipeline = clonedPipeline.jpeg({
+        quality: args.quality,
+        progressive: args.jpegProgressive,
+        force: args.toFormat === `jpg`,
+      })
+    }
 
     // grayscale
     if (args.grayscale) {
@@ -198,7 +233,6 @@ const processFile = (file, jobs, cb, reporter) => {
         job.outsideResolve()
       }
     }
-
     if (
       (job.file.extension === `png` && args.toFormat === ``) ||
       args.toFormat === `png`
@@ -213,7 +247,36 @@ const processFile = (file, jobs, cb, reporter) => {
                   quality: `${args.quality}-${Math.min(
                     args.quality + 25,
                     100
-                  )}`, // e.g. 40-65
+                  )}`,
+                  speed: args.pngCompressionSpeed
+                    ? args.pngCompressionSpeed
+                    : undefined,
+                  strip: !!pluginOptions.stripMetadata, // Must be a bool
+                }),
+              ],
+            })
+            .then(imageminBuffer => {
+              fs.writeFile(job.outputPath, imageminBuffer, onFinish)
+            })
+            .catch(onFinish)
+        )
+        .catch(onFinish)
+      // Compress jpeg
+    } else if (
+      pluginOptions.useMozJpeg &&
+      ((job.file.extension === `jpg` && args.toFormat === ``) ||
+        (job.file.extension === `jpeg` && args.toFormat === ``) ||
+        args.toFormat === `jpg`)
+    ) {
+      clonedPipeline
+        .toBuffer()
+        .then(sharpBuffer =>
+          imagemin
+            .buffer(sharpBuffer, {
+              plugins: [
+                imageminMozjpeg({
+                  quality: args.quality,
+                  progressive: args.jpegProgressive,
                 }),
               ],
             })
@@ -241,7 +304,7 @@ const processFile = (file, jobs, cb, reporter) => {
             .catch(onFinish)
         )
         .catch(onFinish)
-      // any other format (jpeg, tiff) - don't compress it just handle output
+      // any other format (tiff) - don't compress it just handle output
     } else {
       clonedPipeline.toFile(job.outputPath, onFinish)
     }
@@ -336,10 +399,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.name}-${
-    file.internal.contentDigest
-  }-${argsDigestShort}.${fileExtension}`
-  const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
+  const imgSrc = `/${file.name}.${fileExtension}`
+  const dirPath = path.join(
+    process.cwd(),
+    `public`,
+    `static`,
+    file.internal.contentDigest,
+    argsDigestShort
+  )
+  const filePath = path.join(dirPath, imgSrc)
+  fs.ensureDirSync(dirPath)
 
   // Create function to call when the image is finished.
   let outsideResolve, outsideReject
@@ -387,8 +456,13 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   queueJob(job, reporter)
 
+  // encode the file name for URL
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
+
   // Prefix the image src.
-  const prefixedSrc = options.pathPrefix + `/static` + imgSrc
+  const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
+  const prefixedSrc =
+    options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
 
   return {
     src: prefixedSrc,
@@ -401,7 +475,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-async function notMemoizedbase64({ file, args = {}, reporter }) {
+async function generateBase64({ file, args, reporter }) {
   const options = healOptions(args, { width: 20 })
   let pipeline
   try {
@@ -412,8 +486,9 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
   }
 
   pipeline
-    .resize(options.width, options.height)
-    .crop(options.cropFocus)
+    .resize(options.width, options.height, {
+      position: options.cropFocus,
+    })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
@@ -443,31 +518,47 @@ async function notMemoizedbase64({ file, args = {}, reporter }) {
       pipeline
     )
   }
-
   const [buffer, info] = await pipeline.toBufferAsync()
-  const originalName = file.base
-
-  return {
+  const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
-    originalName: originalName,
+    originalName: file.base,
   }
+  return base64output
 }
 
-const memoizedBase64 = _.memoize(
-  notMemoizedbase64,
-  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
-)
+const base64CacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
 
-async function base64(args) {
-  return await memoizedBase64(args)
+const memoizedBase64 = _.memoize(generateBase64, base64CacheKey)
+
+const cachifiedBase64 = async ({ cache, ...arg }) => {
+  const cacheKey = base64CacheKey(arg)
+
+  const cachedBase64 = await cache.get(cacheKey)
+  if (cachedBase64) {
+    return cachedBase64
+  }
+
+  const base64output = await generateBase64(arg)
+
+  await cache.set(cacheKey, base64output)
+
+  return base64output
 }
 
-async function fluid({ file, args = {}, reporter }) {
+async function base64(arg) {
+  if (arg.cache) {
+    // Not all tranformer plugins are going to provide cache
+    return await cachifiedBase64(arg)
+  }
+
+  return await memoizedBase64(arg)
+}
+
+async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
-
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
@@ -487,6 +578,14 @@ async function fluid({ file, args = {}, reporter }) {
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
+
+  if (options[fixedDimension] < 1) {
+    throw new Error(
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${
+        options[fixedDimension]
+      }`
+    )
+  }
 
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
@@ -508,21 +607,38 @@ async function fluid({ file, args = {}, reporter }) {
     options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
-  // Create sizes (in width) for the image. If the max width of the container
-  // for the rendered markdown file is 800px, the sizes would then be: 200,
-  // 400, 800, 1200, 1600, 2400.
+  // Create sizes (in width) for the image if no custom breakpoints are
+  // provided. If the max width of the container for the rendered markdown file
+  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  const fluidSizes = []
-  fluidSizes.push(options[fixedDimension] / 4)
-  fluidSizes.push(options[fixedDimension] / 2)
-  fluidSizes.push(options[fixedDimension])
-  fluidSizes.push(options[fixedDimension] * 1.5)
-  fluidSizes.push(options[fixedDimension] * 2)
-  fluidSizes.push(options[fixedDimension] * 3)
+  const fluidSizes = [
+    options[fixedDimension], // ensure maxWidth (or maxHeight) is added
+  ]
+  // use standard breakpoints if no custom breakpoints are specified
+  if (!options.srcSetBreakpoints || !options.srcSetBreakpoints.length) {
+    fluidSizes.push(options[fixedDimension] / 4)
+    fluidSizes.push(options[fixedDimension] / 2)
+    fluidSizes.push(options[fixedDimension] * 1.5)
+    fluidSizes.push(options[fixedDimension] * 2)
+    fluidSizes.push(options[fixedDimension] * 3)
+  } else {
+    options.srcSetBreakpoints.forEach(breakpoint => {
+      if (breakpoint < 1) {
+        throw new Error(
+          `All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`
+        )
+      }
+      // ensure no duplicates are added
+      if (fluidSizes.includes(breakpoint)) {
+        return
+      }
+      fluidSizes.push(breakpoint)
+    })
+  }
   const filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
@@ -568,7 +684,7 @@ async function fluid({ file, args = {}, reporter }) {
   }
 
   // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter })
+  const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -616,7 +732,7 @@ async function fluid({ file, args = {}, reporter }) {
   }
 }
 
-async function fixed({ file, args = {}, reporter }) {
+async function fixed({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, {})
 
   // if no width is passed, we need to resize the image based on the passed height
@@ -678,7 +794,7 @@ async function fixed({ file, args = {}, reporter }) {
   }
 
   // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter })
+  const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
   const fallbackSrc = images[0].src
   const srcSet = images
@@ -737,8 +853,9 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   }
 
   pipeline
-    .resize(options.width, options.height)
-    .crop(options.cropFocus)
+    .resize(options.width, options.height, {
+      position: options.cropFocus,
+    })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,

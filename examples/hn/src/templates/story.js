@@ -27,7 +27,7 @@ class Story extends React.Component {
         comment.depth = depth
         seenComments[comment.id] = true
         childComments.push(comment)
-        if (comment && comment.children && comment.children.length > 0) {
+        if (comment.children && comment.children.length > 0) {
           childComments = childComments.concat(
             flattenComments(comment.children, depth + 1)
           )
@@ -51,9 +51,7 @@ class Story extends React.Component {
                   {story.title}
                 </a>
                 <span className="sitebit comhead">
-                  {` `}(
-                  <span className="sitestr">{story.domain}</span>
-                  )
+                  {` `}(<span className="sitestr">{story.domain}</span>)
                 </span>
               </td>
             </tr>
@@ -70,9 +68,7 @@ class Story extends React.Component {
                 <span className="age">
                   <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
                 </span>
-                {` `}
-                |
-                {` `}
+                {` `}|{` `}
                 <Link to={`/item/${story.id}/`}>
                   {story.descendants ? story.descendants : 0} comments
                 </Link>

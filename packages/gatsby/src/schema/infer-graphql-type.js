@@ -12,14 +12,21 @@ const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { oneLine } = require(`common-tags`)
 
-const { store, getNode, getNodes } = require(`../redux`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { store } = require(`../redux`)
+const { getNode, getNodes, getNodesByType } = require(`../db/nodes`)
+const pageDependencyResolver = require(`./page-dependency-resolver`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
-const { getExampleValues, isEmptyObjectOrArray } = require(`./data-tree-utils`)
+const {
+  getExampleValues,
+  isEmptyObjectOrArray,
+  INVALID_VALUE,
+} = require(`./data-tree-utils`)
 const DateType = require(`./types/type-date`)
 const FileType = require(`./types/type-file`)
 const is32BitInteger = require(`../utils/is-32-bit-integer`)
+const unionTypes = new Map()
+const lazyFields = require(`./lazy-fields`)
 
 import type { GraphQLOutputType } from "graphql"
 import type {
@@ -93,7 +100,12 @@ function inferGraphQLType({
     return listType
   }
 
-  if (DateType.shouldInfer(exampleValue)) {
+  if (
+    // momentjs crashes when it encounters a Symbol,
+    // so check against that
+    typeof exampleValue !== `symbol` &&
+    DateType.shouldInfer(exampleValue)
+  ) {
     return DateType.getType()
   }
 
@@ -102,21 +114,24 @@ function inferGraphQLType({
       return { type: GraphQLBoolean }
     case `string`:
       return { type: GraphQLString }
-    case `object`:
+    case `object`: {
+      const typeName = createTypeName(fieldName)
       return {
         type: new GraphQLObjectType({
-          name: createTypeName(fieldName),
+          name: typeName,
           fields: _inferObjectStructureFromNodes(
             {
               ...otherArgs,
               selector,
               nodes,
               types,
+              typeName,
             },
             exampleValue
           ),
         }),
       }
+    }
     case `number`:
       return is32BitInteger(exampleValue)
         ? { type: GraphQLInt }
@@ -142,31 +157,20 @@ function inferFromMapping(
     return null
   }
 
-  const findNode = (fieldValue, path) => {
-    const linkedNode = _.find(
-      getNodes(),
-      n =>
-        n.internal.type === linkedType && _.get(n, linkedField) === fieldValue
-    )
-    if (linkedNode) {
-      createPageDependency({ path, nodeId: linkedNode.id })
-      return linkedNode
-    }
-    return null
-  }
+  const findNode = fieldValue =>
+    getNodesByType(linkedType).find(n => _.get(n, linkedField) === fieldValue)
 
   if (_.isArray(value)) {
     return {
       type: new GraphQLList(matchedTypes[0].nodeObjectType),
-      resolve: (node, a, b, { fieldName }) => {
+      resolve: pageDependencyResolver((node, a, b, { fieldName }) => {
         const fieldValue = node[fieldName]
-
         if (fieldValue) {
-          return fieldValue.map(value => findNode(value, b.path))
+          return fieldValue.map(findNode)
         } else {
           return null
         }
-      },
+      }),
     }
   }
 
@@ -176,7 +180,7 @@ function inferFromMapping(
       const fieldValue = node[fieldName]
 
       if (fieldValue) {
-        return findNode(fieldValue, b.path)
+        return findNode(fieldValue)
       } else {
         return null
       }
@@ -184,33 +188,29 @@ function inferFromMapping(
   }
 }
 
-export function findLinkedNode(value, linkedField, path) {
+function findLinkedNodeByField(linkedField, value) {
+  return getNodes().find(n => n[linkedField] === value)
+}
+
+export function findLinkedNode(value, linkedField) {
   let linkedNode
   // If the field doesn't link to the id, use that for searching.
   if (linkedField) {
-    linkedNode = getNodes().find(n => n[linkedField] === value)
+    linkedNode = findLinkedNodeByField(linkedField, value)
     // Else the field is linking to the node's id, the default.
   } else {
     linkedNode = getNode(value)
   }
-
-  if (linkedNode) {
-    if (path) createPageDependency({ path, nodeId: linkedNode.id })
-    return linkedNode
-  }
-  return null
+  return linkedNode
 }
 
-function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
-  let isArray = false
-  if (_.isArray(value)) {
-    isArray = true
-    // Reduce values to nodes with unique types.
-    value = _.uniqBy(value, v => getNode(v).internal.type)
-  }
-
-  const key = selector.split(`.`).pop()
-  const [, , linkedField] = key.split(`___`)
+function inferFromFieldName(
+  value,
+  key,
+  selector,
+  types
+): GraphQLFieldConfig<*, *> {
+  const linkedField = key.split(`___NODE___`)[1]
 
   const validateLinkedNode = linkedNode => {
     invariant(
@@ -235,67 +235,61 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     )
   }
 
-  const findNodeType = node =>
-    types.find(type => type.name === node.internal.type)
+  const findType = typeName => types.find(type => type.name === typeName)
 
-  if (isArray) {
-    const linkedNodes = value.map(v => findLinkedNode(v))
+  if (Array.isArray(value)) {
+    const linkedNodes = value.map(v => findLinkedNode(v, linkedField))
     linkedNodes.forEach(node => validateLinkedNode(node))
-    const fields = linkedNodes.map(node => findNodeType(node))
+    const linkedTypes = [...new Set(linkedNodes.map(n => n.internal.type))]
+    const fields = linkedTypes.map(findType)
     fields.forEach((field, i) => validateField(linkedNodes[i], field))
 
     let type
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
-      type = new GraphQLUnionType({
-        name: createTypeName(
-          `Union_${key}_${fields
-            .map(f => f.name)
+      const typeName = `Union_${key}_${linkedTypes.sort().join(`__`)}`
+
+      if (unionTypes.has(typeName)) {
+        type = unionTypes.get(typeName)
+      }
+
+      if (!type) {
+        type = new GraphQLUnionType({
+          name: createTypeName(`Union_${key}`),
+          description: `Union interface for the field "${key}" for types [${linkedTypes
             .sort()
-            .join(`__`)}`
-        ),
-        description: `Union interface for the field "${key}" for types [${fields
-          .map(f => f.name)
-          .sort()
-          .join(`, `)}]`,
-        types: fields.map(f => f.nodeObjectType),
-        resolveType: data =>
-          fields.find(f => f.name == data.internal.type).nodeObjectType,
-      })
+            .join(`, `)}]`,
+          types: fields.map(f => f.nodeObjectType),
+          resolveType: node => node.internal.type,
+        })
+        unionTypes.set(typeName, type)
+      }
     } else {
       type = fields[0].nodeObjectType
     }
 
     return {
       type: new GraphQLList(type),
-      resolve: (node, a, b = {}) => {
+      resolve: pageDependencyResolver(node => {
         let fieldValue = node[key]
         if (fieldValue) {
-          return fieldValue.map(value =>
-            findLinkedNode(value, linkedField, b.path)
-          )
+          return fieldValue.map(value => findLinkedNode(value, linkedField))
         } else {
           return null
         }
-      },
+      }),
     }
   }
 
   const linkedNode = findLinkedNode(value, linkedField)
   validateLinkedNode(linkedNode)
-  const field = findNodeType(linkedNode)
+  const field = findType(linkedNode.internal.type)
   validateField(linkedNode, field)
   return {
     type: field.nodeObjectType,
-    resolve: (node, a, b = {}) => {
-      let fieldValue = node[key]
-      if (fieldValue) {
-        const result = findLinkedNode(fieldValue, linkedField, b.path)
-        return result
-      } else {
-        return null
-      }
-    },
+    resolve: pageDependencyResolver(node =>
+      findLinkedNode(node[key], linkedField)
+    ),
   }
 }
 
@@ -304,18 +298,20 @@ type inferTypeOptions = {
   types: ProcessedNodeType[],
   ignoreFields?: string[],
   selector?: string,
+  typeName?: string,
 }
 
 const EXCLUDE_KEYS = {
   id: 1,
   parent: 1,
   children: 1,
+  $loki: 1,
 }
 
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
 function _inferObjectStructureFromNodes(
-  { nodes, types, selector, ignoreFields }: inferTypeOptions,
+  { nodes, types, selector, ignoreFields, typeName }: inferTypeOptions,
   exampleValue: ?Object
 ): GraphQLFieldConfigMap<*, *> {
   const config = store.getState().config
@@ -325,23 +321,26 @@ function _inferObjectStructureFromNodes(
   // Ensure nodes have internal key with object.
   nodes = nodes.map(n => (n.internal ? n : { ...n, internal: {} }))
 
-  const typeName: string = nodes[0].internal.type
+  const rootTypeName: string = nodes[0].internal.type
+  if (!typeName) {
+    typeName = rootTypeName
+  }
 
   let resolvedExample: Object =
     exampleValue != null
       ? exampleValue
-      : getExampleValues({ nodes, typeName, ignoreFields })
+      : getExampleValues({ nodes, typeName: rootTypeName, ignoreFields })
 
   const inferredFields = {}
   _.each(resolvedExample, (value, key) => {
     // Remove fields common to the top-level of all nodes.  We add these
     // elsewhere so don't need to infer their type.
-    if (isRoot && EXCLUDE_KEYS[key]) return
+    if (value === INVALID_VALUE || (isRoot && EXCLUDE_KEYS[key])) return
 
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
     const nextSelector = selector ? `${selector}.${key}` : key
-    const fieldSelector = `${typeName}.${nextSelector}`
+    const fieldSelector = `${rootTypeName}.${nextSelector}`
 
     let fieldName = key
     let inferredField
@@ -351,11 +350,13 @@ function _inferObjectStructureFromNodes(
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       inferredField = inferFromMapping(value, mapping, fieldSelector, types)
 
-      // Second if the field has a suffix of ___node. We use then the value
-      // (a node id) to find the node and use that node's type as the field
+      // Second if the field has a suffix of `___NODE`, we use the field value
+      // to find the linked node. By default we use the `id` as foreign key,
+      // but a foreign key can be specified with `___NODE___fieldName`.
     } else if (key.includes(`___NODE`)) {
+      inferredField = inferFromFieldName(value, key, nextSelector, types)
       ;[fieldName] = key.split(`___`)
-      inferredField = inferFromFieldName(value, nextSelector, types)
+      lazyFields.add(typeName, fieldName)
     }
 
     // Replace unsupported values
@@ -411,4 +412,8 @@ function _inferObjectStructureFromNodes(
 
 export function inferObjectStructureFromNodes(options: inferTypeOptions) {
   return _inferObjectStructureFromNodes(options, null)
+}
+
+export function clearUnionTypes() {
+  unionTypes.clear()
 }

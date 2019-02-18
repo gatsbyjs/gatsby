@@ -5,12 +5,12 @@ title: Adding Markdown Pages
 Gatsby can use markdown files to create pages in your site.
 You add plugins to read and understand folders with markdown files and from them create pages automatically.
 
-Here's the steps Gatsby follows for making this happen.
+Here are the steps Gatsby follows for making this happen.
 
 1.  Read files into Gatsby from the filesystem
 2.  Transform markdown to HTML and frontmatter to data
 3.  Create a page component for the markdown files
-4.  Programmatically create pages using Gatsby's node.js `createPage` API
+4.  Programmatically create pages using Gatsby's Node.js `createPage` API
 
 ### Read files into Gatsby from the filesystem - `gatsby-source-filesystem`
 
@@ -25,7 +25,7 @@ Now open `gatsby-config.js` to add this plugin to the plugin array.
 To add a plugin, add either a string (the plugin name) or to pass options, an object.
 For `gatsby-source-filesystem` we pass an object so we can set the file system path:
 
-```javascript
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-filesystem`,
@@ -47,7 +47,7 @@ We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-
 
 Add this to `gatsby-config.js` after the previously added `gatsby-source-filesystem`.
 
-```javascript
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-filesystem`,
@@ -77,7 +77,7 @@ title: "My first blog post"
 Create a folder in the `/src` directory of your Gatsby application called `templates`.
 Now create a `blogTemplate.js` inside it with the following content.
 
-```jsx
+```jsx:title=src/templates/blogTemplate.js
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -126,7 +126,7 @@ Gatsby exposes a powerful Node.js API, which allows for functionality such as cr
 
 Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`. Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
 
-```javascript
+```javascript:title=gatsby-node.js
 const path = require("path")
 
 exports.createPages = ({ actions, graphql }) => {
@@ -173,4 +173,4 @@ Check out tutorials listed on the [Awesome Gatsby](/docs/awesome-gatsby/#gatsby-
 
 ## Gatsby markdown starters
 
-There are a number of [Gatsby starters](/docs/gatsby-starters/) that come preconfigured to work with markdown.
+There are a number of [Gatsby starters](/starters?c=Markdown) that come preconfigured to work with markdown.

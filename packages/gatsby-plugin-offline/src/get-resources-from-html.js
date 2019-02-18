@@ -37,15 +37,12 @@ module.exports = htmlPath => {
     const $elem = $(elem)
     const url =
       $elem.attr(`src`) || $elem.attr(`href`) || $elem.attr(`data-href`)
-    const blackListRegex = /\.xml$/
+
+    // Don't cache XML files, or external resources (beginning with // or http)
+    const blackListRegex = /(\.xml$|^\/\/|^http)/
 
     if (!blackListRegex.test(url)) {
-      let path = url
-      if (url.substr(0, 4) !== `http`) {
-        path = `public${url}`
-      }
-
-      criticalFilePaths.push(path)
+      criticalFilePaths.push(url.replace(/^\//, ``))
     }
   })
 

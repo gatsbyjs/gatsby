@@ -15,12 +15,38 @@ Provides drop-in support for TypeScript and TSX.
 `gatsby-config.js`
 
 ```javascript
-plugins: [`gatsby-plugin-typescript`]
+module.exports = {
+  // ...,
+  plugins: [...`gatsby-plugin-typescript`],
+}
 ```
+
+## Options
+
+When adding this plugin to your `gatsby-config.js`, you can pass in options to override the default [@babel/preset-typescript](https://babeljs.io/docs/en/babel-preset-typescript#options) config.
+
+```javascript
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-typescript`,
+      options: {
+        isTSX: true, // defaults to false
+        jsxPragma: `jsx`, // defaults to "React"
+        allExtensions: true, // defaults to false
+      },
+    },
+  ],
+}
+```
+
+For more detailed documentation on the available options, visit https://babeljs.io/docs/en/babel-preset-typescript#options.
 
 ## Caveats
 
-This plugin uses [`babel-plugin-transform-typescript`](https://new.babeljs.io/docs/en/next/babel-plugin-transform-typescript.html) to transpile typescript. It does _not do type checking_. Also since the TypeScript
+This plugin uses [`babel-plugin-transform-typescript`](https://babeljs.io/docs/en/babel-plugin-transform-typescript.html)
+to transpile typescript. It does _not do type checking_. Also since the TypeScript
 compiler is not involved, the following applies:
 
 > Does not support namespaces.
@@ -36,7 +62,7 @@ compiler is not involved, the following applies:
 > to using export default and export const,
 > and import x, {y} from "z".
 
-https://new.babeljs.io/docs/en/next/babel-plugin-transform-typescript.html
+https://babeljs.io/docs/en/babel-plugin-transform-typescript.html
 
 ## Type checking
 

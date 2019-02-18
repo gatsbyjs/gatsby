@@ -9,7 +9,8 @@ class CssModules extends React.Component {
         <header className={s.header}>
           <h1 className={s.theStylusClass}>Hi stylish friends</h1>
           <p>
-            All the styles for this page are written using{` `}
+            All the styles for this page are written using
+            {` `}
             <a href="https://github.com/stylus/stylus">Stylus</a>
           </p>
           <p>

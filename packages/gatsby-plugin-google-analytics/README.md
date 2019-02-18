@@ -24,11 +24,23 @@ module.exports = {
         respectDNT: true,
         // Avoids sending pageview hits from custom paths
         exclude: ["/preview/**", "/do-not-track/me/too/"],
+        // Enables Google Optimize using your container Id
+        optimizeId: "YOUR_GOOGLE_OPTIMIZE_TRACKING_ID",
+        // Enables Google Optimize Experiment ID
+        experimentId: "YOUR_GOOGLE_EXPERIMENT_ID",
+        // Set Variation ID. 0 for original 1,2,3....
+        variationId: "YOUR_GOOGLE_OPTIMIZE_VARIATION_ID",
+        // Any additional create only fields (optional)
+        sampleRate: 5,
+        siteSpeedSampleRate: 10,
+        cookieDomain: "example.com",
       },
     },
   ],
 }
 ```
+
+See below for the complete list of [Create Only Fields](#create-only-fields).
 
 ## `<OutboundLink>` component
 
@@ -79,3 +91,35 @@ If you enable this optional option, Google Analytics will not be loaded at all f
 ## The "exclude" option
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+## The "optimizeId" option
+
+If you need to use Google Optimize for A/B testing, you can add this optional Optimize container id to allow Google Optimize to load the correct test parameters for your site.
+
+## The "experimentId" option
+
+If you need to setup SERVER_SIDE Google Optimize experiment, you can add the experiment ID. The experiment ID is shown on the right-hand panel on the experiment details page. [Server-side Experiments](https://developers.google.com/optimize/devguides/experiments)
+
+## The "variationId" option
+
+Besides the experiment ID you also need the variation ID for SERVER_SIDE experiments in Google Optimize. Set 0 for original version.
+
+## Create Only Fields
+
+This plugin supports all optional Create Only Fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create):
+
+- `name`: string, tracker name
+- `clientId`: string
+- `sampleRate`: number
+- `siteSpeedSampleRate`: number
+- `alwaysSendReferrer`: boolean
+- `allowAnchor`: boolean
+- `cookieName`: string
+- `cookieDomain`: string, defaults to `'auto'` if not given
+- `cookieExpires`: number
+- `storeGac`: boolean
+- `legacyCookieDomain`: string
+- `legacyHistoryImport`: boolean
+- `allowLinker`: boolean
+
+These fields can be specified in the plugin's `options` as shown in the [How to use](#how-to-use) section.

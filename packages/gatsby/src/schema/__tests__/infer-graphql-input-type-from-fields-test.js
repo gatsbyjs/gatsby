@@ -26,6 +26,7 @@ function isIntInput(type) {
     gt: { name: `gt`, type: GraphQLInt },
     gte: { name: `gte`, type: GraphQLInt },
     in: { name: `in`, type: new GraphQLList(GraphQLInt) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLInt) },
   })
 }
 
@@ -35,6 +36,7 @@ function isIdInput(type) {
     eq: { name: `eq`, type: GraphQLID },
     ne: { name: `ne`, type: GraphQLID },
     in: { name: `in`, type: new GraphQLList(GraphQLID) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLID) },
   })
 }
 
@@ -46,6 +48,7 @@ function isStringInput(type) {
     regex: { name: `regex`, type: GraphQLString },
     glob: { name: `glob`, type: GraphQLString },
     in: { name: `in`, type: new GraphQLList(GraphQLString) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLString) },
   })
 }
 
@@ -101,6 +104,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
       gt: { name: `gt`, type: GraphQLFloat },
       gte: { name: `gte`, type: GraphQLFloat },
       in: { name: `in`, type: new GraphQLList(GraphQLFloat) },
+      nin: { name: `nin`, type: new GraphQLList(GraphQLFloat) },
     })
 
     const string = inferredFields.scal_string.type
@@ -114,6 +118,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
       eq: { name: `eq`, type: GraphQLBoolean },
       ne: { name: `ne`, type: GraphQLBoolean },
       in: { name: `in`, type: new GraphQLList(GraphQLBoolean) },
+      nin: { name: `nin`, type: new GraphQLList(GraphQLBoolean) },
     })
 
     expect(inferredFields).not.toHaveProperty(`scal_odd_unknown`)
@@ -262,6 +267,14 @@ describe(`GraphQL Input args from fields, test-only`, () => {
                 },
               })
             ),
+            baz: typeField(
+              new GraphQLObjectType({
+                name: `Jbo2`,
+                fields: {
+                  aa: typeField(OddType),
+                },
+              })
+            ),
           },
         }),
       },
@@ -288,6 +301,10 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     isStringInput(innerObjFields.foo.type)
     expect(innerObjFields.ba).toBeUndefined()
     isIntInput(innerObjFields.bar.type)
+
+    // innerObj.baz is object containing only unsupported types
+    // so it should not be defined
+    expect(innerObj.baz).toBeUndefined()
   })
 
   it(`includes the filters of list elements`, async () => {
@@ -311,6 +328,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
       lt: { name: `lt`, type: GraphQLFloat },
       lte: { name: `lte`, type: GraphQLFloat },
       in: { name: `in`, type: new GraphQLList(GraphQLFloat) },
+      nin: { name: `nin`, type: new GraphQLList(GraphQLFloat) },
     })
   })
 

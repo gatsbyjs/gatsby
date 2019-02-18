@@ -11,7 +11,7 @@ about: Usage question or discussion about Gatsby.
 
   Gatsby has several community support channels, try asking your question on:
 
-  - Discord: https://discord.gg/0ZcbPKXt5bVoxkfV
+  - Discord: https://gatsby.app/discord
   - Spectrum: https://spectrum.chat/gatsby-js
   - Twitter: https://twitter.com/gatsbyjs
 
@@ -27,8 +27,7 @@ about: Usage question or discussion about Gatsby.
 ### Environment (if relevant)
 
 <!--
-  Required. Run `gatsby info --clipboard` in your gatsby project directory and paste its contents here.
-  Not working? You may need to update your global gatsby-cli - `npm install -g gatsby-cli`
+  Required. Run `npx gatsby info --clipboard` in your gatsby project directory and paste its contents here.
 -->
 
 ### File contents (if changed)

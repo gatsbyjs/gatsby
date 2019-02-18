@@ -12,6 +12,7 @@ const createLink = ({
   isActive,
   isParentOfActiveItem,
   stepsUI,
+  customCSS,
 }) => {
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
@@ -26,7 +27,7 @@ const createLink = ({
           background: colors.ui.border,
           bottom: 0,
           top: `auto`,
-          content: ` `,
+          content: `''`,
           height: 1,
           position: `absolute`,
           right: 0,
@@ -40,6 +41,7 @@ const createLink = ({
           isDraft && styles.draft,
           isActive && styles.activeLink,
           isParentOfActiveItem && styles.parentOfActiveLink,
+          customCSS && customCSS,
         ]}
         onClick={onLinkClick}
         to={item.link}
@@ -120,7 +122,7 @@ const styles = {
     },
     "&:before": {
       borderRadius: `100%`,
-      content: ` `,
+      content: `''`,
       transform: `scale(0.1)`,
       width: bulletSize,
       [presets.Tablet]: {
@@ -130,7 +132,7 @@ const styles = {
     "&:after": {
       background: colors.gatsby,
       borderRadius: 4,
-      content: ` `,
+      content: `''`,
       left: bulletOffset.default.left + 7,
       opacity: 0,
       transform: `translateX(-200px)`,

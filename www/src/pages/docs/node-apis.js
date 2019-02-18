@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
@@ -56,12 +56,13 @@ class NodeAPIDocs extends React.Component {
             />
           </pre>
           <p>
-            If your plugin doesn't do async work, you can just return directly.
+            If your plugin does not do async work, you can just return directly.
           </p>
           <hr />
           <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
           <p css={{ marginBottom: rhythm(1) }}>
-            Implement any of these APIs by exporting them from a file named{` `}
+            Implement any of these APIs by exporting them from a file named
+            {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />

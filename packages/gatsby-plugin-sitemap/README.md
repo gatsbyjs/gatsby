@@ -13,11 +13,7 @@ Create a sitemap for your Gatsby site.
 siteMetadata: {
   siteUrl: `https://www.example.com`,
 },
-plugins: [
-  {
-    resolve: `gatsby-plugin-sitemap`
-  }
-]
+plugins: [`gatsby-plugin-sitemap`]
 ```
 
 Above is the minimal configuration required to have it work. By default, the

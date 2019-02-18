@@ -8,13 +8,13 @@ You may be looking to build a plugin that doesn't exist yet, or you may just be 
 2.  naming conventions for the plugin title
 3.  expected files in a plugin package
 4.  defining a local (unpublished) plugin for your own use case
-5.  what a plugin is _not_
+5.  how to publish your plugin to the library
 
 ## Core Concepts
 
 - Each Gatsby plugin can be created as an npm package or as a [local plugin](#local-plugins)
 - A `package.json` is required
-- Plugin implement the Gatsby APIs for [Node](/docs/node-apis/), [server-side rendering](/docs/ssr-apis/), and the [browser](/docs/browser-apis/)
+- Plugins implement the Gatsby APIs for [Node](/docs/node-apis/), [server-side rendering](/docs/ssr-apis/), and the [browser](/docs/browser-apis/)
 
 ## Plugin naming conventions
 
@@ -60,7 +60,19 @@ plugins
 
 **NOTE:** You still need to add the plugin to your `gatsby-config.js`. There is no auto-detection of local plugins.
 
+**NOTE:** For the plugin to be discovered, the plugin's root folder name is the value that needs to be referenced in order to load it (_not_ its _name_ in its package.json file). For example, in the above structure, the correct way to load the plugin is:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: ["my-own-plugin"],
+}
+```
+
 Like all `gatsby-*` files, the code is not processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
 can place the files in a `src` subfolder and build them to the plugin folder
 root.
+
+## Publishing a plugin to the library
+
+If you'd like to publish your plugin to the Gatsby Plugin Library (please do!), [follow these steps](/docs/submit-to-plugin-library/).

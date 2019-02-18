@@ -2,6 +2,7 @@ const Prism = require(`prismjs`)
 const _ = require(`lodash`)
 
 const loadPrismLanguage = require(`./load-prism-language`)
+const handleDirectives = require(`./directives`)
 
 module.exports = (language, code, lineNumbersHighlight = []) => {
   // (Try to) load languages on demand.
@@ -20,29 +21,19 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
 
   const grammar = Prism.languages[language]
 
-  let highlightedCode = Prism.highlight(code, grammar, language)
-  if (lineNumbersHighlight.length > 0) {
-    const codeSplits = highlightedCode.split(`\n`).map((split, i) => {
-      if (_.includes(lineNumbersHighlight, i + 1)) {
-        return {
-          highlighted: true,
-          code: `<span class="gatsby-highlight-code-line">${split}\n</span>`,
-        }
-      } else {
-        return { code: split }
-      }
-    })
+  const highlighted = Prism.highlight(code, grammar, language)
+  const codeSplits = handleDirectives(highlighted, lineNumbersHighlight)
 
-    highlightedCode = ``
-    const lastIdx = codeSplits.length - 1
-    // Don't add back the new line character after highlighted lines
-    // as they need to be display: block and full-width.
-    codeSplits.forEach((split, idx) => {
-      split.highlighted
-        ? (highlightedCode += split.code)
-        : (highlightedCode += `${split.code}${idx == lastIdx ? `` : `\n`}`)
-    })
-  }
+  let finalCode = ``
 
-  return highlightedCode
+  const lastIdx = codeSplits.length - 1
+  // Don't add back the new line character after highlighted lines
+  // as they need to be display: block and full-width.
+  codeSplits.forEach((split, idx) => {
+    finalCode += split.highlight
+      ? split.code
+      : `${split.code}${idx == lastIdx ? `` : `\n`}`
+  })
+
+  return finalCode
 }

@@ -6,7 +6,7 @@ const { onCreateNode } = require(`../gatsby-node`)
 describe(`Process YAML nodes correctly`, () => {
   const node = {
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       contentDigest: `whatever`,
@@ -27,12 +27,14 @@ describe(`Process YAML nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -51,12 +53,14 @@ describe(`Process YAML nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()

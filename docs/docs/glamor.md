@@ -2,7 +2,9 @@
 title: Glamor
 ---
 
-In this guide, we'll walk through setting up a site with the CSS-in-JS library [Glamor](https://github.com/threepointone/glamor).
+In this guide, you will learn setting up a site with the CSS-in-JS library [Glamor](https://github.com/threepointone/glamor).
+
+Glamor is not actively maintained, the maintainer recommends using [Emotion](/docs/emotion).
 
 Glamor lets you write _real_ CSS inline in your components using the same Object
 CSS syntax React supports for the `style` prop. Glamor is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
@@ -14,10 +16,10 @@ With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to 
 First, open a new terminal window and run the following to create a new site:
 
 ```shell
-gatsby new glamor-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new glamor-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Second, install the Gatsby plugin for Glamor.
+Second, install the necessary dependencies for Glamor and Gatsby.
 
 ```shell
 npm install --save gatsby-plugin-glamor glamor
@@ -25,17 +27,17 @@ npm install --save gatsby-plugin-glamor glamor
 
 And then add it to your site's `gatsby-config.js`:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-glamor`],
 }
 ```
 
-Then in your terminal run `gatsby develop` to start the Gatsby development server.
+Then in your terminal run `npm run develop` to start the Gatsby development server.
 
 Now let's create a sample Glamor page at `src/pages/index.js`
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 
 const Container = ({ children }) => <div>{children}</div>
@@ -48,22 +50,23 @@ export default () => (
 )
 ```
 
-Let's add css styles to `Container` and add a inline `User` component using Glamor's `css` prop.
+Let's add css styles to `Container` and add an inline `User` component using Glamor's `css` prop.
 
-```jsx{4,7-29,35-42}
+```jsx:title=src/pages/index.js
 import React from "react"
 
 const Container = ({ children }) => (
-  <div css={{ margin: `3rem auto`, maxWidth: 600 }}>{children}</div>
-);
+  <div css={{ margin: `3rem auto`, maxWidth: 600 }}>{children}</div> {/* highlight-line */}
+)
 
-const User = props =>
+// highlight-start
+const User = props => (
   <div
     css={{
       display: `flex`,
       alignItems: `center`,
       margin: `0 auto 12px auto`,
-      "&:last-child": { marginBottom: 0 }
+      "&:last-child": { marginBottom: 0 },
     }}
   >
     <img
@@ -72,30 +75,32 @@ const User = props =>
       alt=""
     />
     <div css={{ flex: 1, marginLeft: 18, padding: 12 }}>
-      <h2 css={{ margin: `0 0 12px 0`, padding: 0 }}>
-        {props.username}
-      </h2>
-      <p css={{ margin: 0 }}>
-        {props.excerpt}
-      </p>
+      <h2 css={{ margin: `0 0 12px 0`, padding: 0 }}>{props.username}</h2>
+      <p css={{ margin: 0 }}>{props.excerpt}</p>
     </div>
   </div>
+)
 
-export default () =>
+export default () => (
   <Container>
+    {/* highlight-end */}
     <h1>About Glamor</h1>
     <p>Glamor is cool</p>
     <User
       username="Jane Doe"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
+      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit." {/* highlight-line */}
+    /> {/* highlight-line */}
+
+    {/* highlight-start */}
     <User
       username="Bob Smith"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
   </Container>
+  {/* highlight-end */}
+)
 ```
 
 ### Final result

@@ -41,7 +41,7 @@ So why fix what isn’t broken?
 
 Many people have contributed to the docs and tutorials already and have done an excellent job. With that being said, there is still room to grow.
 
-Here is a brief overview of issues that have come up again and again as I've interviewed people and observed them going through the tutorials and docs (see [Issue #4175](https://github.com/gatsbyjs/gatsby/issues/4175) on Github to follow this and contribute):
+Here is a brief overview of issues that have come up again and again as I've interviewed people and observed them going through the tutorials and docs (see [Issue #4175](https://github.com/gatsbyjs/gatsby/issues/4175) on GitHub to follow this and contribute):
 
 - Gatsby is beginner-friendly; however, _true_ beginners to programming need an intro to basic tools like the command line, code editors, and browser consoles.
 - Upon first visit to Gatsbyjs.org, most visitors click “Get Started.” This is the perfect solution for them if they prefer to jump into coding without reading much. If they prefer step-by-step instructions, it takes some looking around before they see the tutorial tab across the top.
@@ -51,7 +51,7 @@ Here is a brief overview of issues that have come up again and again as I've int
 
 ## Documentation project beginnings
 
-After outlining the issues above and attempting to solve them myself, I realized the pooled efforts of the community would be incredibly valuable in creating solutions to these issues. So, I created the Documentation Project in Github to plan and track documentation issues.
+After outlining the issues above and attempting to solve them myself, I realized the pooled efforts of the community would be incredibly valuable in creating solutions to these issues. So, I created the Documentation Project in GitHub to plan and track documentation issues.
 
 The [Documentation Project’s](https://github.com/gatsbyjs/gatsby/projects/3) goal is to make Gatsby documentation clear, organized, and useful. Issues in the project come from the community and/or interviews with community members. This project also provides a centralized way to plan, manage, and track our progress so that we maintain and enhance the docs and tutorials.
 

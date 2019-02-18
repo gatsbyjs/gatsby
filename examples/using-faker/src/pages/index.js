@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import "./index.css"
 
 const IndexPage = ({ data }) => (
@@ -11,8 +11,7 @@ const IndexPage = ({ data }) => (
         <div>{data.personalData.address.streetName}</div>
         <div>{data.personalData.address.city}</div>
         <div>
-          {data.personalData.address.state} -
-          {data.personalData.address.zipCode}
+          {data.personalData.address.state} -{data.personalData.address.zipCode}
         </div>
       </div>
       <div className="email-section">
@@ -27,7 +26,7 @@ const IndexPage = ({ data }) => (
     <div className="company-section">
       <h3>Worked at</h3>
       {data.allCompanyData.edges.map(({ node }) => (
-        <div>
+        <div key={node.id}>
           <div>{node.company.companyName}</div>
           <div>{node.company.companySuffix}</div>
         </div>

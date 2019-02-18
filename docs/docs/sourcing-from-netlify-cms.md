@@ -13,7 +13,7 @@ to bridge this gap, providing a solid interface that works well for technical an
 users alike, and interacts with your static site repository via API so that every change results in
 a commit.
 
-A primary focus of Netlify CMS is to work well with static site generators like Gatsby. Installation
+A primary focus of Netlify CMS is to work well with modern site generators like Gatsby. Installation
 typically requires just an index.html file and a YAML configuration file, but we're going to
 leverage the Gatsby plugin for Netlify CMS to automatically install and build the CMS along with a
 static site.
@@ -31,7 +31,7 @@ directory called `netlify-cms-tutorial` that contains the starter site, but you 
 "netlify-cms-tutorial" in the command below to be whatever you like.
 
 ```shell
-gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Now move into the newly created directory and install the Gatsby plugin for Netlify CMS:
@@ -43,7 +43,7 @@ cd netlify-cms-tutorial && npm install --save netlify-cms gatsby-plugin-netlify-
 Gatsby plugins are registered in a file called `gatsby-config.js` in the site root. Create that file
 if it's not already there, and add the following to register the Netlify CMS plugin:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-netlify-cms`],
 }
@@ -55,10 +55,10 @@ want to put the configuration file in that same directory.
 
 Still in the root directory, add a "static" folder. Gatsby will copy everything in the static folder
 into the output, so we'll want to place the Netlify CMS configuration file as
-"static/admin/config.yml". Let's create a test configuration now - add this to your new
+`static/admin/config.yml`. Let's create a test configuration now - add this to your new
 `config.yml`:
 
-```yaml
+```yaml:title=static/admin/config.yml
 backend:
   name: test-repo
 
@@ -77,8 +77,8 @@ collections:
       - { name: body, label: Body, widget: markdown }
 ```
 
-Then in your terminal run `gatsby develop` to start the Gatsby development server. Once the server
-is running, it will print the address to open for viewing. Its typically `localhost:8000`. Open that
+Then in your terminal run `npm run develop` to start the Gatsby development server. Once the server
+is running, it will print the address to open for viewing. It's typically `localhost:8000`. Open that
 in a browser and you should see the text "Hello World" in the top left corner. Now navigate to
 `/admin/` - so if your site is at `localhost:8000`, go to `localhost:8000/admin/`. **The trailing
 slash is required!**
@@ -136,7 +136,7 @@ example below. Note that the `repo` value must be your GitHub username followed 
 forward slash, and then your repository name. If your username is "test-user" and your repo name is
 "test-repo", you would put "test-user/test-repo".
 
-```yaml
+```yaml:title=static/admin/config.yml
 backend:
   name: github
   repo: your-username/your-repo-name

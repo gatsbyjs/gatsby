@@ -26,7 +26,8 @@ class About extends React.Component {
             .
           </p>
           <p>
-            The code for the site lives at{` `}
+            The code for the site lives at
+            {` `}
             <a
               href="https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram"
               rel="noopener noreferrer"

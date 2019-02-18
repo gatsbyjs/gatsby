@@ -8,7 +8,12 @@ const path = require(`path`)
 const normalizePath = require(`normalize-path`)
 const { clearTypeExampleValues } = require(`../data-tree-utils`)
 const { typeConflictReporter } = require(`../type-conflict-reporter`)
-const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
+const {
+  inferObjectStructureFromNodes,
+  clearUnionTypes,
+} = require(`../infer-graphql-type`)
+const { clearTypeNames } = require(`../create-type-name`)
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function queryResult(nodes, fragment, { types = [], ignoreFields } = {}) {
   const schema = new GraphQLSchema({
@@ -82,6 +87,10 @@ describe(`GraphQL type inferance`, () => {
       "with space": 1,
       "with-hyphen": 2,
       "with resolver": `1012-11-01`,
+      123: 42,
+      456: {
+        testingTypeNameCreation: true,
+      },
       aBoolean: true,
       externalUrl: `https://example.com/awesome.jpg`,
       domain: `pizza.com`,
@@ -102,6 +111,7 @@ describe(`GraphQL type inferance`, () => {
       anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
       "with space": 3,
       "with-hyphen": 4,
+      123: 24,
       frontmatter: {
         date: `1984-10-12`,
         title: `The world of slash and adventure`,
@@ -235,6 +245,10 @@ describe(`GraphQL type inferance`, () => {
         with_space
         with_hyphen
         with_resolver(formatString:"DD.MM.YYYY")
+        _123
+        _456 {
+          testingTypeNameCreation
+        }
       `
     )
 
@@ -245,6 +259,9 @@ describe(`GraphQL type inferance`, () => {
     expect(result.data.listNode[1].with_space).toEqual(3)
     expect(result.data.listNode[1].with_hyphen).toEqual(4)
     expect(result.data.listNode[0].with_resolver).toEqual(`01.11.1012`)
+    expect(result.data.listNode[0]._123).toEqual(42)
+    expect(result.data.listNode[1]._123).toEqual(24)
+    expect(result.data.listNode[0]._456).toEqual(nodes[0][`456`])
   })
 
   describe(`Handles dates`, () => {
@@ -506,6 +523,8 @@ describe(`GraphQL type inferance`, () => {
     beforeEach(() => {
       ;({ store } = require(`../../redux`))
 
+      store.dispatch({ type: `DELETE_CACHE` })
+
       const { setFileNodeRootType } = require(`../types/type-file`)
       const fileType = {
         name: `File`,
@@ -596,6 +615,7 @@ describe(`GraphQL type inferance`, () => {
 
     beforeEach(() => {
       ;({ store } = require(`../../redux`))
+      store.dispatch({ type: `DELETE_CACHE` })
       types = [
         {
           name: `Child`,
@@ -662,6 +682,35 @@ describe(`GraphQL type inferance`, () => {
       expect(result.data.listNode[0].linked[1].hair).toEqual(`blonde`)
     })
 
+    it(`Links nodes by field`, async () => {
+      let result = await queryResult(
+        [{ linked___NODE___hair: `brown` }],
+        `
+          linked {
+            hair
+          }
+        `,
+        { types }
+      )
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].linked.hair).toEqual(`brown`)
+    })
+
+    it(`Links an array of nodes by field`, async () => {
+      let result = await queryResult(
+        [{ linked___NODE___hair: [`brown`, `blonde`] }],
+        `
+          linked {
+            hair
+          }
+        `,
+        { types }
+      )
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
+      expect(result.data.listNode[0].linked[1].hair).toEqual(`blonde`)
+    })
+
     it(`Errors clearly when missing nodes`, async () => {
       expect(() => {
         inferObjectStructureFromNodes({
@@ -693,30 +742,93 @@ describe(`GraphQL type inferance`, () => {
       )
     })
 
-    it(`Creates union types when an array field is linking to multiple node types`, async () => {
-      let result = await queryResult(
-        [{ linked___NODE: [`child_1`, `pet_1`] }],
-        `
-          linked {
-            __typename
-            ... on Child {
-              hair
+    describe(`Creation of union types when array field is linking to multiple types`, () => {
+      beforeEach(() => {
+        clearTypeNames()
+        clearUnionTypes()
+      })
+
+      it(`Creates union types`, async () => {
+        let result = await queryResult(
+          [{ linked___NODE: [`child_1`, `pet_1`] }],
+          `
+            linked {
+              __typename
+              ... on Child {
+                hair
+              }
+              ... on Pet {
+                species
+              }
             }
-            ... on Pet {
-              species
-            }
-          }
-        `,
-        { types }
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
-      expect(result.data.listNode[0].linked[0].__typename).toEqual(`Child`)
-      expect(result.data.listNode[0].linked[1].species).toEqual(`dog`)
-      expect(result.data.listNode[0].linked[1].__typename).toEqual(`Pet`)
-      store.dispatch({
-        type: `CREATE_NODE`,
-        payload: { id: `baz`, internal: { type: `Bar` } },
+          `,
+          { types }
+        )
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
+        expect(result.data.listNode[0].linked[0].__typename).toEqual(`Child`)
+        expect(result.data.listNode[0].linked[1].species).toEqual(`dog`)
+        expect(result.data.listNode[0].linked[1].__typename).toEqual(`Pet`)
+        store.dispatch({
+          type: `CREATE_NODE`,
+          payload: { id: `baz`, internal: { type: `Bar` } },
+        })
+      })
+
+      it(`Uses same union type for same child node types and key`, () => {
+        const fields = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
+          types,
+        })
+        const fields2 = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_2`] }],
+          types,
+        })
+        expect(fields.test.type).toEqual(fields2.test.type)
+      })
+
+      it(`Uses a different type for the same child node types with a different key`, () => {
+        const fields = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
+          types,
+        })
+        const fields2 = inferObjectStructureFromNodes({
+          nodes: [{ differentKey___NODE: [`pet_1`, `child_2`] }],
+          types,
+        })
+        expect(fields.test.type).not.toEqual(fields2.differentKey.type)
+      })
+
+      it(`Uses a different type for different child node types with the same key`, () => {
+        store.dispatch({
+          type: `CREATE_NODE`,
+          payload: { id: `toy_1`, internal: { type: `Toy` } },
+        })
+        const fields = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_1`] }],
+          types,
+        })
+        const fields2 = inferObjectStructureFromNodes({
+          nodes: [{ test___NODE: [`pet_1`, `child_1`, `toy_1`] }],
+          types: types.concat([{ name: `Toy` }]),
+        })
+        expect(fields.test.type).not.toEqual(fields2.test.type)
+      })
+
+      it(`Creates a new type after schema updates clear union types`, () => {
+        const nodes = [{ test___NODE: [`pet_1`, `child_1`] }]
+        const fields = inferObjectStructureFromNodes({ nodes, types })
+        clearUnionTypes()
+        const updatedFields = inferObjectStructureFromNodes({ nodes, types })
+        expect(fields.test.type).not.toEqual(updatedFields.test.type)
+      })
+
+      it(`Uses a reliable naming convention`, () => {
+        const nodes = [{ test___NODE: [`pet_1`, `child_1`] }]
+        inferObjectStructureFromNodes({ nodes, types })
+        clearUnionTypes()
+        const updatedFields = inferObjectStructureFromNodes({ nodes, types })
+        expect(updatedFields.test.type.ofType.name).toEqual(`unionTestNode_2`)
       })
     })
   })

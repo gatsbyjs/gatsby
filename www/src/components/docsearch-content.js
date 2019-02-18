@@ -1,5 +1,7 @@
 import React from "react"
 
 export default ({ children }) => (
-  <div className={`docSearch-content`}>{children}</div>
+  <main id={`reach-skip-nav`} className={`docSearch-content`}>
+    {children}
+  </main>
 )

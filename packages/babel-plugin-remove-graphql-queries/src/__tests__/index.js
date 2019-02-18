@@ -1,14 +1,177 @@
-const babel = require(`babel-core`)
-const reactPreset = require(`@babel/preset-react`)
+const babel = require(`@babel/core`)
 const plugin = require(`../`)
 
 function matchesSnapshot(query) {
   const { code } = babel.transform(query, {
-    presets: [reactPreset],
+    presets: [`@babel/preset-react`],
     plugins: [plugin],
   })
   expect(code).toMatchSnapshot()
 }
+
+it.todo(
+  `Works correctly with the kitchen sink`
+  // , () => {
+  //   matchesSnapshot(`
+  //   import React from 'react'
+  //   import { graphql, useStaticQuery, StaticQuery } from 'gatsby'
+
+  //   export default () => {
+  //     const query = graphql\`{site { siteMetadata { title }}}\`
+  //     const siteDescription = useStaticQuery(query)
+
+  //     return (
+  //       <StaticQuery
+  //         query={graphql\`{site { siteMetadata { title }}}\`}
+  //         render={data => (
+  //           <div>
+  //             <h1>{data.site.siteMetadata.title}</h1>
+  //             <p>{siteDescription.site.siteMetadata.description}</p>
+  //           </div>
+  //         )}
+  //       />
+  //     )
+  //   }
+  //   `)
+  // }
+)
+
+it(`Transforms queries in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
+    
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transforms exported queries in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const data = useStaticQuery(query)
+
+    return (
+      <>
+        <h1>{data.site.siteMetadata.title}</h1>
+        <p>{data.site.siteMetadata.description}</p>
+      </>
+    )
+  }
+
+  export const query = graphql\`{site { siteMetadata { title }}}\`
+  `)
+})
+
+it(`Transforms queries defined in own variable in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    const siteTitle = useStaticQuery(query)
+    
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transforms queries and preserves destructuring in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    const { site } = useStaticQuery(query)
+    
+    return (
+      <h1>{site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transforms queries and preserves variable type in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    let { site } = useStaticQuery(query)
+    
+    return (
+      <h1>{site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transformation does not break custom hooks`, () => {
+  matchesSnapshot(`
+  import React from "react"
+  import { graphql, useStaticQuery } from "gatsby"
+
+  const useSiteMetadata = () => {
+    const data = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
+    return data.site.siteMetadata
+  }
+
+  export default () => {
+    const siteMetadata = useSiteMetadata()
+
+    return <h1>{site.siteMetadata.title}</h1>
+  }
+
+  `)
+})
+
+it(`Transforms only the call expression in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from "react"
+  import { graphql, useStaticQuery } from "gatsby"
+  
+  const useSiteMetadata = () => {
+    return useStaticQuery(
+      graphql\`{site { siteMetadata { title }}}\`
+    ).site.siteMetadata
+  }
+  
+  export default () => {
+    const siteMetadata = useSiteMetadata()
+  
+    return <h1>{siteMetadata.title}</h1>
+  }    
+  `)
+})
+
+it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    const siteTitle = useStaticQuery(query)
+    
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
 
 it(`Transforms queries in <StaticQuery>`, () => {
   matchesSnapshot(`
@@ -18,6 +181,38 @@ it(`Transforms queries in <StaticQuery>`, () => {
   export default () => (
     <StaticQuery
       query={graphql\`{site { siteMetadata { title }}}\`}
+      render={data => <div>{data.site.siteMetadata.title}</div>}
+    />
+  )
+  `)
+})
+
+it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, StaticQuery } from 'gatsby'
+
+  const query = graphql\`{site { siteMetadata { title }}}\`
+
+  export default () => (
+    <StaticQuery
+      query={query}
+      render={data => <div>{data.site.siteMetadata.title}</div>}
+    />
+  )
+  `)
+})
+
+it(`transforms exported variable queries in <StaticQuery>`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, StaticQuery } from 'gatsby'
+
+  export const query = graphql\`{site { siteMetadata { title }}}\`
+
+  export default () => (
+    <StaticQuery
+      query={query}
       render={data => <div>{data.site.siteMetadata.title}</div>}
     />
   )
@@ -200,5 +395,35 @@ it(`Handles closing StaticQuery tag`, () => {
       {data => <div>{data.site.siteMetadata.title}</div>}
     </StaticQuery>
   )
+  `)
+})
+
+it(`Doesn't add data import for non static queries`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { StaticQuery, graphql } from "gatsby"
+
+  const Test = () => (
+    <StaticQuery
+      query={graphql\`
+      {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+      \`}
+      render={data => <div>{data.site.siteMetadata.title}</div>}
+    />
+  )
+
+  export default Test
+
+  export const fragment = graphql\`
+    fragment MarkdownNodeFragment on MarkdownRemark {
+      html
+    }
+  \`
   `)
 })

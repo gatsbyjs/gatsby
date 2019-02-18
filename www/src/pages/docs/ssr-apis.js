@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
@@ -26,7 +26,8 @@ class SSRAPIs extends React.Component {
           </h1>
           <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
           <p css={{ marginBottom: rhythm(1) }}>
-            Implement any of these APIs by exporting them from a file named{` `}
+            Implement any of these APIs by exporting them from a file named
+            {` `}
             <code>gatsby-ssr.js</code> in the root of your project.
           </p>
           <hr />

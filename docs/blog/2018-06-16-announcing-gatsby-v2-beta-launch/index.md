@@ -1,9 +1,9 @@
 ---
 title: Announcing Gatsby v2 beta launch!
-date: "2018-06-16"
+date: 2018-06-16
 author: "Mike Allanson"
-tags: ["v2", "gatsby"]
-image: 'astronaut-v2.jpg'
+tags: ["v2"]
+image: "astronaut-v2.jpg"
 ---
 
 We’re excited to announce that today we shipped the first beta for Gatsby v2! 36 contributors have made over 300 commits to v2 since Gatsby v1 was released in July 2017.
@@ -14,13 +14,13 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
 - Out With Gatsby Layout Components, In With StaticQuery
 
-  Gatby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our [Life After Layouts post](/blog/2018-06-08-life-after-layouts/).
+  Gatsby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our [Life After Layouts post](/blog/2018-06-08-life-after-layouts/).
 
 - Improve APIs
 
   We’ve renamed `sizes` and `resolutions` to `fluid` and `fixed`, `boundActionCreators` to `actions`, as well as other changes intended to make API names more consistent and prevent common gotchas.
 
-  To see the full list of renamings, take a look at the upgrade guide for [image queries](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions) and the [babel](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig) and [webpack](https://next.gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig) API hooks.
+  To see the full list of renamings, take a look at the upgrade guide for [image queries](/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions) and the [babel](/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig) and [webpack](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig) API hooks.
 
 - Hotter Hot Reloading
 

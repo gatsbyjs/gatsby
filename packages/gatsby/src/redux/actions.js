@@ -7,9 +7,10 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
-const { hasNodeChanged, getNode } = require(`./index`)
-const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
+const { hasNodeChanged, getNode } = require(`../db/nodes`)
+const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
@@ -86,7 +87,7 @@ const fileOkCache = {}
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
- * for detailed documenation about creating pages.
+ * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
@@ -136,7 +137,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorName`,
+      `pluginCreatorId`,
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -212,12 +213,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (noPageOrComponent) {
-    console.log(``)
-    console.log(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+    report.panic(
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
     )
-    console.log(``)
-    process.exit(1)
   }
 
   let jsonName
@@ -268,7 +266,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     if (
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
-      !fileContent.includes(`exports.default`)
+      !fileContent.includes(`exports.default`) &&
+      // this check only applies to js and ts, not mdx
+      /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
       includesDefaultExport = false
     }
@@ -279,33 +279,29 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
         )
-        console.log(``)
-        // TODO actually do die during builds.
-        // process.exit(1)
       }
 
       if (!includesDefaultExport) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `[${fileName}] The page component must export a React component for it to be valid`
         )
-        console.log(``)
       }
-
-      // TODO actually do die during builds.
-      // process.exit(1)
     }
 
     fileOkCache[internalPage.component] = true
   }
 
+  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const contextModified =
+    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
+    contextModified,
     plugin,
     payload: internalPage,
   }
@@ -493,13 +489,12 @@ actions.createNode = (
 
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
-    console.log(JSON.stringify(node, null, 4))
-    console.log(
+    report.error(JSON.stringify(node, null, 4))
+    report.panic(
       chalk.bold.red(
         `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
-    process.exit(1)
   }
 
   // Add the plugin name to the internal object.
@@ -611,6 +606,7 @@ actions.createNode = (
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
+      oldNode,
       ...actionOptions,
       payload: node,
     }
@@ -890,10 +886,12 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
- * @param {Object} config An options object in the shape of a normal babelrc javascript object
+ * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
  * @example
  * setBabelOptions({
- *   sourceMaps: `inline`,
+ *   options: {
+ *     sourceMaps: `inline`,
+ *   }
  * })
  */
 actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
@@ -1074,16 +1072,20 @@ actions.setPluginStatus = (
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
- * plugin](/packages/gatsby-plugin-netlify/)).
+ * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
+ * plugin](/packages/gatsby-plugin-s3/).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
  * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
  * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
+ * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ * createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
  */
 actions.createRedirect = ({
   fromPath,
@@ -1097,13 +1099,20 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
+  // Parse urls to get their protocols
+  // url.parse will not cover protocol-relative urls so do a separate check for those
+  const parsed = url.parse(toPath)
+  const isRelativeProtocol = toPath.startsWith(`//`)
+  const toPathPrefix =
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+
   return {
     type: `CREATE_REDIRECT`,
     payload: {
       fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
       redirectInBrowser,
-      toPath: `${pathPrefix}${toPath}`,
+      toPath: `${toPathPrefix}${toPath}`,
       ...rest,
     },
   }

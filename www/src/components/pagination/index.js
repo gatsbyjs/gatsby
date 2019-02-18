@@ -8,17 +8,17 @@ import { options, rhythm } from "../../utils/typography"
 
 class Pagination extends React.Component {
   changePage = e => {
-    navigate(`/blog/${e.target.value}`)
+    navigate(e.target.value ? `/blog/page/${e.target.value}` : `/blog/`)
   }
   render() {
     const { numPages, currentPage } = this.props.context
     const isFirst = currentPage === 1
     const isLast = currentPage === numPages
     const prevPageNum =
-      currentPage - 1 === 1 ? `` : (currentPage - 1).toString()
+      currentPage - 1 === 1 ? `` : `page/${(currentPage - 1).toString()}`
     const nextPageNum = (currentPage + 1).toString()
     const prevPageLink = isFirst ? null : `/blog/${prevPageNum}`
-    const nextPageLink = isLast ? null : `/blog/${nextPageNum}`
+    const nextPageLink = isLast ? null : `/blog/page/${nextPageNum}`
 
     const prevNextLinkStyles = {
       "&&": {

@@ -14,7 +14,7 @@ In addition links to various resources (JavaScript, images, CSS) need the same
 prefix added (this is accomplished by setting the `publicPath` in webpack).
 
 Luckily, for most sites, this work can be offloaded to Gatsby. Using
-[Gatsby's Link component](/packages/gatsby/) for internal links ensures those links
+[Gatsby's Link component](/packages/gatsby-link/) for internal links ensures those links
 will be prefixed correctly. Gatsby ensures that paths created internally and by
 webpack are also correctly prefixed.
 
@@ -30,7 +30,7 @@ There are two steps for building a site with path prefixes.
 
 First define the prefix in your site's `gatsby-config.js`.
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
@@ -39,7 +39,7 @@ module.exports = {
 
 Then pass `--prefix-paths` cmd option to Gatsby.
 
-```sh
+```shell
 gatsby build --prefix-paths
 ```
 

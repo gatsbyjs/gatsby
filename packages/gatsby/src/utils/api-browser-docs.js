@@ -21,10 +21,11 @@ exports.onInitialClientRender = true
  * Called when changing location is started.
  * @param {object} $0
  * @param {object} $0.location A location object
- * @param {object} $0.action The "action" that caused the route change
+ * @param {object|null} $0.prevLocation The previous location object
  * @example
- * exports.onPreRouteUpdate = ({ location }) => {
- *   console.log("Gatsby started to change location", location.pathname)
+ * exports.onPreRouteUpdate = ({ location, prevLocation }) => {
+ *   console.log("Gatsby started to change location to", location.pathname)
+ *   console.log("Gatsby started to change location from", prevLocation ? prevLocation.pathname : null)
  * }
  */
 exports.onPreRouteUpdate = true
@@ -45,20 +46,50 @@ exports.onRouteUpdateDelayed = true
  * Called when the user changes routes
  * @param {object} $0
  * @param {object} $0.location A location object
- * @param {object} $0.action The "action" that caused the route change
+ * @param {object|null} $0.prevLocation The previous location object
  * @example
- * exports.onRouteUpdate = ({ location }) => {
+ * exports.onRouteUpdate = ({ location, prevLocation }) => {
  *   console.log('new pathname', location.pathname)
+ *   console.log('old pathname', prevLocation ? prevLocation.pathname : null)
+ *
+ *   // Track pageview with google analytics
+ *   window.ga(
+ *     `set`,
+ *     `page`,
+ *     location.pathname + location.search + location.hash,
+ *   )
+ *   window.ga(`send`, `pageview`)
  * }
  */
 exports.onRouteUpdate = true
 
 /**
- * Allow a plugin to decide if the "scroll" should update or
+ * Allow a plugin to decide if the scroll position should update or
  * not on a route change.
  * @param {object} $0
  * @param {object} $0.prevRouterProps The previous state of the router before the route change.
- * @param {object} $0.pathname The new pathname
+ * @param {object} $0.routerProps The current state of the router.
+ * @param {string} $0.pathname The new pathname (for backwards compatibility with v1).
+ * @param {function} $0.getSavedScrollPosition Takes a location and returns the
+ * coordinates of the last scroll position for that location, or `null`. Gatsby
+ * saves scroll positions for each route in `SessionStorage`, so they are
+ * available after page reload.
+ * @returns {(boolean|string|Array)} Should return either an [x, y] Array of
+ * coordinates to scroll to, a string of the `id` or `name` of an element to
+ * scroll to, `false` to not update the scroll position, or `true` for the
+ * default behavior.
+ * @example
+ * exports.shouldUpdateScroll = ({
+ *   routerProps: { location },
+ *   getSavedScrollPosition
+ * }) => {
+ *   const currentPosition = getSavedScrollPosition(location)
+ *   const queriedPosition = getSavedScrollPosition({ pathname: `/random` })
+ *
+ *   window.scrollTo(...(currentPosition || [0, 0]))
+ *
+ *   return false
+ * }
  */
 exports.shouldUpdateScroll = true
 
@@ -90,12 +121,12 @@ exports.replaceComponentRenderer = true
  * @param {object} $0.props Props object used by page.
  * @example
  * import React from "react"
- * import Layout from "./src/components/Layout"
+ * import Layout from "./src/components/layout"
  *
  * export const wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get
  *   // including location, data, etc - you don't need to pass it
- *   <Layout {...props}>{element}</Layout>
+ *   return <Layout {...props}>{element}</Layout>
  * }
  */
 exports.wrapPageElement = true
@@ -130,18 +161,29 @@ exports.wrapRootElement = true
  * Called when prefetching for a pathname is triggered. Allows
  * for plugins with custom prefetching logic.
  * @param {object} $0
- * @param {object} $0.pathname The pathname whose resources should now be prefetched
- * @param {object} $0.getResourcesForPathname Function for fetching resources related to pathname
+ * @param {string} $0.pathname The pathname whose resources should now be prefetched
+ * @param {function} $0.getResourcesForPathname Function for fetching resources related to pathname
  */
 exports.onPrefetchPathname = true
 
 /**
+ * Called when prefetching for a pathname is successful. Allows
+ * for plugins with custom prefetching logic.
+ * @param {object} $0
+ * @param {string} $0.pathname The pathname whose resources have now been prefetched
+ * @param {function} $0.getResourceURLsForPathname Function for fetching URLs for resources related to the pathname
+ */
+exports.onPostPrefetchPathname = true
+
+/**
  * Plugins can take over prefetching logic. If they do, they should call this
  * to disable the now duplicate core prefetching logic.
+ * @example
+ * exports.disableCorePrefetching = () => true
  */
 exports.disableCorePrefetching = true
 
-/*
+/**
  * Allow a plugin to replace the ReactDOM.render function call by a custom renderer.
  * This method takes no param and should return a function with same signature as ReactDOM.render()
  * Note it's very important to call the callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
@@ -168,6 +210,14 @@ exports.onServiceWorkerInstalled = true
  * @param {object} $0.serviceWorker The service worker instance.
  */
 exports.onServiceWorkerUpdateFound = true
+
+/**
+ * Inform plugins when a service worker has been updated in the background
+ * and the page is ready to reload to apply changes.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerUpdateReady = true
 
 /**
  * Inform plugins when a service worker has become active.

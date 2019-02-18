@@ -1,13 +1,13 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const babylon = require(`@babel/parser`)
-const traverse = require(`babel-traverse`).default
+const traverse = require(`@babel/traverse`).default
 
 async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
   const { createNode, createParentChildLink } = actions
   const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
 
-  // This only processes javascript and typescript files.
+  // This only processes JavaScript and TypeScript files.
   if (!_.includes(fileExtsToProcess, node.extension)) {
     return
   }
@@ -20,7 +20,12 @@ async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
       `jsx`,
       `doExpressions`,
       `objectRestSpread`,
-      `decorators`,
+      [
+        `decorators`,
+        {
+          decoratorsBeforeExport: true,
+        },
+      ],
       `classProperties`,
       `exportExtensions`,
       `asyncGenerators`,

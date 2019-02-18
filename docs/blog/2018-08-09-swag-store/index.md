@@ -1,9 +1,9 @@
 ---
 title: Free Swag for Gatsby Contributors
-date: "2018-08-09"
+date: 2018-08-09
 image: images/gatsby-swag.jpg
 author: Jason Lengstorf
-tags: ["collaboration","gatsby","community"]
+tags: ["collaboration", "community"]
 ---
 
 Today, we’re _so excited_ to announce the launch of the [Gatsby Swag Store][store]! If you’ve been following along [on Twitter][twitter], you may have seen the news a little while back.
@@ -50,7 +50,7 @@ We love seeing how great the community looks in purple, so please post your Gats
 
 ## How the store works
 
-All of the source code for the swag store [has been open sourced][swag-source]. The front-end is a [Gatsby v2][v2] site (naturally) using [Shopify][shopify] (and their [JS Buy SDK][js-buy-sdk]) to display products and manage carts, [Auth0][auth0] to handle authentication, and a [custom Express API][swag-api] to manage discount code requests.
+All of the source code for the swag store [has been open sourced][swag-source]. The frontend is a [Gatsby v2][v2] site (naturally) using [Shopify][shopify] (and their [JS Buy SDK][js-buy-sdk]) to display products and manage carts, [Auth0][auth0] to handle authentication, and a [custom Express API][swag-api] to manage discount code requests.
 
 We also use [Peril][peril] to [automatically invite contributors][invite] to the Gatsby organization on GitHub and post details about claiming swag. Here’s an example (and some kind words from Gatsby contributor [Payton Burdette](https://twitter.com/beardedpayton)) showing what the automated response looks like:
 
@@ -69,12 +69,13 @@ Thanks for being part of the open source community! 💪💜
 [twitter]: https://twitter.com/gatsbyjs
 [org]: https://github.com/gatsbyjs
 [store]: https://store.gatsbyjs.org/
-[swag]: https://next.gatsbyjs.org/docs/contributor-swag/
+[swag]: /docs/contributor-swag/
 [swag-source]: https://github.com/gatsbyjs/store.gatsbyjs.org
 [swag-api]: https://github.com/gatsbyjs/api.gatsbyjs.org
-[v2]: https://www.gatsbyjs.org/blog/2018-06-16-announcing-gatsby-v2-beta-launch/
+[v2]: /blog/2018-06-16-announcing-gatsby-v2-beta-launch/
 [shopify]: https://www.shopify.com/
 [js-buy-sdk]: https://shopify.github.io/js-buy-sdk/
 [auth0]: https://auth0.com/
-[invite]: https://github.com/gatsbyjs/peril-gatsbyjs/blob/master/org/invite-collaborator.ts
+[invite]: https://github.com/gatsbyjs/peril-gatsbyjs/blob/master/rules/invite-collaborator.ts
 [peril]: https://github.com/danger/peril
+[contribute]: /docs/how-to-contribute/

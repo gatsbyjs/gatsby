@@ -73,10 +73,18 @@ const handleQuery = (
   // If this is a static query
   // Add action / reducer + watch staticquery files
   if (query.isStaticQuery) {
-    const isNewQuery = !staticQueryComponents.has(query.jsonName)
+    const oldQuery = staticQueryComponents.get(query.jsonName)
+    const isNewQuery = !oldQuery
+
+    // Compare query text because text is compiled query with any attached
+    // fragments and we want to rerun queries if fragments are edited.
+    // Compare hash because hash is used for identyfing query and
+    // passing data to component in development. Hash can change if user will
+    // format query text, but it doesn't mean that compiled text will change.
     if (
       isNewQuery ||
-      staticQueryComponents.get(query.jsonName).query !== query.text
+      oldQuery.hash !== query.hash ||
+      oldQuery.text !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
@@ -142,15 +150,24 @@ const updateStateAndRunQueries = isFirstRun => {
 
     if (queriesWillNotRun) {
       report.log(report.stripIndent`
-        Exported queries are only executed for Page components. Instead of an exported
-        query, either co-locate a GraphQL fragment and compose that fragment into the
-        query (or other fragment) of the top-level page that renders this component, or
-        use a <StaticQuery> in this component. For more info on fragments and
-        composition, see http://graphql.org/learn/queries/#fragments and for more
-        information on <StaticQuery>, see https://next.gatsbyjs.org/docs/static-query
+
+        Exported queries are only executed for Page components. It's possible you're
+        trying to create pages in your gatsby-node.js and that's failing for some
+        reason.
+
+        If the failing component(s) is a regular component and not intended to be a page
+        component, you generally want to use a <StaticQuery> (https://gatsbyjs.org/docs/static-query)
+        instead of exporting a page query.
+
+        If you're more experienced with GraphQL, you can also export GraphQL
+        fragments from components and compose the fragments in the Page component
+        query and pass data down into the child component — http://graphql.org/learn/queries/#fragments
+
       `)
     }
     runQueuedQueries()
+
+    return null
   })
 }
 

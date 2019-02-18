@@ -1,6 +1,6 @@
 ---
 title: "Migrating My Blog From Hexo To Gatsby"
-date: "2017-10-01"
+date: 2017-10-01
 image: "hexo-to-gatsby.png"
 author: "Ian Sinnott"
 excerpt: "How I migrated my blog to Gatsby and how you can do the same."
@@ -82,8 +82,7 @@ are many ways you could do this but I'll go over what I did.
 To get all the Gatsby files you can use the Gatsby CLI.
 
 ```yaml
-npm install -g gatsby-cli   # Install gatsby CLI
-gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
+npx gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
 cp -R temp-gatsby-files/* ./ # Copy all the files into your root directory
 rm -rf temp-gatsby-files     # Remove the temp directory
 ```
@@ -548,7 +547,7 @@ By default, Gatsby will create a static HTML page for everything under
 `src/pages/`. At this point we've discussed `src/pages/index.js` extensively. It
 will be the `index.html` page of your site, and thus your landing page.
 
-For any stand-alone pages, simply create a corresponding js file in the `pages/`
+For any stand-alone pages, simply create a corresponding JavaScript file in the `pages/`
 directory and you are good to go. For example, `src/pages/about.js` would
 generate an `about.html` page. Simple.
 

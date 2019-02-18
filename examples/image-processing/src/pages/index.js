@@ -31,7 +31,9 @@ class Index extends React.Component {
           {` `}
           <a href="https://github.com/lovell/sharp">
             Sharp image processing library
-          </a>. With it and{` `}
+          </a>
+          . With it and
+          {` `}
           <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
             Gatsby Image
           </a>
@@ -46,7 +48,8 @@ class Index extends React.Component {
               documentation
             </a>
             {` `}
-            or peep the{` `}
+            or peep the
+            {` `}
             <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing">
               code
             </a>
@@ -69,8 +72,7 @@ class Index extends React.Component {
         </h2>
 
         <p>
-          Easily resize and intelligently crop images given a
-          {` `}
+          Easily resize and intelligently crop images given a{` `}
           <code>width</code>
           {` `}
           and optionally a <code>height</code>.
@@ -81,8 +83,8 @@ class Index extends React.Component {
           {` `}
           <code>rotate</code> option
           {` `}
-          exposes Sharp{`'`}s
-          {` `}
+          exposes Sharp
+          {`'`}s{` `}
           <a href="http://sharp.dimens.io/en/stable/api-operation/#rotate">
             <code>rotate</code>
           </a>
@@ -111,9 +113,7 @@ class Index extends React.Component {
           }}
         >
           We also expose all of Sharp
-          {`'`}
-          s
-          {` `}
+          {`'`}s{` `}
           <a href="http://sharp.dimens.io/en/stable/api-resize/#crop">
             <code>crop</code>
           </a>
@@ -123,9 +123,11 @@ class Index extends React.Component {
         <p>
           The default is
           <code>ATTENTION</code>, which the Sharp documentation describes as
-          {` "`}focus on the region with the highest luminance frequency, colour
-          saturation and presence of skin tones{`"`} – which is why we actually
-          see Mr. Gatsby toasting to us in the first thumbnail:
+          {` "`}
+          focus on the region with the highest luminance frequency, colour
+          saturation and presence of skin tones
+          {`"`} – which is why we actually see Mr. Gatsby toasting to us in the
+          first thumbnail:
         </p>
 
         <ul style={{ ...styles.ul, ...styles.row }}>
@@ -203,11 +205,10 @@ class Index extends React.Component {
           {` `}
           <code>aspectRatio</code>
           {` `}
-          and a
-          {` `}
+          and a{` `}
           <code>base64</code>
           {` `}
-          image to use as a placeholder) you need to implement the "blur up"
+          image to use as a placeholder) you need to implement the {`"blur up"`}
           technique popularized by
           {` `}
           <a href="https://jmperezperez.com/medium-image-progressive-loading-placeholder/">
@@ -224,16 +225,15 @@ class Index extends React.Component {
           {` `}
           <a href="https://www.gatsbyjs.org/packages/gatsby-remark-images/">
             gatsby-remark-images
-          </a>).
+          </a>
+          ).
         </p>
         <p>
           The <code>duotone</code> option (see
           {` `}
           <a href="https://alistapart.com/article/finessing-fecolormatrix">I</a>
-          ,
-          {` `}
-          <a href="http://blog.72lions.com/blog/2015/7/7/duotone-in-js">II</a>
-          ,
+          ,{` `}
+          <a href="http://blog.72lions.com/blog/2015/7/7/duotone-in-js">II</a>,
           {` `}
           <a href="https://ines.io/blog/dynamic-duotone-svg-jade">III</a>
           ), given two hex colors
@@ -247,8 +247,8 @@ class Index extends React.Component {
 
         <p>
           The <code>toFormat</code> option lets you convert the source image to
-          another image format. We use "PNG" here to ensure that the duotoned
-          image does not show any JPG artifacts.
+          another image format. We use {`"PNG"`} here to ensure that the
+          duotoned image does not show any JPG artifacts.
         </p>
 
         <h3>
@@ -256,7 +256,8 @@ class Index extends React.Component {
             fluid(duotone:
             {` `}
             {`{ `}
-            highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
+            highlight: {`"#f00e2e"`}, shadow: {`"#192550"`} {`}`}, toFormat:
+            PNG)
           </small>
         </h3>
 
@@ -267,7 +268,7 @@ class Index extends React.Component {
             fluid(duotone:
             {` `}
             {`{ `}
-            highlight: "#0ec4f1", shadow: "#192550", opacity: 50 {`}`})
+            highlight: {`"#0ec4f1"`}, shadow: {`"#192550"`}, opacity: 50 {`}`})
           </small>
         </h3>
 
@@ -290,11 +291,14 @@ class Index extends React.Component {
         </div>
 
         <p>
-          By setting an optional third parameter{` `}
+          By setting an optional third parameter
+          {` `}
           <code>opacity</code> for <code>duotone</code>, a semi-transparent
-          version of the duotone{`'`}d image will be composited over the
-          original allowing the original image and its colors to partially {`"`}shine
-          through{`"`}.
+          version of the duotone
+          {`'`}d image will be composited over the original allowing the
+          original image and its colors to partially {`"`}
+          shine through
+          {`"`}.
         </p>
 
         <h2
@@ -321,8 +325,8 @@ class Index extends React.Component {
           {` `}
           <code>grayscale</code> option
           {` `}
-          uses Sharp{`'`}s
-          {` `}
+          uses Sharp
+          {`'`}s{` `}
           <a href="http://sharp.dimens.io/en/stable/api-colour/#greyscale">
             <code>greyscale</code>
           </a>

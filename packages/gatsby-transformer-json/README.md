@@ -7,7 +7,7 @@ arrays of objects and single objects.
 
 `npm install --save gatsby-transformer-json`
 
-You also need to have `gatsby-source-filesystem` installed and configured so it
+If you want to transform json files, you also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
 
 ## How to use
@@ -37,10 +37,16 @@ or as single objects spread across multiple files.
 
 The algorithm for arrays is to convert each item in the array into a node.
 
-So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" }, { "value": "c" }]` then the following three nodes would be created:
+So if your project has a `letters.json` with
 
-```javascript
-;[{ value: "a" }, { value: "b" }, { value: "c" }]
+```json
+[{ "value": "a" }, { "value": "b" }, { "value": "c" }]
+```
+
+Then the following three nodes would be created:
+
+```json
+[{ "value": "a" }, { "value": "b" }, { "value": "c" }]
 ```
 
 ### Single Object
@@ -49,7 +55,7 @@ The algorithm for single JSON objects is to convert the object defined at the
 root of the file into a node. The type of the node is based on the name of the
 parent directory.
 
-For example, lets say your project has a data layout like:
+For example, let's say your project has a data layout like:
 
 ```
 data/
@@ -61,31 +67,31 @@ data/
 
 Where each of `a.json`, `b.json` and `c.json` look like:
 
-```javascript
-{ 'value': 'a' }
+```json
+{ "value": "a" }
 ```
 
-```javascript
-{ 'value': 'b' }
+```json
+{ "value": "b" }
 ```
 
-```javascript
-{ 'value': 'c' }
+```json
+{ "value": "c" }
 ```
 
 Then the following three nodes would be created:
 
-```javascript
-;[
+```json
+[
   {
-    value: "a",
+    "value": "a"
   },
   {
-    value: "b",
+    "value": "b"
   },
   {
-    value: "c",
-  },
+    "value": "c"
+  }
 ]
 ```
 
@@ -132,6 +138,88 @@ Which would return:
 }
 ```
 
+## Configuration options
+
+**`typeName`** [string|function][optional]
+
+The default naming convention documented above can be changed with
+either a static string value (e.g. to be able to query all json with a
+simple query):
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-json`,
+      options: {
+        typeName: `Json`, // a fixed string
+      },
+    },
+  ],
+}
+```
+
+```graphql
+{
+  allJson {
+    edges {
+      node {
+        value
+      }
+    }
+  }
+}
+```
+
+or a function that receives the following arguments:
+
+- `node`: the graphql node that is being processed, e.g. a File node with
+  json content
+- `object`: a single object (either an item from an array or the whole json content)
+- `isArray`: boolean, true if `object` is part of an array
+
+```json
+[
+  {
+    "level": "info",
+    "message": "hurray"
+  },
+  {
+    "level": "info",
+    "message": "it works"
+  },
+  {
+    "level": "warning",
+    "message": "look out"
+  }
+]
+```
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-json`,
+      options: {
+        typeName: ({ node, object, isArray }) => object.level,
+      },
+    },
+  ],
+}
+```
+
+```graphql
+{
+  allInfo {
+    edges {
+      node {
+        message
+      }
+    }
+  }
+}
+```
+
 ## Examples
 
 The [gatsbygram example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js) uses this plugin.
@@ -144,24 +232,18 @@ If some fields are missing or you see the error on build:
 
 It's probably because you have arrays of mixed values somewhere. For instance:
 
-```
+```json
 {
-  stuff: [25, "bob"],
-  orEven: [
-    [25, "bob"],
-    [23, "joe"]
-  ]
+  "stuff": [25, "bob"],
+  "orEven": [[25, "bob"], [23, "joe"]]
 }
 ```
 
-If you can rewrite your data with objects you should be good to go:
+If you can rewrite your data with objects, you should be good to go:
 
-```
+```json
 {
-  stuff: [{ "count": 25, "name": "bob" }],
-  orEven: [
-    { "count": 25, "name": "bob" },
-    { "count": 23, "name": "joe" }
-  ]
+  "stuff": [{ "count": 25, "name": "bob" }],
+  "orEven": [{ "count": 25, "name": "bob" }, { "count": 23, "name": "joe" }]
 }
 ```

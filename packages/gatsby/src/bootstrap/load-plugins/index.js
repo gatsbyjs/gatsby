@@ -39,7 +39,7 @@ const flattenPlugins = plugins => {
 
 module.exports = async (config = {}) => {
   // Collate internal plugins, site config plugins, site default plugins
-  const plugins = await loadPlugins(config)
+  const plugins = loadPlugins(config)
 
   // Create a flattened array of the plugins
   let flattenedPlugins = flattenPlugins(plugins)
@@ -52,8 +52,7 @@ module.exports = async (config = {}) => {
   const badExports = x.badExports
 
   // Show errors for any non-Gatsby APIs exported from plugins
-  const isBad = handleBadExports({ apis, badExports })
-  if (isBad && process.env.NODE_ENV === `production`) process.exit(1) // TODO: change to panicOnBuild
+  handleBadExports({ apis, badExports })
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({

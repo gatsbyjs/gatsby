@@ -4,7 +4,6 @@ import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import UglifyJsPlugin from "uglifyjs-webpack-plugin"
 import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
 
 /**
@@ -34,7 +33,7 @@ function deepMap(obj, fn) {
 }
 
 exports.onCreateWebpackConfig = (
-  { store, stage, getConfig, plugins },
+  { store, stage, getConfig, plugins, pathPrefix },
   {
     modulePath,
     publicPath = `admin`,
@@ -83,8 +82,9 @@ exports.onCreateWebpackConfig = (
          */
         ...gatsbyConfig.plugins.filter(
           plugin =>
-            ![UglifyJsPlugin, MiniCssExtractPlugin, FriendlyErrorsPlugin].find(
-              Plugin => plugin instanceof Plugin
+            ![`MiniCssExtractPlugin`, `GatsbyWebpackStatsExtractor`].find(
+              pluginName =>
+                plugin.constructor && plugin.constructor.name === pluginName
             )
         ),
 
@@ -126,6 +126,14 @@ exports.onCreateWebpackConfig = (
          * `HtmlWebpackPlugin` config.
          */
         new HtmlWebpackExcludeAssetsPlugin(),
+
+        /**
+         * Pass in needed Gatsby config values.
+         */
+        new webpack.DefinePlugin({
+          __PATH__PREFIX__: pathPrefix,
+          CMS_PUBLIC_PATH: JSON.stringify(publicPath),
+        }),
       ].filter(p => p),
 
       /**
@@ -134,7 +142,13 @@ exports.onCreateWebpackConfig = (
        */
       mode: `none`,
       optimization: {},
+      devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
     }
-    webpack(config).run()
+
+    if (stage === `develop`) {
+      webpack(config).watch({}, () => {})
+    } else {
+      webpack(config).run()
+    }
   }
 }

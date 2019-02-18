@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.8...gatsby-plugin-google-tagmanager@2.0.9) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.7...gatsby-plugin-google-tagmanager@2.0.8) (2019-01-24)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-tagmanager:** handle line breaks ([#11169](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/issues/11169)) ([d974f80](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/commit/d974f80))
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.6...gatsby-plugin-google-tagmanager@2.0.7) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.5...gatsby-plugin-google-tagmanager@2.0.6) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.0-rc.1...gatsby-plugin-google-tagmanager@2.0.5) (2018-09-17)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+<a name="2.0.0-rc.1"></a>
+
+# [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.0-rc.0...gatsby-plugin-google-tagmanager@2.0.0-rc.1) (2018-08-29)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
 <a name="2.0.0-rc.0"></a>
 
 # [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.0-beta.3...gatsby-plugin-google-tagmanager@2.0.0-rc.0) (2018-08-21)

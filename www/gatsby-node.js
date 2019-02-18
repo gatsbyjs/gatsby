@@ -6,6 +6,31 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`slugify`)
 const url = require(`url`)
+const getpkgjson = require(`get-package-json-from-github`)
+const parseGHUrl = require(`parse-github-url`)
+const { GraphQLClient } = require(`graphql-request`)
+const moment = require(`moment`)
+const startersRedirects = require(`./starter-redirects.json`)
+
+let ecosystemFeaturedItems
+
+if (
+  process.env.gatsby_executing_command === `build` &&
+  !process.env.GITHUB_API_TOKEN
+) {
+  throw new Error(
+    `A GitHub token is required to build the site. Check the README.`
+  )
+}
+
+// used to gather repo data on starters
+const githubApiClient = process.env.GITHUB_API_TOKEN
+  ? new GraphQLClient(`https://api.github.com/graphql`, {
+      headers: {
+        authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`,
+      },
+    })
+  : null
 
 const localPackages = `../packages`
 const localPackagesArr = []
@@ -19,8 +44,20 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
+
+  createRedirect({
+    fromPath: `/blog/2018-10-25-unstructured-data/`,
+    toPath: `/blog/2018-10-25-using-gatsby-without-graphql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-unstructured-data/`,
+    toPath: `/docs/using-gatsby-without-graphql/`,
+    isPermanent: true,
+  })
 
   // Random redirects
   createRedirect({
@@ -42,10 +79,65 @@ exports.createPages = ({ graphql, actions }) => {
   })
 
   createRedirect({
-    fromPath: `/docs/netlify-cms`,
+    fromPath: `/docs/netlify-cms/`,
+    toPath: `/docs/sourcing-from-netlify-cms/`,
     isPermanent: true,
-    redirectInBrowser: true,
-    toPath: `/docs/sourcing-from-netlify-cms`,
+  })
+
+  createRedirect({
+    fromPath: `/starter-showcase/`, // Moved "Starter Showcase" index page from /starter-showcase to /starters
+    toPath: `/starters/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/gatsby-starters/`, // Main Gatsby starters page is the starter library
+    toPath: `/starters/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/adding-third-party-services/`,
+    toPath: `/docs/adding-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/bound-action-creators/`,
+    toPath: `/docs/actions/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/bound-action-creators`,
+    toPath: `/docs/actions`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/blog/2019-10-03-gatsby-perf`,
+    toPath: `/blog/2018-10-03-gatsby-perf`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/add-a-service-worker`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/add-offline-support`,
+    toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
+    createRedirect({
+      fromPath: `/starters${fromSlug}`,
+      toPath: `/starters${toSlug}`,
+      isPermanent: true,
+    })
   })
 
   return new Promise((resolve, reject) => {
@@ -65,88 +157,106 @@ exports.createPages = ({ graphql, actions }) => {
     const showcaseTemplate = path.resolve(
       `src/templates/template-showcase-details.js`
     )
-
-    createRedirect({
-      fromPath: `/docs/bound-action-creators/`,
-      isPermanent: true,
-      redirectInBrowser: true,
-      toPath: `/docs/actions/`,
-    })
-
-    createRedirect({
-      fromPath: `/docs/bound-action-creators`,
-      isPermanent: true,
-      redirectInBrowser: true,
-      toPath: `/docs/actions`,
-    })
+    const creatorPageTemplate = path.resolve(
+      `src/templates/template-creator-details.js`
+    )
 
     // Query for markdown nodes to use in creating pages.
-
-    graphql(
-      `
-        query {
-          allMarkdownRemark(
-            sort: { order: DESC, fields: [frontmatter___date] }
-            limit: 10000
-            filter: { fileAbsolutePath: { ne: null } }
-          ) {
-            edges {
-              node {
-                fields {
-                  slug
-                  package
-                  starterShowcase {
-                    slug
-                    stub
-                  }
-                }
-                frontmatter {
-                  title
-                  draft
-                  canonicalLink
-                  publishedAt
-                  tags
-                }
-              }
-            }
-          }
-          allAuthorYaml {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-          allSitesYaml(filter: { main_url: { ne: null } }) {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-          allNpmPackage {
-            edges {
-              node {
-                id
-                title
+    graphql(`
+      query {
+        allMarkdownRemark(
+          sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
+          limit: 10000
+          filter: { fileAbsolutePath: { ne: null } }
+        ) {
+          edges {
+            node {
+              fields {
                 slug
-                readme {
+                package
+                released
+              }
+              frontmatter {
+                title
+                draft
+                canonicalLink
+                publishedAt
+                issue
+                tags
+              }
+            }
+          }
+        }
+        allAuthorYaml {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allCreatorsYaml {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allSitesYaml(filter: { main_url: { ne: null } }) {
+          edges {
+            node {
+              main_url
+              fields {
+                slug
+                hasScreenshot
+              }
+            }
+          }
+        }
+        allStartersYaml {
+          edges {
+            node {
+              id
+              fields {
+                starterShowcase {
+                  slug
+                  stub
+                }
+              }
+              url
+              repo
+            }
+          }
+        }
+        allNpmPackage {
+          edges {
+            node {
+              id
+              title
+              slug
+              readme {
+                id
+                childMarkdownRemark {
                   id
-                  childMarkdownRemark {
-                    id
-                    html
-                  }
+                  html
                 }
               }
             }
           }
         }
-      `
-    ).then(result => {
+        allEcosystemYaml {
+          edges {
+            node {
+              starters
+              plugins
+            }
+          }
+        }
+      }
+    `).then(result => {
       if (result.errors) {
         return reject(result.errors)
       }
@@ -163,13 +273,19 @@ exports.createPages = ({ graphql, actions }) => {
         return undefined
       })
 
+      const releasedBlogPosts = blogPosts.filter(post =>
+        _.get(post, `node.fields.released`)
+      )
+
       // Create blog-list pages.
       const postsPerPage = 8
-      const numPages = Math.ceil(blogPosts.length / postsPerPage)
+      const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
 
-      Array.from({ length: numPages }).forEach((_, i) => {
+      Array.from({
+        length: numPages,
+      }).forEach((_, i) => {
         createPage({
-          path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+          path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
           component: slash(blogListTemplate),
           context: {
             limit: postsPerPage,
@@ -182,7 +298,9 @@ exports.createPages = ({ graphql, actions }) => {
 
       // Create blog-post pages.
       blogPosts.forEach((edge, index) => {
-        const next = index === 0 ? null : blogPosts[index - 1].node
+        let next = index === 0 ? null : blogPosts[index - 1].node
+        if (next && !_.get(next, `fields.released`)) next = null
+
         const prev =
           index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
 
@@ -197,13 +315,13 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
-      const tagLists = blogPosts
+      const tagLists = releasedBlogPosts
         .filter(post => _.get(post, `node.frontmatter.tags`))
         .map(post => _.get(post, `node.frontmatter.tags`))
 
       _.uniq(_.flatten(tagLists)).forEach(tag => {
         createPage({
-          path: `/blog/tags/${_.kebabCase(tag)}/`,
+          path: `/blog/tags/${_.kebabCase(tag.toLowerCase())}/`,
           component: tagTemplate,
           context: {
             tag,
@@ -211,19 +329,23 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
-      // Create starters.
-      const starters = _.filter(result.data.allMarkdownRemark.edges, edge => {
+      // Create starter pages.
+      const starters = _.filter(result.data.allStartersYaml.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
-        if (!slug) return null
-        else return edge
+        if (!slug) {
+          return null
+        } else {
+          return edge
+        }
       })
+
       const starterTemplate = path.resolve(
-        `src/templates/template-starter-showcase.js`
+        `src/templates/template-starter-page.js`
       )
 
       starters.forEach((edge, index) => {
         createPage({
-          path: `/starters${edge.node.fields.starterShowcase.slug}`, // required
+          path: `/starters${edge.node.fields.starterShowcase.slug}`,
           component: slash(starterTemplate),
           context: {
             slug: edge.node.fields.starterShowcase.slug,
@@ -231,7 +353,6 @@ exports.createPages = ({ graphql, actions }) => {
           },
         })
       })
-      // END Create starters.
 
       // Create contributor pages.
       result.data.allAuthorYaml.edges.forEach(edge => {
@@ -244,9 +365,29 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
 
+      result.data.allCreatorsYaml.edges.forEach(edge => {
+        if (!edge.node.fields) return
+        if (!edge.node.fields.slug) return
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(creatorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
+      })
+
       result.data.allSitesYaml.edges.forEach(edge => {
         if (!edge.node.fields) return
         if (!edge.node.fields.slug) return
+        if (!edge.node.fields.hasScreenshot) {
+          reporter.warn(
+            `Site showcase entry "${
+              edge.node.main_url
+            }" seems offline. Skipping.`
+          )
+          return
+        }
         createPage({
           path: `${edge.node.fields.slug}`,
           component: slash(showcaseTemplate),
@@ -284,6 +425,7 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
+              layout: `plugins`,
             },
           })
         } else {
@@ -293,18 +435,22 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               slug: edge.node.slug,
               id: edge.node.id,
+              layout: `plugins`,
             },
           })
         }
       })
+
+      // Read featured starters and plugins for Ecosystem
+      ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
 
       return resolve()
     })
   })
 }
 
-// Create slugs for files.
-exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
+// Create slugs for files, set released status for blog posts.
+exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
@@ -336,6 +482,27 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       } else {
         slug = `/${parsedFilePath.dir}/`
       }
+
+      // Set released status and `published at` for blog posts.
+      if (_.includes(parsedFilePath.dir, `blog`)) {
+        let released = false
+        const date = _.get(node, `frontmatter.date`)
+        if (date) {
+          released = moment().isSameOrAfter(moment.utc(date))
+        }
+        createNodeField({ node, name: `released`, value: released })
+
+        const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
+        const publishedAt = _.get(node, `frontmatter.publishedAt`)
+
+        createNodeField({
+          node,
+          name: `publishedAt`,
+          value: canonicalLink
+            ? publishedAt || url.parse(canonicalLink).hostname
+            : null,
+        })
+      }
     }
     // Add slugs for package READMEs.
     if (
@@ -350,13 +517,6 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
       })
       createNodeField({ node, name: `package`, value: true })
     }
-    if (
-      // starter showcase
-      fileNode.sourceInstanceName === `StarterShowcaseData` &&
-      parsedFilePath.name !== `README`
-    ) {
-      createNodesForStarterShowcase({ node, getNode, getNodes, actions })
-    } // end starter showcase
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
@@ -371,6 +531,167 @@ exports.onCreateNode = ({ node, actions, getNode, getNodes }) => {
     const cleaned = parsed.hostname + parsed.pathname
     slug = `/showcase/${slugify(cleaned)}`
     createNodeField({ node, name: `slug`, value: slug })
+
+    // determine if screenshot is available
+    const screenshotNode = node.children
+      .map(childID => getNode(childID))
+      .find(node => node.internal.type === `Screenshot`)
+
+    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
+  } else if (node.internal.type === `StartersYaml` && node.repo) {
+    // To develop on the starter showcase, you'll need a GitHub
+    // personal access token. Check the `www` README for details.
+    // Default fields are to avoid graphql errors.
+    const { owner, name: repoStub } = parseGHUrl(node.repo)
+    const defaultFields = {
+      slug: `/${owner}/${repoStub}/`,
+      stub: repoStub,
+      name: ``,
+      description: ``,
+      stars: 0,
+      lastUpdated: ``,
+      owner: ``,
+      githubFullName: ``,
+      gatsbyMajorVersion: [[`no data`, `0`]],
+      allDependencies: [[`no data`, `0`]],
+      gatsbyDependencies: [[`no data`, `0`]],
+      miscDependencies: [[`no data`, `0`]],
+    }
+
+    if (!process.env.GITHUB_API_TOKEN) {
+      return createNodeField({
+        node,
+        name: `starterShowcase`,
+        value: {
+          ...defaultFields,
+        },
+      })
+    } else {
+      return Promise.all([
+        getpkgjson(node.repo),
+        githubApiClient.request(`
+            query {
+              repository(owner:"${owner}", name:"${repoStub}") {
+                name
+                stargazers {
+                  totalCount
+                }
+                createdAt
+                pushedAt
+                owner {
+                  login
+                }
+                nameWithOwner
+              }
+            }
+          `),
+      ])
+        .then(results => {
+          const [pkgjson, githubData] = results
+          const {
+            stargazers: { totalCount: stars },
+            pushedAt: lastUpdated,
+            owner: { login: owner },
+            name,
+            nameWithOwner: githubFullName,
+          } = githubData.repository
+
+          const { dependencies = [], devDependencies = [] } = pkgjson
+          const allDependencies = Object.entries(dependencies).concat(
+            Object.entries(devDependencies)
+          )
+
+          const gatsbyMajorVersion = allDependencies
+            .filter(([key, _]) => key === `gatsby`)
+            .map(version => {
+              let [gatsby, versionNum] = version
+              if (versionNum === `latest` || versionNum === `next`) {
+                return [gatsby, `2`]
+              }
+              return [gatsby, versionNum.replace(/\D/g, ``).charAt(0)]
+            })
+
+          // If a new field is added here, make sure a corresponding
+          // change is made to "defaultFields" to not break DX
+          const starterShowcaseFields = {
+            slug: `/${owner}/${repoStub}/`,
+            stub: repoStub,
+            name,
+            description: pkgjson.description,
+            stars,
+            lastUpdated,
+            owner,
+            githubFullName,
+            gatsbyMajorVersion,
+            allDependencies,
+            gatsbyDependencies: allDependencies
+              .filter(
+                ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
+              )
+              .filter(([key, _]) => key.includes(`gatsby`)),
+            miscDependencies: allDependencies.filter(
+              ([key, _]) => !key.includes(`gatsby`)
+            ),
+          }
+          createNodeField({
+            node,
+            name: `starterShowcase`,
+            value: starterShowcaseFields,
+          })
+        })
+        .catch(err => {
+          reporter.panicOnBuild(
+            `Error getting repo data for starter "${repoStub}":\n
+            ${err.message}`
+          )
+        })
+    }
+  }
+
+  // Creator pages
+  else if (node.internal.type === `CreatorsYaml`) {
+    const validTypes = {
+      individual: `people`,
+      agency: `agencies`,
+      company: `companies`,
+    }
+
+    if (!validTypes[node.type]) {
+      throw new Error(
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${
+          node.type
+        }” was provided for ${node.name}.`
+      )
+    }
+    slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
+      lower: true,
+    })}`
+    createNodeField({ node, name: `slug`, value: slug })
+  }
+  // end Creator pages
+  return null
+}
+
+exports.onCreatePage = ({ page, actions }) => {
+  // add lists of featured items to Ecosystem page
+  if (page.path === `/ecosystem/` || page.path === `/`) {
+    const { createPage, deletePage } = actions
+    const oldPage = Object.assign({}, page)
+
+    page.context.featuredStarters = ecosystemFeaturedItems.starters
+    page.context.featuredPlugins = ecosystemFeaturedItems.plugins
+
+    deletePage(oldPage)
+    createPage(page)
+  }
+
+  if (page.path === `/plugins/`) {
+    const { createPage, deletePage } = actions
+    const oldPage = Object.assign({}, page)
+
+    page.context.layout = `plugins`
+    deletePage(oldPage)
+    createPage(page)
   }
 }
 
@@ -379,65 +700,4 @@ exports.onPostBuild = () => {
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
     `./public/gatsbygram.mp4`
   )
-}
-
-// Starter Showcase related code
-const { createFilePath } = require(`gatsby-source-filesystem`)
-const gitFolder = `./src/data/StarterShowcase/generatedGithubData`
-function createNodesForStarterShowcase({ node, getNode, getNodes, actions }) {
-  const { createNodeField, createParentChildLink } = actions
-  if (node.internal.type === `MarkdownRemark`) {
-    const slug = createFilePath({
-      node,
-      getNode,
-      basePath: `startersData`,
-    })
-    // preprocessing
-    const stub = slug.replace(/\//gi, ``)
-    var fromPath = path.join(gitFolder, `${stub}.json`)
-    var data = fs.readFileSync(fromPath, `utf8`)
-    const ghdata = JSON.parse(data)
-    if (ghdata.repository && ghdata.repository.url)
-      ghdata.repository = ghdata.repository.url // flatten a potential object into a string. weird quirk.
-    const { repoMetadata, dependencies = [], devDependencies = [] } = ghdata
-    const allDependencies = Object.entries(dependencies).concat(
-      Object.entries(devDependencies)
-    )
-    // make an object to stick into a Field
-    const starterShowcaseFields = {
-      slug,
-      stub,
-      date: new Date(node.frontmatter.date),
-      githubData: ghdata,
-      // nice-to-have destructures of githubData
-      description: ghdata.description,
-      stars: repoMetadata.stargazers_count,
-      lastUpdated: repoMetadata.created_at,
-      owner: repoMetadata.owner,
-      githubFullName: repoMetadata.full_name,
-      allDependencies,
-      gatsbyDependencies: allDependencies
-        .filter(
-          ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
-        )
-        .filter(([key, _]) => key.includes(`gatsby`)),
-      miscDependencies: allDependencies.filter(
-        ([key, _]) => !key.includes(`gatsby`)
-      ),
-    }
-    createNodeField({
-      node,
-      name: `starterShowcase`,
-      value: starterShowcaseFields,
-    })
-  }
-}
-// End Starter Showcase related code
-
-// limited logging for debug purposes
-let limitlogcount = 0
-function log(max) {
-  return function(...args) {
-    if (limitlogcount++ < max) console.log(...args)
-  }
 }

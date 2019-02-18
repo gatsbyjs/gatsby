@@ -5,7 +5,9 @@ const TechWithIcon = ({ icon, height, children }) => {
 
   return (
     <span css={{ whiteSpace: `nowrap` }}>
-      {children}&nbsp;<img
+      {children}
+      &nbsp;
+      <img
         src={icon}
         alt=""
         css={{

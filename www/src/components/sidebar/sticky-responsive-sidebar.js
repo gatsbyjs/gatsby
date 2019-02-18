@@ -26,13 +26,17 @@ class StickyResponsiveSidebar extends Component {
 
   render() {
     const { open } = this.state
-    const SidebarComponent = this.props.enableScrollSync
-      ? ScrollSyncSidebar
-      : Sidebar
+    const {
+      enableScrollSync,
+      location: { pathname },
+    } = this.props
+    const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
 
-    const iconOffset = open ? 8 : -4
+    const iconOffset = open ? 5 : -5
     const menuOpacity = open ? 1 : 0
     const menuOffset = open ? 0 : rhythm(10)
+
+    const sidebarType = pathname.split(`/`)[1]
 
     return (
       <ScrollPositionProvider>
@@ -52,7 +56,7 @@ class StickyResponsiveSidebar extends Component {
             <ScrollPositionConsumer>
               {({ positions, onPositionChange }) => (
                 <SidebarComponent
-                  position={positions[this.props.location.pathname]}
+                  position={positions[sidebarType]}
                   onPositionChange={onPositionChange}
                   closeSidebar={this._closeSidebar}
                   {...this.props}
@@ -65,20 +69,24 @@ class StickyResponsiveSidebar extends Component {
           css={{ ...styles.sidebarToggleButton }}
           onClick={this._openSidebar}
           role="button"
+          aria-label="Show Secondary Navigation"
+          aria-controls="SecondaryNavigation"
+          aria-expanded={open ? `true` : `false`}
           tabIndex={0}
         >
           <div css={{ ...styles.sidebarToggleButtonInner }}>
             <ChevronSvg
               size={15}
               cssProps={{
-                transform: `translate(2px, ${iconOffset}px) rotate(180deg)`,
+                transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
                 transition: `transform 0.2s ease`,
               }}
             />
             <ChevronSvg
               size={15}
               cssProps={{
-                transform: `translate(2px, ${0 - iconOffset}px)`,
+                transform: `translate(${5 -
+                  iconOffset}px, -5px) rotate(270deg)`,
                 transition: `transform 0.2s ease`,
               }}
             />
@@ -103,13 +111,11 @@ const styles = {
     width: 320,
     zIndex: 10,
     [presets.Tablet]: {
-      height: `calc(100vh - ${presets.headerHeight} - ${
-        presets.bannerHeight
-      } + 1px)`,
+      height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+      top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
       width: rhythm(10),
     },
     [presets.Desktop]: {

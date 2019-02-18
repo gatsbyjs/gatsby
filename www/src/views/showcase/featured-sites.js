@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
-import { style } from "glamor"
 
 import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
@@ -13,6 +12,9 @@ import URLQuery from "../../components/url-query"
 import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 import scrollToAnchor from "../../utils/scroll-to-anchor"
+import { svgStyles } from "../../utils/styles"
+import Button from "../../components/button"
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 class FeaturedSites extends Component {
   onClickHandler = (target, updateQuery, filter) =>
@@ -61,7 +63,11 @@ class FeaturedSites extends Component {
             flexWrap: `wrap`,
           }}
         >
-          <img src={FeaturedSitesIcon} alt="icon" css={{ marginBottom: 0 }} />
+          <img
+            src={FeaturedSitesIcon}
+            alt="icon"
+            css={{ marginBottom: 0, height: `1rem` }}
+          />
           <h1
             css={{
               ...scale(1 / 5),
@@ -69,7 +75,7 @@ class FeaturedSites extends Component {
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: 30,
-              marginLeft: 15,
+              marginLeft: 4,
               marginTop: 0,
               marginBottom: 0,
             }}
@@ -80,8 +86,8 @@ class FeaturedSites extends Component {
             {(_, updateQuery) => (
               <a
                 href="#showcase"
-                {...styles.withTitleHover}
                 css={{
+                  ...styles.withTitleHover,
                   display: `none`,
                   [presets.Phablet]: {
                     display: `block`,
@@ -131,28 +137,16 @@ class FeaturedSites extends Component {
             >
               Want to get featured?
             </div>
-            <a
-              href="https://next.gatsbyjs.org/docs/site-showcase-submissions/"
+            <Button
+              to="https://gatsbyjs.org/docs/site-showcase-submissions/"
+              tag="href"
               target="_blank"
               rel="noopener noreferrer"
-              css={{ ...styles.button }}
+              small
+              icon={<ArrowForwardIcon />}
             >
-              Submit
-              {` `}
-              <span
-                css={{
-                  display: `none`,
-                  [presets.Desktop]: {
-                    display: `inline`,
-                  },
-                }}
-              >
-                your
-                {` `}
-              </span>
-              Site
-              <MdArrowForward style={{ marginLeft: 4, verticalAlign: `sub` }} />
-            </a>
+              Submit your Site
+            </Button>
           </div>
         </div>
         <div
@@ -173,8 +167,10 @@ class FeaturedSites extends Component {
             {featured.slice(0, 9).map(({ node }) => (
               <div
                 key={node.id}
-                {...styles.featuredSitesCard}
-                {...styles.withTitleHover}
+                css={{
+                  ...styles.featuredSitesCard,
+                  ...styles.withTitleHover,
+                }}
               >
                 <Link
                   css={{
@@ -190,9 +186,9 @@ class FeaturedSites extends Component {
                 >
                   {node.childScreenshot && (
                     <Img
-                      sizes={
+                      fluid={
                         node.childScreenshot.screenshotFile.childImageSharp
-                          .sizes
+                          .fluid
                       }
                       alt={node.title}
                       css={{ ...styles.screenshot }}
@@ -238,19 +234,19 @@ class FeaturedSites extends Component {
                 {(_, updateQuery) => (
                   <a
                     href="#showcase"
-                    {...styles.featuredSitesCard}
                     css={{
                       marginRight: `${rhythm(3 / 4)} !important`,
-                      border: `1px solid ${hex2rgba(colors.lilac, 0.2)}`,
+                      backgroundColor: hex2rgba(colors.ui.light, 0.25),
                       borderRadius: presets.radius,
                       textAlign: `center`,
                       "&&": {
+                        border: `1px solid ${colors.ui.light}`,
                         boxShadow: `none`,
                         transition: `all ${presets.animation.speedDefault} ${
                           presets.animation.curveDefault
                         }`,
                         "&:hover": {
-                          backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                          background: `#fff`,
                           transform: `translateY(-3px)`,
                           boxShadow: `0 8px 20px ${hex2rgba(
                             colors.lilac,
@@ -258,6 +254,7 @@ class FeaturedSites extends Component {
                           )}`,
                         },
                       },
+                      ...styles.featuredSitesCard,
                     }}
                     onClick={this.onClickHandler(
                       showcase,
@@ -267,34 +264,20 @@ class FeaturedSites extends Component {
                   >
                     <div
                       css={{
-                        margin: rhythm(1),
-                        background: colors.ui.whisper,
+                        borderRadius: presets.radius,
                         display: `flex`,
                         alignItems: `center`,
                         position: `relative`,
                         flexBasis: `100%`,
                       }}
                     >
-                      <img
-                        src={ShowcaseIcon}
-                        css={{
-                          position: `absolute`,
-                          height: `100%`,
-                          width: `auto`,
-                          display: `block`,
-                          margin: `0`,
-                          opacity: 0.04,
-                        }}
-                        alt=""
-                      />
                       <span
                         css={{
                           margin: `0 auto`,
                           color: colors.gatsby,
                         }}
                       >
-                        <img
-                          src={ShowcaseIcon}
+                        <span
                           css={{
                             height: 44,
                             width: `auto`,
@@ -308,9 +291,17 @@ class FeaturedSites extends Component {
                             [presets.Hd]: {
                               height: 72,
                             },
+
+                            "& svg": {
+                              height: `100%`,
+                              ...svgStyles.active,
+                            },
                           }}
-                          alt=""
-                        />
+                        >
+                          <span
+                            dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
+                          />
+                        </span>
                         View all Featured Sites
                       </span>
                     </div>

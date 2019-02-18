@@ -16,7 +16,12 @@ export default ShowcasePage
 
 export const showcaseQuery = graphql`
   query {
-    featured: allSitesYaml(filter: { featured: { eq: true } }) {
+    featured: allSitesYaml(
+      filter: {
+        featured: { eq: true }
+        fields: { hasScreenshot: { eq: true } }
+      }
+    ) {
       edges {
         node {
           id
@@ -29,8 +34,8 @@ export const showcaseQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                sizes(maxWidth: 512) {
-                  ...GatsbyImageSharpSizes
+                fluid(maxWidth: 512) {
+                  ...GatsbyImageSharpFluid_noBase64
                 }
               }
             }
@@ -38,7 +43,12 @@ export const showcaseQuery = graphql`
         }
       }
     }
-    allSitesYaml(filter: { main_url: { ne: null } }) {
+    allSitesYaml(
+      filter: {
+        main_url: { ne: null }
+        fields: { hasScreenshot: { eq: true } }
+      }
+    ) {
       edges {
         node {
           id
@@ -53,9 +63,7 @@ export const showcaseQuery = graphql`
           childScreenshot {
             screenshotFile {
               childImageSharp {
-                resolutions(width: 282, height: 211) {
-                  ...GatsbyImageSharpResolutions
-                }
+                ...ShowcaseThumbnailFragment_item
               }
             }
           }

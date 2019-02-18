@@ -21,5 +21,10 @@ module.exports = (key: string): string => {
     return replaced.replace(/_/g, (char, index) => (index === 0 ? `_` : `x`))
   }
 
+  // key is invalid (starts with numeric); normalize with leading underscore
+  if (replaced.match(/^[0-9]/)) {
+    return `_` + replaced
+  }
+
   return replaced
 }

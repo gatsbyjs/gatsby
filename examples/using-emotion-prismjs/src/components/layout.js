@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import { Link, StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 import { css } from "react-emotion"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import { rhythm } from "../utils/typography"
 import "../prism-styles"
@@ -19,7 +19,7 @@ const link = css`
   color: inherit;
 `
 
-class Layout extends React.Component {
+class PureLayout extends React.Component {
   render() {
     const HeadingTag = this.props.isIndex ? `h1` : `h3`
     const { siteTitle, pageTitle } = this.props
@@ -34,7 +34,8 @@ class Layout extends React.Component {
             content="Gatsby example site using Emotion and PrismJS"
           />
           <meta name="referrer" content="origin" />
-        </Helmet>` `<div className={indexContainer}>
+        </Helmet>
+        <div className={indexContainer}>
           <HeadingTag>
             <Link className={link} to={`/`}>
               Using Gatsby with Emotion and PrismJS
@@ -47,26 +48,30 @@ class Layout extends React.Component {
   }
 }
 
-Layout.propTypes = {
+PureLayout.propTypes = {
   siteTitle: PropTypes.string.isRequired,
   pageTitle: PropTypes.string,
   isIndex: PropTypes.bool,
   children: PropTypes.node.isRequired,
 }
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-          }
-        }
+const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
       }
-    `}
+    }
+  }
+`
+
+const Layout = props => (
+  <StaticQuery
+    query={query}
     render={data => (
-      <Layout siteTitle={data.site.siteMetadata.title} {...props} />
+      <PureLayout siteTitle={data.site.siteMetadata.title} {...props} />
     )}
   />
 )
+
+export default Layout

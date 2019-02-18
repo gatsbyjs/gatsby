@@ -4,7 +4,7 @@ title: How to label an issue
 
 ## What are issue labels?
 
-Issue labels are a tool in GitHub that that is used to group issues into one or more categories.
+Issue labels are a tool in GitHub that are used to group issues into one or more categories.
 
 [Check out Gatsby's labels (and their descriptions)](https://github.com/gatsbyjs/gatsby/issues/labels)
 
@@ -24,11 +24,11 @@ Anyone who's a member of the [Gatsby Maintainers team](https://github.com/orgs/g
 
 You can get an invite to the team by having a Pull Request merged into the Gatsby project. Check out the list of [`help wanted`](https://github.com/gatsbyjs/gatsby/labels/%F0%9F%93%8D%20status%3A%20help%20wanted) issues and the [How To Contribute Guide](/docs/how-to-contribute/) to get started.
 
-**NOTE:** If you’ve already had a pull request merged and you have _not_ been invited to the maintainers team, please go to [the dashboard](https://store.gatsbyjs.org/account/dashboard) and request a discount code. You should get an invite to the team — _and you get free Gatsby swag!_ If that doesn’t work, please email team@gatsbyjs.com and we'll get you invited.
+**NOTE:** If you’ve already had a pull request merged and you have _not_ been invited to the maintainers team, please go to [the dashboard](https://store.gatsbyjs.org/) and request a discount code. You should get an invite to the team — _and you get free Gatsby swag!_ If that doesn’t work, please email team@gatsbyjs.com and we'll get you invited.
 
 ## How to label an issue
 
-Ideally every issue should have a single `type:` label applied to it. Optionally a `status:` label, or other labels may also be applied.
+Ideally, every issue should have a single `type:` label applied to it. Optionally a `status:` label or other labels may also be applied.
 
 Before continuing, get familiar with [Gatsby's issue labels and their descriptions](https://github.com/gatsbyjs/gatsby/issues/labels).
 
@@ -42,7 +42,7 @@ The rest of this document will describe how to choose the right labels for an is
 
 ### Find an issue that you're interested in
 
-Start with [Gatsby's issues list](https://github.com/gatsbyjs/gatsby/issues) and scroll through until you see a recent one that strikes your interest. Alternatively you can view the [list of unlabelled issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+no%3Alabel).
+Start with [Gatsby's issues list](https://github.com/gatsbyjs/gatsby/issues) and scroll through until you see a recent one that strikes your interest. Alternatively, you can view the [list of unlabelled issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+no%3Alabel).
 
 ### Read the issue
 
@@ -78,7 +78,7 @@ Examples of applying `status:` labels might be:
 
 - An issue describing a bug without clear steps to reproduce could be labelled with `status: needs reproduction`
 
-- An issue describing a bug where there's steps to reproduce the bug _and_ you've run the code locally and seen the error yourself can be labelled `status: confirmed`
+- An issue describing a bug where there are steps to reproduce the bug _and_ you've run the code locally and seen the error yourself can be labelled `status: confirmed`
 
 ### Choose any other labels
 
