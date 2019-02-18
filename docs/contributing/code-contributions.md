@@ -2,7 +2,7 @@
 title: Code Contributions
 ---
 
-The beauty of contributing to open source is that you can clone your favorite framework, get it running locally, and test out experiments and changes in real time! Way to feel like a wizard.
+The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real time! Way to feel like a wizard.
 
 This page includes instructions specific to the Gatsby core codebase, blog, and website. To start setting up the Gatsby repo on your machine, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/). For additional instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
 
