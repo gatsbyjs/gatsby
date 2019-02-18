@@ -21,8 +21,8 @@ When working on the Gatsby.js documentation, you can choose between two major st
    [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/contributing) on GitHub and
    use the file editor to edit and then preview your changes.
 2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria:
-   - Follow the standards outlined in the [Gatsby Style Guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/).
-   - If your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the [Docs Decision Tree](https://www.gatsbyjs.org/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
+   - Follow the standards outlined in the [Gatsby Style Guide](/contributing/gatsby-style-guide/).
+   - If your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the [Docs Decision Tree](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
      > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
@@ -53,7 +53,6 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
 ### Claim your swag
 
 After your first code contribution to the Gatsby repo (including documentation) you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag/) for more details!
-
 
 ### Want more?
 
