@@ -11,7 +11,7 @@ const { getFilterInput } = require(`./types/filter`)
 const buildSchema = async ({
   schemaComposer,
   nodeStore,
-  typeDefs,
+  types,
   thirdPartySchemas,
   typeMapping,
   typeConflictReporter,
@@ -20,7 +20,7 @@ const buildSchema = async ({
   await updateSchemaComposer({
     schemaComposer,
     nodeStore,
-    typeDefs,
+    types,
     thirdPartySchemas,
     typeMapping,
     typeConflictReporter,
@@ -59,13 +59,13 @@ module.exports = {
 const updateSchemaComposer = async ({
   schemaComposer,
   nodeStore,
-  typeDefs,
+  types,
   typeMapping,
   thirdPartySchemas,
   typeConflictReporter,
   parentSpan,
 }) => {
-  await addTypeDefs({ schemaComposer, parentSpan, typeDefs })
+  await addTypes({ schemaComposer, parentSpan, types })
   await addInferredTypes({
     schemaComposer,
     nodeStore,
@@ -114,9 +114,14 @@ const processTypeComposer = async ({
   }
 }
 
-const addTypeDefs = ({ schemaComposer, typeDefs, parentSpan }) => {
-  typeDefs.forEach(typeDef => {
-    schemaComposer.addTypeDefs(typeDef)
+const addTypes = ({ schemaComposer, types, parentSpan }) => {
+  types.forEach(typeOrTypeDef => {
+    console.log(typeOrTypeDef)
+    if (typeof typeOrTypeDef === `string`) {
+      schemaComposer.addTypeDefs(typeOrTypeDef)
+    } else {
+      schemaComposer.add(typeOrTypeDef)
+    }
   })
 }
 
@@ -179,7 +184,7 @@ const addThirdPartySchemas = ({
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
   const intermediateSchema = schemaComposer.buildSchema()
-  const addResolvers = resolvers => {
+  const createResolvers = resolvers => {
     Object.keys(resolvers).forEach(typeName => {
       const fields = resolvers[typeName]
       if (schemaComposer.has(typeName)) {
@@ -218,9 +223,9 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
       }
     })
   }
-  await apiRunner(`addResolvers`, {
+  await apiRunner(`createResolvers`, {
     schema: intermediateSchema,
-    addResolvers,
+    createResolvers,
     traceId: `initial-addResolvers`,
     parentSpan: parentSpan,
   })

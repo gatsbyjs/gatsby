@@ -18,7 +18,7 @@ const buildTestSchema = async nodes => {
   const schema = await buildSchema({
     schemaComposer,
     nodeStore,
-    typeDefs: [],
+    types: [],
     thirdPartySchemas: [],
   })
   return schema

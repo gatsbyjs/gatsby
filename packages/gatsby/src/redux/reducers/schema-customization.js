@@ -1,8 +1,9 @@
+const _ = require(`lodash`)
 module.exports = (
   state = {
     composer: null,
     thirdPartySchemas: [],
-    typeDefs: [],
+    types: [],
   },
   action
 ) => {
@@ -17,11 +18,18 @@ module.exports = (
         ...state,
         composer: action.payload,
       }
-    case `ADD_TYPE_DEFS`:
+    case `CREATE_TYPES`: {
+      let types
+      if (_.isArray(action.payload)) {
+        types = [...state.types, ...action.payload]
+      } else {
+        types = [...state.types, action.payload]
+      }
       return {
         ...state,
-        typeDefs: [...state.typeDefs, action.payload],
+        types,
       }
+    }
     default:
       return state
   }

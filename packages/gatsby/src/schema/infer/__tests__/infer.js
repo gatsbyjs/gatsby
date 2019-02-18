@@ -87,7 +87,7 @@ describe(`GraphQL type inference`, () => {
     const schema = await buildSchema({
       schemaComposer,
       nodeStore,
-      typeDefs: [],
+      types: [],
       thirdPartySchemas: [],
       typeMapping: [],
       typeConflictReporter,

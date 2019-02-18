@@ -204,7 +204,7 @@ exports.setFieldsOnGraphQLNodeType = true
  * @param {string} resolvers Resolvers from plugin options in `gatsby-config.js`.
  * @example
  * ```js
- * exports.addResolvers = ({ addResolvers }) => {
+ * exports.createResolvers = ({ createResolvers }) => {
  *   const resolvers = {
  *     Author: {
  *       fullName: {
@@ -221,11 +221,11 @@ exports.setFieldsOnGraphQLNodeType = true
  *       }
  *     }
  *   }
- *   addResolvers(resolvers)
+ *   createResolvers(resolvers)
  * }
  * ```
  */
-exports.addResolvers = true
+exports.createResolvers = true
 
 /**
  * Ask compile-to-js plugins to process source to JavaScript so the query

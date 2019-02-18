@@ -60,7 +60,7 @@ describe(`build-node-types`, () => {
     const schema = await buildSchema({
       schemaComposer,
       nodeStore,
-      typeDefs: [],
+      types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
     })

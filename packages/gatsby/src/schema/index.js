@@ -12,7 +12,7 @@ module.exports.build = async ({ parentSpan }) => {
   const span = tracer.startSpan(`build schema`, spanArgs)
 
   let {
-    schemaCustomization: { thirdPartySchemas, typeDefs },
+    schemaCustomization: { thirdPartySchemas, types },
     config: { mapping: typeMapping },
   } = store.getState()
 
@@ -22,7 +22,7 @@ module.exports.build = async ({ parentSpan }) => {
   const schema = await buildSchema({
     schemaComposer,
     nodeStore,
-    typeDefs,
+    types,
     thirdPartySchemas,
     typeMapping,
     typeConflictReporter,

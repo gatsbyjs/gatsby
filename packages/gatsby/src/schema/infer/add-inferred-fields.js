@@ -130,7 +130,7 @@ const addInferredFieldsImpl = ({
             nodeStore,
             prefix: selector,
             depth: depth + 1,
-            addDefaultResolvers: true,
+            addDefaultResolvers: addDefaultResolvers,
           })
         }
       }

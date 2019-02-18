@@ -1142,12 +1142,16 @@ actions.addThirdPartySchema = (
   }
 }
 
-actions.addTypeDefs = (typeDefs: string, plugin: Plugin, traceId?: string) => {
+actions.createTypes = (
+  types: string | GraphQLType | Array<string | GraphQLType>,
+  plugin: Plugin,
+  traceId?: string
+) => {
   return {
-    type: `ADD_TYPE_DEFS`,
+    type: `CREATE_TYPES`,
     plugin,
     traceId,
-    payload: typeDefs,
+    payload: types,
   }
 }
 /**

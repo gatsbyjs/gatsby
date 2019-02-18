@@ -29,8 +29,8 @@ describe(`Kichen sink schema test`, () => {
     apiRunnerNode.mockImplementation((api, ...args) => {
       if (api === `setFieldsOnGraphQLNodeType`) {
         return mockSetFieldsOnGraphQLNodeType(...args)
-      } else if (api === `addResolvers`) {
-        return mockAddResolvers(...args)
+      } else if (api === `createResolvers`) {
+        return mockCreateResolvers(...args)
       } else {
         return []
       }
@@ -43,7 +43,7 @@ describe(`Kichen sink schema test`, () => {
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
     store.dispatch({
-      type: `ADD_TYPE_DEFS`,
+      type: `ADD_TYPES`,
       payload: `
         type PostsJson implements Node {
           id: String!
@@ -118,8 +118,8 @@ const mockSetFieldsOnGraphQLNodeType = async ({ type: { name } }) => {
   }
 }
 
-const mockAddResolvers = ({ addResolvers }) => {
-  addResolvers({
+const mockCreateResolvers = ({ createResolvers }) => {
+  createResolvers({
     Query: {
       likedEnough: {
         type: `[PostsJson]`,

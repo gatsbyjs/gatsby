@@ -51,7 +51,7 @@ describe(`build-node-connections`, () => {
     const schema = await buildSchema({
       schemaComposer,
       nodeStore,
-      typeDefs: [],
+      types: [],
       thirdPartySchemas: [],
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
