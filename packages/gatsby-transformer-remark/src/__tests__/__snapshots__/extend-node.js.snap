@@ -116,7 +116,7 @@ Object {
     },
     Object {
       "depth": 2,
-      "value": null,
+      "value": "second title",
     },
   ],
 }
