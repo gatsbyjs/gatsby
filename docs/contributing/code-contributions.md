@@ -32,6 +32,70 @@ GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 
 The `.env.development` file is ignored by git. Your token should never be committed.
 
+## Using Docker to set up test environments
+
+With all of the possible Gatsby integrations, it might help to spin up a Docker container with the software application you need to test. This makes installation a breeze, so you can focus less on getting set up and more on the integration details that matter to you.
+
+> Do you have a setup not listed here? Let us know by adding it to this file and opening a PR.
+
+### Docker, Wordpress and Gatsby
+
+To install Wordpress to use with Gatsby, this `docker-compose.yml` file will come in handy:
+
+```
+version: '2'
+
+services:
+  db:
+    image: mysql:5.6
+    container_name: sessions_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    image: wordpress:latest
+    container_name: sessions_wordpress
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - "7000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_PASSWORD: wordpress
+    volumes:
+    - ./wp-content:/var/www/html/wp-content
+    - ./wp-app:/var/www/html
+
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: sessions_phpmyadmin
+      environment:
+       - PMA_ARBITRARY=1
+       - PMA_HOST=sessions_db
+       - PMA_USER=wordpress
+       - PMA_PASSWORD=wordpress
+      restart: always
+      ports:
+       - 8080:80
+      volumes:
+       - /sessions
+```
+
+Use the above file contents when following the Docker Wordpress install instructions: https://docs.docker.com/compose/wordpress/
+
+Using Docker Compose, you can start and stop a Wordpress instance and integrate it with the [Gatsby Wordpress source plugin](/docs/sourcing-from-wordpress/).
+
 ## Development tools
 
 ### Debugging the build process
