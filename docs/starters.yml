@@ -1875,6 +1875,19 @@
     - Shopify Store Credentials included
     - Optimized images with gatsby-image.
     - SEO
+- url: https://gatejs.netlify.com
+  repo: https://github.com/sarasate/gate
+  description: API Doc generator inspired by Stripe's API docs
+  tags:
+    - API
+    - Documentation
+    - Markdown
+    - Onepage
+  features:
+    - API documentation from markdown sources
+    - Code samples separated by language
+    - Syntax highlighting
+    - Everything in a single page
 - url: https://hopeful-keller-943d65.netlify.com
   repo: https://github.com/iwilsonq/gatsby-starter-reasonml
   description: Gatsby starter to create static sites using type-safe ReasonML
