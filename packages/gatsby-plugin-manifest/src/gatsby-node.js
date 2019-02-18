@@ -14,7 +14,9 @@ function generateIcons(icons, srcIcon) {
     // For vector graphics, instruct sharp to use a pixel density
     // suitable for the resolution we're rasterizing to.
     // For pixel graphics sources this has no effect.
-    return sharp(srcIcon, { density: size })
+    // Sharp accept density from 1 to 2400
+    const density = Math.min(2400, Math.max(1, size))
+    return sharp(srcIcon, { density })
       .resize(size)
       .toFile(imgPath)
       .then(() => {})
