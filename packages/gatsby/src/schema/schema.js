@@ -117,9 +117,21 @@ const processTypeComposer = async ({
 
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(typeOrTypeDef => {
-    console.log(typeOrTypeDef)
     if (typeof typeOrTypeDef === `string`) {
-      schemaComposer.addTypeDefs(typeOrTypeDef)
+      const addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
+      addedTypes.forEach(type => {
+        const { GraphQLInterfaceType, GraphQLUnionType } = require(`graphql`)
+        let typeComposer
+        if (type instanceof GraphQLInterfaceType) {
+          typeComposer = schemaComposer.getOrCreateIFTC(type.name)
+        } else if (type instanceof GraphQLUnionType) {
+          typeComposer = schemaComposer.getOrCreateUTC(type.name)
+        }
+        if (typeComposer) {
+          typeComposer.setResolveType(node => node.internal.type)
+          schemaComposer.addSchemaMustHaveType(typeComposer)
+        }
+      })
     } else {
       schemaComposer.add(typeOrTypeDef)
     }

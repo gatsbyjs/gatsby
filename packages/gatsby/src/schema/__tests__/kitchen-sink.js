@@ -7,14 +7,12 @@
 // addTypeDefs and corner cases
 // addResolvers
 
-const fs = require(`fs`)
-const path = require(`path`)
-
 const { SchemaComposer } = require(`graphql-compose`)
 const { graphql } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { build } = require(`../index`)
 const withResolverContext = require(`../context`)
+require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
@@ -36,9 +34,9 @@ describe(`Kichen sink schema test`, () => {
         return []
       }
     })
-    const nodes = JSON.parse(
-      fs.readFileSync(path.join(__dirname, `./fixtures/kitchen-sink.json`))
-    )
+
+    const nodes = require(`./fixtures/kitchen-sink.json`)
+
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
       store.dispatch({ type: `CREATE_NODE`, payload: node })

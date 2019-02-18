@@ -64,7 +64,6 @@ const addInferredTypes = ({
     } else {
       typeComposer = schemaComposer.createTC(typeName)
       addNodeInterface({ schemaComposer, typeComposer })
-      inferConfig = getInferConfig(typeComposer)
     }
   })
 

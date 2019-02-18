@@ -1,7 +1,12 @@
 // @flow
 
 const _ = require(`lodash`)
-const { isAbstractType, GraphQLOutputType } = require(`graphql`)
+const {
+  isAbstractType,
+  GraphQLOutputType,
+  GraphQLUnionType,
+} = require(`graphql`)
+const invariant = require(`invariant`)
 
 type IDOrNode = string | { id: string }
 type TypeOrTypeName = string | GraphQLOutputType
@@ -32,8 +37,11 @@ class LocalNodeModel {
     this.createPageDependency = createPageDependency
   }
 
-  getNodeById({ id, type }, pageDependencies) {
+  getNodeById(args, pageDependencies) {
+    const { id, type } = args || {}
+
     const node = getNodeById(this.nodeStore, id)
+
     let result
     if (!node) {
       result = null
@@ -43,6 +51,7 @@ class LocalNodeModel {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
       result = nodeTypeNames.includes(node.internal.type) ? node : null
     }
+
     return trackPageDependencies(
       result,
       pageDependencies,
@@ -50,15 +59,21 @@ class LocalNodeModel {
     )
   }
 
-  getNodesByIds({ ids, type }, pageDependencies) {
-    const nodes = ids.map(id => getNodeById(this.nodeStore, id)).filter(Boolean)
+  getNodesByIds(args, pageDependencies) {
+    const { ids, type } = args || {}
+
+    const nodes = Array.isArray(ids)
+      ? ids.map(id => getNodeById(this.nodeStore, id)).filter(Boolean)
+      : []
+
     let result
-    if (!type) {
+    if (!nodes.length || !type) {
       result = nodes
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
       result = nodes.filter(node => nodeTypeNames.includes(node.internal.type))
     }
+
     return trackPageDependencies(
       result,
       pageDependencies,
@@ -66,7 +81,9 @@ class LocalNodeModel {
     )
   }
 
-  getAllNodes({ type }, pageDependencies) {
+  getAllNodes(args, pageDependencies) {
+    const { type } = args || {}
+
     let result
     if (!type) {
       result = this.nodeStore.getNodes()
@@ -89,8 +106,18 @@ class LocalNodeModel {
   async runQuery(args, pageDependencies) {
     const { query, firstOnly, type } = args || {}
 
+    // We don't support querying union types (yet?), because the combined types
+    // need not have any fields in common.
+    const gqlType = typeof type === `string` ? this.schema.getType(type) : type
+    invariant(
+      !(gqlType instanceof GraphQLUnionType),
+      `Querying GraphQLUnion types is not supported.`
+    )
+
+    // We provide nodes in case of abstract types, because `run-sift` should
+    // only need to know about node types in the store.
     let nodes
-    const nodeTypeNames = toNodeTypeNames(this.schema, type)
+    const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
     if (nodeTypeNames.length > 1) {
       nodes = nodeTypeNames.reduce(
         (acc, typeName) => acc.concat(this.nodeStore.getNodesByType(typeName)),
@@ -101,9 +128,10 @@ class LocalNodeModel {
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
-      gqlType: typeof type === `string` ? this.schema.getType(type) : type,
+      gqlType,
       nodes,
     })
+
     let result = queryResult
     if (args.firstOnly) {
       if (result && result.length > 0) {
@@ -112,6 +140,7 @@ class LocalNodeModel {
         result = null
       }
     }
+
     return trackPageDependencies(
       result,
       pageDependencies,
@@ -142,7 +171,7 @@ const toNodeTypeNames = (schema, gqlTypeName) => {
   const gqlType =
     typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
 
-  if (!gqlType) return null
+  if (!gqlType) return []
 
   const possibleTypes = isAbstractType(gqlType)
     ? schema.getPossibleTypes(gqlType)
