@@ -82,7 +82,8 @@ const addInferredFieldsImpl = ({
         value,
         selector,
         depth,
-        typeMapping
+        typeMapping,
+        addDefaultResolvers
       )
     }
 
@@ -235,7 +236,8 @@ const getFieldConfig = (
   value,
   selector,
   depth,
-  typeMapping
+  typeMapping,
+  addDefaultResolvers
 ) => {
   switch (typeof value) {
     case `boolean`:
@@ -275,6 +277,7 @@ const getFieldConfig = (
             typeMapping,
             prefix: selector,
             depth: depth + 1,
+            addDefaultResolvers: addDefaultResolvers,
           }),
         }
       }

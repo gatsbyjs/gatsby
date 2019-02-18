@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const { isSpecifiedScalarType, isIntrospectionType } = require(`graphql`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
@@ -166,17 +167,19 @@ const addThirdPartySchemas = ({
       schema.getQueryType()
     )
     const fields = QueryTC.getFields()
-    // TODO: Wrap field resolvers to include projected fields in the
-    // selection set.
     schemaComposer.Query.addFields(fields)
 
     // Explicitly add the third-party schema's types, so they can be targeted
     // in `addResolvers` API.
-    const rootTypeName = fields[Object.keys(fields)[0]].type.name
     const types = schema.getTypeMap()
     Object.keys(types).forEach(typeName => {
-      if (!typeName === rootTypeName) {
-        schemaComposer.add(types[typeName])
+      const type = types[typeName]
+      if (
+        type !== schema.getQueryType() &&
+        !isSpecifiedScalarType(type) &&
+        !isIntrospectionType(type)
+      ) {
+        schemaComposer.add(type)
       }
     })
   })

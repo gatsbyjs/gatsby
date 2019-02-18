@@ -1,7 +1,6 @@
 const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
-const { findRootNodeAncestor } = require(`../db/node-tracking`)
 const { GraphQLList, getNullableType, getNamedType } = require(`graphql`)
 
 const findMany = typeName => ({ args, context, info }) =>
@@ -169,7 +168,7 @@ const fileByPath = (source, args, context, info) => {
 
   // Find the File node for this node (we assume the node is something
   // like markdown which would be a child node of a File node).
-  const parentFileNode = findRootNodeAncestor(source)
+  const parentFileNode = context.nodeModel.findRootNodeAncestor(source)
 
   // Find the linked File node(s)
   if (isArray) {
