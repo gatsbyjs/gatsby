@@ -1,5 +1,5 @@
-import * as React from "react";
-import { WindowLocation } from "@reach/router";
+import * as React from "react"
+import { WindowLocation } from "@reach/router"
 
 export {
   default as Link,
@@ -8,8 +8,8 @@ export {
   navigateTo,
   push,
   replace,
-  withPrefix
-} from "gatsby-link";
+  withPrefix,
+} from "gatsby-link"
 
 type RenderCallback = (data: any) => React.ReactNode
 
@@ -21,14 +21,14 @@ export interface StaticQueryProps {
 
 export class StaticQuery extends React.Component<StaticQueryProps> {}
 
-export const useStaticQuery: <TData = any>(query: any) => TData;
+export const useStaticQuery: <TData = any>(query: any) => TData
 
-export const graphql: (query: TemplateStringsArray) => void;
+export const graphql: (query: TemplateStringsArray) => void
 
-export const parsePath: (path: string) => WindowLocation;
+export const parsePath: (path: string) => WindowLocation
 
 export interface PageRendererProps {
-  location: WindowLocation;
+  location: WindowLocation
 }
 
 export class PageRenderer extends React.Component<PageRendererProps> {}
