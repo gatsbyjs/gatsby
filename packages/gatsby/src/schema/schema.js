@@ -175,7 +175,7 @@ const addThirdPartySchemas = ({
     const rootTypeName = fields[Object.keys(fields)[0]].type.name
     const types = schema.getTypeMap()
     Object.keys(types).forEach(typeName => {
-      if (typeName.startsWith(rootTypeName)) {
+      if (!typeName === rootTypeName) {
         schemaComposer.add(types[typeName])
       }
     })

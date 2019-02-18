@@ -10,6 +10,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 
+const { SchemaComposer } = require(`graphql-compose`)
 const { graphql } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { build } = require(`../index`)
@@ -51,6 +52,10 @@ describe(`Kichen sink schema test`, () => {
           code: String
         }
       `,
+    })
+    store.dispatch({
+      type: `ADD_THIRD_PARTY_SCHEMA`,
+      payload: buildThirdPartySchema(),
     })
     await build({})
     schema = store.getState().schema
@@ -95,11 +100,35 @@ describe(`Kichen sink schema test`, () => {
             likes
             code
           }
+          thirdPartyStuff {
+            text
+          }
         }
     `)
     ).toMatchSnapshot()
   })
 })
+
+const buildThirdPartySchema = () => {
+  const schemaComposer = new SchemaComposer()
+  schemaComposer.addTypeDefs(`
+    type ThirdPartyStuff {
+      text: String
+    }
+
+    type Query {
+      thirdPartyStuff: ThirdPartyStuff
+    }
+  `)
+  schemaComposer.Query.extendField(`thirdPartyStuff`, {
+    resolve() {
+      return {
+        text: `Hello third-party schema!`,
+      }
+    },
+  })
+  return schemaComposer.buildSchema()
+}
 
 const mockSetFieldsOnGraphQLNodeType = async ({ type: { name } }) => {
   if (name === `PostsJson`) {
