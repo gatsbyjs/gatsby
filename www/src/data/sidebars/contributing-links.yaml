@@ -28,8 +28,6 @@
           link: /contributing/how-to-label-an-issue/
         - title: Triaging GitHub Issues
           link: /contributing/triaging-github-issues/
-        - title: Setting Up Your Local Dev Environment
-          link: /contributing/setting-up-your-local-dev-environment/
         - title: Docs Contributions
           link: /contributing/docs-contributions/
           items:
@@ -37,10 +35,12 @@
               link: /contributing/docs-templates/
             - title: How to Write a Stub
               link: /contributing/how-to-write-a-stub/
+        - title: Blog & Website Contributions
+          link: /contributing/blog-and-website-contributions/
         - title: Code Contributions
           link: /contributing/code-contributions/
-        - title: Blog and Website Contributions
-          link: /contributing/blog-and-website-contributions/
+        - title: Setting Up Your Local Dev Environment
+          link: /contributing/setting-up-your-local-dev-environment/
         - title: Community Contributions
           link: /contributing/community-contributions/
           items:

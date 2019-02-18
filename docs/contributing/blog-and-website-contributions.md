@@ -1,5 +1,5 @@
 ---
-title: Blog and Website Contributions
+title: Blog & Website Contributions
 ---
 
 We wholeheartedly welcome contributions to the Gatsby blog and website! Instructions on this page:
