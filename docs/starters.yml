@@ -1875,3 +1875,15 @@
     - Shopify Store Credentials included
     - Quick and simple start
     - SEO
+- url: https://hopeful-keller-943d65.netlify.com
+  repo: https://github.com/iwilsonq/gatsby-starter-reasonml
+  description: Gatsby starter to create static sites using type-safe ReasonML
+  tags:
+    - ReasonML
+    - BuckleScript
+    - Blog
+    - bs-css
+  features:
+    - Gatsby v2 support
+    - bs-platform v4 support
+    - Similar to gatsby-starter-blog
