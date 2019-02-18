@@ -18,7 +18,7 @@ const getOrCreateNodeInterface = schemaComposer => {
   const NodeInterfaceTC = schemaComposer.getOrCreateIFTC(`Node`, tc => {
     tc.setDescription(`Node Interface`)
     tc.addFields({
-      id: `String!`,
+      id: `ID!`,
       parent: {
         type: `Node`,
         resolve: (source, args, context, info) => {

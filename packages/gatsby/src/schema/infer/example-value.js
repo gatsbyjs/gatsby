@@ -50,7 +50,6 @@ const getExampleObject = ({
     if (!entriesByType.length) return acc
 
     // TODO: This whole thing could be prettier!
-
     let { value, type } = entriesByType[0]
     let arrayWrappers = 0
     while (Array.isArray(value)) {
@@ -59,8 +58,8 @@ const getExampleObject = ({
     }
 
     if (entriesByType.length > 1 || type.includes(`,`)) {
-      typeConflictReporter.addConflict(selector, entriesByType)
       if (
+        // Maybe have a warning here too
         isMixOfDatesAndStrings(
           entriesByType.map(entry => entry.type),
           arrayWrappers
@@ -68,16 +67,25 @@ const getExampleObject = ({
       ) {
         value = `String`
       } else {
+        typeConflictReporter.addConflict(selector, entriesByType)
         return acc
       }
     }
 
     let exampleFieldValue
-    if (_.isPlainObject(value)) {
+    if (
+      _.isObject(value) &&
+      !_.isArray(value) &&
+      !_.isDate(value) &&
+      !_.isRegExp(value)
+    ) {
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
         let arrays = arrayWrappers - 1
-        while (arrays-- > 0) value = value[0]
+        while (arrays > 0) {
+          value = value[0]
+          arrays--
+        }
         return acc.concat(value)
       }, [])
       const exampleObject = getExampleObject({

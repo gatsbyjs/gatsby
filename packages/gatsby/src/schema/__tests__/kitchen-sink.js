@@ -79,6 +79,7 @@ describe(`Kichen sink schema test`, () => {
                     id
         					}
                 }
+                _3invalidKey
         			}
             }
           }

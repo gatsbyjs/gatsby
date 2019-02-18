@@ -294,6 +294,37 @@ describe(`Get example value for type inference`, () => {
     expect(example.numbers[0]).toBe(3000000000)
   })
 
+  it(`goes through nested object-like objects`, () => {
+    class ObjectLike {
+      constructor(key1, key2) {
+        this.key1 = key1
+        this.key2 = key2
+      }
+    }
+
+    const example = getExampleValue({
+      nodes: [
+        {
+          foo: new ObjectLike(1, `string`),
+          bar: new ObjectLike(2, `string2`),
+        },
+      ],
+      typeConflictReporter,
+    })
+    expect(example).toMatchInlineSnapshot(`
+Object {
+  "bar": Object {
+    "key1": 2,
+    "key2": "string2",
+  },
+  "foo": Object {
+    "key1": 1,
+    "key2": "string",
+  },
+}
+`)
+  })
+
   describe(`handles mix of date strings and date objects`, () => {
     it(`infers mixed string and object dates as Date`, () => {
       const example = getExampleValue({
@@ -559,7 +590,8 @@ describe(`Type conflicts`, () => {
     expect(typeConflictReporter.getConflicts()).toMatchSnapshot()
   })
 
-  it(`reports date and string conflicts`, () => {
+  // We removed this warning to not confuse people
+  it.skip(`reports date and string conflicts`, () => {
     const typeConflictReporter = new TypeConflictReporter()
 
     const nodes = [
