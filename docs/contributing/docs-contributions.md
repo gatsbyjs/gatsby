@@ -2,7 +2,7 @@
 title: Docs Contributions
 ---
 
-Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! It's people like you that make this community great!
+Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of February 2019, over 800 people have contributed. It's people like you that make this community great!
 
 ## Top priorities
 
@@ -50,7 +50,14 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
   ...
 ```
 
-Want more? Check out our additional pages on docs contributions:
+### Claim your swag
+
+After your first code contribution to the Gatsby repo (including documentation) you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag/) for more details!
+
+
+### Want more?
+
+Check out our additional pages on docs contributions:
 
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
 - [Docs Templates](/contributing/docs-templates/)

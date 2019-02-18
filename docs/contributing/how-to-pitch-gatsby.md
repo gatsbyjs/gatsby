@@ -17,7 +17,7 @@ Build blazing-fast websites without the hosting hassles of managing complex, cos
 
 - **Trusted:** Leverage the power of the latest web technologies including React, Webpack, GraphQL, modern JavaScript, and more. Get the best of both worlds—all the power and conveniences from React and its ecosystem with a really slick and responsive user experience.
 
-- **Flexible with BYOC (Bring your own content):** Build websites quickly and deploy them safely, no matter where your content lives. Load data from your CMS, static files, a database, or from multiple places at once. Your marketing team is happy because they can use the content management tools they’re familiar with (WordPress, Drupal, Contentful, Shopify).
+- **Flexible with the Content Mesh:** Build websites quickly and deploy them safely, no matter where your content lives. Load data from your CMS, static files, a database, or from multiple places at once. Your marketing team is happy because they can use the content management tools they’re familiar with (WordPress, Drupal, Contentful, Shopify).
 
 - **Secure:** Gatsby websites are inherently more secure because there are no servers involved. All your content is compiled ahead of time so hackers can’t get to your database or into your CMS. And your site is more resilient to DDoS attacks because the biggest point of failure — a server — is no longer part of the equation.
 

@@ -47,7 +47,7 @@ To add a new blog post to the gatsbyjs.org blog:
 - Double check your grammar and capitalise correctly
 - Commit and push to your fork
 - Create a pull request from your branch
-  - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change`
+  - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change` ([PR example](https://github.com/gatsbyjs/gatsby/commit/9c21394add7906974dcfd22ad5dc1351a99d7ceb#diff-bf544fce773d8a5381f64c37d48d9f12))
 
 ## Development tools
 
