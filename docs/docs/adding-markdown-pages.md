@@ -41,7 +41,7 @@ Now that we've "sourced" the markdown files from the filesystem, we can now "tra
 
 ### Transforming markdown — `gatsby-transformer-remark`
 
-We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognise files which are markdown and read its content. It will convert the frontmatter metadata part of your markdown file as `frontmatter` and the content part as HTML.
+We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) (or [`gatsby-transformer-yaml`](/packages/gatsby-transformer-yaml/) for .yml files) to recognise files which are markdown and read its content. It will convert the frontmatter metadata part of your markdown file as `frontmatter` and the content part as HTML.
 
 `npm install --save gatsby-transformer-remark`
 
