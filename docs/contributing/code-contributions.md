@@ -4,12 +4,17 @@ title: Code Contributions
 
 The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real time! Way to feel like a wizard.
 
-This page includes instructions specific to the Gatsby core codebase, blog, and website. To start setting up the Gatsby repo on your machine, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/). For additional instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
+## Repo setup
 
-## Making changes to the website
+This page includes details specific to the Gatsby core and ecosystem codebase.
 
-If you want to make more changes to the website functionality or documentation, that is, change layout components or templates, add sections/pages, follow the steps for [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/). You can then spin up your own instance of the Gatsby website and make/preview your changes before raising
-a pull request.
+To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-CLI, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/).
+
+To contribute to the blog or Gatsbyjs.org website, check out the setup steps on the [blog and website contributions](/contributing/blog-and-website-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
+
+### Creating your own plugins and loaders
+
+If you create a loader or plugin, we would love for you to open source it and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
 
 ## Making changes to the starter library
 
@@ -26,28 +31,6 @@ GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
 The `.env.development` file is ignored by git. Your token should never be committed.
-
-## Contributing to the blog
-
-Note: Before adding a blog post ensure you have approval from a member of the Gatsby team. You can do this by [opening an issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) or contacting [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs).
-
-To add a new blog post to the gatsbyjs.org blog:
-
-- Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
-- Run `yarn` to install all of the website's dependencies.
-- Run `npm run develop` to preview the blog at `http://localhost:8000/blog`.
-- The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
-- Add your avatar image to `/docs/blog/avatars`
-- Add your name to `/docs/blog/author.yaml`
-- Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder add an `index.md` file.
-- Add `title`, `date`, `author`, and `tags` ([view existing tags](https://www.gatsbyjs.org/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
-- If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
-- Ensure any links to gatsbyjs.org are relative links - `/contributing/how-to-contribute/` instead of `https://gatsbyjs.org/contributing/how-to-contribute`
-- Follow the [Style Guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/#word-choice) to make sure you're using the appropriate wording.
-- Double check your grammar and capitalise correctly
-- Commit and push to your fork
-- Create a pull request from your branch
-  - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change` ([PR example](https://github.com/gatsbyjs/gatsby/commit/9c21394add7906974dcfd22ad5dc1351a99d7ceb#diff-bf544fce773d8a5381f64c37d48d9f12))
 
 ## Development tools
 

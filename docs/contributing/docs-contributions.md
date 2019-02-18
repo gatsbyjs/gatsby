@@ -13,7 +13,7 @@ Check the GitHub repo for issues labeled with ["documentation" and "good first i
 When working on the Gatsby.js documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
-- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content and infrastructure changes. Learn how to get set up in the [Gatsby docs setup instructions](/contributing/setting-up-your-local-dev-environment#docs-site-setup-instructions).
+- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content and infrastructure changes. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
 
 ### Modifying markdown files
 
@@ -49,6 +49,20 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
     link: /docs/example-document/
   ...
 ```
+
+## Docs site setup instructions
+
+After going through the development setup instructions above, there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/). which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) directory.
+
+- Clone the Gatsby repo as described above.
+- For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
+- Change directories into the docs site folder: `cd www`
+- Install dependencies with Yarn: `yarn install`
+- Add the following env variable to an `.env.development` file to [enable image placeholders](https://github.com/gatsbyjs/gatsby/tree/master/www#running-slow-build-screenshots-placeholder): `GATSBY_SCREENSHOT_PLACEHOLDER=true`. This will speed up building the docs site significantly!
+- Start a build of `www` with `gatsby develop`.
+- Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
+- View the changes in your browser at `http://localhost:8000`.
+- Commit your changes and submit a pull request!
 
 ### Claim your swag
 

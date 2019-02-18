@@ -2,8 +2,10 @@
 title: Setting Up Your Local Dev Environment
 ---
 
-Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
-[Lerna](https://lernajs.io/) and [Yarn](https://yarnpkg.com/en/) to configure the repository for both active development and documentation infrastructure changes.
+This page outlines how to get set up to contribute to Gatsby core and its ecosystem. For instructions on working with docs, visit the [docs contributions](/contributing/docs-contributions/) page. For blog and website setup instructions, visit the [blog and website contributions](/contributing/blog-and-website-contributions/) page.
+
+> Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
+> [Lerna](https://lernajs.io/) and [Yarn](https://yarnpkg.com/en/) to configure the repository for both active development and documentation infrastructure changes.
 
 ## Using Yarn
 
@@ -24,7 +26,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 - Set up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
-- See [docs setup instructions](#docs-site-setup-instructions) below for docs-only changes.
+- See [docs setup instructions](/contributing/docs-contributions#docs-site-setup-instructions) below for docs-only changes.
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work. Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch -- --scope={gatsby,gatsby-cli}`. To watch just one package, run `yarn run watch -- --scope=gatsby`.
 - Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
@@ -37,17 +39,3 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 - Once you're done, make sure all tests still pass: `yarn test`.
 - Commit and push to your fork.
 - Create a pull request from your branch.
-
-### Docs site setup instructions
-
-After going through the development setup instructions above, there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](https://gatsbyjs.org/docs/). which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) directory.
-
-- Clone the Gatsby repo as described above.
-- For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
-- Change directories into the docs site folder: `cd www`
-- Install dependencies with Yarn: `yarn install`
-- Add the following env variable to an `.env.development` file to [enable image placeholders](https://github.com/gatsbyjs/gatsby/tree/master/www#running-slow-build-screenshots-placeholder): `GATSBY_SCREENSHOT_PLACEHOLDER=true`. This will speed up building the docs site significantly!
-- Start a build of `www` with `gatsby develop`.
-- Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
-- View the changes in your browser at `http://localhost:8000`.
-- Commit your changes and submit a pull request!
