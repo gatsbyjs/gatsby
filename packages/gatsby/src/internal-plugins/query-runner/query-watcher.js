@@ -13,7 +13,7 @@ const chokidar = require(`chokidar`)
 const path = require(`path`)
 const slash = require(`slash`)
 
-const { store, emitter } = require(`../../redux/`)
+const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
@@ -45,6 +45,7 @@ const handleComponentsWithRemovedQueries = (
       debug(`Page query was removed from ${c.componentPath}`)
       boundActionCreators.replaceComponentQuery({
         query: ``,
+        queryState: `QUERY_EXTRACTED`,
         componentPath: c.componentPath,
       })
       queueQueriesForPageComponent(c.componentPath)
@@ -61,6 +62,17 @@ const handleComponentsWithRemovedQueries = (
         payload: c.jsonName,
       })
       boundActionCreators.deleteComponentsDependencies([c.jsonName])
+    }
+  })
+}
+
+const handlePageComponentsWithNoQueries = ({ components }, queries) => {
+  components.forEach(c => {
+    if (c.queryState === `QUERY_NOT_YET_EXTRACTED`) {
+      boundActionCreators.replaceComponentQuery({
+        queryState: `QUERY_EXTRACTED`,
+        componentPath: c.componentPath,
+      })
     }
   })
 }
@@ -106,7 +118,7 @@ const handleQuery = (
     }
     return true
 
-    // If this is page query
+    // If this is page query.
   } else if (components.has(component)) {
     if (components.get(component).query !== query.text) {
       boundActionCreators.replaceComponentQuery({
@@ -133,6 +145,7 @@ const updateStateAndRunQueries = isFirstRun => {
   const snapshot = getQueriesSnapshot()
   return queryCompiler().then(queries => {
     handleComponentsWithRemovedQueries(snapshot, queries)
+    handleComponentsWithNoQueries(snapshot, queries)
 
     let queriesWillNotRun = false
     queries.forEach((query, component) => {
@@ -244,8 +257,10 @@ const watchComponent = componentPath => {
     !filesToWatch.has(componentPath)
   ) {
     filesToWatch.add(componentPath)
+    console.log(`watchComponent`, componentPath)
     if (watcher) {
       watcher.add(componentPath)
+      updateStateAndRunQueries()
     }
   }
 }
