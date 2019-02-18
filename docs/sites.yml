@@ -4335,3 +4335,15 @@
   built_by: Incremental
   built_by_url: https://www.incremental.com.au
   featured: false
+- title: Technica11y
+  main_url: https://www.technica11y.org
+  url: https://www.technica11y.org
+  description: >
+    Discussing challenges in technical accessibility.
+  categories:
+    - Accessibility
+    - Education
+    - Video
+  built_by: Tenon.io
+  built_by_url: https://tenon.io
+  featured: false
