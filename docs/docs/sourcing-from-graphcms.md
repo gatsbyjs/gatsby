@@ -31,12 +31,12 @@ You can install this component with:
 
 ```bash
   # Optionally with `npm install`
-  yarn add gatsby-source-graphql
+  npm install --save gatsby-source-graphql
 ```
 
 ### Configure the Plugin
 
-The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array. This example uses an open API from GraphCMS but you will most likely want to replace this with your own API and provide a fieldName that makes the most sense to your project.
+The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array. This example uses an open API from GraphCMS but you will most likely want to replace this with your own API and provide a fieldName that makes the most sense to your project. [Here's more information on working with GraphCMS APIs.](https://docs.graphcms.com/developers/api) 
 
 ```js
 {
@@ -57,7 +57,7 @@ If everything works correctly, you should now have your GraphCMS data added to t
 
 ### Querying for Content
 
-From the root of your project, run the development environment with `yarn run development`. Once the server has started and is error free, you should be able to open the following URL in your browser:
+From the root of your project, run the development environment with `npm run development`. Once the server has started and is error free, you should be able to open the following URL in your browser:
 
 `http://localhost:8000/___graphql`
 
@@ -109,7 +109,7 @@ Again, if everything is working properly, you should see a successful response i
 
 ### Getting Content on the Page
 
-For the purpose of this tutorial I've removed all the layout, SEO, link or other components that comprise a page in the Gatsby starter. The components are still there and 99% of users will likely want to put them back in once they understand what's happenig in the code. You are just looking at the nails for right now, but the hammers, saws and other tools are still in the toolbox. Open the index file located at `src/pages/index.js` and replace the content with this code:
+For the purpose of this tutorial I've removed all the layout, SEO, link or other components that comprise a page in the Gatsby starter. The components are still there and 99% of users will likely want to put them back in once they understand what's happening in the code. You are just looking at the nails for right now, but the hammers, saws and other tools are still in the toolbox. Open the index file located at `src/pages/index.js` and replace the content with this code:
 
 ```js
 import React from "react"
@@ -159,4 +159,4 @@ With this code, you have:
 
 Hopefully you've seen how easy it is to start working with GraphCMS and Gatsby. With projects of all sizes gravitating towards the benefits of the JAM stack, the time has never been better to learn how to work with Gatsby. Adding a content API in the back-end with GraphCMS provides a scalable CMS that you can start using within minutes and keep using for the life of your project.
 
-[Checkout GraphCMS today and build "fast websites", fast!](https://graphcms.com?ref="gatsby-headless-docs-bottom")
+[Check out GraphCMS today and build "fast websites", fast!](https://graphcms.com?ref="gatsby-headless-docs-bottom")
