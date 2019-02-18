@@ -9,6 +9,170 @@ function matchesSnapshot(query) {
   expect(code).toMatchSnapshot()
 }
 
+it.todo(
+  `Works correctly with the kitchen sink`
+  // , () => {
+  //   matchesSnapshot(`
+  //   import React from 'react'
+  //   import { graphql, useStaticQuery, StaticQuery } from 'gatsby'
+
+  //   export default () => {
+  //     const query = graphql\`{site { siteMetadata { title }}}\`
+  //     const siteDescription = useStaticQuery(query)
+
+  //     return (
+  //       <StaticQuery
+  //         query={graphql\`{site { siteMetadata { title }}}\`}
+  //         render={data => (
+  //           <div>
+  //             <h1>{data.site.siteMetadata.title}</h1>
+  //             <p>{siteDescription.site.siteMetadata.description}</p>
+  //           </div>
+  //         )}
+  //       />
+  //     )
+  //   }
+  //   `)
+  // }
+)
+
+it(`Transforms queries in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
+    
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transforms exported queries in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const data = useStaticQuery(query)
+
+    return (
+      <>
+        <h1>{data.site.siteMetadata.title}</h1>
+        <p>{data.site.siteMetadata.description}</p>
+      </>
+    )
+  }
+
+  export const query = graphql\`{site { siteMetadata { title }}}\`
+  `)
+})
+
+it(`Transforms queries defined in own variable in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    const siteTitle = useStaticQuery(query)
+    
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transforms queries and preserves destructuring in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    const { site } = useStaticQuery(query)
+    
+    return (
+      <h1>{site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transforms queries and preserves variable type in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql, useStaticQuery } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    let { site } = useStaticQuery(query)
+    
+    return (
+      <h1>{site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Transformation does not break custom hooks`, () => {
+  matchesSnapshot(`
+  import React from "react"
+  import { graphql, useStaticQuery } from "gatsby"
+
+  const useSiteMetadata = () => {
+    const data = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
+    return data.site.siteMetadata
+  }
+
+  export default () => {
+    const siteMetadata = useSiteMetadata()
+
+    return <h1>{site.siteMetadata.title}</h1>
+  }
+
+  `)
+})
+
+it(`Transforms only the call expression in useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from "react"
+  import { graphql, useStaticQuery } from "gatsby"
+  
+  const useSiteMetadata = () => {
+    return useStaticQuery(
+      graphql\`{site { siteMetadata { title }}}\`
+    ).site.siteMetadata
+  }
+  
+  export default () => {
+    const siteMetadata = useSiteMetadata()
+  
+    return <h1>{siteMetadata.title}</h1>
+  }    
+  `)
+})
+
+it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import { graphql } from 'gatsby'
+
+  export default () => {
+    const query = graphql\`{site { siteMetadata { title }}}\`
+    const siteTitle = useStaticQuery(query)
+    
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
 it(`Transforms queries in <StaticQuery>`, () => {
   matchesSnapshot(`
   import React from 'react'

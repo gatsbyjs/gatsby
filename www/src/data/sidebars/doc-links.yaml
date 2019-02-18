@@ -118,6 +118,8 @@
           link: /docs/page-query/
         - title: Querying data in components with StaticQuery
           link: /docs/static-query/
+        - title: Querying data in components with the useStaticQuery hook
+          link: /docs/use-static-query/
         - title: Using GraphQL fragments
           link: /docs/using-fragments/
         - title: Creating slugs for pages

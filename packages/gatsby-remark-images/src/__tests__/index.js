@@ -15,6 +15,7 @@ jest.mock(`gatsby-plugin-sharp`, () => {
 })
 
 const Remark = require(`remark`)
+const queryString = require(`query-string`)
 
 const plugin = require(`../`)
 
@@ -53,7 +54,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
   return {
     files: [].concat(imagePaths).map(imagePath => {
       return {
-        absolutePath: `${dirName}/${imagePath}`,
+        absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
       }
     }),
     markdownNode: createNode(content),
@@ -264,6 +265,40 @@ test(`it handles goofy nesting properly`, async () => {
   const nodes = await plugin(createPluginOptions(content, imagePath))
   const node = nodes.pop()
 
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms HTML img tags with query strings`, async () => {
+  const imagePath = `image/my-image.jpeg?query=string`
+
+  const content = `
+<img src="./${imagePath}">
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms images in markdown with query strings`, async () => {
+  const imagePath = `images/my-image.jpeg?query=string`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
