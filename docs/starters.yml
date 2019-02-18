@@ -1867,13 +1867,13 @@
     - Headless CMS
     - SEO
     - eCommerce
+    - Styling:CSS-in-JS
   features:
     - Shopping Cart
     - Shopify Integration
     - Product Grid
-    - Easily modifiable
     - Shopify Store Credentials included
-    - Quick and simple start
+    - Optimized images with gatsby-image.
     - SEO
 - url: https://hopeful-keller-943d65.netlify.com
   repo: https://github.com/iwilsonq/gatsby-starter-reasonml
