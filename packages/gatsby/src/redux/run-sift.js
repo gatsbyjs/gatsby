@@ -117,9 +117,7 @@ function handleMany(siftArgs, nodes, sort) {
   if (sort) {
     // create functions that return the item to compare on
     // uses _.get so nested fields can be retrieved
-    const convertedFields = sort.fields
-      .map(field => field.replace(/___/g, `.`))
-      .map(field => v => _.get(v, field))
+    const convertedFields = sort.fields.map(field => v => _.get(v, field))
 
     result = _.orderBy(result, convertedFields, sort.order)
   }

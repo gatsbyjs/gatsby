@@ -455,7 +455,7 @@ describe(`collection fields`, () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`],
+        fields: [`frontmatter.blue`],
         order: [`desc`],
       },
     })
@@ -498,7 +498,7 @@ describe(`collection fields`, () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`, `id`],
+        fields: [`frontmatter.blue`, `id`],
         order: [`desc`], // `id` field will be sorted asc
       },
     })
@@ -513,7 +513,7 @@ describe(`collection fields`, () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`, `id`],
+        fields: [`frontmatter.blue`, `id`],
         order: [`desc`, `desc`], // `id` field will be sorted desc
       },
     })
