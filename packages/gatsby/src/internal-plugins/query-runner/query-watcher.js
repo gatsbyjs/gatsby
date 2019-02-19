@@ -132,6 +132,9 @@ const handleQuery = (
 const updateStateAndRunQueries = isFirstRun => {
   const snapshot = getQueriesSnapshot()
   return queryCompiler().then(queries => {
+    // If there's an error while extracting queries, the queryCompiler returns false.
+    // Yeah, should probably be an error but don't feel like threading the error
+    // all the way here.
     if (!queries) {
       return null
     }
@@ -262,13 +265,15 @@ const watchComponent = componentPath => {
   }
 }
 
+const debounceCompile = _.debounce(() => {
+  updateStateAndRunQueries()
+}, 100)
+
 exports.watchComponent = watchComponent
+exports.debounceCompile = debounceCompile
 
 const watch = rootDir => {
   if (watcher) return
-  const debounceCompile = _.debounce(() => {
-    updateStateAndRunQueries()
-  }, 100)
 
   watcher = chokidar
     .watch(slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)))

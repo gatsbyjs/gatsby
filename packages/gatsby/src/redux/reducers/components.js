@@ -1,58 +1,102 @@
 const _ = require(`lodash`)
 const normalize = require(`normalize-path`)
 const { Machine, interpret, actions } = require(`xstate`)
-
 const { assign } = actions
 
 const componentMachine = Machine(
   {
-    id: "pageComponents",
-    initial: "extractingQueries",
+    id: `pageComponents`,
+    initial: `inactive`,
     context: {
+      isInBootstrap: true,
       componentPath: ``,
       query: ``,
     },
     states: {
-      extractingQueries: {
-        onEntry: ["extractQueries"],
+      inactive: {
         on: {
+          // Transient transition
+          // Will transition to either 'inactiveWhileBootstrapping' or 'extractingQueries'
+          // immediately upon entering 'inactive' state if the condition is met.
+          "": [
+            { target: `inactiveWhileBootstrapping`, cond: `isBootstrapping` },
+            { target: `extractingQueries`, cond: `isNotBootstrapping` },
+          ],
+        },
+      },
+      inactiveWhileBootstrapping: {
+        on: {
+          BOOTSTRAP_FINISHED: {
+            target: `extractingQueries`,
+            actions: `setBootstrapFinished`,
+          },
+          QUERY_EXTRACTED: `queryExtracted`,
+          QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
+        },
+      },
+      extractingQueries: {
+        onEntry: [`extractQueries`],
+        on: {
+          BOOTSTRAP_FINISHED: {
+            actions: `setBootstrapFinished`,
+          },
           QUERY_EXTRACTED: `queryExtracted`,
           QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
         },
       },
       queryExtracted: {
-        onEntry: ["setQuery", "runPageComponentQueries"],
+        onEntry: [`setQuery`, `runPageComponentQueries`],
         on: {
-          COMPONENT_CHANGED: "extractingQueries",
+          BOOTSTRAP_FINISHED: {
+            actions: `setBootstrapFinished`,
+          },
+          COMPONENT_CHANGED: `extractingQueries`,
         },
       },
       queryGraphQLError: {
         on: {
-          COMPONENT_CHANGED: "extractingQueries",
-          QUERY_EXTRACTED: "queryExtracted",
+          COMPONENT_CHANGED: `extractingQueries`,
+          QUERY_EXTRACTED: `queryExtracted`,
         },
       },
     },
   },
   {
+    guards: {
+      isBootstrapping: context => context.isInBootstrap,
+      isNotBootstrapping: context => !context.isInBootstrap,
+    },
     actions: {
-      extractQueries() {
-        console.log(`call extractQueries`)
+      extractQueries: () => {
+        const {
+          debounceCompile,
+        } = require(`../../internal-plugins/query-runner/query-watcher`)
+
+        debounceCompile()
       },
       runPageComponentQueries: () => console.log(`runPageComponentQueries`),
       setQuery: assign({
         query: (ctx, event) => event.query,
+      }),
+      setBootstrapFinished: assign({
+        isInBootstrap: false,
       }),
     },
   }
 )
 
 const services = new Map()
+let programStatus = `BOOTSTRAPPING`
 
 module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()
+    case `SET_PROGRAM_STATUS`:
+      programStatus = action.payload
+      console.log(`programStatus`, programStatus)
+      services.forEach(s => s.send(`BOOTSTRAP_FINISHED`))
+      return state
     case `CREATE_PAGE`: {
       action.payload.componentPath = normalize(action.payload.component)
       // Create XState service.
@@ -60,9 +104,13 @@ module.exports = (state = new Map(), action) => {
         const machine = componentMachine.withContext({
           componentPath: action.payload.componentPath,
           query: ``,
+          isInBootstrap: programStatus === `BOOTSTRAPPING`,
         })
         const service = interpret(machine).onTransition(nextState => {
-          console.log(`component machine value`, nextState)
+          console.log(
+            `component machine value`,
+            _.pick(nextState, [`value`, `context`, `event`])
+          )
         })
         service.start()
         services.set(action.payload.componentPath, service)

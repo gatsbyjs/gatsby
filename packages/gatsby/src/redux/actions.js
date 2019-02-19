@@ -1188,6 +1188,20 @@ actions.queryGraphQLError = (
 }
 
 /**
+ * Set overall program status.
+ *
+ * @param {string} Program status
+ */
+actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
+  return {
+    type: `SET_PROGRAM_STATUS`,
+    plugin,
+    traceId,
+    payload: status,
+  }
+}
+
+/**
  * All action creators wrapped with a dispatch.
  */
 exports.actions = actions
