@@ -11,16 +11,16 @@ size, disability, ethnicity, gender identity and expression, level of
 experience, nationality, personal appearance, race, religion, or sexual identity
 and orientation.
 
-[Read full code of conduct](/docs/code-of-conduct/)
+[Read full code of conduct](/contributing/code-of-conduct/)
 
 ## Ways to Contribute
 
 The Gatsby community welcomes contributions. Please refer to the guides below on how to make sure your contributions get accepted:
 
-- [How to Contribute](/docs/how-to-contribute/)
-- [How to File an Issue](/docs/how-to-file-an-issue/)
+- [How to Contribute](/contributing/how-to-contribute/)
+- [How to File an Issue](/contributing/how-to-file-an-issue/)
 - [Make feature requests with an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
-- [Gatsby Style Guide](/docs/gatsby-style-guide/)
+- [Gatsby Style Guide](/contributing/gatsby-style-guide/)
 
 ## Gatsby news
 

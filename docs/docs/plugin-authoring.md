@@ -75,4 +75,4 @@ root.
 
 ## Publishing a plugin to the library
 
-If you'd like to publish your plugin to the Gatsby Plugin Library (please do!), [follow these steps](/docs/submit-to-plugin-library/).
+If you'd like to publish your plugin to the Gatsby Plugin Library (please do!), [follow these steps](/contributing/submit-to-plugin-library/).

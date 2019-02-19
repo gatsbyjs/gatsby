@@ -389,41 +389,9 @@
       link: /docs/image-tutorial/
     - title: Writing documentation with Docz
       link: /docs/writing-documentation-with-docz/
-- title: Contributing
-  items:
-    - title: Community
-      link: /docs/community/
-    - title: Code of Conduct
-      link: /docs/code-of-conduct/
-    - title: How to contribute
-      link: /docs/how-to-contribute/
-    - title: Free swag for contributors
-      link: /docs/contributor-swag/
-    - title: How to file an issue
-      link: /docs/how-to-file-an-issue/
-    - title: How to label an issue
-      link: /docs/how-to-label-an-issue/
-    - title: Community Pair Programming Sessions
-      link: /docs/pair-programming/
-    - title: Gatsby Style Guide
-      link: /docs/gatsby-style-guide/
-    - title: RFC process
-      link: /docs/rfc-process/
-    - title: Docs templates
-      link: /docs/templates/
-    - title: How to run a Gatsby workshop*
-      link: /docs/how-to-run-a-gatsby-workshop/
-    - title: How to pitch Gatsby*
-      link: /docs/how-to-pitch-gatsby/
-    - title: Submit to Site Showcase
-      link: /docs/site-showcase-submissions/
-    - title: Submit to Creator Showcase
-      link: /docs/submit-to-creator-showcase/
-    - title: Submit to Starter Library
-      link: /docs/submit-to-starter-library/
-    - title: Submit to Plugin Library
-      link: /docs/submit-to-plugin-library/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/
+- title: Contributing
+  link: /contributing/

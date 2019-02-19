@@ -2,7 +2,7 @@
 title: Free Swag for Gatsby Contributors!
 ---
 
-Gatsby relies on contributors from the open source community, and we want to make sure you know how much it means to us that you’re willing to put time and effort into [contributing to Gatsby](/docs/how-to-contribute/).
+Gatsby relies on contributors from the open source community, and we want to make sure you know how much it means to us that you’re willing to put time and effort into [contributing to Gatsby](/contributing/how-to-contribute/).
 
 To show our appreciation, _**everyone who contributes to Gatsby is eligible to receive free swag!**_
 
