@@ -2,6 +2,7 @@ const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { URL } = require(`url`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
@@ -132,8 +133,9 @@ exports.normalizeEntities = normalizeEntities
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>
   entities.map(e =>
-    deepMapKeys(e, key =>
-      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key })
+    deepMapKeys(
+      e,
+      key => (key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }))
     )
   )
 
