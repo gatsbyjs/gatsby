@@ -488,7 +488,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         let released = false
         const date = _.get(node, `frontmatter.date`)
         if (date) {
-          released = moment().isSameOrAfter(moment.utc(date))
+          released = moment.utc().isSameOrAfter(moment.utc(date))
         }
         createNodeField({ node, name: `released`, value: released })
 
