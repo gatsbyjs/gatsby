@@ -1,11 +1,13 @@
 [
   {
-    "name": "Mikhail Novikov",
+    "name": "Novikov",
+    "firstName": "Mikhail",
     "email": "m@example.com",
     "picture": "../images/gatsby-astronaut.png"
   },
   {
-    "name": "Stefan Probst",
+    "name": "Probst",
+    "firstName": "Stefan",
     "email": "s@example.com",
     "picture": "../images/gatsby-astronaut.png"
   }

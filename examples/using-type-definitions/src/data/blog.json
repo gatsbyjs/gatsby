@@ -6,12 +6,12 @@
     "tags": ["foo", "bar"]
   },
   {
-    "title": "But Gatsby blog posts might not have author",
+    "title": "But Gatsby blog posts might not have an author",
     "date": "2018-01-01",
     "tags": ["baz", "bar"]
   },
   {
-    "title": "Or more than one author",
+    "title": "Or they might have more than one author",
     "authors": ["m@example.com", "s@example.com"],
     "date": "2017-01-01",
     "tags": ["baz"]
