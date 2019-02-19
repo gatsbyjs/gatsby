@@ -65,6 +65,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   if (
     // Make sure the window.page object is defined
     page &&
+    // Prevent navigation when acting as a single/static page generator
+    !__DISABLE_ALL_REDIRECTS_BECASUE_IM_USING_GATSBY_AS_A_STATIC_PAGE_GENERATOR__ &&
     // The canonical path doesn't match the actual path (i.e. the address bar)
     __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
     // ...and if matchPage is specified, it also doesn't match the actual path

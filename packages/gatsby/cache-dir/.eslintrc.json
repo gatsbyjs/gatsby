@@ -4,6 +4,7 @@
   },
   "globals": {
     "__PATH_PREFIX__": false,
+    "__DISABLE_ALL_REDIRECTS_BECASUE_IM_USING_GATSBY_AS_A_STATIC_PAGE_GENERATOR__": false,
     "___emitter": false
   }
 }

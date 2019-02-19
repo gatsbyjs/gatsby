@@ -376,6 +376,7 @@ export default (pagePath, callback) => {
     replacePostBodyComponents,
     pathname: pagePath,
     pathPrefix: __PATH_PREFIX__,
+    disableAllRedirectsBecasueImUsingGatsbyAsAStaticPageGenerator: __DISABLE_ALL_REDIRECTS_BECASUE_IM_USING_GATSBY_AS_A_STATIC_PAGE_GENERATOR__,
   })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(

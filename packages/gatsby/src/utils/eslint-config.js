@@ -6,6 +6,7 @@ module.exports = schema => {
     baseConfig: {
       globals: {
         graphql: true,
+        __DISABLE_ALL_REDIRECTS_BECASUE_IM_USING_GATSBY_AS_A_STATIC_PAGE_GENERATOR__: false,
         __PATH_PREFIX__: true,
       },
       extends: `react-app`,
