@@ -181,6 +181,8 @@ module.exports = async (
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
+        __DISABLE_ALL_REDIRECTS_BECASUE_IM_USING_GATSBY_AS_A_STATIC_PAGE_GENERATOR__: store.getState()
+          .config.disableAllRedirectsBecasueImUsingGatsbyAsAStaticPageGenerator,
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
