@@ -127,7 +127,7 @@ Object {
   "headings": Array [
     Object {
       "depth": 1,
-      "value": "An ",
+      "value": "An important heading with inline code and text",
     },
   ],
 }

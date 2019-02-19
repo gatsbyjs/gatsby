@@ -15,6 +15,7 @@ const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
+const mdastToString = require(`mdast-util-to-string`)
 const Promise = require(`bluebird`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
@@ -267,12 +268,8 @@ module.exports = (
       } else {
         const ast = await getAST(markdownNode)
         const headings = select(ast, `heading`).map(heading => {
-          const texts = [
-            ...select(heading, `text`),
-            ...select(heading, `inlineCode`),
-          ].filter(text => text.value)
           return {
-            value: _.first(texts.map(text => text.value)),
+            value: mdastToString(heading),
             depth: heading.depth,
           }
         })
