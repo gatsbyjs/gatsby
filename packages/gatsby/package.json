@@ -113,6 +113,7 @@
     "signal-exit": "^3.0.2",
     "slash": "^1.0.0",
     "socket.io": "^2.0.3",
+    "stack-trace": "^0.0.10",
     "string-similarity": "^1.2.0",
     "style-loader": "^0.21.0",
     "terser-webpack-plugin": "^1.2.2",
