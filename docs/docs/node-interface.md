@@ -65,4 +65,4 @@ GraphQL schema which you can then query from your site's components.
 
 ## Node Creation
 
-To learn more about how nodes are created and linked together, check out the [Node Creation](https://www.gatsbyjs.org/docs/node-creation/) documentation in the "Behind the Scenes" section.
+To learn more about how nodes are created and linked together, check out the [Node Creation](/docs/node-creation/) documentation in the "Behind the Scenes" section.
