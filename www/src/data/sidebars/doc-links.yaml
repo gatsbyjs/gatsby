@@ -199,6 +199,8 @@
           link: /docs/debugging-cache-issues/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
+        - title: Debugging Async Lifecycles
+          link: /docs/debugging-async-lifecycles/
     - title: Adding website functionality
       link: /docs/adding-website-functionality/
       items:
