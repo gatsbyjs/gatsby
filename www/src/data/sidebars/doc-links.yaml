@@ -195,6 +195,8 @@
           link: /docs/debugging-replace-renderer-api/
         - title: Debugging the build process
           link: /docs/debugging-the-build-process/
+        - title: Debugging Cache Issues
+          link: /docs/debugging-cache-issues/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
     - title: Adding website functionality
