@@ -5697,7 +5697,7 @@ createerror@1.3.0, createerror@^1.2.0, createerror@^1.3.0:
   resolved "https://registry.yarnpkg.com/createerror/-/createerror-1.3.0.tgz#c666bd4cd6b94e35415396569d4649dd0cdb3313"
   integrity sha512-w9UZUtkaGd8MfS7eMG7Sa0lV5vCJghqQfiOnwNVrPhbZScUp5h0jwYoAF933MKlotlG1JAJOCCT3xU6r+SDKNw==
 
-cross-env@^5.0.5, cross-env@^5.1.4:
+cross-env@^5.0.5, cross-env@^5.1.4, cross-env@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.2.0.tgz#6ecd4c015d5773e614039ee529076669b9d126f2"
   integrity sha512-jtdNFfFW1hB7sMhr/H6rW1Z45LFqyI431m3qU6bFXcQ3Eh7LtBuG3h74o7ohHZ3crrRkkqHlo4jYHFPcjroANg==
