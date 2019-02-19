@@ -78,3 +78,34 @@ Then, tell the plugin to look in your theme's `src/pages` directory.
   },
 },
 ```
+
+## Transpiling your theme with webpack
+
+By default, webpack won't be run on themes that are installed via npm.
+However, you can ensure that webpack transpiles your theme by extending the webpack config.
+
+```js:title=gatsby-node.js
+exports.onCreateWebpackConfig = ({ loaders, actions }) => {
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: path.dirname(require.resolve("gatsby-theme-NAME")),
+          use: [loaders.js()],
+        },
+      ],
+    },
+  })
+}
+```
+
+## Publishing to npm
+
+In order to allow others to install your theme you will need to publish it to npm. If you haven't published to npm before, learn how [here](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+
+Once you've published, you can install the theme in your starter.
+
+```sh
+npm install --save gatsby-theme-NAME
+```
