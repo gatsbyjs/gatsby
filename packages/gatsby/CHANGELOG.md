@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.8...gatsby@2.1.9) (2019-02-19)
+
+### Features
+
+- **gatsby:** show warning if createPage was called after createPages API finished ([#11883](https://github.com/gatsbyjs/gatsby/issues/11883)) ([258b655](https://github.com/gatsbyjs/gatsby/commit/258b655))
+
 ## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.7...gatsby@2.1.8) (2019-02-19)
 
 ### Features
