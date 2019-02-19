@@ -26,7 +26,6 @@ const addInferredFields = ({
       prefix: typeComposer.getTypeName(),
       typeMapping: typeMapping,
       addDefaultResolvers: inferConfig ? inferConfig.addDefaultResolvers : true,
-      depth: 0,
     })
   }
 }
@@ -297,12 +296,17 @@ const getSimpleFieldConfig = (
         return { type: `String` }
       }
       if (value /* && depth < MAX_DEPTH*/) {
+        // We only create a temporary TypeComposer on nested fields,
+        // because we don't yet know if this type should end up in
+        // the schema. It might be for a possibleField that will be
+        // disregarded later.
+        const typeComposer = schemaComposer.TypeComposer.createTemp(
+          createTypeName(selector)
+        )
         return {
           type: addInferredFieldsImpl({
             schemaComposer,
-            typeComposer: schemaComposer.getOrCreateTC(
-              createTypeName(selector)
-            ),
+            typeComposer,
             nodeStore,
             exampleObject: value,
             typeMapping,

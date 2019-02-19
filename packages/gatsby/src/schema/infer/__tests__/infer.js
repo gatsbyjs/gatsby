@@ -346,6 +346,34 @@ describe(`GraphQL type inference`, () => {
     expect(result).toMatchSnapshot()
   })
 
+  it(`Handles priority for conflicting nested fields`, async () => {
+    const nodes = [
+      {
+        "2invalid": { nested: { check: 1 } },
+        _2invalid: { nested: { check: true } },
+        internal: { type: `Test` },
+        id: `1`,
+      },
+      {
+        "2invalid": { nested: { check: 0 } },
+        _2invalid: { nested: { check: false } },
+        internal: { type: `Test` },
+        id: `2`,
+      },
+    ]
+
+    const result = await getQueryResult(
+      nodes,
+      `
+      _2invalid { nested { check } }
+      `
+    )
+    const { edges } = result.data.allTest
+    expect(edges[0].node[`_2invalid`].nested.check).toBe(true)
+    expect(edges[1].node[`_2invalid`].nested.check).toBe(false)
+    expect(result).toMatchSnapshot()
+  })
+
   describe(`Handles dates`, () => {
     it(`Handles integer with valid date format`, async () => {
       const nodes = [
