@@ -356,3 +356,19 @@ You can similarly check for file downloads:
 ```
 
 [egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
+
+## Limitations when appending query parameters or hash links programmatically
+
+Neither `<Link>` not `navigate` can be used to add query parameters or send your user to a hash link due to their use of `withPrefix`. If you need this behavior, you should either use an anchor tag or load the `@reach/router` package to make use of its `navigate` function.
+
+```jsx
+import { navigate } from '@reach/router';
+
+...
+
+onClick = () => {
+  navigate('#some-link');
+  // OR
+  navigate('?foo=bar');
+}
+```
