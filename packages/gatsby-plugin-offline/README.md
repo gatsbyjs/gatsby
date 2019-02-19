@@ -21,14 +21,14 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Available options
 
-As of `gatsby-plugin-offline` 2.1.0, the following options are available:
+As of `gatsby-plugin-offline` 3.0.0, the following options are available:
 
 - `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration)
 - `injectScript` lets you specify a file to be injected into the end of the generated service worker (`sw.js`)
 
 For example:
 
-```javascript
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-offline`,
@@ -42,11 +42,25 @@ plugins: [
 ]
 ```
 
-## Upgrading from 2.0.x
+```javascript:title=src/custom-sw-code.js
+// show a notification after 15 seconds (the notification
+// permission must be granted first)
+setTimeout(() => {
+  self.registration.showNotification("Hello, world!")
+}, 15000)
 
-To upgrade from 2.0.x to 2.1.x, move any existing options into the `workboxConfig` option. If you haven't specified any options, you have nothing to do.
+// register a custom navigation route
+const customRoute = new workbox.routing.NavigationRoute(({ event }) => {
+  // ...
+})
+workbox.routing.registerRoute(customRoute)
+```
 
-For example, here is a 2.0.x config:
+## Upgrading from 2.x
+
+To upgrade from 2.x to 3.x, move any existing options into the `workboxConfig` option. If you haven't specified any options, you have nothing to do.
+
+For example, here is a 2.x config:
 
 ```javascript
 plugins: [
@@ -59,7 +73,7 @@ plugins: [
 ]
 ```
 
-Here is the equivalent 2.1.x config:
+Here is the equivalent 3.x config:
 
 ```javascript
 plugins: [
