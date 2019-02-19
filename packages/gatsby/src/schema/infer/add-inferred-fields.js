@@ -1,11 +1,7 @@
 const _ = require(`lodash`)
-const {
-  GraphQLList,
-  GraphQLObjectType,
-  defaultFieldResolver,
-  getNamedType,
-} = require(`graphql`)
+const { defaultFieldResolver, getNamedType } = require(`graphql`)
 const invariant = require(`invariant`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const { isFile } = require(`./is-file`)
 const { link, fileByPath } = require(`../resolvers`)
@@ -46,90 +42,49 @@ const addInferredFieldsImpl = ({
   exampleObject,
   typeMapping,
   prefix,
-  depth,
   addDefaultResolvers,
 }) => {
-  const fields = {}
+  const fields = []
   Object.keys(exampleObject).forEach(unsanitizedKey => {
     const exampleValue = exampleObject[unsanitizedKey]
-    let key = createFieldName(unsanitizedKey)
-    const selector = `${prefix}.${key}`
-
-    let arrays = 0
-    let value = exampleValue
-    while (Array.isArray(value)) {
-      value = value[0]
-      arrays++
-    }
-
-    let fieldConfig
-    if (hasMapping(typeMapping, selector)) {
-      // TODO: Use `prefix` instead of `selector` in hasMapping and getFromMapping?
-      // i.e. does the config contain sanitized field names?
-      fieldConfig = getFieldConfigFromMapping(typeMapping, selector)
-    } else if (key.includes(`___NODE`)) {
-      fieldConfig = getFieldConfigFromFieldNameConvention(
+    fields.push(
+      getFieldConfig({
         schemaComposer,
         nodeStore,
+        prefix,
         exampleValue,
-        unsanitizedKey
-      )
-      key = key.split(`___NODE`)[0]
-    } else {
-      fieldConfig = getFieldConfig(
-        schemaComposer,
-        nodeStore,
-        value,
-        selector,
-        depth,
+        unsanitizedKey,
         typeMapping,
-        addDefaultResolvers
-      )
-    }
+        addDefaultResolvers,
+      })
+    )
+  })
 
-    // Proxy resolver to unsanitized fieldName in case it contained invalid characters
-    if (key !== unsanitizedKey) {
-      // Don't create a field with the sanitized key if a field with that name already exists.
-      invariant(
-        exampleObject[key] == null && !typeComposer.hasField(key),
-        `Field name "${unsanitizedKey}" on "${prefix}" is invalid. Gatsby tried adding a proxy field with name "${key}", but it already exists in the type.`
-      )
+  const fieldsByKey = _.groupBy(fields, field => field.key)
 
-      const resolver = fieldConfig.resolve || defaultFieldResolver
-      fieldConfig = {
-        ...fieldConfig,
-        resolve: (source, args, context, info) =>
-          resolver(source, args, context, {
-            ...info,
-            fieldName: unsanitizedKey,
-          }),
-      }
+  Object.keys(fieldsByKey).forEach(key => {
+    const possibleFields = fieldsByKey[key]
+    let fieldConfig
+    if (possibleFields.length > 1) {
+      const field = resolveMultipleFields(possibleFields)
+      const possibleFieldsNames = possibleFields
+        .map(field => field.unsanitizedKey)
+        .join(`, `)
+      report.warn(
+        `Multiple node fields resolve to the same GraphQL field "${
+          field.key
+        }" - "[${possibleFieldsNames}]". Gatsby will use "${
+          field.unsanitizedKey
+        }".`
+      )
+      fieldConfig = field.fieldConfig
+    } else {
+      fieldConfig = possibleFields[0].fieldConfig
     }
 
     if (typeComposer.hasField(key)) {
-      let fieldType = typeComposer.getFieldType(key)
-      if (_.isPlainObject(value) /* && depth < MAX_DEPTH */) {
-        // TODO: Use helper (similar to dropTypeModifiers)
-        let lists = 0
-        while (fieldType.ofType) {
-          if (fieldType instanceof GraphQLList) lists++
-          fieldType = fieldType.ofType
-        }
-
-        if (lists === arrays && fieldType instanceof GraphQLObjectType) {
-          addInferredFieldsImpl({
-            schemaComposer,
-            typeComposer: typeComposer.getFieldTC(key),
-            exampleObject: value,
-            typeMapping,
-            nodeStore,
-            prefix: selector,
-            depth: depth + 1,
-            addDefaultResolvers: addDefaultResolvers,
-          })
-        }
-      }
       let field = typeComposer.getField(key)
+      let fieldType = typeComposer.getFieldType(key)
       if (
         addDefaultResolvers &&
         getNamedType(fieldType).name === fieldConfig.type
@@ -148,18 +103,97 @@ const addInferredFieldsImpl = ({
         typeComposer.setField(key, field)
       }
     } else {
-      while (arrays > 0) {
-        fieldConfig = { ...fieldConfig, type: [fieldConfig.type] }
-        arrays--
-      }
-      fields[key] = fieldConfig
+      typeComposer.setField(key, fieldConfig)
     }
   })
 
-  Object.keys(fields).forEach(fieldName => {
-    typeComposer.setField(fieldName, fields[fieldName])
-  })
   return typeComposer
+}
+
+const getFieldConfig = ({
+  schemaComposer,
+  nodeStore,
+  prefix,
+  exampleValue,
+  unsanitizedKey,
+  typeMapping,
+  addDefaultResolvers,
+}) => {
+  let key = createFieldName(unsanitizedKey)
+  const selector = `${prefix}.${key}`
+
+  let arrays = 0
+  let value = exampleValue
+  while (Array.isArray(value)) {
+    value = value[0]
+    arrays++
+  }
+
+  let fieldConfig
+  if (hasMapping(typeMapping, selector)) {
+    // TODO: Use `prefix` instead of `selector` in hasMapping and getFromMapping?
+    // i.e. does the config contain sanitized field names?
+    fieldConfig = getFieldConfigFromMapping(typeMapping, selector)
+  } else if (key.includes(`___NODE`)) {
+    fieldConfig = getFieldConfigFromFieldNameConvention(
+      schemaComposer,
+      nodeStore,
+      exampleValue,
+      unsanitizedKey
+    )
+    key = key.split(`___NODE`)[0]
+  } else {
+    fieldConfig = getSimpleFieldConfig(
+      schemaComposer,
+      nodeStore,
+      value,
+      selector,
+      typeMapping,
+      addDefaultResolvers
+    )
+  }
+
+  // Proxy resolver to unsanitized fieldName in case it contained invalid characters
+  if (key !== unsanitizedKey) {
+    const resolver = fieldConfig.resolve || defaultFieldResolver
+    fieldConfig = {
+      ...fieldConfig,
+      resolve: (source, args, context, info) =>
+        resolver(source, args, context, {
+          ...info,
+          fieldName: unsanitizedKey,
+        }),
+    }
+  }
+
+  while (arrays > 0) {
+    fieldConfig = { ...fieldConfig, type: [fieldConfig.type] }
+    arrays--
+  }
+
+  return {
+    key,
+    unsanitizedKey,
+    fieldConfig,
+  }
+}
+
+const resolveMultipleFields = possibleFields => {
+  const nodeField = possibleFields.find(field =>
+    field.unsanitizedKey.endsWith(`___NODE`)
+  )
+  if (nodeField) {
+    return nodeField
+  }
+
+  const canonicalField = possibleFields.find(
+    field => field.unsanitizedKey === field.key
+  )
+  if (canonicalField) {
+    return canonicalField
+  }
+
+  return _.sortBy(possibleFields, field => field.unsanitizedKey)[0]
 }
 
 // XXX(freiksenet): removing this as it's a breaking change
@@ -228,12 +262,11 @@ const getFieldConfigFromFieldNameConvention = (
   return { type, resolve: link({ by: foreignKey || `id`, from: key }) }
 }
 
-const getFieldConfig = (
+const getSimpleFieldConfig = (
   schemaComposer,
   nodeStore,
   value,
   selector,
-  depth,
   typeMapping,
   addDefaultResolvers
 ) => {
@@ -274,7 +307,6 @@ const getFieldConfig = (
             exampleObject: value,
             typeMapping,
             prefix: selector,
-            depth: depth + 1,
             addDefaultResolvers: addDefaultResolvers,
           }),
         }

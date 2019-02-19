@@ -308,6 +308,44 @@ describe(`GraphQL type inference`, () => {
     expect(result.data.allTest.edges[0].node._456).toEqual(nodes[0][`456`])
   })
 
+  it(`Handles priority for conflicting fields`, async () => {
+    const nodes = [
+      {
+        _2invalid: 1,
+        "2invalid": 2,
+        sibling: { id: `Test` },
+        sibling___NODE: `2`,
+        internal: { type: `Test` },
+        id: `1`,
+      },
+      {
+        _2invalid: 1,
+        "2invalid": 2,
+        sibling: { id: `Test` },
+        sibling___NODE: `3`,
+        internal: { type: `Test` },
+        id: `2`,
+      },
+      {
+        _2invalid: 1,
+        "2invalid": 2,
+        sibling: { id: `Test` },
+        sibling___NODE: `1`,
+        internal: { type: `Test` },
+        id: `3`,
+      },
+    ]
+
+    const result = await getQueryResult(
+      nodes,
+      `
+      sibling { id }
+      _2invalid
+      `
+    )
+    expect(result).toMatchSnapshot()
+  })
+
   describe(`Handles dates`, () => {
     it(`Handles integer with valid date format`, async () => {
       const nodes = [
