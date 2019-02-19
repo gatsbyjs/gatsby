@@ -4,7 +4,7 @@ const path = require(`path`)
 module.exports = async function clean(args) {
   const { directory, report } = args
 
-  const directories = [`.cache`, `public`, `node_modules`]
+  const directories = [`.cache`, `public`]
 
   report.info(`Deleting ${directories.join(`, `)}`)
 
