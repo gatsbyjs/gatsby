@@ -1,4 +1,5 @@
 import docsSidebar from "../../data/sidebars/doc-links.yaml"
+import contributingSidebar from "../../data/sidebars/contributing-links.yaml"
 import featuresSidebar from "../../data/sidebars/features-links.yaml"
 import tutorialSidebar from "../../data/sidebars/tutorial-links.yaml"
 
@@ -40,4 +41,13 @@ const itemListTutorial = extenditemList(tutorialSidebar).map(item => {
   return { ...item, key: `tutorial` }
 })
 
-export { itemListDocs, itemListFeatures, itemListTutorial }
+const itemListContributing = extenditemList(contributingSidebar).map(item => {
+  return { ...item, key: `contributing`, disableAccordions: true }
+})
+
+export {
+  itemListDocs,
+  itemListFeatures,
+  itemListTutorial,
+  itemListContributing,
+}

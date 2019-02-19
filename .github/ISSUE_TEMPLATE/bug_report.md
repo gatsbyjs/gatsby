@@ -8,7 +8,7 @@ about: Something isn't working as expected? Here is the right place to report.
 
   Useful Links:
   - Documentation: https://www.gatsbyjs.org/docs/
-  - How to File an Issue: https://www.gatsbyjs.org/docs/how-to-file-an-issue/
+  - How to File an Issue: https://www.gatsbyjs.org/contributing/how-to-file-an-issue/
 
   Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues
 -->

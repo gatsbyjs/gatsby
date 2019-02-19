@@ -249,7 +249,7 @@ export default class FilteredStarterLibrary extends Component {
                 />
               </label>
               <Button
-                to="https://gatsbyjs.org/docs/submit-to-starter-library/"
+                to="https://gatsbyjs.org/contributing/submit-to-starter-library/"
                 tag="href"
                 target="_blank"
                 rel="noopener noreferrer"

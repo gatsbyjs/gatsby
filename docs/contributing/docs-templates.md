@@ -1,5 +1,5 @@
 ---
-title: Docs templates
+title: Docs Templates
 ---
 
 1.  [Why use templates?](#why-use-templates)
