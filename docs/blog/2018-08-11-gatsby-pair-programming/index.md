@@ -1,6 +1,6 @@
 ---
 title: My experience doing pair programming with the Gatsby team and why you should do it
-date: "2018-08-11"
+date: 2018-08-11
 image: images/screenshot.jpg
 author: Horacio Herrera
 tags: ["collaboration", "community"]

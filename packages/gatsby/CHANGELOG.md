@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.4...gatsby@2.1.5) (2019-02-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.3...gatsby@2.1.4) (2019-02-15)
+
+### Features
+
+- **gatsby:** update cache.set to resolve with set value ([#11327](https://github.com/gatsbyjs/gatsby/issues/11327)) ([930164a](https://github.com/gatsbyjs/gatsby/commit/930164a)), closes [#1234](https://github.com/gatsbyjs/gatsby/issues/1234) [#1234](https://github.com/gatsbyjs/gatsby/issues/1234) [#1234](https://github.com/gatsbyjs/gatsby/issues/1234) [#11275](https://github.com/gatsbyjs/gatsby/issues/11275)
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.2...gatsby@2.1.3) (2019-02-15)
+
+### Bug Fixes
+
+- Only create one CSS file during builds to avoid problems caused by split CSS files loading in different orders ([#11800](https://github.com/gatsbyjs/gatsby/issues/11800)) ([7058a25](https://github.com/gatsbyjs/gatsby/commit/7058a25)), closes [#11072](https://github.com/gatsbyjs/gatsby/issues/11072)
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.1...gatsby@2.1.2) (2019-02-14)
+
+**Note:** Version bump only for package gatsby
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.0...gatsby@2.1.1) (2019-02-14)
+
+### Bug Fixes
+
+- **gatsby:** move to @gatsby scoped version of relay-compiler to fix some upstream bugs([#11759](https://github.com/gatsbyjs/gatsby/pull/11759))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.120...gatsby@2.1.0) (2019-02-13)
+
+### Features
+
+- **gatsby:** add useStaticQuery hook ([#11588](https://github.com/gatsbyjs/gatsby/issues/11588)) ([f149c4c](https://github.com/gatsbyjs/gatsby/commit/f149c4c))
+
+## [2.0.120](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.119...gatsby@2.0.120) (2019-02-13)
+
+### Bug Fixes
+
+- **core:** added event source polyfill in develop to fix IE/edge hmr ([#11582](https://github.com/gatsbyjs/gatsby/issues/11582)) ([8a6db6a](https://github.com/gatsbyjs/gatsby/commit/8a6db6a)), closes [#11495](https://github.com/gatsbyjs/gatsby/issues/11495)
+
+## [2.0.119](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.118...gatsby@2.0.119) (2019-02-12)
+
+### Bug Fixes
+
+- **gatsby:** add history fallback for client-only routes ([#11610](https://github.com/gatsbyjs/gatsby/issues/11610)) ([a0da7a2](https://github.com/gatsbyjs/gatsby/commit/a0da7a2)), closes [#11581](https://github.com/gatsbyjs/gatsby/issues/11581) [#11581](https://github.com/gatsbyjs/gatsby/issues/11581)
+
+## [2.0.118](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.117...gatsby@2.0.118) (2019-02-08)
+
+### Bug Fixes
+
+- **gatsby:** pin webpack to fix unexpected token error during build ([#11640](https://github.com/gatsbyjs/gatsby/issues/11640)) ([f460b7f](https://github.com/gatsbyjs/gatsby/commit/f460b7f)), closes [#11198](https://github.com/gatsbyjs/gatsby/issues/11198) [webpack/webpack#8656](https://github.com/webpack/webpack/issues/8656) [#11198](https://github.com/gatsbyjs/gatsby/issues/11198) [webpack/webpack#8656](https://github.com/webpack/webpack/issues/8656)
+
+## [2.0.117](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.116...gatsby@2.0.117) (2019-02-07)
+
+### Bug Fixes
+
+- **gatsby:** add sanity check before displaying path for static html build error ([#11620](https://github.com/gatsbyjs/gatsby/issues/11620)) ([3ee60d5](https://github.com/gatsbyjs/gatsby/commit/3ee60d5))
+- **gatsby:** Fix Loki query operators special casing ([#11517](https://github.com/gatsbyjs/gatsby/issues/11517)) ([e61692d](https://github.com/gatsbyjs/gatsby/commit/e61692d))
+
+### Features
+
+- **gatsby:** Cache resolved nodes in develop ([#11522](https://github.com/gatsbyjs/gatsby/issues/11522)) ([55e3425](https://github.com/gatsbyjs/gatsby/commit/55e3425))
+
+## [2.0.116](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.115...gatsby@2.0.116) (2019-02-06)
+
+### Bug Fixes
+
+- **gatsby:** use history fallback to display client-only routes in serve ([#11581](https://github.com/gatsbyjs/gatsby/issues/11581)) ([75f6118](https://github.com/gatsbyjs/gatsby/commit/75f6118)), closes [#8080](https://github.com/gatsbyjs/gatsby/issues/8080)
+
+### Features
+
+- **gatsby-plugin-netlify:** Allow status codes in redirects ([#11255](https://github.com/gatsbyjs/gatsby/issues/11255)) ([#11484](https://github.com/gatsbyjs/gatsby/issues/11484)) ([024f6f4](https://github.com/gatsbyjs/gatsby/commit/024f6f4))
+
 ## [2.0.115](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.0.114...gatsby@2.0.115) (2019-02-05)
 
 ### Bug Fixes
