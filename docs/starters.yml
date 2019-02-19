@@ -1895,7 +1895,7 @@
     - ReasonML
     - BuckleScript
     - Blog
-    - bs-css
+    - Styling:CSS-in-JS
   features:
     - Gatsby v2 support
     - bs-platform v4 support
