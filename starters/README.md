@@ -71,14 +71,11 @@ A starter is a simplified example to get up and running with Gatsby quickly and 
 ## 🚀 Get Up and Running in 5 Minutes
 
 ```sh
-# install the Gatsby CLI globally
-npm install -g gatsby-cli
-
 # create a new Gatsby site using the default starter
-gatsby new my-blazing-fast-site
+npx gatsby new my-blazing-fast-site
 ```
 
-e.g. `gatsby new blog my-blazing-fast-site` or `gatsby new hello-world my-blazing-fast-site` to use a specific starter!
+e.g. `npx gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-blog` or `npx gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-hello-world` to use a specific starter!
 
 This will clone the starter of specified name into the folder `my-blazing-fast-site` and get you up and running in under 5 minutes with Gatsby and a fantastic starter. We can't wait to see what you build!
 

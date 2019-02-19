@@ -109,6 +109,14 @@ describe(`JavaScript page creator`, () => {
     )
   })
 
+  it(`doesn't filter out test.js`, () => {
+    const validFiles = [{ path: `src/pages/test.js` }]
+
+    expect(validFiles.filter(file => validatePath(file.path))).toEqual(
+      validFiles
+    )
+  })
+
   describe(`create-path`, () => {
     it(`should create unix paths`, () => {
       const basePath = `/a/`
