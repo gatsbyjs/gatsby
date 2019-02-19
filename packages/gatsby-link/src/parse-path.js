@@ -1,4 +1,4 @@
-export default function parsePath(path) {
+export function parsePath(path) {
   var pathname = path || `/`
   var search = ``
   var hash = ``
