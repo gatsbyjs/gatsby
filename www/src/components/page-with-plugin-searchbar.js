@@ -10,7 +10,7 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
       css={{
         ...styles.sidebar,
         // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
-        display: `${!isPluginsIndex && `none`}`,
+        display: !isPluginsIndex ? `none` : false,
       }}
     >
       <PluginSearchBar location={location} />
@@ -20,7 +20,7 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
       css={{
         ...styles.content,
         // mobile: hide README on gatsbyjs.org/plugins index page
-        display: `${isPluginsIndex && `none`}`,
+        display: isPluginsIndex ? `none` : false,
       }}
     >
       {children}
@@ -34,7 +34,7 @@ const widthLarge = rhythm(16)
 const styles = {
   sidebar: {
     height: `calc(100vh - ${presets.headerHeight})`,
-    width: `100vw`,
+    width: `100%`,
     zIndex: 1,
     top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     ...scrollbarStyles,
