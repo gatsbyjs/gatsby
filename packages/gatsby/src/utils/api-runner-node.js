@@ -172,11 +172,10 @@ const runAPI = (plugin, api, args) => {
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
       pluginSpan.finish()
-      const resultPromise = Promise.resolve(result)
-      resultPromise.then(() => {
+      return Promise.resolve(result).then(res => {
         apiFinished = true
+        return res
       })
-      return resultPromise
     }
   }
 
