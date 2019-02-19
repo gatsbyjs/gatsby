@@ -82,7 +82,7 @@ Then, tell the plugin to look in your theme's `src/pages` directory.
 ## Transpiling your theme with webpack
 
 By default, webpack won't be run on themes that are installed via npm.
-However, you can ensure that webpack transpiles your theme by extending the webpack config.
+You can ensure that webpack transpiles your theme by extending the webpack config.
 
 ```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ loaders, actions }) => {
