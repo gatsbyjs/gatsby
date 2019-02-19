@@ -2,6 +2,13 @@
 title: Themes API Reference
 ---
 
+Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs.
+
+- [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
+- [Actions](https://www.gatsbyjs.org/docs/actions/)
+- [Node Interface](https://www.gatsbyjs.org/docs/node-interface/)
+- ... [and more](https://www.gatsbyjs.org/docs/api-specification/)
+
 ## Configuration
 
 Similarly to plugins, you can access options that are passed to your theme.
@@ -31,8 +38,17 @@ exports.createPages = async ({ graphql, actions }, themeOptions) => {
 }
 ```
 
-## Component shadowing
+## Component Shadowing
 
-## Design tokens convention
+Gatsby Themes allow you to customize any file in a theme's `src` directory by following a file naming convention.
+If you're using `gatsby-theme-tomato` which uses a `ProfileCard` component located at `src/components/ProfileCard.js` you can override the component by creating `src/gatsby-theme-tomato/components/ProfileCard.js`. If you want to see what props are passed you can do so by putting the props into a `pre` tag:
 
-## Separating queries and presentational components
+```js:title=src/gatsby-theme-tomato/components/ProfileCard.js
+import React from "react"
+
+export default props => <pre>{JSON.stringify(props, null, 2)}</pre>
+```
+
+## Design Token Conventions
+
+## Separating Queries and Presentational Components
