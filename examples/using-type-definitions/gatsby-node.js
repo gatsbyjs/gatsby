@@ -1,78 +1,91 @@
-exports.sourceNodes = ({ actions: { addTypes } }) => {
+exports.sourceNodes = ({ actions }) => {
+  const { createTypes } = actions
   const typeDefs = `
     type AuthorJson implements Node {
       name: String!
+      firstName: String!
       email: String!
-      picture: File @link(by: "relativePath")
-      posts: [BlogJson] @link(by: "authors.email", from: "email")
+      picture: File
     }
 
     type BlogJson implements Node {
       title: String!
-      authors: [AuthorJson] @link(by: "email")
+      authors: [AuthorJson]
       text: String
-      date: Date @dateformat(formatString: "yyyy/MM/dd")
+      date: Date
       tags: [String]
     }
   `
-  addTypes(typeDefs)
+  createTypes(typeDefs)
 }
 
 exports.createResolvers = ({ createResolvers }) => {
-  // const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
-  // const { createNode } = actions
-  // const resolvers = {
-  //   GraphCMS_BlogPost: {
-  //     // Wrap the resolver on an existing field by providing a function.
-  //     // The original resolver is available on `info.resolver`.
-  //     // This approach works fine if the returnType stays the same.
-  //     post: async (source, args, context, info) => {
-  //       const remark = require(`remark`)
-  //       const html = require(`remark-html`)
-  //       const result = await info.resolver(source, args, context, info)
-  //       // return a Promise with the markdown string converted to html
-  //       return remark()
-  //         .use(html)
-  //         .process(result)
-  //     },
-  //   },
-  //   GraphCMS_Asset: {
-  //     // Instead of a resolve function it is possible to provide a
-  //     // field config for a *new* field.
-  //     // This allows specifying a return type. The values of sibling fields
-  //     // are available from `source` if they are in the selection set.
-  //     // Be aware that without other fields in the selection set this will
-  //     // throw if the parent is NonNull, even if this resolver returns a value.
-  //     // This is because the delegated schema does not know about this field.
-  //     imageFile: {
-  //       type: `File`,
-  //       // Projection fields will be included in the selection set without
-  //       // having to be explicitly added to the query, i.e.
-  //       // they will be accessible from `source`.
-  //       projection: { url: true, fileName: true },
-  //       resolve: async (source, args, context, info) => {
-  //         const { fileName, url } = source
-  //         const ext = `.` + fileName.match(/[^.]*$/)
-  //         const node = await createRemoteFileNode({
-  //           url,
-  //           store,
-  //           cache,
-  //           createNode,
-  //           createNodeId,
-  //           ext,
-  //           // name: fileName, // Needs #11054
-  //         })
-  //         return node
-  //       },
-  //     },
-  //   },
-  // }
   createResolvers({
     Query: {
-      newField: {
+      // Create a new root query field.
+      allAuthorFullNames: {
         type: [`String!`],
-        resolve() {
-          return [`Foo`, `bar`, `baz`]
+        resolve(source, args, context, info) {
+          const authors = context.nodeModel.getAllNodes(
+            {
+              type: `AuthorJson`,
+            },
+            { path: context.path }
+          )
+          return authors.map(author => `${author.name}, ${author.firstName}`)
+        },
+      },
+      // Field resolvers can use all of Gatsby's querying capabilities
+      allPostsTaggedWithBaz: {
+        type: [`BlogJson`],
+        resolve(source, args, context, info) {
+          return context.nodeModel.runQuery(
+            {
+              query: { filter: { tags: { eq: `baz` } } },
+              type: `BlogJson`,
+              firstOnly: false,
+            },
+            { path: context.path }
+          )
+        },
+      },
+    },
+    AuthorJson: {
+      // Add a field to an existing type by providing a field config.
+      // Note that added fields will not be available in the input filter
+      // when no type definitions are provided wth `createTypes`.
+      posts: {
+        type: [`BlogJson`],
+        resolve(source, args, context, info) {
+          // We use an author's `email` as foreign key in `BlogJson.authors`
+          const fieldValue = source.email
+
+          const posts = context.nodeModel.getAllNodes(
+            {
+              type: `BlogJson`,
+            },
+            { path: context.path }
+          )
+          return posts.filter(post =>
+            (post.authors || []).some(author => author === fieldValue)
+          )
+        },
+      },
+    },
+    BlogJson: {
+      // Add a resolver to a field defined with `createTypes`.
+      authors: {
+        resolve(source, args, context, info) {
+          const emails = source[info.fieldName]
+          if (emails == null) return null
+
+          const authors = context.nodeModel.getAllNodes(
+            {
+              type: `AuthorJson`,
+            },
+            { path: context.path }
+          )
+          return authors.filter(author => emails.includes(author.email))
         },
       },
     },
