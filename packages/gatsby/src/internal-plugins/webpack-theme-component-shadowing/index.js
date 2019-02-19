@@ -42,23 +42,13 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         projectRoot: this.projectRoot,
       })
 
-      if (!builtComponentPath) {
-        return resolver.doResolve(
-          `describedRelative`,
-          request,
-          null,
-          {},
-          callback
-        )
-      } else {
-        return resolver.doResolve(
-          `describedRelative`,
-          { ...request, path: builtComponentPath },
-          null,
-          {},
-          callback
-        )
-      }
+      return resolver.doResolve(
+        `describedRelative`,
+        { ...request, path: builtComponentPath || request.path },
+        null,
+        {},
+        callback
+      )
     })
   }
 
