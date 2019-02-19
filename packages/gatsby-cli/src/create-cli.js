@@ -249,7 +249,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `clean`,
-    desc: `Wipe the local gatsby environment when something has gone wrong`,
+    desc: `Wipe the local gatsby environment including built assets and cache`,
     handler: getCommandHandler(`clean`),
   })
 
