@@ -11,7 +11,7 @@ const getNonGatsbyCallSite = () =>
     .get()
     .find(callSite => !callSite.getFileName().includes(gatsbyLocation))
 
-const getNonGatsbyCodeFrame = () => {
+const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
   const callSite = getNonGatsbyCallSite()
   if (!callSite) {
     return null
@@ -33,7 +33,7 @@ const getNonGatsbyCodeFrame = () => {
         },
       },
       {
-        highlightCode: true,
+        highlightCode,
       }
     ),
   ].join(`\n`)
