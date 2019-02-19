@@ -13,6 +13,7 @@ const sanitizeHTML = require(`sanitize-html`)
 const _ = require(`lodash`)
 const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
+const toString = require(`mdast-util-to-string`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const Promise = require(`bluebird`)
@@ -268,7 +269,7 @@ module.exports = (
         const ast = await getAST(markdownNode)
         const headings = select(ast, `heading`).map(heading => {
           return {
-            value: _.first(select(heading, `text`).map(text => text.value)),
+            value: toString(heading),
             depth: heading.depth,
           }
         })
