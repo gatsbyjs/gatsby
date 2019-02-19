@@ -231,7 +231,7 @@ module.exports = async (api, args = {}, pluginSource) =>
     }
 
     let stopQueuedApiRuns = false
-    let unlisten = null
+    let onAPIRunComplete = null
     if (api === `onCreatePage`) {
       const path = args.page.path
       const actionHandler = action => {
@@ -240,7 +240,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         }
       }
       emitter.on(`DELETE_PAGE`, actionHandler)
-      unlisten = () => {
+      onAPIRunComplete = () => {
         emitter.off(`DELETE_PAGE`, actionHandler)
       }
     }
@@ -262,8 +262,8 @@ module.exports = async (api, args = {}, pluginSource) =>
         return null
       })
     }).then(results => {
-      if (unlisten) {
-        unlisten()
+      if (onAPIRunComplete) {
+        onAPIRunComplete()
       }
       // Remove runner instance
       apisRunningById.delete(apiRunInstance.id)
