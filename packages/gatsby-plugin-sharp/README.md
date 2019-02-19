@@ -252,7 +252,7 @@ fixed(
 
 ### Setting a default quality
 
-You can set a default quality by passing the `defaultQuality` option to the plugin.
+You can pass a default image quality to `sharp` by setting the `defaultQuality` option.
 
 ### Using MozJPEG
 
