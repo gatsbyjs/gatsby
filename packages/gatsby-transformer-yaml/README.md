@@ -127,7 +127,7 @@ single objects, you'd be able to query your letters like:
 
 ```graphql
 {
-  allLettersYaml {
+  allDbYaml {
     edges {
       node {
         character
@@ -141,7 +141,7 @@ Which would return:
 
 ```javascript
 {
-  allLettersYaml: {
+  allDbYaml: {
     edges: [
       {
         node: {
@@ -163,4 +163,4 @@ Which would return:
 }
 ```
 
-Please do **note** that `allLettersYaml` **will not** show up if you do not have any `.yaml` files.
+Please do **note** that `allDbYaml` **will not** show up if you do not have any `.yaml` files.
