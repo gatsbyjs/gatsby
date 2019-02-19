@@ -96,12 +96,8 @@ const generalArgs = {
   sizeByPixelDensity: false,
 }
 
-const healOptions = (pluginOptions, args, defaultArgs) => {
-  const quality =
-    pluginOptions.defaultQuality && args.quality === 50
-      ? pluginOptions.defaultQuality
-      : args.quality
-  let options = _.defaults({}, { quality }, args, defaultArgs, generalArgs)
+const healOptions = ({ defaultQuality: quality }, args, defaultArgs) => {
+  let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
