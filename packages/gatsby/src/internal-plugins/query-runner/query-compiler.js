@@ -12,6 +12,7 @@ import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForN
 const _ = require(`lodash`)
 
 import { store } from "../../redux"
+const { boundActionCreators } = require(`../../redux/actions`)
 import FileParser from "./file-parser"
 import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
 import {
@@ -136,6 +137,7 @@ class Runner {
     const compiledNodes: Queries = new Map()
     const namePathMap = new Map()
     const nameDefMap = new Map()
+    const nameErrorMap = new Map()
     const documents = []
 
     for (let [filePath, doc] of nodes.entries()) {
@@ -165,8 +167,18 @@ class Runner {
         )
       )
     } catch (error) {
-      this.reportError(graphqlError(namePathMap, nameDefMap, error))
-      return compiledNodes
+      const { formattedMessage, docName, message, codeBlock } = graphqlError(
+        namePathMap,
+        nameDefMap,
+        error
+      )
+      nameErrorMap.set(docName, { formattedMessage, message, codeBlock })
+      boundActionCreators.queryGraphQLError({
+        componentPath: namePathMap.get(docName),
+        error: formattedMessage,
+      })
+      this.reportError(formattedMessage)
+      return false
     }
 
     // relay-compiler v1.5.0 added "StripUnusedVariablesTransform" to

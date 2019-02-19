@@ -132,7 +132,19 @@ const handleQuery = (
 const updateStateAndRunQueries = isFirstRun => {
   const snapshot = getQueriesSnapshot()
   return queryCompiler().then(queries => {
+    if (!queries) {
+      return null
+    }
     handleComponentsWithRemovedQueries(snapshot, queries)
+
+    // Run action for each component
+    const { components } = snapshot
+    components.forEach(c =>
+      boundActionCreators.queryExtracted({
+        componentPath: c.componentPath,
+        query: queries.get(c.componentPath)?.text || ``,
+      })
+    )
 
     let queriesWillNotRun = false
     queries.forEach((query, component) => {

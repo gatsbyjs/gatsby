@@ -1143,6 +1143,51 @@ actions.addThirdPartySchema = (
 }
 
 /**
+ *
+ * Report that a query has been extracted from a component. Used by
+ * query-compilier.js.
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {query} $0.query The GraphQL query that was extracted from the component.
+ */
+actions.queryExtracted = (
+  { componentPath, query },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTED`,
+    plugin,
+    traceId,
+    payload: { componentPath, query },
+  }
+}
+
+/**
+ *
+ * Report that the Relay Compilier found an error when extracting a query
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {error} $0.query The GraphQL query that was extracted from the component.
+ */
+actions.queryGraphQLError = (
+  { componentPath, error },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_GRAPHQL_ERROR`,
+    plugin,
+    traceId,
+    payload: { componentPath, error },
+  }
+}
+
+/**
  * All action creators wrapped with a dispatch.
  */
 exports.actions = actions
