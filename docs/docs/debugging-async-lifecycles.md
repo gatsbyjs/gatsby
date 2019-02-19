@@ -4,7 +4,7 @@ title: Debugging Asynchronous Lifecycle Methods
 
 Various lifecycle methods (see: [Gatsby Node APIs](/docs/node-apis/)) within Gatsby are presumed to be asynchronous. In other words, these methods can _eventually_ resolve to a value and this value is a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). We wait for the `Promise` to resolve, and then mark the lifecycle method as completed when it does.
 
-In the context of Gatsby, this means that if you are invoking async functionality (e.g. data requests, `graphql` calls, etc.) and not correctly returning the Promise an internal issue can arise where the result of those call(s) happens _after_ the lifecycle method has already been marked as completed. Let's consider an example:
+In the context of Gatsby, this means that if you are invoking asynchronous functionality (e.g. data requests, `graphql` calls, etc.) and not correctly returning the Promise an internal issue can arise where the result of those call(s) happens _after_ the lifecycle method has already been marked as completed. Let's consider an example:
 
 ```js:title=gatsby-node.js
 exports.createPages = async function({ actions, graphql }) {
@@ -35,7 +35,7 @@ exports.createPages = async function({ actions, graphql }) {
 }
 ```
 
-Can you spot the error? In this case, an asyncronous action (`graphql`) was invoked but this async action was neither `return`ed nor `await`ed from `createPages`. This means that the lifecycle method will be marked as complete before it's actually completed--which leads to missing data errors and other hard-to-debug errors.
+Can you spot the error? In this case, an asynchronous action (`graphql`) was invoked but this asynchronous action was neither `return`ed nor `await`ed from `createPages`. This means that the lifecycle method will be marked as complete before it's actually completed--which leads to missing data errors and other hard-to-debug errors.
 
 The fix is surprisingly simple--just one line to change!
 
