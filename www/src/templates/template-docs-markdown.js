@@ -3,7 +3,11 @@ import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import { itemListDocs, itemListTutorial } from "../utils/sidebar/item-list"
+import {
+  itemListDocs,
+  itemListTutorial,
+  itemListContributing,
+} from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 
@@ -51,58 +55,65 @@ const getPageHTML = page => {
   return page.html.replace(`[[guidelist]]`, toc)
 }
 
-class DocsTemplate extends React.Component {
-  render() {
-    const page = this.props.data.markdownRemark
-    const isDocsPage = this.props.location.pathname.slice(0, 5) === `/docs`
-    const html = getPageHTML(page)
-
-    return (
-      <React.Fragment>
-        <Helmet>
-          <title>{page.frontmatter.title}</title>
-          <meta name="description" content={page.excerpt} />
-          <meta property="og:description" content={page.excerpt} />
-          <meta property="og:title" content={page.frontmatter.title} />
-          <meta property="og:type" content="article" />
-          <meta name="twitter:description" content={page.excerpt} />
-          <meta name="twitter.label1" content="Reading time" />
-          <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
-        </Helmet>
-        <Layout
-          location={this.props.location}
-          isSidebarDisabled={
-            this.props.location.pathname === `/code-of-conduct/`
-          }
-          itemList={isDocsPage ? itemListDocs : itemListTutorial}
-          enableScrollSync={isDocsPage ? false : true}
-        >
-          <DocSearchContent>
-            <Container>
-              <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
-                {page.frontmatter.title}
-              </h1>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: html,
-                }}
-              />
-              {page.frontmatter.issue && (
-                <a
-                  href={page.frontmatter.issue}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  See the issue relating to this stub on GitHub
-                </a>
-              )}
-              <MarkdownPageFooter page={page} />
-            </Container>
-          </DocSearchContent>
-        </Layout>
-      </React.Fragment>
-    )
+const getDocsData = location => {
+  const [urlSegment] = location.pathname.split(`/`).slice(1)
+  const itemListLookup = {
+    docs: itemListDocs,
+    contributing: itemListContributing,
+    tutorial: itemListTutorial,
   }
+
+  return [urlSegment, itemListLookup[urlSegment] || itemListTutorial]
+}
+
+function DocsTemplate({ data, location }) {
+  const page = data.markdownRemark
+  const html = getPageHTML(page)
+
+  const [urlSegment, itemList] = getDocsData(location)
+
+  return (
+    <React.Fragment>
+      <Helmet>
+        <title>{page.frontmatter.title}</title>
+        <meta name="description" content={page.excerpt} />
+        <meta property="og:description" content={page.excerpt} />
+        <meta property="og:title" content={page.frontmatter.title} />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:description" content={page.excerpt} />
+        <meta name="twitter.label1" content="Reading time" />
+        <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
+      </Helmet>
+      <Layout
+        location={location}
+        itemList={itemList}
+        enableScrollSync={urlSegment === `docs` ? false : true}
+      >
+        <DocSearchContent>
+          <Container>
+            <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
+              {page.frontmatter.title}
+            </h1>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: html,
+              }}
+            />
+            {page.frontmatter.issue && (
+              <a
+                href={page.frontmatter.issue}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                See the issue relating to this stub on GitHub
+              </a>
+            )}
+            <MarkdownPageFooter page={page} />
+          </Container>
+        </DocSearchContent>
+      </Layout>
+    </React.Fragment>
+  )
 }
 
 export default DocsTemplate
