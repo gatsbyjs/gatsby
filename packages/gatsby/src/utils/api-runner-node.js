@@ -201,7 +201,11 @@ module.exports = async (api, args = {}, pluginSource) =>
     })
 
     // Check that the API is documented.
-    if (!apiList[api]) {
+    // "FAKE_API_CALL" is used when code needs to trigger something
+    // to happen once the the API queue is empty. Ideally of course
+    // we'd have an API (returning a promise) for that. But this
+    // works nicely in the meantime.
+    if (!apiList[api] && api !== `FAKE_API_CALL`) {
       reporter.panic(`api: "${api}" is not a valid Gatsby api`)
     }
 
