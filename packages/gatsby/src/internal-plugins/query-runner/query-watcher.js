@@ -13,7 +13,7 @@ const chokidar = require(`chokidar`)
 const path = require(`path`)
 const slash = require(`slash`)
 
-const { store, emitter } = require(`../../redux/`)
+const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
@@ -70,15 +70,11 @@ const handlePageComponentsWithNoQueries = ({ components }, queries) => {
   components.forEach(c => {
     if (c.queryState === `QUERY_NOT_YET_EXTRACTED`) {
       boundActionCreators.replaceComponentQuery({
-        query: ``,
         queryState: `QUERY_EXTRACTED`,
         componentPath: c.componentPath,
       })
-      queueQueriesForPageComponent(c.componentPath)
     }
   })
-  console.log({ runQueuedQueries })
-  runQueuedQueries()
 }
 
 const handleQuery = (
@@ -149,7 +145,7 @@ const updateStateAndRunQueries = isFirstRun => {
   const snapshot = getQueriesSnapshot()
   return queryCompiler().then(queries => {
     handleComponentsWithRemovedQueries(snapshot, queries)
-    handlePageComponentsWithNoQueries(snapshot, queries)
+    handleComponentsWithNoQueries(snapshot, queries)
 
     let queriesWillNotRun = false
     queries.forEach((query, component) => {
@@ -232,7 +228,6 @@ exports.extractQueries = () => {
 }
 
 const queueQueriesForPageComponent = componentPath => {
-  console.log(`queueQueriesForPageComponent`, { componentPath })
   const pages = getPagesForComponent(componentPath)
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.

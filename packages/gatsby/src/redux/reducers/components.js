@@ -34,9 +34,9 @@ module.exports = (state = new Map(), action) => {
       )
       action.payload.componentPath = normalize(action.payload.componentPath)
       state.set(action.payload.componentPath, {
+        queryState: `QUERY_EXTRACTED`,
         ...state.get(action.payload.componentPath),
         query: action.payload.query,
-        queryState: `QUERY_EXTRACTED`,
       })
       return state
   }

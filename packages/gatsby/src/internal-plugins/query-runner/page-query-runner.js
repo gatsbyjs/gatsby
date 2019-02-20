@@ -17,6 +17,7 @@ const { store, emitter } = require(`../../redux`)
 let queuedDirtyActions = []
 
 let active = false
+let running = false
 
 const runQueriesForPathnamesQueue = new Set()
 exports.queueQueryForPathname = pathname => {
@@ -49,7 +50,6 @@ const runQueries = async () => {
     ...dirtyIds,
     ...cleanIds,
   ])
-  console.log({ pathnamesToRun })
 
   runQueriesForPathnamesQueue.clear()
 
@@ -73,13 +73,12 @@ emitter.on(`CREATE_PAGE`, action => {
 })
 
 const runQueuedActions = async () => {
-  console.log(`runQueuedActions`, { active })
-  if (active) {
+  if (active && !running) {
     try {
+      running = true
       await runQueries()
     } finally {
-      // TODO what does this mean?
-      // Why "finally"?
+      running = false
       if (queuedDirtyActions.length > 0) {
         runQueuedActions()
       }
@@ -156,10 +155,6 @@ const runQueriesForPathnames = pathnames => {
   let didNotQueueItems = true
   pageQueries.forEach(id => {
     const page = pages.get(id)
-    console.log({
-      page,
-      component: store.getState().components.get(page.componentPath),
-    })
     // Don't run queries for page components that haven't yet
     // had their queries extracted. Once that is finished, the pages
     // with using that component will have their queries queued again.
