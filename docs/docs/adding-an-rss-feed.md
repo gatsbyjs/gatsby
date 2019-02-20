@@ -21,12 +21,12 @@ npm install --save gatsby-plugin-feed
 Once installation is complete, you can now add this plugin to your site's config file, like so:
 
 ```json:title=gatsby-config.js
-module.exports = {
-  siteMetadata: {
-    siteUrl: `https://www.example.com`,
+(module.exports = {
+  "siteMetadata": {
+    "siteUrl": `https://www.example.com`
   },
-  plugins: [`gatsby-plugin-feed`],
-}
+  "plugins": [`gatsby-plugin-feed`]
+})
 ```
 
 To complete the feed setup, you need to expose a GraphQL entry for our content called `fields.slug` by modifying `gatsby-node.js`. Start with the following code, noting the reference to `MarkdownRemark` content. For content sources other than Markdown, you will want to modify it:
@@ -55,6 +55,7 @@ For basic setups with Markdown content like the [gatsby-starter-blog](https://gi
 ## Customizing the RSS feed plugin
 
 Your content might not fit neatly into the blog-starter scenario, for various reasons like:
+
 - Your content isn't in Markdown so the plugin doesn't know about it
 - Your Markdown files have dates in the filenames, for which the slug URLs cause 404s
 
@@ -136,9 +137,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
     /* highlight-start */
-    // filter out dates such as YYYY-MM-DD- 
+    // filter out dates such as YYYY-MM-DD-
     const dateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])-)/
-    const value = createFilePath({ node, getNode }).replace(dateRegex, '')
+    const value = createFilePath({ node, getNode }).replace(dateRegex, "")
     /* highlight-end */
     createNodeField({
       name: `slug`,
@@ -148,6 +149,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 ```
+
 In this snippet, the code replaces dates in filename slugs by matching the date format and replacing it with an empty string: `2019-02-15-awesome-post` becomes `awesome-post`. When URLs for your content are published in the feed XML, the plugin will produce a more accurate link: `https://your-gatsby.site/awesome-post/`
 
 ## Happy blogging!
