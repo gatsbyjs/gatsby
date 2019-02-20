@@ -1,20 +1,15 @@
 import React from "react"
-import { Link } from "gatsby"
 
 const Home = () => (
   <div>
-    <h1>Using prefixed paths</h1>
-    <ul>
-      <li>
-        <Link to="/a/">A</Link>
-      </li>
-      <li>
-        <Link to="/b/">B</Link>
-      </li>
-      <li>
-        <Link to="/c/">C</Link>
-      </li>
-    </ul>
+    <p>
+      By default, Gatsby will change http://localhost:9000/index.html to
+      http://localhost:9000.
+    </p>
+    <p>
+      setting `disableAllRedirectsBecasueImUsingGatsbyAsAStaticPageGenerator:
+      true` will prevent this or any similar behavior from happening.
+    </p>
   </div>
 )
 
