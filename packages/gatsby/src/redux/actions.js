@@ -1188,7 +1188,7 @@ actions.queryGraphQLError = (
 }
 
 /**
- * Set overall program status.
+ * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
  *
  * @param {string} Program status
  */
