@@ -36,6 +36,12 @@ async function onCreateNode(
 
   const { createNode, createParentChildLink } = actions
 
+  const { plugins } = pluginOptions
+
+  if (plugins && plugins.length > 0 && !plugins.includes(node.internal.owner)) {
+    return
+  }
+
   // We only care about JSON content.
   if (node.internal.mediaType !== `application/json`) {
     return
