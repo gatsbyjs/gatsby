@@ -39,6 +39,8 @@ describe(`Production pathPrefix`, () => {
     it(`can go back`, () => {
       cy.getTestElement(`page-2-link`).click()
 
+      cy.getTestElement(`index-link`)
+
       cy.go(`back`)
 
       cy.location(`pathname`, { timeout: 10000 }).should(
