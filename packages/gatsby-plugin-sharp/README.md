@@ -32,6 +32,7 @@ plugins: [
     options: {
       useMozJpeg: false,
       stripMetadata: true,
+      defaultQuality: 75,
     },
   },
 ]
@@ -248,6 +249,10 @@ fixed(
   tracedSVG
 }
 ```
+
+### Setting a default quality
+
+You can pass a default image quality to `sharp` by setting the `defaultQuality` option.
 
 ### Using MozJPEG
 

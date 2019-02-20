@@ -137,7 +137,6 @@ const fixedNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       toFormat: {
         type: ImageFormatType,
@@ -263,7 +262,6 @@ const fluidNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       toFormat: {
         type: ImageFormatType,
@@ -413,7 +411,6 @@ module.exports = ({
         },
         quality: {
           type: GraphQLInt,
-          defaultValue: 50,
         },
         jpegProgressive: {
           type: GraphQLBoolean,

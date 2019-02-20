@@ -45,6 +45,7 @@ exports.setBoundActionCreators = actions => {
 const pluginDefaults = {
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
+  defaultQuality: 50,
 }
 let pluginOptions = Object.assign({}, pluginDefaults)
 exports.setPluginOptions = opts => {
@@ -95,8 +96,8 @@ const generalArgs = {
   sizeByPixelDensity: false,
 }
 
-const healOptions = (args, defaultArgs) => {
-  let options = _.defaults({}, args, defaultArgs, generalArgs)
+const healOptions = ({ defaultQuality: quality }, args, defaultArgs) => {
+  let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
@@ -125,7 +126,6 @@ const healOptions = (args, defaultArgs) => {
 
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
-  // console.log("totalJobs", totalJobs)
   bar.total = totalJobs
 
   let imagesFinished = 0
@@ -372,7 +372,7 @@ const queueJob = (job, reporter) => {
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
-  const options = healOptions(args, {})
+  const options = healOptions(pluginOptions, args, {})
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
   const pairedArgs = _.toPairs(args)
@@ -476,7 +476,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 async function generateBase64({ file, args, reporter }) {
-  const options = healOptions(args, { width: 20 })
+  const options = healOptions(pluginOptions, args, { width: 20 })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -558,7 +558,7 @@ async function base64(arg) {
 }
 
 async function fluid({ file, args = {}, reporter, cache }) {
-  const options = healOptions(args, {})
+  const options = healOptions(pluginOptions, args, {})
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
@@ -733,7 +733,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 }
 
 async function fixed({ file, args = {}, reporter, cache }) {
-  const options = healOptions(args, {})
+  const options = healOptions(pluginOptions, args, {})
 
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
@@ -843,7 +843,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
     turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
   }
   const optionsSVG = _.defaults(args, defaultArgs)
-  const options = healOptions(fileArgs, {})
+  const options = healOptions(pluginOptions, fileArgs, {})
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
