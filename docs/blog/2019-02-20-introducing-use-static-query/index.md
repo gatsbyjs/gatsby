@@ -123,7 +123,7 @@ npm install gatsby react react-dom
 
 # Known Limitations
 
-Because of the way queries are currently parsed in Gatsby, `useStaticQuery` has one small limitation at the moment. You can only use one instance of `useStaticQuery` in a file. That's it! This doesn't mean your app can't have multiple uses. Just that a single JavaScript source file can have one instance of it.
+Because of the way queries are currently parsed in Gatsby, `useStaticQuery` has one small limitation at the moment. You can only use one instance of `useStaticQuery` in a file. That's it! This doesn't mean your app can't have multiple uses, but rather that a single JavaScript file can only have one instance of `useStaticQuery`.
 
 We're working on fixing this soon.
 
