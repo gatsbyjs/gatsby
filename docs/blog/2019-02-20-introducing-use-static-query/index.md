@@ -154,7 +154,7 @@ We're working on fixing this soon.
 - To see `useStaticQuery` in action (and for a really gentle introduction to Hooks in general), check out the [livestream][use-static-query-livestream] Jason Lengstorf and I did last week
 - Hit [me][sidhartha-twitter] up on Twitter for any questions!
 
-We hope you enjoy using `useStaticQuery` in your Gatsby apps to query your data!
+We hope you enjoy using `useStaticQuery` in your Gatsby apps. Happy building!
 
 [use-static-query]: /docs/use-static-query/
 [use-static-query-livestream]: https://www.youtube.com/watch?v=asrdFuAxPaU&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
