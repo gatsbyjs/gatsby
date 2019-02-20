@@ -9,6 +9,7 @@ const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
+const { emitter } = require(`../redux`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
 
 // Bind action creators per plugin so we can auto-add
@@ -277,7 +278,26 @@ module.exports = async (api, args = {}, pluginSource) =>
       apisRunningByTraceId.set(apiRunInstance.traceId, 1)
     }
 
+    let stopQueuedApiRuns = false
+    let onAPIRunComplete = null
+    if (api === `onCreatePage`) {
+      const path = args.page.path
+      const actionHandler = action => {
+        if (action.payload.path === path) {
+          stopQueuedApiRuns = true
+        }
+      }
+      emitter.on(`DELETE_PAGE`, actionHandler)
+      onAPIRunComplete = () => {
+        emitter.off(`DELETE_PAGE`, actionHandler)
+      }
+    }
+
     Promise.mapSeries(noSourcePluginPlugins, plugin => {
+      if (stopQueuedApiRuns) {
+        return null
+      }
+
       let pluginName =
         plugin.name === `default-site-plugin`
           ? `gatsby-node.js`
@@ -290,6 +310,9 @@ module.exports = async (api, args = {}, pluginSource) =>
         return null
       })
     }).then(results => {
+      if (onAPIRunComplete) {
+        onAPIRunComplete()
+      }
       // Remove runner instance
       apisRunningById.delete(apiRunInstance.id)
       const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
