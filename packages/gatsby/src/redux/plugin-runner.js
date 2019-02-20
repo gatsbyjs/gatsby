@@ -12,6 +12,8 @@ emitter.on(`CREATE_NODE`, action => {
     traceId: action.traceId,
     parentSpan: action.parentSpan,
     traceTags,
+  }).then(() => {
+    emitter.emit(`CREATE_NODE_FINISHED`, node)
   })
 })
 

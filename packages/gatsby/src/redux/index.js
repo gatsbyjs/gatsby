@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 const fs = require(`fs`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
+const thunk = require(`redux-thunk`).default
 
 // Create event emitter for actions
 const emitter = mitt()
@@ -60,15 +61,13 @@ try {
   // ignore errors.
 }
 
+const multiMiddleware = ({ dispatch }) => next => action =>
+  Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
+
 const store = Redux.createStore(
   Redux.combineReducers({ ...reducers }),
   initialState,
-  Redux.applyMiddleware(function multi({ dispatch }) {
-    return next => action =>
-      Array.isArray(action)
-        ? action.filter(Boolean).map(dispatch)
-        : next(action)
-  })
+  Redux.applyMiddleware(multiMiddleware, thunk)
 )
 
 // Persist state.

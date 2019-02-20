@@ -29,9 +29,9 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
           // Let action callers override who the plugin is. Shouldn't be
           // used that often.
           if (args.length === 1) {
-            boundActionCreator(args[0], plugin, actionOptions)
+            return boundActionCreator(args[0], plugin, actionOptions)
           } else if (args.length === 2) {
-            boundActionCreator(args[0], args[1], actionOptions)
+            return boundActionCreator(args[0], args[1], actionOptions)
           }
         }
       }

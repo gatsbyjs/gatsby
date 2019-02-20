@@ -11,7 +11,7 @@ const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`../db/nodes`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
-const { store } = require(`./index`)
+const { store, emitter } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
@@ -618,6 +618,46 @@ actions.createNode = (
     return updateNodeAction
   }
 }
+
+/**
+ * Wrap `createNode` action in a Promise that resolves with the created node
+ * when all subsequent `onCreateNode` API calls have finished, or with null
+ *  after a timeout has elapsed.
+ */
+actions.createNodeAndWaitForTransforms = (
+  node: any,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions = {}
+) => dispatch =>
+  new Promise((resolve, reject) => {
+    const createNodeHandler = createdNode => {
+      if (createdNode.id === node.id) {
+        cleanUp()
+        resolve(node)
+      }
+    }
+    emitter.on(`CREATE_NODE_FINISHED`, createNodeHandler)
+
+    const apiQueueEmptyHandler = () => {
+      cleanUp()
+      resolve(node)
+    }
+    emitter.on(`API_RUNNING_QUEUE_EMPTY`, apiQueueEmptyHandler)
+
+    const DELAY = 1000
+    const timeout = setTimeout(() => {
+      cleanUp()
+      resolve(null) // reject()
+    }, DELAY)
+
+    const cleanUp = () => {
+      emitter.off(apiQueueEmptyHandler)
+      emitter.off(createNodeHandler)
+      clearTimeout(timeout)
+    }
+
+    dispatch(actions.createNode(node, plugin, actionOptions))
+  })
 
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
