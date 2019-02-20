@@ -2,7 +2,7 @@
 title: Writing Themes
 ---
 
-Initialize a theme project
+## Initialize a theme
 
 ```sh
 mkdir gatsby-theme-developer
@@ -11,6 +11,8 @@ git init
 npm init -y
 npm i -D gatsby react react-dom
 ```
+
+## Add dependencies
 
 Then you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies.
 
@@ -22,6 +24,9 @@ Then you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies
   "version": "0.0.1",
   "main": "index.js",
   "keywords": ["gatsby-theme"],
+  "scripts": {
+    "develop": "gatsby develop"
+  },
   "peerDependencies": {
     "gatsby": "^2.1.9",
     "react": "^16.8.2",
@@ -64,12 +69,38 @@ module.exports = {
         path: path.join(__dirname, "src", "pages"),
       },
     },
-    "gatsby-plugin-compile-es6-packages",
   ],
 }
 ```
 
-**Note:** `gatsby-plugin-compile-es6-packages` is used to ensure that all of a theme's code is transpiled
+## Add theme transpilation
+
+Since your theme will be installed, it will end up in `node_modules` which Gatsby doesn't transpile by default.
+This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
+
+You will need to install the package:
+
+```sh
+yarn add gatsby-plugin-compile-es6-packages
+```
+
+And then add it to your plugins list:
+
+```js:title=gatsby-config.js
+const path = require("path")
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: path.join(__dirname, "src", "pages"),
+      },
+    },
+    "gatsby-plugin-compile-es6-packages",
+  ],
+}
+```
 
 ## Create your starter
 
@@ -88,6 +119,8 @@ module.exports = {
   __experimentalThemes: ["gatsby-theme-developer"],
 }
 ```
+
+### Add some seed content
 
 ## **Principles**
 
