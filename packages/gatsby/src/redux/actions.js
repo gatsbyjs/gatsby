@@ -1202,6 +1202,21 @@ actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
 }
 
 /**
+ * Broadcast that a page component has changed.
+ *
+ * @param {string} Path to the page component that changed.
+ */
+actions.pageComponentChanged = (path, plugin: Plugin, traceId?: string) => {
+  return {
+    // TODO think about naming patterns for events
+    type: `PAGE_COMPONENT_CHANGED`,
+    plugin,
+    traceId,
+    payload: path,
+  }
+}
+
+/**
  * All action creators wrapped with a dispatch.
  */
 exports.actions = actions

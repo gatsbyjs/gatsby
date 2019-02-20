@@ -46,7 +46,7 @@ const componentMachine = Machine(
       },
       queryGraphQLError: {
         on: {
-          COMPONENT_CHANGED: `extractingQueries`,
+          PAGE_COMPONENT_CHANGED: `extractingQueries`,
           QUERY_EXTRACTED: `queryExtracted`,
         },
       },
@@ -56,7 +56,7 @@ const componentMachine = Machine(
           BOOTSTRAP_FINISHED: {
             actions: `setBootstrapFinished`,
           },
-          COMPONENT_CHANGED: `extractingQueries`,
+          PAGE_COMPONENT_CHANGED: `extractingQueries`,
         },
       },
     },
@@ -78,14 +78,8 @@ const componentMachine = Machine(
         const {
           queueQueriesForPageComponent,
         } = require(`../../internal-plugins/query-runner/query-watcher`)
-        const {
-          runQueuedActions,
-        } = require(`../../internal-plugins/query-runner/page-query-runner`)
-        console.log(
-          `running queueQueriesForPageComponent`,
-          queueQueriesForPageComponent,
-          { context }
-        )
+        // Wait a bit as calling this function immediately triggers
+        // an Action call which Redux squawks about.
         setTimeout(() => {
           queueQueriesForPageComponent(context.componentPath)
         }, 0)
@@ -167,6 +161,15 @@ module.exports = (state = new Map(), action) => {
         error: action.payload.error,
       })
       services.set(action.payload.componentPath, service)
+      return state
+    }
+    case `PAGE_COMPONENT_CHANGED`: {
+      action.payload = normalize(action.payload)
+      const service = services.get(action.payload)
+      service.send({
+        type: `PAGE_COMPONENT_CHANGED`,
+      })
+      services.set(action.payload, service)
       return state
     }
     case `REMOVE_TEMPLATE_COMPONENT`: {
