@@ -208,4 +208,59 @@ describe(`Process JSON nodes correctly`, () => {
       expect(createParentChildLink).toHaveBeenCalledTimes(1)
     })
   })
+
+  it(`process node that is listed in plugins pluginOption`, async () => {
+    const data = { id: `foo`, blue: true, funny: `yup` }
+    const node = {
+      ...baseNonFileNode,
+      content: JSON.stringify(data),
+      internal: {
+        ...baseNonFileNode.internal,
+        owner: `gatsby-source-filesystem`,
+      },
+    }
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const loadNodeContent = jest.fn()
+    loadNodeContent.mockReturnValue(JSON.stringify(data))
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      { node, actions, loadNodeContent, createContentDigest },
+      { plugins: [`gatsby-source-filesystem`] }
+    )
+    expect(createNode).toHaveBeenCalled()
+    expect(createParentChildLink).toHaveBeenCalled()
+    expect(loadNodeContent).toHaveBeenCalled()
+  })
+
+  it(`does not process node that is NOT listed in plugins pluginOption`, async () => {
+    const data = { id: `foo`, blue: true, funny: `yup` }
+    const node = {
+      ...baseNonFileNode,
+      content: JSON.stringify(data),
+      internal: {
+        ...baseNonFileNode.internal,
+        owner: `gatsby-some-plugin`,
+      },
+    }
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const loadNodeContent = jest.fn()
+    loadNodeContent.mockReturnValue(JSON.stringify(data))
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      { node, actions, loadNodeContent, createContentDigest },
+      { plugins: [`gatsby-source-filesystem`] }
+    )
+    expect(actions.createNode).not.toHaveBeenCalled()
+    expect(actions.createParentChildLink).not.toHaveBeenCalled()
+  })
 })
