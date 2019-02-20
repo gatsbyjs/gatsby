@@ -117,6 +117,10 @@ The sharp reader (Jacob is sharp, be like Jacob) would've noticed that we _steal
 
 To use useStaticQuery, update `gatsby` to v2.1.0 and `react` and `react-dom` to v16.8.0!
 
+```shell
+npm install gatsby react react-dom
+```
+
 # Known Limitations
 
 Because of the way queries are currently parsed in Gatsby, `useStaticQuery` has one small limitation at the moment. You can only use one instance of `useStaticQuery` in a file. That's it! This doesn't mean your app can't have multiple uses. Just that a single JavaScript source file can have one instance of it.
