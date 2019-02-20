@@ -7,19 +7,19 @@ tags:
   - static query
 ---
 
-React Hooks are _cool_. Besides simplifying your code and removing the need for a lot of boilerplate associated with classes in JavaScript (looking at you, `this`), they enable some _serious_ shareability. They also make it possible to use state in functional components!
+React Hooks are _cool_. Besides simplifying your code and removing the need for a lot of boilerplate associated with classes in JavaScript (looking at you, `this`), they enable some serious shareability. They also make it possible to use state in functional components.
 
-You can probably tell that we've been _super_ excited about [React Hooks][hooks-intro]. So when they finally landed in React 16.8, we figured it was time to give our very own `StaticQuery` component the hook treatment!
+You can probably tell that we've been super excited about [React Hooks][hooks-intro]. So when they finally landed in React 16.8, we figured it was time to give our very own `StaticQuery` component the hook treatment!
 
 ### Say hello to useStaticQuery
 
-`useStaticQuery` is a hook that takes a GraphQL query and returns your data. That's it!
+`useStaticQuery` is a hook that takes a GraphQL query and returns your data. That's it.
 
 **No more Render Props necessary to use a Static Query**
 
-Not only does this simplify accessing your data in components now but will also keep your component tree shallow!
+This simplifies accessing data in your components and also keeps your component tree shallow.
 
-Let's check out a simple example. Here's a simple Header component, first using `StaticQuery` and then with `useStaticQuery`.
+Let's quickly check out a simple example. Here's a simple Header component, first using `StaticQuery` and then with `useStaticQuery`.
 
 ### Before
 
@@ -82,9 +82,9 @@ export default Header
 
 Isn't that cleaner and more succinct?
 
-Just like `StaticQuery`, when you build your site for production, Gatsby will parse _and_ execute your queries in `useStaticQuery` and inject data in just the right place!
+Just like `StaticQuery`, when you build your site for production, Gatsby will parse _and_ execute your queries in `useStaticQuery` and inject data in just the right place.
 
-Where this gets even more powerful is the ability to create custom hooks that use `useStaticQuery` in them. Let's say you need to query for the site title several times in your app. Instead of a call to `useStaticQuery` in each component, you can _extract_ it out to a custom hook like:
+Where this gets even more powerful is the ability to create custom hooks that use `useStaticQuery` in them. Let's say you need to query for the site title several times in your app. Instead of a call to `useStaticQuery` in each component, you can extract it out to a custom hook like:
 
 ```jsx
 const useSiteMetadata = () => {
