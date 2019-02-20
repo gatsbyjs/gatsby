@@ -151,7 +151,7 @@ We're working on fixing this soon.
 # Next Steps
 
 - Check out the [documentation][use-static-query]
-- To see `useStaticQuery` in action (and a really gentle introduction to Hooks in general), check out the [livestream][use-static-query-livestream] Jason Lengstorf and I did last week
+- To see `useStaticQuery` in action (and for a really gentle introduction to Hooks in general), check out the [livestream][use-static-query-livestream] Jason Lengstorf and I did last week
 - Hit [me][sidhartha-twitter] up on Twitter for any questions!
 
 We hope you enjoy using `useStaticQuery` in your Gatsby apps to query your data!
