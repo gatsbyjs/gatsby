@@ -115,7 +115,7 @@ We're really excited about this pattern and everything it enables. With our upco
 
 The sharp reader (Jacob is sharp, be like Jacob) would've noticed that we _stealthily_ released `useStaticQuery` last week.
 
-To use useStaticQuery, update `gatsby` to v2.1.0 and `react` and `react-dom` to v16.8.0!
+To use `useStaticQuery`, update `gatsby` to v2.1.0 and `react` and `react-dom` to v16.8.0!
 
 ```shell
 npm install gatsby react react-dom
