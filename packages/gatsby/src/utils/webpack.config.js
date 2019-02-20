@@ -399,7 +399,7 @@ module.exports = async (
           styles: {
             name: `styles`,
             // This should cover all our types of CSS.
-            test: /\.(css|scss|sass|less)$/,
+            test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
           },
