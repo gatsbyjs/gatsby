@@ -1,5 +1,5 @@
 ---
-title: Localization with Gatsby and Sanity.io
+title: A method for Localization with Gatsby and Sanity.io
 date: 2019-03-01
 author: Travis Stanley
 tags: ["sanity", "localization", "l10n"]
@@ -9,7 +9,7 @@ showImageInArticle: true
 
 Localization is a common problem and there are _many_ solutions, each with their own benifits and trade-offs. With Gatsby and Sanity.io its possible to achieve a solution that is easy to work with and extend. If you haven't already read about why Gatsby and Sanity.io pair so well check out the blog post by [Knut Melvær](/contributors/knut-melvaer/): [Blazing fast development with Gatsby and Sanity.io](/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io).
 
-I have completed two sites with Gatsby and Sanity that required localization. The first site needed to maintain every link from the original site without redirects. Each language living in its own subdomain, `es.my-web-page.com` for example. The simplest solution at the time was to use multiple builds which always bothered me. The second site I vowed to do it the _right™_ way.
+I have completed two sites with Gatsby and Sanity that required localization. The first site needed to maintain every link from the original site without redirects: each language living in its own subdomain, `es.my-web-page.com` for example. The simplest solution at the time was to use multiple builds which always bothered me. The second site I vowed to do it the _right™_ way.
 
 The new setup would generate pages for every language in one build step giving urls like `my-home-page.com/es/...`. This makes it easier for both the content team and our developers to use.
 
@@ -125,9 +125,9 @@ It is preferable to reference only the title key and get the correct text. No ne
 <Component>{data.sanitySomeDataType.title}</Component>
 ```
 
-So lets make _that_ work.
+So let's make _that_ work.
 
-Once again, you can use the example from the Sanity.io documentation for [a function](https://www.sanity.io/docs/localization#code-snippet-deeply-localizing-an-entire-document) to localize the text from a given Sanity document. I've modified the example below to always default to English. This suits my use case and it's a good starting point if your use case differs. The function walks through a given document and updates any object with `_type: 'locale<TEXT_TYPE>'` ( for example `_type: 'localeText'`, or `_type: 'localeString'` ) and returns only the correct translation text.
+Once again, you can use the example from the Sanity.io documentation for [a function to localize](https://www.sanity.io/docs/localization#code-snippet-deeply-localizing-an-entire-document) the text from a given Sanity document. I've modified the example below to always default to English. This suits my use case and it's a good starting point if your use case differs. The function walks through a given document and updates any object with `_type: 'locale<TEXT_TYPE>'` ( for example `_type: 'localeText'`, or `_type: 'localeString'` ) and returns only the correct translation text.
 
 ```js:title=src/util/index.js
 export const createLocaleTextGetter = languageCode => {
