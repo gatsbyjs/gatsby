@@ -136,7 +136,7 @@ describe(`develop-static-entry`, () => {
 describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
-    global.__DISABLE_ALL_REDIRECTS_BECASUE_IM_USING_GATSBY_AS_A_STATIC_PAGE_GENERATOR__ = ``
+    global.__DISABLE_ALL_REDIRECTS_BECASUE_IM_USING_GATSBY_AS_A_STATIC_PAGE_GENERATOR__ = false
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
