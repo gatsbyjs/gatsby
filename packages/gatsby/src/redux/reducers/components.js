@@ -44,6 +44,12 @@ const componentMachine = Machine(
           QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
         },
       },
+      queryGraphQLError: {
+        on: {
+          COMPONENT_CHANGED: `extractingQueries`,
+          QUERY_EXTRACTED: `queryExtracted`,
+        },
+      },
       queryExtracted: {
         onEntry: [`setQuery`, `runPageComponentQueries`],
         on: {
@@ -51,12 +57,6 @@ const componentMachine = Machine(
             actions: `setBootstrapFinished`,
           },
           COMPONENT_CHANGED: `extractingQueries`,
-        },
-      },
-      queryGraphQLError: {
-        on: {
-          COMPONENT_CHANGED: `extractingQueries`,
-          QUERY_EXTRACTED: `queryExtracted`,
         },
       },
     },
