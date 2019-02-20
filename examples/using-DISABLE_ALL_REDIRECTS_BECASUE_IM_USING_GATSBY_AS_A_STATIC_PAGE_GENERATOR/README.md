@@ -19,5 +19,4 @@ This behavior is desirable when:
 - serving a Gatsby application via an Nginx alias or similar
 - serving a Gatsby application from an S3 sub-bucket or similar
 
-Please submit PRs containing additional use-cases so other users are able to find
-out about this feature in the future.
+PRs containing additional use-cases would be most welcome.

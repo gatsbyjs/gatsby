@@ -1,8 +1,8 @@
 {
   "name": "using-path-prefix",
   "private": true,
-  "description": "Gatsby example site using using-path-prefix",
-  "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
+  "description": "Gatsby example site using disableAllRedirectsBecasueImUsingGatsbyAsAStaticPageGenerator config option",
+  "author": "pdoherty@protonmail.com",
   "dependencies": {
     "gatsby": "../../packages/gatsby",
     "react": "^16.4.0",
