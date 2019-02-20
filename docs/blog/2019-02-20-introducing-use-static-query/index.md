@@ -29,6 +29,7 @@ import { StaticQuery, graphql } from "gatsby"
 
 const Header = () => {
   return (
+    // highlight-next-line
     <StaticQuery
       query={graphql`
         query {
@@ -39,6 +40,7 @@ const Header = () => {
           }
         }
       `}
+      // highlight-next-line
       render={data => (
         <header>
           <h1>{data.site.siteMetadata.title}</h1>
@@ -58,6 +60,7 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 const Header = () => {
+  // highlight-next-line
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -71,6 +74,7 @@ const Header = () => {
   )
 
   return (
+    // highlight-next-line
     <header>
       <h1>{site.siteMetadata.title}</h1>
     </header>
