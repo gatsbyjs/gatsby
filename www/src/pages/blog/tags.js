@@ -175,7 +175,10 @@ export const pageQuery = graphql`
   query {
     allMarkdownRemark(
       limit: 2000
-      filter: { fileAbsolutePath: { regex: "/docs.blog/" } }
+      filter: {
+        fields: { released: { eq: true } }
+        fileAbsolutePath: { regex: "/docs.blog/" }
+      }
     ) {
       group(field: frontmatter___tags) {
         fieldValue

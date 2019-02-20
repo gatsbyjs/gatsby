@@ -27,7 +27,7 @@ This plugin configures Gatsby to create a `manifest.webmanifest` file on every s
 
 ## Generating icons
 
-It can be tedious creating the multitude of icon sizes required by different devices and browsers. This plugin includes code to auto-generate smaller icons from a larger src image.
+It can be tedious creating the multitude of icon sizes required by different devices and browsers. This plugin includes code to auto-generate smaller icons from a larger src image (which can also be an SVG).
 
 There are three modes in which icon generation can function: automatic, hybrid, and manual. These three modes are explained below. Icon generation functions differently depending on which of the three you choose.
 

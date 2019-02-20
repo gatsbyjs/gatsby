@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
+const chalk = require(`chalk`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -8,6 +9,7 @@ const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
+const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -94,6 +96,44 @@ const runAPI = (plugin, api, args) => {
 
     const cache = getCache(plugin.name)
 
+    // Ideally this would be more abstracted and applied to more situations, but right now
+    // this can be potentially breaking so targeting `createPages` API and `createPage` action
+    let apiFinished = false
+    if (api === `createPages`) {
+      let alreadyDisplayed = false
+      const createPageAction = doubleBoundActionCreators.createPage
+      doubleBoundActionCreators.createPage = (...args) => {
+        createPageAction(...args)
+        if (apiFinished && !alreadyDisplayed) {
+          const warning = [
+            reporter.stripIndent(`
+              Action ${chalk.bold(
+                `createPage`
+              )} was called outside of its expected asynchronous lifecycle ${chalk.bold(
+              `createPages`
+            )} in ${chalk.bold(plugin.name)}.
+              Ensure that you return a Promise from ${chalk.bold(
+                `createPages`
+              )} and are awaiting any asynchronous method invocations (like ${chalk.bold(
+              `graphql`
+            )} or http requests).
+              For more info and debugging tips: see ${chalk.bold(
+                `https://gatsby.app/sync-actions`
+              )}
+            `),
+          ]
+
+          const possiblyCodeFrame = getNonGatsbyCodeFrame()
+          if (possiblyCodeFrame) {
+            warning.push(possiblyCodeFrame)
+          }
+
+          reporter.warn(warning.join(`\n\n`))
+          alreadyDisplayed = true
+        }
+      }
+    }
+
     const apiCallArgs = [
       {
         ...args,
@@ -125,13 +165,17 @@ const runAPI = (plugin, api, args) => {
         const cb = (err, val) => {
           pluginSpan.finish()
           callback(err, val)
+          apiFinished = true
         }
         gatsbyNode[api](...apiCallArgs, cb)
       })
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
       pluginSpan.finish()
-      return Promise.resolve(result)
+      return Promise.resolve(result).then(res => {
+        apiFinished = true
+        return res
+      })
     }
   }
 
