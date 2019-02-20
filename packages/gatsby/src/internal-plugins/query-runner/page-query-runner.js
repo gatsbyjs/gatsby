@@ -42,13 +42,14 @@ const runQueries = async () => {
 
   // Find ids without data dependencies (i.e. no queries have been run for
   // them before) and run them.
-  const cleanIds = findIdsWithoutDataDependencies()
+  // const cleanIds = findIdsWithoutDataDependencies()
+  // console.log({ cleanIds })
 
   // Construct paths for all queries to run
   const pathnamesToRun = _.uniq([
     ...runQueriesForPathnamesQueue,
     ...dirtyIds,
-    ...cleanIds,
+    // ...cleanIds,
   ])
 
   runQueriesForPathnamesQueue.clear()
@@ -58,18 +59,14 @@ const runQueries = async () => {
   return
 }
 
+exports.runQueries = runQueries
+
 emitter.on(`CREATE_NODE`, action => {
   queuedDirtyActions.push(action)
 })
 
 emitter.on(`DELETE_NODE`, action => {
   queuedDirtyActions.push({ payload: action.payload })
-})
-
-emitter.on(`CREATE_PAGE`, action => {
-  if (action.contextModified) {
-    exports.queueQueryForPathname(action.payload.path)
-  }
 })
 
 const runQueuedActions = async () => {

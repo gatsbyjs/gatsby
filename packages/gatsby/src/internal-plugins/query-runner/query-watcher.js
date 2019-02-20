@@ -20,6 +20,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const {
   queueQueryForPathname,
   runQueuedActions: runQueuedQueries,
+  runQueries,
 } = require(`./page-query-runner`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
@@ -40,16 +41,17 @@ const handleComponentsWithRemovedQueries = (
 ) => {
   // If a component previously with a query now doesn't — update the
   // store.
-  components.forEach(c => {
-    if (c.query !== `` && !queries.has(c.componentPath)) {
-      debug(`Page query was removed from ${c.componentPath}`)
-      boundActionCreators.replaceComponentQuery({
-        query: ``,
-        componentPath: c.componentPath,
-      })
-      queueQueriesForPageComponent(c.componentPath)
-    }
-  })
+  // TODO handle in xstate
+  // components.forEach(c => {
+  // if (c.query !== `` && !queries.has(c.componentPath)) {
+  // debug(`Page query was removed from ${c.componentPath}`)
+  // boundActionCreators.replaceComponentQuery({
+  // query: ``,
+  // componentPath: c.componentPath,
+  // })
+  // queueQueriesForPageComponent(c.componentPath)
+  // }
+  // })
 
   // If a component had static query and it doesn't have it
   // anymore - update the store
@@ -105,25 +107,6 @@ const handleQuery = (
       queueQueryForPathname(query.jsonName)
     }
     return true
-
-    // If this is page query
-  } else if (components.has(component)) {
-    if (components.get(component).query !== query.text) {
-      boundActionCreators.replaceComponentQuery({
-        query: query.text,
-        componentPath: component,
-      })
-
-      debug(
-        `Page query in ${component} ${
-          components.get(component).query.length === 0
-            ? `was added`
-            : `has changed`
-        }.`
-      )
-      queueQueriesForPageComponent(component)
-    }
-    return true
   }
 
   return false
@@ -163,6 +146,7 @@ const updateStateAndRunQueries = isFirstRun => {
       }
     })
 
+    // TODO restore this logic for page components.
     if (queriesWillNotRun) {
       report.log(report.stripIndent`
 
@@ -231,6 +215,7 @@ exports.extractQueries = () => {
 
 const queueQueriesForPageComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
+  console.log(`queueQueriesForPageComponent`, { componentPath, pages })
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
@@ -238,7 +223,10 @@ const queueQueriesForPageComponent = componentPath => {
     pages.map(p => p.path || p.id)
   )
   pages.forEach(page => queueQueryForPathname(page.path))
+  runQueries()
 }
+
+exports.queueQueriesForPageComponent = queueQueriesForPageComponent
 
 const getPagesForComponent = componentPath => {
   const state = store.getState()
@@ -278,6 +266,7 @@ const watch = rootDir => {
   watcher = chokidar
     .watch(slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)))
     .on(`change`, path => {
+      console.log(`watched file changed`, path)
       debounceCompile()
     })
   filesToWatch.forEach(filePath => watcher.add(filePath))

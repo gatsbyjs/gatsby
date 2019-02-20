@@ -74,7 +74,22 @@ const componentMachine = Machine(
 
         debounceCompile()
       },
-      runPageComponentQueries: () => console.log(`runPageComponentQueries`),
+      runPageComponentQueries: context => {
+        const {
+          queueQueriesForPageComponent,
+        } = require(`../../internal-plugins/query-runner/query-watcher`)
+        const {
+          runQueuedActions,
+        } = require(`../../internal-plugins/query-runner/page-query-runner`)
+        console.log(
+          `running queueQueriesForPageComponent`,
+          queueQueriesForPageComponent,
+          { context }
+        )
+        setTimeout(() => {
+          queueQueriesForPageComponent(context.componentPath)
+        }, 0)
+      },
       setQuery: assign({
         query: (ctx, event) => event.query,
       }),
