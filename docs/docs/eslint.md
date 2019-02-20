@@ -41,32 +41,28 @@ module.exports = {
     "prettier",
     "prettier/react",
   ],
-  plugins: [
-    "prettier",
-    "react",
-    "jsx-a11y",
-  ],
+  plugins: ["prettier", "react", "jsx-a11y"],
   parser: "babel-eslint",
   parserOptions: {
-    "ecmaVersion": 8,
-    "ecmaFeatures": {
-      "impliedStrict": true,
-      "classes": true,
-      "jsx": true
-    }
+    ecmaVersion: 8,
+    ecmaFeatures: {
+      impliedStrict: true,
+      classes: true,
+      jsx: true,
+    },
   },
   env: {
-    "browser": true,
-    "es6": true
+    browser: true,
+    es6: true,
   },
   settings: {
     react: {
-      "version": "latest"
+      version: "latest",
     },
   },
   rules: {
     // https://github.com/yannickcr/eslint-plugin-react#configuration
-    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": ["warn", { extensions: [".js", ".jsx"] }],
     "react/jsx-uses-react": "error",
     "react/react-in-jsx-scope": "error",
     "react/no-deprecated": "error",
@@ -78,21 +74,24 @@ module.exports = {
     "jsx-a11y/alt-text": "warn",
 
     // prettier - gatsby-starter-default options
-    "prettier/prettier": ["error", {
-      "printWidth": 80,
-      "tabWidth": "error",
-      "useTabs": false,
-      "semi": false,
-      "singleQuote": false,
-      "endOfLine": "lf",
-      "jsxSingleQuote": false,
-      "trailingComma": "es5",
-      "bracketSpacing": true,
-      "jsxBracketSameLine": false,
-      "arrowParens": "avoid"
-    }]
-  }
-};
+    "prettier/prettier": [
+      "error",
+      {
+        printWidth: 80,
+        tabWidth: "error",
+        useTabs: false,
+        semi: false,
+        singleQuote: false,
+        endOfLine: "lf",
+        jsxSingleQuote: false,
+        trailingComma: "es5",
+        bracketSpacing: true,
+        jsxBracketSameLine: false,
+        arrowParens: "avoid",
+      },
+    ],
+  },
+}
 ```
 
 ### Running ESLint with a Script
@@ -110,7 +109,7 @@ Now we will begin by adding a two `lint` scripts in your project's `package.json
     "format": "prettier --write src/**/*.{js,jsx}",
     "lint": "eslint --config .eslintrc.js src",
     "lint:fix": "eslint --config .eslintrc.js --fix src"
-  },
+  }
 }
 ```
 
@@ -132,19 +131,16 @@ Adding ESLint to VS Code needs a little more configuring unlike the Prettier ext
 3. Click “Install”
 4. Open your VS Code settings as JSON (CMD/Ctrl+Shift+P => "Preferences: Open Settings (JSON)")
 5. Input the following, we will cover:
-  1. Disabling VS Code's built-in formatting
-  2. Enabling ESLint validation
-  3. Enabling ESLint auto-fix on save
+6. Disabling VS Code's built-in formatting
+7. Enabling ESLint validation
+8. Enabling ESLint auto-fix on save
 
 ```json:title=settings.json
 {
   // ...
   "editor.formatOnSave": false,
   "eslint.autoFixOnSave": true,
-  "eslint.validate": [
-      "javascript",
-      "javascriptreact",
-  ],
+  "eslint.validate": ["javascript", "javascriptreact"]
   // ...
 }
 ```
@@ -155,8 +151,8 @@ It is important to note that by disabling VS Code's built-in formatting, HTML fi
 {
   // ...
   "[html]": {
-    "editor.formatOnSave": true,
-  },
+    "editor.formatOnSave": true
+  }
   // ...
 }
 ```
