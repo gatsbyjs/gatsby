@@ -58,7 +58,7 @@ If you want to make changes, improvements, or add new functionality to the websi
 
 - Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
-- Run `npm run develop` to preview the blog at `http://localhost:8000/blog`.
+- Run `npm run develop` to preview the site at `http://localhost:8000/`.
 
 Now you can make and preview your changes before raising a pull request!
 
