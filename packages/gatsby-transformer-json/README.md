@@ -140,6 +140,23 @@ Which would return:
 
 ## Configuration options
 
+**`plugins`** [string[]][optional]
+
+By default, all JSON nodes are transformed. Use the `plugins` array option as an opt-in performance enhancement to only transform nodes created by specific plugins. This will also reduce the amount of unused queries and types in your GraphQL schema.
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-json`,
+      options: {
+        plugins: [`gatsby-source-filesystem`],
+      },
+    },
+  ],
+}
+```
+
 **`typeName`** [string|function][optional]
 
 The default naming convention documented above can be changed with
