@@ -4360,7 +4360,7 @@
   built_by: Tenon.io
   built_by_url: https://tenon.io
   featured: false
-- title: Title of the Site
+- title: Matthew Secrist
   main_url: https://www.matthewsecrist.net
   url: https://www.matthewsecrist.net
   source_url: https://github.com/matthewsecrist/v3
@@ -4372,4 +4372,18 @@
     - Web Development
   built_by: Matthew Secrist
   built_by_url: https://www.matthewsecrist.net
+  featured: false
+- title: Node.js Dev
+  main_url: https://nodejs.dev
+  url: https://nodejs.dev
+  source_url: https://github.com/nodejs/nodejs.dev
+  description: >
+    Node.js Foundation Website.
+  categories:
+    - Node.js
+    - Documentation
+    - Dev
+    - Web Development
+  built_by: Node.js Website Redesign Working Group
+  built_by_url: https://github.com/nodejs/website-redesign
   featured: false
