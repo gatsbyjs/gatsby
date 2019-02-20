@@ -1,21 +1,23 @@
 ---
 title: Introducing useStaticQuery
-date: 2019-02-15
+date: 2019-02-20
 author: Sidhartha Chatterjee
 tags:
   - hooks
   - static query
 ---
 
-We've been _super_ excited about [React Hooks][hooks-intro] for a while and when they finally landed last week in React 16.8, we figured it was time to give our very own `StaticQuery` component the hook treatment.
+React Hooks are _cool_. Besides simplifying your code and removing the need for a lot of boilerplate associated with classes in JavaScript (looking at you, `this`), they enable some _serious_ shareability. They also make it possible to use state in functional components!
 
-We'd like to introduce our first hook, `useStaticQuery`.
+You can probably tell that we've been _super_ excited about [React Hooks][hooks-intro]. So when they finally landed in React 16.8, we figured it was time to give our very own `StaticQuery` component the hook treatment!
+
+### Say hello to useStaticQuery
 
 `useStaticQuery` is a hook that takes a GraphQL query and returns your data. That's it!
 
-**No more Render Props necessary. Not only does this simplify accessing your data in components now but will also keep your component tree shallow!**
+**No more Render Props necessary to use a Static Query**
 
-> 💡 To use useStaticQuery, you'll need to update `gatsby` to v2.1.0 and `react` and `react-dom` to v16.8.0
+Not only does this simplify accessing your data in components now but will also keep your component tree shallow!
 
 Let's check out a simple example. Here's a simple Header component, first using `StaticQuery` and then with `useStaticQuery`.
 
@@ -78,13 +80,11 @@ const Header = () => {
 export default Header
 ```
 
-![excited-gif](./images/excited.gif)
-
 Isn't that cleaner and more succinct?
 
 Just like `StaticQuery`, when you build your site for production, Gatsby will parse _and_ execute your queries in `useStaticQuery` and inject data in just the right place!
 
-You can even create custom hooks that use `useStaticQuery` in them. All the [rules of hooks][rules-of-hooks] apply.
+Where this gets even more powerful is the ability to create custom hooks that use `useStaticQuery` in them. Let's say you need to query for the site title several times in your app. Instead of a call to `useStaticQuery` in each component, you can _extract_ it out to a custom hook like:
 
 ```jsx
 const useSiteMetadata = () => {
@@ -102,6 +102,20 @@ const useSiteMetadata = () => {
   return site.siteMetadata
 }
 ```
+
+Now everytime you need the site title, you can use this custom hook. And in case you change the structure of that data, you only need to change the query once!
+
+![excited-gif](./images/excited.gif)
+
+We're really excited about this pattern and everything it enables. With our upcoming [themes][themes] feature, a theme could export custom hooks of its own and consumers could access data without writing a single query.
+
+# Where can I get this?
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">useStaticQuery hook snuck into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> pretty quick 😍 <a href="https://t.co/PbzTuzk6hb">https://t.co/PbzTuzk6hb</a> waaay nicer API than using the &lt;StaticQuery&gt; component. <a href="https://t.co/6Mf4sSF5C3">pic.twitter.com/6Mf4sSF5C3</a></p>&mdash; Jacob Impson (@jacobimpson) <a href="https://twitter.com/jacobimpson/status/1095930703504584706?ref_src=twsrc%5Etfw">February 14, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+The sharp reader (Jacob is sharp, be like Jacob) would've noticed that we already _stealthily_ released `useStaticQuery` last week.
+
+To use useStaticQuery, update `gatsby` to v2.1.0 and `react` and `react-dom` to v16.8.0!
 
 # Known Limitations
 
@@ -122,3 +136,4 @@ We hope you enjoy using `useStaticQuery` in your Gatsby apps to query your data!
 [sidhartha-twitter]: https://twitter.com/chatsidhartha
 [rules-of-hooks]: https://reactjs.org/docs/hooks-rules.html
 [hooks-intro]: https://reactjs.org/docs/hooks-intro.html
+[themes]: /blog/2019-02-11-gatsby-themes-livestream-and-example/
