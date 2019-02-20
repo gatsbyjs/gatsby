@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.17...gatsby-plugin-manifest@2.0.18) (2019-02-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** improve SVG->PNG fidelity ([#11608](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/11608)) ([e9345cd](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/e9345cd))
+
 ## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.16...gatsby-plugin-manifest@2.0.17) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

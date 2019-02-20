@@ -48,7 +48,7 @@
     "gatsby-source-npm-package-search": "^2.0.0",
     "gatsby-transformer-csv": "^2.0.0",
     "gatsby-transformer-documentationjs": "^2.0.0",
-    "gatsby-transformer-remark": "^2.2.4",
+    "gatsby-transformer-remark": "^2.2.5",
     "gatsby-transformer-screenshot": "^2.0.4",
     "gatsby-transformer-sharp": "^2.1.1",
     "gatsby-transformer-yaml": "^2.1.1",

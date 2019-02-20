@@ -327,7 +327,7 @@ as well as
 
 Gatsby supports almost every possible styling option (if there isn't a plugin
 yet for your favorite CSS option,
-[please contribute one!](/docs/how-to-contribute/))
+[please contribute one!](/contributing/how-to-contribute/))
 
 - [Typography.js](/packages/gatsby-plugin-typography/)
 - [Sass](/packages/gatsby-plugin-sass/)
