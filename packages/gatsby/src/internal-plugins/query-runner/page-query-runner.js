@@ -155,14 +155,7 @@ const runQueriesForPathnames = pathnames => {
   let didNotQueueItems = true
   pageQueries.forEach(id => {
     const page = pages.get(id)
-    // Don't run queries for page components that haven't yet
-    // had their queries extracted. Once that is finished, the pages
-    // with using that component will have their queries queued again.
-    if (
-      page &&
-      store.getState().components.get(page.componentPath).queryState !==
-        `QUERY_NOT_YET_EXTRACTED`
-    ) {
+    if (page) {
       didNotQueueItems = false
       queue.push(
         ({

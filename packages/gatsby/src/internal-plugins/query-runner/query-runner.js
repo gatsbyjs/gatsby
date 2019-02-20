@@ -27,8 +27,6 @@ type QueryJob = {
 module.exports = async (queryJob: QueryJob, component: Any) => {
   const { schema, program } = store.getState()
 
-  console.log(`running query for`, queryJob.context.path)
-  console.log({ query: queryJob.query })
   const graphql = (query, context) =>
     graphqlFunction(schema, query, context, context, context)
 
@@ -40,7 +38,6 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   } else {
     result = await graphql(queryJob.query, queryJob.context)
   }
-  console.log({ result })
 
   // If there's a graphql error then log the error. If we're building, also
   // quit.
