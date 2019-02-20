@@ -107,11 +107,28 @@ const useSiteMetadata = () => {
 }
 ```
 
-Now everytime you need the site title, you can use this custom hook. And in case you change the structure of that data, you only need to change the query once!
+Now everytime you need the site title, you can use this custom hook.
+
+```jsx
+const Header = () => {
+  // highlight-next-line
+  const { title } = useSiteMetadata()
+
+  return (
+    <header>
+      <h1>{title}</h1>
+    </header>
+  )
+}
+```
+
+Isn't that neat?
 
 ![excited-gif](./images/excited.gif)
 
-We're really excited about this pattern and everything it enables. With our upcoming [themes][themes] feature, a theme could export custom hooks of its own and consumers could access data without writing a single query.
+And if there's a change to the structure of that data, you only need to change the query in one place!
+
+We're really excited about this pattern and everything it enables. With our upcoming [themes][themes] feature, a theme could even export custom hooks of its own. Users could access data using these without writing a single query.
 
 # Where can I get this?
 
