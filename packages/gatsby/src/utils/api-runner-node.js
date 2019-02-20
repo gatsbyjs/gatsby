@@ -104,7 +104,7 @@ const runAPI = (plugin, api, args) => {
       let alreadyDisplayed = false
       const createPageAction = actions.createPage
       // create new actions object with wrapped createPage action
-      // doubleBoundActionCreators is∂ memoized, so we can't just
+      // doubleBoundActionCreators is memoized, so we can't just
       // reassign createPage field as this would cause this extra logic
       // to be used in subsequent APIs and we only want to target this `createPages` call.
       actions = {
