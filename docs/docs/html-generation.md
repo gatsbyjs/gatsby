@@ -7,8 +7,8 @@ In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack
 The high level process is:
 
 1. Create a webpack configuration for Node.js Server Side Rendering (SSR)
-1. Build a `page-renderer.js` that takes a page path and renders its HTML
-1. For each page in redux, call `page-renderer.js`
+1. Build a `render-page.js` that takes a page path and renders its HTML
+1. For each page in redux, call `render-page.js`
 
 ## Webpack
 
@@ -87,10 +87,10 @@ Finally, we call [react-dom](https://reactjs.org/docs/react-dom.html) and render
 
 ## build-html.js
 
-So, we've built the means to generate HTML for a page. This webpack bundle is saved to `public/page-renderer.js`. Next, we need to use it to generate HTML for all the site's pages.
+So, we've built the means to generate HTML for a page. This webpack bundle is saved to `public/render-page.js`. Next, we need to use it to generate HTML for all the site's pages.
 
 Page HTML does not depend on other pages. So we can perform this step in parallel. We use the [jest-worker](https://github.com/facebook/jest/tree/master/packages/jest-worker) library to make this easier. The [html-renderer-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/html-renderer-queue.js) creates a pool of workers equal to the number of cores on your machine. It then partitions the pages into groups and sends them to the workers, which run [worker.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker.js).
 
-The workers simply iterate over each page in their partition, and call the `page-renderer.js` with the page. It then saves the html for the page's path in `/public`.
+The workers simply iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the html for the page's path in `/public`.
 
 Once all workers have finished, we're done!

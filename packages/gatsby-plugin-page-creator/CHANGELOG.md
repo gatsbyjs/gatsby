@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.6...gatsby-plugin-page-creator@2.0.7) (2019-02-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** Fix regular expression for validate path ([#11862](https://github.com/gatsbyjs/gatsby/issues/11862)) ([898873d](https://github.com/gatsbyjs/gatsby/commit/898873d))
+
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.5...gatsby-plugin-page-creator@2.0.6) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

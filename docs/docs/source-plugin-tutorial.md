@@ -362,7 +362,7 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, `npm` allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/docs/submit-to-plugin-library/).
+> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
 
 ## Summary
 
