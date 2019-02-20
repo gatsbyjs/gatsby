@@ -1,11 +1,12 @@
 ---
-title: Getting Started with Gatsby Themes and MDX
+title: "Getting Started with Gatsby Themes and MDX"
 date: 2019-02-20
 author: Katie Fujihara
 tags: ["themes", "tutorials"]
 ---
 ### What is a Gatsby theme?
-> Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package. -Jason Lengstorf
+> Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package. 
+-[Jason Lengstorf](/blog/2019-02-11-gatsby-themes-livestream-and-example/)
 
 # Getting Started
 
@@ -35,7 +36,7 @@ Tidy up your *package.json* file and create workspaces which includes the projec
 }
 ```
 
-Next, you want to create your *site* directory and your *packages* directory within your *gatsby-theme* project directory. Make sure the names that you choose for your directories are the same as what you put in your workspaces. You will also want to go into your packages directory and make another directory with the name of your theme. For the purpose of this tutorial, we can will call it *theme*. Then you will want to ```yarn init``` the *theme* directory and the *site* directory.
+Next, you want to create your *site* directory and your *packages* directory within your *gatsby-theme* project directory. Make sure the names that you choose for your directories are the same as what you put in your workspaces. You will also want to go into your packages directory and make another directory with the name of your theme. For the purpose of this tutorial, we will call it *theme*. Then you will want to ```yarn init``` the *theme* directory and the *site* directory.
 
 ```
 mkdir site
