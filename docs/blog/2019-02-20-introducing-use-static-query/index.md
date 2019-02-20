@@ -19,7 +19,7 @@ You can probably tell that we've been super excited about [React Hooks][hooks-in
 
 This simplifies accessing data in your components and also keeps your component tree shallow.
 
-Let's quickly check out a simple example. Here's a simple Header component, first using `StaticQuery` and then with `useStaticQuery`.
+Let's quickly check out a basic example. Here's a typical Header component, first written using `StaticQuery` and then `useStaticQuery`.
 
 ### Before
 
