@@ -84,7 +84,7 @@ export default class FilteredStarterLibrary extends Component {
       starters = starters.filter(starter =>
         JSON.stringify(starter.node)
           .toLowerCase()
-          .includes(urlState.s)
+          .includes(urlState.s.toLowerCase())
       )
     }
 

@@ -25,7 +25,7 @@ When working on the Gatsby.js documentation, you can choose between two major st
 ## Modifying markdown files
 
 1. If you want to add/modify any Gatsby documentation, go to the
-   [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/contributing) on GitHub and
+   [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and
    use the file editor to edit and then preview your changes.
 2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria:
    - Follow the standards outlined in the [Gatsby Style Guide](/contributing/gatsby-style-guide/).
