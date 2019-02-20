@@ -56,12 +56,6 @@ exports.setPluginOptions = opts => {
 // raw) callback-accepting toBuffer(...) method
 Promise.promisifyAll(sharp.prototype, { multiArgs: true })
 
-// Try to enable the use of SIMD instructions. Seems to provide a smallish
-// speedup on resizing heavy loads (~10%). Sharp disables this feature by
-// default as there's been problems with segfaulting in the past but we'll be
-// adventurous and see what happens with it on.
-sharp.simd(true)
-
 const bar = new ProgressBar(
   `Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`,
   {
