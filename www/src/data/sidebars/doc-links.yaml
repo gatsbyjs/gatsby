@@ -230,6 +230,8 @@
         - title: Creating a sitemap
           link: /docs/creating-a-sitemap/
         - title: Linking between pages
+        - title: Adding an RSS Feed
+          link: /docs/adding-an-rss-feed/
           link: /docs/linking-between-pages/
         - title: Making your site accessible
           link: /docs/making-your-site-accessible
