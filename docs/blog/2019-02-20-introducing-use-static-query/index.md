@@ -113,7 +113,7 @@ We're really excited about this pattern and everything it enables. With our upco
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">useStaticQuery hook snuck into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> pretty quick 😍 <a href="https://t.co/PbzTuzk6hb">https://t.co/PbzTuzk6hb</a> waaay nicer API than using the &lt;StaticQuery&gt; component. <a href="https://t.co/6Mf4sSF5C3">pic.twitter.com/6Mf4sSF5C3</a></p>&mdash; Jacob Impson (@jacobimpson) <a href="https://twitter.com/jacobimpson/status/1095930703504584706?ref_src=twsrc%5Etfw">February 14, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-The sharp reader (Jacob is sharp, be like Jacob) would've noticed that we already _stealthily_ released `useStaticQuery` last week.
+The sharp reader (Jacob is sharp, be like Jacob) would've noticed that we _stealthily_ released `useStaticQuery` last week.
 
 To use useStaticQuery, update `gatsby` to v2.1.0 and `react` and `react-dom` to v16.8.0!
 
