@@ -4360,6 +4360,19 @@
   built_by: Tenon.io
   built_by_url: https://tenon.io
   featured: false
+- title: Matthew Secrist
+  main_url: https://www.matthewsecrist.net
+  url: https://www.matthewsecrist.net
+  source_url: https://github.com/matthewsecrist/v3
+  description: >
+    Matthew Secrist's personal portfolio using Gatsby, Prismic and Styled-Components.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: Matthew Secrist
+  built_by_url: https://www.matthewsecrist.net
+  featured: false
 - title: Node.js Dev
   main_url: https://nodejs.dev
   url: https://nodejs.dev
@@ -4374,4 +4387,3 @@
   built_by: Node.js Website Redesign Working Group
   built_by_url: https://github.com/nodejs/website-redesign
   featured: false
-  
