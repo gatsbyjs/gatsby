@@ -53,10 +53,6 @@ exports.onServiceWorkerActive = ({
   })
 }
 
-exports.onRouteUpdate = () => {
-  console.log(document.getElementById(`___gatsby`).innerHTML)
-}
-
 exports.onPostPrefetchPathname = ({ pathname, getResourceURLsForPathname }) => {
   // do nothing if the SW has just updated, since we still have old pages in
   // memory which we don't want to be whitelisted
