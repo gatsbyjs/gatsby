@@ -2,6 +2,8 @@
 title: Themes API Reference
 ---
 
+> ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
+
 ## Table of contents
 
 - [Core Gatsby APIs](#core-gatsby-apis)

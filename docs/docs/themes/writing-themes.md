@@ -2,7 +2,9 @@
 title: Writing Themes
 ---
 
-**Note**: This page is currently a WIP, see the [blog post guide]() for a full guide on buildint a theme.
+> ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
+
+**Note**: This page is currently a WIP, see the [blog post guide]() for a full guide on building a theme.
 
 ## Initialize a theme
 
