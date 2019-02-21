@@ -22,7 +22,7 @@ The two functions you would want to use are:
 `cache.set(key: String, obj: Object): Promise<any>`
 
 ### `get`
-`cache.get(key: String): Promise<Object>`
+`cache.get(key: String): Promise<any>`
 
 
 
