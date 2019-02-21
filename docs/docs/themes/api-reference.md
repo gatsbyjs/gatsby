@@ -45,6 +45,20 @@ module.exports = {
 }
 ```
 
+In your theme's `gatsby-config.js` you can return a function, the argument it receives are the options:
+
+```js:title=gatsby-config.js
+module.exports = themeOptions => {
+  console.log(themeOptions)
+
+  return {
+    plugins: [
+      // ...
+    ],
+  }
+}
+```
+
 Then, in your theme's `gatsby-node.js` you can access them as the second argument:
 
 ```js:title=gatsby-node.js
