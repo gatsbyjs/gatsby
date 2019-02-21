@@ -100,7 +100,7 @@ You will want to make Gatsby, React, and ReactDom peer dependencies in both the 
   },
 ```
 
-# Installing MDX and gatsby-plugin-page-creator
+## Installing MDX and gatsby-plugin-page-creator
 
 ### What is MDX?
 
