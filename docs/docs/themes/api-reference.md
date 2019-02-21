@@ -49,6 +49,42 @@ import React from "react"
 export default props => <pre>{JSON.stringify(props, null, 2)}</pre>
 ```
 
+## Add theme transpilation
+
+**Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
+
+Since your theme will be installed, it will end up in `node_modules` which Gatsby doesn't transpile by default.
+This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
+
+You will need to install the package:
+
+```sh
+yarn add gatsby-plugin-compile-es6-packages
+```
+
+And then add it to your plugins list:
+
+```js:title=gatsby-config.js
+const path = require("path")
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: path.join(__dirname, "src", "pages"),
+      },
+    },
+    {
+      resolve: "gatsby-plugin-compile-es6-packages",
+      options: {
+        modules: ["gatsby-theme-developer"],
+      },
+    },
+  ],
+}
+```
+
 ## Design Token Conventions
 
 ## Separating Queries and Presentational Components

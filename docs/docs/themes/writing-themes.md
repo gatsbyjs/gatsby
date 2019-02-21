@@ -2,6 +2,8 @@
 title: Writing Themes
 ---
 
+**Note**: This page is currently a WIP, see the [blog post guide]() for a full guide on buildint a theme.
+
 ## Initialize a theme
 
 ```sh
@@ -97,7 +99,12 @@ module.exports = {
         path: path.join(__dirname, "src", "pages"),
       },
     },
-    "gatsby-plugin-compile-es6-packages",
+    {
+      resolve: "gatsby-plugin-compile-es6-packages",
+      options: {
+        modules: ["gatsby-theme-developer"],
+      },
+    },
   ],
 }
 ```

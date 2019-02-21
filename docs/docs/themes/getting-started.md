@@ -14,8 +14,7 @@ For example, a theme-based starter for a blog might do the following:
 
 ## 1. Install the theme and configure it
 
-```js
-// gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   themes: [
     {
@@ -30,9 +29,7 @@ module.exports = {
 
 ## 2. Scaffold out an example post
 
-`src/posts/hello-world.md`
-
-```md
+```md:title=src/posts/hello-world.md
 ---
 title: Hello, world!
 path: /hello-world
@@ -43,9 +40,7 @@ I'm an example post!
 
 ## 3. Scaffold out the home page
 
-`src/pages/index.md`
-
-```md
+```md:title=src/pages/index.md
 # Home page!
 ```
 
