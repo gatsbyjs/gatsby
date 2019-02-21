@@ -26,10 +26,11 @@ exports.sourceNodes = (
     : `mongodb://${authUrlPart}${serverOptions.address}:${
         serverOptions.port
       }/${dbName}${connectionExtraParams}`
-
-  return MongoClient.connect(connectionURL)
+  const mongoClient = new MongoClient(connectionURL, { useNewUrlParser: true })
+  return mongoClient
+    .connect()
     .then(client => {
-      let db = client.db(dbName)
+      const db = client.db(dbName)
       let collection = pluginOptions.collection || [`documents`]
       if (!Array.isArray(collection)) {
         collection = [collection]
@@ -41,11 +42,11 @@ exports.sourceNodes = (
         )
       )
         .then(() => {
-          db.close()
+          mongoClient.close()
         })
         .catch(err => {
           console.warn(err)
-          db.close()
+          mongoClient.close()
           return err
         })
     })
