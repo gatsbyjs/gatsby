@@ -20,7 +20,7 @@ npm install --save gatsby-plugin-feed
 
 Once installation is complete, you can now add this plugin to your site's config file, like so:
 
-```json:title=gatsby-config.js
+```js:title=gatsby-config.js
 (module.exports = {
   "siteMetadata": {
     "siteUrl": `https://www.example.com`
