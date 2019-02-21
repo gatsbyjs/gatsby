@@ -282,4 +282,18 @@ If you want to check your progress, go to the _site_ directory and
 
 Once your server is up you should see your beautiful theme applied to your files!
 
+## Troubleshooting Plugin Error
+
+If you run into an error that your theme plugin can't be found, try clearing your cache. You can either use `rm -rf.cache` or you can add:
+
+```json
+{
+  "scripts": {
+    "clean": "gatsby clean"
+  }
+}
+```
+
+to your _package.json_ file. Then you can use `npm run clean` in your terminal.
+
 If you happen to find this tutorial helpful, please feel free to let me know on Twitter [@KatieofCode](www.twitter.com/katieofcode)! I would love to see what kind of themes you build.
