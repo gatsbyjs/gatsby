@@ -62,7 +62,6 @@ export default () => {
       }
     }
   `)
-};
 
   return (
     <header>
