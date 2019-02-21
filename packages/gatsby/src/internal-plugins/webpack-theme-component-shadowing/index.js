@@ -66,9 +66,11 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         path.join(path.resolve(`.`), `src`, theme),
       ]
         .concat(
-          themes.map(aTheme =>
-            path.join(path.dirname(require.resolve(aTheme)), `src`, theme)
-          )
+          Array.from(themes)
+            .reverse()
+            .map(aTheme =>
+              path.join(path.dirname(require.resolve(aTheme)), `src`, theme)
+            )
         )
         .map(dir => path.join(dir, component))
         .find(possibleComponentPath => {
