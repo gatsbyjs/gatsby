@@ -26,7 +26,7 @@ The two functions you would want to use are:
 
 
 
-## Custom plugin – example
+## Plugin Example
 
 In your plugin's `gatsby-node.js` file, you can access the `cache` argument like so:
 
