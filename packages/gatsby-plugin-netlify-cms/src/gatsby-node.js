@@ -55,6 +55,7 @@ exports.onCreateWebpackConfig = (
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
     manualInit = false,
+    resolvePaths = [],
   }
 ) => {
   if ([`develop`, `build-javascript`].includes(stage)) {
@@ -74,6 +75,9 @@ exports.onCreateWebpackConfig = (
       },
       output: {
         path: path.join(program.directory, `public`, publicPathClean),
+      },
+      resolve: {
+        modules: [...resolvePaths, `node_modules`],
       },
       module: {
         /**
@@ -160,6 +164,30 @@ exports.onCreateWebpackConfig = (
       optimization: {},
       devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
     }
+
+    config.module.rules.push({
+      test: /gatsby\/cache-dir.*\.js$/,
+      loader: require.resolve(`babel-loader`),
+      options: {
+        presets: [
+          require.resolve(`@babel/preset-react`),
+          [
+            require.resolve(`@babel/preset-env`),
+            {
+              shippedProposals: true,
+              useBuiltIns: `entry`,
+            },
+          ],
+        ],
+        plugins: [require.resolve(`@babel/plugin-proposal-class-properties`)],
+      },
+    })
+
+    // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
+    config.module.rules.exclude = [/node_modules\/(?!(gatsby)\/)/]
+
+    // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
+    config.resolve.mainFields = [`browser`, `module`, `main`]
 
     if (stage === `develop`) {
       webpack(config).watch({}, () => {})
