@@ -686,6 +686,15 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
+  let tracedSVG
+  if (options.generateTracedSVG && options.tracedSVG) {
+    tracedSVG = await traceSVG({
+      file,
+      args: options.tracedSVG,
+      fileArgs: options,
+    })
+  }
+
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
@@ -729,6 +738,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
+    tracedSVG,
   }
 }
 
@@ -796,6 +806,15 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
+  let tracedSVG
+  if (options.generateTracedSVG && options.tracedSVG) {
+    tracedSVG = await traceSVG({
+      file,
+      args: options.tracedSVG,
+      fileArgs: options,
+    })
+  }
+
   const fallbackSrc = images[0].src
   const srcSet = images
     .map((image, i) => {
@@ -829,6 +848,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
+    tracedSVG,
   }
 }
 
