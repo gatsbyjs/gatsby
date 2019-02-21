@@ -28,7 +28,7 @@ Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs.
 - [Node Interface](https://www.gatsbyjs.org/docs/node-interface/)
 - ... [and more](https://www.gatsbyjs.org/docs/api-specification/)
 
-If you're new to Gatsby you can get started by following along with the guides for building out a site. Converting it to a theme will be easy later on since themes are prepackaged Gatsby sites.
+If you're new to Gatsby you can get started by following along with the guides for building out a site. Converting it to a theme will be straightforward later on since themes are prepackaged Gatsby sites.
 
 ## Configuration
 
