@@ -459,7 +459,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (
+actions.createNodeSync = (
   node: any,
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
@@ -619,45 +619,21 @@ actions.createNode = (
   }
 }
 
-/**
- * Wrap `createNode` action in a Promise that resolves with the created node
- * when all subsequent `onCreateNode` API calls have finished, or with null
- *  after a timeout has elapsed.
- */
-actions.createNodeAndWaitForTransforms = (
+actions.createNode = (
   node: any,
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
-) => dispatch =>
-  new Promise((resolve, reject) => {
-    const createNodeHandler = createdNode => {
-      if (createdNode.id === node.id) {
-        cleanUp()
-        resolve(node)
-      }
-    }
-    emitter.on(`CREATE_NODE_FINISHED`, createNodeHandler)
+) => dispatch => {
+  dispatch(actions.createNodeSync(node, plugin, actionOptions))
 
-    const apiQueueEmptyHandler = () => {
-      cleanUp()
-      resolve(node)
-    }
-    emitter.on(`API_RUNNING_QUEUE_EMPTY`, apiQueueEmptyHandler)
-
-    const DELAY = 1000
-    const timeout = setTimeout(() => {
-      cleanUp()
-      resolve(null) // reject()
-    }, DELAY)
-
-    const cleanUp = () => {
-      emitter.off(apiQueueEmptyHandler)
-      emitter.off(createNodeHandler)
-      clearTimeout(timeout)
-    }
-
-    dispatch(actions.createNode(node, plugin, actionOptions))
+  const apiRunnerNode = require(`../utils/api-runner-node`)
+  return apiRunnerNode(`onCreateNode`, {
+    node,
+    traceId: actionOptions.traceId,
+    parentSpan: actionOptions.parentSpan,
+    traceTags: { nodeId: node.id, nodeType: node.internal.type },
   })
+}
 
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't

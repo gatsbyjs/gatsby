@@ -22,7 +22,7 @@ const commentId = (parentId, commentNumber) =>
 const descriptionId = (parentId, name) =>
   `${parentId}--DocumentationJSComponentDescription--${name}`
 
-function createDescriptionNode(
+async function createDescriptionNode(
   node,
   docNodeId,
   markdownStr,
@@ -45,7 +45,7 @@ function createDescriptionNode(
   }
 
   node.children = node.children.concat([descriptionNode.id])
-  createNode(descriptionNode)
+  await createNode(descriptionNode)
 
   return descriptionNode.id
 }

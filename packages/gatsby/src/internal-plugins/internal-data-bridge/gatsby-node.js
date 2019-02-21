@@ -41,7 +41,7 @@ function transformPackageJson(json) {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.sourceNodes = ({ createContentDigest, actions, store }) => {
+exports.sourceNodes = async ({ createContentDigest, actions, store }) => {
   const { createNode } = actions
   const state = store.getState()
   const { program } = state
@@ -50,7 +50,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   // Add our default development page since we know it's going to
   // exist and we need a node to exist so its query works :-)
   const page = { path: `/dev-404-page/` }
-  createNode({
+  await createNode({
     ...page,
     id: createPageId(page.path),
     parent: null,
@@ -61,21 +61,23 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     },
   })
 
-  flattenedPlugins.forEach(plugin => {
-    plugin.pluginFilepath = plugin.resolve
-    createNode({
-      ...plugin,
-      packageJson: transformPackageJson(
-        require(`${plugin.resolve}/package.json`)
-      ),
-      parent: null,
-      children: [],
-      internal: {
-        contentDigest: createContentDigest(plugin),
-        type: `SitePlugin`,
-      },
+  await Promise.all(
+    flattenedPlugins.map(plugin => {
+      plugin.pluginFilepath = plugin.resolve
+      return createNode({
+        ...plugin,
+        packageJson: transformPackageJson(
+          require(`${plugin.resolve}/package.json`)
+        ),
+        parent: null,
+        children: [],
+        internal: {
+          contentDigest: createContentDigest(plugin),
+          type: `SitePlugin`,
+        },
+      })
     })
-  })
+  )
 
   // Add site node.
   const buildTime = moment()
@@ -95,7 +97,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       ...configCopy,
       buildTime,
     }
-    createNode({
+    return createNode({
       ...node,
       id: `Site`,
       parent: null,
@@ -107,19 +109,19 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     })
   }
 
-  createGatsbyConfigNode(state.config)
+  await createGatsbyConfigNode(state.config)
 
   const pathToGatsbyConfig = systemPath.join(
     program.directory,
     `gatsby-config.js`
   )
-  chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
+  chokidar.watch(pathToGatsbyConfig).on(`change`, async () => {
     const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
     try {
       // Delete require cache so we can reload the module.
       delete require.cache[require.resolve(pathToGatsbyConfig)]
       const config = require(pathToGatsbyConfig)
-      createGatsbyConfigNode(config)
+      await createGatsbyConfigNode(config)
     } catch (e) {
       // Restore the old cache since requiring the new gatsby-config.js failed.
       if (oldCache !== undefined) {
@@ -129,13 +131,13 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   })
 }
 
-exports.onCreatePage = ({ createContentDigest, page, actions }) => {
+exports.onCreatePage = async ({ createContentDigest, page, actions }) => {
   const { createNode } = actions
   // eslint-disable-next-line
   const { updatedAt, ...pageWithoutUpdated } = page
 
   // Add page.
-  createNode({
+  await createNode({
     ...pageWithoutUpdated,
     id: createPageId(page.path),
     parent: null,

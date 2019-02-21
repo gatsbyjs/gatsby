@@ -24,7 +24,7 @@ module.exports = async function onCreateNode({ node, actions, createNodeId }) {
     },
   }
 
-  createNode(imageNode)
+  await createNode(imageNode)
   createParentChildLink({ parent: node, child: imageNode })
 
   return
