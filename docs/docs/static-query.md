@@ -44,6 +44,33 @@ export default () => (
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
 
+### Hooks Example
+
+Using the hooks version of static query is very similar. Something to note though, Hooks with GraphQL only works with Gatsby version 2.1 and above here is the boilerplate syntax to use it:
+
+```jsx:title=src/components/header.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+
+export default () => {
+  const data = useStaticQuery(graphql`
+    query HeadingQuery {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+  `);
+
+  return (
+    <header>
+        <h1>{site.siteMetadata.title}</h1>
+     </header>
+  );
+};
+```
+
 ### Typechecking
 
 With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
