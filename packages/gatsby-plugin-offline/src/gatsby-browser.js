@@ -53,6 +53,24 @@ exports.onServiceWorkerActive = ({
   })
 }
 
+exports.onRouteUpdate = ({ location }) => {
+  if (
+    !(`serviceWorker` in navigator) ||
+    navigator.serviceWorker.controller === null
+  ) {
+    return
+  }
+
+  const links = document.querySelectorAll(`link[rel=stylesheet]`)
+
+  navigator.serviceWorker.controller.postMessage({
+    gatsbyApi: `storePageContent`,
+    path: location.pathname,
+    rootHTML: document.getElementById(`___gatsby`).innerHTML,
+    stylesheets: Array.from(links).map(link => link.href),
+  })
+}
+
 exports.onPostPrefetchPathname = ({ pathname, getResourceURLsForPathname }) => {
   // do nothing if the SW has just updated, since we still have old pages in
   // memory which we don't want to be whitelisted
