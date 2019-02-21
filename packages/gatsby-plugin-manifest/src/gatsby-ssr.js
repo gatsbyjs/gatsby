@@ -31,13 +31,25 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   }
 
   // Add manifest link tag.
-  headComponents.push(
-    <link
-      key={`gatsby-plugin-manifest-link`}
-      rel="manifest"
-      href={withPrefix(`/manifest.webmanifest`)}
-    />
-  )
+  if (pluginOptions.crossOrigin) {
+    headComponents.push(
+      <link
+        key={`gatsby-plugin-manifest-link`}
+        rel="manifest"
+        href={withPrefix(`/manifest.webmanifest`)}
+        crossOrigin={pluginOptions.crossOrigin}
+      />
+    )
+  } else {
+    headComponents.push(
+      <link
+        key={`gatsby-plugin-manifest-link`}
+        rel="manifest"
+        href={withPrefix(`/manifest.webmanifest`)}
+      />
+    )
+  }
+
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (pluginOptions.theme_color) {
     let insertMetaTag = Object.keys(pluginOptions).includes(
