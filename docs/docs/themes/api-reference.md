@@ -11,6 +11,8 @@ Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs.
 
 ## Table of contents
 
+Themes also have some unique APIs and considerations to be made when building your own.
+
 - [Configuration](#configuration)
 - [Component shadowing](#component-shadowing)
 - [Separating queries and presentational components](#separating-queries-and-presentational-components)
