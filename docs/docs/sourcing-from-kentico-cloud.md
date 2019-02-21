@@ -2,7 +2,7 @@
 title: Sourcing from Kentico Cloud
 ---
 
-In this guide, you'll go through how to quickly source content for your Gatsby site from [Kentico Cloud](https://kenticocloud.com/). 
+In this guide, you'll go through how to quickly source content for your Gatsby site from [Kentico Cloud](https://kenticocloud.com/).
 
 Kentico Cloud is a hosted CMS that offers you Content as a Service (CaaS) for all your content needs. Using CaaS ensures that your content will be future-proof and reusable, so you can add a mobile app that uses the same content as your Gatsby site without worrying about how it will fit. Kentico Cloud offers CaaS with an easy-to-use editing interface and excellent collaboration features, so all your work on content can happen in one place without requiring technical help for each user.
 
@@ -13,6 +13,7 @@ _Note: For this guide, you'll work from scratch from the [Gatsby default starter
 ## Setup
 
 ### Kentico Cloud
+
 The first thing to do, if you haven't already done so, is [sign up for a Kentico Cloud account](https://app.kenticocloud.com/sign-up). This will automatically start a free 30-day trial with all Kentico Cloud features. At any point during the trial or after, you can switch to a Starter plan (which always starts as free) or a higher plan with more features.
 
 Once you have a subscription to Kentico Cloud, you need some content to retrieve. If you know what you want, you can set up your own content types (templates for your content) and then create content items (the actual content) based on them. If you'd like to take a shortcut and see some example content, you can use our [Sample Project generator](https://app.kenticocloud.com/sample-project-generator) to create sample content. This guide will continue with the example of the Sample Project.
@@ -68,7 +69,7 @@ gatsby develop
 
 To see all the content that's available from Kentico Cloud, you can test out GraphQL queries in GraphiQL at `http://localhost:8000/___graphql`. Nodes from Kentico Cloud will be prefixed with `kenticoCloud` (for single nodes) or `allKenticoCloud` (for all examples of a given type). Then each node has `Item` or `Type`, depending on what it is, and lastly you can add the codename of a specific type you are looking for. Feel free to explore the responses in GraphiQL.
 
-To see how to put that data into your site, first go to `http://localhost:8000/`. Notice that the default title for the site is "Gatsby Default Starter". You can change that by pulling the title for your site from Kentico Cloud. 
+To see how to put that data into your site, first go to `http://localhost:8000/`. Notice that the default title for the site is "Gatsby Default Starter". You can change that by pulling the title for your site from Kentico Cloud.
 
 The title here is generated in the layout from the site metadata. By default, the Kentico Cloud Sample Project has a single item named "Home" that is the only item of the Home type. So you can change the layout component to query the metadata of that item and then use that data to populate your title.
 
@@ -93,7 +94,7 @@ const Layout = ({ children }) => (
 ...
 ```
 
-If you look at  `http://localhost:8000/`, you'll notice the title is now "Dancing Goat–Freshest coffee on the block!". You can easily change this title in Kentico Cloud to whatever you want and rerun `gatsby develop` to rebuild the site ([see below about automatic builds](#continuous-deployment)).
+If you look at `http://localhost:8000/`, you'll notice the title is now "Dancing Goat–Freshest coffee on the block!". You can easily change this title in Kentico Cloud to whatever you want and rerun `gatsby develop` to rebuild the site ([see below about automatic builds](#continuous-deployment)).
 
 So you've seen how to add content to existing pages in Gatsby using Kentico Cloud. Next, you will start creating new pages of your own.
 
@@ -193,7 +194,6 @@ export const query = graphql`
     }
   }
 `
-
 ```
 
 When you rerun `gatsby develop`, you'll be able to see each article as a page with content pulled from Kentico Cloud. To see a list of all pages, visit `http://localhost:8000/asdf` (or any other url that generates a 404).
