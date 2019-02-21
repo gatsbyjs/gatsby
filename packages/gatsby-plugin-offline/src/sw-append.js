@@ -10,7 +10,9 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   const resources = await idbKeyval.get(`resources:${pathname}`)
   console.log(`trying resources:${pathname}`)
 
-  if (!resources) {
+  // Check for resources + the app-XXX.js file
+  // The latter may not exist if the SW is updating to a new version
+  if (!resources || !(await caches.match(`%pathPrefix%/%appFile%`))) {
     console.log(`nothing`)
     return await fetch(event.request)
   }
