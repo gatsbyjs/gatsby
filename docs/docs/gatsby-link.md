@@ -359,7 +359,7 @@ You can similarly check for file downloads:
 
 ## Limitations when appending query parameters or hash links programmatically
 
-Neither `<Link>` not `navigate` can be used to add query parameters or send your user to a hash link due to their use of `withPrefix`. If you need this behavior, you should either use an anchor tag or load the `@reach/router` package to make use of its `navigate` function.
+Neither `<Link>` not `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package to make use of its `navigate` function, like so:
 
 ```jsx
 import { navigate } from '@reach/router';
