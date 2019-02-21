@@ -9,7 +9,7 @@ tags: ["themes", "tutorials"]
 
 <pullquote cite="Jason Lengstorf">Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package.</pullquote>
 
-# Getting Started
+## Getting Started
 
 Create a new directory
 
