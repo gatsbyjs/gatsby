@@ -5,7 +5,7 @@ issue: https://github.com/gatsbyjs/gatsby/issues/8103
 
 Plugins can cache data as json objects and retrieve them on consecutive builds.
 
-Data is stored under the `/.cache/caches/{plugin-name}/` directory.
+Data is stored in the `.cache` directory relative to your project root.
 
 
 ## The cache api
