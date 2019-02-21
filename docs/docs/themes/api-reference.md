@@ -15,12 +15,13 @@ Themes also have some unique APIs and considerations to be made when building yo
 
 - [Configuration](#configuration)
 - [Component shadowing](#component-shadowing)
-- [Separating queries and presentational components](#separating-queries-and-presentational-components)
-  - [Page queries](#page-queries)
-  - [Static queries](#static-queries)
-- [Initializing required directories](#initializing-required-directories)
+- [Theme composition](#theme-composition)
 - [Add theme transpilation](#add-theme-transpilation)
 - [Conventions](#conventions)
+  - [Initializing required directories](#initializing-required-directories)
+  - [Separating queries and presentational components](#separating-queries-and-presentational-components)
+    - [Page queries](#page-queries)
+    - [Static queries](#static-queries)
   - [Site metadata](#site-metadata)
   - [Design tokens](#design-tokens)
   - [Templates vs components](#templates-vs-components)
@@ -72,19 +73,84 @@ exports.createPages = async ({ graphql, actions }, themeOptions) => {
 ## Component Shadowing
 
 Gatsby Themes allow you to customize any file in a theme's `src` directory by following a file naming convention.
-If you're using `gatsby-theme-tomato` which uses a `ProfileCard` component located at `src/components/ProfileCard.js` you can override the component by creating `src/gatsby-theme-tomato/components/ProfileCard.js`. If you want to see what props are passed you can do so by putting the props into a `pre` tag:
+If you're using `gatsby-theme-tomato` which uses a `ProfileCard` component located at `src/components/ProfileCard.js` you can override the component by creating `src/gatsby-theme-tomato/components/profile-card.js`. If you want to see what props are passed you can do so by putting the props into a `pre` tag:
 
-```js:title=src/gatsby-theme-tomato/components/ProfileCard.js
+```js:title=src/gatsby-theme-tomato/components/profile-card.js
 import React from "react"
 
 export default props => <pre>{JSON.stringify(props, null, 2)}</pre>
 ```
 
-## Separating queries and presentational components
+## Theme composition
+
+TODO
+
+## Add theme transpilation
+
+**Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
+
+Since your theme will be installed, it will end up in `node_modules` which Gatsby doesn't transpile by default.
+This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
+
+You will need to install the package:
+
+```sh
+yarn add gatsby-plugin-compile-es6-packages
+```
+
+And then add it to your plugins list:
+
+```js:title=gatsby-config.js
+const path = require("path")
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: path.join(__dirname, "src", "pages"),
+      },
+    },
+    {
+      resolve: "gatsby-plugin-compile-es6-packages",
+      options: {
+        modules: ["gatsby-theme-developer"],
+      },
+    },
+  ],
+}
+```
+
+## Conventions
+
+### Initializing required directories
+
+If your theme relies on the presence of particular directories, like `posts` for `gatsby-source-filesystem`, you can use the `onPreBootstrap` hook to initialize them to avoid a crash when Gatsby tries to build the site.
+
+```js:gatsby-node.js
+exports.onPreBootstrap = ({ store, reporter }) => {
+  const { program } = store.getState()
+
+  const dirs = [
+    path.join(program.directory, "posts"),
+    path.join(program.directory, "src/pages"),
+    path.join(program.directory, "src/data"),
+  ]
+
+  dirs.forEach(dir => {
+    if (!fs.existsSync(dir)) {
+      reporter.log(`creating the ${dir} directory`)
+      mkdirp.sync(dir)
+    }
+  })
+}
+```
+
+### Separating queries and presentational components
 
 As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to override a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
 
-### Page queries
+#### Page queries
 
 You can use a template for top-level data collection with a page query that passes the data to a `PostList` component:
 
@@ -123,7 +189,7 @@ export const query = graphql`
 `
 ```
 
-### Static queries
+#### Static queries
 
 You can use static queries at the top level template as well and pass the data to other presentational components as props:
 
@@ -166,67 +232,6 @@ const Layout = ({ children }) => {
 
 export default Layout
 ```
-
-## Initializing required directories
-
-If your theme relies on the presence of particular directories, like `posts` for `gatsby-source-filesystem`, you can use the `onPreBootstrap` hook to initialize them to avoid a crash when Gatsby tries to build the site.
-
-```js:gatsby-node.js
-exports.onPreBootstrap = ({ store, reporter }) => {
-  const { program } = store.getState()
-
-  const dirs = [
-    path.join(program.directory, "posts"),
-    path.join(program.directory, "src/pages"),
-    path.join(program.directory, "src/data"),
-  ]
-
-  dirs.forEach(dir => {
-    if (!fs.existsSync(dir)) {
-      reporter.log(`creating the ${dir} directory`)
-      mkdirp.sync(dir)
-    }
-  })
-}
-```
-
-## Add theme transpilation
-
-**Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
-
-Since your theme will be installed, it will end up in `node_modules` which Gatsby doesn't transpile by default.
-This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
-
-You will need to install the package:
-
-```sh
-yarn add gatsby-plugin-compile-es6-packages
-```
-
-And then add it to your plugins list:
-
-```js:title=gatsby-config.js
-const path = require("path")
-
-module.exports = {
-  plugins: [
-    {
-      resolve: "gatsby-plugin-page-creator",
-      options: {
-        path: path.join(__dirname, "src", "pages"),
-      },
-    },
-    {
-      resolve: "gatsby-plugin-compile-es6-packages",
-      options: {
-        modules: ["gatsby-theme-developer"],
-      },
-    },
-  ],
-}
-```
-
-## Conventions
 
 ### Site metadata
 
