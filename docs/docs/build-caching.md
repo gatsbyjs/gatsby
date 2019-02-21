@@ -18,7 +18,7 @@ exports.onPostBootstrap = async function({ cache, store, graphql }) {
 
 The two functions you would want to use are:
 
-### SET
+### `set`
 `cache.set(key: String, obj: Object): Promise<any>`
 
 ### `get`
