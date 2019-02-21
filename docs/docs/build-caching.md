@@ -10,7 +10,7 @@ Data is stored in the `.cache` directory relative to your project root.
 
 ## The cache api
 
-The cache api is accessible within the arguments object past to [Gatsby's apis](/docs/node-apis/).
+The cache API is passed to [Gatsby's Node APIs](/docs/node-apis/), which is typically implemented by plugins.
 ```
 exports.onPostBootstrap = async function({ cache, store, graphql }) {
 ```
