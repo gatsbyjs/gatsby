@@ -284,7 +284,7 @@ Once your server is up you should see your beautiful theme applied to your files
 
 ## Troubleshooting Plugin Error
 
-If you run into an error that your theme plugin can't be found, try clearing your cache. You can either use `rm -rf.cache` or you can add:
+If you run into an error that your theme plugin can't be found, try clearing your cache. You can either use `rm -rf.cache` in your terminal, or you can add:
 
 ```json
 {
