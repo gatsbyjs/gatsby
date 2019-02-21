@@ -62,13 +62,12 @@ export default () => {
       }
     }
   `)
-
   return (
     <header>
-        <h1>{site.siteMetadata.title}</h1>
-     </header>
+      <h1>{site.siteMetadata.title}</h1>
+    </header>
   );
-};
+}
 ```
 
 ### Typechecking
