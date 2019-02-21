@@ -30,7 +30,7 @@ Other CMS systems you can connect to include:
 - [Ghost](https://ghost.org): [docs](/docs/sourcing-from-ghost/), [guide](/blog/2019-01-14-modern-publications-with-gatsby-ghost/), [starter](/starters/TryGhost/gatsby-starter-ghost/)
 - [Kentico Cloud](https://kenticocloud.com/): [docs](/packages/gatsby-source-kentico-cloud), [guide](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/), [starter](/starters/Kentico/gatsby-starter-kentico-cloud/)
 - [Directus](/packages/gatsby-source-directus)
-- [GraphCMS](https://graphcms.com/?ref=gatsby-headless-cms-landing]):[docs](/packages/gatsby-source-graphql), [guide](/docs/sourcing-from-graphcms), [starter](/starters/GraphCMS/gatsby-graphcms-tailwindcss-example/)
+- [GraphCMS](https://graphcms.com/?ref=gatsby-headless-cms-landing]): [docs](/packages/gatsby-source-graphql), [guide](/docs/sourcing-from-graphcms), [starter](/starters/GraphCMS/gatsby-graphcms-tailwindcss-example/)
 - [CosmicJS](https://cosmicjs.com/): [docs](/packages/gatsby-source-cosmicjs), [guide](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/)
 - [Cockpit](/packages/gatsby-plugin-cockpit)
 - [Storyblok](/packages/gatsby-source-storyblok)
