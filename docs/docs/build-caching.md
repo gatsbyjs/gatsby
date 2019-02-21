@@ -28,7 +28,7 @@ The two functions you would want to use are:
 
 ## Custom plugin – example
 
-In your plugin's `gatsby-node.js` file, on the [Gatsby api](/docs/node-apis/) you wish to utilize cache in, include `cache` as an argument; eg.
+In your plugin's `gatsby-node.js` file, you can access the `cache` argument like so:
 
 ```
 exports.onPostBuild = async function(
