@@ -61,13 +61,39 @@ exports.onRouteUpdate = ({ location }) => {
     return
   }
 
-  const links = document.querySelectorAll(`link[rel=stylesheet]`)
+  const styleElements = []
+
+  // used to keep track of duplicates
+  const linkedStyles = []
+  const embeddedStyles = []
+
+  Array.from(document.styleSheets).forEach(stylesheet => {
+    const { ownerNode } = stylesheet
+    const href = stylesheet.href || ownerNode.getAttribute(`data-href`)
+
+    if (href) {
+      if (linkedStyles.indexOf(href) === -1) {
+        linkedStyles.push(href)
+        styleElements.push(`<link rel="stylesheet" href="${href}" />`)
+      }
+    } else {
+      const { rules } = stylesheet
+      const cssText = Array.from(rules)
+        .map(rule => rule.cssText)
+        .join(``)
+
+      if (embeddedStyles.indexOf(cssText) === -1) {
+        embeddedStyles.push(cssText)
+        styleElements.push(`<style>${cssText}</style>`)
+      }
+    }
+  })
 
   navigator.serviceWorker.controller.postMessage({
     gatsbyApi: `storePageContent`,
     path: location.pathname,
     rootHTML: document.getElementById(`___gatsby`).innerHTML,
-    stylesheets: Array.from(links).map(link => link.href),
+    styleElements,
   })
 }
 

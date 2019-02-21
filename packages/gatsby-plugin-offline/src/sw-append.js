@@ -24,15 +24,17 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
 
   const content = await idbKeyval.get(`content:${pathname}`)
   if (content) {
-    const { rootHTML, stylesheets } = content
-    const links = stylesheets
-      .map(stylesheet => `<link rel="stylesheet" href="${stylesheet}">`)
-      .join(``)
+    const { rootHTML, styleElements } = content
 
     const response = await caches.match(offlineShell)
     const text = (await response.text())
-      .replace(/(<!--\/gatsby-root--><\/div>)/, `$1` + links)
-      .replace(/<!--gatsby-root-->.*<!--\/gatsby-root-->/, rootHTML)
+      // remove existing style elements
+      .replace(/<style.*?>.*?<\/style>/g, ``)
+      .replace(/<link .*?rel="stylesheet".*?>/g, ``)
+      // insert the style elements in the head tag
+      .replace(/(<\/head>)/, styleElements.join(``) + `$1`)
+      // insert the root element HTML
+      .replace(/<!--gatsby-root-->.*?<!--\/gatsby-root-->/, rootHTML)
 
     return new Response(text, { headers: { "Content-Type": `text/html` } })
   } else {
@@ -51,9 +53,11 @@ const messageApi = {
     event.waitUntil(idbKeyval.clear())
   },
 
-  storePageContent(event, { path, rootHTML, stylesheets }) {
+  storePageContent(event, { path, rootHTML, styleElements }) {
     path = path.replace(new RegExp(`^%pathPrefix%`), ``)
-    event.waitUntil(idbKeyval.set(`content:${path}`, { rootHTML, stylesheets }))
+    event.waitUntil(
+      idbKeyval.set(`content:${path}`, { rootHTML, styleElements })
+    )
   },
 }
 
