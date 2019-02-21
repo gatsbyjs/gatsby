@@ -357,7 +357,7 @@ You can similarly check for file downloads:
 
 [egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
 
-## Limitations when appending query parameters or hash links programmatically
+## Recommendations for programmatic, in-app navigation
 
 Neither `<Link>` not `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package to make use of its `navigate` function, like so:
 
