@@ -22,14 +22,13 @@ plugins: [
 ]
 ```
 
-To complete the feed setup, you need to expose a GraphQL entry for our content called `fields.slug` by modifying `gatsby-node.js`. Start with the following code, noting the reference to `MarkdownRemark` content. For content sources other than Markdown, you will want to modify it:
+Here's an example of [how you could implement](/docs/adding-an-rss-feed/) this plugin with Markdown, but for other sources, you will need a way to uniquely identify content--typically a URL or slug.
 
-```js:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
-  // highlight-next-line
   if (node.internal.type === `MarkdownRemark`) {
     const value = createFilePath({ node, getNode })
     createNodeField({
