@@ -55,13 +55,14 @@ import { useStaticQuery, graphql } from "gatsby"
 export default () => {
   const data = useStaticQuery(graphql`
     query HeadingQuery {
-        site {
-          siteMetadata {
-            title
-          }
+      site {
+        siteMetadata {
+          title
         }
       }
-  `);
+    }
+  `)
+};
 
   return (
     <header>
