@@ -157,7 +157,7 @@ exports.createPages = ({ graphql, actions }) => {
 
 Now create a basic template to display each article with a title and the body that you pull with a GraphQL query:
 
-````javascript:title=src/templates/article.js
+```javascript:title=src/templates/article.js
 import React from "react"
 import { graphql } from "gatsby"
 
