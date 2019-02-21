@@ -12,6 +12,9 @@
     "@types/reach__router": "^1.0.0",
     "prop-types": "^15.6.1"
   },
+  "peerDependencies": {
+    "react-dom": "*"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
