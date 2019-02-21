@@ -21,7 +21,7 @@ The two functions you would want to use are:
 ### SET
 `cache.set(key: String, obj: Object): Promise<any>`
 
-### GET
+### `get`
 `cache.get(key: String): Promise<Object>`
 
 
