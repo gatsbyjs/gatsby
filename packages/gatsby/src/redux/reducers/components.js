@@ -30,7 +30,7 @@ const componentMachine = Machine(
             target: `extractingQueries`,
             actions: `setBootstrapFinished`,
           },
-          QUERY_EXTRACTED: `queryExtracted`,
+          QUERY_EXTRACTED: `runningPageQueries`,
           QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
         },
       },
@@ -40,23 +40,31 @@ const componentMachine = Machine(
           BOOTSTRAP_FINISHED: {
             actions: `setBootstrapFinished`,
           },
-          QUERY_EXTRACTED: `queryExtracted`,
+          QUERY_CHANGED: `runningPageQueries`,
+          QUERY_DID_NOT_CHANGE: `idle`,
           QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
         },
       },
       queryGraphQLError: {
         on: {
           PAGE_COMPONENT_CHANGED: `extractingQueries`,
-          QUERY_EXTRACTED: `queryExtracted`,
         },
       },
-      queryExtracted: {
+      runningPageQueries: {
         onEntry: [`setQuery`, `runPageComponentQueries`],
         on: {
           BOOTSTRAP_FINISHED: {
             actions: `setBootstrapFinished`,
           },
+          QUERIES_COMPLETE: `idle`,
+        },
+      },
+      idle: {
+        on: {
           PAGE_COMPONENT_CHANGED: `extractingQueries`,
+          BOOTSTRAP_FINISHED: {
+            actions: `setBootstrapFinished`,
+          },
         },
       },
     },
@@ -85,7 +93,13 @@ const componentMachine = Machine(
         }, 0)
       },
       setQuery: assign({
-        query: (ctx, event) => event.query,
+        query: (ctx, event) => {
+          if (event.query) {
+            return event.query
+          } else {
+            return ctx.query
+          }
+        },
       }),
       setBootstrapFinished: assign({
         isInBootstrap: false,
@@ -103,26 +117,29 @@ module.exports = (state = new Map(), action) => {
       return new Map()
     case `SET_PROGRAM_STATUS`:
       programStatus = action.payload
-      console.log(`programStatus`, programStatus)
       services.forEach(s => s.send(`BOOTSTRAP_FINISHED`))
       return state
     case `CREATE_PAGE`: {
       action.payload.componentPath = normalize(action.payload.component)
       // Create XState service.
+      let service
       if (!services.has(action.payload.componentPath)) {
         const machine = componentMachine.withContext({
           componentPath: action.payload.componentPath,
           query: ``,
           isInBootstrap: programStatus === `BOOTSTRAPPING`,
         })
-        const service = interpret(machine).onTransition(nextState => {
-          console.log(
-            `component machine value`,
-            _.pick(nextState, [`value`, `context`, `event`])
-          )
-        })
-        service.start()
+        service = interpret(machine)
+          .onTransition(nextState => {
+            console.log(
+              `component machine value`,
+              _.pick(nextState, [`value`, `context`, `event`])
+            )
+          })
+          .start()
         services.set(action.payload.componentPath, service)
+      } else {
+        service = services.get(action.payload.componentPath)
       }
 
       state.set(
@@ -131,6 +148,7 @@ module.exports = (state = new Map(), action) => {
           {
             query: ``,
           },
+          service.state.context,
           state.get(action.payload.componentPath),
           {
             componentPath: action.payload.componentPath,
@@ -142,10 +160,25 @@ module.exports = (state = new Map(), action) => {
     case `QUERY_EXTRACTED`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const service = services.get(action.payload.componentPath)
-      service.send({
-        type: `QUERY_EXTRACTED`,
-        query: action.payload.query,
-      })
+
+      // Check if we're in bootstrap or not
+      if (service.state.context.isInBootstrap) {
+        // See if the query changed or not.
+        service.send({
+          type: `QUERY_EXTRACTED`,
+          query: action.payload.query,
+        })
+      } else {
+        // Check if the query has changed or not.
+        if (service.state.context.query === action.payload.query) {
+          service.send(`QUERY_DID_NOT_CHANGE`)
+        } else {
+          service.send({
+            type: `QUERY_CHANGED`,
+            query: action.payload.query,
+          })
+        }
+      }
       services.set(action.payload.componentPath, service)
       state.set(action.payload.componentPath, {
         ...state.get(action.payload.componentPath),
@@ -170,6 +203,19 @@ module.exports = (state = new Map(), action) => {
         type: `PAGE_COMPONENT_CHANGED`,
       })
       services.set(action.payload, service)
+      return state
+    }
+    case `PAGE_QUERY_RUN`: {
+      action.payload.componentPath = normalize(action.payload.componentPath)
+      const service = services.get(action.payload.componentPath)
+      // TODO we want to keep track of whether there's any outstanding queries still
+      // running as this will mark queries as complete immediately even though
+      // a page component could have thousands of pages will processing.
+      // This can be done once we start modeling Pages as well.
+      service.send({
+        type: `QUERIES_COMPLETE`,
+      })
+      services.set(action.payload.componentPath, service)
       return state
     }
     case `REMOVE_TEMPLATE_COMPONENT`: {

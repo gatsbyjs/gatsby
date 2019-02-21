@@ -1217,6 +1217,24 @@ actions.pageComponentChanged = (path, plugin: Plugin, traceId?: string) => {
 }
 
 /**
+ * Broadcast that a page's query was run.
+ *
+ * @param {string} Path to the page component that changed.
+ */
+actions.pageQueryRun = (
+  { path, componentPath },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `PAGE_QUERY_RUN`,
+    plugin,
+    traceId,
+    payload: { path, componentPath },
+  }
+}
+
+/**
  * All action creators wrapped with a dispatch.
  */
 exports.actions = actions

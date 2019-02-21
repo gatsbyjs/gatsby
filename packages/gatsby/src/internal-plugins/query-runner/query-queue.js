@@ -2,6 +2,7 @@ const Queue = require(`better-queue`)
 
 const queryRunner = require(`./query-runner`)
 const { store, emitter } = require(`../../redux`)
+const { boundActionCreators } = require(`../../redux/actions`)
 const websocketManager = require(`../../utils/websocket-manager`)
 
 const processing = new Set()
@@ -55,6 +56,10 @@ const queue = new Queue((plObj, callback) => {
           queue.push(waiting.get(plObj.id))
           waiting.delete(plObj.id)
         }
+        boundActionCreators.pageQueryRun({
+          path: plObj.id,
+          componentPath: plObj.componentPath,
+        })
         return callback(null, result)
       },
       error => callback(error)
