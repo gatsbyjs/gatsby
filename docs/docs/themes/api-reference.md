@@ -2,17 +2,9 @@
 title: Themes API Reference
 ---
 
-Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs.
-
-- [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
-- [Actions](https://www.gatsbyjs.org/docs/actions/)
-- [Node Interface](https://www.gatsbyjs.org/docs/node-interface/)
-- ... [and more](https://www.gatsbyjs.org/docs/api-specification/)
-
 ## Table of contents
 
-Themes also have some unique APIs and considerations to be made when building your own.
-
+- [Core Gatsby APIs](#core-gatsby-apis)
 - [Configuration](#configuration)
 - [Component shadowing](#component-shadowing)
 - [Theme composition](#theme-composition)
@@ -26,6 +18,17 @@ Themes also have some unique APIs and considerations to be made when building yo
   - [Design tokens](#design-tokens)
   - [Templates vs components](#templates-vs-components)
   - [Frontmatter placeholder](#frontmatter-placeholder)
+
+## Core Gatsby APIs
+
+Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs.
+
+- [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
+- [Actions](https://www.gatsbyjs.org/docs/actions/)
+- [Node Interface](https://www.gatsbyjs.org/docs/node-interface/)
+- ... [and more](https://www.gatsbyjs.org/docs/api-specification/)
+
+If you're new to Gatsby you can get started by following along with the guides for building out a site. Converting it to a theme will be easy later on since themes are prepackaged Gatsby sites.
 
 ## Configuration
 
