@@ -55,8 +55,6 @@ exports.onPostBuild = async function(
   }
 ```
 
-**Note:** Adding an option such as `enableCaching` to your plugin's option could be used to toggle between using caching or not.
-
 
 ## Clearing cache
 
@@ -66,8 +64,3 @@ The cache is also invalidated by Gatsby in a few cases, specifically:
 - If `package.json` changes, for example a dependency is updated or added
 - If `gatsby-config.js` changes, for example a plugin is added or modified
 - If `gatsby-node.js` changes, for example if you invoke a new Node API, or change a `createPage` call
-
-
-## Using with Netlify
-
-In order to make use of any caching on Netlify you need to include the [gatsby-plugin-netlify-cache](/packages/gatsby-plugin-netlify-cache/) plugin.
