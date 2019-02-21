@@ -94,6 +94,20 @@ module.exports = {
 }
 ```
 
+### Understanding the Plugins
+
+In the example configuration file above we explored a few plugins, as well as *extending* their recommended rule sets. Now we will discover the purpose of including these plugins and their value.
+
+#### eslint-plugin-react
+
+The React plugin assists your development experience with Gatsby by helping you remember to validate props, include default props, importing React any time JSX is used, and enforce handler naming convention (e.g. `handleClick()`). It requires a version to be specified, therefore can even prevent usage of deprecated implementations. Since Gatsby development utilizes React this is an excellent addition to accelerate your experience by bypassing errors before they're made.
+
+#### eslint-plugin-jsx-a11y
+
+> In short, A11Y means “accessibility”
+
+The [A11Y Project](https://a11yproject.com/) focuses in reinforcing accessibility in your code, ensuring your new Gatsby project can be used effectively by those with visual or auditory impairment. This plugin helps you remember to include alternative text to image tags, [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) props, and eliminating redundant role properties. Accessibility is often overlook, and by doing so can hinder the ability to provide a phenomenal user experience. Including this plugin and its recommended rule set reduces the time required to implement accessibility by reminding you throughout development.
+
 ### Running ESLint with a Script
 
 Now we will begin by adding a two `lint` scripts in your project's `package.json` file as shown below:
