@@ -49,6 +49,93 @@ import React from "react"
 export default props => <pre>{JSON.stringify(props, null, 2)}</pre>
 ```
 
+## Separating queries and presentational components
+
+As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to override a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
+
+### Page queries
+
+You can use a template for top-level data collection with a page query that passes the data to a `PostList` component:
+
+```js:src/templates/post-list.js
+import React from "react"
+import { graphql } from "gatsby"
+
+import PostList from "../components/PostList"
+
+export default props => <PostList posts={props.allMdx.edges} />
+
+export const query = graphql`
+  query {
+    allMdx(
+      sort: { order: DESC, fields: [frontmatter___date] }
+      filter: { frontmatter: { draft: { ne: true } } }
+    ) {
+      edges {
+        node {
+          id
+          parent {
+            ... on File {
+              name
+              sourceInstanceName
+            }
+          }
+          frontmatter {
+            title
+            path
+            date(formatString: "MMMM DD, YYYY")
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+### Static queries
+
+You can use static queries at the top level template as well and pass the data to other presentational components as props:
+
+```js:src/components/layout.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+
+import Header from "../header.js"
+import Footer from "../footer.js"
+
+const Layout = ({ children }) => {
+  const {
+    site: { siteMetadata },
+  } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            social {
+              twitter
+              github
+            }
+          }
+        }
+      }
+    `
+  )
+
+  const { title, social } = siteMetadata
+
+  return (
+    <>
+      <Header title={title} />
+      {children}
+      <Footer {...social} />
+    </>
+  )
+}
+
+export default Layout
+```
+
 ## Add theme transpilation
 
 **Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
@@ -86,5 +173,3 @@ module.exports = {
 ```
 
 ## Design Token Conventions
-
-## Separating Queries and Presentational Components
