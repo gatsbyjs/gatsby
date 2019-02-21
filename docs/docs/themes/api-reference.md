@@ -9,6 +9,21 @@ Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs.
 - [Node Interface](https://www.gatsbyjs.org/docs/node-interface/)
 - ... [and more](https://www.gatsbyjs.org/docs/api-specification/)
 
+## Table of contents
+
+- [Configuration](#configuration)
+- [Component shadowing](#component-shadowing)
+- [Separating queries and presentational components](#separating-queries-and-presentational-components)
+  - [Page queries](#page-queries)
+  - [Static queries](#static-queries)
+- [Initializing required directories](#initializing-required-directories)
+- [Add theme transpilation](#add-theme-transpilation)
+- [Conventions](#conventions)
+  - [Site metadata](#site-metadata)
+  - [Design tokens](#design-tokens)
+  - [Templates vs components](#templates-vs-components)
+  - [Frontmatter placeholder](#frontmatter-placeholder)
+
 ## Configuration
 
 Similarly to plugins, you can access options that are passed to your theme.
@@ -136,6 +151,29 @@ const Layout = ({ children }) => {
 export default Layout
 ```
 
+## Initializing required directories
+
+If your theme relies on the presence of particular directories, like `posts` for `gatsby-source-filesystem`, you can use the `onPreBootstrap` hook to initialize them to avoid a crash when Gatsby tries to build the site.
+
+```js:gatsby-node.js
+exports.onPreBootstrap = ({ store, reporter }) => {
+  const { program } = store.getState()
+
+  const dirs = [
+    path.join(program.directory, "posts"),
+    path.join(program.directory, "src/pages"),
+    path.join(program.directory, "src/data"),
+  ]
+
+  dirs.forEach(dir => {
+    if (!fs.existsSync(dir)) {
+      reporter.log(`creating the ${dir} directory`)
+      mkdirp.sync(dir)
+    }
+  })
+}
+```
+
 ## Add theme transpilation
 
 **Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
@@ -172,4 +210,14 @@ module.exports = {
 }
 ```
 
-## Design Token Conventions
+## Conventions
+
+### Site metadata
+
+### Design tokens
+
+### Templates vs components
+
+### Frontmatter placeholder
+
+**Note**: This is only needed temporarily. In the future themes will be able to set frontmatter schema.
