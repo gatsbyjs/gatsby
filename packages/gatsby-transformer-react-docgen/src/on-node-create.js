@@ -23,7 +23,7 @@ function canParse(node) {
   )
 }
 
-function createDescriptionNode(node, entry, actions, createNodeId) {
+async function createDescriptionNode(node, entry, actions, createNodeId) {
   if (!entry.description) return node
   const { createNode } = actions
 
@@ -42,34 +42,36 @@ function createDescriptionNode(node, entry, actions, createNodeId) {
 
   node.description___NODE = descriptionNode.id
   node.children = node.children.concat([descriptionNode.id])
-  createNode(descriptionNode)
+  await createNode(descriptionNode)
 
   return node
 }
 
-function createPropNodes(node, component, actions, createNodeId) {
+async function createPropNodes(node, component, actions, createNodeId) {
   const { createNode } = actions
   let children = new Array(component.props.length)
 
-  component.props.forEach((prop, i) => {
-    let propNodeId = propsId(node.id, prop.name)
-    let content = JSON.stringify(prop)
+  await Promise.all(
+    component.props.map((prop, i) => {
+      let propNodeId = propsId(node.id, prop.name)
+      let content = JSON.stringify(prop)
 
-    let propNode = {
-      ...prop,
-      id: createNodeId(propNodeId),
-      children: [],
-      parent: node.id,
-      parentType: prop.type,
-      internal: {
-        type: `ComponentProp`,
-        contentDigest: digest(content),
-      },
-    }
-    children[i] = propNode.id
-    propNode = createDescriptionNode(propNode, prop, actions, createNodeId)
-    createNode(propNode)
-  })
+      let propNode = {
+        ...prop,
+        id: createNodeId(propNodeId),
+        children: [],
+        parent: node.id,
+        parentType: prop.type,
+        internal: {
+          type: `ComponentProp`,
+          contentDigest: digest(content),
+        },
+      }
+      children[i] = propNode.id
+      propNode = createDescriptionNode(propNode, prop, actions, createNodeId)
+      return createNode(propNode)
+    })
+  )
 
   node.props___NODE = children
   node.children = node.children.concat(children)
@@ -82,7 +84,7 @@ export default async function onCreateNode(
 ) {
   const { createNode, createParentChildLink } = actions
 
-  if (!canParse(node)) return
+  if (!canParse(node)) return Promise.resolve()
 
   const content = await loadNodeContent(node)
 
@@ -96,39 +98,41 @@ export default async function onCreateNode(
       }"`,
       err
     )
-    return
+    return Promise.resolve()
   }
 
-  components.forEach(component => {
-    const strContent = JSON.stringify(component)
-    const contentDigest = digest(strContent)
-    const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
+  return Promise.all(
+    components.map(async component => {
+      const strContent = JSON.stringify(component)
+      const contentDigest = digest(strContent)
+      const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
 
-    let metadataNode = {
-      ...component,
-      props: null, // handled by the prop node creation
-      id: createNodeId(nodeId),
-      children: [],
-      parent: node.id,
-      internal: {
-        contentDigest,
-        type: `ComponentMetadata`,
-      },
-    }
+      let metadataNode = {
+        ...component,
+        props: null, // handled by the prop node creation
+        id: createNodeId(nodeId),
+        children: [],
+        parent: node.id,
+        internal: {
+          contentDigest,
+          type: `ComponentMetadata`,
+        },
+      }
 
-    createParentChildLink({ parent: node, child: metadataNode })
-    metadataNode = createPropNodes(
-      metadataNode,
-      component,
-      actions,
-      createNodeId
-    )
-    metadataNode = createDescriptionNode(
-      metadataNode,
-      component,
-      actions,
-      createNodeId
-    )
-    createNode(metadataNode)
-  })
+      createParentChildLink({ parent: node, child: metadataNode })
+      metadataNode = await createPropNodes(
+        metadataNode,
+        component,
+        actions,
+        createNodeId
+      )
+      metadataNode = await createDescriptionNode(
+        metadataNode,
+        component,
+        actions,
+        createNodeId
+      )
+      return createNode(metadataNode)
+    })
+  )
 }

@@ -44,7 +44,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     }
     loadNodeContent = jest.fn(node => readFile(node.__fixture))
     actions = {
-      createNode: jest.fn(n => createdNodes.push(n)),
+      createNode: jest.fn(async n => {
+        createdNodes.push(await n)
+        return n
+      }),
       createParentChildLink: jest.fn(n => updatedNodes.push(n)),
     }
   })
@@ -92,14 +95,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
     let types = groupBy(createdNodes, `internal.type`)
 
-    expect(types.ComponentMetadata.map(c => c.displayName)).toEqual([
-      `Baz`,
-      `Buz`,
-      `Foo`,
-      `Baz.Foo`,
-      `Bar`,
-      `Qux`,
-    ])
+    expect(types.ComponentMetadata.map(c => c.displayName)).toEqual(
+      expect.arrayContaining([`Baz`, `Buz`, `Foo`, `Baz.Foo`, `Bar`, `Qux`])
+    )
   })
 
   it(`should handle duplicate doclet values`, async () => {
@@ -131,13 +129,16 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     await run(node)
 
     let types = groupBy(createdNodes, `internal.type`)
-    expect(types.ComponentProp[0].description).toEqual(
-      `An object hash of field (fix this @mention?) errors for the form.`
+    expect(types.ComponentProp.map(p => p.description)).toEqual(
+      expect.arrayContaining([
+        `An object hash of field (fix this @mention?) errors for the form.`,
+      ])
     )
-    expect(types.ComponentProp[0].doclets).toEqual([
-      { tag: `type`, value: `{Foo}` },
-      { tag: `default`, value: `blue` },
-    ])
+    expect(types.ComponentProp.map(p => p.doclets)).toEqual(
+      expect.arrayContaining([
+        [{ tag: `type`, value: `{Foo}` }, { tag: `default`, value: `blue` }],
+      ])
+    )
   })
 
   it(`should extract create description nodes with markdown types`, async () => {
@@ -163,13 +164,13 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     beforeEach(() => {
       node.__fixture = `flow.js`
     })
+
     it(`should add flow type info`, async () => {
       await run(node)
-      const created = createdNodes.find(f => !!f.flowType)
 
-      expect(created.flowType).toEqual({
-        name: `number`,
-      })
+      const created = createdNodes.map(f => f.flowType)
+
+      expect(created).toEqual(expect.arrayContaining([{ name: `number` }]))
     })
   })
 })

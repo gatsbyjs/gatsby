@@ -76,95 +76,97 @@ fragment commentsFragment on HackerNewsItem {
   console.timeEnd(`fetch HN data`)
 
   // Create top-story nodes.
-  result.data.data.hn.topStories.forEach((story, i) => {
-    const storyStr = JSON.stringify(story)
+  return Promise.all(
+    result.data.data.hn.topStories.map(async (story, i) => {
+      const storyStr = JSON.stringify(story)
 
-    // Ask HN, Polls, etc. don't have urls.
-    // For those that do, HN displays just the bare domain.
-    let domain
-    if (story.url) {
-      const parsedUrl = url.parse(story.url)
-      const splitHost = parsedUrl.host.split(`.`)
-      if (splitHost.length > 2) {
-        domain = splitHost.slice(1).join(`.`)
-      } else {
-        domain = splitHost.join(`.`)
+      // Ask HN, Polls, etc. don't have urls.
+      // For those that do, HN displays just the bare domain.
+      let domain
+      if (story.url) {
+        const parsedUrl = url.parse(story.url)
+        const splitHost = parsedUrl.host.split(`.`)
+        if (splitHost.length > 2) {
+          domain = splitHost.slice(1).join(`.`)
+        } else {
+          domain = splitHost.join(`.`)
+        }
       }
-    }
 
-    let kids
-    kids = _.pick(story, `kids`)
-    if (!kids.kids) {
-      kids.kids = []
-    }
-    const kidLessStory = _.omit(story, `kids`)
-    const childIds = kids.kids.map(k => createNodeId(k.id))
+      let kids
+      kids = _.pick(story, `kids`)
+      if (!kids.kids) {
+        kids.kids = []
+      }
+      const kidLessStory = _.omit(story, `kids`)
+      const childIds = kids.kids.map(k => createNodeId(k.id))
 
-    const storyNode = {
-      ...kidLessStory,
-      id: createNodeId(kidLessStory.id),
-      children: childIds,
-      parent: null,
-      content: storyStr,
-      internal: {
-        type: `HNStory`,
-      },
-      domain,
-      order: i + 1,
-    }
+      const storyNode = {
+        ...kidLessStory,
+        id: createNodeId(kidLessStory.id),
+        children: childIds,
+        parent: null,
+        content: storyStr,
+        internal: {
+          type: `HNStory`,
+        },
+        domain,
+        order: i + 1,
+      }
 
-    // Just store the user id
-    storyNode.by = storyNode.by.id
+      // Just store the user id
+      storyNode.by = storyNode.by.id
 
-    // Get content digest of node.
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(storyNode))
-      .digest(`hex`)
+      // Get content digest of node.
+      const contentDigest = crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(storyNode))
+        .digest(`hex`)
 
-    storyNode.internal.contentDigest = contentDigest
-    createNode(storyNode)
+      storyNode.internal.contentDigest = contentDigest
+      await createNode(storyNode)
 
-    // Recursively create comment nodes.
-    const createCommentNodes = (comments, parent, depth = 0) => {
-      comments.forEach((comment, i) => {
-        if (!comment.kids) {
-          comment.kids = []
-        }
-        let commentChildIds = comment.kids.map(k => createNodeId(k.id))
-        let commentNode = {
-          ..._.omit(comment, `kids`),
-          id: createNodeId(comment.id),
-          children: commentChildIds,
-          parent,
-          internal: {
-            type: `HNComment`,
-          },
-          order: i + 1,
-        }
+      // Recursively create comment nodes.
+      const createCommentNodes = (comments, parent, depth = 0) =>
+        Promise.all(
+          comments.map(async (comment, i) => {
+            if (!comment.kids) {
+              comment.kids = []
+            }
+            let commentChildIds = comment.kids.map(k => createNodeId(k.id))
+            let commentNode = {
+              ..._.omit(comment, `kids`),
+              id: createNodeId(comment.id),
+              children: commentChildIds,
+              parent,
+              internal: {
+                type: `HNComment`,
+              },
+              order: i + 1,
+            }
 
-        commentNode.by = commentNode.by.id
-        const nodeStr = JSON.stringify(commentNode)
+            commentNode.by = commentNode.by.id
+            const nodeStr = JSON.stringify(commentNode)
 
-        // Get content digest of comment node.
-        const contentDigest = crypto
-          .createHash(`md5`)
-          .update(nodeStr)
-          .digest(`hex`)
+            // Get content digest of comment node.
+            const contentDigest = crypto
+              .createHash(`md5`)
+              .update(nodeStr)
+              .digest(`hex`)
 
-        commentNode.internal.contentDigest = contentDigest
-        commentNode.internal.content = nodeStr
+            commentNode.internal.contentDigest = contentDigest
+            commentNode.internal.content = nodeStr
 
-        createNode(commentNode)
+            await createNode(commentNode)
 
-        if (comment.kids.length > 0) {
-          createCommentNodes(comment.kids, commentNode.id, depth + 1)
-        }
-      })
-    }
+            if (comment.kids.length > 0) {
+              return createCommentNodes(comment.kids, commentNode.id, depth + 1)
+            }
+            return Promise.resolve()
+          })
+        )
 
-    createCommentNodes(kids.kids, storyNode.id)
-  })
-
-  return
+      return createCommentNodes(kids.kids, storyNode.id)
+    })
+  )
 }

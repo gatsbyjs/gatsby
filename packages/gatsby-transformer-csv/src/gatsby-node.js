@@ -21,7 +21,7 @@ async function onCreateNode(
   const { createNode, createParentChildLink } = actions
   // Filter out non-csv content
   if (node.extension !== `csv`) {
-    return
+    return Promise.resolve()
   }
   // Load CSV contents
   const content = await loadNodeContent(node)
@@ -45,13 +45,15 @@ async function onCreateNode(
       }
     })
 
-    _.each(csvArray, y => {
-      createNode(y)
-      createParentChildLink({ parent: node, child: y })
-    })
+    return Promise.all(
+      csvArray.map(item => {
+        createParentChildLink({ parent: node, child: item })
+        return createNode(item)
+      })
+    )
   }
 
-  return
+  return Promise.resolve()
 }
 
 exports.onCreateNode = onCreateNode

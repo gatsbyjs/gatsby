@@ -246,250 +246,255 @@ exports.createContentTypeNodes = ({
   locales,
 }) => {
   const contentTypeItemId = contentTypeItem.name
-  locales.forEach(locale => {
-    const localesFallback = buildFallbackChain(locales)
-    const mId = makeMakeId({
-      currentLocale: locale.code,
-      defaultLocale,
-      createNodeId,
-    })
-    const getField = makeGetLocalizedField({
-      locale,
-      localesFallback,
-    })
+  return Promise.all(
+    locales.map(locale => {
+      const localesFallback = buildFallbackChain(locales)
+      const mId = makeMakeId({
+        currentLocale: locale.code,
+        defaultLocale,
+        createNodeId,
+      })
+      const getField = makeGetLocalizedField({
+        locale,
+        localesFallback,
+      })
 
-    // Warn about any field conflicts
-    const conflictFields = []
-    contentTypeItem.fields.forEach(contentTypeItemField => {
-      const fieldName = contentTypeItemField.id
-      if (restrictedNodeFields.includes(fieldName)) {
-        console.log(
-          `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
-        )
-        conflictFields.push(fieldName)
-      }
-    })
-
-    const childrenNodes = []
-
-    // First create nodes for each of the entries of that content type
-    const entryNodes = entries.map(entryItem => {
-      // Get localized fields.
-      const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
-        const fieldProps = contentTypeItem.fields.find(field => field.id === k)
-        if (fieldProps.localized) {
-          return getField(v)
+      // Warn about any field conflicts
+      const conflictFields = []
+      contentTypeItem.fields.forEach(contentTypeItemField => {
+        const fieldName = contentTypeItemField.id
+        if (restrictedNodeFields.includes(fieldName)) {
+          console.log(
+            `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
+          )
+          conflictFields.push(fieldName)
         }
-        return v[defaultLocale]
       })
 
-      // Prefix any conflicting fields
-      // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
-      conflictFields.forEach(conflictField => {
-        entryItemFields[`${conflictFieldPrefix}${conflictField}`] =
-          entryItemFields[conflictField]
-        delete entryItemFields[conflictField]
-      })
+      const childrenNodes = []
 
-      // Add linkages to other nodes based on foreign references
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        if (entryItemFields[entryItemFieldKey]) {
-          const entryItemFieldValue = entryItemFields[entryItemFieldKey]
-          if (Array.isArray(entryItemFieldValue)) {
-            if (
-              entryItemFieldValue[0] &&
-              entryItemFieldValue[0].sys &&
-              entryItemFieldValue[0].sys.type &&
-              entryItemFieldValue[0].sys.id
-            ) {
-              // Check if there are any values in entryItemFieldValue to prevent
-              // creating an empty node field in case when original key field value
-              // is empty due to links to missing entities
-              const resolvableEntryItemFieldValue = entryItemFieldValue
-                .filter(function(v) {
-                  return resolvable.has(v.sys.id)
-                })
-                .map(function(v) {
-                  return mId(v.sys.id)
-                })
-              if (resolvableEntryItemFieldValue.length !== 0) {
-                entryItemFields[
-                  `${entryItemFieldKey}___NODE`
-                ] = resolvableEntryItemFieldValue
+      // First create nodes for each of the entries of that content type
+      const entryNodes = entries.map(entryItem => {
+        // Get localized fields.
+        const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
+          const fieldProps = contentTypeItem.fields.find(
+            field => field.id === k
+          )
+          if (fieldProps.localized) {
+            return getField(v)
+          }
+          return v[defaultLocale]
+        })
+
+        // Prefix any conflicting fields
+        // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
+        conflictFields.forEach(conflictField => {
+          entryItemFields[`${conflictFieldPrefix}${conflictField}`] =
+            entryItemFields[conflictField]
+          delete entryItemFields[conflictField]
+        })
+
+        // Add linkages to other nodes based on foreign references
+        Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+          if (entryItemFields[entryItemFieldKey]) {
+            const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+            if (Array.isArray(entryItemFieldValue)) {
+              if (
+                entryItemFieldValue[0] &&
+                entryItemFieldValue[0].sys &&
+                entryItemFieldValue[0].sys.type &&
+                entryItemFieldValue[0].sys.id
+              ) {
+                // Check if there are any values in entryItemFieldValue to prevent
+                // creating an empty node field in case when original key field value
+                // is empty due to links to missing entities
+                const resolvableEntryItemFieldValue = entryItemFieldValue
+                  .filter(function(v) {
+                    return resolvable.has(v.sys.id)
+                  })
+                  .map(function(v) {
+                    return mId(v.sys.id)
+                  })
+                if (resolvableEntryItemFieldValue.length !== 0) {
+                  entryItemFields[
+                    `${entryItemFieldKey}___NODE`
+                  ] = resolvableEntryItemFieldValue
+                }
+
+                delete entryItemFields[entryItemFieldKey]
               }
-
+            } else if (
+              entryItemFieldValue &&
+              entryItemFieldValue.sys &&
+              entryItemFieldValue.sys.type &&
+              entryItemFieldValue.sys.id
+            ) {
+              if (resolvable.has(entryItemFieldValue.sys.id)) {
+                entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
+                  entryItemFieldValue.sys.id
+                )
+              }
               delete entryItemFields[entryItemFieldKey]
             }
-          } else if (
-            entryItemFieldValue &&
-            entryItemFieldValue.sys &&
-            entryItemFieldValue.sys.type &&
-            entryItemFieldValue.sys.id
-          ) {
-            if (resolvable.has(entryItemFieldValue.sys.id)) {
-              entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
-                entryItemFieldValue.sys.id
-              )
-            }
-            delete entryItemFields[entryItemFieldKey]
-          }
-        }
-      })
-
-      // Add reverse linkages if there are any for this node
-      const foreignReferences = foreignReferenceMap[entryItem.sys.id]
-      if (foreignReferences) {
-        foreignReferences.forEach(foreignReference => {
-          const existingReference = entryItemFields[foreignReference.name]
-          if (existingReference) {
-            entryItemFields[foreignReference.name].push(
-              mId(foreignReference.id)
-            )
-          } else {
-            // If there is one foreign reference, there can be many.
-            // Best to be safe and put it in an array to start with.
-            entryItemFields[foreignReference.name] = [mId(foreignReference.id)]
           }
         })
-      }
 
-      let entryNode = {
-        id: mId(entryItem.sys.id),
-        contentful_id: entryItem.sys.contentful_id,
-        createdAt: entryItem.sys.createdAt,
-        updatedAt: entryItem.sys.updatedAt,
-        parent: contentTypeItemId,
-        children: [],
-        internal: {
-          type: `${makeTypeName(contentTypeItemId)}`,
-        },
-      }
-
-      // Use default locale field.
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        // Ignore fields with "___node" as they're already handled
-        // and won't be a text field.
-        if (entryItemFieldKey.split(`___`).length > 1) {
-          return
-        }
-      })
-
-      // Replace text fields with text nodes so we can process their markdown
-      // into HTML.
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        // Ignore fields with "___node" as they're already handled
-        // and won't be a text field.
-        if (entryItemFieldKey.split(`___`).length > 1) {
-          return
+        // Add reverse linkages if there are any for this node
+        const foreignReferences = foreignReferenceMap[entryItem.sys.id]
+        if (foreignReferences) {
+          foreignReferences.forEach(foreignReference => {
+            const existingReference = entryItemFields[foreignReference.name]
+            if (existingReference) {
+              entryItemFields[foreignReference.name].push(
+                mId(foreignReference.id)
+              )
+            } else {
+              // If there is one foreign reference, there can be many.
+              // Best to be safe and put it in an array to start with.
+              entryItemFields[foreignReference.name] = [
+                mId(foreignReference.id),
+              ]
+            }
+          })
         }
 
-        const fieldType = contentTypeItem.fields.find(
-          f =>
-            (restrictedNodeFields.includes(f.id)
-              ? `${conflictFieldPrefix}${f.id}`
-              : f.id) === entryItemFieldKey
-        ).type
-        if (fieldType === `Text`) {
-          const textNode = prepareTextNode(
-            entryNode,
-            entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNodeId
-          )
+        let entryNode = {
+          id: mId(entryItem.sys.id),
+          contentful_id: entryItem.sys.contentful_id,
+          createdAt: entryItem.sys.createdAt,
+          updatedAt: entryItem.sys.updatedAt,
+          parent: contentTypeItemId,
+          children: [],
+          internal: {
+            type: `${makeTypeName(contentTypeItemId)}`,
+          },
+        }
 
-          childrenNodes.push(textNode)
-          entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
+        // Use default locale field.
+        Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+          // Ignore fields with "___node" as they're already handled
+          // and won't be a text field.
+          if (entryItemFieldKey.split(`___`).length > 1) {
+            return
+          }
+        })
 
-          delete entryItemFields[entryItemFieldKey]
-        } else if (
-          fieldType === `RichText` &&
-          _.isPlainObject(entryItemFields[entryItemFieldKey])
-        ) {
-          const richTextNode = prepareStructuredTextNode(
-            entryNode,
-            entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNodeId
-          )
+        // Replace text fields with text nodes so we can process their markdown
+        // into HTML.
+        Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+          // Ignore fields with "___node" as they're already handled
+          // and won't be a text field.
+          if (entryItemFieldKey.split(`___`).length > 1) {
+            return
+          }
 
-          childrenNodes.push(richTextNode)
-          entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
+          const fieldType = contentTypeItem.fields.find(
+            f =>
+              (restrictedNodeFields.includes(f.id)
+                ? `${conflictFieldPrefix}${f.id}`
+                : f.id) === entryItemFieldKey
+          ).type
+          if (fieldType === `Text`) {
+            const textNode = prepareTextNode(
+              entryNode,
+              entryItemFieldKey,
+              entryItemFields[entryItemFieldKey],
+              createNodeId
+            )
 
-          delete entryItemFields[entryItemFieldKey]
-        } else if (
-          fieldType === `Object` &&
-          _.isPlainObject(entryItemFields[entryItemFieldKey])
-        ) {
-          const jsonNode = prepareJSONNode(
-            entryNode,
-            entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNodeId
-          )
+            childrenNodes.push(textNode)
+            entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
 
-          childrenNodes.push(jsonNode)
-          entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNode.id
+            delete entryItemFields[entryItemFieldKey]
+          } else if (
+            fieldType === `RichText` &&
+            _.isPlainObject(entryItemFields[entryItemFieldKey])
+          ) {
+            const richTextNode = prepareStructuredTextNode(
+              entryNode,
+              entryItemFieldKey,
+              entryItemFields[entryItemFieldKey],
+              createNodeId
+            )
 
-          delete entryItemFields[entryItemFieldKey]
-        } else if (
-          fieldType === `Object` &&
-          _.isArray(entryItemFields[entryItemFieldKey])
-        ) {
-          entryItemFields[`${entryItemFieldKey}___NODE`] = []
+            childrenNodes.push(richTextNode)
+            entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
 
-          entryItemFields[entryItemFieldKey].forEach((obj, i) => {
+            delete entryItemFields[entryItemFieldKey]
+          } else if (
+            fieldType === `Object` &&
+            _.isPlainObject(entryItemFields[entryItemFieldKey])
+          ) {
             const jsonNode = prepareJSONNode(
               entryNode,
               entryItemFieldKey,
-              obj,
-              createNodeId,
-              i
+              entryItemFields[entryItemFieldKey],
+              createNodeId
             )
 
             childrenNodes.push(jsonNode)
-            entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNode.id)
-          })
+            entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNode.id
 
-          delete entryItemFields[entryItemFieldKey]
+            delete entryItemFields[entryItemFieldKey]
+          } else if (
+            fieldType === `Object` &&
+            _.isArray(entryItemFields[entryItemFieldKey])
+          ) {
+            entryItemFields[`${entryItemFieldKey}___NODE`] = []
+
+            entryItemFields[entryItemFieldKey].forEach((obj, i) => {
+              const jsonNode = prepareJSONNode(
+                entryNode,
+                entryItemFieldKey,
+                obj,
+                createNodeId,
+                i
+              )
+
+              childrenNodes.push(jsonNode)
+              entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNode.id)
+            })
+
+            delete entryItemFields[entryItemFieldKey]
+          }
+        })
+
+        entryNode = {
+          ...entryItemFields,
+          ...entryNode,
+          node_locale: locale.code,
         }
+
+        // Get content digest of node.
+        const contentDigest = digest(stringify(entryNode))
+
+        entryNode.internal.contentDigest = contentDigest
+
+        return entryNode
       })
 
-      entryNode = { ...entryItemFields, ...entryNode, node_locale: locale.code }
+      // Create a node for each content type
+      const contentTypeNode = {
+        id: createNodeId(contentTypeItemId),
+        parent: null,
+        children: [],
+        name: contentTypeItem.name,
+        displayField: contentTypeItem.displayField,
+        description: contentTypeItem.description,
+        internal: {
+          type: `${makeTypeName(`ContentType`)}`,
+        },
+      }
 
       // Get content digest of node.
-      const contentDigest = digest(stringify(entryNode))
+      const contentDigest = digest(stringify(contentTypeNode))
 
-      entryNode.internal.contentDigest = contentDigest
+      contentTypeNode.internal.contentDigest = contentDigest
 
-      return entryNode
+      const nodes = [contentTypeNode, ...entryNodes, ...childrenNodes]
+      return Promise.all(nodes.map(node => createNode(node)))
     })
-
-    // Create a node for each content type
-    const contentTypeNode = {
-      id: createNodeId(contentTypeItemId),
-      parent: null,
-      children: [],
-      name: contentTypeItem.name,
-      displayField: contentTypeItem.displayField,
-      description: contentTypeItem.description,
-      internal: {
-        type: `${makeTypeName(`ContentType`)}`,
-      },
-    }
-
-    // Get content digest of node.
-    const contentDigest = digest(stringify(contentTypeNode))
-
-    contentTypeNode.internal.contentDigest = contentDigest
-
-    createNode(contentTypeNode)
-    entryNodes.forEach(entryNode => {
-      createNode(entryNode)
-    })
-    childrenNodes.forEach(entryNode => {
-      createNode(entryNode)
-    })
-  })
+  )
 }
 
 exports.createAssetNodes = ({
@@ -498,51 +503,52 @@ exports.createAssetNodes = ({
   createNodeId,
   defaultLocale,
   locales,
-}) => {
-  locales.forEach(locale => {
-    const localesFallback = buildFallbackChain(locales)
-    const mId = makeMakeId({
-      currentLocale: locale.code,
-      defaultLocale,
-      createNodeId,
+}) =>
+  Promise.all(
+    locales.map(locale => {
+      const localesFallback = buildFallbackChain(locales)
+      const mId = makeMakeId({
+        currentLocale: locale.code,
+        defaultLocale,
+        createNodeId,
+      })
+      const getField = makeGetLocalizedField({
+        locale,
+        localesFallback,
+      })
+
+      const localizedAsset = { ...assetItem }
+      // Create a node for each asset. They may be referenced by Entries
+      //
+      // Get localized fields.
+      localizedAsset.fields = {
+        file: localizedAsset.fields.file
+          ? getField(localizedAsset.fields.file)
+          : null,
+        title: localizedAsset.fields.title
+          ? getField(localizedAsset.fields.title)
+          : ``,
+        description: localizedAsset.fields.description
+          ? getField(localizedAsset.fields.description)
+          : ``,
+      }
+      const assetNode = {
+        contentful_id: localizedAsset.sys.contentful_id,
+        id: mId(localizedAsset.sys.id),
+        parent: null,
+        children: [],
+        ...localizedAsset.fields,
+        node_locale: locale.code,
+        internal: {
+          type: `${makeTypeName(`Asset`)}`,
+        },
+      }
+
+      // Get content digest of node.
+      const contentDigest = digest(stringify(assetNode))
+
+      assetNode.internal.contentDigest = contentDigest
+
+      return createNode(assetNode)
     })
-    const getField = makeGetLocalizedField({
-      locale,
-      localesFallback,
-    })
-
-    const localizedAsset = { ...assetItem }
-    // Create a node for each asset. They may be referenced by Entries
-    //
-    // Get localized fields.
-    localizedAsset.fields = {
-      file: localizedAsset.fields.file
-        ? getField(localizedAsset.fields.file)
-        : null,
-      title: localizedAsset.fields.title
-        ? getField(localizedAsset.fields.title)
-        : ``,
-      description: localizedAsset.fields.description
-        ? getField(localizedAsset.fields.description)
-        : ``,
-    }
-    const assetNode = {
-      contentful_id: localizedAsset.sys.contentful_id,
-      id: mId(localizedAsset.sys.id),
-      parent: null,
-      children: [],
-      ...localizedAsset.fields,
-      node_locale: locale.code,
-      internal: {
-        type: `${makeTypeName(`Asset`)}`,
-      },
-    }
-
-    // Get content digest of node.
-    const contentDigest = digest(stringify(assetNode))
-
-    assetNode.internal.contentDigest = contentDigest
-
-    createNode(assetNode)
-  })
-}
+  )

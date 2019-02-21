@@ -160,7 +160,5 @@ exports.sourceNodes = async (
   }
 
   // creates nodes for each entry
-  normalize.createNodesFromEntities({ entities, createNode })
-
-  return
+  return normalize.createNodesFromEntities({ entities, createNode })
 }

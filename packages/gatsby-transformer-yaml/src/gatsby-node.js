@@ -20,34 +20,37 @@ async function onCreateNode({
         type,
       },
     }
-    createNode(yamlNode)
     createParentChildLink({ parent: node, child: yamlNode })
+    return createNode(yamlNode)
   }
 
   const { createNode, createParentChildLink } = actions
 
   if (node.internal.mediaType !== `text/yaml`) {
-    return
+    return Promise.resolve()
   }
 
   const content = await loadNodeContent(node)
   const parsedContent = jsYaml.load(content)
 
   if (_.isArray(parsedContent)) {
-    parsedContent.forEach((obj, i) => {
-      transformObject(
-        obj,
-        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
-        _.upperFirst(_.camelCase(`${node.name} Yaml`))
+    return Promise.all(
+      parsedContent.map((obj, i) =>
+        transformObject(
+          obj,
+          obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
+          _.upperFirst(_.camelCase(`${node.name} Yaml`))
+        )
       )
-    })
+    )
   } else if (_.isPlainObject(parsedContent)) {
-    transformObject(
+    return transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> YAML`),
       _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`))
     )
   }
+  return Promise.resolve()
 }
 
 exports.onCreateNode = onCreateNode

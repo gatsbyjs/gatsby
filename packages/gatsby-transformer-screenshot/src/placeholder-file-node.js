@@ -9,7 +9,7 @@ const getPlaceholderFileNode = async ({ createNode, createNodeId }) => {
       createNodeId,
       {}
     )
-    createNode(fileNode, { name: `gatsby-source-filesystem` })
+    await createNode(fileNode, { name: `gatsby-source-filesystem` })
     placeholderFileNode = fileNode
   }
 

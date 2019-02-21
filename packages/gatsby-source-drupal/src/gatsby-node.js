@@ -220,5 +220,5 @@ exports.sourceNodes = async (
     })
   )
 
-  nodes.forEach(n => createNode(n))
+  return Promise.all(nodes.map(node => createNode(node)))
 }

@@ -25,7 +25,7 @@ async function onCreateNode({
 
   // Filter out non-pdf content
   if (node.extension !== `pdf`) {
-    return
+    return Promise.resolve()
   }
 
   let parsedContent = await convertToJson(node.absolutePath)
@@ -42,8 +42,8 @@ async function onCreateNode({
   pdfNode.content = parsedContent
   pdfNode.internal.contentDigest = createContentDigest(pdfNode)
 
-  createNode(pdfNode)
   createParentChildLink({ parent: node, child: pdfNode })
+  return createNode(pdfNode)
 }
 
 exports.onCreateNode = onCreateNode

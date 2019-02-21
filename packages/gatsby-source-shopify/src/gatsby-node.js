@@ -104,7 +104,7 @@ const createNodes = async (
     await queryAll(client, [`shop`, endpoint], query),
     async entity => {
       const node = await nodeFactory(imageArgs)(entity)
-      createNode(node)
+      await createNode(node)
       await f(entity)
     }
   )
@@ -125,13 +125,15 @@ const createShopPolicies = async ({
 
   if (verbose) console.time(msg)
   const { shop: policies } = await queryOnce(client, SHOP_POLICIES_QUERY)
-  Object.entries(policies)
-    .filter(([_, policy]) => Boolean(policy))
-    .forEach(
-      pipe(
-        ([type, policy]) => ShopPolicyNode(policy, { type }),
-        createNode
+  await Promise.all(
+    Object.entries(policies)
+      .filter(([_, policy]) => Boolean(policy))
+      .map(
+        pipe(
+          ([type, policy]) => ShopPolicyNode(policy, { type }),
+          createNode
+        )
       )
-    )
+  )
   if (verbose) console.timeEnd(msg)
 }

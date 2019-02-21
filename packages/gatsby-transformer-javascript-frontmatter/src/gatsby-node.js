@@ -9,7 +9,7 @@ async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
 
   // This only processes JavaScript and TypeScript files.
   if (!_.includes(fileExtsToProcess, node.extension)) {
-    return
+    return Promise.resolve()
   }
 
   const code = await loadNodeContent(node)
@@ -130,10 +130,11 @@ async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
         nodeData.fileAbsolutePath = node.absolutePath
       }
 
-      createNode(nodeData)
       createParentChildLink({ parent: node, child: nodeData })
+      await createNode(nodeData)
     }
   }
+  return Promise.resolve()
 }
 
 exports.onCreateNode = onCreateNode

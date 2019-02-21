@@ -2,6 +2,8 @@ const _ = require(`lodash`)
 const faker = require(`faker`)
 const fs = require(`fs`)
 
+const range = n => Array.from(Array(n).keys())
+
 let NUM_PAGES = 5000
 if (process.env.NUM_PAGES) {
   NUM_PAGES = process.env.NUM_PAGES
@@ -27,25 +29,26 @@ exports.sourceNodes = ({ actions: { createNode } }) => {
   // Create markdown nodes
   const pagesPerType = NUM_PAGES / NUM_TYPES
 
-  let step = 0
-
-  _.forEach(types, typeName => {
-    for (var i = 0; i < pagesPerType; i++) {
-      step++
-      const id = `${typeName}${step.toString()}`
-      createNode({
-        id,
-        parent: null,
-        children: [],
-        internal: {
-          type: typeName,
-          nestedId: id,
-          content: faker.lorem.word(),
-          contentDigest: step.toString(),
-        },
-      })
-    }
-  })
+  return Promise.all(
+    types.map((typeName, step) =>
+      Promise.all(
+        range(pagesPerType).map(i => {
+          const id = `${typeName}${step.toString()}`
+          return createNode({
+            id,
+            parent: null,
+            children: [],
+            internal: {
+              type: typeName,
+              nestedId: id,
+              content: faker.lorem.word(),
+              contentDigest: step.toString(),
+            },
+          })
+        })
+      )
+    )
+  )
 }
 
 // Total hack. It would be nice if we could programatically generate

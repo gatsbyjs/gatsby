@@ -133,18 +133,19 @@ exports.createGatsbyIds = (createNodeId, entities) =>
     return e
   })
 
-exports.createNodesFromEntities = ({ entities, createNode }) => {
-  entities.forEach(e => {
-    let { ...entity } = e
-    let node = {
-      ...entity,
-      parent: null,
-      children: [],
-      internal: {
-        type: `lever`,
-        contentDigest: digest(JSON.stringify(entity)),
-      },
-    }
-    createNode(node)
-  })
-}
+exports.createNodesFromEntities = ({ entities, createNode }) =>
+  Promise.all(
+    entities.map(e => {
+      let { ...entity } = e
+      let node = {
+        ...entity,
+        parent: null,
+        children: [],
+        internal: {
+          type: `lever`,
+          contentDigest: digest(JSON.stringify(entity)),
+        },
+      }
+      return createNode(node)
+    })
+  )

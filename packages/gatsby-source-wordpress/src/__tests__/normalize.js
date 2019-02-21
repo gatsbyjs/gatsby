@@ -70,7 +70,7 @@ describe(`Process WordPress data`, () => {
   // })
 
   it(`creates nodes for each entry`, () => {
-    const createNode = jest.fn()
+    const createNode = jest.fn(n => Promise.resolve(n))
     normalize.createNodesFromEntities({ entities, createNode })
     expect(createNode.mock.calls).toMatchSnapshot()
   })

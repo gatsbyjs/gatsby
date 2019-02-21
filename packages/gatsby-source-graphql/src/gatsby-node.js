@@ -81,7 +81,7 @@ exports.sourceNodes = async (
 
   const nodeId = createNodeId(`gatsby-source-graphql-${typeName}`)
   const node = createSchemaNode({ id: nodeId, typeName, fieldName })
-  createNode(node)
+  await createNode(node)
 
   const resolver = (parent, args, context) => {
     createPageDependency({ path: context.path, nodeId: nodeId })

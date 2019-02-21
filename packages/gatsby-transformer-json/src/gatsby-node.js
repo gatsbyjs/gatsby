@@ -30,35 +30,38 @@ async function onCreateNode(
         type,
       },
     }
-    createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })
+    return createNode(jsonNode)
   }
 
   const { createNode, createParentChildLink } = actions
 
   // We only care about JSON content.
   if (node.internal.mediaType !== `application/json`) {
-    return
+    return Promise.resolve()
   }
 
   const content = await loadNodeContent(node)
   const parsedContent = JSON.parse(content)
 
   if (_.isArray(parsedContent)) {
-    parsedContent.forEach((obj, i) => {
-      transformObject(
-        obj,
-        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> JSON`),
-        getType({ node, object: obj, isArray: true })
+    return Promise.all(
+      parsedContent.map((obj, i) =>
+        transformObject(
+          obj,
+          obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> JSON`),
+          getType({ node, object: obj, isArray: true })
+        )
       )
-    })
+    )
   } else if (_.isPlainObject(parsedContent)) {
-    transformObject(
+    return transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> JSON`),
       getType({ node, object: parsedContent, isArray: false })
     )
   }
+  return Promise.resolve()
 }
 
 exports.onCreateNode = onCreateNode

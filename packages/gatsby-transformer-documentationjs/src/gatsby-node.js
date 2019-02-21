@@ -80,107 +80,113 @@ exports.onCreateNode = async ({
   }
 
   if (documentationJson && documentationJson.length > 0) {
-    documentationJson.forEach((docsJson, i) => {
-      const picked = _.pick(docsJson, [`kind`, `memberof`, `name`, `scope`])
+    await Promise.all(
+      documentationJson.map(async (docsJson, i) => {
+        const picked = _.pick(docsJson, [`kind`, `memberof`, `name`, `scope`])
 
-      // Defaults
-      picked.params = [{ name: ``, type: { type: ``, name: `` } }]
-      picked.returns = [{ type: { type: ``, name: `` } }]
-      picked.examples = [{ raw: ``, highlighted: `` }]
+        // Defaults
+        picked.params = [{ name: ``, type: { type: ``, name: `` } }]
+        picked.returns = [{ type: { type: ``, name: `` } }]
+        picked.examples = [{ raw: ``, highlighted: `` }]
 
-      // Prepare various sub-pieces.
-      if (docsJson.description) {
-        picked.description___NODE = createDescriptionNode(
-          node,
-          commentId(node.id, i),
-          stringifyMarkdownAST(docsJson.description),
-          `comment.description`,
-          actions,
-          createNodeId
-        )
-      }
-
-      const transformParam = param => {
-        if (param.description) {
-          param.description___NODE = createDescriptionNode(
+        // Prepare various sub-pieces.
+        if (docsJson.description) {
+          picked.description___NODE = await createDescriptionNode(
             node,
             commentId(node.id, i),
-            stringifyMarkdownAST(param.description),
-            param.name,
+            stringifyMarkdownAST(docsJson.description),
+            `comment.description`,
             actions,
             createNodeId
           )
-          delete param.description
-        }
-        delete param.lineNumber
-
-        // When documenting destructured parameters, the name
-        // is parent.child where we just want the child.
-        if (param.name.split(`.`).length > 1) {
-          param.name = param.name
-            .split(`.`)
-            .slice(-1)
-            .join(`.`)
         }
 
-        if (param.properties) {
-          param.properties = param.properties.map(transformParam)
-        }
-
-        return param
-      }
-
-      if (docsJson.params) {
-        picked.params = docsJson.params.map(transformParam)
-      }
-
-      if (docsJson.returns) {
-        picked.returns = docsJson.returns.map(ret => {
-          if (ret.description) {
-            ret.description___NODE = createDescriptionNode(
+        const transformParam = async param => {
+          if (param.description) {
+            param.description___NODE = await createDescriptionNode(
               node,
               commentId(node.id, i),
-              stringifyMarkdownAST(ret.description),
-              ret.title,
+              stringifyMarkdownAST(param.description),
+              param.name,
               actions,
               createNodeId
             )
-            delete ret.description
+            delete param.description
+          }
+          delete param.lineNumber
+
+          // When documenting destructured parameters, the name
+          // is parent.child where we just want the child.
+          if (param.name.split(`.`).length > 1) {
+            param.name = param.name
+              .split(`.`)
+              .slice(-1)
+              .join(`.`)
           }
 
-          return ret
-        })
-      }
-
-      if (docsJson.examples) {
-        picked.examples = docsJson.examples.map(example => {
-          return {
-            raw: example.description,
-            highlighted: Prism.highlight(
-              example.description,
-              Prism.languages.javascript
-            ),
+          if (param.properties) {
+            param.properties = await Promise.all(
+              param.properties.map(transformParam)
+            )
           }
-        })
-      }
 
-      const strContent = JSON.stringify(picked, null, 4)
+          return Promise.resolve(param)
+        }
 
-      const docNode = {
-        ...picked,
-        commentNumber: i,
-        id: createNodeId(commentId(node.id, i)),
-        parent: node.id,
-        children: [],
-        internal: {
-          contentDigest: digest(strContent),
-          type: `DocumentationJs`,
-        },
-      }
+        if (docsJson.params) {
+          picked.params = await Promise.all(docsJson.params.map(transformParam))
+        }
 
-      createParentChildLink({ parent: node, child: docNode })
-      createNode(docNode)
-    })
+        if (docsJson.returns) {
+          picked.returns = await Promise.all(
+            docsJson.returns.map(async ret => {
+              if (ret.description) {
+                ret.description___NODE = await createDescriptionNode(
+                  node,
+                  commentId(node.id, i),
+                  stringifyMarkdownAST(ret.description),
+                  ret.title,
+                  actions,
+                  createNodeId
+                )
+                delete ret.description
+              }
+
+              return Promise.resolve(ret)
+            })
+          )
+        }
+
+        if (docsJson.examples) {
+          picked.examples = docsJson.examples.map(example => {
+            return {
+              raw: example.description,
+              highlighted: Prism.highlight(
+                example.description,
+                Prism.languages.javascript
+              ),
+            }
+          })
+        }
+
+        const strContent = JSON.stringify(picked, null, 4)
+
+        const docNode = {
+          ...picked,
+          commentNumber: i,
+          id: createNodeId(commentId(node.id, i)),
+          parent: node.id,
+          children: [],
+          internal: {
+            contentDigest: digest(strContent),
+            type: `DocumentationJs`,
+          },
+        }
+
+        createParentChildLink({ parent: node, child: docNode })
+        return createNode(docNode)
+      })
+    )
 
     return true
   } else {

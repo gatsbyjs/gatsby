@@ -22,8 +22,8 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
         type,
       },
     }
-    createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })
+    return createNode(jsonNode)
   }
 
   // We only care about HJSON content.
@@ -33,22 +33,24 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
     node.internal.mediaType !== `text/hjson` &&
     node.internal.mediaType !== `application/hjson`
   ) {
-    return
+    return Promise.resolve()
   }
 
   const content = await loadNodeContent(node)
   const parsedContent = HJSON.parse(content)
 
   if (_.isArray(parsedContent)) {
-    parsedContent.forEach((obj, i) => {
-      transformObject(
-        obj,
-        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> HJSON`),
-        _.upperFirst(_.camelCase(`${node.name} HJson`))
+    return Promise.all(
+      parsedContent.map((obj, i) =>
+        transformObject(
+          obj,
+          obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> HJSON`),
+          _.upperFirst(_.camelCase(`${node.name} HJson`))
+        )
       )
-    })
+    )
   } else if (_.isPlainObject(parsedContent)) {
-    transformObject(
+    return transformObject(
       parsedContent,
       parsedContent.id
         ? parsedContent.id
@@ -56,6 +58,7 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
       _.upperFirst(_.camelCase(`${path.basename(node.dir)} HJson`))
     )
   }
+  return Promise.resolve()
 }
 
 exports.onCreateNode = onCreateNode

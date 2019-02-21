@@ -10,15 +10,18 @@ const store = Redux.createStore(
   Redux.combineReducers({ nodeReducer, nodeTouchedReducer }),
   {}
 )
+const dispatch = jest.spyOn(store, `dispatch`)
+
 describe(`Create and update nodes`, () => {
   beforeEach(() => {
     store.dispatch({
       type: `DELETE_CACHE`,
     })
+    dispatch.mockClear()
   })
 
-  it(`allows creating nodes`, () => {
-    const action = actions.createNode(
+  it(`allows creating nodes`, async () => {
+    await actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -32,13 +35,14 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     expect(action).toMatchSnapshot()
     expect(nodeReducer(undefined, action)).toMatchSnapshot()
   })
 
-  it(`allows updating nodes`, () => {
-    const action = actions.createNode(
+  it(`allows updating nodes`, async () => {
+    await actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -61,8 +65,8 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
-    const updateAction = actions.createNode(
+    )(dispatch)
+    await actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -82,7 +86,9 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
+    const updateAction = dispatch.mock.calls[1][0]
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
     expect(state.get(`hi`).pickle).toEqual(false)
@@ -90,8 +96,8 @@ describe(`Create and update nodes`, () => {
     expect(state.get(`hi`).deep2.boom).toEqual(`foo`)
   })
 
-  it(`nodes that are added are also "touched"`, () => {
-    const action = actions.createNode(
+  it(`nodes that are added are also "touched"`, async () => {
+    await actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -105,13 +111,14 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     let state = nodeTouchedReducer(undefined, action)
     expect(state[`hi`]).toBe(true)
   })
 
-  it(`allows adding fields to nodes`, () => {
-    const action = actions.createNode(
+  it(`allows adding fields to nodes`, async () => {
+    await actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -125,7 +132,8 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     let state = nodeReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
@@ -142,8 +150,8 @@ describe(`Create and update nodes`, () => {
     expect(state).toMatchSnapshot()
   })
 
-  it(`throws error if a field is updated by a plugin not its owner`, () => {
-    const action = actions.createNode(
+  it(`throws error if a field is updated by a plugin not its owner`, async () => {
+    await actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -157,7 +165,8 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     let state = nodeReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
@@ -187,8 +196,8 @@ describe(`Create and update nodes`, () => {
     expect(callActionCreator).toThrowErrorMatchingSnapshot()
   })
 
-  it(`throws error if a node is created by a plugin not its owner`, () => {
-    actions.createNode(
+  it(`throws error if a node is created by a plugin not its owner`, async () => {
+    await actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -202,10 +211,10 @@ describe(`Create and update nodes`, () => {
       {
         name: `pluginA`,
       }
-    )
+    )(dispatch)
 
     function callActionCreator() {
-      actions.createNode(
+      return actions.createNode(
         {
           id: `hi2`,
           children: [],
@@ -219,15 +228,15 @@ describe(`Create and update nodes`, () => {
         {
           name: `pluginB`,
         }
-      )
+      )(dispatch)
     }
 
-    expect(callActionCreator).toThrowErrorMatchingSnapshot()
+    expect(await callActionCreator).toThrowErrorMatchingSnapshot()
   })
 
-  it(`throws error if a node sets a value on "fields"`, () => {
+  it(`throws error if a node sets a value on "fields"`, async () => {
     function callActionCreator() {
-      actions.createNode(
+      return actions.createNode(
         {
           id: `hi`,
           children: [],
@@ -244,9 +253,9 @@ describe(`Create and update nodes`, () => {
         {
           name: `pluginA`,
         }
-      )
+      )(dispatch)
     }
 
-    expect(callActionCreator).toThrowErrorMatchingSnapshot()
+    expect(await callActionCreator).toThrowErrorMatchingSnapshot()
   })
 })

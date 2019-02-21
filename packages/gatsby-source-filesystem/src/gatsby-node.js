@@ -91,16 +91,9 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     ],
   })
 
-  const createAndProcessNode = path => {
-    const fileNodePromise = createFileNode(
-      path,
-      createNodeId,
-      pluginOptions
-    ).then(fileNode => {
-      createNode(fileNode)
-      return null
-    })
-    return fileNodePromise
+  const createAndProcessNode = async path => {
+    const fileNode = await createFileNode(path, createNodeId, pluginOptions)
+    return createNode(fileNode)
   }
 
   // For every path that is reported before the 'ready' event, we throw them
@@ -120,9 +113,10 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       ) {
         reporter.info(`added file at ${path}`)
       }
-      createAndProcessNode(path).catch(err => reporter.error(err))
+      return createAndProcessNode(path).catch(err => reporter.error(err))
     } else {
       pathQueue.push(path)
+      return Promise.resolve()
     }
   })
 
@@ -132,7 +126,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     ) {
       reporter.info(`changed file at ${path}`)
     }
-    createAndProcessNode(path).catch(err => reporter.error(err))
+    return createAndProcessNode(path).catch(err => reporter.error(err))
   })
 
   watcher.on(`unlink`, path => {
@@ -156,9 +150,10 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       ) {
         reporter.info(`added directory at ${path}`)
       }
-      createAndProcessNode(path).catch(err => reporter.error(err))
+      return createAndProcessNode(path).catch(err => reporter.error(err))
     } else {
       pathQueue.push(path)
+      return Promise.resolve()
     }
   })
 

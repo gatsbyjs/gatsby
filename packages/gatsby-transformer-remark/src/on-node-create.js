@@ -13,7 +13,7 @@ module.exports = async function onCreateNode(
     node.internal.mediaType !== `text/markdown` &&
     node.internal.mediaType !== `text/x-markdown`
   ) {
-    return {}
+    return Promise.resolve()
   }
 
   const content = await loadNodeContent(node)
@@ -58,10 +58,8 @@ module.exports = async function onCreateNode(
       .update(JSON.stringify(markdownNode))
       .digest(`hex`)
 
-    createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
-
-    return markdownNode
+    return createNode(markdownNode)
   } catch (err) {
     reporter.panicOnBuild(
       `Error processing Markdown ${
@@ -70,6 +68,6 @@ module.exports = async function onCreateNode(
       ${err.message}`
     )
 
-    return {} // eslint
+    return Promise.resolve()
   }
 }

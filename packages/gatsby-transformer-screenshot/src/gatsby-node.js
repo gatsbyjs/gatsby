@@ -7,11 +7,10 @@ const LAMBDA_CONCURRENCY_LIMIT = 50
 const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
 
 const screenshotQueue = new Queue(
-  (input, cb) => {
+  (input, cb) =>
     createScreenshotNode(input)
       .then(r => cb(null, r))
-      .catch(e => cb(e))
-  },
+      .catch(e => cb(e)),
   { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 }
 )
 
@@ -158,9 +157,7 @@ const createScreenshotNode = async ({
 
     screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)
 
-    createNode(screenshotNode)
-
-    return screenshotNode
+    return createNode(screenshotNode)
   } catch (e) {
     console.log(`Failed to screenshot ${url}. Retrying...`)
 

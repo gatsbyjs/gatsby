@@ -26,7 +26,10 @@ beforeEach(() => {
     },
   }
 
-  actions = { createNode: jest.fn(), createParentChildLink: jest.fn() }
+  actions = {
+    createNode: jest.fn(node => Promise.resolve(node)),
+    createParentChildLink: jest.fn(),
+  }
   createNodeId = jest.fn().mockReturnValue(`uuid-from-gatsby`)
 })
 

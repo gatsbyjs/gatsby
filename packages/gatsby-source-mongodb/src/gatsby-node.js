@@ -70,62 +70,62 @@ function createNodes(
         reject(err)
       }
 
-      documents.forEach(item => {
-        var id = item._id.toString()
-        delete item._id
+      const p = Promise.all(
+        documents.map(item => {
+          var id = item._id.toString()
+          delete item._id
 
-        var node = {
-          // Data for the node.
-          ...item,
-          id: createNodeId(`${id}`),
-          mongodb_id: id,
-          parent: `__${collectionName}__`,
-          children: [],
-          internal: {
-            type: `mongodb${sanitizeName(dbName)}${sanitizeName(
-              collectionName
-            )}`,
-            content: JSON.stringify(item),
-            contentDigest: crypto
-              .createHash(`md5`)
-              .update(JSON.stringify(item))
-              .digest(`hex`),
-          },
-        }
-        const childrenNodes = []
-        if (pluginOptions.map) {
-          let mapObj = pluginOptions.map
-          if (pluginOptions.map[collectionName]) {
-            mapObj = pluginOptions.map[collectionName]
+          var node = {
+            // Data for the node.
+            ...item,
+            id: createNodeId(`${id}`),
+            mongodb_id: id,
+            parent: `__${collectionName}__`,
+            children: [],
+            internal: {
+              type: `mongodb${sanitizeName(dbName)}${sanitizeName(
+                collectionName
+              )}`,
+              content: JSON.stringify(item),
+              contentDigest: crypto
+                .createHash(`md5`)
+                .update(JSON.stringify(item))
+                .digest(`hex`),
+            },
           }
-          // We need to map certain fields to a contenttype.
-          Object.keys(mapObj).forEach(mediaItemFieldKey => {
-            if (
-              node[mediaItemFieldKey] &&
-              (typeof mapObj[mediaItemFieldKey] === `string` ||
-                mapObj[mediaItemFieldKey] instanceof String)
-            ) {
-              const mappingChildNode = prepareMappingChildNode(
-                node,
-                mediaItemFieldKey,
-                node[mediaItemFieldKey],
-                mapObj[mediaItemFieldKey],
-                createNode
-              )
-
-              node[`${mediaItemFieldKey}___NODE`] = mappingChildNode.id
-              childrenNodes.push(mappingChildNode)
-
-              delete node[mediaItemFieldKey]
+          const childrenNodes = []
+          if (pluginOptions.map) {
+            let mapObj = pluginOptions.map
+            if (pluginOptions.map[collectionName]) {
+              mapObj = pluginOptions.map[collectionName]
             }
-          })
-        }
-        createNode(node)
-        childrenNodes.forEach(node => {
-          createNode(node)
+            // We need to map certain fields to a contenttype.
+            Object.keys(mapObj).forEach(mediaItemFieldKey => {
+              if (
+                node[mediaItemFieldKey] &&
+                (typeof mapObj[mediaItemFieldKey] === `string` ||
+                  mapObj[mediaItemFieldKey] instanceof String)
+              ) {
+                const mappingChildNode = prepareMappingChildNode(
+                  node,
+                  mediaItemFieldKey,
+                  node[mediaItemFieldKey],
+                  mapObj[mediaItemFieldKey],
+                  createNode
+                )
+
+                node[`${mediaItemFieldKey}___NODE`] = mappingChildNode.id
+                childrenNodes.push(mappingChildNode)
+
+                delete node[mediaItemFieldKey]
+              }
+            })
+          }
+          const nodes = [node, ...childrenNodes]
+          return Promise.all(nodes.map(node => createNode(node)))
         })
-      })
-      resolve()
+      )
+      resolve(p)
     })
   })
 }

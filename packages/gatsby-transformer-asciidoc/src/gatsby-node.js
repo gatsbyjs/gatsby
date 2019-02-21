@@ -13,7 +13,7 @@ async function onCreateNode(
 ) {
   // Filter out non-adoc content
   if (!node.extension || node.extension !== `adoc`) {
-    return
+    return Promise.resolve()
   }
 
   const { createNode, createParentChildLink } = actions
@@ -71,8 +71,8 @@ async function onCreateNode(
 
     asciiNode.internal.contentDigest = createContentDigest(asciiNode)
 
-    createNode(asciiNode)
     createParentChildLink({ parent: node, child: asciiNode })
+    return createNode(asciiNode)
   } catch (err) {
     reporter.panicOnBuild(
       `Error processing Asciidoc ${

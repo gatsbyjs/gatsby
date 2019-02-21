@@ -12,7 +12,7 @@ async function onCreateNode({
 
   // We only care about XML content.
   if (![`application/xml`, `text/xml`].includes(node.internal.mediaType)) {
-    return
+    return Promise.resolve()
   }
   const rawXml = await loadNodeContent(node)
   const parsedXml = parseXml(rawXml)
@@ -35,11 +35,12 @@ async function onCreateNode({
     }
   })
 
-  _.each(nodeArray, j => {
-    createNode(j)
-    createParentChildLink({ parent: node, child: j })
-  })
-  return
+  return Promise.all(
+    nodeArray.map(item => {
+      createParentChildLink({ parent: node, child: item })
+      return createNode(item)
+    })
+  )
 }
 
 exports.onCreateNode = onCreateNode

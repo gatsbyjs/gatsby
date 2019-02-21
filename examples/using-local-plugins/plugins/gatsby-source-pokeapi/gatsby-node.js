@@ -31,16 +31,14 @@ exports.sourceNodes = async ({ actions }) => {
   const allPokemon = await getPokemonData([`pikachu`, `charizard`, `squirtle`])
 
   // Process data for each pokemon into Gatsby node format
-  const processPokemon = pokemon => {
+  const processPokemon = async pokemon => {
     // Set up each ability as a node
     const abilityNodes = pokemon.abilities.map(abilityData =>
       prepareAbilityNode(abilityData)
     )
 
     // Actually create the "Ability" nodes for given pokemon
-    abilityNodes.forEach(node => {
-      createNode(node)
-    })
+    await Promise.all(abilityNodes.map(node => createNode(node)))
 
     // Create the "Pokemon" node for given pokemon
     const pokemonNode = preparePokemonNode(pokemon)
@@ -52,5 +50,7 @@ exports.sourceNodes = async ({ actions }) => {
   }
 
   // Process data into nodes using our helper.
-  allPokemon.forEach(pokemon => createNode(processPokemon(pokemon)))
+  return Promise.all(
+    allPokemon.map(async pokemon => createNode(await processPokemon(pokemon)))
+  )
 }

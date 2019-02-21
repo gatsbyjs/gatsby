@@ -14,7 +14,7 @@ async function onCreateNode({
 
   // This only processes JavaScript files.
   if (node.internal.mediaType !== `application/javascript`) {
-    return
+    return Promise.resolve()
   }
 
   const code = await loadNodeContent(node)
@@ -150,9 +150,10 @@ async function onCreateNode({
       nodeData.fileAbsolutePath = node.absolutePath
     }
 
-    createNode(nodeData)
     createParentChildLink({ parent: node, child: nodeData })
+    await createNode(nodeData)
   }
+  return Promise.resolve()
 }
 
 exports.onCreateNode = onCreateNode

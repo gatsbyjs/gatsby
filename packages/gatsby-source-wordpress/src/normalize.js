@@ -570,50 +570,48 @@ const prepareACFChildNodes = (
   return acfChildNode
 }
 
-exports.createNodesFromEntities = ({ entities, createNode }) => {
-  entities.forEach(e => {
-    // Create subnodes for ACF Flexible layouts
-    let { __type, ...entity } = e // eslint-disable-line no-unused-vars
-    let children = []
-    let childrenNodes = []
-    if (entity.acf) {
-      _.each(entity.acf, (value, key) => {
-        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
-          entity.acf[`${key}_${entity.type}___NODE`] = entity.acf[key].map(
-            (f, i) => {
-              const type = `WordPressAcf_${f.acf_fc_layout}`
-              delete f.acf_fc_layout
+exports.createNodesFromEntities = ({ entities, createNode }) =>
+  Promise.all(
+    entities.map(e => {
+      // Create subnodes for ACF Flexible layouts
+      let { __type, ...entity } = e // eslint-disable-line no-unused-vars
+      let children = []
+      let childrenNodes = []
+      if (entity.acf) {
+        _.each(entity.acf, (value, key) => {
+          if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
+            entity.acf[`${key}_${entity.type}___NODE`] = entity.acf[key].map(
+              (f, i) => {
+                const type = `WordPressAcf_${f.acf_fc_layout}`
+                delete f.acf_fc_layout
 
-              const acfChildNode = prepareACFChildNodes(
-                f,
-                entity.id + i,
-                key,
-                type,
-                children,
-                childrenNodes
-              )
+                const acfChildNode = prepareACFChildNodes(
+                  f,
+                  entity.id + i,
+                  key,
+                  type,
+                  children,
+                  childrenNodes
+                )
 
-              return acfChildNode.id
-            }
-          )
+                return acfChildNode.id
+              }
+            )
 
-          delete entity.acf[key]
-        }
-      })
-    }
+            delete entity.acf[key]
+          }
+        })
+      }
 
-    let node = {
-      ...entity,
-      children,
-      parent: null,
-      internal: {
-        type: e.__type,
-        contentDigest: digest(JSON.stringify(entity)),
-      },
-    }
-    createNode(node)
-    childrenNodes.forEach(node => {
-      createNode(node)
+      let node = {
+        ...entity,
+        children,
+        parent: null,
+        internal: {
+          type: e.__type,
+          contentDigest: digest(JSON.stringify(entity)),
+        },
+      }
+      return Promise.all([node, ...childrenNodes].map(n => createNode(n)))
     })
-  })
-}
+  )

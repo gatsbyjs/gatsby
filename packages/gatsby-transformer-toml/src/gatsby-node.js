@@ -8,7 +8,7 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   // Currently TOML files are considered null in 'mime-db'
   // Hence the extension test instead of mediaType test
   if (node.extension !== `toml`) {
-    return
+    return Promise.resolve()
   }
   // Load TOML contents
   const content = await loadNodeContent(node)
@@ -39,9 +39,8 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
     },
   }
 
-  createNode(newNode)
   createParentChildLink({ parent: node, child: newNode })
-  return
+  return createNode(newNode)
 }
 
 exports.onCreateNode = onCreateNode

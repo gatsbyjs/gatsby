@@ -55,7 +55,7 @@ exports.sourceNodes = async (
       `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
     )
 
-    return
+    return Promise.resolve()
   }
 
   const createSyncToken = () =>
@@ -184,32 +184,36 @@ exports.sourceNodes = async (
       }
     })
 
-  contentTypeItems.forEach((contentTypeItem, i) => {
-    normalize.createContentTypeNodes({
-      contentTypeItem,
-      restrictedNodeFields,
-      conflictFieldPrefix,
-      entries: entryList[i],
-      createNode,
-      createNodeId,
-      resolvable,
-      foreignReferenceMap,
-      defaultLocale,
-      locales,
+  await Promise.all(
+    contentTypeItems.map((contentTypeItem, i) => {
+      normalize.createContentTypeNodes({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i],
+        createNode,
+        createNodeId,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+      })
     })
-  })
+  )
 
-  assets.forEach(assetItem => {
-    normalize.createAssetNodes({
-      assetItem,
-      createNode,
-      createNodeId,
-      defaultLocale,
-      locales,
+  await Promise.all(
+    assets.map(assetItem => {
+      normalize.createAssetNodes({
+        assetItem,
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+      })
     })
-  })
+  )
 
-  return
+  return Promise.resolve()
 }
 
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,

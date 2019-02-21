@@ -11,7 +11,7 @@ module.exports = async function onCreateNode({ node, actions, createNodeId }) {
   const { createNode, createParentChildLink } = actions
 
   if (!supportedExtensions[node.extension]) {
-    return
+    return Promise.resolve()
   }
 
   const imageNode = {
@@ -24,8 +24,6 @@ module.exports = async function onCreateNode({ node, actions, createNodeId }) {
     },
   }
 
-  await createNode(imageNode)
   createParentChildLink({ parent: node, child: imageNode })
-
-  return
+  return createNode(imageNode)
 }

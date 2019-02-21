@@ -112,7 +112,7 @@ exports.sourceNodes = async (
         links
       )
 
-      createNode(node)
+      return createNode(node)
     })
   } catch (error) {
     console.error(error)

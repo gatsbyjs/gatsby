@@ -19,7 +19,7 @@ async function onCreateNode(
     `|`
   )
   if (extensions.indexOf((node.extension || ``).toLowerCase()) == -1) {
-    return
+    return Promise.resolve()
   }
   // Load binary string
   const content = await _loadNodeContent(node, loadNodeContent)
@@ -39,62 +39,65 @@ async function onCreateNode(
 
   // Parse
   let wb = XLSX.read(content, { type: `binary`, cellDates: true })
-  wb.SheetNames.forEach((n, idx) => {
-    let ws = wb.Sheets[n]
-    let parsedContent = XLSX.utils.sheet_to_json(ws, xlsxOptions)
+  return Promise.all(
+    wb.SheetNames.map(async (n, idx) => {
+      let ws = wb.Sheets[n]
+      let parsedContent = XLSX.utils.sheet_to_json(ws, xlsxOptions)
 
-    if (_.isArray(parsedContent)) {
-      const csvArray = parsedContent.map((obj, i) => {
-        const objStr = JSON.stringify(obj)
+      if (_.isArray(parsedContent)) {
+        const csvArray = parsedContent.map((obj, i) => {
+          const objStr = JSON.stringify(obj)
+          const contentDigest = crypto
+            .createHash(`md5`)
+            .update(objStr)
+            .digest(`hex`)
+
+          return {
+            ...obj,
+            id: obj.id
+              ? obj.id
+              : createNodeId(`${node.id} [${n} ${i}] >>> ${node.extension}`),
+            children: [],
+            parent: node.id,
+            internal: {
+              contentDigest,
+              type:
+                _.upperFirst(_.camelCase(`${node.name} ${node.extension}`)) +
+                `__` +
+                _.upperFirst(_.camelCase(`${n}`)),
+            },
+          }
+        })
+
+        await Promise.all(
+          csvArray.map(item => {
+            createParentChildLink({ parent: node, child: item })
+            return createNode(item)
+          })
+        )
+
+        const shObj = { name: n, idx: idx }
+        const shStr = JSON.stringify(shObj)
         const contentDigest = crypto
           .createHash(`md5`)
-          .update(objStr)
+          .update(shStr)
           .digest(`hex`)
 
-        return {
-          ...obj,
-          id: obj.id
-            ? obj.id
-            : createNodeId(`${node.id} [${n} ${i}] >>> ${node.extension}`),
+        const z = {
+          id: createNodeId(`${node.id} [${idx}] >>> ${node.extension}`),
           children: [],
           parent: node.id,
           internal: {
             contentDigest,
-            type:
-              _.upperFirst(_.camelCase(`${node.name} ${node.extension}`)) +
-              `__` +
-              _.upperFirst(_.camelCase(`${n}`)),
+            type: _.upperFirst(_.camelCase(`${node.name} ${node.extension}`)),
           },
         }
-      })
-
-      _.each(csvArray, y => {
-        createNode(y)
-        createParentChildLink({ parent: node, child: y })
-      })
-
-      const shObj = { name: n, idx: idx }
-      const shStr = JSON.stringify(shObj)
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(shStr)
-        .digest(`hex`)
-
-      const z = {
-        id: createNodeId(`${node.id} [${idx}] >>> ${node.extension}`),
-        children: [],
-        parent: node.id,
-        internal: {
-          contentDigest,
-          type: _.upperFirst(_.camelCase(`${node.name} ${node.extension}`)),
-        },
+        createParentChildLink({ parent: node, child: z })
+        return createNode(z)
       }
-      createNode(z)
-      createParentChildLink({ parent: node, child: z })
-    }
-  })
-
-  return
+      return Promise.resolve()
+    })
+  )
 }
 
 exports.onCreateNode = onCreateNode
