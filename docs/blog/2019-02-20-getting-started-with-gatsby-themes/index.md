@@ -85,7 +85,7 @@ Then you will navigate out of the _site_ directory and add Gatsby, React, and Re
 
 `yarn workspace theme add gatsby react react-dom -D`
 
-You will want to make Gatsby, React, and ReactDom peer dependencies in both the _site_ and _theme_ directories.
+You will want to make Gatsby, React, and ReactDom peer dependencies in both the _theme_ directory.
 
 ```json
  "devDependencies": {
@@ -100,7 +100,7 @@ You will want to make Gatsby, React, and ReactDom peer dependencies in both the 
   },
 ```
 
-# Installing MDX and gatsby-plugin-page-creator
+## Installing MDX and gatsby-plugin-page-creator
 
 ### What is MDX?
 
@@ -126,7 +126,7 @@ Read more about the page-creator plugin [here.](/packages/gatsby-plugin-page-cre
 
 Next, you will want to create your _gatsby-config.js_ file under your _theme_ directory. Make sure to include 'gatsby-mdx' and 'gatsby-plugin-page-creator.'
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -173,7 +173,7 @@ Your workspace info should look similar to this:
 
 Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ directory.
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   __experimentalThemes: ["theme"],
 }
@@ -185,7 +185,7 @@ While you're still in the _site_ directory, you are going to create an _index.md
 
 Your website content goes in _index.mdx_.
 
-# Styling Layout and Components
+## Styling Layout and Components
 
 Next, you will navigate to the _theme_ directory. You will then create a _components_ folder under _src_, and in components you create a _layout.js_ file.
 
@@ -193,14 +193,14 @@ Next, you will navigate to the _theme_ directory. You will then create a _compon
 
 Inside of your _layout.js_ file, you can add your styling.
 
-```javascript
+```javascript:title=layout.js
 export default ({ children }) => (
   <div
-    style={
-      {
-        //Layout styling //
-      }
-    }
+    style={{
+      //Layout styling //
+      margin: "10%",
+      backgroundColor: "#000000",
+    }}
   >
     {children}
   </div>
@@ -209,7 +209,7 @@ export default ({ children }) => (
 
 To make sure your _layout.js_ file is connected to your theme you will navigate to your _gatsby-config.js_ file in your _theme_ directory. You will add defaultLayouts under options and make sure that the _layout.js_ is required.
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -234,22 +234,23 @@ If you want to reuse a specific style, you can create styled components. In your
 
 Here is an example of how you can set-up your styled component in _header.js_. Please make sure you write css-in-javascript when styling your div.
 
-```javascript
+```javascript:title=header.js
 export default ({ children }) => (
   <section
     style={{
-     // Header Specific Styling //
+      // Header Specific Styling //
+      padding: "10px",
+      backgroundColor: "blue",
     }}
   >
     {children}
   </section>
-);
-➜  co
+)
 ```
 
 To import your styled components, go to _index.js_
 
-`packages/theme/index.js`
+`javascript:title=packages/theme/index.js`
 
 You will then export your component.
 
@@ -261,12 +262,10 @@ If you want to use this component in your site, you will then go to your page (_
 You can then use it to style specific things in your file.
 
 ```mdx
-import { Header } from "theme"
-
 <Header>Header content goes here</Header>
 ```
 
-# Using Your Theme
+## Using Your Theme
 
 It's finally time to use and share your theme! You can push your whole directory (_gatsby-themes_) to GitHub.
 
@@ -282,7 +281,7 @@ If you want to check your progress, go to the _site_ directory and
 
 Once your server is up you should see your beautiful theme applied to your files!
 
-## Troubleshooting Plugin Error
+### Troubleshooting Plugin Error
 
 If you run into an error that your theme plugin can't be found, try clearing your cache. You can either use `rm -rf.cache` in your terminal, or you can add:
 
