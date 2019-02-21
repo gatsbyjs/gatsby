@@ -1,5 +1,5 @@
 ---
-title: Writing Themes
+title: Building Themes
 ---
 
 > ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
