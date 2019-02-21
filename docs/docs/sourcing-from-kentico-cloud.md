@@ -198,9 +198,9 @@ export const query = graphql`
 
 When you rerun `gatsby develop`, you'll be able to see each article as a page with content pulled from Kentico Cloud. To see a list of all pages, visit `http://localhost:8000/asdf` (or any other url that generates a 404).
 
-Now you know how to create pages programmatically and pull their content from Kentico Cloud. To get the most out of your CaaS, you'll want to also make sure your site builds automatically whenever published content changes inside Kentico Cloud.
+The body copy for this article comes from a rich text element in Kentico Cloud. Links and inline linked items (e.g., embedded videos) are not resolved by default for rich text elements. If you want to resolve them, you can use the [embedded JS SDK resolution](https://github.com/Kentico/gatsby-source-kentico-cloud#embedded-js-sdk-resolution) or query the required data in structured form for resolution and create your own React components for [inline content items](https://github.com/Kentico/gatsby-source-kentico-cloud#content-items-in-rich-text-elements), [links](https://github.com/Kentico/gatsby-source-kentico-cloud#links-in-rich-text-elements), and [images](https://github.com/Kentico/gatsby-source-kentico-cloud#images-in-rich-text-elements).
 
-No links nor inline linked items are not resolved for the rich text element. If you want to resolve them, it is possible to use the [embedded JS SDK resolution](https://github.com/Kentico/gatsby-source-kentico-cloud#embedded-js-sdk-resolution), or it is possible to query required data in structured form for resolution and create own React components for [inline content items](https://github.com/Kentico/gatsby-source-kentico-cloud#content-items-in-rich-text-elements), [links](https://github.com/Kentico/gatsby-source-kentico-cloud#links-in-rich-text-elements), and [images](https://github.com/Kentico/gatsby-source-kentico-cloud#images-in-rich-text-elements).
+Now you know how to create pages programmatically and pull their content from Kentico Cloud. To get the most out of your CaaS, you'll want to also make sure your site builds automatically whenever published content changes inside Kentico Cloud.
 
 ### Continuous deployment
 
