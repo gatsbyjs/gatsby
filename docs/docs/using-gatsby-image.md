@@ -56,7 +56,6 @@ With Gatsby, we can make images way way better.
 module.exports = {
   plugins: [
     // highlight-start
-    `gatsby-image`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     // highlight-end
