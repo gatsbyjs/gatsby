@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.21...gatsby-plugin-sharp@2.0.22) (2019-02-22)
+
+### Features
+
+- **gatsby-plugin-sharp:** Add tracedSVG option in fluid and fixed processors ([#11981](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/11981)) ([8aaaa85](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/8aaaa85)), closes [#11912](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/11912)
+
 ## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.20...gatsby-plugin-sharp@2.0.21) (2019-02-19)
 
 ### Features
