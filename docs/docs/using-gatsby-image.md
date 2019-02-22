@@ -37,7 +37,20 @@ With Gatsby, we can make images way way better.
 
 `gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images, you only need to:
 
-1. Install `gatsby-image` and its peer dependencies. The `gatsby-config.json` needs to include the following:
+1. Install `gatsby-image` and other, necessary dependencies like `gatsby-plugin-sharp` and `gatsby-transformer-sharp`
+    ```shell
+    npm i gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+    ```
+1. Add the newly installed plugins and transformer plugins to your `gatsby-config.js`
+    ```js:title=gatsby-config.js
+    module.exports = {
+      plugins: [
+        // highlight-start
+        `gatsby-plugin-sharp`,
+        `gatsby-transformer-sharp`
+      ]
+    }
+    ```
 
 ```js:title=src/gatsby-config.js
 module.exports = {
