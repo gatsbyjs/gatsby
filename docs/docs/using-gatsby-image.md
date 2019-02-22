@@ -40,23 +40,37 @@ With Gatsby, we can make images way way better.
 1. Install `gatsby-image` and its peer dependencies. The `gatsby-config.json` needs to include the following:
 
 ```js:title=src/gatsby-config.js
-plugins: [
-    `gatsby-image`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`
-]
+module.exports = {
+  siteMetadata: {
+    title: "Gatsby Project",
+    author: "You",
+    description: "A Gatsby.js Project using gatsby-image"
+  },
+  plugins: [
+      `gatsby-image`,
+      `gatsby-transformer-sharp`,
+      `gatsby-plugin-sharp`
+  ],
+}
 ```
 2. Configure the peer dependencies to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires another update to `gatsby-config.json`. Any path can replace `src/data` in this example, but whatever the path is the image file being queried needs to be placed within the scope of this path.
 
-```js:title=src/gatsby-config.js
-plugins: [
+```js:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: "Gatsby Project",
+    author: "You",
+    description: "A Gatsby.js Project using gatsby-image"
+  },
+  plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/data/`,
       }
     }
-]
+  ],
+}
 ```
 
 3. Write a GraphQL query using one of the included GraphQL “fragments” which specify the fields needed by `gatsby-image`. There are numerous fragments that can be used and the choice is based on the type of responsive image desired. This example will use `GatsbyImageSharpFluid`. An example of a GraphQL query is below where the path listed is the path relative to the location specified in the `gatsby-source-filesystem` configuration.
