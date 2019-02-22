@@ -258,11 +258,12 @@ module.exports = {
 }
 ```
 
-## Include `crossorigin` in manifest
+## Enable CORS using `crossorigin` attribute
 
 Add a `crossorigin` attribute to the manifest `<link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" />` link tag.
 
-You can set `crossOrigin` plugin option to `'use-credentials'` to enable sharing resources via cookies.
+You can set `crossOrigin` plugin option to `'use-credentials'` to enable sharing resources via cookies. Any invalid keyword or empty string will fallback to `'anonymous'`.
+
 You can find more information about `crossorigin` on MDN.
 
 [https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes)
