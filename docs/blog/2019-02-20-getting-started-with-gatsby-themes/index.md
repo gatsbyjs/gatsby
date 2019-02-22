@@ -254,7 +254,9 @@ To import your styled components, go to _index.js_
 
 You will then export your component.
 
-`export {default as Header} from './src/components/header'`
+```javascript:title=packages/theme/index.js
+export { default as Header } from "./src/components/header"
+```
 
 If you want to use this component in your site, you will then go to your page (_index.mdx_) and import the specific components.
 
