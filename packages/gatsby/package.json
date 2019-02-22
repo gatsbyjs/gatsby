@@ -68,6 +68,7 @@
     "gatsby-link": "^2.0.16",
     "gatsby-plugin-page-creator": "^2.0.11",
     "gatsby-react-router-scroll": "^2.0.6",
+    "gatsby-telemetry": "^0.0.1",
     "glob": "^7.1.1",
     "graphql": "^14.1.1",
     "graphql-compose": "^6.0.3",
