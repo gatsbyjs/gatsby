@@ -10,6 +10,9 @@
     "@babel/preset-react": "^7.0.0",
     "babel-plugin-macros": "^2.4.2"
   },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0"
+  },
   "license": "MIT",
   "main": "index.js",
   "scripts": {
