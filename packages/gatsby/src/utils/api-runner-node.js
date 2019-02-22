@@ -9,6 +9,7 @@ const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
+const { emitter } = require(`../redux`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
 
 // Bind action creators per plugin so we can auto-add
@@ -98,39 +99,47 @@ const runAPI = (plugin, api, args) => {
 
     // Ideally this would be more abstracted and applied to more situations, but right now
     // this can be potentially breaking so targeting `createPages` API and `createPage` action
+    let actions = doubleBoundActionCreators
     let apiFinished = false
     if (api === `createPages`) {
       let alreadyDisplayed = false
-      const createPageAction = doubleBoundActionCreators.createPage
-      doubleBoundActionCreators.createPage = (...args) => {
-        createPageAction(...args)
-        if (apiFinished && !alreadyDisplayed) {
-          const warning = [
-            reporter.stripIndent(`
+      const createPageAction = actions.createPage
+      // create new actions object with wrapped createPage action
+      // doubleBoundActionCreators is memoized, so we can't just
+      // reassign createPage field as this would cause this extra logic
+      // to be used in subsequent APIs and we only want to target this `createPages` call.
+      actions = {
+        ...actions,
+        createPage: (...args) => {
+          createPageAction(...args)
+          if (apiFinished && !alreadyDisplayed) {
+            const warning = [
+              reporter.stripIndent(`
               Action ${chalk.bold(
                 `createPage`
               )} was called outside of its expected asynchronous lifecycle ${chalk.bold(
-              `createPages`
-            )} in ${chalk.bold(plugin.name)}.
+                `createPages`
+              )} in ${chalk.bold(plugin.name)}.
               Ensure that you return a Promise from ${chalk.bold(
                 `createPages`
               )} and are awaiting any asynchronous method invocations (like ${chalk.bold(
-              `graphql`
-            )} or http requests).
+                `graphql`
+              )} or http requests).
               For more info and debugging tips: see ${chalk.bold(
                 `https://gatsby.app/sync-actions`
               )}
             `),
-          ]
+            ]
 
-          const possiblyCodeFrame = getNonGatsbyCodeFrame()
-          if (possiblyCodeFrame) {
-            warning.push(possiblyCodeFrame)
+            const possiblyCodeFrame = getNonGatsbyCodeFrame()
+            if (possiblyCodeFrame) {
+              warning.push(possiblyCodeFrame)
+            }
+
+            reporter.warn(warning.join(`\n\n`))
+            alreadyDisplayed = true
           }
-
-          reporter.warn(warning.join(`\n\n`))
-          alreadyDisplayed = true
-        }
+        },
       }
     }
 
@@ -138,8 +147,8 @@ const runAPI = (plugin, api, args) => {
       {
         ...args,
         pathPrefix,
-        boundActionCreators: doubleBoundActionCreators,
-        actions: doubleBoundActionCreators,
+        boundActionCreators: actions,
+        actions,
         loadNodeContent,
         store,
         emitter,
@@ -201,7 +210,11 @@ module.exports = async (api, args = {}, pluginSource) =>
     })
 
     // Check that the API is documented.
-    if (!apiList[api]) {
+    // "FAKE_API_CALL" is used when code needs to trigger something
+    // to happen once the the API queue is empty. Ideally of course
+    // we'd have an API (returning a promise) for that. But this
+    // works nicely in the meantime.
+    if (!apiList[api] && api !== `FAKE_API_CALL`) {
       reporter.panic(`api: "${api}" is not a valid Gatsby api`)
     }
 
@@ -273,7 +286,26 @@ module.exports = async (api, args = {}, pluginSource) =>
       apisRunningByTraceId.set(apiRunInstance.traceId, 1)
     }
 
+    let stopQueuedApiRuns = false
+    let onAPIRunComplete = null
+    if (api === `onCreatePage`) {
+      const path = args.page.path
+      const actionHandler = action => {
+        if (action.payload.path === path) {
+          stopQueuedApiRuns = true
+        }
+      }
+      emitter.on(`DELETE_PAGE`, actionHandler)
+      onAPIRunComplete = () => {
+        emitter.off(`DELETE_PAGE`, actionHandler)
+      }
+    }
+
     Promise.mapSeries(noSourcePluginPlugins, plugin => {
+      if (stopQueuedApiRuns) {
+        return null
+      }
+
       let pluginName =
         plugin.name === `default-site-plugin`
           ? `gatsby-node.js`
@@ -286,6 +318,9 @@ module.exports = async (api, args = {}, pluginSource) =>
         return null
       })
     }).then(results => {
+      if (onAPIRunComplete) {
+        onAPIRunComplete()
+      }
       // Remove runner instance
       apisRunningById.delete(apiRunInstance.id)
       const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
