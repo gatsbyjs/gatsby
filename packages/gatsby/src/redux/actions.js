@@ -202,7 +202,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // normalize component path
       page.component = slash(page.component)
       // check if path uses correct casing - incorrect casing will
-      // casue issues in query compiler and incosistencies when
+      // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
       const trueComponentPath = slash(truePath(page.component))
