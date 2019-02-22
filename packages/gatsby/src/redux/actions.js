@@ -1167,12 +1167,12 @@ actions.queryExtracted = (
 
 /**
  *
- * Report that the Relay Compilier found an error when extracting a query
+ * Report that the Relay Compilier found a graphql error when attempting to extract a query
  *
  * @param {Object} $0
  * @param {componentPath} $0.componentPath The path to the component that just had
  * its query read.
- * @param {error} $0.query The GraphQL query that was extracted from the component.
+ * @param {error} $0.error The GraphQL query that was extracted from the component.
  */
 actions.queryGraphQLError = (
   { componentPath, error },
@@ -1181,6 +1181,28 @@ actions.queryGraphQLError = (
 ) => {
   return {
     type: `QUERY_GRAPHQL_ERROR`,
+    plugin,
+    traceId,
+    payload: { componentPath, error },
+  }
+}
+
+/**
+ *
+ * Report that the Relay Compilier found a babel error when attempting to extract a query
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {error} $0.error The Babel error object
+ */
+actions.queryExtractionBabelError = (
+  { componentPath, error },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_BABEL_ERROR`,
     plugin,
     traceId,
     payload: { componentPath, error },
@@ -1212,7 +1234,7 @@ actions.pageComponentChanged = (path, plugin: Plugin, traceId?: string) => {
     type: `PAGE_COMPONENT_CHANGED`,
     plugin,
     traceId,
-    payload: path,
+    payload: { componentPath: path },
   }
 }
 

@@ -118,7 +118,7 @@ const updateStateAndRunQueries = isFirstRun => {
     // If there's an error while extracting queries, the queryCompiler returns false.
     // Yeah, should probably be an error but don't feel like threading the error
     // all the way here.
-    if (!queries) {
+    if (!queries || queries.size === 0) {
       return null
     }
     handleComponentsWithRemovedQueries(snapshot, queries)

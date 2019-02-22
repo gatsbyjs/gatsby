@@ -32,6 +32,7 @@ const componentMachine = Machine(
           },
           QUERY_EXTRACTED: `runningPageQueries`,
           QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
+          QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
       },
       extractingQueries: {
@@ -43,11 +44,23 @@ const componentMachine = Machine(
           QUERY_CHANGED: `runningPageQueries`,
           QUERY_DID_NOT_CHANGE: `idle`,
           QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
+          QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
       },
       queryGraphQLError: {
         on: {
           PAGE_COMPONENT_CHANGED: `extractingQueries`,
+          BOOTSTRAP_FINISHED: {
+            actions: `setBootstrapFinished`,
+          },
+        },
+      },
+      queryExtractionBabelError: {
+        on: {
+          PAGE_COMPONENT_CHANGED: `extractingQueries`,
+          BOOTSTRAP_FINISHED: {
+            actions: `setBootstrapFinished`,
+          },
         },
       },
       runningPageQueries: {
@@ -186,23 +199,16 @@ module.exports = (state = new Map(), action) => {
       })
       return state
     }
+    case `PAGE_COMPONENT_CHANGED`:
+    case `QUERY_EXTRACTION_BABEL_ERROR`:
     case `QUERY_GRAPHQL_ERROR`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const service = services.get(action.payload.componentPath)
       service.send({
-        type: `QUERY_GRAPHQL_ERROR`,
-        error: action.payload.error,
+        type: action.type,
+        ...action.payload,
       })
       services.set(action.payload.componentPath, service)
-      return state
-    }
-    case `PAGE_COMPONENT_CHANGED`: {
-      action.payload = normalize(action.payload)
-      const service = services.get(action.payload)
-      service.send({
-        type: `PAGE_COMPONENT_CHANGED`,
-      })
-      services.set(action.payload, service)
       return state
     }
     case `PAGE_QUERY_RUN`: {
