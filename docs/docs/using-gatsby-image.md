@@ -37,24 +37,55 @@ With Gatsby, we can make images way way better.
 
 `gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images, you only need to:
 
-1. Import gatsby-image and use it in place of the built-in img
-1. Write a GraphQL query using one of the included GraphQL “fragments” which specify the fields needed by `gatsby-image`.
+1. Install `gatsby-image` and its peer dependencies. The `gatsby-config.json` needs to include the following:
 
-The GraphQL query creates multiple thumbnails with optimized JPEG and PNG compression. The `gatsby-image` component automatically sets up the “blur-up” effect as well as lazy loading of images further down the screen.
+```js:title=src/gatsby-config.js
+plugins: [
+    `gatsby-image`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`
+]
+```
+2. Configure the peer dependencies to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires another update to `gatsby-config.json`. Any path can replace `src/data` in this example, but whatever the path is the image file being queried needs to be placed within the scope of this path.
 
-Here’s what a really simple Gatsby page component using gatsby-image would look like:
+```js:title=src/gatsby-config.js
+plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/data/`,
+      }
+    }
+]
+```
+
+3. Write a GraphQL query using one of the included GraphQL “fragments” which specify the fields needed by `gatsby-image`. There are numerous fragments that can be used and the choice is based on the type of responsive image desired. This example will use `GatsbyImageSharpFluid`. An example of a GraphQL query is below where the path listed is the path relative to the location specified in the `gatsby-source-filesystem` configuration.
+
+```graphql
+file(relativePath: { eq: "images/default.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+}
+```
+
+4. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well.
 
 ```jsx
-import React from "react"
 import Img from "gatsby-image"
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img fluid={data.file.childImageSharp.fluid} />
   </div>
 )
 ```
+
+The GraphQL query creates multiple thumbnails with optimized JPEG and PNG compression. The `gatsby-image` component automatically sets up the “blur-up” effect as well as lazy loading of images further down the screen.
 
 So this is all very nice and it’s far better to be able to use this from NPM vs. implementing it yourself or cobbling together several standalone libraries.
 
