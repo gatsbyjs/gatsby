@@ -559,3 +559,77 @@ This is [a reference]
     { additionalParameters: { pathPrefix: `/prefix` } }
   )
 })
+
+describe(`Headings are generated correctly from schema`, () => {
+  bootstrapTest(
+    `returns value`,
+    `
+# first title
+
+## second title
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns value with inlineCode`,
+    `
+# first title
+
+## \`second title\`
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns value with mixed text`,
+    `
+# An **important** heading with \`inline code\` and text
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `An important heading with inline code and text`,
+          depth: 1,
+        },
+      ])
+    }
+  )
+})

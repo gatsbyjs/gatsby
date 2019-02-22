@@ -319,6 +319,53 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result).toMatchSnapshot()
     })
   })
+
+  describe(`tracedSVG`, () => {
+    it(`doesn't always run`, async () => {
+      const args = {
+        maxWidth: 100,
+        width: 100,
+        tracedSVG: { color: `#FF0000` },
+      }
+
+      let result = await fixed({
+        file,
+        args,
+      })
+
+      expect(result.tracedSVG).toBeUndefined()
+
+      result = await fluid({
+        file,
+        args,
+      })
+
+      expect(result.tracedSVG).toBeUndefined()
+    })
+
+    it(`runs on demand`, async () => {
+      const args = {
+        maxWidth: 100,
+        width: 100,
+        generateTracedSVG: true,
+        tracedSVG: { color: `#FF0000` },
+      }
+
+      let result = await fixed({
+        file,
+        args,
+      })
+
+      expect(result).toMatchSnapshot()
+
+      result = await fluid({
+        file,
+        args,
+      })
+
+      expect(result).toMatchSnapshot()
+    })
+  })
 })
 
 function getFileObject(absolutePath, name = `test`) {

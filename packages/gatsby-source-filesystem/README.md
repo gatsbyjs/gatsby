@@ -163,6 +163,9 @@ createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file.jpg`,
 
+  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
+  parentNodeId,
+
   // The redux store which is passed to all Node APIs.
   store,
 
@@ -208,6 +211,7 @@ exports.downloadMediaFiles = ({
       try {
         fileNode = await createRemoteFileNode({
           url: node.source_url,
+          parentNodeId: node.id,
           store,
           cache,
           createNode,
@@ -238,6 +242,7 @@ The helper tries first to retrieve the file name and extension by parsing the ur
 createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file-without-an-extension`,
+  parentNodeId: node.id,
   store,
   cache,
   createNode,

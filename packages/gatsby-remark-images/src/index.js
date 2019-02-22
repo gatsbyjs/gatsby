@@ -9,7 +9,7 @@ const path = require(`path`)
 const queryString = require(`query-string`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { fluid } = require(`gatsby-plugin-sharp`)
+const { fluid, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -32,6 +32,7 @@ module.exports = (
     showCaptions: false,
     pathPrefix,
     withWebp: false,
+    tracedSVG: false,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -206,6 +207,32 @@ module.exports = (
       `.trim()
     }
 
+    let placeholderImageData = fluidResult.base64
+
+    // if options.tracedSVG is enabled generate the traced SVG and use that as the placeholder image
+    if (options.tracedSVG) {
+      let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
+
+      // Translate Potrace constants (e.g. TURNPOLICY_LEFT, COLOR_AUTO) to the values Potrace expects
+      const { Potrace } = require(`potrace`)
+      const argsKeys = Object.keys(args)
+      args = argsKeys.reduce((result, key) => {
+        const value = args[key]
+        result[key] = Potrace.hasOwnProperty(value) ? Potrace[value] : value
+        return result
+      }, {})
+
+      const tracedSVG = await traceSVG({
+        file: imageNode,
+        args,
+        fileArgs: args,
+        reporter,
+      })
+
+      // Escape single quotes so the SVG data can be used in inline style attribute with single quotes
+      placeholderImageData = tracedSVG.replace(/'/g, `\\'`)
+    }
+
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
     // Construct new image node w/ aspect ratio placeholder
@@ -219,9 +246,7 @@ module.exports = (
   >
     <span
       class="${imageBackgroundClass}"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      fluidResult.base64
-    }'); background-size: cover; display: block;"
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
     ></span>
     ${imageTag}
   </span>

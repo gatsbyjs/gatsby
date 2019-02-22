@@ -4335,3 +4335,66 @@
   built_by: Incremental
   built_by_url: https://www.incremental.com.au
   featured: false
+- title: Technica11y
+  main_url: https://www.technica11y.org
+  url: https://www.technica11y.org
+  description: >
+    Discussing challenges in technical accessibility.
+  categories:
+    - Accessibility
+    - Education
+    - Video
+  built_by: Tenon.io
+  built_by_url: https://tenon.io
+  featured: false
+- title: Tenon-UI Documentation
+  main_url: https://www.tenon-ui.info
+  url: https://www.tenon-ui.info
+  description: >
+    Documentation site for Tenon-UI: Tenon.io's accessible components library.
+  categories:
+    - Accessibility
+    - Documentation
+    - Library
+    - Web Development
+  built_by: Tenon.io
+  built_by_url: https://tenon.io
+  featured: false
+- title: Matthew Secrist
+  main_url: https://www.matthewsecrist.net
+  url: https://www.matthewsecrist.net
+  source_url: https://github.com/matthewsecrist/v3
+  description: >
+    Matthew Secrist's personal portfolio using Gatsby, Prismic and Styled-Components.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: Matthew Secrist
+  built_by_url: https://www.matthewsecrist.net
+  featured: false
+- title: Node.js Dev
+  main_url: https://nodejs.dev
+  url: https://nodejs.dev
+  source_url: https://github.com/nodejs/nodejs.dev
+  description: >
+    Node.js Foundation Website.
+  categories:
+    - Node.js
+    - Documentation
+    - Dev
+    - Web Development
+  built_by: Node.js Website Redesign Working Group
+  built_by_url: https://github.com/nodejs/website-redesign
+  featured: false
+- title: Sheffielders
+  main_url: https://sheffielders.org
+  url: https://sheffielders.org
+  source_url: https://github.com/davemullenjnr/sheffielders
+  description: >
+    A collective of businesses, creatives, and projects based in Sheffield, UK.
+  categories:
+    - Directory
+  built_by: Dave Mullen Jnr
+  built_by_url: https://davemullenjnr.co.uk
+  featured: false

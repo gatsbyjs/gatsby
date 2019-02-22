@@ -27,7 +27,7 @@ This plugin configures Gatsby to create a `manifest.webmanifest` file on every s
 
 ## Generating icons
 
-It can be tedious creating the multitude of icon sizes required by different devices and browsers. This plugin includes code to auto-generate smaller icons from a larger src image.
+It can be tedious creating the multitude of icon sizes required by different devices and browsers. This plugin includes code to auto-generate smaller icons from a larger src image (which can also be an SVG).
 
 There are three modes in which icon generation can function: automatic, hybrid, and manual. These three modes are explained below. Icon generation functions differently depending on which of the three you choose.
 
@@ -252,6 +252,36 @@ module.exports = {
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
         theme_color_in_head: false, // This will avoid adding theme-color meta tag.
         include_favicon: false, // This will exclude favicon link tag
+      },
+    },
+  ],
+}
+```
+
+## Enable CORS using `crossorigin` attribute
+
+Add a `crossorigin` attribute to the manifest `<link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" />` link tag.
+
+You can set `crossOrigin` plugin option to `'use-credentials'` to enable sharing resources via cookies. Any invalid keyword or empty string will fallback to `'anonymous'`.
+
+You can find more information about `crossorigin` on MDN.
+
+[https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes)
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        crossOrigin: `use-credentials`,
       },
     },
   ],

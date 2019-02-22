@@ -398,7 +398,8 @@ module.exports = async (
           // See https://github.com/gatsbyjs/gatsby/issues/11072
           styles: {
             name: `styles`,
-            test: /\.css$/,
+            // This should cover all our types of CSS.
+            test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
           },
