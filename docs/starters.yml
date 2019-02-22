@@ -1910,3 +1910,13 @@
     - Gatsby v2 support
     - bs-platform v4 support
     - Similar to gatsby-starter-blog
+- url: https://gatsby-starter-blog-amp-to-pwa.netlify.com/
+  repo: https://github.com/tomoyukikashiro/gatsby-starter-blog-amp-to-pwa
+  description: Gatsby starter blog with AMP to PWA Strategy
+  tags:
+    - Blog
+    - AMP
+    - PWA
+  features:
+    - Similar to gatsby-starter-blog
+    - Support AMP to PWA strategy
