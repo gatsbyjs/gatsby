@@ -28,7 +28,7 @@ Other CMS systems you can connect to include:
 - [Contentstack](https://www.contentstack.com): [docs](/packages/gatsby-source-contentstack), [guide](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack), [starter](/starters/contentstack/gatsby-starter-contentstack/)
 - [ButterCMS](https://buttercms.com): [docs](/packages/gatsby-source-buttercms), [guide](/docs/sourcing-from-buttercms/), [starter](/starters/ButterCMS/gatsby-starter-buttercms/)
 - [Ghost](https://ghost.org): [docs](/docs/sourcing-from-ghost/), [guide](/blog/2019-01-14-modern-publications-with-gatsby-ghost/), [starter](/starters/TryGhost/gatsby-starter-ghost/)
-- [Kentico Cloud](https://kenticocloud.com/): [docs](/packages/gatsby-source-kentico-cloud), [guide](https://github.com/gatsbyjs/gatsby/pull/11478/files), [launch post](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/), [starter](/starters/Kentico/gatsby-starter-kentico-cloud/)
+- [Kentico Cloud](https://kenticocloud.com/): [docs](/packages/gatsby-source-kentico-cloud), [guide](/docs/sourcing-from-kentico-cloud), [launch post](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/), [starter](/starters/Kentico/gatsby-starter-kentico-cloud/)
 - [Directus](/packages/gatsby-source-directus)
 - [GraphCMS](https://graphcms.com/?ref=gatsby-headless-cms-landing]): [docs](/packages/gatsby-source-graphql), [guide](/docs/sourcing-from-graphcms), [starter](/starters/GraphCMS/gatsby-graphcms-tailwindcss-example/)
 - [CosmicJS](https://cosmicjs.com/): [docs](/packages/gatsby-source-cosmicjs), [guide](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/)
