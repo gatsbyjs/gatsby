@@ -76,6 +76,8 @@
           link: /docs/working-with-images/
         - title: Using gatsby-image
           link: /docs/using-gatsby-image/
+        - title: Preoptimizing your Images
+          link: /docs/preoptimizing-images/
     - title: Sourcing content and data
       link: /docs/content-and-data/
       items:
