@@ -12,7 +12,7 @@ import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
-import MdLaunch from "react-icons/lib/md/launch"
+import MdLink from "react-icons/lib/md/link"
 import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
@@ -473,7 +473,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         },
                       }}
                     >
-                      <MdLaunch
+                      <MdLink
                         style={{
                           verticalAlign: `sub`,
                         }}

@@ -43,7 +43,7 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/showcase/">Showcase</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/how-to-contribute/">Contribute</a>
+  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
@@ -95,8 +95,8 @@ This repository is a [monorepo][monorepo] managed using [Lerna][lerna]. This mea
 
 We have set-up read-only clones of all of the [starters][starters] in the official gatsbyjs organization. For example, the [`default` starter](starters/default) is available as a read-only clone at [`gatsbyjs/gatsby-starter-default`][gatsby-starter-default]. Please open PRs versus **this** repository rather than the read-only clones. Upon merge any starters that have been modified will be tagged and released.
 
-[code-of-conduct]: https://gatsbyjs.org/docs/code-of-conduct/
-[contributing-guide]: https://gatsbyjs.org/docs/how-to-contribute/
+[code-of-conduct]: https://gatsbyjs.org/contributing/code-of-conduct/
+[contributing-guide]: https://gatsbyjs.org/contributing/how-to-contribute/
 [monorepo]: https://trunkbaseddevelopment.com/monorepos
 [lerna]: https://github.com/lerna/lerna
 [starters]: /starters
