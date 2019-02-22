@@ -188,7 +188,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
-  page.component = slash(page.component)
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
@@ -199,7 +198,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       console.log(``)
       console.log(page)
       noPageOrComponent = true
-    } else {
+    } else if (page.component) {
+      // normalize component path
+      page.component = slash(page.component)
       // check if path uses correct casing - incorrect casing will
       // casue issues in query compiler and incosistencies when
       // developing on Mac or Windows and trying to deploy from
