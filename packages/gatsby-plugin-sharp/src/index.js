@@ -557,6 +557,18 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
+async function getTracedSVG(options, file) {
+  if (options.generateTracedSVG && options.tracedSVG) {
+    const tracedSVG = await traceSVG({
+      file,
+      args: options.tracedSVG,
+      fileArgs: options,
+    })
+    return tracedSVG
+  }
+  return undefined
+}
+
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(pluginOptions, args, {})
   // Account for images with a high pixel density. We assume that these types of
@@ -686,6 +698,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
+  const tracedSVG = await getTracedSVG(options, file)
+
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
@@ -729,6 +743,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
+    tracedSVG,
   }
 }
 
@@ -796,6 +811,8 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
+  const tracedSVG = await getTracedSVG(options, file)
+
   const fallbackSrc = images[0].src
   const srcSet = images
     .map((image, i) => {
@@ -829,6 +846,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
+    tracedSVG,
   }
 }
 
