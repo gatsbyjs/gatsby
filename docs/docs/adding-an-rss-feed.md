@@ -20,7 +20,7 @@ npm install --save gatsby-plugin-feed
 
 Once installation is complete, you can now add this plugin to your site's config file, like so:
 
-```json:title=gatsby-config.js
+```js:title=gatsby-config.js
 (module.exports = {
   "siteMetadata": {
     "siteUrl": `https://www.example.com`
@@ -29,7 +29,7 @@ Once installation is complete, you can now add this plugin to your site's config
 })
 ```
 
-To complete the feed setup, you need to expose a GraphQL entry for our content called `fields.slug` by modifying `gatsby-node.js`. Start with the following code, noting the reference to `MarkdownRemark` content. For content sources other than Markdown, you will want to modify it:
+To complete the feed setup, you need to expose a GraphQL entry for our content called `fields.slug` by modifying `gatsby-node.js`. Start with the following code, noting the reference to `MarkdownRemark` content. For content types other than Markdown, you will want to tweak the condition:
 
 ```js:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
