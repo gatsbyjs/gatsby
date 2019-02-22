@@ -7,9 +7,10 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
-const glob = require(`glob`)
+const truePath = require(`true-case-path`)
 const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
+const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../db/nodes`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`./index`)
@@ -86,8 +87,6 @@ const pascalCase = _.flow(
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const fileOkCache = {}
-
-const memoizedGlobSyncNoCase = _.memoize(glob.sync)
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
@@ -189,6 +188,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  page.component = slash(page.component)
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
@@ -204,13 +204,13 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // casue issues in query compiler and incosistencies when
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
-      const globTest = memoizedGlobSyncNoCase(page.component, { nocase: true })
-      if (globTest.length === 1 && globTest[0] !== page.component) {
+      const trueComponentPath = slash(truePath(page.component))
+      if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
           const markers = page.component
             .split(``)
             .map((letter, index) => {
-              if (letter !== globTest[0][index]) {
+              if (letter !== trueComponentPath[index]) {
                 return `^`
               }
               return ` `
@@ -222,13 +222,13 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
           ${name} created a page with a component path that doesn't match casing of file. This will work locally, but will break on Linux (on most CI/CD pipelines).
 
           page.component:     "${page.component}"
-          path in filesystem: "${globTest[0]}"
+          path in filesystem: "${trueComponentPath}"
                                ${markers}
         `
           )
           hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
-        page.component = globTest[0]
+        page.component = trueComponentPath
       }
     }
   }
