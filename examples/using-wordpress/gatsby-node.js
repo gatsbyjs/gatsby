@@ -20,7 +20,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            link
+            slug
             status
             template
           }
@@ -30,7 +30,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            link
+            slug
             status
             template
             format
