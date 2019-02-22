@@ -31,7 +31,7 @@ module.exports = (
           use: [
             loaders.js(),
             {
-              loader: "gatsby-mdx/loaders/mdx-components",
+              loader: path.join("gatsby-mdx", "loaders", "mdx-components"),
               options: {
                 plugins: options.mdxPlugins
               }
@@ -43,7 +43,7 @@ module.exports = (
           use: [
             loaders.js(),
             {
-              loader: "gatsby-mdx/loaders/mdx-loader",
+              loader: path.join("gatsby-mdx", "loaders", "mdx-loader"),
               options: {
                 ...other,
                 pluginOptions: options
