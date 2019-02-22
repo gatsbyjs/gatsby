@@ -1920,3 +1920,14 @@
   features:
     - Similar to gatsby-starter-blog
     - Support AMP to PWA strategy
+- url: https://cvluca.github.io/gatsby-starter-markdown/
+  repo: https://github.com/cvluca/gatsby-starter-markdown
+  description: Boilerplate for markdown-based website (Documentation, Blog, etc.)
+  tags:
+    - Markdown
+    - Redux
+    - Ant Design
+  features:
+    - Responsive Web Design
+    - Auto generated Sidebar
+    - Auto generated Anchor
