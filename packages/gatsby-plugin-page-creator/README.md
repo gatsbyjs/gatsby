@@ -55,11 +55,6 @@ module.exports = {
 
 ```javascript
 // The following example will disable the `/blog` index page
-// Note: This will only stop the creation of the `/blog` page!
-// To disable both the `/blog` and `/blog/post-slug` pages,
-// make a config.js which defines an `ignorePages` array
-// and then use those patterns in both this plugin
-// AND in your `createPages` function in gatsby-node.js
 
 // gatsby-config.js
 module.exports = {
@@ -76,6 +71,10 @@ module.exports = {
   ],
 }
 ```
+
+**NOTE**: The above code snippet will only stop the creation of the `/blog` page, which is defined as a React component.
+This plugin does not affect the generation of pages from content/data files
+(see [gatsby-source-filesystem](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/) instead).
 
 #### Ignore Options
 
