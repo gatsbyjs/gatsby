@@ -45,11 +45,12 @@ module.exports = {
     // highlight-start
     `gatsby-image`,
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`
+    `gatsby-plugin-sharp`,
     // highlight-end
   ],
 }
 ```
+
 2. Configure the peer dependencies to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires another update to `gatsby-config.json`. Any path can replace `src/data` in this example, but whatever the path is the image file being queried needs to be placed within the scope of this path.
 
 ```js:title=gatsby-config.js
