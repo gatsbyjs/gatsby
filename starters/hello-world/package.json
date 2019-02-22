@@ -20,9 +20,6 @@
   "devDependencies": {
     "prettier": "^1.16.4"
   },
-  "devDependencies": {
-    "prettier": "^1.16.4"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
