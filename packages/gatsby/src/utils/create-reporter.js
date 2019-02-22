@@ -18,7 +18,6 @@ const reporter = {
   panicOnBuild: message => dispatch(log({ message, level: `panicOnBuild` })),
   activityTimer: message => {
     let id = null
-    // I haven't tried this. It probably doesn't work!
     return {
       start: () => {
         id = uuid()(
