@@ -15,8 +15,6 @@ With this plugin, _any_ file that lives in the `src/pages` folder (or subfolders
 - `_*`
 - `.*`
 
-NOTE: also excludes `test.js` and `spec.js` (or .ts, .jsx, .tsx)
-
 To exclude custom patterns, see [Ignoring Specific Files](#ignoring-specific-files)
 
 ## Install
