@@ -32,5 +32,3 @@ flow-typed
 coverage
 decls
 examples
-/*.js
-!/index.js

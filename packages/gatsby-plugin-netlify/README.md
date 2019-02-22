@@ -84,7 +84,7 @@ you.
 
 The Netlify `_headers` file does not inherit headers, and it will replace any
 matching headers it finds in more specific routes. For example, if you add a
-link to the the root wildcard path (`/*`), it will be replaced by any more
+link to the root wildcard path (`/*`), it will be replaced by any more
 specific path. If you want a resource to put linked across the site, you will
 have to add to every path. To make this easier, the plugin provides the
 `allPageHeaders` option to inject the same headers on every path.

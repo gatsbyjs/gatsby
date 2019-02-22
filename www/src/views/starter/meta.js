@@ -3,7 +3,7 @@ import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import ShareMenu from "../../components/share-menu"
-import MdLaunch from "react-icons/lib/md/launch"
+import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
 
 const Meta = ({ starter, repoName, imageSharp, demo }) => (
@@ -154,7 +154,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               },
             }}
           >
-            <MdLaunch
+            <MdLink
               style={{
                 verticalAlign: `sub`,
               }}

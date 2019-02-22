@@ -163,6 +163,56 @@ Array [
 ]
 `;
 
+exports[`gatsby-plugin-manifest Adds a crossorigin attribute to manifest link tag if provided 1`] = `
+Array [
+  <link
+    crossOrigin="use-credentials"
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <link
+    href="/icons/icon-48x48.png"
+    rel="apple-touch-icon"
+    sizes="48x48"
+  />,
+  <link
+    href="/icons/icon-72x72.png"
+    rel="apple-touch-icon"
+    sizes="72x72"
+  />,
+  <link
+    href="/icons/icon-96x96.png"
+    rel="apple-touch-icon"
+    sizes="96x96"
+  />,
+  <link
+    href="/icons/icon-144x144.png"
+    rel="apple-touch-icon"
+    sizes="144x144"
+  />,
+  <link
+    href="/icons/icon-192x192.png"
+    rel="apple-touch-icon"
+    sizes="192x192"
+  />,
+  <link
+    href="/icons/icon-256x256.png"
+    rel="apple-touch-icon"
+    sizes="256x256"
+  />,
+  <link
+    href="/icons/icon-384x384.png"
+    rel="apple-touch-icon"
+    sizes="384x384"
+  />,
+  <link
+    href="/icons/icon-512x512.png"
+    rel="apple-touch-icon"
+    sizes="512x512"
+  />,
+]
+`;
+
 exports[`gatsby-plugin-manifest Adds link favicon if "include_favicon" option is not provided 1`] = `
 Array [
   <link

@@ -6,6 +6,12 @@ This quick start is intended for intermediate to advanced developers. For a gent
 
 ## Use the Gatsby CLI
 
+<iframe title="Screencast on egghead of getting started with Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-quick-start-with-gatsby-create-develop-and-build-gatsby-sites-from-the-command-line/embed" />
+
+Video hosted on [egghead.io][egghead].
+
+[egghead]: https://egghead.io/lessons/gatsby-quick-start-with-gatsby-create-develop-and-build-gatsby-sites-from-the-command-line
+
 ### Create a new site.
 
 ```shell
@@ -42,7 +48,7 @@ Gatsby will perform an optimized production build for your site, generating stat
 npm run serve
 ```
 
-Gatsby starts a local HTML server for testing your built site.
+Gatsby starts a local HTML server for testing your built site. Remember to build your site using `npm run build` before using this command.
 
 ### Access documentation for CLI commands.
 

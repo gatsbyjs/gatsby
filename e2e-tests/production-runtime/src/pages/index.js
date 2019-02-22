@@ -41,6 +41,11 @@ const IndexPage = ({ pageContext }) => (
           gatsby-browser.js (global styles)
         </Link>
       </li>
+      <li>
+        <Link to="/static-query/" data-testid="static-query">
+          StaticQuery and useStaticQuery
+        </Link>
+      </li>
     </ul>
   </Layout>
 )
