@@ -173,7 +173,7 @@ class Runner {
         error
       )
       nameErrorMap.set(docName, { formattedMessage, message, codeBlock })
-      boundActionCreators.queryGraphQLError({
+      boundActionCreators.queryExtractionGraphQLError({
         componentPath: namePathMap.get(docName),
         error: formattedMessage,
       })

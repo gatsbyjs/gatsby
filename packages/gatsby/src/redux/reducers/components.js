@@ -31,7 +31,7 @@ const componentMachine = Machine(
             actions: `setBootstrapFinished`,
           },
           QUERY_EXTRACTED: `runningPageQueries`,
-          QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
+          QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
       },
@@ -43,11 +43,11 @@ const componentMachine = Machine(
           },
           QUERY_CHANGED: `runningPageQueries`,
           QUERY_DID_NOT_CHANGE: `idle`,
-          QUERY_GRAPHQL_ERROR: `queryGraphQLError`,
+          QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
       },
-      queryGraphQLError: {
+      queryExtractionGraphQLError: {
         on: {
           PAGE_COMPONENT_CHANGED: `extractingQueries`,
           BOOTSTRAP_FINISHED: {
@@ -201,7 +201,7 @@ module.exports = (state = new Map(), action) => {
     }
     case `PAGE_COMPONENT_CHANGED`:
     case `QUERY_EXTRACTION_BABEL_ERROR`:
-    case `QUERY_GRAPHQL_ERROR`: {
+    case `QUERY_EXTRACTION_GRAPHQL_ERROR`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const service = services.get(action.payload.componentPath)
       service.send({

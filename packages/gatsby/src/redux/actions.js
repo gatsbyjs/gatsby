@@ -1174,13 +1174,13 @@ actions.queryExtracted = (
  * its query read.
  * @param {error} $0.error The GraphQL query that was extracted from the component.
  */
-actions.queryGraphQLError = (
+actions.queryExtractionGraphQLError = (
   { componentPath, error },
   plugin: Plugin,
   traceId?: string
 ) => {
   return {
-    type: `QUERY_GRAPHQL_ERROR`,
+    type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
     plugin,
     traceId,
     payload: { componentPath, error },
