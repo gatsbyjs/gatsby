@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.18...gatsby-plugin-manifest@2.0.19) (2019-02-22)
+
+### Features
+
+- **gatsby-plugin-manifest:** add option for crossorigin in manifest ([#11953](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/11953)) ([1a16600](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/1a16600))
+
 ## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.17...gatsby-plugin-manifest@2.0.18) (2019-02-19)
 
 ### Bug Fixes
