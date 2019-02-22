@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.10...gatsby-cli@2.4.11) (2019-02-19)
+
+### Features
+
+- **gatsby-cli:** add a clean command to wipe out local dirs ([#9126](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/9126)) ([5807936](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/5807936))
+
 ## [2.4.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.9...gatsby-cli@2.4.10) (2019-02-12)
 
 ### Features

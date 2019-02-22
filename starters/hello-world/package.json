@@ -13,9 +13,12 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "dependencies": {
-    "gatsby": "^2.1.2",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "gatsby": "^2.1.16",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
+  "devDependencies": {
+    "prettier": "^1.16.4"
   },
   "devDependencies": {
     "prettier": "^1.16.4"
