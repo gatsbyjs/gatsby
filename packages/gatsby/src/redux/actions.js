@@ -220,7 +220,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
           report.warn(
             stripIndent`
-          ${name} created a page with a component path that doesn't match casing of file. This will work locally, but will break on Linux (on most CI/CD pipelines).
+          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
           page.component:     "${page.component}"
           path in filesystem: "${trueComponentPath}"
