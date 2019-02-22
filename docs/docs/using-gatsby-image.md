@@ -51,7 +51,7 @@ module.exports = {
 }
 ```
 
-2. Configure the peer dependencies to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires another update to `gatsby-config.json`. Any path can replace `src/data` in this example, but whatever the path is the image file being queried needs to be placed within the scope of this path.
+2. Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option with wherever your images are located relative to your project.
 
 ```js:title=gatsby-config.js
 module.exports = {
