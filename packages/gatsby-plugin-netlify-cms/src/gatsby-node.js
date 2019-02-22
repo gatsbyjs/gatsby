@@ -186,9 +186,6 @@ exports.onCreateWebpackConfig = (
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
     config.module.rules.exclude = [/node_modules\/(?!(gatsby)\/)/]
 
-    // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
-    config.resolve.mainFields = [`browser`, `module`, `main`]
-
     if (stage === `develop`) {
       webpack(config).watch({}, () => {})
     } else {
