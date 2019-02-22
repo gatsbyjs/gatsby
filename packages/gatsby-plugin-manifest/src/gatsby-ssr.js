@@ -10,11 +10,16 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const legacy =
     typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 
-  // If icons were generated, also add a favicon link.
+  // The user has an option to opt out of the favicon link tag being inserted into the head.
   if (pluginOptions.icon) {
     let favicon = icons && icons.length ? icons[0].src : null
 
-    if (favicon) {
+    const insertFaviconLinkTag =
+      typeof pluginOptions.include_favicon !== `undefined`
+        ? pluginOptions.include_favicon
+        : true
+
+    if (favicon && insertFaviconLinkTag) {
       headComponents.push(
         <link
           key={`gatsby-plugin-manifest-icon-link`}

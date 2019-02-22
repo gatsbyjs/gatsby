@@ -149,6 +149,7 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/features/">Features</NavItem>
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
+            <NavItem linkTo="/contributing/">Contributing</NavItem>
             {/* <li css={styles.li}>
                 <Link
                   to="/community/"
@@ -183,10 +184,7 @@ const Navigation = ({ pathname }) => {
             <SocialNavItem href="https://gatsby.app/discord" title="Discord">
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
-            <SocialNavItem
-              href="https://twitter.com/gatsbyjs"
-              title="@gatsbyjs"
-            >
+            <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
           </div>

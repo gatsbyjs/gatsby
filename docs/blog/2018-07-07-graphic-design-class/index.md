@@ -1,6 +1,6 @@
 ---
 title: Learning how to code with Gatsby
-date: "2018-07-07"
+date: 2018-07-07
 author: "Shannon Soper"
 tags: ["college", "case study", "design", "getting-started"]
 ---
@@ -69,7 +69,7 @@ Here’s a list of what they love about Gatsby:
 * _Docs:_ While not perfect, the Gatsby tutorial and documentation. was “approachable”
 * _Speed_: They never heard of static site generators or the JAMstack, but the speed immediately impressed them
 * _Built off previous knowledge:_ They were able to use the routing knowledge they gleaned from NextJS
-* _Uses simple commands:_ They work locally and type `$ gatsby develop`. A server opens up and they see and can edit their site in real time. Easy peasy. They want to build for production they use `$ gatsby build && gatsby serve`. Simple!
+* _Uses simple commands:_ They work locally and type `$ npm run develop`. A server opens up and they see and can edit their site in real time. Easy peasy. They want to build for production they use `$ npx gatsby build && npx gatsby serve`. Simple!
 * _Netlify:_ When I showed them Netlify and how they could quickly (and freely) push their site to GitHub and hook it up to Netlify so that it would automatically build it and make their site live! They were blown away.
 * _Fast to build:_ They were able to create their final projects in 3 weeks
 

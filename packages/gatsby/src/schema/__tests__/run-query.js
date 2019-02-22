@@ -36,6 +36,9 @@ const makeNodes = () => [
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
     ],
     boolean: true,
+    nestedRegex: {
+      field: `har har`,
+    },
   },
   {
     id: `1`,
@@ -48,6 +51,7 @@ const makeNodes = () => [
     anArray: [1, 2, 5, 4],
     waxOnly: {
       foo: true,
+      bar: { baz: true },
     },
     anotherKey: {
       withANested: {
@@ -76,6 +80,9 @@ const makeNodes = () => [
           },
         },
       ],
+    },
+    nestedRegex: {
+      field: ``,
     },
   },
   {
@@ -193,8 +200,22 @@ describe(`Filter fields`, () => {
     expect(result[0].hair).toEqual(1)
   })
 
+  it(`handles ne: true operator`, async () => {
+    let result = await runFilter({ boolean: { ne: true } })
+
+    expect(result.length).toEqual(2)
+  })
+
   it(`handles nested ne: true operator`, async () => {
     let result = await runFilter({ waxOnly: { foo: { ne: true } } })
+
+    expect(result.length).toEqual(2)
+  })
+
+  it(`handles deeply nested ne: true operator`, async () => {
+    let result = await runFilter({
+      waxOnly: { bar: { baz: { ne: true } } },
+    })
 
     expect(result.length).toEqual(2)
   })
@@ -235,6 +256,13 @@ describe(`Filter fields`, () => {
     let result = await runFilter({ name: { regex: `/^the.*wax/i` } })
     expect(result.length).toEqual(2)
     expect(result[0].name).toEqual(`The Mad Wax`)
+  })
+
+  it(`handles the nested regex operator`, async () => {
+    let result = await runFilter({ nestedRegex: { field: { regex: `/.*/` } } })
+    expect(result.length).toEqual(2)
+    expect(result[0].id).toEqual(`0`)
+    expect(result[1].id).toEqual(`1`)
   })
 
   it(`handles the in operator for strings`, async () => {
@@ -387,10 +415,7 @@ describe(`Filter fields`, () => {
     let result = await runFilter({ boolean: { nin: [true, null] } })
 
     expect(result.length).toEqual(1)
-    result.forEach(edge => {
-      expect(edge.boolean).not.toEqual(null)
-      expect(edge.boolean).not.toEqual(true)
-    })
+    expect(result[0].boolean).toBe(false)
   })
 
   it(`handles the glob operator`, async () => {
@@ -407,6 +432,20 @@ describe(`Filter fields`, () => {
     expect(result[0].index).toEqual(0)
     expect(result[1].index).toEqual(2)
   })
+
+  it(`handles the eq operator for array field values`, async () => {
+    const result = await runFilter({ anArray: { eq: 5 } })
+
+    expect(result.length).toBe(1)
+    expect(result[0].index).toBe(1)
+  })
+
+  it(`handles the ne operator for array field values`, async () => {
+    const result = await runFilter({ anArray: { ne: 1 } })
+
+    expect(result.length).toBe(1)
+    expect(result[0].index).toBe(2)
+  })
 })
 
 describe(`collection fields`, () => {
@@ -415,7 +454,7 @@ describe(`collection fields`, () => {
       limit: 10,
       sort: {
         fields: [`frontmatter___blue`],
-        order: `desc`,
+        order: [`desc`],
       },
     })
 
@@ -428,7 +467,7 @@ describe(`collection fields`, () => {
       limit: 10,
       sort: {
         fields: [`waxOnly`],
-        order: `desc`,
+        order: [`desc`],
       },
     })
 
@@ -443,7 +482,7 @@ describe(`collection fields`, () => {
       limit: 10,
       sort: {
         fields: [`waxOnly`],
-        order: `asc`,
+        order: [`asc`],
       },
     })
 
@@ -453,18 +492,33 @@ describe(`collection fields`, () => {
     expect(result[2].id).toEqual(`0`)
   })
 
-  it(`applies order (asc/desc) to all sort fields`, async () => {
+  it(`applies specified sort order, and sorts asc by default`, async () => {
     let result = await runQuery({
       limit: 10,
       sort: {
         fields: [`frontmatter___blue`, `id`],
-        order: `desc`,
+        order: [`desc`], // `id` field will be sorted asc
       },
     })
 
     expect(result.length).toEqual(3)
     expect(result[0].id).toEqual(`1`) // blue = 10010, id = 1
     expect(result[1].id).toEqual(`2`) // blue = 10010, id = 2
+    expect(result[2].id).toEqual(`0`) // blue = 100, id = 0
+  })
+
+  it(`applies specified sort order per field`, async () => {
+    let result = await runQuery({
+      limit: 10,
+      sort: {
+        fields: [`frontmatter___blue`, `id`],
+        order: [`desc`, `desc`], // `id` field will be sorted desc
+      },
+    })
+
+    expect(result.length).toEqual(3)
+    expect(result[0].id).toEqual(`2`) // blue = 10010, id = 2
+    expect(result[1].id).toEqual(`1`) // blue = 10010, id = 1
     expect(result[2].id).toEqual(`0`) // blue = 100, id = 0
   })
 })

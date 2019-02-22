@@ -92,6 +92,9 @@
         - title: Sourcing from (headless) CMSs
           link: /docs/headless-cms/
           items:
+            # This list should only include the top 5 CMSs by Gatsby plugin usage.
+            # Please do not add your headless CMS here.
+            # Instead, please add links on the /docs/headless-cms/ page
             - title: Sourcing from WordPress
               link: /docs/sourcing-from-wordpress/
             - title: Sourcing from Drupal
@@ -102,8 +105,6 @@
               link: /docs/sourcing-from-prismic/
             - title: Sourcing from Netlify CMS
               link: /docs/sourcing-from-netlify-cms/
-            - title: Sourcing from Ghost
-              link: /docs/sourcing-from-ghost/
     - title: Querying your data with GraphQL
       link: /docs/graphql/
       items:
@@ -117,6 +118,8 @@
           link: /docs/page-query/
         - title: Querying data in components with StaticQuery
           link: /docs/static-query/
+        - title: Querying data in components with the useStaticQuery hook
+          link: /docs/use-static-query/
         - title: Using GraphQL fragments
           link: /docs/using-fragments/
         - title: Creating slugs for pages
@@ -154,6 +157,8 @@
           link: /docs/css-modules/
         - title: Typography.js
           link: /docs/typography-js/
+        - title: Using CSS-in-JS library Emotion
+          link: /docs/emotion/
         - title: Using CSS-in-JS library Glamor
           link: /docs/glamor/
         - title: Using CSS-in-JS library styled components
@@ -190,8 +195,12 @@
           link: /docs/debugging-replace-renderer-api/
         - title: Debugging the build process
           link: /docs/debugging-the-build-process/
+        - title: Debugging Cache Issues
+          link: /docs/debugging-cache-issues/
         - title: Trace Gatsby builds
           link: /docs/performance-tracing/
+        - title: Debugging Async Lifecycles
+          link: /docs/debugging-async-lifecycles/
     - title: Adding website functionality
       link: /docs/adding-website-functionality/
       items:
@@ -256,6 +265,11 @@
           link: /docs/seo/
         - title: Optimizing Site Performance with Guess.js
           link: /docs/optimizing-site-performance-with-guessjs/
+    - title: Localizing your site*
+      link: /docs/localization-i18n/
+      items:
+        - title: Creating Prefixed 404 Pages for Different Languages
+          link: /docs/creating-prefixed-404-pages-for-different-languages/
 - title: Ecosystem
   link: /ecosystem/
   items:
@@ -355,6 +369,8 @@
           link: /docs/html-generation/
         - title: Code Splitting and Prefetching
           link: /docs/how-code-splitting-works/
+    - title: Resource Handling & Service Workers
+      link: /docs/resource-handling-and-service-workers/
     - title: Data Storage (Redux)*
       link: /docs/data-storage-redux/
     - title: Build Caching*
@@ -373,41 +389,11 @@
       link: /docs/wordpress-source-plugin-tutorial/
     - title: Adding images to a WordPress site
       link: /docs/image-tutorial/
-- title: Contributing
-  items:
-    - title: Community
-      link: /docs/community/
-    - title: Code of Conduct
-      link: /docs/code-of-conduct/
-    - title: How to contribute
-      link: /docs/how-to-contribute/
-    - title: Free swag for contributors
-      link: /docs/contributor-swag/
-    - title: How to file an issue
-      link: /docs/how-to-file-an-issue/
-    - title: How to label an issue
-      link: /docs/how-to-label-an-issue/
-    - title: Community Pair Programming Sessions
-      link: /docs/pair-programming/
-    - title: Gatsby Style Guide
-      link: /docs/gatsby-style-guide/
-    - title: RFC process
-      link: /docs/rfc-process/
-    - title: Docs templates
-      link: /docs/templates/
-    - title: How to run a Gatsby workshop*
-      link: /docs/how-to-run-a-gatsby-workshop/
-    - title: How to pitch Gatsby*
-      link: /docs/how-to-pitch-gatsby/
-    - title: Submit to Site Showcase
-      link: /docs/site-showcase-submissions/
-    - title: Submit to Creator Showcase
-      link: /docs/submit-to-creator-showcase/
-    - title: Submit to Starter Library
-      link: /docs/submit-to-starter-library/
-    - title: Submit to Plugin Library
-      link: /docs/submit-to-plugin-library/
+    - title: Writing documentation with Docz
+      link: /docs/writing-documentation-with-docz/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/
+- title: Contributing
+  link: /contributing/

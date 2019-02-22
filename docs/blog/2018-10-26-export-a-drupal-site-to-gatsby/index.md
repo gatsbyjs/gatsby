@@ -19,7 +19,7 @@ mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
 To do this yourself, you'll build a simple blog using the excellent [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) project. Create a new project and then add a [sqlite library](https://github.com/JoshuaWise/better-sqlite3) as a dev dependency:
 
 ```
-gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
+npx gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
 git init # so you can keep track of the changes
 npm i --save-dev better-sqlite3
 ```
@@ -84,7 +84,7 @@ And now that you have all the data you need, it is just a matter of creating a f
   file.on('open', function () {
     file.write('---\n');
     file.write('title: "' + row.title + '"\n');
-    file.write('date: "' + date.toISOString() + '"\n');
+    file.write('date: ' + date.toISOString() + '\n');
     file.write('aliases: ' + JSON.stringify(aliases) + '\n');
     file.write('tags: ' + JSON.stringify(tags) + '\n');
     file.write('---\n\n');

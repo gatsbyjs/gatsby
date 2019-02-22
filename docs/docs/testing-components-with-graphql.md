@@ -71,7 +71,7 @@ describe("Index", () =>
 
 This should fix the `StaticQuery` error, but in a more real-world example you may also be using a page query with the `graphql` helper from Gatsby. In this case, there is no GraphQL data being passed to the component. We can pass this in too,
 but the structure is a little more complicated. Luckily there's an easy way to
-get some suitable data. Run `gatsby develop` and go to
+get some suitable data. Run `npm run develop` and go to
 http://localhost:8000/___graphql to load the GraphiQL IDE. You can now get the
 right data using the same query that you used on the page. If it is a simple
 query with no fragments you can copy it directly. That is the case here, run

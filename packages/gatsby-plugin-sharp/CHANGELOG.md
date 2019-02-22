@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.20...gatsby-plugin-sharp@2.0.21) (2019-02-19)
+
+### Features
+
+- **gatsby-plugin-sharp:** add defaultQuality option ([8af9826](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/8af9826))
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.19...gatsby-plugin-sharp@2.0.20) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.18...gatsby-plugin-sharp@2.0.19) (2019-01-29)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 <a name="2.0.18"></a>
 
 ## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.17...gatsby-plugin-sharp@2.0.18) (2019-01-23)
