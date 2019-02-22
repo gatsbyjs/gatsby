@@ -41,15 +41,12 @@ With Gatsby, we can make images way way better.
 
 ```js:title=src/gatsby-config.js
 module.exports = {
-  siteMetadata: {
-    title: "Gatsby Project",
-    author: "You",
-    description: "A Gatsby.js Project using gatsby-image"
-  },
   plugins: [
-      `gatsby-image`,
-      `gatsby-transformer-sharp`,
-      `gatsby-plugin-sharp`
+    // highlight-start
+    `gatsby-image`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`
+    // highlight-end
   ],
 }
 ```
@@ -57,18 +54,18 @@ module.exports = {
 
 ```js:title=gatsby-config.js
 module.exports = {
-  siteMetadata: {
-    title: "Gatsby Project",
-    author: "You",
-    description: "A Gatsby.js Project using gatsby-image"
-  },
   plugins: [
+    `gatsby-image`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`
+    // highlight-start
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/data/`,
       }
     }
+    // highlight-end
   ],
 }
 ```
