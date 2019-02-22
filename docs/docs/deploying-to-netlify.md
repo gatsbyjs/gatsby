@@ -24,7 +24,7 @@ npm install --global gatsby-cli
 Next, we'll create a new Gatsby site:
 
 ```shell
-gatsby new my-gatsby-site
+npx gatsby new my-gatsby-site
 ```
 
 Finally, change into the new site directory:
@@ -43,7 +43,7 @@ Now, go to Netlify and signup if you haven't already.
 We connect to GitHub (or GitLab/Bitbucket) and select the repository.
 
 We can change how Netlify builds and deploys the site.
-If we change nothing, Netlify will build the `master` branch of the repository and will invoke the `gatsby build` command after we clicked deploy.
+If we change nothing, Netlify will build the `master` branch of the repository and will invoke the build command after we clicked deploy.
 If you would have previously build the site and pushed the build to Git, Netlify would publish the directory selected (`/public`).
 
 After Netlify now finished the build, we can see the website on the given url.

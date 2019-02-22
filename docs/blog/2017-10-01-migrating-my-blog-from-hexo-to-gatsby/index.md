@@ -1,6 +1,6 @@
 ---
 title: "Migrating My Blog From Hexo To Gatsby"
-date: "2017-10-01"
+date: 2017-10-01
 image: "hexo-to-gatsby.png"
 author: "Ian Sinnott"
 excerpt: "How I migrated my blog to Gatsby and how you can do the same."
@@ -82,8 +82,7 @@ are many ways you could do this but I'll go over what I did.
 To get all the Gatsby files you can use the Gatsby CLI.
 
 ```yaml
-npm install -g gatsby-cli   # Install gatsby CLI
-gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
+npx gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
 cp -R temp-gatsby-files/* ./ # Copy all the files into your root directory
 rm -rf temp-gatsby-files     # Remove the temp directory
 ```

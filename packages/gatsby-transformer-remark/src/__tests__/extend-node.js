@@ -455,6 +455,89 @@ final text
       expect(node).toMatchSnapshot()
     }
   )
+
+  bootstrapTest(
+    `table of contents is generated with correct depth (graphql option)`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1)
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#first-title">first title</a></li>
+</ul>`)
+    }
+  )
+
+  bootstrapTest(
+    `table of contents is generated with correct depth (plugin option)`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title")
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#first-title">first title</a></li>
+</ul>`)
+    },
+    {
+      pluginOptions: {
+        tableOfContents: {
+          maxDepth: 1,
+        },
+      },
+    }
+  )
+
+  bootstrapTest(
+    `table of contents is generated from given heading onwards`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+
+# third title
+
+final text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title")
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#third-title">third title</a></li>
+</ul>`)
+    }
+  )
 })
 
 describe(`Links are correctly prefixed`, () => {
@@ -474,5 +557,79 @@ This is [a reference]
       expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
     },
     { additionalParameters: { pathPrefix: `/prefix` } }
+  )
+})
+
+describe(`Headings are generated correctly from schema`, () => {
+  bootstrapTest(
+    `returns value`,
+    `
+# first title
+
+## second title
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns value with inlineCode`,
+    `
+# first title
+
+## \`second title\`
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns value with mixed text`,
+    `
+# An **important** heading with \`inline code\` and text
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `An important heading with inline code and text`,
+          depth: 1,
+        },
+      ])
+    }
   )
 })

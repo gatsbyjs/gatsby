@@ -61,7 +61,7 @@ exports.onCreateWebpackConfig = (
 
   if (!isSSR) {
     postcssRule.use.unshift(loaders.miniCssExtract())
-    postcssRuleModules.use.unshift(loaders.miniCssExtract())
+    postcssRuleModules.use.unshift(loaders.miniCssExtract({ hmr: false }))
   }
 
   const postcssRules = { oneOf: [] }

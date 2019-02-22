@@ -54,7 +54,7 @@ What does the code look like?
 
 A source plugin is a normal NPM package. It has a package.json with optional
 dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
-APIs. Gatsby supports node versions back to Node 4 and as it's common to want to
+APIs. Gatsby's minimum supported Node.js version is Node 8 and as it's common to want to
 use more modern Node.js and JavaScript syntax, many plugins write code in a
 source directory and compile the code. All plugins maintained in the Gatsby repo
 follow this pattern.
@@ -128,7 +128,7 @@ _Examples_
 
 An example of a foreign-key relationship would be a Post that has an Author.
 
-In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. The API of a service that allows complex object modelling, for example a CMS, will often allow users to relationships between entities and expose them through the API.
+In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. The API of a service that allows complex object modelling, for example a CMS, will often allow users to add relationships between entities and expose them through the API.
 
 When an object node is deleted, Gatsby _does not_ delete any referenced entities. When using foreign-key references, it's a source plugin's responsibility to clean up any dangling entity references.
 

@@ -64,7 +64,7 @@ _In the playground below the list, there is an example query with a description 
 
 - `eq`: short for **equal**, must match the given data exactly
 - `ne`: short for **not equal**, must be different from the given data
-- `regex`: short for **regular expression**, must match the given pattern
+- `regex`: short for **regular expression**, must match the given pattern. Note that backslashes need to be escaped _twice_, so `/\w+/` needs to be written as `"/\\\\w+/"`.
 - `glob`: short for **global**, allows to use wildcard `*` which acts as a placeholder for any non-empty string
 - `in`: short for **in array**, must be an element of the array
 - `nin`: short for **not in array**, must NOT be an element of the array
@@ -91,6 +91,8 @@ You can also sort on multiple fields but the `sort` keyword can only be used onc
 `Children's Anthology of Monsters` and `Break with Banshee` both have the same date (`1992-01-02`) but in the first query (only one sort field) the latter comes after the first. The additional sorting on the `title` puts `Break with Banshee` in the right order.
 
 By default, sort `fields` will be sorted in ascending order. Optionally, you can specify a sort `order` per field by providing an array of `ASC` (for ascending) or `DESC` (for descending) values. For example, to sort by `frontmatter.date` in ascending order, and additionally by `frontmatter.title` in descending order, you would use `sort: { fields: [frontmatter___date, frontmatter___title], order: [ASC, DESC] }`. Note that if you only provide a single sort `order` value, this will affect the first sort field only, the rest will be sorted in default ascending order.
+
+<iframe src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20sort%3A%20%7B%0A%20%20%20%20%20%20fields%3A%20%5Bfrontmatter___date%2C%20frontmatter___title%5D%0A%20%20%20%20%20%20order%3A%20%5BASC%2C%20DESC%5D%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" width="600" height="400"></iframe>
 
 ## Format
 

@@ -29,6 +29,8 @@ Take a moment to locate and open up the command line interface (CLI) for your co
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
+_Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
+
 ### ⌚ Download Node.js
 
 Visit the [**Node.js site**](https://nodejs.org/) and follow the instructions to download and install the recommended version for your operating system. Once you have followed the installation steps, make sure everything was installed properly:
@@ -67,43 +69,22 @@ The steps to download and install Git depend on your operating system. Follow th
 
 > 💡 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
 
-## Install Gatsby CLI
+## Using the Gatsby CLI
 
-The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites. It is a published npm package. You can install Gatsby CLI from the npm registry, using the npm CLI.
+The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites. It is a published npm package. Rather than installing the Gatsby CLI tool locally you can run it using [npx](https://www.npmjs.com/package/npx).
 
-1.  Navigate to the terminal.
-2.  Run `npm install --global gatsby-cli`.
+To see the commands available to run `npx gatsby --help`.
 
-> 💡 If you are unable to successfully install due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
-
-A couple of different things are happening here.
-
-```shell
-npm install --global gatsby-cli
-```
-
-- You're using the npm CLI to install Gatsby CLI. `npm install` is the command used to install packages.
-- When installing npm packages, you can install them globally or in a specific project. (You’ll learn about the latter, later). The `--global` flag signals that we want the first option to install globally. This means your package will be available to you on your computer, outside of the context of a specific project.
-- `gatsby-cli` is the exact name our desired package is registered with on the [**npm registry**](https://www.npmjs.com/package/gatsby-cli).
-
-### Check your Gatsby CLI installation
-
-1.  Open up your terminal.
-2.  Run `gatsby --version`.
-3.  Run `gatsby --help`.
-
-![Check gatsby version in terminal](02-gatsby-version.png)
-
-If successfully installed, running `gatsby --version` should return a version number and running `gatsby --help` will show different commands available to you using the `gatsby-cli` tool.
+> 💡 If you are unable to successfully run npx due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
 ## Create a Gatsby site
 
-Now you are ready to use Gatsby CLI tool to create your first Gatsby site. Using the tool, you can download “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
+Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. Using the tool, you can download “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
 
 1.  Open up your terminal.
-2.  Run `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`. (_Note: Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install_).
+2.  Run `npx gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`. (_Note: Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install_).
 3.  Run `cd hello-world`.
-4.  Run `gatsby develop`.
+4.  Run `npm run develop`.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./03-create-site.mp4"></source>
@@ -113,10 +94,11 @@ Now you are ready to use Gatsby CLI tool to create your first Gatsby site. Using
 What just happened?
 
 ```shell
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-- Starting with `gatsby` says, ‘hey, we want to use the gatsby-cli tool!’.
+- Starting with `npx` executes an npm package binary without installing it locally.
+- `gatsby` tells npx, ‘hey, we want to use the gatsby-cli tool!’.
 - `new` is a gatsby command to create a new Gatsby project.
 - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
 - Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
@@ -128,7 +110,7 @@ cd hello-world
 - This says 'I want to change directories (`cd`) to the “hello-world” subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 - This command starts a development server. You will be able to see and interact with your new site in a development environment — local (on your computer, not published to the internet).
@@ -141,9 +123,9 @@ Open up a new tab in your browser and navigate to [**http://localhost:8000**](ht
 
 Congrats! This is the beginning of your very first Gatsby site! 🎉
 
-You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. That’s the process you started by running the `gatsby develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
+You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. That’s the process you started by running the `npm run develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `npm run develop` again!
 
-**Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `gatsby develop --host=0.0.0.0`. Now, the development server listens on both 'localhost' and your local IP.
+**Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `npm run develop -- --host=0.0.0.0`. Now, the development server listens on both 'localhost' and your local IP.
 
 ## Set up a code editor
 
