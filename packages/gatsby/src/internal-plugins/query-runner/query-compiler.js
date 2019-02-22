@@ -4,16 +4,16 @@ const normalize = require(`normalize-path`)
 import glob from "glob"
 
 import { validate } from "graphql"
-import { IRTransforms } from "relay-compiler"
-import RelayParser from "relay-compiler/lib/RelayParser"
-import ASTConvert from "relay-compiler/lib/ASTConvert"
-import GraphQLCompilerContext from "relay-compiler/lib/GraphQLCompilerContext"
-import filterContextForNode from "relay-compiler/lib/filterContextForNode"
+import { IRTransforms } from "@gatsbyjs/relay-compiler"
+import RelayParser from "@gatsbyjs/relay-compiler/lib/RelayParser"
+import ASTConvert from "@gatsbyjs/relay-compiler/lib/ASTConvert"
+import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompilerContext"
+import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
 const _ = require(`lodash`)
 
 import { store } from "../../redux"
 import FileParser from "./file-parser"
-import GraphQLIRPrinter from "relay-compiler/lib/GraphQLIRPrinter"
+import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
 import {
   graphqlError,
   graphqlValidationError,
@@ -28,7 +28,6 @@ const { printTransforms } = IRTransforms
 
 const {
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -51,7 +50,6 @@ type Queries = Map<string, RootQuery>
 
 const validationRules = [
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -64,15 +62,24 @@ const validationRules = [
 let lastRunHadErrors = null
 const overlayErrorID = `graphql-compiler`
 
+const resolveThemes = (plugins = []) =>
+  plugins.reduce((merged, plugin) => {
+    if (plugin.name.includes(`gatsby-theme-`)) {
+      merged.push(plugin.resolve)
+    }
+    return merged
+  }, [])
+
 class Runner {
-  baseDir: string
+  base: string
+  additional: string[]
   schema: GraphQLSchema
   errors: string[]
   fragmentsDir: string
 
-  constructor(baseDir: string, fragmentsDir: string, schema: GraphQLSchema) {
-    this.baseDir = baseDir
-    this.fragmentsDir = fragmentsDir
+  constructor(base: string, additional: string[], schema: GraphQLSchema) {
+    this.base = base
+    this.additional = additional
     this.schema = schema
   }
 
@@ -91,14 +98,21 @@ class Runner {
   }
 
   async parseEverything() {
-    // FIXME: this should all use gatsby's configuration to determine parsable
-    // files (and how to parse them)
-    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`, {
-      nodir: true,
-    })
-    files = files.concat(
-      glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`, { nodir: true })
-    )
+    const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
+    let files = [
+      path.join(this.base, `src`),
+      path.join(this.base, `.cache`, `fragments`),
+    ]
+      .concat(this.additional.map(additional => path.join(additional, `src`)))
+      .reduce(
+        (merged, folderPath) =>
+          merged.concat(
+            glob.sync(path.join(folderPath, filesRegex), {
+              nodir: true,
+            })
+          ),
+        []
+      )
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
 
@@ -192,6 +206,7 @@ class Runner {
         text,
         originalText: nameDefMap.get(name).text,
         path: filePath,
+        isHook: nameDefMap.get(name).isHook,
         isStaticQuery: nameDefMap.get(name).isStaticQuery,
         hash: nameDefMap.get(name).hash,
       }
@@ -203,6 +218,18 @@ class Runner {
             `${path.relative(store.getState().program.directory, filePath)}`
           )
       }
+
+      if (
+        query.isHook &&
+        process.env.NODE_ENV === `production` &&
+        typeof require(`react`).useContext !== `function`
+      ) {
+        report.panicOnBuild(
+          `You're likely using a version of React that doesn't support Hooks\n` +
+            `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
+        )
+      }
+
       compiledNodes.set(filePath, query)
     })
 
@@ -217,16 +244,13 @@ class Runner {
     return compiledNodes
   }
 }
-export { Runner }
+export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
-  const { program, schema } = store.getState()
+  // TODO: swap plugins to themes
+  const { program, schema, plugins } = store.getState()
 
-  const runner = new Runner(
-    `${program.directory}/src`,
-    `${program.directory}/.cache/fragments`,
-    schema
-  )
+  const runner = new Runner(program.directory, resolveThemes(plugins), schema)
 
   const queries = await runner.compileAll()
 

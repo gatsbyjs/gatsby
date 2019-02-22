@@ -31,7 +31,7 @@ directory called `netlify-cms-tutorial` that contains the starter site, but you 
 "netlify-cms-tutorial" in the command below to be whatever you like.
 
 ```shell
-gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Now move into the newly created directory and install the Gatsby plugin for Netlify CMS:
@@ -77,7 +77,7 @@ collections:
       - { name: body, label: Body, widget: markdown }
 ```
 
-Then in your terminal run `gatsby develop` to start the Gatsby development server. Once the server
+Then in your terminal run `npm run develop` to start the Gatsby development server. Once the server
 is running, it will print the address to open for viewing. It's typically `localhost:8000`. Open that
 in a browser and you should see the text "Hello World" in the top left corner. Now navigate to
 `/admin/` - so if your site is at `localhost:8000`, go to `localhost:8000/admin/`. **The trailing

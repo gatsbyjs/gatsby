@@ -36,7 +36,8 @@ const colors = {
     superLight: gray(96, 270),
   },
   code: {
-    bg: `#fdfaf6`, // colors.a[0] #fcf6f0
+    bgInline: `#fbf2e9`,
+    bg: `#fdfaf6`,
     border: `#faede5`,
     text: `#866c5b`,
     remove: `#e45c5c`,

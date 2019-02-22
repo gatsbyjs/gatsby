@@ -14,6 +14,9 @@ const createPageDependency = require(`../../redux/actions/add-page-dependency`)
 jest.mock(`../../redux/actions/add-page-dependency`)
 const nodeTypes = require(`../build-node-types`)
 
+const { typeConflictReporter } = require(`../type-conflict-reporter`)
+const addConflictSpy = jest.spyOn(typeConflictReporter, `addConflict`)
+
 describe(`build-node-types`, () => {
   let schema, store, types
 
@@ -26,6 +29,7 @@ describe(`build-node-types`, () => {
 
   beforeEach(async () => {
     createPageDependency.mockClear()
+    addConflictSpy.mockClear()
     const apiRunnerResponse = [
       {
         pluginField: {
@@ -58,6 +62,7 @@ describe(`build-node-types`, () => {
         hair: `brown`,
         children: [],
         parent: `p1`,
+        pluginField: `string`,
       },
       {
         id: `c2`,
@@ -65,6 +70,7 @@ describe(`build-node-types`, () => {
         hair: `blonde`,
         children: [],
         parent: `p1`,
+        pluginField: 5,
       },
     ].forEach(n => store.dispatch({ type: `CREATE_NODE`, payload: n }))
 
@@ -266,5 +272,9 @@ describe(`build-node-types`, () => {
       path: `foo`,
       nodeId: `c2`,
     })
+  })
+
+  it(`should not report conflicts on plugin fields`, () => {
+    expect(typeConflictReporter.addConflict).not.toBeCalled()
   })
 })

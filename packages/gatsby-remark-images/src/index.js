@@ -4,7 +4,9 @@ const {
   imageWrapperClass,
 } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
+const getDefinitions = require(`mdast-util-definitions`)
 const path = require(`path`)
+const queryString = require(`query-string`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
 const { fluid, traceSVG } = require(`gatsby-plugin-sharp`)
@@ -42,6 +44,9 @@ module.exports = (
         node.type === `link`
     )
 
+  // Get all the available definitions in the markdown tree
+  const definitions = getDefinitions(markdownAST)
+
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
   let rawHtmlNodes = []
@@ -54,21 +59,42 @@ module.exports = (
   // This will only work for markdown syntax image tags
   let markdownImageNodes = []
 
-  visitWithParents(markdownAST, `image`, (node, ancestors) => {
-    const inLink = ancestors.some(findParentLinks)
+  visitWithParents(
+    markdownAST,
+    [`image`, `imageReference`],
+    (node, ancestors) => {
+      const inLink = ancestors.some(findParentLinks)
 
-    markdownImageNodes.push({ node, inLink })
-  })
+      markdownImageNodes.push({ node, inLink })
+    }
+  )
+
+  const getImageInfo = uri => {
+    const { url, query } = queryString.parseUrl(uri)
+    return {
+      ext: path
+        .extname(url)
+        .split(`.`)
+        .pop(),
+      url,
+      query,
+    }
+  }
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function(node, resolve, inLink) {
+  const generateImagesAndUpdateNode = async function(
+    node,
+    resolve,
+    inLink,
+    overWrites = {}
+  ) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the image isn't hosted locally.
     const parentNode = getNode(markdownNode.parent)
     let imagePath
     if (parentNode && parentNode.dir) {
-      imagePath = slash(path.join(parentNode.dir, node.url))
+      imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
     } else {
       return null
     }
@@ -101,10 +127,18 @@ module.exports = (
     const presentationWidth = fluidResult.presentationWidth
 
     // Generate default alt tag
-    const srcSplit = node.url.split(`/`)
+    const srcSplit = getImageInfo(node.url).url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+
+    const alt = overWrites.alt
+      ? overWrites.alt
+      : node.alt
+      ? node.alt
+      : defaultAlt
+
+    const title = node.title ? node.title : ``
 
     const imageStyle = `
       width: 100%;
@@ -124,8 +158,8 @@ module.exports = (
       <img
         class="${imageClass}"
         style="${imageStyle}"
-        alt="${node.alt ? node.alt : defaultAlt}"
-        title="${node.title ? node.title : ``}"
+        alt="${alt}"
+        title="${title}"
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
@@ -166,8 +200,8 @@ module.exports = (
           class="${imageClass}"
           style="${imageStyle}"
           src="${fallbackSrc}"
-          alt="${node.alt ? node.alt : defaultAlt}"
-          title="${node.title ? node.title : ``}"
+          alt="${alt}"
+          title="${title}"
         />
       </picture>
       `.trim()
@@ -251,7 +285,24 @@ module.exports = (
     markdownImageNodes.map(
       ({ node, inLink }) =>
         new Promise(async (resolve, reject) => {
-          const fileType = node.url.slice(-3)
+          const overWrites = {}
+          let refNode
+          if (
+            !node.hasOwnProperty(`url`) &&
+            node.hasOwnProperty(`identifier`)
+          ) {
+            //consider as imageReference node
+            refNode = node
+            node = definitions(refNode.identifier)
+            // pass original alt from referencing node
+            overWrites.alt = refNode.alt
+            if (!node) {
+              // no definition found for image reference,
+              // so there's nothing for us to do.
+              return resolve()
+            }
+          }
+          const fileType = getImageInfo(node.url).ext
 
           // Ignore gifs as we can't process them,
           // svgs as they are already responsive by definition
@@ -263,11 +314,15 @@ module.exports = (
             const rawHTML = await generateImagesAndUpdateNode(
               node,
               resolve,
-              inLink
+              inLink,
+              overWrites
             )
 
             if (rawHTML) {
-              // Replace the image node with an inline HTML node.
+              // Replace the image or ref node with an inline HTML node.
+              if (refNode) {
+                node = refNode
+              }
               node.type = `html`
               node.value = rawHTML
             }
@@ -311,7 +366,7 @@ module.exports = (
                 return resolve()
               }
 
-              const fileType = formattedImgTag.url.slice(-3)
+              const fileType = getImageInfo(formattedImgTag.url).ext
 
               // Ignore gifs as we can't process them,
               // svgs as they are already responsive by definition

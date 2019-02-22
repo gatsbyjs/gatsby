@@ -6,10 +6,19 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
+const ProgressBar = require(`progress`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension } = require(`./utils`)
+const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
+
+const bar = new ProgressBar(
+  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
+  {
+    total: 0,
+    width: 30,
+  }
+)
 
 /********************
  * Type Definitions *
@@ -75,7 +84,7 @@ const FS_PLUGIN_DIR = `gatsby-source-filesystem`
  * @return {String}
  */
 const createFilePath = (directory, filename, ext) =>
-  path.join(directory, CACHE_DIR, FS_PLUGIN_DIR, `${filename}${ext}`)
+  path.join(directory, `${filename}${ext}`)
 
 /********************
  * Queue Management *
@@ -114,7 +123,8 @@ async function pushToQueue(task, cb) {
     const node = await processRemoteNode(task)
     return cb(null, node)
   } catch (e) {
-    return cb(null, e)
+    console.warn(`Failed to process remote content ${task.url}`)
+    return cb(e)
   }
 }
 
@@ -173,13 +183,19 @@ async function processRemoteNode({
   store,
   cache,
   createNode,
+  parentNodeId,
   auth = {},
   createNodeId,
   ext,
+  name,
 }) {
   // Ensure our cache directory exists.
-  const programDir = store.getState().program.directory
-  await fs.ensureDir(path.join(programDir, CACHE_DIR, FS_PLUGIN_DIR))
+  const pluginCacheDir = path.join(
+    store.getState().program.directory,
+    CACHE_DIR,
+    FS_PLUGIN_DIR
+  )
+  await fs.ensureDir(pluginCacheDir)
 
   // See if there's response headers for this url
   // from a previous request.
@@ -198,49 +214,49 @@ async function processRemoteNode({
 
   // Create the temp and permanent file names for the url.
   const digest = createHash(url)
+  if (!name) {
+    name = getRemoteFileName(url)
+  }
   if (!ext) {
     ext = getRemoteFileExtension(url)
   }
 
-  const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
+  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  try {
-    const response = await requestRemoteNode(url, headers, tmpFilename)
-    // Save the response headers for future requests.
-    await cache.set(cacheId(url), response.headers)
+  const response = await requestRemoteNode(url, headers, tmpFilename)
+  // Save the response headers for future requests.
+  await cache.set(cacheId(url), response.headers)
 
-    // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
-    if (ext === ``) {
-      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-      const filetype = fileType(buffer)
-      if (filetype) {
-        ext = `.${filetype.ext}`
-      }
+  // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
+  if (ext === ``) {
+    const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
+    const filetype = fileType(buffer)
+    if (filetype) {
+      ext = `.${filetype.ext}`
     }
-    const filename = createFilePath(programDir, digest, ext)
-    // If the status code is 200, move the piped temp file to the real name.
-    if (response.statusCode === 200) {
-      await fs.move(tmpFilename, filename, { overwrite: true })
-      // Else if 304, remove the empty response.
-    } else {
-      await fs.remove(tmpFilename)
-    }
-
-    // Create the file node.
-    const fileNode = await createFileNode(filename, createNodeId, {})
-    fileNode.internal.description = `File "${url}"`
-    // Override the default plugin as gatsby-source-filesystem needs to
-    // be the owner of File nodes or there'll be conflicts if any other
-    // File nodes are created through normal usages of
-    // gatsby-source-filesystem.
-    createNode(fileNode, { name: `gatsby-source-filesystem` })
-
-    return fileNode
-  } catch (err) {
-    // ignore
   }
-  return null
+
+  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
+  // If the status code is 200, move the piped temp file to the real name.
+  if (response.statusCode === 200) {
+    await fs.move(tmpFilename, filename, { overwrite: true })
+    // Else if 304, remove the empty response.
+  } else {
+    await fs.remove(tmpFilename)
+  }
+
+  // Create the file node.
+  const fileNode = await createFileNode(filename, createNodeId, {})
+  fileNode.internal.description = `File "${url}"`
+  fileNode.parent = parentNodeId
+  // Override the default plugin as gatsby-source-filesystem needs to
+  // be the owner of File nodes or there'll be conflicts if any other
+  // File nodes are created through normal usages of
+  // gatsby-source-filesystem.
+  createNode(fileNode, { name: `gatsby-source-filesystem` })
+
+  return fileNode
 }
 
 /**
@@ -268,6 +284,9 @@ const pushTask = task =>
       })
   })
 
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
+
 /***************
  * Entry Point *
  ***************/
@@ -288,9 +307,11 @@ module.exports = ({
   store,
   cache,
   createNode,
+  parentNodeId = null,
   auth = {},
   createNodeId,
   ext = null,
+  name = null,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -322,13 +343,23 @@ module.exports = ({
     return Promise.resolve()
   }
 
-  return (processingCache[url] = pushTask({
+  totalJobs += 1
+  bar.total = totalJobs
+
+  const fileDownloadPromise = pushTask({
     url,
     store,
     cache,
     createNode,
+    parentNodeId,
     createNodeId,
     auth,
     ext,
-  }))
+    name,
+  })
+
+  fileDownloadPromise.then(() => bar.tick())
+
+  processingCache[url] = fileDownloadPromise
+  return fileDownloadPromise
 }

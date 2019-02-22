@@ -13,7 +13,7 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 
 ## Table of Contents
 
-- [Using unstructured data](#using-unstructured-data)
+- [Using Gatsby without Graphql](#using-gatsby-without-graphql)
 - [Gatsby project structure](#gatsby-project-structure)
 - [Using a starter](#using-a-starter)
 - [Creating pages](#creating-pages)
@@ -25,11 +25,11 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 - [Sourcing data](#sourcing-data)
 - [Transforming data](#transforming-data)
 
-## Using unstructured data
+## Using Gatsby without GraphQL
 
-You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-- Learn how to pull unstructured data into Gatsby sites in [Using Unstructured Data](/docs/using-unstructured-data/)
+- Learn how to pull unstructured data into Gatsby sites in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
 - Learn when and how to use GraphQL and source plugins for more complex Gatsby sites in [Querying data with GraphQL](/docs/querying-with-graphql/)
 
 ## Gatsby project structure
@@ -41,7 +41,7 @@ Read the [Gatsby project structure](/docs/gatsby-project-structure/) guide for a
 Starters are boilerplate Gatsby sites maintained officially, or by the community.
 
 - Learn how to use the Gatsby CLI tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
-- See a list of [official and community starters](/docs/gatsby-starters/)
+- Browse the [Starter Library](/starters/)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
 
 ## Creating pages

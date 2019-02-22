@@ -91,7 +91,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, useYarn }
+      let args = { ...argv, ...siteInfo, report, useYarn }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -227,6 +227,7 @@ function buildLocalCommands(cli, isLocalSite) {
             System: [`OS`, `CPU`, `Shell`],
             Binaries: [`Node`, `npm`, `Yarn`],
             Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
+            Languages: [`Python`],
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
           },
@@ -244,6 +245,12 @@ function buildLocalCommands(cli, isLocalSite) {
         console.log(err)
       }
     },
+  })
+
+  cli.command({
+    command: `clean`,
+    desc: `Wipe the local gatsby environment including built assets and cache`,
+    handler: getCommandHandler(`clean`),
   })
 
   cli.command({
@@ -271,7 +278,7 @@ function isLocalGatsbySite() {
   return inGatsbySite
 }
 
-module.exports = (argv, handlers) => {
+module.exports = argv => {
   let cli = yargs()
   let isLocalSite = isLocalGatsbySite()
 

@@ -64,12 +64,72 @@ Object {
 }
 `;
 
-exports[`Excerpt is generated correctly from schema given an html format, it respects the excerpt_separator 1`] = `
+exports[`Excerpt is generated correctly from schema given an html format, it prunes large excerpts 1`] = `
 Object {
   "excerpt": "<p>Where oh where is that pony? Is he in the stable…</p>",
   "frontmatter": Object {
     "title": "my little pony",
   },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given an html format, it respects the excerpt_separator 1`] = `
+Object {
+  "excerpt": "<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>
+",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given raw html in the text body, this html is not escaped 1`] = `
+Object {
+  "excerpt": "<p>Where is my <code>pony</code> named leo?</p>",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Headings are generated correctly from schema returns value 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
+exports[`Headings are generated correctly from schema returns value with inlineCode 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
+exports[`Headings are generated correctly from schema returns value with mixed text 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "An important heading with inline code and text",
+    },
+  ],
 }
 `;
 

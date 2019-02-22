@@ -23,6 +23,8 @@ function getNodesReducer() {
 module.exports = {
   program: require(`./program`),
   nodes: getNodesReducer(),
+  nodesByType: require(`./nodes-by-type`),
+  resolvedNodesCache: require(`./resolved-nodes`),
   nodesTouched: require(`./nodes-touched`),
   lastAction: require(`./last-action`),
   plugins: require(`./plugins`),
@@ -40,5 +42,6 @@ module.exports = {
   redirects: require(`./redirects`),
   babelrc: require(`./babelrc`),
   jsonDataPaths: require(`./json-data-paths`),
-  thirdPartySchemas: require(`./thirdPartySchemas`),
+  thirdPartySchemas: require(`./third-party-schemas`),
+  themes: require(`./themes`),
 }

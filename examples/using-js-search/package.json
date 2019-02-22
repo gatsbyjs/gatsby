@@ -1,0 +1,24 @@
+{
+  "name": "js-search-example",
+  "private": true,
+  "description": "Gatsby example site to demonstrate client side search",
+  "version": "0.1.0",
+  "keywords": [
+    "Gatsby", "client side search", "js-search"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "gatsby": "^2.0.104",
+    "js-search": "^1.4.2",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1"
+  }
+}

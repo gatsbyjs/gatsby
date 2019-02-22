@@ -212,7 +212,7 @@ async function getWPCOMAccessToken(_auth) {
  */
 async function getJWToken(_auth, url) {
   let result
-  let authUrl = `${url}/jwt-auth/v1/token`
+  let authUrl = `${url}${_auth.jwt_base_path || `/jwt-auth/v1/token`}`
   try {
     const options = {
       url: authUrl,
@@ -445,9 +445,9 @@ function getValidRoutes({
   if (_useACF) {
     let defaultAcfNamespace = `acf/v3`
     // Grab ACF Version from namespaces
-    const acfNamespace = allRoutes.data.namespaces.find(namespace =>
-      namespace.includes(`acf`)
-    )
+    const acfNamespace = allRoutes.data.namespaces
+      ? allRoutes.data.namespaces.find(namespace => namespace.includes(`acf`))
+      : null
     const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
     _includedRoutes.push(`/${acfRestNamespace}/**`)
 

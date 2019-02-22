@@ -28,7 +28,7 @@ If you didn’t get a chance to cast your vote for a Gatsby Days host city, you 
 
 Meetups are also a great way to connect with the Gatsby community. Several community-organized Gatsby meetups have already been popping up across the globe and we’ll be launching a more formal program to support community-organized meetups with free swag and resources (details will be coming soon). In the meantime, if you’re organizing a Gatsby meetup or event and need some support, just [fill out the form here](https://airtable.com/shrpwc99yogJm9sfI) and someone will get back with you to work out the details.
 
-And if you’re in the San Francisco bay area, join our [San Francisco meetup](https://www.meetup.com/meetup-group-cHIRVLfX/) to connect with Gatsbyjs community members. These will be more casual gatherings where we talk about front-end web development, the modern web tech stack, and Gatsby. We'll have our first meetup after the new year (in January 2019) so stay tuned!
+And if you’re in the San Francisco bay area, join our [San Francisco meetup](https://www.meetup.com/meetup-group-cHIRVLfX/) to connect with Gatsbyjs community members. These will be more casual gatherings where we talk about frontend web development, the modern web tech stack, and Gatsby. We'll have our first meetup after the new year (in January 2019) so stay tuned!
 
 Join the Gatsby [Meetup San Francisco here](https://www.meetup.com/meetup-group-cHIRVLfX/).
 

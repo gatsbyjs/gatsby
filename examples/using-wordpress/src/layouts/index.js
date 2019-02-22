@@ -58,7 +58,7 @@ class DefaultLayout extends React.Component {
 }
 
 DefaultLayout.propTypes = {
-  location: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired,
 }
 
 export default DefaultLayout
