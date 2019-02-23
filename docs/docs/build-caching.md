@@ -5,6 +5,12 @@ issue: https://github.com/gatsbyjs/gatsby/issues/8103
 
 Plugins can cache data as json objects and retrieve them on consecutive builds.
 
+Caching is already used by Gatsby and plugins for example:
+
+* any nodes created by source/transformer plugins are cached
+* `gatsby-plugin-sharp` caches built thumbnails
+
+
 Data is stored in the `.cache` directory relative to your project root.
 
 
