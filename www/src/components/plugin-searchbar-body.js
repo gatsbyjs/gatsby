@@ -370,20 +370,6 @@ const Result = ({ hit, pathname, query }) => {
           }}
         >
           {hit.name}
-          {hit.repository &&
-            hit.repository.url.startsWith(
-              `https://github.com/gatsbyjs/gatsby`
-            ) && (
-              <img
-                src={GatsbyIcon}
-                css={{
-                  width: 20,
-                  marginBottom: 0,
-                  marginLeft: 5,
-                }}
-                alt={`Official Gatsby Plugin`}
-              />
-            )}
         </div>
         <div
           css={{
@@ -394,6 +380,21 @@ const Result = ({ hit, pathname, query }) => {
             fontSize: rhythm(4 / 7),
           }}
         >
+          {hit.repository &&
+            hit.repository.url.startsWith(
+              `https://github.com/gatsbyjs/gatsby`
+            ) && (
+              <img
+                src={GatsbyIcon}
+                css={{
+                  width: 20,
+                  marginBottom: 0,
+                  marginRight: 5,
+                  filter: selected ? false : `grayscale(100%) opacity(50%)`,
+                }}
+                alt={`Official Gatsby Plugin`}
+              />
+            )}
           {hit.humanDownloadsLast30Days}
           {` `}
           <span

@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
 import { colors } from "../utils/presets"
+import { options } from "../utils/typography"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import GithubIcon from "react-icons/lib/go/mark-github"
@@ -25,51 +26,66 @@ const PackageReadMe = props => {
         <meta name="twitter:data1" content={`${timeToRead} min read`} />
       </Helmet>
       <div css={{ display: `flex`, justifyContent: `space-between` }}>
-        <a
+        <div
           css={{
-            "&&": {
-              display: githubUrl ? `inline-block` : `none`,
-              fontWeight: `normal`,
-              border: 0,
-              color: colors.gray.calm,
-              boxShadow: `none`,
-              "&:hover": {
-                background: `none`,
-                color: colors.gatsby,
-              },
-            },
+            display: `flex`,
+            alignItems: `center`,
           }}
-          href={githubUrl}
-          aria-label={`${packageName} source`}
-          title={`View source on GitHub`}
         >
-          <GithubIcon focusable="false" style={{ verticalAlign: `text-top` }} />
-        </a>
+          <a
+            css={{
+              "&&": {
+                marginRight: 25,
+                display: githubUrl ? `inline-flex` : `none`,
+                fontWeight: `normal`,
+                border: 0,
+                color: colors.gray.calm,
+                boxShadow: `none`,
+                "&:hover": {
+                  background: `none`,
+                  color: colors.gatsby,
+                },
+              },
+            }}
+            href={githubUrl}
+            aria-label={`${packageName} source`}
+            title={`View source on GitHub`}
+          >
+            <GithubIcon
+              focusable="false"
+              style={{ verticalAlign: `text-top` }}
+            />
+          </a>
+          {githubUrl.startsWith(`https://github.com/gatsbyjs/gatsby`) && (
+            <div
+              css={{
+                display: `flex`,
+                alignItems: `center`,
+                fontSize: 18,
+                lineHeight: 1,
+                color: `#888`,
+                fontFamily: options.headerFontFamily,
+              }}
+            >
+              <img
+                src={GatsbyIcon}
+                css={{
+                  width: 18,
+                  marginBottom: 0,
+                  marginRight: 5,
+                  filter: `grayscale(100%) opacity(50%)`,
+                }}
+                alt={`Official Gatsby Plugin`}
+              />
+              Official Plugin
+            </div>
+          )}
+        </div>
         {githubUrl && (
           <Link to={`/starters?d=${packageName}`}>
             See starters that use this
           </Link>
         )}
-      </div>
-
-      <div
-        css={{
-          background: colors.lilac,
-          fontWeight: 600,
-          color: `white`,
-          padding: `10px`,
-          display: `inline-flex`,
-          margin: `10px 0`,
-          borderRadius: 10,
-          alignItems: `center`,
-        }}
-      >
-        <img
-          src={GatsbyIcon}
-          css={{ width: 25, marginBottom: 0, marginRight: 5 }}
-          alt={`Official Gatsby Plugin`}
-        />
-        Official Plugin
       </div>
 
       <div
