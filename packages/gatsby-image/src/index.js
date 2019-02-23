@@ -79,7 +79,7 @@ const listenToIntersections = (el, cb) => {
 
   return () => {
     observer.unobserve(el)
-    listeners.remove(el)
+    listeners.delete(el)
   }
 }
 
