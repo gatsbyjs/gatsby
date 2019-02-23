@@ -46,29 +46,7 @@ Using `StaticQuery`, you can colocate a component with its data. No longer is it
 
 ### Hooks Example
 
-Using the hooks version of static query is very similar. Something to note though, Hooks with GraphQL only works with Gatsby version 2.1 and above here is the boilerplate syntax to use it:
-
-```jsx:title=src/components/header.js
-import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
-
-export default () => {
-  const data = useStaticQuery(graphql`
-    query HeadingQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
-  return (
-    <header>
-      <h1>{site.siteMetadata.title}</h1>
-    </header>
-  );
-}
-```
+Using the hooks version of static query is very similar. Checkout the documentation of `useStaticQuery` [here!](/docs/use-static-query/)
 
 ### Typechecking
 
