@@ -109,11 +109,22 @@ class GatsbyLink extends React.Component {
       ...rest
     } = this.props
 
-    const LOCAL_URL = /^\/(?!\/)/
-    if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
-      console.warn(
-        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.app/internal-links`
-      )
+    if (process.env.NODE_ENV !== `production`) {
+      const LOCAL_URL = /^\/(?!\/)/
+      const message = `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.app/internal-links`
+
+      try {
+        const link = new URL(to, window.location)
+
+        if (window.location.host !== link.host) {
+          console.warn(message)
+        }
+      } catch (e) {
+        // in case IE happens, we revert back to the old way
+        if (!LOCAL_URL.test(to)) {
+          console.warn(message)
+        }
+      }
     }
 
     const prefixedTo = withPrefix(to)
