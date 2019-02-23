@@ -212,16 +212,18 @@ module.exports = (state = new Map(), action) => {
       return state
     }
     case `PAGE_QUERY_RUN`: {
-      action.payload.componentPath = normalize(action.payload.componentPath)
-      const service = services.get(action.payload.componentPath)
-      // TODO we want to keep track of whether there's any outstanding queries still
-      // running as this will mark queries as complete immediately even though
-      // a page component could have thousands of pages will processing.
-      // This can be done once we start modeling Pages as well.
-      service.send({
-        type: `QUERIES_COMPLETE`,
-      })
-      services.set(action.payload.componentPath, service)
+      if (action.payload.isPage) {
+        action.payload.componentPath = normalize(action.payload.componentPath)
+        const service = services.get(action.payload.componentPath)
+        // TODO we want to keep track of whether there's any outstanding queries still
+        // running as this will mark queries as complete immediately even though
+        // a page component could have thousands of pages will processing.
+        // This can be done once we start modeling Pages as well.
+        service.send({
+          type: `QUERIES_COMPLETE`,
+        })
+        services.set(action.payload.componentPath, service)
+      }
       return state
     }
     case `REMOVE_TEMPLATE_COMPONENT`: {

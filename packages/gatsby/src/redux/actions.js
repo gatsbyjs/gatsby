@@ -1244,7 +1244,7 @@ actions.pageComponentChanged = (path, plugin: Plugin, traceId?: string) => {
  * @param {string} Path to the page component that changed.
  */
 actions.pageQueryRun = (
-  { path, componentPath },
+  { path, componentPath, isPage },
   plugin: Plugin,
   traceId?: string
 ) => {
@@ -1252,7 +1252,7 @@ actions.pageQueryRun = (
     type: `PAGE_QUERY_RUN`,
     plugin,
     traceId,
-    payload: { path, componentPath },
+    payload: { path, componentPath, isPage },
   }
 }
 

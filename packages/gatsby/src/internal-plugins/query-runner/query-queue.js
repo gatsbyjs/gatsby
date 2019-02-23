@@ -56,10 +56,14 @@ const queue = new Queue((plObj, callback) => {
           queue.push(waiting.get(plObj.id))
           waiting.delete(plObj.id)
         }
+
+        // Send event that the page query finished.
         boundActionCreators.pageQueryRun({
           path: plObj.id,
           componentPath: plObj.componentPath,
+          isPage: plObj.isPage,
         })
+
         return callback(null, result)
       },
       error => callback(error)
