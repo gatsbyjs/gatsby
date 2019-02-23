@@ -51,16 +51,15 @@ function getIO() {
     io = new window.IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          listeners.forEach((cb, element) => {
-            if (element === entry.target) {
-              // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
-              if (entry.isIntersecting || entry.intersectionRatio > 0) {
-                io.unobserve(element)
-                listeners.delete(element)
-                cb()
-              }
+          if (listeners.has(entry.target)) {
+            const cb = listeners.get(entry.target)
+            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+              io.unobserve(entry.target)
+              listeners.delete(entry.target)
+              cb()
             }
-          })
+          }
         })
       },
       { rootMargin: `200px` }
@@ -76,6 +75,11 @@ const listenToIntersections = (el, cb) => {
   if (observer) {
     observer.observe(el)
     listeners.set(el, cb)
+  }
+
+  return () => {
+    observer.unobserve(el)
+    listeners.remove(el)
   }
 }
 
@@ -167,7 +171,7 @@ class Image extends React.Component {
       IOSupported = false
     }
 
-    const hasNoScript = !(this.props.critical && !this.props.fadeIn)
+    const hasNoScript = !(props.critical && !props.fadeIn)
 
     this.state = {
       isVisible,
@@ -191,7 +195,7 @@ class Image extends React.Component {
     }
 
     if (this.state.IOSupported && wrapper) {
-      listenToIntersections(wrapper, () => {
+      this.cleanUpListeners = listenToIntersections(wrapper, () => {
         const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
@@ -206,7 +210,9 @@ class Image extends React.Component {
   }
 
   componentWillUnmount() {
-    listeners.delete(this.wrapperRef.current)
+    if (this.cleanUpListeners) {
+      this.cleanUpListeners()
+    }
   }
 
   handleImageLoaded = () => {
