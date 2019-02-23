@@ -89,7 +89,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
               const filenameWithoutExtension = path.basename(filepath, ext)
               return filenameWithoutExtension
             })
-            .includes(path.basename(possibleComponentPath))
+            .includes(path.basename(possibleComponentPath, path.extname(possibleComponentPath)))
           return exists
         })
     }
