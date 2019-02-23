@@ -11,12 +11,18 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
 }
 
 // calls `saveState()` on all DBs
+let saveInProgess = false
 async function saveState() {
+  if (saveInProgess) return
+  saveInProgess = true
+
   try {
     await Promise.all(dbs.map(db => db.saveState()))
   } catch (err) {
     report.warn(`Error persisting state: ${(err && err.message) || err}`)
   }
+
+  saveInProgess = false
 }
 const saveStateDebounced = _.debounce(saveState, 1000)
 
