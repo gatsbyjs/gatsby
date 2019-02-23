@@ -46,10 +46,6 @@ const htmlAstCacheKey = node =>
   `transformer-remark-markdown-html-ast-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const excerptCacheKey = (node, format) =>
-  `transformer-remark-markdown-excerpt-${format}-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const headingsCacheKey = node =>
   `transformer-remark-markdown-headings-${
     node.internal.contentDigest
@@ -371,12 +367,6 @@ module.exports = (
       markdownNode,
       { pruneLength, truncate, excerptSeparator }
     ) {
-      const format = `ast`
-      const cachedAst = await cache.get(excerptCacheKey(markdownNode, format))
-      if (cachedAst) {
-        return cachedAst
-      }
-
       const fullAST = await getHTMLAst(markdownNode)
       if (excerptSeparator) {
         return cloneTreeUntil(
@@ -386,7 +376,6 @@ module.exports = (
         )
       }
       if (!fullAST.children.length) {
-        cache.set(excerptCacheKey(markdownNode, format), fullAST)
         return fullAST
       }
 
@@ -399,7 +388,6 @@ module.exports = (
         !unprunedExcerpt ||
         (pruneLength && unprunedExcerpt.length < pruneLength)
       ) {
-        cache.set(excerptCacheKey(markdownNode, format), excerptAST)
         return excerptAST
       }
 
@@ -418,7 +406,6 @@ module.exports = (
           omission: `…`,
         })
       }
-      cache.set(excerptCacheKey(markdownNode, format), excerptAST)
       return excerptAST
     }
 
@@ -426,13 +413,6 @@ module.exports = (
       markdownNode,
       { format, pruneLength, truncate, excerptSeparator }
     ) {
-      const cachedExcerpt = await cache.get(
-        excerptCacheKey(markdownNode, format)
-      )
-      if (cachedExcerpt) {
-        return cachedExcerpt
-      }
-
       if (format === `html`) {
         const excerptAST = await getExcerptAst(markdownNode, {
           pruneLength,
@@ -442,7 +422,6 @@ module.exports = (
         const html = hastToHTML(excerptAST, {
           allowDangerousHTML: true,
         })
-        cache.set(excerptCacheKey(markdownNode, format), html)
         return html
       }
 
@@ -466,7 +445,6 @@ module.exports = (
           omission: `…`,
         })
       })
-      cache.set(excerptCacheKey(markdownNode, format), text)
       return text
     }
 
