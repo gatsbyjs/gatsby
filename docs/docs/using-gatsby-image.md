@@ -38,32 +38,22 @@ With Gatsby, we can make images way way better.
 `gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images, you only need to:
 
 1. Install `gatsby-image` and other, necessary dependencies like `gatsby-plugin-sharp` and `gatsby-transformer-sharp`
-    ```shell
-    npm i gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
-    ```
-1. Add the newly installed plugins and transformer plugins to your `gatsby-config.js`
-    ```js:title=gatsby-config.js
-    module.exports = {
-      plugins: [
-        // highlight-start
-        `gatsby-plugin-sharp`,
-        `gatsby-transformer-sharp`
-      ]
-    }
-    ```
+   ```shell
+   npm i gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+   ```
+2. Add the newly installed plugins and transformer plugins to your `gatsby-config.js`
 
-```js:title=src/gatsby-config.js
-module.exports = {
-  plugins: [
-    // highlight-start
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    // highlight-end
-  ],
-}
-```
+   ```js:title=gatsby-config.js
+   module.exports = {
+     plugins: [
+       // highlight-start
+       `gatsby-plugin-sharp`,
+       `gatsby-transformer-sharp`,
+     ],
+   }
+   ```
 
-2. Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option with wherever your images are located relative to your project.
+3. Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option with wherever your images are located relative to your project.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -83,7 +73,7 @@ module.exports = {
 }
 ```
 
-3. Write a GraphQL query using one of the included [GraphQL “fragments”](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example will use `GatsbyImageSharpFluid`. An example of a GraphQL query is below where the path listed is the path relative to the location specified in the `gatsby-source-filesystem` options.
+4. Write a GraphQL query using one of the included [GraphQL “fragments”](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example will use `GatsbyImageSharpFluid`. An example of a GraphQL query is below where the path listed is the path relative to the location specified in the `gatsby-source-filesystem` options.
 
 ```graphql
 file(relativePath: { eq: "images/default.jpg" }) {
@@ -96,7 +86,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-4. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well.
+5. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well.
 
 ```jsx
 import Img from "gatsby-image"
