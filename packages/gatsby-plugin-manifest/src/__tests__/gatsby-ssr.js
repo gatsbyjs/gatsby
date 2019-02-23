@@ -13,6 +13,11 @@ describe(`gatsby-plugin-manifest`, () => {
     headComponents = []
   })
 
+  it(`Adds a crossorigin attribute to manifest link tag if provided`, () => {
+    onRenderBody(ssrArgs, { crossOrigin: `use-credentials` })
+    expect(headComponents).toMatchSnapshot()
+  })
+
   it(`Adds a "theme color" meta tag to head if "theme_color_in_head" is not provided`, () => {
     onRenderBody(ssrArgs, { theme_color: `#000000` })
     expect(headComponents).toMatchSnapshot()

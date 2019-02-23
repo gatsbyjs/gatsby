@@ -261,11 +261,14 @@ const _options = {
         fontSize: `102%`,
         color: colors.gatsby,
       },
+      ".post-body figure img": {
+        marginBottom: 0,
+      },
       ".post-body figcaption": {
         color: colors.gray.calm,
         fontFamily: headerFontFamily.join(`,`),
         fontSize: `87.5%`,
-        marginTop: rhythm(1 / 2),
+        marginTop: rhythm(1 / 4),
       },
       ".main-body a:hover": {
         background: colors.ui.bright,

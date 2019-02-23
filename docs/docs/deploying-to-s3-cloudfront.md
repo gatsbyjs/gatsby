@@ -33,7 +33,7 @@ You'll need these in the next step.
 Install the AWS CLI and configure it (ensure python is installed before running these commands)
 
 ```shell
-pip install aws
+pip install awscli
 aws configure
 ```
 

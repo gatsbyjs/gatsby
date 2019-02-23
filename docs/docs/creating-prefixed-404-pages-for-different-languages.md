@@ -32,7 +32,7 @@ export default () => (
 
 Now, open up your project's `gatsby-node.js` and add the following code:
 
-```javascript:gatsby-node.js
+```javascript:title=gatsby-node.js
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage, deletePage } = actions
 
