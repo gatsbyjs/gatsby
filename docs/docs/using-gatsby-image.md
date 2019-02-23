@@ -38,27 +38,25 @@ With Gatsby, we can make images way way better.
 `gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images, you only need to:
 
 1. Install `gatsby-image` and other, necessary dependencies like `gatsby-plugin-sharp` and `gatsby-transformer-sharp`
-   ```shell
-   npm i gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
-   ```
+```shell
+  npm i gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+```
 2. Add the newly installed plugins and transformer plugins to your `gatsby-config.js`
 
-   ```js:title=gatsby-config.js
-   module.exports = {
-     plugins: [
-       // highlight-start
-       `gatsby-plugin-sharp`,
-       `gatsby-transformer-sharp`,
-     ],
-   }
-   ```
+```js:title=gatsby-config.js
+  module.exports = {
+    plugins: [
+      `gatsby-plugin-sharp`,
+      `gatsby-transformer-sharp`,
+    ],
+  }
+```
 
 3. Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option with wherever your images are located relative to your project.
 
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [
-    `gatsby-image`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`
     // highlight-start
