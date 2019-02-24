@@ -39,6 +39,19 @@ module.exports = (
           ]
         },
         {
+          test: /loaders\/mdx-wrappers\.js$/,
+          include: path.dirname(require.resolve("gatsby-mdx")),
+          use: [
+            loaders.js(),
+            {
+              loader: "gatsby-mdx/loaders/mdx-wrappers",
+              options: {
+                store: other.store
+              }
+            }
+          ]
+        },
+        {
           test: testPattern,
           use: [
             loaders.js(),
