@@ -150,7 +150,7 @@ const addSetFieldsOnGraphQLNodeTypeFields = ({
         tc.hasInterface(`Node`)
       ) {
         const typeName = tc.getTypeName()
-        const [fields] = await apiRunner(`setFieldsOnGraphQLNodeType`, {
+        const result = await apiRunner(`setFieldsOnGraphQLNodeType`, {
           type: {
             name: typeName,
             nodes: nodeStore.getNodesByType(typeName),
@@ -158,13 +158,11 @@ const addSetFieldsOnGraphQLNodeTypeFields = ({
           traceId: `initial-setFieldsOnGraphQLNodeType`,
           parentSpan: parentSpan,
         })
-        if (fields) {
-          // NOTE: `setFieldsOnGraphQLNodeType` only allows setting
-          // nested fields with a path as property name, i.e.
-          // `{ 'frontmatter.published': 'Boolean' }`, but not in the form
-          // `{ frontmatter: { published: 'Boolean' }}`
-          tc.addNestedFields(fields)
-        }
+        // NOTE: `setFieldsOnGraphQLNodeType` only allows setting
+        // nested fields with a path as property name, i.e.
+        // `{ 'frontmatter.published': 'Boolean' }`, but not in the form
+        // `{ frontmatter: { published: 'Boolean' }}`
+        result.forEach(fields => tc.addNestedFields(fields))
       }
     })
   )
