@@ -108,7 +108,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     ```sh
     cd my-blazing-fast-site/
-    gatsby develop
+    npm run develop
     ```
 
 3.  **Open the source code and start editing!**
