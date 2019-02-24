@@ -77,7 +77,7 @@ Object {
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "base64": undefined,
   "height": 1,
   "originalName": undefined,
   "src": "/static/1234/05eb0/test.png",
@@ -90,7 +90,7 @@ Object {
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 2`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "base64": undefined,
   "density": 72,
   "originalImg": "/static/1234/c1fac/test.png",
   "originalName": undefined,
