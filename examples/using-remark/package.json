@@ -34,7 +34,7 @@
     "react-dom": "^16.3.2",
     "react-typography": "^0.16.13",
     "rehype-react": "^3.0.2",
-    "slash": "^1.0.0",
+    "slash": "^2.0.0",
     "typeface-space-mono": "^0.0.22",
     "typeface-spectral": "^0.0.29",
     "typography": "^0.16.17"

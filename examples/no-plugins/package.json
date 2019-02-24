@@ -9,7 +9,7 @@
     "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "slash": "^1.0.0"
+    "slash": "^2.0.0"
   },
   "keywords": [
     "gatsby"

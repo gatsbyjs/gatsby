@@ -12,7 +12,7 @@
     "react-dom": "^16.3.1",
     "react-transition-group": "^2.4.0",
     "react-typography": "^0.16.13",
-    "slash": "^1.0.0",
+    "slash": "^2.0.0",
     "typography": "^0.16.6",
     "typography-breakpoint-constants": "^0.15.10"
   },

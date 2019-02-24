@@ -21,7 +21,7 @@
     "react-dom": "^16.3.2",
     "react-icons": "^2.2.7",
     "react-typography": "^0.16.13",
-    "slash": "^1.0.0",
+    "slash": "^2.0.0",
     "typeface-josefin-sans": "^0.0.43",
     "typeface-josefin-slab": "^0.0.43",
     "typeface-rochester": "^0.0.43",
