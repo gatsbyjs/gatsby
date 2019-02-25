@@ -157,7 +157,3 @@ emitter.on(`DELETE_PAGE`, action => {
   const node = getNode(nodeId)
   boundActionCreators.deleteNode({ node })
 })
-
-emitter.on(`BOOTSTRAP_FINISHED`, () =>
-  boundActionCreators.setProgramStatus(`BOOTSTRAP_FINISHED`)
-)
