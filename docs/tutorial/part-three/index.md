@@ -65,7 +65,7 @@ The `gatsby-config.js` is another special file that Gatsby will automatically re
 3. Start the development server.
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:

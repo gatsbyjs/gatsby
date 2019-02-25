@@ -120,7 +120,7 @@ import "./src/styles/global.css"
 3. Start the development server:
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 If you take a look at your project in the browser, you should see a lavender background applied to the "hello world" starter:
@@ -327,7 +327,7 @@ as well as
 
 Gatsby supports almost every possible styling option (if there isn't a plugin
 yet for your favorite CSS option,
-[please contribute one!](/docs/how-to-contribute/))
+[please contribute one!](/contributing/how-to-contribute/))
 
 - [Typography.js](/packages/gatsby-plugin-typography/)
 - [Sass](/packages/gatsby-plugin-sass/)

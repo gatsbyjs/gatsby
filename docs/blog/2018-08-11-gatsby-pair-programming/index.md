@@ -36,4 +36,4 @@ Jason patiently explained the parts I didn’t understand about Gatsby and he al
 
 Again, thanks Jason Lengstorf for the time! and thanks Gatsby for this amazing project!! 🎉
 
-> If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/docs/pair-programming/).
+> If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/contributing/pair-programming/).
