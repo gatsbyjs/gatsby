@@ -234,10 +234,11 @@ module.exports = (
     }
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
-    
-    const wrapperStyle = typeof options.wrapperStyle === `function`
-      ? options.wrapperStyle(fluidResult)
-      : options.wrapperStyle
+
+    const wrapperStyle =
+      typeof options.wrapperStyle === `function`
+        ? options.wrapperStyle(fluidResult)
+        : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
     const showCaptions = options.showCaptions && node.title
