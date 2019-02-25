@@ -4,11 +4,11 @@ const { distinct, group } = require(`../resolvers`)
 const getPageInfo = ({ schemaComposer }) =>
   schemaComposer.getOrCreateTC(`PageInfo`, tc => {
     tc.addFields({
-      hasNextPage: `Boolean`,
-      // currentPage: `Int`,
-      // hasPreviousPage: `Boolean`,
-      // itemCount: `Int`,
-      // pageCount: `Int`,
+      hasNextPage: `Boolean!`,
+      // currentPage: `Int!`,
+      // hasPreviousPage: `Boolean!`,
+      // itemCount: `Int!`,
+      // pageCount: `Int!`,
       // perPage: `Int`,
     })
   })
@@ -18,26 +18,34 @@ const getEdge = ({ schemaComposer, typeComposer }) => {
   return schemaComposer.getOrCreateTC(typeName, tc => {
     tc.addFields({
       next: typeComposer,
-      node: typeComposer,
+      node: typeComposer.getTypeNonNull(),
       previous: typeComposer,
     })
   })
 }
 
-const createPagination = ({ schemaComposer, typeComposer, fields, typeName }) =>
-  schemaComposer.getOrCreateTC(typeName, tc => {
+const createPagination = ({
+  schemaComposer,
+  typeComposer,
+  fields,
+  typeName,
+}) => {
+  const paginationTypeComposer = schemaComposer.getOrCreateTC(typeName, tc => {
     tc.addFields({
-      totalCount: `Int`,
-      edges: [getEdge({ schemaComposer, typeComposer })],
-      pageInfo: getPageInfo({ schemaComposer }),
+      totalCount: `Int!`,
+      edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
+      pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
       ...fields,
     })
   })
+  paginationTypeComposer.makeFieldNonNull(`edges`)
+  return paginationTypeComposer
+}
 
 const getGroup = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName() + `GroupConnection`
   const fields = {
-    field: `String`,
+    field: `String!`,
     fieldValue: `String`,
   }
   return createPagination({ schemaComposer, typeComposer, fields, typeName })
@@ -69,7 +77,15 @@ const getPagination = ({ schemaComposer, typeComposer }) => {
       resolve: group,
     },
   }
-  return createPagination({ schemaComposer, typeComposer, fields, typeName })
+  const paginationTypeComposer = createPagination({
+    schemaComposer,
+    typeComposer,
+    fields,
+    typeName,
+  })
+  paginationTypeComposer.makeFieldNonNull(`distinct`)
+  paginationTypeComposer.makeFieldNonNull(`group`)
+  return paginationTypeComposer
 }
 
 module.exports = {
