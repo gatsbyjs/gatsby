@@ -145,7 +145,7 @@ async function pushToQueue(task, cb) {
 const requestRemoteNode = (url, headers, tmpFilename) =>
   new Promise((resolve, reject) => {
     const responseStream = got.stream(url, {
-      ...headers,
+      headers,
       timeout: 30000,
       retries: 5,
     })
