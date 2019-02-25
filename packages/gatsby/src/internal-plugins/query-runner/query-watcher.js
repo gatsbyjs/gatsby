@@ -39,20 +39,6 @@ const handleComponentsWithRemovedQueries = (
   { components, staticQueryComponents },
   queries
 ) => {
-  // If a component previously with a query now doesn't — update the
-  // store.
-  // TODO handle in xstate
-  // components.forEach(c => {
-  // if (c.query !== `` && !queries.has(c.componentPath)) {
-  // debug(`Page query was removed from ${c.componentPath}`)
-  // boundActionCreators.replaceComponentQuery({
-  // query: ``,
-  // componentPath: c.componentPath,
-  // })
-  // queueQueriesForPageComponent(c.componentPath)
-  // }
-  // })
-
   // If a component had static query and it doesn't have it
   // anymore - update the store
   staticQueryComponents.forEach(c => {
