@@ -42,14 +42,13 @@ const runQueries = async () => {
 
   // Find ids without data dependencies (i.e. no queries have been run for
   // them before) and run them.
-  // const cleanIds = findIdsWithoutDataDependencies()
-  // console.log({ cleanIds })
+  const cleanIds = findIdsWithoutDataDependencies()
 
   // Construct paths for all queries to run
   const pathnamesToRun = _.uniq([
     ...runQueriesForPathnamesQueue,
     ...dirtyIds,
-    // ...cleanIds,
+    ...cleanIds,
   ])
 
   runQueriesForPathnamesQueue.clear()
@@ -113,10 +112,7 @@ const findIdsWithoutDataDependencies = () => {
   // Get list of paths not already tracked and run the queries for these
   // paths.
   const notTrackedIds = _.difference(
-    [
-      ...Array.from(state.pages.values(), p => p.path),
-      ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
-    ],
+    [...[...state.staticQueryComponents.values()].map(c => c.jsonName)],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
 
