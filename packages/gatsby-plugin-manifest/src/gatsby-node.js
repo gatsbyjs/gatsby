@@ -33,7 +33,7 @@ function generateIcons(icons, srcIcon) {
     // Sharp accept density from 1 to 2400
     const density = Math.min(2400, Math.max(1, size))
     return sharp(srcIcon, { density })
-      .resize(size)
+      .resize(size, size)
       .toFile(imgPath)
       .then(() => {})
   })
