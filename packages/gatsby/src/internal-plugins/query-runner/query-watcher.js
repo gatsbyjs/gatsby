@@ -115,7 +115,8 @@ const handleQuery = (
 const updateStateAndRunQueries = isFirstRun => {
   const snapshot = getQueriesSnapshot()
   return queryCompiler().then(queries => {
-    // If there's an error while extracting queries, the queryCompiler returns false.
+    // If there's an error while extracting queries, the queryCompiler returns false
+    // or zero results.
     // Yeah, should probably be an error but don't feel like threading the error
     // all the way here.
     if (!queries || queries.size === 0) {
