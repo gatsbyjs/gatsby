@@ -381,7 +381,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: nodes.concat(descendantNodes),
+    payload: [...nodes, ...descendantNodes],
   }
   return deleteNodesAction
 }
