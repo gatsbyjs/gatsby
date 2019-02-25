@@ -107,7 +107,7 @@ const componentMachine = Machine(
       },
       setQuery: assign({
         query: (ctx, event) => {
-          if (event.query) {
+          if (typeof event.query !== `undefined` || event.query !== null) {
             return event.query
           } else {
             return ctx.query
@@ -161,11 +161,7 @@ module.exports = (state = new Map(), action) => {
           {
             query: ``,
           },
-          service.state.context,
-          state.get(action.payload.componentPath),
-          {
-            componentPath: action.payload.componentPath,
-          }
+          service.state.context
         )
       )
       return state
@@ -194,8 +190,7 @@ module.exports = (state = new Map(), action) => {
       }
       services.set(action.payload.componentPath, service)
       state.set(action.payload.componentPath, {
-        ...state.get(action.payload.componentPath),
-        query: action.payload.query,
+        ...service.state.context,
       })
       return state
     }
