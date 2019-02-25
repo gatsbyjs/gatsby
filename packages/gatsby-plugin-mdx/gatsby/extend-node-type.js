@@ -185,8 +185,17 @@ module.exports = (
             return Promise.resolve(mdxNode.html);
           }
           const { body } = await processMDX({ node: mdxNode });
-          const withMDX = renderHTML(body);
-          return withMDX(store.getState().webpack);
+          try {
+            const withMDX = renderHTML(body);
+            return withMDX(store.getState().webpack);
+          } catch (e) {
+            throw new Error(
+              "Error querying the `html` field. This field is inded for use with RSS feed generation.\n" +
+                "If you're trying to use it in application-level code, try querying for code.body instead.\n" +
+                "Original error: " +
+                e
+            );
+          }
         }
       },
       tableOfContents: {
