@@ -1151,6 +1151,7 @@ actions.addThirdPartySchema = (
  * @param {componentPath} $0.componentPath The path to the component that just had
  * its query read.
  * @param {query} $0.query The GraphQL query that was extracted from the component.
+ * @private
  */
 actions.queryExtracted = (
   { componentPath, query },
@@ -1173,6 +1174,7 @@ actions.queryExtracted = (
  * @param {componentPath} $0.componentPath The path to the component that just had
  * its query read.
  * @param {error} $0.error The GraphQL query that was extracted from the component.
+ * @private
  */
 actions.queryExtractionGraphQLError = (
   { componentPath, error },
@@ -1195,6 +1197,7 @@ actions.queryExtractionGraphQLError = (
  * @param {componentPath} $0.componentPath The path to the component that just had
  * its query read.
  * @param {error} $0.error The Babel error object
+ * @private
  */
 actions.queryExtractionBabelError = (
   { componentPath, error },
@@ -1213,6 +1216,7 @@ actions.queryExtractionBabelError = (
  * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
  *
  * @param {string} Program status
+ * @private
  */
 actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
   return {
@@ -1242,6 +1246,7 @@ actions.pageComponentChanged = (path, plugin: Plugin, traceId?: string) => {
  * Broadcast that a page's query was run.
  *
  * @param {string} Path to the page component that changed.
+ * @private
  */
 actions.pageQueryRun = (
   { path, componentPath, isPage },

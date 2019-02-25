@@ -202,7 +202,6 @@ exports.extractQueries = () => {
 
 const queueQueriesForPageComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
-  console.log(`queueQueriesForPageComponent`, { componentPath, pages })
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
