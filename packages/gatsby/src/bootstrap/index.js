@@ -55,10 +55,6 @@ module.exports = async (args: BootstrapArgs) => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
-  // Start plugin runner which listens to the store
-  // and invokes Gatsby API based on actions.
-  require(`../redux/plugin-runner`)
-
   const directory = slash(args.directory)
 
   const program = {
@@ -396,7 +392,6 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
     traceId: `initial-createPages`,
-    waitForCascadingActions: true,
     parentSpan: activity.span,
   })
   activity.end()
@@ -412,7 +407,6 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
     traceId: `initial-createPagesStatefully`,
-    waitForCascadingActions: true,
     parentSpan: activity.span,
   })
   activity.end()

@@ -15,13 +15,15 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `)
 
-  data.cms.blogPosts.forEach(blog => {
-    actions.createPage({
-      path: makeBlogPath(blog),
-      component: path.resolve(`./src/components/blog-post.js`),
-      context: {
-        blogId: blog.id,
-      },
-    })
-  })
+  return Promise.all(
+    data.cms.blogPosts.map(blog =>
+      actions.createPage({
+        path: makeBlogPath(blog),
+        component: path.resolve(`./src/components/blog-post.js`),
+        context: {
+          blogId: blog.id,
+        },
+      })
+    )
+  )
 }

@@ -4,10 +4,11 @@ exports.onCreatePage = ({ page, store, actions }) => {
   // site 404 pages to be named this.
   // https://www.gatsbyjs.org/docs/add-404-page/
   if (!created404 && page.path === `/404/`) {
-    actions.createPage({
+    created404 = true
+    return actions.createPage({
       ...page,
       path: `/404.html`,
     })
-    created404 = true
   }
+  return Promise.resolve()
 }

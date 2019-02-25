@@ -47,14 +47,16 @@ exports.createPages = async function createPages({
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
-  data.posts.edges.forEach(({ node }) => {
-    const { slug } = node.fields
-    createPage({
-      path: slug,
-      component: blogPostTemplate,
-      context: {
-        slug,
-      },
+  return Promise.all(
+    data.posts.edges.map(({ node }) => {
+      const { slug } = node.fields
+      return createPage({
+        path: slug,
+        component: blogPostTemplate,
+        context: {
+          slug,
+        },
+      })
     })
-  })
+  )
 }

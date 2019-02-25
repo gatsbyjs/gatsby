@@ -55,7 +55,6 @@ const runCreatePages = async () => {
   await apiRunnerNode(`createPages`, {
     graphql,
     traceId: `createPages`,
-    waitForCascadingActions: true,
   })
 
   // Delete pages that weren't updated when running createPages.

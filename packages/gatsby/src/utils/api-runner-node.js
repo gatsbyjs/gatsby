@@ -102,8 +102,7 @@ const runAPI = (plugin, api, args) => {
     if (api === `createPages`) {
       let alreadyDisplayed = false
       const createPageAction = doubleBoundActionCreators.createPage
-      doubleBoundActionCreators.createPage = (...args) => {
-        createPageAction(...args)
+      doubleBoundActionCreators.createPage = async (...args) => {
         if (apiFinished && !alreadyDisplayed) {
           const warning = [
             reporter.stripIndent(`
@@ -131,6 +130,7 @@ const runAPI = (plugin, api, args) => {
           reporter.warn(warning.join(`\n\n`))
           alreadyDisplayed = true
         }
+        return createPageAction(...args)
       }
     }
 
@@ -179,151 +179,63 @@ const runAPI = (plugin, api, args) => {
     }
   }
 
-  return null
+  return Promise.resolve()
 }
 
 let filteredPlugins
 const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
-let apisRunningById = new Map()
-let apisRunningByTraceId = new Map()
-let waitingForCasacadeToFinish = []
+module.exports = async (api, args = {}, pluginSource) => {
+  const { parentSpan } = args
+  const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
 
-module.exports = async (api, args = {}, pluginSource) =>
-  new Promise(resolve => {
-    const { parentSpan } = args
-    const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
-    const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
+  apiSpan.setTag(`api`, api)
+  _.forEach(args.traceTags, (value, key) => {
+    apiSpan.setTag(key, value)
+  })
 
-    apiSpan.setTag(`api`, api)
-    _.forEach(args.traceTags, (value, key) => {
-      apiSpan.setTag(key, value)
-    })
+  // Check that the API is documented.
+  // "FAKE_API_CALL" is used when code needs to trigger something to happen
+  // once the the API queue is empty. Ideally of course we'd have an API
+  // (returning a promise) for that. But this works nicely in the meantime.
+  if (!apiList[api] && api !== `FAKE_API_CALL`) {
+    reporter.panic(`api: "${api}" is not a valid Gatsby api`)
+  }
 
-    // Check that the API is documented.
-    // "FAKE_API_CALL" is used when code needs to trigger something
-    // to happen once the the API queue is empty. Ideally of course
-    // we'd have an API (returning a promise) for that. But this
-    // works nicely in the meantime.
-    if (!apiList[api] && api !== `FAKE_API_CALL`) {
-      reporter.panic(`api: "${api}" is not a valid Gatsby api`)
-    }
+  const { store } = require(`../redux`)
+  const plugins = store.getState().flattenedPlugins
+  // Get the list of plugins that implement gatsby-node.
+  if (!filteredPlugins) {
+    filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))
+  }
 
-    const { store } = require(`../redux`)
-    const plugins = store.getState().flattenedPlugins
-    // Get the list of plugins that implement gatsby-node
-    if (!filteredPlugins) {
-      filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))
-    }
+  // Break infinite loops.
+  // Sometimes a plugin will implement an API and call an action which will
+  // trigger the same API being called. `onCreatePage` is the only example
+  // right now. In these cases, we should avoid calling the originating plugin
+  // again.
+  const noSourcePluginPlugins = pluginSource
+    ? filteredPlugins.filter(p => p.name !== pluginSource)
+    : filteredPlugins
 
-    // Break infinite loops.
-    // Sometimes a plugin will implement an API and call an
-    // action which will trigger the same API being called.
-    // "onCreatePage" is the only example right now.
-    // In these cases, we should avoid calling the originating plugin
-    // again.
-    let noSourcePluginPlugins = filteredPlugins
-    if (pluginSource) {
-      noSourcePluginPlugins = filteredPlugins.filter(
-        p => p.name !== pluginSource
-      )
-    }
-
-    const apiRunInstance = {
-      api,
-      args,
-      pluginSource,
-      resolve,
-      span: apiSpan,
-      startTime: new Date().toJSON(),
-      traceId: args.traceId,
-    }
-
-    // Generate IDs for api runs. Most IDs we generate from the args
-    // but some API calls can have very large argument objects so we
-    // have special ways of generating IDs for those to avoid stringifying
-    // large objects.
-    let id
-    if (api === `setFieldsOnGraphQLNodeType`) {
-      id = `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
-    } else if (api === `onCreateNode`) {
-      id = `${api}${apiRunInstance.startTime}${
-        args.node.internal.contentDigest
-      }${args.traceId}`
-    } else if (api === `preprocessSource`) {
-      id = `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
-    } else if (api === `onCreatePage`) {
-      id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
-    } else {
-      // When tracing is turned on, the `args` object will have a
-      // `parentSpan` field that can be quite large. So we omit it
-      // before calling stringify
-      const argsJson = JSON.stringify(_.omit(args, `parentSpan`))
-      id = `${api}|${apiRunInstance.startTime}|${
-        apiRunInstance.traceId
-      }|${argsJson}`
-    }
-    apiRunInstance.id = id
-
-    if (args.waitForCascadingActions) {
-      waitingForCasacadeToFinish.push(apiRunInstance)
-    }
-
-    apisRunningById.set(apiRunInstance.id, apiRunInstance)
-    if (apisRunningByTraceId.has(apiRunInstance.traceId)) {
-      const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
-      apisRunningByTraceId.set(apiRunInstance.traceId, currentCount + 1)
-    } else {
-      apisRunningByTraceId.set(apiRunInstance.traceId, 1)
-    }
-
-    Promise.mapSeries(noSourcePluginPlugins, plugin => {
-      let pluginName =
+  const results = []
+  for (const plugin of noSourcePluginPlugins) {
+    try {
+      const result = await runAPI(plugin, api, { ...args, parentSpan: apiSpan })
+      results.push(result)
+    } catch (err) {
+      const pluginName =
         plugin.name === `default-site-plugin`
           ? `gatsby-node.js`
           : `Plugin ${plugin.name}`
+      reporter.panicOnBuild(`${pluginName} returned an error`, err)
+    }
+  }
 
-      return new Promise(resolve => {
-        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
-      }).catch(err => {
-        reporter.panicOnBuild(`${pluginName} returned an error`, err)
-        return null
-      })
-    }).then(results => {
-      // Remove runner instance
-      apisRunningById.delete(apiRunInstance.id)
-      const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
-      apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
+  const { emitter } = require(`../redux`)
+  emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+  apiSpan.finish()
 
-      if (apisRunningById.size === 0) {
-        const { emitter } = require(`../redux`)
-        emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
-      }
-
-      // Filter empty results
-      apiRunInstance.results = results.filter(result => !_.isEmpty(result))
-
-      // Filter out empty responses and return if the
-      // api caller isn't waiting for cascading actions to finish.
-      if (!args.waitForCascadingActions) {
-        apiSpan.finish()
-        resolve(apiRunInstance.results)
-      }
-
-      // Check if any of our waiters are done.
-      waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
-        instance => {
-          // If none of its trace IDs are running, it's done.
-          const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId)
-          if (apisByTraceIdCount === 0) {
-            instance.span.finish()
-            instance.resolve(instance.results)
-            return false
-          } else {
-            return true
-          }
-        }
-      )
-      return
-    })
-  })
+  return results.filter(result => !_.isEmpty(result))
+}

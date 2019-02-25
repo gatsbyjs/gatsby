@@ -131,13 +131,13 @@ exports.sourceNodes = async ({ createContentDigest, actions, store }) => {
   })
 }
 
-exports.onCreatePage = async ({ createContentDigest, page, actions }) => {
+exports.onCreatePage = ({ createContentDigest, page, actions }) => {
   const { createNode } = actions
   // eslint-disable-next-line
   const { updatedAt, ...pageWithoutUpdated } = page
 
   // Add page.
-  await createNode({
+  return createNode({
     ...pageWithoutUpdated,
     id: createPageId(page.path),
     parent: null,

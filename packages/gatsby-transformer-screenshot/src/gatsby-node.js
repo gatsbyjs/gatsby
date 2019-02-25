@@ -57,9 +57,7 @@ exports.onPreBootstrap = (
   }
 
   return new Promise((resolve, reject) => {
-    screenshotQueue.on(`drain`, () => {
-      resolve()
-    })
+    screenshotQueue.on(`drain`, () => resolve())
   })
 }
 
@@ -75,36 +73,30 @@ exports.onCreateNode = async (
    */
   const validNodeTypes = [`SitesYaml`].concat(pluginOptions.nodeTypes || [])
   if (!validNodeTypes.includes(node.internal.type) || !node.url) {
-    return
+    return Promise.resolve()
   }
 
-  try {
-    const screenshotNode = await new Promise((resolve, reject) => {
-      screenshotQueue
-        .push({
-          url: node.url,
-          parent: node.id,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-          createContentDigest,
-        })
-        .on(`finish`, r => {
-          resolve(r)
-        })
-        .on(`failed`, e => {
-          reject(e)
-        })
-    })
+  const screenshotNode = await new Promise((resolve, reject) => {
+    screenshotQueue
+      .push({
+        url: node.url,
+        parent: node.id,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+        createContentDigest,
+      })
+      .on(`finish`, r => resolve(r))
+      .on(`failed`, e => reject(e))
+  })
 
-    createParentChildLink({
-      parent: node,
-      child: screenshotNode,
-    })
-  } catch (e) {
-    return
-  }
+  createParentChildLink({
+    parent: node,
+    child: screenshotNode,
+  })
+
+  return Promise.resolve()
 }
 
 const createScreenshotNode = async ({
@@ -157,10 +149,10 @@ const createScreenshotNode = async ({
 
     screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)
 
-    return createNode(screenshotNode)
+    await createNode(screenshotNode)
+    return Promise.resolve(screenshotNode)
   } catch (e) {
     console.log(`Failed to screenshot ${url}. Retrying...`)
-
     throw e
   }
 }

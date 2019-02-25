@@ -18,7 +18,7 @@ exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
       return resolve()
     }
 
-    prefixes.some(prefix => {
+    const matched = prefixes.some(prefix => {
       if (!re[prefix]) {
         // Remove the * from the prefix and memoize
         const trimmedPrefix = prefix.replace(/\*$/, ``)
@@ -30,13 +30,15 @@ exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
 
       if (path.match(re[prefix])) {
         page.matchPath = prefix.replace(/\*$/, `*`)
-        createPage(page)
         return true
       }
 
       return false
     })
 
-    return resolve()
+    if (matched) {
+      return createPage(page)
+    }
+    return Promise.resolve()
   })
 }

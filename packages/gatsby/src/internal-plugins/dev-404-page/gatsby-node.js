@@ -14,7 +14,7 @@ exports.createPagesStatefully = async ({ store, actions }, options, done) => {
     )
     const copy = () => fs.copy(source, destination)
     await copy()
-    createPage({
+    await createPage({
       component: destination,
       path: `/dev-404-page/`,
     })

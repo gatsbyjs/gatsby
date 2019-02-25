@@ -30,7 +30,6 @@ function discoverPluginsWithoutNodes(storeState) {
 module.exports = async ({ parentSpan } = {}) => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
-    waitForCascadingActions: true,
     parentSpan: parentSpan,
   })
 

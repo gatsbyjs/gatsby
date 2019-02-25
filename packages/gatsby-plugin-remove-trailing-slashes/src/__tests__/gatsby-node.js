@@ -6,14 +6,14 @@ describe(`gatsby-plugin-remove-trailing-slashes`, () => {
     deletePage: jest.fn(),
   }
 
-  it(`correctly keeps index /`, () => {
-    onCreatePage({ actions, page: { page: `/` } })
+  it(`correctly keeps index /`, async () => {
+    await onCreatePage({ actions, page: { path: `/` } })
     expect(actions.createPage).not.toBeCalled()
     expect(actions.deletePage).not.toBeCalled()
   })
 
-  it(`correctly removes slash and recreated page`, () => {
-    onCreatePage({ actions, page: { path: `/home/` } })
+  it(`correctly removes slash and recreated page`, async () => {
+    await onCreatePage({ actions, page: { path: `/home/` } })
     expect(actions.deletePage).toBeCalledWith({ path: `/home/` })
     expect(actions.createPage).toBeCalledWith({ path: `/home` })
   })

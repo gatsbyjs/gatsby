@@ -1,5 +1,3 @@
-"use strict"
-
 const fs = require(`fs`)
 const { extname, resolve } = require(`path`)
 const recursiveReaddir = require(`recursive-readdir-synchronous`)
@@ -43,38 +41,39 @@ exports.createPages = (
 
   if (files.length === 0) {
     console.warn(`Specified REPL directory "${directory}" contains no files`)
-
-    return
+    return Promise.resolve()
   }
 
-  files.forEach(file => {
-    if (extname(file) === `.js` || extname(file) === `.jsx`) {
-      const slug = file
-        .substring(0, file.length - extname(file).length)
-        .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
-      const code = fs.readFileSync(file, `utf8`)
+  return Promise.all(
+    files
+      .filter(file => extname(file) === `.js` || extname(file) === `.jsx`)
+      .map(file => {
+        const slug = file
+          .substring(0, file.length - extname(file).length)
+          .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
+        const code = fs.readFileSync(file, `utf8`)
 
-      // Codepen configuration.
-      // https://blog.codepen.io/documentation/api/prefill/
-      const action = `https://codepen.io/pen/define`
-      const payload = JSON.stringify({
-        editors: `0010`,
-        html,
-        js: code,
-        js_external: externals.join(`;`),
-        js_pre_processor: `babel`,
-        layout: `left`,
-      })
+        // Codepen configuration.
+        // https://blog.codepen.io/documentation/api/prefill/
+        const action = `https://codepen.io/pen/define`
+        const payload = JSON.stringify({
+          editors: `0010`,
+          html,
+          js: code,
+          js_external: externals.join(`;`),
+          js_pre_processor: `babel`,
+          layout: `left`,
+        })
 
-      createPage({
-        path: slug,
-        // Normalize the path so tests pass on Linux + Windows
-        component: normalizePath(resolve(redirectTemplate)),
-        context: {
-          action,
-          payload,
-        },
+        return createPage({
+          path: slug,
+          // Normalize the path so tests pass on Linux + Windows
+          component: normalizePath(resolve(redirectTemplate)),
+          context: {
+            action,
+            payload,
+          },
+        })
       })
-    }
-  })
+  )
 }

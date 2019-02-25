@@ -11,7 +11,7 @@ const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
 const { hasNodeChanged, getNode } = require(`../db/nodes`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
-const { store, emitter } = require(`./index`)
+const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
@@ -105,10 +105,10 @@ const fileOkCache = {}
  *   },
  * })
  */
-actions.createPage = (
+const createPage = (
   page: PageInput,
   plugin?: Plugin,
-  actionOptions?: ActionOptions
+  actionOptions?: ActionOptions = {}
 ) => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
@@ -307,6 +307,26 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 }
 
+actions.createPage = (
+  page: PageInput,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions = {}
+) => dispatch => {
+  const action = createPage(page, plugin, actionOptions)
+  dispatch(action)
+
+  const apiRunnerNode = require(`../utils/api-runner-node`)
+  return apiRunnerNode(
+    `onCreatePage`,
+    {
+      page: action.payload,
+      parentSpan: actionOptions.parentSpan,
+      traceId: actionOptions.traceId,
+    },
+    plugin.name
+  )
+}
+
 /**
  * Delete a node
  * @param {object} $0
@@ -459,7 +479,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNodeSync = (
+const createNode = (
   node: any,
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
@@ -624,13 +644,16 @@ actions.createNode = (
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
 ) => dispatch => {
-  dispatch(actions.createNodeSync(node, plugin, actionOptions))
-
+  const action = createNode(node, plugin, actionOptions)
+  dispatch(action)
   const apiRunnerNode = require(`../utils/api-runner-node`)
   return apiRunnerNode(`onCreateNode`, {
-    node,
-    traceId: actionOptions.traceId,
+    // We need to get the node from the store to ensure it has internal properties
+    // like `$loki` added. Otherwise `createParentChildLink` and similar will fail
+    // when trying to `update()` the node in the db.
+    node: getNode(action.payload.id),
     parentSpan: actionOptions.parentSpan,
+    traceId: actionOptions.traceId,
     traceTags: { nodeId: node.id, nodeType: node.internal.type },
   })
 }
