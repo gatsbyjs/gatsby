@@ -46,7 +46,7 @@ Using `StaticQuery`, you can colocate a component with its data. No longer is it
 
 ### useStaticQuery
 
-Using the hooks version of static query is very similar. Checkout the documentation of `useStaticQuery` [here!](/docs/use-static-query/)
+There's also a hooks version of StaticQuery called `useStaticQuery`. Check out its documentation [here!](/docs/use-static-query/)
 
 ### Typechecking
 
