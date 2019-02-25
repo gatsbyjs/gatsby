@@ -8,9 +8,9 @@ import pluginOptionsSchema from "./plugin-options"
 
 const publicPath = `./public`
 
-const warnMessage = (error, reason) => `
+const warnMessage = (error, behavior) => `
   gatsby-plugin-feed was initialized in gatsby-config.js without a ${error}.
-  This means that we the plugin will use ${reason}, which may not match your use case.
+  This means that we the plugin will use ${behavior}, which may not match your use case.
   This behavior will be removed in the next major release of gatsby-plugin-feed.
   For more info, check out: https://gatsby.app/rss-feed
 `
@@ -28,7 +28,6 @@ const serialize = ({ query: { site, allMarkdownRemark } }) =>
     }
   })
 
-// TODO: remove this check in the next major release
 exports.onPreBootstrap = async function onPreBootstrap(
   { reporter },
   pluginOptions
@@ -38,6 +37,7 @@ exports.onPreBootstrap = async function onPreBootstrap(
   try {
     const normalized = await pluginOptionsSchema.validate(pluginOptions)
 
+    // TODO: remove these checks in the next major release
     if (!normalized.feeds) {
       reporter.warn(
         reporter.stripIndent(

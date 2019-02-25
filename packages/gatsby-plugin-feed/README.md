@@ -70,8 +70,10 @@ plugins: [
 ]
 ```
 
-Each feed must include `output`, `query`, and `title`. Additionally, it is strongly recommended to pass a custom `serialize` function, otherwise an internal serialize function will be used which may not exactly match your particualr use case.
+Each feed must include `output`, `query`, and `title`. Additionally, it is strongly recommended to pass a custom `serialize` function, otherwise an internal serialize function will be used which may not exactly match your particular use case.
 
 All additional options are passed through to the [`RSS`][rss] utillity. For more info on those additional options, [check out the `itemOptions` section of the `RSS` utility](https://www.npmjs.com/package/rss#itemoptions).
 
 _NOTE: This plugin only generates the `xml` file(s) when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`._
+
+[rss]: https://www.npmjs.com/package/rss
