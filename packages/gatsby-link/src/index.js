@@ -11,8 +11,7 @@ export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
 }
 
-function normalizePath(path) {
-}
+function normalizePath(path) {}
 
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
