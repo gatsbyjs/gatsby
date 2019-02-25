@@ -213,7 +213,13 @@ const queueQueriesForPageComponent = componentPath => {
   runQueries()
 }
 
+const runQueryForPage = path => {
+  queueQueryForPathname(path)
+  runQueries()
+}
+
 exports.queueQueriesForPageComponent = queueQueriesForPageComponent
+exports.runQueryForPage = runQueryForPage
 
 const getPagesForComponent = componentPath => {
   const state = store.getState()

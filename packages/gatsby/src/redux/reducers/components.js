@@ -33,6 +33,9 @@ const componentMachine = Machine(
           QUERY_EXTRACTED: `runningPageQueries`,
           QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
+          NEW_PAGE_CREATED: {
+            actions: `setPage`,
+          },
         },
       },
       extractingQueries: {
@@ -45,6 +48,9 @@ const componentMachine = Machine(
           QUERY_DID_NOT_CHANGE: `idle`,
           QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
+          NEW_PAGE_CREATED: {
+            actions: `setPage`,
+          },
         },
       },
       queryExtractionGraphQLError: {
@@ -70,6 +76,9 @@ const componentMachine = Machine(
             actions: `setBootstrapFinished`,
           },
           QUERIES_COMPLETE: `idle`,
+          NEW_PAGE_CREATED: {
+            actions: `setPage`,
+          },
         },
       },
       idle: {
@@ -77,6 +86,9 @@ const componentMachine = Machine(
           PAGE_COMPONENT_CHANGED: `extractingQueries`,
           BOOTSTRAP_FINISHED: {
             actions: `setBootstrapFinished`,
+          },
+          NEW_PAGE_CREATED: {
+            actions: `setPage`,
           },
         },
       },
@@ -114,6 +126,15 @@ const componentMachine = Machine(
           }
         },
       }),
+      setPage: assign({
+        pages: (ctx, event) => {
+          if (event.path) {
+            return ctx.pages.concat(event.path)
+          } else {
+            return ctx.pages
+          }
+        },
+      }),
       setBootstrapFinished: assign({
         isInBootstrap: false,
       }),
@@ -140,6 +161,7 @@ module.exports = (state = new Map(), action) => {
         const machine = componentMachine.withContext({
           componentPath: action.payload.componentPath,
           query: ``,
+          pages: [action.payload.path],
           isInBootstrap: programStatus === `BOOTSTRAPPING`,
         })
         service = interpret(machine)
@@ -153,6 +175,19 @@ module.exports = (state = new Map(), action) => {
         services.set(action.payload.componentPath, service)
       } else {
         service = services.get(action.payload.componentPath)
+        // Check if this is a new page — if so, run its query.
+        if (!_.includes(service.state.context.pages, action.payload.path)) {
+          service.send({ type: `NEW_PAGE_CREATED`, path: action.payload.path })
+          // Run query for the new page.
+          const {
+            runQueryForPage,
+          } = require(`../../internal-plugins/query-runner/query-watcher`)
+          // Wait a bit as calling this function immediately triggers
+          // an Action call which Redux squawks about.
+          setTimeout(() => {
+            runQueryForPage(action.payload.path)
+          }, 0)
+        }
       }
 
       state.set(
