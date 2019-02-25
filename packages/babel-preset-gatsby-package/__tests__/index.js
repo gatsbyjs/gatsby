@@ -148,3 +148,51 @@ it(`Specifies proper presets and plugins in debug browser mode`, () => {
     ),
   ])
 })
+
+it(`Specifies proper presets and plugins in production browser mode`, () => {
+  const currentBabelEnv = process.env.BABEL_ENV
+  let presets
+  let plugins
+
+  try {
+    process.env.BABEL_ENV = `production`
+    const config = preset(null, { browser: true })
+    presets = config.presets
+    plugins = config.plugins
+  } finally {
+    process.env.BABEL_ENV = currentBabelEnv
+  }
+
+  expect(presets).toEqual([
+    [
+      expect.stringContaining(path.join(`@babel`, `preset-env`)),
+      {
+        debug: false,
+        loose: true,
+        modules: `commonjs`,
+        shippedProposals: true,
+        targets: {
+          browsers: [`last 4 versions`, `safari >= 7`, `ie >= 9`],
+        },
+        useBuiltIns: false,
+      },
+    ],
+    [
+      expect.stringContaining(path.join(`@babel`, `preset-react`)),
+      { development: false },
+    ],
+    expect.stringContaining(path.join(`@babel`, `preset-flow`)),
+  ])
+  expect(plugins).toEqual([
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-proposal-class-properties`)
+    ),
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-proposal-optional-chaining`)
+    ),
+    expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
+    expect.stringContaining(
+      path.join(`@babel`, `plugin-syntax-dynamic-import`)
+    ),
+  ])
+})
