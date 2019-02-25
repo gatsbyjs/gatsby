@@ -2,13 +2,14 @@ require(`v8-compile-cache`)
 
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const url = require(`url`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath } = require(`./path`)
+const { withBasePath, withTrailingSlash } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -38,10 +39,8 @@ module.exports = async (
   const { assetPrefix, pathPrefix } = store.getState().config
 
   let publicPath = `/`
-  if (assetPrefix || pathPrefix) {
-    publicPath = [assetPrefix, pathPrefix]
-      .filter(part => part && part.length > 0)
-      .join(`/`)
+  if (program.prefixPaths && (pathPrefix || assetPrefix)) {
+    publicPath = url.resolve(assetPrefix, pathPrefix)
   }
 
   function processEnv(stage, defaultNodeEnv) {
@@ -100,7 +99,7 @@ module.exports = async (
       if (pubPath.substr(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
-        hmrBasePath = `${pubPath}/`
+        hmrBasePath = withTrailingSlash(pubPath)
       }
     }
 
@@ -135,14 +134,14 @@ module.exports = async (
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath,
+          publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
-          publicPath,
+          publicPath: withTrailingSlash(publicPath),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -186,6 +185,7 @@ module.exports = async (
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
+        __BASE_PATH__: JSON.stringify(program.prefixPaths ? pathPrefix : ``),
         __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``

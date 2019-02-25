@@ -8,6 +8,7 @@ const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
+const cors = require(`cors`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
 const getPages = directory =>
@@ -66,6 +67,7 @@ module.exports = async program => {
     return next()
   })
   app.use(pathPrefix, router)
+  app.use(cors())
 
   const server = app.listen(port, host, () => {
     let openUrlString = `http://${host}:${port}${pathPrefix}`

@@ -88,7 +88,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       createElement(
         Router,
         {
-          basepath: __PATH_PREFIX__,
+          basepath: __BASE_PATH__,
         },
         createElement(RouteHandler, { path: `/*` })
       )
