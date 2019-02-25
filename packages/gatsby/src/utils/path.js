@@ -15,5 +15,5 @@ export function withBasePath(basePath) {
 }
 
 export function withTrailingSlash(basePath) {
-  return basePath.replace(/([\/]+)?$/, '/')
+  return basePath.replace(/([\/]+)?$/, `/`)
 }
