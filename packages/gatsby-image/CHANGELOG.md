@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.30](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.29...gatsby-image@2.0.30) (2019-02-25)
+
+### Bug Fixes
+
+- **gatsby-image:** Safari Downloading multiple resolutions ([#11920](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/11920)) ([29e572e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/29e572e))
+
 ## [2.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.28...gatsby-image@2.0.29) (2019-01-28)
 
 ### Bug Fixes

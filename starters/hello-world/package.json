@@ -7,14 +7,18 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
+    "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "dependencies": {
-    "gatsby": "^2.1.10",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2"
+    "gatsby": "^2.1.18",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
+  "devDependencies": {
+    "prettier": "^1.16.4"
   },
   "repository": {
     "type": "git",

@@ -208,6 +208,7 @@ exports.sourceNodes = async (
             cache,
             createNode,
             createNodeId,
+            parentNodeId: node.id,
             auth,
           })
         } catch (e) {

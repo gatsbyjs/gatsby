@@ -94,6 +94,15 @@ At the root of a Gatsby site run `npx gatsby info` to get helpful environment in
 | :-----------------: | ------------------------------------------------------- |
 | `-C`, `--clipboard` | Automagically copy environment information to clipboard |
 
+### `clean`
+
+At the root of a Gatsby app run gatsby clean to wipe out the cache (.cache folder) and public directories. This is useful as a last resort when your local project seems to have issues or content does not seem to be refreshing. Issues this may fix commonly include:
+
+- Stale data, e.g. this file/resource/etc. isn't appearing
+- GraphQL error, e.g. this GraphQL resource should be present but is not
+- Dependency issues, e.g. invalid version, cryptic errors in console, etc.
+- Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
+
 ### Repl
 
 Get a Node.js REPL (interactive shell) with context of Gatsby environment

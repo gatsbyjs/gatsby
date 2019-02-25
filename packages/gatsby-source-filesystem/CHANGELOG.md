@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.22...gatsby-source-filesystem@2.0.23) (2019-02-25)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Do not re-download cached files from createRemoteFileNode ([#12054](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/12054)) ([a358239](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/a358239))
+
+## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.21...gatsby-source-filesystem@2.0.22) (2019-02-22)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.20...gatsby-source-filesystem@2.0.21) (2019-02-20)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Let plugins set parent when creating File nodes with createRemoteFileNode ([#11795](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/11795)) ([5a3c1fc](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/5a3c1fc))
+
 ## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.19...gatsby-source-filesystem@2.0.20) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-source-filesystem

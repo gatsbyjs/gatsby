@@ -120,7 +120,7 @@ import "./src/styles/global.css"
 3. Start the development server:
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 If you take a look at your project in the browser, you should see a lavender background applied to the "hello world" starter:
