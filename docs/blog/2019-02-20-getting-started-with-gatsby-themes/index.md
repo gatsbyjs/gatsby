@@ -21,7 +21,7 @@ Navigate to the directory
 
 Create a _package.json_ file
 
-`npm init`
+`yarn init`
 
 Tidy up your _package.json_ file and create workspaces which includes the project name, site, and your packages. Both of these directories will include their own _package.json_ files.
 
@@ -85,7 +85,7 @@ Then you will navigate out of the _site_ directory and add Gatsby, React, and Re
 
 `yarn workspace theme add gatsby react react-dom -D`
 
-You will want to make Gatsby, React, and ReactDom peer dependencies in both the _theme_ directory.
+You will want to make Gatsby, React, and ReactDom peer dependencies in the _theme_ directory.
 
 ```json
  "devDependencies": {
@@ -147,7 +147,7 @@ module.exports = {
 }
 ```
 
-Now, to make sure _site_ is linked to _theme_.
+Now, you can make sure _site_ is linked to _theme_.
 
 ```
 yarn
@@ -283,9 +283,9 @@ If you want to check your progress, go to the _site_ directory and
 
 Once your server is up you should see your beautiful theme applied to your files!
 
-### Troubleshooting Plugin Error
+### Troubleshooting Plugin Errors
 
-If you run into an error that your theme plugin can't be found, try clearing your cache. You can either use `rm -rf.cache` in your terminal, or you can add:
+If you run into an error that your theme plugin can't be found, try clearing your cache. You can either use `rm -rf .cache` in your terminal, or you can add:
 
 ```json
 {
