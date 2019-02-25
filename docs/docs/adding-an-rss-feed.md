@@ -21,12 +21,12 @@ npm install --save gatsby-plugin-feed
 Once installation is complete, you can now add this plugin to your site's config file, like so:
 
 ```js:title=gatsby-config.js
-(module.exports = {
-  "siteMetadata": {
-    "siteUrl": `https://www.example.com`
+module.exports = {
+  siteMetadata: {
+    siteUrl: `https://www.example.com`,
   },
-  "plugins": [`gatsby-plugin-feed`]
-})
+  plugins: [`gatsby-plugin-feed`],
+}
 ```
 
 Here's an example of how you could implement this plugin with Markdown, but for other sources, you will need a way to uniquely identify content--typically a URL or slug.
@@ -128,7 +128,7 @@ The `output` field in your feed object allows you to customize the filename for 
 
 To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`.
 
-> NOTE: if your blog has custom permalinks, such as links without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed.
+> NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute/) if you need any help!
 
 ## Happy blogging!
 
