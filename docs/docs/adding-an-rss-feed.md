@@ -29,7 +29,7 @@ Once installation is complete, you can now add this plugin to your site's config
 })
 ```
 
-To complete the feed setup, you need to expose a GraphQL entry for our content called `fields.slug` by modifying `gatsby-node.js`. Start with the following code, noting the reference to `MarkdownRemark` content. For content types other than Markdown, you will want to tweak the condition:
+Here's an example of how you could implement this plugin with Markdown, but for other sources, you will need a way to uniquely identify content--typically a URL or slug.
 
 ```js:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
@@ -126,31 +126,9 @@ This snippet contains a custom `gatsby-plugin-feed` setup in `gatsby-config.js` 
 
 The `output` field in your feed object allows you to customize the filename for your RSS feed, and `title` for the name of your site's RSS feed.
 
-> To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`.
+To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`.
 
-## Additional customization for content slugs
-
-To make additional customizations to your RSS feed like removing dates from your content slugs (which are based on filenames), you can modify `gatsby-node.js`:
-
-```javascript:title=gatsby-node.js
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
-  if (node.internal.type === `MarkdownRemark`) {
-    /* highlight-start */
-    // filter out dates such as YYYY-MM-DD-
-    const dateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])-)/
-    const value = createFilePath({ node, getNode }).replace(dateRegex, "")
-    /* highlight-end */
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
-  }
-}
-```
-
-In this snippet, the code replaces dates in filename slugs by matching the date format and replacing it with an empty string: `2019-02-15-awesome-post` becomes `awesome-post`. When URLs for your content are published in the feed XML, the plugin will produce a more accurate link: `https://your-gatsby.site/awesome-post/`
+> NOTE: if your blog has custom permalinks, such as links without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed.
 
 ## Happy blogging!
 
