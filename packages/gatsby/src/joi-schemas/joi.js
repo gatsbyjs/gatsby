@@ -1,10 +1,18 @@
 const Joi = require(`joi`)
 
+const stripTrailingSlash = chain => chain.replace(/\/$/, ``)
+
 export const gatsbyConfigSchema = Joi.object().keys({
   __experimentalThemes: Joi.array(),
   polyfill: Joi.boolean(),
   siteMetadata: Joi.object(),
-  pathPrefix: Joi.string(),
+  assetPrefix: stripTrailingSlash(Joi.string().uri()),
+  pathPrefix: stripTrailingSlash(
+    Joi.string().uri({
+      allowRelative: true,
+      relativeOnly: true,
+    })
+  ),
   mapping: Joi.object(),
   plugins: Joi.array(),
   proxy: Joi.object().keys({

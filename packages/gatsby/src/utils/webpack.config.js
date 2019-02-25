@@ -35,6 +35,15 @@ module.exports = async (
   const stage = suppliedStage
   const { rules, loaders, plugins } = await createUtils({ stage, program })
 
+  const { assetPrefix, pathPrefix } = store.getState().config
+
+  let publicPath = `/`
+  if (assetPrefix || pathPrefix) {
+    publicPath = [assetPrefix, pathPrefix]
+      .filter(part => part && part.length > 0)
+      .join(`/`)
+  }
+
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
     const env = process.env.NODE_ENV
@@ -126,18 +135,14 @@ module.exports = async (
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          publicPath,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          publicPath,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -181,8 +186,9 @@ module.exports = async (
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
-        __PATH_PREFIX__: JSON.stringify(
-          program.prefixPaths ? store.getState().config.pathPrefix : ``
+        __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
+        __ASSET_PREFIX__: JSON.stringify(
+          program.prefixPaths ? assetPrefix : ``
         ),
       }),
     ]
