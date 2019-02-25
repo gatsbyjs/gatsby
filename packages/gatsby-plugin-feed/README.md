@@ -10,27 +10,11 @@ Create an RSS feed (or multiple feeds) for your Gatsby site.
 
 ```javascript
 // In your gatsby-config.js
-siteMetadata: {
-  title: `GatsbyJS`,
-  description: `Blazing fast modern site generator for React`,
-  siteUrl: `https://www.gatsbyjs.org`
-},
-plugins: [
-  {
-    resolve: `gatsby-plugin-feed`
-  }
-]
-```
-
-Above is the minimal configuration required to begin working. If you wish to
-customize the query being executed to retrieve nodes, try this:
-
-```javascript
-// In your gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-feed`,
     options: {
+      // this base query will be merged with any queries in each feed
       query: `
         {
           site {
@@ -86,6 +70,8 @@ plugins: [
 ]
 ```
 
-To see what option keys are valid, see [the itemOptions section](https://www.npmjs.com/package/rss#itemoptions) of the RSS module.
+Each feed must include `output`, `query`, and `title`. Additionally, it is strongly recommended to pass a custom `serialize` function, otherwise an internal serialize function will be used which may not exactly match your particualr use case.
 
-NOTE: This plugin only generates the `/rss.xml` file when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`.
+All additional options are passed through to the [`RSS`][rss] utillity. For more info on those additional options, [check out the `itemOptions` section of the `RSS` utility](https://www.npmjs.com/package/rss#itemoptions).
+
+_NOTE: This plugin only generates the `xml` file(s) when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`._
