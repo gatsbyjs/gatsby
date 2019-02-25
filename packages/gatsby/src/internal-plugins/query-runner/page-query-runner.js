@@ -93,6 +93,15 @@ exports.runQueuedActions = runQueuedActions
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
 let seenIdsWithoutDataDependencies = []
+
+// Remove pages from seenIdsWithoutDataDependencies when they're deleted
+// so their query will be run again if they're created again.
+emitter.on(`DELETE_PAGE`, action => {
+  seenIdsWithoutDataDependencies = seenIdsWithoutDataDependencies.filter(
+    p => p !== action.payload.path
+  )
+})
+
 const findIdsWithoutDataDependencies = () => {
   const state = store.getState()
   const allTrackedIds = _.uniq(

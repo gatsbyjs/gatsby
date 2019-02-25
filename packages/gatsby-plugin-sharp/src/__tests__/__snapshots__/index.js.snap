@@ -24,6 +24,7 @@ Object {
   "srcSet": "/static/1234/223da/test.png 200w,
 /static/1234/29cdc/test.png 281w",
   "srcSetType": "image/png",
+  "tracedSVG": undefined,
 }
 `;
 
@@ -41,6 +42,7 @@ Object {
   "srcSet": "/static/1234/6d94b/test.png 200w,
 /static/1234/55fae/test.png 281w",
   "srcSetType": "image/png",
+  "tracedSVG": undefined,
 }
 `;
 
@@ -57,6 +59,7 @@ Object {
   "src": "/static/1234/7bd23/test.png",
   "srcSet": "/static/1234/7bd23/test.png 1w",
   "srcSetType": "image/png",
+  "tracedSVG": undefined,
 }
 `;
 
@@ -119,6 +122,7 @@ exports[`gatsby-plugin-sharp queueImageResizing should process immediately when 
         "touchNode": [Function],
       },
       Object {
+        "defaultQuality": 50,
         "lazyImageGeneration": true,
         "stripMetadata": true,
         "useMozJpeg": false,
@@ -131,5 +135,35 @@ exports[`gatsby-plugin-sharp queueImageResizing should process immediately when 
       "value": Promise {},
     },
   ],
+}
+`;
+
+exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
+Object {
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "height": 1,
+  "originalName": undefined,
+  "src": "/static/1234/155b3/test.png",
+  "srcSet": "/static/1234/155b3/test.png 1x",
+  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' version='1'/%3e",
+  "width": 1,
+}
+`;
+
+exports[`gatsby-plugin-sharp tracedSVG runs on demand 2`] = `
+Object {
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "density": 72,
+  "originalImg": "/static/1234/3092c/test.png",
+  "originalName": undefined,
+  "presentationHeight": 1,
+  "presentationWidth": 1,
+  "sizes": "(max-width: 1px) 100vw, 1px",
+  "src": "/static/1234/3092c/test.png",
+  "srcSet": "/static/1234/3092c/test.png 1w",
+  "srcSetType": "image/png",
+  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' version='1'/%3e",
 }
 `;

@@ -92,6 +92,47 @@ Object {
 }
 `;
 
+exports[`Headings are generated correctly from schema returns value 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
+exports[`Headings are generated correctly from schema returns value with inlineCode 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
+exports[`Headings are generated correctly from schema returns value with mixed text 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "An important heading with inline code and text",
+    },
+  ],
+}
+`;
+
 exports[`Links are correctly prefixed correctly prefixes links 1`] = `
 Object {
   "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>

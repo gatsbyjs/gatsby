@@ -500,6 +500,7 @@ exports.downloadMediaFiles = async ({
               cache,
               createNode,
               createNodeId,
+              parentNodeId: e.id,
               auth: _auth,
             })
 

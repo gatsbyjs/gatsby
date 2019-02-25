@@ -1,6 +1,7 @@
 const sharp = require(`sharp`)
 const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
+const { promisify } = require(`bluebird`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -43,10 +44,27 @@ const pluginDefaults = {
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
   lazyImageGeneration: true,
+  defaultQuality: 50,
 }
+
+const generalArgs = {
+  quality: 50,
+  jpegProgressive: true,
+  pngCompressionLevel: 9,
+  // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
+  pngCompressionSpeed: 4,
+  base64: false,
+  grayscale: false,
+  duotone: false,
+  pathPrefix: ``,
+  toFormat: ``,
+  sizeByPixelDensity: false,
+}
+
 let pluginOptions = Object.assign({}, pluginDefaults)
 exports.setPluginOptions = opts => {
   pluginOptions = Object.assign({}, pluginOptions, opts)
+  generalArgs.quality = pluginOptions.defaultQuality
 
   return pluginOptions
 }
@@ -63,20 +81,6 @@ const reportError = (message, err, reporter) => {
   }
 }
 exports.reportError = reportError
-
-const generalArgs = {
-  quality: 50,
-  jpegProgressive: true,
-  pngCompressionLevel: 9,
-  // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
-  pngCompressionSpeed: 4,
-  base64: false,
-  grayscale: false,
-  duotone: false,
-  pathPrefix: ``,
-  toFormat: ``,
-  sizeByPixelDensity: false,
-}
 
 const healOptions = (args, fileExtension, defaultArgs = {}) => {
   let options = _.defaults({}, args, defaultArgs, generalArgs)
@@ -296,6 +300,18 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
+async function getTracedSVG(options, file) {
+  if (options.generateTracedSVG && options.tracedSVG) {
+    const tracedSVG = await traceSVG({
+      file,
+      args: options.tracedSVG,
+      fileArgs: options,
+    })
+    return tracedSVG
+  }
+  return undefined
+}
+
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(args, file.extension)
   // Account for images with a high pixel density. We assume that these types of
@@ -425,6 +441,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
+  const tracedSVG = await getTracedSVG(options, file)
+
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
@@ -468,6 +486,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
+    tracedSVG,
   }
 }
 
@@ -535,6 +554,8 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args, reporter, cache })
 
+  const tracedSVG = await getTracedSVG(options, file)
+
   const fallbackSrc = images[0].src
   const srcSet = images
     .map((image, i) => {
@@ -568,13 +589,14 @@ async function fixed({ file, args = {}, reporter, cache }) {
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
+    tracedSVG,
   }
 }
 
 async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   const potrace = require(`potrace`)
   const svgToMiniDataURI = require(`mini-svg-data-uri`)
-  const trace = Promise.promisify(potrace.trace)
+  const trace = promisify(potrace.trace)
   const defaultArgs = {
     color: `lightgray`,
     optTolerance: 0.4,
