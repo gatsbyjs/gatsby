@@ -234,8 +234,9 @@ module.exports = (
     }
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
-    const wrapperStyle = options.addAspectRatio
-      ? `${options.wrapperStyle}flex:${_.round(fluidResult.aspectRatio, 2)};`
+    
+    const wrapperStyle = typeof options.wrapperStyle === 'function'
+      ? options.wrapperStyle(fluidResult)
       : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
