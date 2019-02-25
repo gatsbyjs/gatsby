@@ -4398,3 +4398,14 @@
   built_by: Dave Mullen Jnr
   built_by_url: https://davemullenjnr.co.uk
   featured: false
+- title: Stealth Labs
+  url: https://stealthlabs.io
+  main_url: https://stealthlabs.io
+  description: >
+    We design and develop for the web, mobile and desktop
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Edvins Antonovs
+  built_by_url: https://edvins.io
+  featured: false
