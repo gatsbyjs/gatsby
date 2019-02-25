@@ -12,7 +12,6 @@ export function withPrefix(path) {
 }
 
 function normalizePath(path) {
-  return path.replace(/\/+/g, `/`)
 }
 
 const NavLinkPropTypes = {
