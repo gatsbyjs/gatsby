@@ -63,8 +63,10 @@ The good news is you can accommodate these scenarios and more in `gatsby-config.
 
 To customize the default feed schema (a.k.a. structure) output by the plugin to work with your website's content, you can start with the following code:
 
-```json:title=gatsby.config.js
-{
+```js:title=gatsby.config.js
+module.exports = {
+  plugins: [
+    {
       resolve: `gatsby-plugin-feed`,
       options: {
         query: `
@@ -120,6 +122,8 @@ To customize the default feed schema (a.k.a. structure) output by the plugin to 
         ],
       },
     },
+  ],
+}
 ```
 
 This snippet contains a custom `gatsby-plugin-feed` setup in `gatsby-config.js` to query metadata for your site, like its `title` and `siteUrl`. It also includes a `feeds` array with at least one object containing a GraphQL query and `serialize` method, which allows you to output a custom RSS feed structure. In this example, the RSS content comes from Markdown files sourced from your site, and queried with the key `allMarkdownRemark` and its associated filters and fields.
