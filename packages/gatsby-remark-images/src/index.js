@@ -235,7 +235,7 @@ module.exports = (
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
     
-    const wrapperStyle = typeof options.wrapperStyle === 'function'
+    const wrapperStyle = typeof options.wrapperStyle === `function`
       ? options.wrapperStyle(fluidResult)
       : options.wrapperStyle
 
