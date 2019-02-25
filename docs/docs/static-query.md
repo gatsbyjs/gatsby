@@ -44,7 +44,7 @@ export default () => (
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
 
-### Hooks Example
+### useStaticQuery
 
 Using the hooks version of static query is very similar. Checkout the documentation of `useStaticQuery` [here!](/docs/use-static-query/)
 
