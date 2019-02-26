@@ -356,3 +356,19 @@ You can similarly check for file downloads:
 ```
 
 [egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
+
+## Recommendations for programmatic, in-app navigation
+
+Neither `<Link>` nor `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package--which Gatsby already depends upon--to make use of its `navigate` function, like so:
+
+```jsx
+import { navigate } from '@reach/router';
+
+...
+
+onClick = () => {
+  navigate('#some-link');
+  // OR
+  navigate('?foo=bar');
+}
+```
