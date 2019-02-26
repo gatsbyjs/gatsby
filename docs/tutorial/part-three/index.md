@@ -50,6 +50,8 @@ npm install --save gatsby-plugin-typography react-typography typography
 
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
 
+To follow along with this tutorial you will need to create and configure a `Typography.js` file. Instructions on how to do this can be found at the specific [Typography.js](/docs/typography-js/) documentation.
+
 2. Create a new file in the root of your project called `gatsby-config.js`, and copy the following into the file:
 
 ```javascript:title=gatsby-config.js
@@ -60,7 +62,7 @@ module.exports = {
 
 The `gatsby-config.js` is another special file that Gatsby will automatically recognize. This is where you add plugins and other site configuration.
 
-> Check out the [doc on `gatsby-config.js`](/docs/gatsby-config/) to read more, if you wish.
+> Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
 
 3. Start the development server.
 
