@@ -461,7 +461,8 @@ module.exports = async (args: BootstrapArgs) => {
       ).toFixed(2)} queries/second`
     )
   })
-  await runInitialQueries(activity)
+  runInitialQueries(activity)
+  await new Promise(resolve => queryQueue.on(`drain`, () => resolve()))
   activity.end()
 
   // Write out files.
