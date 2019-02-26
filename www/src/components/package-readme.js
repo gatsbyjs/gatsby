@@ -42,7 +42,6 @@ const PackageReadMe = props => {
           }}
           href={githubUrl}
           aria-label={`${packageName} source`}
-          title={`View plugin on GitHub`}
         >
           <GithubIcon focusable="false" style={{ verticalAlign: `text-top` }} />&nbsp;&nbsp;<span>View plugin on GitHub</span>
         </a>
