@@ -4387,3 +4387,35 @@
   built_by: Node.js Website Redesign Working Group
   built_by_url: https://github.com/nodejs/website-redesign
   featured: false
+- title: Sheffielders
+  main_url: https://sheffielders.org
+  url: https://sheffielders.org
+  source_url: https://github.com/davemullenjnr/sheffielders
+  description: >
+    A collective of businesses, creatives, and projects based in Sheffield, UK.
+  categories:
+    - Directory
+  built_by: Dave Mullen Jnr
+  built_by_url: https://davemullenjnr.co.uk
+  featured: false
+- title: Stealth Labs
+  url: https://stealthlabs.io
+  main_url: https://stealthlabs.io
+  description: >
+    We design and develop for the web, mobile and desktop
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Edvins Antonovs
+  built_by_url: https://edvins.io
+  featured: false
+- title: Constanzia Yurashko
+  main_url: https://www.constanziayurashko.com
+  url: https://www.constanziayurashko.com
+  description: >
+    Exclusive women's ready-to-wear fashion by designer Constanzia Yurashko.
+  categories:
+    - Fashion
+    - Portfolio
+  built_by: Maxim Andries
+  featured: false

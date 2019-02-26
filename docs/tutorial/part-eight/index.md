@@ -32,7 +32,7 @@ First, you need to create a production build of your Gatsby site. The Gatsby dev
 1.  Stop the development server (if it's still running) and run:
 
 ```shell
-gatsby build
+npm run build
 ```
 
 > 💡 As you learned in [part 1](/tutorial/part-one/), this does a production build of your site and outputs the built static files into the `public` directory.
@@ -40,7 +40,7 @@ gatsby build
 2.  View the production site locally. Run:
 
 ```shell
-gatsby serve
+npm run serve
 ```
 
 Once this starts, you can now view your site at `localhost:9000`.
@@ -214,7 +214,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 1.  [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. _[working example](http://gatsbyjs.github.io/gatsby-starter-default/)_
 2.  [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. _[working example](http://gatsbyjs.github.io/gatsby-starter-blog/)_
-3.  [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
+3.  [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
 
 ## That's all, folks
 

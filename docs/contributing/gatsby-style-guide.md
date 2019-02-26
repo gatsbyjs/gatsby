@@ -181,9 +181,9 @@ File:
 or
 
 Folder:
-`querying-data-with-graphl`
-`querying-data-with-graphl/index.md`
-`querying-data-with-graphl/graphql-image.png`
+`querying-data-with-graphql`
+`querying-data-with-graphql/index.md`
+`querying-data-with-graphql/graphql-image.png`
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
