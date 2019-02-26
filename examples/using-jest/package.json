@@ -4,16 +4,16 @@
   "version": "1.0.0",
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
-    "gatsby": "^2.0.19",
-    "gatsby-image": "^2.0.15",
-    "gatsby-plugin-manifest": "^2.0.5",
-    "gatsby-plugin-offline": "^2.0.5",
-    "gatsby-plugin-react-helmet": "^3.0.0",
-    "gatsby-plugin-sharp": "^2.0.7",
-    "gatsby-source-filesystem": "^2.0.4",
-    "gatsby-transformer-sharp": "^2.1.4",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
+    "gatsby": "^2.0.98",
+    "gatsby-image": "^2.0.28",
+    "gatsby-plugin-manifest": "^2.0.13",
+    "gatsby-plugin-offline": "^2.0.21",
+    "gatsby-plugin-react-helmet": "^3.0.5",
+    "gatsby-plugin-sharp": "^2.0.18",
+    "gatsby-source-filesystem": "^2.0.17",
+    "gatsby-transformer-sharp": "^2.1.12",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-helmet": "^5.2.0"
   },
   "keywords": [
@@ -27,20 +27,15 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
-    "format": "prettier --write \"src/**/*.js\"",
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "babel-core": "^7.0.0-0",
-    "babel-jest": "^23.6.0",
-    "babel-preset-gatsby": "^0.1.2",
+    "babel-jest": "^24.0.0",
+    "babel-preset-gatsby": "^0.1.6",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^23.6.0",
-    "jest-dom": "^2.1.0",
-    "prettier": "^1.14.2",
-    "react-test-renderer": "^16.6.0",
-    "react-testing-library": "^5.2.3"
+    "jest": "^24.0.0",
+    "jest-dom": "^3.0.0",
+    "react-testing-library": "^5.4.4"
   },
   "repository": {
     "type": "git",

@@ -34,9 +34,10 @@ public_path: "/src/uploads"
 front_matter_path: ''
 use_front_matter_path: false
 file_template: ":filename:"
-custom_preview: true
 build:
   preview_command: npm run forestry:preview
+  publish_command: gatsby build
   preview_env:
   - BUILD_DIR=www/
+  preview_output_directory: public
   output_directory: www/public

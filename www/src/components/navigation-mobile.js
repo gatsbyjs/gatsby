@@ -112,7 +112,7 @@ const styles = {
   },
   link: {
     default: {
-      color: colors.lavender,
+      color: colors.gatsby,
       borderRadius: presets.radius,
       fontSize: scale(-1 / 2).fontSize,
       flexShrink: 0,

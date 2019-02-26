@@ -162,7 +162,7 @@ you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include
 [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/),
-[gatsby-source-contentful](/packages/gatsby-source-contentful/) and [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms).
+[gatsby-source-contentful](/packages/gatsby-source-contentful/), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity).
 
 Their fragments are:
 
@@ -200,6 +200,13 @@ Their fragments are:
 - `GatsbyDatoCmsFixed_noBase64`
 - `GatsbyDatoCmsFluid`
 - `GatsbyDatoCmsFluid_noBase64`
+
+### gatsby-source-sanity
+
+- `GatsbySanityImageFixed`
+- `GatsbySanityImageFixed_noBase64`
+- `GatsbySanityImageFluid`
+- `GatsbySanityImageFluid_noBase64`
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
@@ -260,6 +267,45 @@ prop. e.g. `<Img fluid={fluid} />`
 }
 ```
 
+### Avoiding stretched images using the fluid type
+
+As mentioned previously, images using the _fluid_ type are stretched to
+match the container's width. In the case where the image's width is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
+
+To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
+
+```jsx
+const NonStretchedImage = props => {
+  let normalizedProps = props
+  if (props.fluid && props.fluid.presentationWidth) {
+    normalizedProps = {
+      ...props,
+      style: {
+        ...(props.style || {}),
+        maxWidth: props.fluid.presentationWidth,
+        margin: "0 auto", // Used to center the image
+      },
+    }
+  }
+
+  return <Img {...normalizedProps} />
+}
+```
+
+**Note:** The `GatsbyImageSharpFluid` fragment does not include `presentationWidth`.
+You will need to add it in your graphql query as is shown in the following snippet:
+
+```graphql
+{
+  childImageSharp {
+    fluid(maxWidth: 500, quality: 100) {
+      ...GatsbyImageSharpFluid
+      presentationWidth
+    }
+  }
+}
+```
+
 ## `gatsby-image` props
 
 | Name                   | Type                | Description                                                                                                                 |
@@ -302,3 +348,5 @@ prop. e.g. `<Img fluid={fluid} />`
 - Gifs can't be resized the same way as pngs and jpegs, unfortunately—if you try
   to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
   to [import the gif directly](/docs/adding-images-fonts-files).
+- Lazy loading behavior is dependent on `IntersectionObserver` which is not available
+  in some fairly common browsers including Safari and IE. A polyfill is recommended.

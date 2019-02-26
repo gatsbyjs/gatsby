@@ -1,6 +1,6 @@
 ---
 title: "Announcing Gatsby 1.0.0 🎉🎉🎉"
-date: "2017-07-06"
+date: 2017-07-06
 author: "Kyle Mathews"
 image: "images/container-ship-leaving.jpg"
 showImageInArticle: false
@@ -151,7 +151,7 @@ Say we had a markdown file that looked like:
 ```markdown
 ---
 title: A sweet post
-date: "2017-02-23"
+date: 2017-02-23
 ---
 
 This is my sweet blog post. **Cool!**
