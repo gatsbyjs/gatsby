@@ -4431,3 +4431,14 @@
     - Featured
   built_by: Algolia
   featured: true
+- title: GVD Renovations
+  url: https://www.gvdrenovations.com/
+  main_url: https://www.gvdrenovations.com/
+  description: >
+    GVD Renovations is a home improvement contractor with a well known reputation as a professional, quality contractor in California.
+  categories:
+    - Construction
+    - Business
+  built_by: David Krasniy
+  built_by_url: http://dkrasniy.com
+  featured: false
