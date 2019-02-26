@@ -125,7 +125,10 @@ const updateStateAndRunQueries = isFirstRun => {
 
       if (queryWillRun) {
         watchComponent(component)
-      } else if (isFirstRun) {
+        // Check if this is a page component.
+        // If it is and this is our first run during bootstrap,
+        // show a warning about having a query in a non-page component.
+      } else if (isFirstRun && !snapshot.components.has(component)) {
         report.warn(
           `The GraphQL query in the non-page component "${component}" will not be run.`
         )
@@ -151,6 +154,7 @@ const updateStateAndRunQueries = isFirstRun => {
 
       `)
     }
+
     runQueuedQueries()
 
     return null
