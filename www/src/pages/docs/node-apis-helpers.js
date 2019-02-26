@@ -19,7 +19,7 @@ class NodeAPIHelperDocs extends React.Component {
       <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
           <Helmet>
-            <title>Node APIs helpers</title>
+            <title>Node API helpers</title>
           </Helmet>
           <h1 id="gatsby-node-helpers-apis" css={{ marginTop: 0 }}>
             Gatsby Node APIs helpers
