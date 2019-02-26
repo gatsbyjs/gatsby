@@ -20455,6 +20455,11 @@ xstate@^3.1.0:
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-3.3.3.tgz#64177cd4473d4c2424b3df7d2434d835404b09a9"
   integrity sha512-p0ZYDPWxZZZRAJyD3jaGO9/MYioHuxZp6sjcLhPfBZHAprl4EDrZRGDqRVH9VvK8oa6Nrbpf+U5eNmn8KFwO3g==
 
+xstate@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.3.2.tgz#772a5f10b80e96f3dd872bedd45bc5bcfd0d2692"
+  integrity sha512-xm01SXhV4/LmxTLOOuhQfdWLFXzl/6fi3DEY6P1WxnuCDJZ/NsSvSggNmKddOTKgGXJgA/5aWxFturJsExV9cw==
+
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
