@@ -38,7 +38,7 @@ Run `npx gatsby --help` for full help.
 
 `npx gatsby new gatsby-site`
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/)
+See the [Gatsby starters docs](https://www.gatsbyjs.org/starters/)
 for a comprehensive list of starters to get started with Gatsby.
 
 ### `develop`

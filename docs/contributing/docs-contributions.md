@@ -8,8 +8,11 @@ On this page:
 
 - [Top priorities](#top-priorities)
 - [Options for contributing to the Gatsby docs](#options-for-contributing-to-the-gatsby-docs)
-- [Modifying markdown files](#modifying-markdown-docs)
+- [Modifying markdown files](#modifying-markdown-files)
+  - [Converting a document from a stub](#converting-a-document-from-a-stub)
 - [Docs site setup instructions](#docs-site-setup-instructions)
+- [Claim your swag](#claim-your-swag)
+- [Want more?](#want-more)
 
 ## Top priorities
 
