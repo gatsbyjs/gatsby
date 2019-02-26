@@ -81,7 +81,7 @@
     "lint:flow": "babel-node scripts/flow-check.js",
     "lint:other": "npm run prettier -- --check",
     "markdown": "md-magic --path \"starters/**/*.md\"",
-    "markdown-link-check": "find . -name \*.md -exec markdown-link-check {} \;",
+    "markdown-link-check": "find . -name *.md -exec markdown-link-check {} ;",
     "postmarkdown": "prettier --write \"starters/**/*.md\"",
     "plop": "plop",
     "prebootstrap": "yarn",
