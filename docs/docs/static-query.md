@@ -44,6 +44,10 @@ export default () => (
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
 
+### useStaticQuery
+
+There's also a hooks version of StaticQuery called `useStaticQuery`. Check out its documentation [here!](/docs/use-static-query/)
+
 ### Typechecking
 
 With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:

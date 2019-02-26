@@ -202,24 +202,24 @@ Just make sure the Header import for your `PrimaryLayout/index.js` is as follows
 
 Now we’ve got this working, we want to take it one step further and make the shared-ui behave in the same way a public package does. Create a `package.json` file inside of the `shared-ui` package and add the following:
 
-```jsx:title=package.json
+```json:title=package.json
 {
-  name: "@lerna-monorepo/shared-ui",
-  description: "Lerna monorepo starter",
-  version: "1.0.2",
-  dependencies: {
-  gatsby: "^1.9.247",
-  gatsby-link: "^1.6.40",
-  gatsby-plugin-react-helmet: "^2.0.10",
-  gatsby-plugin-react-next: "^1.0.11",
-  react: "16.4.2",
-  react-helmet: "^5.2.0",
-  styled-components: "^3.3.3"
+  "name": "@lerna-monorepo/shared-ui",
+  "description": "Lerna monorepo starter",
+  "version": "1.0.2",
+  "dependencies": {
+    "gatsby": "^1.9.247",
+    "gatsby-link": "^1.6.40",
+    "gatsby-plugin-react-helmet": "^2.0.10",
+    "gatsby-plugin-react-next": "^1.0.11",
+    "react": "16.4.2",
+    "react-helmet": "^5.2.0",
+    "styled-components": "^3.3.3"
   },
-  license: "MIT",
-  repository: {
-    type: "git",
-    url: "https://github.com/gatsbyjs/gatsby-starter-default"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
   }
 }
 ```
@@ -236,7 +236,7 @@ Now we’re going to want to split up our original application into two separate
 
 Go ahead and create blank folders/files for each item in the list above inside of each package. We’ll go through each item one by one for the blog package, then I’ll leave you to implement this for the shop package. You can refer to the finished repo at anytime if you’re stuck.
 
-Data directory — Move the `blog.json` file in the top level `data` directory. Go to your console, move to the repo’s top level directory and execute the following command mv `data/blog.json` `packages/blog/data/`. This moves our mock blog data into its rightful home.
+Data directory — Move the `blog.json` file in the top level `data` directory. Go to your console, move to the repo’s top level directory and execute the following command `mv data/blog.json packages/blog/data/blog.json`. This moves our mock blog data into its rightful home.
 
 Src directory with layouts and pages — In `packages/blog/src/layouts`, create an `index.js` file. Copy and paste the contents of the top level `src/layouts/index.js` file. Your IDE might start shouting at you because `../../packages/shared-ui` is no longer a valid import location. We finally get to use the brand spanking new `shared-ui` package we created earlier on. Change the old import location to `@lerna-monorepo/shared-ui`. Create two new files inside the `packages/blog/src/pages/` directory with the file name of `index.js` and `blogItem.js`. In the `index.js` file copy the contents of the `blog.js` file under the `src/pages/` directory. Update the import for the `shared-ui` package like we did for the index file. Do the same for the `blogItem.js` file. You’ll need to change the ‘back to blog’ to attribute in this file to ‘/’.
 
@@ -246,31 +246,31 @@ gatsby-node.js — We’ll only know whether everything works or if our site
 
 package.json- Add the following to the `package.json` file:
 
-```jsx:title=package.json
+```json:title=package.json
 {
-  name: "@lerna-monorepo/blog",
-  description: "Lerna monorepo starter",
-  version: "1.0.2",
-  dependencies: {
-    @lerna-monorepo/shared-ui: "^1.0.1",
-    gatsby: "^1.9.247",
-    gatsby-link: "^1.6.40",
-    gatsby-plugin-react-helmet: "^2.0.10",
-    gatsby-plugin-react-next: "^1.0.11",
-    gatsby-react-router-scroll: "^1.0.18",
-    gatsby-source-filesystem: "^1.5.39",
-    gatsby-transformer-json: "^1.0.20",
-    react: "^16.4.2",
-    react-helmet: "^5.2.0",
-    react-router-dom: "4.3.1",
-    serve: "^10.0.0",
-    styled-components: "^3.3.3"
+  "name": "@lerna-monorepo/blog",
+  "description": "Lerna monorepo starter",
+  "version": "1.0.2",
+  "dependencies": {
+    "@lerna-monorepo/shared-ui": "^1.0.1",
+    "gatsby": "^1.9.247",
+    "gatsby-link": "^1.6.40",
+    "gatsby-plugin-react-helmet": "^2.0.10",
+    "gatsby-plugin-react-next": "^1.0.11",
+    "gatsby-react-router-scroll": "^1.0.18",
+    "gatsby-source-filesystem": "^1.5.39",
+    "gatsby-transformer-json": "^1.0.20",
+    "react": "^16.4.2",
+    "react-helmet": "^5.2.0",
+    "react-router-dom": "4.3.1",
+    "serve": "^10.0.0",
+    "styled-components": "^3.3.3"
   },
-  license: "MIT",
-  scripts: {
-    start: "serve public/",
-    build: "gatsby build",
-    develop: "gatsby develop"
+  "license": "MIT",
+  "scripts": {
+    "start": "serve public/",
+    "build": "gatsby build",
+    "develop": "gatsby develop"
   }
 }
 ```
@@ -285,31 +285,31 @@ Once you’ve done this, try navigating to the `packages/blog` directory and run
 
 Here’s the `package.json` file for the shop package:
 
-```jsx:title=package.json
+```json:title=package.json
 {
-  name: "@lerna-monorepo/shop",
-  description: "Lerna monorepo finisher",
-  version: "1.0.2",
-  dependencies: {
-    @lerna-monorepo/shared-ui: "^1.0.1",
-    gatsby: "^1.9.247",
-    gatsby-link: "^1.6.40",
-    gatsby-plugin-react-helmet: "^2.0.10",
-    gatsby-plugin-react-next: "^1.0.11",
-    gatsby-source-filesystem: "^1.5.39",
-    gatsby-transformer-json: "^1.0.20",
-    gatsby-react-router-scroll: "^1.0.18",
-    react: "^16.4.2",
-    react-helmet: "^5.2.0",
-    react-router-dom: "4.3.1",
-    serve: "^10.0.0",
-    styled-components: "^3.3.3"
+  "name": "@lerna-monorepo/shop",
+  "description": "Lerna monorepo finisher",
+  "version": "1.0.2",
+  "dependencies": {
+    "@lerna-monorepo/shared-ui": "^1.0.1",
+    "gatsby": "^1.9.247",
+    "gatsby-link": "^1.6.40",
+    "gatsby-plugin-react-helmet": "^2.0.10",
+    "gatsby-plugin-react-next": "^1.0.11",
+    "gatsby-source-filesystem": "^1.5.39",
+    "gatsby-transformer-json": "^1.0.20",
+    "gatsby-react-router-scroll": "^1.0.18",
+    "react": "^16.4.2",
+    "react-helmet": "^5.2.0",
+    "react-router-dom": "4.3.1",
+    "serve": "^10.0.0",
+    "styled-components": "^3.3.3"
   },
-  license: "MIT",
-  scripts: {
-    start: "serve public",
-    build: "gatsby build",
-    develop: "gatsby develop -p 8001"
+  "license": "MIT",
+  "scripts": {
+    "start": "serve public",
+    "build": "gatsby build",
+    "develop": "gatsby develop -p 8001"
   }
 }
 ```
@@ -324,7 +324,7 @@ We’ll resolve the first issue by creating a top level script that runs both th
 
 Add the following to the scripts block of your top level `package.json` file.
 
-```jsx:title=package.json
+```json:title=package.json
 "scripts": {
   "run:blog": "cd packages/blog && yarn develop",
   "run:shop": "cd packages/shop && yarn develop",

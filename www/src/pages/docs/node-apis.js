@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
@@ -34,7 +34,12 @@ class NodeAPIDocs extends React.Component {
             calling remote APIs, etc.) you must either return a promise or use
             the callback passed to the 3rd argument. Gatsby needs to know when
             plugins are finished as some APIs, to work correctly, require
-            previous APIs to be complete first.
+            previous APIs to be complete first. See{` `}
+            <Link to="/docs/debugging-async-lifecycles/">
+              Debugging Async Lifecycles
+            </Link>
+            {` `}
+            for more info.
           </p>
           <pre>
             <code
