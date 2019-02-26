@@ -104,6 +104,12 @@ jobs:
           root: packages
           paths:
             - "*"
+  markdown:
+    executor: node
+    steps:
+      - checkout
+      - <<: *install_node_modules
+      - run: yarn markdown-link-check
 
   lint:
     executor: node
@@ -188,7 +194,6 @@ jobs:
       - <<: *install_node_modules
       - <<: *persist_cache
       - run: yarn markdown
-      - run: yarn markdown-link-check
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
