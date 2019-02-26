@@ -205,6 +205,7 @@ workflows:
     jobs:
       - bootstrap
       - lint
+      - markdown
       - unit_tests_node6:
           <<: *ignore_docs
           requires:
