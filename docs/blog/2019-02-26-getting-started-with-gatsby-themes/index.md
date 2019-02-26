@@ -1,6 +1,6 @@
 ---
 title: "Getting Started with Gatsby Themes and MDX"
-date: 2019-02-20
+date: 2019-02-26
 author: Katie Fujihara
 tags: ["themes", "tutorials"]
 ---
