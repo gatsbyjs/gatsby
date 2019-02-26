@@ -116,7 +116,7 @@ const GatsbyTracing = {
 /** */
 const GatsbyNodeHelpers = {
   /**
-   * Key-value store used to persist results of time/memory/cpu instensive
+   * Key-value store used to persist results of time/memory/cpu intensive
    * tasks. All functions are async and return promises.
    * @type {GatsbyCache}
    */
@@ -185,7 +185,7 @@ const GatsbyNodeHelpers = {
 
   /**
    * Internal redux state used for application state. Do not use, unless you
-   * absolutely must. Store is considered private API and can change with
+   * absolutely must. Store is considered a private API and can change with
    * any version.
    * @type {Redux.Store}
    */
@@ -193,7 +193,7 @@ const GatsbyNodeHelpers = {
 
   /**
    * Internal event emitter / listener.  Do not use, unless you absolutely
-   * must. Emitter is considered private API and can change with any version.
+   * must. Emitter is considered a private API and can change with any version.
    * @type {Emitter}
    */
   emitter: true,
@@ -229,7 +229,7 @@ const GatsbyNodeHelpers = {
   /**
    * Compares `contentDigest` of cached node with passed value
    * to determine if node has changed.
-   * if node changed.
+   *
    * @param {string} id of node
    * @param {string} contentDigest of node
    * @returns {boolean}
