@@ -203,4 +203,61 @@ describe(`Test plugin feed`, async () => {
     expect(contents).toMatchSnapshot()
     expect(graphql).toBeCalledWith(customQuery)
   })
+
+  it(`does not mutate base query when merging`, async () => {
+    fs.writeFile = jest.fn()
+    fs.writeFile.mockResolvedValue()
+
+    const siteQuery = {
+      data: {
+        site: {
+          siteMetadata: {
+            title: `Hello World`,
+          },
+        },
+      },
+    }
+
+    const markdownQuery = {
+      data: {
+        allMarkdownRemark: {
+          edges: [
+            {
+              node: {
+                fields: {
+                  slug: `/hello-world`,
+                },
+                frontmatter: {
+                  title: `Hello World`,
+                },
+              },
+            },
+          ],
+        },
+      },
+    }
+
+    const graphql = jest
+      .fn()
+      .mockResolvedValueOnce(siteQuery)
+      .mockResolvedValueOnce(markdownQuery)
+
+    const options = {
+      query: `{}`,
+      feeds: [
+        {
+          output: `rss.xml`,
+          query: `{ firstMarkdownQuery }`,
+        },
+      ],
+    }
+
+    await onPostBuild({ graphql }, options)
+
+    expect(siteQuery).toEqual({
+      data: {
+        site: expect.any(Object),
+      },
+    })
+  })
 })

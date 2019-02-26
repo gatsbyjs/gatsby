@@ -12,7 +12,7 @@ const warnMessage = (error, behavior) => `
   gatsby-plugin-feed was initialized in gatsby-config.js without a ${error}.
   This means that we the plugin will use ${behavior}, which may not match your use case.
   This behavior will be removed in the next major release of gatsby-plugin-feed.
-  For more info, check out: https://gatsby.app/rss-feed
+  For more info, check out: https://gatsby.app/adding-rss-feed
 `
 
 // TODO: remove in the next major release
@@ -57,7 +57,11 @@ exports.onPreBootstrap = async function onPreBootstrap(
       )
     }
   } catch (e) {
-    throw new Error(e.details.map(detail => detail.message).join(`\n`))
+    throw new Error(
+      e.details
+        .map(detail => `[Config Validation]: ${detail.message}`)
+        .join(`\n`)
+    )
   }
 }
 
@@ -76,7 +80,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   for (let feed of options.feeds) {
     if (feed.query) {
       feed.query = await runQuery(graphql, feed.query).then(result =>
-        merge(baseQuery, result)
+        merge({}, baseQuery, result)
       )
     }
 
