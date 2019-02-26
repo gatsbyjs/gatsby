@@ -196,6 +196,7 @@ describe(`gatsby-remark-code-repls`, () => {
         } else {
           throwFileNotFoundErr(path)
         }
+        return null
       })
 
       createPages(createPagesParams, {
@@ -221,6 +222,7 @@ describe(`gatsby-remark-code-repls`, () => {
         } else {
           throwFileNotFoundErr(path)
         }
+        return null
       })
 
       createPages(createPagesParams, {
@@ -244,6 +246,7 @@ describe(`gatsby-remark-code-repls`, () => {
         } else {
           throwFileNotFoundErr(path)
         }
+        return null
       })
 
       createPages(createPagesParams, {
@@ -267,6 +270,7 @@ describe(`gatsby-remark-code-repls`, () => {
         } else {
           throwFileNotFoundErr(path)
         }
+        return null
       })
 
       createPages(createPagesParams, {

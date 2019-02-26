@@ -166,8 +166,8 @@ specified examples directory. (This will avoid broken links at runtime.)
 
     // Include CSS with matching name.
     // This option only applies to REPLs that support it (eg Codepen).
-    // If set to `true`, when specifying `file1.js` as example file, 
-    // it will try to inject the CSS in `file1.css` if the file exists, 
+    // If set to `true`, when specifying `file1.js` as example file,
+    // it will try to inject the CSS in `file1.css` if the file exists,
     // otherwise the default behaviour is preserved
     includeMatchingCSS: false,
   },
