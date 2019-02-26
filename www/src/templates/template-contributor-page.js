@@ -105,8 +105,9 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
+      sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
+        fields: { released: { eq: true } }
         fileAbsolutePath: { regex: "/blog/" }
         frontmatter: { draft: { ne: true } }
       }

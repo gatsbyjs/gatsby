@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
 import { colors } from "../utils/presets"
@@ -9,14 +9,7 @@ import MarkdownPageFooter from "../components/markdown-page-footer"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const PackageReadMe = props => {
-  const {
-    page,
-    packageName,
-    excerpt,
-    html,
-    githubUrl,
-    timeToRead,
-  } = props
+  const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
 
   return (
     <Container>
@@ -46,8 +39,10 @@ const PackageReadMe = props => {
             },
           }}
           href={githubUrl}
+          aria-label={`${packageName} source`}
+          title={`View source on GitHub`}
         >
-          <GithubIcon style={{ verticalAlign: `text-top` }} />
+          <GithubIcon focusable="false" style={{ verticalAlign: `text-top` }} />
         </a>
         {githubUrl && (
           <Link to={`/starters?d=${packageName}`}>

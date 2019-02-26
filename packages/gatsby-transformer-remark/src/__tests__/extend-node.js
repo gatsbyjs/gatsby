@@ -15,7 +15,7 @@ async function queryResult(
   nodes,
   fragment,
   { types = [] } = {},
-  additionalParameters
+  { additionalParameters = {}, pluginOptions = {} }
 ) {
   const inferredFields = inferObjectStructureFromNodes({
     nodes,
@@ -33,6 +33,7 @@ async function queryResult(
     },
     {
       plugins: [],
+      ...pluginOptions,
     }
   )
 
@@ -80,7 +81,7 @@ const bootstrapTest = (
   content,
   query,
   test,
-  additionalParameters = {}
+  { additionalParameters = {}, pluginOptions = {} } = {}
 ) => {
   const node = {
     id: `whatever`,
@@ -102,7 +103,7 @@ const bootstrapTest = (
         {
           types: [{ name: `MarkdownRemark` }],
         },
-        additionalParameters
+        { additionalParameters, pluginOptions }
       ).then(result => {
         try {
           test(result.data.listNode[0])
@@ -123,7 +124,7 @@ const bootstrapTest = (
         actions,
         createNodeId,
       },
-      { ...additionalParameters }
+      { ...additionalParameters, ...pluginOptions }
     )
   })
 }
@@ -137,13 +138,25 @@ date: "2017-09-18T23:19:51.246Z"
 ---
 Where oh where is my little pony?`,
     `excerpt
-    frontmatter {
-        title
-    }
-    `,
+      excerptAst
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            type: `text`,
+            value: `Where oh where is my little pony?`,
+          },
+        ],
+        properties: {},
+        tagName: `p`,
+        type: `element`,
+      })
     }
   )
 
@@ -154,13 +167,21 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---`,
     `excerpt
-    frontmatter {
-        title
-    }
-    `,
+      excerptAst
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(``)
+      expect(node.excerptAst).toMatchObject({
+        children: [],
+        data: {
+          quirksMode: false,
+        },
+        type: `root`,
+      })
     }
   )
 
@@ -175,17 +196,41 @@ Where oh where is my little pony?
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-    `,
+      `,
     `excerpt
-    frontmatter {
-        title
-    }
-    `,
+      excerptAst
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            children: [
+              {
+                type: `text`,
+                value: `Where oh where is my little pony?`,
+              },
+            ],
+            properties: {},
+            tagName: `p`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: `\n`,
+          },
+        ],
+        data: {
+          quirksMode: false,
+        },
+        type: `root`,
+      })
     },
-    { excerpt_separator: `<!-- end -->` }
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 
   const content = `---
@@ -194,19 +239,22 @@ date: "2017-09-18T23:19:51.246Z"
 ---
 Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-`
+  `
 
   bootstrapTest(
     `correctly prunes length to default value`,
     content,
     `excerpt
-    frontmatter {
-        title
-    }
-    `,
+      excerptAst
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(139)
+      expect(node.excerptAst.children.length).toBe(1)
+      expect(node.excerptAst.children[0].value.length).toBe(139)
     }
   )
 
@@ -214,13 +262,16 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `correctly prunes length to provided parameter`,
     content,
     `excerpt(pruneLength: 50)
-    frontmatter {
-        title
-    }
-    `,
+      excerptAst(pruneLength: 50)
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(46)
+      expect(node.excerptAst.children.length).toBe(1)
+      expect(node.excerptAst.children[0].value.length).toBe(46)
     }
   )
 
@@ -228,14 +279,256 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `correctly prunes length to provided parameter with truncate`,
     content,
     `excerpt(pruneLength: 50, truncate: true)
+      excerptAst(pruneLength: 50, truncate: true)
+      frontmatter {
+          title
+      }
+      `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt.length).toBe(50)
+      expect(node.excerptAst.children.length).toBe(1)
+      expect(node.excerptAst.children[0].value.length).toBe(50)
+    }
+  )
+
+  bootstrapTest(
+    `given an html format, it correctly maps nested markdown to html`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
+    `excerpt(format: HTML)
+      excerptAst
+      frontmatter {
+          title
+      }
+      `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
+      )
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            type: `text`,
+            value: `Where oh `,
+          },
+          {
+            children: [
+              {
+                children: [
+                  {
+                    type: `text`,
+                    value: `where`,
+                  },
+                ],
+                properties: {},
+                tagName: `em`,
+                type: `element`,
+              },
+            ],
+            properties: {
+              href: `nick.com`,
+            },
+            tagName: `a`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: ` `,
+          },
+          {
+            children: [
+              {
+                children: [
+                  {
+                    type: `text`,
+                    value: `is`,
+                  },
+                ],
+                properties: {},
+                tagName: `em`,
+                type: `element`,
+              },
+            ],
+            properties: {},
+            tagName: `strong`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: ` `,
+          },
+          {
+            children: [],
+            properties: {
+              alt: `that pony`,
+              src: `pony.png`,
+            },
+            tagName: `img`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: `?`,
+          },
+        ],
+        properties: {},
+        tagName: `p`,
+        type: `element`,
+      })
+    }
+  )
+
+  bootstrapTest(
+    `given raw html in the text body, this html is not escaped`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where is my <code>pony</code> named leo?`,
+    `excerpt(format: HTML)
+      excerptAst
+      frontmatter {
+          title
+      }
+      `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where is my <code>pony</code> named leo?</p>`
+      )
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            type: `text`,
+            value: `Where is my `,
+          },
+          {
+            children: [
+              {
+                type: `text`,
+                value: `pony`,
+              },
+            ],
+            properties: {},
+            tagName: `code`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: ` named leo?`,
+          },
+        ],
+        properties: {},
+        tagName: `p`,
+        type: `element`,
+      })
+    },
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+  )
+
+  bootstrapTest(
+    `given an html format, it prunes large excerpts`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh where is that pony? Is he in the stable or down by the stream?`,
+    `excerpt(format: HTML, pruneLength: 50)
+      excerptAst(pruneLength: 50)
+      frontmatter {
+          title
+      }
+      `,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is that pony? Is he in the stable…</p>`
+      )
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            type: `text`,
+            value: `Where oh where is that pony? Is he in the stable…`,
+          },
+        ],
+        properties: {},
+        tagName: `p`,
+        type: `element`,
+      })
+    }
+  )
+
+  bootstrapTest(
+    `given an html format, it respects the excerpt_separator`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh where is that *pony*? Is he in the stable or by the stream?
+
+<!-- end -->
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+`,
+    `excerpt(format: HTML, pruneLength: 50)
+    excerptAst(pruneLength: 50)
     frontmatter {
         title
     }
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt.length).toBe(50)
-    }
+      expect(node.excerpt).toMatch(
+        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>`
+      )
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            children: [
+              {
+                type: `text`,
+                value: `Where oh where is that `,
+              },
+              {
+                children: [
+                  {
+                    type: `text`,
+                    value: `pony`,
+                  },
+                ],
+                properties: {},
+                tagName: `em`,
+                type: `element`,
+              },
+              {
+                type: `text`,
+                value: `? Is he in the stable or by the stream?`,
+              },
+            ],
+            properties: {},
+            tagName: `p`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: `\n`,
+          },
+        ],
+        data: {
+          quirksMode: false,
+        },
+        type: `root`,
+      })
+    },
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 })
 
@@ -364,6 +657,89 @@ final text
       expect(node).toMatchSnapshot()
     }
   )
+
+  bootstrapTest(
+    `table of contents is generated with correct depth (graphql option)`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1)
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#first-title">first title</a></li>
+</ul>`)
+    }
+  )
+
+  bootstrapTest(
+    `table of contents is generated with correct depth (plugin option)`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title")
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#first-title">first title</a></li>
+</ul>`)
+    },
+    {
+      pluginOptions: {
+        tableOfContents: {
+          maxDepth: 1,
+        },
+      },
+    }
+  )
+
+  bootstrapTest(
+    `table of contents is generated from given heading onwards`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+
+# third title
+
+final text`,
+    `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title")
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node.tableOfContents).toBe(`<ul>
+<li><a href="/my%20little%20pony/#third-title">third title</a></li>
+</ul>`)
+    }
+  )
 })
 
 describe(`Links are correctly prefixed`, () => {
@@ -382,6 +758,80 @@ This is [a reference]
       expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
       expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
     },
-    { pathPrefix: `/prefix` }
+    { additionalParameters: { pathPrefix: `/prefix` } }
+  )
+})
+
+describe(`Headings are generated correctly from schema`, () => {
+  bootstrapTest(
+    `returns value`,
+    `
+# first title
+
+## second title
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns value with inlineCode`,
+    `
+# first title
+
+## \`second title\`
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns value with mixed text`,
+    `
+# An **important** heading with \`inline code\` and text
+`,
+    `headings {
+      value
+      depth
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          value: `An important heading with inline code and text`,
+          depth: 1,
+        },
+      ])
+    }
   )
 })

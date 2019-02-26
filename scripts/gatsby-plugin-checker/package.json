@@ -1,0 +1,15 @@
+{
+  "name": "gatsby-plugin-checker",
+  "version": "1.0.0",
+  "description": "Checks for Gatsby plugins on NPM without the gatsby-plugin keyword.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "author": "Osmond van Hemert <osmond@vanhemert.nu>",
+  "license": "MIT",
+  "dependencies": {
+    "got": "^9.0.0"
+  }
+}

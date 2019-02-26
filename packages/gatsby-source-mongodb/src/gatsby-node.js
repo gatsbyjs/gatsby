@@ -1,7 +1,6 @@
 const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
-const _ = require(`lodash`)
 const queryString = require(`query-string`)
 
 exports.sourceNodes = (
@@ -29,7 +28,7 @@ exports.sourceNodes = (
   return MongoClient.connect(connectionURL)
     .then(db => {
       let collection = pluginOptions.collection || [`documents`]
-      if (!_.isArray(collection)) {
+      if (!Array.isArray(collection)) {
         collection = [collection]
       }
 
@@ -83,7 +82,9 @@ function createNodes(
           parent: `__${collectionName}__`,
           children: [],
           internal: {
-            type: `mongodb${sanitizeName(dbName)}${sanitizeName(collectionName)}`,
+            type: `mongodb${sanitizeName(dbName)}${sanitizeName(
+              collectionName
+            )}`,
             content: JSON.stringify(item),
             contentDigest: crypto
               .createHash(`md5`)
@@ -130,9 +131,7 @@ function createNodes(
 }
 
 function sanitizeName(s) {
-  return s
-    .replace(/[^_a-zA-Z0-9]/, ``)
-    .replace(/\b\w/g, l => l.toUpperCase())
+  return s.replace(/[^_a-zA-Z0-9]/, ``).replace(/\b\w/g, l => l.toUpperCase())
 }
 
 function getConnectionExtraParams(extraParams) {

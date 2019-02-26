@@ -25,7 +25,7 @@ If you’d like to look at the growing number source plugins available to you, s
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-gatsby new wordpress-tutorial-site
+npx gatsby new wordpress-tutorial-site
 cd wordpress-tutorial-site
 ```
 
@@ -37,7 +37,7 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```js{11-30}:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Gatsby WordPress Tutorial",
@@ -48,13 +48,14 @@ module.exports = {
      * Gatsby's data processing layer begins with “source”
      * plugins. Here the site sources its data from WordPress.
      */
+    // highlight-start
     {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-        * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
-        */
+         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
+         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
+         */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
         protocol: `http`,
@@ -68,6 +69,7 @@ module.exports = {
         useACF: true,
       },
     },
+    // highlight-end
   ],
 }
 ```

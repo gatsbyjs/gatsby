@@ -21,6 +21,8 @@ const fsExtra = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 
+const DEFAULT_PNG_COMPRESSION_SPEED = 4
+
 const {
   ImageFormatType,
   ImageCropFocusType,
@@ -51,6 +53,7 @@ const fixedNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
+  cache,
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -71,7 +74,7 @@ const fixedNodeType = ({
           resolve: ({ file, image, fieldArgs }) => {
             // If the file is already in webp format or should explicitly
             // be converted to webp, we do not create additional webp files
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
@@ -80,6 +83,7 @@ const fixedNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ src }) => src)
           },
@@ -87,7 +91,7 @@ const fixedNodeType = ({
         srcSetWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
@@ -96,6 +100,7 @@ const fixedNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -114,6 +119,10 @@ const fixedNodeType = ({
         type: GraphQLBoolean,
         defaultValue: true,
       },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+      },
       grayscale: {
         type: GraphQLBoolean,
         defaultValue: false,
@@ -128,7 +137,6 @@ const fixedNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       toFormat: {
         type: ImageFormatType,
@@ -151,6 +159,7 @@ const fixedNodeType = ({
           file,
           args,
           reporter,
+          cache,
         })
       ).then(o =>
         Object.assign({}, o, {
@@ -169,6 +178,7 @@ const fluidNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
+  cache,
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -194,6 +204,7 @@ const fluidNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ src }) => src)
           },
@@ -210,6 +221,7 @@ const fluidNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -236,6 +248,10 @@ const fluidNodeType = ({
         type: GraphQLBoolean,
         defaultValue: true,
       },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+      },
       duotone: {
         type: DuotoneGradientType,
         defaultValue: false,
@@ -246,7 +262,6 @@ const fluidNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       toFormat: {
         type: ImageFormatType,
@@ -278,6 +293,7 @@ const fluidNodeType = ({
           file,
           args,
           reporter,
+          cache,
         })
       ).then(o =>
         Object.assign({}, o, {
@@ -295,6 +311,7 @@ module.exports = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
+  cache,
 }) => {
   if (type.name !== `ImageSharp`) {
     return {}
@@ -305,6 +322,7 @@ module.exports = ({
     pathPrefix,
     getNodeAndSavePathDependency,
     reporter,
+    cache,
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
@@ -393,7 +411,6 @@ module.exports = ({
         },
         quality: {
           type: GraphQLInt,
-          defaultValue: 50,
         },
         jpegProgressive: {
           type: GraphQLBoolean,
@@ -402,6 +419,10 @@ module.exports = ({
         pngCompressionLevel: {
           type: GraphQLInt,
           defaultValue: 9,
+        },
+        pngCompressionSpeed: {
+          type: GraphQLInt,
+          defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
         },
         grayscale: {
           type: GraphQLBoolean,
@@ -440,6 +461,7 @@ module.exports = ({
             resolve(
               base64({
                 file,
+                cache,
               })
             )
           } else {

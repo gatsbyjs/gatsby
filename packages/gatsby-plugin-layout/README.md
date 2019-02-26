@@ -46,11 +46,13 @@ module.exports = {
 ];
 ```
 
+Once the plugin is added, you don't need to manually wrap your pages with the Layout component. The plugin does this automatically.
+
 ## Why would you want to reimplement the V1 layout behavior?
 
 There are a few scenarios where it makes sense to reimplement the V1 layout handling:
 
-1.  You have a large or complex V1 site and [refactoring to the new layout component](https://v2--gatsbyjs.netlify.com/docs/migrating-from-v1-to-v2/#update-layout-component) is not feasible
+1.  You have a large or complex V1 site and [refactoring to the new layout component](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components) is not feasible
 2.  Your site uses page transitions or other transitions that break if the layout component is unmounted and remounted when routes change
 3.  Your site attaches global state in the layout that doesn't persist if the component is unmounted and remounted
 
@@ -99,7 +101,7 @@ import React from "react"
 const defaultContextValue = {
   data: {
     // set your initial data shape here
-    showMenu: false,
+    menuOpen: false,
   },
   set: () => {},
 }
@@ -201,11 +203,9 @@ And then in `src/layouts/index.js`:
 
 ```js
 export default ({ children, pageContext }) => {
-  if (pageContext.layout === 'special') {
+  if (pageContext.layout === "special") {
     return <AlternativeLayout>{children}</AlternativeLayout>
   }
-  return (
-    <RegularLayout>{children}</RegularLayout>
-  ) 
+  return <RegularLayout>{children}</RegularLayout>
 }
 ```

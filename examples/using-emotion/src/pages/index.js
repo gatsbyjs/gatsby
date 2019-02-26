@@ -1,31 +1,22 @@
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
-import styled, { css, injectGlobal } from "react-emotion"
-// You can import everything from "react-emotion"
+import { Helmet } from "react-helmet"
+import styled from "@emotion/styled"
+import { css, Global } from "@emotion/core"
 
 // Emotion supports different styling options, all of which are supported by gatsby-plugin-emotion out of the box
 
-injectGlobal`
+// Create styles for the Global component
+const globalStyles = css`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-  html, body {
-    font-family: -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      "Roboto",
-      "Roboto Light",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
-      "Fira Sans",
-      "Droid Sans",
-      "Helvetica Neue",
-      sans-serif,
-      "Apple Color Emoji",
-      "Segoe UI Emoji",
+  html,
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+      "Roboto Light", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
   }
 `
@@ -41,7 +32,7 @@ const Wrapper = styled.section`
   width: 100vw;
 `
 
-// Using css with template literal
+// Using css with a template literal
 const title = css`
   font-size: 1.5em;
   color: #ff79c6;
@@ -52,11 +43,6 @@ const title = css`
   }
 `
 
-// Using css with object
-const subtitle = css({
-  color: `#bd93f9`,
-})
-
 const IndexPage = () => (
   <Fragment>
     <Helmet>
@@ -64,15 +50,22 @@ const IndexPage = () => (
       <meta name="description" content="Gatsby example site using Emotion" />
       <meta name="referrer" content="origin" />
     </Helmet>
+    <Global styles={globalStyles} />
     <Wrapper>
-      <h1 className={title}>
-        Hello World, this is my first component styled with{" "}
+      <h1 css={title}>
+        Hello World, this is my first component styled with
+        {` `}
         <a href="https://emotion.sh/">emotion</a>!
       </h1>
-      <p className={subtitle}>
+      <p
+        // Styling "inline" via css prop and object styles
+        css={{
+          color: `#bd93f9`,
+        }}
+      >
         <a
           href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/"
-          // Styling “inline” with css prop
+          // Styling “inline” via css prop and a template literal
           css={css`
             color: inherit;
           `}

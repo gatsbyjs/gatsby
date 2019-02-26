@@ -31,7 +31,7 @@ In order for Gatsby to grab all information from Prismic you'll need to generate
 First, open a new terminal window and run the following command to create a new site:
 
 ```shell
-gatsby new prismic-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new prismic-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 This will create a new directory called `prismic-tutorial` that contains the starters site, but you can change `prismic-tutorial` in the command above to whatever name you prefer!
@@ -131,7 +131,7 @@ const Post = ({ data: { prismicPost } }) => {
       <h1>{data.title.text}</h1>
       <div dangerouslySetInnerHTML={{ __html: data.content.html }} />
     </React.Fragment>
-  );
+  )
 }
 
 export default Post
@@ -155,11 +155,11 @@ export const pageQuery = graphql`
 
 ## Deploying to Netlify
 
+Earlier you defined an `API_KEY` environment variable for the source plugin. Netlify can set [build environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables), too. Go to your site and enter the `API_KEY` variable under `Settings → Build & deploy`. This way the source plugin gets the access token passed on the build.
+
 Netlify is able to automatically start builds on pushes to a repository and accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately, Prismic can [trigger webhook](https://user-guides.prismic.io/webhooks/webhooks) URLs when publishing content. With those features set up, new content will automatically appear on your Netlify site.
 
-Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format `https://api.netlify.com/build_hooks/-randomstring-` after clicking `Add build hook`.
-
-On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Everytime you publish a new document, Netlify will re-build your site.
+Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format `https://api.netlify.com/build_hooks/-randomstring-` after clicking `Add build hook`. On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Everytime you publish a new document, Netlify will re-build your site.
 
 ## Adding more features
 
@@ -188,7 +188,9 @@ import { graphql, Link } from "gatsby"
 const Index = ({ data: { prismicHomepage } }) => (
   <React.Fragment>
     <h1>{prismicHomepage.data.title.text}</h1>
-    <div dangerouslySetInnerHTML={{ __html: prismicHomepage.data.content.html }} />
+    <div
+      dangerouslySetInnerHTML={{ __html: prismicHomepage.data.content.html }}
+    />
   </React.Fragment>
 )
 

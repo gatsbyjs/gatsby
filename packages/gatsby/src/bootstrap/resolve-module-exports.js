@@ -1,6 +1,6 @@
 // @flow
 const fs = require(`fs`)
-const traverse = require(`babel-traverse`).default
+const traverse = require(`@babel/traverse`).default
 const get = require(`lodash/get`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
@@ -70,6 +70,15 @@ module.exports = (modulePath, resolver = require.resolve) => {
       isES6 = true
       if (exportName) exportNames.push(exportName)
     },
+
+    // get foo from `export { foo } from 'bar'`
+    // get foo from `export { foo }`
+    ExportSpecifier: function ExportSpecifier(astPath) {
+      const exportName = get(astPath, `node.exported.name`)
+      isES6 = true
+      if (exportName) exportNames.push(exportName)
+    },
+
     AssignmentExpression: function AssignmentExpression(astPath) {
       const nodeLeft = astPath.node.left
 

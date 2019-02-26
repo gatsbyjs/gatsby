@@ -1,6 +1,6 @@
 ---
 title: Gatsby's first beta release
-date: "2017-06-15"
+date: 2017-06-15
 author: "Kyle Mathews"
 image: "images/13382568193_31cfce63be_o-edited.jpg"
 imageAuthor: Kees Torn
@@ -66,7 +66,7 @@ individuals and companies.
 - [X-Team](https://x-team.com/)
 - [Contentful](https://www.contentful.com/)
 
-### Our open source hosting/testing infastructure providers
+### Our open source hosting/testing infrastructure providers
 
 It'd be impossible to write open source code without the generous support of
 these infrastructure providers.

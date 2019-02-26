@@ -11,6 +11,9 @@ try {
         `Please create layout component in that location or specify path to layout component in gatsby-config.js`
     )
   } else {
+    // Logging the error for debugging older browsers as there is no way
+    // to wrap the thrown error in a try/catch.
+    console.error(e)
     throw e
   }
 }

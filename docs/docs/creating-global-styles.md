@@ -19,7 +19,7 @@ The best way to add global styles is with a [shared layout component](/tutorial/
 To create a shared layout with global styles, start by creating a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
 
 ```shell
-gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Open your new site in your code editor and create a new directory at `/src/components`. Inside, create two new files:
@@ -46,7 +46,7 @@ div {
 
 In `src/components/layout.js`, include the stylesheet and export a layout component:
 
-```js:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import "./layout.css"
 
@@ -62,7 +62,7 @@ import Layout from "../components/layout"
 export default () => <Layout>Hello world!</Layout>
 ```
 
-Run `gatsby develop` and you’ll see the global styles applied.
+Run `npm run develop` and you’ll see the global styles applied.
 
 ![Global styles](./images/global-styles.png)
 
@@ -73,9 +73,9 @@ Run `gatsby develop` and you’ll see the global styles applied.
 To start, create a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world) and install [`gatsby-plugin-emotion`](/packages/gatsby-plugin-emotion/) and its dependencies:
 
 ```shell
-gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd global-styles
-npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
 Create `gatsby-config.js` and add the Emotion plugin:
@@ -90,21 +90,27 @@ Next, add a layout component at `src/components/layout.js`:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
-import styled, { injectGlobal } from "react-emotion"
-
-injectGlobal`
-  div {
-    background: red;
-    color: white;
-  }
-`
+import { Global, css } from "@emotion/core"
+import styled from "@emotion/styled"
 
 const Wrapper = styled("div")`
   border: 2px solid green;
   padding: 10px;
 `
 
-export default ({ children }) => <Wrapper>{children}</Wrapper>
+export default ({ children }) => (
+  <Wrapper>
+    <Global
+      styles={css`
+        div {
+          background: red;
+          color: white;
+        }
+      `}
+    />
+    {children}
+  </Wrapper>
+)
 ```
 
 Then, update `src/pages/index.js` to use the layout:
@@ -116,7 +122,7 @@ import Layout from "../components/layout"
 export default () => <Layout>Hello world!</Layout>
 ```
 
-Run `gatsby build`, and you can see in `public/index.html` that the styles have been inlined globally.
+Run `npm run build`, and you can see in `public/index.html` that the styles have been inlined globally.
 
 ## Add global styles with CSS files and no layout component
 
@@ -127,9 +133,9 @@ In some cases, using a shared layout component is not desirable. In these cases,
 First, open a new terminal window and run the following commands to create a new default Gatsby site and start the development server:
 
 ```shell
-gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default
+npx gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default
 cd global-style-tutorial
-gatsby develop
+npm run develop
 ```
 
 Second, create a css file and define any styles you wish. An arbitrary example:

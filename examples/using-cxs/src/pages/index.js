@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import cxs from "cxs"
 
 // Create a Title component that'll render an <h1> tag with some styles
@@ -37,7 +37,9 @@ class IndexPage extends React.Component {
           }}
         >
           <div className={wrapperClassName}>
-            <div className={titleClassName}>Hello World, this is my first styled component!</div>
+            <div className={titleClassName}>
+              Hello World, this is my first styled component!
+            </div>
             <p>
               <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
                 gatsby-plugin-styled-component docs

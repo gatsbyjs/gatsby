@@ -23,6 +23,36 @@ class ShareMenu extends React.Component {
       open: false,
     }
     this.shareMenu = this.shareMenu.bind(this)
+    this.clickOutsideShareMenu = this.clickOutsideShareMenu.bind(this)
+    this.setShareBtnRef = this.setShareBtnRef.bind(this)
+    this.setShareMenuRef = this.setShareMenuRef.bind(this)
+  }
+
+  componentDidMount() {
+    document.addEventListener(`mousedown`, this.clickOutsideShareMenu)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener(`mousedown`, this.clickOutsideShareMenu)
+  }
+
+  setShareBtnRef(node) {
+    this.shareBtnref = node
+  }
+
+  setShareMenuRef(node) {
+    this.shareMenuRef = node
+  }
+
+  clickOutsideShareMenu(event) {
+    const { open } = this.state
+    if (
+      open &&
+      !this.shareBtnref.contains(event.target) &&
+      !this.shareMenuRef.contains(event.target)
+    ) {
+      this.shareMenu()
+    }
   }
 
   shareMenu() {
@@ -33,7 +63,7 @@ class ShareMenu extends React.Component {
   }
 
   render() {
-    const { url, title, image, theme = `gatsby` } = this.props
+    const { url, title, image, className, theme = `gatsby` } = this.props
     const { open } = this.state
     return (
       <Fragment>
@@ -46,6 +76,8 @@ class ShareMenu extends React.Component {
             color: styles[theme].textColor,
             cursor: `pointer`,
           }}
+          className={className}
+          ref={this.setShareBtnRef}
         >
           <MdShare />
         </button>
@@ -57,6 +89,7 @@ class ShareMenu extends React.Component {
               left: `auto`,
               right: 0,
             }}
+            ref={this.setShareMenuRef}
           >
             <a
               {...linkAttrs}

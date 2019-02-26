@@ -1,5 +1,5 @@
-const axios = require("axios")
-const createNodeHelpers = require("gatsby-node-helpers").default
+const axios = require(`axios`)
+const createNodeHelpers = require(`gatsby-node-helpers`).default
 
 const get = endpoint => axios.get(`https://pokeapi.co/api/v2${endpoint}`)
 
@@ -22,13 +22,13 @@ const getPokemonData = names =>
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
   const { createNodeFactory } = createNodeHelpers({
-    typePrefix: "Pokeapi",
+    typePrefix: `Pokeapi`,
   })
-  const prepareAbilityNode = createNodeFactory("Ability")
-  const preparePokemonNode = createNodeFactory("Pokemon")
+  const prepareAbilityNode = createNodeFactory(`Ability`)
+  const preparePokemonNode = createNodeFactory(`Pokemon`)
 
   // Get all our pokemon data
-  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
+  const allPokemon = await getPokemonData([`pikachu`, `charizard`, `squirtle`])
 
   // Process data for each pokemon into Gatsby node format
   const processPokemon = pokemon => {

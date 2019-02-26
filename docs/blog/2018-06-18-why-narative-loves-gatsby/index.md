@@ -1,6 +1,6 @@
 ---
 title: Why Narative loves Gatsby
-date: "2018-06-18"
+date: 2018-06-18
 author: "Dennis Brotzky"
 tags: ["gatsby", "narative", "graphql", "blog", "agency"]
 excerpt: "Redefining how Narative builds page based websites with Gatsby"

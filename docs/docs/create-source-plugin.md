@@ -10,6 +10,8 @@ and "transformer" plugins.
 - **Transformer** plugins "transform" data provided by source plugins into new
   nodes and/or node fields.
 
+This doc focuses on source plugins.
+
 For example:
 
 The [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin
@@ -44,7 +46,7 @@ node for the markdown content and set its mediaType as `text/markdown` and the
 various Gatsby markdown transformer plugins will see your node and transform it
 into HTML.
 
-This loose coupling between data source and transformer plugins allow Gatsby
+This loose coupling between the data source and the transformer plugins allow Gatsby
 site builders to quickly assemble complex data transformation pipelines with
 little work on their (and your (the source plugin author)) part.
 
@@ -52,9 +54,9 @@ What does the code look like?
 
 A source plugin is a normal NPM package. It has a package.json with optional
 dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
-APIs. Gatsby supports node versions back to Node 4 and as it's common to want to
+APIs. Gatsby's minimum supported Node.js version is Node 8 and as it's common to want to
 use more modern Node.js and JavaScript syntax, many plugins write code in a
-`src` directory and compile the code. All plugins maintained in the Gatsby repo
+source directory and compile the code. All plugins maintained in the Gatsby repo
 follow this pattern.
 
 Your `gatsby-node.js` should look something like:
@@ -89,10 +91,7 @@ But at a high-level, these are the jobs of a source plugin:
 - "Link" nodes types you create as appropriate (see
   [_Node Link_](/docs/api-specification/) in the API specification concepts
   section.
-- Return either a promise or use the callback (3rd parameter) to report back to
-  Gatsby when you're done sourcing nodes. Otherwise either Gatsby will continue
-  on before you're done sourcing or hang while waiting for you to indicate
-  you're finished.
+- Return either a promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Your nodes might not end up in the generated schema at compilation, or the process will hang while waiting for an indication that it's finished.
 
 [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers),
 a community-made NPM package, can help when writing source plugins. This
@@ -113,7 +112,7 @@ There are two ways of adding node relationships in Gatsby: (1) transformations (
 
 An example of a transformation relationship is the `gatsby-transformer-remark` plugin, which transforms a parent `fileNode`'s markdown string into a `MarkdownRemark` node. The Remark transformer plugin adds its newly created child node as a child of the parent node using the action `createParentChildLink`. Transformation relationships are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `fileNode` and wouldn't ever exist if the parent `fileNode` hadn't been created.
 
-Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on) with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there's not nodes left over that were derived from older versions of data but shouldn't exist any longer.
+Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on) with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there are no nodes left over that were derived from older versions of data but shouldn't exist any longer.
 
 _Creating the transformation relationship_
 
@@ -129,7 +128,7 @@ _Examples_
 
 An example of a foreign-key relationship would be a Post that has an Author.
 
-In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. The API of a service that allows complex object modelling, for example a CMS, will often allow users to relationships between entities and expose them through the API.
+In this relationship, each object is a distinct entity that exists whether or not the other does, with independent schemas, and field(s) on each entity that reference the other entity -- in this case the Post would have an Author, and the Author might have Posts. The API of a service that allows complex object modelling, for example a CMS, will often allow users to add relationships between entities and expose them through the API.
 
 When an object node is deleted, Gatsby _does not_ delete any referenced entities. When using foreign-key references, it's a source plugin's responsibility to clean up any dangling entity references.
 

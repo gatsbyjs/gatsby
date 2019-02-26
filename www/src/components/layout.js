@@ -1,6 +1,7 @@
 import React from "react"
 import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
 import presets, { colors } from "../utils/presets"
@@ -150,28 +151,14 @@ class DefaultLayout extends React.Component {
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2.
-          {` `}
-          <a
-            href="https://v1.gatsbyjs.org/"
-            css={{
-              color: `#fff`,
-            }}
+          {/* !!! If you change the children of Banner remember to do the same in layout/layout-with-heading.js */}
+          <OutboundLink
+            href="https://www.gatsbyjs.com/behind-the-scenes/"
+            css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
           >
-            View the v1 docs
-            <span
-              css={{
-                display: `none`,
-                [presets.Mobile]: {
-                  display: `inline`,
-                },
-              }}
-            >
-              {` `}
-              instead
-            </span>
-          </a>
-          .
+            Watch now
+          </OutboundLink>
+          {`: “Behind the Scenes: What makes Gatsby Great”.`}
         </Banner>
         <Navigation pathname={this.props.location.pathname} />
         <div

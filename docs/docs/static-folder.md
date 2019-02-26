@@ -2,30 +2,31 @@
 title: Static folder
 ---
 
-In general, every website needs assets: images, stylesheets, scripts, etc. When using Gatsby, we recommend 
- [Adding Images, Fonts, and Files](/docs/adding-images-fonts-files/) in JavaScript files,
- because of the benefits it provides:
+In general, every website needs assets: images, stylesheets, scripts, etc. When using Gatsby, we recommend
+[Adding Images, Fonts, and Files](/docs/adding-images-fonts-files/) in JavaScript files,
+because of the benefits it provides:
 
 - Scripts and stylesheets are minified and bundled together to avoid extra
   network requests.
 - Missing files cause compilation errors instead of 404 errors for your users.
 - Result filenames include content hashes so you don’t need to worry about
-  browsers caching their old versions. 
-  
+  browsers caching their old versions.
+
 However, there is an **escape hatch** that you can use to add an asset outside of
 the module system.
 
 ## Adding Assets Outside of the Module System
 
 You can create a folder named `static` at the root of your project. Every file
- you put into that folder will be copied into the `public` folder. E.g. if you
- add a file named `sun.jpg` to the static folder, it'll be copied to
- `public/sun.jpg`
- 
+you put into that folder will be copied into the `public` folder. E.g. if you
+add a file named `sun.jpg` to the static folder, it'll be copied to
+`public/sun.jpg`
+
 ### Referencing your static asset
- 
+
 In order to reference assets from the `static` folder in your code, you'll need to
 [import the `withPrefix` helper function from `gatsby`](/docs/gatsby-link/#prefixed-paths-helper):
+
 ```js
 import { withPrefix } from 'gatsby'
 
@@ -35,8 +36,8 @@ render() {
   // as described in the “Adding Images, Fonts, and Files” page.
   return <img src={withPrefix('/img/logo.png')} alt="Logo" />;
 }
-``` 
- 
+```
+
 And make sure you
 [set `pathPrefix` in your gatsby-config.js](/docs/path-prefix/):
 
@@ -46,7 +47,6 @@ module.exports = {
   pathPrefix: `/img`,
 }
 ```
-
 
 ### Downsides
 

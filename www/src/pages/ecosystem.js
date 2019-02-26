@@ -42,7 +42,7 @@ class EcosystemPage extends Component {
 
     const plugins = pluginsData.map(item => item.node)
 
-    const pageTitle = "Ecosystem"
+    const pageTitle = `Ecosystem`
     const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
 
     return (

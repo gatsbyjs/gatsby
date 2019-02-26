@@ -2,6 +2,8 @@
 title: Migrating from v1 to v2
 ---
 
+Looking for the v1 docs? [Find them here](https://v1.gatsbyjs.org/).
+
 > This document is a work in progress. Have you upgraded your site and run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/master/docs/docs/migrating-from-v1-to-v2.md)!
 
 ## Introduction
@@ -14,9 +16,9 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 This documentation page covers the _how_ of migrating from v1 to v2. The _why_ is covered in various blog posts:
 
-* [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
-* [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
-* [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
+- [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
+- [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
+- [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
 
 ## What we'll cover
 
@@ -88,7 +90,7 @@ You need update your `package.json` to use the latest version of Gatsby.
 
 Or run
 
-```bash
+```shell
 npm i gatsby@latest
 ```
 
@@ -96,13 +98,13 @@ npm i gatsby@latest
 
 Update your `package.json` to use the latest versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
 
-```bash
+```shell
 npm outdated
 ```
 
 And compare "Wanted" and "Latest" versions and update `package.json` file manually or run
 
-```bash
+```shell
 npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
 ```
 
@@ -112,7 +114,7 @@ npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-
 
 In v1, the `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
 
-```bash
+```shell
 npm i react react-dom
 ```
 
@@ -120,7 +122,7 @@ npm i react react-dom
 
 Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to install:
 
-```bash
+```shell
 npm i typography react-typography
 ```
 
@@ -158,7 +160,7 @@ export default ({ children }) => (
 
 #### 2. Move `layouts/index.js` to `src/components/layout.js` (optional, but recommended)
 
-```bash
+```shell
 git mv src/layouts/index.js src/components/layout.js
 ```
 
@@ -213,7 +215,7 @@ Replacing a layout's query with `StaticQuery`:
 
 ```diff:title=src/components/layout.js
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
 
 - export default ({ children, data }) => (
@@ -731,7 +733,7 @@ exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
 }
 ```
 
-If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/packages/gatsby-plugin-sass/README.md#how-to-use) or [`gatsby-plugin-less`](/packages/gatsby-plugin-less/README.md#how-to-use):
+If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/packages/gatsby-plugin-sass/#how-to-use) or [`gatsby-plugin-less`](/packages/gatsby-plugin-less/#how-to-use):
 
 ```javascript
 // in gatsby-config.js
@@ -1028,17 +1030,17 @@ _Starters:_ If you'd rather use one of the official starters, install your favou
 `gatsby-starter-default` with v2:
 
 ```
-gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default
+npx gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 `gatsby-starter-hello-world` with v2:
 
 ```
-gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 `gatsby-starter-blog` with v2:
 
 ```
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
+npx gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
 ```

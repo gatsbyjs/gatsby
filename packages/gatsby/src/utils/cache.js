@@ -7,10 +7,7 @@ const MAX_CACHE_SIZE = 250
 const TTL = Number.MAX_SAFE_INTEGER
 
 class Cache {
-  constructor({
-    name = `db`,
-    store = fsStore,
-  } = {}) {
+  constructor({ name = `db`, store = fsStore } = {}) {
     this.name = name
     this.store = store
   }
@@ -43,13 +40,17 @@ class Cache {
 
   get(key) {
     return new Promise(resolve => {
-      this.cache.get(key, (_, res) => resolve(res))
+      this.cache.get(key, (err, res) => {
+        resolve(err ? undefined : res)
+      })
     })
   }
 
   set(key, value, args = {}) {
     return new Promise(resolve => {
-      this.cache.set(key, value, args, (_, res) => resolve(res))
+      this.cache.set(key, value, args, err => {
+        resolve(err ? undefined : value)
+      })
     })
   }
 }

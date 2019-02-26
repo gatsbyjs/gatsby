@@ -7,10 +7,12 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const truePath = require(`true-case-path`)
 const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
+const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../db/nodes`)
-const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
+const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
@@ -82,7 +84,8 @@ const pascalCase = _.flow(
   _.camelCase,
   _.upperFirst
 )
-const hasWarnedForPageComponent = new Set()
+const hasWarnedForPageComponentInvalidContext = new Set()
+const hasWarnedForPageComponentInvalidCasing = new Set()
 const fileOkCache = {}
 
 /**
@@ -137,7 +140,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorName`,
+      `pluginCreatorId`,
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -177,9 +180,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       } else if (invalidFields.some(f => page.context[f] !== page[f])) {
         report.panic(error)
       } else {
-        if (!hasWarnedForPageComponent.has(page.component)) {
+        if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
           report.warn(error)
-          hasWarnedForPageComponent.add(page.component)
+          hasWarnedForPageComponentInvalidContext.add(page.component)
         }
       }
     }
@@ -195,6 +198,39 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       console.log(``)
       console.log(page)
       noPageOrComponent = true
+    } else if (page.component) {
+      // normalize component path
+      page.component = slash(page.component)
+      // check if path uses correct casing - incorrect casing will
+      // cause issues in query compiler and inconsistencies when
+      // developing on Mac or Windows and trying to deploy from
+      // linux CI/CD pipeline
+      const trueComponentPath = slash(truePath(page.component))
+      if (trueComponentPath !== page.component) {
+        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+          const markers = page.component
+            .split(``)
+            .map((letter, index) => {
+              if (letter !== trueComponentPath[index]) {
+                return `^`
+              }
+              return ` `
+            })
+            .join(``)
+
+          report.warn(
+            stripIndent`
+          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+
+          page.component:     "${page.component}"
+          path in filesystem: "${trueComponentPath}"
+                               ${markers}
+        `
+          )
+          hasWarnedForPageComponentInvalidCasing.add(page.component)
+        }
+        page.component = trueComponentPath
+      }
     }
   }
 
@@ -214,7 +250,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (noPageOrComponent) {
     report.panic(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
     )
   }
 
@@ -294,9 +330,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     fileOkCache[internalPage.component] = true
   }
 
+  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const contextModified =
+    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
+    contextModified,
     plugin,
     payload: internalPage,
   }
@@ -601,6 +642,7 @@ actions.createNode = (
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
+      oldNode,
       ...actionOptions,
       payload: node,
     }
@@ -1066,16 +1108,20 @@ actions.setPluginStatus = (
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
- * plugin](/packages/gatsby-plugin-netlify/)).
+ * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
+ * plugin](/packages/gatsby-plugin-s3/).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
  * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
  * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
+ * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ * createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
  */
 actions.createRedirect = ({
   fromPath,

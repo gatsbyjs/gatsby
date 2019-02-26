@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.23...gatsby-plugin-offline@2.0.24) (2019-02-19)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [2.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.22...gatsby-plugin-offline@2.0.23) (2019-02-07)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.21...gatsby-plugin-offline@2.0.22) (2019-01-28)
+
+### Features
+
+- **gatsby-plugin-offline:** reload when missing resources and SW was updated + add "onServiceWorkerUpdateReady" API ([#10432](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10432)) ([4a01c6d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/4a01c6d))
+
+<a name="2.0.21"></a>
+
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.20...gatsby-plugin-offline@2.0.21) (2019-01-06)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+<a name="2.0.20"></a>
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.19...gatsby-plugin-offline@2.0.20) (2018-12-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** prevent incorrect revisioning of static file by workbox ([#10416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10416)) ([008b5db](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/008b5db))
+
+<a name="2.0.19"></a>
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.18...gatsby-plugin-offline@2.0.19) (2018-12-07)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** gracefully degrade if appshell isn't precached ([#10329](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/10329)) ([19e9f3e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/19e9f3e))
+
+<a name="2.0.18"></a>
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.17...gatsby-plugin-offline@2.0.18) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+<a name="2.0.17"></a>
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.16...gatsby-plugin-offline@2.0.17) (2018-11-21)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+<a name="2.0.16"></a>
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.15...gatsby-plugin-offline@2.0.16) (2018-11-20)
+
+### Features
+
+- **gatsby-plugin-offline:** replace no-cache detection with dynamic path whitelist ([#9907](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/9907)) ([8d3af3f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/8d3af3f))
+
+<a name="2.0.15"></a>
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.14...gatsby-plugin-offline@2.0.15) (2018-11-14)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** fix certain resources being cached excessively ([#9923](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/9923)) ([7c826a1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/7c826a1)), closes [#9415](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/9415)
+
+<a name="2.0.14"></a>
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.13...gatsby-plugin-offline@2.0.14) (2018-11-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Sync docs with actual defaults being used ([#9903](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/9903)) ([8cd7432](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/8cd7432))
+
+<a name="2.0.13"></a>
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.12...gatsby-plugin-offline@2.0.13) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+<a name="2.0.12"></a>
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.11...gatsby-plugin-offline@2.0.12) (2018-11-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Serve the offline shell for short URLs + use no-cors for external resources ([#9679](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/9679)) ([430e8f1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/430e8f1)), closes [#8145](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/8145)
+
 <a name="2.0.11"></a>
 
 ## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.10...gatsby-plugin-offline@2.0.11) (2018-11-01)

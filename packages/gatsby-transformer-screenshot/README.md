@@ -88,13 +88,13 @@ To set up the HTTP interface, you will need to use AWS API Gateway. Create a new
 
 If your site pulls a lot of screenshots it might be beneficial to use placeholder image instead of downloading and processing all the screenshots. It will help with data sourcing and query running times.
 
-You can use placeholder image by setting `GATSBY_SCREENSHOT_PLACEHOLDER` environment variable when running `gatsby develop`:
+You can use placeholder image by setting `GATSBY_SCREENSHOT_PLACEHOLDER` environment variable when running `npm run develop`:
 
 ```shell
 GATSBY_SCREENSHOT_PLACEHOLDER=true gatsby develop
 ```
 
-or by adding it to `.env.development` file in root of your project:
+or by using [`dotenv`](https://www.gatsbyjs.org/docs/environment-variables/#server-side-nodejs) in your `gatsby-config.js` and adding `GATSBY_SCREENSHOT_PLACEHOLDER` to `.env.development` file in root of your project:
 
 ```shell:title=.env.development
 GATSBY_SCREENSHOT_PLACEHOLDER=true
