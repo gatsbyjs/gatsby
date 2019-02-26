@@ -359,7 +359,7 @@ You can similarly check for file downloads:
 
 ## Recommendations for programmatic, in-app navigation
 
-Neither `<Link>` not `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package to make use of its `navigate` function, like so:
+Neither `<Link>` nor `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package--which Gatsby already depends upon--to make use of its `navigate` function, like so:
 
 ```jsx
 import { navigate } from '@reach/router';
