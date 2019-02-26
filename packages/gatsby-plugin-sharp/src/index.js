@@ -88,7 +88,7 @@ const generalArgs = {
   pngCompressionLevel: 9,
   // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
   pngCompressionSpeed: 4,
-  base64: false,
+  base64: true,
   grayscale: false,
   duotone: false,
   pathPrefix: ``,
@@ -685,7 +685,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   })
 
   let base64Image
-  if (!options.generateTracedSVG) {
+  if (options.base64) {
     const base64Width = 20
     const base64Height = Math.max(1, Math.round((base64Width * height) / width))
     const base64Args = {
@@ -804,7 +804,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   })
 
   let base64Image
-  if (!options.generateTracedSVG) {
+  if (options.base64) {
     const base64Args = {
       duotone: options.duotone,
       grayscale: options.grayscale,
