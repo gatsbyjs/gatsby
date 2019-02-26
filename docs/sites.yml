@@ -4419,3 +4419,15 @@
     - Portfolio
   built_by: Maxim Andries
   featured: false
+- title: Algolia
+  url: https://algolia.com
+  main_url: https://algolia.com
+  description: >
+    Algolia helps businesses across industries quickly create relevant, scalable, and lightning fast search and discovery experiences.
+  categories:
+    - Web Development
+    - Technology
+    - Open Source
+    - Featured
+  built_by: Algolia
+  featured: true
