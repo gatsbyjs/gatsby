@@ -149,6 +149,7 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/features/">Features</NavItem>
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
+            <NavItem linkTo="/contributing/">Contributing</NavItem>
             {/* <li css={styles.li}>
                 <Link
                   to="/community/"
