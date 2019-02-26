@@ -1,4 +1,4 @@
-/*global __PATH_PREFIX__ */
+/*global __BASE_PATH__ */
 import PropTypes from "prop-types"
 import React from "react"
 import { Link } from "@reach/router"
@@ -8,10 +8,12 @@ import { parsePath } from "./parse-path"
 export { parsePath }
 
 export function withPrefix(path) {
-  return normalizePath(`${__PATH_PREFIX__}/${path}`)
+  return normalizePath(`${__BASE_PATH__}/${path}`)
 }
 
-function normalizePath(path) {}
+function normalizePath(path) {
+  return path.replace(/\/+/g, `/`)
+}
 
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,

@@ -77,10 +77,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // pages have this canonical path)
     !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
   ) {
-    navigate(
-      __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
-      { replace: true }
-    )
+    navigate(__BASE_PATH__ + page.path + browserLoc.search + browserLoc.hash, {
+      replace: true,
+    })
   }
 
   loader.getResourcesForPathname(browserLoc.pathname).then(() => {
