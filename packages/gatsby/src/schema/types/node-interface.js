@@ -37,7 +37,7 @@ const getOrCreateNodeInterface = schemaComposer => {
           )
         },
       },
-      internal: `Internal`,
+      internal: `Internal!`,
     })
   })
   NodeInterfaceTC.getITC()
