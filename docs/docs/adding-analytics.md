@@ -40,14 +40,14 @@ npm install --save gatsby-plugin-google-analytics
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-plugin-google-analytics',
+      resolve: `gatsby-plugin-google-analytics`,
       options: {
         // replace "UA-XXXXXXXXX-X" with your own Tracking ID
         trackingId: "UA-XXXXXXXXX-X",
       },
     },
   ],
-};
+}
 ```
 
 > Note: Read more about [gatsby-config.js](https://www.gatsbyjs.org/docs/gatsby-config/)
