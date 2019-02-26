@@ -26,14 +26,14 @@ module.exports = (state = new Map(), action) => {
           pages: [action.payload.path],
           isInBootstrap: programStatus === `BOOTSTRAPPING`,
         })
-        service = interpret(machine)
-          .onTransition(nextState => {
-            console.log(
-              `component machine value`,
-              _.pick(nextState, [`value`, `context`, `event`])
-            )
-          })
-          .start()
+        service = interpret(machine).start()
+        // .onTransition(nextState => {
+        // console.log(
+        // `component machine value`,
+        // _.pick(nextState, [`value`, `context`, `event`])
+        // )
+        // })
+        // .start()
         services.set(action.payload.componentPath, service)
       } else {
         service = services.get(action.payload.componentPath)
