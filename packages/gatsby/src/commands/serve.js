@@ -8,7 +8,6 @@ const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
-const cors = require(`cors`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
 const getPages = directory =>
