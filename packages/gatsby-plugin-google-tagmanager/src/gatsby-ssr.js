@@ -15,7 +15,7 @@ const generateDefaultDataLayer = (dataLayer, reporter) => {
   let result = `window.dataLayer = window.dataLayer || [];`
 
   if (typeof dataLayer === `function`) {
-    result += `window.dataLayer.push((${dataLayer})()));`
+    result += `window.dataLayer.push((${dataLayer})());`
   } else {
     if (typeof dataLayer !== `object` || dataLayer.constructor !== Object) {
       reporter.panic(

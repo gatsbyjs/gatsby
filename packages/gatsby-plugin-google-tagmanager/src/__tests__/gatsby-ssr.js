@@ -1,3 +1,4 @@
+const { oneLine } = require(`common-tags`)
 const { onRenderBody } = require(`../gatsby-ssr`)
 
 describe(`gatsby-plugin-google-tagmanager`, () => {
@@ -65,16 +66,18 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       }
       const pluginOptions = {
         includeInDevelopment: true,
-        defaultDataLayer: () => {
+        defaultDataLayer: function() {
           return { pageCategory: window.pageType }
         },
       }
+
+      const datalayerFuncAsString = oneLine`${pluginOptions.defaultDataLayer.toString()}`
 
       onRenderBody(mocks, pluginOptions)
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
-        `window.dataLayer`
+        `window.dataLayer.push((${datalayerFuncAsString})());`
       )
     })
 

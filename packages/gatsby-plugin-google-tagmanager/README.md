@@ -21,7 +21,7 @@ plugins: [
       includeInDevelopment: false,
 
       // datalayer to be set before GTM is loaded
-      // should be a stringified object or object
+      // should be an object or a function that is executed in the browser
       // Defaults to null
       defaultDataLayer: { platform: "gatsby" },
 
