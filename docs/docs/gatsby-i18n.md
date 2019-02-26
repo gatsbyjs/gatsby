@@ -8,14 +8,8 @@ In practice i18n involves translating text and formatting dates, numbers, and st
 This guide is a brief look at the options that exist for enhancing your Gatsby project for internationalization.
 
 ### Choosing a package
-There are a few React i18n packages out there. We considered [react-intl](https://github.com/yahoo/react-intl) and the community [Gatsby plugin](https://www.npmjs.com/package/gatsby-plugin-i18n). However, we opted for [react-i18next](https://github.com/i18next/react-i18next/) because we use a version of i18next in our core Meteor app, and our translators are familiar with the system. [It’s well documented too.](https://react.i18next.com/)
+There are a few React i18n packages out there. Several options include [react-intl](https://github.com/yahoo/react-intl), the community [Gatsby plugin](https://www.npmjs.com/package/gatsby-plugin-i18n) and [react-i18next](https://github.com/i18next/react-i18next/). There are several factors to consider when choosing a package: Do you already use something similiar in another project? How well does the package meet the needs of your users? Are you or your team already familiar with a certain package? Is the package well documented? 
 
-
-We also wanted to use a non-specific Gatsby solution so we can use a similar implementation in other projects.
-
-To get started, you’ll need to install a few packages:
-
-`npm i -S i18next i18next-xhr-backend i18next-browser-languagedetector react-i18next`
 
 ### gatsby-plugin-i18n
 This plugin helps you use react-intl, i18next or and other i18n library with Gatsby. This plugin does not translate or format your content rather it creates routes for each language, allowing Google to more easily find the correct version of your site, and if you need to, designate alternative UI layouts.
