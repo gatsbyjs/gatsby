@@ -1,0 +1,12 @@
+---
+title: tv in the making
+author: one
+---
+
+black gold Were gonna do it. Give us any chance well take it. Give us any rule we'll break it. We're gonna make our dreams come true. Movin' on up to the east side. We finally got a piece of the pie. In a freak mishap Ranger 3 and its pilot Captain William Buck Rogers are blown out of their trajectory into an orbit which freezes his life support systems and returns Buck Rogers to Earth five-hundred years later. Here he comes Here comes Speed Racer. He's a demon on wheels., Maybe you and me were never meant to be. But baby think of me once in awhile. I'm at WKRP in Cincinnati. Goodbye gray sky hello blue. There's nothing can hold me when I hold you. Feels so right it cant be wrong. Rockin' and rollin' all week long. Well we're movin' on up to the east side to a deluxe apartment in the sky? Its mission - to explore strange new worlds to seek out new life and new civilizations to boldly go where no man has gone before.
+
+It's time to put on makeup. It's time to dress up right. It's time to raise the curtain on the Muppet Show tonight. Texas tea. I have always wanted to have a neighbor just like you. I've always wanted to live in a neighborhood with you. Just two good ol' boys Never meanin' no harm. Beats all you've ever saw been in trouble with the law since the day they was born. Its mission - to explore strange new worlds to seek out new life and new civilizations to boldly go where no man has gone before. Today still wanted by the government they survive as soldiers of fortune. Fleeing from the Cylon tyranny the last Battlestar – Galactica - leads a rag-tag fugitive fleet on a lonely quest - a shining planet known as Earth." In 1972 a crack commando unit was sent to prison by a military court for a crime they didn't commit. These men promptly escaped from a maximum security stockade to the Los Angeles underground.
+
+That this group would somehow form a family that's the way we all became the Brady Bunch. Makin their way the only way they know how. That's just a little bit more than the law will allow.
+
+The ship set ground on the shore of this uncharted desert isle with Gilligan the Skipper too the millionaire and his wife. And you know where you were then. Girls were girls and men were men. Mister we could use a man like Herbert Hoover again." All of them had hair of gold like their mother the youngest one in curls. Makin their way the only way they know how. That's just a little bit more than the law will allow.

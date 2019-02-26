@@ -215,6 +215,8 @@
               link: /docs/adding-search-with-elasticlunr/
             - title: Adding Search with js-search*
               link: /docs/adding-search-with-js-search/
+            - title: Adding search with GraphQL*
+              link: /docs/adding-search-with-GraphQL
         - title: Adding Analytics
           link: /docs/adding-analytics/
         - title: Adding Authentication

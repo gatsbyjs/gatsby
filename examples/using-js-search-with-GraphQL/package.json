@@ -1,0 +1,35 @@
+{
+  "name": "advanced-js-search-example",
+  "private": true,
+  "description": "Searching with js search and some Markdown content",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "clean": "rimraf ./public && rimraf .cache",
+    "serve": "gatsby serve",
+    "format": "prettier --write \"src/**/*.js\"",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+  },
+  "dependencies": {
+    "gatsby": "^2.0.118",
+    "gatsby-source-filesystem": "^2.0.20",
+    "gatsby-transformer-remark": "^2.2.4",
+    "js-search": "^1.4.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "devDependencies": {
+    "prettier": "^1.16.4",
+    "rimraf": "^2.6.3"
+  }
+}
