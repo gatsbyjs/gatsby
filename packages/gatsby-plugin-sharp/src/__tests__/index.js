@@ -349,6 +349,7 @@ describe(`gatsby-plugin-sharp`, () => {
         width: 100,
         generateTracedSVG: true,
         tracedSVG: { color: `#FF0000` },
+        base64: false,
       }
 
       let result = await fixed({
