@@ -54,6 +54,12 @@ plugins: [
 
     The available properties for each item can be found in the [rss module documentation](https://www.npmjs.com/package/rss#itemoptions).
 
+    By default the `serialize` function will create the `url` and `guid` out of the `siteUrl` found in the site meta data and the corresponding slug for each page.
+
+    If you want to use the default setting, you need to make sure the page nodes you list in the feed have a `slug` field. To generate slugs out of Markdown pages, take a look at this [guide](https://www.gatsbyjs.org/docs/creating-slugs-for-pages/).
+
+    You can use other fields to generate the `url` and `guid` by providing them in the object returned by the `serialize` function.
+
   * query
 
     A GraphQL query selecting the items to be listed in the RSS feed. They will be passed to the `serialize` function as parameter.
