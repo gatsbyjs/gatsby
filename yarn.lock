@@ -10847,6 +10847,13 @@ isemail@3.x.x:
   dependencies:
     punycode "2.x.x"
 
+isemail@^3.1.2:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/isemail/-/isemail-3.2.0.tgz#59310a021931a9fb06bbb51e155ce0b3f236832c"
+  integrity sha512-zKqkK+O+dGqevc93KNsbZ/TqTUFd46MwWjYOoMrjIMZ51eU7DtQG3Wmd9SQQT7i7RVnuTPEiYEWHU3MSbxC1Tg==
+  dependencies:
+    punycode "2.x.x"
+
 isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
@@ -12138,6 +12145,16 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
+link-check@^4.4.4:
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/link-check/-/link-check-4.4.4.tgz#08dbb881b70c23f1c173889c3a34d682c2e68c1a"
+  integrity sha512-yvowNBZEMOFH9nGLiJ5/YV68PBMVTo4opC2SzcACO8g4gSPTB9Rwa5GIziOX9Z5Er3Yf01DHoOyVV2LeApIw8w==
+  dependencies:
+    is-relative-url "^2.0.0"
+    isemail "^3.1.2"
+    ms "^2.1.1"
+    request "^2.87.0"
+
 lint-staged@^8.0.4:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-8.0.4.tgz#d3c909fcf7897152cdce2d6e42500cd9b5b41a0d"
@@ -12813,6 +12830,27 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.2.tgz#e639cbde7b99c841c0bacc8a07982873b46d2122"
   integrity sha512-lbRZ2mE3Q9RtLjxZBZ9+IMl68DKIXaVAhwvwn9pmjnPLS0h/6kyBMgNhqi1xFJ/2yv6cSyv0jbiZavZv93JkkA==
 
+markdown-link-check@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/markdown-link-check/-/markdown-link-check-3.7.2.tgz#4e3485c22d2dc70c9cbe63258fc7e155a9e3c1c1"
+  integrity sha512-rt6d75iz0Bw9LHmN+DT1a7kiVrkK3gsGhPVB/PwwZDq8LHlILQToC/hwq9tE2CUDg8OdZOV1+7j8vuG9Mu4sIQ==
+  dependencies:
+    async "^2.6.1"
+    chalk "^2.4.1"
+    commander "^2.16.0"
+    link-check "^4.4.4"
+    lodash "^4.17.10"
+    markdown-link-extractor "^1.2.0"
+    progress "^2.0.0"
+    request "^2.87.0"
+
+markdown-link-extractor@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/markdown-link-extractor/-/markdown-link-extractor-1.2.0.tgz#aecb2df2d811d9af1cc26b52de5073c2d7a9b05b"
+  integrity sha512-1unDsoZSSiF5oGFu/2y8M3E2I2YhWT/jiKGTQxa1IAmkC1OcyHo9OYNu3qCuVSj5Ty87+mFtgQxJPUfc08WirA==
+  dependencies:
+    marked "^0.4.0"
+
 markdown-link@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/markdown-link/-/markdown-link-0.1.1.tgz#32c5c65199a6457316322d1e4229d13407c8c7cf"
@@ -12859,6 +12897,11 @@ markdown-toc@^1.0.2:
     remarkable "^1.7.1"
     repeat-string "^1.6.1"
     strip-color "^0.1.0"
+
+marked@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.4.0.tgz#9ad2c2a7a1791f10a852e0112f77b571dce10c66"
+  integrity sha512-tMsdNBgOsrUophCAFQl0XPe6Zqk/uy9gnue+jIIKhykO51hxyu6uNx7zBPy0+y/WKYVZZMspV9YeXLNdKk+iYw==
 
 matcher@^1.0.0:
   version "1.1.1"
