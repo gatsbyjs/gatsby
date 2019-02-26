@@ -124,7 +124,7 @@ const HomepageSection = ({
         {links && (
           <Actions>
             {links.map((item, idx) => {
-              const { to, label, icon: Icon, secondary } = item
+              const { to, label, icon: Icon, secondary, tracking } = item
 
               return (
                 <Button
@@ -133,6 +133,7 @@ const HomepageSection = ({
                   small
                   ondark={inverseStyle ? true : false}
                   secondary={secondary}
+                  tracking={tracking}
                 >
                   {label} {Icon && <Icon />}
                 </Button>
