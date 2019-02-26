@@ -34,7 +34,7 @@
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
-    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
+    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social" alt="Follow @gatsbyjs" />
   </a>
 </p>
 
