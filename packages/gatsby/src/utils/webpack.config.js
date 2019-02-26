@@ -36,7 +36,7 @@ module.exports = async (program, directory, suppliedStage) => {
   let publicPath = `/`
   if (program.prefixPaths && (pathPrefix || assetPrefix)) {
     publicPath = url.resolve(
-      ...[assetPrefix, pathPrefix].filter(part => part && part.length > 0)
+      ...[assetPrefix, pathPrefix].map(part => part || ``)
     )
   }
 
