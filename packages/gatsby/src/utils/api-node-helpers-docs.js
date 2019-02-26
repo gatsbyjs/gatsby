@@ -96,7 +96,7 @@ const GatsbyTracing = {
    */
 
   /**
-   * Convience function to start span using API run span as parent.
+   * Convenience function to start a span using API run span as parent.
    * @type {GatsbyTracing.StartSpan}
    * @example
    * exports.sourceNodes = async ({ actions, tracing }) => {
