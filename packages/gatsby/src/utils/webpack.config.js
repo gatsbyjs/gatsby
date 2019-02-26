@@ -21,12 +21,7 @@ const hasLocalEslint = require(`./local-eslint-config-finder`)
 //   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
 
-module.exports = async (
-  program,
-  directory,
-  suppliedStage,
-  webpackPort = 1500
-) => {
+module.exports = async (program, directory, suppliedStage) => {
   const directoryPath = withBasePath(directory)
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -40,7 +35,9 @@ module.exports = async (
 
   let publicPath = `/`
   if (program.prefixPaths && (pathPrefix || assetPrefix)) {
-    publicPath = url.resolve(assetPrefix, pathPrefix)
+    publicPath = url.resolve(
+      ...[assetPrefix, pathPrefix].filter(part => part && part.length > 0)
+    )
   }
 
   function processEnv(stage, defaultNodeEnv) {
