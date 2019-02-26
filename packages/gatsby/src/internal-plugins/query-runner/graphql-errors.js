@@ -170,10 +170,16 @@ export function graphqlError(
   nameDefMap: Map<string, any>,
   error: Error | RelayGraphQLError
 ) {
-  let { message, docName, codeBlock } = extractError(error)
+  let codeBlock
+  let { message, docName } = extractError(error)
   let filePath = namePathMap.get(docName)
 
   if (filePath && docName) {
+    codeBlock = getCodeFrameFromRelayError(
+      nameDefMap.get(docName),
+      message,
+      error
+    )
     const formattedMessage = formatError(message, filePath, codeBlock)
     return { formattedMessage, docName, message, codeBlock }
   }
