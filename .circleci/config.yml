@@ -108,7 +108,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - <<: *install_node_modules
+      - run: npm install -g markdown-link-check@3.7.2
       - run: find . -name \*.md -exec markdown-link-check {} \;
 
   lint:
