@@ -17,18 +17,23 @@ const getPages = directory =>
     .catch(() => [])
 
 const clientOnlyPathsRouter = (pages, options) => {
-  const clientOnlyRoutes = pages
-    .filter(page => page.matchPath)
-    .map(page => page.matchPath)
+  const clientOnlyRoutes = pages.filter(page => page.matchPath)
   return (req, res, next) => {
     const { url } = req
     if (req.accepts(`html`)) {
-      if (clientOnlyRoutes.some(route => reachMatch(route, url) !== null)) {
-        return res.sendFile(`index.html`, options, err => {
-          if (err) {
-            next()
+      const route = clientOnlyRoutes.find(
+        clientRoute => reachMatch(clientRoute.matchPath, url) !== null
+      )
+      if (route && route.path) {
+        return res.sendFile(
+          path.join(route.path, `index.html`),
+          options,
+          err => {
+            if (err) {
+              next()
+            }
           }
-        })
+        )
       }
     }
     return next()

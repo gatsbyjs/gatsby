@@ -116,6 +116,8 @@ function toMongoArgs(gqlFilter, lastFieldType) {
         const Minimatch = require(`minimatch`).Minimatch
         const mm = new Minimatch(v)
         mongoArgs[`$regex`] = mm.makeRe()
+      } else if (k === `eq` && v === null) {
+        mongoArgs[`$in`] = [null, undefined]
       } else if (
         k === `eq` &&
         lastFieldType &&
