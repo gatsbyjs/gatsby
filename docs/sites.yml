@@ -4428,5 +4428,6 @@
     - Web Development
     - Technology
     - Open Source
+    - Featured
   built_by: Algolia
-  featured: false
+  featured: true
