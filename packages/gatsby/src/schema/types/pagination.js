@@ -34,11 +34,13 @@ const createPagination = ({
     tc.addFields({
       totalCount: `Int!`,
       edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
+      nodes: [typeComposer.getTypeNonNull()],
       pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
       ...fields,
     })
   })
   paginationTypeComposer.makeFieldNonNull(`edges`)
+  paginationTypeComposer.makeFieldNonNull(`nodes`)
   return paginationTypeComposer
 }
 

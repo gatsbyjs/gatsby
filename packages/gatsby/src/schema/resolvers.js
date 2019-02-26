@@ -76,6 +76,7 @@ const paginate = (results, { skip = 0, limit }) => {
         previous: arr[i - 1],
       }
     }),
+    nodes: items,
     pageInfo: {
       hasNextPage,
     },
