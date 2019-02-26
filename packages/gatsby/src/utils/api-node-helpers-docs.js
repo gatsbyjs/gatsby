@@ -258,7 +258,7 @@ const GatsbyNodeHelpers = {
 
   /**
    * Utility function useful to generate globally unique and stable node IDs.
-   * It will generate different IDs for different plugin if they use same
+   * It will generate different IDs for different plugins if they use same
    * input.
    *
    * @param {string} input
