@@ -42,23 +42,13 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         projectRoot: this.projectRoot,
       })
 
-      if (!builtComponentPath) {
-        return resolver.doResolve(
-          `describedRelative`,
-          request,
-          null,
-          {},
-          callback
-        )
-      }
-      const resolvedComponentPath = require.resolve(builtComponentPath)
-      // this callbackends the resolver fallthrough chain.
-      return callback(null, {
-        directory: request.directory,
-        path: resolvedComponentPath,
-        query: request.query,
-        request: ``,
-      })
+      return resolver.doResolve(
+        `describedRelative`,
+        { ...request, path: builtComponentPath || request.path },
+        null,
+        {},
+        callback
+      )
     })
   }
 
@@ -76,9 +66,11 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         path.join(path.resolve(`.`), `src`, theme),
       ]
         .concat(
-          themes.map(aTheme =>
-            path.join(path.dirname(require.resolve(aTheme)), `src`, theme)
-          )
+          Array.from(themes)
+            .reverse()
+            .map(aTheme =>
+              path.join(path.dirname(require.resolve(aTheme)), `src`, theme)
+            )
         )
         .map(dir => path.join(dir, component))
         .find(possibleComponentPath => {
@@ -97,7 +89,12 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
               const filenameWithoutExtension = path.basename(filepath, ext)
               return filenameWithoutExtension
             })
-            .includes(path.basename(possibleComponentPath))
+            .includes(
+              path.basename(
+                possibleComponentPath,
+                path.extname(possibleComponentPath)
+              )
+            )
           return exists
         })
     }

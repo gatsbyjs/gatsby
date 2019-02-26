@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.13...gatsby-plugin-google-gtag@1.0.14) (2019-02-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-gtag:** page view and title mismatch ([#12033](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/12033)) ([b95ae69](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/commit/b95ae69))
+
 ## [1.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.12...gatsby-plugin-google-gtag@1.0.13) (2019-02-04)
 
 ### Bug Fixes
