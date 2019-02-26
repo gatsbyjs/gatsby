@@ -28,7 +28,7 @@ const Deprecated = ({ definition }) => {
         css={`
           p:before {
             color: #e8bd36;
-            content: "(depracated) ";
+            content: "(deprecated) ";
             font-family: ${options.headerFontFamily.join(`,`)};
           }
         `}
