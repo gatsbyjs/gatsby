@@ -235,8 +235,6 @@
           link: /docs/adding-an-rss-feed/
         - title: Linking Between Pages
           link: /docs/linking-between-pages/
-        - title: Routing
-          link: /docs/routing/
           items:
             - title: "@reach/router and Gatsby*"
               link: /docs/reach-router-and-gatsby/
@@ -246,26 +244,26 @@
               link: /docs/centralizing-your-sites-navigation/
             - title: Rendering Sidebar Navigation Dynamically*
               link: /docs/rendering-sidebar-navigation-dynamically/
-        - title: Making your site accessible
+        - title: Making Your Site Accessible
           link: /docs/making-your-site-accessible
     - title: Improving Performance
       link: /docs/performance/
       items:
-        - title: Supporting progressive web apps (PWAs)
+        - title: Supporting Progressive Web Apps (PWAs)
           link: /docs/progressive-web-app/
         - title: Caching
           link: /docs/caching/
-        - title: Using local HTTPS
+        - title: Using Local HTTPS
           link: /docs/local-https/
-        - title: Auditing with lighthouse
+        - title: Auditing with Lighthouse
           link: /docs/audit-with-lighthouse/
-        - title: Addding a manifest file
+        - title: Addding a Manifest File
           link: /docs/add-a-manifest-file/
-        - title: Addding offline support with a service worker
+        - title: Addding Offline Support with a Service Worker
           link: /docs/add-offline-support-with-a-service-worker
-        - title: Adding page metadata
+        - title: Adding Page Metadata
           link: /docs/add-page-metadata/
-        - title: Optimizing for search engines (SEO)
+        - title: Optimizing for Search Engines (SEO)
           link: /docs/seo/
         - title: Optimizing Site Performance with Guess.js
           link: /docs/optimizing-site-performance-with-guessjs/
@@ -327,7 +325,7 @@
       link: /docs/prpl-pattern/
     - title: Querying Data with GraphQL
       link: /docs/querying-with-graphql/
-    - title: Fetching client data
+    - title: Client Data Fetching
       link: /docs/client-data-fetching/
 - title: Behind the Scenes
   link: /docs/behind-the-scenes/
