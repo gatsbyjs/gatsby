@@ -109,7 +109,7 @@ jobs:
     steps:
       - checkout
       - <<: *install_node_modules
-      - run: yarn markdown-link-check
+      - run: find . -name \*.md -exec markdown-link-check {} \;
 
   lint:
     executor: node
