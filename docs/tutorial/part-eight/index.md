@@ -32,7 +32,7 @@ First, you need to create a production build of your Gatsby site. The Gatsby dev
 1.  Stop the development server (if it's still running) and run:
 
 ```shell
-gatsby build
+npm run build
 ```
 
 > 💡 As you learned in [part 1](/tutorial/part-one/), this does a production build of your site and outputs the built static files into the `public` directory.
@@ -40,7 +40,7 @@ gatsby build
 2.  View the production site locally. Run:
 
 ```shell
-gatsby serve
+npm run serve
 ```
 
 Once this starts, you can now view your site at `localhost:9000`.
@@ -85,7 +85,9 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 npm install --save gatsby-plugin-manifest
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2. Add a favicon for your app under `src/images/icon.png`. The icon is necessary to build all images for the manifest. For more information look at the docs of [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+
+3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {

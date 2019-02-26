@@ -3,6 +3,13 @@
 exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
 Object {
   "excerpt": "",
+  "excerptAst": Object {
+    "children": Array [],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -12,6 +19,17 @@ Object {
 exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
 Object {
   "excerpt": "Where oh where is my little pony?",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "type": "text",
+        "value": "Where oh where is my little pony?",
+      },
+    ],
+    "properties": Object {},
+    "tagName": "p",
+    "type": "element",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -21,6 +39,17 @@ Object {
 exports[`Excerpt is generated correctly from schema correctly prunes length to default value 1`] = `
 Object {
   "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "type": "text",
+        "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+      },
+    ],
+    "properties": Object {},
+    "tagName": "p",
+    "type": "element",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -30,6 +59,17 @@ Object {
 exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter 1`] = `
 Object {
   "excerpt": "Where oh where is my little pony? Lorem ipsum…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "type": "text",
+        "value": "Where oh where is my little pony? Lorem ipsum…",
+      },
+    ],
+    "properties": Object {},
+    "tagName": "p",
+    "type": "element",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -39,6 +79,17 @@ Object {
 exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter with truncate 1`] = `
 Object {
   "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "type": "text",
+        "value": "Where oh where is my little pony? Lorem ipsum dol…",
+      },
+    ],
+    "properties": Object {},
+    "tagName": "p",
+    "type": "element",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -49,6 +100,30 @@ exports[`Excerpt is generated correctly from schema correctly uses excerpt separ
 Object {
   "excerpt": "Where oh where is my little pony?
 ",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+      Object {
+        "type": "text",
+        "value": "
+",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -58,6 +133,76 @@ Object {
 exports[`Excerpt is generated correctly from schema given an html format, it correctly maps nested markdown to html 1`] = `
 Object {
   "excerpt": "<p>Where oh <a href=\\"nick.com\\"><em>where</em></a> <strong><em>is</em></strong> <img src=\\"pony.png\\" alt=\\"that pony\\">?</p>",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "type": "text",
+        "value": "Where oh ",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "where",
+              },
+            ],
+            "properties": Object {},
+            "tagName": "em",
+            "type": "element",
+          },
+        ],
+        "properties": Object {
+          "href": "nick.com",
+        },
+        "tagName": "a",
+        "type": "element",
+      },
+      Object {
+        "type": "text",
+        "value": " ",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "is",
+              },
+            ],
+            "properties": Object {},
+            "tagName": "em",
+            "type": "element",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "strong",
+        "type": "element",
+      },
+      Object {
+        "type": "text",
+        "value": " ",
+      },
+      Object {
+        "children": Array [],
+        "properties": Object {
+          "alt": "that pony",
+          "src": "pony.png",
+        },
+        "tagName": "img",
+        "type": "element",
+      },
+      Object {
+        "type": "text",
+        "value": "?",
+      },
+    ],
+    "properties": Object {},
+    "tagName": "p",
+    "type": "element",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -67,6 +212,17 @@ Object {
 exports[`Excerpt is generated correctly from schema given an html format, it prunes large excerpts 1`] = `
 Object {
   "excerpt": "<p>Where oh where is that pony? Is he in the stable…</p>",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "type": "text",
+        "value": "Where oh where is that pony? Is he in the stable…",
+      },
+    ],
+    "properties": Object {},
+    "tagName": "p",
+    "type": "element",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -77,6 +233,45 @@ exports[`Excerpt is generated correctly from schema given an html format, it res
 Object {
   "excerpt": "<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>
 ",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is that ",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "pony",
+              },
+            ],
+            "properties": Object {},
+            "tagName": "em",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": "? Is he in the stable or by the stream?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+      Object {
+        "type": "text",
+        "value": "
+",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
@@ -86,6 +281,32 @@ Object {
 exports[`Excerpt is generated correctly from schema given raw html in the text body, this html is not escaped 1`] = `
 Object {
   "excerpt": "<p>Where is my <code>pony</code> named leo?</p>",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "type": "text",
+        "value": "Where is my ",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "pony",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "code",
+        "type": "element",
+      },
+      Object {
+        "type": "text",
+        "value": " named leo?",
+      },
+    ],
+    "properties": Object {},
+    "tagName": "p",
+    "type": "element",
+  },
   "frontmatter": Object {
     "title": "my little pony",
   },
