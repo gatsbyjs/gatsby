@@ -8,8 +8,25 @@ import Layout from "../../components/layout"
 class ShowcaseView extends Component {
   showcase = React.createRef()
 
-  render = () => {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      filters: [],
+    }
+  }
+
+  updateFilters = filters => {
+    this.setState({
+      filters: [].concat(filters),
+    })
+  }
+
+  render() {
     const { location, data } = this.props
+    const { filters } = this.state
+
+    console.log(`implemented`, filters)
 
     return (
       <Layout location={location}>
@@ -17,11 +34,16 @@ class ShowcaseView extends Component {
           <title>Showcase</title>
         </Helmet>
         <FeaturedSites
+          setFilters={this.updateFilters}
           featured={data.featured.edges}
           showcase={this.showcase}
         />
         <div id="showcase" css={{ height: 0 }} ref={this.showcase} />
-        <FilteredShowcase data={data} />
+        <FilteredShowcase
+          filters={filters}
+          setFilters={this.updateFilters}
+          data={data}
+        />
       </Layout>
     )
   }
