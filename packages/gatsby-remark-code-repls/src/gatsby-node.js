@@ -57,7 +57,7 @@ exports.createPages = (
       const code = fs.readFileSync(file, `utf8`)
 
       let css
-      if (includeMatchingCSS) {
+      if (includeMatchingCSS === true) {
         try {
           css = fs.readFileSync(file.replace(extname(file), `.css`), `utf8`)
         } catch (err) {
