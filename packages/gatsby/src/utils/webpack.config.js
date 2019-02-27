@@ -2,11 +2,11 @@ require(`v8-compile-cache`)
 
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const url = require(`url`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
+const getPublicPath = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { withBasePath, withTrailingSlash } = require(`./path`)
@@ -33,12 +33,7 @@ module.exports = async (program, directory, suppliedStage) => {
 
   const { assetPrefix, pathPrefix } = store.getState().config
 
-  let publicPath = `/`
-  if (program.prefixPaths && (pathPrefix || assetPrefix)) {
-    publicPath = url.resolve(
-      ...[assetPrefix, pathPrefix].map(part => part || ``)
-    )
-  }
+  const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
