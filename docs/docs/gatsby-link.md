@@ -70,7 +70,7 @@ const SiteNavigation = () => (
     <Link
       to="/about/"
       {/* highlight-next-line */}
-      activeStyle={{ color: red }}
+      activeStyle={{ color: "red" }}
     >
       About
     </Link>
@@ -181,11 +181,11 @@ _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is depreca
 
 Instead, Gatsby exports a `navigate` helper function that accepts `to` and `options` arguments.
 
-| Argument          | Required | Description                                                                                      |
-| ----------------- | -------- | ------------------------------------------------------------------------------------------------ |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                         |
-| `options.state`   | no       | An object. Values passed here will be available in `locations.state` in the target page’s props. |
-| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                   |
+| Argument          | Required | Description                                                                                     |
+| ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
+| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
+| `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
+| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
 
 By default, `navigate` operates the same way as a clicked `Link` component.
 
@@ -356,3 +356,19 @@ You can similarly check for file downloads:
 ```
 
 [egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
+
+## Recommendations for programmatic, in-app navigation
+
+Neither `<Link>` nor `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package--which Gatsby already depends upon--to make use of its `navigate` function, like so:
+
+```jsx
+import { navigate } from '@reach/router';
+
+...
+
+onClick = () => {
+  navigate('#some-link');
+  // OR
+  navigate('?foo=bar');
+}
+```

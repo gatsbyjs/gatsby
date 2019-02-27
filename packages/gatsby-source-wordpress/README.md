@@ -70,6 +70,8 @@ module.exports = {
         // Must be using V3 of ACF to REST to include these routes
         // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
         // routes with the ID option_page_1 and option_page_2
+        // The IDs provided to this array should correspond to the `post_id` value when defining your
+        // options page using the provided `acf_add_options_page` method, in your WordPress setup
         // Dashes in IDs will be converted to underscores for use in GraphQL
         acfOptionPageIds: [],
         auth: {
@@ -95,7 +97,7 @@ module.exports = {
           // plugin, you can specify user and password to obtain access token and use authenticated requests against wordpress REST API.
           jwt_user: process.env.JWT_USER,
           jwt_pass: process.env.JWT_PASSWORD,
-          jwt_base_path: "/jwt-auth/v1/token" # Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
+          jwt_base_path: "/jwt-auth/v1/token", // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
         },
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems.
@@ -119,16 +121,16 @@ module.exports = {
         // all routes that begin with `yoast` from fetch.
         // Whitelisted routes using glob patterns
         includedRoutes: [
-          "**/*/*/categories",
-          "**/*/*/posts",
-          "**/*/*/pages",
-          "**/*/*/media",
-          "**/*/*/tags",
-          "**/*/*/taxonomies",
-          "**/*/*/users",
+          "**/categories",
+          "**/posts",
+          "**/pages",
+          "**/media",
+          "**/tags",
+          "**/taxonomies",
+          "**/users",
         ],
         // Blacklisted routes using glob patterns
-        excludedRoutes: ["**/*/*/posts/1456"],
+        excludedRoutes: ["**/posts/1456"],
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
@@ -199,13 +201,13 @@ If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise
 
 ```javascript
 includedRoutes: [
-  "**/*/*/posts",
-  "**/*/*/pages",
-  "**/*/*/media",
-  "**/*/*/categories",
-  "**/*/*/tags",
-  "**/*/*/taxonomies",
-  "**/*/*/users",
+  "**/posts",
+  "**/pages",
+  "**/media",
+  "**/categories",
+  "**/tags",
+  "**/taxonomies",
+  "**/users",
 ],
 ```
 
@@ -728,8 +730,6 @@ and also your `wordpress-source-plugin` options from `gatsby-config.js`. To lear
 ## Site's `gatsby-node.js` example
 
 ```javascript
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
 
@@ -739,101 +739,82 @@ const slash = require(`slash`)
 // create pages.
 // Will create pages for WordPress pages (route : /{slug})
 // Will create pages for WordPress posts (route : /post/{slug})
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  return new Promise((resolve, reject) => {
-    // The “graphql” function allows us to run arbitrary
-    // queries against the local WordPress graphql schema. Think of
-    // it like the site has a built-in database constructed
-    // from the fetched data that you can run queries against.
 
-    // ==== PAGES (WORDPRESS NATIVE) ====
-    graphql(
-      `
-        {
-          allWordpressPage {
-            edges {
-              node {
-                id
-                slug
-                status
-                template
-              }
-            }
+  // The “graphql” function allows us to run arbitrary
+  // queries against the local WordPress graphql schema. Think of
+  // it like the site has a built-in database constructed
+  // from the fetched data that you can run queries against.
+  const result = await graphql(`
+    {
+      allWordpressPage {
+        edges {
+          node {
+            id
+            link
+            status
+            template
           }
         }
-      `
-    )
-      .then(result => {
-        if (result.errors) {
-          console.log(result.errors)
-          reject(result.errors)
-        }
-
-        // Create Page pages.
-        const pageTemplate = path.resolve("./src/templates/page.js")
-        // We want to create a detailed page for each
-        // page node. We'll just use the WordPress Slug for the slug.
-        // The Page ID is prefixed with 'PAGE_'
-        _.each(result.data.allWordpressPage.edges, edge => {
-          // Gatsby uses Redux to manage its internal state.
-          // Plugins and sites can use functions like "createPage"
-          // to interact with Gatsby.
-          createPage({
-            // Each page is required to have a `path` as well
-            // as a template component. The `context` is
-            // optional but is often necessary so the template
-            // can query data specific to each page.
-            path: `/${edge.node.slug}/`,
-            component: slash(pageTemplate),
-            context: {
-              id: edge.node.id,
-            },
-          })
-        })
-      })
-      // ==== END PAGES ====
-
-      // ==== POSTS (WORDPRESS NATIVE AND ACF) ====
-      .then(() => {
-        graphql(
-          `
-            {
-              allWordpressPost {
-                edges {
-                  node {
-                    id
-                    slug
-                    status
-                    template
-                    format
-                  }
-                }
-              }
-            }
-          `
-        ).then(result => {
-          if (result.errors) {
-            console.log(result.errors)
-            reject(result.errors)
+      }
+      allWordpressPost {
+        edges {
+          node {
+            id
+            link
+            status
+            template
+            format
           }
-          const postTemplate = path.resolve("./src/templates/post.js")
-          // We want to create a detailed page for each
-          // post node. We'll just use the WordPress Slug for the slug.
-          // The Post ID is prefixed with 'POST_'
-          _.each(result.data.allWordpressPost.edges, edge => {
-            createPage({
-              path: `/${edge.node.slug}/`,
-              component: slash(postTemplate),
-              context: {
-                id: edge.node.id,
-              },
-            })
-          })
-          resolve()
-        })
-      })
-    // ==== END POSTS ====
+        }
+      }
+    }
+  `)
+
+  // Check for any errors
+  if (result.errors) {
+    throw new Error(result.errors)
+  }
+
+  // Access query results via object destructuring
+  const { allWordpressPage, allWordpressPost } = result.data
+
+  // Create Page pages.
+  const pageTemplate = path.resolve(`./src/templates/page.js`)
+  // We want to create a detailed page for each
+  // page node. We'll just use the WordPress Slug for the slug.
+  // The Page ID is prefixed with 'PAGE_'
+  allWordpressPage.edges.forEach(edge => {
+    // Gatsby uses Redux to manage its internal state.
+    // Plugins and sites can use functions like "createPage"
+    // to interact with Gatsby.
+    createPage({
+      // Each page is required to have a `path` as well
+      // as a template component. The `context` is
+      // optional but is often necessary so the template
+      // can query data specific to each page.
+      path: `/${edge.node.slug}/`,
+      component: slash(pageTemplate),
+      context: {
+        id: edge.node.id,
+      },
+    })
+  })
+
+  // Create Post pages
+  const postTemplate = path.resolve(`./src/templates/post.js`)
+  // We want to create a detailed page for each
+  // post node. We'll just use the WordPress Slug for the slug.
+  // The Post ID is prefixed with 'POST_'
+  allWordpressPost.edges.forEach(edge => {
+    createPage({
+      path: `/${edge.node.slug}/`,
+      component: slash(postTemplate),
+      context: {
+        id: edge.node.id,
+      },
+    })
   })
 }
 ```
@@ -908,6 +889,12 @@ When the post an image is attached to becomes inaccessible (e.g. from changing v
 which prevents Gatsby from retrieving it.
 
 In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
+
+### ACF Option Pages - Option page data not showing or not updating
+
+This issue occurs when you are trying to pull in data from your ACF Option pages. On certain occasions (initial setup or rebuilding) the data will not appear or won't update to the latest data.
+
+To resolve this issue, make sure that your ids in the `acfOptionPageIds` array, in the plugin config, corresponds to the `post_id` value when defining your Options page with the `acf_add_options_page` method provided by ACF.
 
 ### Self-signed certificates
 
