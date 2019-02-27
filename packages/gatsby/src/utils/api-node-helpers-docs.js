@@ -166,7 +166,7 @@ const GatsbyNodeHelpers = {
   actions: true,
 
   /**
-   *
+   * Get content for a node from the plugin that created it.
    * @param {Node} node
    * @returns {Promise<string>}
    * @example
