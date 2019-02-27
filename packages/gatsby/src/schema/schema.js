@@ -206,7 +206,9 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
         Object.keys(fields).forEach(fieldName => {
           const fieldConfig = fields[fieldName]
           if (tc.hasField(fieldName)) {
-            const originalTypeName = tc.getFieldType(fieldName).toString()
+            const originalFieldConfig = tc.getFieldConfig(fieldName)
+            const originalTypeName = originalFieldConfig.type.toString()
+            const originalResolver = originalFieldConfig.resolve
             const fieldTypeName =
               fieldConfig.type && fieldConfig.type.toString()
             if (
@@ -222,7 +224,15 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                 newConfig.args = fieldConfig.args
               }
               if (fieldConfig.resolve) {
-                newConfig.resolve = fieldConfig.resolve
+                if (originalResolver) {
+                  newConfig.resolve = (source, args, context, info) =>
+                    fieldConfig.resolve(source, args, context, {
+                      ...info,
+                      originalResolver,
+                    })
+                } else {
+                  newConfig.resolve = fieldConfig.resolve
+                }
               }
               tc.extendField(fieldName, newConfig)
             } else if (fieldTypeName) {
