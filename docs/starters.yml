@@ -1931,3 +1931,21 @@
     - Responsive Web Design
     - Auto generated Sidebar
     - Auto generated Anchor
+- url: https://gatsby-blogger.netlify.com/
+  repo: https://github.com/aslammultidots/blogger
+  description: A Simple, clean and modern desgined blog with firebase authentication feature and easily customizable code.
+  tags:
+    - Blog
+    - Redux
+    - Disqus
+    - Contentful
+    - Firebase
+  features:
+    - Minimal and clean white layout.
+    - Dynamic content from Contentful.
+    - Blog post listing with previews (image + summary) for each blog post.
+    - Disqus commenting system for each blog post.
+    - Search post with keyword.
+    - Firebase for Authentication.
+    - Protected Routes with Authorization.
+    - Contact form integration.
