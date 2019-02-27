@@ -5,7 +5,6 @@ import { graphql } from "gatsby"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
-import Avatar from "../components/Avatar"
 import Post from "../components/post"
 import Layout from "../layouts"
 
@@ -196,7 +195,6 @@ export const pageQuery = graphql`
       edges {
         node {
           username
-          ...Avatar_user
         }
       }
     }
