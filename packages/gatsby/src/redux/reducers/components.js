@@ -85,7 +85,6 @@ module.exports = (state = new Map(), action) => {
           })
         }
       }
-      services.set(action.payload.componentPath, service)
       state.set(action.payload.componentPath, {
         ...service.state.context,
       })
@@ -96,11 +95,12 @@ module.exports = (state = new Map(), action) => {
     case `QUERY_EXTRACTION_GRAPHQL_ERROR`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const service = services.get(action.payload.componentPath)
-      service.send({
-        type: action.type,
-        ...action.payload,
-      })
-      services.set(action.payload.componentPath, service)
+      if (service) {
+        service.send({
+          type: action.type,
+          ...action.payload,
+        })
+      }
       return state
     }
     case `PAGE_QUERY_RUN`: {
@@ -114,7 +114,6 @@ module.exports = (state = new Map(), action) => {
         service.send({
           type: `QUERIES_COMPLETE`,
         })
-        services.set(action.payload.componentPath, service)
       }
       return state
     }
