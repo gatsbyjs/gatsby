@@ -4,15 +4,16 @@ const url = require(`url`)
 const stripTrailingSlash = part =>
   part.endsWith(`/`) ? part.slice(0, -1) : part
 
-module.exports = function getPublicPath(
-  { assetPrefix, pathPrefix, prefixPaths },
-  fallback = `/`
-) {
+module.exports = function getPublicPath({
+  assetPrefix,
+  pathPrefix,
+  prefixPaths,
+}) {
   if (prefixPaths && (assetPrefix || pathPrefix)) {
     return stripTrailingSlash(
       url.resolve(...[assetPrefix, pathPrefix].map(part => part || ``))
     )
   }
 
-  return fallback
+  return ``
 }

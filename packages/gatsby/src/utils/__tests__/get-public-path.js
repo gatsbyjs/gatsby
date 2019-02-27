@@ -32,29 +32,3 @@ describe(`basic functionality`, () => {
     ).toBe(`${assetPrefix}${pathPrefix}`)
   })
 })
-
-describe(`fallback behavior`, () => {
-  it(`uses default if prefixPaths is not specified`, () => {
-    expect(
-      getPublicPath({
-        assetPrefix,
-        pathPrefix,
-        prefixPaths: false,
-      })
-    ).toBe(`/`)
-  })
-
-  it(`can customize the default`, () => {
-    const fallback = ``
-    expect(
-      getPublicPath(
-        {
-          assetPrefix,
-          pathPrefix,
-          prefixPaths: false,
-        },
-        fallback
-      )
-    ).toBe(fallback)
-  })
-})
