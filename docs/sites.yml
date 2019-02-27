@@ -4468,3 +4468,17 @@
     - Landing Page
   built_by: timehackers
   featured: false
+- title: Little & Big
+  main_url: "https://www.littleandbig.com.au/"
+  url: "https://www.littleandbig.com.au/"
+  description: >
+    Little & Big exists with the aim to create Websites, Apps, E-commerce stores
+    that are consistently unique and thoughtfully crafted, every time.
+  categories:
+    - Agency
+    - Design
+    - Web Development
+    - Portfolio
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
+  featured: false
