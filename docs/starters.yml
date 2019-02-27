@@ -1931,6 +1931,20 @@
     - Responsive Web Design
     - Auto generated Sidebar
     - Auto generated Anchor
+- url: https://gatsby-starter-wordpress-community.netlify.com/
+  repo: https://github.com/pablovila/gatsby-starter-wordpress-community
+  description: Starter using gatsby-source-wordpress to display posts and pages from a WordPress site
+  tags:
+    - Wordpress
+    - Styling:Bulma
+    - Blog
+    - Pagination
+  features:
+    - Gatsby v2 support
+    - Responsive Web Design
+    - WordPress support
+    - Bulma and Sass Support for styling
+    - Pagination logic
 - url: https://gatsby-blogger.netlify.com/
   repo: https://github.com/aslammultidots/blogger
   description: A Simple, clean and modern desgined blog with firebase authentication feature and easily customizable code.
