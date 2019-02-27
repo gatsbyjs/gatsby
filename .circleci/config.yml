@@ -109,7 +109,8 @@ jobs:
     steps:
       - checkout
       - run: sudo npm install -g markdown-link-check@3.7.2
-      - run: find ./docs/ -name \*.md -exec markdown-link-check {} \;
+      - run: cd docs/
+      - run: find . -name \*.md -exec markdown-link-check {} \;
 
   lint:
     executor: node
