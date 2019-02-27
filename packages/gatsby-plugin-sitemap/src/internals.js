@@ -2,10 +2,11 @@ import fs from "fs"
 import pify from "pify"
 import minimatch from "minimatch"
 
-const withoutTrailingSlash = path =>
+export const withoutTrailingSlash = path =>
   path === `/` ? path : path.replace(/\/$/, ``)
 
 export const writeFile = pify(fs.writeFile)
+export const renameFile = pify(fs.rename)
 
 export const runQuery = (handler, query, excludes, pathPrefix) =>
   handler(query).then(r => {
