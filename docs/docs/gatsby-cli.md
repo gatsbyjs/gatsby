@@ -115,6 +115,32 @@ This is useful as a last resort when your local project seems to have issues or 
 
 ### Repl
 
-Get a Node.js REPL (interactive shell) with context of Gatsby environment
+Get a Node.js REPL (interactive shell) with context of your Gatsby environment:
+
+`gatsby repl`
+
+Gatsby will prompt you to type in commands and explore. When it shows this: `gatsby >`
+
+You can type in a command, such as one of these:
+
+`babelrc`
+
+`components`
+
+`dataPaths`
+
+`getNodes()`
+
+`nodes`
+
+`pages`
+
+`schema`
+
+`siteConfig`
+
+`staticQueries`
+
+When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
 <!-- TODO: add repl documentation link when ready -->

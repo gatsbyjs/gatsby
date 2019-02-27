@@ -399,5 +399,7 @@
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/
+- title: Gatsby REPL*
+  link: /docs/gatsby-repl/
 - title: Contributing
   link: /contributing/
