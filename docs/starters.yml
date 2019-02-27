@@ -1963,3 +1963,11 @@
     - Firebase for Authentication.
     - Protected Routes with Authorization.
     - Contact form integration.
+- url: https://gatsby-starter-styled-components.netlify.com/
+  repo: https://github.com/blakenoll/gatsby-starter-styled-components
+  description: The Gatsby default starter modified to use styled-components
+  tags:
+    - Styling:CSS-in-JS
+  features:
+    - styled-components
+    - sticky footer
