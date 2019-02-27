@@ -1,4 +1,4 @@
-const { onPreBootstrap } = require(`../gatsby-node`)
+const { onPreInit } = require(`../gatsby-node`)
 
 const getOptions = config => {
   return {
@@ -17,7 +17,7 @@ const getOptions = config => {
 
 test(`it throws error if assetPrefix is in config`, () => {
   expect(() =>
-    onPreBootstrap(
+    onPreInit(
       getOptions({
         assetPrefix: `https://cdn.example.com`,
       })
@@ -27,7 +27,7 @@ test(`it throws error if assetPrefix is in config`, () => {
 
 test(`it does not throw if assetPrefix is not in config`, () => {
   expect(() =>
-    onPreBootstrap(
+    onPreInit(
       getOptions({
         pathPrefix: `/blog`,
       })
