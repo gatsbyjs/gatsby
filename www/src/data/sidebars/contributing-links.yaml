@@ -24,6 +24,8 @@
       items:
         - title: How to File an Issue
           link: /contributing/how-to-file-an-issue/
+        - title: How to Make a Reproducible Build
+          link: /contributing/how-to-make-a-reproducible-build/
         - title: How to Label an Issue
           link: /contributing/how-to-label-an-issue/
         - title: Triaging GitHub Issues
