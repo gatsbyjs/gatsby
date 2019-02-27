@@ -4442,6 +4442,19 @@
   built_by: David Krasniy
   built_by_url: http://dkrasniy.com
   featured: false
+- title: Styled System
+  url: https://styled-system.com/
+  main_url: https://styled-system.com/
+  source_url: https://github.com/styled-system/styled-system/tree/master/docs
+  description: >
+    Style props for rapid UI development.
+  categories:
+    - Design System
+    - Styles
+    - Type Scale
+    - Responsive Design
+  built_by: Brent Jackson
+  built_by_url: https://jxnblk.com/
 - title: Timehacker
   url: https://timehacker.app
   main_url: https://timehacker.app
