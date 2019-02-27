@@ -89,7 +89,7 @@ const runAPI = (plugin, api, args) => {
 
     const { config, program } = store.getState()
 
-    const publicPath = getPublicPath({ ...config, ...program })
+    const publicPath = getPublicPath({ ...config, ...program }, ``)
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
