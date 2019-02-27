@@ -30,17 +30,13 @@ describe(`gatsby config`, () => {
     expect(await gatsbyConfigSchema.validate(config)).toEqual(config)
   })
 
-  it(`does not allow pathPrefix to be full URL`, async () => {
+  it(`does not allow pathPrefix to be full URL`, () => {
     const config = {
       pathPrefix: `https://google.com`,
     }
 
-    try {
-      await gatsbyConfigSchema.validate(config)
-    } catch (e) {
-      expect(e.message).toContain(`must be a valid relative uri`)
-    } finally {
-      expect.assertions(1)
-    }
+    expect(
+      gatsbyConfigSchema.validate(config)
+    ).rejects.toThrowErrorMatchingSnapshot()
   })
 })
