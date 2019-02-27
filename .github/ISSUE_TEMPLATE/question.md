@@ -12,7 +12,7 @@ about: Usage question or discussion about Gatsby.
 
   Gatsby has several community support channels, try asking your question on:
 
-  - Discord: https://gatsby.app/discord
+  - Discord: https://gatsby.dev/discord
   - Spectrum: https://spectrum.chat/gatsby-js
   - Twitter: https://twitter.com/gatsbyjs
 

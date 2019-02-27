@@ -47,7 +47,7 @@ tagged with **gatsby** or
 ### Discord
 
 If you need an answer right away, check out the
-[Gatsby Discord](https://gatsby.app/discord). Community & team members are happy to help you out or point you to
+[Gatsby Discord](https://gatsby.dev/discord). Community & team members are happy to help you out or point you to
 useful resources.
 
 ### Hashnode
