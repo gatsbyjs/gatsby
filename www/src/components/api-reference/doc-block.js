@@ -117,10 +117,9 @@ const DocBlock = ({
         )}
         {definition.optional && <Optional />}
       </Header>
-
+      {showSignature && !showSignatureNextToTitle && signatureElement}
       <Description definition={definition} />
       <Deprecated definition={definition} />
-      {showSignature && !showSignatureNextToTitle && signatureElement}
       <ParamsBlock
         definition={definition}
         level={level}
