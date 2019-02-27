@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`it throws error if assetPrefix is in config 1`] = `
-"gatsby-plugin-offline cannot be used with the assetPrefix option.
+"gatsby-plugin-offline cannot be used with the \`assetPrefix\` option.
       A service worker specifies that it must be served on the same domain.
-      Either remove the assetPrefix from gatsby-config.js or remove this plugin."
+      Either remove \`assetPrefix\` from gatsby-config.js or remove this plugin."
 `;
