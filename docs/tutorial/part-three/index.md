@@ -45,18 +45,23 @@ There are two main steps to using a plugin: Installing and configuring.
 1. Install the `gatsby-plugin-typography` NPM package.
 
 ```shell
-npm install --save gatsby-plugin-typography react-typography typography
+npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
 ```
 
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
-
-To follow along with this tutorial you will need to create and configure a `Typography.js` file. Instructions on how to do this can be found at the specific [Typography.js](/docs/typography-js/) documentation.
 
 2. Create a new file in the root of your project called `gatsby-config.js`, and copy the following into the file:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-typography`],
+  plugins: [
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+  ],
 }
 ```
 
@@ -64,7 +69,21 @@ The `gatsby-config.js` is another special file that Gatsby will automatically re
 
 > Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
 
-3. Start the development server.
+3. Add `typography.js` configuration file
+
+Typography.js needs a configuration file. Add it now.
+
+```javascript:title=src/utils/typography.js
+import Typography from "typography"
+import fairyGateTheme from "typography-theme-fairy-gates"
+
+const typography = new Typography(fairyGateTheme)
+
+export const { scale, rhythm, options } = typography
+export default typography
+```
+
+4. Start the development server.
 
 ```shell
 npm run develop
