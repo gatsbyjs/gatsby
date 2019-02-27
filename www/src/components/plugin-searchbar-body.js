@@ -424,9 +424,8 @@ const Result = ({ hit, pathname, query }) => {
           }}
         >
           {hit.repository &&
-            hit.repository.url.startsWith(
-              `https://github.com/gatsbyjs/gatsby`
-            ) && (
+            hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
+              0 && (
               <img
                 src={GatsbyIcon}
                 css={{

@@ -56,7 +56,7 @@ const PackageReadMe = props => {
               style={{ verticalAlign: `text-top` }}
             />
           </a>
-          {githubUrl.startsWith(`https://github.com/gatsbyjs/gatsby`) && (
+          {githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 && (
             <div
               css={{
                 display: `flex`,
