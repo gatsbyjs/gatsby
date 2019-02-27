@@ -11,7 +11,7 @@ Each of these sites need a prefix added to all paths on the site. So a link to
 
 In addition links to various resources (JavaScript, CSS, images, and other static content) need the same prefix, so that the site continues to function and display correctly, even if served from this path prefix.
 
-## Usage
+Let's get this functionality implemented. We'll add an option to our `gatsby-config.js`, and add a flag to our build command.
 
 ### Add to `gatsby-config.js`
 

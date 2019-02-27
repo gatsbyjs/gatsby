@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/compare/gatsby-plugin-feed@2.0.13...gatsby-plugin-feed@2.0.14) (2019-02-25)
+
+### Features
+
+- **docs:** adding an RSS Feed ([#11941](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/issues/11941)) ([0d7449d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/commit/0d7449d))
+
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/compare/gatsby-plugin-feed@2.0.12...gatsby-plugin-feed@2.0.13) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-feed
