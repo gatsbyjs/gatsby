@@ -95,15 +95,6 @@ class Index extends React.Component {
           >
             <div
               css={{
-                marginRight: rhythm(1),
-                flexGrow: 1,
-                flexShrink: 0,
-              }}
-            >
-              <Avatar user={user} />
-            </div>
-            <div
-              css={{
                 flexGrow: 2,
                 flexShrink: 0,
                 textAlign: `center`,
