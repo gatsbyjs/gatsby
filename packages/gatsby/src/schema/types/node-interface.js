@@ -28,7 +28,7 @@ const getOrCreateNodeInterface = schemaComposer => {
         },
       },
       children: {
-        type: `[Node]!`,
+        type: `[Node!]!`,
         resolve: (source, args, context, info) => {
           const { path } = context
           return context.nodeModel.getNodesByIds(

@@ -63,14 +63,14 @@ const getPagination = ({ schemaComposer, typeComposer }) => {
   })
   const fields = {
     distinct: {
-      type: [`String`],
+      type: [`String!`],
       args: {
         field: FieldsEnumTC.getTypeNonNull(),
       },
       resolve: distinct,
     },
     group: {
-      type: [getGroup({ schemaComposer, typeComposer })],
+      type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],
       args: {
         skip: `Int`,
         limit: `Int`,
