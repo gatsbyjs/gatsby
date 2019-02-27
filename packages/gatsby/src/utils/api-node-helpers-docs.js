@@ -131,11 +131,9 @@ const GatsbyNodeHelpers = {
   getCache: true,
 
   /**
-   * Create stable content digest from string or object. Useful to set
-   * `internal.contentDigest` field on nodes to make sure that Gatsby
-   * either invalidates cached node and GraphQL query results depending
-   * on that if data changed or reuse cached query results if data didn't
-   * change.
+   * Create a stable content digest from a string or object, you can use this
+   * to set the `internal.contentDigest` field on nodes. Gatsby uses the value
+   * of this field to invalidate stale data when your content changes.
    * @param {(string|object)} input
    * @returns {string} Hash string
    * @example
@@ -168,6 +166,7 @@ const GatsbyNodeHelpers = {
   actions: true,
 
   /**
+   *
    * @param {Node} node
    * @returns {Promise<string>}
    * @example
