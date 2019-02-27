@@ -40,13 +40,17 @@ class Cache {
 
   get(key) {
     return new Promise(resolve => {
-      this.cache.get(key, (_, res) => resolve(res))
+      this.cache.get(key, (err, res) => {
+        resolve(err ? undefined : res)
+      })
     })
   }
 
   set(key, value, args = {}) {
     return new Promise(resolve => {
-      this.cache.set(key, value, args, (_, res) => resolve(res))
+      this.cache.set(key, value, args, err => {
+        resolve(err ? undefined : value)
+      })
     })
   }
 }

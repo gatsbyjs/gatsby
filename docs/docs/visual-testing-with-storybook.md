@@ -32,6 +32,7 @@ To update your Storybook config open `.storybook/config.js` and modify the conte
 
 ```js:title=.storybook/config.js
 import { configure } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 
 // automatically import all files ending in *.stories.js
 // highlight-next-line

@@ -1,8 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
+import TagsIcon from "react-icons/lib/ti/tags"
 
 import Layout from "../components/layout"
+import Button from "../components/button"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Pagination from "../components/pagination"
@@ -99,6 +101,18 @@ class BlogPostsIndex extends React.Component {
               />
             ))}
             <Pagination context={this.props.pageContext} />
+            <div
+              css={{
+                display: `flex`,
+                flexFlow: `row nowrap`,
+                width: `100%`,
+                justifyContent: `flex-end`,
+              }}
+            >
+              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
+                View All Tags <TagsIcon />
+              </Button>
+            </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
           </Container>
         </main>

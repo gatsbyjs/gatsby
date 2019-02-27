@@ -1,6 +1,6 @@
 ---
 title: What's coming in Gatsby 1.0
-date: "2017-02-23"
+date: 2017-02-23
 author: "Kyle Mathews"
 image: "ui-and-code.png"
 draft: true
@@ -270,7 +270,7 @@ Say we had a markdown file that looked like:
 ```markdown
 ---
 title: A sweet post
-date: "2017-02-23"
+date: 2017-02-23
 ---
 
 This is my sweet blog post. **Cool!**

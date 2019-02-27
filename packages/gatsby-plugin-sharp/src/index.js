@@ -45,6 +45,7 @@ exports.setBoundActionCreators = actions => {
 const pluginDefaults = {
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
+  defaultQuality: 50,
 }
 let pluginOptions = Object.assign({}, pluginDefaults)
 exports.setPluginOptions = opts => {
@@ -87,7 +88,7 @@ const generalArgs = {
   pngCompressionLevel: 9,
   // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
   pngCompressionSpeed: 4,
-  base64: false,
+  base64: true,
   grayscale: false,
   duotone: false,
   pathPrefix: ``,
@@ -95,8 +96,8 @@ const generalArgs = {
   sizeByPixelDensity: false,
 }
 
-const healOptions = (args, defaultArgs) => {
-  let options = _.defaults({}, args, defaultArgs, generalArgs)
+const healOptions = ({ defaultQuality: quality }, args, defaultArgs) => {
+  let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
@@ -125,7 +126,6 @@ const healOptions = (args, defaultArgs) => {
 
 let totalJobs = 0
 const processFile = (file, jobs, cb, reporter) => {
-  // console.log("totalJobs", totalJobs)
   bar.total = totalJobs
 
   let imagesFinished = 0
@@ -372,7 +372,7 @@ const queueJob = (job, reporter) => {
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
-  const options = healOptions(args, {})
+  const options = healOptions(pluginOptions, args, {})
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
   const pairedArgs = _.toPairs(args)
@@ -476,7 +476,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 async function generateBase64({ file, args, reporter }) {
-  const options = healOptions(args, { width: 20 })
+  const options = healOptions(pluginOptions, args, { width: 20 })
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()
@@ -557,8 +557,20 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
+async function getTracedSVG(options, file) {
+  if (options.generateTracedSVG && options.tracedSVG) {
+    const tracedSVG = await traceSVG({
+      file,
+      args: options.tracedSVG,
+      fileArgs: options,
+    })
+    return tracedSVG
+  }
+  return undefined
+}
+
 async function fluid({ file, args = {}, reporter, cache }) {
-  const options = healOptions(args, {})
+  const options = healOptions(pluginOptions, args, {})
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
@@ -672,19 +684,23 @@ async function fluid({ file, args = {}, reporter, cache }) {
     })
   })
 
-  const base64Width = 20
-  const base64Height = Math.max(1, Math.round((base64Width * height) / width))
-  const base64Args = {
-    duotone: options.duotone,
-    grayscale: options.grayscale,
-    rotate: options.rotate,
-    toFormat: options.toFormat,
-    width: base64Width,
-    height: base64Height,
+  let base64Image
+  if (options.base64) {
+    const base64Width = 20
+    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
+    const base64Args = {
+      duotone: options.duotone,
+      grayscale: options.grayscale,
+      rotate: options.rotate,
+      toFormat: options.toFormat,
+      width: base64Width,
+      height: base64Height,
+    }
+    // Get base64 version
+    base64Image = await base64({ file, args: base64Args, reporter, cache })
   }
 
-  // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter, cache })
+  const tracedSVG = await getTracedSVG(options, file)
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -718,7 +734,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   return {
-    base64: base64Image.src,
+    base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
@@ -729,11 +745,12 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
+    tracedSVG,
   }
 }
 
 async function fixed({ file, args = {}, reporter, cache }) {
-  const options = healOptions(args, {})
+  const options = healOptions(pluginOptions, args, {})
 
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
@@ -786,15 +803,25 @@ async function fixed({ file, args = {}, reporter, cache }) {
     })
   })
 
-  const base64Args = {
-    duotone: options.duotone,
-    grayscale: options.grayscale,
-    rotate: options.rotate,
-    toFormat: options.toFormat,
+  let base64Image
+  if (options.base64) {
+    const base64Args = {
+      duotone: options.duotone,
+      grayscale: options.grayscale,
+      rotate: options.rotate,
+      toFormat: options.toFormat,
+    }
+
+    // Get base64 version
+    base64Image = await base64({
+      file,
+      args: base64Args,
+      reporter,
+      cache,
+    })
   }
 
-  // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter, cache })
+  const tracedSVG = await getTracedSVG(options, file)
 
   const fallbackSrc = images[0].src
   const srcSet = images
@@ -822,13 +849,14 @@ async function fixed({ file, args = {}, reporter, cache }) {
   const originalName = file.base
 
   return {
-    base64: base64Image.src,
+    base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
     width: images[0].width,
     height: images[0].height,
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
+    tracedSVG,
   }
 }
 
@@ -843,7 +871,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
     turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
   }
   const optionsSVG = _.defaults(args, defaultArgs)
-  const options = healOptions(fileArgs, {})
+  const options = healOptions(pluginOptions, fileArgs, {})
   let pipeline
   try {
     pipeline = sharp(file.absolutePath).rotate()

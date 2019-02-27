@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.25...gatsby-source-drupal@3.0.26) (2019-02-25)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.24...gatsby-source-drupal@3.0.25) (2019-02-22)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.23...gatsby-source-drupal@3.0.24) (2019-02-20)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Let plugins set parent when creating File nodes with createRemoteFileNode ([#11795](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/11795)) ([5a3c1fc](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/5a3c1fc))
+
+## [3.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.22...gatsby-source-drupal@3.0.23) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.21...gatsby-source-drupal@3.0.22) (2019-01-31)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 ## [3.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.20...gatsby-source-drupal@3.0.21) (2019-01-28)
 
 **Note:** Version bump only for package gatsby-source-drupal

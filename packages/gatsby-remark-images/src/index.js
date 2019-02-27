@@ -6,9 +6,10 @@ const {
 const visitWithParents = require(`unist-util-visit-parents`)
 const getDefinitions = require(`mdast-util-definitions`)
 const path = require(`path`)
+const queryString = require(`query-string`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { fluid } = require(`gatsby-plugin-sharp`)
+const { fluid, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -31,6 +32,7 @@ module.exports = (
     showCaptions: false,
     pathPrefix,
     withWebp: false,
+    tracedSVG: false,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -67,6 +69,18 @@ module.exports = (
     }
   )
 
+  const getImageInfo = uri => {
+    const { url, query } = queryString.parseUrl(uri)
+    return {
+      ext: path
+        .extname(url)
+        .split(`.`)
+        .pop(),
+      url,
+      query,
+    }
+  }
+
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = async function(
@@ -80,7 +94,7 @@ module.exports = (
     const parentNode = getNode(markdownNode.parent)
     let imagePath
     if (parentNode && parentNode.dir) {
-      imagePath = slash(path.join(parentNode.dir, node.url))
+      imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
     } else {
       return null
     }
@@ -113,7 +127,7 @@ module.exports = (
     const presentationWidth = fluidResult.presentationWidth
 
     // Generate default alt tag
-    const srcSplit = node.url.split(`/`)
+    const srcSplit = getImageInfo(node.url).url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
@@ -193,6 +207,32 @@ module.exports = (
       `.trim()
     }
 
+    let placeholderImageData = fluidResult.base64
+
+    // if options.tracedSVG is enabled generate the traced SVG and use that as the placeholder image
+    if (options.tracedSVG) {
+      let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
+
+      // Translate Potrace constants (e.g. TURNPOLICY_LEFT, COLOR_AUTO) to the values Potrace expects
+      const { Potrace } = require(`potrace`)
+      const argsKeys = Object.keys(args)
+      args = argsKeys.reduce((result, key) => {
+        const value = args[key]
+        result[key] = Potrace.hasOwnProperty(value) ? Potrace[value] : value
+        return result
+      }, {})
+
+      const tracedSVG = await traceSVG({
+        file: imageNode,
+        args,
+        fileArgs: args,
+        reporter,
+      })
+
+      // Escape single quotes so the SVG data can be used in inline style attribute with single quotes
+      placeholderImageData = tracedSVG.replace(/'/g, `\\'`)
+    }
+
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
     // Construct new image node w/ aspect ratio placeholder
@@ -206,9 +246,7 @@ module.exports = (
   >
     <span
       class="${imageBackgroundClass}"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      fluidResult.base64
-    }'); background-size: cover; display: block;"
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
     ></span>
     ${imageTag}
   </span>
@@ -264,7 +302,7 @@ module.exports = (
               return resolve()
             }
           }
-          const fileType = node.url.slice(-3)
+          const fileType = getImageInfo(node.url).ext
 
           // Ignore gifs as we can't process them,
           // svgs as they are already responsive by definition
@@ -328,7 +366,7 @@ module.exports = (
                 return resolve()
               }
 
-              const fileType = formattedImgTag.url.slice(-3)
+              const fileType = getImageInfo(formattedImgTag.url).ext
 
               // Ignore gifs as we can't process them,
               // svgs as they are already responsive by definition

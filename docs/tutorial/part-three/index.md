@@ -34,7 +34,7 @@ For an initial introduction to using plugins, we'll install and implement the Ga
 As we mentioned in [part two](/tutorial/part-two/), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
-gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-three
 ```
 
@@ -45,7 +45,7 @@ There are two main steps to using a plugin: Installing and configuring.
 1. Install the `gatsby-plugin-typography` NPM package.
 
 ```shell
-npm install --save gatsby-plugin-typography react-typography typography
+npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
 ```
 
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
@@ -54,18 +54,39 @@ npm install --save gatsby-plugin-typography react-typography typography
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-typography`],
+  plugins: [
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+  ],
 }
 ```
 
 The `gatsby-config.js` is another special file that Gatsby will automatically recognize. This is where you add plugins and other site configuration.
 
-> Check out the [doc on `gatsby-config.js`](/docs/gatsby-config/) to read more, if you wish.
+> Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
 
-3. Start the development server.
+3. Add `typography.js` configuration file
+
+Typography.js needs a configuration file. Add it now.
+
+```javascript:title=src/utils/typography.js
+import Typography from "typography"
+import fairyGateTheme from "typography-theme-fairy-gates"
+
+const typography = new Typography(fairyGateTheme)
+
+export const { scale, rhythm, options } = typography
+export default typography
+```
+
+4. Start the development server.
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:
@@ -232,7 +253,7 @@ const ListLink = props => (
 // highlight-end
 
 export default ({ children }) => (
-  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
+  <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
     {/* highlight-start */}
     <header style={{ marginBottom: `1.5rem` }}>
       <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>

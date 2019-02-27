@@ -25,7 +25,7 @@ If you’d like to look at the growing number source plugins available to you, s
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-gatsby new wordpress-tutorial-site
+npx gatsby new wordpress-tutorial-site
 cd wordpress-tutorial-site
 ```
 
@@ -54,7 +54,7 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
          */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.

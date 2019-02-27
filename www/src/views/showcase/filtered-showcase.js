@@ -8,7 +8,6 @@ import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
 import Button from "../../components/button"
 import { colors } from "../../utils/presets"
-import URLQuery from "../../components/url-query"
 import {
   ContentHeader,
   ContentTitle,
@@ -59,120 +58,111 @@ class FilteredShowcase extends Component {
   }
 
   render() {
-    const { data } = this.props
+    const { data, filters, setFilters } = this.props
+
+    let items = data.allSitesYaml.edges
+
+    if (this.state.search.length > 0) {
+      items = this.fuse.search(this.state.search)
+    }
+
+    if (filters && filters.length > 0) {
+      items = filterByCategories(items, filters)
+    }
+
+    // create map of categories with totals
+    const aggregatedCategories = data.allSitesYaml.edges.reduce(
+      (categories, edge) => {
+        if (edge.node.categories) {
+          edge.node.categories.forEach(category => {
+            // if we already have the category recorded, increase count
+            if (categories[category]) {
+              categories[category] = categories[category] + 1
+            } else {
+              // record first encounter of category
+              categories[category] = 1
+            }
+          })
+        }
+
+        return { ...categories }
+      },
+      {}
+    )
+
+    // get sorted set of categories to generate list with
+    const categoryKeys = Object.keys(aggregatedCategories).sort((a, b) => {
+      if (a < b) return -1
+      if (a > b) return 1
+      return 0
+    })
 
     return (
-      <URLQuery>
-        {({ filters = [] }, updateQuery) => {
-          let items = data.allSitesYaml.edges
-
-          if (this.state.search.length > 0) {
-            items = this.fuse.search(this.state.search)
-          }
-
-          if (filters && filters.length > 0) {
-            items = filterByCategories(items, filters)
-          }
-
-          // create map of categories with totals
-          const aggregatedCategories = data.allSitesYaml.edges.reduce(
-            (categories, edge) => {
-              if (edge.node.categories) {
-                edge.node.categories.forEach(category => {
-                  // if we already have the category recorded, increase count
-                  if (categories[category]) {
-                    categories[category] = categories[category] + 1
-                  } else {
-                    // record first encounter of category
-                    categories[category] = 1
-                  }
-                })
-              }
-
-              return { ...categories }
-            },
-            {}
-          )
-
-          // get sorted set of categories to generate list with
-          const categoryKeys = Object.keys(aggregatedCategories).sort(
-            (a, b) => {
-              if (a < b) return -1
-              if (a > b) return 1
-              return 0
-            }
-          )
-
-          return (
-            <section className="showcase" css={{ display: `flex` }}>
-              <Filters
-                updateQuery={updateQuery}
-                filters={filters}
-                categoryKeys={categoryKeys}
-                aggregatedCategories={aggregatedCategories}
-              />
-              <ContentContainer>
-                <ContentHeader>
-                  <ContentTitle
-                    search={this.state.search}
-                    filters={filters}
-                    label="Site"
-                    items={items}
-                    edges={data.allSitesYaml.edges}
-                  />
-                  <div css={{ marginLeft: `auto` }}>
-                    <label css={{ position: `relative` }}>
-                      <input
-                        css={{ ...styles.searchInput }}
-                        type="search"
-                        value={this.state.search}
-                        onChange={e =>
-                          this.setState({ search: e.target.value })
-                        }
-                        placeholder="Search sites"
-                        aria-label="Search sites"
-                      />
-                      <SearchIcon
-                        overrideCSS={{
-                          fill: colors.lilac,
-                          position: `absolute`,
-                          left: `5px`,
-                          top: `50%`,
-                          width: `16px`,
-                          height: `16px`,
-                          pointerEvents: `none`,
-                          transform: `translateY(-50%)`,
-                        }}
-                      />
-                    </label>
-                  </div>
-                </ContentHeader>
-
-                <ShowcaseList
-                  items={items}
-                  count={this.state.sitesToShow}
-                  filters={filters}
+      <section className="showcase" css={{ display: `flex` }}>
+        <Filters
+          setFilters={setFilters}
+          filters={filters}
+          categoryKeys={categoryKeys}
+          aggregatedCategories={aggregatedCategories}
+        />
+        <ContentContainer>
+          <ContentHeader>
+            <ContentTitle
+              search={this.state.search}
+              filters={filters}
+              label="Site"
+              items={items}
+              edges={data.allSitesYaml.edges}
+            />
+            <div css={{ marginLeft: `auto` }}>
+              <label css={{ position: `relative` }}>
+                <input
+                  css={{ ...styles.searchInput }}
+                  type="search"
+                  value={this.state.search}
+                  onChange={e => this.setState({ search: e.target.value })}
+                  placeholder="Search sites"
+                  aria-label="Search sites"
                 />
+                <SearchIcon
+                  overrideCSS={{
+                    fill: colors.lilac,
+                    position: `absolute`,
+                    left: `5px`,
+                    top: `50%`,
+                    width: `16px`,
+                    height: `16px`,
+                    pointerEvents: `none`,
+                    transform: `translateY(-50%)`,
+                  }}
+                />
+              </label>
+            </div>
+          </ContentHeader>
 
-                {this.state.sitesToShow < items.length && (
-                  <Button
-                    tag="button"
-                    overrideCSS={styles.loadMoreButton}
-                    onClick={() => {
-                      this.setState({
-                        sitesToShow: this.state.sitesToShow + 15,
-                      })
-                    }}
-                    icon={<MdArrowDownward />}
-                  >
-                    Load More
-                  </Button>
-                )}
-              </ContentContainer>
-            </section>
-          )
-        }}
-      </URLQuery>
+          <ShowcaseList
+            items={items}
+            count={this.state.sitesToShow}
+            filters={filters}
+            onCategoryClick={c => setFilters(c)}
+          />
+
+          {this.state.sitesToShow < items.length && (
+            <Button
+              tag="button"
+              overrideCSS={styles.loadMoreButton}
+              onClick={() => {
+                this.setState({
+                  sitesToShow: this.state.sitesToShow + 15,
+                })
+              }}
+              icon={<MdArrowDownward />}
+            >
+              Load More
+            </Button>
+          )}
+        </ContentContainer>
+      </section>
     )
   }
 }
