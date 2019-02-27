@@ -244,10 +244,10 @@ const GatsbyNodeHelpers = {
   reporter: true,
 
   /**
-   * Get single node by given ID and creates dependency for given path.
+   * Get single node by given ID and create dependency for given path.
    * This should be used instead of `getNode` in graphql resolvers to enable
    * tracking dependencies for query results. If it's not used Gatsby will
-   * not rerun query if node. See
+   * not rerun query if node changes leading to stale query results. See
    * [Page -> Node Dependency Tracking](/docs/page-node-dependencies/)
    * for more details.
    * @param {string} ID id of the node.
