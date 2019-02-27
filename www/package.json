@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@reach/skip-nav": "^0.1.1",
+    "@reach/visually-hidden": "^0.1.2",
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
     "dotenv": "^6.0.0",
@@ -36,7 +37,7 @@
     "gatsby-plugin-twitter": "^2.0.5",
     "gatsby-plugin-typography": "^2.2.0",
     "gatsby-remark-autolink-headers": "^2.0.10",
-    "gatsby-remark-code-titles": "^1.1.0-rc.0",
+    "gatsby-remark-code-titles": "^1.0.2",
     "gatsby-remark-copy-linked-files": "^2.0.5",
     "gatsby-remark-graphviz": "^1.0.0",
     "gatsby-remark-images": "^2.0.1",
