@@ -1,5 +1,5 @@
 <!--
-  Have any questions? Check out the contributing docs at https://gatsby.app/contribute, or
+  Have any questions? Check out the contributing docs at https://gatsby.dev/contribute, or
   ask in this Pull Request and a Gatsby maintainer will be happy to help :)
 -->
 

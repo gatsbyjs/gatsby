@@ -114,7 +114,7 @@ it in a clear, accurate, and objective manner. You'll likely go through several
 rounds of proofreading and editing before you're happy with your writing.
 
 Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
-[Gatsby Discord](https://gatsby.app/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
+[Gatsby Discord](https://gatsby.dev/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
 
 ## Word choice
 
