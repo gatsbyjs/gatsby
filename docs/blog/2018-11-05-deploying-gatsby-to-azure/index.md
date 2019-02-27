@@ -45,7 +45,7 @@ Next you will create the blog from the handy [Gatsby Starter Blog](https://githu
 From your terminal run
 
 ```bash
-$ gatsby new azure-blog https://github.com/gatsbyjs/gatsby-starter-blog
+$ npx gatsby new azure-blog https://github.com/gatsbyjs/gatsby-starter-blog
 
 info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git
 Cloning into 'azure-blog'...
@@ -63,7 +63,7 @@ You can now view your website by running
 
 ```bash
 $ cd azure-blog
-$ gatsby develop
+$ npm run develop
 ```
 
 You should now see your blog in the flesh!
@@ -74,7 +74,7 @@ You should now see your blog in the flesh!
 
 Microsoft Azure is a cloud hosting provider which offers a wide range of tools and services. Today you are going to use Azure Storage to host our static Gatsby blog.
 
-> If you don't have an Azure account, [sign up today](https://azure.microsoft.com/en-us/free/) for a free 30 day account with $200 in Azure credits.
+> If you don't have an Azure account, [sign up today](https://azure.microsoft.com/en-us/free/) for a free 30 day account with \$200 in Azure credits.
 
 > Note: You will need to verify your identity with a credit card, but will not be charged unless you begin to use paid service and exceed the free allowance. The cost per GB for storage is in the region of £0.04 so it should last a while.
 

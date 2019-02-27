@@ -132,6 +132,8 @@ exports.sourceNodes = async (
 
   entities = normalize.mapPolylangTranslations(entities)
 
+  entities = normalize.createUrlPathsFromLinks(entities)
+
   // apply custom normalizer
   if (typeof _normalizer === `function`) {
     entities = _normalizer({

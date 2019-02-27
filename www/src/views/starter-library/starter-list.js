@@ -18,8 +18,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       urlState.s !== ``
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `matching` // if no search term or single dependency
+        ? urlState.d // if theres a single dependency
+        : `matching` // if no search term or single dependency
     return (
       <div
         css={{
@@ -36,7 +36,10 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             <small>
               Maybe you should write one and
               {` `}
-              <Link to="/docs/submit-to-starter-library/">submit it</Link>?
+              <Link to="/contributing/submit-to-starter-library/">
+                submit it
+              </Link>
+              ?
             </small>
           </div>
         </h1>
