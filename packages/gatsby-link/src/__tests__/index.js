@@ -9,7 +9,7 @@ import {
 import Link, { navigate, push, replace, withPrefix } from "../"
 
 afterEach(() => {
-  global.__PATH_PREFIX__ = ``
+  global.__BASE_PATH__ = ``
   cleanup()
 })
 
@@ -34,12 +34,12 @@ const getReplace = () => {
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
-  global.__PATH_PREFIX__ = pathPrefix
+  global.__BASE_PATH__ = pathPrefix
   return withPrefix
 }
 
 const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
-  global.__PATH_PREFIX__ = pathPrefix
+  global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
 
@@ -151,11 +151,11 @@ describe(`navigate`, () => {
 
   it(`respects pathPrefix`, () => {
     const to = `/some-path`
-    global.__PATH_PREFIX__ = `/blog`
+    global.__BASE_PATH__ = `/blog`
     getNavigate()(to)
 
     expect(global.___navigate).toHaveBeenCalledWith(
-      `${global.__PATH_PREFIX__}${to}`,
+      `${global.__BASE_PATH__}${to}`,
       undefined
     )
   })

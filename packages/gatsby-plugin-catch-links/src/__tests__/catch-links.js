@@ -4,7 +4,7 @@ import { navigate } from "gatsby"
 import * as catchLinks from "../catch-links"
 
 beforeAll(() => {
-  global.__PATH_PREFIX__ = ``
+  global.__BASE_PATH__ = ``
   // Set the base URL we will be testing against to http://localhost:8000/blog
   window.history.pushState({}, `APP Url`, `${pathPrefix}`)
 })
@@ -365,13 +365,13 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
   })
 
   afterAll(() => {
-    global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
     eventDestroyer()
   })
 
   test(`on sites with pathPrefix '${pathPrefix}'`, done => {
     // simulate case with --prefix-paths and prefix /blog
-    global.__PATH_PREFIX__ = pathPrefix
+    global.__BASE_PATH__ = pathPrefix
 
     // create the element with href /blog/article
     const clickElement = document.createElement(`a`)
@@ -408,7 +408,7 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
 
   test(`on sites without pathPrefix`, done => {
     // simulate default case without --prefix-paths
-    global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
 
     // create the element with href /blog/article
     const clickElement = document.createElement(`a`)

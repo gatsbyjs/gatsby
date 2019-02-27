@@ -9,7 +9,7 @@ const ssrArgs = {
 
 describe(`gatsby-plugin-manifest`, () => {
   beforeEach(() => {
-    global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
     headComponents = []
   })
 
@@ -130,7 +130,7 @@ describe(`gatsby-plugin-manifest`, () => {
   })
 
   it(`Creates href attributes using pathPrefix`, () => {
-    global.__PATH_PREFIX__ = `/path-prefix`
+    global.__BASE_PATH__ = `/path-prefix`
 
     onRenderBody(ssrArgs, {
       icon: true,

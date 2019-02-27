@@ -66,7 +66,7 @@ module.exports = async program => {
     return next()
   })
   app.use(function(req, res, next) {
-    res.header(`Access-Control-Allow-Origin`, `http://localhost:9000`)
+    res.header(`Access-Control-Allow-Origin`, `http://${host}:${port}`)
     res.header(`Access-Control-Allow-Credentials`, true)
     res.header(
       `Access-Control-Allow-Headers`,

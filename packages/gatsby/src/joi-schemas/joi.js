@@ -1,6 +1,6 @@
 const Joi = require(`joi`)
 
-const stripTrailingSlash = chain => chain.replace(/\/$/, ``)
+const stripTrailingSlash = chain => chain.replace(/(\w)\//, `$1`)
 
 export const gatsbyConfigSchema = Joi.object().keys({
   __experimentalThemes: Joi.array(),
