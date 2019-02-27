@@ -74,6 +74,26 @@ Object {
 }
 `;
 
+exports[`gatsby-plugin-sharp optimization warnings warns when dimension exceeds 1`] = `
+Array [
+  Array [
+    "
+Image test exceeds the warning threshold for image optimization. Read more on image optimization link!
+",
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp optimization warnings warns when size exceeds 1`] = `
+Array [
+  Array [
+    "
+Image test exceeds the warning threshold for image optimization. Read more on image optimization link!
+",
+  ],
+]
+`;
+
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
 Object {
   "aspectRatio": 1,

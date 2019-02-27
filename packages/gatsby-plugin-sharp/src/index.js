@@ -82,6 +82,29 @@ const reportError = (message, err, reporter) => {
   }
 }
 
+const warnOnThreshold = ({
+  name,
+  options: {
+    warningThreshold = true,
+    sizeThreshold = 1000000 * 3, // 3mb
+    dimensionThreshold = 2000,
+  },
+  fixedDimension,
+  size,
+  sizes,
+}) => {
+  if (
+    warningThreshold &&
+    (size >= sizeThreshold ||
+      (sizes.find(size => size > dimensionThreshold) &&
+        fixedDimension < dimensionThreshold))
+  ) {
+    console.warn(`
+Image ${name} exceeds the warning threshold for image optimization. Read more on image optimization link!
+`)
+  }
+}
+
 const generalArgs = {
   quality: 50,
   jpegProgressive: true,
@@ -581,7 +604,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     return null
   }
 
-  const { width, height, density, format } = metadata
+  const { width, height, density, format, size } = metadata
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72
@@ -654,6 +677,14 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
+
+  warnOnThreshold({
+    name: file.base,
+    options,
+    fixedDimension,
+    size,
+    sizes: filteredSizes,
+  })
 
   // Add the original image to ensure the largest image possible
   // is available for small images. Also so we can link to
@@ -756,6 +787,16 @@ async function fixed({ file, args = {}, reporter, cache }) {
   const fixedDimension = options.width === undefined ? `height` : `width`
 
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
+  let metadata
+  try {
+    metadata = await sharp(file.absolutePath).metadata()
+  } catch (err) {
+    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    return null
+  }
+
+  const { size } = metadata
+
   const sizes = []
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
@@ -782,6 +823,14 @@ async function fixed({ file, args = {}, reporter, cache }) {
                  `
     )
   }
+
+  warnOnThreshold({
+    name: file.base,
+    options,
+    fixedDimension,
+    size,
+    sizes: filteredSizes,
+  })
 
   // Sort images for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -969,3 +1018,4 @@ exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.warnOnThreshold = warnOnThreshold

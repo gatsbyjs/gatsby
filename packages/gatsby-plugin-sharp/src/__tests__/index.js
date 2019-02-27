@@ -15,6 +15,7 @@ const {
   fixed,
   queueImageResizing,
   getImageSize,
+  warnOnThreshold,
 } = require(`../`)
 
 describe(`gatsby-plugin-sharp`, () => {
@@ -365,6 +366,53 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result).toMatchSnapshot()
+    })
+  })
+
+  describe(`optimization warnings`, () => {
+    console.warn = jest.fn()
+    const defaultArgs = {
+      name: `test`,
+      options: { warningThreshold: true },
+      size: 1000,
+      fixedDimension: 1000,
+      sizes: [500, 1000, 2000, 3000],
+    }
+
+    beforeEach(() => {
+      console.warn.mockClear()
+    })
+
+    afterAll(() => {
+      console.warn.mockClear()
+    })
+
+    it(`doesn't warn when off`, async () => {
+      warnOnThreshold({ ...defaultArgs, options: { warningThreshold: false } })
+      expect(console.warn).not.toBeCalled()
+    })
+
+    it(`warns when dimension exceeds`, async () => {
+      warnOnThreshold({ ...defaultArgs })
+      expect(console.warn.mock.calls).toMatchSnapshot()
+    })
+
+    it(`warns when size exceeds`, async () => {
+      warnOnThreshold({ ...defaultArgs, sizes: [500, 1000], size: 1000000 * 4 })
+      expect(console.warn.mock.calls).toMatchSnapshot()
+    })
+
+    it(`doesn't warn on big fixed dimension`, async () => {
+      warnOnThreshold({ ...defaultArgs, fixedDimension: 3000 })
+      expect(console.warn).not.toBeCalled()
+    })
+
+    it(`can be configured`, async () => {
+      warnOnThreshold({ ...defaultArgs, options: { dimensionThreshold: 4000 } })
+      expect(console.warn).not.toBeCalled()
+
+      warnOnThreshold({ ...defaultArgs, options: { sizeThreshold: 400 } })
+      expect(console.warn).toBeCalledTimes(1)
     })
   })
 })
