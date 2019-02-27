@@ -21,6 +21,9 @@ import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { injectGlobal } from "react-emotion"
 import removeMD from "remove-markdown"
+import VisuallyHidden from "@reach/visually-hidden"
+import styled from "react-emotion"
+import { SkipNavLink } from "@reach/skip-nav"
 
 // This is for the urlSync
 const updateAfter = 700
@@ -120,6 +123,9 @@ injectGlobal`
   .ais-SearchBox__submit:focus {
     outline: 0;
   }
+  .ais-SearchBox__submit:focus svg {
+    fill: ${colors.gatsby};
+  }
   .ais-SearchBox__submit svg {
     width: 1rem;
     height: 1rem;
@@ -137,7 +143,8 @@ injectGlobal`
   .ais-SearchBox__reset:focus {
     outline: 0;
   }
-  .ais-SearchBox__reset:hover svg {
+  .ais-SearchBox__reset:hover svg,
+  .ais-SearchBox__reset:focus svg {
     fill: ${colors.gatsby};
   }
   .ais-SearchBox__reset svg {
@@ -162,7 +169,8 @@ injectGlobal`
 };
     font-family: ${typography.options.headerFontFamily.join(`,`)};
   }
-  .ais-InfiniteHits__loadMore:hover {
+  .ais-InfiniteHits__loadMore:hover,
+  .ais-InfiniteHits__loadMore:focus {
     background-color: ${colors.gatsby};
     color: #fff;
   }
@@ -172,6 +180,30 @@ injectGlobal`
   }
 `
 /* stylelint-enable */
+
+const StyledSkipNavLink = styled(SkipNavLink)`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 100;
+  font-size: 0.85rem;
+
+  :focus {
+    padding: 0.9rem;
+    top: 10px;
+    left: 10px;
+    background: white;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    clip: auto;
+  }
+`
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
@@ -231,6 +263,7 @@ class Search extends Component {
                 },
               }}
             />
+            <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
           </div>
         </div>
 
@@ -358,17 +391,27 @@ const Result = ({ hit, pathname, query }) => {
           marginBottom: rhythm(typography.options.blockMarginBottom / 2),
         }}
       >
-        <div
+        <h2
           css={{
             color: selected ? colors.gatsby : false,
+            fontSize: `inherit`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
             lineHeight: 1.2,
+            marginBottom: 0,
+            marginTop: 0,
+            letterSpacing: 0,
           }}
         >
           {hit.name}
+        </h2>
+        <div>
+          <VisuallyHidden>
+            {hit.downloadsLast30Days} monthly downloads
+          </VisuallyHidden>
         </div>
         <div
+          aria-hidden
           css={{
             alignItems: `center`,
             color: selected ? colors.lilac : colors.gray.bright,
