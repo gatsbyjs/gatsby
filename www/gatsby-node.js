@@ -83,6 +83,16 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/docs/how-to-create-an-issue/`,
+    toPath: `/contributing/how-to-create-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-label-an-issue/`,
+    toPath: `/contributing/how-to-label-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/contributor-swag/`,
     toPath: `/contributing/contributor-swag/`,
     isPermanent: true,

@@ -15,14 +15,14 @@ Object {
   "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABAklEQVQoz61R7WrCQBDM+7+Cv1qhlIogoUWMoH8KrfgOLVXRKDV4d7kkl6/pbsxpqBIo9mBuZ7N3k51bB7TKsrwZVsexyS2rKerwFhYFVI1DnkMQOHIuCaLB+ayuwXlMaApXgvMoxjTU8MIQE4rMx8SnNffUkU/qM/bbiPAeRfgw5n8tB+QgO1kmUvwROdm0kYHmUNoe+NoU2wZTdVjQH7Isg9YRpFIXor8vpGmKjb/FQQgslit8fi3wvQ/OHXLhxRvDHY7Qd5+x3e2udmNzTUN4fZvhoddH566L+8cn9AZuVcvpLR3e9kEAISWEkDAmbRXkGCcJ1r4PRRNPEkPu9Kn2Azs0CqJYU3JKAAAAAElFTkSuQmCC",
   "density": 144,
-  "originalImg": "/static/1234/29cdc/test.png",
+  "originalImg": "/static/1234/c81ba/test.png",
   "originalName": undefined,
   "presentationHeight": 68,
   "presentationWidth": 141,
   "sizes": "(max-width: 141px) 100vw, 141px",
-  "src": "/static/1234/29cdc/test.png",
-  "srcSet": "/static/1234/223da/test.png 200w,
-/static/1234/29cdc/test.png 281w",
+  "src": "/static/1234/c81ba/test.png",
+  "srcSet": "/static/1234/e4832/test.png 200w,
+/static/1234/c81ba/test.png 281w",
   "srcSetType": "image/png",
   "tracedSVG": undefined,
 }
@@ -33,14 +33,14 @@ Object {
   "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABAklEQVQoz61R7WrCQBDM+7+Cv1qhlIogoUWMoH8KrfgOLVXRKDV4d7kkl6/pbsxpqBIo9mBuZ7N3k51bB7TKsrwZVsexyS2rKerwFhYFVI1DnkMQOHIuCaLB+ayuwXlMaApXgvMoxjTU8MIQE4rMx8SnNffUkU/qM/bbiPAeRfgw5n8tB+QgO1kmUvwROdm0kYHmUNoe+NoU2wZTdVjQH7Isg9YRpFIXor8vpGmKjb/FQQgslit8fi3wvQ/OHXLhxRvDHY7Qd5+x3e2udmNzTUN4fZvhoddH566L+8cn9AZuVcvpLR3e9kEAISWEkDAmbRXkGCcJ1r4PRRNPEkPu9Kn2Azs0CqJYU3JKAAAAAElFTkSuQmCC",
   "density": 144,
-  "originalImg": "/static/1234/55fae/test.png",
+  "originalImg": "/static/1234/ec7d1/test.png",
   "originalName": undefined,
   "presentationHeight": 136,
   "presentationWidth": 281,
   "sizes": "(max-width: 281px) 100vw, 281px",
-  "src": "/static/1234/55fae/test.png",
-  "srcSet": "/static/1234/6d94b/test.png 200w,
-/static/1234/55fae/test.png 281w",
+  "src": "/static/1234/ec7d1/test.png",
+  "srcSet": "/static/1234/dc107/test.png 200w,
+/static/1234/ec7d1/test.png 281w",
   "srcSetType": "image/png",
   "tracedSVG": undefined,
 }
@@ -51,13 +51,13 @@ Object {
   "aspectRatio": 1,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
   "density": 72,
-  "originalImg": "/static/1234/7bd23/test.png",
+  "originalImg": "/static/1234/1581d/test.png",
   "originalName": undefined,
   "presentationHeight": 1,
   "presentationWidth": 1,
   "sizes": "(max-width: 1px) 100vw, 1px",
-  "src": "/static/1234/7bd23/test.png",
-  "srcSet": "/static/1234/7bd23/test.png 1w",
+  "src": "/static/1234/1581d/test.png",
+  "srcSet": "/static/1234/1581d/test.png 1w",
   "srcSetType": "image/png",
   "tracedSVG": undefined,
 }
@@ -80,7 +80,7 @@ exports[`gatsby-plugin-sharp queueImageResizing should process immediately when 
     Array [
       Object {
         "args": Object {
-          "base64": false,
+          "base64": true,
           "duotone": false,
           "grayscale": false,
           "jpegProgressive": true,
@@ -141,7 +141,7 @@ exports[`gatsby-plugin-sharp queueImageResizing should process immediately when 
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "base64": undefined,
   "height": 1,
   "originalName": undefined,
   "src": "/static/1234/155b3/test.png",
@@ -154,7 +154,7 @@ Object {
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 2`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "base64": undefined,
   "density": 72,
   "originalImg": "/static/1234/3092c/test.png",
   "originalName": undefined,
