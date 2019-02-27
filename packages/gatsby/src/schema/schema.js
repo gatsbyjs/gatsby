@@ -180,7 +180,7 @@ const addThirdPartySchemas = ({
     schemaComposer.Query.addFields(fields)
 
     // Explicitly add the third-party schema's types, so they can be targeted
-    // in `addResolvers` API.
+    // in `createResolvers` API.
     const types = schema.getTypeMap()
     Object.keys(types).forEach(typeName => {
       const type = types[typeName]
@@ -189,6 +189,7 @@ const addThirdPartySchemas = ({
         !isSpecifiedScalarType(type) &&
         !isIntrospectionType(type)
       ) {
+        type.isThirdPartyType = true
         schemaComposer.add(type)
       }
     })
@@ -210,9 +211,13 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               fieldConfig.type && fieldConfig.type.toString()
             if (
               !fieldTypeName ||
-              tc.getFieldType(fieldName) === fieldConfig.type.toString()
+              tc.getFieldType(fieldName) === fieldConfig.type.toString() ||
+              tc.getType().isThirdPartyType
             ) {
               const newConfig = {}
+              if (fieldConfig.type) {
+                newConfig.type = fieldConfig.type
+              }
               if (fieldConfig.args) {
                 newConfig.args = fieldConfig.args
               }
@@ -222,7 +227,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               tc.extendField(fieldName, newConfig)
             } else if (fieldTypeName) {
               report.warn(
-                `\`addResolvers\` passed resolvers for field \`${typeName}.${fieldName}\` with type ${fieldTypeName}. Such field with type ${originalTypeName} already exists on the type. Use \`addTypeDefs\` to override type fields.`
+                `\`createResolvers\` passed resolvers for field \`${typeName}.${fieldName}\` with type ${fieldTypeName}. Such field with type ${originalTypeName} already exists on the type. Use \`createTypes\` to override type fields.`
               )
             }
           } else {
@@ -231,7 +236,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
         })
       } else {
         report.warn(
-          `\`addResolvers\` passed resolvers for type \`${typeName}\` that doesn't exist in the schema. Use \`addTypeDefs\` to add the type before adding resolvers.`
+          `\`createResolvers\` passed resolvers for type \`${typeName}\` that doesn't exist in the schema. Use \`addTypeDefs\` to add the type before adding resolvers.`
         )
       }
     })
@@ -239,7 +244,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
   await apiRunner(`createResolvers`, {
     schema: intermediateSchema,
     createResolvers,
-    traceId: `initial-addResolvers`,
+    traceId: `initial-createResolvers`,
     parentSpan: parentSpan,
   })
 }
