@@ -15,7 +15,7 @@ class ShowcaseView extends Component {
 
   componentDidMount() {
     const {
-      location: { search },
+      location: { search = `` },
     } = this.props
 
     const { filters } = qs.parse(search.replace(`?`, ``))
