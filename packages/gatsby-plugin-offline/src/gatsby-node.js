@@ -6,6 +6,20 @@ const _ = require(`lodash`)
 
 const getResourcesFromHTML = require(`./get-resources-from-html`)
 
+exports.onPreInit = ({ store, reporter }) => {
+  const { assetPrefix } = store.getState().config
+
+  if (assetPrefix) {
+    throw new Error(
+      reporter.stripIndent(`
+      gatsby-plugin-offline cannot be used with the \`assetPrefix\` option.
+      A service worker specifies that it must be served on the same domain.
+      Either remove \`assetPrefix\` from gatsby-config.js or remove this plugin.
+    `)
+    )
+  }
+}
+
 exports.createPages = ({ actions }) => {
   if (process.env.NODE_ENV === `production`) {
     const { createPage } = actions
