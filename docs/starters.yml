@@ -1931,3 +1931,11 @@
     - Responsive Web Design
     - Auto generated Sidebar
     - Auto generated Anchor
+- url: https://gatsby-starter-styled-components.netlify.com/
+  repo: https://github.com/blakenoll/gatsby-starter-styled-components
+  description: The Gatsby default starter modified to use styled-components
+  tags: 
+    - styled-components 
+  features:
+    - styled-components
+    - sticky footer
