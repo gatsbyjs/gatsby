@@ -27,13 +27,12 @@ const PackageReadMe = props => {
         <a
           css={{
             "&&": {
-              display: githubUrl ? `inline-block` : `none`,
+              display: githubUrl ? `flex` : `none`,
               fontWeight: `normal`,
               border: 0,
               color: colors.gray.calm,
               boxShadow: `none`,
-              display: 'flex',
-              alignItems: 'center',
+              alignItems: `center`,
               "&:hover": {
                 background: `none`,
                 color: colors.gatsby,
@@ -41,9 +40,22 @@ const PackageReadMe = props => {
             },
           }}
           href={githubUrl}
-          aria-label={`${packageName} source`}
+          aria-labelledby="github-link-label"
         >
-          <GithubIcon focusable="false" style={{ verticalAlign: `text-top` }} />&nbsp;&nbsp;<span>View plugin on GitHub</span>
+          <GithubIcon
+            focusable="false"
+            style={{ verticalAlign: `text-top`, marginRight: 10 }}
+          />
+          <span
+            id="github-link-label"
+            css={{
+              "@media screen and (max-width: 385px)": {
+                display: `none`,
+              },
+            }}
+          >
+            View plugin on GitHub
+          </span>
         </a>
         {githubUrl && (
           <Link to={`/starters?d=${packageName}`}>
