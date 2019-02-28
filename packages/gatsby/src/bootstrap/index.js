@@ -462,7 +462,7 @@ module.exports = async (args: BootstrapArgs) => {
     )
   })
   runInitialQueries(activity)
-  await new Promise(resolve => queryQueue.on(`drain`, () => resolve()))
+  await new Promise(resolve => queryQueue.on(`drain`, resolve))
   activity.end()
 
   // Write out files.

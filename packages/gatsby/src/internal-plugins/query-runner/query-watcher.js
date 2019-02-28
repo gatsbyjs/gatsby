@@ -136,7 +136,6 @@ const updateStateAndRunQueries = isFirstRun => {
       }
     })
 
-    // TODO restore this logic for page components.
     if (queriesWillNotRun) {
       report.log(report.stripIndent`
 
