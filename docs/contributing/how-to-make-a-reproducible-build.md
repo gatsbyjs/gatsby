@@ -10,7 +10,7 @@ A reproducible build is a small Gatsby site built to demonstrate a problem - oft
 
 A reproducible build lets you isolate the cause of a problem, which is the first step towards fixing it!
 
-The [most important part of any bug report](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Bug_writing_guidelines#Writing_precise_steps_to_reproduce) is to describe the exact steps needed to reproduce the bug. 
+The [most important part of any bug report](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Bug_writing_guidelines#Writing_precise_steps_to_reproduce) is to describe the exact steps needed to reproduce the bug.
 
 A reproducible build is a great way to share a specific environment that causes a bug. Your reproducible build is the best way to help people that want to help _you_.
 
