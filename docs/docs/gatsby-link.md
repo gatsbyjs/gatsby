@@ -95,12 +95,12 @@ In instances like these, we can use [@reach/router's](https://reach.tech/router/
 import React from "react"
 import { Link } from "gatsby"
 
-const partlyActive = className => ({ isPartiallyCurrent }) => ({
+const partiallyActive = className => ({ isPartiallyCurrent }) => ({
   className: className + (isPartiallyCurrent ? ` active` : ``),
 })
 
-const PartlyActiveLink = ({ className, ...rest }) => (
-  <Link getProps={partlyActive(className)} {...rest} />
+const PartiallyActiveLink = ({ className, ...rest }) => (
+  <Link getProps={partiallyActive(className)} {...rest} />
 )
 ```
 
