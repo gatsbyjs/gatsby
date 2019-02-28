@@ -282,7 +282,12 @@ module.exports = argv => {
   let cli = yargs()
   let isLocalSite = isLocalGatsbySite()
 
+  cli.parserConfiguration({
+    "boolean-negation": false,
+  })
+
   cli
+    .scriptName(`gatsby`)
     .usage(`Usage: $0 <command> [options]`)
     .alias(`h`, `help`)
     .alias(`v`, `version`)
