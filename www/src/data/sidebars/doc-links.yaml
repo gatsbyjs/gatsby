@@ -149,7 +149,7 @@
       link: /docs/starters/
       items:
         - title: Create a Starter*
-          link: /docs/create-a-starter/
+          link: /contributing/create-a-starter/
     - title: Styling Your Site
       link: /docs/styling/
       items:
