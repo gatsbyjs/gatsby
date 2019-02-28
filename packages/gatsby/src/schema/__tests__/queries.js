@@ -45,7 +45,7 @@ describe(`Query schema`, () => {
       } else if (api === `createResolvers`) {
         return [
           args[0].createResolvers({
-            MarkdownFrontmatter: {
+            Frontmatter: {
               authors: {
                 resolve(source, args, context, info) {
                   // NOTE: When using the first field resolver argument (here called
@@ -121,17 +121,16 @@ describe(`Query schema`, () => {
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
 
-    // FIXME: Needs to work when type is just called `Frontmatter`
     const typeDefs = [
-      `type Test implements Node { isOnlyDefinedLater: Author } `,
-      `type Markdown implements Node { frontmatter: MarkdownFrontmatter! }`,
-      `type MarkdownFrontmatter { authors: [Author] }`,
+      `type Markdown implements Node { frontmatter: Frontmatter! }`,
+      `type Frontmatter { authors: [Author] }`,
       `type Author implements Node { posts: [Markdown] }`,
     ]
     typeDefs.forEach(def =>
       store.dispatch({ type: `CREATE_TYPES`, payload: def })
     )
 
+    debugger
     await build({})
     schema = store.getState().schema
   })
@@ -299,7 +298,18 @@ describe(`Query schema`, () => {
   describe(`on fields added with createTypes`, () => {
     it(`handles selection set`, async () => {
       const query = `
-        query {
+        {
+          markdown {
+            frontmatter {
+              authors {
+                posts {
+                  frontmatter {
+                    title
+                  }
+                }
+              }
+            }
+          }
           allMarkdown {
             edges {
               node {
@@ -325,6 +335,19 @@ describe(`Query schema`, () => {
       `
       const results = await runQuery(query)
       const expected = {
+        markdown: {
+          frontmatter: {
+            authors: [
+              {
+                posts: [
+                  { frontmatter: { title: `Markdown File 1` } },
+                  { frontmatter: { title: `Markdown File 2` } },
+                ],
+              },
+              { posts: [{ frontmatter: { title: `Markdown File 1` } }] },
+            ],
+          },
+        },
         allMarkdown: {
           edges: [
             {
@@ -381,7 +404,23 @@ describe(`Query schema`, () => {
 
     it(`handles query arguments`, async () => {
       const query = `
-        query {
+        {
+          author(
+            posts: {
+              elemMatch: {
+                frontmatter: {
+                  title: { eq: "Markdown File 2" }
+                }
+              }
+            }
+          ) {
+            name
+            posts {
+              frontmatter {
+                title
+              }
+            }
+          }
           allMarkdown(
             filter: {
               frontmatter: {
@@ -418,6 +457,13 @@ describe(`Query schema`, () => {
       `
       const results = await runQuery(query)
       const expected = {
+        author: {
+          name: `Author 1`,
+          posts: [
+            { frontmatter: { title: `Markdown File 1` } },
+            { frontmatter: { title: `Markdown File 2` } },
+          ],
+        },
         allMarkdown: {
           edges: [
             {
@@ -449,7 +495,7 @@ describe(`Query schema`, () => {
     describe(`edges { node }`, () => {
       it(`paginates results`, async () => {
         const query = `
-          query {
+          {
             pages: allMarkdown {
               totalCount
               edges {
@@ -577,7 +623,7 @@ describe(`Query schema`, () => {
     describe(`group field`, () => {
       it(`groups query results`, async () => {
         const query = `
-          query {
+          {
             allMarkdown {
               group(field: frontmatter___title) {
                 fieldValue
@@ -632,7 +678,7 @@ describe(`Query schema`, () => {
 
       it(`groups query results by scalar field with resolver`, async () => {
         const query = `
-          query {
+          {
             allMarkdown {
               group(field: frontmatter___date) {
                 fieldValue
@@ -675,7 +721,7 @@ describe(`Query schema`, () => {
       // FIXME: This is not yet possible
       it.skip(`groups query results by foreign key field`, async () => {
         const query = `
-          query {
+          {
             allMarkdown {
               group(field: frontmatter___authors___name) {
                 fieldValue
@@ -742,7 +788,7 @@ describe(`Query schema`, () => {
     describe(`distinct field`, () => {
       it(`returns distinct values`, async () => {
         const query = `
-          query {
+          {
             allMarkdown {
               distinct(field: frontmatter___title)
             }
@@ -761,7 +807,7 @@ describe(`Query schema`, () => {
       // FIXME: This is not yet possible
       it.skip(`returns distinct values on foreign-key field`, async () => {
         const query = `
-          query {
+          {
             allMarkdown {
               distinct(field: frontmatter___authors___name)
             }

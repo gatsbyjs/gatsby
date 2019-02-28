@@ -1,5 +1,10 @@
 const _ = require(`lodash`)
-const { isSpecifiedScalarType, isIntrospectionType } = require(`graphql`)
+const {
+  isSpecifiedScalarType,
+  isIntrospectionType,
+  GraphQLInterfaceType,
+  GraphQLUnionType,
+} = require(`graphql`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
@@ -125,7 +130,6 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
     if (typeof typeOrTypeDef === `string`) {
       const addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
       addedTypes.forEach(type => {
-        const { GraphQLInterfaceType, GraphQLUnionType } = require(`graphql`)
         let typeComposer
         if (type instanceof GraphQLInterfaceType) {
           typeComposer = schemaComposer.getOrCreateIFTC(type.name)
@@ -178,10 +182,10 @@ const addThirdPartySchemas = ({
   parentSpan,
 }) => {
   thirdPartySchemas.forEach(schema => {
-    const QueryTC = schemaComposer.TypeComposer.createTemp(
+    const queryTC = schemaComposer.TypeComposer.createTemp(
       schema.getQueryType()
     )
-    const fields = QueryTC.getFields()
+    const fields = queryTC.getFields()
     schemaComposer.Query.addFields(fields)
 
     // Explicitly add the third-party schema's types, so they can be targeted
