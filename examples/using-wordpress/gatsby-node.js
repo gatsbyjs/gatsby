@@ -48,7 +48,6 @@ exports.createPages = async ({ graphql, actions }) => {
   // Access query results via object destructuring
   const { allWordpressPage, allWordpressPost } = result.data
 
-  // Create Page pages.
   const pageTemplate = path.resolve(`./src/templates/page.js`)
   // We want to create a detailed page for each
   // page node. We'll just use the WordPress Slug for the slug.
