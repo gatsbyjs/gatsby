@@ -396,6 +396,13 @@ painter, sculptor, and architect. It makes things clearer.
 
 [Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
 
+### Prefer US English
+
+For words that have multiple spellings, prefer the US English word over British or Canadian English. For example:
+
+- `color` over `colour`
+- `behavior` over `behaviour`
+
 ### Use apps that help you edit
 
 Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
