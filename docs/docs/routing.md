@@ -11,11 +11,11 @@ Gatsby makes it easy to programmatically control your pages. Pages can be create
 - Gatsby core automatically turns React components in `src/pages` into pages
 - Plugins can also implement `createPages` and create pages for you
 
-See the [Creating and Modifying Pages](/docs/creating-and-modifying-pages) for more detail. 
+See the [Creating and Modifying Pages](/docs/creating-and-modifying-pages) for more detail.
 
 ## Linking between routes
 
-You can use `gatsby-link` to link to these routes -- this will provide almost-instantaneous page transitions via prefetching. [More on Gatsby Link](https://www.gatsbyjs.org/docs/gatsby-link/). 
+You can use `gatsby-link` to link to these routes -- this will provide almost-instantaneous page transitions via prefetching. [More on Gatsby Link](https://www.gatsbyjs.org/docs/gatsby-link/).
 
 You can also use standard `<a>` links, but you won't get the benefit of prefetching in this case.
 
