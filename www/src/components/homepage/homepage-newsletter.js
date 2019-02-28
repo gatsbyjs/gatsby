@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import HomepageSection from "./homepage-section"
 import EmailCaptureForm from "../../components/email-capture-form"

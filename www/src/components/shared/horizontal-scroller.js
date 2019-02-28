@@ -1,4 +1,4 @@
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import { rhythm } from "../../utils/typography"
 import presets from "../../utils/presets"
