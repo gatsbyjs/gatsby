@@ -398,7 +398,10 @@ painter, sculptor, and architect. It makes things clearer.
 
 ### Prefer US English
 
-For words that have multiple spellings, prefer the US English word over British or Canadian English.
+For words that have multiple spellings, prefer the US English word over British or Canadian English. For example:
+
+- `color` over `colour`
+- `behavior` over `behaviour`
 
 ### Use apps that help you edit
 
