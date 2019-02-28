@@ -56,7 +56,7 @@ const getGroup = ({ schemaComposer, typeComposer }) => {
 const getPagination = ({ schemaComposer, typeComposer }) => {
   const inputTypeComposer = typeComposer.getInputTypeComposer()
   const typeName = typeComposer.getTypeName() + `Connection`
-  const FieldsEnumTC = getFieldsEnum({
+  const fieldsEnumTC = getFieldsEnum({
     schemaComposer,
     typeComposer,
     inputTypeComposer,
@@ -65,7 +65,7 @@ const getPagination = ({ schemaComposer, typeComposer }) => {
     distinct: {
       type: [`String!`],
       args: {
-        field: FieldsEnumTC.getTypeNonNull(),
+        field: fieldsEnumTC.getTypeNonNull(),
       },
       resolve: distinct,
     },
@@ -74,7 +74,7 @@ const getPagination = ({ schemaComposer, typeComposer }) => {
       args: {
         skip: `Int`,
         limit: `Int`,
-        field: FieldsEnumTC.getTypeNonNull(),
+        field: fieldsEnumTC.getTypeNonNull(),
       },
       resolve: group,
     },

@@ -33,7 +33,9 @@ const distinct = (source, args, context, info) => {
   const { edges } = source
   const values = edges.reduce((acc, { node }) => {
     const value = getValueAtSelector(node, field)
-    return value != null ? acc.concat(value) : acc
+    return value != null
+      ? acc.concat(value instanceof Date ? value.toISOString() : value)
+      : acc
   }, [])
   return Array.from(new Set(values)).sort()
 }
@@ -46,7 +48,10 @@ const group = (source, args, context, info) => {
     const values = Array.isArray(value) ? value : [value]
     values
       .filter(value => value != null)
-      .forEach(v => (acc[v] = (acc[v] || []).concat(node)))
+      .forEach(value => {
+        const key = value instanceof Date ? value.toISOString() : value
+        acc[key] = (acc[key] || []).concat(node)
+      })
     return acc
   }, {})
   return Object.keys(groupedResults)

@@ -32,7 +32,7 @@ const convert = ({ schemaComposer, inputTypeComposer }) => {
     if (type instanceof GraphQLInputObjectType) {
       const itc = new schemaComposer.InputTypeComposer(type)
 
-      const OperatorsInputTC = convert({
+      const operatorsInputTC = convert({
         schemaComposer,
         inputTypeComposer: itc,
       })
@@ -46,9 +46,9 @@ const convert = ({ schemaComposer, inputTypeComposer }) => {
         ? getQueryOperatorListInput({
             schemaComposer,
             type: type,
-            inputTypeComposer: OperatorsInputTC,
+            inputTypeComposer: operatorsInputTC,
           })
-        : OperatorsInputTC
+        : operatorsInputTC
     } else {
       // GraphQLScalarType || GraphQLEnumType
       const operatorFields = getQueryOperatorInput({ schemaComposer, type })
@@ -92,7 +92,7 @@ const removeEmptyFields = (
 
 const getFilterInput = ({ schemaComposer, typeComposer }) => {
   const inputTypeComposer = typeComposer.getInputTypeComposer()
-  const FilterInputTC = convert({
+  const filterInputTC = convert({
     schemaComposer,
     inputTypeComposer,
   })
@@ -103,7 +103,7 @@ const getFilterInput = ({ schemaComposer, typeComposer }) => {
   // to handle circular definitions, e.g. like in `NodeInput`.
   // NOTE: We can remove this if we can guarantee that every type has query
   // operators.
-  return removeEmptyFields({ schemaComposer, inputTypeComposer: FilterInputTC })
+  return removeEmptyFields({ schemaComposer, inputTypeComposer: filterInputTC })
 }
 
 module.exports = { getFilterInput }

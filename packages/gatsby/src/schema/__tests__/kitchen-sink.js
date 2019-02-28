@@ -1,12 +1,5 @@
 // @flow
 
-// Children
-// childX
-// childrenX
-// NODE__ connections
-// addTypeDefs and corner cases
-// addResolvers
-
 const { SchemaComposer } = require(`graphql-compose`)
 const { graphql } = require(`graphql`)
 const { store } = require(`../../redux`)
@@ -42,7 +35,7 @@ describe(`Kichen sink schema test`, () => {
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
     store.dispatch({
-      type: `ADD_TYPES`,
+      type: `CREATE_TYPES`,
       payload: `
         type PostsJson implements Node {
           id: String!

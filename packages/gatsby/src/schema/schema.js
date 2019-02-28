@@ -33,7 +33,7 @@ const buildSchema = async ({
   return schema
 }
 
-const rebuildSchemaWithSitePage = ({
+const rebuildSchemaWithSitePage = async ({
   schemaComposer,
   nodeStore,
   typeMapping,
@@ -48,7 +48,12 @@ const rebuildSchemaWithSitePage = ({
     typeMapping,
     parentSpan,
   })
-  processTypeComposer({ schemaComposer, typeComposer, nodeStore, parentSpan })
+  await processTypeComposer({
+    schemaComposer,
+    typeComposer,
+    nodeStore,
+    parentSpan,
+  })
   return schemaComposer.buildSchema()
 }
 
@@ -261,16 +266,23 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
 
 const addResolvers = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
+
+  // TODO: We should have an abstraction for keeping and clearing
+  // related TypeComposers and InputTypeComposers.
+  // NOTE: No need to clear the SortInput, that will be regenerated anyway.
+  // Also see the comment on the skipped test in `rebuild-schema`.
   typeComposer.removeInputTypeComposer()
-  const SortInputTC = getSortInput({
+  schemaComposer.delete(`${typeName}FilterInput`)
+
+  const sortInputTC = getSortInput({
     schemaComposer,
     typeComposer,
   })
-  const FilterInputTC = getFilterInput({
+  const filterInputTC = getFilterInput({
     schemaComposer,
     typeComposer,
   })
-  const PaginationTC = getPagination({
+  const paginationTC = getPagination({
     schemaComposer,
     typeComposer,
   })
@@ -278,16 +290,16 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
     name: `findOne`,
     type: typeComposer,
     args: {
-      ...FilterInputTC.getFields(),
+      ...filterInputTC.getFields(),
     },
     resolve: findOne(typeName),
   })
   typeComposer.addResolver({
     name: `findManyPaginated`,
-    type: PaginationTC,
+    type: paginationTC,
     args: {
-      filter: FilterInputTC,
-      sort: SortInputTC,
+      filter: filterInputTC,
+      sort: sortInputTC,
       skip: `Int`,
       limit: `Int`,
       // page: `Int`,

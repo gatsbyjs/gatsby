@@ -258,7 +258,7 @@ const getFieldConfigFromFieldNameConvention = (
     type = linkedTypes[0]
   }
 
-  return { type, resolve: link({ by: foreignKey || `id`, from: key }) }
+  return { type, resolve: link({ by: foreignKey || `id` }) }
 }
 
 const getSimpleFieldConfig = (
@@ -300,7 +300,10 @@ const getSimpleFieldConfig = (
         // because we don't yet know if this type should end up in
         // the schema. It might be for a possibleField that will be
         // disregarded later.
-        const typeComposer = schemaComposer.TypeComposer.createTemp(
+        // const typeComposer = schemaComposer.TypeComposer.createTemp(
+        //   createTypeName(selector)
+        // )
+        const typeComposer = schemaComposer.getOrCreateTC(
           createTypeName(selector)
         )
         return {

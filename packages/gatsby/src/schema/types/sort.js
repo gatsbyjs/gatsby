@@ -17,16 +17,18 @@ const getSortOrderEnum = ({ schemaComposer }) =>
 
 const getFieldsEnum = ({ schemaComposer, typeComposer, inputTypeComposer }) => {
   const typeName = typeComposer.getTypeName()
-  return schemaComposer.getOrCreateETC(`${typeName}FieldsEnum`, etc => {
-    const fields = convert(inputTypeComposer.getFields())
-    etc.addFields(fields)
-  })
+  const fieldsEnumTypeComposer = schemaComposer.getOrCreateETC(
+    `${typeName}FieldsEnum`
+  )
+  const fields = convert(inputTypeComposer.getFields())
+  fieldsEnumTypeComposer.setFields(fields)
+  return fieldsEnumTypeComposer
 }
 
 const getSortInput = ({ schemaComposer, typeComposer }) => {
   const inputTypeComposer = typeComposer.getInputTypeComposer()
-  const SortOrderEnumTC = getSortOrderEnum({ schemaComposer })
-  const FieldsEnumTC = getFieldsEnum({
+  const sortOrderEnumTC = getSortOrderEnum({ schemaComposer })
+  const fieldsEnumTC = getFieldsEnum({
     schemaComposer,
     typeComposer,
     inputTypeComposer,
@@ -35,8 +37,8 @@ const getSortInput = ({ schemaComposer, typeComposer }) => {
 
   return schemaComposer.getOrCreateITC(`${typeName}SortInput`, itc => {
     itc.addFields({
-      fields: [FieldsEnumTC],
-      order: { type: [SortOrderEnumTC], defaultValue: [`ASC`] },
+      fields: [fieldsEnumTC],
+      order: { type: [sortOrderEnumTC], defaultValue: [`ASC`] },
     })
   })
 }
