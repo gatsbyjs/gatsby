@@ -18,7 +18,7 @@ Creating a reprodicible build is the best way to help other people that want to 
 
 - Create a new Gatsby site with a starter, the official `hello-world` starter is a great 'barebones' starting point here: `gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-hello-world`
 - Add the plugins specific to the issue. For example, if you're having problems with Gatsby MDX you should install and configure the related MDX plugins. Don't add any other plugins unless they're needed to demonstrate the problem
-- Add the code needed to show recreate the error you've seen
+- Add the code needed to recreate the error you've seen
 - Publish the code (your GitHub account is a good place to do this) code and then link to it when [creating an issue](/contributing/how-to-file-an-issue/)
 
 ## Places to develop a reproducible build
