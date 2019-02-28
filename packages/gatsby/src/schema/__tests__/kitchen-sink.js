@@ -56,7 +56,7 @@ describe(`Kichen sink schema test`, () => {
     expect(
       await runQuery(`
         {
-          sort: allPostsJson(sort: { fields: likes, order: DESC }, limit: 2) {
+          sort: allPostsJson(sort: { fields: likes, order: ASC }, limit: 2) {
             edges {
               node {
                 id

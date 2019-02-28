@@ -41,33 +41,33 @@ Object {
         Object {
           "node": Object {
             "_3invalidKey": null,
-            "code": "BGiWipNM96D",
-            "comment": 1,
-            "id": "1270677182602272387",
-            "idWithDecoration": "decoration-1270677182602272387",
+            "code": "BShF_8qhtEv",
+            "comment": 0,
+            "id": "1486495736706552111",
+            "idWithDecoration": "decoration-1486495736706552111",
             "image": Object {
               "childImageSharp": Object {
-                "id": "081cbcc5-44ec-5f4e-ae7a-fc25e68ff615",
+                "id": "f5f0e564-899f-5bbc-92de-a2325b69cb75",
               },
             },
-            "likes": null,
-            "time": "12.06.2016",
+            "likes": 8,
+            "time": "05.04.2017",
           },
         },
         Object {
           "node": Object {
             "_3invalidKey": null,
-            "code": "BFur3Jfs94V",
+            "code": "BY6B8z5lR1F",
             "comment": 0,
-            "id": "1256134251849702933",
-            "idWithDecoration": "decoration-1256134251849702933",
+            "id": "1601601194425654597",
+            "idWithDecoration": "decoration-1601601194425654597",
             "image": Object {
               "childImageSharp": Object {
-                "id": "a0a75092-ed13-5117-a44b-7360940f99b5",
+                "id": "6ba97198-5331-53d6-a0e0-c9c063c5094e",
               },
             },
-            "likes": null,
-            "time": "23.05.2016",
+            "likes": 9,
+            "time": "11.09.2017",
           },
         },
       ],
