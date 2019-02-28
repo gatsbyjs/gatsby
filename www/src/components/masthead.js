@@ -100,7 +100,12 @@ const MastheadContent = () => (
         </span>
         apps and websites with React
       </h1>
-      <Button large to="/docs/" icon={<ArrowForwardIcon />}>
+      <Button
+        large
+        to="/docs/"
+        tracking="MasterHead -> Get Started"
+        icon={<ArrowForwardIcon />}
+      >
         Get Started
       </Button>
     </div>
