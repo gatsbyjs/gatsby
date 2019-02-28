@@ -20,9 +20,9 @@ import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { Global, css } from "@emotion/core"
+import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
 import VisuallyHidden from "@reach/visually-hidden"
-import styled from "react-emotion"
 import { SkipNavLink } from "@reach/skip-nav"
 
 // This is for the urlSync

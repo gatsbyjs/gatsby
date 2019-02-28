@@ -12,8 +12,15 @@ import presets, { colors } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 import typography, { rhythm, scale, options } from "../utils/typography"
 
-const getProps = ({ isPartiallyCurrent }) =>
-  isPartiallyCurrent && { "data-active": true }
+const getProps = ({ isPartiallyCurrent }) => {
+  return {
+    ...(isPartiallyCurrent
+      ? {
+          "data-active": true,
+        }
+      : {}),
+  }
+}
 
 const MobileNavItem = ({ linkTo, label, icon }) => (
   <Link

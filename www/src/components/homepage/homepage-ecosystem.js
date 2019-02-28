@@ -93,7 +93,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   ${presets.Desktop} {
     flex-basis: 28%;
 
-    :nth-child(4) {
+    :nth-of-type(4) {
       margin-left: 8%;
     }
   }
