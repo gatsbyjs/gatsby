@@ -54,7 +54,7 @@ module.exports = (state = new Map(), action) => {
 
       state.set(
         action.payload.componentPath,
-        _.merge(
+        Object.assign(
           {
             query: ``,
           },
