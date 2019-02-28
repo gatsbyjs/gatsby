@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
@@ -93,7 +93,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   ${presets.Desktop} {
     flex-basis: 28%;
 
-    :nth-child(4) {
+    :nth-of-type(4) {
       margin-left: 8%;
     }
   }
@@ -155,6 +155,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
         label: `Explore the Gatsby Ecosystem`,
         to: `/ecosystem/`,
         icon: ArrowForwardIcon,
+        tracking: `Plugins - Explore the Gatsby Ecosystem`,
       },
     ]}
     inverseStyle={true}

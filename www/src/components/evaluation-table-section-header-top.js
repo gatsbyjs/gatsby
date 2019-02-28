@@ -31,7 +31,7 @@ const superHeader = () => (
           // fontFamily: options.headerFontFamily.join(`,`),
           color: colors.gray.calm,
           background: colors.ui.whisper,
-          "&:first-child": {
+          "span:first-of-type": {
             borderTopLeftRadius: presets.radiusLg,
             textAlign: `left`,
           },

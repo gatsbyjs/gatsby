@@ -149,7 +149,7 @@
       link: /docs/starters/
       items:
         - title: Create a Starter*
-          link: /docs/create-a-starter/
+          link: /contributing/create-a-starter/
     - title: Styling Your Site
       link: /docs/styling/
       items:
@@ -209,7 +209,7 @@
         - title: Adding Search
           link: /docs/adding-search/
           items:
-            - title: Adding Search with Algolia*
+            - title: Adding search with Algolia
               link: /docs/adding-search-with-algolia/
             - title: Adding Search with elasticlunr*
               link: /docs/adding-search-with-elasticlunr/
@@ -399,5 +399,7 @@
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/
+- title: Gatsby REPL*
+  link: /docs/gatsby-repl/
 - title: Contributing
   link: /contributing/

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.18...gatsby@2.1.19) (2019-02-28)
+
+### Bug Fixes
+
+- **gatsby:** Adapt Loki workaround for eq:null ([#12062](https://github.com/gatsbyjs/gatsby/issues/12062)) ([ff7f5ba](https://github.com/gatsbyjs/gatsby/commit/ff7f5ba))
+- **gatsby:** Don't delete nodes multiple times ([#12049](https://github.com/gatsbyjs/gatsby/issues/12049)) ([9a15739](https://github.com/gatsbyjs/gatsby/commit/9a15739))
+
 ## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.17...gatsby@2.1.18) (2019-02-25)
 
 ### Bug Fixes
