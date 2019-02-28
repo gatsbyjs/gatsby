@@ -26,7 +26,7 @@ Creating a reprodicible build is the best way to help other people that want to 
 - Locally with a starter: You can start with a [Starter](/docs/starters) locally and then build it on your own machine. Gatsby's official [`hello-world`](https://github.com/gatsbyjs/gatsby/tree/master/starters/hello-world) or [`default`](https://github.com/gatsbyjs/gatsby-starter-default) starter are both good foundations for a reproducible build.
 - Host on CodeSandbox: You can develop a Gatsby site straight from your browser with CodeSandbox using their [Gatsby template](https://codesandbox.io/s/github/gatsbyjs/gatsby-starter-default). CodeSandbox also hosts your site automatically, which can be useful to demonstrate the behaviour of your site.
 
-## Benefits of Reproducible Builds
+## Benefits of reproducible builds
 
 - Smaller surface area: By removing everything but the error, you don't have to dig to find the bug.
 - No need to publish secret code: You might not be able to publish your main site (for many reasons). Remaking a small part of it as a reproducible build allows you to publicly demonstrate a problem without exposing any secret code.
