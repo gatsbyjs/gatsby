@@ -1,7 +1,6 @@
 const Joi = require(`joi`)
 
-const normalizeUrl = chain => chain.replace(/\/*$/, ``)
-const normalizePath = path => path.replace(/\/*$/, ``).replace(/^\/?/, `/`)
+const normalizeUrl = url => url.replace(/\/*$/, ``)
 
 export const gatsbyConfigSchema = Joi.object().keys({
   __experimentalThemes: Joi.array(),
@@ -9,7 +8,7 @@ export const gatsbyConfigSchema = Joi.object().keys({
   siteMetadata: Joi.object({
     siteUrl: normalizeUrl(Joi.string()).uri(),
   }).unknown(),
-  pathPrefix: normalizePath(Joi.string()).uri({
+  pathPrefix: Joi.string().uri({
     allowRelative: true,
     relativeOnly: true,
   }),
