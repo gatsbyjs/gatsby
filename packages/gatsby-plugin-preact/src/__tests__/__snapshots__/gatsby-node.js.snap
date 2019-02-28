@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-preact sets the correct webpack config 1`] = `
+Array [
+  Array [
+    Object {
+      "resolve": Object {
+        "alias": Object {
+          "create-react-class": "preact-compat/lib/create-react-class",
+          "react": "preact-compat",
+          "react-dom": "preact-compat",
+        },
+      },
+    },
+  ],
+]
+`;
