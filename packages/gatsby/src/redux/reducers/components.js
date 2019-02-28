@@ -13,7 +13,9 @@ module.exports = (state = new Map(), action) => {
       return new Map()
     case `SET_PROGRAM_STATUS`:
       programStatus = action.payload
-      services.forEach(s => s.send(`BOOTSTRAP_FINISHED`))
+      if (programStatus === `BOOTSTRAP_QUERY_RUNNING_FINISHED`) {
+        services.forEach(s => s.send(`BOOTSTRAP_FINISHED`))
+      }
       return state
     case `CREATE_PAGE`: {
       action.payload.componentPath = normalize(action.payload.component)

@@ -468,6 +468,10 @@ module.exports = async (args: BootstrapArgs) => {
   await new Promise(resolve => queryQueue.on(`drain`, resolve))
   activity.end()
 
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
+
   // Write out files.
   activity = report.activityTimer(`write out page data`, {
     parentSpan: bootstrapSpan,
