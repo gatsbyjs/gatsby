@@ -147,21 +147,21 @@ We're going to assemble everything we need into a React `Search` component that 
 The first step is to create the main component file.
 
 ```jsx:title=src/components/Search/index.js
-import React, { Component, createRef } from 'react'
-import algoliasearch from 'algoliasearch/lite'
+import React, { Component, createRef } from "react"
+import algoliasearch from "algoliasearch/lite"
 import {
   InstantSearch,
   Index,
   Hits,
   connectStateResults,
-} from 'react-instantsearch-dom'
-import { Algolia } from 'styled-icons/fa-brands/Algolia'
+} from "react-instantsearch-dom"
+import { Algolia } from "styled-icons/fa-brands/Algolia"
 
-import { Root, HitsWrapper, By } from './styles'
-import Input from './Input'
-import * as hitComps from './hits'
+import { Root, HitsWrapper, By } from "./styles"
+import Input from "./Input"
+import * as hitComps from "./hits"
 
-const events = ['mousedown', 'touchstart']
+const events = ["mousedown", "touchstart"]
 
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
@@ -235,7 +235,7 @@ export default class Search extends Component {
             </Index>
           ))}
           <By>
-            Powered by{' '}
+            Powered by{" "}
             <a href="https://www.algolia.com">
               <Algolia size="1em" /> Algolia
             </a>
@@ -255,7 +255,7 @@ import {
   Index,
   Hits,
   connectStateResults,
-} from 'react-instantsearch-dom'
+} from "react-instantsearch-dom"
 ```
 
 `InstantSearch` imported from [`react-instantsearch-dom`](https://community.algolia.com/react-instantsearch) is Algolia's main off-the-shelf React component that allows your whole search experience to connect to their service. As the name suggests, `Index` allows you to tap into an individual index and `Hits` provides you with the data returned for a user's search input. Finally [`connectStateResults`](https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html) provides high-level stats about the current search state such as the query, the number of results and how long it took to fetch them.
@@ -263,8 +263,8 @@ import {
 Next we import the styled components that make up the UI.
 
 ```js
-import { Algolia } from 'styled-icons/fa-brands/Algolia'
-import { Root, SearchBox, HitsWrapper, By } from './styles'
+import { Algolia } from "styled-icons/fa-brands/Algolia"
+import { Root, SearchBox, HitsWrapper, By } from "./styles"
 ```
 
 Notice that we're importing the Algolia logo from `styled-icons`. That's because if you're using Algolia's generous free tier, they ask you to acknowledge them with a little `Powered by Algolia` link below the search results. `react-instantsearch-dom` provides a [`PoweredBy` component](https://community.algolia.com/react-instantsearch/widgets/PoweredBy.html) for that but you can of course build and style your own (as done here).
@@ -272,16 +272,16 @@ Notice that we're importing the Algolia logo from `styled-icons`. That's because
 We'll get back to those styled components once we're done with `index.js`. For now, let's move on.
 
 ```js
-import Input from './Input'
+import Input from "./Input"
 ```
 
 The Input component is where the user enters the search string. It is quite short since the grunt work is done by one of Algolia's components called [`connectSearchBox`](https://community.algolia.com/react-instantsearch/connectors/connectSearchBox.html):
 
 ```jsx:title=src/components/Search/Input.js
-import React from 'react'
-import { connectSearchBox } from 'react-instantsearch-dom'
+import React from "react"
+import { connectSearchBox } from "react-instantsearch-dom"
 
-import { SearchIcon, Form, Input } from './styles'
+import { SearchIcon, Form, Input } from "./styles"
 
 export default connectSearchBox(({ refine, ...rest }) => (
   <Form>
@@ -302,14 +302,14 @@ Let's again worry about the styled components `SearchIcon`, `Form`, `Input` late
 The next line imports hit components for every type of result we want to display to the user. (The term "hit" in this context just means search result.) The hit component determines how attributes of matching results such as author and title in the case of a blog post are displayed to the user.
 
 ```js
-import * as hitComps from './hits'
+import * as hitComps from "./hits"
 ```
 
 `hits.js` itself just bundles the exports from all hit components. We'll get to `PageHit` and `PostHit` in the end.
 
 ```js:title=src/components/Search/hits.js
-export { default as PageHit } from './PageHit'
-export { default as PostHit } from './PostHit'
+export { default as PageHit } from "./PageHit"
+export { default as PostHit } from "./PostHit"
 ```
 
 Next we define two tiny connected components. `Results` informs the user that no matches could be found for a query if there were no matches, i.e. `searchResults.nbHits == 0`. `Stats` just displays `searchResults.nbHits`.
@@ -363,8 +363,8 @@ Note below that we feed `InstantSearch` with the same app ID we specified in our
 Now we come to the styled components. Of course, the design will be very different from one site to the next so we only list them here for completeness and because it might save some time to simply copy and customize them.
 
 ```js:title=src/components/Search/styles.js
-import styled, { css } from 'styled-components'
-import { Search } from 'styled-icons/fa-solid/Search'
+import styled, { css } from "styled-components"
+import { Search } from "styled-icons/fa-solid/Search"
 
 export const Root = styled.div`
   position: relative;
@@ -508,9 +508,9 @@ export const By = styled.span`
 Now we're almost done. 2 small steps remain. First, we need to put together a hit component for every type of result we want to display. In our example, these are blog posts and pages. And second, we need to call our `Search` component somewhere on our site. Here are the post and page hit components.
 
 ```jsx:title=src/components/Search/PageHit.js
-import React from 'react'
-import { Highlight, Snippet } from 'react-instantsearch-dom'
-import { Link } from 'gatsby'
+import React from "react"
+import { Highlight, Snippet } from "react-instantsearch-dom"
+import { Link } from "gatsby"
 
 const PageHit = clickHandler => ({ hit }) => (
   <div>
@@ -527,11 +527,11 @@ export default PageHit
 ```
 
 ```jsx:title=src/components/Search/PostHit.js
-import React, { Fragment } from 'react'
-import { Highlight, Snippet } from 'react-instantsearch-dom'
-import { Link } from 'gatsby'
-import { Calendar } from 'styled-icons/octicons/Calendar'
-import { Tags } from 'styled-icons/fa-solid/Tags'
+import React, { Fragment } from "react"
+import { Highlight, Snippet } from "react-instantsearch-dom"
+import { Link } from "gatsby"
+import { Calendar } from "styled-icons/octicons/Calendar"
+import { Tags } from "styled-icons/fa-solid/Tags"
 
 const PostHit = clickHandler => ({ hit }) => (
   <div>
@@ -549,7 +549,7 @@ const PostHit = clickHandler => ({ hit }) => (
       &nbsp;
       {hit.tags.map((tag, index) => (
         <Fragment key={tag}>
-          {index > 0 && ', '}
+          {index > 0 && ", "}
           <Link to={`blog/` + tag.toLowerCase().replace(` `, `-`)}>{tag}</Link>
         </Fragment>
       ))}
@@ -564,11 +564,11 @@ export default PostHit
 Now all we need to do is import `Search` somewhere. The obvious place is the `Header` component so let's add it there.
 
 ```jsx:title=src/components/Header/index.js
-import React from 'react'
+import React from "react"
 
-import { Container, Logo } from './styles'
-import Nav from '../Nav'
-import Search from '../Search'
+import { Container, Logo } from "./styles"
+import Nav from "../Nav"
+import Search from "../Search"
 
 const searchIndices = [
   { name: `Pages`, title: `Pages`, hitComp: `PageHit` },
