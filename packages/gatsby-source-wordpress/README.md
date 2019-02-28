@@ -743,7 +743,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   // The “graphql” function allows us to run arbitrary
-  // queries against the local WordPress graphql schema. Think of
+  // queries against the local Gatsby GraphQL schema. Think of
   // it like the site has a built-in database constructed
   // from the fetched data that you can run queries against.
   const result = await graphql(`
@@ -752,7 +752,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            link
+            slug
             status
             template
           }
@@ -762,7 +762,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            link
+            slug
             status
             template
             format
@@ -802,7 +802,6 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
-  // Create Post pages
   const postTemplate = path.resolve(`./src/templates/post.js`)
   // We want to create a detailed page for each
   // post node. We'll just use the WordPress Slug for the slug.
