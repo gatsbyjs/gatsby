@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "gatsby"
-import { css } from "react-emotion"
 import SvgDefs from "../assets/svg-defs"
 import {
   BlogIcon,
@@ -13,24 +12,29 @@ import presets, { colors } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 import typography, { rhythm, scale, options } from "../utils/typography"
 
-const getNavItemStyles = ({ isPartiallyCurrent }) =>
-  isPartiallyCurrent
-    ? {
-        className: css({
-          ...styles.link.default,
-          ...styles.link.active,
-          ...styles.svg.active,
-        }),
-      }
-    : {
-        className: css({
-          ...styles.link.default,
-          ...styles.svg.default,
-        }),
-      }
+const getProps = ({ isPartiallyCurrent }) => {
+  return {
+    ...(isPartiallyCurrent
+      ? {
+          "data-active": true,
+        }
+      : {}),
+  }
+}
 
 const MobileNavItem = ({ linkTo, label, icon }) => (
-  <Link to={linkTo} getProps={getNavItemStyles}>
+  <Link
+    css={{
+      ...styles.link.default,
+      ...styles.svg.default,
+      "&[data-active]": {
+        ...styles.link.active,
+        ...styles.svg.active,
+      },
+    }}
+    getProps={getProps}
+    to={linkTo}
+  >
     <span dangerouslySetInnerHTML={{ __html: icon }} />
     <div>{label}</div>
   </Link>

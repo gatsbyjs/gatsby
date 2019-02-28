@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import { keyframes } from "react-emotion"
+import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, scale, options } from "../utils/typography"
