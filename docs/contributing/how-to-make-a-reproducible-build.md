@@ -4,22 +4,22 @@ title: How to Make a Reproducible Build
 
 ## What is a reproducible build?
 
-A reproducible build is a small Gatsby site built to demonstrate a problem - often this problem is caused by a bug in Gatsby or a Gatsby plugin. The site should contain the bare minimum features needed to clearly demonstrate the bug.
+A reproducible build is a small Gatsby site built to demonstrate a problem - often this problem is caused by a bug in Gatsby or a Gatsby plugin. Your reproducible build should contain the bare minimum features needed to clearly demonstrate the bug.
 
 ## Why should you create a reproducible build?
 
-A reproducible build lets you isolate the cause of a problem which makes it much easier for other people to investigate the problem.
+A reproducible build lets you isolate the cause of a problem, which is the first step towards fixing it!
 
-The [most important part of any bug report](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Bug_writing_guidelines#Writing_precise_steps_to_reproduce) is describing the exact steps needed to reproduce the bug. A reproducible build is a great way to share a specific environment that causes a bug.
+The [most important part of any bug report](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Bug_writing_guidelines#Writing_precise_steps_to_reproduce) is to describe the exact steps needed to reproduce the bug. 
 
-Creating a reprodicible build is the best way to help other people that want to help you with the problem you've found.
+A reproducible build is a great way to share a specific environment that causes a bug. Your reproducible build is the best way to help people that want to help _you_.
 
 ## Steps to create a reproducible build
 
 - Create a new Gatsby site with a starter, the official `hello-world` starter is a great 'barebones' starting point here: `gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-hello-world`
-- Add the plugins specific to the issue. For example, if you're having problems with Gatsby MDX you should install and configure the related MDX plugins. Don't add any other plugins unless they're needed to demonstrate the problem
-- Add the code needed to recreate the error you've seen
-- Publish the code (your GitHub account is a good place to do this) code and then link to it when [creating an issue](/contributing/how-to-file-an-issue/)
+- Add any Gatsby plugins that relate to the issue. For example, if you're having problems with Gatsby MDX you should install and configure [`gatsby-plugin-mdx`](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx/). Only add plugins that are needed to demonstrate the problem.
+- Add the code needed to recreate the error you've seen.
+- Publish the code (your GitHub account is a good place to do this) code and then link to it when [creating an issue](/contributing/how-to-file-an-issue/).
 
 ## Places to develop a reproducible build
 
