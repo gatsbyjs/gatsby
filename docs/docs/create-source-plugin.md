@@ -77,7 +77,7 @@ exports.sourceNodes = async ({ actions }) => {
 ```
 
 Peruse the [`sourceNodes`](/docs/node-apis/#sourceNodes) and
-[`createNode`](/docs/bound-action-creators/#createNode) docs for detailed
+[`createNode`](/docs/actions/#createNode) docs for detailed
 documentation on implementing those APIs.
 
 But at a high-level, these are the jobs of a source plugin:
@@ -85,7 +85,7 @@ But at a high-level, these are the jobs of a source plugin:
 - Ensure local data is synced with its source and 100% accurate. If your source
   allows you to add an `updatedSince` query (or something similar) you can store
   the last time you fetched data using
-  [`setPluginStatus`](/docs/bound-action-creators/#setPluginStatus).
+  [`setPluginStatus`](/docs/actions/#setPluginStatus).
 - Create nodes with accurate media types, human meaningful types, and accurate
   contentDigests.
 - "Link" nodes types you create as appropriate (see
