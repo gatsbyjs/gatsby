@@ -48,7 +48,7 @@ Gatsby will perform an optimized production build for your site, generating stat
 npm run serve
 ```
 
-Gatsby starts a local HTML server for testing your built site.
+Gatsby starts a local HTML server for testing your built site. Remember to build your site using `npm run build` before using this command.
 
 ### Access documentation for CLI commands.
 

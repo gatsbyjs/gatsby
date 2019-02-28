@@ -32,6 +32,7 @@ exports.onPostBootstrap = (args, pluginOptions) =>
     delete manifest.plugins
     delete manifest.legacy
     delete manifest.theme_color_in_head
+    delete manifest.crossOrigin
 
     // If icons are not manually defined, use the default icon set.
     if (!manifest.icons) {

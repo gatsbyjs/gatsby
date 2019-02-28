@@ -1,3 +1,7 @@
+const mockTraceSVG = jest.fn(
+  async () => `data:image/svg+xml,%3csvg 'MOCK SVG'%3c/svg%3e`
+)
+
 jest.mock(`gatsby-plugin-sharp`, () => {
   return {
     fluid({ file, args }) {
@@ -8,13 +12,15 @@ jest.mock(`gatsby-plugin-sharp`, () => {
         src: file.absolutePath,
         srcSet: `${file.absolutePath}, ${file.absolutePath}`,
         sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
-        base64: `url('data:image/png;base64, iVBORw)`,
+        base64: `data:image/png;base64,iVBORw`,
       })
     },
+    traceSVG: mockTraceSVG,
   }
 })
 
 const Remark = require(`remark`)
+const { Potrace } = require(`potrace`)
 const queryString = require(`query-string`)
 
 const plugin = require(`../`)
@@ -302,4 +308,32 @@ test(`it transforms images in markdown with query strings`, async () => {
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it uses tracedSVG placeholder when enabled`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    tracedSVG: { color: `COLOR_AUTO`, turnPolicy: `TURNPOLICY_LEFT` },
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+  expect(mockTraceSVG).toBeCalledTimes(1)
+
+  expect(mockTraceSVG).toBeCalledWith(
+    expect.objectContaining({
+      // fileArgs cannot be left undefined or traceSVG errors
+      fileArgs: expect.any(Object),
+      // args containing Potrace constants should be translated to their values
+      args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
+    })
+  )
 })

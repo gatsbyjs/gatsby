@@ -112,7 +112,7 @@ class GatsbyLink extends React.Component {
     const LOCAL_URL = /^\/(?!\/)/
     if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
       console.warn(
-        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.app/internal-links`
+        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
     }
 

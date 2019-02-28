@@ -12,7 +12,7 @@ const CollapsibleFilterList = ({
   filters,
   categoryKeys,
   aggregatedCategories,
-  updateQuery,
+  setFilters,
   heading,
 }) => (
   <Collapsible heading={heading}>
@@ -22,13 +22,9 @@ const CollapsibleFilterList = ({
         className={filters.includes(c) ? `selected` : ``}
         onClick={() => {
           if (filters.includes(c)) {
-            updateQuery(() => {
-              return { filters: filters.filter(f => f !== c) }
-            })
+            setFilters(filters.filter(f => f !== c))
           } else {
-            updateQuery(() => {
-              return { filters: [...filters, c] }
-            })
+            setFilters([...filters, c])
           }
         }}
         css={styles.filterButton}
