@@ -1,6 +1,6 @@
 ---
 title: Why I Upgraded My Website to GatsbyJS from Jekyll
-date: "2018-02-27"
+date: 2018-02-27
 author: "Jia Hao Goh"
 excerpt: My thought process during the long overdue rewrite of this website
 tags: ["jekyll", "plugins", "getting-started", "gatsby-apis"]
@@ -36,7 +36,7 @@ As I had some free time on my hands, why not rewrite everything again and keep m
 
 ## Final Form — Gatsby
 
-[Gatsby](https://www.gatsbyjs.org/) is a static site generator that can render sites from markup documents using templates defined as React components. It functions similarly to Jekyll, where you can pick a [starter project](https://github.com/gatsbyjs/gatsby-starter-blog), [drop in](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/src/pages/hello-world/index.md) some markdown documents for articles, and [be rewarded](https://gatsbyjs.github.io/gatsby-starter-blog/) with a website with minimal effort.
+[Gatsby](https://www.gatsbyjs.org/) is a static site generator that can render sites from markup documents using templates defined as React components. It functions similarly to Jekyll, where you can pick a [starter project](https://github.com/gatsbyjs/gatsby-starter-blog), [drop in](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/content/blog/hello-world/index.md) some markdown documents for articles, and [be rewarded](https://gatsbyjs.github.io/gatsby-starter-blog/) with a website with minimal effort.
 
 It offers much much more, however. Gatsby lets me leverage all the modern tools for building web applications and to add interactive experiences for visitors like a fully fledged [React](https://reactjs.org/) application. Not only that, it is unlike traditional single page applications, and works _without_ JavaScript! Things would certainly be more complicated if I were to add a JavaScript compilation pipeline to a Jekyll site, and a JavaScript framework would be a better fit.
 
@@ -86,7 +86,7 @@ export const pageQuery = graphql`
 
 When the `<PostTemplate />` component needs to be rendered into a page, the accompanying exported `pageQuery`, a GraphQL query is made, and the results are passed in as props into the component.
 
-The real magic happens when the website is compiled into a production bundle. Running `gatsby build` will tell Gatsby to perform all the GraphQL queries defined and render all the React components into a HTML document, using a technique known as server-side rendering. This means that everything “React” is serialized and compiled to static HTML, ready to be viewed without JavaScript. Visitors to the site will then be able to quickly load and interact with the static version of the page.
+The real magic happens when the website is compiled into a production bundle. Running `npm run build` will tell Gatsby to perform all the GraphQL queries defined and render all the React components into a HTML document, using a technique known as server-side rendering. This means that everything “React” is serialized and compiled to static HTML, ready to be viewed without JavaScript. Visitors to the site will then be able to quickly load and interact with the static version of the page.
 
 Not only that, within the HTML document, there are instructions to load the JavaScript bundle of your application asynchronously. When it has been loaded, the content displayed in the browser will be dynamically replaced by the React application, gaining interactivity. This also happens with the other pages of your site — Gatsby will ensure that they are asynchronously loaded so that when you click on a link, the data is already cached on the browser for React to swap out the DOM elements that need to be changed. Everything is done to give the illusion of speed to the viewer while asynchronously loading everything in the background.
 

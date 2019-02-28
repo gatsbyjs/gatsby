@@ -24,7 +24,7 @@ Everything in Gatsby is built using components.
 
 A basic directory structure of a project might look like this:
 
-```sh
+```
 .
 ├── gatsby-config.js
 ├── package.json
@@ -54,16 +54,14 @@ otherwise your build will fail.
 Example:
 
 ```jsx:title=src/pages/about.jsx
-import React, { Component } from "react"
+import React from "react"
 
-class AboutPage extends Component {
-  render() {
-    return (
-      <div className="about-container">
-        <p>About me.</p>
-      </div>
-    )
-  }
+function AboutPage(props) {
+  return (
+    <div className="about-container">
+      <p>About me.</p>
+    </div>
+  )
 }
 
 export default AboutPage
@@ -86,17 +84,14 @@ Example:
 import React from "react"
 import { graphql } from "gatsby"
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.markdownRemark
-
-    return (
-      <div>
-        <h1>{post.frontmatter.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-      </div>
-    )
-  }
+function BlogPostTemplate(props) {
+  const post = props.data.markdownRemark
+  return (
+    <div>
+      <h1>{post.frontmatter.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+    </div>
+  )
 }
 
 export default BlogPostTemplate
@@ -118,7 +113,7 @@ export const pageQuery = graphql`
 `src/html.jsx` is responsible for everything other than where Gatsby lives in
 the `<body />`.
 
-In this file you can modify the `<head>` metadata, general structure of the
+In this file, you can modify the `<head>` metadata and general structure of the
 document and add external links.
 
 Typically you should omit this from your site as the default html.js file will
@@ -140,39 +135,31 @@ if (process.env.NODE_ENV === "production") {
   }
 }
 
-export default class HTML extends React.Component {
-  render() {
-    let css
-    if (process.env.NODE_ENV === "production") {
-      css = (
-        <style
-          id="gatsby-inlined-css"
-          dangerouslySetInnerHTML={{ __html: inlinedStyles }}
-        />
-      )
-    }
-    return (
-      <html lang="en">
-        <head>
-          <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          {this.props.headComponents}
-          <link rel="shortcut icon" href={favicon} />
-          {css}
-        </head>
-        <body>
-          <div
-            id="___gatsby"
-            dangerouslySetInnerHTML={{ __html: this.props.body }}
-          />
-          {this.props.postBodyComponents}
-        </body>
-      </html>
+function HTML(props) {
+  let css
+  if (process.env.NODE_ENV === "production") {
+    css = (
+      <style
+        id="gatsby-inlined-css"
+        dangerouslySetInnerHTML={{ __html: inlinedStyles }}
+      />
     )
   }
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {props.headComponents}
+        <link rel="shortcut icon" href={favicon} />
+        {css}
+      </head>
+      <body>
+        <div id="___gatsby" dangerouslySetInnerHTML={{ __html: props.body }} />
+        {props.postBodyComponents}
+      </body>
+    </html>
+  )
 }
 ```
 

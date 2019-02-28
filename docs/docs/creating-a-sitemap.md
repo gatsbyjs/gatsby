@@ -1,8 +1,8 @@
 ---
-title: Creating a sitemap
+title: Creating a Sitemap
 ---
 
-### What is a Sitemap?
+### What is a sitemap?
 
 An [XML sitemap](https://support.google.com/webmasters/answer/156184?hl=en) lists a website’s important pages, making sure search engines (such as Google) can find and crawl them all. In effect, a sitemap helps a search engine understand your website structure.
 
@@ -26,7 +26,7 @@ module.exports = {
 }
 ```
 
-This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap will include all of your site’s pages, but of course the plugin exposes options to configure this default functionality.
+Next run a build (`npm run build`) since the sitemap generation will only happen for production builds. This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap path is /sitemap.xml and will include all of your site’s pages, but of course the plugin exposes options to configure this default functionality.
 
 ### Additional Modification
 

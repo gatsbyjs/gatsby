@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
 import { colors } from "../utils/presets"
@@ -39,8 +39,10 @@ const PackageReadMe = props => {
             },
           }}
           href={githubUrl}
+          aria-label={`${packageName} source`}
+          title={`View source on GitHub`}
         >
-          <GithubIcon style={{ verticalAlign: `text-top` }} />
+          <GithubIcon focusable="false" style={{ verticalAlign: `text-top` }} />
         </a>
         {githubUrl && (
           <Link to={`/starters?d=${packageName}`}>

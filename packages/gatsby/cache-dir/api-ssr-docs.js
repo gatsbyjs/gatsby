@@ -73,7 +73,7 @@ exports.replaceRenderer = true
  * is merged with other body props and passed to `html.js` as `bodyProps`.
  * @param {Object} pluginOptions
  * @example
- * const Helmet = require("react-helmet")
+ * const { Helmet } = require("react-helmet")
  *
  * exports.onRenderBody = (
  *   { setHeadComponents, setHtmlAttributes, setBodyAttributes },
@@ -142,10 +142,9 @@ exports.onPreRenderHTML = true
  * @param {object} $0
  * @param {object} $0.element The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
- * @param {string} $0.pathname Path of page.
  * @example
  * import React from "react"
- * import Layout from "./src/components/Layout"
+ * import Layout from "./src/components/layout"
  *
  * export const wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get

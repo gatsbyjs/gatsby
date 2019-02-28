@@ -2,6 +2,8 @@
 
 Create a sitemap for your Gatsby site.
 
+_NOTE: This plugin only generates output when run in `production` mode! To test your sitemap, run: `gatsby build && gatsby serve`_
+
 ## Install
 
 `npm install --save gatsby-plugin-sitemap`
@@ -61,5 +63,3 @@ plugins: [
   }
 ]
 ```
-
-_NOTE: This plugin only generates output when run in `production` mode! To test your sitemap, run: `gatsby build && gatsby serve`_

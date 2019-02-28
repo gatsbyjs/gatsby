@@ -1,5 +1,6 @@
 import React from "react"
 import { navigate, graphql } from "gatsby"
+import qs from "qs"
 
 import ShowcaseDetails from "../components/showcase-details"
 
@@ -29,6 +30,7 @@ class ShowcaseTemplate extends React.Component {
     navigate(nextSite.fields.slug, {
       state: {
         isModal: location.state.isModal,
+        filters: location.state.filters,
       },
     })
   }
@@ -47,8 +49,27 @@ class ShowcaseTemplate extends React.Component {
     navigate(previousSite.fields.slug, {
       state: {
         isModal: location.state.isModal,
+        filters: location.state.filters,
       },
     })
+  }
+
+  /**
+   * @returns {string} - the URI that should be navigated to when the showcase details modal is closed
+   */
+  getExitLocation() {
+    if (
+      this.props.location.state &&
+      this.props.location.state.filters &&
+      Object.keys(this.props.location.state.filters).length
+    ) {
+      const queryString = qs.stringify({
+        filters: this.props.location.state.filters,
+      })
+      return `/showcase?${queryString}`
+    } else {
+      return `/showcase`
+    }
   }
 
   render() {

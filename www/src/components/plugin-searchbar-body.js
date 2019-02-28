@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import {
   InstantSearch,
+  Configure,
   SearchBox,
   Stats,
   RefinementList,
@@ -20,6 +21,9 @@ import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { injectGlobal } from "react-emotion"
 import removeMD from "remove-markdown"
+import VisuallyHidden from "@reach/visually-hidden"
+import styled from "react-emotion"
+import { SkipNavLink } from "@reach/skip-nav"
 
 // This is for the urlSync
 const updateAfter = 700
@@ -119,6 +123,9 @@ injectGlobal`
   .ais-SearchBox__submit:focus {
     outline: 0;
   }
+  .ais-SearchBox__submit:focus svg {
+    fill: ${colors.gatsby};
+  }
   .ais-SearchBox__submit svg {
     width: 1rem;
     height: 1rem;
@@ -136,7 +143,8 @@ injectGlobal`
   .ais-SearchBox__reset:focus {
     outline: 0;
   }
-  .ais-SearchBox__reset:hover svg {
+  .ais-SearchBox__reset:hover svg,
+  .ais-SearchBox__reset:focus svg {
     fill: ${colors.gatsby};
   }
   .ais-SearchBox__reset svg {
@@ -161,7 +169,8 @@ injectGlobal`
 };
     font-family: ${typography.options.headerFontFamily.join(`,`)};
   }
-  .ais-InfiniteHits__loadMore:hover {
+  .ais-InfiniteHits__loadMore:hover,
+  .ais-InfiniteHits__loadMore:focus {
     background-color: ${colors.gatsby};
     color: #fff;
   }
@@ -172,12 +181,32 @@ injectGlobal`
 `
 /* stylelint-enable */
 
+const StyledSkipNavLink = styled(SkipNavLink)`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 100;
+  font-size: 0.85rem;
+
+  :focus {
+    padding: 0.9rem;
+    top: 10px;
+    left: 10px;
+    background: white;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    clip: auto;
+  }
+`
+
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
-  constructor(props, context) {
-    super(props)
-  }
-
   render() {
     return (
       <div
@@ -199,6 +228,7 @@ class Search extends Component {
           <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
 
           <div css={{ display: `none` }}>
+            <Configure analyticsTags={[`gatsby-plugins`]} />
             <RefinementList
               attributeName="keywords"
               defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
@@ -233,6 +263,7 @@ class Search extends Component {
                 },
               }}
             />
+            <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
           </div>
         </div>
 
@@ -253,7 +284,7 @@ class Search extends Component {
                 <Result
                   hit={result.hit}
                   pathname={this.props.pathname}
-                  search={this.props.searchState}
+                  query={this.props.query}
                 />
               )}
             />
@@ -305,14 +336,14 @@ class Search extends Component {
 }
 
 // the result component is fed into the InfiniteHits component
-const Result = ({ hit, pathname, search }) => {
+const Result = ({ hit, pathname, query }) => {
   // Example:
-  // pathname = `/plugins/gatsby-link/` || `/plugins/@comsoc/gatsby-mdast-copy-linked-files`
+  // pathname = `/packages/gatsby-link/` || `/packages/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
-  const selected = pathname.includes(hit.name)
+  const selected = new RegExp(`^/packages/${hit.name}/?$`).test(pathname)
   return (
     <Link
-      to={`/packages/${hit.name}/?=${search}`}
+      to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
           boxShadow: `none`,
@@ -360,17 +391,27 @@ const Result = ({ hit, pathname, search }) => {
           marginBottom: rhythm(typography.options.blockMarginBottom / 2),
         }}
       >
-        <div
+        <h2
           css={{
             color: selected ? colors.gatsby : false,
+            fontSize: `inherit`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
             lineHeight: 1.2,
+            marginBottom: 0,
+            marginTop: 0,
+            letterSpacing: 0,
           }}
         >
           {hit.name}
+        </h2>
+        <div>
+          <VisuallyHidden>
+            {hit.downloadsLast30Days} monthly downloads
+          </VisuallyHidden>
         </div>
         <div
+          aria-hidden
           css={{
             alignItems: `center`,
             color: selected ? colors.lilac : colors.gray.bright,
@@ -415,7 +456,8 @@ class PluginSearchBar extends Component {
 
   urlToSearch = () => {
     if (this.props.location.search) {
-      return this.props.location.search.slice(2)
+      // ignore this automatically added query parameter
+      return this.props.location.search.replace(`no-cache=1`, ``).slice(2)
     }
     return ``
   }
@@ -426,7 +468,7 @@ class PluginSearchBar extends Component {
     })
   }
 
-  onSearchStateChange(searchState) {
+  onSearchStateChange = searchState => {
     this.updateHistory(searchState)
     this.setState({ searchState })
   }
@@ -439,11 +481,11 @@ class PluginSearchBar extends Component {
           appId="OFCNCOG2CU"
           indexName="npm-search"
           searchState={this.state.searchState}
-          onSearchStateChange={this.onSearchStateChange.bind(this)}
+          onSearchStateChange={this.onSearchStateChange}
         >
           <Search
             pathname={this.props.location.pathname}
-            searchState={this.state.searchState.query}
+            query={this.state.searchState.query}
           />
         </InstantSearch>
       </div>

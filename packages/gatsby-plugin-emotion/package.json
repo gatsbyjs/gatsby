@@ -1,16 +1,14 @@
 {
   "name": "gatsby-plugin-emotion",
   "description": "Gatsby plugin to add support for Emotion",
-  "version": "3.0.1",
+  "version": "4.0.4",
   "author": "Tegan Churchill <churchill.tegan@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/plugin-transform-react-jsx": "^7.1.6",
     "@babel/runtime": "^7.0.0",
-    "babel-plugin-emotion": "^10.0.0",
-    "babel-plugin-jsx-pragmatic": "^1.0.2"
+    "@emotion/babel-preset-css-prop": "^10.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -20,17 +18,16 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
   "keywords": [
-    "emotion",
     "gatsby",
-    "gatsby-plugin"
+    "gatsby-plugin",
+    "emotion",
+    "css-in-js"
   ],
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "@emotion/core": "^10.0.0",
-    "emotion": "^10.0.0",
-    "emotion-server": "^10.0.0",
-    "gatsby": ">2.0.0"
+    "@emotion/core": "^10.0.5",
+    "gatsby": "^2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion",
   "scripts": {

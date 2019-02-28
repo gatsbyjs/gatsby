@@ -1,6 +1,6 @@
 ---
 title: Announcing Gatsby v2 beta launch!
-date: "2018-06-16"
+date: 2018-06-16
 author: "Mike Allanson"
 tags: ["v2"]
 image: "astronaut-v2.jpg"

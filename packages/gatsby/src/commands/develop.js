@@ -3,17 +3,19 @@
 const url = require(`url`)
 const glob = require(`glob`)
 const fs = require(`fs`)
+const openurl = require(`better-opn`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
-const parsePath = require(`parse-filepath`)
+const graphqlPlayground = require(`graphql-playground-middleware-express`)
+  .default
 const request = require(`request`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
-const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const { syncStaticDir } = require(`../utils/get-static-dir`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -31,10 +33,10 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 // const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
-// changed. Wait 10 seconds so copying doesn't interfer with the regular
+// changed. Wait 10 seconds so copying doesn't interfere with the regular
 // bootstrap.
 setTimeout(() => {
-  copyStaticDirectory()
+  syncStaticDir()
 }, 10000)
 
 const rlInterface = rl.createInterface({
@@ -60,7 +62,7 @@ async function startServer(program) {
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
 
-          See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+          See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
         `,
         err
       )
@@ -91,11 +93,21 @@ async function startServer(program) {
       heartbeat: 10 * 1000,
     })
   )
+
+  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
+    app.get(
+      `/___graphql`,
+      graphqlPlayground({
+        endpoint: `/___graphql`,
+      }),
+      () => {}
+    )
+  }
   app.use(
     `/___graphql`,
     graphqlHTTP({
       schema: store.getState().schema,
-      graphiql: true,
+      graphiql: process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
     })
   )
 
@@ -174,20 +186,11 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    const parsedPath = parsePath(req.path)
-    if (
-      parsedPath.extname === `` ||
-      parsedPath.extname.startsWith(`.html`) ||
-      parsedPath.path.endsWith(`/`)
-    ) {
-      res.sendFile(directoryPath(`public/index.html`), err => {
-        if (err) {
-          res.status(500).end()
-        }
-      })
-    } else {
-      next()
-    }
+    res.sendFile(directoryPath(`public/index.html`), err => {
+      if (err) {
+        res.status(500).end()
+      }
+    })
   })
 
   /**
@@ -248,9 +251,10 @@ module.exports = async (program: any) => {
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
+  // Scoped names are converted from @npm/package-name to npm--package-name
   if (program.https) {
     program.ssl = await getSslCert({
-      name: program.sitePackageJson.name,
+      name: program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`),
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
@@ -359,7 +363,11 @@ module.exports = async (program: any) => {
 
     console.log()
     console.log(
-      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+      `View ${
+        process.env.GATSBY_GRAPHQL_IDE === `playground`
+          ? `the GraphQL Playground`
+          : `GraphiQL`
+      }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
     console.log(`  ${urls.localUrlForTerminal}___graphql`)
@@ -367,7 +375,7 @@ module.exports = async (program: any) => {
     console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
-      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
+      `To create a production build, use ` + `${chalk.cyan(`npm run build`)}`
     )
     console.log()
   }
@@ -377,11 +385,11 @@ module.exports = async (program: any) => {
     const fixMap = {
       boundActionCreators: {
         newName: `actions`,
-        docsLink: `https://gatsby.app/boundActionCreators`,
+        docsLink: `https://gatsby.dev/boundActionCreators`,
       },
       pathContext: {
         newName: `pageContext`,
-        docsLink: `https://gatsby.app/pathContext`,
+        docsLink: `https://gatsby.dev/pathContext`,
       },
     }
     const deprecatedLocations = {}
@@ -439,7 +447,7 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        require(`opn`)(urls.localUrlForBrowser).catch(err =>
+        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
           console.log(
             `${chalk.yellow(
               `warn`

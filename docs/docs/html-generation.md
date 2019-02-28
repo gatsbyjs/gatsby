@@ -7,8 +7,8 @@ In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack
 The high level process is:
 
 1. Create a webpack configuration for Node.js Server Side Rendering (SSR)
-1. Build a `page-renderer.js` that takes a page path and renders its HTML
-1. For each page in redux, call `page-renderer.js`
+1. Build a `render-page.js` that takes a page path and renders its HTML
+1. For each page in redux, call `render-page.js`
 
 ## Webpack
 
@@ -19,7 +19,7 @@ For the first step, we use webpack to build an optimized Node.js bundle. The ent
 [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) exports a function that takes a path and returns rendered HTML. Here's what it does to create that HTML:
 
 1. [Require page, json, and webpack chunk data sources](/docs/html-generation/#1-require-page-json-and-webpack-chunk-data-sources)
-2. [Create HTML React container](/docs/html-generation/#2-create-html-react-container)
+2. [Create HTML React Container](/docs/html-generation/#2-create-html-react-container)
 3. [Load Page and Data](/docs/html-generation/#3-load-page-and-data)
 4. [Create Page Component](/docs/html-generation/#4-create-page-component)
 5. [Add Preload Link and Script Tags](/docs/html-generation/#5-add-preload-link-and-script-tags)
@@ -58,13 +58,13 @@ The only input to `static-entry.js` is a path. So we must look up the page for t
 
 Now we're ready to create a React component for the page (inside the Html container). This is handled by [RouteHandler](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L123). Its render will create an element from the component in `sync-requires.js`.
 
-#### 5. Add preload Link and Script Tags
+#### 5. Add Preload Link and Script Tags
 
 This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON.
 
 #### 6. Inject Page Info to CDATA
 
-The [production-app.js](/docs/production-app/#first-load) needs to know the page that it's rendering. The way we pass this information is by setting it in CDATA during HTML generation. Since we know that page at this point. So we add the following to the [top of the HTML document](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L325):
+The [production-app.js](/docs/production-app/#first-load) needs to know the page that it's rendering. The way we pass this information is by setting it in CDATA during HTML generation, since we know that page at this point. So we add the following to the [top of the HTML document](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L325):
 
 ```html
 /*
@@ -81,16 +81,16 @@ The [production-app.js](/docs/production-app/#first-load) needs to know the page
 */
 ```
 
-##### 7. Render Final HTML Document
+#### 7. Render Final HTML Document
 
 Finally, we call [react-dom](https://reactjs.org/docs/react-dom.html) and render our top level Html component to a string and return it.
 
 ## build-html.js
 
-So, we've built the means to generate HTML for a page. This webpack bundle is saved to `public/page-renderer.js`. Next, we need to use it to generate HTML for all the site's pages.
+So, we've built the means to generate HTML for a page. This webpack bundle is saved to `public/render-page.js`. Next, we need to use it to generate HTML for all the site's pages.
 
 Page HTML does not depend on other pages. So we can perform this step in parallel. We use the [jest-worker](https://github.com/facebook/jest/tree/master/packages/jest-worker) library to make this easier. By default, the [html-renderer-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/html-renderer-queue.js) creates a pool of workers equal to the number of physical cores on your machine. You can configure the number of pools by passing an optional environment variable, [`GATSBY_CPU_COUNT`](/docs/multi-core-builds). It then partitions the pages into groups and sends them to the workers, which run [worker.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker.js).
 
-The workers simply iterate over each page in their partition, and call the `page-renderer.js` with the page. It then saves the html for the page's path in `/public`.
+The workers simply iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the html for the page's path in `/public`.
 
 Once all workers have finished, we're done!

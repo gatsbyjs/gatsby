@@ -8,7 +8,7 @@ support for writing modern JavaScript — while still supporting older browsers.
 ## How to specify which browsers to support
 
 Gatsby supports by default the last two versions of major browsers, IE 9+, as well as
-any browser that still as 1%+ browser share.
+any browser that still has 1%+ browser share.
 
 This means we automatically compile your JavaScript to ensure it works on older browsers.
 We also automatically add polyfills as needed — no more shipping code which mysteriously
@@ -22,10 +22,10 @@ browsers.
 ## How to use a custom .babelrc file
 
 Gatsby ships with a default .babelrc setup that should work for most sites. If you'd like
-to add custom Babel presets or plugins, you can create your own `.babelrc` at the root of your site, import [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby), and overwrite the `target` option.
+to add custom Babel presets or plugins, you can create your own `.babelrc` at the root of your site, import [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby), and overwrite the `targets` option.
 
-```bash
-npm install --save babel-preset-gatsby
+```shell
+npm install --save-dev babel-preset-gatsby
 ```
 
 ```json5:title=.babelrc

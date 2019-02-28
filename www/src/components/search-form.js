@@ -378,7 +378,7 @@ class SearchForm extends Component {
               },
               [presets.Desktop]: {
                 backgroundColor: !isHomepage && `#fff`,
-                width: !isHomepage && rhythm(3.5),
+                width: !isHomepage && rhythm(3.75),
                 ":focus": {
                   backgroundColor: colors.ui.light,
                 },
@@ -386,7 +386,7 @@ class SearchForm extends Component {
               [presets.Hd]: {
                 backgroundColor: isHomepage && colors.lilac,
                 color: isHomepage && colors.ui.light,
-                width: isHomepage && rhythm(3.5),
+                width: isHomepage && rhythm(3.75),
               },
             }}
             type="search"

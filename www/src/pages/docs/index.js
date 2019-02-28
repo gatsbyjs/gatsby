@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import Layout from "../../components/layout"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -73,13 +73,13 @@ class IndexRoute extends React.Component {
                   <strong>Advanced Tutorials</strong>: Learn about topics that
                   are too large for a doc and warrant a tutorial.
                 </li>
-                <li>
-                  <strong>Contributing</strong>: Find guides on the Gatsby
-                  community, code of conduct, and how to get started
-                  contributing to Gatsby.
-                </li>
               </ul>
             </ol>
+            <p>
+              Visit the <Link to="/contributing">Contributing</Link> section to
+              find guides on the Gatsby community, code of conduct, and how to
+              get started contributing to Gatsby.
+            </p>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
           </Container>
         </DocSearchContent>

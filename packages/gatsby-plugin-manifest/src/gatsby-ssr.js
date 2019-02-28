@@ -7,12 +7,19 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   let headComponents = []
 
   const icons = pluginOptions.icons || defaultIcons
+  const legacy =
+    typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 
-  // If icons were generated, also add a favicon link.
+  // The user has an option to opt out of the favicon link tag being inserted into the head.
   if (pluginOptions.icon) {
     let favicon = icons && icons.length ? icons[0].src : null
 
-    if (favicon) {
+    const insertFaviconLinkTag =
+      typeof pluginOptions.include_favicon !== `undefined`
+        ? pluginOptions.include_favicon
+        : true
+
+    if (favicon && insertFaviconLinkTag) {
       headComponents.push(
         <link
           key={`gatsby-plugin-manifest-icon-link`}
@@ -29,21 +36,30 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
       href={withPrefix(`/manifest.webmanifest`)}
+      crossOrigin={pluginOptions.crossOrigin}
     />
   )
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (pluginOptions.theme_color) {
-    headComponents.push(
-      <meta
-        key={`gatsby-plugin-manifest-meta`}
-        name="theme-color"
-        content={pluginOptions.theme_color}
-      />
+    let insertMetaTag = Object.keys(pluginOptions).includes(
+      `theme_color_in_head`
     )
+      ? pluginOptions.theme_color_in_head
+      : true
+
+    if (insertMetaTag) {
+      headComponents.push(
+        <meta
+          key={`gatsby-plugin-manifest-meta`}
+          name="theme-color"
+          content={pluginOptions.theme_color}
+        />
+      )
+    }
   }
 
-  if (pluginOptions.legacy) {
+  if (legacy) {
     const iconLinkTags = icons.map(icon => (
       <link
         key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}

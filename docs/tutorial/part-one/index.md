@@ -9,14 +9,14 @@ In the [**previous section**](/tutorial/part-zero/), you prepared your local dev
 
 In [**tutorial part zero**](/tutorial/part-zero/), you created a new site based on the “hello world” starter using the following command:
 
-```bash
-gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+```shell
+npx gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 When creating a new Gatsby site, you can use the following command structure to create a new site based on any existing Gatsby starter:
 
-```bash
-gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
+```shell
+npx gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 ```
 
 > 💡 See a list of the existing [**official and community starters**](/starters/)!
@@ -33,7 +33,7 @@ _Note: Again, the editor shown here is Visual Studio Code. If you’re using a d
 
 Let’s take a look at the code that powers the homepage.
 
-> 💡 If you stopped your development server after running `gatsby develop` in the previous section, start it up again now — time to make some changes to the hello-world site!
+> 💡 If you stopped your development server after running `npm run develop` in the previous section, start it up again now — time to make some changes to the hello-world site!
 
 ## Familiarizing with Gatsby pages
 
@@ -90,8 +90,8 @@ export default () => (
   <div style={{ color: `purple` }}>
     <h1>Hello Gatsby!</h1>
     <p>What a world.</p>
-    <img src="https://source.unsplash.com/random/400x200" alt="" />{" "}
     {/* highlight-next-line */}
+    <img src="https://source.unsplash.com/random/400x200" alt="" />
   </div>
 )
 ```
@@ -136,9 +136,7 @@ Take the example of creating a custom button. In the past, you would
 create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
 
 ```html
-<button class="primary-button">
-  Click me
-</button>
+<button class="primary-button">Click me</button>
 ```
 
 In the world of components, you instead create a `PrimaryButton` component with your button styles and use it throughout your site like:
@@ -241,13 +239,13 @@ Earlier you defined React components as reusable pieces of code describing a UI.
 
 In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` to the imported `Header` sub-component:
 
-```jsx
+```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" />
 ```
 
 Over in `header.js`, the header component expects to receive the `headerText` prop (because you’ve written it to expect that) So you can access it like so:
 
-```jsx
+```jsx:title=src/components/header.js
 <h1>{props.headerText}</h1>
 ```
 
@@ -255,7 +253,7 @@ Over in `header.js`, the header component expects to receive the `headerText` pr
 
 If you had passed another prop to our `<Header />` component, like so...
 
-```jsx
+```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
 ```
 
@@ -317,7 +315,7 @@ When you click the new "Contact" link on the homepage, you should see...
 
 > 💡 Want to know more about 404 pages in Gatsby? Check out [the docs](/docs/add-404-page/).
 
-2.  Now you'll have to create a page component for our new " Contact" page at `src/pages/contact.js`, and have it link back to the homepage:
+2.  Now you'll have to create a page component for our new "Contact" page at `src/pages/contact.js`, and have it link back to the homepage:
 
 ```jsx:title=src/pages/contact.js
 import React from "react"
@@ -333,7 +331,7 @@ export default () => (
 )
 ```
 
-After you save the file, you should be see the contact page, and be able to link between it and the homepage.
+After you save the file, you should see the contact page and be able to link between it and the homepage.
 
 <video controls="controls" loop="true">
   <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
@@ -354,30 +352,30 @@ deploy Gatsby sites.
 
 If you haven't previously installed & set up Surge, open a new terminal window and install their terminal tool:
 
-```bash
+```shell
 npm install --global surge
 
 # Then create a (free) account with them
 surge
 ```
 
-Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
+Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `npm run develop`):
 
-```bash
-gatsby build
+```shell
+npm run build
 ```
 
-The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
+The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `npm run build` command just prepared to deploy.
 
 Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 
-```bash
+```shell
 ls public
 ```
 
 Then finally deploy your site by publishing the generated files to surge.sh.
 
-```bash
+```shell
 surge public/
 ```
 
