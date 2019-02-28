@@ -888,4 +888,14 @@ describe(`Query schema`, () => {
       expect(results.data).toEqual(expected)
     })
   })
+
+  describe(`on fields added from third-party schema`, () => {
+    it.todo(`returns correct results`)
+  })
+
+  describe(`on foreign-key fields`, () => {
+    it.todo(`with the ___NODE convention`)
+
+    it.todo(`with defined field mappings`)
+  })
 })
