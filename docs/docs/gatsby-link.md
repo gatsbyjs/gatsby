@@ -89,27 +89,20 @@ The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component
 - We may want `/blog/hello-world` to match `<Link to="/blog">`
 - Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
 
-In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to add the string `"active"` to the `className` of only partially active links as follows:
 
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
 
-const PartialNavLink = () => (
-  <Link
-    to="/blog/"
-    {/* highlight-start */}
-    getProps={({ isPartiallyCurrent }) =>
-      isPartiallyCurrent ? { className: "active" } : null
-    }
-    {/* highlight-end */}
-  >
-    Blog
-  </Link>
+const partlyActive = className => ({ isPartiallyCurrent }) => ({
+  className: className + (isPartiallyCurrent ? ` active` : ``),
+})
+
+const PartlyActiveLink = ({ className, ...rest }) => (
+  <Link getProps={partlyActive(className)} {...rest} />
 )
 ```
-
-Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
 
 ### Pass state as props to the linked page
 
@@ -181,11 +174,11 @@ _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is depreca
 
 Instead, Gatsby exports a `navigate` helper function that accepts `to` and `options` arguments.
 
-| Argument          | Required | Description                                                                                     |
-| ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
+| Argument          | Required | Description                                                                                      |
+| ----------------- | -------- | ------------------------------------------------------------------------------------------------ |
+| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                         |
 | `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
-| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
+| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                   |
 
 By default, `navigate` operates the same way as a clicked `Link` component.
 
