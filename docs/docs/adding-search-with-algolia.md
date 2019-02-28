@@ -9,7 +9,7 @@ Two things before we begin:
 1. Beyond this guide, you may also want to checkout Algolia's extensive [docs on how to get started in React](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react).
 2. If you're looking to add search to a documentation site, you can let Algolia handle most of the steps outlined below for you by using their excellent [Docsearch](https://community.algolia.com/docsearch) functionality. For other types of sites and more fine-grained control over exactly what data should be indexed, read on.
 
-## Backend
+## Configuring the Algolia plugin
 
 First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia), [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) and [`algoliasearch`](https://github.com/algolia/algoliasearch-client-javascript) to your project. With `react-instantsearch` Algolia provides an extensive library of off-the-shelf React components that we can import to save ourselves a lot of work. `algoliasearch` provides the actual search client which we'll simply pass into `react-instantsearch`. If you're not using it already, also install [`dotenv`](https://github.com/motdotla/dotenv) while you're at it. We're going to need it to specify your Algolia app ID and both the search and admin API keys without commiting them to version control.
 
@@ -19,8 +19,7 @@ yarn add gatsby-plugin-algolia react-instantsearch-dom algoliasearch dotenv
 
 Next, add `gatsby-plugin-algolia` to your `gatsby-config.js`.
 
-```js
-// gatsby-config.js
+```js:title=gatsby-config.js
 const queries = require('./src/utils/algolia')
 
 require('dotenv').config()
@@ -47,8 +46,7 @@ module.exports = {
 
 Notice that we're loading `queries` from a file at `./src/utils/algolia.js` (you can of course put it wherever you like) and our Algolia ID and API key from `.env` so let's add those files.
 
-```env
-// .env
+```env:title=.env
 GATSBY_ALGOLIA_APP_ID = KA4OJA9KAS
 GATSBY_ALGOLIA_SEARCH_KEY=lkjas987ef923ohli9asj213k12n59ad
 ALGOLIA_ADMIN_KEY = lksa09sadkj1230asd09dfvj12309ajl
@@ -56,8 +54,7 @@ ALGOLIA_ADMIN_KEY = lksa09sadkj1230asd09dfvj12309ajl
 
 I inserted random character sequences here but yours should be the same length. Also, it's good practice to commit a `.env.example` to version control so that if someone forks your repo, they know which environment variables they need to supply.
 
-```env
-// .env.example
+```env:title=.env.example
 # rename this file to .env and supply the listed values
 # also make sure they are available to the build tool (e.g. netlify)
 # warning: variables prexifed with GATSBY_ will be made available to client-side code,
@@ -70,8 +67,7 @@ ALGOLIA_ADMIN_KEY=insertValue
 
 The `queries` allow you to grab the data you want Algolia to index directly from Gatsby's GraphQL layer by exporting from `src/utils/algolia.js` an array of objects, each containing a GraphQL query and (optionally) an index name, a transformer function and a settings object.
 
-```js
-// src/utils/algolia.js
+```js:title=src/utils/algolia.js
 const pageQuery = `{
   pages: allMarkdownRemark(
     filter: {
@@ -142,7 +138,7 @@ Notice also that you can run transformers on the data returned by the queries to
 
 If you've come this far, then the "backend" is done. You can now run `gatsby build` to see your indices in Algolia's webinterface flooded with all your data (provided the build throws no errors).
 
-## Frontend
+## Adding a search interface to your site
 
 What remains to be done now is to add a user-facing search interface to your site. It needs a way for the user to enter a search string, send that string to Algolia, receive matching results from your indices and finally display those to the user. Let's dive right in.
 
@@ -150,8 +146,7 @@ We're going to assemble everything we need into a React `Search` component that 
 
 The first step is to create the main component file.
 
-```jsx
-// src/components/Search/index.js
+```jsx:title=src/components/Search/index.js
 import React, { Component, createRef } from 'react'
 import algoliasearch from 'algoliasearch/lite'
 import {
@@ -282,12 +277,11 @@ import Input from './Input'
 
 The Input component is where the user enters the search string. It is quite short since the grunt work is done by one of Algolia's components called [`connectSearchBox`](https://community.algolia.com/react-instantsearch/connectors/connectSearchBox.html):
 
-```jsx
-// src/components/Search/Input.js
+```jsx:title=src/components/Search/Input.js
 import React from 'react'
 import { connectSearchBox } from 'react-instantsearch-dom'
 
-import { Loupe, Form, Input } from './styles'
+import { SearchIcon, Form, Input } from './styles'
 
 export default connectSearchBox(({ refine, ...rest }) => (
   <Form>
@@ -298,14 +292,14 @@ export default connectSearchBox(({ refine, ...rest }) => (
       onChange={e => refine(e.target.value)}
       {...rest}
     />
-    <Loupe />
+    <SearchIcon />
   </Form>
 ))
 ```
 
-Let's again worry about the styled components `Loupe`, `Form`, `Input` later.
+Let's again worry about the styled components `SearchIcon`, `Form`, `Input` later.
 
-The next line imports hit components for every type of result we want to display to the user. The hit component determines how attributes of matching results such as author and title in the case of a blog post are displayed to the user.
+The next line imports hit components for every type of result we want to display to the user. (The term "hit" in this context just means search result.) The hit component determines how attributes of matching results such as author and title in the case of a blog post are displayed to the user.
 
 ```js
 import * as hitComps from './hits'
@@ -313,8 +307,7 @@ import * as hitComps from './hits'
 
 `hits.js` itself just bundles the exports from all hit components. We'll get to `PageHit` and `PostHit` in the end.
 
-```js
-// src/components/Search/hits.js
+```js:title=src/components/Search/hits.js
 export { default as PageHit } from './PageHit'
 export { default as PostHit } from './PostHit'
 ```
@@ -333,11 +326,11 @@ const Stats = connectStateResults(
 )
 ```
 
-Now comes the actual `Search` component class. It starts off with a bunch of boilerplate to initialize state, define handler functions and make those trigger with event listeners. All they do is make the search input slide out when the user clicks a loupe icon and make it disappear again when the user clicks anywhere else or starts to scroll.
+Now comes the actual `Search` component class. It starts off with a bunch of boilerplate to initialize state, define handler functions and make those trigger with event listeners. All they do is make the search input slide out when the user clicks a search icon and make it disappear again when the user clicks anywhere else or starts to scroll.
 
 The `render` function takes a dynamic array of `indices` passed as a prop. Each array item should be an object with keys `name`, `title`, `hitComp` that specifies the name of the index in your Algolia account that should be queried, the title to display aboe the results shown to the user and the component `hitComp` that renders the data returned for each match.
 
-Passing this `indices` array as a prop allows you to reuse the same `Search` component in differnt parts of your site and have each of them query different Algolia indices. As an example, besides a primary search box in the header used for finding pages and/or posts, your site might have a wiki and you want to offer your visitors a second search box that displays results only for that part of your site.
+Passing this `indices` array as a prop allows you to reuse the same `Search` component in different parts of your site and have each of them query different Algolia indices. As an example, besides a primary search box in the header used for finding pages and/or posts, your site might have a wiki and you want to offer your visitors a second search box that displays results only for that part of your site.
 
 ```jsx
 const { indices, collapse, hitsAsGrid } = this.props
@@ -369,8 +362,7 @@ Note below that we feed `InstantSearch` with the same app ID we specified in our
 
 Now we come to the styled components. Of course, the design will be very different from one site to the next so we only list them here for completeness and because it might save some time to simply copy and customize them.
 
-```js
-// src/components/Search/styles.js
+```js:title=src/components/Search/styles.js
 import styled, { css } from 'styled-components'
 import { Search } from 'styled-icons/fa-solid/Search'
 
@@ -380,7 +372,7 @@ export const Root = styled.div`
   grid-gap: 1em;
 `
 
-export const Loupe = styled(Search)`
+export const SearchIcon = styled(Search)`
   width: 1em;
   pointer-events: none;
 `
@@ -390,7 +382,7 @@ const focussed = css`
   color: ${props => props.theme.darkBlue};
   cursor: text;
   width: 5em;
-  + ${Loupe} {
+  + ${SearchIcon} {
     color: ${props => props.theme.darkBlue};
     margin: 0.3em;
   }
@@ -400,7 +392,7 @@ const collapse = css`
   width: 0;
   cursor: pointer;
   color: ${props => props.theme.lightBlue};
-  + ${Loupe} {
+  + ${SearchIcon} {
     color: ${props => props.theme.white};
   }
   ${props => props.focussed && focussed}
@@ -416,7 +408,7 @@ const expand = css`
   width: 6em;
   margin-left: -1.6em;
   padding-left: 1.6em;
-  + ${Loupe} {
+  + ${SearchIcon} {
     margin: 0.3em;
   }
 `
@@ -515,8 +507,7 @@ export const By = styled.span`
 
 Now we're almost done. 2 small steps remain. First, we need to put together a hit component for every type of result we want to display. In our example, these are blog posts and pages. And second, we need to call our `Search` component somewhere on our site. Here are the post and page hit components.
 
-```jsx
-// src/components/Search/PageHit.js
+```jsx:title=src/components/Search/PageHit.js
 import React from 'react'
 import { Highlight, Snippet } from 'react-instantsearch-dom'
 import { Link } from 'gatsby'
@@ -535,13 +526,7 @@ const PageHit = clickHandler => ({ hit }) => (
 export default PageHit
 ```
 
-```jsx
-// src/components/Search/PostHit.js
-import React from 'react'
-import { Highlight, Snippet } from 'react-instantsearch-dom'
-import { Link } from 'gatsby'
-
-const PageHit = clickHandler => ({ hit }) => (
+```jsx:title=src/components/Search/PostHit.js
 import React, { Fragment } from 'react'
 import { Highlight, Snippet } from 'react-instantsearch-dom'
 import { Link } from 'gatsby'
@@ -564,7 +549,7 @@ const PostHit = clickHandler => ({ hit }) => (
       &nbsp;
       {hit.tags.map((tag, index) => (
         <Fragment key={tag}>
-          {!!index && ', '}
+          {index > 0 && ', '}
           <Link to={`blog/` + tag.toLowerCase().replace(` `, `-`)}>{tag}</Link>
         </Fragment>
       ))}
@@ -578,8 +563,7 @@ export default PostHit
 
 Now all we need to do is import `Search` somewhere. The obvious place is the `Header` component so let's add it there.
 
-```jsx
-// src/components/Header/index.js
+```jsx:title=src/components/Header/index.js
 import React from 'react'
 
 import { Container, Logo } from './styles'
@@ -602,4 +586,8 @@ const Header = ({ site, transparent }) => (
 export default Header
 ```
 
-Note that this is where we define our array of search indices and pass it as a prop to `Search`. If everything works as expected, running `gatsby develop` should now give you some instant search magic in your site's header! How cool is that! :sunglasses:
+Note that this is where we define our array of search indices and pass it as a prop to `Search`.
+
+If everything works as expected, running `gatsby develop` should now give you some instant search magic looking something like in the video below! You can also play around with it [here](https://janosh.io/blog).
+
+`youtube: Amsub4xJ3Jc`
