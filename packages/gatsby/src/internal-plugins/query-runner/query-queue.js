@@ -70,6 +70,17 @@ const queue = new Queue((plObj, callback) => {
     )
 }, queueOptions)
 
+// HACKY!!! TODO: REMOVE IN NEXT REFACTOR
+// We start paused until we call `runInitialQueries` during bootstrap.
+let isBootstrapping = true
+queue.pause()
+
+emitter.on(`START_QUERY_QUEUE`, () => {
+  isBootstrapping = false
+  queue.resume()
+})
+// END HACKY
+
 // Pause running queries when new nodes are added (processing starts).
 emitter.on(`CREATE_NODE`, () => {
   queue.pause()
@@ -77,7 +88,9 @@ emitter.on(`CREATE_NODE`, () => {
 
 // Resume running queries as soon as the api queue is empty.
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
-  queue.resume()
+  if (!isBootstrapping) {
+    queue.resume()
+  }
 })
 
 queue.on(`drain`, () => {

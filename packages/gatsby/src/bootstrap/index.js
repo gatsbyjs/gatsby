@@ -461,6 +461,9 @@ module.exports = async (args: BootstrapArgs) => {
       ).toFixed(2)} queries/second`
     )
   })
+  // HACKY!!! TODO: REMOVE IN NEXT REFACTOR
+  emitter.emit(`START_QUERY_QUEUE`)
+  // END HACKY
   runInitialQueries(activity)
   await new Promise(resolve => queryQueue.on(`drain`, resolve))
   activity.end()
