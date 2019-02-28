@@ -283,7 +283,9 @@ module.exports = argv => {
   let isLocalSite = isLocalGatsbySite()
 
   cli.parserConfiguration({
-    "boolean-negation": false,
+    yargs: {
+      "boolean-negation": false,
+    },
   })
 
   cli
