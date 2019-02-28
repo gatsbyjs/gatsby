@@ -85,6 +85,34 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         `param description`
       )
     })
+
+    it(`should extract code and docs location`, () => {
+      const appleNode = createdNodes.find(node => node.name === `apple`)
+
+      expect(appleNode.docsLocation).toBeDefined()
+      expect(appleNode.docsLocation).toEqual(
+        expect.objectContaining({
+          start: expect.objectContaining({
+            line: 1,
+          }),
+          end: expect.objectContaining({
+            line: 7,
+          }),
+        })
+      )
+
+      expect(appleNode.codeLocation).toBeDefined()
+      expect(appleNode.codeLocation).toEqual(
+        expect.objectContaining({
+          start: expect.objectContaining({
+            line: 8,
+          }),
+          end: expect.objectContaining({
+            line: 10,
+          }),
+        })
+      )
+    })
   })
 
   describe(`Complex example`, () => {

@@ -133,6 +133,15 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       ])
 
       picked.optional = false
+      if (docsJson.loc) {
+        // loc is instance of SourceLocation class, and Gatsby doesn't support
+        // class instances at this moment when inferring schema. Serializing
+        // and desirializing converts class instance to plain object.
+        picked.docsLocation = JSON.parse(JSON.stringify(docsJson.loc))
+      }
+      if (docsJson.context && docsJson.context.loc) {
+        picked.codeLocation = JSON.parse(JSON.stringify(docsJson.context.loc))
+      }
 
       if (picked.type) {
         if (picked.type.type === `OptionalType` && picked.type.expression) {
