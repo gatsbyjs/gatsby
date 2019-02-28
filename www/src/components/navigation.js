@@ -181,7 +181,7 @@ const Navigation = ({ pathname }) => {
               [presets.Hd]: { display: `flex` },
             }}
           >
-            <SocialNavItem href="https://gatsby.app/discord" title="Discord">
+            <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
               <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
