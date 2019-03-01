@@ -163,10 +163,6 @@ class GatsbyLink extends React.Component {
 
 GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
-  innerRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any }),
-  ]),
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
   replace: PropTypes.bool,
