@@ -215,7 +215,7 @@ const getFieldConfig = ({
 
 const resolveMultipleFields = possibleFields => {
   const nodeField = possibleFields.find(field =>
-    field.unsanitizedKey.endsWith(`___NODE`)
+    field.unsanitizedKey.includes(`___NODE`)
   )
   if (nodeField) {
     return nodeField

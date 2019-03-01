@@ -48,7 +48,7 @@ describe(`merges explicit and inferred type definitions`, () => {
     addDefaultResolvers = true,
   }) => {
     const inferDirective = infer ? `@infer` : `@dontInfer`
-    const shouldAddDefaultResolvers = addDefaultResolvers ? `true` : `false`
+    const noDefaultResolvers = addDefaultResolvers ? `false` : `true`
     const typeDefs = [
       `
       type NestedNested {
@@ -63,7 +63,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         nested: NestedNested
       }
 
-      type Test implements Node ${inferDirective}(addDefaultResolvers: ${shouldAddDefaultResolvers}) {
+      type Test implements Node ${inferDirective}(noDefaultResolvers: ${noDefaultResolvers}) {
         bar: Boolean!
         nested: Nested!
         nestedArray: [Nested!]!
@@ -126,11 +126,11 @@ describe(`merges explicit and inferred type definitions`, () => {
     expect(nestedNestedFields.conflict.type.toString()).toBe(`String!`)
   })
 
-  it.todo(`with @infer directive`)
-
   it.todo(`with @dontInfer directive`)
 
-  it.todo(`with addDefaultResolvers: false`)
+  it.todo(`with noDefaultResolvers: true`)
+
+  it.todo(`with both @dontInfer and noDefaultResolvers: true`)
 
   // FIXME: Currently we don't do that
   it.todo(`warns in case of user-defined Node interface`)

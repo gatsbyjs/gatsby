@@ -22,11 +22,15 @@ describe(`Build schema`, () => {
 
     it.todo(`allows adding type in SDL`)
 
+    it.todo(`allows adding array of types`)
+
     it.todo(`adds node interface fields`)
 
     it.todo(`allows adding abstract types in SDL`)
 
     it.todo(`adds type resolver to abstract types`)
+
+    it.todo(`adds args to field`)
 
     it.todo(`handles being called multiple times`)
   })

@@ -40,8 +40,8 @@ const getNoDefaultResolvers = directive => {
     ({ name }) => name.value === `noDefaultResolvers`
   )
   if (noDefaultResolvers) {
-    if (noDefaultResolvers.value.kind === Kind.BOOLEAN_NODE) {
-      return noDefaultResolvers.value.value
+    if (noDefaultResolvers.value.kind === Kind.BOOLEAN) {
+      return !noDefaultResolvers.value.value
     }
   }
 
