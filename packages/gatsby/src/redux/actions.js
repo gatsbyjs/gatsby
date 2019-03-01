@@ -1178,8 +1178,65 @@ actions.addThirdPartySchema = (
   }
 }
 
+/**
+ * Add type definitions to the GraphQL schema.
+ *
+ * @param {TypeDefinitions} types Type definitions, where `type TypeDefinitions = string | GraphQLOutputType | string[] | GraphQLOutputType[]`
+ *
+ * Type definitions can be provided either as
+ * [`graphql-js` types](https://graphql.org/graphql-js/), or in
+ * [GraphQL schema definition language (SDL)](https://graphql.org/learn/).
+ *
+ * Things to note:
+ * * needs to be called *before* schema generation. It is recommended to use
+ *   `createTypes` in the `sourceNodes` API.
+ * * type definitions targeting node types, i.e. `MarkdownRemark` and others
+ *   added in `sourceNodes` or `onCreateNode` APIs, need to implement the
+ *   `Node` interface. Interface fields will be added automatically, but it
+ *   is mandatory to label those types with `implements Node`.
+ * * by default, explicit type definitions from `createTypes` will be merged
+ *   with inferred field types, and default field resolvers for `Date` (which
+ *   adds formatting options) and `File` (which resolves the field value as
+ *   a `relativePath` foreign-key field) are added. This behavior can be
+ *   customised with `@infer` and `dontInfer` directives, and their
+ *   `noDefaultResolvers` argument.
+ *
+ * @example
+ * exports.sourceNodes = ({ actions }) => {
+ *   const { createTypes } = actions
+ *   const typeDefs = `
+ *     """
+ *     Markdown Node
+ *     """
+ *     type MarkdownRemark implements Node {
+ *       frontmatter: Frontmatter!
+ *     }
+ *
+ *     """
+ *     Markdown Frontmatter
+ *     """
+ *     type Frontmatter {
+ *       title: String!
+ *       author: AuthorJson!
+ *       date: Date!
+ *       published: Boolean!
+ *       tags: [String!]!
+ *     }
+ *
+ *     """
+ *     Author information
+ *     """
+ *     # Does not include automatically inferred fields
+ *     type AuthorJson implements Node @dontInfer(noFieldResolvers: true) {
+ *       name: String!
+ *       birthday: Date! # no default resolvers for Date formatting added
+ *     }
+ *   `
+ *   createTypes(typeDefs)
+ * }
+ */
 actions.createTypes = (
-  types: string | GraphQLType | Array<string | GraphQLType>,
+  types: string | GraphQLOutputType | Array<string | GraphQLOutputType>,
   plugin: Plugin,
   traceId?: string
 ) => {
@@ -1190,6 +1247,7 @@ actions.createTypes = (
     payload: types,
   }
 }
+
 /**
  * All action creators wrapped with a dispatch.
  */

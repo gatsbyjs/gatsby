@@ -249,7 +249,7 @@ function toSortFields(sortArgs) {
   const lokiSortFields = []
   for (let i = 0; i < fields.length; i++) {
     const dottedField = fields[i]
-    const isDesc = order[i] === `desc`
+    const isDesc = order[i] && order[i].toLowerCase() === `desc`
     lokiSortFields.push([dottedField, isDesc])
   }
   return lokiSortFields

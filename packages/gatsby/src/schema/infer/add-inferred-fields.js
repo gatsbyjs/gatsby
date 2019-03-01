@@ -1,5 +1,10 @@
 const _ = require(`lodash`)
-const { defaultFieldResolver, getNamedType } = require(`graphql`)
+const {
+  defaultFieldResolver,
+  getNamedType,
+  GraphQLObjectType,
+  GraphQLList,
+} = require(`graphql`)
 const invariant = require(`invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
@@ -24,7 +29,7 @@ const addInferredFields = ({
       nodeStore,
       exampleObject: exampleValue,
       prefix: typeComposer.getTypeName(),
-      typeMapping: typeMapping,
+      typeMapping,
       addDefaultResolvers: inferConfig ? inferConfig.addDefaultResolvers : true,
     })
   }
@@ -49,6 +54,7 @@ const addInferredFieldsImpl = ({
     fields.push(
       getFieldConfig({
         schemaComposer,
+        typeComposer,
         nodeStore,
         prefix,
         exampleValue,
@@ -82,24 +88,51 @@ const addInferredFieldsImpl = ({
     }
 
     if (typeComposer.hasField(key)) {
-      let field = typeComposer.getField(key)
-      let fieldType = typeComposer.getFieldType(key)
-      if (
-        addDefaultResolvers &&
-        getNamedType(fieldType).name === fieldConfig.type
-      ) {
-        if (!field.type) {
-          field = {
-            type: field,
+      const fieldType = typeComposer.getFieldType(key)
+
+      let lists = 0
+      let namedFieldType = fieldType
+      while (namedFieldType.ofType) {
+        namedFieldType = namedFieldType.ofType
+        if (namedFieldType instanceof GraphQLList) {
+          lists++
+        }
+      }
+
+      let arrays = 0
+      let namedInferredType = fieldConfig.type
+      while (Array.isArray(namedInferredType)) {
+        namedInferredType = namedInferredType[0]
+        arrays++
+      }
+
+      if (arrays === lists) {
+        if (
+          namedFieldType instanceof GraphQLObjectType &&
+          typeof namedInferredType !== `string` &&
+          namedFieldType.name === namedInferredType.getTypeName()
+        ) {
+          const fieldTypeComposer = typeComposer.getFieldTC(key)
+          const inferredFields = namedInferredType.getFields()
+          fieldTypeComposer.addFields(inferredFields)
+        } else if (
+          addDefaultResolvers &&
+          namedFieldType.name === namedInferredType
+        ) {
+          let field = typeComposer.getField(key)
+          if (!field.type) {
+            field = {
+              type: field,
+            }
           }
+          if (_.isEmpty(field.args) && fieldConfig.args) {
+            field.args = fieldConfig.args
+          }
+          if (!field.resolve && fieldConfig.resolve) {
+            field.resolve = fieldConfig.resolve
+          }
+          typeComposer.setField(key, field)
         }
-        if (_.isEmpty(field.args) && fieldConfig.args) {
-          field.args = fieldConfig.args
-        }
-        if (!field.resolve && fieldConfig.resolve) {
-          field.resolve = fieldConfig.resolve
-        }
-        typeComposer.setField(key, field)
       }
     } else {
       typeComposer.setField(key, fieldConfig)
@@ -111,6 +144,7 @@ const addInferredFieldsImpl = ({
 
 const getFieldConfig = ({
   schemaComposer,
+  typeComposer,
   nodeStore,
   prefix,
   exampleValue,
@@ -132,24 +166,26 @@ const getFieldConfig = ({
   if (hasMapping(typeMapping, selector)) {
     // TODO: Use `prefix` instead of `selector` in hasMapping and getFromMapping?
     // i.e. does the config contain sanitized field names?
-    fieldConfig = getFieldConfigFromMapping(typeMapping, selector)
+    fieldConfig = getFieldConfigFromMapping({ typeMapping, selector })
   } else if (key.includes(`___NODE`)) {
-    fieldConfig = getFieldConfigFromFieldNameConvention(
+    fieldConfig = getFieldConfigFromFieldNameConvention({
       schemaComposer,
       nodeStore,
-      exampleValue,
-      unsanitizedKey
-    )
+      value: exampleValue,
+      key: unsanitizedKey,
+    })
     key = key.split(`___NODE`)[0]
   } else {
-    fieldConfig = getSimpleFieldConfig(
+    fieldConfig = getSimpleFieldConfig({
       schemaComposer,
+      typeComposer,
       nodeStore,
+      key,
       value,
       selector,
       typeMapping,
-      addDefaultResolvers
-    )
+      addDefaultResolvers,
+    })
   }
 
   // Proxy resolver to unsanitized fieldName in case it contained invalid characters
@@ -179,7 +215,7 @@ const getFieldConfig = ({
 
 const resolveMultipleFields = possibleFields => {
   const nodeField = possibleFields.find(field =>
-    field.unsanitizedKey.endsWith(`___NODE`)
+    field.unsanitizedKey.includes(`___NODE`)
   )
   if (nodeField) {
     return nodeField
@@ -202,18 +238,18 @@ const resolveMultipleFields = possibleFields => {
 const hasMapping = (mapping, selector) =>
   mapping && Object.keys(mapping).includes(selector)
 
-const getFieldConfigFromMapping = (mapping, selector) => {
-  const [type, ...path] = mapping[selector].split(`.`)
+const getFieldConfigFromMapping = ({ typeMapping, selector }) => {
+  const [type, ...path] = typeMapping[selector].split(`.`)
   return { type, resolve: link({ by: path.join(`.`) || `id` }) }
 }
 
 // probably should be in example value
-const getFieldConfigFromFieldNameConvention = (
+const getFieldConfigFromFieldNameConvention = ({
   schemaComposer,
   nodeStore,
   value,
-  key
-) => {
+  key,
+}) => {
   const path = key.split(`___NODE___`)[1]
   // Allow linking by nested fields, e.g. `author___NODE___contact___email`
   const foreignKey = path && path.replace(/___/g, `.`)
@@ -258,17 +294,19 @@ const getFieldConfigFromFieldNameConvention = (
     type = linkedTypes[0]
   }
 
-  return { type, resolve: link({ by: foreignKey || `id`, from: key }) }
+  return { type, resolve: link({ by: foreignKey || `id` }) }
 }
 
-const getSimpleFieldConfig = (
+const getSimpleFieldConfig = ({
   schemaComposer,
+  typeComposer,
   nodeStore,
+  key,
   value,
   selector,
   typeMapping,
-  addDefaultResolvers
-) => {
+  addDefaultResolvers,
+}) => {
   switch (typeof value) {
     case `boolean`:
       return { type: `Boolean` }
@@ -296,22 +334,36 @@ const getSimpleFieldConfig = (
         return { type: `String` }
       }
       if (value /* && depth < MAX_DEPTH*/) {
-        // We only create a temporary TypeComposer on nested fields,
-        // because we don't yet know if this type should end up in
-        // the schema. It might be for a possibleField that will be
-        // disregarded later.
-        const typeComposer = schemaComposer.TypeComposer.createTemp(
-          createTypeName(selector)
-        )
+        // We only create a temporary TypeComposer on nested fields
+        // (either a clone of an existing field type, or a temporary new one),
+        // because we don't yet know if this type should end up in the schema.
+        // It might be for a possibleField that will be disregarded later,
+        // so we cannot mutate the original.
+        let fieldTypeComposer
+        if (
+          typeComposer.hasField(key) &&
+          getNamedType(typeComposer.getFieldType(key)) instanceof
+            GraphQLObjectType
+        ) {
+          const originalFieldTypeComposer = typeComposer.getFieldTC(key)
+          fieldTypeComposer = originalFieldTypeComposer.clone(
+            originalFieldTypeComposer.getTypeName()
+          )
+        } else {
+          fieldTypeComposer = schemaComposer.TypeComposer.createTemp(
+            createTypeName(selector)
+          )
+        }
+
         return {
           type: addInferredFieldsImpl({
             schemaComposer,
-            typeComposer,
+            typeComposer: fieldTypeComposer,
             nodeStore,
             exampleObject: value,
             typeMapping,
             prefix: selector,
-            addDefaultResolvers: addDefaultResolvers,
+            addDefaultResolvers,
           }),
         }
       }

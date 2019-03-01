@@ -1,5 +1,10 @@
 const _ = require(`lodash`)
-const { isSpecifiedScalarType, isIntrospectionType } = require(`graphql`)
+const {
+  isSpecifiedScalarType,
+  isIntrospectionType,
+  GraphQLInterfaceType,
+  GraphQLUnionType,
+} = require(`graphql`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
@@ -33,7 +38,7 @@ const buildSchema = async ({
   return schema
 }
 
-const rebuildSchemaWithSitePage = ({
+const rebuildSchemaWithSitePage = async ({
   schemaComposer,
   nodeStore,
   typeMapping,
@@ -48,7 +53,12 @@ const rebuildSchemaWithSitePage = ({
     typeMapping,
     parentSpan,
   })
-  processTypeComposer({ schemaComposer, typeComposer, nodeStore, parentSpan })
+  await processTypeComposer({
+    schemaComposer,
+    typeComposer,
+    nodeStore,
+    parentSpan,
+  })
   return schemaComposer.buildSchema()
 }
 
@@ -120,7 +130,6 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
     if (typeof typeOrTypeDef === `string`) {
       const addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
       addedTypes.forEach(type => {
-        const { GraphQLInterfaceType, GraphQLUnionType } = require(`graphql`)
         let typeComposer
         if (type instanceof GraphQLInterfaceType) {
           typeComposer = schemaComposer.getOrCreateIFTC(type.name)
@@ -173,10 +182,10 @@ const addThirdPartySchemas = ({
   parentSpan,
 }) => {
   thirdPartySchemas.forEach(schema => {
-    const QueryTC = schemaComposer.TypeComposer.createTemp(
+    const queryTC = schemaComposer.TypeComposer.createTemp(
       schema.getQueryType()
     )
-    const fields = QueryTC.getFields()
+    const fields = queryTC.getFields()
     schemaComposer.Query.addFields(fields)
 
     // Explicitly add the third-party schema's types, so they can be targeted
@@ -261,16 +270,23 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
 
 const addResolvers = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
+
+  // TODO: We should have an abstraction for keeping and clearing
+  // related TypeComposers and InputTypeComposers.
+  // NOTE: No need to clear the SortInput, that will be regenerated anyway.
+  // Also see the comment on the skipped test in `rebuild-schema`.
   typeComposer.removeInputTypeComposer()
-  const SortInputTC = getSortInput({
+  schemaComposer.delete(`${typeName}FilterInput`)
+
+  const sortInputTC = getSortInput({
     schemaComposer,
     typeComposer,
   })
-  const FilterInputTC = getFilterInput({
+  const filterInputTC = getFilterInput({
     schemaComposer,
     typeComposer,
   })
-  const PaginationTC = getPagination({
+  const paginationTC = getPagination({
     schemaComposer,
     typeComposer,
   })
@@ -278,16 +294,16 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
     name: `findOne`,
     type: typeComposer,
     args: {
-      ...FilterInputTC.getFields(),
+      ...filterInputTC.getFields(),
     },
     resolve: findOne(typeName),
   })
   typeComposer.addResolver({
     name: `findManyPaginated`,
-    type: PaginationTC,
+    type: paginationTC,
     args: {
-      filter: FilterInputTC,
-      sort: SortInputTC,
+      filter: filterInputTC,
+      sort: sortInputTC,
       skip: `Int`,
       limit: `Int`,
       // page: `Int`,
