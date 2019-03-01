@@ -4556,3 +4556,16 @@
   built_by: Benjamin Lannon
   built_by_url: https://lannonbr.com
   featured: false
+- title: Josef Aidt
+  url: https://josefaidt.me
+  main_url: https://josefaidt.me
+  source_url: https://github.com/josefaidt/josefaidt.github.io
+  description: >
+    Personal website, blog, portfolio for Josef Aidt
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Josef Aidt
+  built_by_url: https://twitter.com/garlicbred
+  featured: false
