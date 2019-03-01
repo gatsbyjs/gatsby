@@ -30,7 +30,7 @@ const cpuCoreCount = (useEnvVar = false) => {
           if (coreCountArg === `logical_cores`) {
             coreCount = logical_cores
 
-            if (typeof coreCount !== "number") {
+            if (typeof coreCount !== `number`) {
               throw new Error(
                 `process.env.GATSBY_CPU_COUNT is set to 'logical_cores' but there was a problem finding the number of logical cores`
               )
