@@ -4636,4 +4636,14 @@
     Personal website, blog, portfolio for Josef Aidt
   built_by: Josef Aidt
   built_by_url: https://twitter.com/garlicbred
+- title: Hash Tech Guru
+  url: https://hashtech.guru
+  main_url: https://hashtech.guru
+  description: >
+    Software Development Training School and Tech Blog
+  categories:
+    - Blog
+    - Education
+  built_by: Htet Wai Yan Soe
+  built_by_url: https://github.com/johnreginald
   featured: false
