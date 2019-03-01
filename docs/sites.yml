@@ -4516,3 +4516,15 @@
   built_by: Nick Taylor
   built_by_url: https://www.iamdeveloper.com
   featured: false
+- title: Benjamin Lannon
+  url: https://lannonbr.com
+  main_url: https://lannonbr.com
+  source_url: https://github.com/lannonbr/Portfolio-gatsby
+  description: >
+    Personal portfolio of Benjamin Lannon
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
+  featured: false
