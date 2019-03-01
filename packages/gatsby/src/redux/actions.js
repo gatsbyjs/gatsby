@@ -315,6 +315,8 @@ actions.createPage = (
   const action = createPage(page, plugin, actionOptions)
   dispatch(action)
 
+  if (action.type !== `CREATE_PAGE`) return Promise.resolve()
+
   const apiRunnerNode = require(`../utils/api-runner-node`)
   return apiRunnerNode(
     `onCreatePage`,
@@ -646,6 +648,9 @@ actions.createNode = (
 ) => dispatch => {
   const action = createNode(node, plugin, actionOptions)
   dispatch(action)
+
+  if (action.type !== `CREATE_NODE`) return Promise.resolve()
+
   const apiRunnerNode = require(`../utils/api-runner-node`)
   return apiRunnerNode(`onCreateNode`, {
     // We need to get the node from the store to ensure it has internal properties

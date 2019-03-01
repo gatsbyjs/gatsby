@@ -185,6 +185,8 @@ const runAPI = (plugin, api, args) => {
 let filteredPlugins
 const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
+let runningApiCount = 0
+
 module.exports = async (api, args = {}, pluginSource) => {
   const { parentSpan } = args
   const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -219,6 +221,7 @@ module.exports = async (api, args = {}, pluginSource) => {
     ? filteredPlugins.filter(p => p.name !== pluginSource)
     : filteredPlugins
 
+  runningApiCount++
   const results = []
   for (const plugin of noSourcePluginPlugins) {
     try {
@@ -232,9 +235,16 @@ module.exports = async (api, args = {}, pluginSource) => {
       reporter.panicOnBuild(`${pluginName} returned an error`, err)
     }
   }
+  runningApiCount--
 
-  const { emitter } = require(`../redux`)
-  emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+  // TODO: The plan should be to get rid of event emitter everywhere,
+  // and only use redux actions. Having both is confusing.
+  // Also figure out what API_RUNNING_QUEUE_EMPTY is used for.
+  if (runningApiCount === 0) {
+    const { emitter } = require(`../redux`)
+    emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+  }
+
   apiSpan.finish()
 
   return results.filter(result => !_.isEmpty(result))
