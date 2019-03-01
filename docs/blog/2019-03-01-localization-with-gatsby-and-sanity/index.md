@@ -264,10 +264,10 @@ exports.createPages = ({ actions, graphql }) => {
 
   // generate your dynamice content here...
   const page = {
-    path: `/${node.slug}`,
-    component: path.resolve(`./src/templates/legal.js`),
+    path: "some-page",
+    component: path.resolve(`./src/templates/some-page.js`),
     context: {
-      slug: node.slug,
+      slug: "some-page-slug",
     },
   }
 
