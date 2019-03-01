@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-react-helmet onRenderBody sets body attributes 1`] = `
+Array [
+  Array [
+    "body-attributes-component",
+  ],
+]
+`;
+
+exports[`gatsby-plugin-react-helmet onRenderBody sets head components 1`] = `
+Array [
+  Array [
+    Array [
+      "title-component",
+      "link-component",
+      "meta-component",
+      "noscript-component",
+      "script-component",
+      "style-component",
+    ],
+  ],
+]
+`;
+
+exports[`gatsby-plugin-react-helmet onRenderBody sets html attributes 1`] = `
+Array [
+  Array [
+    "html-attributes-component",
+  ],
+]
+`;
