@@ -137,12 +137,12 @@
     - title: Plugins
       link: /docs/plugins/
       items:
-        - title: Plugin Authoring
-          link: /docs/plugin-authoring/
-        - title: Create a Transformer Plugin
-          link: /docs/create-transformer-plugin/
-        - title: Create a Source Plugin
-          link: /docs/create-source-plugin/
+        - title: How Plugins Work
+          link: /docs/how-plugins-work/
+        - title: Creating a Transformer Plugin
+          link: /docs/creating-a-transformer-plugin/
+        - title: Creating a Source Plugin
+          link: /docs/creating-a-source-plugin/
         - title: Source Plugin Tutorial
           link: /docs/source-plugin-tutorial/
     - title: Starters
