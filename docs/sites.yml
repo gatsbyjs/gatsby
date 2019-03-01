@@ -4518,7 +4518,7 @@
   featured: false
 - title: Mayne's Blog
   main_url: "https://gine.me/"
-  url: "https://gine.me/"
+  url: "https://gine.me/page/1"
   source_url: "https://github.com/mayneyao/gine-blog"
   featured: false
   categories:
