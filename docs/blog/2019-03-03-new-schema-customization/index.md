@@ -5,9 +5,9 @@ author: Mikhail Novikov
 tags: ["schema", "graphql"]
 ---
 
-Today we are releasing a preview of a new core Gatsby API - Schema Customization. It gives Gatsby user a much better control over the inferred schema, solving many common issues that people have with their data sources. In addition to adding the new API, we rewrote big chunks of schema generation code from scratch. This gives us a great long-term foundation that will let us make Gatsby GraphQL better in the future.
+Today we are releasing a preview of a new core Gatsby API - Schema Customization. It gives Gatsby users much better control over the inferred schema, solving many common issues that people have had with their data sources. In addition to adding the new API, we rewrote big chunks of schema generation code from scratch. This gives us a great long-term foundation that will let us make Gatsby GraphQL better in the future.
 
-I would like to thank our community member [Stefan Probst](https://github.com/stefanprobst), who not only did lots of initial groundwork on the refactoring, but also helped immensely with the follow-up work there. We are really happy to have such a great community and super grateful to Stefan for all his hard work. I'd also like to thank [Pavev Chertogov](https://github.com/nodkz/), the author of the [graphql-compose](https://graphql-compose.github.io/) library that we used, who's been super responsive to our bug reports and feature requests.
+I would like to thank our community member [Stefan Probst](https://github.com/stefanprobst), who not only did lots of initial groundwork on the refactoring, but also helped immensely with the follow-up work there. We are really happy to have such a great community and super grateful to Stefan for all his hard work. I'd also like to thank [Pavel Chertorogov](https://github.com/nodkz/), the author of the [graphql-compose](https://graphql-compose.github.io/) library that we used, who's been super responsive to our bug reports and feature requests.
 
 As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can install it through TODO INSTRUCTIONS. We would really like your help in finding out potential bugs in this code, so we encourage you to try it and report any issues that you encounter in this TODO PINNED THREAD.
 
@@ -67,14 +67,13 @@ However this can break if we accidentally add invalid date as a birthday for a n
 
 Now there is a type conflict between date and string and this will be inferred as string, possibly breaking our queries.
 
-````graphql
 ```graphql
 type AuthorsJson implements Node {
   # default gatsby node fields
   id: ID!
   parent: Node
   children: [Node!]!
-  internal: `Internal`,
+  internal: `Internal!`,
   # inferred fields
   name: String
   birthday: String
@@ -109,20 +108,20 @@ type AuthorJson implements Node {
   birthday: Date
 }
 
-# For this type `name` won't be added but birtday won't get a Gatsby resolver for date formatting
+# For this type `name` won't be added but `birthday` won't get a Gatsby resolver for date formatting
 @dontInfer(noDefaultResolvers: true)
 type AuthorJson implements Node {
   birthday: Date
 }
 
 
-# For this type all fields `name`. Current default behaviour, but allows one to be explicit about it.
+# For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
 @infer()
 type AuthorJson implements Node {
   id: ID!
 }
 
-# Birthday will be Date, but we won't add a Gatsby resolver for date formatting
+# `birthday` will be Date, but we won't add a Gatsby resolver for date formatting
 @infer(noDefaultResolvers: true)
 type AuthorJson implements Node {
   id: ID!
@@ -131,7 +130,7 @@ type AuthorJson implements Node {
 
 ## `createResolvers`
 
-This is a similar API to `setFieldsOnNodeType` in that it allows to add new fields and resolvers for them. However, this one is ran last, so you'd have all the schema available to you in it. Also it's possible to extend types like `Query` to add more root resolvers.
+This is a similar API to `setFieldsOnGraphQLNodeType` in that it allows to add new fields and resolvers to types. However, this one is run last, so you'd have all the schema available to you in it. It is also possible to extend the `Query` type to add custom root resolvers, which enables a powerful resolver-based approach to querying your data sources.
 
 ```js
 exports.createResolvers = ({ createResolvers, schema }) => {
@@ -183,13 +182,13 @@ You can also see TODO ADD using resolvers example.
 
 # Why was it needed?
 
-The motivation to do this change is a two-fold one. We've seen many issues with automatically generated schemas. They can change from a minor data source modification, like changing one fields. The resulting schema will break queries on the pages and will leave users confused. Making inference smarter is just pouring more oil on already burning fire, because the core issue is not the inferrence, but lack of control. Therefore we wanted to give people control over the schema.
+The motivation to do this change is a two-fold one. We've seen many issues with automatically generated schemas. They can change from a minor data source modification, like changing one field. The resulting schema will break queries on the pages and will leave users confused. Making inference smarter is just pouring more oil on already burning fire, because the core issue is not the inference, but lack of control. Therefore we wanted to give people control over the schema.
 
 On the other hand, we wanted to reevaluate our approach to schema in general. In the "wild", GraphQL is used very differently than in Gatsby. Schemas aren't as commonly generated from the data sources and often schemas are the source of truth. We want to experiment with enabling people to use that approach with Gatsby too. By allowing people to define types and resolvers, we open new opportunities in that direction. We want to see how the community reacts to that and if that will evolve in some new approaches to defining schemas in Gatsby.
 
 # How did we do it?
 
-The biggest issue with building GraphQL schemas with `graphql-js` is that `graphql-js` expects all types to be final at the moment where either schema is created or one inspects the fields of the type. This is solved in graphql-js by using _thunks_, a non-argument functions that refer to types in some global context. With hand-written schemas it's usually type definitions in the same file as the newly defined type, but this isn't available in generated schema situation.
+The biggest issue with building GraphQL schemas with `graphql-js` is that `graphql-js` expects all types to be final at the moment where either schema is created or one inspects the fields of the type. This is solved in `graphql-js` by using _thunks_, non-argument functions that refer to types in some global context. With hand-written schemas it's usually type definitions in the same file as the newly defined type, but this isn't available in generated schema situation.
 
 ```js
 const Foo = graphql.GraphQLObjectType({
