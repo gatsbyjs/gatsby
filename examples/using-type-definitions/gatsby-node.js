@@ -26,12 +26,9 @@ exports.createResolvers = ({ createResolvers }) => {
       allAuthorFullNames: {
         type: [`String!`],
         resolve(source, args, context, info) {
-          const authors = context.nodeModel.getAllNodes(
-            {
-              type: `AuthorJson`,
-            },
-            { path: context.path }
-          )
+          const authors = context.nodeModel.getAllNodes({
+            type: `AuthorJson`,
+          })
           return authors.map(author => `${author.name}, ${author.firstName}`)
         },
       },
@@ -39,14 +36,11 @@ exports.createResolvers = ({ createResolvers }) => {
       allPostsTaggedWithBaz: {
         type: [`BlogJson`],
         resolve(source, args, context, info) {
-          return context.nodeModel.runQuery(
-            {
-              query: { filter: { tags: { eq: `baz` } } },
-              type: `BlogJson`,
-              firstOnly: false,
-            },
-            { path: context.path }
-          )
+          return context.nodeModel.runQuery({
+            query: { filter: { tags: { eq: `baz` } } },
+            type: `BlogJson`,
+            firstOnly: false,
+          })
         },
       },
     },
@@ -60,12 +54,9 @@ exports.createResolvers = ({ createResolvers }) => {
           // We use an author's `email` as foreign key in `BlogJson.authors`
           const fieldValue = source.email
 
-          const posts = context.nodeModel.getAllNodes(
-            {
-              type: `BlogJson`,
-            },
-            { path: context.path }
-          )
+          const posts = context.nodeModel.getAllNodes({
+            type: `BlogJson`,
+          })
           return posts.filter(post =>
             (post.authors || []).some(author => author === fieldValue)
           )
@@ -79,12 +70,9 @@ exports.createResolvers = ({ createResolvers }) => {
           const emails = source[info.fieldName]
           if (emails == null) return null
 
-          const authors = context.nodeModel.getAllNodes(
-            {
-              type: `AuthorJson`,
-            },
-            { path: context.path }
-          )
+          const authors = context.nodeModel.getAllNodes({
+            type: `AuthorJson`,
+          })
           return authors.filter(author => emails.includes(author.email))
         },
       },
