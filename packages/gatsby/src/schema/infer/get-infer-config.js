@@ -17,7 +17,7 @@ const getInferConfig: (
   typeComposer: TypeComposer
 ) => InferConfig = typeComposer => {
   const type = typeComposer.getType()
-  const inferConfig = DEFAULT_INFER_CONFIG
+  const inferConfig = { ...DEFAULT_INFER_CONFIG }
   if (type.astNode && type.astNode.directives) {
     type.astNode.directives.forEach(directive => {
       if (directive.name.value === `infer`) {
