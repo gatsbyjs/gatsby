@@ -101,6 +101,7 @@
     "physical-cpu-count": "^2.0.0",
     "postcss-flexbugs-fixes": "^3.0.0",
     "postcss-loader": "^2.1.3",
+    "prop-types": "^15.6.1",
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^4.2.1",
     "react-error-overlay": "^3.0.0",
