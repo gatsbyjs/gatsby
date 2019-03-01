@@ -4556,3 +4556,13 @@
   built_by: Benjamin Lannon
   built_by_url: https://lannonbr.com
   featured: false
+- title: Sherpalo Ventures
+  main_url: "https://www.sherpalo.com/"
+  url: "https://www.sherpalo.com/"
+  featured: false
+  categories:
+    - Finance
+    - Business
+    - Technology
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
