@@ -207,13 +207,13 @@ exports.setFieldsOnGraphQLNodeType = true
  * * New fields will not be available on `filter` and `sort` input types. Extend
  *   types defined with `createTypes` if you need this.
  * * In field configs, types can be referenced as strings.
- * * When extending a field with an existing field resolver, thr original
+ * * When extending a field with an existing field resolver, the original
  *   resolver function is available from `info.originalResolver`.
  * * The `createResolvers` API is called as the last step in schema generation.
- *   Thus, an intermediate schema is made available on the `schema` argument.
+ *   Thus, an intermediate schema is made available on the `schema` property.
  *   In resolver functions themselves, it is recommended to access the final
  *   built schema from `info.schema`.
- * * Gatsby's model layer, including all internal query capabilities, is
+ * * Gatsby's data layer, including all internal query capabilities, is
  *   exposed on `context.nodeModel`. The node store can be queried directly
  *   with `getAllNodes`, `getNodeById` and `getNodesByIds`, while more advanced
  *   queries can be composed with `runQuery`. Note that `runQuery` will call
