@@ -4516,6 +4516,16 @@
   built_by: Nick Taylor
   built_by_url: https://www.iamdeveloper.com
   featured: false
+- title: xfuture's blog
+  url: https://www.xfuture-blog.com/
+  main_url: https://www.xfuture-blog.com/
+  source_url: https://github.com/xFuture603/xfuture-blog
+  description: >
+    A blog about Devops, Web development, and my insights as a systems engineer.
+  categories:
+    - Blog
+  built_by: Daniel Uhlmann
+  built_by_url: https://www.xfuture-blog.com/
 - title: Mayne's Blog
   main_url: "https://gine.me/"
   url: "https://gine.me/page/1"
