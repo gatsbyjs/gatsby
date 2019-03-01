@@ -1181,7 +1181,7 @@ actions.addThirdPartySchema = (
 /**
  * Add type definitions to the GraphQL schema.
  *
- * @param {(string|GraphQLOutputType|string[]|GraphQLOutputType[])} types Type definitions
+ * @param {TypeDefinitions} types Type definitions, where `type TypeDefinitions = string | GraphQLOutputType | string[] | GraphQLOutputType[]`
  *
  * Type definitions can be provided either as
  * [`graphql-js` types](https://graphql.org/graphql-js/), or in
