@@ -432,7 +432,8 @@ const Result = ({ hit, pathname, query }) => {
                   width: 20,
                   marginBottom: 0,
                   marginRight: 5,
-                  filter: selected ? false : `grayscale(100%) opacity(50%)`,
+                  filter: selected ? false : `grayscale(100%)`,
+                  opacity: selected ? false : `0.5`,
                 }}
                 alt={`Official Gatsby Plugin`}
               />
