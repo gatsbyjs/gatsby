@@ -4516,3 +4516,14 @@
   built_by: Nick Taylor
   built_by_url: https://www.iamdeveloper.com
   featured: false
+  - title: Keziah MOSELLE blog
+  url: https://blog.keziahmoselle.fr/
+  main_url: https://blog.keziahmoselle.fr/
+  source_url: https://github.com/KeziahMoselle/blog.keziahmoselle.fr
+  description: >
+   ✍️ A place to share my thoughts.
+  categories:
+    - Blog
+  built_by: Keziah MOSELLE
+  built_by_url: https://keziahmoselle.fr/
+  featured: false
