@@ -31,10 +31,11 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, nodeStore, createPageDependency }) {
+  constructor({ schema, nodeStore, createPageDependency, path }) {
     this.schema = schema
     this.nodeStore = nodeStore
     this.createPageDependency = createPageDependency
+    this.path = path
   }
 
   getNodeById(args, pageDependencies) {
@@ -54,7 +55,7 @@ class LocalNodeModel {
 
     return trackPageDependencies(
       result,
-      pageDependencies,
+      { path: this.path, ...pageDependencies },
       this.createPageDependency
     )
   }
@@ -76,7 +77,7 @@ class LocalNodeModel {
 
     return trackPageDependencies(
       result,
-      pageDependencies,
+      { path: this.path, ...pageDependencies },
       this.createPageDependency
     )
   }
@@ -98,7 +99,7 @@ class LocalNodeModel {
 
     return trackPageDependencies(
       result,
-      pageDependencies,
+      { path: this.path, ...pageDependencies },
       this.createPageDependency
     )
   }
@@ -143,7 +144,7 @@ class LocalNodeModel {
 
     return trackPageDependencies(
       result,
-      pageDependencies,
+      { path: this.path, ...pageDependencies },
       this.createPageDependency
     )
   }
@@ -187,7 +188,7 @@ const trackPageDependencies = (
   pageDependencies,
   createPageDependency
 ) => {
-  const { path, connectionType } = pageDependencies || {}
+  const { path, connectionType } = pageDependencies
   if (path) {
     if (connectionType) {
       createPageDependency({ path, connection: connectionType })

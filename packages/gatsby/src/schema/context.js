@@ -6,7 +6,12 @@ const withResolverContext = (context, schema) => {
 
   return {
     ...context,
-    nodeModel: new LocalNodeModel({ nodeStore, schema, createPageDependency }),
+    nodeModel: new LocalNodeModel({
+      nodeStore,
+      schema,
+      createPageDependency,
+      path: context.path,
+    }),
   }
 }
 
