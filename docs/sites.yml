@@ -4516,6 +4516,7 @@
   built_by: Nick Taylor
   built_by_url: https://www.iamdeveloper.com
   featured: false
+<<<<<<< HEAD
 - title: Keziah Moselle Blog
   url: https://blog.keziahmoselle.fr/
   main_url: https://blog.keziahmoselle.fr/
@@ -4646,4 +4647,16 @@
     - Education
   built_by: Htet Wai Yan Soe
   built_by_url: https://github.com/johnreginald
+=======
+- title: AquaGruppen Vattenfilter
+  url: https://aquagruppen.se
+  main_url: https://aquagruppen.se/
+  description: >
+    Vattenfilter och vattenrening (Water filter and water treatment products in Sweden)
+  categories:
+    - Business
+    - Technology
+  built_by: Johan Eliasson
+  built_by_url: https://github.com/elitan
+>>>>>>> added aaquagruppen.se to docs/sites.yml
   featured: false
