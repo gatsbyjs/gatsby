@@ -5,7 +5,7 @@ require(`../../db/__tests__/fixtures/ensure-loki`)()
 const nodes = require(`./fixtures/node-model`)
 
 describe(`Build schema`, () => {
-  let schema
+  // let schema
 
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
@@ -14,7 +14,7 @@ describe(`Build schema`, () => {
     )
 
     await build({})
-    schema = store.getState().schema
+    // schema = store.getState().schema
   })
 
   describe(`createTypes action`, () => {

@@ -130,7 +130,6 @@ describe(`Query schema`, () => {
       store.dispatch({ type: `CREATE_TYPES`, payload: def })
     )
 
-    debugger
     await build({})
     schema = store.getState().schema
   })
