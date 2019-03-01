@@ -4,17 +4,14 @@
  * @returns {number} Count of the requested type of CPU cores. Defaults to number of physical cores or 1
  */
 
-const physical_cores = require(`physical-cpu-count`)
-const logical_cores = require(`os`).cpus().length
-
 const cpuCoreCount = (useEnvVar = false) => {
   try {
-    let coreCount = physical_cores || 1
+    let coreCount = require(`physical-cpu-count`) || 1
 
     if (!useEnvVar) {
       // Return the physical CPU count,
       // or default to 1 if we can't detect
-      return physical_cores || 1
+      return coreCount
     }
 
     if (typeof process.env.GATSBY_CPU_COUNT !== `undefined`) {
@@ -28,7 +25,7 @@ const cpuCoreCount = (useEnvVar = false) => {
           // CPU count === logical CPU count
           // throw error if we have a problem counting logical cores
           if (coreCountArg === `logical_cores`) {
-            coreCount = logical_cores
+            coreCount = require(`os`).cpus().length
 
             if (typeof coreCount !== `number`) {
               throw new Error(
