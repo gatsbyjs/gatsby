@@ -32,7 +32,7 @@ const MastheadContent = () => (
       [presets.Hd]: {
         paddingTop: rhythm(5),
         paddingLeft: vPHd,
-        paddingBottom: rhythm(3),
+        paddingBottom: rhythm(2),
       },
       [presets.VHd]: {
         paddingTop: rhythm(6),

@@ -2,7 +2,7 @@ import React from "react"
 import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
-import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
+import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
   <li
@@ -136,7 +136,6 @@ const UsedBy = () => (
           alt="Fabric"
           href="https://meetfabric.com/careers"
         />
-        <Icon icon={SegmentIcon} alt="Segment" href="https://segment.com" />
         <Icon
           icon={FormidableIcon}
           alt="Formidable"
