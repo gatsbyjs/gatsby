@@ -1,7 +1,7 @@
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { rhythm, scale } from "../utils/typography"
+import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import Button from "./button"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
@@ -50,7 +50,7 @@ const MastheadContent = () => (
           color: colors.gatsby,
           lineHeight: 1.1,
           margin: 0,
-          marginBottom: `1.2em`,
+          marginBottom: `2rem`,
           padding: 0,
           width: rhythm(10),
           //fontSize: `calc(12px + 2vh + 2vw)`,
@@ -100,6 +100,19 @@ const MastheadContent = () => (
         </span>
         apps and websites with React
       </h1>
+      <p
+        css={{
+          fontFamily: options.headerFontFamily.join(`,`),
+          maxWidth: rhythm(20),
+          fontSize: scale(1 / 5).fontSize,
+          [presets.Phablet]: {
+            fontSize: scale(3 / 5).fontSize,
+          },
+        }}
+      >
+        Gatsby is a free and open source framework based on React for building
+        blazing fast websites and apps
+      </p>
       <Button
         large
         to="/docs/"

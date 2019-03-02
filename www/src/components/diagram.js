@@ -271,11 +271,6 @@ const Diagram = () => (
         </h1>
         <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
           <FuturaParagraph>
-            Gatsby is a free and open source framework based on React for
-            building blazing fast websites and apps
-          </FuturaParagraph>
-          <br />
-          <FuturaParagraph>
             Pull data from <em>anywhere</em> in minutes
           </FuturaParagraph>
         </div>
