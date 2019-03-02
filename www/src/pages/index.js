@@ -96,10 +96,8 @@ class IndexRoute extends React.Component {
         </Helmet>
         <div
           css={{
-            display: `flex`,
-            flexDirection: `row`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
+            maxWidth: 1280,
+            margin: "0 auto",
           }}
         >
           <MastheadContent />
@@ -109,7 +107,7 @@ class IndexRoute extends React.Component {
               padding: rhythm(presets.gutters.default / 2),
               paddingBottom: 0,
               flex: `0 0 100%`,
-              maxWidth: `100%`,
+              maxWidth: 1280,
               [presets.Hd]: { padding: vP, paddingTop: 0, paddingBottom: 0 },
             }}
           >

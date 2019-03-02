@@ -4,24 +4,17 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import Button from "./button"
-import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
-import Slider from "./slider"
 
 const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      display: `flex`,
-      padding: vP,
+      margin: "0 auto",
       paddingTop: rhythm(4),
       paddingBottom: rhythm(1),
-      flexGrow: `0`,
-      flexShrink: `1`,
+      textAlign: "center",
       [presets.Mobile]: {
         paddingBottom: rhythm(2),
-      },
-      [presets.Phablet]: {
-        paddingRight: 0,
       },
       [presets.Tablet]: {
         paddingTop: rhythm(5),
@@ -31,97 +24,46 @@ const MastheadContent = () => (
       },
       [presets.Hd]: {
         paddingTop: rhythm(5),
-        paddingLeft: vPHd,
-        paddingBottom: rhythm(2),
-      },
-      [presets.VHd]: {
-        paddingTop: rhythm(6),
-        paddingLeft: vPVHd,
-      },
-      [presets.VVHd]: {
-        paddingLeft: vPVVHd,
+        paddingBottom: rhythm(3),
       },
     }}
   >
-    <div>
-      <h1
-        css={{
-          ...scale(0.7),
-          color: colors.gatsby,
-          lineHeight: 1.1,
-          margin: 0,
-          marginBottom: `2rem`,
-          padding: 0,
-          width: rhythm(10),
-          //fontSize: `calc(12px + 2vh + 2vw)`,
-          [presets.Mobile]: {
-            width: rhythm(10),
-          },
+    <h1
+      css={{
+        color: colors.gatsby,
+        fontSize: `calc(12px + 2vh + 2vw)`,
+        lineHeight: 1.1,
+        maxWidth: "11em",
+        margin: "0 auto 1.75rem",
+        padding: 0,
+        letterSpacing: "-0.25",
+      }}
+    >
+      Build blazing fast apps and websites with React
+    </h1>
+    <p
+      css={{
+        color: colors.gray.copy,
+        fontFamily: options.headerFontFamily.join(`,`),
+        maxWidth: rhythm(26),
+        margin: "0 auto 2rem",
+        fontSize: scale(1 / 5).fontSize,
+        [presets.Phablet]: {
           fontSize: scale(3 / 5).fontSize,
-          "@media (min-width: 350px)": {
-            fontSize: scale(4 / 5).fontSize,
-          },
-          "@media (min-width: 650px)": {
-            fontSize: scale(1).fontSize,
-            width: rhythm(12),
-          },
-          [presets.Tablet]: {
-            fontSize: scale(1.1).fontSize,
-            width: rhythm(14),
-          },
-          [presets.Hd]: {
-            fontSize: scale(1.4).fontSize,
-            width: rhythm(16),
-          },
-          [presets.VHd]: {
-            fontSize: scale(1.5).fontSize,
-            width: rhythm(18),
-          },
-          [presets.VVHd]: {
-            fontSize: scale(1.6).fontSize,
-            width: rhythm(18),
-          },
-        }}
-      >
-        <span css={{ display: `block` }}>
-          <span
-            css={{
-              [presets.Tablet]: {
-                marginRight: rhythm(1 / 8),
-              },
-            }}
-          >
-            Build
-          </span>
-          <Slider
-            items={[`blazing fast`, `modern`, `beautiful`, `secure`]}
-            color={colors.lilac}
-          />
-        </span>
-        apps and websites with React
-      </h1>
-      <p
-        css={{
-          fontFamily: options.headerFontFamily.join(`,`),
-          maxWidth: rhythm(20),
-          fontSize: scale(1 / 5).fontSize,
-          [presets.Phablet]: {
-            fontSize: scale(3 / 5).fontSize,
-          },
-        }}
-      >
-        Gatsby is a free and open source framework based on React for building
-        blazing fast websites and apps
-      </p>
-      <Button
-        large
-        to="/docs/"
-        tracking="MasterHead -> Get Started"
-        icon={<ArrowForwardIcon />}
-      >
-        Get Started
-      </Button>
-    </div>
+        },
+      }}
+    >
+      Gatsby is a free and open source developer framework based on React for
+      building blazing fast websites and apps
+    </p>
+    <Button
+      large
+      to="/docs/"
+      tracking="MasterHead -> Get Started"
+      icon={<ArrowForwardIcon />}
+    >
+      Get Started
+    </Button>
   </div>
 )
 
