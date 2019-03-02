@@ -259,12 +259,11 @@ const Diagram = () => (
       >
         <h1
           css={{
-            marginTop: rhythm(1 / 4),
+            marginTop: 0, //rhythm(1 / 4),
             marginBottom: rhythm(3 / 4),
             ...scale(0.9),
             [presets.Tablet]: {
-              marginTop: rhythm(1),
-              marginBottom: rhythm(1.5),
+              marginTop: rhythm(3 / 4),
             },
           }}
         >
@@ -274,6 +273,10 @@ const Diagram = () => (
           <FuturaParagraph>
             Gatsby is a free and open source framework based on React for
             building blazing fast websites and apps
+          </FuturaParagraph>
+          <br />
+          <FuturaParagraph>
+            Pull data from <em>anywhere</em> in minutes
           </FuturaParagraph>
         </div>
 

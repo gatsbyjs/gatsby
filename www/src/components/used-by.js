@@ -136,7 +136,6 @@ const UsedBy = () => (
           alt="Fabric"
           href="https://meetfabric.com/careers"
         />
-        <Icon icon={SegmentIcon} alt="Segment" href="https://segment.com" />
         <Icon
           icon={FormidableIcon}
           alt="Formidable"
