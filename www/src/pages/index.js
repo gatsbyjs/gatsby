@@ -106,6 +106,7 @@ class IndexRoute extends React.Component {
               paddingBottom: 0,
               flex: `0 0 100%`,
               maxWidth: 1280,
+              borderTop: `1px solid ${colors.gray.superLight}`,
               [presets.Hd]: {
                 padding: rhythm(presets.gutters.default),
                 paddingTop: 0,

@@ -246,14 +246,10 @@ const Diagram = () => (
       <section
         className="Diagram"
         css={{
-          borderRadius: presets.radiusLg,
           fontFamily: options.headerFontFamily.join(`,`),
           padding: rhythm(presets.gutters.default),
           textAlign: `center`,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
           flex: `1 1 100%`,
-          borderTop: `1px solid ${colors.ui.light}`,
         }}
       >
         <h1
