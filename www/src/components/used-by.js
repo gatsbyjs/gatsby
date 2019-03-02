@@ -2,7 +2,7 @@ import React from "react"
 import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
-import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
+import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
   <li
