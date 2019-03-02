@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
@@ -97,7 +97,7 @@ const Actions = styled(`div`)`
   }
 `
 
-const EcosysteSection = ({
+const EcosystemSection = ({
   title,
   description,
   subTitle,
@@ -127,17 +127,16 @@ const EcosysteSection = ({
       {subTitle && <SubTitle>{subTitle}</SubTitle>}
     </Header>
 
-    {featuredItems &&
-      featuredItems.length > 0 && (
-        <EcosystemFeaturedItems
-          items={featuredItems}
-          itemComponent={EcosystemFeaturedItem}
-        />
-      )}
+    {featuredItems && featuredItems.length > 0 && (
+      <EcosystemFeaturedItems
+        items={featuredItems}
+        itemComponent={EcosystemFeaturedItem}
+      />
+    )}
   </EcosystemSectionRoot>
 )
 
-EcosysteSection.propTypes = {
+EcosystemSection.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   className: PropTypes.string,
@@ -147,4 +146,4 @@ EcosysteSection.propTypes = {
   featuredItems: PropTypes.array,
 }
 
-export default EcosysteSection
+export default EcosystemSection

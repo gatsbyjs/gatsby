@@ -33,14 +33,16 @@ module.exports = function createSortField(
         },
         order: {
           name: _.camelCase(`${typeName} sortOrder`),
-          defaultValue: `ASC`,
-          type: new GraphQLEnumType({
-            name: _.camelCase(`${typeName} sortOrderValues`),
-            values: {
-              ASC: { value: `asc` },
-              DESC: { value: `desc` },
-            },
-          }),
+          defaultValue: [`ASC`],
+          type: new GraphQLList(
+            new GraphQLEnumType({
+              name: _.camelCase(`${typeName} sortOrderValues`),
+              values: {
+                ASC: { value: `asc` },
+                DESC: { value: `desc` },
+              },
+            })
+          ),
         },
       },
     }),

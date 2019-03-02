@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import axios from "axios"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
@@ -142,6 +142,8 @@ class Unbird extends React.Component {
   }
 
   render() {
+    const { publicKey, feedbackPrompt, feedbackPlaceholder } = this.props
+
     return (
       <FeedbackComponent>
         <FeedbackToggle onClick={this.toggleFeedbackForm}>
@@ -154,22 +156,28 @@ class Unbird extends React.Component {
           <FeedbackForm>
             <Form autoComplete="off" onSubmit={this.submitFeedback}>
               <Label htmlFor="unbird-feedback">
-                {this.props.feedbackPrompt}
+                {publicKey
+                  ? feedbackPrompt
+                  : `Feedback widget not configured in dev`}
               </Label>
               {this.state.statusMessage && (
                 <StatusMessage>{this.state.statusMessage}</StatusMessage>
               )}
-              <Input
-                id="unbird-feedback"
-                type="text"
-                value={this.state.feedbackInput}
-                onChange={this.handleFeedbackInput}
-                placeholder={this.props.feedbackPlaceholder}
-                required
-              />
-              <Send>
-                <SendIcon />
-              </Send>
+              {publicKey && (
+                <>
+                  <Input
+                    id="unbird-feedback"
+                    type="text"
+                    value={this.state.feedbackInput}
+                    onChange={this.handleFeedbackInput}
+                    placeholder={feedbackPlaceholder}
+                    required
+                  />
+                  <Send>
+                    <SendIcon />
+                  </Send>
+                </>
+              )}
             </Form>
           </FeedbackForm>
         )}

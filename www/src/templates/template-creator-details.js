@@ -225,46 +225,45 @@ class CreatorTemplate extends Component {
                 {creator.location}
               </p>
             </MetaSection>
-            {creator.portfolio === true &&
-              sites.length > 0 && (
-                <MetaSection background="transparent" last>
-                  <MetaTitle>Worked On</MetaTitle>
-                  <div
-                    css={{
-                      display: `flex`,
-                      alignItems: `flex-start`,
-                    }}
-                  >
-                    {sites.map(site => (
-                      <Link
-                        key={site.node.title}
-                        css={{
-                          "&&": {
-                            marginRight: rhythm(3 / 4),
-                            borderBottom: `none`,
-                            boxShadow: `none`,
-                            transition: `all ${
-                              presets.animation.speedDefault
-                            } ${presets.animation.curveDefault}`,
-                            "&:hover": {
-                              background: `none`,
-                            },
+            {creator.portfolio === true && sites.length > 0 && (
+              <MetaSection background="transparent" last>
+                <MetaTitle>Worked On</MetaTitle>
+                <div
+                  css={{
+                    display: `flex`,
+                    alignItems: `flex-start`,
+                  }}
+                >
+                  {sites.map(site => (
+                    <Link
+                      key={site.node.title}
+                      css={{
+                        "&&": {
+                          marginRight: rhythm(3 / 4),
+                          borderBottom: `none`,
+                          boxShadow: `none`,
+                          transition: `all ${presets.animation.speedDefault} ${
+                            presets.animation.curveDefault
+                          }`,
+                          "&:hover": {
+                            background: `none`,
                           },
-                        }}
-                        to={site.node.fields.slug}
-                      >
-                        <Img
-                          alt={`${site.node.title}`}
-                          fixed={
-                            site.node.childScreenshot.screenshotFile
-                              .childImageSharp.fixed
-                          }
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </MetaSection>
-              )}
+                        },
+                      }}
+                      to={site.node.fields.slug}
+                    >
+                      <Img
+                        alt={`${site.node.title}`}
+                        fixed={
+                          site.node.childScreenshot.screenshotFile
+                            .childImageSharp.fixed
+                        }
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </MetaSection>
+            )}
           </div>
         </main>
       </Layout>
@@ -297,7 +296,7 @@ export const pageQuery = graphql`
         slug
       }
     }
-    allSitesYaml {
+    allSitesYaml(filter: { fields: { hasScreenshot: { eq: true } } }) {
       edges {
         node {
           built_by

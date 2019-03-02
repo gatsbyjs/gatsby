@@ -25,7 +25,7 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `your_space_id`,
-        // Learn about environment variables: https://gatsby.app/env-vars
+        // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
@@ -43,7 +43,7 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `your_space_id`,
-        // Learn about environment variables: https://gatsby.app/env-vars
+        // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
         host: `preview.contentful.com`,
       },
@@ -171,6 +171,28 @@ Querying a **single** `CaseStudy` node with the ShortText properties `title` and
 }
 ```
 
+#### Duplicated entries
+
+When Contentful pulls the data, all localizations will be pulled. Therefore, if you have a localization active, it will duplicate the entries. Narrow the search by filtering the query with `node_locale` filter:
+
+```graphql
+{
+  allContentfulCaseStudy(filter: { node_locale: { eq: "en-US" } }) {
+    edges {
+      node {
+        id
+        slug
+        title
+        subtitle
+        body {
+          body
+        }
+      }
+    }
+  }
+}
+```
+
 ### Query for Assets in ContentType nodes
 
 More typically your `Asset` nodes will be mixed inside of your `ContentType` nodes, so you'll query them together. All the same formatting rules for `Asset` and `ContentType` nodes apply.
@@ -227,4 +249,4 @@ After adding the transformer plugin you can use the following query to get the h
 ```
 
 [dotenv]: https://github.com/motdotla/dotenv
-[envvars]: https://gatsby.app/env-vars
+[envvars]: https://gatsby.dev/env-vars

@@ -23,7 +23,7 @@ GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
 ## Data in Gatsby
 
 A website has four parts, HTML, CSS, JS, and data. The first half of the
-tutorial focused on the first three. Let's learn now how to use data in Gatsby
+tutorial focused on the first three. Now let’s learn how to use data in Gatsby
 sites.
 
 What is data?
@@ -54,15 +54,15 @@ directly into your components**—in the shape and form you want.
 
 ### Do I have to use GraphQL and source plugins to pull data into Gatsby sites?
 
-Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby pages directly, rather than through the GraphQL data layer. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-See the [Using Unstructured Data](/docs/using-unstructured-data/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
+See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
 
 ### When do I use unstructured data vs GraphQL?
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/packages/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
 2.  If they don't exist, read the [Plugin Authoring](/docs/plugin-authoring/) guide and consider building your own!
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
@@ -88,7 +88,7 @@ Create another new site for this part of the tutorial. You're going to build a M
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`, and navigate to the new directory:
 
 ```shell
-gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
+npx gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-four
 ```
 
@@ -199,7 +199,7 @@ module.exports = {
 }
 ```
 
-Add the above files and then run `gatsby develop`, per usual, and you should see the following:
+Add the above files and then run `npm run develop`, per usual, and you should see the following:
 
 ![start](start.png)
 

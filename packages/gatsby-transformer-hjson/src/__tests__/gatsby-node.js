@@ -9,7 +9,7 @@ describe(`Process HJSON nodes correctly`, () => {
   const node = {
     name: `nodeName`,
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       contentDigest: `whatever`,

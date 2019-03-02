@@ -4,7 +4,7 @@ title: "Environment Variables"
 
 ## Environments and Environment Variables
 
-You can provide environment variables to your site to customise its behaviour in different environments.
+You can provide environment variables to your site to customise its behavior in different environments.
 
 Note that we need to distinguish in this discussion between variables which have been defined in
 special places in order to be used in different deployment environments, and true OS-level
@@ -15,10 +15,10 @@ we're in.
 
 By default gatsby supports only 2 environments:
 
-- If you run `gatsby develop`, then you will be in the 'development' environment.
-- If you run `gatsby build` + `gatsby serve`, then you will be in the 'production' environment.
+- If you run the develop script then you will be in the `development` environment.
+- If you run the build or serve scripts, then you will be in the `production` environment.
 
-If you want to define other environments then you'll need to do a little more work. See 'Additional Environments' below.
+If you want to define other environments then you'll need to do a little more work. See 'Additional Environments' below. You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
 ## Accessing Environment Variables in JavaScript
 
@@ -61,7 +61,7 @@ calling Gatsby on the command line.
 In Linux terminals this can be done with:
 
 ```shell
-MY_ENV_VAR=foo gatsby develop
+MY_ENV_VAR=foo npm run develop
 ```
 
 In Windows it's a little more complex. [Check out this Stack Overflow article for some options](https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only)
@@ -131,11 +131,13 @@ module.exports = {
 - `NODE_ENV`
 - `PUBLIC_DIR`
 
-Gatsby also allows you to specify another enviroment variable when running the local development server (e.g. `gatsby develop`):
+Gatsby also allows you to specify another environment variable when running the local development server (e.g. `npm run develop`):
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
 If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
+
+You can trigger this endpoint locally for example on Unix-based operating systems (like Ubuntu and MacOS) you can use `curl -X POST http://localhost:8000/__refresh`.
 
 ## Additional Environments (Staging, Test, etc)
 
@@ -191,5 +193,5 @@ Note that `ACTIVE_ENV` could be called anything - it's not used or known about b
 Local testing of the `staging` environment can be done with:
 
 ```shell
-ACTIVE_ENV=staging gatsby develop
+ACTIVE_ENV=staging npm run develop
 ```

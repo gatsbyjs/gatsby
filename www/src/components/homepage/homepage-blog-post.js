@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
@@ -215,8 +215,9 @@ const HomepageBlogPost = ({
 
   return (
     <HomepageBlogPostRoot fullWidth={fullWidth}>
-      {desktopViewport &&
-        cover && <Cover fluid={cover.childImageSharp.fluid} />}
+      {desktopViewport && cover && (
+        <Cover fluid={cover.childImageSharp.fluid} />
+      )}
 
       <Link to={slug}>
         <Header first={first} withCover={cover}>

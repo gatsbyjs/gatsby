@@ -13,10 +13,10 @@ const Card = ({ children }) => (
         flex: `0 0 auto`,
         maxWidth: `50%`,
         boxShadow: `0 1px 0 0 ${colors.ui.light}`,
-        "&:nth-child(5),&:nth-child(6)": {
+        "&:nth-of-type(5),&:nth-of-type(6)": {
           boxShadow: `none`,
         },
-        "&:nth-child(2n)": {
+        "&:nth-of-type(2n)": {
           borderLeft: `1px solid ${colors.ui.light}`,
         },
       },
@@ -24,10 +24,10 @@ const Card = ({ children }) => (
         flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
         borderLeft: `1px solid ${colors.ui.light}`,
-        "&:nth-child(4)": {
+        "&:nth-of-type(4)": {
           boxShadow: `none`,
         },
-        "&:nth-child(3n+1)": {
+        "&:nth-of-type(3n+1)": {
           borderLeft: 0,
         },
       },

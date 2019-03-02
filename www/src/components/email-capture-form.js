@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
@@ -178,7 +178,7 @@ class Form extends React.Component {
           type="email"
           required
           autoComplete="email"
-          innerRef={input => {
+          ref={input => {
             this.email = input
           }}
           aria-label={isHomepage ? `Email` : ``}

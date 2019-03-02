@@ -187,15 +187,9 @@ function prepareTextNode(node, key, text, createNodeId, createContentDigest) {
   return textNode
 }
 
-function prepareStructuredTextNode(
-  node,
-  key,
-  content,
-  createNodeId,
-  createContentDigest
-) {
+function prepareRichTextNode(node, key, content, createNodeId) {
   const str = stringify(content)
-  const structuredTextNode = {
+  const richTextNode = {
     ...content,
     id: createNodeId(`${node.id}${key}RichTextNode`),
     parent: node.id,
@@ -209,9 +203,9 @@ function prepareStructuredTextNode(
     },
   }
 
-  node.children = node.children.concat([structuredTextNode.id])
+  node.children = node.children.concat([richTextNode.id])
 
-  return structuredTextNode
+  return richTextNode
 }
 
 function prepareJSONNode(
@@ -306,6 +300,7 @@ exports.createContentTypeNodes = ({
           const entryItemFieldValue = entryItemFields[entryItemFieldKey]
           if (Array.isArray(entryItemFieldValue)) {
             if (
+              entryItemFieldValue[0] &&
               entryItemFieldValue[0].sys &&
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
@@ -414,7 +409,7 @@ exports.createContentTypeNodes = ({
           fieldType === `RichText` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
-          const richTextNode = prepareStructuredTextNode(
+          const richTextNode = prepareRichTextNode(
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],

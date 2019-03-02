@@ -21,10 +21,11 @@ async function onCreateNode(
   const content = await loadNodeContent(node)
   // Load Asciidoc file for extracting
   // https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/extract-api/
-  const doc = await asciidoc.loadFile(node.absolutePath)
+  // We use a `let` here as a warning: some operations, like .convert() mutate the document
+  let doc = await asciidoc.load(content, pluginOptions)
 
   try {
-    const html = asciidoc.convert(content, pluginOptions)
+    const html = doc.convert()
     // Use "partition" option to be able to get title, subtitle, combined
     const title = doc.getDocumentTitle({ partition: true })
 

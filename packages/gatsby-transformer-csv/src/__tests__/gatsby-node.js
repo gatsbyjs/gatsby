@@ -7,7 +7,7 @@ const createContentDigest = require(`../../../gatsby/src/utils/create-content-di
 describe(`Process  nodes correctly`, () => {
   const node = {
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     extension: `csv`,
     internal: {

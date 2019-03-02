@@ -5,7 +5,7 @@ const createContentDigest = require(`../../../gatsby/src/utils/create-content-di
 describe(`Process TOML nodes correctly`, () => {
   const node = {
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     extension: `toml`,
     internal: {

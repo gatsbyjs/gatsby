@@ -1,6 +1,6 @@
 const Redux = require(`redux`)
 const _ = require(`lodash`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
 
@@ -46,6 +46,15 @@ try {
   }
   if (initialState.nodes) {
     initialState.nodes = objectToMap(initialState.nodes)
+
+    initialState.nodesByType = new Map()
+    initialState.nodes.forEach(node => {
+      const { type } = node.internal
+      if (!initialState.nodesByType.has(type)) {
+        initialState.nodesByType.set(type, new Map())
+      }
+      initialState.nodesByType.get(type).set(node.id, node)
+    })
   }
 } catch (e) {
   // ignore errors.
@@ -80,11 +89,7 @@ function saveState() {
   pickedState.components = mapToObject(pickedState.components)
   pickedState.nodes = pickedState.nodes ? mapToObject(pickedState.nodes) : []
   const stringified = stringify(pickedState, null, 2)
-  fs.writeFile(
-    `${process.cwd()}/.cache/redux-state.json`,
-    stringified,
-    () => {}
-  )
+  return fs.writeFile(`${process.cwd()}/.cache/redux-state.json`, stringified)
 }
 
 exports.saveState = saveState

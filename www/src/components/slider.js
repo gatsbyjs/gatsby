@@ -1,5 +1,5 @@
 import React from "react"
-import { keyframes } from "react-emotion"
+import { keyframes } from "@emotion/core"
 
 export default ({ items, color }) => (
   <div
@@ -12,15 +12,15 @@ export default ({ items, color }) => (
         opacity: 0,
         position: `absolute`,
 
-        ":nth-child(2)": {
+        ":nth-of-type(2)": {
           animationDelay: `2.5s`,
         },
 
-        ":nth-child(3)": {
+        ":nth-of-type(3)": {
           animationDelay: `5s`,
         },
 
-        ":nth-child(4)": {
+        ":nth-of-type(4)": {
           animationDelay: `7.5s`,
         },
       },

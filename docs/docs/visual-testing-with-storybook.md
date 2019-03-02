@@ -32,6 +32,7 @@ To update your Storybook config open `.storybook/config.js` and modify the conte
 
 ```js:title=.storybook/config.js
 import { configure } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 
 // automatically import all files ending in *.stories.js
 // highlight-next-line
@@ -60,7 +61,7 @@ configure(loadStories, module)
 // highlight-end
 ```
 
-> You can remove the `stories` folder from the root of your project, or move it inside you `src` folder
+> You can remove the `stories` folder from the root of your project, or move it inside your `src` folder
 
 Next make some adjustments to Storybook's default `webpack` configuration so you can transpile Gatsby source files, and to ensure you have the necessary `babel` plugins to transpile Gatsby components.
 
