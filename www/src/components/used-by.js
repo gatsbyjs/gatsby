@@ -108,7 +108,7 @@ const UsedBy = () => (
     >
       <p
         css={{
-          color: `#fff`,
+          color: presets.colors.lilac,
           letterSpacing: `0.02em`,
           fontFamily: typography.options.headerFontFamily.join(`,`),
           fontSize: scale(-2 / 5).fontSize,
