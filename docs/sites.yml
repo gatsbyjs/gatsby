@@ -4556,3 +4556,16 @@
   built_by: Benjamin Lannon
   built_by_url: https://lannonbr.com
   featured: false
+- title: Aravind Balla
+  url: https://aravindballa.com
+  main_url: https://aravindballa.com
+  source_url: https://github.com/aravindballa/website-2017
+  description: >
+    Personal portfolio of Aravind Balla
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Aravind Balla
+  built_by_url: https://aravindballa.com
+  featured: false
