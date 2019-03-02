@@ -4556,12 +4556,12 @@
   built_by: Benjamin Lannon
   built_by_url: https://lannonbr.com
   featured: false
-  - title: Michal Czaplinski
+- title: Michal Czaplinski
   url: https://czaplinski.io
   main_url: https://czaplinski.io
   source_url: https://github.com/michalczaplinski/czaplinski.io
   description: >
-    Personal site of Michal Czaplinski
+    Michal Czaplinski is a full-stack developer 🚀
   categories:
     - Portfolio
     - Web Development
