@@ -10,7 +10,7 @@ import presets, { colors } from "../../utils/presets"
 const ICON_SIZE = `32px`
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsby : `#fff`)};
+  background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   margin: 0 -${rhythm(presets.gutters.default / 2)};
   padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
