@@ -2,19 +2,7 @@ const grayMatter = require(`gray-matter`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
-<<<<<<< HEAD
-  {
-    node,
-    getNode,
-    loadNodeContent,
-    actions,
-    createNodeId,
-    createContentDigest,
-    reporter,
-  },
-=======
   { node, loadNodeContent, actions, createNodeId, reporter },
->>>>>>> 888c124d24aea36a57086d096154ecacf44f0980
   pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions

@@ -25,11 +25,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-<<<<<<< HEAD
-    "gatsby": "^2.0.15"
-=======
     "gatsby": "^2.0.0"
->>>>>>> 888c124d24aea36a57086d096154ecacf44f0980
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-excel",
   "scripts": {
