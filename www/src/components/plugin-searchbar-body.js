@@ -424,6 +424,7 @@ const Result = ({ hit, pathname, query }) => {
           }}
         >
           {hit.repository &&
+            hit.name[0] !== `@` &&
             hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
               0 && (
               <img

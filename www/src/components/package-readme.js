@@ -56,30 +56,31 @@ const PackageReadMe = props => {
               style={{ verticalAlign: `text-top` }}
             />
           </a>
-          {githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 && (
-            <div
-              css={{
-                display: `flex`,
-                alignItems: `center`,
-                fontSize: 18,
-                lineHeight: 1,
-                color: `#888`,
-                fontFamily: options.headerFontFamily,
-              }}
-            >
-              <img
-                src={GatsbyIcon}
+          {githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 &&
+            packageName[0] !== `@` && (
+              <div
                 css={{
-                  width: 18,
-                  marginBottom: 0,
-                  marginRight: 5,
-                  filter: `grayscale(100%) opacity(50%)`,
+                  display: `flex`,
+                  alignItems: `center`,
+                  lineHeight: 1,
+                  color: `#888`,
+                  fontFamily: options.headerFontFamily.join(`, `),
                 }}
-                alt={`Official Gatsby Plugin`}
-              />
-              Official Plugin
-            </div>
-          )}
+              >
+                <img
+                  src={GatsbyIcon}
+                  css={{
+                    width: 18,
+                    marginBottom: 0,
+                    marginRight: 5,
+                    filter: `grayscale(100%)`,
+                    opacity: 0.5,
+                  }}
+                  alt={`Official Gatsby Plugin`}
+                />
+                Official Plugin
+              </div>
+            )}
         </div>
         {githubUrl && (
           <Link to={`/starters?d=${packageName}`}>
