@@ -150,7 +150,7 @@ class DefaultLayout extends React.Component {
       <div className={isHomepage ? `is-homepage` : ``}>
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
-        <Banner background={isHomepage ? `#402060` : false}>
+        <Banner>
           {/* !!! If you change the children of Banner remember to do the same in layout/layout-with-heading.js */}
           <OutboundLink
             href="https://www.gatsbyjs.com/behind-the-scenes/"
