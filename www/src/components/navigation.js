@@ -35,12 +35,6 @@ const Navigation = ({ pathname }) => {
   const socialIconsStyles = {
     ...styles.navItem,
     ...styles.socialIconItem,
-    [presets.Phablet]: {
-      color: isHomepage ? iconColorHomepage : false,
-      "&:hover": {
-        color: isHomepage ? colors.ui.bright : colors.gatsby,
-      },
-    },
   }
 
   const SocialNavItem = ({ href, title, children, overrideCSS }) => (
@@ -164,8 +158,7 @@ const Navigation = ({ pathname }) => {
         <div css={styles.searchAndSocialContainer}>
           <SearchForm
             key="SearchForm"
-            iconColor={isHomepage ? iconColorHomepage : iconColor}
-            isHomepage={isHomepage}
+            iconColor={iconColor}
             offsetVertical="-0.2175rem"
           />
           <SocialNavItem
