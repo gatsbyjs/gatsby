@@ -8,7 +8,6 @@ import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Card from "../components/card"
-import UsedBy from "../components/used-by"
 import CardHeadline from "../components/card-headline"
 import Diagram from "../components/diagram"
 import FuturaParagraph from "../components/futura-paragraph"
@@ -214,8 +213,6 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={posts} />
 
           <HomepageNewsletter />
-
-          <UsedBy />
         </main>
       </Layout>
     )
