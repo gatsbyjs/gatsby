@@ -9,7 +9,7 @@ const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      margin: "0 auto",
+      margin: `0 ${rhythm(presets.gutters.default)}`,
       paddingTop: rhythm(4),
       paddingBottom: rhythm(1),
       textAlign: "center",
