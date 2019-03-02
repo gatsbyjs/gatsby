@@ -10,33 +10,29 @@ const MastheadContent = () => (
     className="masthead-content"
     css={{
       margin: `0 ${rhythm(presets.gutters.default)}`,
-      paddingTop: rhythm(4),
-      paddingBottom: rhythm(1),
+      paddingBottom: rhythm(2),
+      paddingTop: `calc(${presets.headerHeight} + ${
+        presets.bannerHeight
+      } + ${rhythm(1)})`,
       textAlign: "center",
-      [presets.Mobile]: {
-        paddingBottom: rhythm(2),
-      },
-      [presets.Tablet]: {
-        paddingTop: rhythm(5),
-      },
       [presets.Desktop]: {
-        paddingTop: rhythm(5),
+        paddingBottom: rhythm(3),
       },
       [presets.Hd]: {
-        paddingTop: rhythm(5),
-        paddingBottom: rhythm(3),
+        paddingTop: `calc(${presets.headerHeight} + ${
+          presets.bannerHeight
+        } + ${rhythm(3)})`,
       },
     }}
   >
     <h1
       css={{
         color: colors.gatsby,
-        fontSize: `calc(12px + 2vh + 2vw)`,
+        fontSize: `calc(12px + 2vh + 1.5vw)`,
         letterSpacing: "-1px",
         lineHeight: 1.1,
         margin: "0 auto 1.75rem",
         maxWidth: "11em",
-        padding: 0,
         WebkitFontSmoothing: `antialiased`,
       }}
     >
@@ -51,7 +47,7 @@ const MastheadContent = () => (
         margin: "0 auto 2rem",
         WebkitFontSmoothing: `antialiased`,
         [presets.Phablet]: {
-          fontSize: scale(3 / 5).fontSize,
+          fontSize: scale(2 / 5).fontSize,
         },
       }}
     >
