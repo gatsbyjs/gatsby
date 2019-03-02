@@ -101,7 +101,6 @@ class IndexRoute extends React.Component {
           }}
         >
           <MastheadContent />
-          <UsedBy />
           <div
             css={{
               padding: rhythm(presets.gutters.default / 2),
@@ -219,6 +218,8 @@ class IndexRoute extends React.Component {
               <HomepageBlog posts={posts} />
 
               <HomepageNewsletter />
+
+              <UsedBy />
             </main>
           </div>
         </div>

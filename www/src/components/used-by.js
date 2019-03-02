@@ -75,7 +75,6 @@ const UsedBy = () => (
         marginBottom: 0,
         paddingLeft: 0,
         flex: `0 1 auto`,
-        order: `0`,
       },
       [presets.Desktop]: {
         paddingTop: rhythm(5),
