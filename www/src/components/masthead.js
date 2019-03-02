@@ -32,11 +32,12 @@ const MastheadContent = () => (
       css={{
         color: colors.gatsby,
         fontSize: `calc(12px + 2vh + 2vw)`,
+        letterSpacing: "-1px",
         lineHeight: 1.1,
-        maxWidth: "11em",
         margin: "0 auto 1.75rem",
+        maxWidth: "11em",
         padding: 0,
-        letterSpacing: "-0.25",
+        WebkitFontSmoothing: `antialiased`,
       }}
     >
       Build blazing fast apps and websites with React
@@ -45,9 +46,10 @@ const MastheadContent = () => (
       css={{
         color: colors.gray.copy,
         fontFamily: options.headerFontFamily.join(`,`),
+        fontSize: scale(1 / 5).fontSize,
         maxWidth: rhythm(26),
         margin: "0 auto 2rem",
-        fontSize: scale(1 / 5).fontSize,
+        WebkitFontSmoothing: `antialiased`,
         [presets.Phablet]: {
           fontSize: scale(3 / 5).fontSize,
         },
