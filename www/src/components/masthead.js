@@ -14,7 +14,7 @@ const MastheadContent = () => (
       paddingTop: `calc(${presets.headerHeight} + ${
         presets.bannerHeight
       } + ${rhythm(1)})`,
-      textAlign: "center",
+      textAlign: `center`,
       [presets.Desktop]: {
         paddingBottom: rhythm(3),
       },
@@ -29,10 +29,10 @@ const MastheadContent = () => (
       css={{
         color: colors.gatsby,
         fontSize: `calc(12px + 2vh + 1.5vw)`,
-        letterSpacing: "-1px",
+        letterSpacing: `-1px`,
         lineHeight: 1.1,
-        margin: "0 auto 1.75rem",
-        maxWidth: "11em",
+        margin: `0 auto 1.75rem`,
+        maxWidth: `11em`,
         WebkitFontSmoothing: `antialiased`,
       }}
     >
@@ -44,7 +44,7 @@ const MastheadContent = () => (
         fontFamily: options.headerFontFamily.join(`,`),
         fontSize: scale(1 / 5).fontSize,
         maxWidth: rhythm(26),
-        margin: "0 auto 2rem",
+        margin: `0 auto 2rem`,
         WebkitFontSmoothing: `antialiased`,
         [presets.Phablet]: {
           fontSize: scale(2 / 5).fontSize,

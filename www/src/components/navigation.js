@@ -5,7 +5,7 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
@@ -14,7 +14,6 @@ const navItemTopOffset = `0.6rem`
 const navItemHorizontalSpacing = rhythm(1 / 3)
 
 const iconColor = colors.lilac
-const iconColorHomepage = colors.ui.light
 
 const assignActiveStyles = ({ isPartiallyCurrent }) =>
   isPartiallyCurrent ? { style: styles.navItem.active } : {}
@@ -200,7 +199,7 @@ const styles = {
     margin: `0 auto`,
     paddingLeft: rhythm(3 / 4),
     paddingRight: rhythm(3 / 4),
-    fontFamily: typography.options.headerFontFamily.join(`,`),
+    fontFamily: options.headerFontFamily.join(`,`),
     display: `flex`,
     alignItems: `center`,
     width: `100%`,
