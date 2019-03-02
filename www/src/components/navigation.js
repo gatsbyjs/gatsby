@@ -52,16 +52,12 @@ const Navigation = ({ pathname }) => {
   return (
     <header
       css={{
-        backgroundColor: isHomepage ? `transparent` : `rgba(255,255,255,0.975)`,
-        position: isHomepage ? `absolute` : `relative`,
+        backgroundColor: `rgba(255,255,255,0.975)`,
+        position: `relative`,
         height: presets.headerHeight,
         left: 0,
         right: 0,
-        top: isHomepage
-          ? `calc(${presets.bannerHeight} + ${rhythm(
-              options.blockMarginBottom
-            )})`
-          : presets.bannerHeight,
+        top: presets.bannerHeight,
         zIndex: 2,
         "&:after": {
           content: `''`,
@@ -95,17 +91,7 @@ const Navigation = ({ pathname }) => {
         paddingRight: `env(safe-area-inset-right)`,
       }}
     >
-      <div
-        css={{
-          ...styles.containerInner,
-          ...(isHomepage
-            ? {
-                paddingLeft: rhythm(presets.gutters.default),
-                paddingRight: rhythm(presets.gutters.default),
-              }
-            : {}),
-        }}
-      >
+      <div css={{ ...styles.containerInner }}>
         <Link
           to="/"
           css={styles.logoLink}
