@@ -127,6 +127,7 @@ class IndexRoute extends React.Component {
                 }}
               >
                 <Cards>
+                  <Diagram />
                   <Card>
                     <CardHeadline>
                       Modern web tech without the headache
@@ -199,7 +200,6 @@ class IndexRoute extends React.Component {
                       delivered instantly to your users wherever they are.
                     </FuturaParagraph>
                   </Card>
-                  <Diagram />
                   <div css={{ flex: `1 1 100%` }}>
                     <Container hasSideBar={false}>
                       <div

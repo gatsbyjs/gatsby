@@ -250,25 +250,30 @@ const Diagram = () => (
           borderRadius: presets.radiusLg,
           fontFamily: options.headerFontFamily.join(`,`),
           padding: vP,
-          marginTop: rhythm(1),
           textAlign: `center`,
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
           flex: `1 1 100%`,
           borderTop: `1px solid ${colors.ui.light}`,
-          [presets.Tablet]: {
-            marginTop: 0,
-          },
         }}
       >
-        <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>
+        <h1
+          css={{
+            marginTop: rhythm(1 / 4),
+            marginBottom: rhythm(3 / 4),
+            ...scale(0.9),
+            [presets.Tablet]: {
+              marginTop: rhythm(1),
+              marginBottom: rhythm(1.5),
+            },
+          }}
+        >
           How Gatsby works
         </h1>
         <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
           <FuturaParagraph>
-            Gatsby lets you build blazing fast sites with <em>your data</em>,
-            whatever the source. Liberate your sites from legacy CMSs and fly
-            into the future.
+            Gatsby is a free and open source framework based on React for
+            building blazing fast websites and apps
           </FuturaParagraph>
         </div>
 

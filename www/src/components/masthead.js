@@ -13,7 +13,7 @@ const MastheadContent = () => (
     css={{
       display: `flex`,
       padding: vP,
-      paddingTop: rhythm(5),
+      paddingTop: rhythm(4),
       paddingBottom: rhythm(1),
       flexGrow: `0`,
       flexShrink: `1`,
