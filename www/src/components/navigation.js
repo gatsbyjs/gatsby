@@ -278,6 +278,7 @@ const styles = {
     alignItems: `center`,
     color: `inherit`,
     display: `flex`,
+    flexShrink: 0,
     marginRight: rhythm(1 / 2),
     textDecoration: `none`,
   },
