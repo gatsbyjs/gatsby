@@ -5,7 +5,6 @@ import styled from "@emotion/styled"
 import Button from "../button"
 
 import { rhythm, options } from "../../utils/typography"
-import { vP } from "../gutters"
 import presets, { colors } from "../../utils/presets"
 
 const ICON_SIZE = `32px`
@@ -18,9 +17,9 @@ const HomepageSectionRoot = styled(`section`)`
   width: calc(100% + ${rhythm(presets.gutters.default)});
 
   ${presets.Hd} {
-    margin: -1px -${vP};
+    margin: -1px -${rhythm(presets.gutters.default)};
     padding: ${rhythm(1)} 5%;
-    width: calc(100% + (${vP} * 2));
+    width: calc(100% + (${rhythm(presets.gutters.default)} * 2));
   }
 
   ${presets.VHd} {

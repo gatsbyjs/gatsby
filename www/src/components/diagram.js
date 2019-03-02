@@ -6,7 +6,6 @@ import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
-import { vP } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
@@ -249,7 +248,7 @@ const Diagram = () => (
         css={{
           borderRadius: presets.radiusLg,
           fontFamily: options.headerFontFamily.join(`,`),
-          padding: vP,
+          padding: rhythm(presets.gutters.default),
           textAlign: `center`,
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,

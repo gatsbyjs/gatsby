@@ -7,7 +7,6 @@ import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
-import { vP, vPHd, vPVHd, vPVVHd } from "./gutters"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -101,20 +100,8 @@ const Navigation = ({ pathname }) => {
           ...styles.containerInner,
           ...(isHomepage
             ? {
-                paddingLeft: vP,
-                paddingRight: vP,
-                [presets.Hd]: {
-                  paddingLeft: vPHd,
-                  paddingRight: vPHd,
-                },
-                [presets.VHd]: {
-                  paddingLeft: vPVHd,
-                  paddingRight: vPVHd,
-                },
-                [presets.VVHd]: {
-                  paddingLeft: vPVVHd,
-                  paddingRight: vPVVHd,
-                },
+                paddingLeft: rhythm(presets.gutters.default),
+                paddingRight: rhythm(presets.gutters.default),
               }
             : {}),
         }}

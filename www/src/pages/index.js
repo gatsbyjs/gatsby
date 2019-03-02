@@ -5,7 +5,6 @@ import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
-import { vP } from "../components/gutters"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Card from "../components/card"
@@ -107,7 +106,11 @@ class IndexRoute extends React.Component {
               paddingBottom: 0,
               flex: `0 0 100%`,
               maxWidth: 1280,
-              [presets.Hd]: { padding: vP, paddingTop: 0, paddingBottom: 0 },
+              [presets.Hd]: {
+                padding: rhythm(presets.gutters.default),
+                paddingTop: 0,
+                paddingBottom: 0,
+              },
             }}
           >
             <main

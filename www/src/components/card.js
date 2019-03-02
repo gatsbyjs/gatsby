@@ -1,7 +1,6 @@
 import React from "react"
 import presets, { colors } from "../utils/presets"
 import { rhythm } from "../utils/typography"
-import { vP, vPHd, vPVHd } from "../components/gutters"
 
 const Card = ({ children }) => (
   <div
@@ -39,17 +38,7 @@ const Card = ({ children }) => (
         paddingBottom: 0,
         transform: `translateZ(0)`,
         [presets.Mobile]: {
-          padding: vP,
-          paddingBottom: 0,
-        },
-        [presets.Phablet]: {
-          padding: vP,
-        },
-        [presets.VHd]: {
-          padding: vPHd,
-        },
-        [presets.VVHd]: {
-          padding: vPVHd,
+          padding: rhythm(presets.gutters.default),
         },
       }}
     >

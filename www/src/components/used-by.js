@@ -1,7 +1,6 @@
 import React from "react"
 import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
-import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
@@ -60,7 +59,7 @@ const UsedBy = () => (
     className="Masthead-usedBy"
     css={{
       display: `flex`,
-      padding: vP,
+      padding: rhythm(presets.gutters.default),
       paddingTop: rhythm(1),
       paddingBottom: rhythm(1),
       marginBottom: rhythm(3),
@@ -78,18 +77,6 @@ const UsedBy = () => (
       },
       [presets.Desktop]: {
         paddingTop: rhythm(5),
-      },
-      [presets.Hd]: {
-        paddingLeft: vPHd,
-        paddingRight: vPHd,
-      },
-      [presets.VHd]: {
-        paddingLeft: vPVHd,
-        paddingRight: vPVHd,
-      },
-      [presets.VVHd]: {
-        paddingLeft: vPVVHd,
-        paddingRight: vPVVHd,
       },
     }}
   >
