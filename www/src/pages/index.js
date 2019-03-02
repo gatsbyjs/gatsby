@@ -7,7 +7,6 @@ import { rhythm } from "../utils/typography"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
 import { vP } from "../components/gutters"
 import Container from "../components/container"
-import MastheadBg from "../components/masthead-bg"
 import MastheadContent from "../components/masthead"
 import Cards from "../components/cards"
 import Card from "../components/card"
@@ -96,8 +95,7 @@ class IndexRoute extends React.Component {
             content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
           />
         </Helmet>
-        <div css={{ position: `relative` }}>
-          <MastheadBg />
+        <div>
           <div
             css={{
               display: `flex`,
