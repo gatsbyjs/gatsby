@@ -103,7 +103,22 @@ class IndexRoute extends React.Component {
             justifyContent: `space-between`,
           }}
         >
-          <Diagram />
+          <div
+            css={{
+              padding: rhythm(presets.gutters.default / 2),
+              paddingTop: 0,
+              paddingBottom: 0,
+              width: "100%",
+              borderBottom: `1px solid ${colors.ui.light}`,
+              borderTop: `1px solid ${colors.ui.light}`,
+              background: colors.ui.whisper,
+              [presets.Hd]: {
+                padding: rhythm(presets.gutters.default),
+              },
+            }}
+          >
+            <Diagram />
+          </div>
           <Card>
             <CardHeadline>Modern web tech without the headache</CardHeadline>
             <FuturaParagraph>

@@ -90,7 +90,7 @@ const box = {
   border: `1px solid ${colors.ui.light}`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: colors.ui.whisper,
+  background: "#fff",
 }
 
 const borderAndBoxShadow = {
