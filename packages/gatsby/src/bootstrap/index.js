@@ -21,6 +21,7 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
+const createContentDigest = require(`../../src/utils/create-content-digest`)
 require(`../db`).startAutosave()
 
 // Show stack trace on unhandled promises.

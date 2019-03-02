@@ -173,6 +173,7 @@ async function processRemoteNode({
   createNodeId,
   ext,
   name,
+  createContentDigest,
 }) {
   // Ensure our cache directory exists.
   const pluginCacheDir = path.join(
@@ -198,7 +199,7 @@ async function processRemoteNode({
   }
 
   // Create the temp and permanent file names for the url.
-  const digest = createHash(url)
+  const digest = createContentDigest(url)
   if (!name) {
     name = getRemoteFileName(url)
   }

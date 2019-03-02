@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))

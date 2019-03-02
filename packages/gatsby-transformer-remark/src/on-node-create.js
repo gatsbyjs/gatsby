@@ -1,3 +1,4 @@
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const grayMatter = require(`gray-matter`)
 const _ = require(`lodash`)
 
