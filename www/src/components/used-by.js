@@ -10,14 +10,14 @@ const Icon = ({ icon, alt, href }) => (
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
-      [presets.Phablet]: {
+      [presets.Sm]: {
         marginBottom: 0,
         height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
         },
       },
-      [presets.Tablet]: {
+      [presets.Md]: {
         height: `calc(12px + 1vw)`,
       },
     }}
@@ -69,13 +69,13 @@ const UsedBy = () => (
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,
-      [presets.Phablet]: {
+      [presets.Sm]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
         paddingLeft: 0,
         flex: `0 1 auto`,
       },
-      [presets.Desktop]: {
+      [presets.Lg]: {
         paddingTop: rhythm(5),
       },
     }}
@@ -87,7 +87,7 @@ const UsedBy = () => (
         flexShrink: `1`,
         alignSelf: `flex-end`,
         transform: `translateZ(0)`,
-        [presets.Phablet]: {
+        [presets.Sm]: {
           flexGrow: `0`,
         },
       }}
@@ -99,11 +99,11 @@ const UsedBy = () => (
           fontFamily: typography.options.headerFontFamily.join(`,`),
           fontSize: scale(-2 / 5).fontSize,
           marginBottom: 0,
-          [presets.Phablet]: {
+          [presets.Sm]: {
             fontSize: scale(-2 / 5).fontSize,
             textAlign: `right`,
           },
-          [presets.Desktop]: {
+          [presets.Lg]: {
             fontSize: scale(-1 / 5).fontSize,
           },
         }}

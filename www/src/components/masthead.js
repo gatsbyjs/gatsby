@@ -13,12 +13,12 @@ const MastheadContent = () => (
       paddingBottom: rhythm(2),
       paddingTop: rhythm(2),
       textAlign: `center`,
-      [presets.Tablet]: {
+      [presets.Md]: {
         paddingTop: `calc(${presets.headerHeight} + ${
           presets.bannerHeight
         } + ${rhythm(1)})`,
       },
-      [presets.Desktop]: {
+      [presets.Lg]: {
         paddingBottom: rhythm(3),
       },
     }}
@@ -44,7 +44,7 @@ const MastheadContent = () => (
         maxWidth: rhythm(26),
         margin: `0 auto 2rem`,
         WebkitFontSmoothing: `antialiased`,
-        [presets.Phablet]: {
+        [presets.Sm]: {
           fontSize: scale(2 / 5).fontSize,
         },
       }}

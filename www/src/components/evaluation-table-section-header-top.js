@@ -38,14 +38,14 @@ const superHeader = () => (
           "&:last-child": {
             borderTopRightRadius: presets.radiusLg,
           },
-          [presets.Mobile]: {
+          [presets.Xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [presets.Tablet]: {
+          [presets.Md]: {
             width: 150,
           },
-          [presets.Desktop]: {
+          [presets.Lg]: {
             width: 175,
           },
         }}

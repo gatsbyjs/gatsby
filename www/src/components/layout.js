@@ -165,7 +165,7 @@ class DefaultLayout extends React.Component {
           className={`main-body`}
           css={{
             paddingTop: presets.bannerHeight,
-            [presets.Tablet]: {
+            [presets.Md]: {
               margin: `0 auto`,
               paddingTop: isHomepage
                 ? presets.bannerHeight

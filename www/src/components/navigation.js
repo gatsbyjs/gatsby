@@ -82,7 +82,7 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [presets.Tablet]: {
+        [presets.Md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.ui.whisper : false,
         },
@@ -142,8 +142,8 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [presets.Desktop]: { display: !isHomepage && `flex` },
-              [presets.Hd]: { display: `flex` },
+              [presets.Lg]: { display: !isHomepage && `flex` },
+              [presets.Xl]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -175,14 +175,14 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [presets.Tablet]: {
+    [presets.Md]: {
       alignSelf: `flex-end`,
       display: `flex`,
     },
   },
   ulContainer: {
     display: `none`,
-    [presets.Tablet]: {
+    [presets.Md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,
@@ -242,7 +242,7 @@ const styles = {
   logo: {
     height: 28,
     margin: 0,
-    [presets.Tablet]: {
+    [presets.Md]: {
       height: `1.55rem`,
     },
   },

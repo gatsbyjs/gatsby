@@ -23,7 +23,7 @@ class BlogPostsIndex extends React.Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            [presets.Tablet]: {
+            [presets.Md]: {
               background: colors.ui.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
@@ -34,7 +34,7 @@ class BlogPostsIndex extends React.Component {
           </Helmet>
           <Container
             css={{
-              [presets.Tablet]: {
+              [presets.Md]: {
                 background: `url(${logo})`,
                 paddingBottom: `${rhythm(
                   options.blockMarginBottom * 4
@@ -48,7 +48,7 @@ class BlogPostsIndex extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Tablet]: {
+                [presets.Md]: {
                   marginTop: 0,
                   position: `absolute`,
                   width: 1,
@@ -69,7 +69,7 @@ class BlogPostsIndex extends React.Component {
                 key={node.fields.slug}
                 css={{
                   marginBottom: rhythm(options.blockMarginBottom),
-                  [presets.Tablet]: {
+                  [presets.Md]: {
                     ...presets.boxShadows.card,
                     background: `#fff`,
                     borderRadius: presets.radiusLg,

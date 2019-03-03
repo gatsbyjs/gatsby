@@ -31,7 +31,7 @@ class FeaturedSites extends Component {
           margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
           position: `relative`,
           display: `none`,
-          [presets.Desktop]: {
+          [presets.Lg]: {
             display: `block`,
           },
         }}
@@ -82,7 +82,7 @@ class FeaturedSites extends Component {
             css={{
               ...styles.withTitleHover,
               display: `none`,
-              [presets.Phablet]: {
+              [presets.Sm]: {
                 display: `block`,
               },
               "&&": {
@@ -119,7 +119,7 @@ class FeaturedSites extends Component {
                 marginRight: 15,
                 fontFamily: options.headerFontFamily.join(`,`),
                 display: `none`,
-                [presets.Tablet]: {
+                [presets.Md]: {
                   display: `block`,
                 },
               }}
@@ -192,7 +192,7 @@ class FeaturedSites extends Component {
                     ...scale(-1 / 6),
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [presets.Desktop]: {
+                    [presets.Lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -262,10 +262,10 @@ class FeaturedSites extends Component {
                         width: `auto`,
                         display: `block`,
                         margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
-                        [presets.Tablet]: {
+                        [presets.Md]: {
                           height: 64,
                         },
-                        [presets.Hd]: {
+                        [presets.Xl]: {
                           height: 72,
                         },
 
