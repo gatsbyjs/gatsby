@@ -25,36 +25,36 @@ const PackageReadMe = props => {
         <meta name="twitter.label1" content="Reading time" />
         <meta name="twitter:data1" content={`${timeToRead} min read`} />
       </Helmet>
-      <div css={{ display: `flex`, justifyContent: `space-between` }}>
+      <div
+        css={{
+          display: `flex`,
+          flexWrap: `wrap`,
+          justifyContent: `space-between`,
+        }}
+      >
         <div
           css={{
             display: `flex`,
             justifyContent: `space-between`,
           }}
         >
-          <a
-            css={{ ...linkStyles }}
-            href={githubUrl}
-            aria-labelledby="github-link-label"
-          >
-            <GithubIcon focusable="false" style={{ marginRight: `.5rem` }} />
-            <span id="github-link-label">View plugin on GitHub</span>
-          </a>
           {githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 &&
             packageName[0] !== `@` && (
               <div
                 css={{
-                  display: `flex`,
-                  alignItems: `center`,
-                  lineHeight: 1,
-                  color: `#888`,
+                  ...linkStyles,
+                  color: `#aaa !important`,
+                  marginRight: `1rem`,
+                  "&&:hover": {
+                    color: `inherit`,
+                  },
                   fontFamily: options.headerFontFamily.join(`, `),
                 }}
               >
                 <img
                   src={GatsbyIcon}
                   css={{
-                    width: 18,
+                    height: 16,
                     marginBottom: 0,
                     marginRight: 5,
                     filter: `grayscale(100%)`,
@@ -65,6 +65,14 @@ const PackageReadMe = props => {
                 Official Plugin
               </div>
             )}
+          <a
+            css={{ ...linkStyles }}
+            href={githubUrl}
+            aria-labelledby="github-link-label"
+          >
+            <GithubIcon focusable="false" style={{ marginRight: `.5rem` }} />
+            <span id="github-link-label">View plugin on GitHub</span>
+          </a>
         </div>
         {githubUrl && (
           <Link to={`/starters?d=${packageName}`} css={{ ...linkStyles }}>
