@@ -51,7 +51,7 @@ module.exports = {
 }
 ```
 
-3. Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option with wherever your images are located relative to your project.
+3. Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an update to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option with wherever your images are located relative to your project.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -91,12 +91,15 @@ import Img from "gatsby-image"
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img fluid={data.file.childImageSharp.fluid} />
+    <Img
+      fluid={data.file.childImageSharp.fluid}
+      alt="Gatsby Docs are awesome"
+    />
   </div>
 )
 ```
 
-This GraphQL query creates multiple sizes of the image. The image that is appropriate for the current screen resolution (e.g. desktop, mobile, and everything in between). The `gatsby-image` component automatically enables a blur-up effect as well as lazy loading images that are not currently on screen.
+This GraphQL query creates multiple sizes of the image and when the page is rendered the image that is appropriate for the current screen resolution (e.g. desktop, mobile, and everything in between) is used. The `gatsby-image` component automatically enables a blur-up effect as well as lazy loading images that are not currently on screen.
 
 So this is all very nice and it’s far better to be able to use this from NPM vs. implementing it yourself or cobbling together several standalone libraries.
 
