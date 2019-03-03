@@ -1,6 +1,5 @@
 import typography, { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
-import hex2rgba from "hex2rgba"
 
 const { curveDefault, speedDefault } = presets.animation
 
