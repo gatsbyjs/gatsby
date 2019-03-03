@@ -39,17 +39,17 @@
 </p>
 
 <h3 align="center">
-  <a href="https://gatsbyjs.org/docs/">Quickstart</a>
+ <a href="https://gatsbyjs.org/docs/"><img alt="Quickstart" src="/readme/Quickstart.png"></a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/tutorial/">Tutorial</a>
+  <a href="https://gatsbyjs.org/tutorial/"><img alt="Tutorial" src="/readme/Tutorial.png"></a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/plugins/">Plugins</a>
+  <a href="https://gatsbyjs.org/plugins/"><img alt="Plugins" src="/readme/Plugins.png"></a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/starters/">Starters</a>
+  <a href="https://gatsbyjs.org/starters/"><img alt="Starters" src="/readme/Starters.png"></a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/showcase/">Showcase</a>
+  <a href="https://gatsbyjs.org/showcase/"><img alt="Showcase" src="/readme/Showcase.png"></a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
+  <a href="https://gatsbyjs.org/contributing/how-to-contribute/"><img alt="Contribute" src="/readme/Contribute.png"></a>
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
