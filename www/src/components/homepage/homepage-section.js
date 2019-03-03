@@ -1,38 +1,35 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import Button from "../button"
 
 import { rhythm, options } from "../../utils/typography"
-import { vP } from "../gutters"
 import presets, { colors } from "../../utils/presets"
 
 const ICON_SIZE = `32px`
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsby : `#fff`)};
+  background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  margin: 0 -${rhythm(presets.gutters.default / 2)};
   padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
-  width: calc(100% + ${rhythm(presets.gutters.default)});
+  width: 100%;
 
-  ${presets.Hd} {
-    margin: -1px -${vP};
+  ${presets.Xl} {
+    margin: -1px 0;
     padding: ${rhythm(1)} 5%;
-    width: calc(100% + (${vP} * 2));
   }
 
-  ${presets.VHd} {
+  ${presets.Xxl} {
     padding: ${rhythm(1.5)} 8%;
   }
 `
 export const Header = styled(`header`)`
-  ${presets.Tablet} {
+  ${presets.Md} {
     max-width: 30rem;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin-left: 3rem;
   }
 `
@@ -47,7 +44,7 @@ export const Name = styled(`h3`)`
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
@@ -55,7 +52,7 @@ export const Name = styled(`h3`)`
 const Icon = styled(`span`)`
   display: block;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     margin-right: calc(${ICON_SIZE} / 5);
   }
 
@@ -90,7 +87,7 @@ const Actions = styled(`div`)`
     margin-right: ${rhythm(0.2)};
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin: 1rem 0 2.5rem;
   }
 `
@@ -124,7 +121,7 @@ const HomepageSection = ({
         {links && (
           <Actions>
             {links.map((item, idx) => {
-              const { to, label, icon: Icon, secondary } = item
+              const { to, label, icon: Icon, secondary, tracking } = item
 
               return (
                 <Button
@@ -133,6 +130,7 @@ const HomepageSection = ({
                   small
                   ondark={inverseStyle ? true : false}
                   secondary={secondary}
+                  tracking={tracking}
                 >
                   {label} {Icon && <Icon />}
                 </Button>

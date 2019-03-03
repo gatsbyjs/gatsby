@@ -42,11 +42,11 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
     const badExportsMigrationMap = {
       modifyWebpackConfig: {
         replacement: `onCreateWebpackConfig`,
-        migrationLink: `https://gatsby.app/update-webpack-config`,
+        migrationLink: `https://gatsby.dev/update-webpack-config`,
       },
       wrapRootComponent: {
         replacement: `wrapRootElement`,
-        migrationLink: `https://gatsby.app/update-wraprootcomponent`,
+        migrationLink: `https://gatsby.dev/update-wraprootcomponent`,
       },
     }
     const isOldAPI = Object.keys(badExportsMigrationMap).includes(

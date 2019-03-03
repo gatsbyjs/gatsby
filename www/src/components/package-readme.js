@@ -9,6 +9,7 @@ import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import GatsbyIcon from "../monogram.svg"
+import { linkStyles } from "../utils/styles"
 
 const PackageReadMe = props => {
   const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
@@ -29,32 +30,16 @@ const PackageReadMe = props => {
         <div
           css={{
             display: `flex`,
-            alignItems: `center`,
+            justifyContent: `space-between`,
           }}
         >
           <a
-            css={{
-              "&&": {
-                marginRight: 25,
-                display: githubUrl ? `inline-flex` : `none`,
-                fontWeight: `normal`,
-                border: 0,
-                color: colors.gray.calm,
-                boxShadow: `none`,
-                "&:hover": {
-                  background: `none`,
-                  color: colors.gatsby,
-                },
-              },
-            }}
+            css={{ ...linkStyles }}
             href={githubUrl}
-            aria-label={`${packageName} source`}
-            title={`View source on GitHub`}
+            aria-labelledby="github-link-label"
           >
-            <GithubIcon
-              focusable="false"
-              style={{ verticalAlign: `text-top` }}
-            />
+            <GithubIcon focusable="false" style={{ marginRight: `.5rem` }} />
+            <span id="github-link-label">View plugin on GitHub</span>
           </a>
           {githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 &&
             packageName[0] !== `@` && (
@@ -83,22 +68,15 @@ const PackageReadMe = props => {
             )}
         </div>
         {githubUrl && (
-          <Link to={`/starters?d=${packageName}`}>
-            See starters that use this
+          <Link to={`/starters?d=${packageName}`} css={{ ...linkStyles }}>
+            See starters using this
           </Link>
         )}
       </div>
 
       <div
-        css={{
-          position: `relative`,
-          "& h1": {
-            marginTop: 0,
-          },
-        }}
-        dangerouslySetInnerHTML={{
-          __html: html,
-        }}
+        css={{ position: `relative` }}
+        dangerouslySetInnerHTML={{ __html: html }}
       />
       <MarkdownPageFooter page={page} packagePage />
     </Container>

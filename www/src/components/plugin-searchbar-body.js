@@ -20,10 +20,10 @@ import unescape from "lodash/unescape"
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
-import { injectGlobal } from "react-emotion"
+import { Global, css } from "@emotion/core"
+import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
 import VisuallyHidden from "@reach/visually-hidden"
-import styled from "react-emotion"
 import { SkipNavLink } from "@reach/skip-nav"
 
 // This is for the urlSync
@@ -35,7 +35,7 @@ const searchMetaHeight = rhythm(8 / 4)
 const searchInputWrapperMargin = rhythm(3 / 4)
 
 /* stylelint-disable */
-injectGlobal`
+const searchBoxStyles = css`
   .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
     display: block;
   }
@@ -165,9 +165,8 @@ injectGlobal`
     margin: ${rhythm(3 / 4)};
     height: ${rhythm(2)};
     outline: none;
-    transition: all ${presets.animation.speedDefault} ${
-  presets.animation.curveDefault
-};
+    transition: all ${presets.animation.speedDefault}
+      ${presets.animation.curveDefault};
     font-family: ${typography.options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover,
@@ -213,7 +212,7 @@ class Search extends Component {
       <div
         css={{
           paddingBottom: rhythm(2.5),
-          [presets.Tablet]: {
+          [presets.Md]: {
             paddingBottom: 0,
           },
         }}
@@ -226,6 +225,7 @@ class Search extends Component {
             width: `100%`,
           }}
         >
+          <Global styles={searchBoxStyles} />
           <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
 
           <div css={{ display: `none` }}>
@@ -252,7 +252,7 @@ class Search extends Component {
               height: searchMetaHeight,
               paddingLeft: rhythm(3 / 4),
               paddingRight: rhythm(3 / 4),
-              [presets.Tablet]: {
+              [presets.Md]: {
                 fontSize: scale(-1 / 4).fontSize,
               },
             }}
@@ -271,7 +271,7 @@ class Search extends Component {
         <div>
           <div
             css={{
-              [presets.Tablet]: {
+              [presets.Md]: {
                 height: `calc(100vh - ${presets.headerHeight} - ${
                   presets.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,

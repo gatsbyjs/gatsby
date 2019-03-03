@@ -62,7 +62,7 @@ async function startServer(program) {
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
 
-          See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
+          See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
         `,
         err
       )
@@ -385,11 +385,11 @@ module.exports = async (program: any) => {
     const fixMap = {
       boundActionCreators: {
         newName: `actions`,
-        docsLink: `https://gatsby.app/boundActionCreators`,
+        docsLink: `https://gatsby.dev/boundActionCreators`,
       },
       pathContext: {
         newName: `pageContext`,
-        docsLink: `https://gatsby.app/pathContext`,
+        docsLink: `https://gatsby.dev/pathContext`,
       },
     }
     const deprecatedLocations = {}

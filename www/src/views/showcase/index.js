@@ -15,7 +15,7 @@ class ShowcaseView extends Component {
 
   componentDidMount() {
     const {
-      location: { search },
+      location: { search = `` },
     } = this.props
 
     const { filters } = qs.parse(search.replace(`?`, ``))
@@ -31,7 +31,7 @@ class ShowcaseView extends Component {
     } = this.props
     const queryString = qs.stringify(this.state)
 
-    if (search !== `?${queryString}`) {
+    if (search.replace(/^\?/, ``) !== queryString) {
       navigate(`${pathname}?${queryString}`, { replace: true })
     }
   }
