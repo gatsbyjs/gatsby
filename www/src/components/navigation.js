@@ -5,9 +5,8 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
-import { vP, vPHd, vPVHd, vPVVHd } from "./gutters"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -15,7 +14,6 @@ const navItemTopOffset = `0.6rem`
 const navItemHorizontalSpacing = rhythm(1 / 3)
 
 const iconColor = colors.lilac
-const iconColorHomepage = colors.ui.light
 
 const assignActiveStyles = ({ isPartiallyCurrent }) =>
   isPartiallyCurrent ? { style: styles.navItem.active } : {}
@@ -35,12 +33,6 @@ const Navigation = ({ pathname }) => {
   const socialIconsStyles = {
     ...styles.navItem,
     ...styles.socialIconItem,
-    [presets.Phablet]: {
-      color: isHomepage ? iconColorHomepage : false,
-      "&:hover": {
-        color: isHomepage ? colors.ui.bright : colors.gatsby,
-      },
-    },
   }
 
   const SocialNavItem = ({ href, title, children, overrideCSS }) => (
@@ -59,16 +51,12 @@ const Navigation = ({ pathname }) => {
   return (
     <header
       css={{
-        backgroundColor: isHomepage ? `transparent` : `rgba(255,255,255,0.975)`,
-        position: isHomepage ? `absolute` : `relative`,
+        backgroundColor: `rgba(255,255,255,0.975)`,
+        position: `relative`,
         height: presets.headerHeight,
         left: 0,
         right: 0,
-        top: isHomepage
-          ? `calc(${presets.bannerHeight} + ${rhythm(
-              options.blockMarginBottom
-            )})`
-          : presets.bannerHeight,
+        top: presets.bannerHeight,
         zIndex: 2,
         "&:after": {
           content: `''`,
@@ -102,29 +90,7 @@ const Navigation = ({ pathname }) => {
         paddingRight: `env(safe-area-inset-right)`,
       }}
     >
-      <div
-        css={{
-          ...styles.containerInner,
-          ...(isHomepage
-            ? {
-                paddingLeft: vP,
-                paddingRight: vP,
-                [presets.Hd]: {
-                  paddingLeft: vPHd,
-                  paddingRight: vPHd,
-                },
-                [presets.VHd]: {
-                  paddingLeft: vPVHd,
-                  paddingRight: vPVHd,
-                },
-                [presets.VVHd]: {
-                  paddingLeft: vPVVHd,
-                  paddingRight: vPVVHd,
-                },
-              }
-            : {}),
-        }}
-      >
+      <div css={{ ...styles.containerInner }}>
         <Link
           to="/"
           css={styles.logoLink}
@@ -164,8 +130,7 @@ const Navigation = ({ pathname }) => {
         <div css={styles.searchAndSocialContainer}>
           <SearchForm
             key="SearchForm"
-            iconColor={isHomepage ? iconColorHomepage : iconColor}
-            isHomepage={isHomepage}
+            iconColor={iconColor}
             offsetVertical="-0.2175rem"
           />
           <SocialNavItem
@@ -234,7 +199,7 @@ const styles = {
     margin: `0 auto`,
     paddingLeft: rhythm(3 / 4),
     paddingRight: rhythm(3 / 4),
-    fontFamily: typography.options.headerFontFamily.join(`,`),
+    fontFamily: options.headerFontFamily.join(`,`),
     display: `flex`,
     alignItems: `center`,
     width: `100%`,
@@ -285,6 +250,7 @@ const styles = {
     alignItems: `center`,
     color: `inherit`,
     display: `flex`,
+    flexShrink: 0,
     marginRight: rhythm(1 / 2),
     textDecoration: `none`,
   },

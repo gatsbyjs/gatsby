@@ -70,9 +70,9 @@ class BlogPostsIndex extends React.Component {
                 css={{
                   marginBottom: rhythm(options.blockMarginBottom),
                   [presets.Tablet]: {
+                    ...presets.boxShadows.card,
                     background: `#fff`,
                     borderRadius: presets.radiusLg,
-                    boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
                     padding: rhythm(options.blockMarginBottom * 2),
                     paddingLeft: rhythm(options.blockMarginBottom * 3),
                     paddingRight: rhythm(options.blockMarginBottom * 3),
@@ -87,7 +87,7 @@ class BlogPostsIndex extends React.Component {
                     }`,
                     "&:hover": {
                       transform: `translateY(-4px)`,
-                      boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)`,
+                      ...presets.boxShadows.cardHover,
                     },
                     "&:active": {
                       boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
@@ -95,8 +95,6 @@ class BlogPostsIndex extends React.Component {
                       transition: `transform 50ms`,
                     },
                   },
-                  [presets.Desktop]: {},
-                  [presets.Hd]: {},
                 }}
               />
             ))}

@@ -5,22 +5,19 @@ import styled from "@emotion/styled"
 import Button from "../button"
 
 import { rhythm, options } from "../../utils/typography"
-import { vP } from "../gutters"
 import presets, { colors } from "../../utils/presets"
 
 const ICON_SIZE = `32px`
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsby : `#fff`)};
+  background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  margin: 0 -${rhythm(presets.gutters.default / 2)};
   padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
-  width: calc(100% + ${rhythm(presets.gutters.default)});
+  width: 100%;
 
   ${presets.Hd} {
-    margin: -1px -${vP};
+    margin: -1px 0;
     padding: ${rhythm(1)} 5%;
-    width: calc(100% + (${vP} * 2));
   }
 
   ${presets.VHd} {

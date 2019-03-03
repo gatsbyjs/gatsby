@@ -1,6 +1,5 @@
 import typography, { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
-import hex2rgba from "hex2rgba"
 
 const { curveDefault, speedDefault } = presets.animation
 
@@ -112,7 +111,7 @@ const styles = {
   },
   screenshot: {
     borderRadius: presets.radius,
-    boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+    ...presets.boxShadows.card,
     marginBottom: rhythm(options.blockMarginBottom / 2),
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
@@ -123,7 +122,7 @@ const styles = {
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
       transform: `translateY(-3px)`,
-      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+      ...presets.boxShadows.cardHover,
     },
   },
   shortcutIcon: {
