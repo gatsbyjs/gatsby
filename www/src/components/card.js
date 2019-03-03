@@ -8,7 +8,7 @@ const Card = ({ children }) => (
       boxSizing: `border-box`,
       display: `flex`,
       transform: `translateZ(0)`,
-      [presets.Tablet]: {
+      [presets.Md]: {
         flex: `0 0 auto`,
         maxWidth: `50%`,
         boxShadow: `0 1px 0 0 ${colors.ui.light}`,
@@ -19,7 +19,7 @@ const Card = ({ children }) => (
           borderLeft: `1px solid ${colors.ui.light}`,
         },
       },
-      [presets.Hd]: {
+      [presets.Xl]: {
         flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
         borderLeft: `1px solid ${colors.ui.light}`,
@@ -37,7 +37,7 @@ const Card = ({ children }) => (
         padding: rhythm(presets.gutters.default / 2),
         paddingBottom: 0,
         transform: `translateZ(0)`,
-        [presets.Mobile]: {
+        [presets.Xs]: {
           padding: rhythm(presets.gutters.default),
         },
       }}

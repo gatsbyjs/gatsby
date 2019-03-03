@@ -24,7 +24,7 @@ const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
   padding-bottom: 3.5rem;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     margin-left: ${presets.pageHeadingDesktopWidth};
     padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
     padding-bottom: 0;

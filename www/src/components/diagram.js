@@ -123,10 +123,10 @@ const SourceItem = ({ children }) => (
       boxSizing: `border-box`,
       padding: `0 ${rhythm(2 / 3)} ${rhythm(1)}`,
       display: `flex`,
-      [presets.Mobile]: {
+      [presets.Xs]: {
         flex: `1 1 50%`,
       },
-      [presets.Phablet]: {
+      [presets.Sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -164,7 +164,7 @@ const ItemDescription = ({ children }) => (
       lineHeight: 1.2,
       display: `block`,
       color: colors.gatsby,
-      [presets.Hd]: {
+      [presets.Xl]: {
         fontSize: scale(-1 / 5).fontSize,
       },
     }}
@@ -187,7 +187,7 @@ const Gatsby = ({ children }) => (
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [presets.Desktop]: {
+      [presets.Lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -199,7 +199,7 @@ const Gatsby = ({ children }) => (
         display: `inline-block`,
         height: rhythm(1.75),
         width: rhythm(1.75),
-        [presets.Desktop]: {
+        [presets.Lg]: {
           width: rhythm(2.25),
           height: rhythm(2.25),
         },
@@ -257,7 +257,7 @@ const Diagram = () => (
             marginTop: 0, //rhythm(1 / 4),
             marginBottom: rhythm(3 / 4),
             ...scale(0.9),
-            [presets.Tablet]: {
+            [presets.Md]: {
               marginTop: rhythm(3 / 4),
             },
           }}

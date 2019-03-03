@@ -58,10 +58,10 @@ const BlogPostPreviewItem = ({ post, className }) => {
             fontFamily: typography.options.headerFontFamily.join(`,`),
             color: colors.gray.calm,
             ...scale(-2 / 5),
-            [presets.Mobile]: {
+            [presets.Xs]: {
               ...scale(-1 / 5),
             },
-            [presets.Desktop]: {
+            [presets.Lg]: {
               ...scale(0),
             },
           }}
