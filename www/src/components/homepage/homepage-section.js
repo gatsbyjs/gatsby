@@ -15,21 +15,21 @@ const HomepageSectionRoot = styled(`section`)`
   padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
   width: 100%;
 
-  ${presets.Hd} {
+  ${presets.Xl} {
     margin: -1px 0;
     padding: ${rhythm(1)} 5%;
   }
 
-  ${presets.VHd} {
+  ${presets.Xxl} {
     padding: ${rhythm(1.5)} 8%;
   }
 `
 export const Header = styled(`header`)`
-  ${presets.Tablet} {
+  ${presets.Md} {
     max-width: 30rem;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin-left: 3rem;
   }
 `
@@ -44,7 +44,7 @@ export const Name = styled(`h3`)`
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
@@ -52,7 +52,7 @@ export const Name = styled(`h3`)`
 const Icon = styled(`span`)`
   display: block;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     margin-right: calc(${ICON_SIZE} / 5);
   }
 
@@ -87,7 +87,7 @@ const Actions = styled(`div`)`
     margin-right: ${rhythm(0.2)};
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin: 1rem 0 2.5rem;
   }
 `

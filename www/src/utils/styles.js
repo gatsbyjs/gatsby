@@ -62,11 +62,11 @@ export const buttonStyles = {
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },
-    [presets.Tablet]: {
+    [presets.Md]: {
       ...scale(1 / 5),
       padding: `${rhythm(2 / 6)} ${rhythm(3 / 5)}`,
     },
-    [presets.VHd]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
+    [presets.Xxl]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
   },
   secondary: {
     backgroundColor: `transparent`,
@@ -77,20 +77,20 @@ export const buttonStyles = {
     // borderRadius: presets.radiusLg,
     fontSize: scale(1 / 5).fontSize,
     padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    [presets.Tablet]: {
+    [presets.Md]: {
       fontSize: scale(2 / 5).fontSize,
       padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
     },
-    [presets.VHd]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
+    [presets.Xxl]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
   },
   small: {
     fontSize: scale(-1 / 3).fontSize,
     padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    [presets.Tablet]: {
+    [presets.Md]: {
       fontSize: scale(-1 / 6).fontSize,
       padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
     },
-    [presets.VHd]: {
+    [presets.Xxl]: {
       fontSize: scale(-1 / 6).fontSize,
       padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
     },
@@ -98,11 +98,11 @@ export const buttonStyles = {
   tiny: {
     fontSize: scale(-1 / 3).fontSize,
     padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
-    [presets.Tablet]: {
+    [presets.Md]: {
       fontSize: scale(-1 / 4).fontSize,
       padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
     },
-    [presets.VHd]: {
+    [presets.Xxl]: {
       fontSize: scale(-1 / 5).fontSize,
       padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
     },

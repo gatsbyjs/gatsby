@@ -18,7 +18,7 @@ const Container = ({
       padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
       paddingBottom: rhythm(3.5),
       position: `relative`,
-      [presets.Tablet]: {
+      [presets.Md]: {
         paddingBottom: rhythm(1.5),
       },
       ...overrideCSS,

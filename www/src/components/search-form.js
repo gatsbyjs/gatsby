@@ -197,7 +197,7 @@ const algoliaStyles = css`
     margin-right: ${rhythm(0.5)} !important;
   }
 
-  @media ${presets.phablet} {
+  ${presets.Sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       color: inherit !important;
       font-weight: normal !important;
@@ -246,7 +246,7 @@ const algoliaStyles = css`
     }
   }
 
-  @media ${presets.tablet} {
+  ${presets.Md} {
     .algolia-autocomplete .ds-dropdown-menu,
     .is-homepage .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
@@ -279,7 +279,7 @@ const algoliaStyles = css`
     }
   }
 
-  @media ${presets.desktop} {
+  @media ${presets.lg} {
     .algolia-autocomplete .ds-dropdown-menu {
       max-width: 600px !important;
       min-width: 540px !important;
@@ -420,14 +420,14 @@ class SearchForm extends Component {
                 outline: 0,
                 width: rhythm(5),
               },
-              [presets.Desktop]: {
+              [presets.Lg]: {
                 backgroundColor: !isHomepage && `#fff`,
                 width: !isHomepage && rhythm(3.75),
                 ":focus": {
                   backgroundColor: colors.ui.light,
                 },
               },
-              [presets.Hd]: {
+              [presets.Xl]: {
                 backgroundColor: isHomepage && colors.lilac,
                 color: isHomepage && colors.ui.light,
                 width: isHomepage && rhythm(3.75),
@@ -454,7 +454,7 @@ class SearchForm extends Component {
               pointerEvents: `none`,
               transition: `fill ${speedDefault} ${curveDefault}`,
               transform: `translateY(-55%)`,
-              [presets.Phablet]: {
+              [presets.Sm]: {
                 fill: focussed ? colors.gatsby : isHomepage ? iconColor : false,
               },
             }}
