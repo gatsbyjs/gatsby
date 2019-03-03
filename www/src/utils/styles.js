@@ -140,3 +140,20 @@ export const svgStyles = {
     },
   },
 }
+
+// This is an exceptionally bad name
+export const linkStyles = {
+  ...scale(-1 / 6),
+  "&&": {
+    alignItems: `center`,
+    border: 0,
+    boxShadow: `none`,
+    color: colors.gray.calm,
+    display: `flex`,
+    fontWeight: `normal`,
+    "&:hover": {
+      background: `none`,
+      color: colors.gatsby,
+    },
+  },
+}
