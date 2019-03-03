@@ -32,22 +32,11 @@ emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
 
 const runCreatePages = async () => {
   pagesDirty = false
-  const plugins = store.getState().plugins
+  const plugins = store.getState().flattenedPlugins
   // Test which plugins implement createPagesStatefully so we can
   // ignore their pages.
   const statefulPlugins = plugins
-    .filter(p => {
-      try {
-        const gatsbyNode = require(`${p.resolve}/gatsby-node`)
-        if (gatsbyNode.createPagesStatefully) {
-          return true
-        } else {
-          return false
-        }
-      } catch (e) {
-        return false
-      }
-    })
+    .filter(plugin => plugin.nodeAPIs.includes(`createPagesStatefully`))
     .map(p => p.id)
 
   const timestamp = Date.now()

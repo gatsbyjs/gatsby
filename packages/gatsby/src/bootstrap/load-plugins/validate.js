@@ -104,12 +104,6 @@ const handleBadExports = ({ apis, badExports }) => {
  * Identify which APIs each plugin exports
  */
 const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
-  const allAPIs = [...apis.node, ...apis.browser, ...apis.ssr]
-  const apiToPlugins = allAPIs.reduce((acc, value) => {
-    acc[value] = []
-    return acc
-  }, {})
-
   // Get a list of bad exports
   const badExports = {
     node: [],
@@ -137,7 +131,6 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
 
     if (pluginNodeExports.length > 0) {
       plugin.nodeAPIs = _.intersection(pluginNodeExports, apis.node)
-      plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
       badExports.node = badExports.node.concat(
         getBadExports(plugin, pluginNodeExports, apis.node)
       ) // Collate any bad exports
@@ -145,9 +138,6 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
 
     if (pluginBrowserExports.length > 0) {
       plugin.browserAPIs = _.intersection(pluginBrowserExports, apis.browser)
-      plugin.browserAPIs.map(browserAPI =>
-        apiToPlugins[browserAPI].push(plugin.name)
-      )
       badExports.browser = badExports.browser.concat(
         getBadExports(plugin, pluginBrowserExports, apis.browser)
       ) // Collate any bad exports
@@ -155,21 +145,21 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
 
     if (pluginSSRExports.length > 0) {
       plugin.ssrAPIs = _.intersection(pluginSSRExports, apis.ssr)
-      plugin.ssrAPIs.map(ssrAPI => apiToPlugins[ssrAPI].push(plugin.name))
       badExports.ssr = badExports.ssr.concat(
         getBadExports(plugin, pluginSSRExports, apis.ssr)
       ) // Collate any bad exports
     }
   })
 
-  return { apiToPlugins, flattenedPlugins, badExports }
+  return { flattenedPlugins, badExports }
 }
 
-const handleMultipleReplaceRenderers = ({ apiToPlugins, flattenedPlugins }) => {
+const handleMultipleReplaceRenderers = ({ flattenedPlugins }) => {
   // multiple replaceRenderers may cause problems at build time
-  if (apiToPlugins.replaceRenderer.length > 1) {
-    const rendererPlugins = [...apiToPlugins.replaceRenderer]
-
+  const rendererPlugins = flattenedPlugins
+    .filter(plugin => plugin.ssrAPIs.includes(`replaceRenderer`))
+    .map(plugin => plugin.name)
+  if (rendererPlugins.length > 1) {
     if (rendererPlugins.includes(`default-site-plugin`)) {
       reporter.warn(`replaceRenderer API found in these plugins:`)
       reporter.warn(rendererPlugins.join(`, `))

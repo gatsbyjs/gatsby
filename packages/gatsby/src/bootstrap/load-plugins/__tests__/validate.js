@@ -128,10 +128,6 @@ describe(`handleBadExports`, () => {
 
 describe(`handleMultipleReplaceRenderers`, () => {
   it(`Does nothing when replaceRenderers is implemented once`, async () => {
-    const apiToPlugins = {
-      replaceRenderer: [`foo-plugin`],
-    }
-
     const flattenedPlugins = [
       {
         resolve: `___TEST___`,
@@ -156,18 +152,13 @@ describe(`handleMultipleReplaceRenderers`, () => {
     ]
 
     const result = handleMultipleReplaceRenderers({
-      apiToPlugins,
       flattenedPlugins,
     })
 
     expect(result).toMatchSnapshot()
   })
 
-  it(`Sets skipSSR when replaceRenderers is implemented more than once`, async () => {
-    const apiToPlugins = {
-      replaceRenderer: [`foo-plugin`, `default-site-plugin`],
-    }
-
+  it.only(`Sets skipSSR when replaceRenderers is implemented more than once`, async () => {
     const flattenedPlugins = [
       {
         resolve: `___TEST___`,
@@ -192,7 +183,6 @@ describe(`handleMultipleReplaceRenderers`, () => {
     ]
 
     const result = handleMultipleReplaceRenderers({
-      apiToPlugins,
       flattenedPlugins,
     })
 
