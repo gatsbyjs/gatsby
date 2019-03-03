@@ -416,8 +416,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? colors.lilac : colors.gray.bright,
             display: `flex`,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
-            fontSize: rhythm(4 / 7),
+            fontSize: rhythm(3 / 6),
           }}
         >
           {hit.humanDownloadsLast30Days}

@@ -174,7 +174,6 @@ class EvaluationTable extends Component {
                       >
                         <td
                           css={{
-                            fontFamily: options.headerFontFamily.join(`,`),
                             paddingBottom: `calc(${rhythm(1)} - 1px)`,
                             "&&": {
                               paddingRight: `${rhythm(1 / 4)}`,

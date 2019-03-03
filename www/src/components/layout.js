@@ -19,9 +19,6 @@ import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
-// Other fonts
-import "typeface-spectral"
-
 let windowWidth
 
 class DefaultLayout extends React.Component {
@@ -57,7 +54,10 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const isHomepage = this.props.location.pathname === `/`
+    const pathname = this.props.location.pathname
+    const isHomepage = pathname === `/`
+    const isBlog =
+      pathname === `/blog/` || pathname.indexOf(`/blog/page/`) === 0
 
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
@@ -164,12 +164,15 @@ class DefaultLayout extends React.Component {
         <div
           className={`main-body`}
           css={{
-            paddingTop: presets.bannerHeight,
+            paddingTop: `calc(${presets.bannerHeight}  + 1rem)`,
             [presets.Md]: {
+              background: isBlog ? colors.ui.whisper : false,
               margin: `0 auto`,
               paddingTop: isHomepage
                 ? presets.bannerHeight
-                : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
+                : `calc(${presets.bannerHeight} + ${
+                    presets.headerHeight
+                  } + 1.5rem)`,
             },
             paddingLeft: `env(safe-area-inset-left)`,
             paddingRight: `env(safe-area-inset-right)`,

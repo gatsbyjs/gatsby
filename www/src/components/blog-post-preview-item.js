@@ -10,7 +10,7 @@ const BlogPostPreviewItem = ({ post, className }) => {
 
   return (
     <article className={className} css={{ position: `relative` }}>
-      <Link to={post.fields.slug}>
+      <Link to={post.fields.slug} css={{ "&&": { color: colors.gray.copy } }}>
         <h2>{post.frontmatter.title}</h2>
         <p css={{ fontWeight: `normal` }}>
           {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
@@ -73,7 +73,7 @@ const BlogPostPreviewItem = ({ post, className }) => {
                 position: `relative`,
                 zIndex: 1,
                 "&&": {
-                  color: `${colors.gatsby}`,
+                  color: colors.gatsby,
                   fontWeight: `normal`,
                   ":hover": {
                     background: colors.ui.bright,

@@ -139,11 +139,11 @@ const FeaturesHeader = () => (
     <h1 id="introduction" style={{ marginTop: 0 }}>
       Features
     </h1>
-    <FuturaParagraph>
+    <p>
       There are many ways to build a website. If you’re considering Gatsby, you
       may also be looking at some alternatives:
-    </FuturaParagraph>
-    <ul css={{ fontFamily: options.headerFontFamily.join(`,`) }}>
+    </p>
+    <ul>
       <li>
         <b>Traditional static site generators</b> such as
         {` `}
@@ -172,11 +172,11 @@ const FeaturesHeader = () => (
         website and customize it.
       </li>
     </ul>
-    <FuturaParagraph>
+    <p>
       The chart below details Gatsby’s capabilities in comparison with a
       representative from each category. Click on any row to see a more detailed
       explanation on that feature and our rating for each system.
-    </FuturaParagraph>
+    </p>
     <h6 id="legend" css={{ textTransform: `uppercase` }}>
       Legend
     </h6>

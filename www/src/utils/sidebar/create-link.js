@@ -102,6 +102,7 @@ const styles = {
     "&&": {
       border: 0,
       boxShadow: `none`,
+      color: colors.gray.copy,
       fontWeight: `normal`,
       "&:hover": {
         background: `transparent`,

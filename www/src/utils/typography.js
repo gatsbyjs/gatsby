@@ -20,7 +20,13 @@ const headerFontFamily = [
 
 const _options = {
   headerFontFamily,
-  bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
+  bodyFontFamily: [
+    `-apple-system`,
+    `BlinkMacSystemFont`,
+    `Times New Roman`,
+    `Times`,
+    `serif`,
+  ],
   monospaceFontFamily: [
     `SFMono-Regular`,
     `Menlo`,
@@ -44,7 +50,7 @@ const _options = {
     `Arial`,
     `sans-serif`,
   ],
-  baseLineHeight: 1.4,
+  baseLineHeight: 1.5,
   baseFontSize: `16px`,
   headerLineHeight: 1.075,
   headerColor: colors.gray.dark,
@@ -126,17 +132,18 @@ const _options = {
       },
       ".gatsby-highlight pre[class*='language-']::before": {
         position: `absolute`,
-        top: `0px`,
+        top: `0`,
         right: `20px`,
         padding: `3px 10px`,
         fontSize: `12px`,
         textAlign: `right`,
-        color: `#444`,
+        color: colors.gray.dark,
         fontWeight: `700`,
         letterSpacing: `0.8px`,
         textTransform: `uppercase`,
-        borderRadius: `0 0 5px 5px`,
+        borderRadius: `0 0 4px 4px`,
         background: `#ddd`,
+        fontFamily: options.monospaceFontFamily.join(`,`),
       },
       ".gatsby-highlight pre[class='language-javascript']::before": {
         content: `'js'`,
@@ -244,22 +251,24 @@ const _options = {
       ".gatsby-resp-image-link + em a": {
         fontWeight: `normal`,
         fontFamily: options.headerFontFamily.join(`,`),
-        color: colors.gatsby,
+        color: colors.lilac,
       },
       ".main-body a": {
-        color: `inherit`,
+        color: colors.lilac,
         textDecoration: `none`,
         transition: `all ${presets.animation.speedFast} ${
           presets.animation.curveDefault
         }`,
-        borderBottom: `1px solid ${colors.ui.bright}`,
-        boxShadow: `inset 0 -2px 0px 0px ${colors.ui.bright}`,
-        fontFamily: options.headerFontFamily.join(`,`),
-        fontWeight: `bold`,
+        borderBottom: `1px solid ${colors.lilac}`,
+        fontWeight: `normal`,
+        // fontSize: `110%`,
+      },
+      ".main-body a:hover": {
+        borderBottomColor: colors.ui.border,
       },
       ".post-body a": {
-        fontSize: `102%`,
-        color: colors.gatsby,
+        color: `${colors.lilac} !important`,
+        fontWeight: `normal`,
       },
       ".post-body figure img": {
         marginBottom: 0,
@@ -270,12 +279,9 @@ const _options = {
         fontSize: `87.5%`,
         marginTop: rhythm(1 / 4),
       },
-      ".main-body a:hover": {
-        background: colors.ui.bright,
-      },
       ".main-body a.anchor": {
         color: `inherit`,
-        fill: colors.gatsby,
+        fill: colors.lilac,
         textDecoration: `none`,
         borderBottom: `none`,
         boxShadow: `none`,
@@ -337,16 +343,6 @@ const _options = {
         height: `348px`,
         border: `none`,
       },
-      [presets.Xs]: {
-        html: {
-          fontSize: `${(17 / 16) * 100}%`,
-        },
-      },
-      [presets.Md]: {
-        html: {
-          fontSize: `${(18 / 16) * 100}%`,
-        },
-      },
       [presets.Lg]: {
         ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-options.blockMarginBottom * 1.5),
@@ -373,7 +369,7 @@ const _options = {
       },
       [presets.Xxl]: {
         html: {
-          fontSize: `${(21 / 16) * 100}%`,
+          fontSize: `${(18 / 16) * 100}%`,
         },
       },
       // PrismJS syntax highlighting token styles
