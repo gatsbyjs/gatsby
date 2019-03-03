@@ -5,7 +5,7 @@ import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
-import { options, rhythm } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 
 class EvaluationTable extends Component {
   constructor() {
