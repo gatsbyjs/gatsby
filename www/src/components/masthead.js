@@ -11,17 +11,15 @@ const MastheadContent = () => (
     css={{
       margin: `0 ${rhythm(presets.gutters.default)}`,
       paddingBottom: rhythm(2),
-      paddingTop: `calc(${presets.headerHeight} + ${
-        presets.bannerHeight
-      } + ${rhythm(1)})`,
+      paddingTop: rhythm(2),
       textAlign: `center`,
-      [presets.Desktop]: {
-        paddingBottom: rhythm(3),
-      },
-      [presets.Hd]: {
+      [presets.Tablet]: {
         paddingTop: `calc(${presets.headerHeight} + ${
           presets.bannerHeight
-        } + ${rhythm(3)})`,
+        } + ${rhythm(1)})`,
+      },
+      [presets.Desktop]: {
+        paddingBottom: rhythm(3),
       },
     }}
   >
