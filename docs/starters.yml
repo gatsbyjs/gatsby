@@ -1971,3 +1971,16 @@
   features:
     - styled-components
     - sticky footer
+- url: https://magazine-example.livingdocs.io/
+  repo: https://github.com/livingdocsIO/gatsby-magazine-example
+  description: This magazine-starter is supposed to help you start out with Livingdocs as a headless CMS.
+  tags:
+    - magazine
+    - livingdocs
+    - headless
+  features:
+    - Photo viewer
+    - Video player
+    - Articles
+    - Recommended Stories
+    - Most Popular
