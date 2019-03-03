@@ -430,24 +430,31 @@ const Result = ({ hit, pathname, query }) => {
               <img
                 src={GatsbyIcon}
                 css={{
-                  width: 20,
+                  height: 12,
                   marginBottom: 0,
                   marginRight: 5,
                   filter: selected ? false : `grayscale(100%)`,
-                  opacity: selected ? false : `0.5`,
+                  opacity: selected ? false : `0.2`,
                 }}
                 alt={`Official Gatsby Plugin`}
               />
             )}
-          {hit.humanDownloadsLast30Days}
-          {` `}
           <span
             css={{
-              color: selected ? colors.lilac : colors.gray.bright,
-              marginLeft: rhythm(1 / 6),
+              width: `4.5em`,
+              textAlign: `right`,
             }}
           >
-            <DownloadArrow />
+            {hit.humanDownloadsLast30Days}
+            {` `}
+            <span
+              css={{
+                color: selected ? colors.lilac : colors.gray.bright,
+                marginLeft: rhythm(1 / 6),
+              }}
+            >
+              <DownloadArrow />
+            </span>
           </span>
         </div>
       </div>
