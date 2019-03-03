@@ -20,9 +20,6 @@ module.exports = {
   radiusLg: 4,
   gutters: {
     default: 1.25,
-    HdR: 2.5,
-    VHdR: 3,
-    VVHdR: 4.5,
   },
   shadowKeyUmbraOpacity: 0.1,
   shadowKeyPenumbraOpacity: 0.07,
@@ -38,4 +35,8 @@ module.exports = {
   bannerHeight: `2.5rem`,
   sidebarUtilityHeight: `2.5rem`,
   pageHeadingDesktopWidth: `3.5rem`,
+  boxShadows: {
+    card: { boxShadow: `0 3px 10px rgba(25, 17, 34, 0.075)` },
+    cardHover: { boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)` },
+  },
 }

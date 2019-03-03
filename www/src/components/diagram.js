@@ -6,7 +6,6 @@ import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
-import { vP } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
@@ -91,14 +90,14 @@ const box = {
   border: `1px solid ${colors.ui.light}`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: colors.ui.whisper,
+  background: `#fff`,
 }
 
 const borderAndBoxShadow = {
+  ...presets.boxShadows.card,
   border: `1px solid ${colors.ui.light}`,
   background: `#fff`,
   width: `100%`,
-  boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
   transform: `translateZ(0)`,
 }
@@ -247,14 +246,10 @@ const Diagram = () => (
       <section
         className="Diagram"
         css={{
-          borderRadius: presets.radiusLg,
           fontFamily: options.headerFontFamily.join(`,`),
-          padding: vP,
+          padding: rhythm(presets.gutters.default),
           textAlign: `center`,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
           flex: `1 1 100%`,
-          borderTop: `1px solid ${colors.ui.light}`,
         }}
       >
         <h1
@@ -270,11 +265,6 @@ const Diagram = () => (
           How Gatsby works
         </h1>
         <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
-          <FuturaParagraph>
-            Gatsby is a free and open source framework based on React for
-            building blazing fast websites and apps
-          </FuturaParagraph>
-          <br />
           <FuturaParagraph>
             Pull data from <em>anywhere</em> in minutes
           </FuturaParagraph>
