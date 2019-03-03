@@ -1,11 +1,11 @@
+jest.mock(`nprogress`)
+
 import NProgress from "nprogress"
 import {
   onClientEntry,
   onRouteUpdateDelayed,
   onRouteUpdate,
 } from "../gatsby-browser"
-
-jest.mock(`nprogress`)
 
 describe(`gatsby-plugin-nprogress`, () => {
   describe(`onClientEntry`, () => {
@@ -16,16 +16,24 @@ describe(`gatsby-plugin-nprogress`, () => {
       createElement.mockReturnValue(element)
       appendChild.mockReturnValue(true)
       NProgress.configure = jest.fn()
+
       onClientEntry(null, { showSpinner: false })
-      expect(NProgress.configure.mock.calls).toMatchSnapshot()
-      expect(element).toMatchSnapshot()
+
+      expect(element.id).toEqual(`nprogress-styles`)
+      expect(element.innerHTML).toMatchSnapshot()
+      expect(NProgress.configure).toHaveBeenCalledWith({
+        color: `#29d`,
+        showSpinner: false,
+      })
     })
   })
 
   describe(`onRouteUpdateDelayed`, () => {
     it(`calls NProgress.start`, () => {
       NProgress.start = jest.fn()
+
       onRouteUpdateDelayed()
+
       expect(NProgress.start).toHaveBeenCalledTimes(1)
     })
   })
@@ -33,7 +41,9 @@ describe(`gatsby-plugin-nprogress`, () => {
   describe(`onRouteUpdate`, () => {
     it(`calls NProgress.done`, () => {
       NProgress.done = jest.fn()
+
       onRouteUpdate()
+
       expect(NProgress.done).toHaveBeenCalledTimes(1)
     })
   })

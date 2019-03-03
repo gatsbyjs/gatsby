@@ -1,20 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`gatsby-plugin-nprogress onClientEntry calls NProgress.configure with the correct styles 1`] = `
-Array [
-  Array [
-    Object {
-      "color": "#29d",
-      "showSpinner": false,
-    },
-  ],
-]
-`;
-
-exports[`gatsby-plugin-nprogress onClientEntry calls NProgress.configure with the correct styles 2`] = `
-Object {
-  "id": "nprogress-styles",
-  "innerHTML": "
+"
     #nprogress {
      pointer-events: none;
     }
@@ -81,6 +68,5 @@ Object {
         transform: rotate(360deg);
       }
     }
-  ",
-}
+  "
 `;
