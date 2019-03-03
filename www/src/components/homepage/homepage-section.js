@@ -12,14 +12,12 @@ const ICON_SIZE = `32px`
 const HomepageSectionRoot = styled(`section`)`
   background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  margin: 0 -${rhythm(presets.gutters.default / 2)};
   padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
-  width: calc(100% + ${rhythm(presets.gutters.default)});
+  width: 100%;
 
   ${presets.Hd} {
-    margin: -1px -${rhythm(presets.gutters.default)};
+    margin: -1px 0;
     padding: ${rhythm(1)} 5%;
-    width: calc(100% + (${rhythm(presets.gutters.default)} * 2));
   }
 
   ${presets.VHd} {
