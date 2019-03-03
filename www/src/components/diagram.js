@@ -94,10 +94,10 @@ const box = {
 }
 
 const borderAndBoxShadow = {
+  ...presets.boxShadows.card,
   border: `1px solid ${colors.ui.light}`,
   background: `#fff`,
   width: `100%`,
-  boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
   transform: `translateZ(0)`,
 }
