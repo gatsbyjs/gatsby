@@ -12,7 +12,7 @@ const {
 } = require(`./constants`)
 
 exports.createPages = async (
-  { actions },
+  { actions, reporter },
   {
     directory = OPTION_DEFAULT_LINK_TEXT,
     externals = [],
@@ -27,11 +27,11 @@ exports.createPages = async (
   const { createPage } = actions
 
   if (!fs.existsSync(directory)) {
-    throw Error(`Invalid REPL directory specified: "${directory}"`)
+    reporter.panic(`Invalid REPL directory specified: "${directory}"`)
   }
 
   if (!fs.existsSync(redirectTemplate)) {
-    throw Error(
+    reporter.panic(
       `Invalid REPL redirectTemplate specified: "${redirectTemplate}"`
     )
   }
@@ -75,7 +75,12 @@ exports.createPages = async (
       }
     })
   } catch (error) {
-    // retrow errors upstream
-    throw error
+    reporter.panic(
+      `
+      Error in gatsby-remark-code-repls plugin: cannot read directory ${directory}.
+      More details can be found in the error reporting below.
+      `,
+      error
+    )
   }
 }
