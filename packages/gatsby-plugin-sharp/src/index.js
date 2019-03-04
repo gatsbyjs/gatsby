@@ -588,7 +588,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const defaultImagePPI = 72 // Standard digital image pixel density
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
-      ? density / density_72PPI
+      ? density / defaultImagePPI
       : 1
 
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
