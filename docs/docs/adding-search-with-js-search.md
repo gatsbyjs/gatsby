@@ -275,7 +275,7 @@ exports.createPages = ({ actions }) => {
       .then(result => {
         const { data } = result
         /**
-         * creates a dynamic page with the data recieved
+         * creates a dynamic page with the data received
          * injects the data into the context object alongside with some options
          * to configure js-search
          */
