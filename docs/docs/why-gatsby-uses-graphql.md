@@ -195,10 +195,10 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
 
 In order to load the product and image data into GraphQL, we need to add a few [Gatsby plugins](/plugins/). Namely, we need plugins to:
 
-- Load the JSON file into GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/))
-- Convert JSON files into GraphQL “nodes” ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/))
+- Load the JSON file into Gatsby’s internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/))
+- Convert JSON files into a format we can query with GraphQL ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/))
 - Optimize images ([`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/))
-- Convert images into GraphQL nodes ([`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/))
+- Add data about optimized images to Gatsby’s data store ([`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/))
 
 In addition to the plugins, we’ll use [`gatsby-image`](/packages/gatsby-image/) to display the optimized images with lazy loading.
 
