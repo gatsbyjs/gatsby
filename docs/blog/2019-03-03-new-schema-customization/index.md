@@ -9,7 +9,7 @@ Today we are releasing a preview of a new core Gatsby API - Schema Customization
 
 I would like to thank our community member [Stefan Probst](https://github.com/stefanprobst), who not only did lots of initial groundwork on the refactoring, but also helped immensely with the follow-up work there. We are really happy to have such a great community and super grateful to Stefan for all his hard work. I'd also like to thank [Pavel Chertorogov](https://github.com/nodkz/), the author of the [graphql-compose](https://graphql-compose.github.io/) library that we used, who's been super responsive to our bug reports and feature requests.
 
-As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can try it by adding `gatsby@2.1.20-alpha.0` as dependency for your Gatsby site. We would really like your help in finding out potential bugs in this code, so we encourage you to try it and report any issues that you encounter in this [this pinned issue](https://github.com/gatsbyjs/gatsby/issues/12272). If you want to contribute to fixing some of those bugs, open PRs against [this branch](https://github.com/gatsbyjs/gatsby/pull/11480).
+As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can try it by adding `gatsby@2.1.20-alpha.0` as dependency for your Gatsby site. We would really like your help in finding out potential bugs in this code, so we encourage you to try it and report any issues that you encounter in [this pinned issue](https://github.com/gatsbyjs/gatsby/issues/12272). If you want to contribute to fixing some of those bugs, open PRs against [this branch](https://github.com/gatsbyjs/gatsby/pull/11480).
 
 # Why was it needed?
 
@@ -165,12 +165,9 @@ createResolvers({
     allAuthorFullNames: {
       type: `[String!]!`,
       resolve(source, args, context, info) {
-        const authors = context.nodeModel.getAllNodes(
-          {
-            type: `AuthorJson`,
-          },
-          { path: context.path }
-        )
+        const authors = context.nodeModel.getAllNodes({
+          type: `AuthorJson`,
+        })
         return authors.map(author => author.name)
       },
     },
@@ -178,7 +175,7 @@ createResolvers({
 })
 ```
 
-Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. In addition to lower lever access functions (`getNode`, `getAllNodes`), full node querying is available in `runQuery`.
+Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. In addition to lower lever access functions (`getNodeById`, `getAllNodes`), full node querying is available in `runQuery`.
 
 You can also see `using-type-definitions` example in the gatsby repository.
 
