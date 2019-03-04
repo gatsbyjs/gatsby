@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.18-alpha.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.17...gatsby-source-shopify@2.0.18-alpha.0) (2019-03-04)
-
-**Note:** Version bump only for package gatsby-source-shopify
-
 ## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.16...gatsby-source-shopify@2.0.17) (2019-02-25)
 
 **Note:** Version bump only for package gatsby-source-shopify

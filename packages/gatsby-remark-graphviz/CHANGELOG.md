@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.0.8-alpha.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.7...gatsby-remark-graphviz@1.0.8-alpha.0) (2019-03-04)
-
-**Note:** Version bump only for package gatsby-remark-graphviz
-
 ## [1.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.6...gatsby-remark-graphviz@1.0.7) (2019-02-20)
 
 **Note:** Version bump only for package gatsby-remark-graphviz

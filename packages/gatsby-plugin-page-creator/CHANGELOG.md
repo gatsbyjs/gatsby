@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.9-alpha.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.8...gatsby-plugin-page-creator@2.0.9-alpha.0) (2019-03-04)
-
-**Note:** Version bump only for package gatsby-plugin-page-creator
-
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.7...gatsby-plugin-page-creator@2.0.8) (2019-02-22)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

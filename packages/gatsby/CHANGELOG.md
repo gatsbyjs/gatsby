@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.1.20-alpha.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.19...gatsby@2.1.20-alpha.0) (2019-03-04)
-
-### Bug Fixes
-
-- **gatsby:** Call onPostBootstrap only once after bootstrap ([#12262](https://github.com/gatsbyjs/gatsby/issues/12262)) ([8fc999f](https://github.com/gatsbyjs/gatsby/commit/8fc999f))
-
 ## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.18...gatsby@2.1.19) (2019-02-28)
 
 ### Bug Fixes

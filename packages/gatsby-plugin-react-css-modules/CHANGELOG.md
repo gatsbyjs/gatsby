@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.8-alpha.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/compare/gatsby-plugin-react-css-modules@2.0.7...gatsby-plugin-react-css-modules@2.0.8-alpha.0) (2019-03-04)
-
-**Note:** Version bump only for package gatsby-plugin-react-css-modules
-
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-react-css-modules/compare/gatsby-plugin-react-css-modules@2.0.6...gatsby-plugin-react-css-modules@2.0.7) (2019-02-04)
 
 ### Bug Fixes
