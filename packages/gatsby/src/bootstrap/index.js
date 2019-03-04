@@ -484,9 +484,13 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
+  let onEndJob
+
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
+      emitter.off(`END_JOB`, onEndJob)
+
       report.log(``)
       report.info(`bootstrap finished - ${process.uptime()} s`)
       report.log(``)
@@ -527,7 +531,8 @@ module.exports = async (args: BootstrapArgs) => {
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
+      onEndJob = () => checkJobsDone(resolve)
+      emitter.on(`END_JOB`, onEndJob)
     })
   }
 }
