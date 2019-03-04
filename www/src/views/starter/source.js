@@ -13,10 +13,10 @@ const Source = ({ startersYaml, repoUrl }) => (
       borderTop: `1px solid ${colors.ui.light}`,
       fontFamily: options.headerFontFamily.join(`,`),
       margin: `0 ${sharedStyles.gutter}`,
-      [presets.Phablet]: {
+      [presets.Sm]: {
         borderTop: 0,
       },
-      [presets.Desktop]: {
+      [presets.Lg]: {
         margin: `0 ${sharedStyles.gutterDesktop}`,
       },
     }}
@@ -27,7 +27,7 @@ const Source = ({ startersYaml, repoUrl }) => (
           padding: 20,
           paddingLeft: startersYaml.featured ? false : 0,
           display: `flex`,
-          [presets.Desktop]: {
+          [presets.Lg]: {
             ...scale(-1 / 6),
           },
           alignItems: `center`,
@@ -68,7 +68,7 @@ const Source = ({ startersYaml, repoUrl }) => (
     <div
       css={{
         display: `none`,
-        [presets.Desktop]: {
+        [presets.Lg]: {
           padding: 20,
           paddingLeft: 0,
           flex: 1,

@@ -8,17 +8,14 @@ const CardHeadline = ({ children }) => (
       ...scale(2 / 5),
       lineHeight: 1.2,
       marginTop: 0,
-      [presets.Tablet]: {
+      [presets.Md]: {
         fontSize: scale(1 / 10).fontSize,
       },
-      [presets.Desktop]: {
+      [presets.Lg]: {
         fontSize: scale(3 / 10).fontSize,
       },
-      [presets.VHd]: {
+      [presets.Xxl]: {
         fontSize: scale(5 / 10).fontSize,
-      },
-      [presets.VVHd]: {
-        fontSize: scale(7 / 10).fontSize,
       },
     }}
   >

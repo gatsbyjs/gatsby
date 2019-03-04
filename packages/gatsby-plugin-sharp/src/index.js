@@ -62,6 +62,12 @@ Promise.promisifyAll(sharp.prototype, { multiArgs: true })
 // adventurous and see what happens with it on.
 sharp.simd(true)
 
+// Handle Sharp's concurrency based on the Gatsby CPU count
+// See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
+// See: https://www.gatsbyjs.org/docs/multi-core-builds/
+const cpuCoreCount = require(`gatsby/dist/utils/cpu-core-count`)
+sharp.concurrency(cpuCoreCount())
+
 const bar = new ProgressBar(
   `Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`,
   {
@@ -88,7 +94,7 @@ const generalArgs = {
   pngCompressionLevel: 9,
   // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
   pngCompressionSpeed: 4,
-  base64: false,
+  base64: true,
   grayscale: false,
   duotone: false,
   pathPrefix: ``,
@@ -557,6 +563,18 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
+async function getTracedSVG(options, file) {
+  if (options.generateTracedSVG && options.tracedSVG) {
+    const tracedSVG = await traceSVG({
+      file,
+      args: options.tracedSVG,
+      fileArgs: options,
+    })
+    return tracedSVG
+  }
+  return undefined
+}
+
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(pluginOptions, args, {})
   // Account for images with a high pixel density. We assume that these types of
@@ -672,19 +690,23 @@ async function fluid({ file, args = {}, reporter, cache }) {
     })
   })
 
-  const base64Width = 20
-  const base64Height = Math.max(1, Math.round((base64Width * height) / width))
-  const base64Args = {
-    duotone: options.duotone,
-    grayscale: options.grayscale,
-    rotate: options.rotate,
-    toFormat: options.toFormat,
-    width: base64Width,
-    height: base64Height,
+  let base64Image
+  if (options.base64) {
+    const base64Width = 20
+    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
+    const base64Args = {
+      duotone: options.duotone,
+      grayscale: options.grayscale,
+      rotate: options.rotate,
+      toFormat: options.toFormat,
+      width: base64Width,
+      height: base64Height,
+    }
+    // Get base64 version
+    base64Image = await base64({ file, args: base64Args, reporter, cache })
   }
 
-  // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter, cache })
+  const tracedSVG = await getTracedSVG(options, file)
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -718,7 +740,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   return {
-    base64: base64Image.src,
+    base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
@@ -729,6 +751,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
+    tracedSVG,
   }
 }
 
@@ -786,15 +809,25 @@ async function fixed({ file, args = {}, reporter, cache }) {
     })
   })
 
-  const base64Args = {
-    duotone: options.duotone,
-    grayscale: options.grayscale,
-    rotate: options.rotate,
-    toFormat: options.toFormat,
+  let base64Image
+  if (options.base64) {
+    const base64Args = {
+      duotone: options.duotone,
+      grayscale: options.grayscale,
+      rotate: options.rotate,
+      toFormat: options.toFormat,
+    }
+
+    // Get base64 version
+    base64Image = await base64({
+      file,
+      args: base64Args,
+      reporter,
+      cache,
+    })
   }
 
-  // Get base64 version
-  const base64Image = await base64({ file, args: base64Args, reporter, cache })
+  const tracedSVG = await getTracedSVG(options, file)
 
   const fallbackSrc = images[0].src
   const srcSet = images
@@ -822,13 +855,14 @@ async function fixed({ file, args = {}, reporter, cache }) {
   const originalName = file.base
 
   return {
-    base64: base64Image.src,
+    base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
     width: images[0].width,
     height: images[0].height,
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
+    tracedSVG,
   }
 }
 
