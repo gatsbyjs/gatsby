@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
@@ -30,11 +30,11 @@ const HomepageBlogPostRoot = styled(
     }
   }
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     width: 320px;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     flex-shrink: 0;
     margin-right: 0;
     margin-bottom: ${rhythm(presets.gutters.default)};
@@ -62,7 +62,7 @@ const Header = styled(`h1`)`
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     font-size: ${props => (props.first ? `1.75rem` : `1.5rem`)};
     padding: ${rhythm(1.5)};
     padding-bottom: 0;
@@ -82,7 +82,7 @@ const Meta = styled(`div`)`
     flex-shrink: 0;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin-top: 1.5rem;
     padding: 0 ${rhythm(1.5)};
   }
@@ -110,7 +110,7 @@ const Author = styled(Link)`
     font-weight: normal;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     :hover {
       span {
         background: ${colors.ui.bright};
@@ -125,7 +125,7 @@ const Excerpt = styled(`p`)`
   line-height: 1.5;
   padding: 0 ${rhythm(4 / 5)};
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin: 0;
     margin-top: 1.5rem;
     padding: 0 ${rhythm(1.5)};
@@ -164,7 +164,7 @@ const ReadMore = styled(Link)`
     margin-right: 0.2rem;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     padding: ${rhythm(1.5)};
 
     span {

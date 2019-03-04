@@ -125,7 +125,7 @@ const styles = {
       content: `''`,
       transform: `scale(0.1)`,
       width: bulletSize,
-      [presets.Tablet]: {
+      [presets.Md]: {
         ...bulletOffset.desktop,
       },
     },
@@ -137,7 +137,7 @@ const styles = {
       opacity: 0,
       transform: `translateX(-200px)`,
       width: 1,
-      [presets.Tablet]: {
+      [presets.Md]: {
         ...bulletOffset.desktop,
       },
     },
@@ -153,7 +153,7 @@ const styles = {
     position: `absolute`,
     width: bulletSize,
     zIndex: -1,
-    [presets.Tablet]: {
+    [presets.Md]: {
       ...bulletOffset.desktop,
     },
   },
