@@ -585,7 +585,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   const { width, height, density, format } = metadata
-  const density_72PPI = 72 // Standard digital image pixel density
+  const defaultImagePPI = 72 // Standard digital image pixel density
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / density_72PPI
