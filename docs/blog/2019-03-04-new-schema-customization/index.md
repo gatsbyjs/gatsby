@@ -21,7 +21,7 @@ We would really appreciate your help in surfacing any bugs in this code, so we e
 
 The motivation to do this change is a two-fold one. Before this feature, Gatsby automatically generated a GraphQL schema for your site based on the data available from your source plugins. While this schema inference is great for getting started it has also been the cause of many problems.
 
-Automatically generating schemas mean that changing your data can result in a changed schema. An updated schema may no longer work with the queries you've written, resulting in errors and confusion. Making schema generation smarter is just pouring more oil on an already burning fire. Tthe core issue is not the inference, but lack of control. Therefore we wanted to give people control over the schema.
+Automatically generating schemas mean that changing your data can result in a changed schema. An updated schema may no longer work with the queries you've written, resulting in errors and confusion. Making schema generation smarter is just pouring more oil on an already burning fire. The core issue is not the inference, but lack of control. Therefore we wanted to give people control over the schema.
 
 On the other hand, we wanted to reevaluate our approach to schemas in general. In the "wild", GraphQL is used very differently than in Gatsby. Schemas aren't as commonly generated from the data sources and often schemas are the source of truth. We want to experiment with enabling people to use that approach with Gatsby too. By allowing people to define types and resolvers, we open new opportunities in that direction. We want to see how the community reacts to these changes and if that will evolve into new approaches to defining schemas in Gatsby.
 
