@@ -18,12 +18,12 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       flexDirection: `column-reverse`,
       padding: sharedStyles.gutter,
       paddingTop: 0,
-      [presets.Phablet]: {
+      [presets.Sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
         paddingBottom: 0,
       },
-      [presets.Desktop]: {
+      [presets.Lg]: {
         padding: sharedStyles.gutterDesktop,
         paddingTop: 0,
         paddingBottom: 0,
@@ -38,7 +38,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexWrap: `wrap`,
         justifyContent: `space-between`,
         flexShrink: 0,
-        [presets.Phablet]: {
+        [presets.Sm]: {
           justifyContent: `flex-start`,
         },
       }}
@@ -79,7 +79,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexGrow: 1,
         borderBottom: `1px solid ${colors.ui.light}`,
         paddingBottom: rhythm(2 / 4),
-        [presets.Phablet]: {
+        [presets.Sm]: {
           borderBottom: 0,
         },
       }}

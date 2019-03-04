@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.20...gatsby-plugin-manifest@2.0.21) (2019-03-04)
+
+### Features
+
+- **gatsby:** configure physical cores, logical_cores or fixed number ([#10257](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/10257)) ([c51440e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/c51440e))
+
 ## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.19...gatsby-plugin-manifest@2.0.20) (2019-02-28)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

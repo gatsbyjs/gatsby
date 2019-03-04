@@ -12,7 +12,7 @@ import { buttonStyles } from "../utils/styles"
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
@@ -70,7 +70,7 @@ const SubmitOnHomepage = styled(`button`)`
     justify-content: space-between;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     width: auto;
     margin-top: 0;
     margin-left: 0.5rem;
