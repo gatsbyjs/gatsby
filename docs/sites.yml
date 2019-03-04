@@ -4592,3 +4592,16 @@
   built_by: Michal Czaplinski mmczaplinski@gmail.com
   built_by_url: https://czaplinski.io
   featured: false
+- title: Weingut Goeschl
+  url: https://www.weingut-goeschl.at/
+  main_url: https://www.weingut-goeschl.at/
+  description: >
+    Weingut Goeschl is a family winery located in Gols, Burgenland in Austria (Österreich)
+  categories:
+    - eCommerce
+    - Webshop
+    - Beverage
+    - Business
+  built_by: Peter Kroyer
+  built_by_url: https://www.peterkroyer.at/
+  featured: false
