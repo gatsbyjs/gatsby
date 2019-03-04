@@ -23,9 +23,14 @@ const _options = {
   bodyFontFamily: [
     `-apple-system`,
     `BlinkMacSystemFont`,
-    `Times New Roman`,
-    `Times`,
-    `serif`,
+    `Segoe UI`,
+    `Roboto`,
+    `Helvetica Neue`,
+    `Arial`,
+    `sans-serif`,
+    `Apple Color Emoji`,
+    `Segoe UI Emoji`,
+    `Segoe UI Symbol`,
   ],
   monospaceFontFamily: [
     `SFMono-Regular`,
