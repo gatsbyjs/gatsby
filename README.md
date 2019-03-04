@@ -39,10 +39,11 @@
 </p>
 
 <h3 align="center">
- <a href="https://gatsbyjs.org/docs/"><img alt="Quickstart" src="readme/Quickstart.png"></a>  <a href="https://gatsbyjs.org/tutorial/"><img alt="Tutorial" src="readme/Tutorial.png"></a>
-  <a href="https://gatsbyjs.org/plugins/"><img alt="Plugins" src="readme/Plugins.png"></a><br>
-  <a href="https://gatsbyjs.org/starters/"><img alt="Starters" src="readme/Starters.png"></a>
-  <a href="https://gatsbyjs.org/showcase/"><img alt="Showcase" src="readme/Showcase.png"></a><br>
+ <a href="https://gatsbyjs.org/docs/"><img alt="Quickstart" src="readme/Quickstart.png"></a>  
+  <a href="https://gatsbyjs.org/tutorial/"><img alt="Tutorial" src="readme/Tutorial.png"></a><br>
+  <a href="https://gatsbyjs.org/plugins/"><img alt="Plugins" src="readme/Plugins.png"></a>
+  <a href="https://gatsbyjs.org/starters/"><img alt="Starters" src="readme/Starters.png"></a><br>
+  <a href="https://gatsbyjs.org/showcase/"><img alt="Showcase" src="readme/Showcase.png"></a>
   <a href="https://gatsbyjs.org/contributing/how-to-contribute/"><img alt="Contribute" src="readme/Contribute.png"></a><br>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
