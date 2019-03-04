@@ -9,7 +9,7 @@ Today we are releasing a preview of a new core Gatsby API - Schema Customization
 
 I would like to thank our community member [Stefan Probst](https://github.com/stefanprobst), who not only did lots of initial groundwork on the refactoring, but also helped immensely with the follow-up work there. We are really happy to have such a great community and super grateful to Stefan for all his hard work. I'd also like to thank [Pavel Chertorogov](https://github.com/nodkz/), the author of the [graphql-compose](https://graphql-compose.github.io/) library that we used, who's been super responsive to our bug reports and feature requests.
 
-As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can try it by adding `gatsby@2.1.20-alpha.0` as a dependency for your Gatsby site. We would really like your help in finding out potential bugs in this code, so we encourage you to try it and report any issues that you encounter in [this pinned issue](https://github.com/gatsbyjs/gatsby/issues/12272). If you want to contribute to fixing some of those bugs, open PRs against [this branch](https://github.com/gatsbyjs/gatsby/pull/11480).
+As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can try it by adding `gatsby@schema-customization` as a dependency for your Gatsby site. We would really like your help in finding out potential bugs in this code, so we encourage you to try it and report any issues that you encounter in [this pinned issue](https://github.com/gatsbyjs/gatsby/issues/12272). If you want to contribute to fixing some of those bugs, open PRs against [this branch](https://github.com/gatsbyjs/gatsby/pull/11480).
 
 # Why was it needed?
 
@@ -305,4 +305,4 @@ You can see the `packages/gatsby/schema/` folder in the [schema refactoring PR](
 
 These schema changes are a first step, in future we want to add more control over the schema and more access to our internal APIs to our users. Our next step would be to add explicit types to the plugins that we maintain. We also want to let those plugins expose their internal APIs through the Model layer, like we did for our root Node API. This way one can reuse the functionality that is only available in plugins in their own resolvers.
 
-We are super excited about those changes. As I mentioned, we really encourage you to try it by adding `gatsby@2.1.20-alpha.0` as a dependency to your Gatsby site. Send us feedback in [this issue](https://github.com/gatsbyjs/gatsby/issues/12272).
+We are super excited about those changes. As I mentioned, we really encourage you to try it by adding `gatsby@schema-customization` as a dependency to your Gatsby site. Send us feedback in [this issue](https://github.com/gatsbyjs/gatsby/issues/12272).
