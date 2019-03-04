@@ -341,7 +341,6 @@
     - Authentication
   features:
     - Uses the Moltin eCommerce Api
-    - React 16 
     - Stripe checkout
     - Semantic-UI
     - Styled components
