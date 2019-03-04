@@ -1989,7 +1989,6 @@
   tags:
     - i18n
     - intl
-    - react-intl
     - v2
     - hooks
     - jest
