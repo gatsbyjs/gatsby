@@ -1988,7 +1988,6 @@
   description: Gatsby v2 i18n starter which makes static pages for every locale and detect your browsers lang. i18n with react-intl.
   tags:
     - i18n
-    - hooks
     - jest
   features:
     - static pages for every language
