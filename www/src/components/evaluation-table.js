@@ -57,7 +57,7 @@ class EvaluationTable extends Component {
                 marginLeft: `auto`,
                 marginRight: `auto`,
                 padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
-                [presets.Mobile]: {
+                [presets.Xs]: {
                   padding: `${rhythm(1 / 2)} 0 ${rhythm(1 / 2)} ${rhythm(
                     1 / 2
                   )}`,
@@ -179,11 +179,11 @@ class EvaluationTable extends Component {
                             "&&": {
                               paddingRight: `${rhythm(1 / 4)}`,
                               paddingLeft: `${rhythm(1 / 4)}`,
-                              [presets.Mobile]: {
+                              [presets.Xs]: {
                                 paddingRight: `${rhythm(1 / 2)}`,
                                 paddingLeft: `${rhythm(1 / 2)}`,
                               },
-                              [presets.Phablet]: {
+                              [presets.Sm]: {
                                 paddingRight: `${rhythm(2)}`,
                                 paddingLeft: `${rhythm(2)}`,
                               },

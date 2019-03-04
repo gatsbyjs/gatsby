@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import axios from "axios"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
@@ -30,7 +30,7 @@ const FeedbackToggle = styled(`div`)`
     background-color: ${colors.gatsbyDark};
   }
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     bottom: 30px;
     right: 30px;
   }
@@ -77,7 +77,7 @@ const FeedbackForm = styled(`div`)`
   border-radius: ${presets.radiusLg}px;
   font-family: ${options.systemFontFamily.join(`,`)};
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     width: 350px;
     right: 30px;
     bottom: 100px;

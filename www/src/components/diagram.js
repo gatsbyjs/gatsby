@@ -1,12 +1,11 @@
 import React, { Fragment } from "react"
-import { keyframes } from "react-emotion"
+import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, scale, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
-import { vP } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
@@ -91,14 +90,14 @@ const box = {
   border: `1px solid ${colors.ui.light}`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: colors.ui.whisper,
+  background: `#fff`,
 }
 
 const borderAndBoxShadow = {
+  ...presets.boxShadows.card,
   border: `1px solid ${colors.ui.light}`,
   background: `#fff`,
   width: `100%`,
-  boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
   transform: `translateZ(0)`,
 }
@@ -124,10 +123,10 @@ const SourceItem = ({ children }) => (
       boxSizing: `border-box`,
       padding: `0 ${rhythm(2 / 3)} ${rhythm(1)}`,
       display: `flex`,
-      [presets.Mobile]: {
+      [presets.Xs]: {
         flex: `1 1 50%`,
       },
-      [presets.Phablet]: {
+      [presets.Sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -165,7 +164,7 @@ const ItemDescription = ({ children }) => (
       lineHeight: 1.2,
       display: `block`,
       color: colors.gatsby,
-      [presets.Hd]: {
+      [presets.Xl]: {
         fontSize: scale(-1 / 5).fontSize,
       },
     }}
@@ -188,7 +187,7 @@ const Gatsby = ({ children }) => (
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [presets.Desktop]: {
+      [presets.Lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -200,7 +199,7 @@ const Gatsby = ({ children }) => (
         display: `inline-block`,
         height: rhythm(1.75),
         width: rhythm(1.75),
-        [presets.Desktop]: {
+        [presets.Lg]: {
           width: rhythm(2.25),
           height: rhythm(2.25),
         },
@@ -247,28 +246,27 @@ const Diagram = () => (
       <section
         className="Diagram"
         css={{
-          borderRadius: presets.radiusLg,
           fontFamily: options.headerFontFamily.join(`,`),
-          padding: vP,
-          marginTop: rhythm(1),
+          padding: rhythm(presets.gutters.default),
           textAlign: `center`,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
           flex: `1 1 100%`,
-          borderTop: `1px solid ${colors.ui.light}`,
-          [presets.Tablet]: {
-            marginTop: 0,
-          },
         }}
       >
-        <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>
+        <h1
+          css={{
+            marginTop: 0, //rhythm(1 / 4),
+            marginBottom: rhythm(3 / 4),
+            ...scale(0.9),
+            [presets.Md]: {
+              marginTop: rhythm(3 / 4),
+            },
+          }}
+        >
           How Gatsby works
         </h1>
         <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
           <FuturaParagraph>
-            Gatsby lets you build blazing fast sites with <em>your data</em>,
-            whatever the source. Liberate your sites from legacy CMSs and fly
-            into the future.
+            Pull data from <em>anywhere</em> in minutes
           </FuturaParagraph>
         </div>
 

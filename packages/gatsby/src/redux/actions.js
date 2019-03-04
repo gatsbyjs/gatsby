@@ -350,44 +350,44 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @example
  * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
+actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   let node = _.get(options, `node`)
 
   // Check if using old method signature. Warn about incorrect usage but get
   // node from nodeID anyway.
   if (typeof options === `string`) {
-    console.warn(
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
-    )
-
-    if (args[0] && args[0].name) {
+    let msg =
+      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
+      `object containing a full node instead: deleteNode({ node }).`
+    if (args && args.name) {
       // `plugin` used to be the third argument
-      console.log(`"deleteNode" was called by ${args[0].name}`)
+      plugin = args
+      msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
+    report.warn(msg)
 
     node = getNode(options)
   }
 
-  let deleteDescendantsActions
-  // It's possible the file node was never created as sometimes tools will
-  // write and then immediately delete temporary files to the file system.
-  if (node) {
-    // Also delete any nodes transformed from this one.
-    const descendantNodes = findChildrenRecursively(node.children)
-    if (descendantNodes.length > 0) {
-      deleteDescendantsActions = descendantNodes.map(n =>
-        actions.deleteNode({ node: getNode(n) }, plugin)
-      )
+  const createDeleteAction = node => {
+    return {
+      type: `DELETE_NODE`,
+      plugin,
+      payload: node,
     }
   }
 
-  const deleteAction = {
-    type: `DELETE_NODE`,
-    plugin,
-    payload: node,
-  }
+  const deleteAction = createDeleteAction(node)
 
-  if (deleteDescendantsActions) {
+  // It's possible the file node was never created as sometimes tools will
+  // write and then immediately delete temporary files to the file system.
+  const deleteDescendantsActions =
+    node &&
+    findChildrenRecursively(node.children)
+      .map(getNode)
+      .map(createDeleteAction)
+
+  if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
   } else {
     return deleteAction
@@ -401,35 +401,25 @@ actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
  * deleteNodes([`node1`, `node2`])
  */
 actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  console.log(
-    `The "deleteNodes" action is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead.`
-  )
+  let msg =
+    `The "deleteNodes" action is now deprecated and will be removed in ` +
+    `Gatsby v3. Please use "deleteNode" instead.`
   if (plugin && plugin.name) {
-    console.log(`"deleteNodes" was called by ${plugin.name}`)
+    msg = msg + ` "deleteNodes" was called by ${plugin.name}`
   }
+  report.warn(msg)
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
     nodes.map(n => findChildrenRecursively(getNode(n).children))
   )
-  let deleteDescendantsActions
-  if (descendantNodes.length > 0) {
-    deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode({ node: getNode(n) }, plugin)
-    )
-  }
 
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: nodes,
+    payload: [...nodes, ...descendantNodes],
   }
-
-  if (deleteDescendantsActions) {
-    return [...deleteDescendantsActions, deleteNodesAction]
-  } else {
-    return deleteNodesAction
-  }
+  return deleteNodesAction
 }
 
 const typeOwners = {}
@@ -617,7 +607,7 @@ actions.createNode = (
     actionOptions.parentSpan.setTag(`nodeType`, node.id)
   }
 
-  let deleteAction
+  let deleteActions
   let updateNodeAction
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
@@ -631,12 +621,17 @@ actions.createNode = (
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
-      const descendantNodes = findChildrenRecursively(oldNode.children)
-      if (descendantNodes.length > 0) {
-        deleteAction = descendantNodes.map(n =>
-          actions.deleteNode({ node: getNode(n) })
-        )
+      const createDeleteAction = node => {
+        return {
+          type: `DELETE_NODE`,
+          plugin,
+          ...actionOptions,
+          payload: node,
+        }
       }
+      deleteActions = findChildrenRecursively(oldNode.children)
+        .map(getNode)
+        .map(createDeleteAction)
     }
 
     updateNodeAction = {
@@ -648,8 +643,8 @@ actions.createNode = (
     }
   }
 
-  if (deleteAction) {
-    return [deleteAction, updateNodeAction]
+  if (deleteActions && deleteActions.length) {
+    return [...deleteActions, updateNodeAction]
   } else {
     return updateNodeAction
   }

@@ -8,26 +8,21 @@ import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
-import URLQuery from "../../components/url-query"
 import { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
-import scrollToAnchor from "../../utils/scroll-to-anchor"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 class FeaturedSites extends Component {
-  onClickHandler = (target, updateQuery, filter) =>
-    target.current
-      ? scrollToAnchor(target.current, () => {
-          updateQuery(({ filters }) => {
-            return { filters: [filter] }
-          })
-        })
-      : () => {}
+  setFilterToFeatured = e => {
+    e.preventDefault()
 
-  render = () => {
-    const { featured, showcase } = this.props
+    this.props.setFilters(`Featured`)
+  }
+
+  render() {
+    const { featured, setFilters } = this.props
 
     return (
       <section
@@ -36,7 +31,7 @@ class FeaturedSites extends Component {
           margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
           position: `relative`,
           display: `none`,
-          [presets.Desktop]: {
+          [presets.Lg]: {
             display: `block`,
           },
         }}
@@ -82,40 +77,34 @@ class FeaturedSites extends Component {
           >
             Featured Sites
           </h1>
-          <URLQuery>
-            {(_, updateQuery) => (
-              <a
-                href="#showcase"
-                css={{
-                  ...styles.withTitleHover,
-                  display: `none`,
-                  [presets.Phablet]: {
-                    display: `block`,
-                  },
-                  "&&": {
-                    ...scale(-1 / 6),
-                    boxShadow: `none`,
-                    borderBottom: 0,
-                    color: colors.lilac,
-                    cursor: `pointer`,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    fontWeight: `normal`,
-                    "&:hover": {
-                      background: `transparent`,
-                      color: colors.gatsby,
-                    },
-                  },
-                }}
-                onClick={this.onClickHandler(showcase, updateQuery, `Featured`)}
-              >
-                <span className="title">View all</span>
-                &nbsp;
-                <MdArrowForward
-                  style={{ marginLeft: 4, verticalAlign: `sub` }}
-                />
-              </a>
-            )}
-          </URLQuery>
+          <a
+            href="#showcase"
+            css={{
+              ...styles.withTitleHover,
+              display: `none`,
+              [presets.Sm]: {
+                display: `block`,
+              },
+              "&&": {
+                ...scale(-1 / 6),
+                boxShadow: `none`,
+                borderBottom: 0,
+                color: colors.lilac,
+                cursor: `pointer`,
+                fontFamily: options.headerFontFamily.join(`,`),
+                fontWeight: `normal`,
+                "&:hover": {
+                  background: `transparent`,
+                  color: colors.gatsby,
+                },
+              },
+            }}
+            onClick={this.setFilterToFeatured}
+          >
+            <span className="title">View all</span>
+            &nbsp;
+            <MdArrowForward style={{ marginLeft: 4, verticalAlign: `sub` }} />
+          </a>
           <div
             css={{
               display: `flex`,
@@ -130,7 +119,7 @@ class FeaturedSites extends Component {
                 marginRight: 15,
                 fontFamily: options.headerFontFamily.join(`,`),
                 display: `none`,
-                [presets.Tablet]: {
+                [presets.Md]: {
                   display: `block`,
                 },
               }}
@@ -203,7 +192,7 @@ class FeaturedSites extends Component {
                     ...scale(-1 / 6),
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [presets.Desktop]: {
+                    [presets.Lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -219,8 +208,7 @@ class FeaturedSites extends Component {
                   )}
                   <ShowcaseItemCategories
                     categories={node.categories}
-                    onClickHandler={this.onClickHandler}
-                    showcase={showcase}
+                    onCategoryClick={c => setFilters(c)}
                   />
                 </div>
               </div>
@@ -230,84 +218,71 @@ class FeaturedSites extends Component {
                 display: `flex`,
               }}
             >
-              <URLQuery>
-                {(_, updateQuery) => (
-                  <a
-                    href="#showcase"
+              <a
+                href="#showcase"
+                css={{
+                  marginRight: `${rhythm(3 / 4)} !important`,
+                  backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                  borderRadius: presets.radius,
+                  textAlign: `center`,
+                  "&&": {
+                    border: `1px solid ${colors.ui.light}`,
+                    boxShadow: `none`,
+                    transition: `all ${presets.animation.speedDefault} ${
+                      presets.animation.curveDefault
+                    }`,
+                    "&:hover": {
+                      background: `#fff`,
+                      transform: `translateY(-3px)`,
+                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                    },
+                  },
+                  ...styles.featuredSitesCard,
+                }}
+                onClick={this.setFilterToFeatured}
+              >
+                <div
+                  css={{
+                    borderRadius: presets.radius,
+                    display: `flex`,
+                    alignItems: `center`,
+                    position: `relative`,
+                    flexBasis: `100%`,
+                  }}
+                >
+                  <span
                     css={{
-                      marginRight: `${rhythm(3 / 4)} !important`,
-                      backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                      borderRadius: presets.radius,
-                      textAlign: `center`,
-                      "&&": {
-                        border: `1px solid ${colors.ui.light}`,
-                        boxShadow: `none`,
-                        transition: `all ${presets.animation.speedDefault} ${
-                          presets.animation.curveDefault
-                        }`,
-                        "&:hover": {
-                          background: `#fff`,
-                          transform: `translateY(-3px)`,
-                          boxShadow: `0 8px 20px ${hex2rgba(
-                            colors.lilac,
-                            0.5
-                          )}`,
-                        },
-                      },
-                      ...styles.featuredSitesCard,
+                      margin: `0 auto`,
+                      color: colors.gatsby,
                     }}
-                    onClick={this.onClickHandler(
-                      showcase,
-                      updateQuery,
-                      `Featured`
-                    )}
                   >
-                    <div
+                    <span
                       css={{
-                        borderRadius: presets.radius,
-                        display: `flex`,
-                        alignItems: `center`,
-                        position: `relative`,
-                        flexBasis: `100%`,
+                        height: 44,
+                        width: `auto`,
+                        display: `block`,
+                        margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
+                        [presets.Md]: {
+                          height: 64,
+                        },
+                        [presets.Xl]: {
+                          height: 72,
+                        },
+
+                        "& svg": {
+                          height: `100%`,
+                          ...svgStyles.active,
+                        },
                       }}
                     >
                       <span
-                        css={{
-                          margin: `0 auto`,
-                          color: colors.gatsby,
-                        }}
-                      >
-                        <span
-                          css={{
-                            height: 44,
-                            width: `auto`,
-                            display: `block`,
-                            margin: `0 auto ${rhythm(
-                              options.blockMarginBottom
-                            )}`,
-                            [presets.Tablet]: {
-                              height: 64,
-                            },
-                            [presets.Hd]: {
-                              height: 72,
-                            },
-
-                            "& svg": {
-                              height: `100%`,
-                              ...svgStyles.active,
-                            },
-                          }}
-                        >
-                          <span
-                            dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
-                          />
-                        </span>
-                        View all Featured Sites
-                      </span>
-                    </div>
-                  </a>
-                )}
-              </URLQuery>
+                        dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
+                      />
+                    </span>
+                    View all Featured Sites
+                  </span>
+                </div>
+              </a>
             </div>
           </div>
           <div

@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
@@ -14,7 +14,7 @@ const EcosystemSectionRoot = styled(`section`)`
   padding: 0 ${rhythm(options.blockMarginBottom)};
   margin-bottom: ${rhythm(1 / 2)};
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
     border-radius: ${presets.radiusLg}px;
     display: flex;
@@ -31,7 +31,7 @@ const EcosystemSectionRoot = styled(`section`)`
     }
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     flex-basis: calc(33.33% - 20px);
     max-height: 100%;
 

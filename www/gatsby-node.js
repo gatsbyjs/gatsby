@@ -83,6 +83,16 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/docs/how-to-create-an-issue/`,
+    toPath: `/contributing/how-to-create-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-label-an-issue/`,
+    toPath: `/contributing/how-to-label-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/contributor-swag/`,
     toPath: `/contributing/contributor-swag/`,
     isPermanent: true,
@@ -200,6 +210,24 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/add-offline-support`,
     toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/create-source-plugin/`,
+    toPath: `/docs/creating-a-source-plugin/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/create-transformer-plugin/`,
+    toPath: `/docs/creating-a-transformer-plugin/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/plugin-authoring/`,
+    toPath: `/docs/how-plugins-work/`,
     isPermanent: true,
   })
 

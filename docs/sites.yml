@@ -4419,3 +4419,152 @@
     - Portfolio
   built_by: Maxim Andries
   featured: false
+- title: The Tenon.io blog
+  main_url: https://blog.tenon.io/
+  url: https://blog.tenon.io/
+  description: >
+    The Tenon.io blog features articles on accessibility written by some of the industry's leading lights and includes news, guidance, and education.
+  categories:
+    - Accessibility
+    - Blog
+    - Education
+  built_by: Tenon.io
+  built_by_url: https://tenon.io
+  featured: false
+- title: Algolia
+  url: https://algolia.com
+  main_url: https://algolia.com
+  description: >
+    Algolia helps businesses across industries quickly create relevant, scalable, and lightning fast search and discovery experiences.
+  categories:
+    - Web Development
+    - Technology
+    - Open Source
+    - Featured
+  built_by: Algolia
+  featured: true
+- title: GVD Renovations
+  url: https://www.gvdrenovations.com/
+  main_url: https://www.gvdrenovations.com/
+  description: >
+    GVD Renovations is a home improvement contractor with a well known reputation as a professional, quality contractor in California.
+  categories:
+    - Construction
+    - Business
+  built_by: David Krasniy
+  built_by_url: http://dkrasniy.com
+  featured: false
+- title: Styled System
+  url: https://styled-system.com/
+  main_url: https://styled-system.com/
+  source_url: https://github.com/styled-system/styled-system/tree/master/docs
+  description: >
+    Style props for rapid UI development.
+  categories:
+    - Design System
+    - Styles
+    - Type Scale
+    - Responsive Design
+  built_by: Brent Jackson
+  built_by_url: https://jxnblk.com/
+- title: Timehacker
+  url: https://timehacker.app
+  main_url: https://timehacker.app
+  description: >
+    Procrastination killer, automatic time tracking app to skyrocket your productivity
+  categories:
+    - Productivity
+    - App
+    - Technology
+    - Marketing
+    - Landing Page
+  built_by: timehackers
+  featured: false
+- title: Little & Big
+  main_url: "https://www.littleandbig.com.au/"
+  url: "https://www.littleandbig.com.au/"
+  description: >
+    Little & Big exists with the aim to create Websites, Apps, E-commerce stores
+    that are consistently unique and thoughtfully crafted, every time.
+  categories:
+    - Agency
+    - Design
+    - Web Development
+    - Portfolio
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
+  featured: false
+- title: Cat Knows
+  main_url: "https://catnose99.com/"
+  url: "https://catnose99.com/"
+  description: >
+    Personal blog built with Gatsby v2.
+  categories:
+    - Blog
+    - Web Development
+  built_by: CatNose
+  built_by_url: "https://twitter.com/catnose99"
+  featured: false
+- title: just some dev
+  url: https://www.iamdeveloper.com
+  main_url: https://www.iamdeveloper.com
+  source_url: https://github.com/nickytonline/www.iamdeveloper.com
+  description: >
+    Just some software developer writing things ✏️
+  categories:
+    - Blog
+  built_by: Nick Taylor
+  built_by_url: https://www.iamdeveloper.com
+  featured: false
+- title: xfuture's blog
+  url: https://www.xfuture-blog.com/
+  main_url: https://www.xfuture-blog.com/
+  source_url: https://github.com/xFuture603/xfuture-blog
+  description: >
+    A blog about Devops, Web development, and my insights as a systems engineer.
+  categories:
+    - Blog
+  built_by: Daniel Uhlmann
+  built_by_url: https://www.xfuture-blog.com/
+- title: Mayne's Blog
+  main_url: "https://gine.me/"
+  url: "https://gine.me/page/1"
+  source_url: "https://github.com/mayneyao/gine-blog"
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+- title: Bakedbird
+  url: https://bakedbird.com
+  main_url: https://bakedbird.com
+  description: >
+    Eleftherios Psitopoulos - A frontend developer from Greece ☕
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Eleftherios Psitopoulos
+  built_by_url: https://bakedbird.com
+- title: Benjamin Lannon
+  url: https://lannonbr.com
+  main_url: https://lannonbr.com
+  source_url: https://github.com/lannonbr/Portfolio-gatsby
+  description: >
+    Personal portfolio of Benjamin Lannon
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
+  featured: false
+- title: Kaleb McKelvey
+  url: https://kalebmckelvey.com
+  main_url: https://kalebmckelvey.com
+  source_url: https://github.com/avatar-kaleb/kalebmckelvey-site
+  description: >
+    Personal portfolio of Kaleb McKelvey!
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Kaleb McKelvey
+  built_by_url: https://kalebmckelvey.com
+  featured: false

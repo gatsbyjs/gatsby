@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 import { Link } from "gatsby"
 
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -73,7 +73,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     background: ${colors.gatsby};
     color: white;
     flex-shrink: 0;
@@ -93,7 +93,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${presets.Hd} {
+  ${presets.Xl} {
     width: 160px;
   }
 `
@@ -123,7 +123,7 @@ class HomepageBlogPosts extends Component {
   }
 
   componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(presets.desktop)
+    this.desktopMediaQuery = window.matchMedia(presets.lg)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
