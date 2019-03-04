@@ -4628,3 +4628,12 @@
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
+- title: Josef Aidt
+  url: https://josefaidt.me
+  main_url: https://josefaidt.me
+  source_url: https://github.com/josefaidt/josefaidt.github.io
+  description: >
+    Personal website, blog, portfolio for Josef Aidt
+  built_by: Josef Aidt
+  built_by_url: https://twitter.com/garlicbred
+  featured: false
