@@ -9,7 +9,7 @@ Today we are releasing a preview of a new core Gatsby API - Schema Customization
 
 I would like to thank our community member [Stefan Probst](https://github.com/stefanprobst), who not only did lots of initial groundwork on the refactoring, but also helped immensely with the follow-up work there. We are really happy to have such a great community and super grateful to Stefan for all his hard work. I'd also like to thank [Pavel Chertorogov](https://github.com/nodkz/), the author of the [graphql-compose](https://graphql-compose.github.io/) library that we used, who's been super responsive to our bug reports and feature requests.
 
-As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can try it by adding `gatsby@2.1.20-alpha.0` as dependency for your Gatsby site. We would really like your help in finding out potential bugs in this code, so we encourage you to try it and report any issues that you encounter in [this pinned issue](https://github.com/gatsbyjs/gatsby/issues/12272). If you want to contribute to fixing some of those bugs, open PRs against [this branch](https://github.com/gatsbyjs/gatsby/pull/11480).
+As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can try it by adding `gatsby@2.1.20-alpha.0` as a dependency for your Gatsby site. We would really like your help in finding out potential bugs in this code, so we encourage you to try it and report any issues that you encounter in [this pinned issue](https://github.com/gatsbyjs/gatsby/issues/12272). If you want to contribute to fixing some of those bugs, open PRs against [this branch](https://github.com/gatsbyjs/gatsby/pull/11480).
 
 # Why was it needed?
 
@@ -21,16 +21,16 @@ On the other hand, we wanted to reevaluate our approach to schema in general. In
 
 There are two main additions to the API:
 
-1. `createTypes` action, which allows one to add, extend or fix the types by passing their type definition using [Graphql SDL](https://graphql.org/learn/schema/).
-2. `createResolvers` Gatsby Node API, that can add or override resolvers on any types and fields in the schema. It can also add new fields with such resolvers.
+1. A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [Graphql SDL](https://graphql.org/learn/schema/).
+2. A `createResolvers` Gatsby Node API that can add or override resolvers on any types and fields in the schema. It can also add new fields with such resolvers.
 
-Why the two APIs? `createTypes` primary purpose is to _fix_ the definition for some of the Node type. Often one is totally happy with default resolvers that Gatsby provides and the only issue is that inference can change based on the data changes.
+Why the two APIs? `createTypes` primary purpose is to _fix_ the definition for some of the Node type. Often one is totally happy with the default resolvers that Gatsby provides and the only issue is that inference can change based on data changes.
 
-On the other hand, `createResolvers` is to add _additional functionality_ to types. `createResolvers` also allows adding new _root fields_ to Query type.
+On the other hand, `createResolvers` is to add _extra functionality_ to types. `createResolvers` also allows adding new _root fields_ to Query type.
 
 ## `createTypes`
 
-Let's consider an example with `gatsby-source-filesystem`, where we are loading data from `authors.json` file. It has the following contents:
+Let's consider an example with `gatsby-source-filesystem`, where we are loading data from an `authors.json` file. It has the following contents:
 
 ```json
 [
@@ -56,7 +56,7 @@ type AuthorsJson implements Node {
 }
 ```
 
-However this can break if we accidentally add invalid date as a birthday for a new node.
+However this can break if we accidentally add an invalid date as a birthday for a new node.
 
 ```json
 [
@@ -86,7 +86,7 @@ type AuthorsJson implements Node {
 }
 ```
 
-Luckily, now we can use `createTypes` action to force birthday to be a Date.
+Luckily, now we can use the `createTypes` action to force birthday to be a Date.
 
 ```js
 exports.sourceNodes = ({ actions }) => {
@@ -132,7 +132,7 @@ type AuthorJson implements Node @infer(noDefaultResolvers: true) {
 
 ## `createResolvers`
 
-This is a similar API to `setFieldsOnGraphQLNodeType` in that it allows to add new fields and resolvers to types. However, this one is run last, so you'd have all the schema available to you in it. It is also possible to extend the `Query` type to add custom root resolvers, which enables a powerful resolver-based approach to querying your data sources. `createResolvers` is called after third-party schemas are merged (eg ones added by `gatsby-source-graphql`), so you can extend those schemas too.
+This is a similar API to `setFieldsOnGraphQLNodeType` in that it allows you to add new fields and resolvers to types. However, this one is run last, so you'd have all the schema available to you in it. It is also possible to extend the `Query` type to add custom root resolvers, which enables a powerful resolver-based approach to querying your data sources. `createResolvers` is called after third-party schemas are merged (eg ones added by `gatsby-source-graphql`), so you can extend those schemas too.
 
 ```js
 exports.createResolvers = ({ createResolvers, schema }) => {
@@ -175,17 +175,17 @@ createResolvers({
 })
 ```
 
-Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. In addition to lower lever access functions (`getNodeById`, `getAllNodes`), full node querying is available in `runQuery`.
+Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. In addition to lower level access functions (`getNodeById`, `getAllNodes`), full node querying is available in `runQuery`.
 
-You can also see `using-type-definitions` example in the gatsby repository.
+You can also see the `using-type-definitions` example in the Gatsby repository.
 
 # Other niceties
 
-Refactoring schema generation allowed us to fix some long-standing bugs and issues that we wanted to fix.
+Refactoring the schema generation allowed us to fix some related long-standing bugs and issues.
 
 ### Type Names
 
-Previously, type names were generated with names like `internal_2` or `SomeType_2`, which could be pretty confusing. We've normalized all the names, there shouldn't be any additional postfixes. If you have relied on generated names as above, this branch will break it to you. However, we never considered this types our public API, partially because of the above issue. Now, however, you can trust that naming of the types would be much more stable.
+Previously, type names were generated with names like `internal_2` or `SomeType_2`, which could be pretty confusing. We've normalized all the names, there shouldn't be any additional postfixes. If you have relied on generated names as above, this branch will break for you. However, we never considered these types to be part our public API, partially because of the above issue. Now, however, you can trust that naming of the types should be stable.
 
 ### Connection `nodes` field
 
@@ -217,14 +217,14 @@ When you have many connections, this becomes pretty tedious, especially destruct
 
 ### Inference quirks
 
-We've had some quirks in inferrence that was ordering dependant. We've made all inference more deterministic.
+We've had some quirks in inference that were ordering dependant. We've made all inference deterministic.
 
 1. Mix of date and non-date strings is always a string
-2. Conflicting fields names always prefers Node reference first and then canonical name of the field.
+2. Conflicting field names always prefer Node references first and then canonical name of the field.
 
 # How did we do it?
 
-The biggest issue with building GraphQL schemas with `graphql-js` is that `graphql-js` expects all types to be final at the moment where either schema is created or one inspects the fields of the type. This is solved in `graphql-js` by using _thunks_, non-argument functions that refer to types in some global context. With hand-written schemas it's usually type definitions in the same file as the newly defined type, but this isn't available in generated schema situation.
+The biggest issue with building GraphQL schemas with `graphql-js` is that `graphql-js` expects all types to be final at the moment where either the schema is created or one inspects the fields of the type. This is solved in `graphql-js` by using _thunks_, non-argument functions that refer to types in some global context. With hand-written schemas usually there are type definitions in the same file as the newly defined type, but this isn't available in a generated schema situation.
 
 ```js
 const Foo = graphql.GraphQLObjectType({
@@ -241,7 +241,7 @@ const Foo = graphql.GraphQLObjectType({
 })
 ```
 
-To solve this issues, a pattern called _Type Registry_ has been widely used. Type registry is some kind of abstraction that holds types inside it and allows other types to retrieve them.
+To solve these issues, a pattern called _Type Registry_ has been widely used. A type registry is an abstraction that holds types inside it and allows other types to retrieve them.
 
 ```js
 // some global state type registry
@@ -261,9 +261,9 @@ const Foo = graphql.GraphQLObjectType({
 })
 ```
 
-After all types are collected into type registry, it can be converted to a normal GraphQL schema. Other common features include being able to generate types like input objects and filter from the types held in type registry.
+After all types are collected into the type registry, the registry can be converted to a normal GraphQL schema. Other common features include being able to generate types like input objects and filter from the types held in the type registry.
 
-We didn't want to implement type registry and all the related things ourselves. Thankfully, there is a library just for that - [graphql-compose](https://graphql-compose.github.io/). We opted to use it and it saved us lots of time. I really recommend this library to anyone, especially if you plan to generate the types.
+We didn't want to implement a type registry and all the related parts ourselves. Thankfully, there is a library just for that - [graphql-compose](https://graphql-compose.github.io/). We opted to use it and it saved us lots of time. I really recommend this library to anyone, especially if you plan to generate types.
 
 ```js
 // global schema composer
@@ -286,21 +286,21 @@ const Foo = SchemaComposer.TypeComposer.create(({
 
 The final schema pipeline that we implemented works like this:
 
-1. We collect all types that are created with `createTypes` and add them to compose type registry (called _Schema Composer_).
+1. We collect all types that are created with `createTypes` and add them to the compose type registry (called _Schema Composer_)
 2. We go through all the collected nodes and we infer types for them
 3. We merge user defined types with inferred types and add them to the composer
 4. We add default resolvers for type fields, such as for `File` and `Date` fields
-5. `setFieldsOnNodeType` is called and those fields are added to the types.
+5. `setFieldsOnNodeType` is called and those fields are added to the types
 6. We create derived input objects, such as filter and sort and then create pagination types such as Connections
 7. Root level resolvers are created for all node types
-8. Third-party schemas are merged into Gatsby schema
-9. `createResolvers` api is called and resulting resolvers are added to the schema
+8. Third-party schemas are merged into the Gatsby schema
+9. The `createResolvers` API is called and resulting resolvers are added to the schema
 10. We generate the schema
 
 You can see the `packages/gatsby/schema/` folder in the [schema refactoring PR](https://github.com/gatsbyjs/gatsby/pull/11480) to learn more about the code.
 
 # Further work
 
-Those schema changes are just a first step. We want to add more control over the schema and more access to our internal APIs to our users. Our next step would be to add explicit types to the plugins that we maintain. We also want to let those plugins expose their internal APIs through the Model layer, like we did for our root Node API. This way one can reuse the functionality that is only available in plugins in their own resolvers.
+These schema changes are a first step, in future we want to add more control over the schema and more access to our internal APIs to our users. Our next step would be to add explicit types to the plugins that we maintain. We also want to let those plugins expose their internal APIs through the Model layer, like we did for our root Node API. This way one can reuse the functionality that is only available in plugins in their own resolvers.
 
-We are super excited about those changes. As I mentioned, we really encourage you to try it by adding `gatsby@2.1.20-alpha.0` as dependency for your Gatsby site. Send us feedback in [this issue](https://github.com/gatsbyjs/gatsby/issues/12272).
+We are super excited about those changes. As I mentioned, we really encourage you to try it by adding `gatsby@2.1.20-alpha.0` as a dependency to your Gatsby site. Send us feedback in [this issue](https://github.com/gatsbyjs/gatsby/issues/12272).
