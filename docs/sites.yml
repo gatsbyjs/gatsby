@@ -4568,4 +4568,15 @@
     - Web Development
   built_by: Aravind Balla
   built_by_url: https://aravindballa.com
+- title: Kaleb McKelvey
+  url: https://kalebmckelvey.com
+  main_url: https://kalebmckelvey.com
+  source_url: https://github.com/avatar-kaleb/kalebmckelvey-site
+  description: >
+    Personal portfolio of Kaleb McKelvey!
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Kaleb McKelvey
+  built_by_url: https://kalebmckelvey.com
   featured: false
