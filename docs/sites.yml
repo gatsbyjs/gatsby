@@ -4647,7 +4647,6 @@
     - Education
   built_by: Htet Wai Yan Soe
   built_by_url: https://github.com/johnreginald
-=======
 - title: AquaGruppen Vattenfilter
   url: https://aquagruppen.se
   main_url: https://aquagruppen.se/
@@ -4658,5 +4657,4 @@
     - Technology
   built_by: Johan Eliasson
   built_by_url: https://github.com/elitan
->>>>>>> added aaquagruppen.se to docs/sites.yml
   featured: false
