@@ -4592,6 +4592,19 @@
   built_by: Michal Czaplinski mmczaplinski@gmail.com
   built_by_url: https://czaplinski.io
   featured: false
+- title: Interactive Investor (ii)
+  url: https://www.ii.co.uk
+  main_url: https://www.ii.co.uk
+  description: >
+    Hybrid (static/dynamic) Gatsby web app for ii's free research, news and analysis, discussion and product marketing site.
+  categories:
+    - Banking
+    - Business
+    - Finance
+    - Technology
+  built_by: Interactive Investor (ii)
+  built_by_url: https://www.ii.co.uk
+  featured: false
 - title: Weingut Goeschl
   url: https://www.weingut-goeschl.at/
   main_url: https://www.weingut-goeschl.at/
