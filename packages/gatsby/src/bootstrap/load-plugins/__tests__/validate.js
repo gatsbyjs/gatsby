@@ -158,7 +158,7 @@ describe(`handleMultipleReplaceRenderers`, () => {
     expect(result).toMatchSnapshot()
   })
 
-  it.only(`Sets skipSSR when replaceRenderers is implemented more than once`, async () => {
+  it(`Sets skipSSR when replaceRenderers is implemented more than once`, async () => {
     const flattenedPlugins = [
       {
         resolve: `___TEST___`,
