@@ -38,23 +38,23 @@ const styles = {
     zIndex: 1,
     top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     ...scrollbarStyles,
-    [presets.Tablet]: {
+    [presets.Md]: {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
       background: colors.ui.whisper,
       borderRight: `1px solid ${colors.ui.light}`,
     },
-    [presets.Desktop]: {
+    [presets.Lg]: {
       width: widthLarge,
     },
   },
   content: {
-    [presets.Tablet]: {
+    [presets.Md]: {
       display: `block`,
       paddingLeft: widthDefault,
     },
-    [presets.Desktop]: {
+    [presets.Lg]: {
       paddingLeft: widthLarge,
     },
   },

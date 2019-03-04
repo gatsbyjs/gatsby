@@ -45,7 +45,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -81,7 +81,7 @@ const Title = styled(`h1`)`
 const Form = styled(EmailCaptureForm)`
   margin-top: 1.25rem;
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin-top: 0;
   }
 `

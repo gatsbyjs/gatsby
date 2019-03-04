@@ -337,17 +337,17 @@ const _options = {
         height: `348px`,
         border: `none`,
       },
-      [presets.Mobile]: {
+      [presets.Xs]: {
         html: {
           fontSize: `${(17 / 16) * 100}%`,
         },
       },
-      [presets.Tablet]: {
+      [presets.Md]: {
         html: {
           fontSize: `${(18 / 16) * 100}%`,
         },
       },
-      [presets.Desktop]: {
+      [presets.Lg]: {
         ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-options.blockMarginBottom * 1.5),
           marginRight: rhythm(-options.blockMarginBottom * 1.5),
@@ -371,7 +371,7 @@ const _options = {
           )} ${rhythm(options.blockMarginBottom / 2)}`,
         },
       },
-      [presets.VVHd]: {
+      [presets.Xxl]: {
         html: {
           fontSize: `${(21 / 16) * 100}%`,
         },

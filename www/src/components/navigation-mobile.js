@@ -70,7 +70,7 @@ const MobileNavigation = () => (
         minHeight: presets.headerHeight,
         fontFamily: typography.options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [presets.Tablet]: {
+        [presets.Md]: {
           display: `none`,
         },
       }}

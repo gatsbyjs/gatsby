@@ -211,7 +211,7 @@ class Search extends Component {
       <div
         css={{
           paddingBottom: rhythm(2.5),
-          [presets.Tablet]: {
+          [presets.Md]: {
             paddingBottom: 0,
           },
         }}
@@ -251,7 +251,7 @@ class Search extends Component {
               height: searchMetaHeight,
               paddingLeft: rhythm(3 / 4),
               paddingRight: rhythm(3 / 4),
-              [presets.Tablet]: {
+              [presets.Md]: {
                 fontSize: scale(-1 / 4).fontSize,
               },
             }}
@@ -270,7 +270,7 @@ class Search extends Component {
         <div>
           <div
             css={{
-              [presets.Tablet]: {
+              [presets.Md]: {
                 height: `calc(100vh - ${presets.headerHeight} - ${
                   presets.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
