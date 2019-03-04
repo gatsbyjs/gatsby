@@ -20,7 +20,7 @@ Using the Amplify console, you can now easily deploy your application to AWS wit
 First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
 
 ```sh
-npm install - global gatsby-cli
+npm install --global gatsby-cli
 ```
 
 Next, we'll create a new Gatsby site:
