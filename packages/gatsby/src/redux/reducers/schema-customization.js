@@ -30,6 +30,12 @@ module.exports = (
         types,
       }
     }
+    case `DELETE_CACHE`:
+      return {
+        composer: null,
+        thirdPartySchemas: [],
+        types: [],
+      }
     default:
       return state
   }

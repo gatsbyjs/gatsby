@@ -4,6 +4,7 @@ const {
   isIntrospectionType,
   GraphQLInterfaceType,
   GraphQLUnionType,
+  GraphQLObjectType,
 } = require(`graphql`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -129,22 +130,30 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(typeOrTypeDef => {
     if (typeof typeOrTypeDef === `string`) {
       const addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
-      addedTypes.forEach(type => {
-        let typeComposer
-        if (type instanceof GraphQLInterfaceType) {
-          typeComposer = schemaComposer.getOrCreateIFTC(type.name)
-        } else if (type instanceof GraphQLUnionType) {
-          typeComposer = schemaComposer.getOrCreateUTC(type.name)
-        }
-        if (typeComposer) {
-          typeComposer.setResolveType(node => node.internal.type)
-          schemaComposer.addSchemaMustHaveType(typeComposer)
-        }
-      })
+      addedTypes.forEach(type =>
+        processAddedType({ schemaComposer, type, parentSpan })
+      )
     } else {
       schemaComposer.add(typeOrTypeDef)
+      processAddedType({ schemaComposer, type: typeOrTypeDef, parentSpan })
     }
   })
+}
+
+const processAddedType = ({ schemaComposer, type, parentSpan }) => {
+  let abstractTypeComposer
+  if (type instanceof GraphQLInterfaceType) {
+    abstractTypeComposer = schemaComposer.getOrCreateIFTC(type.name)
+  } else if (type instanceof GraphQLUnionType) {
+    abstractTypeComposer = schemaComposer.getOrCreateUTC(type.name)
+  } else if (type instanceof GraphQLObjectType) {
+    const typeComposer = schemaComposer.getOrCreateTC(type.name)
+    schemaComposer.addSchemaMustHaveType(typeComposer)
+  }
+  if (abstractTypeComposer) {
+    abstractTypeComposer.setResolveType(node => node.internal.type)
+    schemaComposer.addSchemaMustHaveType(abstractTypeComposer)
+  }
 }
 
 const addSetFieldsOnGraphQLNodeTypeFields = ({
