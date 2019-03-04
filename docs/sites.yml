@@ -4580,3 +4580,15 @@
   built_by: Kaleb McKelvey
   built_by_url: https://kalebmckelvey.com
   featured: false
+- title: Michal Czaplinski
+  url: https://czaplinski.io
+  main_url: https://czaplinski.io
+  source_url: https://github.com/michalczaplinski/michalczaplinski.github.io
+  description: >
+    Michal Czaplinski is a full-stack developer 🚀
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Michal Czaplinski mmczaplinski@gmail.com
+  built_by_url: https://czaplinski.io
+  featured: false
