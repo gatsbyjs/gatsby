@@ -11,6 +11,12 @@ I would like to thank our community member [Stefan Probst](https://github.com/st
 
 As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can install it through TODO INSTRUCTIONS. We would really like your help in finding out potential bugs in this code, so we encourage you to try it and report any issues that you encounter in this TODO PINNED THREAD.
 
+# Why was it needed?
+
+The motivation to do this change is a two-fold one. We've seen many issues with automatically generated schemas. They can change from a minor data source modification, like changing one field. The resulting schema will break queries on the pages and will leave users confused. Making inference smarter is just pouring more oil on already burning fire, because the core issue is not the inference, but lack of control. Therefore we wanted to give people control over the schema.
+
+On the other hand, we wanted to reevaluate our approach to schema in general. In the "wild", GraphQL is used very differently than in Gatsby. Schemas aren't as commonly generated from the data sources and often schemas are the source of truth. We want to experiment with enabling people to use that approach with Gatsby too. By allowing people to define types and resolvers, we open new opportunities in that direction. We want to see how the community reacts to that and if that will evolve in some new approaches to defining schemas in Gatsby.
+
 # New API
 
 There are two main additions to the API:
@@ -78,7 +84,7 @@ type AuthorsJson implements Node {
   name: String
   birthday: String
 }
-````
+```
 
 Luckily, now we can use `createTypes` action to force birthday to be a Date.
 
@@ -103,34 +109,30 @@ You can specify types for some or all of the fields that you have on the given n
 
 ```graphql
 # For this type `name` won't be added
-@dontInfer()
-type AuthorJson implements Node {
+type AuthorJson implements Node @dontInfer() {
   birthday: Date
 }
 
 # For this type `name` won't be added but `birthday` won't get a Gatsby resolver for date formatting
-@dontInfer(noDefaultResolvers: true)
-type AuthorJson implements Node {
+type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
   birthday: Date
 }
 
 
 # For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
-@infer()
-type AuthorJson implements Node {
+type AuthorJson implements Node @infer() {
   id: ID!
 }
 
 # `birthday` will be Date, but we won't add a Gatsby resolver for date formatting
-@infer(noDefaultResolvers: true)
-type AuthorJson implements Node {
+type AuthorJson implements Node @infer(noDefaultResolvers: true) {
   id: ID!
 }
 ```
 
 ## `createResolvers`
 
-This is a similar API to `setFieldsOnGraphQLNodeType` in that it allows to add new fields and resolvers to types. However, this one is run last, so you'd have all the schema available to you in it. It is also possible to extend the `Query` type to add custom root resolvers, which enables a powerful resolver-based approach to querying your data sources.
+This is a similar API to `setFieldsOnGraphQLNodeType` in that it allows to add new fields and resolvers to types. However, this one is run last, so you'd have all the schema available to you in it. It is also possible to extend the `Query` type to add custom root resolvers, which enables a powerful resolver-based approach to querying your data sources. `createResolvers` is called after third-party schemas are merged (eg ones added by `gatsby-source-graphql`), so you can extend those schemas too.
 
 ```js
 exports.createResolvers = ({ createResolvers, schema }) => {
@@ -176,15 +178,52 @@ createResolvers({
 })
 ```
 
-Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. Full documentation of nodeModel is available at TODO.
+Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. In addition to lower lever access functions (`getNode`, `getAllNodes`), full node querying is available in `runQuery` .Full documentation of nodeModel is available at TODO.
 
 You can also see TODO ADD using resolvers example.
 
-# Why was it needed?
+# Other niceties
 
-The motivation to do this change is a two-fold one. We've seen many issues with automatically generated schemas. They can change from a minor data source modification, like changing one field. The resulting schema will break queries on the pages and will leave users confused. Making inference smarter is just pouring more oil on already burning fire, because the core issue is not the inference, but lack of control. Therefore we wanted to give people control over the schema.
+Refactoring schema generation allowed us to fix some long-standing bugs and issues that we wanted to fix.
 
-On the other hand, we wanted to reevaluate our approach to schema in general. In the "wild", GraphQL is used very differently than in Gatsby. Schemas aren't as commonly generated from the data sources and often schemas are the source of truth. We want to experiment with enabling people to use that approach with Gatsby too. By allowing people to define types and resolvers, we open new opportunities in that direction. We want to see how the community reacts to that and if that will evolve in some new approaches to defining schemas in Gatsby.
+### Type Names
+
+Previously, type names were generated with names like `internal_2` or `SomeType_2`, which could be pretty confusing. We've normalized all the names, there shouldn't be any additional postfixes. If you have relied on generated names as above, this branch will break it to you. However, we never considered this types our public API, partially because of the above issue. Now, however, you can trust that naming of the types would be much more stable.
+
+### Connection `nodes` field
+
+Querying connections is pretty verbose in Gatsby.
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+```
+
+When you have many connections, this becomes pretty tedious, especially destructuring it all in JS. We've added a very common shortcut `nodes` that allows you to not write `{ edges { node }}`, but is direct an array of nodes instead.
+
+```graphql
+{
+  allMarkdownRemark {
+    nodes {
+      id
+    }
+  }
+}
+```
+
+### Inference quirks
+
+We've had some quirks in inferrence that was ordering dependant. We've made all inference more deterministic.
+
+1. Mix of date and non-date strings is always a string
+2. Conflicting fields names always prefers Node reference first and then canonical name of the field.
 
 # How did we do it?
 
@@ -257,10 +296,11 @@ The final schema pipeline that we implemented works like this:
 5. `setFieldsOnNodeType` is called and those fields are added to the types.
 6. We create derived input objects, such as filter and sort and then create pagination types such as Connections
 7. Root level resolvers are created for all node types
-8. `createResolvers` api is called and resulting resolvers are added to the schema
-9. We generate the schema
+8. Third-party schemas are merged into Gatsby schema
+9. `createResolvers` api is called and resulting resolvers are added to the schema
+10. We generate the schema
 
-You can see the TODO LINK `packages/gatsby/schema/` folder in the schema= refactoring branch to learn more about the code.
+You can see the TODO LINK `packages/gatsby/schema/` folder in the schema refactoring branch to learn more about the code.
 
 # Further work
 
