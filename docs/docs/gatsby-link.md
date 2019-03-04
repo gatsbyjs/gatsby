@@ -295,7 +295,7 @@ question, you may need to customize the heuristic to your environment, but the
 following may be a good starting point:
 
 ```jsx
-import { Link as GatsbyLink } from "gatsby"
+import { GatsbyLink } from "gatsby"
 
 // Since DOM elements <a> cannot receive activeClassName,
 // destructure the prop here and pass it only to GatsbyLink
