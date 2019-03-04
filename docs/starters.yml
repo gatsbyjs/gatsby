@@ -1976,11 +1976,10 @@
   description: This magazine-starter helps you start out with Livingdocs as a headless CMS.
   tags:
     - Blog
-    - Headless CMS 
+    - Headless CMS
     - Livingdocs
   features:
     - Minimal and clean white layout.
     - Dynamic content from Livingdocs.
     - Built-in component library.
     - Robust template and theme.
-    
