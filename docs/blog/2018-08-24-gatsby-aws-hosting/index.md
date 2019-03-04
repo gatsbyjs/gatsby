@@ -26,7 +26,7 @@ npm install --global gatsby-cli
 Next, we'll create a new Gatsby site:
 
 ```sh
-npx gatsby new my-gatsby-site
+gatsby new my-gatsby-site
 ```
 
 Finally, change into the new site directory:
