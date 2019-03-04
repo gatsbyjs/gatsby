@@ -18,6 +18,3 @@
 *.tar.gz binary
 *.zip binary
 *.7z binary
-
-*.md     filter=wordbyword
-
