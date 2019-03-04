@@ -13,9 +13,11 @@ As it's a huge feature and big parts of the code are affected, we are releasing 
 
 # Why was it needed?
 
-The motivation to do this change is a two-fold one. We've seen many issues with automatically generated schemas. They can change from a minor data source modification, like changing one field. The resulting schema will break queries on the pages and will leave users confused. Making inference smarter is just pouring more oil on already burning fire, because the core issue is not the inference, but lack of control. Therefore we wanted to give people control over the schema.
+The motivation to do this change is a two-fold one. Before this feature, Gatsby automatically generated a GraphQL schema for your site based on the data available from your source plugins. While this schema inference is great for getting started it has also been the cause of many problems.
 
-On the other hand, we wanted to reevaluate our approach to schema in general. In the "wild", GraphQL is used very differently than in Gatsby. Schemas aren't as commonly generated from the data sources and often schemas are the source of truth. We want to experiment with enabling people to use that approach with Gatsby too. By allowing people to define types and resolvers, we open new opportunities in that direction. We want to see how the community reacts to that and if that will evolve in some new approaches to defining schemas in Gatsby.
+Automatically generating schemas mean that changing your data can result in a changed schema. An updated schema may no longer work with the queries you've written, resulting in errors and confusion. Making schema generation smarter is just pouring more oil on an already burning fire, because the core issue is not the inference, but lack of control. Therefore we wanted to give people control over the schema.
+
+On the other hand, we wanted to reevaluate our approach to schemas in general. In the "wild", GraphQL is used very differently than in Gatsby. Schemas aren't as commonly generated from the data sources and often schemas are the source of truth. We want to experiment with enabling people to use that approach with Gatsby too. By allowing people to define types and resolvers, we open new opportunities in that direction. We want to see how the community reacts to that and if that will evolve into new approaches to defining schemas in Gatsby.
 
 # New API
 
@@ -177,7 +179,7 @@ createResolvers({
 
 Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. In addition to lower level access functions (`getNodeById`, `getAllNodes`), full node querying is available in `runQuery`.
 
-You can also see the `using-type-definitions` example in the Gatsby repository.
+You can also see [using-type-definitions example](https://github.com/gatsbyjs/gatsby/tree/schema-refactor-new/examples/using-type-definitions) in the gatsby repository.
 
 # Other niceties
 
