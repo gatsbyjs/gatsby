@@ -77,11 +77,9 @@ function serveStatic(root, options) {
     var originalUrl = parseUrl.original(req)
     var path = parseUrl(req).pathname
     const parsedPath = sysPath.parse(path)
-    console.log({ parsedPath })
 
     // Ignore html files.
     if (parsedPath.ext === `.htm` || parsedPath.ext === `.html`) {
-      console.log(`ignoring html`)
       return next()
     }
 
