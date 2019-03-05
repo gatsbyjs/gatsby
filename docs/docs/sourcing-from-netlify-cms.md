@@ -31,7 +31,7 @@ directory called `netlify-cms-tutorial` that contains the starter site, but you 
 "netlify-cms-tutorial" in the command below to be whatever you like.
 
 ```shell
-npx gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Now move into the newly created directory and install the Gatsby plugin for Netlify CMS:

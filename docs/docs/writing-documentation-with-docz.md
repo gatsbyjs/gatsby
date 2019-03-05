@@ -15,7 +15,7 @@ Alternatively, the following guide should help you to get Docz working within an
 First, if you do not have a Gatsby project set up yet, use the Gatsby CLI to create a new site:
 
 ```shell
-npx gatsby new my-gatsby-site-with-docz
+gatsby new my-gatsby-site-with-docz
 ```
 
 To set up Docz you need to install dependencies and do some custom configuration. Make sure you are in the root directory of your Gatsby project:

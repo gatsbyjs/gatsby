@@ -13,6 +13,7 @@ import { colors } from "../utils/presets"
 import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/md/file-download"
 import AlgoliaLogo from "../assets/algolia.svg"
+import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
@@ -211,7 +212,7 @@ class Search extends Component {
       <div
         css={{
           paddingBottom: rhythm(2.5),
-          [presets.Tablet]: {
+          [presets.Md]: {
             paddingBottom: 0,
           },
         }}
@@ -251,7 +252,7 @@ class Search extends Component {
               height: searchMetaHeight,
               paddingLeft: rhythm(3 / 4),
               paddingRight: rhythm(3 / 4),
-              [presets.Tablet]: {
+              [presets.Md]: {
                 fontSize: scale(-1 / 4).fontSize,
               },
             }}
@@ -270,7 +271,7 @@ class Search extends Component {
         <div>
           <div
             css={{
-              [presets.Tablet]: {
+              [presets.Md]: {
                 height: `calc(100vh - ${presets.headerHeight} - ${
                   presets.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
@@ -398,6 +399,8 @@ const Result = ({ hit, pathname, query }) => {
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
             lineHeight: 1.2,
+            display: `flex`,
+            alignItems: `center`,
             marginBottom: 0,
             marginTop: 0,
             letterSpacing: 0,
@@ -420,15 +423,38 @@ const Result = ({ hit, pathname, query }) => {
             fontSize: rhythm(4 / 7),
           }}
         >
-          {hit.humanDownloadsLast30Days}
-          {` `}
+          {hit.repository &&
+            hit.name[0] !== `@` &&
+            hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
+              0 && (
+              <img
+                src={GatsbyIcon}
+                css={{
+                  height: 12,
+                  marginBottom: 0,
+                  marginRight: 5,
+                  filter: selected ? false : `grayscale(100%)`,
+                  opacity: selected ? false : `0.2`,
+                }}
+                alt={`Official Gatsby Plugin`}
+              />
+            )}
           <span
             css={{
-              color: selected ? colors.lilac : colors.gray.bright,
-              marginLeft: rhythm(1 / 6),
+              width: `4.5em`,
+              textAlign: `right`,
             }}
           >
-            <DownloadArrow />
+            {hit.humanDownloadsLast30Days}
+            {` `}
+            <span
+              css={{
+                color: selected ? colors.lilac : colors.gray.bright,
+                marginLeft: rhythm(1 / 6),
+              }}
+            >
+              <DownloadArrow />
+            </span>
           </span>
         </div>
       </div>

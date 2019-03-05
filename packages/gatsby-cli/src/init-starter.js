@@ -91,7 +91,7 @@ const copy = async (starterPath: string, rootPath: string) => {
       `You can't create a starter from the existing directory. If you want to
       create a new site in the current directory, the trailing dot isn't
       necessary. If you want to create a new site from a local starter, run
-      something like "npx gatsby new new-gatsby-site ../my-gatsby-starter"`
+      something like "gatsby new new-gatsby-site ../my-gatsby-starter"`
     )
   }
 
@@ -148,7 +148,7 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   const urlObject = url.parse(rootPath)
   if (urlObject.protocol && urlObject.host) {
     report.panic(
-      `It looks like you forgot to add a name for your new project. Try running instead "npx gatsby new new-gatsby-project ${rootPath}"`
+      `It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
     )
     return
   }
