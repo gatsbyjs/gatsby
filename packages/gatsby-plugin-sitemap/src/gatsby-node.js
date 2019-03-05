@@ -42,10 +42,10 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
   )
   const urls = serialize(queryRecords)
 
-  if (!(rest.sitemapSize && urls.length > rest.sitemapSize)) {
+  if (!rest.sitemapSize || urls.length <= rest.sitemapSize) {
     const map = sitemap.createSitemap(rest)
     serialize(queryRecords).forEach(u => map.add(u))
-    return await writeFile(saved, map.toString())
+    return writeFile(saved, map.toString())
   } else {
     const {
       site: {
@@ -60,12 +60,11 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
       )
       const sitemapIndexOptions = {
         ...rest,
-        ...{
           hostname: hostname || withoutTrailingSlash(siteUrl),
           targetFolder: distDir,
           urls,
           callback: error => {
-            if (error) reject()
+            if (error) throw new Error(error)
             renameFile(indexFilePath, saved).then(resolve)
           },
         },
