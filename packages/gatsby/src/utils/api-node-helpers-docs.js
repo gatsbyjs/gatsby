@@ -54,17 +54,19 @@ const GatsbyReporter = {
 /** */
 const GatsbyCache = {
   /**
-   * @param {string} key
-   * @returns {Promise<any>}
+   * Retrieve cached value
+   * @param {string} key Cache key
+   * @returns {Promise<any>} Promise resolving to cached value
    * @example
    * const value = await cache.get(`unique-key`)
    */
   get: true,
 
   /**
-   * @param {string} key
-   * @param {any} value
-   * @returns {Promise<any>}
+   * Cache value
+   * @param {string} key Cache key
+   * @param {any} value Value to be cached
+   * @returns {Promise<any>} Promise resolving to cached value
    * @example
    * await cache.set(`unique-key`, value)
    */
