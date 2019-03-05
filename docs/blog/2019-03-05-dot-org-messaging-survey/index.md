@@ -4,6 +4,7 @@ date: 2019-03-05
 author: Shannon Soper
 tags: ["ux", "design"]
 ---
+
 Recently, we sent out a survey asking people in the Gatsby community how they would define Gatsby and what they value most about Gatsby. The results are in, and I want to share them with you! Thanks to everyone who filled out the survey.
 
 Here’s [the original survey](https://docs.google.com/forms/d/e/1FAIpQLSfxLn81j5FBEnDGSMFAgMo0lZctb3GGVZi_xteIbwE-Q6eoaQ/viewform?usp=sf_link) if you’d like to see the questions (it’s closed to responses).
@@ -99,16 +100,20 @@ Many people still marked these values as crucial things that Gatsby gives them. 
 Here are some more values that community members listed that we hadn’t listed in the survey: a welcoming community, plugins, accessibility matter to Gatsby users, and that Gatsby is fun AND easy to use. It’s good to know these things are valuable because then we can keep building on our successes and refining Gatsby’s ability to provide this value.
 
 ### Community
+
 > The community around Gatsby is outstanding! From the store, all the public events, Twitter, podcast appearances, insane activity in the repository.. anytime I've needed help I've been able to easily find it, or get it from one of the above.
 
 ### Plugins
+
 > Plugin ecosystem: it's growing quickly and it's a nice way to contribute and engage with others. I've met some great folks because of it
 > Plugins and ability to use npm gives you a huge ecosystem to draw on.
 
 ### Accessibility
+
 > Gatsby allows for accessible websites by statically rendering pages, and also makes use of Reach Router to ensure a more accessible experience. A lot of modern JavaScript applications result in poor accessibility, but Gatsby takes care of important core functionality that doesn't force compromise.
 
 ### Easy & fun
+
 > “Fun”! I really enjoy working with Gatsby. It work they way it should and sometimes even exceeds my expectations.
 
 ## Takeaways
@@ -127,5 +132,6 @@ Quote:
 <pullquote>[I didn’t think the value Gatsby provides was] that crucial until I experienced it firsthand.</pullquote>
 
 ## How you can participate
+
 1. [Comment on the RFC](https://github.com/gatsbyjs/rfcs/pull/32) about redesigning the .org homepage
 2. [Sign up to receive a newsletter whenever there is an upcoming test for Gatsby users, such as testing the .org homepage](https://airtable.com/shrKDSF2E7ljCaYCd).
