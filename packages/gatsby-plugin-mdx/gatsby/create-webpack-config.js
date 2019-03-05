@@ -26,7 +26,7 @@ module.exports = (
         },
 
         {
-          test: /loaders\/mdx-components\.js$/,
+          test: /mdx-components\.js$/,
           include: path.dirname(require.resolve("gatsby-mdx")),
           use: [
             loaders.js(),
@@ -39,12 +39,12 @@ module.exports = (
           ]
         },
         {
-          test: /loaders\/mdx-wrappers\.js$/,
+          test: /mdx-wrappers\.js$/,
           include: path.dirname(require.resolve("gatsby-mdx")),
           use: [
             loaders.js(),
             {
-              loader: "gatsby-mdx/loaders/mdx-wrappers",
+              loader: path.join("gatsby-mdx", "loaders", "mdx-wrappers"),
               options: {
                 store: other.store
               }
