@@ -262,7 +262,7 @@ const createLocalePage = (page, createPage) => {
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 
-  // generate your dynamice content here...
+  // generate your dynamic content here...
   const page = {
     path: "some-page",
     component: path.resolve(`./src/templates/some-page.js`),
