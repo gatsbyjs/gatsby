@@ -75,6 +75,7 @@ At companies, 56% said this was crucial: “People will ignore sites that are sl
 Gatsby gives you expert performance optimization and speed, out-of-the-box by default.
 
 At agencies, 54% said this was crucial: “Gatsby performance out of the box helps me worry about my user experience instead of load times.”
+
 At companies, 44% said this was crucial: “Performance and flexibility to use any data source is crucial because we have multiple types of sources of data and being able to use them is absolutely necessary.”
 
 ### Productive from the start
@@ -93,22 +94,24 @@ Many people still marked these values as crucial things that Gatsby gives them. 
 - Build with modern tools: Leverage the power of the latest web technologies including React, Webpack, GraphQL, modern JavaScript, and more.
 - Bring your own content: Gatsby consolidates your data (source agnostic- CMS, static files, database, etc.) into a single, predictable, queryable layer.
 - Low to no hosting costs: Gatsby eliminates the need for traditional hosting costs because the site is hosted on the edge (Content Delivery Network).
-  Instantly scalable: No servers and no databases to manage with a website that never goes down because it’s built on the edge, instantly scaling for traffic spikes.
+- Instantly scalable: No servers and no databases to manage with a website that never goes down because it’s built on the edge, instantly scaling for traffic spikes.
 - Secure: Gatsby websites are inherently more secure because there are no servers involved. All your content is compiled ahead of time so hackers can’t get to your database or into your CMS. And your site is more resilient to DDoS attacks because the biggest point of failure — a server — is no longer part of the equation
 
 ## Extra values
 
 Here are some more values that community members listed that we hadn’t listed in the survey: a welcoming community, plugins, accessibility matter to Gatsby users, and that Gatsby is fun AND easy to use. It’s good to know these things are valuable because then we can keep building on our successes and refining Gatsby’s ability to provide this value.
 
-Community
-
+### Community
 > The community around Gatsby is outstanding! From the store, all the public events, Twitter, podcast appearances, insane activity in the repository.. anytime I've needed help I've been able to easily find it, or get it from one of the above.
-> Plugins
+
+### Plugins
 > Plugin ecosystem: it's growing quickly and it's a nice way to contribute and engage with others. I've met some great folks because of it
 > Plugins and ability to use npm gives you a huge ecosystem to draw on.
-> Accessibility
+
+### Accessibility
 > Gatsby allows for accessible websites by statically rendering pages, and also makes use of Reach Router to ensure a more accessible experience. A lot of modern JavaScript applications result in poor accessibility, but Gatsby takes care of important core functionality that doesn't force compromise.
-> Easy & fun
+
+### Easy & fun
 > “Fun”! I really enjoy working with Gatsby. It work they way it should and sometimes even exceeds my expectations.
 
 ## Takeaways
@@ -127,5 +130,5 @@ Quote:
 <pullquote>[I didn’t think the value Gatsby provides was] that crucial until I experienced it firsthand.</pullquote>
 
 ## How you can participate
-
-[Want to test new & existing @gatsbyjs products and features such as new designs for the .org homepage? Sign up to receive a newsletter whenever there is an upcoming test.](https://airtable.com/shrKDSF2E7ljCaYCd).
+1. [Comment on the RFC](https://github.com/gatsbyjs/rfcs/pull/32) about redesigning the .org homepage
+2. [Sign up to receive a newsletter whenever there is an upcoming test for Gatsby users, such as testing the .org homepage](https://airtable.com/shrKDSF2E7ljCaYCd).
