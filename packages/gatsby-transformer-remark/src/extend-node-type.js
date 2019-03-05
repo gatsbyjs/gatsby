@@ -152,6 +152,7 @@ module.exports = (
         ASTGenerationPromise.then(markdownAST => {
           cache.set(cacheKey, markdownAST)
           ASTPromiseMap.delete(cacheKey)
+          return null
         }).catch(err => {
           ASTPromiseMap.delete(cacheKey)
           return err
