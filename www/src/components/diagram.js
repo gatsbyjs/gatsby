@@ -266,7 +266,7 @@ const Diagram = () => (
         </h1>
         <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
           <FuturaParagraph>
-            Pull data from <em>anywhere</em> in minutes
+            Pull data from <em>anywhere</em>
           </FuturaParagraph>
         </div>
 
