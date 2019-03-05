@@ -92,6 +92,16 @@ const removeEmptyFields = (
 
 const getFilterInput = ({ schemaComposer, typeComposer }) => {
   const inputTypeComposer = typeComposer.getInputTypeComposer()
+
+  // TODO: In Gatsby v2, the NodeInput.id field is of type String, not ID.
+  // Remove this workaround for v3.
+  if (
+    inputTypeComposer.hasField(`id`) &&
+    getNamedType(inputTypeComposer.getFieldType(`id`)).name === `ID`
+  ) {
+    inputTypeComposer.extendField(`id`, { type: `String` })
+  }
+
   const filterInputTC = convert({
     schemaComposer,
     inputTypeComposer,
