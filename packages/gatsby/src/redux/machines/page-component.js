@@ -108,14 +108,18 @@ module.exports = Machine(
         debounceCompile()
       },
       runPageComponentQueries: context => {
-        const {
-          queueQueriesForPageComponent,
-        } = require(`../../internal-plugins/query-runner/query-watcher`)
-        // Wait a bit as calling this function immediately triggers
-        // an Action call which Redux squawks about.
-        setTimeout(() => {
-          queueQueriesForPageComponent(context.componentPath)
-        }, 0)
+        // Let page-query-runner.js handle running page component queries
+        // until we're out of bootstrap.
+        if (!context.isInBootstrap) {
+          const {
+            queueQueriesForPageComponent,
+          } = require(`../../internal-plugins/query-runner/query-watcher`)
+          // Wait a bit as calling this function immediately triggers
+          // an Action call which Redux squawks about.
+          setTimeout(() => {
+            queueQueriesForPageComponent(context.componentPath)
+          }, 0)
+        }
       },
       setQuery: assign({
         query: (ctx, event) => {

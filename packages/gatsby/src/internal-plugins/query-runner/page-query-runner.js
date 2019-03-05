@@ -28,13 +28,17 @@ exports.queueQueryForPathname = pathname => {
 // Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
 // for dirty nodes before running queries.
 exports.runInitialQueries = async () => {
-  await runQueries()
-
   active = true
+  await runQueries(true)
   return
 }
 
-const runQueries = async () => {
+const runQueries = async (initial = false) => {
+  // Don't run queries until bootstrap gets to "run graphql queries"
+  if (!active) {
+    return
+  }
+
   // Find paths dependent on dirty nodes
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
@@ -45,11 +49,25 @@ const runQueries = async () => {
   const cleanIds = findIdsWithoutDataDependencies()
 
   // Construct paths for all queries to run
-  const pathnamesToRun = _.uniq([
-    ...runQueriesForPathnamesQueue,
-    ...dirtyIds,
-    ...cleanIds,
-  ])
+  let pathnamesToRun = _.uniq([...dirtyIds, ...cleanIds])
+
+  // If this is the initial run, remove pathnames from `runQueriesForPathnamesQueue`
+  // if they're also not in the dirtyIds or cleanIds.
+  //
+  // We do this because the page component reducer/machine always
+  // adds pages to runQueriesForPathnamesQueue but during bootstrap
+  // we may not want to run those page queries if their data hasn't
+  // changed since the last time we ran Gatsby.
+  let diffedPathnames = [...runQueriesForPathnamesQueue]
+  if (initial) {
+    diffedPathnames = _.intersection(
+      [...runQueriesForPathnamesQueue],
+      pathnamesToRun
+    )
+  }
+
+  // Combine.
+  pathnamesToRun = _.union(diffedPathnames, pathnamesToRun)
 
   runQueriesForPathnamesQueue.clear()
 
@@ -112,7 +130,10 @@ const findIdsWithoutDataDependencies = () => {
   // Get list of paths not already tracked and run the queries for these
   // paths.
   const notTrackedIds = _.difference(
-    [...[...state.staticQueryComponents.values()].map(c => c.jsonName)],
+    [
+      ...Array.from(state.pages.values(), p => p.path),
+      ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
+    ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
 
