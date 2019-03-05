@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -332,6 +333,11 @@ module.exports = async (
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
+      plugins: [
+        PnpWebpackPlugin.bind(`${directoryPath}/.cache`, module),
+        PnpWebpackPlugin.bind(`${directoryPath}/public`, module),
+        PnpWebpackPlugin,
+      ],
     }
   }
 
@@ -350,6 +356,7 @@ module.exports = async (
 
     return {
       modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
+      plugins: [PnpWebpackPlugin.moduleLoader(module)],
     }
   }
 
