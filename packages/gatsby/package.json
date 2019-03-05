@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.1.21",
+  "version": "2.1.22",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -64,7 +64,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^5.0.0",
-    "gatsby-cli": "^2.4.12",
+    "gatsby-cli": "^2.4.13",
     "gatsby-link": "^2.0.14",
     "gatsby-plugin-page-creator": "^2.0.8",
     "gatsby-react-router-scroll": "^2.0.4",
