@@ -21,7 +21,8 @@ export const HorizontalScrollerContent = styled(`ul`)`
 export const HorizontalScrollerItem = styled(`li`)`
   background: #fff;
   border-radius: ${presets.radiusLg}px;
-  box-shadow: 0 0 ${BOX_SHADOW_BLUR} rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 0 ${BOX_SHADOW_BLUR} rgba(0, 0, 0, 0.2); */
+  box-shadow: ${presets.boxShadows.card.boxShadow};
   margin: 0;
   margin-right: ${rhythm(presets.gutters.default / 2)};
   width: 77vw;
