@@ -197,6 +197,7 @@ jobs:
     executor: node
     environment:
       GATSBY_SCREENSHOT_PLACEHOLDER: true
+      GITHUB_API_TOKEN: $(eval echo ${GITHUB_API_TOKEN})
     steps:
       - link_and_run:
           path: www
