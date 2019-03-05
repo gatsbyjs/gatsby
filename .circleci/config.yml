@@ -205,8 +205,8 @@ jobs:
           command: yarn build
           steps:
             - run: |
-                export GITHUB_API_TOKEN="$(eval echo ${GITHUB_API_TOKEN})"
-                export GATSBY_SCREENSHOT_PLACEHOLDER=true
+                echo 'export GATSBY_SCREENSHOT_PLACEHOLDER=true' >> $BASH_ENV
+                echo 'export GITHUB_API_TOKEN="$GITHUB_API_TOKEN"' >> $BASH_ENV
 
 workflows:
   version: 2
