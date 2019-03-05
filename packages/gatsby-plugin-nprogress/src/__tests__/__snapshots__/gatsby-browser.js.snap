@@ -1,18 +1,12 @@
-import NProgress from "nprogress"
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
-const defaultOptions = { color: `#29d` }
-
-export const onClientEntry = (a, pluginOptions = {}) => {
-  // Merge default options with user defined options in `gatsby-config.js`
-  const options = { ...defaultOptions, ...pluginOptions }
-
-  // Inject styles.
-  const styles = `
+exports[`gatsby-plugin-nprogress onClientEntry calls NProgress.configure with the correct styles 1`] = `
+"
     #nprogress {
      pointer-events: none;
     }
     #nprogress .bar {
-      background: ${options.color};
+      background: #29d;
       position: fixed;
       z-index: 1031;
       top: 0;
@@ -26,7 +20,7 @@ export const onClientEntry = (a, pluginOptions = {}) => {
       right: 0px;
       width: 100px;
       height: 100%;
-      box-shadow: 0 0 10px ${options.color}, 0 0 5px ${options.color};
+      box-shadow: 0 0 10px #29d, 0 0 5px #29d;
       opacity: 1.0;
       -webkit-transform: rotate(3deg) translate(0px, -4px);
       -ms-transform: rotate(3deg) translate(0px, -4px);
@@ -44,8 +38,8 @@ export const onClientEntry = (a, pluginOptions = {}) => {
       height: 18px;
       box-sizing: border-box;
       border: solid 2px transparent;
-      border-top-color: ${options.color};
-      border-left-color: ${options.color};
+      border-top-color: #29d;
+      border-left-color: #29d;
       border-radius: 50%;
       -webkit-animation: nprogress-spinner 400ms linear infinite;
       animation: nprogress-spinner 400ms linear infinite;
@@ -74,20 +68,5 @@ export const onClientEntry = (a, pluginOptions = {}) => {
         transform: rotate(360deg);
       }
     }
-  `
-
-  const node = document.createElement(`style`)
-  node.id = `nprogress-styles`
-  node.innerHTML = styles
-  document.head.appendChild(node)
-
-  NProgress.configure(options)
-}
-
-export const onRouteUpdateDelayed = () => {
-  NProgress.start()
-}
-
-export const onRouteUpdate = () => {
-  NProgress.done()
-}
+  "
+`;
