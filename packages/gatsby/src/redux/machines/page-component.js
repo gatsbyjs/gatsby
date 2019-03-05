@@ -36,6 +36,9 @@ module.exports = Machine(
           NEW_PAGE_CREATED: {
             actions: `setPage`,
           },
+          DELETE_PAGE: {
+            actions: `deletePage`,
+          },
         },
       },
       extractingQueries: {
@@ -50,6 +53,9 @@ module.exports = Machine(
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
           NEW_PAGE_CREATED: {
             actions: `setPage`,
+          },
+          DELETE_PAGE: {
+            actions: `deletePage`,
           },
         },
       },
@@ -79,6 +85,9 @@ module.exports = Machine(
           NEW_PAGE_CREATED: {
             actions: `setPage`,
           },
+          DELETE_PAGE: {
+            actions: `deletePage`,
+          },
         },
       },
       idle: {
@@ -89,6 +98,9 @@ module.exports = Machine(
           },
           NEW_PAGE_CREATED: {
             actions: `setPage`,
+          },
+          DELETE_PAGE: {
+            actions: `deletePage`,
           },
         },
       },
@@ -138,6 +150,9 @@ module.exports = Machine(
             return ctx.pages
           }
         },
+      }),
+      deletePage: assign({
+        pages: (ctx, event) => ctx.pages.filter(p => p !== event.page.path),
       }),
       setBootstrapFinished: assign({
         isInBootstrap: false,

@@ -124,6 +124,15 @@ module.exports = (state = new Map(), action) => {
       state.delete(action.payload.componentPath)
       return state
     }
+    case `DELETE_PAGE`: {
+      action.payload.componentPath = normalize(action.payload.componentPath)
+      const service = services.get(action.payload.componentPath)
+      service.send({
+        type: `DELETE_PAGE`,
+        page: action.payload,
+      })
+      return state
+    }
   }
 
   return state
