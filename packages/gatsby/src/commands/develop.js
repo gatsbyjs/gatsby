@@ -200,7 +200,13 @@ async function startServer(program) {
 
   // If a SSL cert exists in program, use it with `createServer`.
   if (program.ssl) {
-    server = require(`https`).createServer(program.ssl, app)
+    server = require(`spdy`).createServer(
+      {
+        key: program.ssl.key,
+        cert: program.ssl.cert,
+      },
+      app
+    )
   }
   websocketManager.init({ server, directory: program.directory })
   const socket = websocketManager.getSocket()
