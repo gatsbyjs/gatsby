@@ -334,8 +334,8 @@ module.exports = async (
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
       plugins: [
-        PnpWebpackPlugin.bind(`${directoryPath}/.cache`, module),
-        PnpWebpackPlugin.bind(`${directoryPath}/public`, module),
+        PnpWebpackPlugin.bind(directoryPath(`.cache`), module),
+        PnpWebpackPlugin.bind(directoryPath(`public`), module),
         PnpWebpackPlugin,
       ],
     }
@@ -356,7 +356,7 @@ module.exports = async (
 
     return {
       modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
-      plugins: [PnpWebpackPlugin.moduleLoader(module)],
+      plugins: [PnpWebpackPlugin.moduleLoader(`${directory}/`)],
     }
   }
 
