@@ -4647,3 +4647,15 @@
   built_by: Htet Wai Yan Soe
   built_by_url: https://github.com/johnreginald
   featured: false
+- title: How To egghead
+  main_url: https://howtoegghead.com/
+  url: https://howtoegghead.com/
+  source_url: https://github.com/eggheadio/how-to-egghead
+  featured: false
+  built_by: egghead.io
+  built_by_url: https://egghead.io
+  description: >
+    How to become an egghead instructor or reviewer
+  categories:
+    - Documentation
+    - Education
