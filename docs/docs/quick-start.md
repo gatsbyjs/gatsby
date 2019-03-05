@@ -12,6 +12,12 @@ Video hosted on [egghead.io][egghead].
 
 [egghead]: https://egghead.io/lessons/gatsby-quick-start-with-gatsby-create-develop-and-build-gatsby-sites-from-the-command-line
 
+### Install the Gatsby CLI.
+
+```shell
+npm install -g gatsby-cli
+```
+
 ### Create a new site.
 
 ```shell
