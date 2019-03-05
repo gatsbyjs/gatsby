@@ -67,6 +67,10 @@ const group = (source, args, context, info) => {
 }
 
 const paginate = (results = [], { skip = 0, limit }) => {
+  if (results === null) {
+    results = []
+  }
+
   const count = results.length
   const items = results.slice(skip, limit && skip + limit)
 

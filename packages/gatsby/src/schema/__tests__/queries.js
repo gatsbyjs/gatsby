@@ -130,6 +130,15 @@ describe(`Query schema`, () => {
       store.dispatch({ type: `CREATE_TYPES`, payload: def })
     )
 
+    store.dispatch({
+      type: `SET_SITE_CONFIG`,
+      payload: {
+        mapping: {
+          "Markdown.frontmatter.reviewerByEmail": `Author.email`,
+        },
+      },
+    })
+
     await build({})
     schema = store.getState().schema
   })
@@ -593,7 +602,34 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
-      it.todo(`paginaties null result`)
+      it(`paginaties null result`, async () => {
+        const query = `
+          {
+            allMarkdown(
+              skip: 1
+              limit: 1,
+              filter: {
+                id: { eq: "non-existing"}
+              }
+            ) {
+              totalCount
+              edges { node { id } }
+              nodes { id }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "edges": Array [],
+    "nodes": Array [],
+    "totalCount": 0,
+  },
+}
+`)
+      })
 
       it(`adds nodes field as a convenience shortcut`, async () => {
         const query = `
@@ -781,7 +817,33 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
-      it.todo(`groups null result`)
+      it(`groups null result`, async () => {
+        const query = `
+          {
+            allMarkdown(
+              skip: 1
+              limit: 1,
+              filter: {
+                id: { eq: "non-existing"}
+              }
+            ) {
+              group(field: frontmatter___title, skip: 1, limit: 1) {
+                field
+                fieldValue
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "group": Array [],
+  },
+}
+`)
+      })
     })
 
     describe(`distinct field`, () => {
@@ -822,9 +884,49 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
-      it.todo(`returns distinct values on scalar field with resolver`)
+      it(`returns distinct values on scalar field with resolver`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              distinct(field: frontmatter___date)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "distinct": Array [
+      "2019-01-01T00:00:00.000Z",
+    ],
+  },
+}
+`)
+      })
 
-      it.todo(`handles null result`)
+      it(`handles null result`, async () => {
+        const query = `
+          {
+            allMarkdown(
+              skip: 1
+              limit: 1
+              filter: { id: { eq: "non-existing" } }
+            ) {
+              distinct(field: frontmatter___title)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "distinct": Array [],
+  },
+}
+`)
+      })
     })
   })
 
@@ -893,8 +995,80 @@ describe(`Query schema`, () => {
   })
 
   describe(`on foreign-key fields`, () => {
-    it.todo(`with the ___NODE convention`)
+    it(`with the ___NODE convention`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            nodes {
+              frontmatter {
+                reviewer {
+                  name
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "nodes": Array [
+      Object {
+        "frontmatter": Object {
+          "reviewer": Object {
+            "name": "Author 2",
+          },
+        },
+      },
+      Object {
+        "frontmatter": Object {
+          "reviewer": null,
+        },
+      },
+    ],
+  },
+}
+`)
+    })
 
-    it.todo(`with defined field mappings`)
+    it(`with defined field mappings`, async () => {
+      const query = `
+          {
+            allMarkdown {
+              nodes {
+                frontmatter {
+                  reviewerByEmail {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "nodes": Array [
+      Object {
+        "frontmatter": Object {
+          "reviewerByEmail": Object {
+            "name": "Author 2",
+          },
+        },
+      },
+      Object {
+        "frontmatter": Object {
+          "reviewerByEmail": null,
+        },
+      },
+    ],
+  },
+}
+`)
+    })
   })
 })

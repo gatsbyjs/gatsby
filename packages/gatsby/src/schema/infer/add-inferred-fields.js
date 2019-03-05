@@ -22,17 +22,16 @@ const addInferredFields = ({
   typeMapping,
   parentSpan,
 }) => {
-  if (!inferConfig || inferConfig.infer) {
-    addInferredFieldsImpl({
-      schemaComposer,
-      typeComposer,
-      nodeStore,
-      exampleObject: exampleValue,
-      prefix: typeComposer.getTypeName(),
-      typeMapping,
-      addDefaultResolvers: inferConfig ? inferConfig.addDefaultResolvers : true,
-    })
-  }
+  addInferredFieldsImpl({
+    schemaComposer,
+    typeComposer,
+    nodeStore,
+    exampleObject: exampleValue,
+    prefix: typeComposer.getTypeName(),
+    typeMapping,
+    addNewFields: inferConfig ? inferConfig.infer : true,
+    addDefaultResolvers: inferConfig ? inferConfig.addDefaultResolvers : true,
+  })
 }
 
 module.exports = {
@@ -46,6 +45,7 @@ const addInferredFieldsImpl = ({
   exampleObject,
   typeMapping,
   prefix,
+  addNewFields,
   addDefaultResolvers,
 }) => {
   const fields = []
@@ -60,6 +60,7 @@ const addInferredFieldsImpl = ({
         exampleValue,
         unsanitizedKey,
         typeMapping,
+        addNewFields,
         addDefaultResolvers,
       })
     )
@@ -134,7 +135,7 @@ const addInferredFieldsImpl = ({
           typeComposer.setField(key, field)
         }
       }
-    } else {
+    } else if (addNewFields) {
       if (namedInferredType instanceof schemaComposer.TypeComposer) {
         schemaComposer.add(namedInferredType)
       }
@@ -153,6 +154,7 @@ const getFieldConfig = ({
   exampleValue,
   unsanitizedKey,
   typeMapping,
+  addNewFields,
   addDefaultResolvers,
 }) => {
   let key = createFieldName(unsanitizedKey)
@@ -187,6 +189,7 @@ const getFieldConfig = ({
       value,
       selector,
       typeMapping,
+      addNewFields,
       addDefaultResolvers,
     })
   }
@@ -308,6 +311,7 @@ const getSimpleFieldConfig = ({
   value,
   selector,
   typeMapping,
+  addNewFields,
   addDefaultResolvers,
 }) => {
   switch (typeof value) {
@@ -366,6 +370,7 @@ const getSimpleFieldConfig = ({
             exampleObject: value,
             typeMapping,
             prefix: selector,
+            addNewFields,
             addDefaultResolvers,
           }),
         }

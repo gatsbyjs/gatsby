@@ -41,6 +41,8 @@ const nodes = [
       title: `Markdown File 1`,
       date: new Date(Date.UTC(2019, 0, 1)),
       authors: [`author2@example.com`, `author1@example.com`],
+      reviewer___NODE: `author2`,
+      reviewerByEmail: `author2@example.com`,
     },
   },
   {
@@ -55,6 +57,8 @@ const nodes = [
       title: `Markdown File 2`,
       published: false,
       authors: [`author1@example.com`],
+      reviewer___NODE: null,
+      reviewerByEmail: null,
     },
   },
   {
