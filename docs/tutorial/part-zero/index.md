@@ -73,6 +73,8 @@ The steps to download and install Git depend on your operating system. Follow th
 
 The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites. It is a published npm package.
 
+The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
+
 To see the commands available to run `gatsby --help`.
 
 ## Create a Gatsby site
