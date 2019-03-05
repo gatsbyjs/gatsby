@@ -78,7 +78,10 @@ commands:
         type: string
       command:
         type: string
-        default: "" # if unset, link-and-run-command specifies the command
+        default: "" # if unset, e2e-test.sh specifies the command
+      steps:
+        type: steps
+        default: []
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.path >>/*"
@@ -86,6 +89,7 @@ commands:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
+      - steps: << parameters.steps >>
       - run: ./scripts/link-and-run-command.sh "<< parameters.path >>" "<< parameters.command >>"
 
 version: 2.1
@@ -195,13 +199,14 @@ jobs:
 
   build_gatsbyjs_org:
     executor: node
-    environment:
-      GATSBY_SCREENSHOT_PLACEHOLDER: true
-      GITHUB_API_TOKEN: $(eval echo ${GITHUB_API_TOKEN}) # https://discuss.circleci.com/t/reference-an-environment-variable-in-environment-yaml-map
     steps:
       - link_and_run:
           path: www
           command: yarn build
+          steps:
+            - run: |
+                export GITHUB_API_TOKEN="$(eval echo ${GITHUB_API_TOKEN})"
+                export GATSBY_SCREENSHOT_PLACEHOLDER=true
 
 workflows:
   version: 2
