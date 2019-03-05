@@ -96,7 +96,11 @@ const GatsbyTracing = {
    */
 
   /**
-   * Convenience function to start a span using API run span as parent.
+   * Start a tracing span. The span will be created as a child of the currently
+   * running API span. This is a convenience wrapper for
+   * ```js
+   * tracing.tracer.startSpan(`span-name`, { childOf: tracing.parentSpan}).
+   * ```
    * @type {GatsbyTracing.StartSpan}
    * @example
    * exports.sourceNodes = async ({ actions, tracing }) => {
