@@ -197,7 +197,7 @@ jobs:
     executor: node
     environment:
       GATSBY_SCREENSHOT_PLACEHOLDER: true
-      GITHUB_API_TOKEN: $(eval echo ${GITHUB_API_TOKEN})
+      GITHUB_API_TOKEN: $(eval echo ${GITHUB_API_TOKEN}) # https://discuss.circleci.com/t/reference-an-environment-variable-in-environment-yaml-map
     steps:
       - link_and_run:
           path: www
