@@ -62,7 +62,8 @@ const runCreatePages = async () => {
   Array.from(store.getState().pages.values()).forEach(page => {
     if (
       !_.includes(statefulPlugins, page.pluginCreatorId) &&
-      page.updatedAt < timestamp
+      page.updatedAt < timestamp &&
+      page.path !== `/404.html`
     ) {
       deleteComponentsDependencies([page.path])
       deletePage(page)
