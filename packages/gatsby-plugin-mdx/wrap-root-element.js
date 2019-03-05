@@ -1,5 +1,6 @@
 import React from "react";
 import { MDXProvider } from "@mdx-js/tag";
+import { withMDXComponents } from "@mdx-js/tag/dist/mdx-provider";
 import { MDXScopeProvider } from "./context";
 // this import, unlike the more complicated one below, executes the
 // mdx-scopes loader with no arguments. No funny-business.
@@ -37,32 +38,37 @@ const componentFromGuards = arr =>
     return <Component {...props} />;
   };
 
-const WrapRootElement = ({ element }) => {
-  mdxPlugins.forEach(({ guards = {}, components }) => {
-    Object.entries(components).forEach(([componentName, Component]) => {
-      if (componentsAndGuards[componentName]) {
-        componentsAndGuards.push({ guard: guards[componentName], Component });
-      } else {
-        componentsAndGuards[componentName] = [
-          { guard: guards[componentName], Component }
-        ];
-      }
-    });
+mdxPlugins.forEach(({ guards = {}, components }) => {
+  Object.entries(components).forEach(([componentName, Component]) => {
+    if (componentsAndGuards[componentName]) {
+      componentsAndGuards.push({ guard: guards[componentName], Component });
+    } else {
+      componentsAndGuards[componentName] = [
+        { guard: guards[componentName], Component }
+      ];
+    }
   });
+});
 
-  const components = Object.entries(componentsAndGuards)
-    .map(([name, arr]) => ({
-      [name]: componentFromGuards(
-        arr.concat({ guard: undefined, Component: name })
-      )
-    }))
-    .reduce((acc, obj) => ({ ...acc, ...obj }), {});
+const components = Object.entries(componentsAndGuards)
+  .map(([name, arr]) => ({
+    [name]: componentFromGuards(
+      arr.concat({ guard: undefined, Component: name })
+    )
+  }))
+  .reduce((acc, obj) => ({ ...acc, ...obj }), {});
 
-  return (
+// merge any components in wrapRootElement above this wrapRoot
+const MDXConsumer = withMDXComponents(
+  ({ components: componentsFromContext, children }) => (
     <MDXScopeProvider __mdxScope={scopeContexts}>
-      <MDXProvider components={components}>{element}</MDXProvider>
+      <MDXProvider components={{ ...componentsFromContext, ...components }}>
+        {children}
+      </MDXProvider>
     </MDXScopeProvider>
-  );
-};
+  )
+);
+
+const WrapRootElement = ({ element }) => <MDXConsumer>{element}</MDXConsumer>;
 
 export default WrapRootElement;
