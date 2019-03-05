@@ -159,7 +159,7 @@ export default class FilteredStarterLibrary extends Component {
             cssOverrides={{
               height: `6rem`,
               paddingTop: `${rhythm(3 / 4)}`,
-              [presets.Phablet]: {
+              [presets.Sm]: {
                 height: presets.headerHeight,
                 paddingTop: `0px`,
               },
@@ -179,7 +179,7 @@ export default class FilteredStarterLibrary extends Component {
                 justifyContent: `space-between`,
                 marginBottom: `.4rem`,
                 width: `100%`,
-                [presets.Phablet]: {
+                [presets.Sm]: {
                   justifyContent: `flex-end`,
                   marginBottom: `0rem`,
                   width: `50%`,
@@ -190,7 +190,7 @@ export default class FilteredStarterLibrary extends Component {
               <label
                 css={{
                   display: `none`,
-                  [presets.Desktop]: {
+                  [presets.Lg]: {
                     border: 0,
                     borderRadius: presets.radiusLg,
                     color: colors.gatsby,

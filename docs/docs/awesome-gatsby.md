@@ -69,6 +69,8 @@ See the [library of official and community plugins](/plugins/)
 - [JAMstack Basics: How to Create a Gatsby Starter with Contentful and Deploy to Netlify](https://itnext.io/jamstack-basics-how-to-create-a-gatsby-starter-with-contentful-and-deploy-to-netlify-846354cc74bc)
 - [How to deploy a static Gatsby app to Heroku](https://medium.freecodecamp.org/how-to-deploy-a-static-gatsby-app-to-heroku-3362e3ecda0f)
 - [A comprehensive guide to build your personal website using GatsbyJS and Ghost deployed on AWS](https://nishantdania.com/blog/guide-to-setup-ghost-gatsby-website)
+- [Zero to Deploy: A Practical Guide to Static Sites with Gatsby.js](https://scotch.io/tutorials/zero-to-deploy-a-practical-guide-to-static-sites-with-gatsbyjs)
+- [Build blazing fast web applications with Gatsby 101](https://gatsbyguides.com/)
 
 ## Other resources
 

@@ -23,7 +23,7 @@ class BlogPostsIndex extends React.Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            [presets.Tablet]: {
+            [presets.Md]: {
               background: colors.ui.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
@@ -34,7 +34,7 @@ class BlogPostsIndex extends React.Component {
           </Helmet>
           <Container
             css={{
-              [presets.Tablet]: {
+              [presets.Md]: {
                 background: `url(${logo})`,
                 paddingBottom: `${rhythm(
                   options.blockMarginBottom * 4
@@ -48,7 +48,7 @@ class BlogPostsIndex extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Tablet]: {
+                [presets.Md]: {
                   marginTop: 0,
                   position: `absolute`,
                   width: 1,
@@ -69,10 +69,10 @@ class BlogPostsIndex extends React.Component {
                 key={node.fields.slug}
                 css={{
                   marginBottom: rhythm(options.blockMarginBottom),
-                  [presets.Tablet]: {
+                  [presets.Md]: {
+                    ...presets.boxShadows.card,
                     background: `#fff`,
                     borderRadius: presets.radiusLg,
-                    boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
                     padding: rhythm(options.blockMarginBottom * 2),
                     paddingLeft: rhythm(options.blockMarginBottom * 3),
                     paddingRight: rhythm(options.blockMarginBottom * 3),
@@ -87,7 +87,7 @@ class BlogPostsIndex extends React.Component {
                     }`,
                     "&:hover": {
                       transform: `translateY(-4px)`,
-                      boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)`,
+                      ...presets.boxShadows.cardHover,
                     },
                     "&:active": {
                       boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
@@ -95,8 +95,6 @@ class BlogPostsIndex extends React.Component {
                       transition: `transform 50ms`,
                     },
                   },
-                  [presets.Desktop]: {},
-                  [presets.Hd]: {},
                 }}
               />
             ))}

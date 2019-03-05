@@ -1,4 +1,5 @@
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
+
 <p align="center">
   <a href="https://www.gatsbyjs.org">
     <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
@@ -20,7 +21,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     ```sh
     # create a new Gatsby site using the blog starter
-    npx gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
+    gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
     ```
 
 1.  **Start developing.**
@@ -48,6 +49,7 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
     ├── node_modules
     ├── src
     ├── .gitignore
+    ├── .prettierrc
     ├── gatsby-browser.js
     ├── gatsby-config.js
     ├── gatsby-node.js

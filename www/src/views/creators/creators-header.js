@@ -54,7 +54,7 @@ class CreatorsHeader extends Component {
             display: `flex`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            [presets.Phablet]: {
+            [presets.Sm]: {
               justifyContent: `flex-start`,
             },
           }}
@@ -157,7 +157,7 @@ const styles = {
       "&:hover": {
         backgroundColor: `initial`,
       },
-      [presets.Desktop]: {
+      [presets.Lg]: {
         // display: `inline`,
       },
     },
