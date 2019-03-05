@@ -4646,6 +4646,16 @@
     - Education
   built_by: Htet Wai Yan Soe
   built_by_url: https://github.com/johnreginald
+- title: AquaGruppen Vattenfilter
+  url: https://aquagruppen.se
+  main_url: https://aquagruppen.se/
+  description: >
+    Water filter and water treatment products in Sweden
+  categories:
+    - Business
+    - Technology
+  built_by: Johan Eliasson
+  built_by_url: https://github.com/elitan
   featured: false
 - title: How To egghead
   main_url: https://howtoegghead.com/
