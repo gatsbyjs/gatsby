@@ -151,7 +151,9 @@ const processAddedType = ({ schemaComposer, type, parentSpan }) => {
     schemaComposer.addSchemaMustHaveType(typeComposer)
   }
   if (abstractTypeComposer) {
-    abstractTypeComposer.setResolveType(node => node.internal.type)
+    if (!abstractTypeComposer.getResolveType()) {
+      abstractTypeComposer.setResolveType(node => node.internal.type)
+    }
     schemaComposer.addSchemaMustHaveType(abstractTypeComposer)
   }
 }
