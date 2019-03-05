@@ -1996,3 +1996,16 @@
     - uses react-intl
     - based on Gatsby Default Starter
     - unit tests with Jest
+- url: https://cape.netlify.com/
+  repo: https://github.com/juhi-trivedi/cape
+  description: A Gatsby - Contentful demo with Netlify.
+  tags:
+    - Blog
+    - Netlify Form
+    - Contentful
+    - Styling:Bootstrap
+  features:
+    - Fecthing Dynamic content from Contentful.
+    - Blog post listing with previews (image + summary) for each blog post.
+    - Contact form integration with Netlify.
+    - Grid system inspired by Bootstrap.
