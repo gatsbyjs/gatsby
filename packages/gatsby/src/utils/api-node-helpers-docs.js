@@ -148,7 +148,7 @@ const GatsbyNodeHelpers = {
   createContentDigest: true,
 
   /**
-   * All action creators wrapped with a dispatch.
+   * Collection of functions used to programmatically modify Gatsby’s internal state.
    *
    * See [`actions`](/docs/actions/) reference.
    * @type {Actions}
@@ -158,7 +158,7 @@ const GatsbyNodeHelpers = {
   boundActionCreators: true,
 
   /**
-   * All action creators wrapped with a dispatch.
+   * Collection of functions used to programmatically modify Gatsby’s internal state.
    *
    * See [`actions`](/docs/actions/) reference.
    * @type {Actions}
