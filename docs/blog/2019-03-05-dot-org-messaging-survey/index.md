@@ -124,8 +124,8 @@ Here are some ideas to keep in mind throughout for a potential redesign of the .
 
 Quote:
 
-> “[I didn’t think the value Gatsby provides was] that crucial until I experienced it first hand.”
+<pullquote>[I didn’t think the value Gatsby provides was] that crucial until I experienced it firsthand.</pullquote>
 
 ## How you can participate
 
-[Want to test new & existing @gatsbyjs products and features such as new designs for the .org homepage? Sign up to receive a newsletter whenever there is an upcoming test](https://airtable.com/shrKDSF2E7ljCaYCd).
+[Want to test new & existing @gatsbyjs products and features such as new designs for the .org homepage? Sign up to receive a newsletter whenever there is an upcoming test.](https://airtable.com/shrKDSF2E7ljCaYCd).
