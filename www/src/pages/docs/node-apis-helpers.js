@@ -22,7 +22,7 @@ class NodeAPIHelperDocs extends React.Component {
             <title>Node API helpers</title>
           </Helmet>
           <h1 id="gatsby-node-helpers-apis" css={{ marginTop: 0 }}>
-            Gatsby Node APIs helpers
+            Gatsby Node API helpers
           </h1>
           <p>
             The first argument passed to each of{` `}
