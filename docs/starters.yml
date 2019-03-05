@@ -1985,3 +1985,14 @@
     - Dynamic content from Livingdocs.
     - Built-in component library.
     - Robust template and theme.
+- url: https://gatsby-starter-intl.tomekskuta.pl
+  repo: https://github.com/tomekskuta/gatsby-starter-intl
+  description: Gatsby v2 i18n starter which makes static pages for every locale and detect your browsers lang. i18n with react-intl.
+  tags:
+    - i18n
+  features:
+    - static pages for every language
+    - detects your browser locale
+    - uses react-intl
+    - based on Gatsby Default Starter
+    - unit tests with Jest
