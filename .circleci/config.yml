@@ -86,7 +86,7 @@ commands:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: ./scripts/link-and-run-command "<< parameters.path >>" "<< parameters.command >>"
+      - run: ./scripts/link-and-run-command.sh "<< parameters.path >>" "<< parameters.command >>"
 
 version: 2.1
 
