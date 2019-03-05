@@ -239,9 +239,12 @@ workflows:
             branches:
               only:
                 - master
-      - build_gatsbyjs_org:
+      - build_gatsbyjs_org_approval:
           type: approval
           requires:
             - bootstrap
+      - build_gatsbyjs_org:
+          requires:
+            - build_gatsbyjs_org_approval
           environment:
             GATSBY_SCREENSHOT_PLACEHOLDER: true
