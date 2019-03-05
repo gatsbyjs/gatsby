@@ -37,7 +37,7 @@ class Pagination extends React.Component {
           justifyContent: `space-between`,
           margin: `${rhythm(1)} 0`,
           flexDirection: `column`,
-          [presets.Tablet]: {
+          [presets.Md]: {
             flexDirection: `row`,
           },
         }}
@@ -50,7 +50,7 @@ class Pagination extends React.Component {
             justifyContent: `space-between`,
             alignItems: `center`,
             marginBottom: rhythm(1 / 2),
-            [presets.Tablet]: {
+            [presets.Md]: {
               width: `15rem`,
               marginBottom: 0,
             },

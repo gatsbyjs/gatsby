@@ -37,7 +37,7 @@ const LegendTable = () => {
     padding: 10,
     borderLeft: `1px solid ${legendBorderColor}`,
     borderBottom: `1px solid ${legendBorderColor}`,
-    [presets.Phablet]: {
+    [presets.Sm]: {
       borderBottom: 0,
     },
   }
@@ -104,7 +104,7 @@ const LegendTable = () => {
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
           display: `none`,
-          [presets.Phablet]: {
+          [presets.Sm]: {
             display: `table`,
           },
         }}
@@ -118,7 +118,7 @@ const LegendTable = () => {
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
-          [presets.Phablet]: {
+          [presets.Sm]: {
             display: `none`,
           },
         }}

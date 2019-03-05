@@ -56,6 +56,15 @@ plugins: [
 | `withWebp`             | `false` | Additionally generate WebP versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format. Pass `true` for default support, or an object of options to specifically override those for the WebP files. For example, pass `{ quality: 80 }` to have the WebP images be at quality level 80.                                                                                     |
 | `tracedSVG`            | `false` | Use traced SVGs for placeholder images instead of the "blur up" effect. Pass `true` for traced SVGs with the default settings (seen [here][3]), or an object of options to override the defaults. For example, pass `{ color: "#F00", turnPolicy: "TURNPOLICY_MAJORITY" }` to change the color of the trace to red and the turn policy to TURNPOLICY_MAJORITY. See [`node-potrace` parameter documentation][4] for a full listing and explanation of the available options. |
 
+## Supported Formats
+
+This plugin will support the following formats:
+
+- JPEG
+- PNG
+
+Since it uses Sharp for image processing, this plugin will not support GIFs or SVGs. If you would like to render these file types with the image markdown syntax, add the [gatsby-remark-copy-linked-files](https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/) plugin. Do note with this it will load in the images, but won't use the features of Sharp such as the elastic container or the blur-up enhancements.
+
 [1]: https://jmperezperez.com/medium-image-progressive-loading-placeholder/
 [2]: https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/
 [3]: https://www.npmjs.com/package/gatsby-plugin-sharp#tracedsvg

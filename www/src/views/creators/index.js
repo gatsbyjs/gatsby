@@ -112,7 +112,7 @@ class CreatorsView extends Component {
             padding: rhythm(3 / 4),
             paddingBottom: `10vh`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
-            [presets.Tablet]: {
+            [presets.Md]: {
               paddingBottom: rhythm(3 / 4),
             },
           }}
@@ -122,7 +122,7 @@ class CreatorsView extends Component {
               display: `flex`,
               flexWrap: `wrap`,
               justifyContent: `center`,
-              [presets.Desktop]: {
+              [presets.Lg]: {
                 justifyContent: `flex-start`,
               },
             }}
