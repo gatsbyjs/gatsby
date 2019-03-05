@@ -3,10 +3,7 @@ title: Results from .org messaging survey are in
 date: 2019-03-05
 author: Shannon Soper
 tags: ["ux", "design"]
-image: 
-showImageInArticle: true
 ---
-
 Recently, we sent out a survey asking people in the Gatsby community how they would define Gatsby and what they value most about Gatsby. The results are in, and I want to share them with you! Thanks to everyone who filled out the survey.
 
 Here’s [the original survey](https://docs.google.com/forms/d/e/1FAIpQLSfxLn81j5FBEnDGSMFAgMo0lZctb3GGVZi_xteIbwE-Q6eoaQ/viewform?usp=sf_link) if you’d like to see the questions (it’s closed to responses).
