@@ -4679,3 +4679,15 @@
     - Technology
   built_by: Othermachines
   built_by_url: "https://othermachines.com"
+- title: WrapCode
+  url: https://www.wrapcode.com
+  main_url: https://www.wrapcode.com
+  description: >
+    A full stack blog on Microsoft Azure, JavaScript, DevOps, AI and Bots.
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Rahul P
+  built_by_url: https://twitter.com/_rahulpp
+  featured: false
