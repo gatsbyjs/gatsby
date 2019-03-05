@@ -150,8 +150,8 @@ module.exports = (
       } else {
         const ASTGenerationPromise = getMarkdownAST(markdownNode)
         ASTGenerationPromise.then(markdownAST => {
-          cache.set(cacheKey, markdownAST)
           ASTPromiseMap.delete(cacheKey)
+          return cache.set(cacheKey, markdownAST)
         }).catch(err => {
           ASTPromiseMap.delete(cacheKey)
           return err
