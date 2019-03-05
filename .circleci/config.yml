@@ -243,3 +243,5 @@ workflows:
           type: approval
           requires:
             - bootstrap
+          environment:
+            GATSBY_SCREENSHOT_PLACEHOLDER: true
