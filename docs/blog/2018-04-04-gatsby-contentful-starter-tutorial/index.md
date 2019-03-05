@@ -33,7 +33,7 @@ This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a
 Start by using this with the Gatsby CLI:
 
 ```bash
-npx gatsby new contentful-starter https://github.com/contentful-userland/gatsby-contentful-starter
+gatsby new contentful-starter https://github.com/contentful-userland/gatsby-contentful-starter
 ```
 
 Alternatively, you can also clone a sample repo from GitHub:

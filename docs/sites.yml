@@ -4646,7 +4646,39 @@
     - Education
   built_by: Htet Wai Yan Soe
   built_by_url: https://github.com/johnreginald
+- title: AquaGruppen Vattenfilter
+  url: https://aquagruppen.se
+  main_url: https://aquagruppen.se/
+  description: >
+    Water filter and water treatment products in Sweden
+  categories:
+    - Business
+    - Technology
+  built_by: Johan Eliasson
+  built_by_url: https://github.com/elitan
   featured: false
+- title: How To egghead
+  main_url: https://howtoegghead.com/
+  url: https://howtoegghead.com/
+  source_url: https://github.com/eggheadio/how-to-egghead
+  featured: false
+  built_by: egghead.io
+  built_by_url: https://egghead.io
+  description: >
+    How to become an egghead instructor or reviewer
+  categories:
+    - Documentation
+    - Education
+- title: Sherpalo Ventures
+  main_url: "https://www.sherpalo.com/"
+  url: "https://www.sherpalo.com/"
+  featured: false
+  categories:
+    - Finance
+    - Business
+    - Technology
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
 - title: WrapCode
   url: https://www.wrapcode.com
   main_url: https://www.wrapcode.com

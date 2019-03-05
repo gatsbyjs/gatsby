@@ -17,7 +17,7 @@ The full code and documentation for this library is [available on GitHub](https:
 You'll start by creating a new Gatsby site based on the official _hello world_ starter. Open up a terminal and run the following command:
 
 ```bash
-npx gatsby new js-search-example https://github.com/gatsbyjs/gatsby-starter-default
+gatsby new js-search-example https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 After the process is complete, some additional packages are needed.
