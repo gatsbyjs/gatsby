@@ -101,6 +101,18 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       }
     }
 
+    /**
+     * Prepare Gatsby node from JsDoc object.
+     *  - set description and deprecated fields as markdown
+     *  - recursively process params, properties, returns
+     *  - link types to type definitions
+     *  - unwrap optional types to top level optional field
+     * @param {Object} docsJson JsDoc object. See https://documentation.js.org/html-example/index.json for example of JsDoc objects shape.
+     * @param {Object} args
+     * @param {Number} [args.commentNumber] Index of JsDoc in root of module
+     * @param {Number} args.level Nesting level
+     * @param {string} args.parent Id of parent node
+     */
     const prepareNodeForDocs = (
       docsJson,
       { commentNumber = null, level = 0, parent = node.id } = {}
