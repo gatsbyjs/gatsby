@@ -69,24 +69,24 @@ aliases:
       - bootstrap
 
 commands:
-  e2e-test:
+  link_and_run:
     parameters:
       trigger_pattern:
         type: string
         default: "packages/*|.circleci/*"
-      test_path:
+      path:
         type: string
-      test_command:
+      command:
         type: string
-        default: "" # if unset, e2e-test.sh specifies the command
+        default: "" # if unset, link-and-run-command specifies the command
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.path >>/*"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+      - run: ./scripts/link-and-run-command "<< parameters.path >>" "<< parameters.command >>"
 
 version: 2.1
 
@@ -133,45 +133,45 @@ jobs:
   integration_tests_long_term_caching:
     executor: node
     steps:
-      - e2e-test:
-          test_path: integration-tests/long-term-caching
+      - link_and_run:
+          path: integration-tests/long-term-caching
 
   integration_tests_gatsby_pipeline:
     executor: node
     steps:
-      - e2e-test:
-          test_path: integration-tests/gatsby-pipeline
+      - link_and_run:
+          path: integration-tests/gatsby-pipeline
 
   e2e_tests_gatsbygram:
     <<: *e2e-executor
     steps:
-      - e2e-test:
-          test_path: examples/gatsbygram
+      - link_and_run:
+          path: examples/gatsbygram
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
     steps:
-      - e2e-test:
-          test_path: e2e-tests/path-prefix
+      - link_and_run:
+          path: e2e-tests/path-prefix
 
   e2e_tests_gatsby-image:
     <<: *e2e-executor
     steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-image
+      - link_and_run:
+          path: e2e-tests/gatsby-image
 
   e2e_tests_development_runtime:
     <<: *e2e-executor
     steps:
-      - e2e-test:
-          test_path: e2e-tests/development-runtime
+      - link_and_run:
+          path: e2e-tests/development-runtime
 
   e2e_tests_production_runtime:
     <<: *e2e-executor
     steps:
-      - e2e-test:
-          test_path: e2e-tests/production-runtime
-          test_command: yarn test && yarn test:offline
+      - link_and_run:
+          path: e2e-tests/production-runtime
+          command: yarn test && yarn test:offline
 
   starters_validate:
     executor: node
@@ -192,6 +192,13 @@ jobs:
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
       - run: sh ./scripts/clone-and-validate.sh starters true
+
+  build_gatsbyjs_org:
+    executor: node
+    steps:
+      - link_and_run:
+          path: www
+          command: yarn build
 
 workflows:
   version: 2
@@ -232,3 +239,7 @@ workflows:
             branches:
               only:
                 - master
+      - build_gatsbyjs_org:
+          type: approval
+          requires:
+            - bootstrap

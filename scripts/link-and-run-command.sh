@@ -12,5 +12,4 @@ yarn &&
 gatsby-dev --set-path-to-repo $GATSBY_PATH &&
 gatsby-dev --scan-once --copy-all --quiet && # copies _all_ files in gatsby/packages
 chmod +x ./node_modules/.bin/gatsby && # this is sometimes necessary to ensure executable
-sh -c "$CUSTOM_COMMAND" &&
-echo "e2e test run succeeded"
+sh -c "$CUSTOM_COMMAND" 
