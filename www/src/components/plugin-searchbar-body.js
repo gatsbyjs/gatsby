@@ -232,6 +232,14 @@ class Search extends Component {
             <Configure analyticsTags={[`gatsby-plugins`]} />
             <RefinementList
               attributeName="keywords"
+              transformItems={items =>
+                items.map(({ count, ...item }) => {
+                  return {
+                    ...item,
+                    count: count || 0,
+                  }
+                })
+              }
               defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
             />
             <Toggle
