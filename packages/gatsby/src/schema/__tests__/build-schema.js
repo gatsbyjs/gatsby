@@ -4,7 +4,10 @@ const {
   GraphQLString,
   GraphQLInterfaceType,
   GraphQLUnionType,
+  GraphQLBoolean,
 } = require(`graphql`)
+const { SchemaComposer } = require(`graphql-compose`)
+jest.mock(`../../utils/api-runner-node`)
 const { store } = require(`../../redux`)
 const { build } = require(`..`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
@@ -12,11 +15,19 @@ require(`../../db/__tests__/fixtures/ensure-loki`)()
 const nodes = require(`./fixtures/node-model`)
 
 describe(`Build schema`, () => {
+  beforeAll(() => {
+    addDefaultApiRunnerMock()
+  })
+
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
+  })
+
+  afterEach(() => {
+    addDefaultApiRunnerMock()
   })
 
   describe(`createTypes`, () => {
@@ -169,33 +180,320 @@ describe(`Build schema`, () => {
   })
 
   describe(`createResolvers`, () => {
-    it.todo(`allows adding resolver to field`)
+    it(`allows adding resolver to field`, async () => {
+      createTypes(`
+        type Author implements Node {
+          name(withHello: Boolean = false): String!
+        }
+      `)
+      createCreateResolversMock({
+        Author: {
+          name: {
+            resolve(parent, args, context, info) {
+              if (args.withHello) {
+                return `Hello ${parent.name}`
+              } else {
+                return info.originalResolver(parent, args, context, info)
+              }
+            },
+          },
+        },
+      })
+      const schema = await buildSchema()
+      const type = schema.getType(`Author`)
+      const fields = type.getFields()
+      expect(fields[`name`].resolve).toBeDefined()
+      expect(
+        fields[`name`].resolve(
+          { name: `Mikhail` },
+          { withHello: true },
+          {},
+          {
+            fieldName: `name`,
+          }
+        )
+      ).toEqual(`Hello Mikhail`)
+      expect(
+        fields[`name`].resolve(
+          { name: `Mikhail` },
+          { withHello: false },
+          {},
+          {
+            fieldName: `name`,
+          }
+        )
+      ).toEqual(`Mikhail`)
+    })
 
-    it.todo(`allows adding args to field`)
+    it(`allows adding args to field`, async () => {
+      createCreateResolversMock({
+        Author: {
+          name: {
+            args: {
+              withHello: {
+                type: `Boolean`,
+                defaultValue: false,
+              },
+            },
+            resolve(parent, args, context, info) {
+              if (args.withHello) {
+                return `Hello ${parent.name}`
+              } else {
+                return info.originalResolver(parent, args, context, info)
+              }
+            },
+          },
+        },
+      })
+      const schema = await buildSchema()
+      const type = schema.getType(`Author`)
+      const fields = type.getFields()
+      expect(fields[`name`].resolve).toBeDefined()
+      expect(
+        fields[`name`].resolve(
+          { name: `Mikhail` },
+          { withHello: true },
+          {},
+          {
+            fieldName: `name`,
+          }
+        )
+      ).toEqual(`Hello Mikhail`)
+      expect(
+        fields[`name`].resolve(
+          { name: `Mikhail` },
+          { withHello: false },
+          {},
+          {
+            fieldName: `name`,
+          }
+        )
+      ).toEqual(`Mikhail`)
+    })
 
-    it.todo(`disallows overriding field type on field`)
+    it(`disallows overriding field type on field`, async () => {
+      createCreateResolversMock({
+        Author: {
+          name: {
+            type: `Boolean`,
+          },
+        },
+      })
+      const schema = await buildSchema()
+      const type = schema.getType(`Author`)
+      const fields = type.getFields()
+      expect(fields[`name`].type).toEqual(GraphQLString)
+    })
 
-    it.todo(`allows overriding field type on field on third-party type`)
+    it(`allows overriding field type on field on third-party type`, async () => {
+      addThirdPartySchema(`
+        type ThirdPartyFoo {
+          text: String
+        }
 
-    it.todo(`allows adding new field`)
+        type Query {
+          foo: ThirdPartyFoo
+        }
+      `)
+      createCreateResolversMock({
+        ThirdPartyFoo: {
+          text: {
+            type: `Boolean`,
+          },
+        },
+      })
 
-    it.todo(`warns if type does not exist`)
+      const schema = await buildSchema()
+      const type = schema.getType(`ThirdPartyFoo`)
+      const fields = type.getFields()
+      expect(fields[`text`].type).toEqual(GraphQLBoolean)
+    })
 
-    it.todo(`makes original field resolver available on info`)
+    it(`allows adding new field`, async () => {
+      createCreateResolversMock({
+        Author: {
+          newField: {
+            type: `String`,
+          },
+        },
+      })
 
+      const schema = await buildSchema()
+      const type = schema.getType(`Author`)
+      const fields = type.getFields()
+      expect(fields[`newField`]).toBeDefined()
+      expect(fields[`newField`].type).toEqual(GraphQLString)
+    })
+
+    it(`disallows adding if type does not exist`, async () => {
+      createCreateResolversMock({
+        FakeType: {
+          newField: {
+            type: `String`,
+          },
+        },
+      })
+      const schema = await buildSchema()
+      const type = schema.getType(`FakeType`)
+      expect(type).not.toBeDefined()
+    })
+
+    it(`makes original field resolver available on info`, async () => {
+      createCreateResolversMock({
+        PostFrontmatter: {
+          date: {
+            resolve(parent, args, context, info) {
+              if (parent.date.getFullYear() < 2018) {
+                return info.originalResolver(
+                  {
+                    ...parent,
+                    date: new Date(2018, 10, 10),
+                  },
+                  args,
+                  context,
+                  info
+                )
+              } else {
+                return info.originalResolver(parent, args, context, info)
+              }
+            },
+          },
+        },
+      })
+      const schema = await buildSchema()
+      const type = schema.getType(`PostFrontmatter`)
+      const fields = type.getFields()
+      expect(
+        fields[`date`].resolve(
+          { date: new Date(2019, 10, 10) },
+          { formatString: `YYYY` },
+          {},
+          {
+            fieldName: `date`,
+          }
+        )
+      ).toEqual(`2019`)
+      expect(
+        fields[`date`].resolve(
+          { date: new Date(2010, 10, 10) },
+          { formatString: `YYYY` },
+          {},
+          {
+            fieldName: `date`,
+          }
+        )
+      ).toEqual(`2018`)
+    })
+
+    // TODO: Define what "handles being called multiple times mean"
     it.todo(`handles being called multiple times`)
   })
 
   describe(`addThirdPartySchemas`, () => {
-    it.todo(`makes third-party schema available on root Query type`)
+    it(`makes third-party schema available on root Query type`, async () => {
+      addThirdPartySchema(`
+        type ThirdPartyFoo {
+          text: String
+        }
 
-    it.todo(`adds third-party types to schema`)
+        type Query {
+          foo: ThirdPartyFoo
+          foos: [ThirdPartyFoo]
+        }
+      `)
+      createCreateResolversMock({
+        ThirdPartyFoo: {
+          text: {
+            type: `Boolean`,
+          },
+        },
+      })
+
+      const schema = await buildSchema()
+      const type = schema.getType(`Query`)
+      const fields = type.getFields()
+      expect(fields[`foo`].type.toString()).toEqual(`ThirdPartyFoo`)
+      expect(fields[`foos`].type.toString()).toEqual(`[ThirdPartyFoo]`)
+    })
+
+    it(`adds third-party types to schema`, async () => {
+      addThirdPartySchema(`
+        type ThirdPartyFoo {
+          text: String
+        }
+
+        type ThirdPartyBar {
+          baz: String
+        }
+
+        union ThirdPartyUnion = ThirdPartyFoo | ThirdPartyBar
+
+        type Query {
+          union: ThirdPartyUnion
+        }
+      `)
+
+      const schema = await buildSchema()
+      ;[`ThirdPartyFoo`, `ThirdPartyBar`, `ThirdPartyUnion`].forEach(
+        typeName => {
+          const type = schema.getType(typeName)
+          expect(type).toBeDefined()
+        }
+      )
+    })
   })
 
-  describe(`addSetFieldsOnGraphQLNodeTypeFields`, () => {
-    it.todo(`allows adding fields`)
+  describe(`setFieldsOnGraphQLNodeType`, () => {
+    it(`allows adding fields`, async () => {
+      createSetFieldsOnNodeTypeMock(({ type: { name } }) => {
+        if (name === `Author`) {
+          return [
+            {
+              newField: {
+                type: GraphQLString,
+              },
+            },
+          ]
+        } else {
+          return []
+        }
+      })
 
-    it.todo(`allows adding nested fields`)
+      const schema = await buildSchema()
+      const type = schema.getType(`Author`)
+      const fields = type.getFields()
+      expect(fields[`newField`]).toBeDefined()
+      expect(fields[`newField`].type).toBe(GraphQLString)
+    })
+
+    it(`allows adding nested fields`, async () => {
+      createSetFieldsOnNodeTypeMock(({ type: { name } }) => {
+        if (name === `Post`) {
+          return [
+            {
+              newField: {
+                type: GraphQLString,
+              },
+              "frontmatter.newField": {
+                type: GraphQLString,
+              },
+            },
+          ]
+        } else {
+          return []
+        }
+      })
+
+      const schema = await buildSchema()
+      const type = schema.getType(`Post`)
+      const fields = type.getFields()
+      expect(fields[`newField`]).toBeDefined()
+      expect(fields[`newField`].type).toBe(GraphQLString)
+      const frontmatterType = fields[`frontmatter`].type
+      const frontmatterFields = frontmatterType.getFields()
+      expect(frontmatterFields[`newField`]).toBeDefined()
+      expect(frontmatterFields[`newField`].type).toBe(GraphQLString)
+    })
   })
 })
 
@@ -203,7 +501,39 @@ const createTypes = types => {
   store.dispatch({ type: `CREATE_TYPES`, payload: types })
 }
 
+const createCreateResolversMock = resolvers => {
+  const apiRunnerNode = require(`../../utils/api-runner-node`)
+  apiRunnerNode.mockImplementation((api, { createResolvers }) => {
+    if (api === `createResolvers`) {
+      return createResolvers(resolvers)
+    }
+    return []
+  })
+}
+
+const createSetFieldsOnNodeTypeMock = mock => {
+  const apiRunnerNode = require(`../../utils/api-runner-node`)
+  apiRunnerNode.mockImplementation((api, ...args) => {
+    if (api === `setFieldsOnGraphQLNodeType`) {
+      return mock(...args)
+    }
+    return []
+  })
+}
+
+const addDefaultApiRunnerMock = () => {
+  const apiRunnerNode = require(`../../utils/api-runner-node`)
+  apiRunnerNode.mockImplementation(() => [])
+}
+
 const buildSchema = async () => {
   await build({})
   return store.getState().schema
+}
+
+const addThirdPartySchema = async typeDefs => {
+  const schemaComposer = new SchemaComposer()
+  schemaComposer.addTypeDefs(typeDefs)
+  const schema = schemaComposer.buildSchema()
+  store.dispatch({ type: `ADD_THIRD_PARTY_SCHEMA`, payload: schema })
 }

@@ -87,6 +87,13 @@ const addInferredFieldsImpl = ({
       fieldConfig = possibleFields[0].fieldConfig
     }
 
+    let arrays = 0
+    let namedInferredType = fieldConfig.type
+    while (Array.isArray(namedInferredType)) {
+      namedInferredType = namedInferredType[0]
+      arrays++
+    }
+
     if (typeComposer.hasField(key)) {
       const fieldType = typeComposer.getFieldType(key)
 
@@ -97,13 +104,6 @@ const addInferredFieldsImpl = ({
         if (namedFieldType instanceof GraphQLList) {
           lists++
         }
-      }
-
-      let arrays = 0
-      let namedInferredType = fieldConfig.type
-      while (Array.isArray(namedInferredType)) {
-        namedInferredType = namedInferredType[0]
-        arrays++
       }
 
       if (arrays === lists) {
@@ -135,6 +135,9 @@ const addInferredFieldsImpl = ({
         }
       }
     } else {
+      if (namedInferredType instanceof schemaComposer.TypeComposer) {
+        schemaComposer.add(namedInferredType)
+      }
       typeComposer.setField(key, fieldConfig)
     }
   })
