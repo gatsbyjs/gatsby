@@ -131,9 +131,10 @@ const GatsbyNodeHelpers = {
   getCache: true,
 
   /**
-   * Create a stable content digest from a string or object, you can use this
-   * to set the `internal.contentDigest` field on nodes. Gatsby uses the value
-   * of this field to invalidate stale data when your content changes.
+   * Create a stable content digest from a string or object, you can use the
+   * result of this function to set the `internal.contentDigest` field
+   * on nodes. Gatsby uses the value of this field to invalidate stale data
+   * when your content changes.
    * @param {(string|object)} input
    * @returns {string} Hash string
    * @example
