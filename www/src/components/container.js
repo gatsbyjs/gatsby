@@ -3,7 +3,7 @@ import presets from "../utils/presets"
 
 import { rhythm, options } from "../utils/typography"
 
-const Container = ({ children, className = ``, hasSideBar = true }) => (
+const Container = ({ children, hasSideBar = true, overrideCSS }) => (
   <div
     css={{
       maxWidth: hasSideBar
@@ -14,12 +14,8 @@ const Container = ({ children, className = ``, hasSideBar = true }) => (
         options.blockMarginBottom
       )}`,
       position: `relative`,
-      [presets.Md]: {
-        // Regular padding without mobile navigation
-        paddingBottom: rhythm(options.blockMarginBottom * 2),
-      },
+      ...overrideCSS,
     }}
-    className={className}
   >
     {children}
   </div>

@@ -10,7 +10,7 @@ class Plugins extends Component {
   render() {
     return (
       <Container
-        css={{
+        overrideCSS={{
           alignItems: `center`,
           display: `flex`,
           minHeight: `calc(100vh - (${presets.headerHeight} + ${
