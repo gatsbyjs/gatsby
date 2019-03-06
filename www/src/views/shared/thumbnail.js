@@ -4,6 +4,7 @@ import Img from "gatsby-image"
 
 import styles from "./styles"
 import presets from "../../utils/presets"
+import { options } from "../../utils/typography"
 
 const ThumbnailLink = ({ slug, image, title, children, state }) => {
   let screenshot = false
@@ -22,6 +23,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
       state={{ isModal: true, ...state }}
       css={{
         ...styles.withTitleHover,
+        fontFamily: options.headerFontFamily.join(`,`),
         "&&": {
           borderBottom: `none`,
           boxShadow: `none`,
