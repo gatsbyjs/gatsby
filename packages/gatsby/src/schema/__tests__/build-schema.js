@@ -14,7 +14,6 @@ const {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
-  buildInputObjectType,
 } = require(`../types/type-builders`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
