@@ -3,25 +3,21 @@ import presets from "../utils/presets"
 
 import { rhythm, options } from "../utils/typography"
 
-const Container = ({
-  children,
-  className = ``,
-  hasSideBar = true,
-  overrideCSS = {},
-}) => (
+const Container = ({ children, className = ``, hasSideBar = true }) => (
   <div
     css={{
       maxWidth: hasSideBar
         ? rhythm(presets.maxWidthWithSidebar)
         : rhythm(presets.maxWidth),
       margin: `0 auto`,
-      padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
-      paddingBottom: rhythm(3.5),
+      padding: `${rhythm(options.blockMarginBottom * 2)} ${rhythm(
+        options.blockMarginBottom
+      )}`,
       position: `relative`,
       [presets.Md]: {
-        paddingBottom: rhythm(1.5),
+        // Regular padding without mobile navigation
+        paddingBottom: rhythm(options.blockMarginBottom * 2),
       },
-      ...overrideCSS,
     }}
     className={className}
   >
