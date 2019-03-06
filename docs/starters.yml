@@ -2021,4 +2021,3 @@
     - Pagination (fallback for users without JS)
     - Toggle between these modes in demo
     - Efficient implementation (only fetch the data that's needed, ship initial items with the page instead of fetch, etc.)
-    
