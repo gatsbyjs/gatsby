@@ -5,7 +5,7 @@ import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import presets, { colors } from "../../utils/presets"
-import { scale, options } from "../../utils/typography"
+import { scale } from "../../utils/typography"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.

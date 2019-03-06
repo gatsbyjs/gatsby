@@ -9,7 +9,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
 import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
   HorizontalScrollerItem.withComponent(`article`)
@@ -214,8 +214,9 @@ const HomepageBlogPost = ({
 
   return (
     <HomepageBlogPostRoot fullWidth={fullWidth}>
-      {desktopViewport &&
-        cover && <Cover fluid={cover.childImageSharp.fluid} />}
+      {desktopViewport && cover && (
+        <Cover fluid={cover.childImageSharp.fluid} />
+      )}
 
       <Link to={slug}>
         <Header first={first} withCover={cover}>
