@@ -295,12 +295,8 @@ const styles = {
   list: {
     margin: 0,
     paddingTop: 20,
-    paddingBottom: 104,
+    paddingBottom: 20,
     fontSize: scale(-2 / 10).fontSize,
-    [presets.Md]: {
-      fontSize: scale(-4 / 10).fontSize,
-      paddingBottom: 20,
-    },
     "& li": {
       margin: 0,
       listStyle: `none`,
