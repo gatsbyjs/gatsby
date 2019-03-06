@@ -22,6 +22,7 @@
     "fs-extra": "^4.0.1",
     "hosted-git-info": "^2.6.0",
     "lodash": "^4.17.10",
+    "meant": "^1.0.1",
     "opentracing": "^0.14.3",
     "pretty-error": "^2.1.1",
     "resolve-cwd": "^2.0.0",
