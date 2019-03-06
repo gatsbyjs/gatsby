@@ -134,12 +134,10 @@ module.exports = (
             "package.json": {
               content: {
                 dependencies: dependencies.reduce((map, dependency) => {
-                  if (dependency.includes(`@`)) {
-                    const [name, version] = dependency.split(`@`)
-                    map[name] = version
-                  } else {
-                    map[dependency] = `latest`
-                  }
+                  const [, name, , version] = /^(@?.+?)(@(.+))?$/.exec(
+                    dependency
+                  )
+                  map[name] = version || `latest`
                   return map
                 }, {}),
                 main: filesPaths[0].url,
