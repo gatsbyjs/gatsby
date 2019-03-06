@@ -165,7 +165,7 @@ class BlogPostTemplate extends React.Component {
                       height: rhythm(2.3),
                       width: rhythm(2.3),
                       margin: 0,
-                      borderRadius: `100%`,
+                      borderRadius: presets.radii[6],
                       display: `inline-block`,
                       verticalAlign: `middle`,
                     }}

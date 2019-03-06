@@ -122,7 +122,7 @@ const styles = {
       }`,
     },
     "&:before": {
-      borderRadius: `100%`,
+      borderRadius: presets.radii[6],
       content: `''`,
       transform: `scale(0.1)`,
       width: bulletSize,
@@ -132,7 +132,7 @@ const styles = {
     },
     "&:after": {
       background: colors.gatsby,
-      borderRadius: 4,
+      borderRadius: presets.radii[2],
       content: `''`,
       left: bulletOffset.default.left + 7,
       opacity: 0,
@@ -147,7 +147,7 @@ const styles = {
     ...bulletOffset.default,
     background: `#fff`,
     border: `1px solid ${colors.ui.bright}`,
-    borderRadius: `100%`,
+    borderRadius: presets.radii[6],
     display: `block`,
     fontWeight: `normal`,
     height: bulletSize,

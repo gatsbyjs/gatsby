@@ -182,7 +182,7 @@ const styles = {
   },
   filter: {
     border: `1px solid ${colors.ui.bright}`,
-    borderRadius: `40px`,
+    borderRadius: 40,
     margin: `${rhythm(3 / 4)} ${rhythm(1 / 6)}`,
     paddingLeft: rhythm(1 / 4),
     paddingRight: rhythm(1 / 4),
@@ -197,7 +197,7 @@ const styles = {
     width: `1rem`,
     height: `1rem`,
     border: `1px solid ${colors.ui.bright}`,
-    borderRadius: `40px`,
+    borderRadius: 40,
     marginRight: `${rhythm(1 / 4)}`,
     outline: `none`,
     "&:checked": {

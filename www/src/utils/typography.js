@@ -111,7 +111,7 @@ const _options = {
         fontWeight: `700`,
         letterSpacing: `0.8px`,
         textTransform: `uppercase`,
-        borderRadius: `0 0 4px 4px`,
+        borderRadius: `0 0 ${presets.radii[2]}px ${presets.radii[2]}px`,
         background: `#ddd`,
         fontFamily: options.monospaceFontFamily.join(`,`),
       },

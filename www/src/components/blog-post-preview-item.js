@@ -41,7 +41,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
           alt=""
           fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
           css={{
-            borderRadius: `100%`,
+            borderRadius: presets.radii[6],
             display: `inline-block`,
             marginRight: rhythm(1 / 2),
             marginBottom: 0,
