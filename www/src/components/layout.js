@@ -1,17 +1,17 @@
 import React from "react"
+import { navigate, PageRenderer } from "gatsby"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
+import mousetrap from "mousetrap"
 import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
-import { navigate, PageRenderer } from "gatsby"
+
 import presets, { colors } from "../utils/presets"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
-
-import mousetrap from "mousetrap"
 
 // Import Futura PT typeface
 import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
