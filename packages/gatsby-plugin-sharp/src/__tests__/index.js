@@ -18,6 +18,7 @@ const {
   getImageSize,
 } = require(`../`)
 const { scheduleJob } = require(`../scheduler`)
+scheduleJob.mockResolvedValue(Promise.resolve())
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -71,8 +72,9 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
     })
 
-    it(`should process immediately when asked`, async () => {
-      scheduleJob.mockResolvedValue(Promise.resolve())
+    // re-enable when image processing on demand is implemented
+    it.skip(`should process immediately when asked`, async () => {
+      scheduleJob.mockClear()
       const result = queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: { width: 3 },

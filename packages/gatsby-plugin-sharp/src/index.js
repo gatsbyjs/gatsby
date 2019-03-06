@@ -206,21 +206,31 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   queue.set(prefixedSrc, job)
 
+  // schedule job immediately - this will be changed when image processing on demand is implemented
+  const finishedPromise = scheduleJob(
+    job,
+    boundActionCreators,
+    pluginOptions
+  ).then(() => {
+    queue.delete(prefixedSrc)
+  })
+
   return {
     src: prefixedSrc,
     absolutePath: filePath,
     width,
     height,
     aspectRatio,
-    // finishedPromise is needed to not break our API (https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sqip/src/extend-node-type.js#L115)
-    finishedPromise: {
-      then: (resolve, reject) => {
-        scheduleJob(job, boundActionCreators, pluginOptions).then(() => {
-          queue.delete(prefixedSrc)
-          resolve()
-        }, reject)
-      },
-    },
+    finishedPromise,
+    // // finishedPromise is needed to not break our API (https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sqip/src/extend-node-type.js#L115)
+    // finishedPromise: {
+    //   then: (resolve, reject) => {
+    //     scheduleJob(job, boundActionCreators, pluginOptions).then(() => {
+    //       queue.delete(prefixedSrc)
+    //       resolve()
+    //     }, reject)
+    //   },
+    // },
     originalName: originalName,
   }
 }

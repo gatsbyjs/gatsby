@@ -1,11 +1,11 @@
 const {
   setBoundActionCreators,
   setPluginOptions,
-  queue: jobQueue,
+  // queue: jobQueue,
   // reportError,
 } = require(`./index`)
-const { scheduleJob } = require(`./scheduler`)
-let normalizedOptions = {}
+// const { scheduleJob } = require(`./scheduler`)
+// let normalizedOptions = {}
 
 // const getQueueFromCache = store => {
 //   const pluginStatus = store.getState().status.plugins[`gatsby-plugin-sharp`]
@@ -51,37 +51,38 @@ let normalizedOptions = {}
 
 exports.onPreBootstrap = ({ actions }, pluginOptions) => {
   setBoundActionCreators(actions)
-  normalizedOptions = setPluginOptions(pluginOptions)
+  setPluginOptions(pluginOptions)
+  // normalizedOptions = setPluginOptions(pluginOptions)
 }
 
-/**
- * save queue to the cache or process queue
- */
-exports.onPostBootstrap = ({
-  // store,
-  boundActionCreators,
-  // actions: { setPluginStatus },
-  // reporter,
-}) => {
-  const promises = []
-  for (const [, job] of jobQueue) {
-    promises.push(scheduleJob(job, boundActionCreators, normalizedOptions))
-  }
+// /**
+//  * save queue to the cache or process queue
+//  */
+// exports.onPostBootstrap = ({
+//   // store,
+//   boundActionCreators,
+//   // actions: { setPluginStatus },
+//   // reporter,
+// }) => {
+//   const promises = []
+//   for (const [, job] of jobQueue) {
+//     promises.push(scheduleJob(job, boundActionCreators, normalizedOptions))
+//   }
 
-  return promises
-  // // Save queue
-  // saveQueueToCache(store, setPluginStatus, jobQueue)
+//   return promises
+//   // // Save queue
+//   // saveQueueToCache(store, setPluginStatus, jobQueue)
 
-  // if (normalizedOptions.lazyImageGeneration) {
-  //   return
-  // }
+//   // if (normalizedOptions.lazyImageGeneration) {
+//   //   return
+//   // }
 
-  // const imageJobs = processQueue(store, boundActionCreators, normalizedOptions)
+//   // const imageJobs = processQueue(store, boundActionCreators, normalizedOptions)
 
-  // cleanupQueueAfterProcess(imageJobs, setPluginStatus, reporter)
+//   // cleanupQueueAfterProcess(imageJobs, setPluginStatus, reporter)
 
-  // return
-}
+//   // return
+// }
 
 /**
  * Execute all unprocessed images on gatsby build
