@@ -22,7 +22,7 @@ describe(`Build schema`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
     )
   })
 
