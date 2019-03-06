@@ -73,8 +73,7 @@ module.exports = {
 ```
 
 **NOTE**: The above code snippet will only stop the creation of the `/blog` page, which is defined as a React component.
-This plugin does not affect the generation of pages from content/data files
-(see [gatsby-source-filesystem](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/) instead).
+This plugin does not affect programmatically generated pages from the [createPagesAPI] (https://www.gatsbyjs.org/docs/node-apis/#createPages).
 
 #### Ignore Options
 
