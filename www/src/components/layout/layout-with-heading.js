@@ -77,15 +77,7 @@ const LayoutWithHeading = props => {
 
       <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
 
-      <Banner>
-        <OutboundLink
-          href="https://www.gatsbyjs.com/behind-the-scenes/"
-          css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
-        >
-          Watch now
-        </OutboundLink>
-        {`: “Behind the Scenes: What makes Gatsby Great”.`}
-      </Banner>
+      <Banner />
 
       <Navigation pathname={props.location.pathname} />
 

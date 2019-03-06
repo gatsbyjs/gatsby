@@ -149,16 +149,7 @@ class DefaultLayout extends React.Component {
       <div>
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
-        <Banner>
-          {/* !!! If you change the children of Banner remember to do the same in layout/layout-with-heading.js */}
-          <OutboundLink
-            href="https://www.gatsbyjs.com/behind-the-scenes/"
-            css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
-          >
-            Watch now
-          </OutboundLink>
-          {`: “Behind the Scenes: What makes Gatsby Great”.`}
-        </Banner>
+        <Banner />
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}
