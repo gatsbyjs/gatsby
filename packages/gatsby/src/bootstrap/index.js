@@ -108,7 +108,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity = report.activityTimer(`load plugins`)
   activity.start()
-  const flattenedPlugins = await loadPlugins(config)
+  const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
   // onPreInit
