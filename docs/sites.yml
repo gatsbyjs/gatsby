@@ -4734,3 +4734,26 @@
   built_by: Rou Hun Fan Developer
   built_by_url: https://flowen.me
   featured: false
+- title: chadly.net
+  url: https://www.chadly.net
+  main_url: https://www.chadly.net
+  source_url: https://github.com/chadly/chadly.net
+  description: >
+    Personal tech blog by Chad Lee.
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Chad Lee
+  built_by_url: https://github.com/chadly
+  featured: false
+- title: CivicSource
+  url: https://www.civicsource.com
+  main_url: https://www.civicsource.com
+  description: >
+    Online auction site to purchase tax-distressed properties from local taxing authorities.
+  categories:
+    - Auction
+    - Real Estate
+    - Government
+  featured: false
