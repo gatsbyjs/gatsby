@@ -9,6 +9,7 @@ import Layout from "../components/layout"
 import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
+import DocSearchContent from "../components/docsearch-content"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
@@ -70,8 +71,8 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <Container className="post" css={{ paddingBottom: `0` }}>
-          <main id={`reach-skip-nav`}>
+        <Container>
+          <DocSearchContent>
             {/* Add long list of social meta tags */}
             <Helmet>
               <title>{post.frontmatter.title}</title>
@@ -256,7 +257,7 @@ class BlogPostTemplate extends React.Component {
               tags={this.props.data.markdownRemark.frontmatter.tags}
             />
             <EmailCaptureForm />
-          </main>
+          </DocSearchContent>
         </Container>
         <div
           css={{
