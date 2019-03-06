@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import styled from "@emotion/styled"
 
 import Banner from "../banner"
