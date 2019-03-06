@@ -8023,9 +8023,10 @@ graceful-fs@^4.1.15, graceful-fs@^4.1.9:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-graphql-compose@^5.10.1:
-  version "5.10.4"
-  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-5.10.4.tgz#6908ba791a4c46e82c646df8bf48f7af6f272d97"
+graphql-compose@^5.11.0:
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-5.11.0.tgz#371a75036897777be7e16e861f8afa86567b0ca1"
+  integrity sha512-TLdHXgjvylxIjijKEI+R8ofI4OB1l8t5npVeIg2rRzuuGu6zkZ93hbUu4kd0McoaoTxnMDmiRYmkKHNpZI7PYg==
   dependencies:
     graphql-type-json "^0.2.1"
     object-path "^0.11.4"

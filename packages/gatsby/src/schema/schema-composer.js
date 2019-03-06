@@ -6,7 +6,7 @@ const { InferDirective, DontInferDirective } = require(`./types/directives`)
 const createSchemaComposer = () => {
   const schemaComposer = new SchemaComposer()
   getNodeInterface({ schemaComposer })
-  schemaComposer.add(GraphQLDate)
+  schemaComposer.addAsComposer(GraphQLDate)
   schemaComposer.addDirective(InferDirective)
   schemaComposer.addDirective(DontInferDirective)
   return schemaComposer

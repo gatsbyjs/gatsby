@@ -6,22 +6,30 @@ const {
   GraphQLList,
 } = require(`graphql`)
 
-const convert = ({ schemaComposer, inputTypeComposer }) => {
+const convert = ({
+  schemaComposer,
+  inputTypeComposer,
+  filterInputComposer,
+}) => {
   const inputTypeName = inputTypeComposer
     .getTypeName()
     .replace(/Input$/, `FilterInput`)
-  if (schemaComposer.has(inputTypeName)) {
-    return schemaComposer.get(inputTypeName)
+
+  let convertedITC
+  if (filterInputComposer) {
+    convertedITC = filterInputComposer
+  } else if (schemaComposer.has(inputTypeName)) {
+    return schemaComposer.getITC(inputTypeName)
+  } else {
+    convertedITC = new schemaComposer.InputTypeComposer(
+      new GraphQLInputObjectType({
+        name: inputTypeName,
+        fields: {},
+      })
+    )
   }
 
-  const convertedITC = new schemaComposer.InputTypeComposer(
-    new GraphQLInputObjectType({
-      name: inputTypeName,
-      fields: {},
-    })
-  )
-
-  schemaComposer.add(convertedITC)
+  schemaComposer.addAsComposer(convertedITC)
 
   const fieldNames = inputTypeComposer.getFieldNames()
   const convertedFields = {}
@@ -90,7 +98,11 @@ const removeEmptyFields = (
   return convert(inputTypeComposer)
 }
 
-const getFilterInput = ({ schemaComposer, typeComposer }) => {
+const getFilterInput = ({
+  schemaComposer,
+  typeComposer,
+  filterInputComposer,
+}) => {
   const inputTypeComposer = typeComposer.getInputTypeComposer()
 
   // TODO: In Gatsby v2, the NodeInput.id field is of type String, not ID.
@@ -105,6 +117,7 @@ const getFilterInput = ({ schemaComposer, typeComposer }) => {
   const filterInputTC = convert({
     schemaComposer,
     inputTypeComposer,
+    filterInputComposer,
   })
   // Filter out any fields whose type has no query operator fields.
   // This will be the case if the input type has only had fields whose types

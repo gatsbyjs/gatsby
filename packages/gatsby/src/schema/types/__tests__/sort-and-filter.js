@@ -240,9 +240,9 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     expect(childAB instanceof GraphQLInputObjectType).toBeTruthy()
     isIdInput(childABFields.bar.type)
 
-    expect(childABFields.typea.type.name).toBe(`TestTypeAFilterInput`)
+    expect(childABFields.typea.type.name).toBe(`TypeAFilterInput`)
 
-    expect(entryPointBFields.typea.type.name).toBe(`TestTypeAFilterInput`)
+    expect(entryPointBFields.typea.type.name).toBe(`TypeAFilterInput`)
   })
 
   it(`recovers from unknown output types`, async () => {

@@ -2,9 +2,6 @@ const _ = require(`lodash`)
 const {
   isSpecifiedScalarType,
   isIntrospectionType,
-  GraphQLInterfaceType,
-  GraphQLUnionType,
-  GraphQLObjectType,
   defaultFieldResolver,
 } = require(`graphql`)
 const apiRunner = require(`../utils/api-runner-node`)
@@ -135,28 +132,23 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
         processAddedType({ schemaComposer, type, parentSpan })
       )
     } else {
-      schemaComposer.add(typeOrTypeDef)
       processAddedType({ schemaComposer, type: typeOrTypeDef, parentSpan })
     }
   })
 }
 
 const processAddedType = ({ schemaComposer, type, parentSpan }) => {
-  let abstractTypeComposer
-  if (type instanceof GraphQLInterfaceType) {
-    abstractTypeComposer = schemaComposer.getOrCreateIFTC(type.name)
-  } else if (type instanceof GraphQLUnionType) {
-    abstractTypeComposer = schemaComposer.getOrCreateUTC(type.name)
-  } else if (type instanceof GraphQLObjectType) {
-    const typeComposer = schemaComposer.getOrCreateTC(type.name)
-    schemaComposer.addSchemaMustHaveType(typeComposer)
-  }
-  if (abstractTypeComposer) {
-    if (!abstractTypeComposer.getResolveType()) {
-      abstractTypeComposer.setResolveType(node => node.internal.type)
+  const typeName = schemaComposer.addAsComposer(type)
+  const typeComposer = schemaComposer.get(typeName)
+  if (
+    typeComposer instanceof schemaComposer.InterfaceTypeComposer ||
+    typeComposer instanceof schemaComposer.UnionTypeComposer
+  ) {
+    if (!typeComposer.getResolveType()) {
+      typeComposer.setResolveType(node => node.internal.type)
     }
-    schemaComposer.addSchemaMustHaveType(abstractTypeComposer)
   }
+  schemaComposer.addSchemaMustHaveType(typeComposer)
 }
 
 const addSetFieldsOnGraphQLNodeTypeFields = ({
@@ -286,7 +278,6 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
   // NOTE: No need to clear the SortInput, that will be regenerated anyway.
   // Also see the comment on the skipped test in `rebuild-schema`.
   typeComposer.removeInputTypeComposer()
-  schemaComposer.delete(`${typeName}FilterInput`)
 
   const sortInputTC = getSortInput({
     schemaComposer,
@@ -295,6 +286,9 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
   const filterInputTC = getFilterInput({
     schemaComposer,
     typeComposer,
+    filterInputComposer: schemaComposer.getOrCreateITC(
+      `${typeName}FilterInput`
+    ),
   })
   const paginationTC = getPagination({
     schemaComposer,
