@@ -6,7 +6,7 @@ import SendIcon from "react-icons/lib/md/send"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/form-styles"
+import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
 
 const StyledForm = styled(`form`)`
