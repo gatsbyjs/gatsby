@@ -354,7 +354,7 @@ class SearchForm extends Component {
   }
   render() {
     const { focussed } = this.state
-    const { iconColor, offsetVertical } = this.props
+    const { offsetVertical } = this.props
     return (
       <form
         css={{
