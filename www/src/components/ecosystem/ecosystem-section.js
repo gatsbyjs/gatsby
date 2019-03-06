@@ -55,7 +55,7 @@ const Title = styled(`h1`)`
   color: ${colors.gatsby};
   display: flex;
   font-size: 1.25rem;
-  line-height: 1;
+  line-height: ${presets.lineHeights.solid};
   margin: 0;
   margin-bottom: ${rhythm(0.25)};
   min-height: 32px;

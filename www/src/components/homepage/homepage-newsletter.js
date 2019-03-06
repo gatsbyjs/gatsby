@@ -73,7 +73,7 @@ const Name = styled(`h3`)`
 const Title = styled(`h1`)`
   color: ${colors.gatsby};
   font-size: 1.25rem;
-  line-height: 1.3;
+  line-height: ${presets.lineHeights.dense};
   margin: 0;
   margin-top: 0.2rem;
 `

@@ -56,7 +56,6 @@ const Header = styled(`h1`)`
   color: ${colors.gatsbyDarker};
   font-size: 1.25rem;
   font-weight: bold;
-  line-height: 1.2;
   margin: 0;
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;

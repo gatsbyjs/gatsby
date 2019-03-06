@@ -14,7 +14,6 @@ const PullquoteRoot = styled(`blockquote`)`
   font-family: ${options.headerFontFamily.join(`,`)};
   font-size: 1.2rem;
   font-weight: bold;
-  line-height: 1.5;
   padding: 2rem 3rem;
   position: relative;
   text-indent: 2rem;
@@ -26,7 +25,7 @@ const PullquoteRoot = styled(`blockquote`)`
   }
 
   ${presets.Lg} {
-    line-height: 1.7;
+    line-height: ${presets.lineHeights.loose};
     margin: 2.5rem -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
