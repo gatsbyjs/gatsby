@@ -11,7 +11,8 @@ export default () => {
     pipe(wrappers.map(w => w.wrapRootElement))(
       <MDXRenderer scope={scopeContexts} isHTMLRenderPass>
         {__MDX_CONTENT__}
-      </MDXRenderer>
+      </MDXRenderer>,
+      {}
     )
   );
 };
