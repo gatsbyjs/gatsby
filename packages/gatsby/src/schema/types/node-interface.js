@@ -38,7 +38,7 @@ const getOrCreateNodeInterface = schemaComposer => {
           )
         },
       },
-      internal: `Internal!`,
+      internal: internalTC.getTypeNonNull(),
     })
     // TODO: In Gatsby v2, the NodeInput.id field is of type String, not ID.
     // Remove this workaround for v3.

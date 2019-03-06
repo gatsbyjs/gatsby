@@ -265,7 +265,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
         })
       } else {
         report.warn(
-          `\`createResolvers\` passed resolvers for type \`${typeName}\` that doesn't exist in the schema. Use \`addTypeDefs\` to add the type before adding resolvers.`
+          `\`createResolvers\` passed resolvers for type \`${typeName}\` that doesn't exist in the schema. Use \`createTypes\` to add the type before adding resolvers.`
         )
       }
     })
