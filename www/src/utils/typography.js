@@ -2,8 +2,7 @@ import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import presets, { colors } from "./presets"
 
-const headerFontFamily = [
-  `Futura PT`,
+const systemFontFamily = [
   `-apple-system`,
   `BlinkMacSystemFont`,
   `Segoe UI`,
@@ -16,45 +15,26 @@ const headerFontFamily = [
   `Helvetica Neue`,
   `Arial`,
   `sans-serif`,
+  `Apple Color Emoji`,
+  `Segoe UI Emoji`,
+  `Segoe UI Symbol`,
+]
+const headerFontFamily = [`Futura PT`, ...systemFontFamily]
+const monospaceFontFamily = [
+  `SFMono-Regular`,
+  `Menlo`,
+  `Monaco`,
+  `Consolas`,
+  `Liberation Mono`,
+  `Courier New`,
+  `monospace`,
 ]
 
 const _options = {
+  bodyFontFamily: systemFontFamily,
   headerFontFamily,
-  bodyFontFamily: [
-    `-apple-system`,
-    `BlinkMacSystemFont`,
-    `Segoe UI`,
-    `Roboto`,
-    `Helvetica Neue`,
-    `Arial`,
-    `sans-serif`,
-    `Apple Color Emoji`,
-    `Segoe UI Emoji`,
-    `Segoe UI Symbol`,
-  ],
-  monospaceFontFamily: [
-    `SFMono-Regular`,
-    `Menlo`,
-    `Monaco`,
-    `Consolas`,
-    `Liberation Mono`,
-    `Courier New`,
-    `monospace`,
-  ],
-  systemFontFamily: [
-    `-apple-system`,
-    `BlinkMacSystemFont`,
-    `Segoe UI`,
-    `Roboto`,
-    `Oxygen`,
-    `Ubuntu`,
-    `Cantarell`,
-    `Fira Sans`,
-    `Droid Sans`,
-    `Helvetica Neue`,
-    `Arial`,
-    `sans-serif`,
-  ],
+  monospaceFontFamily,
+  systemFontFamily,
   baseLineHeight: 1.5,
   baseFontSize: `16px`,
   headerLineHeight: 1.075,
