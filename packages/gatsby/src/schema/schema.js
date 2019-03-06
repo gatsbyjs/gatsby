@@ -12,6 +12,7 @@ const { findOne, findManyPaginated } = require(`./resolvers`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
+const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
 
 const buildSchema = async ({
   schemaComposer,
@@ -131,6 +132,15 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
       addedTypes.forEach(type =>
         processAddedType({ schemaComposer, type, parentSpan })
       )
+    } else if (isGatsbyType(typeOrTypeDef)) {
+      const type = createTypeComposerFromGatsbyType({
+        schemaComposer,
+        type: typeOrTypeDef,
+        parentSpan,
+      })
+      if (type) {
+        processAddedType({ schemaComposer, type, parentSpan })
+      }
     } else {
       processAddedType({ schemaComposer, type: typeOrTypeDef, parentSpan })
     }
@@ -149,6 +159,57 @@ const processAddedType = ({ schemaComposer, type, parentSpan }) => {
     }
   }
   schemaComposer.addSchemaMustHaveType(typeComposer)
+}
+
+const createTypeComposerFromGatsbyType = ({
+  schemaComposer,
+  type,
+  parentSpan,
+}) => {
+  switch (type.kind) {
+    case GatsbyGraphQLTypeKind.OBJECT: {
+      return schemaComposer.TypeComposer.createTemp({
+        ...type.config,
+        interfaces: () => {
+          if (type.config.interfaces) {
+            return type.config.interfaces.map(iface => {
+              if (typeof iface === `string`) {
+                return schemaComposer.getIFTC(iface).getType()
+              } else {
+                return iface
+              }
+            })
+          } else {
+            return []
+          }
+        },
+      })
+    }
+    case GatsbyGraphQLTypeKind.INPUT_OBJECT: {
+      return schemaComposer.InputTypeComposer.createTemp(type.config)
+    }
+    case GatsbyGraphQLTypeKind.UNION: {
+      return schemaComposer.UnionTypeComposer.createTemp({
+        ...type.config,
+        types: () => {
+          if (type.types) {
+            return type.types.map(typeName =>
+              schemaComposer.getTC(typeName).getType()
+            )
+          } else {
+            return []
+          }
+        },
+      })
+    }
+    case GatsbyGraphQLTypeKind.INTERFACE: {
+      return schemaComposer.InterfaceTypeComposer.createTemp(type.config)
+    }
+    default: {
+      console.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
+      return null
+    }
+  }
 }
 
 const addSetFieldsOnGraphQLNodeTypeFields = ({

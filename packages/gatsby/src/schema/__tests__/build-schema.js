@@ -10,6 +10,12 @@ const { SchemaComposer } = require(`graphql-compose`)
 jest.mock(`../../utils/api-runner-node`)
 const { store } = require(`../../redux`)
 const { build } = require(`..`)
+const {
+  buildObjectType,
+  buildUnionType,
+  buildInterfaceType,
+  buildInputObjectType,
+} = require(`../types/type-builders`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const nodes = require(`./fixtures/node-model`)
@@ -55,10 +61,48 @@ describe(`Build schema`, () => {
       const schema = await buildSchema()
       const fooType = schema.getType(`Foo`)
       expect(fooType).toBeInstanceOf(GraphQLObjectType)
+      expect(fooType.getInterfaces()).toEqual([schema.getType(`Node`)])
       const fields = fooType.getFields()
       expect(fields[`text`]).toBeDefined()
       expect(fields[`text`].type).toBeInstanceOf(GraphQLNonNull)
       expect(fields[`text`].type.ofType).toBe(GraphQLString)
+    })
+
+    it(`allows adding type in gatsby type def language`, async () => {
+      createTypes(
+        buildObjectType({
+          name: `Foo`,
+          fields: {
+            text: `String!`,
+            withArgs: {
+              type: `Boolean`,
+              args: {
+                what: {
+                  type: `Boolean`,
+                },
+              },
+              resolve(parent, args) {
+                return Boolean(args.what)
+              },
+            },
+          },
+          interfaces: [`Node`],
+        })
+      )
+      const schema = await buildSchema()
+      const fooType = schema.getType(`Foo`)
+      expect(fooType).toBeInstanceOf(GraphQLObjectType)
+      expect(fooType.getInterfaces()).toEqual([schema.getType(`Node`)])
+      const fields = fooType.getFields()
+      expect(fields[`text`]).toBeDefined()
+      expect(fields[`text`].type).toBeInstanceOf(GraphQLNonNull)
+      expect(fields[`text`].type.ofType).toBe(GraphQLString)
+      expect(fields[`withArgs`]).toBeDefined()
+      expect(fields[`withArgs`].type).toBe(GraphQLBoolean)
+      expect(fields[`withArgs`].args[0]).toBeDefined()
+      expect(fields[`withArgs`].args[0].name).toEqual(`what`)
+      expect(fields[`withArgs`].args[0].type).toBe(GraphQLBoolean)
+      expect(fields[`withArgs`].resolve({}, { what: true })).toBe(true)
     })
 
     it(`allows adding array of types`, async () => {
@@ -142,6 +186,58 @@ describe(`Build schema`, () => {
 
         union UFooBar = Foo | Bar | Author
       `)
+
+      const schema = await buildSchema()
+
+      const interfaceType = schema.getType(`FooBar`)
+      expect(interfaceType).toBeInstanceOf(GraphQLInterfaceType)
+      const unionType = schema.getType(`UFooBar`)
+      expect(unionType).toBeInstanceOf(GraphQLUnionType)
+      ;[(`Foo`, `Bar`, `Author`)].forEach(typeName => {
+        const type = schema.getType(typeName)
+        const typeSample = { internal: { type: typeName } }
+        expect(interfaceType.resolveType(typeSample)).toBe(typeName)
+        expect(unionType.resolveType(typeSample)).toBe(typeName)
+        expect(new Set(type.getInterfaces())).toEqual(
+          new Set([schema.getType(`Node`), schema.getType(`FooBar`)])
+        )
+      })
+    })
+
+    it(`allows adding abstract types in gatsby type def language`, async () => {
+      createTypes([
+        buildInterfaceType({
+          name: `FooBar`,
+          fields: {
+            text: `String!`,
+          },
+        }),
+        buildObjectType({
+          name: `Foo`,
+          fields: {
+            text: `String!`,
+          },
+          interfaces: [`Node`, `FooBar`],
+        }),
+        buildObjectType({
+          name: `Bar`,
+          fields: {
+            text: `String!`,
+          },
+          interfaces: [`Node`, `FooBar`],
+        }),
+        buildObjectType({
+          name: `Author`,
+          fields: {
+            text: `String!`,
+          },
+          interfaces: [`Node`, `FooBar`],
+        }),
+        buildUnionType({
+          name: `UFooBar`,
+          types: [`Foo`, `Bar`, `Author`],
+        }),
+      ])
 
       const schema = await buildSchema()
 
