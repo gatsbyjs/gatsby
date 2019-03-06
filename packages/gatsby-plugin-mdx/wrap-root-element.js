@@ -1,6 +1,5 @@
 import React from "react";
-import { MDXProvider } from "@mdx-js/tag";
-import { withMDXComponents } from "@mdx-js/tag/dist/mdx-provider";
+import { MDXProvider, withMDXComponents } from "@mdx-js/tag";
 import { MDXScopeProvider } from "./context";
 
 /**

@@ -114,6 +114,9 @@ module.exports = async function genMDX({
     mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins)
   });
 
+  code = `/* @jsx mdx */
+${code}`;
+
   debug("compiling scope");
   const instance = new BabelPluginPluckImports();
   const result = babel.transform(code, {

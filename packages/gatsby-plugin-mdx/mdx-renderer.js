@@ -1,6 +1,6 @@
 const React = require("react");
-const { MDXTag } = require("@mdx-js/tag");
-const { withMDXComponents } = require("@mdx-js/tag/dist/mdx-provider");
+const { withMDXComponents } = require("@mdx-js/tag");
+const mdx = require("@mdx-js/mdx/create-element");
 const { withMDXScope } = require("./context");
 
 module.exports = withMDXScope(
@@ -9,10 +9,10 @@ module.exports = withMDXScope(
       return null;
     }
     const fullScope = {
-      // React and MDXTag are here just in case the user doesn't pass them in
+      // React is here just in case the user doesn't pass them in
       // in a manual usage of the renderer
       React,
-      MDXTag,
+      mdx,
       ...scope
     };
 
