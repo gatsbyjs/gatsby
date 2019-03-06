@@ -1,6 +1,5 @@
 import typography, { options, rhythm, scale } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
-import hex2rgba from "hex2rgba"
 
 const { curveDefault, speedDefault } = presets.animation
 
@@ -13,11 +12,11 @@ const styles = {
     width: 320,
     marginBottom: rhythm(options.blockMarginBottom * 2),
     marginRight: rhythm(3 / 4),
-    [presets.Hd]: {
+    [presets.Xl]: {
       width: 360,
       marginRight: rhythm(6 / 4),
     },
-    [presets.VHd]: {
+    [presets.Xxl]: {
       width: 400,
     },
   },
@@ -39,7 +38,7 @@ const styles = {
   featuredItem: {
     display: `none`,
     transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
@@ -78,7 +77,7 @@ const styles = {
     display: `flex`,
     flexFlow: `row wrap`,
     margin: `0 auto ${rhythm(3)}`,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       margin: `0 auto ${rhythm(2 / 2)}`,
     },
   },
@@ -93,7 +92,7 @@ const styles = {
     // "Featured Sites" content block, but no success—only removing the entire block
     // resolves the issue.
     top: `calc(${presets.bannerHeight} - 1px)`,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
@@ -112,7 +111,7 @@ const styles = {
   },
   screenshot: {
     borderRadius: presets.radius,
-    boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+    ...presets.boxShadows.card,
     marginBottom: rhythm(options.blockMarginBottom / 2),
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
@@ -123,7 +122,7 @@ const styles = {
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
       transform: `translateY(-3px)`,
-      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+      ...presets.boxShadows.cardHover,
     },
   },
   shortcutIcon: {
@@ -171,7 +170,7 @@ const styles = {
   },
   filterButton: {
     ...scale(-2 / 10),
-    [presets.Tablet]: {
+    [presets.Md]: {
       ...scale(-4 / 10),
     },
     margin: 0,
@@ -199,7 +198,7 @@ const styles = {
   },
   sidebarHeader: {
     margin: 0,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       ...scale(1 / 8),
       // display: `flex`,
       display: `none`,
@@ -226,7 +225,7 @@ const styles = {
   },
   sidebarContainer: {
     display: `none`,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       // background: colors.ui.whisper,
       display: `block`,
       flexBasis: `15rem`,

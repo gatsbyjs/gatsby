@@ -12,10 +12,16 @@ Video hosted on [egghead.io][egghead].
 
 [egghead]: https://egghead.io/lessons/gatsby-quick-start-with-gatsby-create-develop-and-build-gatsby-sites-from-the-command-line
 
+### Install the Gatsby CLI.
+
+```shell
+npm install -g gatsby-cli
+```
+
 ### Create a new site.
 
 ```shell
-npx gatsby new gatsby-site
+gatsby new gatsby-site
 ```
 
 ### Change directories into site folder.
@@ -52,6 +58,6 @@ Gatsby starts a local HTML server for testing your built site. Remember to build
 
 ### Access documentation for CLI commands.
 
-To see detailed documentation for the CLI commands, run `npx gatsby --help` in the terminal.
+To see detailed documentation for the CLI commands, run `gatsby --help` in the terminal.
 
-For specific commands, run `npx gatsby COMMAND_NAME --help` e.g. `npx gatsby new --help`.
+For specific commands, run `gatsby COMMAND_NAME --help` e.g. `gatsby new --help`.

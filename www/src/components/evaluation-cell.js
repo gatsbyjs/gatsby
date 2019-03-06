@@ -28,7 +28,7 @@ const basicStyling = {
   width: rhythm(3 / 4),
   borderRadius: `50%`,
   margin: `0 auto`,
-  [presets.Mobile]: {
+  [presets.Xs]: {
     height: rhythm(0.875),
     width: rhythm(0.875),
   },

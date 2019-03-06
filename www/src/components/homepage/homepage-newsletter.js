@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import HomepageSection from "./homepage-section"
 import EmailCaptureForm from "../../components/email-capture-form"
@@ -45,7 +45,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -81,7 +81,7 @@ const Title = styled(`h1`)`
 const Form = styled(EmailCaptureForm)`
   margin-top: 1.25rem;
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin-top: 0;
   }
 `

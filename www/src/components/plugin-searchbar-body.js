@@ -13,16 +13,17 @@ import { colors } from "../utils/presets"
 import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/md/file-download"
 import AlgoliaLogo from "../assets/algolia.svg"
+import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
-import { injectGlobal } from "react-emotion"
+import { Global, css } from "@emotion/core"
+import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
 import VisuallyHidden from "@reach/visually-hidden"
-import styled from "react-emotion"
 import { SkipNavLink } from "@reach/skip-nav"
 
 // This is for the urlSync
@@ -34,7 +35,7 @@ const searchMetaHeight = rhythm(8 / 4)
 const searchInputWrapperMargin = rhythm(3 / 4)
 
 /* stylelint-disable */
-injectGlobal`
+const searchBoxStyles = css`
   .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
     display: block;
   }
@@ -164,9 +165,8 @@ injectGlobal`
     margin: ${rhythm(3 / 4)};
     height: ${rhythm(2)};
     outline: none;
-    transition: all ${presets.animation.speedDefault} ${
-  presets.animation.curveDefault
-};
+    transition: all ${presets.animation.speedDefault}
+      ${presets.animation.curveDefault};
     font-family: ${typography.options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover,
@@ -212,7 +212,7 @@ class Search extends Component {
       <div
         css={{
           paddingBottom: rhythm(2.5),
-          [presets.Tablet]: {
+          [presets.Md]: {
             paddingBottom: 0,
           },
         }}
@@ -225,12 +225,21 @@ class Search extends Component {
             width: `100%`,
           }}
         >
+          <Global styles={searchBoxStyles} />
           <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
 
           <div css={{ display: `none` }}>
             <Configure analyticsTags={[`gatsby-plugins`]} />
             <RefinementList
               attributeName="keywords"
+              transformItems={items =>
+                items.map(({ count, ...item }) => {
+                  return {
+                    ...item,
+                    count: count || 0,
+                  }
+                })
+              }
               defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
             />
             <Toggle
@@ -251,7 +260,7 @@ class Search extends Component {
               height: searchMetaHeight,
               paddingLeft: rhythm(3 / 4),
               paddingRight: rhythm(3 / 4),
-              [presets.Tablet]: {
+              [presets.Md]: {
                 fontSize: scale(-1 / 4).fontSize,
               },
             }}
@@ -270,7 +279,7 @@ class Search extends Component {
         <div>
           <div
             css={{
-              [presets.Tablet]: {
+              [presets.Md]: {
                 height: `calc(100vh - ${presets.headerHeight} - ${
                   presets.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
@@ -398,6 +407,8 @@ const Result = ({ hit, pathname, query }) => {
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
             lineHeight: 1.2,
+            display: `flex`,
+            alignItems: `center`,
             marginBottom: 0,
             marginTop: 0,
             letterSpacing: 0,
@@ -420,15 +431,38 @@ const Result = ({ hit, pathname, query }) => {
             fontSize: rhythm(4 / 7),
           }}
         >
-          {hit.humanDownloadsLast30Days}
-          {` `}
+          {hit.repository &&
+            hit.name[0] !== `@` &&
+            hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
+              0 && (
+              <img
+                src={GatsbyIcon}
+                css={{
+                  height: 12,
+                  marginBottom: 0,
+                  marginRight: 5,
+                  filter: selected ? false : `grayscale(100%)`,
+                  opacity: selected ? false : `0.2`,
+                }}
+                alt={`Official Gatsby Plugin`}
+              />
+            )}
           <span
             css={{
-              color: selected ? colors.lilac : colors.gray.bright,
-              marginLeft: rhythm(1 / 6),
+              width: `4.5em`,
+              textAlign: `right`,
             }}
           >
-            <DownloadArrow />
+            {hit.humanDownloadsLast30Days}
+            {` `}
+            <span
+              css={{
+                color: selected ? colors.lilac : colors.gray.bright,
+                marginLeft: rhythm(1 / 6),
+              }}
+            >
+              <DownloadArrow />
+            </span>
           </span>
         </div>
       </div>
