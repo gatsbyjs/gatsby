@@ -123,7 +123,6 @@ async function pushToQueue(task, cb) {
     const node = await processRemoteNode(task)
     return cb(null, node)
   } catch (e) {
-    console.warn(`Failed to process remote content ${task.url}`)
     return cb(e)
   }
 }
@@ -282,8 +281,8 @@ const pushTask = task =>
       .on(`finish`, task => {
         resolve(task)
       })
-      .on(`failed`, () => {
-        resolve()
+      .on(`failed`, err => {
+        reject(`failed to process ${task.url}\n${err}`)
       })
   })
 
@@ -341,9 +340,7 @@ module.exports = ({
   }
 
   if (!url || isWebUri(url) === undefined) {
-    // should we resolve here, or reject?
-    // Technically, it's invalid input
-    return Promise.resolve()
+    return Promise.reject(`wrong url: ${url}`)
   }
 
   totalJobs += 1
