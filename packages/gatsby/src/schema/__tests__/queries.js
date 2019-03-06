@@ -602,7 +602,7 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
-      it(`paginaties null result`, async () => {
+      it(`paginates null result`, async () => {
         const query = `
           {
             allMarkdown(

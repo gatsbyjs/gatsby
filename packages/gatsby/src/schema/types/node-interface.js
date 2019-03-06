@@ -2,7 +2,7 @@ const getOrCreateNodeInterface = schemaComposer => {
   // TODO: why is `mediaType` on Internal? Applies only to File!?
   // `fieldOwners` is an object
   // Should we drop ignoreType?
-  const InternalTC = schemaComposer.getOrCreateTC(`Internal`, tc => {
+  const internalTC = schemaComposer.getOrCreateTC(`Internal`, tc => {
     tc.addFields({
       content: `String`,
       contentDigest: `String!`,
@@ -13,10 +13,11 @@ const getOrCreateNodeInterface = schemaComposer => {
       owner: `String!`,
       type: `String!`,
     })
+    // TODO: Can be removed with graphql-compose 5.11
+    tc.getInputTypeComposer()
   })
-  InternalTC.getITC()
 
-  const NodeInterfaceTC = schemaComposer.getOrCreateIFTC(`Node`, tc => {
+  const nodeInterfaceTC = schemaComposer.getOrCreateIFTC(`Node`, tc => {
     tc.setDescription(`Node Interface`)
     tc.addFields({
       id: `ID!`,
@@ -37,24 +38,27 @@ const getOrCreateNodeInterface = schemaComposer => {
           )
         },
       },
-      internal: `Internal!`,
+      internal: internalTC.getTypeNonNull(),
     })
+    // TODO: In Gatsby v2, the NodeInput.id field is of type String, not ID.
+    // Remove this workaround for v3.
+    const nodeInputTC = tc.getInputTypeComposer()
+    nodeInputTC.extendField(`id`, { type: `String` })
   })
-  NodeInterfaceTC.getITC()
 
-  return NodeInterfaceTC
+  return nodeInterfaceTC
 }
 
 const addNodeInterface = ({ schemaComposer, typeComposer }) => {
-  const NodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
-  typeComposer.addInterface(NodeInterfaceTC)
+  const nodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
+  typeComposer.addInterface(nodeInterfaceTC)
   addNodeInterfaceFields({ schemaComposer, typeComposer })
 }
 
 const addNodeInterfaceFields = ({ schemaComposer, typeComposer }) => {
-  const NodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
-  typeComposer.addFields(NodeInterfaceTC.getFields())
-  NodeInterfaceTC.setResolveType(node => node.internal.type)
+  const nodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
+  typeComposer.addFields(nodeInterfaceTC.getFields())
+  nodeInterfaceTC.setResolveType(node => node.internal.type)
   schemaComposer.addSchemaMustHaveType(typeComposer)
 }
 
