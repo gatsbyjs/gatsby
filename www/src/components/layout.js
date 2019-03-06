@@ -55,7 +55,6 @@ class DefaultLayout extends React.Component {
 
   render() {
     const pathname = this.props.location.pathname
-    const isHomepage = pathname === `/`
     const isBlog =
       pathname === `/blog/` || pathname.indexOf(`/blog/page/`) === 0
 
@@ -147,7 +146,7 @@ class DefaultLayout extends React.Component {
     }
 
     return (
-      <div className={isHomepage ? `is-homepage` : ``}>
+      <div>
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner>
@@ -164,18 +163,16 @@ class DefaultLayout extends React.Component {
         <div
           className={`main-body`}
           css={{
-            paddingTop: `calc(${presets.bannerHeight}  + 1rem)`,
+            paddingLeft: `env(safe-area-inset-left)`,
+            paddingRight: `env(safe-area-inset-right)`,
+            paddingTop: presets.bannerHeight,
             [presets.Md]: {
               background: isBlog ? colors.ui.whisper : false,
               margin: `0 auto`,
-              paddingTop: isHomepage
-                ? presets.bannerHeight
-                : `calc(${presets.bannerHeight} + ${
-                    presets.headerHeight
-                  } + 1.5rem)`,
+              paddingTop: `calc(${presets.bannerHeight} + ${
+                presets.headerHeight
+              } + 1.5rem)`,
             },
-            paddingLeft: `env(safe-area-inset-left)`,
-            paddingRight: `env(safe-area-inset-right)`,
           }}
         >
           <PageWithSidebar

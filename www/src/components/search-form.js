@@ -29,10 +29,6 @@ const algoliaStyles = css`
     box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
   }
 
-  .is-homepage .algolia-autocomplete .ds-dropdown-menu {
-    top: ${homepageSearchDropdownOffsetTop} !important;
-  }
-
   /* .searchWrap to beat docsearch.css' !important */
   .searchWrap
     .algolia-autocomplete.algolia-autocomplete-right
@@ -91,13 +87,6 @@ const algoliaStyles = css`
     ) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;
-  }
-
-  .is-homepage .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
-    max-height: calc(
-      100vh - ${homepageSearchDropdownOffsetTop} - ${presets.headerHeight} -
-        ${presets.bannerHeight}
-    ) !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
@@ -247,21 +236,11 @@ const algoliaStyles = css`
   }
 
   ${presets.Md} {
-    .algolia-autocomplete .ds-dropdown-menu,
-    .is-homepage .algolia-autocomplete .ds-dropdown-menu {
+    .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
       max-width: 600px !important;
       min-width: 500px !important;
-    }
-
-    .is-homepage
-      .algolia-autocomplete
-      .ds-dropdown-menu
-      [class^="ds-dataset-"] {
-      max-height: calc(
-        100vh - ${homepageSearchDropdownOffsetTop} - ${presets.bannerHeight}
-      ) !important;
     }
 
     /* .searchWrap to beat docsearch.css' !important */
