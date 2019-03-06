@@ -159,7 +159,6 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, level }) => (
     css={{
       alignItems: `center`,
       display: `flex`,
-      fontFamily: options.systemFontFamily.join(`,`),
       fontSize: `100%`,
       fontWeight: isActive ? `bold` : `normal`,
       margin: 0,

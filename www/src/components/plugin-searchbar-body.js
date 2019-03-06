@@ -434,7 +434,6 @@ const Result = ({ hit, pathname, query }) => {
       <div
         css={{
           color: selected ? `inherit` : colors.gray.calm,
-          fontFamily: typography.options.systemFontFamily.join(`,`),
           fontSize: scale(-1 / 2).fontSize,
           lineHeight: 1.5,
         }}

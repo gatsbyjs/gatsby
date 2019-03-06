@@ -83,7 +83,6 @@ const SubTitle = styled(`h2`)`
 
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
-  font-family: ${options.systemFontFamily.join(`,`)};
   font-size: 0.8125rem;
 `
 
@@ -127,12 +126,13 @@ const EcosystemSection = ({
       {subTitle && <SubTitle>{subTitle}</SubTitle>}
     </Header>
 
-    {featuredItems && featuredItems.length > 0 && (
-      <EcosystemFeaturedItems
-        items={featuredItems}
-        itemComponent={EcosystemFeaturedItem}
-      />
-    )}
+    {featuredItems &&
+      featuredItems.length > 0 && (
+        <EcosystemFeaturedItems
+          items={featuredItems}
+          itemComponent={EcosystemFeaturedItem}
+        />
+      )}
   </EcosystemSectionRoot>
 )
 

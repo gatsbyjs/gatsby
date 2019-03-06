@@ -16,7 +16,6 @@ const HomepageBlogPostRoot = styled(
 )`
   display: flex;
   flex-direction: column;
-  font-family: ${options.systemFontFamily.join(`,`)};
   padding-bottom: ${rhythm(2.5)};
   position: relative;
 
@@ -215,9 +214,8 @@ const HomepageBlogPost = ({
 
   return (
     <HomepageBlogPostRoot fullWidth={fullWidth}>
-      {desktopViewport && cover && (
-        <Cover fluid={cover.childImageSharp.fluid} />
-      )}
+      {desktopViewport &&
+        cover && <Cover fluid={cover.childImageSharp.fluid} />}
 
       <Link to={slug}>
         <Header first={first} withCover={cover}>

@@ -65,7 +65,6 @@ const Header = styled(`header`)`
     color: ${colors.lilac};
     display: flex;
     font-size: 0.8125rem;
-    font-family: ${options.systemFontFamily.join(`,`)};
     padding-left: 5px;
 
     svg {

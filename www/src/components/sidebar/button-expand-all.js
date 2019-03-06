@@ -22,7 +22,6 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       marginLeft: `auto`,
       paddingTop: rhythm(options.blockMarginBottom / 3),
       paddingBottom: rhythm(options.blockMarginBottom / 3),
-      fontFamily: options.systemFontFamily.join(`,`),
       textAlign: `left`,
       transition: `all .2s`,
       "&:hover": {

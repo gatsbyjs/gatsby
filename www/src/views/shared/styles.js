@@ -180,7 +180,6 @@ const styles = {
     color: colors.gray.text,
     cursor: `pointer`,
     display: `flex`,
-    fontFamily: options.systemFontFamily.join(`,`),
     justifyContent: `space-between`,
     outline: `none`,
     padding: 0,
