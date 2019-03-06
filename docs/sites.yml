@@ -4634,6 +4634,10 @@
   source_url: https://github.com/josefaidt/josefaidt.github.io
   description: >
     Personal website, blog, portfolio for Josef Aidt
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
   built_by: Josef Aidt
   built_by_url: https://twitter.com/garlicbred
 - title: Hash Tech Guru
@@ -4704,6 +4708,32 @@
   built_by: Kirankumar Ambati
   built_by_url: https://github.com/kirankumarambati
   featured: false
+- title: Mixkit by Envato
+  url: https://mixkit.co
+  main_url: https://mixkit.co
+  description: >
+    Extraordinary free HD videos
+  categories:
+    - Video
+    - Art
+    - Design
+    - Gallery
+    - Video
+  built_by: Envato
+  built_by_url: https://github.com/envato
+  featured: false
+- title: Rou Hun Fan's portfolio
+  main_url: https://flowen.me
+  url: https://flowen.me
+  source_url: https://github.com/flowen/flowen.me/tree/master/2019/v3
+  description: >
+    Portfolio of creative developer Rou Hun Fan. Built with Gatsby v2 &amp; Greensock drawSVG.
+  categories:
+    - Portfolio
+    - Personal website
+  built_by: Rou Hun Fan Developer
+  built_by_url: https://flowen.me
+  featured: false
 - title: chadly.net
   url: https://www.chadly.net
   main_url: https://www.chadly.net
@@ -4727,3 +4757,4 @@
     - Real Estate
     - Government
   featured: false
+  

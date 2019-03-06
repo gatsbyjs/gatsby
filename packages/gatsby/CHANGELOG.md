@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.22...gatsby@2.1.23) (2019-03-05)
+
+### Bug Fixes
+
+- **core:** Only delete html/css files during prod builds ([#12243](https://github.com/gatsbyjs/gatsby/issues/12243)) ([9835f56](https://github.com/gatsbyjs/gatsby/commit/9835f56))
+- **gatsby:** don't delete /404.html during development ([#12297](https://github.com/gatsbyjs/gatsby/issues/12297)) ([23488ea](https://github.com/gatsbyjs/gatsby/commit/23488ea))
+
 ## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.21...gatsby@2.1.22) (2019-03-05)
 
 **Note:** Version bump only for package gatsby

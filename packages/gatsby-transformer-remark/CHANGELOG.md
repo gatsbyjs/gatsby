@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.0...gatsby-transformer-remark@2.3.1) (2019-03-05)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Fix unreturned Promise warning ([#12303](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/12303)) ([6f8f2c3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/6f8f2c3))
+
 # [2.3.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.6...gatsby-transformer-remark@2.3.0) (2019-02-25)
 
 ### Features
