@@ -201,8 +201,9 @@ const _options = {
         background: colors.code.border,
         borderRadius: `0 0 ${presets.radiusLg}px ${presets.radiusLg}px`,
       },
-      // Target image captions. This is kind of a fragile selector...
-      ".gatsby-resp-image-link + em": {
+      // Target image captions.
+      // This is kind of a fragile selector...
+      ".gatsby-resp-image-link + em, .gatsby-resp-image-wrapper + em": {
         ...scale(-1 / 5),
         lineHeight: 1.3,
         paddingTop: rhythm(3 / 8),
@@ -213,9 +214,8 @@ const _options = {
         color: colors.gray.calm,
         position: `relative`,
       },
-      ".gatsby-resp-image-link + em a": {
+      ".gatsby-resp-image-link + em a, .gatsby-resp-image-wrapper + em a": {
         fontWeight: `normal`,
-        fontFamily: options.headerFontFamily.join(`,`),
         color: colors.lilac,
       },
       ".main-body a": {
@@ -226,7 +226,6 @@ const _options = {
         }`,
         borderBottom: `1px solid ${colors.lilac}`,
         fontWeight: `normal`,
-        // fontSize: `110%`,
       },
       ".main-body a:hover": {
         borderBottomColor: colors.ui.border,
@@ -240,9 +239,9 @@ const _options = {
       },
       ".post-body figcaption": {
         color: colors.gray.calm,
-        fontFamily: headerFontFamily.join(`,`),
         fontSize: `87.5%`,
         marginTop: rhythm(1 / 4),
+        marginBottom: rhythm(2 / 4),
       },
       ".main-body a.anchor": {
         color: `inherit`,
