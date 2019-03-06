@@ -301,6 +301,8 @@ const _options = {
         borderRadius: `${presets.radius}px`,
         overflow: `hidden`,
       },
+      // gatsby-remark-code-titles styles
+      // https://www.gatsbyjs.org/packages/gatsby-remark-code-titles/
       ".gatsby-code-title": {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
