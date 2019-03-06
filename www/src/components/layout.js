@@ -155,7 +155,7 @@ class DefaultLayout extends React.Component {
             [presets.Md]: {
               paddingTop: `calc(${presets.bannerHeight} + ${
                 presets.headerHeight
-              } + 1.5rem)`,
+              })`,
             },
           }}
         >
