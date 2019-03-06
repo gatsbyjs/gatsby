@@ -2,6 +2,7 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 
@@ -278,6 +279,17 @@ function isLocalGatsbySite() {
   return inGatsbySite
 }
 
+function getOnFailSuggestion(arg, commands) {
+  let suggestion
+  if (!arg) {
+    suggestion = `Pass --help to see all available commands and options.`
+    return suggestion
+  } else {
+    const suggestion = didYouMean(arg, commands) || ``
+    return suggestion
+  }
+}
+
 module.exports = argv => {
   let cli = yargs()
   let isLocalSite = isLocalGatsbySite()
@@ -313,9 +325,17 @@ module.exports = argv => {
       ),
     })
     .wrap(cli.terminalWidth())
-    .demandCommand(1, `Pass --help to see all available commands and options.`)
+    .demandCommand(1)
     .strict()
-    .showHelpOnFail(true)
-    .recommendCommands()
+    .fail((msg, err, yargs) => {
+      const availableCommands = yargs.getCommands().map(commandDescription => {
+        const [command] = commandDescription
+        return command.split(` `)[0]
+      })
+      const arg = argv.slice(2)[0]
+      cli.showHelp()
+      report.log(getOnFailSuggestion(arg, availableCommands))
+      report.log(msg)
+    })
     .parse(argv.slice(2))
 }
