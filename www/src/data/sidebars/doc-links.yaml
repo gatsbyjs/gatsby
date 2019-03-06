@@ -297,6 +297,8 @@
       link: /docs/ssr-apis/
     - title: Actions
       link: /docs/actions/
+    - title: Node Model
+      link: /docs/node-model/
     - title: Node Interface
       link: /docs/node-interface/
     - title: API Philosophy
