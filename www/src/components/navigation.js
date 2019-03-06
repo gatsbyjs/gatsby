@@ -240,11 +240,8 @@ const styles = {
     marginLeft: `auto`,
   },
   logo: {
-    height: 28,
+    height: `1.5rem`,
     margin: 0,
-    [presets.Md]: {
-      height: `1.55rem`,
-    },
   },
   logoLink: {
     alignItems: `center`,
