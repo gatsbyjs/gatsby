@@ -13,11 +13,6 @@ const MastheadContent = () => (
       paddingBottom: rhythm(2),
       paddingTop: rhythm(2),
       textAlign: `center`,
-      [presets.Md]: {
-        paddingTop: `calc(${presets.headerHeight} + ${
-          presets.bannerHeight
-        } + ${rhythm(1)})`,
-      },
       [presets.Lg]: {
         paddingBottom: rhythm(3),
       },
@@ -54,7 +49,8 @@ const MastheadContent = () => (
       }}
     >
       Gatsby is a free and open source framework based on React that helps
-      developers build blazing fast <strong>websites</strong> and{` `}
+      developers build blazing fast <strong>websites</strong> and
+      {` `}
       <strong>apps</strong>
     </p>
     <Button
