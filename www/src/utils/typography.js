@@ -40,11 +40,17 @@ const _options = {
   plugins: [new CodePlugin()],
   overrideStyles: ({ rhythm, scale }, options) => {
     return {
+      a: {
+        textDecoration: `none`,
+      },
       "h1,h2,h4,h5,h6": {
         letterSpacing: `-0.0075em`,
       },
-      "ul, ol": {
-        marginTop: rhythm(options.blockMarginBottom),
+      h2: {
+        marginTop: rhythm(options.blockMarginBottom * 3),
+      },
+      h3: {
+        marginTop: rhythm(options.blockMarginBottom * 2),
       },
       blockquote: {
         paddingLeft: rhythm(options.blockMarginBottom),
