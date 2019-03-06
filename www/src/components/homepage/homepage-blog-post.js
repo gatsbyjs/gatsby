@@ -19,9 +19,8 @@ const HomepageBlogPostRoot = styled(
   padding-bottom: ${rhythm(2.5)};
   position: relative;
 
-  .main-body & a {
+  a {
     border: none;
-    box-shadow: none;
     font-family: inherit;
 
     :hover {
@@ -100,7 +99,6 @@ const Author = styled(Link)`
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
-    box-shadow: inset 0 -2px 0px 0px ${colors.ui.bright};
     margin-left: 0.5rem;
   }
 
@@ -156,7 +154,6 @@ const ReadMore = styled(Link)`
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
-    box-shadow: inset 0 -2px 0px 0px ${colors.ui.bright};
     font-weight: bold;
     margin-right: 0.2rem;
   }
