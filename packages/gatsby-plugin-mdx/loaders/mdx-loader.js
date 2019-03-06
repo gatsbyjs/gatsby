@@ -162,6 +162,12 @@ ${contentWithoutFrontmatter}`;
     mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins),
     hastPlugins: options.hastPlugins
   });
+
+  code = `
+  /* @jsx mdx */
+import mdx from '@mdx-js/mdx/create-element';
+${code}`;
+
   try {
     const result = babel.transform(code, {
       configFile: false,
