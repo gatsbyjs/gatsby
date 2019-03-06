@@ -209,7 +209,6 @@ const _options = {
         paddingTop: rhythm(3 / 8),
         marginBottom: rhythm(options.blockMarginBottom * 2),
         display: `block`,
-        textAlign: `center`,
         fontStyle: `normal`,
         color: colors.gray.calm,
         position: `relative`,
