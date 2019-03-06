@@ -10,18 +10,30 @@ const IndexPage = ({ data }) => (
     <h1>Hi people</h1>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
-    {data.allAuthorJson.edges.map(({ node }) => (
-      <div key={node.id}>
-        <h4>
-          Posts by {node.firstName} {node.name}
-        </h4>
-        <ul>
-          {node.posts.map(post => (
-            <li key={post.id}>{post.title}</li>
-          ))}
-        </ul>
-      </div>
-    ))}
+    <div>
+      {data.allAuthorJson.edges.map(({ node }) => (
+        <div key={node.id}>
+          <h4>
+            Posts by {node.firstName} {node.name}
+          </h4>
+          <ul>
+            {node.posts.map(post => (
+              <li key={post.id}>
+                <h5>{post.title}</h5>
+                <ul>
+                  {post.comments.map((comment, i) => (
+                    <li key={i}>
+                      <b>{comment.author.name}</b> - {comment.text}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
     <Link to="/page-2/">Go to page 2</Link>
   </Layout>
 )
@@ -39,6 +51,12 @@ export const query = graphql`
           posts {
             id
             title
+            comments {
+              text
+              author {
+                name
+              }
+            }
           }
         }
       }

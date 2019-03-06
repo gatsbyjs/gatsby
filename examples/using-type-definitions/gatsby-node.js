@@ -1,4 +1,4 @@
-exports.sourceNodes = ({ actions }) => {
+exports.sourceNodes = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = `
     type AuthorJson implements Node {
@@ -17,6 +17,33 @@ exports.sourceNodes = ({ actions }) => {
     }
   `
   createTypes(typeDefs)
+  createTypes([
+    schema.buildObjectType({
+      name: `CommentJson`,
+      fields: {
+        text: `String!`,
+        blog: {
+          type: `BlogJson`,
+          resolve(parent, args, context) {
+            return context.nodeModel.getNodeById({
+              id: parent.author,
+              type: `BlogJson`,
+            })
+          },
+        },
+        author: {
+          type: `AuthorJson`,
+          resolve(parent, args, context) {
+            return context.nodeModel.getNodeById({
+              id: parent.author,
+              type: `AuthorJson`,
+            })
+          },
+        },
+      },
+      interfaces: [`Node`],
+    }),
+  ])
 }
 
 exports.createResolvers = ({ createResolvers }) => {
@@ -74,6 +101,15 @@ exports.createResolvers = ({ createResolvers }) => {
             type: `AuthorJson`,
           })
           return authors.filter(author => emails.includes(author.email))
+        },
+      },
+      comments: {
+        type: `[CommentJson!]!`,
+        async resolve(source, args, context, info) {
+          const result = await context.nodeModel.getAllNodes({
+            type: `CommentJson`,
+          })
+          return result.filter(({ blog }) => blog === source.id)
         },
       },
     },
